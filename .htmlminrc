@@ -1,0 +1,13 @@
+/*
+html-minifier Options
+https://github.com/gruntjs/grunt-contrib-htmlmin#options
+http://perfectionkills.com/experimenting-with-html-minifier/#options
+*/
+
+exports = module.exports = {
+
+    collapseWhitespace: true,
+    removeComments: true
+}
+
+
