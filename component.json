@@ -1,0 +1,14 @@
+{
+    "name": "kiw",
+    "paths": [
+        "lib"
+    ],
+    "local": [
+    ],
+    "dependencies": {
+    },
+    "styles": [
+    ],
+    "scripts": [
+    ]
+}
