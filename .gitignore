@@ -20,10 +20,10 @@
 /docs
 
 # Ignore reports
-/report
+/test/report
 
 # Ignore coverage report
-/coverage
+/test/coverage
 
 # Ignore log files
 /log
