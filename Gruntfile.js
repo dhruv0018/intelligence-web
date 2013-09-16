@@ -285,6 +285,10 @@ module.exports = function(grunt) {
             options: {
                 livereload: true
             },
+            json: {
+                files: ['*.json'],
+                tasks: ['dev']
+            },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
                 tasks: ['dev']
