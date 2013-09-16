@@ -1,0 +1,18 @@
+/*
+RECESS Options
+Options turned off here are already linted by CSSLint;
+RECESS is used to enforce a couple extra rules that are not in CSSLint
+*/
+
+exports = module.exports = {
+
+    noJSPrefix: true,
+    strictPropertyOrder: true,
+    noIDs: false,
+    zeroUnits: false,
+    noUnderscores: false,
+    prefixWhitespace: false,
+    noOverqualifying: false,
+    noUniversalSelectors: false
+}
+
