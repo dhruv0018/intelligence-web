@@ -1,0 +1,32 @@
+# Ignore build files
+/build
+
+# Ignore dev files
+/dev
+
+# Ignore production files
+/prod
+
+# Ignore vendor files
+/vendor
+
+# Ignore components
+/components
+
+# Ignore NPM modules
+/node_modules
+
+# Ignore docs
+/docs
+
+# Ignore reports
+/report
+
+# Ignore coverage report
+/coverage
+
+# Ignore log files
+/log
+
+# Ignore temporary files
+/tmp
