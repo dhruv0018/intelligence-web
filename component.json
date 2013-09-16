@@ -1,0 +1,14 @@
+{
+    "name": "intelligence-web-client",
+    "paths": [
+        "lib"
+    ],
+    "local": [
+    ],
+    "dependencies": {
+    },
+    "styles": [
+    ],
+    "scripts": [
+    ]
+}

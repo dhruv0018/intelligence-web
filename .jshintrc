@@ -1,0 +1,8 @@
+{
+    "indent"        : 4,
+    "newcap"        : true,
+    "camelcase"     : true,
+    "quotmark"      : true,
+    "trailing"      : true,
+    "asi"           : false
+}

@@ -1,0 +1,12 @@
+/*
+UglifyJS Options
+https://github.com/mishoo/UglifyJS2#compressor-options
+*/
+
+exports = module.exports = {
+
+    preserveComments: false,
+    compress: {
+    }
+}
+
