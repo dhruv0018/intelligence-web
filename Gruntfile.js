@@ -228,7 +228,7 @@ module.exports = function(grunt) {
         cucumberjs: {
             features: 'test/acceptance/features',
             options: {
-                steps: "test/acceptance/step_definitions"
+                steps: 'test/acceptance/step_definitions'
             }
         },
 
