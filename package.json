@@ -12,6 +12,7 @@
     "devDependencies": {
         "component": "0.x",
         "component-html": "0.0.3",
+        "component-json": "~0.1.4",
         "decomponentify": "0.0.3",
         "grunt": "~0.4.1",
         "grunt-cli": "~0.1.9",
