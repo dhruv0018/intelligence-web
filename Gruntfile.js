@@ -169,6 +169,10 @@ module.exports = function(grunt) {
                             path: 'vendor/angular/angular.js',
                             exports: 'angular'
                         },
+                        angularui: {
+                            path: 'vendor/angular-ui-router/release/angular-ui-router.js',
+                            exports: 'angularui'
+                        },
                         bootstrap: {
                             path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
                             exports: 'bootstrap'
