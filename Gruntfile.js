@@ -154,7 +154,7 @@ module.exports = function(grunt) {
             build: {
                 options: {
                     args: {
-                        use: 'component-html'
+                        use: 'component-html,component-json'
                     }
                 }
             }
