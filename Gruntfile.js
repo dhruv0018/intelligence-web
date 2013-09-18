@@ -18,7 +18,8 @@ module.exports = function(grunt) {
             css: {
                 src: [
                     'src/**/*.css',
-                    'lib/**/*.css'
+                    'lib/**/*.css',
+                    'theme/**/*.css'
                 ]
             },
             js: {
