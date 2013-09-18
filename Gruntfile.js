@@ -108,7 +108,7 @@ module.exports = function(grunt) {
                 dest: 'build/theme.css'
             },
             build: {
-                src: ['build/build.css'],
+                src: ['build/build.css', 'build/theme.css'],
                 dest: 'build/themed.css'
             }
         },
