@@ -4,11 +4,13 @@
         "lib"
     ],
     "local": [
+        "login"
     ],
     "dependencies": {
     },
     "styles": [
     ],
     "scripts": [
+        "src/main.js"
     ]
 }
