@@ -1,0 +1,22 @@
+{
+    "name": "login",
+    "dependencies": {
+    },
+    "development": {
+    },
+    "paths": [
+        "lib"
+    ],
+    "local": [
+        "oauth"
+    ],
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "login.css"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
