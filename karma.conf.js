@@ -9,7 +9,8 @@ module.exports = function(config) {
         basePath: '',
 
         files: [
-            'prod/*.js',
+            'dev/*.js',
+            'vendor/angular-mocks/angular-mocks.js',
             'test/unit/**/*.js',
             {pattern: 'src/**/*.js', included: false},
             {pattern: 'lib/**/*.js', included: false}

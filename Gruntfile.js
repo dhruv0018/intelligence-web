@@ -294,7 +294,7 @@ module.exports = function(grunt) {
                 tasks: ['csslint', 'recess', 'build-css', 'copy:dev']
             },
             js: {
-                files: ['src/**/*.js', 'lib/**/*.js', 'test/**/*.js'],
+                files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
                 tasks: ['jsvalidate', 'jshint', 'build-js', 'test', 'copy:dev']
             }
         }
