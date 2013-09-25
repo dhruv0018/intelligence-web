@@ -298,6 +298,10 @@ module.exports = function(grunt) {
 
                             /* Serve static files. */
                             connect.static(options.base),
+
+                            /* Make empty directories browsable. */
+                            connect.directory(options.base)
+
                         ];
                     }
                 }
