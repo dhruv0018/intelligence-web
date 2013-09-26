@@ -2,31 +2,25 @@
 
 <div class="login panel panel-primary">
 
-    <div class="panel-heading">
+    <header class="panel-heading">
 
         <h1 class="panel-title">Login</h1>
 
-    </div>
+    </header>
 
     <div class="panel-body" ng-controller="LoginController">
 
         <form class="form-horizontal" role="form" action="" ng-submit="login.connect()">
 
-            <div class="form-group">
+            <dl class="form-group">
 
-                <label class="control-label" for="email">Email</label>
+                <dt><label class="control-label" for="email">Email</label></dt>
+                <dd><input class="form-control input-lg" ng-model="login.email" name="email" type="email" placeholder="EMail" required /></dd>
 
-                <input class="form-control input-lg" ng-model="login.email" name="email" type="email" placeholder="EMail" required />
+                <dt><label class="control-label" for="password">Password</label></dt>
+                <dd><input class="form-control input-lg" ng-model="login.password" name="password" type="password" placeholder="Password" required /></dd>
 
-            </div>
-
-            <div class="form-group">
-
-                <label class="control-label" for="password">Password</label>
-
-                <input class="form-control input-lg" ng-model="login.password" name="password" type="password" placeholder="Password" required />
-
-            </div>
+            </dl>
 
             <div class="form-group">
 
