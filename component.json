@@ -8,6 +8,7 @@
     "dependencies": {
     },
     "styles": [
+        "vendor/bootstrap/dist/css/bootstrap.css"
     ],
     "scripts": [
     ]

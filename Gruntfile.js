@@ -18,7 +18,8 @@ module.exports = function(grunt) {
             css: {
                 src: [
                     'src/**/*.css',
-                    'lib/**/*.css'
+                    'lib/**/*.css',
+                    'theme/**/*.css'
                 ]
             },
             js: {
@@ -108,7 +109,7 @@ module.exports = function(grunt) {
                 dest: 'build/theme.css'
             },
             build: {
-                src: ['build/build.css'],
+                src: ['build/build.css', 'build/theme.css'],
                 dest: 'build/themed.css'
             }
         },
@@ -285,12 +286,20 @@ module.exports = function(grunt) {
             options: {
                 livereload: true
             },
+            json: {
+                files: ['*.json'],
+                tasks: ['dev']
+            },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
                 tasks: ['dev']
             },
             css: {
                 files: ['src/**/*.css', 'lib/**/*.css'],
+                tasks: ['csslint', 'recess', 'dev']
+            },
+            theme: {
+                files: ['theme/**/*.css'],
                 tasks: ['csslint', 'recess', 'build-css', 'copy:dev']
             },
             js: {
