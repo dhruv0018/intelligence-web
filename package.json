@@ -10,6 +10,7 @@
     "dependencies": {
     },
     "devDependencies": {
+        "connect-modrewrite": "~0.5.8",
         "component": "0.x",
         "component-html": "0.0.3",
         "decomponentify": "0.0.3",

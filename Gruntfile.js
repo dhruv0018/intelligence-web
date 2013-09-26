@@ -2,6 +2,8 @@
 
 'use strict';
 
+var modRewrite = require('connect-modrewrite');
+
 module.exports = function(grunt) {
 
     grunt.initConfig({
@@ -136,7 +138,7 @@ module.exports = function(grunt) {
                     'dev/styles.css': 'build/reworked.css',
                     'dev/scripts.js': 'build/bundle.js'
                 }
-            },
+            }
         },
 
 
@@ -281,7 +283,19 @@ module.exports = function(grunt) {
                 options: {
                     base: 'dev',
                     port: 8000,
-                    livereload: true
+                    livereload: true,
+                    middleware: function (connect, options) {
+                        return [
+
+                            /* Redirect hash urls to index.html */
+                            modRewrite([
+                                '!\\.html|\\.js|\\.css|\\.png$ /index.html [L]'
+                            ]),
+
+                            /* Serve static files. */
+                            connect.static(options.base),
+                        ];
+                    }
                 }
             }
         },
