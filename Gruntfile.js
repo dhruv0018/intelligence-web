@@ -111,6 +111,10 @@ module.exports = function(grunt) {
             build: {
                 src: ['build/build.css', 'build/theme.css'],
                 dest: 'build/themed.css'
+            },
+            angular: {
+                src: ['vendor/angular/angular.js','vendor/angular-resource/angular-resource.js'],
+                dest: 'build/angular.js'
             }
         },
 
@@ -167,7 +171,7 @@ module.exports = function(grunt) {
                     transform: ['decomponentify'],
                     shim: {
                         angular: {
-                            path: 'vendor/angular/angular.js',
+                            path: 'build/angular.js',
                             exports: 'angular'
                         },
                         bootstrap: {
@@ -346,8 +350,8 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('build-js', ['component:build', 'browserify']);
-    grunt.registerTask('build-css', ['concat', 'autoprefixer', 'rework']);
+    grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
+    grunt.registerTask('build-css', ['concat:theme', 'concat:build', 'autoprefixer', 'rework']);
     grunt.registerTask('build', ['build-js', 'build-css']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);
