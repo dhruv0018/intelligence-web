@@ -161,7 +161,7 @@ module.exports = function(grunt) {
             build: {
                 options: {
                     args: {
-                        use: 'component-html'
+                        use: 'component-html,component-json'
                     }
                 }
             }
@@ -175,6 +175,10 @@ module.exports = function(grunt) {
                         angular: {
                             path: 'build/angular.js',
                             exports: 'angular'
+                        },
+                        angularui: {
+                            path: 'vendor/angular-ui-router/release/angular-ui-router.js',
+                            exports: 'angularui'
                         },
                         bootstrap: {
                             path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
@@ -294,6 +298,10 @@ module.exports = function(grunt) {
 
                             /* Serve static files. */
                             connect.static(options.base),
+
+                            /* Make empty directories browsable. */
+                            connect.directory(options.base)
+
                         ];
                     }
                 }

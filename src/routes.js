@@ -1,5 +1,13 @@
 var IntelligenceWebClient = require('./app');
 
+IntelligenceWebClient.config([
+    '$locationProvider',
+    function config($locationProvider) {
+
+        $locationProvider.html5Mode(true);
+    }
+]);
+
 IntelligenceWebClient.run([
     '$rootScope', '$location', '$state', '$stateParams', 'AuthenticationService',
     function run($rootScope, $location, $state, $stateParams, AuthenticationService) {
