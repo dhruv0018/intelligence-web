@@ -1,0 +1,20 @@
+.logo {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+}
+
+.login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 300px;
+    margin: 0 auto;
+    margin-top: -150px;
+    margin-left: -200px;
+}
+
+.login .panel-body {
+    padding: 25px;
+}
