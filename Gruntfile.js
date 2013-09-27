@@ -2,6 +2,8 @@
 
 'use strict';
 
+var modRewrite = require('connect-modrewrite');
+
 module.exports = function(grunt) {
 
     grunt.initConfig({
@@ -18,7 +20,8 @@ module.exports = function(grunt) {
             css: {
                 src: [
                     'src/**/*.css',
-                    'lib/**/*.css'
+                    'lib/**/*.css',
+                    'theme/**/*.css'
                 ]
             },
             js: {
@@ -108,8 +111,12 @@ module.exports = function(grunt) {
                 dest: 'build/theme.css'
             },
             build: {
-                src: ['build/build.css'],
+                src: ['build/build.css', 'build/theme.css'],
                 dest: 'build/themed.css'
+            },
+            angular: {
+                src: ['vendor/angular/angular.js','vendor/angular-resource/angular-resource.js'],
+                dest: 'build/angular.js'
             }
         },
 
@@ -131,7 +138,7 @@ module.exports = function(grunt) {
                     'dev/styles.css': 'build/reworked.css',
                     'dev/scripts.js': 'build/bundle.js'
                 }
-            },
+            }
         },
 
 
@@ -154,7 +161,7 @@ module.exports = function(grunt) {
             build: {
                 options: {
                     args: {
-                        use: 'component-html'
+                        use: 'component-html,component-json'
                     }
                 }
             }
@@ -166,8 +173,12 @@ module.exports = function(grunt) {
                     transform: ['decomponentify'],
                     shim: {
                         angular: {
-                            path: 'vendor/angular/angular.js',
+                            path: 'build/angular.js',
                             exports: 'angular'
+                        },
+                        angularui: {
+                            path: 'vendor/angular-ui-router/release/angular-ui-router.js',
+                            exports: 'angularui'
                         },
                         bootstrap: {
                             path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
@@ -276,7 +287,23 @@ module.exports = function(grunt) {
                 options: {
                     base: 'dev',
                     port: 8000,
-                    livereload: true
+                    livereload: true,
+                    middleware: function (connect, options) {
+                        return [
+
+                            /* Redirect hash urls to index.html */
+                            modRewrite([
+                                '!\\.html|\\.js|\\.css|\\.png$ /index.html [L]'
+                            ]),
+
+                            /* Serve static files. */
+                            connect.static(options.base),
+
+                            /* Make empty directories browsable. */
+                            connect.directory(options.base)
+
+                        ];
+                    }
                 }
             }
         },
@@ -285,16 +312,24 @@ module.exports = function(grunt) {
             options: {
                 livereload: true
             },
+            json: {
+                files: ['*.json'],
+                tasks: ['dev']
+            },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
                 tasks: ['dev']
             },
             css: {
                 files: ['src/**/*.css', 'lib/**/*.css'],
+                tasks: ['csslint', 'recess', 'dev']
+            },
+            theme: {
+                files: ['theme/**/*.css'],
                 tasks: ['csslint', 'recess', 'build-css', 'copy:dev']
             },
             js: {
-                files: ['src/**/*.js', 'lib/**/*.js', 'test/**/*.js'],
+                files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
                 tasks: ['jsvalidate', 'jshint', 'build-js', 'test', 'copy:dev']
             }
         }
@@ -337,8 +372,8 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('build-js', ['component:build', 'browserify']);
-    grunt.registerTask('build-css', ['concat', 'autoprefixer', 'rework']);
+    grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
+    grunt.registerTask('build-css', ['concat:theme', 'concat:build', 'autoprefixer', 'rework']);
     grunt.registerTask('build', ['build-js', 'build-css']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);

@@ -1,0 +1,36 @@
+<img class="logo" src="logo.png" alt="Krossover" />
+
+<div class="login panel panel-primary">
+
+    <header class="panel-heading">
+
+        <h1 class="panel-title">Login</h1>
+
+    </header>
+
+    <div class="panel-body" ng-controller="LoginController">
+
+        <form class="form-horizontal" role="form" action="" ng-submit="login.connect()">
+
+            <dl class="form-group">
+
+                <dt><label class="control-label" for="email">Email</label></dt>
+                <dd><input class="form-control input-lg" ng-model="login.email" name="email" type="email" placeholder="EMail" required /></dd>
+
+                <dt><label class="control-label" for="password">Password</label></dt>
+                <dd><input class="form-control input-lg" ng-model="login.password" name="password" type="password" placeholder="Password" required /></dd>
+
+            </dl>
+
+            <div class="form-group">
+
+                <button type="submit" class="btn-lg btn-primary">Login</button>
+                <button type="button" class="btn-lg btn-secondary" disabled="disabled">Forgot Password</button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
