@@ -2,7 +2,8 @@ var pkg = require('../package.json');
 
 var IntelligenceWebClient = angular.module(pkg.name, [
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'login'
 ]);
 
 exports = module.exports = IntelligenceWebClient;
