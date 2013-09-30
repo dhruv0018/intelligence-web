@@ -1,5 +1,7 @@
 var IntelligenceWebClient = require('./app');
 
+require('./services/authentication');
+
 IntelligenceWebClient.config([
     '$locationProvider',
     function config($locationProvider) {
