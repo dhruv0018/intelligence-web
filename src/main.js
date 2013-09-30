@@ -7,6 +7,7 @@ require('angularui');
 require('bootstrap');
 
 require('./app');
+require('./routes');
 
 component('login');
 
