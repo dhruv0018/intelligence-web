@@ -1,12 +1,13 @@
 var pkg = require('../package.json');
 
+var component = require('../build/build.js');
+
 require('angular');
 require('angularui');
 require('bootstrap');
 
-var component = require('../build/build.js');
-
 require('./app');
 
-angular.bootstrap(document, [pkg.name]);
+component('login');
 
+angular.bootstrap(document, [pkg.name]);
