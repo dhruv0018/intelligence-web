@@ -1,3 +1,5 @@
+var pkg = require('../package.json');
+
 require('angular');
 require('bootstrap');
 
@@ -9,5 +11,5 @@ IntelligenceWebClient.run(function() {
 
 });
 
-angular.bootstrap(document, ['intelligence-web-client']);
+angular.bootstrap(document, [pkg.name]);
 
