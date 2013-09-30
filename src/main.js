@@ -1,13 +1,12 @@
+var pkg = require('../package.json');
+
 require('angular');
+require('angularui');
 require('bootstrap');
 
 var component = require('../build/build.js');
 
-var IntelligenceWebClient = angular.module('intelligence-web-client', ['ui.bootstrap']);
+require('./app');
 
-IntelligenceWebClient.run(function() {
-
-});
-
-angular.bootstrap(document, ['intelligence-web-client']);
+angular.bootstrap(document, [pkg.name]);
 
