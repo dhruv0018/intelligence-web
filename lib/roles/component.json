@@ -1,0 +1,12 @@
+{
+    "name": "roles",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "roles.css"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
