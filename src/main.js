@@ -8,6 +8,14 @@ require('bootstrap');
 
 require('./app');
 
+require('./services/token');
+require('./services/authentication');
+
+require('./models/users');
+
+require('./routes');
+
 component('login');
+component('account');
 
 angular.bootstrap(document, [pkg.name]);

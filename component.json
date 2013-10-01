@@ -4,7 +4,8 @@
         "lib"
     ],
     "local": [
-        "login"
+        "login",
+        "account"
     ],
     "dependencies": {
     },

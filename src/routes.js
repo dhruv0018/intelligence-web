@@ -1,10 +1,67 @@
 var IntelligenceWebClient = require('./app');
 
+require('./services/authentication');
+
 IntelligenceWebClient.config([
     '$locationProvider',
     function config($locationProvider) {
 
         $locationProvider.html5Mode(true);
+    }
+]);
+
+IntelligenceWebClient.config([
+    '$urlRouterProvider',
+    function config($urlRouterProvider) {
+
+        $urlRouterProvider
+
+            .when('', '/')
+
+            .otherwise('/404');
+    }
+]);
+
+IntelligenceWebClient.config([
+    '$stateProvider',
+    function config($stateProvider) {
+
+        $stateProvider
+
+            .state('root', {
+                url: '/',
+                template: '<h1>ROOT</h1>',
+                public: true
+            })
+
+            .state('index', {
+                url: '/index',
+                template: '<h1>INDEX</h1>',
+                public: true
+            })
+
+            .state('test', {
+                url: '/test',
+                template: '<h1>TEST</h1><p><a ui-sref="index">Index</a></p><p><a ui-sref="private">Private</a></p>',
+                public: true
+            })
+
+            .state('private', {
+                url: '/private',
+                template: '<h1>Private</h1>',
+                public: false
+            })
+
+            .state('locked', {
+                url: '/locked',
+                template: '<h1>Locked</h1>',
+            })
+
+            .state('404', {
+                url: '/404',
+                template: '<h1>Not Found</h1>',
+                public: true
+            });
     }
 ]);
 
