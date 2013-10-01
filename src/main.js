@@ -7,6 +7,10 @@ require('angularui');
 require('bootstrap');
 
 require('./app');
+
+require('./services/token');
+require('./services/authentication');
+
 require('./routes');
 
 component('login');
