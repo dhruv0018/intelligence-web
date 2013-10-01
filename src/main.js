@@ -16,5 +16,6 @@ require('./models/users');
 require('./routes');
 
 component('login');
+component('account');
 
 angular.bootstrap(document, [pkg.name]);
