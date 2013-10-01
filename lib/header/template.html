@@ -1,0 +1,32 @@
+<nav class="navbar navbar-default navbat-fixed-top" role="navigation" data-ng-show="isLoggedIn">
+
+    <ul class="nav navbar-nav">
+
+        <li><a href="/users">Users</a></li>
+        <li><a href="/teams">Teams</a></li>
+        <li><a href="/schools">Schools</a></li>
+        <li><a href="/games">Games</a></li>
+        <li><a href="/reports">Reports</a></li>
+        <li><a href="/platform">Platform</a></li>
+
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+
+        <li class="dropdown">
+
+            <a href="#" class="dropdown-toggle">{{name}} <b class="caret"></b></a>
+
+            <ul class="dropdown-menu">
+
+                <li><a href="/account">Your Account</a></li>
+                <li><a href="/role">Change Role</a></li>
+                <li><a href="#" ng-click="logout()">Sign out</a></li>
+
+            </ul>
+
+        </li>
+
+    </ul>
+
+</div>
