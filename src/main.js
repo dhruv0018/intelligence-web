@@ -16,6 +16,7 @@ require('./models/users');
 require('./routes');
 
 component('login');
+component('roles');
 component('header');
 component('account');
 
