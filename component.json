@@ -6,6 +6,7 @@
     "local": [
         "login",
         "roles",
+        "header",
         "account"
     ],
     "dependencies": {

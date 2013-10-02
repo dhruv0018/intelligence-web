@@ -30,8 +30,16 @@ IntelligenceWebClient.config([
 
             .state('root', {
                 url: '/',
-                template: '<h1>ROOT</h1>',
-                public: true
+                public: true,
+                views: {
+                    'header': {
+                        templateUrl: 'header.html',
+                        controller: 'HeaderController'
+                    },
+                    'main': {
+                        template: '<h1>ROOT</h1>'
+                    }
+                }
             })
 
             .state('index', {
