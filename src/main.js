@@ -17,6 +17,7 @@ require('./routes');
 
 component('login');
 component('roles');
+component('header');
 component('account');
 
 angular.bootstrap(document, [pkg.name]);

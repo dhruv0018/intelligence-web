@@ -1,0 +1,9 @@
+{
+    "name": "header",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
