@@ -14,6 +14,7 @@ require('./services/authentication');
 require('./models/users');
 
 require('./routes');
+require('./errors');
 
 component('login');
 component('roles');
