@@ -1,0 +1,59 @@
+<div class="schools panel panel-primary">
+
+    <div class="panel-heading">
+
+        <h1 class="panel-title">Schools</h1>
+
+    </div>
+
+    <div class="panel-body" ng-controller="SchoolsController">
+
+        <button class="btn btn-primary pull-right" data-ng-click="add()">Add School</button>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Country</th>
+                        <th>Conference</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <!-- Use mock data for now -->
+                    <div ng-init="schools = [
+                        { id: 1, name: 'Team 1', city: 'Town 1', state: 'NY', country: 'USA', conference: 'None'},
+                        { id: 2, name: 'Team 2', city: 'Town 2', state: 'NY', country: 'USA', conference: 'None'},
+                        { id: 3, name: 'Team 3', city: 'Town 3', state: 'NY', country: 'USA', conference: 'None'}
+                        ]">
+
+                    <tr data-ng-repeat="school in schools" data-ng-click="edit(school)">
+
+                        <td>{{school.name}}</td>
+                        <td>{{school.city}}</td>
+                        <td>{{school.state}}</td>
+                        <td>{{school.country}}</td>
+                        <td>{{school.Conference}}</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+

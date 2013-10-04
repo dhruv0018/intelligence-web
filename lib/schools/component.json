@@ -1,0 +1,10 @@
+{
+    "name": "schools",
+    "templates": [
+        "school.html",
+        "schools.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

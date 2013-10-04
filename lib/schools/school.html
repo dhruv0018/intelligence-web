@@ -1,0 +1,73 @@
+<div class="school panel panel-primary">
+
+    <div class="panel-heading">
+
+        <h1 class="panel-title">
+
+            <span ng-switch on="school">
+
+                <span ng-switch-when="null">Add a</span>
+                <span ng-switch-default>Edit</span>
+                <span>School</span>
+
+            </span>
+
+        </h1>
+
+    </div>
+
+    <div class="panel-body" ng-controller="SchoolController">
+
+        <form role="form" action="">
+
+            <dl class="form-group">
+
+                <dt><label class="control-label" for="type">Type</label></dt>
+                <dd>
+                    <select class="form-control" name="type" data-ng-model="school.type" required>
+                        <option value="">Choose a Type</option>
+                    </select>
+                </dd>
+
+                <dt><label class="control-label" for="name">School Name</label></dt>
+                <dd><input class="form-control" name="name" placeholder="Name" data-ng-model="school.name" type="text" required /></dd>
+
+                <dt><label class="control-label" for="conference">Conference</label></dt>
+                <dd><input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text" /></dd>
+
+                <dt><label class="control-label" for="division">Division</label></dt>
+                <dd><input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text" /></dd>
+
+                <dt><label class="control-label" for="address1">Address 1</label></dt>
+                <dd><input class="form-control" name="address1" placeholder="Address 1" data-ng-model="school.address1" type="text" /></dd>
+
+                <dt><label class="control-label" for="address1">Address 2</label></dt>
+                <dd><input class="form-control" name="address2" placeholder="Address 2" data-ng-model="school.address2" type="text" /></dd>
+
+                <dt><label class="control-label" for="city">City</label></dt>
+                <dd><input class="form-control" name="city" placeholder="City" data-ng-model="school.city" type="text" required /></dd>
+
+                <dt><label class="control-label" for="country">Country</label></dt>
+                <dd><input class="form-control" name="country" placeholder="Country" data-ng-model="school.country" type="text" required /></dd>
+
+                <dt><label class="control-label" for="state">State</label></dt>
+                <dd><input class="form-control" name="state" placeholder="State" data-ng-model="school.state" type="text" required /></dd>
+
+                <dt><label class="control-label" for="postal">Postal Code</label></dt>
+                <dd><input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="login.postal" type="text" /></dd>
+
+            </dl>
+
+            <div class="form-group">
+
+                <button class="btn btn-primary" data-ng-click="save(school)">Save</button>
+                <a class="pull-right" href="#" data-ng-click="cancel()">cancel</a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
