@@ -6,7 +6,8 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'ui.bootstrap',
     'login',
     'roles',
-    'account'
+    'account',
+    'schools'
 ]);
 
 exports = module.exports = IntelligenceWebClient;
