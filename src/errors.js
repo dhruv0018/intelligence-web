@@ -111,3 +111,59 @@ IntelligenceWebClient.config([
     }
 ]);
 
+/**
+ * Intercepts HTTP responses.
+ */
+IntelligenceWebClient.factory('HttpInterceptor', [
+    '$q', '$location',
+    function factory($q, $location) {
+
+        return {
+
+            /* Intercept all responses. Includes any server responses that are
+            * considered successful. Which are status codes up to the 400 level. */
+            response: function(response) {
+
+                return response;
+            },
+
+            /* Intercept responses with status codes that indicate errors. */
+            responseError: function(response) {
+
+                switch (response.status) {
+
+                case 401: /* Unauthorized */
+                case 403: /* Forbidden */
+                    ErrorReporter.reportError(new Error('Unauthorized'));
+                    $location.path('/login');
+                    break;
+
+                case 404: /* Not Found */
+                    $location.path('/404').replace();
+                    break;
+
+                case 500: /* Server Error */
+                    ErrorReporter.reportError(new Error('Server error', response.data));
+                    $location.path('/500').replace();
+                    break;
+
+                case 501: /* Not Implemented */
+                    $location.path('/501').replace();
+                    break;
+
+                default:
+                    ErrorReporter.reportError(new Error('Error response', response.data));
+                    $location.path('/error').replace();
+                    break;
+                }
+
+                return $q.reject(response);
+            }
+        };
+    }
+]);
+
+IntelligenceWebClient.config(function($httpProvider) {
+
+    $httpProvider.interceptors.push('HttpInterceptor');
+});
