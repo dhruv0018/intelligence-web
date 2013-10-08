@@ -17,17 +17,13 @@ IntelligenceWebClient.factory('Users', [
          */
         Users.prototype.getDefaultRole = function() {
 
-            if (this.defaultRole) {
+            var roles = this.roles;
 
-                return this.defaultRole;
-            }
+            for (var i in this.roles) {
 
-            for (var role in this.roles) {
+                if (roles[i].isDefault) {
 
-                if (role.isDefault) {
-
-                    this.defaultRole = role;
-                    return this.defaultRole;
+                    return roles[i];
                 }
             }
 
