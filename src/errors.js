@@ -1,5 +1,3 @@
-var http = require('http');
-
 var IntelligenceWebClient = require('./app');
 
 /**
@@ -46,23 +44,7 @@ var ErrorReporter = {
      */
     logToAPI: function(error) {
 
-        var options = {
-            method: 'POST',
-            hostname: 'www.dev.krossover.com',
-            port: 80,
-            path: '/intelligence-api/v1/log'
-        };
-
-        /* TODO: Pull token from storage. */
-        var token = '';
-
-        var data = {
-            error: error.message
-        };
-
-        var req = http.request(options);
-        req.setHeader('Authorization', 'Bearer ' + token);
-        req.end(JSON.stringify(data));
+        /* TODO: Implement this functionality at a later date. */
     }
 };
 
