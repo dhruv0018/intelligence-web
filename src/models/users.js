@@ -19,7 +19,7 @@ IntelligenceWebClient.factory('Users', [
 
             var roles = this.roles;
 
-            for (var i in this.roles) {
+            for (var i in roles) {
 
                 if (roles[i].isDefault) {
 
