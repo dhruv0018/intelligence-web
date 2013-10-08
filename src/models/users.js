@@ -24,7 +24,7 @@ IntelligenceWebClient.factory('Users', [
 
             for (var i in roles) {
 
-                roles[i].isDefault = newDefaultRole.id === roles[i].id ? true : false;
+                roles[i].isDefault = (newDefaultRole.id === roles[i].id);
             }
 
             this.$update();
