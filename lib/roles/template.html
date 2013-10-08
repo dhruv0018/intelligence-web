@@ -2,24 +2,13 @@
 
     <h1>Pick how you'd like to use Krossover.</h1>
 
-    <!-- Use mock data for now -->
-    <div ng-init="roles = [
-        {roleType: { id: 1, name: 'Head Coach' }, team: { id: 1, name: 'North Central Vikings'}},
-        {roleType: { id: 2, name: 'Assistant Coach' }, team: { id: 2, name: 'Team XYZ'}},
-        {roleType: { id: 2, name: 'Assistant Coach' }, team: { id: 3, name: 'Team ABC'}},
-        {roleType: { id: 3, name: 'Athlete' }, team: { id: null, name: ''}},
-        {roleType: { id: 10, name: 'Admin' }, team: { id: null, name: ''}},
-        {roleType: { id: 11, name: 'Indexer' }, team: { id: null, name: ''}},
-        {roleType: { id: 6, name: 'Observer' }, team: { id: null, name: 'Athlete Mark McCake'}}
-        ]">
-
     <ul class="list-group">
 
         <li class="role" data-ng-repeat="role in roles">
 
             <a href="#" data-ng-click="setDefaultRole(role)">
 
-                 <span ng-switch on="role.roleType.id">
+                 <span ng-switch on="role.type.id">
 
                     <span ng-switch-when="3">An</span>
                     <span ng-switch-when="11">An</span>
@@ -27,9 +16,9 @@
 
                 </span>
 
-                {{role.roleType.name}}
+                {{role.type.name}}
 
-                 <span ng-switch on="role.roleType.id">
+                 <span ng-switch on="role.type.id">
 
                     <span ng-switch-when="1">of the</span>
                     <span ng-switch-when="2">of the</span>
@@ -38,6 +27,8 @@
 
                 </span>
 
+                <!-- TODO: Now that this is using real data from the API,
+                     this needs to query for team data -->
                 {{role.team.name}}
 
             </a>
