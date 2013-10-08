@@ -18,13 +18,13 @@ IntelligenceWebClient.factory('Users', [
         /**
          * Sets the users default role.
          */
-        Users.prototype.setDefaultRole = function(role) {
+        Users.prototype.setDefaultRole = function(newDefaultRole) {
 
             var roles = this.roles;
 
             for (var i in roles) {
 
-                roles[i].isDefault = role.id === roles[i].id ? true : false;
+                roles[i].isDefault = newDefaultRole.id === roles[i].id ? true : false;
             }
 
             this.$update();
