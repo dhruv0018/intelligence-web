@@ -1,4 +1,70 @@
+var http = require('http');
+
 var IntelligenceWebClient = require('./app');
+
+/**
+ * Error reporter to manage how error reporting is handled.
+ * @class ErrorReporter
+ */
+var ErrorReporter = {
+
+    /**
+     * Delegates the error to specified services.
+     * @method reportError
+     * @param {Error} error - the error to handle.
+     */
+    reportError: function(error) {
+
+        /* TODO: Check if this is the same error as the last one;
+         * in which case we don't need to report it again. */
+
+        /* TODO: Rate limit the number of errors generated. */
+
+        error.message = 'Error: ' + error.message + '\n';
+
+        /* Append the stack trace to the error message if present. */
+        if (error.stack) error.message += 'Stacktrace:\n' + error.stack;
+
+        this.logToConsole(error);
+        this.logToAPI(error);
+    },
+
+    /**
+     * Delegate to log the error to the browser console.
+     * @method logToConsole
+     * @param {Error} error - the error to handle.
+     */
+    logToConsole: function(error) {
+
+        console.error(error.message);
+    },
+
+    /**
+     * Delegate to log the error to the API log endpoint.
+     * @method logToAPI
+     * @param {Error} error - the error to handle.
+     */
+    logToAPI: function(error) {
+
+        var options = {
+            method: 'POST',
+            hostname: 'www.dev.krossover.com',
+            port: 80,
+            path: '/intelligence-api/v1/log'
+        };
+
+        /* TODO: Pull token from storage. */
+        var token = '';
+
+        var data = {
+            error: error.message
+        };
+
+        var req = http.request(options);
+        req.setHeader('Authorization', 'Bearer ' + token);
+        req.end(JSON.stringify(data));
+    }
+};
 
 /**
  * Browser error handler function. This is the default browser error handler
@@ -16,28 +82,30 @@ window.onerror = function(message, url, line, column, error) {
     /* If no error object is present create one. */
     error = error || new Error(message + ' at ' + line + ':' + column + ' in ' + url);
 
+    /* Handle the error. */
+    ErrorReporter.reportError(error);
+
+    /* Error has been handled, prevent default handling. */
+    return true;
 };
 
 /**
  * Creates decorator hook to Angular's exception handler
  * Uses a decorator to intercept the built-in Angular exception handler. This
  * allows other actions to be performed when Angular captures an exception.
- * Afterwards; the exception is passed back to Angular for handling.
  */
 IntelligenceWebClient.config([
     '$provide',
     function config($provide) {
 
-        $provide.decorator('$exceptionHandler', function($delegate) {
+        $provide.decorator('$exceptionHandler', function() {
 
             return function(exception, cause) {
 
-                exception.message = exception.message + ' caused by ' + cause;
+                exception.message = exception.message + ' error' + ' caused by ' + cause;
 
-                /* Pass along exception to default Angular handler.
-                 * The default implementation simply delegates to
-                 * $log.error which logs it into the browser console. */
-                $delegate(exception, cause);
+                /* Handle the error. */
+                ErrorReporter.reportError(exception);
             };
         });
     }
