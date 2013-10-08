@@ -167,3 +167,25 @@ IntelligenceWebClient.config(function($httpProvider) {
 
     $httpProvider.interceptors.push('HttpInterceptor');
 });
+
+IntelligenceWebClient.run([
+    '$rootScope', '$location', '$state',
+    function run($rootScope, $location, $state) {
+
+        $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
+
+            $location.path('/404').replace();
+        });
+
+        $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+
+            ErrorReporter.reportError(error);
+        });
+
+        $rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {
+
+            ErrorReporter.reportError(error);
+        });
+    }
+]);
+
