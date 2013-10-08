@@ -12,6 +12,28 @@ IntelligenceWebClient.factory('Users', [
 
         });
 
+        /**
+         * Gets the users default role.
+         */
+        Users.prototype.getDefaultRole = function() {
+
+            if (this.defaultRole) {
+
+                return this.defaultRole;
+            }
+
+            for (var role in this.roles) {
+
+                if (role.isDefault) {
+
+                    this.defaultRole = role;
+                    return this.defaultRole;
+                }
+            }
+
+            return undefined;
+        };
+
         return Users;
     }
 ]);
