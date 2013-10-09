@@ -21,9 +21,7 @@ IntelligenceWebClient.factory('Users', [
 
             for (var i = 0; i < roles.length; i++) {
 
-                var isDefault = roles[i].isDefault;
-
-                if (isDefault === true) {
+                if (roles[i].isDefault === true) {
 
                     return roles[i];
                 }
