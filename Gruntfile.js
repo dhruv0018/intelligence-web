@@ -134,9 +134,9 @@ module.exports = function(grunt) {
         copy: {
             dev: {
                 files: {
-                    'dev/index.html': 'src/index.html',
-                    'dev/styles.css': 'build/reworked.css',
-                    'dev/scripts.js': 'build/bundle.js'
+                    'dev/intelligence/index.html': 'src/index.html',
+                    'dev/intelligence/styles.css': 'build/reworked.css',
+                    'dev/intelligence/scripts.js': 'build/bundle.js'
                 }
             }
         },
@@ -285,15 +285,17 @@ module.exports = function(grunt) {
         connect: {
             server: {
                 options: {
-                    base: 'dev',
+                    hostname: '*',
                     port: 8000,
+                    protocol: 'https',
+                    base: 'dev',
                     livereload: true,
                     middleware: function (connect, options) {
                         return [
 
                             /* Redirect hash urls to index.html */
                             modRewrite([
-                                '!\\.html|\\.js|\\.css|\\.png$ /index.html [L]'
+                                '!\\.html|\\.js|\\.css|\\.png$ /intelligence/index.html [L]'
                             ]),
 
                             /* Serve static files. */
