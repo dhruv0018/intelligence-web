@@ -15,6 +15,7 @@ require('./models/users');
 require('./models/schools');
 
 require('./routes');
+require('./errors');
 
 component('login');
 component('roles');

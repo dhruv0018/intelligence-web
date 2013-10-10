@@ -17,7 +17,7 @@
 
         <li class="role" data-ng-repeat="role in roles">
 
-            <a href="#">
+            <a href="#" data-ng-click="setDefaultRole(role)">
 
                  <span ng-switch on="role.roleType.id">
 
