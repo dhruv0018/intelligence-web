@@ -20,8 +20,7 @@ module.exports = function(grunt) {
             css: {
                 src: [
                     'src/**/*.css',
-                    'lib/**/*.css',
-                    'theme/**/*.css'
+                    'lib/**/*.css'
                 ]
             },
             js: {
@@ -56,6 +55,10 @@ module.exports = function(grunt) {
                 csslintrc: '.csslintrc'
             },
             files: '<%= files.css %>'
+        },
+
+        lesslint: {
+            files: 'theme/**/*.less'
         },
 
         jshint: {
@@ -117,6 +120,14 @@ module.exports = function(grunt) {
             angular: {
                 src: ['vendor/angular/angular.js','vendor/angular-resource/angular-resource.js'],
                 dest: 'build/angular.js'
+            }
+        },
+
+        less: {
+            theme: {
+                files: {
+                    'build/theme.css': ['theme/**/*.less']
+                }
             }
         },
 
@@ -327,8 +338,8 @@ module.exports = function(grunt) {
                 tasks: ['csslint', 'recess', 'dev']
             },
             theme: {
-                files: ['theme/**/*.css'],
-                tasks: ['csslint', 'recess', 'build-css', 'copy:dev']
+                files: ['theme/**/*.less'],
+                tasks: ['lesslint', 'build-css', 'copy:dev']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
@@ -350,6 +361,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-html-inspector');
     grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-contrib-csslint');
+    grunt.loadNpmTasks('grunt-lesslint')
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-jsvalidate');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
@@ -359,6 +371,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-plato');
     grunt.loadNpmTasks('grunt-complexity');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-rework');
     grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-component');
@@ -375,11 +388,11 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
-    grunt.registerTask('build-css', ['concat:theme', 'concat:build', 'autoprefixer', 'rework']);
+    grunt.registerTask('build-css', ['less:theme', 'concat:build', 'autoprefixer', 'rework']);
     grunt.registerTask('build', ['build-js', 'build-css']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);
-    grunt.registerTask('lint', ['csslint', 'recess', 'jshint']);
+    grunt.registerTask('lint', ['lesslint', 'csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('dev', ['build', 'copy:dev']);
