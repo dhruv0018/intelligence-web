@@ -124,6 +124,11 @@ module.exports = function(grunt) {
         },
 
         less: {
+            options: {
+                paths: [
+                    'vendor/bootstrap/less'
+                ]
+            },
             theme: {
                 files: {
                     'build/theme.css': ['theme/**/*.less']
