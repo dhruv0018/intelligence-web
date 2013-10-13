@@ -126,7 +126,8 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
-                    'vendor/bootstrap/less'
+                    'vendor/bootstrap/less',
+                    'vendor/font-awesome/less'
                 ]
             },
             theme: {
