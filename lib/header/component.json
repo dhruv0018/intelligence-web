@@ -3,6 +3,9 @@
     "templates": [
         "template.html"
     ],
+    "styles": [
+        "styles.css"
+    ],
     "scripts": [
         "index.js"
     ]
