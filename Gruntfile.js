@@ -355,12 +355,12 @@ module.exports = function(grunt) {
                 tasks: ['dev']
             },
             css: {
-                files: ['src/**/*.css', 'lib/**/*.css'],
-                tasks: ['csslint', 'recess', 'dev']
+                files: ['src/**/*.css'],
+                tasks: ['csslint', 'recess', 'build-css', 'copy:dev']
             },
-            theme: {
-                files: ['theme/**/*.less'],
-                tasks: ['lesslint', 'build-css', 'copy:dev']
+            less: {
+                files: ['lib/**/*.less', 'theme/**/*.less'],
+                tasks: ['lesslint', 'recess', 'build-less', 'copy:dev']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
@@ -409,8 +409,9 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
-    grunt.registerTask('build-css', ['less:theme', 'concat:build', 'autoprefixer', 'rework']);
-    grunt.registerTask('build', ['build-js', 'build-css']);
+    grunt.registerTask('build-css', ['concat:build', 'autoprefixer', 'rework']);
+    grunt.registerTask('build-less', ['less', 'build-css']);
+    grunt.registerTask('build', ['build-js', 'build-less']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);
     grunt.registerTask('lint', ['lesslint', 'csslint', 'recess', 'jshint']);
