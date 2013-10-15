@@ -31,8 +31,8 @@
             <input class="form-field-login" name="password" type="password" placeholder="Password" data-ng-model="login.password" required>
 
             <span class="errors">
-                <span class="error" data-ng-show="form.password.$error.required && !form.password.$error.wrongPassword">Required!</span>
-                <span class="error" data-ng-show="form.password.$error.wrongPassword">Wrong Password, try again.</span>
+                <span class="error" data-ng-show="form.password.$error.required && !form.password.$error.password">Required!</span>
+                <span class="error" data-ng-show="form.password.$error.password">Wrong Password, try again.</span>
             </span>
 
         </div>

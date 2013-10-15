@@ -57,7 +57,7 @@
 }
 
 .form-field-login.ng-dirty.ng-invalid:not(:focus),
-.form-field-login.ng-dirty.ng-invalid-wrong-password:focus {
+.form-field-login.ng-dirty.ng-invalid-password:focus {
 
     border-color: red;
 }
@@ -170,7 +170,7 @@ and (min-width: 800px) {
 
     /* Show form errors on the side in larger displays. */
     .form-field-login.ng-dirty.ng-invalid:not(:focus) + .errors,
-    .form-field-login.ng-dirty.ng-invalid-wrong-password:focus + .errors {
+    .form-field-login.ng-dirty.ng-invalid-password:focus + .errors {
 
         .show;
     }
