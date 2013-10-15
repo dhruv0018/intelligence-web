@@ -20,7 +20,14 @@ module.exports = function(grunt) {
             css: {
                 src: [
                     'src/**/*.css',
-                    'lib/**/*.css'
+                    'lib/**/*.css',
+                    'build/theme.css'
+                ]
+            },
+            less: {
+                src: [
+                    'lib/**/*.less',
+                    'theme/**/*.less'
                 ]
             },
             js: {
@@ -58,7 +65,7 @@ module.exports = function(grunt) {
         },
 
         lesslint: {
-            files: ['lib/**/*.less', 'theme/**/*.less']
+            files: '<%= files.less %>'
         },
 
         jshint: {
