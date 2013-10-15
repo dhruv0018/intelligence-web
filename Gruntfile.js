@@ -193,6 +193,7 @@ module.exports = function(grunt) {
             build: {
                 options: {
                     args: {
+                        prefix: 'assets',
                         use: 'component-html,component-json'
                     }
                 }
