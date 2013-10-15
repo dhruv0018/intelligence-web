@@ -170,6 +170,12 @@ module.exports = function(grunt) {
                     'dev/intelligence/styles.css': 'build/reworked.css',
                     'dev/intelligence/scripts.js': 'build/bundle.js'
                 }
+            },
+            components: {
+                expand: true,
+                cwd:    'lib',
+                src:    '**/*.png',
+                dest:   'dev/intelligence/assets'
             }
         },
 
@@ -423,7 +429,7 @@ module.exports = function(grunt) {
     grunt.registerTask('lint', ['lesslint', 'csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
-    grunt.registerTask('dev', ['build', 'copy:dev']);
+    grunt.registerTask('dev', ['build', 'copy']);
     grunt.registerTask('prod', ['clean', 'install', 'build', 'min', 'ver:prod']);
     grunt.registerTask('dist', ['prod', 'compress', 'ver:dist']);
     grunt.registerTask('serve', ['connect']);
