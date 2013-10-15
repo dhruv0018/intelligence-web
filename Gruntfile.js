@@ -58,7 +58,7 @@ module.exports = function(grunt) {
         },
 
         lesslint: {
-            files: 'theme/**/*.less'
+            files: ['lib/**/*.less', 'theme/**/*.less']
         },
 
         jshint: {
@@ -126,6 +126,7 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
+                    'theme',
                     'vendor/bootstrap/less',
                     'vendor/font-awesome/less'
                 ]
@@ -134,6 +135,13 @@ module.exports = function(grunt) {
                 files: {
                     'build/theme.css': ['theme/**/*.less']
                 }
+            },
+            components: {
+                expand: true,
+                cwd:    'lib',
+                src:    '**/*.less',
+                dest:   'lib',
+                ext:    '.css'
             }
         },
 
