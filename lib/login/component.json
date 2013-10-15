@@ -14,7 +14,7 @@
         "template.html"
     ],
     "styles": [
-        "login.css"
+        "styles.css"
     ],
     "scripts": [
         "index.js"
