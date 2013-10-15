@@ -423,7 +423,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
     grunt.registerTask('build-css', ['concat:build', 'autoprefixer', 'rework']);
     grunt.registerTask('build-less', ['less', 'build-css']);
-    grunt.registerTask('build', ['build-js', 'build-less']);
+    grunt.registerTask('build', ['less', 'build-js', 'build-css']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);
     grunt.registerTask('lint', ['lesslint', 'csslint', 'recess', 'jshint']);
