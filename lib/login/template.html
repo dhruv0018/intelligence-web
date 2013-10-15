@@ -1,36 +1,61 @@
-<img class="logo" src="logo.png" alt="Krossover" />
+<header class="signup">
 
-<div class="login panel panel-primary">
+    <span>Don't have an account?</span>
+    <a href="http://www.krossover.com/sign-up.php">Get started</a>
 
-    <header class="panel-heading">
+</header>
 
-        <h1 class="panel-title">Login</h1>
+<div class="login">
+
+    <header>
+
+        <img class="logo-login" alt="Krossover">
 
     </header>
 
-    <div class="panel-body" ng-controller="LoginController">
+    <form class="form-login" name="form" role="form" data-ng-controller="LoginController" data-ng-submit="login()" novalidate>
 
-        <form class="form-horizontal" role="form" action="" ng-submit="login()">
+        <div class="form-group">
 
-            <dl class="form-group">
+            <input class="form-field-login" name="email" type="email" placeholder="Your email" data-ng-model="login.email" autofocus required>
 
-                <dt><label class="control-label" for="email">Email</label></dt>
-                <dd><input class="form-control input-lg" ng-model="login.email" name="email" type="email" placeholder="EMail" required /></dd>
+            <span class="errors">
+                <span class="error" data-ng-show="form.email.$error.required">Required!</span>
+                <span class="error" data-ng-show="form.email.$error.email">This is not a valid email.</span>
+            </span>
 
-                <dt><label class="control-label" for="password">Password</label></dt>
-                <dd><input class="form-control input-lg" ng-model="login.password" name="password" type="password" placeholder="Password" required /></dd>
+        </div>
 
-            </dl>
+        <div class="form-group">
 
-            <div class="form-group">
+            <input class="form-field-login" name="password" type="password" placeholder="Password" data-ng-model="login.password" required>
 
-                <button type="submit" class="btn-lg btn-primary">Login</button>
-                <button type="button" class="btn-lg btn-secondary" disabled="disabled">Forgot Password</button>
+            <span class="errors">
+                <span class="error" data-ng-show="form.password.$error.required && !form.password.$error.wrongPassword">Required!</span>
+                <span class="error" data-ng-show="form.password.$error.wrongPassword">Wrong Password, try again.</span>
+            </span>
 
+            </input>
+
+        </div>
+
+        <div class="form-group">
+
+            <div class="password-reset"><a href="#">Forgot your password?</a></div>
+
+        </div>
+
+        <div class="form-group">
+
+            <div class="user-remember">
+                <input id="remember" name="remember" type="checkbox" data-ng-model="login.remember">
+                <label for="remember">Remember me</label>
             </div>
 
-        </form>
+            <button class="button-signin" type="submit" data-ng-disabled="form.$invalid">Sign in</button>
 
-    </div>
+        </div>
+
+    </form>
 
 </div>
