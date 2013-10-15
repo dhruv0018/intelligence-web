@@ -10,11 +10,14 @@
     "local": [
         "oauth"
     ],
+    "images": [
+        "krossover-login-logo-320.png"
+    ],
     "templates": [
         "template.html"
     ],
     "styles": [
-        "login.css"
+        "styles.css"
     ],
     "scripts": [
         "index.js"
