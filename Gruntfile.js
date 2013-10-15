@@ -263,6 +263,11 @@ module.exports = function(grunt) {
 
         complexity: {
             report: {
+                options: {
+                    cyclomatic: 5,
+                    halstead: 25,
+                    maintainability: 50
+                },
                 files: '<%= files.js %>'
             }
         },
