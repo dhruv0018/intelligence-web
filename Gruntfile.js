@@ -21,7 +21,13 @@ module.exports = function(grunt) {
                 src: [
                     'src/**/*.css',
                     'lib/**/*.css',
-                    'theme/**/*.css'
+                    'build/theme.css'
+                ]
+            },
+            less: {
+                src: [
+                    'lib/**/*.less',
+                    'theme/**/*.less'
                 ]
             },
             js: {
@@ -56,6 +62,10 @@ module.exports = function(grunt) {
                 csslintrc: '.csslintrc'
             },
             files: '<%= files.css %>'
+        },
+
+        lesslint: {
+            files: '<%= files.less %>'
         },
 
         jshint: {
@@ -117,6 +127,28 @@ module.exports = function(grunt) {
             angular: {
                 src: ['vendor/angular/angular.js','vendor/angular-resource/angular-resource.js'],
                 dest: 'build/angular.js'
+            }
+        },
+
+        less: {
+            options: {
+                paths: [
+                    'theme',
+                    'vendor/bootstrap/less',
+                    'vendor/font-awesome/less'
+                ]
+            },
+            theme: {
+                files: {
+                    'build/theme.css': ['theme/**/*.less']
+                }
+            },
+            components: {
+                expand: true,
+                cwd:    'lib',
+                src:    '**/*.less',
+                dest:   'lib',
+                ext:    '.css'
             }
         },
 
@@ -328,12 +360,12 @@ module.exports = function(grunt) {
                 tasks: ['dev']
             },
             css: {
-                files: ['src/**/*.css', 'lib/**/*.css'],
-                tasks: ['csslint', 'recess', 'dev']
-            },
-            theme: {
-                files: ['theme/**/*.css'],
+                files: ['src/**/*.css'],
                 tasks: ['csslint', 'recess', 'build-css', 'copy:dev']
+            },
+            less: {
+                files: ['lib/**/*.less', 'theme/**/*.less'],
+                tasks: ['lesslint', 'recess', 'build-less', 'copy:dev']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
@@ -355,6 +387,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-html-inspector');
     grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-contrib-csslint');
+    grunt.loadNpmTasks('grunt-lesslint')
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-jsvalidate');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
@@ -364,6 +397,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-plato');
     grunt.loadNpmTasks('grunt-complexity');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-rework');
     grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-component');
@@ -380,11 +414,12 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
-    grunt.registerTask('build-css', ['concat:theme', 'concat:build', 'autoprefixer', 'rework']);
-    grunt.registerTask('build', ['build-js', 'build-css']);
+    grunt.registerTask('build-css', ['concat:build', 'autoprefixer', 'rework']);
+    grunt.registerTask('build-less', ['less', 'build-css']);
+    grunt.registerTask('build', ['build-js', 'build-less']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);
-    grunt.registerTask('lint', ['csslint', 'recess', 'jshint']);
+    grunt.registerTask('lint', ['lesslint', 'csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('dev', ['build', 'copy:dev']);

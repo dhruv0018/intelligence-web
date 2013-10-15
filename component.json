@@ -13,7 +13,6 @@
     "dependencies": {
     },
     "styles": [
-        "vendor/bootstrap/dist/css/bootstrap.css"
     ],
     "scripts": [
         "src/main.js"
