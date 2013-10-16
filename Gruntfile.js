@@ -359,7 +359,7 @@ module.exports = function(grunt) {
                 livereload: true
             },
             json: {
-                files: ['*.json'],
+                files: ['*.json', 'lib/**/*.json'],
                 tasks: ['dev']
             },
             html: {
