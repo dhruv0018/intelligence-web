@@ -372,7 +372,7 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['lib/**/*.less', 'theme/**/*.less'],
-                tasks: ['lesslint', 'recess', 'build-less', 'copy:dev']
+                tasks: ['lesslint', 'recess', 'build', 'copy:dev']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
@@ -422,7 +422,6 @@ module.exports = function(grunt) {
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
     grunt.registerTask('build-css', ['concat:build', 'autoprefixer', 'rework']);
-    grunt.registerTask('build-less', ['less', 'build-css']);
     grunt.registerTask('build', ['less', 'build-js', 'build-css']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);
