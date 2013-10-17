@@ -7,6 +7,7 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'login',
     'roles',
     'account',
+    'users',
     'schools'
 ]);
 

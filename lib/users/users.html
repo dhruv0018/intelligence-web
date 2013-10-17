@@ -1,0 +1,79 @@
+<section class="users panel panel-primary">
+
+    <header class="panel-heading">
+
+        <h1 class="panel-title">Users</h1>
+
+    </header>
+
+    <div class="panel-body" ng-controller="UsersController">
+
+        <button class="btn btn-primary pull-right" data-ng-click="add()">Add User</button>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Last Accessed</th>
+                        <th>Roles</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr data-ng-repeat="user in users" data-ng-click="edit(user)">
+
+                        <td>{{user.email}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.lastAccessed}}</td>
+
+                        <td>
+
+                            <ul>
+
+                                <li data-ng-repeat="role in user.roles">
+
+                                    {{role.type.name}}
+
+                                </li>
+
+                            </ul>
+
+                        </td>
+
+                        <td>
+
+                            <ul>
+
+                                <li data-ng-repeat="role in user.roles">
+
+                                    <span data-ng-if="user.isActive">Active</span>
+                                    <span data-ng-if="!user.isActive">Inactive</span>
+
+                                </li>
+
+                            </ul>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
