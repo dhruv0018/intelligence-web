@@ -1,13 +1,25 @@
-<nav class="navbar navbar-default navbat-fixed-top" role="navigation" data-ng-show="isLoggedIn">
+<nav class="header" role="navigation" data-ng-show="auth.isLoggedIn">
 
-    <ul class="nav navbar-nav">
+    <div class="rolebar"></div>
 
-        <li><a href="users">Users</a></li>
-        <li><a href="teams">Teams</a></li>
+    <header class="navbar-header">
+
+        <a class="navbar-brand" href="/intelligence/">
+
+            <img class="logo-header" alt="Krossover">
+
+        </a>
+
+    </header>
+
+    <ul class="menu nav navbar-nav">
+
+        <li data-ng-show="user.isAdmin"><a href="users">Users</a></li>
+        <li data-ng-show="user.isAdmin"><a href="teams">Teams</a></li>
         <li><a href="schools">Schools</a></li>
-        <li><a href="games">Games</a></li>
-        <li><a href="reports">Reports</a></li>
-        <li><a href="platform">Platform</a></li>
+        <li data-ng-show="user.isAdmin"><a href="games">Games</a></li>
+        <li data-ng-show="user.isAdmin"><a href="reports">Reports</a></li>
+        <li data-ng-show="user.isSuperAdmin"><a href="platform">Platform</a></li>
 
     </ul>
 
@@ -15,13 +27,31 @@
 
         <li class="dropdown">
 
-            <a href="#" class="dropdown-toggle">{{name}} <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle">
+
+                <x-krossover-role role="user.defaultRole"></x-krossover-role>
+                <i class="icon-dropdown"></i>
+
+            </a>
 
             <ul class="dropdown-menu">
 
-                <li><a href="account">Your Account</a></li>
-                <li><a href="roles">Change Role</a></li>
-                <li><a href="#" ng-click="logout()">Sign out</a></li>
+                <li data-ng-repeat="role in user.roles">
+
+                    <a href data-ng-click="switchDefaultRole(role)">
+
+                        <x-krossover-role role="role"></x-krossover-role>
+
+                    </a>
+
+                </li>
+
+                <footer>
+
+                    <button href="#" data-ng-click="settings()"><i class="icon-cog"></i> Settings</button>
+                    <button href="#" data-ng-click="logout()"><i class="icon-signout"></i> Log out</button>
+
+                </footer>
 
             </ul>
 
