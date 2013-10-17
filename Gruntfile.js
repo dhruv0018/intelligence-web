@@ -170,6 +170,12 @@ module.exports = function(grunt) {
                     'dev/intelligence/styles.css': 'build/reworked.css',
                     'dev/intelligence/scripts.js': 'build/bundle.js'
                 }
+            },
+            components: {
+                expand: true,
+                cwd:    'lib',
+                src:    '**/*.png',
+                dest:   'dev/intelligence/assets'
             }
         },
 
@@ -193,6 +199,7 @@ module.exports = function(grunt) {
             build: {
                 options: {
                     args: {
+                        prefix: 'assets',
                         use: 'component-html,component-json'
                     }
                 }
@@ -352,7 +359,7 @@ module.exports = function(grunt) {
                 livereload: true
             },
             json: {
-                files: ['*.json'],
+                files: ['*.json', 'lib/**/*.json'],
                 tasks: ['dev']
             },
             html: {
@@ -365,7 +372,7 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['lib/**/*.less', 'theme/**/*.less'],
-                tasks: ['lesslint', 'recess', 'build-less', 'copy:dev']
+                tasks: ['lesslint', 'recess', 'build', 'copy:dev']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
@@ -415,14 +422,13 @@ module.exports = function(grunt) {
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
     grunt.registerTask('build-css', ['concat:build', 'autoprefixer', 'rework']);
-    grunt.registerTask('build-less', ['less', 'build-css']);
-    grunt.registerTask('build', ['build-js', 'build-less']);
+    grunt.registerTask('build', ['less', 'build-js', 'build-css']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);
     grunt.registerTask('lint', ['lesslint', 'csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
-    grunt.registerTask('dev', ['build', 'copy:dev']);
+    grunt.registerTask('dev', ['build', 'copy']);
     grunt.registerTask('prod', ['clean', 'install', 'build', 'min', 'ver:prod']);
     grunt.registerTask('dist', ['prod', 'compress', 'ver:dist']);
     grunt.registerTask('serve', ['connect']);
