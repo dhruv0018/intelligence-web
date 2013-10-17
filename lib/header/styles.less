@@ -47,10 +47,17 @@ body {
 
 .navbar-right {
 
+    li a {
+
+        position: relative;
+    }
+
     .icon-dropdown {
 
-        .pull-right;
-        margin-right: @dropdown-margin-right;
+        position: absolute;
+        top: 50%;
+        right: @dropdown-margin-right;
+        margin-top: -7.5px;
     }
 
     .icon-dropdown:before {
@@ -123,3 +130,7 @@ body {
     }
 }
 
+.header .navbar-right li a {
+
+    padding: 0;
+}
