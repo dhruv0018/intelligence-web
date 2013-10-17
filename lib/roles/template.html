@@ -8,28 +8,7 @@
 
             <a href="#" data-ng-click="setDefaultRole(role)">
 
-                 <span ng-switch on="role.type.id">
-
-                    <span ng-switch-when="3">An</span>
-                    <span ng-switch-when="11">An</span>
-                    <span ng-switch-default></span>
-
-                </span>
-
-                {{role.type.name}}
-
-                 <span ng-switch on="role.type.id">
-
-                    <span ng-switch-when="1">of the</span>
-                    <span ng-switch-when="2">of the</span>
-                    <span ng-switch-when="6">to</span>
-                    <span ng-switch-default></span>
-
-                </span>
-
-                <!-- TODO: Now that this is using real data from the API,
-                     this needs to query for team data -->
-                {{role.team.name}}
+                <x-krossover-role role="role"></x-krossover-role>
 
             </a>
 
