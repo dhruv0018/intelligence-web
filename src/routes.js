@@ -85,7 +85,7 @@ IntelligenceWebClient.run([
             /* If not accessing a public state and not logged in, then
              * redirect the user to login.
              */
-            if (!to.public && !AuthenticationService.isLoggedIn()) {
+            if (!to.public && !AuthenticationService.isLoggedIn) {
 
                 event.preventDefault();
                 $location.path('/login');
