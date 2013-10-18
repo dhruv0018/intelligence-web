@@ -3,6 +3,13 @@
     "templates": [
         "template.html"
     ],
+    "images": [
+        "krossover_logo_2013.png",
+        "krossover_logo_2013_small.png"
+    ],
+    "styles": [
+        "styles.css"
+    ],
     "scripts": [
         "index.js"
     ]
