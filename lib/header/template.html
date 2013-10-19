@@ -14,12 +14,12 @@
 
     <ul class="menu nav navbar-nav">
 
-        <li data-ng-show="user.isAdmin"><a href="users">Users</a></li>
-        <li data-ng-show="user.isAdmin"><a href="teams">Teams</a></li>
-        <li><a href="schools">Schools</a></li>
-        <li data-ng-show="user.isAdmin"><a href="games">Games</a></li>
-        <li data-ng-show="user.isAdmin"><a href="reports">Reports</a></li>
-        <li data-ng-show="user.isSuperAdmin"><a href="platform">Platform</a></li>
+        <li data-ng-show="user.isAdmin"><a data-ui-sref="users">Users</a></li>
+        <li data-ng-show="user.isAdmin"><a data-ui-sref="teams">Teams</a></li>
+        <li><a data-ui-sref="schools">Schools</a></li>
+        <li data-ng-show="user.isAdmin"><a data-ui-sref="games">Games</a></li>
+        <li data-ng-show="user.isAdmin"><a data-ui-sref="reports">Reports</a></li>
+        <li data-ng-show="user.isSuperAdmin"><a data-ui-sref="platform">Platform</a></li>
 
     </ul>
 
