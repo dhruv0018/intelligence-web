@@ -331,7 +331,7 @@ module.exports = function(grunt) {
                 options: {
                     hostname: '*',
                     port: 8000,
-                    protocol: 'https',
+                    protocol: 'http',
                     base: 'dev',
                     livereload: true,
                     middleware: function (connect, options) {
