@@ -5,6 +5,7 @@
     ],
     "local": [
         "login",
+        "role",
         "roles",
         "header",
         "account",

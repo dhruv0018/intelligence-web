@@ -1,0 +1,40 @@
+<div class="role">
+
+    <div class="avatar">
+
+        <img src="http://lorempixel.com/40/40/sports" class="pull-left">
+
+    </div>
+
+    <div class="sport"></div>
+
+    <div class="role-title">
+
+        <span ng-switch on="role.type.id">
+
+            <!-- For coaches, use "Coach [lastName]" -->
+            <span ng-switch-when="3">Coach {{user.lastName}}</span>
+            <span ng-switch-when="4">Coach {{user.lastName}}</span>
+
+            <!-- Otherwise, use full name -->
+            <span ng-switch-default>{{user.name}}</span>
+
+        </span>
+
+    </div>
+
+    <div class="role-name">
+
+        <span ng-switch on="role.type.id">
+
+            <!-- For coaches, show their team name-->
+            <span ng-switch-when="3">{{team.name}}</span>
+            <span ng-switch-when="4">{{team.name}}</span>
+
+            <!-- Otherwise, display role name -->
+            <span ng-switch-default>{{role.type.name}}</span>
+
+        </span>
+
+</div>
+
