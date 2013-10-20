@@ -1,21 +1,35 @@
-<section class="text-center">
+<div class="roles modal">
 
-    <h1>Before we begin, choose your default role:</h1>
+    <div class="modal-dialog">
 
-    <ul class="list-group">
+        <div class="modal-content">
 
-        <li class="role" data-ng-repeat="role in roles">
+            <header class="modal-header">
 
-            <a href="#" data-ng-click="setDefaultRole(role)">
+                <h3 class="modal-title"><i class="icon-group icon-2"></i> Before we begin, choose your default role:</h3>
 
-                <x-krossover-role role="role"></x-krossover-role>
+            </header>
 
-            </a>
+            <div class="modal-body">
 
-            <div class="checkbox"></div>
+                <ul class="list-group">
 
-        </li>
+                    <li class="role list-group-item" data-ng-repeat="role in roles">
 
-    </ul>
+                        <a href="#" data-ng-click="setDefaultRole(role)">
 
-</section>
+                            <x-krossover-role role="role"></x-krossover-role>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
