@@ -164,6 +164,12 @@ module.exports = function(grunt) {
         },
 
         copy: {
+            'component-assets': {
+                expand: true,
+                cwd:    'lib',
+                src:    '**/*.png',
+                dest:   'build/assets'
+            },
             dev: {
                 files: {
                     'dev/intelligence/index.html': 'src/index.html',
@@ -171,11 +177,23 @@ module.exports = function(grunt) {
                     'dev/intelligence/scripts.js': 'build/bundle.js'
                 }
             },
-            components: {
+            'dev-assets': {
                 expand: true,
-                cwd:    'lib',
-                src:    '**/*.png',
+                cwd:    'build/assets',
+                src:    '**',
                 dest:   'dev/intelligence/assets'
+            },
+            prod: {
+                files: {
+                    'prod/.htaccess': 'src/.htaccess',
+                    'prod/assets': 'build/assets/**/*'
+                }
+            },
+            'prod-assets': {
+                expand: true,
+                cwd:    'build/assets',
+                src:    '**',
+                dest:   'prod/assets'
             }
         },
 
@@ -422,14 +440,14 @@ module.exports = function(grunt) {
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
     grunt.registerTask('build-css', ['concat:build', 'autoprefixer', 'rework']);
-    grunt.registerTask('build', ['less', 'build-js', 'build-css']);
+    grunt.registerTask('build', ['less', 'build-js', 'build-css', 'copy:component-assets']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);
     grunt.registerTask('lint', ['lesslint', 'csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
-    grunt.registerTask('dev', ['build', 'copy']);
-    grunt.registerTask('prod', ['clean', 'install', 'build', 'min', 'ver:prod']);
+    grunt.registerTask('dev', ['build', 'copy:dev', 'copy:dev-assets']);
+    grunt.registerTask('prod', ['clean', 'install', 'build', 'copy:prod-assets', 'min', 'ver:prod']);
     grunt.registerTask('dist', ['prod', 'compress', 'ver:dist']);
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('default', ['install', 'dev', 'serve', 'watch']);
