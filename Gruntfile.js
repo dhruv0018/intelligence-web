@@ -172,6 +172,7 @@ module.exports = function(grunt) {
             },
             dev: {
                 files: {
+                    'dev/intelligence/.htaccess': 'src/.htaccess',
                     'dev/intelligence/index.html': 'src/index.html',
                     'dev/intelligence/styles.css': 'build/reworked.css',
                     'dev/intelligence/scripts.js': 'build/bundle.js'
