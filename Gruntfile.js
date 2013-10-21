@@ -87,7 +87,7 @@ module.exports = function(grunt) {
             prod: {
                 options: require('./.htmlminrc'),
                 files: {
-                    'prod/index.html': 'src/index.html'
+                    'prod/intelligence/index.html': 'src/index.html'
                 }
             }
         },
@@ -95,7 +95,7 @@ module.exports = function(grunt) {
         csso: {
             prod: {
                 files: {
-                    'prod/styles.css': ['build/reworked.css']
+                    'prod/intelligence/styles.css': ['build/reworked.css']
                 }
             }
         },
@@ -104,7 +104,7 @@ module.exports = function(grunt) {
             options: require('./.uglifyrc'),
             prod: {
                 files: {
-                    'prod/scripts.js': ['build/bundle.js']
+                    'prod/intelligence/scripts.js': ['build/bundle.js']
                 }
             }
         },
@@ -186,15 +186,15 @@ module.exports = function(grunt) {
             },
             prod: {
                 files: {
-                    'prod/.htaccess': 'src/.htaccess',
-                    'prod/assets': 'build/assets/**/*'
+                    'prod/intelligence/.htaccess': 'src/.htaccess',
+                    'prod/intelligence/assets': 'build/assets/**/*'
                 }
             },
             'prod-assets': {
                 expand: true,
                 cwd:    'build/assets',
                 src:    '**',
-                dest:   'prod/assets'
+                dest:   'prod/intelligence/assets'
             }
         },
 
@@ -259,11 +259,11 @@ module.exports = function(grunt) {
                 forceVersion: '<%= pkg.version %>',
                 phases: [{
                     files: [
-                        'prod/*.js',
-                        'prod/*.css'
+                        'prod/intelligence/*.js',
+                        'prod/intelligence/*.css'
                     ],
                     references: [
-                        'prod/index.html'
+                        'prod/intelligence/index.html'
                     ]
                 }]
             },
@@ -283,9 +283,9 @@ module.exports = function(grunt) {
                     archive: 'dist/<%= pkg.name %>.zip'
                 },
                 src: [
-                    'prod/index.html',
-                    'prod/*.css',
-                    'prod/*.js'
+                    'prod/intelligence/index.html',
+                    'prod/intelligence/*.css',
+                    'prod/intelligence/*.js'
                 ]
             }
         },
