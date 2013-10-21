@@ -6,6 +6,9 @@ var modRewrite = require('connect-modrewrite');
 
 module.exports = function(grunt) {
 
+    /* Load all grunt tasks. */
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
@@ -430,40 +433,6 @@ module.exports = function(grunt) {
         }
 
     });
-
-
-    /* Create tasks */
-
-
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-bower-task');
-    grunt.loadNpmTasks('grunt-install-dependencies');
-    grunt.loadNpmTasks('grunt-html-inspector');
-    grunt.loadNpmTasks('grunt-recess');
-    grunt.loadNpmTasks('grunt-contrib-csslint');
-    grunt.loadNpmTasks('grunt-lesslint')
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-jsvalidate');
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
-    grunt.loadNpmTasks('grunt-csso');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-cucumber');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-plato');
-    grunt.loadNpmTasks('grunt-complexity');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-rework');
-    grunt.loadNpmTasks('grunt-autoprefixer');
-    grunt.loadNpmTasks('grunt-component');
-    grunt.loadNpmTasks('grunt-browserify');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-dox');
-    grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-ver');
-    grunt.loadNpmTasks('grunt-shell');
 
 
     /* Tasks */
