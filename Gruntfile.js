@@ -39,9 +39,9 @@ module.exports = function(grunt) {
         },
 
         clean: {
+            build: ['build'],
             dev: ['dev'],
-            prod: ['prod'],
-            build: ['build']
+            prod: ['prod']
         },
 
 
@@ -397,6 +397,9 @@ module.exports = function(grunt) {
             }
         },
 
+        shell: {
+            dev: {
+                command: 'scp -r dev/intelligence virtual@www.dev.krossover.com:/var/www',
             }
         },
 
@@ -460,6 +463,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-dox');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-ver');
+    grunt.loadNpmTasks('grunt-shell');
 
 
     /* Tasks */
@@ -478,6 +482,7 @@ module.exports = function(grunt) {
     grunt.registerTask('prod', ['clean', 'install', 'build', 'copy:prod-assets', 'min', 'ver:prod']);
     grunt.registerTask('dist', ['prod', 'compress', 'ver:dist']);
     grunt.registerTask('serve', ['connect']);
+    grunt.registerTask('deploy', ['dev', 'shell:dev']);
     grunt.registerTask('default', ['install', 'dev', 'serve', 'watch']);
 
 };

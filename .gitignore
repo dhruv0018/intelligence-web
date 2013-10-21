@@ -4,6 +4,9 @@
 # Ignore dev files
 /dev
 
+# Ignore qa files
+/qa
+
 # Ignore production files
 /prod
 
