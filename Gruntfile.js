@@ -346,7 +346,7 @@ module.exports = function(grunt) {
 
 
         connect: {
-            server: {
+            dev: {
                 options: {
                     hostname: '*',
                     port: 8000,
@@ -370,6 +370,33 @@ module.exports = function(grunt) {
                         ];
                     }
                 }
+            },
+            prod: {
+                options: {
+                    hostname: '*',
+                    port: 8001,
+                    protocol: 'https',
+                    base: 'prod',
+                    middleware: function (connect, options) {
+                        return [
+
+                            /* Redirect hash urls to index.html */
+                            modRewrite([
+                                '!\\.html|\\.js|\\.css|\\.png$ /intelligence/index.html [L]'
+                            ]),
+
+                            /* Serve static files. */
+                            connect.static(options.base),
+
+                            /* Make empty directories browsable. */
+                            connect.directory(options.base)
+
+                        ];
+                    }
+                }
+            }
+        },
+
             }
         },
 
