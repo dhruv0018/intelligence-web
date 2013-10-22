@@ -9,7 +9,7 @@ IntelligenceWebClient.factory('Users', [
 
         var Users = $resource(
 
-            'https://www.dev.krossover.com/intelligence-api/v1/users/:id',
+            'https://www-dev.krossover.com/intelligence-api/v1/users/:id',
             {
                 id: '@id'
 
