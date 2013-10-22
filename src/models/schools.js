@@ -6,7 +6,7 @@ IntelligenceWebClient.factory('Schools', [
 
         var Schools = $resource(
 
-            'https://www.dev.krossover.com/intelligence-api/v1/schools/:id', {
+            'https://www-dev.krossover.com/intelligence-api/v1/schools/:id', {
 
             id: '@id'
 
