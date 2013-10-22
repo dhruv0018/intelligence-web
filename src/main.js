@@ -18,6 +18,7 @@ require('./routes');
 require('./errors');
 
 component('login');
+component('role');
 component('roles');
 component('header');
 component('account');
