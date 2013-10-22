@@ -21,6 +21,7 @@ component('login');
 component('roles');
 component('header');
 component('account');
+component('users');
 component('schools');
 
 angular.bootstrap(document, [pkg.name]);

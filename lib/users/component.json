@@ -1,0 +1,10 @@
+{
+    "name": "users",
+    "templates": [
+        "user.html",
+        "users.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
