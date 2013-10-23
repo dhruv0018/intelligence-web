@@ -5,8 +5,10 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'ui.router',
     'ui.bootstrap',
     'login',
+    'role',
     'roles',
     'account',
+    'users',
     'schools'
 ]);
 

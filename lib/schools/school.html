@@ -22,13 +22,6 @@
 
             <dl class="form-group">
 
-                <dt><label class="control-label" for="type">Type</label></dt>
-                <dd>
-                    <select class="form-control" name="type" data-ng-model="school.type" required>
-                        <option value="">Choose a Type</option>
-                    </select>
-                </dd>
-
                 <dt><label class="control-label" for="name">School Name</label></dt>
                 <dd><input class="form-control" name="name" placeholder="Name" data-ng-model="school.name" type="text" required /></dd>
 
@@ -61,7 +54,7 @@
             <div class="form-group">
 
                 <button class="btn btn-primary" data-ng-click="save(school)">Save</button>
-                <a class="pull-right" href="#" data-ng-click="cancel()">cancel</a>
+                <a class="pull-right" href data-ng-click="cancel()">cancel</a>
 
             </div>
 

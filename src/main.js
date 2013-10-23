@@ -18,9 +18,11 @@ require('./routes');
 require('./errors');
 
 component('login');
+component('role');
 component('roles');
 component('header');
 component('account');
+component('users');
 component('schools');
 
 angular.bootstrap(document, [pkg.name]);

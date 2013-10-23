@@ -5,9 +5,11 @@
     ],
     "local": [
         "login",
+        "role",
         "roles",
         "header",
         "account",
+        "users",
         "schools"
     ],
     "dependencies": {

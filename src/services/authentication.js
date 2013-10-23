@@ -13,11 +13,20 @@ function AuthenticationService($rootScope) {
     this.logoutUser = function() {
         $rootScope.currentUser = null;
     };
-
-    this.isLoggedIn = function() {
-        return !!$rootScope.currentUser;
-    };
 }
+
+Object.defineProperty(AuthenticationService.prototype, 'isLoggedIn', {
+
+    get: function isLoggedIn() {
+
+        return !!this.$rootScope.currentUser;
+    },
+
+    set: function isLoggedIn() {
+
+        throw new Error('Illegal attempt to override function isLoggedIn');
+    }
+});
 
 IntelligenceWebClient.service('AuthenticationService', AuthenticationService);
 
