@@ -1,47 +1,35 @@
-<section class="text-center">
+<div class="roles modal">
 
-    <h1>Pick how you'd like to use Krossover.</h1>
+    <div class="modal-dialog">
 
-    <!-- Use mock data for now -->
-    <div ng-init="roles = [
-        {roleType: { id: 1, name: 'Head Coach' }, team: { id: 1, name: 'North Central Vikings'}},
-        {roleType: { id: 2, name: 'Assistant Coach' }, team: { id: 2, name: 'Team XYZ'}},
-        {roleType: { id: 2, name: 'Assistant Coach' }, team: { id: 3, name: 'Team ABC'}},
-        {roleType: { id: 3, name: 'Athlete' }, team: { id: null, name: ''}},
-        {roleType: { id: 10, name: 'Admin' }, team: { id: null, name: ''}},
-        {roleType: { id: 11, name: 'Indexer' }, team: { id: null, name: ''}},
-        {roleType: { id: 6, name: 'Observer' }, team: { id: null, name: 'Athlete Mark McCake'}}
-        ]">
+        <div class="modal-content">
 
-    <ul class="list-group">
+            <header class="modal-header">
 
-        <li class="role" data-ng-repeat="role in roles">
+                <h3 class="modal-title"><i class="icon-group"></i> Before we begin, choose your default role:</h3>
 
-            <a href="#" data-ng-click="setDefaultRole(role)">
+            </header>
 
-                 <span ng-switch on="role.roleType.id">
+            <div class="modal-body">
 
-                    <span ng-switch-when="3">An</span>
-                    <span ng-switch-when="11">An</span>
-                    <span ng-switch-default></span>
+                <ul class="list-group">
 
-                </span>
+                    <li class="role list-group-item" data-ng-repeat="role in roles">
 
-                {{role.roleType.name}}
+                        <a href="#" data-ng-click="setDefaultRole(role)">
 
-                 <span ng-switch on="role.roleType.id">
+                            <x-krossover-role role="role"></x-krossover-role>
 
-                    <span ng-switch-when="1">of the</span>
-                    <span ng-switch-when="2">of the</span>
-                    <span ng-switch-when="6">to</span>
-                    <span ng-switch-default></span>
+                        </a>
 
-                </span>
+                    </li>
 
-                {{role.team.name}}
+                </ul>
 
-            </a>
+            </div>
 
-        </li>
+        </div>
 
-    </ul>
+    </div>
+
+</div>
