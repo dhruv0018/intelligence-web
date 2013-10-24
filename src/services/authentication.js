@@ -8,10 +8,17 @@ function AuthenticationService($rootScope) {
 
     this.loginUser = function(user) {
         $rootScope.currentUser = user;
+        $rootScope.isLoggedIn = true;
     };
 
     this.logoutUser = function() {
         $rootScope.currentUser = null;
+        $rootScope.isLoggedIn = false;
+    };
+
+    this.currentUser = function() {
+
+        return $rootScope.currentUser;
     };
 }
 
