@@ -8,11 +8,13 @@ require('bootstrap');
 
 require('./app');
 
-require('./services/token');
-require('./services/authentication');
-
 require('./models/users');
 require('./models/schools');
+
+require('./services/authentication');
+require('./services/token');
+require('./services/session');
+require('./services/users');
 
 require('./routes');
 require('./errors');
