@@ -452,6 +452,6 @@ module.exports = function(grunt) {
     grunt.registerTask('dist', ['prod', 'compress', 'ver:dist']);
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('deploy', ['dev', 'shell:dev']);
-    grunt.registerTask('default', ['install', 'dev', 'serve', 'watch']);
+    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
 };
