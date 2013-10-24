@@ -5,8 +5,6 @@ IntelligenceWebClient.service('SessionService', [
 
         this.currentUser = null;
 
-        this.currentRole = null;
-
     }
 ]);
 
