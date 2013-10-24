@@ -6,6 +6,9 @@ var modRewrite = require('connect-modrewrite');
 
 module.exports = function(grunt) {
 
+    /* Load all grunt tasks. */
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
@@ -39,9 +42,9 @@ module.exports = function(grunt) {
         },
 
         clean: {
+            build: ['build'],
             dev: ['dev'],
-            prod: ['prod'],
-            build: ['build']
+            prod: ['prod']
         },
 
 
@@ -87,7 +90,7 @@ module.exports = function(grunt) {
             prod: {
                 options: require('./.htmlminrc'),
                 files: {
-                    'prod/index.html': 'src/index.html'
+                    'prod/intelligence/index.html': 'src/index.html'
                 }
             }
         },
@@ -95,7 +98,7 @@ module.exports = function(grunt) {
         csso: {
             prod: {
                 files: {
-                    'prod/styles.css': ['build/reworked.css']
+                    'prod/intelligence/styles.css': ['build/reworked.css']
                 }
             }
         },
@@ -104,7 +107,7 @@ module.exports = function(grunt) {
             options: require('./.uglifyrc'),
             prod: {
                 files: {
-                    'prod/scripts.js': ['build/bundle.js']
+                    'prod/intelligence/scripts.js': ['build/bundle.js']
                 }
             }
         },
@@ -164,18 +167,37 @@ module.exports = function(grunt) {
         },
 
         copy: {
+            'component-assets': {
+                expand: true,
+                cwd:    'lib',
+                src:    '**/*.png',
+                dest:   'build/assets'
+            },
             dev: {
                 files: {
+                    'dev/intelligence/.htaccess': 'src/.htaccess',
                     'dev/intelligence/index.html': 'src/index.html',
                     'dev/intelligence/styles.css': 'build/reworked.css',
                     'dev/intelligence/scripts.js': 'build/bundle.js'
                 }
             },
-            components: {
+            'dev-assets': {
                 expand: true,
-                cwd:    'lib',
-                src:    '**/*.png',
+                cwd:    'build/assets',
+                src:    '**',
                 dest:   'dev/intelligence/assets'
+            },
+            prod: {
+                files: {
+                    'prod/intelligence/.htaccess': 'src/.htaccess',
+                    'prod/intelligence/assets': 'build/assets/**/*'
+                }
+            },
+            'prod-assets': {
+                expand: true,
+                cwd:    'build/assets',
+                src:    '**',
+                dest:   'prod/intelligence/assets'
             }
         },
 
@@ -240,11 +262,11 @@ module.exports = function(grunt) {
                 forceVersion: '<%= pkg.version %>',
                 phases: [{
                     files: [
-                        'prod/*.js',
-                        'prod/*.css'
+                        'prod/intelligence/*.js',
+                        'prod/intelligence/*.css'
                     ],
                     references: [
-                        'prod/index.html'
+                        'prod/intelligence/index.html'
                     ]
                 }]
             },
@@ -264,9 +286,9 @@ module.exports = function(grunt) {
                     archive: 'dist/<%= pkg.name %>.zip'
                 },
                 src: [
-                    'prod/index.html',
-                    'prod/*.css',
-                    'prod/*.js'
+                    'prod/intelligence/index.html',
+                    'prod/intelligence/*.css',
+                    'prod/intelligence/*.js'
                 ]
             }
         },
@@ -327,11 +349,11 @@ module.exports = function(grunt) {
 
 
         connect: {
-            server: {
+            dev: {
                 options: {
                     hostname: '*',
                     port: 8000,
-                    protocol: 'https',
+                    protocol: 'http',
                     base: 'dev',
                     livereload: true,
                     middleware: function (connect, options) {
@@ -351,6 +373,36 @@ module.exports = function(grunt) {
                         ];
                     }
                 }
+            },
+            prod: {
+                options: {
+                    hostname: '*',
+                    port: 8001,
+                    protocol: 'https',
+                    base: 'prod',
+                    middleware: function (connect, options) {
+                        return [
+
+                            /* Redirect hash urls to index.html */
+                            modRewrite([
+                                '!\\.html|\\.js|\\.css|\\.png$ /intelligence/index.html [L]'
+                            ]),
+
+                            /* Serve static files. */
+                            connect.static(options.base),
+
+                            /* Make empty directories browsable. */
+                            connect.directory(options.base)
+
+                        ];
+                    }
+                }
+            }
+        },
+
+        shell: {
+            dev: {
+                command: 'scp -r dev/intelligence virtual@www.dev.krossover.com:/var/www',
             }
         },
 
@@ -383,55 +435,23 @@ module.exports = function(grunt) {
     });
 
 
-    /* Create tasks */
-
-
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-bower-task');
-    grunt.loadNpmTasks('grunt-install-dependencies');
-    grunt.loadNpmTasks('grunt-html-inspector');
-    grunt.loadNpmTasks('grunt-recess');
-    grunt.loadNpmTasks('grunt-contrib-csslint');
-    grunt.loadNpmTasks('grunt-lesslint')
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-jsvalidate');
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
-    grunt.loadNpmTasks('grunt-csso');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-cucumber');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-plato');
-    grunt.loadNpmTasks('grunt-complexity');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-rework');
-    grunt.loadNpmTasks('grunt-autoprefixer');
-    grunt.loadNpmTasks('grunt-component');
-    grunt.loadNpmTasks('grunt-browserify');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-dox');
-    grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-ver');
-
-
     /* Tasks */
 
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
     grunt.registerTask('build-css', ['concat:build', 'autoprefixer', 'rework']);
-    grunt.registerTask('build', ['less', 'build-js', 'build-css']);
+    grunt.registerTask('build', ['less', 'build-js', 'build-css', 'copy:component-assets']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);
     grunt.registerTask('lint', ['lesslint', 'csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
-    grunt.registerTask('dev', ['build', 'copy']);
-    grunt.registerTask('prod', ['clean', 'install', 'build', 'min', 'ver:prod']);
+    grunt.registerTask('dev', ['build', 'copy:dev', 'copy:dev-assets']);
+    grunt.registerTask('prod', ['clean', 'install', 'build', 'copy:prod-assets', 'min', 'ver:prod']);
     grunt.registerTask('dist', ['prod', 'compress', 'ver:dist']);
     grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('default', ['install', 'dev', 'serve', 'watch']);
+    grunt.registerTask('deploy', ['dev', 'shell:dev']);
+    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
 };
