@@ -17,6 +17,7 @@ require('./services/token');
 require('./services/session');
 require('./services/users');
 require('./services/teams');
+require('./services/schools');
 
 require('./routes');
 require('./errors');
