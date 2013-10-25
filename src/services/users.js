@@ -8,6 +8,8 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             resource: users,
 
+            list: [],
+
             get: function(userId, callback) {
 
                 var self = this;
@@ -29,7 +31,17 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             getAll: function() {
 
-                return users.query();
+                var self = this;
+
+                self.list = self.resource.query(function() {
+
+                    for (var i = 0; i < self.list.length; i++) {
+
+                        delete self.list[i].password;
+                    }
+                });
+
+                return self.list;
             },
 
             save: function(user) {
