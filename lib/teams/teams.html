@@ -1,0 +1,52 @@
+<section class="teams panel panel-primary">
+
+    <header class="panel-heading">
+
+        <h1 class="panel-title">Teams</h1>
+
+    </header>
+
+    <div class="panel-body" ng-controller="TeamsController">
+
+        <button class="btn btn-primary pull-right" data-ng-click="add()">Add Team</button>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Team/Mascot Name</th>
+                        <th>Sport</th>
+                        <th>League</th>
+                        <th>School</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr data-ng-repeat="team in teams" data-ng-click="edit(team)">
+
+                        <td>{{team.name}}</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>{{team.school.name}}</td>
+                        <td>N/A</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
