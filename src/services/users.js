@@ -8,11 +8,11 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             resource: users,
 
-            get: function(email, callback) {
+            get: function(userId, callback) {
 
                 var self = this;
 
-                self.resource.get({ id: email }, function(user) {
+                self.resource.get({ id: userId }, function(user) {
 
                     /* Remove the user password from the model. If set it will
                      * be sent in a resource call. So only set it if the intent
