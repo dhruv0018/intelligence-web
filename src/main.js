@@ -15,6 +15,7 @@ require('./services/authentication');
 require('./services/token');
 require('./services/session');
 require('./services/users');
+require('./services/schools');
 
 require('./routes');
 require('./errors');

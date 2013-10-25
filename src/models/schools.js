@@ -8,9 +8,14 @@ IntelligenceWebClient.factory('SchoolsResource', [
 
             'https://www-dev.krossover.com/intelligence-api/v1/schools/:id', {
 
-            id: '@id'
+                id: '@id'
 
-        });
+            }, {
+
+                create: { method: 'POST' },
+                update: { method: 'PUT' }
+            }
+        );
 
         return SchoolsResource;
     }
