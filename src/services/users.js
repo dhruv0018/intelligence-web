@@ -41,7 +41,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* User ID's are assigned server side, if it is present that means
                 * the user is present on the server, so update them (PUT).
                 * If not present then this a new user so create them (POST). */
-                if (user.id) self.resource.update(self);
+                if (user.id) self.resource.update(user);
                 else self.resource.create(user);
             },
 
