@@ -1,10 +1,10 @@
 var IntelligenceWebClient = require('../app');
 
-IntelligenceWebClient.factory('Schools', [
+IntelligenceWebClient.factory('SchoolsResource', [
     '$resource',
     function($resource) {
 
-        var Schools = $resource(
+        var SchoolsResource = $resource(
 
             'https://www-dev.krossover.com/intelligence-api/v1/schools/:id', {
 
@@ -12,7 +12,7 @@ IntelligenceWebClient.factory('Schools', [
 
         });
 
-        return Schools;
+        return SchoolsResource;
     }
 ]);
 
