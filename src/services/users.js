@@ -2,17 +2,19 @@ var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('UsersFactory', [
     '$rootScope', 'UsersResource', 'ROLE_TYPE',
-    function($rootScope, users, ROLE_TYPE) {
+    function($rootScope, UsersResource, ROLE_TYPE) {
 
         var UsersFactory = {
 
-            resource: users,
+            resource: UsersResource,
 
-            get: function(email, callback) {
+            list: [],
+
+            get: function(userId, callback) {
 
                 var self = this;
 
-                self.resource.get({ id: email }, function(user) {
+                self.resource.get({ id: userId }, function(user) {
 
                     /* Remove the user password from the model. If set it will
                      * be sent in a resource call. So only set it if the intent
@@ -29,7 +31,17 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             getAll: function() {
 
-                return users.query();
+                var self = this;
+
+                self.list = self.resource.query(function() {
+
+                    for (var i = 0; i < self.list.length; i++) {
+
+                        delete self.list[i].password;
+                    }
+                });
+
+                return self.list;
             },
 
             save: function(user) {
@@ -41,8 +53,13 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* User ID's are assigned server side, if it is present that means
                 * the user is present on the server, so update them (PUT).
                 * If not present then this a new user so create them (POST). */
-                if (user.id) self.resource.update(self);
-                else self.resource.create(user);
+                if (user.id) user.$update();
+
+                else {
+
+                    var newUser = new UsersResource(user);
+                    newUser.$create();
+                }
             },
 
             /**
