@@ -9,12 +9,14 @@ require('bootstrap');
 require('./app');
 
 require('./models/users');
+require('./models/teams');
 require('./models/schools');
 
 require('./services/authentication');
 require('./services/token');
 require('./services/session');
 require('./services/users');
+require('./services/teams');
 
 require('./routes');
 require('./errors');
@@ -25,6 +27,7 @@ component('roles');
 component('header');
 component('account');
 component('users');
+component('teams');
 component('schools');
 
 angular.bootstrap(document, [pkg.name]);

@@ -1,0 +1,94 @@
+<section class="team panel panel-primary">
+
+    <header class="panel-heading">
+
+        <h1 class="panel-title">
+
+            <span ng-switch on="team.name">
+
+                <span ng-switch-when="null">Add a new team</span>
+                <span ng-switch-default>{{team.name}}</span>
+
+            </span>
+
+        </h1>
+
+    </header>
+
+    <div class="panel-body" ng-controller="TeamController">
+
+        <form role="form" action="">
+
+            <dl class="form-group">
+
+                <dt><label class="control-label" for="sport">Sport</label></dt>
+                <dd><input class="form-control" name="sport" placeholder="Sport" type="text" required></dd>
+
+                <dt><label class="control-label" for="leagues">Leagues</label></dt>
+                <dd>
+
+                    <input class="form-control" name="leagues" placeholder="Leagues" type="text" required>
+                    <input chass="form-control" name="camp" type="checkbox"> Check if Camp, Tournament, or Showcase
+
+                </dd>
+
+                <dt><label class="control-label" for="name">Team Name</label></dt>
+                <dd><input class="form-control" name="name" placeholder="Team Name" data-ng-model="team.name" type="text" required></dd>
+
+                <p>For schools, enter just the mascot name. E.g. "Bears"</p>
+
+                <p>For all others, enter full team name. E.g. "Cleveland
+                Cavilers"</p>
+
+            </dl>
+
+            <hr>
+
+            <dl class="form-group">
+
+                <dt><label class="control-label" for="name">School Name</label></dt>
+                <dd>
+                    <select class="form-control" name="name" data-ng-model="team.school" ng-options="school.name for school in schools track by school.id" required></select>
+                    <a data-ui-sref="school">add a new school</a>
+                </dd>
+
+                <dt><label class="control-label" for="conference">Conference</label></dt>
+                <dd><input class="form-control" name="conference" placeholder="Conference" data-ng-model="team.school.conference" type="text" disabled></dd>
+
+                <dt><label class="control-label" for="division">Division</label></dt>
+                <dd><input class="form-control" name="division" placeholder="Division" data-ng-model="team.school.division" type="text" disabled></dd>
+
+                <dt><label class="control-label" for="address1">Address 1</label></dt>
+                <dd><input class="form-control" name="address1" placeholder="Address 1" data-ng-model="team.school.address.street1" type="text" disabled></dd>
+
+                <dt><label class="control-label" for="address1">Address 2</label></dt>
+                <dd><input class="form-control" name="address2" placeholder="Address 2" data-ng-model="team.school.address.street2" type="text" disabled></dd>
+
+                <dt><label class="control-label" for="city">City</label></dt>
+                <dd><input class="form-control" name="city" placeholder="City" data-ng-model="team.school.address.city" type="text" required disabled></dd>
+
+                <dt><label class="control-label" for="country">Country</label></dt>
+                <dd><input class="form-control" name="country" placeholder="Country" data-ng-model="team.school.address.countryCode" type="text" required disabled></dd>
+
+                <dt><label class="control-label" for="state">State</label></dt>
+                <dd><input class="form-control" name="state" placeholder="State" data-ng-model="team.school.address.regionCode" type="text" required disabled></dd>
+
+                <dt><label class="control-label" for="postal">Postal Code</label></dt>
+                <dd><input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="team.school.address.postalCode" type="text" disabled></dd>
+
+            </dl>
+
+            <div class="form-group">
+
+                <button class="btn btn-primary" data-ng-click="next()">Next</button>
+
+                <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
