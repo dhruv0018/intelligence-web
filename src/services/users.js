@@ -2,11 +2,11 @@ var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('UsersFactory', [
     '$rootScope', 'UsersResource', 'ROLE_TYPE',
-    function($rootScope, users, ROLE_TYPE) {
+    function($rootScope, UsersResource, ROLE_TYPE) {
 
         var UsersFactory = {
 
-            resource: users,
+            resource: UsersResource,
 
             list: [],
 
@@ -53,8 +53,13 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* User ID's are assigned server side, if it is present that means
                 * the user is present on the server, so update them (PUT).
                 * If not present then this a new user so create them (POST). */
-                if (user.id) self.resource.update(user);
-                else self.resource.create(user);
+                if (user.id) user.$update();
+
+                else {
+
+                    var newUser = new UsersResource(user);
+                    newUser.$create();
+                }
             },
 
             /**
