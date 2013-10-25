@@ -2,11 +2,11 @@ var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('TeamsFactory', [
     '$rootScope', 'TeamsResource', 'SchoolsResource',
-    function($rootScope, teams, schools) {
+    function($rootScope, TeamsResource, schools) {
 
         var TeamsFactory = {
 
-            resource: teams,
+            resource: TeamsResource,
 
             list: [],
 
@@ -33,8 +33,13 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 team = team || self;
 
-                if (team.id) self.resource.update(team);
-                else self.resource.create(team);
+                if (team.id) team.$update();
+
+                else {
+
+                    var newTeam = new TeamsResource(team);
+                    newTeam.$create();
+                }
             }
         };
 
