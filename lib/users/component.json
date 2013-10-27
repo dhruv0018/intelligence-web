@@ -8,6 +8,7 @@
         "index.js"
     ],
     "styles": [
-        "styles.css"
+        "user.css",
+        "users.css"
     ]
 }
