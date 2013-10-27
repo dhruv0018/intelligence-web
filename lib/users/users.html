@@ -1,48 +1,43 @@
-<section class="users panel panel-primary">
+<section class="users">
 
-    <header class="panel-heading">
+    <div class="search">
 
-        <h1 class="panel-title">Users</h1>
+        <button class="add" data-ng-click="add()"><i class="icon-plus-circle"></i>Add New User</button>
 
-    </header>
+    </div>
 
-    <div class="panel-body" ng-controller="UsersController">
-
-        <button class="btn btn-primary pull-right" data-ng-click="add()">Add User</button>
+    <div class="list" ng-controller="UsersController">
 
         <div class="table-responsive">
 
-            <table class="table table-hover">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Email</th>
-                        <th>Name</th>
-                        <th>Last Accessed</th>
-                        <th>Roles</th>
-                        <th>Status</th>
-
-                    </tr>
-
-                </thead>
+            <table class="table table-striped table-hover">
 
                 <tbody>
 
-                    <tr data-ng-repeat="user in users" data-ng-click="edit(user)">
+                    <tr data-ng-repeat="user in users">
 
                         <td>{{user.email}}</td>
-                        <td>{{user.name}}</td>
-                        <td>{{user.lastAccessed}}</td>
+                        <td class="name"><a href>{{user.firstName}} {{user.lastName}}</a></td>
+                        <td class="date">{{user.lastAccessed | date:'longDate'}}</td>
 
-                        <td>
+                        <td class="roles">
 
                             <ul>
 
-                                <li data-ng-repeat="role in user.roles">
+                                <li class="role-name" data-ng-repeat="role in user.roles">
 
-                                    {{role.type.name}}
+                                    <a href>
+
+                                        <span ng-switch on="role.type.id">
+
+                                            <span ng-switch-when="3">Head Coach, Team to be implemented</span>
+                                            <span ng-switch-when="4">Assist. Coach, Team to be implemented</span>
+                                            <span ng-switch-when="5">Athlete, Sport to be implemented</span>
+                                            <span ng-switch-default>{{role.type.name}}</span>
+
+                                        </span>
+
+                                    </a>
 
                                 </li>
 
@@ -56,12 +51,18 @@
 
                                 <li data-ng-repeat="role in user.roles">
 
-                                    <span data-ng-if="user.isActive">Active</span>
-                                    <span data-ng-if="!user.isActive">Inactive</span>
+                                    <span data-ng-if="user.isActive" class="active">Active</span>
+                                    <span data-ng-if="!user.isActive" class="inactive">Inactive</span>
 
                                 </li>
 
                             </ul>
+
+                        </td>
+
+                        <td>
+
+                            <button class="edit" data-ng-click="edit(user)"><i class="icon-pencil"></i> Edit</button>
 
                         </td>
 
