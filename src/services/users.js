@@ -23,9 +23,9 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     /* Copy all of the properties from the retrieved $resource
                      * "user" object. */
-                    angular.extend(self, user);
+                    angular.extend(user, self);
 
-                    callback(self);
+                    callback(user);
                 });
             },
 
@@ -38,6 +38,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                     for (var i = 0; i < self.list.length; i++) {
 
                         delete self.list[i].password;
+
+                        angular.extend(self.list[i], self);
                     }
                 });
 
