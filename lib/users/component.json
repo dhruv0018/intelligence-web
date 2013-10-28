@@ -6,5 +6,9 @@
     ],
     "scripts": [
         "index.js"
+    ],
+    "styles": [
+        "user.css",
+        "users.css"
     ]
 }

@@ -1,42 +1,27 @@
-<section class="schools panel panel-primary">
+<section class="schools">
 
-    <header class="panel-heading">
+    <div class="search-bar">
 
-        <h1 class="panel-title">Schools</h1>
+        <button class="btn-add-new" data-ng-click="add()"><i class="icon-plus"></i> Add New School</button>
 
-    </header>
+    </div>
 
-    <div class="panel-body" ng-controller="SchoolsController">
-
-        <button class="btn btn-primary pull-right" data-ng-click="add()">Add School</button>
+    <div class="list" ng-controller="SchoolsController">
 
         <div class="table-responsive">
 
-            <table class="table table-hover">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Name</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Country</th>
-                        <th>Conference</th>
-
-                    </tr>
-
-                </thead>
+            <table class="table table-striped table-hover">
 
                 <tbody>
 
-                    <tr data-ng-repeat="school in schools" data-ng-click="edit(school)">
+                    <tr data-ng-repeat="school in schools">
 
                         <td>{{school.name}}</td>
                         <td>{{school.address.city}}</td>
                         <td>{{school.address.regionCode}}</td>
                         <td>{{school.address.countryCode}}</td>
                         <td>{{school.conference}}</td>
+                        <td><button class="edit" data-ng-click="edit(school)"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 

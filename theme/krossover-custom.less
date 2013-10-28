@@ -1,4 +1,46 @@
-@import "krossover-variables.less";
+@import "font-awesome.less";
+@import "krossover-bootstrap.less";
+
+@search-bar-height: 90px;
+@search-bar-form-height: 40px;
+
+.body {
+
+    font-weight: 200;
+}
+
+.container {
+
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+.table {
+
+    font-weight: 200;
+
+    td:first-child {
+
+        padding-left: 100px;
+    }
+
+    td {
+
+        ul,
+        li {
+
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+
+            list-style: none;
+        }
+    }
+}
 
 .form-control {
 
@@ -21,3 +63,41 @@
     border-radius: @border-radius-base;
 }
 
+.btn {
+
+    font-family: @font-family-serif;
+    text-transform: uppercase;
+    border-radius: @border-radius-small;
+}
+
+.active {
+
+    color: rgb(101, 154, 65);
+}
+
+.info-bar {
+
+    height: @search-bar-height;
+    padding: 25px;
+    background-color: rgb(247, 248, 248);
+}
+
+.search-bar {
+
+    position: fixed;
+    width: 100%;
+    height: @search-bar-height;
+    padding: 25px;
+    background-color: rgb(247, 248, 248);
+    text-transform: uppercase;
+
+    .btn-add-new {
+
+        .btn;
+        .btn-primary;
+        position: absolute;
+        top: ((@search-bar-height - @search-bar-form-height)/2);
+        right: 25px;
+        height: @search-bar-form-height;
+    }
+}

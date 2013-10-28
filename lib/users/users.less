@@ -1,0 +1,46 @@
+@import "main.less";
+
+.users {
+
+    .list {
+
+        padding-top: 90px;
+    }
+
+    .date {
+
+        width: 12em;
+    }
+
+    .roles {
+
+        ul,
+        li {
+
+            width: 15em;
+            .text-overflow();
+        }
+    }
+
+    .name,
+    .role-name {
+
+        text-transform: capitalize;
+    }
+
+    .edit {
+
+        .btn;
+        .btn-default;
+        width: 100px;
+        visibility: hidden;
+    }
+
+    tr:hover {
+
+        .edit {
+
+            visibility: visible;
+        }
+    }
+}
