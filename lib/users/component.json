@@ -2,6 +2,7 @@
     "name": "users",
     "templates": [
         "user.html",
+        "adduser.html",
         "users.html"
     ],
     "scripts": [
@@ -9,6 +10,7 @@
     ],
     "styles": [
         "user.css",
+        "adduser.css",
         "users.css"
     ]
 }
