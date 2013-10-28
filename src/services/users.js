@@ -10,22 +10,37 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             list: [],
 
+            extendUser: function(user) {
+
+                var self = this;
+
+                /* Remove the user password from the model. If set it will
+                 * be sent in a resource call. So only set it if the intent
+                 * is to change the password. */
+                delete user.password;
+
+                /* Convert the last accessed string to a date object. */
+                user.lastAccessed = new Date(user.lastAccessed);
+
+                /* If the date conversion failed clear the value. */
+                if (isNaN(user.lastAccessed.valueOf())) user.lastAccessed = '';
+
+                /* Copy all of the properties from the retrieved $resource
+                 * "user" object. */
+                angular.extend(user, self);
+
+                return user;
+            },
+
             get: function(userId, callback) {
 
                 var self = this;
 
                 self.resource.get({ id: userId }, function(user) {
 
-                    /* Remove the user password from the model. If set it will
-                     * be sent in a resource call. So only set it if the intent
-                     * is to change the password. */
-                    delete user.password;
+                    user = self.extendUser(user);
 
-                    /* Copy all of the properties from the retrieved $resource
-                     * "user" object. */
-                    angular.extend(self, user);
-
-                    callback(self);
+                    callback(user);
                 });
             },
 
@@ -37,7 +52,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     for (var i = 0; i < self.list.length; i++) {
 
-                        delete self.list[i].password;
+                        self.list[i] = self.extendUser(self.list[i]);
                     }
                 });
 
