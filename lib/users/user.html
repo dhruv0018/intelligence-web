@@ -1,95 +1,129 @@
-<section class="user panel panel-primary">
+<section class="user">
 
-    <header class="panel-heading">
+    <div class="info-bar">
 
-        <h1 class="panel-title">
+        <div class="avatar">
 
-            <span ng-switch on="user.name">
+            <img src="http://lorempixel.com/40/40/sports" alt="Avatar">
 
-                <span ng-switch-when="null">Add a new user</span>
-                <span ng-switch-default>{{user.name}}</span>
+        </div>
 
-            </span>
+        <h1 class="name">{{user.firstName}} {{user.lastName}}</h1>
 
-        </h1>
+    </div>
 
-    </header>
+    <div class="content" ng-controller="UserController">
 
-    <div class="panel-body" ng-controller="UserController">
+        <tabset>
 
-        <form role="form" action="">
+            <tab heading="Contact Info">
 
-            <dl class="form-group">
+                <form class"contact-info form-horizontal" role="form">
 
-                <dt><label class="control-label" for="firstName">First Name</label></dt>
-                <dd><input class="form-control" name="firstName" placeholder="First Name" data-ng-model="user.firstName" type="text" required></dd>
+                    <div class="row">
 
-                <dt><label class="control-label" for="lastName">Last Name</label></dt>
-                <dd><input class="form-control" name="lastName" placeholder="Last Name" data-ng-model="user.lastName" type="text" required></dd>
-
-                <dt><label class="control-label" for="email">Email</label></dt>
-                <dd><input class="form-control" name="email" placeholder="Email" data-ng-model="user.email" type="text" required></dd>
-
-                <dt><label class="control-label" for="phone1">Phone 1</label></dt>
-                <dd><input class="form-control" name="phone1" placeholder="Phone 1" data-ng-model="user.phone1" type="text"></dd>
-
-                <dt><label class="control-label" for="phone2">Phone 2</label></dt>
-                <dd><input class="form-control" name="phone2" placeholder="Phone 2" data-ng-model="user.phone2" type="text"></dd>
-
-            </dl>
-
-            <div class="form-group well">
-
-                <h1>Roles</h1>
-
-                <ul>
-
-                    <li data-ng-repeat="role in user.roles">
-
-                        <form class="form-inline" role="form">
+                        <div class="col-md-6">
 
                             <div class="form-group">
 
-                                <a class="btn pull-right" href data-ng-click="removeRole(role)">Remove</a>
-
-                                <x-krossover-role user="user" role="role"></x-krossover-role>
+                                <input class="form-control" name="firstName" placeholder="First Name" data-ng-model="user.firstName" type="text" required>
 
                             </div>
 
-                        </form>
+                        </div>
 
-                    </li>
+                        <div class="col-md-6">
 
-                </ul>
+                            <div class="form-group">
 
-            </div>
+                                <input class="form-control" name="lastName" placeholder="Last Name" data-ng-model="user.lastName" type="text" required>
 
-            <dl class="form-group well">
+                            </div>
 
-                <h1>Add Role</h1>
+                        </div>
 
-                <dt><label class="control-label" for="newRoleTypeId">Role Type ID</label></dt>
-                <dd><input class="form-control" name="newRoleTypeId" placeholder="" data-ng-model="newRole.type.id" type="text"></dd>
+                    </div>
 
-                <dt><label class="control-label" for="newRoleTypeName">Role Type Name</label></dt>
-                <dd><input class="form-control" name="newRoleTypeName" placeholder="" data-ng-model="newRole.type.name" type="text"></dd>
+                    <div class="form-group">
 
-                <dt><label class="control-label" for="rewRoleTeamId">Team ID</label></dt>
-                <dd><input class="form-control" name="newRoleTeamId" placeholder="" data-ng-model="newRole.teamId" type="text"></dd>
+                        <input class="form-control" name="email" placeholder="Email" data-ng-model="user.email" type="email" required>
 
-                <button class="btn btn-primary" data-ng-click="addRole(newRole)">Add Role</button>
+                    </div>
 
-            </dl>
+                    <div class="form-group">
 
-            <div class="form-group">
+                        <input class="form-control" name="phone1" placeholder="Phone Number 1" data-ng-model="user.phone1" type="tel">
 
-                <button class="btn btn-primary" data-ng-click="save(user)">Save</button>
+                    </div>
 
-                <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
+                    <div class="form-group">
 
-            </div>
+                        <input class="form-control" name="phone2" placeholder="Phone Number 2" data-ng-model="user.phone2" type="tel">
 
-        </form>
+                    </div>
+
+                </form>
+
+            </tab>
+
+            <tab heading="Roles">
+
+                <form role="form">
+
+                    <div class="form-group well">
+
+                        <h1>Roles</h1>
+
+                        <ul>
+
+                            <li data-ng-repeat="role in user.roles">
+
+                                <form class="form-inline" role="form">
+
+                                    <div class="form-group">
+
+                                        <a class="btn pull-right" href data-ng-click="removeRole(role)">Remove</a>
+
+                                        <x-krossover-role user="user" role="role"></x-krossover-role>
+
+                                    </div>
+
+                                </form>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <dl class="form-group well">
+
+                        <h1>Add Role</h1>
+
+                        <dt><label class="control-label" for="newRoleTypeId">Role Type ID</label></dt>
+                        <dd><input class="form-control" name="newRoleTypeId" placeholder="" data-ng-model="newRole.type.id" type="text"></dd>
+
+                        <dt><label class="control-label" for="newRoleTypeName">Role Type Name</label></dt>
+                        <dd><input class="form-control" name="newRoleTypeName" placeholder="" data-ng-model="newRole.type.name" type="text"></dd>
+
+                        <dt><label class="control-label" for="rewRoleTeamId">Team ID</label></dt>
+                        <dd><input class="form-control" name="newRoleTeamId" placeholder="" data-ng-model="newRole.teamId" type="text"></dd>
+
+                        <button class="btn btn-primary" data-ng-click="addRole(newRole)">Add Role</button>
+
+                    </dl>
+
+                </form>
+
+            </tab>
+
+            <tab heading="Usage Report" disabled="true"></tab>
+
+        </tabset>
+
+        <button class="btn btn-primary" data-ng-click="save(user)">Save</button>
+
+        <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
 
     </div>
 
