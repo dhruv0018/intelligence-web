@@ -1,24 +1,24 @@
-<section class="container">
+<section class="account">
 
-    <img src="http://lorempixel.com/200/200/sports/Pic-of-indexer" alt="Pic of indexer" class="img-thumbnail pull-right">
+    <div class="info-bar">
 
-    <h1>Your Information</h1>
+        <div class="avatar">
 
-    <h2>{{name}}</h2>
+            <img src="http://lorempixel.com/40/40/sports" alt="Avatar">
 
-    <p><a href="#">change password</a></p>
+        </div>
 
-    <p><a href="#">change email address</a></p>
-
-</section>
-
-<div class="panel panel-default" data-ng-show="isSuperAdmin">
-
-    <div class="panel-body">
-
-        You are a Super Admin
+        <h1 class="name">{{user.firstName}} {{user.lastName}}</h1>
 
     </div>
 
-</div>
+    <div class="content">
+
+        <p><a href="#">change password</a></p>
+
+        <p><a href="#">change email address</a></p>
+
+    </div>
+
+</section>
 
