@@ -15,8 +15,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                 var self = this;
 
                 /* Remove the user password from the model. If set it will
-                    * be sent in a resource call. So only set it if the intent
-                    * is to change the password. */
+                 * be sent in a resource call. So only set it if the intent
+                 * is to change the password. */
                 delete user.password;
 
                 /* Convert the last accessed string to a date object. */
@@ -26,7 +26,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (isNaN(user.lastAccessed.valueOf())) user.lastAccessed = '';
 
                 /* Copy all of the properties from the retrieved $resource
-                    * "user" object. */
+                 * "user" object. */
                 angular.extend(user, self);
 
                 return user;
