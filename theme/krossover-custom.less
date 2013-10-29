@@ -59,12 +59,26 @@
     display: block;
 }
 
+.modal-backdrop {
+
+    &.in { .opacity(.9); }
+}
+
+.modal-title {
+
+    color: @brand-blue;
+}
+
 .modal-content {
 
+    font-size: 15px;
+    font-family: @font-family-serif;
+    text-transform: uppercase;
     border-radius: @border-radius-base;
 }
 
-.btn {
+.btn,
+.btn-lg {
 
     font-family: @font-family-serif;
     text-transform: uppercase;
