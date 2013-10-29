@@ -2,21 +2,41 @@
 
     <div class="info-bar">
 
-        <div class="avatar">
+        <x-krossover-role user="user" role="user.currentRole"></x-krossover-role>
 
-            <img src="http://lorempixel.com/40/40/sports" alt="Avatar">
+        <tabset vertical="true" direction="right">
 
-        </div>
+            <tab class="contact-info" heading="Contact Info">
 
-        <h1 class="name">{{user.firstName}} {{user.lastName}}</h1>
+                <div class="content">
 
-    </div>
+                    <p><a href="#">change password</a></p>
 
-    <div class="content">
+                    <p><a href="#">change email address</a></p>
 
-        <p><a href="#">change password</a></p>
+                </div>
 
-        <p><a href="#">change email address</a></p>
+            </tab>
+
+            <tab class="roles" heading="Roles">
+
+                <div class="content">
+
+                    <ul class="list-group">
+
+                        <li class="role list-group-item" data-ng-repeat="role in user.roles">
+
+                            <x-krossover-role user="user" role="role"></x-krossover-role>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </tab>
+
+        </tabset>
 
     </div>
 
