@@ -62,6 +62,28 @@
 
             <tab class="roles" heading="Roles">
 
+                <div class="newRole">
+
+                    <select data-ng-model="newRole" data-ng-options="role.type.name for role in roles | EditableRolesByRole: currentRole track by role.type.id">
+
+                        <option value="">Pick a Role</option>
+
+                    </select>
+
+                    <a href data-ng-click="addNewRole(newRole)"><i class="icon-plus-sign"></i> Add Role</a>
+
+                </div>
+
+                <ul class="list-group">
+
+                    <li class="role-new list-group-item" data-ng-repeat="role in user.newRoles">
+
+                        <x-krossover-new-role user="user" role="role"></x-krossover-new-role>
+
+                    </li>
+
+                </ul>
+
                 <ul class="list-group">
 
                     <li class="role list-group-item" data-ng-repeat="role in user.roles">
