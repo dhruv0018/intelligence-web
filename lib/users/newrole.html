@@ -1,0 +1,100 @@
+<div class="role-new">
+
+    <div data-ng-if="role.type.id == ROLE_TYPE.COACH">
+
+        <h4>Head Coach</h4>
+
+        <form role="form">
+
+            <div class="form-group">
+
+                <select class="form-control">
+                    <option>Pick a Sport</option>
+                    <option>Fake Sport 1</option>
+                    <option>Fake Sport 2</option>
+                    <option>Fake Sport 3</option>
+                    <option>Fake Sport 4</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <select class="form-control" data-ng-model="team" data-ng-options="team.name for team in teams">
+
+                    <option value="">Team name</option>
+
+                </select>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div data-ng-if="role.type.id == ROLE_TYPE.ASSISTANT_COACH">
+
+        <h4>Assistant Coach</h4>
+
+        <form role="form">
+
+            <div class="form-group">
+
+                <select class="form-control">
+                    <option>Pick a Sport</option>
+                    <option>Fake Sport 1</option>
+                    <option>Fake Sport 2</option>
+                    <option>Fake Sport 3</option>
+                    <option>Fake Sport 4</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <select class="form-control" data-ng-model="team" data-ng-options="team.name for team in teams">
+
+                    <option value="">Team name</option>
+
+                </select>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div data-ng-if="role.type.id == ROLE_TYPE.INDEXER">
+
+        <h4>Indexer</h4>
+
+        <p>Pick work this person can do:</p>
+
+        <div class="row">
+
+            <div class="col-md-6"><input type="checkbox"> Basketball Indexing</div><div class="col-md-r"><input type="checkbox"> Basketball QA</div>
+            <div class="col-md-6"><input type="checkbox"> Football Indexing</div><div class="col-md-r"><input type="checkbox"> Football QA</div>
+            <div class="col-md-6"><input type="checkbox"> Lacrosse Indexing</div><div class="col-md-r"><input type="checkbox"> Lacrosse QA</div>
+
+        </div>
+
+    </div>
+
+    <div data-ng-if="role.type.id == ROLE_TYPE.ATHLETE">
+
+        <h4>Athlete</h4>
+
+        <p>Only coaches can add an athlete to a team roster</p>
+
+        <p>Only Athletes can add parents to their account</p>
+
+    </div>
+
+    <div>
+
+        <a class="btn-role-new" href data-ng-click="addRole(role)"><i class="icon-plus-sign"></i> Add New Role</a>
+
+    </div>
+
+</div>
+

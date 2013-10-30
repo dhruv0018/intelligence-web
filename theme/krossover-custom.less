@@ -5,9 +5,22 @@
 @search-bar-height: 90px;
 @search-bar-form-height: 40px;
 
-.body {
+body {
 
+    color: @gray-dark;
     font-weight: 200;
+}
+
+select {
+
+    color: @gray-dark;
+    padding: 0.5em;
+    outline: 0;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: @border-radius-base;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .container {
@@ -21,6 +34,7 @@
 .table {
 
     font-weight: 200;
+    letter-spacing: 0.01em;
 
     td:first-child {
 
@@ -153,6 +167,8 @@
     padding: 25px;
     background-color: rgb(247, 248, 248);
     text-transform: uppercase;
+    border-bottom: 1px solid rgb(216, 216, 216);
+    box-shadow: 0 1px 3px rgb(230, 229, 228);
 
     .btn-add-new {
 

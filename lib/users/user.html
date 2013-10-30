@@ -2,23 +2,13 @@
 
     <div class="info-bar">
 
-        <div class="avatar">
+        <x-krossover-role user="user" role="role"></x-krossover-role>
 
-            <img src="http://lorempixel.com/40/40/sports" alt="Avatar">
+        <tabset vertical="true" direction="right">
 
-        </div>
+            <tab class="tab-contact" heading="Contact Info">
 
-        <h1 class="name">{{user.firstName}} {{user.lastName}}</h1>
-
-    </div>
-
-    <div class="content" ng-controller="UserController">
-
-        <tabset>
-
-            <tab heading="Contact Info">
-
-                <form class"contact-info form-horizontal" role="form">
+                <form class"form-contact" role="form">
 
                     <div class="row">
 
@@ -64,66 +54,54 @@
 
                 </form>
 
-            </tab>
+                <button class="btn btn-primary" data-ng-disabled="disableSave" data-ng-click="save(user)">Save</button>
 
-            <tab heading="Roles">
-
-                <form role="form">
-
-                    <div class="form-group well">
-
-                        <h1>Roles</h1>
-
-                        <ul>
-
-                            <li data-ng-repeat="role in user.roles">
-
-                                <form class="form-inline" role="form">
-
-                                    <div class="form-group">
-
-                                        <a class="btn pull-right" href data-ng-click="removeRole(role)">Remove</a>
-
-                                        <x-krossover-role user="user" role="role"></x-krossover-role>
-
-                                    </div>
-
-                                </form>
-
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                    <dl class="form-group well">
-
-                        <h1>Add Role</h1>
-
-                        <dt><label class="control-label" for="newRoleTypeId">Role Type ID</label></dt>
-                        <dd><input class="form-control" name="newRoleTypeId" placeholder="" data-ng-model="newRole.type.id" type="text"></dd>
-
-                        <dt><label class="control-label" for="newRoleTypeName">Role Type Name</label></dt>
-                        <dd><input class="form-control" name="newRoleTypeName" placeholder="" data-ng-model="newRole.type.name" type="text"></dd>
-
-                        <dt><label class="control-label" for="rewRoleTeamId">Team ID</label></dt>
-                        <dd><input class="form-control" name="newRoleTeamId" placeholder="" data-ng-model="newRole.teamId" type="text"></dd>
-
-                        <button class="btn btn-primary" data-ng-click="addRole(newRole)">Add Role</button>
-
-                    </dl>
-
-                </form>
+                <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
 
             </tab>
 
-            <tab heading="Usage Report" disabled="true"></tab>
+            <tab class="roles" heading="Roles">
+
+                <div class="newRole">
+
+                    <select data-ng-model="newRole" data-ng-options="role.type.name for role in roles | EditableRolesByRole: currentRole track by role.type.id">
+
+                        <option value="">Pick a Role</option>
+
+                    </select>
+
+                    <a href data-ng-click="addNewRole(newRole)"><i class="icon-plus-sign"></i> Add Role</a>
+
+                </div>
+
+                <ul class="list-group">
+
+                    <li class="role-new list-group-item" data-ng-repeat="role in user.newRoles">
+
+                        <x-krossover-new-role user="user" role="role"></x-krossover-new-role>
+
+                    </li>
+
+                </ul>
+
+                <ul class="list-group">
+
+                    <li class="role list-group-item" data-ng-repeat="role in user.roles">
+
+                        <a class="btn pull-right" href data-ng-click="removeRole(role)">Remove</a>
+                        <x-krossover-role user="user" role="role"></x-krossover-role>
+
+                    </li>
+
+                </ul>
+
+                <button class="btn btn-primary" data-ng-disabled="disableSave" data-ng-click="save(user)">Save</button>
+
+                <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
+
+            </tab>
 
         </tabset>
-
-        <button class="btn btn-primary" data-ng-click="save(user)">Save</button>
-
-        <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
 
     </div>
 

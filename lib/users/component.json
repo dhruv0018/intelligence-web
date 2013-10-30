@@ -3,6 +3,7 @@
     "templates": [
         "user.html",
         "adduser.html",
+        "newrole.html",
         "users.html"
     ],
     "scripts": [
@@ -11,6 +12,7 @@
     "styles": [
         "user.css",
         "adduser.css",
+        "newrole.css",
         "users.css"
     ]
 }

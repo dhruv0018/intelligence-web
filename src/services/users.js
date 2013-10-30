@@ -100,6 +100,8 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var roles = this.roles;
 
+                if (!roles) return undefined;
+
                 for (var i = 0; i < roles.length; i++) {
 
                     if (roles[i].isDefault === true) {
