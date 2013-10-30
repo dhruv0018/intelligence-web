@@ -4,7 +4,7 @@
 
         <h4>Head Coach</h4>
 
-        <div>
+        <form role="form">
 
             <select>
                 <option>Pick a Sport</option>
@@ -14,9 +14,17 @@
 
         <div>
 
-            <input placeholder="Team Name">
+            <div class="form-group">
 
-        </div>
+                <select class="form-control" data-ng-model="team" data-ng-options="team.name for team in teams">
+
+                    <option value="">Team name</option>
+
+                </select>
+
+            </div>
+
+        </form>
 
     </span>
 
@@ -24,7 +32,7 @@
 
         <h4>Assistant Coach</h4>
 
-        <div>
+        <form role="form">
 
             <select>
                 <option>Pick a Sport</option>
@@ -34,9 +42,17 @@
 
         <div>
 
-            <input placeholder="Team Name">
+            <div class="form-group">
 
-        </div>
+                <select class="form-control" data-ng-model="team" data-ng-options="team.name for team in teams">
+
+                    <option value="">Team name</option>
+
+                </select>
+
+            </div>
+
+        </form>
 
     </span>
 
