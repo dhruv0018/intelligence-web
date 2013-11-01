@@ -1,64 +1,84 @@
-<section class="school panel panel-primary">
+<section class="school">
 
-    <header class="panel-heading">
+    <div class="info-bar">
 
-        <h1 class="panel-title">
+        <h1 class="name">{{school.name}}</h1>
 
-            <span ng-switch on="school">
+        <tabset vertical="true" direction="right">
 
-                <span ng-switch-when="null">Add a</span>
-                <span ng-switch-default>Editing a</span>
-                <span>School</span>
+            <tab heading="School Info">
 
-            </span>
+                <div class="row">
 
-        </h1>
+                    <div class="col-md-4">
 
-    </header>
+                        <form class="form-info" name="form" role="form">
 
-    <div class="panel-body" ng-controller="SchoolController">
+                            <div class="form-group">
 
-        <form role="form" action="">
+                                <select class="form-control" name="type" data-ng-model="school.type" required>
 
-            <dl class="form-group">
+                                    <option value="college">College</option>
+                                    <option value="university">University</option>
+                                    <option value="school">High School</option>
+                                    <option value="other">Other</option>
 
-                <dt><label class="control-label" for="name">School Name</label></dt>
-                <dd><input class="form-control" name="name" placeholder="Name" data-ng-model="school.name" type="text" required /></dd>
+                                </select>
 
-                <dt><label class="control-label" for="conference">Conference</label></dt>
-                <dd><input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text" /></dd>
+                                <input class="form-control" name="name" placeholder="Name" data-ng-model="school.name" type="text" required />
 
-                <dt><label class="control-label" for="division">Division</label></dt>
-                <dd><input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text" /></dd>
+                                <input class="form-control" name="mascot" placeholder="Team Name (or mascot)" data-ng-model="school.mascot" type="text" required />
 
-                <dt><label class="control-label" for="address1">Address 1</label></dt>
-                <dd><input class="form-control" name="address1" placeholder="Address 1" data-ng-model="school.address.street1" type="text" /></dd>
+                                <input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text" />
 
-                <dt><label class="control-label" for="address1">Address 2</label></dt>
-                <dd><input class="form-control" name="address2" placeholder="Address 2" data-ng-model="school.address.street2" type="text" /></dd>
+                                <input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text" />
 
-                <dt><label class="control-label" for="city">City</label></dt>
-                <dd><input class="form-control" name="city" placeholder="City" data-ng-model="school.address.city" type="text" required /></dd>
+                                <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="school.address.street1" type="text" />
 
-                <dt><label class="control-label" for="country">Country</label></dt>
-                <dd><input class="form-control" name="country" placeholder="Country" data-ng-model="school.address.countryCode" type="text" required /></dd>
+                                <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="school.address.street2" type="text" />
 
-                <dt><label class="control-label" for="state">State</label></dt>
-                <dd><input class="form-control" name="state" placeholder="State" data-ng-model="school.address.regionCode" type="text" required /></dd>
+                                <input class="form-control" name="city" placeholder="City" data-ng-model="school.address.city" type="text" required />
 
-                <dt><label class="control-label" for="postal">Postal Code</label></dt>
-                <dd><input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="school.address.postalCode" type="text" /></dd>
+                                <input class="form-control" name="country" placeholder="Country" data-ng-model="school.address.countryCode" type="text" required />
 
-            </dl>
+                                <input class="form-control" name="state" placeholder="State" data-ng-model="school.address.regionCode" type="text" required />
 
-            <div class="form-group">
+                                <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="school.address.postalCode" type="text" />
 
-                <button class="btn btn-primary" data-ng-click="save(school)">Save</button>
-                <a class="pull-right" href data-ng-click="cancel()">cancel</a>
+                            </div>
 
-            </div>
+                            <div class="form-group">
 
-        </form>
+                                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(school)">Save</button>
+                                <a class="pull-right" href data-ng-click="cancel()">cancel</a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <h3>Teams</h3>
+
+                            <ul>
+
+                                <li data-ng-repeat="team in school.teams">
+
+                                    <a data-ui-sref="team({ id: team.id } )">{{team.name}}</a>
+
+                                </li>
+
+                            </ul>
+
+                    </div>
+
+                </div>
+
+            </tab>
+
+        </tabset>
 
     </div>
 

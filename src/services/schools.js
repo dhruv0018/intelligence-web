@@ -25,8 +25,15 @@ IntelligenceWebClient.factory('SchoolsFactory', [
 
                 school = school || self;
 
-                if (school.id) self.resource.update(school);
-                else self.resource.create(school);
+                if (school.id) {
+
+                    school.$update();
+
+                } else {
+
+                    var newSchool = new SchoolsResource(school);
+                    newSchool.$create();
+                }
             }
         };
 
