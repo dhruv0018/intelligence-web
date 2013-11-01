@@ -1,92 +1,117 @@
-<section class="team panel panel-primary">
+<section class="team">
 
-    <header class="panel-heading">
+    <div class="info-bar">
 
-        <h1 class="panel-title">
+        <h1 class="name">{{team.name}}</h1>
 
-            <span ng-switch on="team.name">
+        <tabset vertical="true" direction="right">
 
-                <span ng-switch-when="null">Add a new team</span>
-                <span ng-switch-default>{{team.name}}</span>
+            <tab heading="Team Info">
 
-            </span>
+                <form class="form-info" role="form" action="">
 
-        </h1>
+                    <div class="form-group">
 
-    </header>
+                        <select class="form-control" name="sport" placeholder="Sport" type="text" required>
+                            <option>Pick a Sport</option>
+                            <option>Fake Sport 1</option>
+                            <option>Fake Sport 2</option>
+                            <option>Fake Sport 3</option>
+                            <option>Fake Sport 4</option>
+                        </select>
 
-    <div class="panel-body" ng-controller="TeamController">
+                        <select class="form-control" name="name" data-ng-model="team.school" data-ng-options="school.name for school in schools track by school.id" required>
+                            <option>School Name</option>
+                        </select>
 
-        <form role="form" action="">
+                        <a class="btn-new" data-ui-sref="school">add a new school</a>
 
-            <dl class="form-group">
+                        <input class="form-control" name="name" placeholder="Team Name" data-ng-model="team.name" type="text" required>
 
-                <dt><label class="control-label" for="sport">Sport</label></dt>
-                <dd><input class="form-control" name="sport" placeholder="Sport" type="text" required></dd>
+                        <p>For schools, enter just the mascot name. E.g. "Bears"</p>
 
-                <dt><label class="control-label" for="leagues">Leagues</label></dt>
-                <dd>
+                        <p>For all others, enter full team name. E.g. "Cleveland Cavilers"</p>
 
-                    <input class="form-control" name="leagues" placeholder="Leagues" type="text" required>
-                    <input chass="form-control" name="camp" type="checkbox"> Check if Camp, Tournament, or Showcase
+                    </div>
 
-                </dd>
+                    <hr>
 
-                <dt><label class="control-label" for="name">Team Name</label></dt>
-                <dd><input class="form-control" name="name" placeholder="Team Name" data-ng-model="team.name" type="text" required></dd>
+                    <div class="form-group">
 
-                <p>For schools, enter just the mascot name. E.g. "Bears"</p>
+                        <input class="form-control" name="conference" placeholder="Conference" data-ng-model="team.school.conference" type="text" disabled>
 
-                <p>For all others, enter full team name. E.g. "Cleveland
-                Cavilers"</p>
+                        <input class="form-control" name="division" placeholder="Division" data-ng-model="team.school.division" type="text" disabled>
 
-            </dl>
+                        <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="team.school.address.street1" type="text" disabled>
 
-            <hr>
+                        <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="team.school.address.street2" type="text" disabled>
 
-            <dl class="form-group">
+                        <input class="form-control" name="city" placeholder="City" data-ng-model="team.school.address.city" type="text" required disabled>
 
-                <dt><label class="control-label" for="name">School Name</label></dt>
-                <dd>
-                    <select class="form-control" name="name" data-ng-model="team.school" ng-options="school.name for school in schools track by school.id" required></select>
-                    <a data-ui-sref="school">add a new school</a>
-                </dd>
+                        <input class="form-control" name="country" placeholder="Country" data-ng-model="team.school.address.countryCode" type="text" required disabled>
 
-                <dt><label class="control-label" for="conference">Conference</label></dt>
-                <dd><input class="form-control" name="conference" placeholder="Conference" data-ng-model="team.school.conference" type="text" disabled></dd>
+                        <input class="form-control" name="state" placeholder="State" data-ng-model="team.school.address.regionCode" type="text" required disabled>
 
-                <dt><label class="control-label" for="division">Division</label></dt>
-                <dd><input class="form-control" name="division" placeholder="Division" data-ng-model="team.school.division" type="text" disabled></dd>
+                        <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="team.school.address.postalCode" type="text" disabled>
 
-                <dt><label class="control-label" for="address1">Address 1</label></dt>
-                <dd><input class="form-control" name="address1" placeholder="Address 1" data-ng-model="team.school.address.street1" type="text" disabled></dd>
+                    </div>
 
-                <dt><label class="control-label" for="address1">Address 2</label></dt>
-                <dd><input class="form-control" name="address2" placeholder="Address 2" data-ng-model="team.school.address.street2" type="text" disabled></dd>
+                </form>
 
-                <dt><label class="control-label" for="city">City</label></dt>
-                <dd><input class="form-control" name="city" placeholder="City" data-ng-model="team.school.address.city" type="text" required disabled></dd>
-
-                <dt><label class="control-label" for="country">Country</label></dt>
-                <dd><input class="form-control" name="country" placeholder="Country" data-ng-model="team.school.address.countryCode" type="text" required disabled></dd>
-
-                <dt><label class="control-label" for="state">State</label></dt>
-                <dd><input class="form-control" name="state" placeholder="State" data-ng-model="team.school.address.regionCode" type="text" required disabled></dd>
-
-                <dt><label class="control-label" for="postal">Postal Code</label></dt>
-                <dd><input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="team.school.address.postalCode" type="text" disabled></dd>
-
-            </dl>
-
-            <div class="form-group">
-
-                <button class="btn btn-primary" data-ng-click="next()">Next</button>
+                <button class="btn btn-primary" data-ng-click="save(team)">Save</button>
 
                 <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
 
-            </div>
+            </tab>
 
-        </form>
+            <tab heading="Team Members">
+
+                <table class="members table">
+
+                    <thead>
+
+                        <th>Role</th>
+                        <th>Name</th>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr class="member" data-ng-repeat="role in team.roles | filter:onlyCurrentRoles | orderBy:team.roles.type.name">
+
+                            <td>{{role.type.name}}</td>
+                            <td><a data-ui-sref="user({ id: role.userId })">{{role.user.firstName}} {{role.user.lastName}}</a></td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <h6>Past users associated with this team</h6>
+
+                <table class="members table">
+
+                    <tbody>
+
+                        <tr class="member" data-ng-repeat="role in team.roles | filter:onlyPastRoles | orderBy:team.roles.type.name">
+
+                            <td>{{role.type.name}}</td>
+                            <td><a data-ui-sref="user({ id: role.userId })">{{role.user.firstName}} {{role.user.lastName}}</a></td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <button class="btn btn-primary" data-ng-click="save(team)">Save</button>
+
+                <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
+
+            </tab>
+
+        </tabset>
 
     </div>
 
