@@ -10,6 +10,11 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
             list: [],
 
+            get: function(teamId) {
+
+                return this.resource.get({ id: teamId });
+            },
+
             getAll: function() {
 
                 var self = this;
