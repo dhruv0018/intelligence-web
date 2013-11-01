@@ -8,7 +8,7 @@
 
             <tab heading="Team Info">
 
-                <form class="form-info" role="form" action="">
+                <form class="form-info" name="form" role="form">
 
                     <div class="form-group">
 
@@ -58,7 +58,7 @@
 
                 </form>
 
-                <button class="btn btn-primary" data-ng-click="save(team)">Save</button>
+                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(team)">Save</button>
 
                 <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
 
