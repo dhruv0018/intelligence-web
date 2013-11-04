@@ -38,6 +38,13 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 team = team || self;
 
+                delete team.school;
+
+                for (var i = 0; i < team.roles.length; i++) {
+
+                    delete team.roles[i].user;
+                }
+
                 if (team.id) team.$update();
 
                 else {
