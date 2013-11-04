@@ -2,11 +2,11 @@ var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('SchoolsFactory', [
     'SchoolsResource',
-    function(schools) {
+    function(SchoolsResource) {
 
         var SchoolsFactory = {
 
-            resource: schools,
+            resource: SchoolsResource,
 
             list: [],
 
