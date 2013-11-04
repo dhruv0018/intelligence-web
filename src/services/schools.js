@@ -25,6 +25,8 @@ IntelligenceWebClient.factory('SchoolsFactory', [
 
                 school = school || self;
 
+                delete school.teams;
+
                 if (school.id) {
 
                     school.$update();
