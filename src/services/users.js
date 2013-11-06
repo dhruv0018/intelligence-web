@@ -29,6 +29,21 @@ IntelligenceWebClient.factory('UsersFactory', [
                  * "user" object. */
                 angular.extend(user, self);
 
+                /* If the user only has one role, then use it for
+                 * their current one. */
+                if (user.roles && user.roles.length === 1)
+                    user.currentRole = user.roles[0];
+
+                /* Get the users default role, in any. */
+                var defaultRole = user.getDefaultRole();
+
+                /* If the user has a default role defined, then use it
+                 * for their default and current one. */
+                if (defaultRole) {
+                    user.defaultRole = defaultRole;
+                    user.currentRole = defaultRole;
+                }
+
                 return user;
             },
 
@@ -123,8 +138,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             * Sets the users default role.
             */
             setDefaultRole: function(newDefaultRole) {
-
-                console.log(newDefaultRole);
 
                 var roles = this.roles;
 
