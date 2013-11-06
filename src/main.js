@@ -13,7 +13,7 @@ require('./models/teams');
 require('./models/schools');
 
 require('./services/authentication');
-require('./services/token');
+require('./services/tokens');
 require('./services/session');
 require('./services/users');
 require('./services/teams');
