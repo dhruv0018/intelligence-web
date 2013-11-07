@@ -19,6 +19,7 @@ require('./services/users');
 require('./services/teams');
 require('./services/schools');
 
+require('./root');
 require('./routes');
 require('./errors');
 
