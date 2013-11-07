@@ -88,7 +88,7 @@ describe('SessionService', function() {
             expect(SessionService.currentUser).to.be.null;
         }));
 
-        it('should save a user the session', inject(function(SessionService) {
+        it('should save a user in the session', inject(function(SessionService) {
 
             SessionService.storeCurrentUser(user);
             SessionService.isCurrentUserStored().should.be.true;
