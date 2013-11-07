@@ -64,7 +64,8 @@
 
                 <div class="newRole">
 
-                    <select data-ng-model="newRole" data-ng-options="role.type.name for role in roles | EditableRolesByRole: currentRole track by role.type.id">
+                    <select data-ng-model="newRole"
+                        data-ng-options="role.type.name for role in roles | EditableRolesByRole: currentUser.currentRole track by role.type.id">
 
                         <option value="">Pick a Role</option>
 

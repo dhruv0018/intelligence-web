@@ -139,24 +139,28 @@ IntelligenceWebClient.factory('UsersFactory', [
             */
             setDefaultRole: function(newDefaultRole) {
 
+                this.currentRole = newDefaultRole;
+
                 var roles = this.roles;
 
                 for (var i = 0; i < roles.length; i++) {
 
                     roles[i].isDefault = (newDefaultRole.id === roles[i].id);
                 }
+
+                this.save();
             },
 
-            isAdmin: function(role) {
+            isAdmin: function() {
 
-                if (!role) return false;
-                return role.type.id == ROLE_TYPE.ADMIN;
+                if (!this.currentRole) return false;
+                return this.currentRole.type.id == ROLE_TYPE.ADMIN;
             },
 
-            isSuperAdmin: function(role) {
+            isSuperAdmin: function() {
 
-                if (!role) return false;
-                return role.type.id == ROLE_TYPE.SUPER_ADMIN;
+                if (!this.currentRole) return false;
+                return this.currentRole.type.id == ROLE_TYPE.SUPER_ADMIN;
             }
         };
 
