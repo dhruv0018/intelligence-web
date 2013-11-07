@@ -95,6 +95,10 @@ IntelligenceWebClient.service('SessionService', [
          */
         this.retrieveCurrentUser = function(userId, callback) {
 
+            var self = this;
+
+            var user;
+
             callback = callback || function(user) {
 
                 return user;
@@ -103,19 +107,25 @@ IntelligenceWebClient.service('SessionService', [
             /* Retrieve user from memory. */
             if (this.currentUser) {
 
-                return callback(this.currentUser);
+                user = this.currentUser;
+                self.storeCurrentUser(user);
+                return user;
             }
 
             /* Retrieve user from session. */
             else if (sessionStorage[CURRENT_USER_KEY]) {
 
-                return callback(this.deserializeUser(sessionStorage[CURRENT_USER_KEY]));
+                user = self.deserializeUser(sessionStorage[CURRENT_USER_KEY]);
+                self.storeCurrentUser(user);
+                return user;
             }
 
             /* Retrieve user from browser. */
             else if (localStorage[CURRENT_USER_KEY]) {
 
-                return callback(this.deserializeUser(localStorage[CURRENT_USER_KEY]));
+                user = self.deserializeUser(localStorage[CURRENT_USER_KEY]);
+                self.storeCurrentUser(user);
+                return user;
             }
 
             /* Retrieve user from server. */
@@ -125,6 +135,7 @@ IntelligenceWebClient.service('SessionService', [
 
                 users.get(userId, function(user) {
 
+                    self.storeCurrentUser(user);
                     return callback(user);
                 });
             }
