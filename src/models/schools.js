@@ -1,12 +1,12 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('SchoolsResource', [
-    '$resource',
-    function($resource) {
+    'config', '$resource',
+    function(config, $resource) {
 
         var SchoolsResource = $resource(
 
-            'https://www-dev.krossover.com/intelligence-api/v1/schools/:id', {
+            config.api.uri + 'schools/:id', {
 
                 id: '@id'
 

@@ -4,6 +4,7 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'ngResource',
     'ui.router',
     'ui.bootstrap',
+    'config',
     'login',
     'role',
     'roles',

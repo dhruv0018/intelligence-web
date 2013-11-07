@@ -13,6 +13,33 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
+        ngconstant: {
+            dev: {
+                dest: 'src/config.js',
+                name: 'config',
+                constants: {
+                    pkg: grunt.file.readJSON('package.json'),
+                    config: grunt.file.readJSON('config/dev.json')
+                }
+            },
+            prod: {
+                dest: 'src/config.js',
+                name: 'config',
+                constants: {
+                    pkg: grunt.file.readJSON('package.json'),
+                    config: grunt.file.readJSON('config/prod.json')
+                }
+            },
+            dist: {
+                dest: 'src/config.js',
+                name: 'config',
+                constants: {
+                    pkg: grunt.file.readJSON('package.json'),
+                    config: grunt.file.readJSON('config/dist.json')
+                }
+            }
+        },
+
         files: {
             html: {
                 src: [
@@ -477,6 +504,7 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', [
         'less',
         'concat:angular',
+        'ngconstant:dev',
         'component:build',
         'browserify:dev',
         'concat:build',
@@ -491,6 +519,7 @@ module.exports = function(grunt) {
         'install',
         'less',
         'concat:angularmin',
+        'ngconstant:prod',
         'component:build',
         'browserify:prod',
         'concat:build',
@@ -506,7 +535,20 @@ module.exports = function(grunt) {
     grunt.registerTask('dist', [
         'clean:dist',
         'clean:prod',
-        'prod',
+        'install',
+        'less',
+        'concat:angularmin',
+        'ngconstant:dist',
+        'component:build',
+        'browserify:prod',
+        'concat:build',
+        'autoprefixer',
+        'rework',
+        'copy:component-assets',
+        'copy:prod-assets',
+        'copy:prod',
+        'htmlmin',
+        'csso',
         'compress',
         'ver:dist']);
 };

@@ -75,12 +75,13 @@ var ROLES = [
 IntelligenceWebClient.constant('ROLES', ROLES);
 
 IntelligenceWebClient.factory('UsersResource', [
-    '$resource',
-    function($resource) {
+    'config', '$resource',
+    function(config, $resource) {
 
         var UsersResource = $resource(
 
-            'https://www-dev.krossover.com/intelligence-api/v1/users/:id',
+            config.api.uri + 'users/:id',
+
             {
                 id: '@id'
 

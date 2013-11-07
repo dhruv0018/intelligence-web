@@ -1,0 +1,11 @@
+{
+    "api": {
+        "uri": {
+            "protocol": "https",
+            "subdomain": "www-dev",
+            "domain": "krossover.com",
+            "base": "intelligence-api",
+            "version": "/v1"
+        }
+    }
+}

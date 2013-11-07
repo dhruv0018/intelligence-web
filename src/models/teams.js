@@ -1,12 +1,13 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('TeamsResource', [
-    '$resource',
-    function($resource) {
+    'config', '$resource',
+    function(config, $resource) {
 
         var TeamsResource = $resource(
 
-            'https://www-dev.krossover.com/intelligence-api/v1/teams/:id',
+            config.api.uri + 'teams/:id',
+
             {
                 id: '@id'
 
