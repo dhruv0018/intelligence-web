@@ -129,15 +129,20 @@ IntelligenceWebClient.service('SessionService', [
             }
 
             /* Retrieve user from server. */
-            else {
-
-                if (!userId) throw new Error('Missing user identifier');
+            else if (userId) {
 
                 users.get(userId, function(user) {
 
                     self.storeCurrentUser(user);
                     return callback(user);
                 });
+            }
+
+            /* No stored user could be found and not enough information provided
+             * to retrieve one, so throw an error. */
+            else {
+
+                throw new Error('Could not retrieve user');
             }
         };
     }
