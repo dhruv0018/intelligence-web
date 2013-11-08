@@ -1,0 +1,11 @@
+{
+    "oauth": {
+        "uri": "https://www-dev.krossover.com/intelligence-api/oauth/",
+        "clientId": "cid",
+        "clientSecret": "csecret",
+        "state": "xyz"
+    },
+    "api": {
+        "uri": "https://www-dev.krossover.com/intelligence-api/v1/"
+    }
+}

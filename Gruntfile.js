@@ -13,6 +13,33 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
+        ngconstant: {
+            dev: {
+                dest: 'src/config.js',
+                name: 'config',
+                constants: {
+                    pkg: grunt.file.readJSON('package.json'),
+                    config: grunt.file.readJSON('config/dev.json')
+                }
+            },
+            prod: {
+                dest: 'src/config.js',
+                name: 'config',
+                constants: {
+                    pkg: grunt.file.readJSON('package.json'),
+                    config: grunt.file.readJSON('config/prod.json')
+                }
+            },
+            dist: {
+                dest: 'src/config.js',
+                name: 'config',
+                constants: {
+                    pkg: grunt.file.readJSON('package.json'),
+                    config: grunt.file.readJSON('config/dist.json')
+                }
+            }
+        },
+
         files: {
             html: {
                 src: [
@@ -130,6 +157,10 @@ module.exports = function(grunt) {
             angular: {
                 src: ['vendor/angular/angular.js','vendor/angular-resource/angular-resource.js'],
                 dest: 'build/angular.js'
+            },
+            angularmin: {
+                src: ['vendor/angular/angular.min.js','vendor/angular-resource/angular-resource.min.js'],
+                dest: 'build/angular.min.js'
             }
         },
 
@@ -190,7 +221,7 @@ module.exports = function(grunt) {
             prod: {
                 files: {
                     'prod/intelligence/.htaccess': 'src/.htaccess',
-                    'prod/intelligence/assets': 'build/assets/**/*'
+                    'prod/intelligence/scripts.js': 'build/bundle.js'
                 }
             },
             'prod-assets': {
@@ -229,7 +260,7 @@ module.exports = function(grunt) {
         },
 
         browserify: {
-            build: {
+            dev: {
                 options: {
                     transform: ['decomponentify'],
                     shim: {
@@ -243,6 +274,28 @@ module.exports = function(grunt) {
                         },
                         bootstrap: {
                             path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
+                            exports: 'bootstrap'
+                        }
+                    }
+                },
+                files: {
+                    'build/bundle.js': ['src/main.js']
+                }
+            },
+            prod: {
+                options: {
+                    transform: ['decomponentify'],
+                    shim: {
+                        angular: {
+                            path: 'build/angular.min.js',
+                            exports: 'angular'
+                        },
+                        angularui: {
+                            path: 'vendor/angular-ui-router/release/angular-ui-router.min.js',
+                            exports: 'angularui'
+                        },
+                        bootstrap: {
+                            path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
                             exports: 'bootstrap'
                         }
                     }
@@ -424,11 +477,11 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['lib/**/*.less', 'theme/**/*.less'],
-                tasks: ['lesslint', 'recess', 'build', 'copy:dev']
+                tasks: ['less', 'copy:dev']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
-                tasks: ['jsvalidate', 'jshint', 'build-js', 'test', 'copy:dev']
+                tasks: ['jsvalidate', 'jshint', 'component:build', 'browserify:dev', 'test', 'copy:dev']
             }
         }
 
@@ -439,19 +492,63 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('build-js', ['concat:angular', 'component:build', 'browserify']);
-    grunt.registerTask('build-css', ['concat:build', 'autoprefixer', 'rework']);
-    grunt.registerTask('build', ['less', 'build-js', 'build-css', 'copy:component-assets']);
     grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
     grunt.registerTask('lint-html', ['html-inspector']);
-    grunt.registerTask('lint', ['lesslint', 'csslint', 'recess', 'jshint']);
+    grunt.registerTask('lint', ['csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
-    grunt.registerTask('dev', ['build', 'copy:dev', 'copy:dev-assets']);
-    grunt.registerTask('prod', ['clean', 'install', 'build', 'copy:prod-assets', 'min', 'ver:prod']);
-    grunt.registerTask('dist', ['prod', 'compress', 'ver:dist']);
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('deploy', ['dev', 'shell:dev']);
     grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
+    grunt.registerTask('dev', [
+        'less',
+        'concat:angular',
+        'ngconstant:dev',
+        'component:build',
+        'browserify:dev',
+        'concat:build',
+        'autoprefixer',
+        'rework',
+        'copy:component-assets',
+        'copy:dev-assets',
+        'copy:dev']);
+
+    grunt.registerTask('prod', [
+        'clean:prod',
+        'install',
+        'less',
+        'concat:angularmin',
+        'ngconstant:prod',
+        'component:build',
+        'browserify:prod',
+        'concat:build',
+        'autoprefixer',
+        'rework',
+        'copy:component-assets',
+        'copy:prod-assets',
+        'copy:prod',
+        'htmlmin',
+        'csso',
+        'ver:prod']);
+
+    grunt.registerTask('dist', [
+        'clean:dist',
+        'clean:prod',
+        'install',
+        'less',
+        'concat:angularmin',
+        'ngconstant:dist',
+        'component:build',
+        'browserify:prod',
+        'concat:build',
+        'autoprefixer',
+        'rework',
+        'copy:component-assets',
+        'copy:prod-assets',
+        'copy:prod',
+        'htmlmin',
+        'csso',
+        'compress',
+        'ver:dist']);
 };

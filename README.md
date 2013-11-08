@@ -90,11 +90,6 @@ There are also specific tasks for:
 #> grunt install
 ```
 
-### Building components
-```
-#> grunt build
-```
-
 ### Linting (CSS, LESS and Javascript)
 ```
 #> grunt lint

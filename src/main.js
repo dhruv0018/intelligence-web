@@ -20,6 +20,7 @@ require('./services/teams');
 require('./services/schools');
 
 require('./root');
+require('./config');
 require('./routes');
 require('./errors');
 
