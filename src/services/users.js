@@ -151,16 +151,18 @@ IntelligenceWebClient.factory('UsersFactory', [
                 this.save();
             },
 
-            isAdmin: function() {
+            isAdmin: function(role) {
 
-                if (!this.currentRole) return false;
-                return this.currentRole.type.id == ROLE_TYPE.ADMIN;
+                role = role || this.currentRole;
+                if (!role) return false;
+                return role.type.id == ROLE_TYPE.ADMIN;
             },
 
-            isSuperAdmin: function() {
+            isSuperAdmin: function(role) {
 
-                if (!this.currentRole) return false;
-                return this.currentRole.type.id == ROLE_TYPE.SUPER_ADMIN;
+                role = role || this.currentRole;
+                if (!role) return false;
+                return role.type.id == ROLE_TYPE.SUPER_ADMIN;
             }
         };
 
