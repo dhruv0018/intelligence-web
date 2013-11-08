@@ -1,39 +1,96 @@
 var IntelligenceWebClient = require('../app');
 
-function AuthenticationService($rootScope) {
+/**
+ * A service to manage logging users in and out. It handles getting the OAuth
+ * tokens, storing them, setting the HTTP authorization headers for future API
+ * calls, retrieving the users data once authenticated and storing it for later.
+ * @module IntelligenceWebClient
+ * @name AuthenticationService
+ * @type {service}
+ */
+IntelligenceWebClient.service('AuthenticationService', [
+    '$rootScope', '$http', 'TokensService', 'SessionService',
+    function($rootScope, $http, tokens, session) {
 
-    this.$rootScope = $rootScope;
+        return {
 
-    $rootScope.currentUser = null;
+            /**
+             * Logs a user in using their email address and password. If the
+             * user opts to remember their login it is persisted until they
+             * decide to logout.
+             * @param {String} email - the users email address; used as a unique
+             * identifier for the user.
+             * @param {String} password - a password for the users email.
+             * @param {Boolean} persist - a flag which indicates if the users
+             * login should be persisted. If true, it will be persisted.
+             * @callback {function(user)} callback - returns the current user.
+             */
+            loginUser: function(email, password, persist, callback) {
 
-    this.loginUser = function(user) {
-        $rootScope.currentUser = user;
-        $rootScope.isLoggedIn = true;
-    };
+                /* Make sure that both email and password are present. */
+                if (!email) throw new Error('Missing email');
+                if (!password) throw new Error('Missing password');
 
-    this.logoutUser = function() {
-        $rootScope.currentUser = null;
-        $rootScope.isLoggedIn = false;
-    };
+                /* Raise an error if session storage is not available. */
+                if (!window.sessionStorage) {
 
-    this.currentUser = function() {
+                    throw new Error('Session storage not available');
+                }
 
-        return $rootScope.currentUser;
-    };
-}
+                /* Raise an error if trying to persist without a storage mechanism. */
+                if (!window.localStorage && persist) {
 
-Object.defineProperty(AuthenticationService.prototype, 'isLoggedIn', {
+                    throw new Error('Unable to persist login');
+                }
 
-    get: function isLoggedIn() {
+                /* Get the OAuth tokens by verifying the users email and password
+                * though the API. Optionally persisting the tokens and user. */
+                tokens.getTokens(email, password, function(authTokens) {
 
-        return !!this.$rootScope.currentUser;
-    },
+                    /* Store the tokens. Optionally persisting. */
+                    tokens.setTokens(authTokens, persist);
 
-    set: function isLoggedIn() {
+                    /* Set the authorization header for future requests. */
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
 
-        throw new Error('Illegal attempt to override function isLoggedIn');
+                    $rootScope.$apply(function() {
+
+                        /* Retrieve the user from the session. */
+                        session.retrieveCurrentUser(email, function(user) {
+
+                            /* Store the user in the session. Optionally persisting. */
+                            session.storeCurrentUser(user, persist);
+
+                            callback(user);
+                        });
+                    });
+                });
+            },
+
+            /**
+             * Logs the current user out.
+             */
+            logoutUser: function() {
+
+                tokens.removeTokens();
+                session.clearCurrentUser();
+            },
+
+            /**
+             * Checks if there is a user logged in.
+             * @returns {Boolean} true if the user is logged in; false otherwise.
+             */
+            get isLoggedIn() {
+
+                return tokens.areTokensSet() && session.isCurrentUserStored();
+            },
+
+            /* Prevent overriding. */
+            set isLoggedIn(noop) {
+
+                throw new Error('Illegal attempt to override function isLoggedIn');
+            }
+        };
     }
-});
-
-IntelligenceWebClient.service('AuthenticationService', AuthenticationService);
+]);
 

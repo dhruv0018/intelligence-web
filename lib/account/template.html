@@ -2,7 +2,7 @@
 
     <div class="info-bar">
 
-        <x-krossover-role user="user" role="user.currentRole"></x-krossover-role>
+        <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
 
         <tabset vertical="true" direction="right">
 
@@ -24,9 +24,9 @@
 
                     <ul class="list-group">
 
-                        <li class="role list-group-item" data-ng-repeat="role in user.roles">
+                        <li class="role list-group-item" data-ng-repeat="role in currentUser.roles">
 
-                            <x-krossover-role user="user" role="role"></x-krossover-role>
+                            <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
                         </li>
 

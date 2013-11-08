@@ -74,21 +74,29 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$location', '$state', '$stateParams', 'AuthenticationService',
-    function run($rootScope, $location, $state, $stateParams, AuthenticationService) {
+    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService',
+    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
         $rootScope.$on('$stateChangeStart', function(event, to, toParams, from, fromParams) {
 
+            $rootScope.isLoggedIn = auth.isLoggedIn;
+
             /* If not accessing a public state and not logged in, then
-             * redirect the user to login.
-             */
-            if (!to.public && !AuthenticationService.isLoggedIn) {
+             * redirect the user to login. */
+            if (!to.public && !auth.isLoggedIn) {
 
                 event.preventDefault();
                 $location.path('/login');
+            }
+
+            /* Check to see if the OAuth tokens have been set, if so then
+             * use the access token in the authorization header. */
+            if (tokens.areTokensSet()) {
+
+                $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
             }
         });
     }
