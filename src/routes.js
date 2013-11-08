@@ -29,46 +29,58 @@ IntelligenceWebClient.config([
         $stateProvider
 
             .state('root', {
-                url: '/',
-                public: true,
+                url: '',
+                abstract: true,
                 views: {
-                    'header': {
-                        templateUrl: 'header.html',
-                        controller: 'HeaderController'
-                    },
-                    'main': {
-                        template: '<h1>ROOT</h1>'
+                    'root': {
+                        template: '<ui-view/>',
+                        controller: 'RootController'
                     }
                 }
             })
 
-            .state('index', {
-                url: '/index',
-                template: '<h1>INDEX</h1>',
-                public: true
-            })
-
-            .state('test', {
-                url: '/test',
-                template: '<h1>TEST</h1><p><a ui-sref="index">Index</a></p><p><a ui-sref="private">Private</a></p>',
-                public: true
-            })
-
-            .state('private', {
-                url: '/private',
-                template: '<h1>Private</h1>',
-                public: false
-            })
-
-            .state('locked', {
-                url: '/locked',
-                template: '<h1>Locked</h1>',
-            })
-
             .state('404', {
                 url: '/404',
-                template: '<h1>Not Found</h1>',
-                public: true
+                parent: 'root',
+                public: true,
+                views: {
+                    'main@': {
+                        template: '<div class="jumbotron"><h1 class="alert alert-info">Not Found</h1></div>',
+                    }
+                }
+            })
+
+            .state('500', {
+                url: '/500',
+                parent: 'root',
+                public: true,
+                views: {
+                    'main@': {
+                        template: '<div class="jumbotron"><h1 class="alert alert-danger">Server Error</h1></div>',
+                    }
+                }
+            })
+
+            .state('501', {
+                url: '/501',
+                parent: 'root',
+                public: true,
+                views: {
+                    'main@': {
+                        template: '<div class="jumbotron"><h1 class="alert alert-warning">Not Implemented</h1></div>',
+                    }
+                }
+            })
+
+            .state('error', {
+                url: '/error',
+                parent: 'root',
+                public: true,
+                views: {
+                    'main@': {
+                        template: '<div class="jumbotron"><h1 class="alert alert-danger">Error</h1></div>',
+                    }
+                }
             });
     }
 ]);
