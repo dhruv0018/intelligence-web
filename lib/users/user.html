@@ -89,7 +89,12 @@
 
                     <li class="role list-group-item" data-ng-repeat="role in user.roles">
 
-                        <a class="btn pull-right" href data-ng-click="removeRole(role)">Remove</a>
+                        <span data-ng-hide="hideRemoveRole(role)">
+
+                            <a class="btn pull-right" href data-ng-click="removeRole(role)">Remove</a>
+
+                        </span>
+
                         <x-krossover-role user="user" role="role"></x-krossover-role>
 
                     </li>
