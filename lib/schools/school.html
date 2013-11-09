@@ -16,34 +16,31 @@
 
                             <div class="form-group">
 
-                                <select class="form-control" name="type" required>
+                                <select class="form-control" name="type" data-ng-model="school.type" data-ng-options="type.name for type in SCHOOL_TYPES track by type.id" required>
 
-                                    <option value="college">College</option>
-                                    <option value="university">University</option>
-                                    <option value="school">High School</option>
-                                    <option value="other">Other</option>
+                                    <option value="">Type</option>
 
                                 </select>
 
-                                <input class="form-control" name="name" placeholder="Name" data-ng-model="school.name" type="text" required />
+                                <input class="form-control" name="name" placeholder="Name" data-ng-model="school.name" type="text" required>
 
-                                <input class="form-control" name="mascot" placeholder="Team Name (or mascot)" type="text" required />
+                                <input class="form-control" name="mascot" placeholder="Mascot" data.ng-model="school.mascot" type="text" required>
 
-                                <input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text" />
+                                <input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text">
 
-                                <input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text" />
+                                <input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text">
 
-                                <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="school.address.street1" type="text" />
+                                <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="school.address.street1" type="text">
 
-                                <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="school.address.street2" type="text" />
+                                <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="school.address.street2" type="text">
 
-                                <input class="form-control" name="city" placeholder="City" data-ng-model="school.address.city" type="text" required />
+                                <input class="form-control" name="city" placeholder="City" data-ng-model="school.address.city" type="text" required>
 
-                                <input class="form-control" name="country" placeholder="Country" data-ng-model="school.address.countryCode" type="text" required />
+                                <input class="form-control" name="country" placeholder="Country" data-ng-model="school.address.countryCode" type="text" required>
 
-                                <input class="form-control" name="state" placeholder="State" data-ng-model="school.address.regionCode" type="text" required />
+                                <input class="form-control" name="state" placeholder="State" data-ng-model="school.address.regionCode" type="text" required>
 
-                                <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="school.address.postalCode" type="text" />
+                                <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="school.address.postalCode" type="text">
 
                             </div>
 
