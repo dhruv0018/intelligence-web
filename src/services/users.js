@@ -107,6 +107,30 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
+             * @class User
+             * @method
+             * @param {Object} role - a role object to add
+             * Adds the given role to the user.
+             */
+            addRole: function(role) {
+
+                this.roles.unshift(role);
+                this.save();
+            },
+
+            /**
+             * @class User
+             * @method
+             * @param {Object} role - a role object to be removed
+             * Removes the given role from the user.
+             */
+            removeRole: function(role) {
+
+                this.roles.splice(this.roles.indexOf(role), 1);
+                this.save();
+            },
+
+            /**
             * @class User
             * @method
             * @returns {Object} the default role object for the user. If no
