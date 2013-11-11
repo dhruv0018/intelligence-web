@@ -175,18 +175,76 @@ IntelligenceWebClient.factory('UsersFactory', [
                 this.save();
             },
 
-            isAdmin: function(role) {
+            /**
+             * @class User
+             * @method
+             * @param {Object} role - the role object to check for the match.
+             * @param {Object} match - the role object to match.
+             * @returns {Boolean} true if a match is found; false otherwise.
+             * Checks if the given role matches the role given as match.
+             * If only one parameter is given, its assumed to be match.
+             * If role is omitted then it will default to this users current.
+             */
+            is: function(role, match) {
+
+                if (!match) {
+
+                    match = role;
+                    role = this.currentRole;
+                }
 
                 role = role || this.currentRole;
+
                 if (!role) return false;
-                return role.type.id == ROLE_TYPE.ADMIN;
+                if (!match) throw new Error('No role to match specified');
+
+                var found = false;
+                var roleIds = role.type.id;
+                var matchIds = match.type.id;
+
+                /* Treat IDs as arrays. */
+                if (!Array.isArray(roleIds)) roleIds = [roleIds];
+                if (!Array.isArray(matchIds)) matchIds = [matchIds];
+
+                /* Loop through Id arrays looking for a match. */
+                roleIds.some(function(roleId) {
+
+                    matchIds.some(function(matchId) {
+
+                        found = roleId == matchId;
+                        return found;
+                    });
+
+                    return found;
+                });
+
+                return found;
             },
 
-            isSuperAdmin: function(role) {
+            /**
+             * @class User
+             * @method
+             * @param {Object} match - the role object to match.
+             * @returns {Boolean} true if a match is found; false otherwise.
+             * Checks if any of the users roles for a match to the role given.
+             */
+            has: function(match) {
 
-                role = role || this.currentRole;
-                if (!role) return false;
-                return role.type.id == ROLE_TYPE.SUPER_ADMIN;
+                var self = this;
+                var found = false;
+                var roles = self.roles;
+
+                if (!roles) return false;
+                if (!match) throw new Error('No role to match specified');
+
+                /* Check all roles for match. */
+                roles.some(function(role) {
+
+                    found = self.is(role, match);
+                    return found;
+                });
+
+                return found;
             }
         };
 
