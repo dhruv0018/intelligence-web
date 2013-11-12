@@ -75,6 +75,8 @@ IntelligenceWebClient.service('AuthenticationService', [
 
                 tokens.removeTokens();
                 session.clearCurrentUser();
+                sessionStorage.clear();
+                localStorage.clear();
             },
 
             /**
