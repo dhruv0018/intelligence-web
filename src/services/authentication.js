@@ -53,16 +53,13 @@ IntelligenceWebClient.service('AuthenticationService', [
                     /* Set the authorization header for future requests. */
                     $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
 
-                    $rootScope.$apply(function() {
+                    /* Retrieve the user from the session. */
+                    session.retrieveCurrentUser(email, function(user) {
 
-                        /* Retrieve the user from the session. */
-                        session.retrieveCurrentUser(email, function(user) {
+                        /* Store the user in the session. Optionally persisting. */
+                        session.storeCurrentUser(user, persist);
 
-                            /* Store the user in the session. Optionally persisting. */
-                            session.storeCurrentUser(user, persist);
-
-                            callback(user);
-                        });
+                        callback(user);
                     });
                 });
             },

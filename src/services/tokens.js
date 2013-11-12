@@ -37,6 +37,7 @@ IntelligenceWebClient.factory('TokensService', [
             if (areTokensSet()) {
 
                 var tokens = new OAuth(getAccessToken(), getRefreshToken());
+
                 callback(tokens);
             }
 
@@ -49,7 +50,10 @@ IntelligenceWebClient.factory('TokensService', [
 
                     if (error) throw error;
 
-                    callback(tokens);
+                    $rootScope.$apply(function() {
+
+                        callback(tokens);
+                    });
                 });
             }
         };
