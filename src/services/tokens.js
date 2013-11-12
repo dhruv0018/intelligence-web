@@ -16,8 +16,8 @@ var IntelligenceWebClient = require('../app');
  * @type {service}
  */
 IntelligenceWebClient.factory('TokensService', [
-    'config', '$injector',
-    function(config, $injector) {
+    '$rootScope', 'config', '$injector',
+    function($rootScope, config, $injector) {
 
         /**
          * Gets the tokens. Tokens are obtained by handshaking with the server
