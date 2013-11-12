@@ -272,10 +272,10 @@ IntelligenceWebClient.factory('UsersFactory', [
                 }
 
                 /* TODO: These rules are meant to be updated when new
-                 * requirements come in. They represent the know access rules. */
+                 * requirements come in. They represent the known access rules. */
 
                 /* Assume all other roles do not have access. */
-                else return false;
+                return false;
             }
         };
 
