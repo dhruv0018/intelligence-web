@@ -22,6 +22,16 @@
 
                 <div class="content">
 
+                    <span data-ng-hide="currentUser.is(ATHLETE)">
+
+                        <span data-ng-show="currentUser.has(COACH) || currentUser.has(PARENT) || currentUser.has(INDEXER)">
+
+                            <p><a href data-ng-click="currentUser.addRole(ATHLETE)">Associate athlete role to myself</a></p>
+
+                        </span>
+
+                    </span>
+
                     <ul class="list-group">
 
                         <li class="role list-group-item" data-ng-repeat="role in currentUser.roles">

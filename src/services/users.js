@@ -107,6 +107,30 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
+             * @class User
+             * @method
+             * @param {Object} role - a role object to add
+             * Adds the given role to the user.
+             */
+            addRole: function(role) {
+
+                this.roles.unshift(role);
+                this.save();
+            },
+
+            /**
+             * @class User
+             * @method
+             * @param {Object} role - a role object to be removed
+             * Removes the given role from the user.
+             */
+            removeRole: function(role) {
+
+                this.roles.splice(this.roles.indexOf(role), 1);
+                this.save();
+            },
+
+            /**
             * @class User
             * @method
             * @returns {Object} the default role object for the user. If no
@@ -151,16 +175,66 @@ IntelligenceWebClient.factory('UsersFactory', [
                 this.save();
             },
 
-            isAdmin: function() {
+            /**
+             * @class User
+             * @method
+             * @param {Object} role - the role object to check for the match.
+             * @param {Object} match - the role object to match.
+             * @returns {Boolean} true if a match is found; false otherwise.
+             * Checks if the given role matches the role given as match.
+             * If only one parameter is given, its assumed to be match.
+             * If role is omitted then it will default to this users current.
+             */
+            is: function(role, match) {
 
-                if (!this.currentRole) return false;
-                return this.currentRole.type.id == ROLE_TYPE.ADMIN;
+                if (!match) {
+
+                    match = role;
+                    role = this.currentRole;
+                }
+
+                role = role || this.currentRole;
+
+                if (!role) return false;
+                if (!match) throw new Error('No role to match specified');
+
+                var roleIds = role.type.id;
+                var matchIds = match.type.id;
+
+                /* Treat IDs as arrays. */
+                if (!Array.isArray(roleIds)) roleIds = [roleIds];
+                if (!Array.isArray(matchIds)) matchIds = [matchIds];
+
+                /* Loop through Id arrays looking for a match. */
+                return roleIds.some(function(roleId) {
+
+                    return matchIds.some(function(matchId) {
+
+                        return roleId == matchId;
+                    });
+                });
             },
 
-            isSuperAdmin: function() {
+            /**
+             * @class User
+             * @method
+             * @param {Object} match - the role object to match.
+             * @returns {Boolean} true if a match is found; false otherwise.
+             * Checks if any of the users roles for a match to the role given.
+             */
+            has: function(match) {
 
-                if (!this.currentRole) return false;
-                return this.currentRole.type.id == ROLE_TYPE.SUPER_ADMIN;
+                var self = this;
+                var roles = self.roles;
+
+                if (!roles) return false;
+                if (!match) throw new Error('No role to match specified');
+
+                /* Check all roles for match. */
+                return roles.some(function(role) {
+
+                    return self.is(role, match);
+                });
             }
         };
 

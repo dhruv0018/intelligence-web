@@ -4,7 +4,7 @@ var ROLE_TYPE = {
 
     SUPER_ADMIN: 1,
     ADMIN: 2,
-    COACH: 3,
+    HEAD_COACH: 3,
     ASSISTANT_COACH: 4,
     INDEXER: 5,
     PARENT: 6,
@@ -13,9 +13,10 @@ var ROLE_TYPE = {
 
 IntelligenceWebClient.constant('ROLE_TYPE', ROLE_TYPE);
 
-var ROLES = [
+var ROLES = {
 
-    {
+    SUPER_ADMIN: {
+
         type: {
 
             id: ROLE_TYPE.SUPER_ADMIN,
@@ -23,7 +24,8 @@ var ROLES = [
         }
     },
 
-    {
+    ADMIN: {
+
         type: {
 
             id: ROLE_TYPE.ADMIN,
@@ -31,15 +33,26 @@ var ROLES = [
         }
     },
 
-    {
+    COACH: {
+
         type: {
 
-            id: ROLE_TYPE.COACH,
+            id: [ROLE_TYPE.HEAD_COACH, ROLE_TYPE.ASSISTANT_COACH],
             name: 'Coach'
         }
     },
 
-    {
+    HEAD_COACH: {
+
+        type: {
+
+            id: ROLE_TYPE.HEAD_COACH,
+            name: 'Head Coach'
+        }
+    },
+
+    ASSISTANT_COACH: {
+
         type: {
 
             id: ROLE_TYPE.ASSISTANT_COACH,
@@ -47,7 +60,8 @@ var ROLES = [
         }
     },
 
-    {
+    INDEXER: {
+
         type: {
 
             id: ROLE_TYPE.INDEXER,
@@ -55,7 +69,8 @@ var ROLES = [
         }
     },
 
-    {
+    PARENT: {
+
         type: {
 
             id: ROLE_TYPE.PARENT,
@@ -63,14 +78,15 @@ var ROLES = [
         }
     },
 
-    {
+    ATHLETE: {
+
         type: {
 
             id: ROLE_TYPE.ATHLETE,
             name: 'Athlete'
         }
     }
-];
+};
 
 IntelligenceWebClient.constant('ROLES', ROLES);
 
