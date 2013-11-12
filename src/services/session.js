@@ -99,7 +99,7 @@ IntelligenceWebClient.service('SessionService', [
 
             var user;
 
-            callback = callback || function(user) {
+            callback = callback || function(error, user) {
 
                 return user;
             };
@@ -134,7 +134,7 @@ IntelligenceWebClient.service('SessionService', [
                 users.get(userId, function(user) {
 
                     self.storeCurrentUser(user);
-                    return callback(user);
+                    return callback(null, user);
                 });
             }
 
@@ -142,7 +142,7 @@ IntelligenceWebClient.service('SessionService', [
              * to retrieve one, so throw an error. */
             else {
 
-                throw new Error('Could not retrieve user');
+                return callback(new Error('Could not retrieve user', null));
             }
         };
     }

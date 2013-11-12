@@ -44,8 +44,10 @@ IntelligenceWebClient.service('AuthenticationService', [
                 }
 
                 /* Get the OAuth tokens by verifying the users email and password
-                * though the API. Optionally persisting the tokens and user. */
-                tokens.getTokens(email, password, function(authTokens) {
+                 * though the API. Optionally persisting the tokens and user. */
+                tokens.getTokens(email, password, function(error, authTokens) {
+
+                    if (error) return callback(error)
 
                     /* Store the tokens. Optionally persisting. */
                     tokens.setTokens(authTokens, persist);
@@ -54,12 +56,14 @@ IntelligenceWebClient.service('AuthenticationService', [
                     $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
 
                     /* Retrieve the user from the session. */
-                    session.retrieveCurrentUser(email, function(user) {
+                    session.retrieveCurrentUser(email, function(error, user) {
+
+                        if (error) return callback(error);
 
                         /* Store the user in the session. Optionally persisting. */
                         session.storeCurrentUser(user, persist);
 
-                        callback(user);
+                        callback(null, user);
                     });
                 });
             },

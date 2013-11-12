@@ -38,7 +38,7 @@ IntelligenceWebClient.factory('TokensService', [
 
                 var tokens = new OAuth(getAccessToken(), getRefreshToken());
 
-                callback(tokens);
+                callback(null, tokens);
             }
 
             /* Request authentication from the server. */
@@ -48,11 +48,9 @@ IntelligenceWebClient.factory('TokensService', [
 
                 oauth.getTokens(userId, password, function(error, tokens) {
 
-                    if (error) throw error;
-
                     $rootScope.$apply(function() {
 
-                        callback(tokens);
+                        callback(error, tokens);
                     });
                 });
             }
