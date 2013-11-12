@@ -8,9 +8,19 @@
 
     <div class="sport"></div>
 
-    <div class="role-title">{{roleTitle}}</div>
+    <div class="role-title">
 
-    <div class="role-name">{{roleName}}</div>
+        <span data-ng-if="users.is(role, COACH)">Coach {{user.lastName}}</span>
+        <span data-ng-if="!users.is(role, COACH)">{{user.firstName}} {{user.lastName}}</span>
+
+    </div>
+
+    <div class="role-name">
+
+        <span data-ng-if="users.is(role, COACH)"><a data-ui-sref="team({ id: role.teamId })">{{team.name}}</a></span>
+        <span data-ng-if="!users.is(role, COACH)">{{role.type.name}}</span>
+
+    </div>
 
 </div>
 
