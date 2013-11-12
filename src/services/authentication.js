@@ -47,7 +47,7 @@ IntelligenceWebClient.service('AuthenticationService', [
                  * though the API. Optionally persisting the tokens and user. */
                 tokens.getTokens(email, password, function(error, authTokens) {
 
-                    if (error) return callback(error)
+                    if (error) return callback(error);
 
                     /* Store the tokens. Optionally persisting. */
                     tokens.setTokens(authTokens, persist);
