@@ -12,12 +12,12 @@
 
                     <div class="form-group">
 
-                        <select class="form-control" name="sport" placeholder="Sport" type="text" required>
+                        <select class="form-control" name="name" data-ng-model="sport" data-ng-options="sport.name for sport in sports track by sport.id" required>
                             <option>Pick a Sport</option>
-                            <option>Fake Sport 1</option>
-                            <option>Fake Sport 2</option>
-                            <option>Fake Sport 3</option>
-                            <option>Fake Sport 4</option>
+                        </select>
+
+                        <select class="form-control" name="name" data-ng-model="team.leagueId" data-ng-options="league.name for league in leagues | filter:{'sportId':sport.id} track by league.id" required>
+                            <option>League Name</option>
                         </select>
 
                         <select class="form-control" name="name" data-ng-model="team.school" data-ng-options="school.name for school in schools track by school.id" required>
