@@ -33,6 +33,15 @@ var ROLES = {
         }
     },
 
+    INDEXER: {
+
+        type: {
+
+            id: ROLE_TYPE.INDEXER,
+            name: 'Indexer'
+        }
+    },
+
     COACH: {
 
         type: {
@@ -57,15 +66,6 @@ var ROLES = {
 
             id: ROLE_TYPE.ASSISTANT_COACH,
             name: 'Assistant Coach'
-        }
-    },
-
-    INDEXER: {
-
-        type: {
-
-            id: ROLE_TYPE.INDEXER,
-            name: 'Indexer'
         }
     },
 
