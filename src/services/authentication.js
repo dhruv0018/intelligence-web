@@ -44,8 +44,10 @@ IntelligenceWebClient.service('AuthenticationService', [
                 }
 
                 /* Get the OAuth tokens by verifying the users email and password
-                * though the API. Optionally persisting the tokens and user. */
-                tokens.getTokens(email, password, function(authTokens) {
+                 * though the API. Optionally persisting the tokens and user. */
+                tokens.getTokens(email, password, function(error, authTokens) {
+
+                    if (error) return callback(error);
 
                     /* Store the tokens. Optionally persisting. */
                     tokens.setTokens(authTokens, persist);
@@ -53,16 +55,15 @@ IntelligenceWebClient.service('AuthenticationService', [
                     /* Set the authorization header for future requests. */
                     $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
 
-                    $rootScope.$apply(function() {
+                    /* Retrieve the user from the session. */
+                    session.retrieveCurrentUser(email, function(error, user) {
 
-                        /* Retrieve the user from the session. */
-                        session.retrieveCurrentUser(email, function(user) {
+                        if (error) return callback(error);
 
-                            /* Store the user in the session. Optionally persisting. */
-                            session.storeCurrentUser(user, persist);
+                        /* Store the user in the session. Optionally persisting. */
+                        session.storeCurrentUser(user, persist);
 
-                            callback(user);
-                        });
+                        callback(null, user);
                     });
                 });
             },
@@ -74,6 +75,8 @@ IntelligenceWebClient.service('AuthenticationService', [
 
                 tokens.removeTokens();
                 session.clearCurrentUser();
+                sessionStorage.clear();
+                localStorage.clear();
             },
 
             /**
