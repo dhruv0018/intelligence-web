@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$rootScope', 'UsersResource', 'ROLE_TYPE',
-    function($rootScope, UsersResource, ROLE_TYPE) {
+    '$rootScope', 'UsersResource', 'ROLE_TYPE', 'ROLES',
+    function($rootScope, UsersResource, ROLE_TYPE, ROLES) {
 
         var UsersFactory = {
 
@@ -235,6 +235,47 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     return self.is(role, match);
                 });
+            },
+
+            /**
+             * @class User
+             * @method
+             * @param {Object} role - a role object to use as accessing role.
+             * @param {Object} verify - a role object to verify access to.
+             * @returns {Boolean} true if role has access to verify; false otherwise.
+             * Verifies that the given role has access to the requested role.
+             */
+            hasAccess:function(role, verify) {
+
+                /* Dictate what Super Admins can access. */
+                if (this.is(role, ROLES.SUPER_ADMIN)) {
+
+                    /* Super Admins can access every role. */
+                    return true;
+                }
+
+                /* Dictate what Admins can access. */
+                else if (this.is(role, ROLES.ADMIN)) {
+
+                    /* Admins can not access Super Admins or other Admins,
+                     * but can access all other roles. */
+                    return this.is(verify, ROLES.SUPER_ADMIN) ||
+                           this.is(verify, ROLES.ADMIN) ? false : true;
+                }
+
+                /* Dictate what a Head Coach can access. */
+                else if (this.is(role, ROLES.HEAD_COACH)) {
+
+                    /* A Head Coach can access Assistant Coaches and Athletes. */
+                    return this.is(verify, ROLES.ASSISTANT_COACH) ||
+                           this.is(verify, ROLES.ATHLETE) ? true : false;
+                }
+
+                /* TODO: These rules are meant to be updated when new
+                 * requirements come in. They represent the know access rules. */
+
+                /* Assume all other roles do not have access. */
+                else return false;
             }
         };
 
