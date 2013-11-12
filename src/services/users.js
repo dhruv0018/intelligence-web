@@ -198,7 +198,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!role) return false;
                 if (!match) throw new Error('No role to match specified');
 
-                var found = false;
                 var roleIds = role.type.id;
                 var matchIds = match.type.id;
 
@@ -207,18 +206,13 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!Array.isArray(matchIds)) matchIds = [matchIds];
 
                 /* Loop through Id arrays looking for a match. */
-                roleIds.some(function(roleId) {
+                return roleIds.some(function(roleId) {
 
-                    matchIds.some(function(matchId) {
+                    return matchIds.some(function(matchId) {
 
-                        found = roleId == matchId;
-                        return found;
+                        return roleId == matchId;
                     });
-
-                    return found;
                 });
-
-                return found;
             },
 
             /**
@@ -231,20 +225,16 @@ IntelligenceWebClient.factory('UsersFactory', [
             has: function(match) {
 
                 var self = this;
-                var found = false;
                 var roles = self.roles;
 
                 if (!roles) return false;
                 if (!match) throw new Error('No role to match specified');
 
                 /* Check all roles for match. */
-                roles.some(function(role) {
+                return roles.some(function(role) {
 
-                    found = self.is(role, match);
-                    return found;
+                    return self.is(role, match);
                 });
-
-                return found;
             }
         };
 
