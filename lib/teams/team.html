@@ -16,7 +16,7 @@
                             <option>Pick a Sport</option>
                         </select>
 
-                        <select class="form-control" name="name" data-ng-model="team.leagueId" data-ng-options="league.name for league in leagues | filter:{'sportId':sport.id} track by league.id" required>
+                        <select class="form-control" name="name" data-ng-model="team.leagueId" data-ng-options="league.name for league in leagues | filter:{'sportId':sport.id} track by league.id" data-ng-disabled="!sport" required>
                             <option>League Name</option>
                         </select>
 
