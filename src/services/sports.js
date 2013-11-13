@@ -20,8 +20,6 @@ IntelligenceWebClient.factory('SportsFactory', [
 
                 sport = sport || self;
 
-                delete sport.teams;
-
                 if (sport.id) {
 
                     sport.$update();
