@@ -2,7 +2,8 @@
 
     <div class="info-bar">
 
-        <h1 class="name">{{team.name}}</h1>
+        <h1 data-ng-if="team.name" class="name">{{team.name}}</h1>
+        <h1 data-ng-if="!team.name" class="name">New Team</h1>
 
         <tabset vertical="true" direction="right">
 
@@ -16,43 +17,55 @@
                             <option>Pick a Sport</option>
                         </select>
 
-                        <select class="form-control" name="name" data-ng-model="team.leagueId" data-ng-options="league.name for league in leagues | filter:{'sportId':sport.id} track by league.id" data-ng-disabled="!sport" required>
+                    </div>
+
+                    <div class="form-group">
+
+                        <select class="form-control" name="name" data-ng-model="team.leagueId" data-ng-options="league.id as league.name for league in leagues | filter:{'sportId':sport.id}" data-ng-disabled="!sport" required>
                             <option>League Name</option>
                         </select>
 
-                        <select class="form-control" name="name" data-ng-model="team.school" data-ng-options="school.name for school in schools track by school.id" required>
+                    </div>
+
+                    <div class="form-group">
+
+                        <select style="display: inline-block" class="form-control" name="name" data-ng-model="team.schoolId" data-ng-options="school.id as school.name for school in schools" required>
                             <option>School Name</option>
                         </select>
 
                         <a class="btn-new" data-ui-sref="school">add a new school</a>
 
+                    </div>
+
+                    <div class="form-group">
+
                         <input class="form-control" name="name" placeholder="Team Name" data-ng-model="team.name" type="text" required>
 
-                        <p>For schools, enter just the mascot name. E.g. "Bears"</p>
-
-                        <p>For all others, enter full team name. E.g. "Cleveland Cavilers"</p>
-
                     </div>
+
+                    <p>For schools, enter just the mascot name. E.g. "Bears"</p>
+
+                    <p>For all others, enter full team name. E.g. "Cleveland Cavilers"</p>
 
                     <hr>
 
                     <div class="form-group">
 
-                        <input class="form-control" name="conference" placeholder="Conference" data-ng-model="team.school.conference" type="text" disabled>
+                        <input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text" disabled>
 
-                        <input class="form-control" name="division" placeholder="Division" data-ng-model="team.school.division" type="text" disabled>
+                        <input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text" disabled>
 
-                        <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="team.school.address.street1" type="text" disabled>
+                        <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="team.address.street1" type="text" disabled>
 
-                        <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="team.school.address.street2" type="text" disabled>
+                        <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="team.address.street2" type="text" disabled>
 
-                        <input class="form-control" name="city" placeholder="City" data-ng-model="team.school.address.city" type="text" required disabled>
+                        <input class="form-control" name="city" placeholder="City" data-ng-model="team.address.city" type="text" required disabled>
 
-                        <input class="form-control" name="country" placeholder="Country" data-ng-model="team.school.address.countryCode" type="text" required disabled>
+                        <input class="form-control" name="country" placeholder="Country" data-ng-model="team.address.countryCode" type="text" required disabled>
 
-                        <input class="form-control" name="state" placeholder="State" data-ng-model="team.school.address.regionCode" type="text" required disabled>
+                        <input class="form-control" name="state" placeholder="State" data-ng-model="team.address.regionCode" type="text" required disabled>
 
-                        <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="team.school.address.postalCode" type="text" disabled>
+                        <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="team.address.postalCode" type="text" disabled>
 
                     </div>
 
@@ -60,7 +73,7 @@
 
                 <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(team)">Save</button>
 
-                <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
+                <a class="pull-right" href data-ui-sref="teams">Cancel</a>
 
             </tab>
 
@@ -80,7 +93,8 @@
                         <tr class="member" data-ng-repeat="role in team.roles | filter:onlyCurrentRoles | orderBy:team.roles.type.name">
 
                             <td>{{role.type.name}}</td>
-                            <td><a data-ui-sref="user({ id: role.userId })">{{role.user.firstName}} {{role.user.lastName}}</a></td>
+                            <td><a data-ui-sref="user({ id: role.userId })">{{members[role.userId].firstName}} {{members[role.userId].lastName}}</a></td>
+                            <td><a href data-ng-click="team.removeRole(role)">remove</a></td>
 
                         </tr>
 
@@ -97,7 +111,7 @@
                         <tr class="member" data-ng-repeat="role in team.roles | filter:onlyPastRoles | orderBy:team.roles.type.name">
 
                             <td>{{role.type.name}}</td>
-                            <td><a data-ui-sref="user({ id: role.userId })">{{role.user.firstName}} {{role.user.lastName}}</a></td>
+                            <td><a data-ui-sref="user({ id: role.userId })">{{members[role.userId].firstName}} {{members[role.userId].lastName}}</a></td>
 
                         </tr>
 
@@ -105,9 +119,9 @@
 
                 </table>
 
-                <button class="btn btn-primary" data-ng-click="save()">Save</button>
+                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save()">Save</button>
 
-                <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
+                <a class="pull-right" href data-ui-sref="teams">Cancel</a>
 
             </tab>
 
