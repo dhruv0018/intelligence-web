@@ -68,6 +68,46 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     var newTeam = new TeamsResource(team);
                     newTeam.$create();
                 }
+            },
+
+            removeRole: function(role) {
+
+                /* Remove role from team. */
+                this.roles.splice(this.roles.indexOf(role), 1);
+
+                /* If removing the head coach role. */
+                if (role.userId && users.is(role, ROLES.HEAD_COACH)) {
+
+                    users.get(role.userId, function(user) {
+
+                        /* Check if they are the head coach of any other team,
+                         * if not then remove the head coach role for the user. */
+                        if (!user.has(ROLES.HEAD_COACH)) {
+
+                            user.removeRole(role);
+                        }
+                    });
+                }
+            },
+
+            getMembers: function() {
+
+                var members = [];
+
+                if (this.roles) {
+
+                    for (var i = 0; i < this.roles.length; i++) {
+
+                        var userId = this.roles[i].userId;
+
+                        if (userId) {
+
+                            members[userId] = usersResource.get({ id: userId });
+                        }
+                    }
+                }
+
+                return members;
             }
         };
 
