@@ -1,0 +1,35 @@
+<section class="leagues">
+
+    <div class="search-bar">
+
+        <button class="btn-add-new" data-ui-sref="league"><i class="icon-plus"></i> Add New League</button>
+
+    </div>
+
+    <div class="list" ng-controller="LeaguesController">
+
+        <div class="table-responsive">
+
+            <table class="table table-striped table-hover">
+
+                <tbody>
+
+                    <tr data-ng-repeat="league in leagues">
+
+                        <td>{{league.name}}</td>
+                        <td ng-repeat="sport in sports | filter:{id: league.sportId}">{{sport.name}}</td>
+                        <td>{{league.gender}}</td>
+                        <td><button class="edit pull-right" data-ui-sref="league({ id: league.id })"><i class="icon-pencil"></i> Edit</button></td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+

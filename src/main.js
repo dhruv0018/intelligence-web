@@ -11,6 +11,8 @@ require('./app');
 require('./models/users');
 require('./models/teams');
 require('./models/schools');
+require('./models/leagues');
+require('./models/sports');
 
 require('./services/authentication');
 require('./services/tokens');
@@ -18,6 +20,8 @@ require('./services/session');
 require('./services/users');
 require('./services/teams');
 require('./services/schools');
+require('./services/leagues');
+require('./services/sports');
 
 require('./root');
 require('./config');
@@ -32,5 +36,6 @@ component('account');
 component('users');
 component('teams');
 component('schools');
+component('leagues');
 
 angular.bootstrap(document, [pkg.name]);

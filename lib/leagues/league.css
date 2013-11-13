@@ -1,0 +1,47 @@
+.league {
+  color: #737474;
+}
+.league .info-bar h1.name {
+  height: 100px;
+}
+.league .nav-tabs li a {
+  padding-left: 75px;
+}
+.league .tab-content {
+  color: #737474;
+  padding: 50px;
+  padding-right: 400px;
+  margin-top: -175px;
+}
+.league .form-info .control-label,
+.league .form-info .radio,
+.league .form-info .checkbox,
+.league .form-info .radio-inline,
+.league .form-info .checkbox-inline {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 7px;
+}
+.league .form-info .form-group {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.league .form-info .form-control {
+  margin: 10px;
+  min-width: 150px;
+  max-width: 300px;
+}
+.league .btn-new {
+  font-size: 15px;
+  font-weight: 400;
+  font-family: "FRANKLIN-GOTHIC-URW-COND", Georgia, "Times New Roman", Times, serif;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.league .tab-content h3 {
+  color: #737474;
+}
+.league .tab-content ul {
+  padding: 0;
+  list-style: none;
+}
