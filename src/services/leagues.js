@@ -13,9 +13,7 @@ IntelligenceWebClient.factory('LeaguesFactory', [
             },
             getList: function() {
                 var self = this;
-                list = self.resource.query();
-                
-                return list ? list : [];
+                return self.resource.query();
             },
             save: function(league) {
                 var self = this;
