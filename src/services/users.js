@@ -169,7 +169,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 for (var i = 0; i < roles.length; i++) {
 
-                    roles[i].isDefault = (newDefaultRole.id === roles[i].id);
+                    roles[i].isDefault = (newDefaultRole.type.id == roles[i].type.id);
                 }
 
                 this.save();
