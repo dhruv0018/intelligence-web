@@ -1,0 +1,14 @@
+{
+    "name": "leagues",
+    "templates": [
+        "league.html",
+        "leagues.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "league.css",
+        "leagues.css"
+    ]
+}
