@@ -2,7 +2,7 @@
 
     <div class="search-bar">
 
-        <button class="btn-add-new" data-ng-click="add()"><i class="icon-plus"></i> Add New Team</button>
+        <button class="btn-add-new" data-ui-sref="team"><i class="icon-plus"></i> Add New Team</button>
 
     </div>
 
@@ -21,7 +21,7 @@
                         <td>League N/A</td>
                         <td>{{team.school.name}}</td>
                         <td>Status N/A</td>
-                        <td><button class="edit" data-ng-click="edit(team)"><i class="icon-pencil"></i> Edit</button></td>
+                        <td><button class="edit" data-ui-sref="team({ id: team.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 

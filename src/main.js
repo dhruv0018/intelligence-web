@@ -9,8 +9,10 @@ require('bootstrap');
 require('./app');
 
 require('./models/users');
+require('./models/sports');
 require('./models/teams');
 require('./models/schools');
+require('./models/leagues');
 
 require('./services/authentication');
 require('./services/tokens');
