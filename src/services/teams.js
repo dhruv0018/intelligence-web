@@ -56,6 +56,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 delete team.list;
 
+                if (team.schoolId) delete team.address;
+
                 for (var i = 0; i < team.roles.length; i++) {
 
                     delete team.roles[i].user;
