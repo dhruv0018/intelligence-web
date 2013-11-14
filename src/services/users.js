@@ -90,6 +90,9 @@ IntelligenceWebClient.factory('UsersFactory', [
                 else {
 
                     var newUser = new UsersResource(user);
+
+                    newUser.password = 'password';
+
                     newUser.$create();
                 }
             },
