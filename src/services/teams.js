@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope', 'TeamsResource', 'SchoolsResource',
-    function($rootScope, TeamsResource, schools) {
+    '$rootScope','ROLES', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'UsersFactory',
+    function($rootScope, ROLES, TeamsResource, schools, usersResource, users) {
 
         var TeamsFactory = {
 
@@ -10,9 +10,27 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
             list: [],
 
-            get: function(teamId) {
+            extendTeam: function(team) {
 
-                return this.resource.get({ id: teamId });
+                var self = this;
+
+                /* Copy all of the properties from the retrieved $resource
+                 * "team" object. */
+                angular.extend(team, self);
+
+                return team;
+            },
+
+            get: function(teamId, callback) {
+
+                var self = this;
+
+                self.resource.get({ id: teamId }, function(team) {
+
+                    team = self.extendTeam(team);
+
+                    return callback(team);
+                });
             },
 
             getAll: function() {
@@ -23,9 +41,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                     for (var i = 0; i < self.list.length; i++) {
 
-                        /* Resolve and append school to team. */
-                        var schoolId = self.list[i].schoolId;
-                        self.list[i].school = schools.get({ id: schoolId });
+                        self.list[i] = self.extendTeam(self.list[i]);
                     }
                 });
 
@@ -38,7 +54,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 team = team || self;
 
-                delete team.school;
+                delete team.list;
 
                 for (var i = 0; i < team.roles.length; i++) {
 
@@ -52,6 +68,46 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     var newTeam = new TeamsResource(team);
                     newTeam.$create();
                 }
+            },
+
+            removeRole: function(role) {
+
+                /* Remove role from team. */
+                this.roles.splice(this.roles.indexOf(role), 1);
+
+                /* If removing the head coach role. */
+                if (role.userId && users.is(role, ROLES.HEAD_COACH)) {
+
+                    users.get(role.userId, function(user) {
+
+                        /* Check if they are the head coach of any other team,
+                         * if not then remove the head coach role for the user. */
+                        if (!user.has(ROLES.HEAD_COACH)) {
+
+                            user.removeRole(role);
+                        }
+                    });
+                }
+            },
+
+            getMembers: function() {
+
+                var members = [];
+
+                if (this.roles) {
+
+                    for (var i = 0; i < this.roles.length; i++) {
+
+                        var userId = this.roles[i].userId;
+
+                        if (userId) {
+
+                            members[userId] = usersResource.get({ id: userId });
+                        }
+                    }
+                }
+
+                return members;
             }
         };
 
