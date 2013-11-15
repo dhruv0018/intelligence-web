@@ -118,7 +118,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             addRole: function(role) {
 
                 this.roles.unshift(role);
-                this.save();
             },
 
             /**
@@ -130,7 +129,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             removeRole: function(role) {
 
                 this.roles.splice(this.roles.indexOf(role), 1);
-                this.save();
             },
 
             /**
