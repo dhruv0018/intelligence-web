@@ -172,7 +172,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 for (var i = 0; i < roles.length; i++) {
 
-                    roles[i].isDefault = (newDefaultRole.type.id == roles[i].type.id);
+                    roles[i].isDefault = angular.equals(roles[i], newDefaultRole);
                 }
 
                 this.save();

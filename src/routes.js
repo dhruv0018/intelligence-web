@@ -11,18 +11,6 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.config([
-    '$urlRouterProvider',
-    function config($urlRouterProvider) {
-
-        $urlRouterProvider
-
-            .when('', '/')
-
-            .otherwise('/404');
-    }
-]);
-
-IntelligenceWebClient.config([
     '$stateProvider',
     function config($stateProvider) {
 
