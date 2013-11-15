@@ -16,7 +16,7 @@
 
                             <div class="form-group">
 
-                                <select class="form-control" name="type" data-ng-model="school.type" data-ng-options="type.name for type in SCHOOL_TYPES track by type.id" required>
+                                <select class="form-control" name="type" data-ng-model="school.type" data-ng-options="type.name for type in SCHOOL_TYPES track by type.id.toString()" required>
 
                                     <option value="">Type</option>
 
