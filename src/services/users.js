@@ -63,7 +63,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var self = this;
 
-                self.list = self.resource.query(function() {
+                self.list = self.resource.range(function() {
 
                     for (var i = 0; i < self.list.length; i++) {
 
