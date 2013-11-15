@@ -4,7 +4,6 @@ var SCHOOL_TYPE = {
 
     COLLEGE: 1,
     UNIVERSITY: 1,
-    HIGH: 2,
     HIGH_SCHOOL: 2,
     OTHER: 3
 };
@@ -14,23 +13,18 @@ IntelligenceWebClient.constant('SCHOOL_TYPE', SCHOOL_TYPE);
 var SCHOOL_TYPES = [
 
     {
-        type: {
+        id: SCHOOL_TYPE.UNIVERSITY,
+        name: 'University/College'
+    },
 
-            id: SCHOOL_TYPE.UNIVERSITY,
-            name: 'University/College'
-        },
+    {
+        id: SCHOOL_TYPE.HIGH_SCHOOL,
+        name: 'High School'
+    },
 
-        type: {
-
-            id: SCHOOL_TYPE.HIGH_SCHOOL,
-            name: 'High School'
-        },
-
-        type: {
-
-            id: SCHOOL_TYPE.OTHER,
-            name: 'Other'
-        }
+    {
+        id: SCHOOL_TYPE.OTHER,
+        name: 'Other'
     }
 ];
 
