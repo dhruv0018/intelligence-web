@@ -59,11 +59,11 @@ IntelligenceWebClient.factory('UsersFactory', [
                 });
             },
 
-            getAll: function() {
+            getRange: function(start, count) {
 
                 var self = this;
 
-                self.list = self.resource.range(function() {
+                self.list = self.resource.query({start: start, count: count}, function() {
 
                     for (var i = 0; i < self.list.length; i++) {
 
@@ -72,6 +72,11 @@ IntelligenceWebClient.factory('UsersFactory', [
                 });
 
                 return self.list;
+            },
+
+            getAll: function() {
+
+                return this.getRange(0, 1000);
             },
 
             save: function(user) {

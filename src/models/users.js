@@ -103,14 +103,7 @@ IntelligenceWebClient.factory('UsersResource', [
 
             }, {
                 create: { method: 'POST' },
-                update: { method: 'PUT' },
-                range: {
-
-                    url: config.api.uri + 'users?start=:start&count=:count',
-                    params: { start: 0, count: 1000 },
-                    method: 'GET',
-                    isArray: true
-                }
+                update: { method: 'PUT' }
             }
         );
 
