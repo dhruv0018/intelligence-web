@@ -59,11 +59,11 @@ IntelligenceWebClient.factory('UsersFactory', [
                 });
             },
 
-            getAll: function() {
+            getRange: function(start, count) {
 
                 var self = this;
 
-                self.list = self.resource.query(function() {
+                self.list = self.resource.query({start: start, count: count}, function() {
 
                     for (var i = 0; i < self.list.length; i++) {
 
@@ -72,6 +72,11 @@ IntelligenceWebClient.factory('UsersFactory', [
                 });
 
                 return self.list;
+            },
+
+            getAll: function() {
+
+                return this.getRange(0, 1000);
             },
 
             save: function(user) {
@@ -118,7 +123,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             addRole: function(role) {
 
                 this.roles.unshift(role);
-                this.save();
             },
 
             /**
@@ -130,7 +134,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             removeRole: function(role) {
 
                 this.roles.splice(this.roles.indexOf(role), 1);
-                this.save();
             },
 
             /**
