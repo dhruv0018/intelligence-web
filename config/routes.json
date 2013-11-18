@@ -1,0 +1,41 @@
+{
+    "account": {
+
+        "*": true
+    },
+
+    "users": {
+
+        "super admin": true,
+        "admin": true
+    },
+
+    "teams": {
+
+        "super admin": true,
+        "admin": true
+    },
+
+    "schools": {
+
+        "*": true
+    },
+
+    "games": {
+
+        "super admin": true,
+        "admin": true
+    },
+
+    "reports": {
+
+        "super admin": true,
+        "admin": true
+    },
+
+    "platform": {
+
+        "super admin": true
+    }
+}
+
