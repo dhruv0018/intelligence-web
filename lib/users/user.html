@@ -64,8 +64,7 @@
 
                 <div class="newRole">
 
-                    <select data-ng-model="newRole"
-                        data-ng-options="role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole track by role.type.id">
+                    <select data-ng-model="newRole" data-ng-options="role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole track by role.type.id">
 
                         <option value="">Pick a Role</option>
 
@@ -89,7 +88,7 @@
 
                     <li class="role list-group-item" data-ng-repeat="role in user.roles">
 
-                        <span data-ng-hide="users.is(role, ADMIN) && !currentUser.is(SUPER_ADMIN)">
+                        <span data-ng-show="currentUser.hasAccess(role)">
 
                             <a class="btn pull-right" href data-ng-click="user.removeRole(role)">Remove</a>
 
