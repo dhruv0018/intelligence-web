@@ -256,8 +256,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* Dictate what Super Admins can access. */
                 if (this.is(role, ROLES.SUPER_ADMIN)) {
 
-                    /* Super Admins can access every role. */
-                    return true;
+                    /* Super Admins can access every role, except other Supers. */
+                    return this.is(verify, ROLES.SUPER_ADMIN) ? false : true;
                 }
 
                 /* Dictate what Admins can access. */
