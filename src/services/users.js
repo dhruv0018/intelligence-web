@@ -124,7 +124,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             addRole: function(user, role) {
 
-                if (!user) {
+                if (!role) {
 
                     role = user;
                     user = this;
@@ -143,7 +143,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             removeRole: function(user, role) {
 
-                if (!user) {
+                if (!role) {
 
                     role = user;
                     user = this;
