@@ -28,20 +28,12 @@
 
                                     <a href>
 
-                                        <span data-ng-switch="user.is(HEAD_COACH) || user.is(ASSISTANT_COACH) || user.is(ATHLETE)">
-
-                                            <span data-ng-switch-when="true">
-
-                                                <span data-ng-if="user.is(HEAD_COACH)">Head Coach, Team to be implemented</span>
-                                                <span data-ng-if="user.is(ASSISTANT_COACH">Assist. Coach, Team to be implemented</span>
-                                                <span data-ng-if="user.is(ATHLETE)">Athlete, Sport to be implemented</span>
-
-                                            </span>
-
-                                            <span data-ng-switch-default>{{role.type.name}}</span>
+                                            <span data-ng-if="user.is(HEAD_COACH)">Head Coach, Team to be implemented</span>
+                                            <span data-ng-if="user.is(ASSISTANT_COACH)">Assist. Coach, Team to be implemented</span>
+                                            <span data-ng-if="user.is(ATHLETE)">Athlete, Sport to be implemented</span>
+                                            <span data-ng-if="!user.is(HEAD_COACH) && !user.is(ASSISTANT_COACH) && !user.is(ATHLETE)">{{role.type.name}}</span>
 
                                         </span>
-
 
                                     </a>
 
