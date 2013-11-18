@@ -253,6 +253,12 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             hasAccess:function(role, verify) {
 
+                if (!verify) {
+
+                    verify = role;
+                    role = this.currentRole;
+                }
+
                 /* Dictate what Super Admins can access. */
                 if (this.is(role, ROLES.SUPER_ADMIN)) {
 
