@@ -27,6 +27,17 @@ IntelligenceWebClient.config([
                 }
             })
 
+            .state('401', {
+                url: '/401',
+                parent: 'root',
+                public: true,
+                views: {
+                    'main@': {
+                        template: '<div class="jumbotron"><h1 class="alert alert-danger">Not Authorized</h1></div>',
+                    }
+                }
+            })
+
             .state('404', {
                 url: '/404',
                 parent: 'root',
@@ -74,8 +85,8 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService',
-    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth) {
+    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService',
+    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -90,6 +101,13 @@ IntelligenceWebClient.run([
 
                 event.preventDefault();
                 $state.go('login');
+            }
+
+            /* Ensure the current user has access to the route. */
+            if (!to.public && !authz.isAuthorized(to)) {
+
+                event.preventDefault();
+                $state.go('401');
             }
 
             /* Check to see if the OAuth tokens have been set, if so then
