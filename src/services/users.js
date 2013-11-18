@@ -117,23 +117,39 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
              * @class User
              * @method
+             * @param {Object} user - the user to add the role to
              * @param {Object} role - a role object to add
-             * Adds the given role to the user.
+             * Adds the given role to the given user. If no user is specified,
+             * this user will be used.
              */
-            addRole: function(role) {
+            addRole: function(user, role) {
 
-                this.roles.unshift(role);
+                if (!user) {
+
+                    role = user;
+                    user = this;
+                }
+
+                user.roles.unshift(role);
             },
 
             /**
              * @class User
              * @method
+             * @param {Object} user - the user to remove the role from
              * @param {Object} role - a role object to be removed
-             * Removes the given role from the user.
+             * Removes the given role from the user. If no user is specified,
+             * this user will be used.
              */
-            removeRole: function(role) {
+            removeRole: function(user, role) {
 
-                this.roles.splice(this.roles.indexOf(role), 1);
+                if (!user) {
+
+                    role = user;
+                    user = this;
+                }
+
+                user.roles.splice(user.roles.indexOf(role), 1);
             },
 
             /**
