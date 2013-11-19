@@ -4,20 +4,23 @@ IntelligenceWebClient.factory('TeamsResource', [
     'config', '$resource',
     function(config, $resource) {
 
-        var TeamsResource = $resource(
+        var base = 'teams';
 
-            config.api.uri + 'teams/:id',
+        var url = config.api.uri + base + '/:id';
 
-            {
-                id: '@id'
+        var paramDefaults = {
 
-            }, {
-                create: { method: 'POST' },
-                update: { method: 'PUT' }
-            }
-        );
+            id: '@'
 
-        return TeamsResource;
+        };
+
+        var actions = {
+
+            create: { method: 'POST' },
+            update: { method: 'PUT' }
+        };
+
+        return $resource(url, paramDefaults, actions);
     }
 ]);
 
