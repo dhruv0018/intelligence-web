@@ -79,6 +79,32 @@
 
             <tab heading="Team Members">
 
+                <div data-ng-if="!team.has(HEAD_COACH, true)">
+
+                    <a href data-ng-hide="addNewHeadCoach" data-ng-click="$parent.addNewHeadCoach = true">Add Head Coach</a>
+
+                    <div data-ng-show="addNewHeadCoach">
+
+                        <form name="form" role="form">
+
+                            <div class="form-group">
+
+                                <select class="form-control" name="coach" data-ng-model="coach" data-ng-options="user.firstName + ' ' + user.lastName + ' - ' + user.email for user in users" required>
+
+                                    <option>Select Coach</option>
+
+                                </select>
+
+                            </div>
+
+                            <button class="btn-role-new" href data-ng-disabled="form.$invalid" data-ng-click="addHeadCoach(coach)"><i class="icon-plus-sign"></i> Add New Head Coach</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
                 <table class="members table">
 
                     <thead>

@@ -130,6 +130,9 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user = this;
                 }
 
+                role.userId = user.id;
+
+                user.roles = user.roles || [];
                 user.roles.unshift(role);
             },
 
@@ -149,7 +152,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user = this;
                 }
 
-                user.roles.splice(user.roles.indexOf(role), 1);
+                user.roles && user.roles.splice(user.roles.indexOf(role), 1);
             },
 
             /**
