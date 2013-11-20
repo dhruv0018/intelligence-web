@@ -89,7 +89,7 @@ IntelligenceWebClient.run([
             if (!to.public && !auth.isLoggedIn) {
 
                 event.preventDefault();
-                $location.path('/login');
+                $state.go('login');
             }
 
             /* Check to see if the OAuth tokens have been set, if so then
