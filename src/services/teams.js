@@ -119,6 +119,30 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 }
 
                 return members;
+            },
+
+            has: function(match, matchIsCurrent) {
+
+                var self = this;
+                var roles = self.roles;
+
+                if (!roles) return false;
+                if (!match) throw new Error('No role to match specified');
+
+                /* Check all roles for match. */
+                return roles.some(function(role) {
+
+                    /* Optionaly, check if the role is current also. */
+                    if (matchIsCurrent === true) {
+
+                        return match.type.id == role.type.id &&
+                               role.tenureEnd === null;
+
+                    } else {
+
+                        return match.type.id == role.type.id;
+                    }
+                });
             }
         };
 
