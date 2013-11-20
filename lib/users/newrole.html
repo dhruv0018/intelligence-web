@@ -1,62 +1,59 @@
 <div class="role-new">
 
-    <div data-ng-if="role.type.id == ROLE_TYPE.COACH">
+    <div data-ng-if="users.is(role, HEAD_COACH) || users.is(role, ASSISTANT_COACH)">
 
-        <h4>Head Coach</h4>
+        <h4 data-ng-show="users.is(role, HEAD_COACH)">Head Coach</h4>
+        <h4 data-ng-show="users.is(role, ASSISTANT_COACH)">Assistant Coach</h4>
 
-        <form role="form">
+        <form name="form" role="form">
 
             <div class="form-group">
 
-                <select class="form-control">
-                    <option>Pick a Sport</option>
-                    <option>Fake Sport 1</option>
-                    <option>Fake Sport 2</option>
-                    <option>Fake Sport 3</option>
-                    <option>Fake Sport 4</option>
+                <select class="form-control" name="sport" data-ng-model="$parent.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
+
+                    <option value="">Pick a Sport</option>
+
                 </select>
 
             </div>
 
             <div class="form-group">
 
-                <select class="form-control" data-ng-model="role.teamId" data-ng-options="team.id as team.name for team in teams">
+                <span data-ng-if="displayTeamsLoading">
 
-                    <option value="">Team name</option>
+                    <select class="form-control" name="team" data-ng-model="role.teamId" disabled required>
 
-                </select>
+                        <option value="">Loading...</option>
+
+                    </select>
+
+                </span>
+
+                <span data-ng-if="displayTeams">
+
+                    <select class="form-control" name="team" data-ng-model="role.teamId" data-ng-options="team.id as team.name for team in teams" data-ng-disabled="!sportId" required>
+
+                        <option value="">Team name</option>
+
+                    </select>
+
+                </span>
+
+                <span data-ng-if="displayTeamsEmpty">
+
+                    <select class="form-control" name="team" data-ng-model="role.teamId" disabled required>
+
+                        <option value="">No Teams</option>
+
+                    </select>
+
+                </span>
 
             </div>
 
-        </form>
-
-    </div>
-
-    <div data-ng-if="role.type.id == ROLE_TYPE.ASSISTANT_COACH">
-
-        <h4>Assistant Coach</h4>
-
-        <form role="form">
-
             <div class="form-group">
 
-                <select class="form-control">
-                    <option>Pick a Sport</option>
-                    <option>Fake Sport 1</option>
-                    <option>Fake Sport 2</option>
-                    <option>Fake Sport 3</option>
-                    <option>Fake Sport 4</option>
-                </select>
-
-            </div>
-
-            <div class="form-group">
-
-                <select class="form-control" data-ng-model="role.teamId" data-ng-options="team.id as team.name for team in teams">
-
-                    <option value="">Team name</option>
-
-                </select>
+                <button class="btn-role-new" href data-ng-disabled="form.$invalid" data-ng-click="addRole(role)"><i class="icon-plus-sign"></i> Add New Role</button>
 
             </div>
 
@@ -64,7 +61,7 @@
 
     </div>
 
-    <div data-ng-if="role.type.id == ROLE_TYPE.INDEXER">
+    <div data-ng-if="users.is(role, INDEXER)">
 
         <h4>Indexer</h4>
 
@@ -78,9 +75,15 @@
 
         </div>
 
+        <div>
+
+            <a class="btn-role-new" href data-ng-click="addRole(role)"><i class="icon-plus-sign"></i> Add New Role</a>
+
+        </div>
+
     </div>
 
-    <div data-ng-if="role.type.id == ROLE_TYPE.ATHLETE">
+    <div data-ng-if="users.is(role, ATHLETE)">
 
         <h4>Athlete</h4>
 
@@ -88,11 +91,11 @@
 
         <p>Only Athletes can add parents to their account</p>
 
-    </div>
+        <div>
 
-    <div>
+            <a class="btn-role-new" href data-ng-click="addRole(role)"><i class="icon-plus-sign"></i> Add New Role</a>
 
-        <a class="btn-role-new" href data-ng-click="addRole(role)"><i class="icon-plus-sign"></i> Add New Role</a>
+        </div>
 
     </div>
 
