@@ -130,6 +130,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user = this;
                 }
 
+                role.userId = user.id;
                 user.roles.unshift(role);
             },
 
