@@ -28,14 +28,10 @@
 
                                     <a href>
 
-                                        <span ng-switch on="role.type.id">
-
-                                            <span ng-switch-when="3">Head Coach, Team to be implemented</span>
-                                            <span ng-switch-when="4">Assist. Coach, Team to be implemented</span>
-                                            <span ng-switch-when="5">Athlete, Sport to be implemented</span>
-                                            <span ng-switch-default>{{role.type.name}}</span>
-
-                                        </span>
+                                        <span data-ng-if="user.is(HEAD_COACH)">Head Coach, Team to be implemented</span>
+                                        <span data-ng-if="user.is(ASSISTANT_COACH)">Assist. Coach, Team to be implemented</span>
+                                        <span data-ng-if="user.is(ATHLETE)">Athlete, Sport to be implemented</span>
+                                        <span data-ng-if="!user.is(HEAD_COACH) && !user.is(ASSISTANT_COACH) && !user.is(ATHLETE)">{{role.type.name}}</span>
 
                                     </a>
 
