@@ -10,7 +10,7 @@ IntelligenceWebClient.factory('TeamsResource', [
 
         var paramDefaults = {
 
-            id: '@'
+            id: '@id'
 
         };
 
