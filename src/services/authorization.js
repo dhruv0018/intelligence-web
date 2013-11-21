@@ -50,11 +50,17 @@ IntelligenceWebClient.service('AuthorizationService', [
                 /* Assert that the route is defined. */
                 if (!route) return false;
 
+                /* If the route is not openly accessible, then check if the
+                 * current user has access... */
+
+                /* Get the current user. */
+                var currentUser = session.retrieveCurrentUser();
+
                 /* Ensure the current user is in the session. */
-                if (!session.currentUser) return false;
+                if (!currentUser) return false;
 
                 /* Get the current users current role. */
-                var currentRole = session.currentUser.currentRole;
+                var currentRole = currentUser.currentRole;
 
                 /* Ensure the current role is set for the current user. */
                 if (!currentRole || !currentRole.type) return false;
