@@ -1,41 +1,81 @@
 {
-    "account": {
+    "401": {
 
         "*": true
+    },
+
+    "404": {
+
+        "*": true
+    },
+
+    "500": {
+
+        "*": true
+    },
+
+    "501": {
+
+        "*": true
+    },
+
+    "error": {
+
+        "*": true
+    },
+
+    "login": {
+
+        "*": true
+    },
+
+    "account": {
+
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Coach": true,
+        "Parent": true,
+        "Athlete": true
     },
 
     "users": {
 
-        "super admin": true,
-        "admin": true
+        "Super Admin": true,
+        "Admin": true
     },
 
     "teams": {
 
-        "super admin": true,
-        "admin": true
+        "Super Admin": true,
+        "Admin": true
     },
 
     "schools": {
 
-        "*": true
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Coach": true,
+        "Parent": true,
+        "Athlete": true
     },
 
     "games": {
 
-        "super admin": true,
-        "admin": true
+        "Super Admin": true,
+        "Admin": true
     },
 
     "reports": {
 
-        "super admin": true,
-        "admin": true
+        "Super Admin": true,
+        "Admin": true
     },
 
     "platform": {
 
-        "super admin": true
+        "Super Admin": true
     }
 }
 
