@@ -30,7 +30,6 @@ IntelligenceWebClient.config([
             .state('401', {
                 url: '/401',
                 parent: 'root',
-                public: true,
                 views: {
                     'main@': {
                         template: '<div class="jumbotron"><h1 class="alert alert-danger">Not Authorized</h1></div>',
@@ -41,7 +40,6 @@ IntelligenceWebClient.config([
             .state('404', {
                 url: '/404',
                 parent: 'root',
-                public: true,
                 views: {
                     'main@': {
                         template: '<div class="jumbotron"><h1 class="alert alert-info">Not Found</h1></div>',
@@ -52,7 +50,6 @@ IntelligenceWebClient.config([
             .state('500', {
                 url: '/500',
                 parent: 'root',
-                public: true,
                 views: {
                     'main@': {
                         template: '<div class="jumbotron"><h1 class="alert alert-danger">Server Error</h1></div>',
@@ -63,7 +60,6 @@ IntelligenceWebClient.config([
             .state('501', {
                 url: '/501',
                 parent: 'root',
-                public: true,
                 views: {
                     'main@': {
                         template: '<div class="jumbotron"><h1 class="alert alert-warning">Not Implemented</h1></div>',
@@ -74,7 +70,6 @@ IntelligenceWebClient.config([
             .state('error', {
                 url: '/error',
                 parent: 'root',
-                public: true,
                 views: {
                     'main@': {
                         template: '<div class="jumbotron"><h1 class="alert alert-danger">Error</h1></div>',
@@ -95,16 +90,16 @@ IntelligenceWebClient.run([
 
             $rootScope.isLoggedIn = auth.isLoggedIn;
 
-            /* If not accessing a public state and not logged in, then
+            /* If not accessing an authorized state and not logged in, then
              * redirect the user to login. */
-            if (!to.public && !auth.isLoggedIn) {
+            if (!authz.isPublic(to) && !auth.isLoggedIn) {
 
                 event.preventDefault();
                 $state.go('login');
             }
 
             /* Ensure the current user has access to the route. */
-            if (!to.public && !authz.isAuthorized(to)) {
+            if (!authz.isAuthorized(to)) {
 
                 event.preventDefault();
                 $state.go('401');
