@@ -59,8 +59,12 @@ IntelligenceWebClient.service('AuthorizationService', [
                 /* Ensure the current role is set for the current user. */
                 if (!currentRole || !currentRole.type) return false;
 
-                /* Get the current roles name. */
-                var roleName = currentRole.type.name.toLowerCase();
+                /* Match the current role based on ID from the server. */
+                var role = ROLES[ROLE_ID[currentRole.type.id]];
+
+                /* Check if the route can be accessed by the currentRole... */
+
+                if (!role) return false;
 
                 /* Match the role name from the route file with the role name
                  * from the roles constant lookup. */
