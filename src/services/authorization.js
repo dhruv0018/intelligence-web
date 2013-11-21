@@ -11,10 +11,27 @@ var routes = require('../../config/routes.json');
  * @type {service}
  */
 IntelligenceWebClient.service('AuthorizationService', [
-    '$state', 'ROLES', 'SessionService', 'UsersFactory',
-    function($state, ROLES, session, users) {
+    '$state', 'ROLE_ID', 'ROLES', 'SessionService',
+    function($state, ROLE_ID, ROLES, session) {
 
         return {
+
+            /**
+             * Verifies if a route is defined as public.
+             * @param {UIState} to - a UI-Router state object
+             * @return true if the route is public.
+             */
+            isPublic: function(to) {
+
+                /* Lookup the route by name. */
+                var route = routes[to.name];
+
+                /* Assert that the route is defined. */
+                if (!route) return false;
+
+                /* Consider authorized if the route is accessible to anyone. */
+                return route[WILDCARD] ? true : false;
+            },
 
             /**
              * Ensures that the current user, in their current role, is
@@ -23,6 +40,9 @@ IntelligenceWebClient.service('AuthorizationService', [
              * @return true if the user is authorized to access the route.
              */
             isAuthorized: function(to) {
+
+                /* Consider authorized if the route is accessible to publicly. */
+                if (this.isPublic(to)) return true;
 
                 /* Lookup the route by name. */
                 var route = routes[to.name];
@@ -42,10 +62,11 @@ IntelligenceWebClient.service('AuthorizationService', [
                 /* Get the current roles name. */
                 var roleName = currentRole.type.name.toLowerCase();
 
-                /* Check if the route can be accessed by the currentRole. */
-                return route[WILDCARD] || route[roleName];
+                /* Match the role name from the route file with the role name
+                 * from the roles constant lookup. */
+                return route[role.type.name];
             }
-        }
+        };
     }
 ]);
 
