@@ -1,5 +1,18 @@
 var IntelligenceWebClient = require('../app');
 
+var ROLE_ID = {
+
+    1: 'SUPER_ADMIN',
+    2: 'ADMIN',
+    3: 'HEAD_COACH',
+    4: 'ASSISTANT_COACH',
+    5: 'INDEXER',
+    6: 'PARENT',
+    7: 'ATHLETE'
+};
+
+IntelligenceWebClient.constant('ROLE_ID', ROLE_ID);
+
 var ROLE_TYPE = {
 
     SUPER_ADMIN: 1,
