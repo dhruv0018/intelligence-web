@@ -155,11 +155,17 @@ module.exports = function(grunt) {
                 dest: 'build/themed.css'
             },
             angular: {
-                src: ['vendor/angular/angular.js','vendor/angular-resource/angular-resource.js'],
+                src: [
+                    'vendor/angular/angular.js',
+                    'vendor/angular-resource/angular-resource.js',
+                    'vendor/angular-ui-router/build/angular-ui-router.js'],
                 dest: 'build/angular.js'
             },
             angularmin: {
-                src: ['vendor/angular/angular.min.js','vendor/angular-resource/angular-resource.min.js'],
+                src: [
+                    'vendor/angular/angular.min.js',
+                    'vendor/angular-resource/angular-resource.min.js',
+                    'vendor/angular-ui-router/build/angular-ui-router.min.js'],
                 dest: 'build/angular.min.js'
             }
         },
@@ -289,10 +295,6 @@ module.exports = function(grunt) {
                         angular: {
                             path: 'build/angular.min.js',
                             exports: 'angular'
-                        },
-                        angularui: {
-                            path: 'vendor/angular-ui-router/release/angular-ui-router.min.js',
-                            exports: 'angularui'
                         },
                         bootstrap: {
                             path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
