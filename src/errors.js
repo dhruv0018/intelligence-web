@@ -152,7 +152,8 @@ IntelligenceWebClient.run([
 
         $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
 
-            $location.path('/404').replace();
+            event.preventDefault();
+            $state.go('404');
         });
 
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
