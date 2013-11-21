@@ -28,7 +28,7 @@
 
         <div class="form-group">
 
-            <input class="form-field-login" name="password" type="password" placeholder="Password" data-ng-model="login.password" required>
+            <input class="form-field-login" name="password" type="password" placeholder="Password" data-ng-model="login.password" oncopy="return false;" onpaste="return false;" required>
 
             <span class="errors">
                 <span class="error" data-ng-show="form.password.$error.required && !form.password.$error.password">Required!</span>
