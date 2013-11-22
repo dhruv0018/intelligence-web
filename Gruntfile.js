@@ -479,7 +479,7 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['lib/**/*.less', 'theme/**/*.less'],
-                tasks: ['less', 'copy:dev']
+                tasks: ['dev']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
@@ -494,7 +494,7 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
+    grunt.registerTask('test', ['karma', 'plato']);
     grunt.registerTask('lint-html', ['html-inspector']);
     grunt.registerTask('lint', ['csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
