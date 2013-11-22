@@ -44,6 +44,7 @@
     position: relative;
 }
 
+.locked,
 .form-login .form-group:last-child {
 
     margin-top: 30px;
@@ -157,6 +158,60 @@
 .error {
 
     color: @brand-primary;
+}
+
+.locked {
+
+    text-align: center;
+    border: 1px solid rgb(216, 216, 216);
+
+    .locked-symbol {
+
+        color: rgb(216, 216, 216);
+        margin-top: 30px;
+
+        &::before {
+
+            .icon(@lock);
+            font-size: 50px;
+            line-height: 84px;
+            display: inline-block;
+            border-color: rgb(216, 216, 216);
+            border: 8px solid rgb(216, 216, 216);
+            border-radius: 100px;
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    .locked-message {
+
+        margin-top: 20px;
+
+        p {
+
+            margin-bottom: 0;
+        }
+    }
+
+    main {
+
+        height: 225px;
+    }
+
+    footer {
+
+        height: 50px;
+        line-height: 50px;
+        text-transform: uppercase;
+        border-top: 1px solid rgb(216, 216, 216);
+
+        .col-md-4 {
+
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
 }
 
 /**

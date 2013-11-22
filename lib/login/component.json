@@ -14,7 +14,9 @@
         "krossover-login-logo-320.png"
     ],
     "templates": [
-        "template.html"
+        "template.html",
+        "login.html",
+        "locked.html"
     ],
     "styles": [
         "styles.css"
