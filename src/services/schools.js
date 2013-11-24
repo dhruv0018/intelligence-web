@@ -9,14 +9,24 @@ IntelligenceWebClient.factory('SchoolsFactory', [
             resource: SchoolsResource,
 
             list: [],
+            get: function(id, callback) {
+                var self = this;
+                self.resource.get({ id: id }, function(school){
+                    return callback(school);
+                });
+            },
 
-            getList: function() {
+            getList: function(filter, success, error) {
 
                 var self = this;
+                filter = filter || {};
+                error = error || function() {
+                    throw new Error('Could not load leagues list');
+                };
 
-                self.list = self.resource.query();
-
-                return self.list;
+                return self.resource.query(filter, function(results){
+                    return success ? success(results) : results;
+                }, error);
             },
 
             save: function(school) {
