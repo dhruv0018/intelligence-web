@@ -11,10 +11,6 @@ IntelligenceWebClient.factory('LeaguesFactory', [
                     return callback(league);
                 });
             },
-            getList: function() {
-                var self = this;
-                return self.resource.query();
-            },
             save: function(league) {
                 var self = this;
                 league = league || self;
@@ -25,7 +21,19 @@ IntelligenceWebClient.factory('LeaguesFactory', [
                     var newLeague = new LeaguesResource(league);
                     newLeague.$create();
                 }
-            }
+            },
+            getList: function(filter, success, error) {
+
+                var self = this;
+                filter = filter || {};
+                error = error || function() {
+                    throw new Error('Could not load leagues list');
+                };
+
+                return self.resource.query(filter, function(leagues){
+                    return success ? success(leagues) : leagues;
+                }, error);
+            },
         };
 
         return LeaguesFactory;
