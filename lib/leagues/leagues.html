@@ -1,11 +1,9 @@
 <section class="leagues" ng-controller="LeaguesController">
 
     <div class="search-bar">
-					<table class="table">
+					<table>
 					<tr>
-                		<form class="form-info" name="form" role="form">
-
-                            <td><input class="form-control" name="name" placeholder="League Name" data-ng-model="filter.name" type="text" /></td>
+                		<td><input class="form-control" name="name" placeholder="League Name" data-ng-model="filter.name" type="text" /></td>
                             <td>
                             	<select class="form-control" name="sport" data-ng-model="filter.sport" data-ng-options="sport.id as sport.name for sport in sports" >
                             		<option value="">Sport</option>
@@ -17,8 +15,6 @@
                              	</select>
                             </td>    
                             <td><button class="btn btn-primary" data-ng-click="search(filter)">Search</button></td>
-
-                        </form>
                 	</tr>
                 	</table>
         <button class="btn-add-new" data-ui-sref="league"><i class="icon-plus"></i> Add New League</button>
