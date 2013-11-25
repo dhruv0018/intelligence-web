@@ -58,6 +58,33 @@ IntelligenceWebClient.factory('UsersFactory', [
                     callback(user);
                 });
             },
+            
+            getList: function(filter, success, error) {
+
+                var self = this;
+                filter = filter || {};
+                
+                if(!filter.start){
+                	filter.start = 0;
+                }
+                if(!filter.count){
+                	filter.count = 1000;
+                }
+
+                error = error || function() {
+
+                    throw new Error('Could not load users list');
+                };
+
+                return self.resource.query(filter, function(users){
+                	for(var i = 0; i < users.length; i++){
+                		users[i] = self.extendUser(users[i]);
+                	}
+                	return success ? success(users) : users;
+                }, error);
+                
+                
+            },
 
             getRange: function(start, count) {
 
