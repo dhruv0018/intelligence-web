@@ -1,24 +1,24 @@
 <section class="users" data-ng-controller="UsersController">
 
     <div class="search-bar">
-		<table>
-			<tr>
-				<td><input class="form-control" placeholder="Email" data-ng-model="filter.email" type="text"></td>
-				<td><input class="form-control" placeholder="First name" data-ng-model="filter.firstName" type="text"></td>
-				<td><input class="form-control" placeholder="Last name" data-ng-model="filter.lastName" type="text"></td>
+        <table>
+            <tr>
+                <td><input class="form-control" placeholder="Email" data-ng-model="filter.email" type="text"></td>
+                <td><input class="form-control" placeholder="First name" data-ng-model="filter.firstName" type="text"></td>
+                <td><input class="form-control" placeholder="Last name" data-ng-model="filter.lastName" type="text"></td>
                 <td>
-                	<select class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole">
-                    	<option value="">Roles</option>
+                    <select class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole">
+                        <option value="">Roles</option>
                     </select>
                 </td>        
                 <td>
-                	<select class="form-control" data-ng-model="filter.isActive" data-ng-options="status.value as status.label for status in statuses">
-                    	<option value="">Status</option>
+                    <select class="form-control" data-ng-model="filter.isActive" data-ng-options="status.value as status.label for status in statuses">
+                        <option value="">Status</option>
                     </select>
                 </td>
                 <td><button class="btn btn-primary" data-ng-click="search(filter)">Search</button></td>
-			</tr>
-		</table>
+            </tr>
+        </table>
         <button class="btn-add-new" data-ng-click="add()"><i class="icon-plus"></i> Add New User</button>
 
     </div>

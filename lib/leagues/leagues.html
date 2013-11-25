@@ -1,22 +1,22 @@
-<section class="leagues" ng-controller="LeaguesController">
+<section class="leagues" data-ng-controller="LeaguesController">
 
     <div class="search-bar">
-					<table>
-					<tr>
-                		<td><input class="form-control" name="name" placeholder="League Name" data-ng-model="filter.name" type="text" /></td>
-                            <td>
-                            	<select class="form-control" name="sport" data-ng-model="filter.sport" data-ng-options="sport.id as sport.name for sport in sports" >
-                            		<option value="">Sport</option>
-                            	</select>
-							</td>
-							<td>
-                             	<select class="form-control" name="gender" data-ng-model="filter.gender" data-ng-options="gender.value as gender.label for gender in genders" >
-                             		<option value="">Gender</option>
-                             	</select>
-                            </td>    
-                            <td><button class="btn btn-primary" data-ng-click="search(filter)">Search</button></td>
-                	</tr>
-                	</table>
+        <table>
+            <tr>
+                <td><input class="form-control" name="name" placeholder="League Name" data-ng-model="filter.name" type="text" /></td>
+                <td>
+                    <select class="form-control" name="sport" data-ng-model="filter.sport" data-ng-options="sport.id as sport.name for sport in sports" >
+                        <option value="">Sport</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" name="gender" data-ng-model="filter.gender" data-ng-options="gender.value as gender.label for gender in genders" >
+                        <option value="">Gender</option>
+                    </select>
+                </td>    
+                <td><button class="btn btn-primary" data-ng-click="search(filter)">Search</button></td>
+            </tr>
+        </table>
         <button class="btn-add-new" data-ui-sref="league"><i class="icon-plus"></i> Add New League</button>
 
     </div>

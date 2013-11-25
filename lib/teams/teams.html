@@ -1,29 +1,29 @@
 <section class="teams" data-ng-controller="TeamsController">
 
     <div class="search-bar">
-		<table>
-        	<tr>
-				<td><input class="form-control" name="name" placeholder="Team Name" data-ng-model="filter.name" type="text"></td>
+        <table>
+            <tr>
+                <td><input class="form-control" name="name" placeholder="Team Name" data-ng-model="filter.name" type="text"></td>
                 <td>
-                	<select class="form-control" name="sport" data-ng-model="filter.sport" data-ng-options="sport.id as sport.name for sport in sports">
-                    	<option value="">Pick a Sport</option>
+                    <select class="form-control" name="sport" data-ng-model="filter.sport" data-ng-options="sport.id as sport.name for sport in sports">
+                        <option value="">Pick a Sport</option>
                     </select>
                 </td>
                 <td>
-                	<select class="form-control" name="league" data-ng-model="filter.league" data-ng-options="league.id as league.name for league in leagues">
-                    	<option value="">League Name</option>
-                	</select>
-				</td>
+                    <select class="form-control" name="league" data-ng-model="filter.league" data-ng-options="league.id as league.name for league in leagues">
+                        <option value="">League Name</option>
+                    </select>
+                </td>
                 <td>
-					<select class="form-control select-school" name="school" data-ng-model="filter.school" data-ng-options="school.id as school.name for school in schools">
-                    	<option value="">School Name</option>
-                    </select>						
-				</td>
+                    <select class="form-control select-school" name="school" data-ng-model="filter.school" data-ng-options="school.id as school.name for school in schools">
+                        <option value="">School Name</option>
+                    </select>                        
+                </td>
                 <td>Status N/A</td>
                 <td><button class="btn btn-primary" data-ng-click="search(filter)">Search</button></td>
 
             </tr>
-		</table>
+        </table>
         <button class="btn-add-new" data-ui-sref="team"><i class="icon-plus"></i> Add New Team</button>
 
     </div>

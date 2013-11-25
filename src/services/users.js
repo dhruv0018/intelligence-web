@@ -65,10 +65,10 @@ IntelligenceWebClient.factory('UsersFactory', [
                 filter = filter || {};
                 
                 if(!filter.start){
-                	filter.start = 0;
+                    filter.start = 0;
                 }
                 if(!filter.count){
-                	filter.count = 1000;
+                    filter.count = 1000;
                 }
 
                 error = error || function() {
@@ -77,10 +77,10 @@ IntelligenceWebClient.factory('UsersFactory', [
                 };
 
                 return self.resource.query(filter, function(users){
-                	for(var i = 0; i < users.length; i++){
-                		users[i] = self.extendUser(users[i]);
-                	}
-                	return success ? success(users) : users;
+                    for(var i = 0; i < users.length; i++){
+                        users[i] = self.extendUser(users[i]);
+                    }
+                    return success ? success(users) : users;
                 }, error);
                 
                 
