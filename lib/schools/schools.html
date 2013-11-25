@@ -1,12 +1,21 @@
-<section class="schools">
+<section class="schools" data-ng-controller="SchoolsController">
 
     <div class="search-bar">
-
+        <table>
+            <tr>
+                <td><input class="form-control" name="name" placeholder="School Name" data-ng-model="filter.name" type="text"></td>
+                <td><input class="form-control" name="name" placeholder="City" data-ng-model="filter.city" type="text"></td>
+                <td><input class="form-control" name="name" placeholder="Region" data-ng-model="filter.region" type="text"></td>
+                <td><input class="form-control" name="name" placeholder="Country" data-ng-model="filter.country" type="text"></td>
+                <td><input class="form-control" name="name" placeholder="Conference" data-ng-model="filter.conference" type="text"></td>
+                <td><button class="btn btn-primary" data-ng-click="search(filter)">Search</button></td>
+            </tr>
+        </table>
         <button class="btn-add-new" data-ng-click="add()"><i class="icon-plus"></i> Add New School</button>
 
     </div>
 
-    <div class="list" ng-controller="SchoolsController">
+    <div class="list">
 
         <div class="table-responsive">
 
@@ -21,14 +30,14 @@
                         <td>{{school.address.regionCode}}</td>
                         <td>{{school.address.countryCode}}</td>
                         <td>{{school.conference}}</td>
-                        <td><button class="edit" data-ng-click="edit(school)"><i class="icon-pencil"></i> Edit</button></td>
+                        <td><button class="edit" data-ui-sref="school({ id: school.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 
                 </tbody>
 
             </table>
-
+            <p data-ng-show="noResults">No results found.</p>
         </div>
 
     </div>
