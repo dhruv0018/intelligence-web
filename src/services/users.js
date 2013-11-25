@@ -86,26 +86,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                 
             },
 
-            getRange: function(start, count) {
-
-                var self = this;
-
-                self.list = self.resource.query({start: start, count: count}, function() {
-
-                    for (var i = 0; i < self.list.length; i++) {
-
-                        self.list[i] = self.extendUser(self.list[i]);
-                    }
-                });
-
-                return self.list;
-            },
-
-            getAll: function() {
-
-                return this.getRange(0, 1000);
-            },
-
             save: function(user) {
 
                 var self = this;
