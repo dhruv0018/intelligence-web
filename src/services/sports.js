@@ -8,10 +8,17 @@ IntelligenceWebClient.factory('SportsFactory', [
 
             resource: SportsResource,
 
-            getList: function() {
+            getList: function(filter, success, error) {
 
                 var self = this;
-                return self.resource.query();
+                filter = filter || {};
+                error = error || function() {
+                    throw new Error('Could not load leagues list');
+                };
+
+                return self.resource.query(filter, function(results){
+                    return success ? success(results) : results;
+                }, error);
             },
             
             save: function(sport) {

@@ -58,25 +58,32 @@ IntelligenceWebClient.factory('UsersFactory', [
                     callback(user);
                 });
             },
-
-            getRange: function(start, count) {
+            
+            getList: function(filter, success, error) {
 
                 var self = this;
+                filter = filter || {};
+                
+                if(!filter.start){
+                    filter.start = 0;
+                }
+                if(!filter.count){
+                    filter.count = 1000;
+                }
 
-                self.list = self.resource.query({start: start, count: count}, function() {
+                error = error || function() {
 
-                    for (var i = 0; i < self.list.length; i++) {
+                    throw new Error('Could not load users list');
+                };
 
-                        self.list[i] = self.extendUser(self.list[i]);
+                return self.resource.query(filter, function(users){
+                    for(var i = 0; i < users.length; i++){
+                        users[i] = self.extendUser(users[i]);
                     }
-                });
-
-                return self.list;
-            },
-
-            getAll: function() {
-
-                return this.getRange(0, 1000);
+                    return success ? success(users) : users;
+                }, error);
+                
+                
             },
 
             save: function(user) {
