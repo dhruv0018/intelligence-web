@@ -1,18 +1,9 @@
-<header class="signup" data-ng-if="$state.is('login')">
+<section class="login" data-ng-controller="LoginController">
 
-    <span>Don't have an account?</span>
-    <a href="http://www.krossover.com/sign-up.php">Get started</a>
+    <header data-ui-view="header"></header>
 
-</header>
+    <div class="logo-login"></div>
 
-<div class="login" data-ng-controller="LoginController">
+    <main data-ui-view="main"></main>
 
-    <header>
-
-        <img class="logo-login" alt="Krossover">
-
-    </header>
-
-    <div data-ui-view="login"></div>
-
-</div>
+</section>
