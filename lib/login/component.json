@@ -15,11 +15,15 @@
     ],
     "templates": [
         "template.html",
+        "signup.html",
         "login.html",
         "locked.html"
     ],
     "styles": [
-        "styles.css"
+        "styles.css",
+        "signup.css",
+        "login.css",
+        "locked.css"
     ],
     "scripts": [
         "index.js"

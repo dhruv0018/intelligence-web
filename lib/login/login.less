@@ -1,0 +1,231 @@
+@import (reference) "main.less";
+
+.password-reset,
+.user-remember,
+.button-signin {
+
+    .uppercase;
+}
+
+.form-login {
+
+    .form-horizontal;
+
+    .form-group {
+
+        margin-left: 0;
+        margin-right: 0;
+        position: relative;
+    }
+
+    .form-group:last-child {
+
+        margin-top: 30px;
+    }
+}
+
+.form-field-login {
+
+    .form-control;
+    .input-lg;
+    box-sizing: content-box;
+    border-width: 3px;
+    padding: 20px;
+    height: 26px;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+
+}
+
+.form-field-login.ng-dirty.ng-invalid-notfound:focus,
+.form-field-login.ng-dirty.ng-invalid-password:focus {
+
+    border-color: red;
+}
+
+.password-reset {
+
+    .text-right;
+}
+
+.user-remember,
+.button-signin {
+
+    height: 62px;
+}
+
+.user-remember {
+
+    .pull-left;
+    line-height: 62px;
+    user-select: none;
+
+    label {
+
+        cursor: pointer;
+        font-weight: 500;
+
+        &::before {
+
+            .icon(@ok);
+            display: inline-block;
+            color: @gray-lighter;
+            width: 28px;
+            height: 28px;
+            line-height: 24px;
+            border-radius: 14px;
+            border: 2px solid @input-border;
+            padding-left: 5px;
+            margin-right: 10px;
+        }
+    }
+
+    input[type="checkbox"] {
+
+        display: none;
+
+        &:checked + label,
+        &:checked + label::before {
+
+            color: @brand-primary;
+            border-color: @brand-primary;
+        }
+    }
+}
+
+.button-signin {
+
+    & {
+
+        .btn;
+        .btn-lg;
+    }
+
+    &:enabled {
+
+        .btn-primary;
+    }
+
+}
+
+.errors {
+
+    .hide;
+}
+
+.error {
+
+    color: @brand-primary;
+}
+
+
+/**
+ * Responsive sizes.
+ */
+
+
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+
+    .form-login {
+
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+
+    }
+
+    .form-field-login {
+
+        width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
+    }
+
+    .button-signin {
+
+        width: 100%;
+    }
+
+    .password-reset {
+
+        .text-center;
+    }
+
+    .user-remember {
+
+        .hide;
+    }
+}
+
+/* Screens over 480px */
+@media only screen
+and (min-width: 480px) {
+
+    .form-field-login {
+
+        width: 404px;
+    }
+
+    .button-signin {
+
+        .pull-right;
+        width: 150px;
+    }
+}
+
+/* Screens under 800px */
+@media only screen
+and (max-width: 799px) {
+
+    .form-field-login {
+
+        &.ng-dirty {
+
+            &.ng-invalid::placeholder {
+
+                color: red;
+            }
+        }
+    }
+}
+
+/* Screens over 800px */
+@media only screen
+and (min-width: 800px) {
+
+    .errors {
+
+        position: absolute;
+        top: 0;
+        left: 450px;
+        width: 200px;
+        height: 72px;
+        line-height: 72px;
+        margin-left: 15px;
+    }
+
+    .form-field-login {
+
+        &.ng-dirty {
+
+            &.ng-invalid:not(:focus) + .errors,
+            &.ng-invalid-notfound:focus + .errors,
+            &.ng-invalid-password:focus + .errors {
+
+                .show;
+            }
+        }
+    }
+}
+
+
+/**
+ * Browser fixes.
+ */
+
+
+.button-signin {
+
+    background-color: @btn-default-bg;
+}
