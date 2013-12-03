@@ -1,291 +1,35 @@
 @import (reference) "main.less";
 
-@grid-gutter-width: 0px;
-@form-login-width: 450px;
-
-.signup,
-.password-reset,
-.user-remember,
-.button-signin {
-
-    .uppercase;
-}
-
-.login {
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: @form-login-width;
-    height: 400px;
-    margin-top: -200px;
-    margin-left: -(@form-login-width / 2);
-    font-family: @font-family-serif;
-}
-
 .logo-login {
 
-    &,
+    .center-block;
+    text-align: center;
+
     &::after {
 
-        .center-block();
-        .img-responsive;
         content: url("krossover-login-logo-320.png");
     }
 }
 
-.form-login {
-
-    .form-horizontal;
-}
-
-.form-login .form-group {
-
-    position: relative;
-}
-
-.locked,
-.form-login .form-group:last-child {
-
-    margin-top: 30px;
-}
-
-.form-field-login {
-
-    .form-control;
-    .input-lg;
-    width: 404px;
-    height: 26px;
-    padding: 20px;
-    font-size: 26px;
-    letter-spacing: -0.01em;
-    font-weight: 400;
-    border-width: 3px;
-    box-sizing: content-box;
-}
-
-.form-field-login.ng-dirty.ng-invalid:not(:focus),
-.form-field-login.ng-dirty.ng-invalid-password:focus {
-
-    border-color: red;
-}
-
-.password-reset {
-
-    .text-right;
-}
-
-.user-remember,
-.button-signin {
-
-    height: 62px;
-}
-
-.user-remember {
-
-    .pull-left;
-    line-height: 62px;
-    user-select: none;
-}
-
-.user-remember label {
-
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.user-remember label::before {
-
-    content: "\2713";
-    display: inline-block;
-    color: @gray-lighter;
-    width: 28px;
-    height: 28px;
-    padding-left: 7px;
-    border-radius: 14px;
-    border: 2px solid @input-border;
-    margin-right: 10px;
-    line-height: 1.6;
-}
-
-.user-remember input[type="checkbox"] {
-
-    display: none;
-}
-
-.user-remember input[type="checkbox"]:checked + label,
-.user-remember input[type="checkbox"]:checked + label::before {
-
-     color: @brand-primary;
-     border-color: @brand-primary;
-}
-
-.button-signin,
-.button-signin:enabled,
-.button-signin:disabled {
-
-    .btn;
-    .btn-lg;
-    .pull-right;
-    width: 150px;
-    font-size: 18px;
-    border-radius: @border-radius-large;
-}
-
-.button-signin:enabled {
-
-    .btn-primary;
-}
-
-.button-signin:disabled {
-
-    .btn-lg;
-}
-
-.errors {
-
-    .hide;
-    position: absolute;
-    top: 0;
-    left: @form-login-width;
-    width: 200px;
-    height: 72px;
-    line-height: 72px;
-    margin-left: 15px;
-}
-
-
-.error {
-
-    color: @brand-primary;
-}
-
-.locked {
-
-    text-align: center;
-    border: 1px solid rgb(216, 216, 216);
-
-    .locked-symbol {
-
-        color: rgb(216, 216, 216);
-        margin-top: 30px;
-
-        &::before {
-
-            .icon(@lock);
-            font-size: 50px;
-            line-height: 84px;
-            display: inline-block;
-            border-color: rgb(216, 216, 216);
-            border: 8px solid rgb(216, 216, 216);
-            border-radius: 100px;
-            width: 100px;
-            height: 100px;
-        }
-    }
-
-    .locked-message {
-
-        margin-top: 20px;
-
-        p {
-
-            margin-bottom: 0;
-        }
-    }
-
-    main {
-
-        height: 225px;
-    }
-
-    footer {
-
-        height: 50px;
-        line-height: 50px;
-        text-transform: uppercase;
-        border-top: 1px solid rgb(216, 216, 216);
-
-        .col-md-4 {
-
-            padding-left: 0;
-            padding-right: 0;
-        }
-    }
-}
 
 /**
  * Responsive sizes.
  */
 
-.signup {
 
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-family: @font-family-serif;
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+
+    .login {
+
+        width: 100%;
+    }
 }
 
 .logo-login {
+
     margin-top: 20px;
     margin-bottom: 20px;
-}
-
-@media only screen
-and (min-width: 800px) {
-
-    /* Show form errors on the side in larger displays. */
-    .form-field-login.ng-dirty.ng-invalid:not(:focus) + .errors,
-    .form-field-login.ng-dirty.ng-invalid-password:focus + .errors {
-
-        .show;
-    }
-}
-
-/* iPhone */
-@media only screen
-and (min-device-width: 320px)
-and (max-device-width: 480px) {
-
-    .signup,
-    .login {
-
-        position: static;
-    }
-
-    .signup {
-
-        margin-top: 20px;
-        .text-center;
-    }
-
-    .login {
-
-        margin: 0;
-    }
-}
-
-/* iPhone in portrait */
-@media only screen
-and (min-device-width: 320px)
-and (max-device-width: 480px)
-and (orientation: portrait) {
-
-    .login,
-    .button-signin {
-
-        width: 290px;
-    }
-
-    .form-login,
-    .password-reset {
-
-        .text-center;
-    }
-
-    .user-remember {
-
-        .hide;
-    }
 }
 
