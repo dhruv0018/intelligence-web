@@ -1,5 +1,18 @@
 var IntelligenceWebClient = require('./app');
 
+IntelligenceWebClient.run(function($rootScope, $window){
+
+    angular.element($window).bind('resize',function(){
+
+        var resize = {
+
+            width: $window.outerWidth
+        };
+
+        $rootScope.$broadcast('resize', resize);
+    });
+});
+
 /**
  * Root controller.
  * @module IntelligenceWebClient
