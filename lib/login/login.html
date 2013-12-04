@@ -2,10 +2,7 @@
 
     <div class="form-group">
 
-        <input class="form-field-login" name="email" type="email"
-        placeholder="Your email" data-ng-model="$parent.login.email"
-        data-ng-change="form.email.$setValidity('notfound', true);"
-        autofocus required>
+        <input class="form-field-login" name="email" type="email" placeholder="Your email" data-ng-model="$parent.login.email" data-ng-change="form.email.$setValidity('notfound', true);" autofocus required>
 
         <span class="errors">
             <span class="error" data-ng-model="login.emailError" data-ng-show="form.email.$error.required">Required!</span>
@@ -17,14 +14,10 @@
 
     <div class="form-group">
 
-        <input class="form-field-login" name="password" type="password"
-        placeholder="Password" data-ng-model="$parent.login.password"
-        data-ng-change="form.password.$setValidity('password', true);"
-        oncopy="return false;" onpaste="return false;" required>
+        <input class="form-field-login" name="password" type="password" placeholder="Password" data-ng-model="$parent.login.password" data-ng-change="form.password.$setValidity('password', true);" oncopy="return false;" onpaste="return false;" required>
 
         <span class="errors">
-            <span class="error" data-ng-show="form.password.$error.required &&
-                !form.password.$error.password">Required!</span>
+            <span class="error" data-ng-show="form.password.$error.required && !form.password.$error.password">Required!</span>
             <span class="error" data-ng-show="form.password.$error.password">Wrong Password, try again.</span>
         </span>
 
