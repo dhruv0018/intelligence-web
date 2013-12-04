@@ -18,14 +18,16 @@
         "signup.html",
         "login.html",
         "locked.html",
-        "forgot.html"
+        "forgot.html",
+        "reset.html"
     ],
     "styles": [
         "styles.css",
         "signup.css",
         "login.css",
         "locked.css",
-        "forgot.css"
+        "forgot.css",
+        "reset.css"
     ],
     "scripts": [
         "index.js"
