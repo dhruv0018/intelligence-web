@@ -17,13 +17,15 @@
         "template.html",
         "signup.html",
         "login.html",
-        "locked.html"
+        "locked.html",
+        "forgot.html"
     ],
     "styles": [
         "styles.css",
         "signup.css",
         "login.css",
-        "locked.css"
+        "locked.css",
+        "forgot.css"
     ],
     "scripts": [
         "index.js"
