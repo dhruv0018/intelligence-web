@@ -23,6 +23,8 @@ require('./services/schools');
 require('./services/leagues');
 require('./services/sports');
 
+require('./directives/match');
+
 require('./root');
 require('./config');
 require('./routes');
