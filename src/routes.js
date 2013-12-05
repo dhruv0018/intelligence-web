@@ -16,17 +16,6 @@ IntelligenceWebClient.config([
 
         $stateProvider
 
-            .state('root', {
-                url: '',
-                abstract: true,
-                views: {
-                    'root': {
-                        template: '<ui-view/>',
-                        controller: 'RootController'
-                    }
-                }
-            })
-
             .state('404', {
                 url: '/404',
                 parent: 'root',

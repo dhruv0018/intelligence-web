@@ -25,11 +25,11 @@ require('./services/sports');
 
 require('./directives/match');
 
-require('./root');
 require('./config');
 require('./routes');
 require('./errors');
 
+component('root');
 component('login');
 component('role');
 component('roles');
