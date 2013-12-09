@@ -1,19 +1,56 @@
 <section class="schools" data-ng-controller="SchoolsController">
 
-    <div class="search-bar">
-        <table>
-            <tr>
-                <td><input class="form-control" name="name" placeholder="School Name" data-ng-model="filter.name" type="text"></td>
-                <td><input class="form-control" name="name" placeholder="City" data-ng-model="filter.city" type="text"></td>
-                <td><input class="form-control" name="name" placeholder="Region" data-ng-model="filter.region" type="text"></td>
-                <td><input class="form-control" name="name" placeholder="Country" data-ng-model="filter.country" type="text"></td>
-                <td><input class="form-control" name="name" placeholder="Conference" data-ng-model="filter.conference" type="text"></td>
-                <td><button class="btn btn-primary" data-ng-click="search(filter)">Search</button></td>
-            </tr>
-        </table>
-        <button class="btn-add-new" data-ng-click="add()"><i class="icon-plus"></i> Add New School</button>
+    <aside class="list sidebar">
 
-    </div>
+        <form role="form">
+
+            <div class="form-group">
+
+                <x-button-add-new data-ng-click="add()">Add new school</x-button-add-new>
+
+            </div>
+
+            <h3>Search</h3>
+
+            <div class="form-group">
+
+                <input class="form-control" name="name" placeholder="School Name" data-ng-model="filter.name" type="text">
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="city" placeholder="City" data-ng-model="filter.city" type="text">
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="region" placeholder="Region" data-ng-model="filter.region" type="text">
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="country" placeholder="Country" data-ng-model="filter.country" type="text">
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="conference" placeholder="Conference" data-ng-model="filter.conference" type="text">
+
+            </div>
+
+            <div class="form-group">
+
+                <button class="btn-search" data-ng-click="search(filter)"></button>
+
+            </div>
+
+        </form>
+
+    </aside>
 
     <div class="list">
 
