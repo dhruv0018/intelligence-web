@@ -6,9 +6,11 @@
 
             <div class="form-group">
 
-                <button class="btn-add-new" data-ng-click="add()"><i class="icon-plus"></i> Add New User</button>
+                <x-button-add-new data-ng-click="add()">Add new user</x-button-add-new>
 
             </div>
+
+            <h3>Search</h3>
 
             <div class="form-group">
 
@@ -18,13 +20,13 @@
 
             <div class="form-group">
 
-                <input class="form-control" placeholder="First name" data-ng-model="filter.firstName" type="text">
+                <input class="form-control" placeholder="First Name" data-ng-model="filter.firstName" type="text">
 
             </div>
 
             <div class="form-group">
 
-                <input class="form-control" placeholder="Last name" data-ng-model="filter.lastName" type="text">
+                <input class="form-control" placeholder="Last Name" data-ng-model="filter.lastName" type="text">
 
             </div>
 
@@ -46,7 +48,7 @@
 
             <div class="form-group">
 
-                <button class="btn btn-primary pull-right" data-ng-click="search(filter)">Search</button>
+                <button class="btn-search" data-ng-click="search(filter)"></button>
 
             </div>
 
