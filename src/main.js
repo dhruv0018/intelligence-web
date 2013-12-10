@@ -15,6 +15,7 @@ require('./models/schools');
 require('./models/leagues');
 
 require('./services/authentication');
+require('./services/authorization');
 require('./services/tokens');
 require('./services/session');
 require('./services/users');

@@ -106,6 +106,27 @@ IntelligenceWebClient.factory('HttpInterceptor', [
             * considered successful. Which are status codes up to the 400 level. */
             response: function(response) {
 
+                /* Catch errors in 200 responses. */
+                if (response.data.error) {
+
+                    if (response.data.error === 'invalid_token') {
+
+                        ErrorReporter.reportError(new Error('Invalid access token'));
+
+                        /* TODO: Don't go to login; refresh token. */
+                        $location.path('/login');
+                    }
+
+                    else {
+
+                        ErrorReporter.reportError(new Error('Error response\n' +
+                            response.data.error + ': ' +
+                            response.data.error_description));
+                    }
+
+                    return $q.reject(response);
+                }
+
                 return response;
             },
 
@@ -131,7 +152,6 @@ IntelligenceWebClient.factory('HttpInterceptor', [
 
                 default:
                     ErrorReporter.reportError(new Error('Error response', response.data));
-                    $location.path('/error').replace();
                     break;
                 }
 
@@ -152,7 +172,8 @@ IntelligenceWebClient.run([
 
         $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
 
-            $location.path('/404').replace();
+            event.preventDefault();
+            $state.go('404');
         });
 
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
