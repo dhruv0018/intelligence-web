@@ -1,0 +1,102 @@
+@import (reference) "main.less";
+
+
+.locked {
+
+    text-align: center;
+    border: 1px solid rgb(216, 216, 216);
+
+    .locked-symbol {
+
+        padding: 20px;
+        color: rgb(216, 216, 216);
+
+        &::before {
+
+            .icon(@lock);
+            font-size: 50px;
+            line-height: 84px;
+            display: inline-block;
+            border-color: rgb(216, 216, 216);
+            border: 8px solid rgb(216, 216, 216);
+            border-radius: 100px;
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    .locked-message {
+
+        p {
+
+            margin-bottom: 0;
+        }
+    }
+
+    main {
+
+        padding: 30px;
+    }
+
+    footer {
+
+        margin: 0;
+        text-transform: uppercase;
+    }
+}
+
+
+/**
+ * Responsive sizes.
+ */
+
+
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+
+    .locked {
+
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+
+        footer {
+
+            flex-direction: column;
+
+            .col {
+
+                border-top: 1px solid rgb(216, 216, 216);
+                padding: 20px;
+            }
+        }
+    }
+}
+
+/* Screens over 480px */
+@media only screen
+and (min-width: 480px) {
+
+    .locked {
+
+        width: 450px;
+
+        footer {
+
+            height: 50px;
+            line-height: 50px;
+            border-top: 1px solid rgb(216, 216, 216);
+
+            .col:first-child {
+
+                margin-left: 20px;
+            }
+
+            .col:nth-child(2) {
+
+                margin-left: 20px;
+            }
+        }
+    }
+}

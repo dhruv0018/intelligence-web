@@ -24,11 +24,13 @@ require('./services/schools');
 require('./services/leagues');
 require('./services/sports');
 
-require('./root');
+require('./directives/match');
+
 require('./config');
 require('./routes');
 require('./errors');
 
+component('root');
 component('login');
 component('role');
 component('roles');

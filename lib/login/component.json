@@ -14,10 +14,20 @@
         "krossover-login-logo-320.png"
     ],
     "templates": [
-        "template.html"
+        "template.html",
+        "signup.html",
+        "login.html",
+        "locked.html",
+        "forgot.html",
+        "reset.html"
     ],
     "styles": [
-        "styles.css"
+        "styles.css",
+        "signup.css",
+        "login.css",
+        "locked.css",
+        "forgot.css",
+        "reset.css"
     ],
     "scripts": [
         "index.js"

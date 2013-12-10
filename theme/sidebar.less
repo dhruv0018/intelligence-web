@@ -1,0 +1,47 @@
+@import (reference) "main.less";
+
+.sidebar {
+
+    flex: 0 0 350px;
+    border-right: 1px solid rgb(216, 216, 216);
+
+    li a {
+
+        .uppercase;
+        margin: 0;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        padding-left: 50px;
+
+        &,
+        &:hover {
+
+            color: @gray-dark;
+            cursor: pointer;
+            border-top: 1px solid rgb(255, 255, 255);
+            border-bottom: 1px solid rgb(255, 255, 255);
+            background-color: rgb(255, 255, 255);
+        }
+    }
+
+    li.active a {
+
+        width: ~"calc(100% + 2px)";
+
+        &,
+        &:hover {
+
+            color: @brand-primary;
+            border-top: 1px solid rgb(221, 221, 221);
+            border-bottom: 1px solid rgb(221, 221, 221);
+            background-color: rgb(247, 248, 248);
+        }
+    }
+}
+
+.sidebar.list {
+
+    padding: 20px;
+}
+

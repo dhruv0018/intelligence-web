@@ -1,11 +1,18 @@
 @import (reference) "main.less";
 
+html,
+body,
+body > #root > main {
+
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+}
+
 body {
 
+    color: @gray-dark;
     .base-typography;
 }
 
-body a:hover {
-
-    text-decoration: none;
-}
