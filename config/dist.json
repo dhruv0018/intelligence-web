@@ -10,5 +10,10 @@
     },
     "passwordReset": {
         "uri": "https://www-dev.krossover.com/intelligence-api/v1/password-reset/"
+    },
+    "links": {
+        "signup": {
+            "uri": "http://krossover.com/sign-up.php"
+        }
     }
 }
