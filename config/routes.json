@@ -55,7 +55,19 @@
         "Athlete": true
     },
 
+    "user": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "users": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "team": {
 
         "Super Admin": true,
         "Admin": true
@@ -67,18 +79,31 @@
         "Admin": true
     },
 
+    "school": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "schools": {
 
         "Super Admin": true,
-        "Admin": true,
-        "Indexer": true,
-        "Head Coach": true,
-        "Assistant Coach": true,
-        "Parent": true,
-        "Athlete": true
+        "Admin": true
+    },
+
+    "game": {
+
+        "Super Admin": true,
+        "Admin": true
     },
 
     "games": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "report": {
 
         "Super Admin": true,
         "Admin": true
@@ -91,6 +116,16 @@
     },
 
     "platform": {
+
+        "Super Admin": true
+    },
+
+    "league": {
+
+        "Super Admin": true
+    },
+
+    "leagues": {
 
         "Super Admin": true
     }
