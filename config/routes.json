@@ -49,7 +49,8 @@
         "Super Admin": true,
         "Admin": true,
         "Indexer": true,
-        "Coach": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
         "Parent": true,
         "Athlete": true
     },
@@ -71,7 +72,8 @@
         "Super Admin": true,
         "Admin": true,
         "Indexer": true,
-        "Coach": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
         "Parent": true,
         "Athlete": true
     },
