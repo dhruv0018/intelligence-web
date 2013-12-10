@@ -29,6 +29,21 @@
         "*": true
     },
 
+    "locked": {
+
+        "*": true
+    },
+
+    "forgot": {
+
+        "*": true
+    },
+
+    "reset": {
+
+        "*": true
+    },
+
     "account": {
 
         "Super Admin": true,
