@@ -25,7 +25,7 @@
 
                 <input class="form-control" name="city" placeholder="City" data-ng-model="filter.city" type="search" autocomplete="on" list="school-city" autosave="school-city">
                 <datalist id="school-city">
-                    <option data-ng-repeat="school in schools" value="{{school.address.city}}">
+                    <option data-ng-repeat="school in schools | unique:'address.city'" value="{{school.address.city}}">
                 </datalist>
 
             </div>
@@ -34,7 +34,7 @@
 
                 <input class="form-control" name="region" placeholder="Region" data-ng-model="filter.region" type="search" autocomplete="on" list="school-region" autosave="school-region">
                 <datalist id="school-region">
-                    <option data-ng-repeat="school in schools" value="{{school.address.regionCode}}">
+                    <option data-ng-repeat="school in schools | unique:'address.regionCode'" value="{{school.address.regionCode}}">
                 </datalist>
 
             </div>
@@ -43,7 +43,7 @@
 
                 <input class="form-control" name="country" placeholder="Country" data-ng-model="filter.country" type="search" autocomplete="on" list="school-country" autosave="school-country">
                 <datalist id="school-country">
-                    <option data-ng-repeat="school in schools" value="{{school.address.countryCode}}">
+                    <option data-ng-repeat="school in schools | unique:'address.countryCode'" value="{{school.address.countryCode}}">
                 </datalist>
 
             </div>
@@ -52,7 +52,7 @@
 
                 <input class="form-control" name="conference" placeholder="Conference" data-ng-model="filter.conference" type="search" autocomplete="on" list="school-conference" autosave="school-conference">
                 <datalist id="school-conference">
-                    <option data-ng-repeat="school in schools" value="{{school.conference}}">
+                    <option data-ng-repeat="school in schools | unique:'conference'" value="{{school.conference}}">
                 </datalist>
 
             </div>
