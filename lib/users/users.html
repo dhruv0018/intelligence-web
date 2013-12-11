@@ -14,19 +14,27 @@
 
             <div class="form-group">
 
-                <input class="form-control" placeholder="Email" data-ng-model="filter.email" type="search">
+                <input class="form-control" placeholder="Email" data-ng-model="filter.email" type="search" autocomplete="on" list="user-email" autosave="user-email">
+                <datalist id="user-email">
+                    <option data-ng-repeat="user in users" value="{{user.email}}">
+                </datalist>
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" placeholder="First Name" data-ng-model="filter.firstName" type="search" autocomplete="on" list="user-firstname" autosave="user-firstname">
+                <datalist id="user-firstname">
+                    <option data-ng-repeat="user in users" value="{{user.firstName}}">
+                </datalist>
 
             </div>
 
             <div class="form-group">
 
-                <input class="form-control" placeholder="First Name" data-ng-model="filter.firstName" type="search">
-
-            </div>
-
-            <div class="form-group">
-
-                <input class="form-control" placeholder="Last Name" data-ng-model="filter.lastName" type="search">
+                <input class="form-control" placeholder="Last Name" data-ng-model="filter.lastName" type="search" autocomplete="on" list="user-lastname" autosave="user-lastname">
+                <datalist id="user-lastname">
+                    <option data-ng-repeat="user in users" value="{{user.lastName}}">
+                </datalist>
 
             </div>
 

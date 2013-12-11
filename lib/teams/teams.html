@@ -14,7 +14,10 @@
 
             <div class="form-group">
 
-                <input class="form-control" name="name" placeholder="Team Name" data-ng-model="filter.name" type="search">
+                <input class="form-control" name="name" placeholder="Team Name" data-ng-model="filter.name" type="search" autocomplete="on" list="team-name" autosave="team-name">
+                <datalist id="team-name">
+                    <option data-ng-repeat="team in teams" value="{{team.name}}">
+                </datalist>
 
             </div>
 
