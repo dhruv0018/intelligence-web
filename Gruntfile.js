@@ -158,6 +158,7 @@ module.exports = function(grunt) {
                 src: [
                     'vendor/angular/angular.js',
                     'vendor/angular-resource/angular-resource.js',
+                    'vendor/angular-ui-utils/modules/unique/unique.js',
                     'vendor/angular-ui-router/build/angular-ui-router.js'],
                 dest: 'build/angular.js'
             },
@@ -165,6 +166,7 @@ module.exports = function(grunt) {
                 src: [
                     'vendor/angular/angular.min.js',
                     'vendor/angular-resource/angular-resource.min.js',
+                    'vendor/angular-ui-utils/modules/unique/unique.js',  /* TODO: Minify this file! */
                     'vendor/angular-ui-router/build/angular-ui-router.min.js'],
                 dest: 'build/angular.min.js'
             }
