@@ -20,7 +20,7 @@ IntelligenceWebClient.config([
                 url: '/401',
                 parent: 'root',
                 views: {
-                    'main@': {
+                    'main@root': {
                         template: '<div class="jumbotron"><h1 class="alert alert-danger">Not Authorized</h1></div>',
                     }
                 }
@@ -30,7 +30,7 @@ IntelligenceWebClient.config([
                 url: '/404',
                 parent: 'root',
                 views: {
-                    'main@': {
+                    'main@root': {
                         template: '<div class="jumbotron"><h1 class="alert alert-info">Not Found</h1></div>',
                     }
                 }
@@ -40,7 +40,7 @@ IntelligenceWebClient.config([
                 url: '/500',
                 parent: 'root',
                 views: {
-                    'main@': {
+                    'main@root': {
                         template: '<div class="jumbotron"><h1 class="alert alert-danger">Server Error</h1></div>',
                     }
                 }
@@ -50,7 +50,7 @@ IntelligenceWebClient.config([
                 url: '/501',
                 parent: 'root',
                 views: {
-                    'main@': {
+                    'main@root': {
                         template: '<div class="jumbotron"><h1 class="alert alert-warning">Not Implemented</h1></div>',
                     }
                 }
@@ -60,7 +60,7 @@ IntelligenceWebClient.config([
                 url: '/error',
                 parent: 'root',
                 views: {
-                    'main@': {
+                    'main@root': {
                         template: '<div class="jumbotron"><h1 class="alert alert-danger">Error</h1></div>',
                     }
                 }

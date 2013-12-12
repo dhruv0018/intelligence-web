@@ -25,6 +25,7 @@ require('./services/leagues');
 require('./services/sports');
 
 require('./directives/match');
+require('./directives/button');
 
 require('./config');
 require('./routes');

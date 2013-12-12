@@ -60,6 +60,28 @@
         "Athlete": true
     },
 
+    "contact-info": {
+
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Parent": true,
+        "Athlete": true
+    },
+
+    "roles-list": {
+
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Parent": true,
+        "Athlete": true
+    },
+
     "user": {
 
         "Super Admin": true,

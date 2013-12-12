@@ -1,54 +1,23 @@
 <section class="account">
 
-    <div class="info-bar">
+    <aside class="sidebar">
 
         <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
 
-        <tabset vertical="true" direction="right">
+        <nav role="navigation">
 
-            <tab class="contact-info" heading="Contact Info">
+            <ul class="nav nav-pills nav-stacked">
 
-                <div class="content">
+                <li ui-sref-active="active"><a href data-ui-sref="contact-info">Contact Info</a></li>
+                <li ui-sref-active="active"><a href data-ui-sref="roles-list">Roles</a></li>
 
-                    <p><a href="#">change password</a></p>
+            </ul>
 
-                    <p><a href="#">change email address</a></p>
+        </nav>
 
-                </div>
+    </aside>
 
-            </tab>
-
-            <tab class="roles" heading="Roles">
-
-                <div class="content">
-
-                    <span data-ng-hide="currentUser.has(ATHLETE)">
-
-                        <span data-ng-show="currentUser.has(COACH) || currentUser.has(PARENT) || currentUser.has(INDEXER)">
-
-                            <p><a href data-ng-click="addAthleteRole()">Associate athlete role to myself</a></p>
-
-                        </span>
-
-                    </span>
-
-                    <ul class="list-group">
-
-                        <li class="role list-group-item" data-ng-repeat="role in currentUser.roles">
-
-                            <x-krossover-role user="currentUser" role="role"></x-krossover-role>
-
-                        </li>
-
-                    </ul>
-
-                </div>
-
-            </tab>
-
-        </tabset>
-
-    </div>
+    <main class="content" data-ui-view="content"></main>
 
 </section>
 

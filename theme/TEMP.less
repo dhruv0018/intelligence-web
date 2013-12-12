@@ -7,43 +7,6 @@
     height: 100%;
 }
 
-/* FIX: These are things that are changing and prbably will be eliminated in the
- * next desgin. */
-
-@info-bar-width: 350px;
-@search-bar-height: 90px;
-@search-bar-form-height: 40px;
-
-.info-bar {
-
-    position: fixed;
-    height: 100%;
-    width: @info-bar-width;
-    border-right: 1px solid rgb(216, 216, 216);
-}
-
-.search-bar {
-
-    position: fixed;
-    width: 100%;
-    height: @search-bar-height;
-    padding: 25px;
-    background-color: rgb(247, 248, 248);
-    text-transform: uppercase;
-    border-bottom: 1px solid rgb(216, 216, 216);
-    box-shadow: 0 1px 3px rgb(230, 229, 228);
-
-    .btn-add-new {
-
-        .btn;
-        .btn-primary;
-        position: absolute;
-        top: ((@search-bar-height - @search-bar-form-height)/2);
-        right: 25px;
-        height: @search-bar-form-height;
-    }
-}
-
 main > section {
 
     width: 100%;
@@ -52,3 +15,7 @@ main > section {
     flex: 1;
 }
 
+.list {
+
+    overflow: scroll;
+}

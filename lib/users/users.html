@@ -1,27 +1,68 @@
 <section class="users" data-ng-controller="UsersController">
 
-    <div class="search-bar">
-        <table>
-            <tr>
-                <td><input class="form-control" placeholder="Email" data-ng-model="filter.email" type="text"></td>
-                <td><input class="form-control" placeholder="First name" data-ng-model="filter.firstName" type="text"></td>
-                <td><input class="form-control" placeholder="Last name" data-ng-model="filter.lastName" type="text"></td>
-                <td>
-                    <select class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole">
-                        <option value="">Roles</option>
-                    </select>
-                </td>        
-                <td>
-                    <select class="form-control" data-ng-model="filter.isActive" data-ng-options="status.value as status.label for status in statuses">
-                        <option value="">Status</option>
-                    </select>
-                </td>
-                <td><button class="btn btn-primary" data-ng-click="search(filter)">Search</button></td>
-            </tr>
-        </table>
-        <button class="btn-add-new" data-ng-click="add()"><i class="icon-plus"></i> Add New User</button>
+    <aside class="list sidebar">
 
-    </div>
+        <form role="form">
+
+            <div class="form-group">
+
+                <x-button-add-new data-ng-click="add()">Add new user</x-button-add-new>
+
+            </div>
+
+            <h3>Search</h3>
+
+            <div class="form-group">
+
+                <input class="form-control" placeholder="Email" data-ng-model="filter.email" type="search" autocomplete="on" list="user-email" autosave="user-email">
+                <datalist id="user-email">
+                    <option data-ng-repeat="user in users" value="{{user.email}}">
+                </datalist>
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" placeholder="First Name" data-ng-model="filter.firstName" type="search" autocomplete="on" list="user-firstname" autosave="user-firstname">
+                <datalist id="user-firstname">
+                    <option data-ng-repeat="user in users" value="{{user.firstName}}">
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" placeholder="Last Name" data-ng-model="filter.lastName" type="search" autocomplete="on" list="user-lastname" autosave="user-lastname">
+                <datalist id="user-lastname">
+                    <option data-ng-repeat="user in users" value="{{user.lastName}}">
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <select class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole">
+                    <option value="">Roles</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <select class="form-control" data-ng-model="filter.isActive" data-ng-options="status.value as status.label for status in statuses">
+                    <option value="">Status</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <button class="btn-search" data-ng-click="search(filter)"></button>
+
+            </div>
+
+        </form>
+
+    </aside>
 
     <div class="list">
 
@@ -35,7 +76,7 @@
 
                         <td>{{user.email}}</td>
                         <td class="name"><a href>{{user.firstName}} {{user.lastName}}</a></td>
-                        
+
                         <td class="roles">
 
                             <ul>
