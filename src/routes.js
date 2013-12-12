@@ -99,6 +99,15 @@ IntelligenceWebClient.run([
                 $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
             }
         });
+
+        $rootScope.$on('roleChangeSuccess', function(event, role) {
+
+            /* Ensure the current user still has access to the current state. */
+            if (!authz.isAuthorized($state.current)) {
+
+                $state.go('401');
+            }
+        });
     }
 ]);
 
