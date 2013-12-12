@@ -1,51 +1,23 @@
 <section class="league">
 
-    <div class="info-bar">
+    <aside class="sidebar">
 
-        <h1 class="name">{{league.name}}</h1>
+        <h1 class="name" data-ng-if="league.name">{{league.name}}</h1>
+        <h1 class="name" data-ng-if="!league.name">New League</h1>
 
-        <tabset vertical="true" direction="right">
+        <nav role="navigation">
 
-            <tab heading="League Info">
+            <ul class="nav nav-pills nav-stacked">
 
-                <div class="row">
+                <li ui-sref-active="active"><a href data-ui-sref="league-info"><i class="icon-info-sign"></i> League Info</a></li>
 
-                    <div class="col-md-4">
+            </ul>
 
-                        <form class="form-info" name="form" role="form">
+        </nav>
 
-                            <div class="form-group">
+    </aside>
 
-                                <select class="form-control" name="sport" data-ng-model="league.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
-                                	<option value="">Sport</option>
-                                </select>
-
-                                <input class="form-control" name="name" placeholder="Name" data-ng-model="league.name" type="text" required />
-
-								<select class="form-control" name="gender" data-ng-model="league.gender" data-ng-options="gender for gender in genders" required>
-                                	<option value="">Gender</option>
-                                </select>
-                                
-                            </div>
-
-                            <div class="form-group">
-
-                                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(league)">Save</button>
-                                <a class="pull-right" href data-ng-click="cancel()">cancel</a>
-
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </tab>
-
-        </tabset>
-
-    </div>
+    <main class="content" data-ui-view="content"></main>
 
 </section>
 

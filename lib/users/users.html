@@ -6,7 +6,7 @@
 
             <div class="form-group">
 
-                <x-button-add-new data-ng-click="add()">Add new user</x-button-add-new>
+                <x-button-add-new data-ng-click="add()">Add a new user</x-button-add-new>
 
             </div>
 
@@ -41,7 +41,7 @@
             <div class="form-group">
 
                 <select class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole">
-                    <option value="">Roles</option>
+                    <option value="">Role</option>
                 </select>
 
             </div>
@@ -115,7 +115,7 @@
 
                         <td>
 
-                            <button class="edit" data-ui-sref="user({ id: user.id })""><i class="icon-pencil"></i> Edit</button>
+                            <button class="edit" data-ui-sref="user-info({ id: user.id })""><i class="icon-pencil"></i> Edit</button>
 
                         </td>
 

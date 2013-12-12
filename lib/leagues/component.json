@@ -2,7 +2,8 @@
     "name": "leagues",
     "templates": [
         "league.html",
-        "leagues.html"
+        "leagues.html",
+        "league-info.html"
     ],
     "scripts": [
         "index.js"

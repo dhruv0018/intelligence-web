@@ -6,7 +6,7 @@
 
             <div class="form-group">
 
-                <x-button-add-new data-ui-sref="team">Add new team</x-button-add-new>
+                <x-button-add-new data-ui-sref="team-info">Add a new team</x-button-add-new>
 
             </div>
 
@@ -70,7 +70,7 @@
                         <td>{{indexedLeagues[team.leagueId]['name']}}</td>
                         <td>{{indexedSchools[team.schoolId]['name']}}</td>
                         <td>Status N/A</td>
-                        <td><button class="edit" data-ui-sref="team({ id: team.id })"><i class="icon-pencil"></i> Edit</button></td>
+                        <td><button class="edit" data-ui-sref="team-info({ id: team.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 

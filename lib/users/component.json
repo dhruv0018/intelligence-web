@@ -4,7 +4,9 @@
         "user.html",
         "adduser.html",
         "newrole.html",
-        "users.html"
+        "users.html",
+        "user-info.html",
+        "user-roles.html"
     ],
     "scripts": [
         "index.js"

@@ -6,7 +6,7 @@
 
             <div class="form-group">
 
-                <x-button-add-new data-ng-click="add()">Add new school</x-button-add-new>
+                <x-button-add-new data-ui-sref="school-info">Add a new school</x-button-add-new>
 
             </div>
 
@@ -82,7 +82,7 @@
                         <td>{{school.address.regionCode}}</td>
                         <td>{{school.address.countryCode}}</td>
                         <td>{{school.conference}}</td>
-                        <td><button class="edit" data-ui-sref="school({ id: school.id })"><i class="icon-pencil"></i> Edit</button></td>
+                        <td><button class="edit" data-ui-sref="school-info({ id: school.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 

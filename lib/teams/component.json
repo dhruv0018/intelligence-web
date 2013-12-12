@@ -2,7 +2,9 @@
     "name": "teams",
     "templates": [
         "team.html",
-        "teams.html"
+        "teams.html",
+        "team-info.html",
+        "team-members.html"
     ],
     "scripts": [
         "index.js"

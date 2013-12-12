@@ -1,0 +1,57 @@
+<form class"form-contact" role="form">
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+
+                <input class="form-control" name="firstName" placeholder="First Name" data-ng-model="user.firstName" type="text" required>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+
+                <input class="form-control" name="lastName" placeholder="Last Name" data-ng-model="user.lastName" type="text" required>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <input class="form-control" name="email" placeholder="Email" data-ng-model="user.email" type="email" required>
+
+    </div>
+
+    <div class="form-group">
+
+        <input class="form-control" name="phone1" placeholder="Phone Number 1" data-ng-model="user.phone1" type="tel">
+
+    </div>
+
+    <div class="form-group">
+
+        <input class="form-control" name="phone2" placeholder="Phone Number 2" data-ng-model="user.phone2" type="tel">
+
+    </div>
+
+</form>
+
+<button class="btn btn-primary" data-ng-disabled="disableSave" data-ng-click="save(user)">Save</button>
+
+<button class="toggle-lock-user" type="button" data-ng-model="user.isActive" data-ng-disabled="user.has(ADMIN) && !currentUser.is(SUPER_ADMIN)" data-btn-checkbox data-btn-checkbox-true="true" data-btn-checkbox-false="false">
+    <i class="icon-lock" data-ng-show="user.isActive"></i>
+    <i class="icon-unlock" data-ng-show="!user.isActive"></i>
+    {{ user.isActive ? "Lock" : "Unlock" }}
+</button>
+
+<button class="btn btn-primary" data-ng-click="auth.requestPasswordReset(user.email)">Password Reset</button>
+
+<a class="pull-right" href data-ui-sref="users">Cancel</a>

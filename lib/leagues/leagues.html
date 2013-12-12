@@ -6,7 +6,7 @@
 
             <div class="form-group">
 
-                <x-button-add-new data-ui-sref="league">Add new league</x-button-add-new>
+                <x-button-add-new data-ui-sref="league-info">Add a new league</x-button-add-new>
 
             </div>
 
@@ -60,7 +60,7 @@
                         <td>{{league.name}}</td>
                         <td ng-repeat="sport in sports | filter:{id: league.sportId}">{{sport.name}}</td>
                         <td>{{league.gender}}</td>
-                        <td><button class="edit pull-right" data-ui-sref="league({ id: league.id })"><i class="icon-pencil"></i> Edit</button></td>
+                        <td><button class="edit pull-right" data-ui-sref="league-info({ id: league.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 
