@@ -16,7 +16,7 @@
 
                 <input class="form-control" name="name" placeholder="Team Name" data-ng-model="filter.name" type="search" autocomplete="on" list="team-name" autosave="team-name">
                 <datalist id="team-name">
-                    <option data-ng-repeat="team in teams" value="{{team.name}}">
+                    <option data-ng-repeat="team in teams | unique:'name' | orderBy:'name'" value="{{team.name}}">
                 </datalist>
 
             </div>
@@ -31,7 +31,8 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="league" data-ng-model="filter.league" data-ng-options="league.id as league.name for league in leagues">
+                <select class="form-control" name="league"
+                    data-ng-model="filter.league" data-ng-options="league.id as league.name for league in leagues | unique:'name' | orderBy:'name'">
                     <option value="">League Name</option>
                 </select>
 
@@ -39,7 +40,8 @@
 
             <div class="form-group">
 
-                <select class="form-control select-school" name="school" data-ng-model="filter.school" data-ng-options="school.id as school.name for school in schools">
+                <select class="form-control select-school" name="school"
+                    data-ng-model="filter.school" data-ng-options="school.id as school.name for school in schools | unique:'name' | orderBy:'name'">
                     <option value="">School Name</option>
                 </select>
 
