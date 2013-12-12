@@ -88,7 +88,7 @@ IntelligenceWebClient.run([
             }
 
             /* Ensure the current user has access to the route. */
-            if (!authz.isAuthorized(to)) {
+            else if (!authz.isAuthorized(to)) {
 
                 event.preventDefault();
                 $state.go('401');
