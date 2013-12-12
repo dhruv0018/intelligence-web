@@ -473,7 +473,7 @@ module.exports = function(grunt) {
             },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
-                tasks: ['dev']
+                tasks: ['component:build', 'browserify:dev', 'copy:dev']
             },
             css: {
                 files: ['src/**/*.css'],
@@ -481,11 +481,11 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['lib/**/*.less', 'theme/**/*.less'],
-                tasks: ['dev']
+                tasks: ['less', 'component:build', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
-                tasks: ['jsvalidate', 'jshint', 'component:build', 'browserify:dev', 'test', 'copy:dev']
+                tasks: ['jshint', 'component:build', 'browserify:dev', 'copy:dev']
             }
         }
 
