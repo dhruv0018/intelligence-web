@@ -9,7 +9,7 @@
     </header>
 
     <!-- Admin menu -->
-    <ul class="menu nav navbar-nav" data-ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
+    <menu class="menu nav navbar-nav" data-ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
 
         <li><a data-ui-sref="users">Users</a></li>
         <li><a data-ui-sref="teams">Teams</a></li>
@@ -18,10 +18,10 @@
         <li><a data-ui-sref="reports">Reports</a></li>
         <li data-ng-show="currentUser.is(SUPER_ADMIN)"><a data-ui-sref="platform">Platform</a></li>
 
-    </ul>
+    </menu>
 
     <!-- Coach menu -->
-    <ul class="menu nav navbar-nav" data-ng-if="currentUser.is(COACH)">
+    <menu class="menu nav navbar-nav" data-ng-if="currentUser.is(COACH)">
 
         <li><a data-ui-sref="film">Film Home</a></li>
         <li><a data-ui-sref="analytics">Analytics</a></li>
@@ -30,11 +30,11 @@
         <li><a data-ng-href="{{config.links.support.uri}}">Support <i class="icon-external-link"></i></a></li>
         <li><a data-ui-sref="addfilm"><button class="btn btn-primary">Add Film</button></a></li>
 
-    </ul>
+    </menu>
 
-    <ul class="nav navbar-nav navbar-right">
+    <menu type="context" class="menu nav navbar-nav navbar-right">
 
-        <li class="dropdown">
+        <div class="dropdown">
 
             <a href="#" class="dropdown-toggle">
 
@@ -64,8 +64,8 @@
 
             </ul>
 
-        </li>
+        </div>
 
-    </ul>
+    </menu>
 
 </div>
