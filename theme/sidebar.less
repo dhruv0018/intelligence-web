@@ -17,17 +17,35 @@
         padding: @sidebar-padding-collapsed;
     }
 
+    .logo {
+
+        .pull-left;
+        margin-right: @sidebar-padding-full;
+    }
+
     h1 {
 
+        font-size: 20px;
+        font-weight: 200;
         .text-overflow;
-        width: (@sidebar-width-full - (@sidebar-padding-full * 2));
-        margin-top: 0;
-        margin-bottom: 0;
+        width: (@sidebar-width-full - (@sidebar-padding-full * 2) - 40px - @sidebar-padding-full - 1px);
+    }
+
+    h2 {
+
+        font-size: 18px;
+        font-weight: 400;
     }
 
     h3 {
 
         color: @brand-blue;
+    }
+
+    h1,
+    h2 {
+
+        margin: 0;
     }
 
     &.ui-hide h3 {
