@@ -1,18 +1,26 @@
 @import (reference) "main.less";
 
-@sidebar-width: 350px;
-@sidebar-padding: 20px;
+@sidebar-width-full: 350px;
+@sidebar-width-collapsed: 65px;
+@sidebar-padding-full: 20px;
+@sidebar-padding-collapsed: 10px;
 
 .sidebar {
 
-    flex: 0 0 @sidebar-width;
-    padding: @sidebar-padding;
+    flex: 0 0 @sidebar-width-full;
+    padding: @sidebar-padding-full;
     border-right: 1px solid rgb(216, 216, 216);
+
+    &.ui-hide {
+
+        flex: 0 0 @sidebar-width-collapsed;
+        padding: @sidebar-padding-collapsed;
+    }
 
     h1 {
 
         .text-overflow;
-        width: (@sidebar-width - (@sidebar-padding * 2));
+        width: (@sidebar-width-full - (@sidebar-padding-full * 2));
         margin-top: 0;
         margin-bottom: 0;
     }
@@ -20,6 +28,16 @@
     h3 {
 
         color: @brand-blue;
+    }
+
+    &.ui-hide h3 {
+
+        display: none;
+    }
+
+    &.ui-hide form {
+
+        display: none;
     }
 
     nav {
@@ -30,8 +48,8 @@
     li,
     li + li {
 
-        margin-left: -@sidebar-padding;
-        width: @sidebar-width;
+        margin-left: -@sidebar-padding-full;
+        width: @sidebar-width-full;
     }
 
     li a {
@@ -59,6 +77,109 @@
             border-bottom: 1px solid rgb(221, 221, 221);
             border-right: @content-bg;
             background-color:@content-bg;
+        }
+    }
+
+    .btn-add-new {
+
+        .btn;
+        width: 100%;
+        font-size: 18px;
+        font-weight: 500;
+        text-align: left;
+        text-transform: none;
+        line-height: 35px;
+        background-color: rgb(239, 239, 239);
+
+        &,
+        &:hover,
+        &:active {
+
+            color: rgb(88, 88, 88);
+        }
+    }
+
+    &.ui-hide .btn-add-new {
+
+        padding: 0;
+        border: none;
+
+        i {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            line-height: 30px;
+        }
+
+        span {
+
+            display: none;
+        }
+    }
+
+    .btn-search {
+
+        .btn;
+        .btn-default;
+        width: 100%;
+        height: 50px;
+        font-size: 18px;
+
+        &,
+        &:hover,
+        &:active {
+
+            color: rgb(88, 88, 88);
+        }
+
+        &::before {
+
+            .icon(@search);
+        }
+    }
+
+    &.ui-hide .btn-add-new,
+    &.ui-hide .btn-search {
+
+        width: (@sidebar-width-collapsed - (@sidebar-padding-collapsed * 2) - 1px);
+        height: (@sidebar-width-collapsed - (@sidebar-padding-collapsed * 2) - 1px);
+    }
+
+    &.ui-hide .btn-search {
+
+        margin-top: @sidebar-padding-collapsed;
+    }
+
+    .btn-toggle-sidebar {
+
+        .btn;
+        .btn-blank;
+        .pull-right;
+
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: @sidebar-width-collapsed;
+        height: @sidebar-width-collapsed;
+
+        &,
+        &:focus,
+        &:hover {
+
+            color: @gray-light;
+        }
+
+        &:before {
+
+            .icon(@chevron-left);
+        }
+    }
+
+    &.ui-hide .btn-toggle-sidebar {
+
+        &:before {
+
+            .icon(@chevron-right);
         }
     }
 }
