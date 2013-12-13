@@ -468,7 +468,7 @@ module.exports = function(grunt) {
                 livereload: true
             },
             json: {
-                files: ['*.json', 'lib/**/*.json'],
+                files: ['*.json', 'config/*.json', 'lib/**/*.json'],
                 tasks: ['dev']
             },
             html: {
