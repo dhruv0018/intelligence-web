@@ -49,6 +49,11 @@
         "*": true
     },
 
+    "roles": {
+
+        "*": true
+    },
+
     "account": {
 
         "Super Admin": true,
@@ -88,6 +93,18 @@
         "Admin": true
     },
 
+    "user-info": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "user-roles": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "users": {
 
         "Super Admin": true,
@@ -100,6 +117,18 @@
         "Admin": true
     },
 
+    "team-info": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "team-members": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "teams": {
 
         "Super Admin": true,
@@ -107,6 +136,12 @@
     },
 
     "school": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "school-info": {
 
         "Super Admin": true,
         "Admin": true
@@ -148,6 +183,11 @@
     },
 
     "league": {
+
+        "Super Admin": true
+    },
+
+    "league-info": {
 
         "Super Admin": true
     },

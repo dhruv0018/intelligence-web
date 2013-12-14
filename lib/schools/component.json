@@ -2,7 +2,8 @@
     "name": "schools",
     "templates": [
         "school.html",
-        "schools.html"
+        "schools.html",
+        "school-info.html"
     ],
     "scripts": [
         "index.js"

@@ -1,0 +1,70 @@
+<div data-ng-if="!team.has(HEAD_COACH, true)">
+
+    <a href data-ng-hide="addNewHeadCoach" data-ng-click="$parent.addNewHeadCoach = true">Add Head Coach</a>
+
+    <div data-ng-show="addNewHeadCoach">
+
+        <form name="form" role="form">
+
+            <div class="form-group">
+
+                <select class="form-control" name="coach" data-ng-model="coach" data-ng-options="user.firstName + ' ' + user.lastName + ' - ' + user.email for user in users" required>
+
+                    <option>Select Coach</option>
+
+                </select>
+
+            </div>
+
+            <button class="btn-role-new" href data-ng-disabled="form.$invalid" data-ng-click="addHeadCoach(coach)"><i class="icon-plus-sign"></i> Add New Head Coach</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<table class="members table">
+
+    <thead>
+
+        <th>Role</th>
+        <th>Name</th>
+
+    </thead>
+
+    <tbody>
+
+        <tr class="member" data-ng-repeat="role in team.roles | filter:onlyCurrentRoles | orderBy:team.roles.type.name">
+
+            <td>{{role.type.name}}</td>
+            <td><a data-ui-sref="user({ id: role.userId })">{{members[role.userId].firstName}} {{members[role.userId].lastName}}</a></td>
+            <td><a href data-ng-click="team.removeRole(role)">remove</a></td>
+
+        </tr>
+
+    </tbody>
+
+</table>
+
+<h6>Past users associated with this team</h6>
+
+<table class="members table">
+
+    <tbody>
+
+        <tr class="member" data-ng-repeat="role in team.roles | filter:onlyPastRoles | orderBy:team.roles.type.name">
+
+            <td>{{role.type.name}}</td>
+            <td><a data-ui-sref="user({ id: role.userId })">{{members[role.userId].firstName}} {{members[role.userId].lastName}}</a></td>
+
+        </tr>
+
+    </tbody>
+
+</table>
+
+<button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save()">Save</button>
+
+<a class="pull-right" href data-ui-sref="teams">Cancel</a>
+

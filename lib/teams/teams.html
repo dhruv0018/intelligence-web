@@ -1,22 +1,18 @@
 <section class="teams" data-ng-controller="TeamsController">
 
-    <aside class="list sidebar">
+    <aside class="sidebar" data-ng-init="sidebar = true" data-ui-toggle="sidebar">
+
+        <x-button-add-new data-ui-sref="team-info">Add a new team</x-button-add-new>
+
+        <h3>Search</h3>
 
         <form role="form">
 
             <div class="form-group">
 
-                <x-button-add-new data-ui-sref="team">Add new team</x-button-add-new>
-
-            </div>
-
-            <h3>Search</h3>
-
-            <div class="form-group">
-
                 <input class="form-control" name="name" placeholder="Team Name" data-ng-model="filter.name" type="search" autocomplete="on" list="team-name" autosave="team-name">
                 <datalist id="team-name">
-                    <option data-ng-repeat="team in teams" value="{{team.name}}">
+                    <option data-ng-repeat="team in teams | unique:'name' | orderBy:'name'" value="{{team.name}}">
                 </datalist>
 
             </div>
@@ -31,7 +27,8 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="league" data-ng-model="filter.league" data-ng-options="league.id as league.name for league in leagues">
+                <select class="form-control" name="league"
+                    data-ng-model="filter.league" data-ng-options="league.id as league.name for league in leagues | unique:'name' | orderBy:'name'">
                     <option value="">League Name</option>
                 </select>
 
@@ -39,19 +36,21 @@
 
             <div class="form-group">
 
-                <select class="form-control select-school" name="school" data-ng-model="filter.school" data-ng-options="school.id as school.name for school in schools">
+                <select class="form-control select-school" name="school"
+                    data-ng-model="filter.school" data-ng-options="school.id as school.name for school in schools | unique:'name' | orderBy:'name'">
                     <option value="">School Name</option>
                 </select>
 
             </div>
 
-            <div class="form-group">
-
-                <button class="btn-search" data-ng-click="search(filter)"></button>
-
-            </div>
 
         </form>
+
+        <button class="btn-search" data-ng-show="sidebar" data-ng-click="search(filter)"><i class="icon-search"></i></button>
+        <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon-search"></i></button>
+
+        <button class="btn-toggle-sidebar" data-ng-show="sidebar" data-ng-click="sidebar = false"><i class="icon-chevron-left"></i></button>
+        <button class="btn-toggle-sidebar" data-ng-hide="sidebar" data-ng-click="sidebar = true"><i class="icon-chevron-right"></i></button>
 
     </aside>
 
@@ -70,7 +69,7 @@
                         <td>{{indexedLeagues[team.leagueId]['name']}}</td>
                         <td>{{indexedSchools[team.schoolId]['name']}}</td>
                         <td>Status N/A</td>
-                        <td><button class="edit" data-ui-sref="team({ id: team.id })"><i class="icon-pencil"></i> Edit</button></td>
+                        <td><button class="edit" data-ui-sref="team-info({ id: team.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 

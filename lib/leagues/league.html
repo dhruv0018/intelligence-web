@@ -1,51 +1,32 @@
 <section class="league">
 
-    <div class="info-bar">
+    <aside class="sidebar">
 
-        <h1 class="name">{{league.name}}</h1>
+        <header>
 
-        <tabset vertical="true" direction="right">
+            <img class="logo" src="http://lorempixel.com/40/40/sports" class="pull-left" alt="Logo">
 
-            <tab heading="League Info">
 
-                <div class="row">
+            <h1 class="name" data-ng-if="league.name">{{ league.name }}</h1>
+            <h1 class="name" data-ng-if="!league.name">New League</h1>
 
-                    <div class="col-md-4">
+            <h2 class="sport">{{ indexedSports[league.sportId].name }}</h2>
 
-                        <form class="form-info" name="form" role="form">
+        </header>
 
-                            <div class="form-group">
+        <nav role="navigation">
 
-                                <select class="form-control" name="sport" data-ng-model="league.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
-                                	<option value="">Sport</option>
-                                </select>
+            <ul class="nav nav-pills nav-stacked">
 
-                                <input class="form-control" name="name" placeholder="Name" data-ng-model="league.name" type="text" required />
+                <li ui-sref-active="active"><a href data-ui-sref="league-info"><i class="icon-info-sign"></i> League Info</a></li>
 
-								<select class="form-control" name="gender" data-ng-model="league.gender" data-ng-options="gender for gender in genders" required>
-                                	<option value="">Gender</option>
-                                </select>
-                                
-                            </div>
+            </ul>
 
-                            <div class="form-group">
+        </nav>
 
-                                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(league)">Save</button>
-                                <a class="pull-right" href data-ng-click="cancel()">cancel</a>
+    </aside>
 
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </tab>
-
-        </tabset>
-
-    </div>
+    <main class="content" data-ui-view="content"></main>
 
 </section>
 

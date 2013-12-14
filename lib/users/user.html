@@ -1,122 +1,23 @@
 <section class="user">
 
-    <div class="info-bar">
+    <aside class="sidebar">
 
-        <x-krossover-role user="user" role="role"></x-krossover-role>
+        <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
 
-        <tabset vertical="true" direction="right">
+        <nav role="navigation">
 
-            <tab class="tab-contact" heading="Contact Info">
+            <ul class="nav nav-pills nav-stacked">
 
-                <form class"form-contact" role="form">
+                <li ui-sref-active="active"><a href data-ui-sref="user-info"><i class="icon-info-sign"></i> Contact Info</a></li>
+                <li ui-sref-active="active"><a href data-ui-sref="user-roles"><i class="icon-trophy"></i> Roles</a></li>
 
-                    <div class="row">
+            </ul>
 
-                        <div class="col-md-6">
+        </nav>
 
-                            <div class="form-group">
+    </aside>
 
-                                <input class="form-control" name="firstName" placeholder="First Name" data-ng-model="user.firstName" type="text" required>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-6">
-
-                            <div class="form-group">
-
-                                <input class="form-control" name="lastName" placeholder="Last Name" data-ng-model="user.lastName" type="text" required>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <input class="form-control" name="email" placeholder="Email" data-ng-model="user.email" type="email" required>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <input class="form-control" name="phone1" placeholder="Phone Number 1" data-ng-model="user.phone1" type="tel">
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <input class="form-control" name="phone2" placeholder="Phone Number 2" data-ng-model="user.phone2" type="tel">
-
-                    </div>
-
-                </form>
-
-                <button class="btn btn-primary" data-ng-disabled="disableSave" data-ng-click="save(user)">Save</button>
-
-                <button class="toggle-lock-user" type="button" data-ng-model="user.isActive" data-ng-disabled="user.has(ADMIN) && !currentUser.is(SUPER_ADMIN)" data-btn-checkbox data-btn-checkbox-true="true" data-btn-checkbox-false="false">
-                    <i class="icon-lock" data-ng-show="user.isActive"></i>
-                    <i class="icon-unlock" data-ng-show="!user.isActive"></i>
-                    {{ user.isActive ? "Lock" : "Unlock" }}
-                </button>
-
-                <button class="btn btn-primary" data-ng-click="auth.requestPasswordReset(user.email)">Password Reset</button>
-
-                <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
-
-            </tab>
-
-            <tab class="roles" heading="Roles">
-
-                <div class="newRole">
-
-                    <select data-ng-model="newRole" data-ng-options="role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole track by role.type.id">
-
-                        <option value="">Pick a Role</option>
-
-                    </select>
-
-                    <a href data-ng-click="addNewRole(newRole)"><i class="icon-plus-sign"></i> Add Role</a>
-
-                </div>
-
-                <ul class="list-group">
-
-                    <li class="role-new list-group-item" data-ng-repeat="role in user.newRoles">
-
-                        <x-krossover-new-role user="user" role="role"></x-krossover-new-role>
-
-                    </li>
-
-                </ul>
-
-                <ul class="list-group">
-
-                    <li class="role list-group-item" data-ng-repeat="role in user.roles">
-
-                        <span data-ng-show="currentUser.hasAccess(role)">
-
-                            <a class="btn pull-right" href data-ng-click="users.removeRole(user, role)">Remove</a>
-
-                        </span>
-
-                        <x-krossover-role user="user" role="role"></x-krossover-role>
-
-                    </li>
-
-                </ul>
-
-                <button class="btn btn-primary" data-ng-disabled="disableSave" data-ng-click="save(user)">Save</button>
-
-                <a class="pull-right" href data-ng-click="cancel()">Cancel</a>
-
-            </tab>
-
-        </tabset>
-
-    </div>
+    <main class="content" data-ui-view="content"></main>
 
 </section>
 

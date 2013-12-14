@@ -1,159 +1,32 @@
 <section class="team">
 
-    <div class="info-bar">
+    <aside class="sidebar">
 
-        <h1 data-ng-if="team.name" class="name">{{team.name}}</h1>
-        <h1 data-ng-if="!team.name" class="name">New Team</h1>
+        <header>
 
-        <tabset vertical="true" direction="right">
+            <img class="logo" src="http://lorempixel.com/40/40/sports" class="pull-left" alt="Logo">
 
-            <tab heading="Team Info">
+            <h1 class="name" data-ng-if="team.name">{{ team.name }}</h1>
+            <h1 class="name" data-ng-if="!team.name">New Team</h1>
 
-                <form class="form-info" name="form" role="form">
+            <h2 class="sport">{{ indexedSports[sportId].name }}</h2>
 
-                    <div class="form-group">
+        </header>
 
-                        <select class="form-control" name="sport" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
-                            <option value="">Pick a Sport</option>
-                        </select>
+        <nav role="navigation">
 
-                    </div>
+            <ul class="nav nav-pills nav-stacked">
 
-                    <div class="form-group">
+                <li ui-sref-active="active"><a href data-ui-sref="team-info"><i class="icon-info-sign"></i> Team Info</a></li>
+                <li ui-sref-active="active"><a href data-ui-sref="team-members"><i class="icon-group"></i> Team Members</a></li>
 
-                        <select class="form-control" name="league" data-ng-model="team.leagueId" data-ng-options="league.id as league.name for league in leagues | filter:{'sportId':sportId}" data-ng-disabled="!sportId" required>
-                            <option value="">League Name</option>
-                        </select>
+            </ul>
 
-                    </div>
+        </nav>
 
-                    <div class="form-group">
+    </aside>
 
-                        <select class="form-control select-school" name="school" data-ng-model="team.schoolId" data-ng-options="school.id as school.name for school in schools" required>
-                            <option value="">School Name</option>
-                        </select>
-
-                        <a class="btn-new" data-ui-sref="school">add a new school</a>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <input class="form-control" name="name" placeholder="Team Name" data-ng-model="team.name" type="text" required>
-
-                    </div>
-
-                    <p>For schools, enter just the mascot name. E.g. "Bears"</p>
-
-                    <p>For all others, enter full team name. E.g. "Cleveland Cavilers"</p>
-
-                    <hr>
-
-                    <div class="form-group">
-
-                        <input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text" disabled>
-
-                        <input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text" disabled>
-
-                        <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="team.address.street1" type="text" disabled>
-
-                        <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="team.address.street2" type="text" disabled>
-
-                        <input class="form-control" name="city" placeholder="City" data-ng-model="team.address.city" type="text" required disabled>
-
-                        <input class="form-control" name="country" placeholder="Country" data-ng-model="team.address.countryCode" type="text" required disabled>
-
-                        <input class="form-control" name="state" placeholder="State" data-ng-model="team.address.regionCode" type="text" required disabled>
-
-                        <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="team.address.postalCode" type="text" disabled>
-
-                    </div>
-
-                </form>
-
-                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(team)">Save</button>
-
-                <a class="pull-right" href data-ui-sref="teams">Cancel</a>
-
-            </tab>
-
-            <tab heading="Team Members">
-
-                <div data-ng-if="!team.has(HEAD_COACH, true)">
-
-                    <a href data-ng-hide="addNewHeadCoach" data-ng-click="$parent.addNewHeadCoach = true">Add Head Coach</a>
-
-                    <div data-ng-show="addNewHeadCoach">
-
-                        <form name="form" role="form">
-
-                            <div class="form-group">
-
-                                <select class="form-control" name="coach" data-ng-model="coach" data-ng-options="user.firstName + ' ' + user.lastName + ' - ' + user.email for user in users" required>
-
-                                    <option>Select Coach</option>
-
-                                </select>
-
-                            </div>
-
-                            <button class="btn-role-new" href data-ng-disabled="form.$invalid" data-ng-click="addHeadCoach(coach)"><i class="icon-plus-sign"></i> Add New Head Coach</button>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-                <table class="members table">
-
-                    <thead>
-
-                        <th>Role</th>
-                        <th>Name</th>
-
-                    </thead>
-
-                    <tbody>
-
-                        <tr class="member" data-ng-repeat="role in team.roles | filter:onlyCurrentRoles | orderBy:team.roles.type.name">
-
-                            <td>{{role.type.name}}</td>
-                            <td><a data-ui-sref="user({ id: role.userId })">{{members[role.userId].firstName}} {{members[role.userId].lastName}}</a></td>
-                            <td><a href data-ng-click="team.removeRole(role)">remove</a></td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-                <h6>Past users associated with this team</h6>
-
-                <table class="members table">
-
-                    <tbody>
-
-                        <tr class="member" data-ng-repeat="role in team.roles | filter:onlyPastRoles | orderBy:team.roles.type.name">
-
-                            <td>{{role.type.name}}</td>
-                            <td><a data-ui-sref="user({ id: role.userId })">{{members[role.userId].firstName}} {{members[role.userId].lastName}}</a></td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save()">Save</button>
-
-                <a class="pull-right" href data-ui-sref="teams">Cancel</a>
-
-            </tab>
-
-        </tabset>
-
-    </div>
+    <main class="content" data-ui-view="content"></main>
 
 </section>
 

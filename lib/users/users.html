@@ -1,22 +1,18 @@
 <section class="users" data-ng-controller="UsersController">
 
-    <aside class="list sidebar">
+    <aside class="sidebar" data-ng-init="sidebar = true" data-ui-toggle="sidebar">
+
+        <x-button-add-new data-ng-click="add()">Add a new user</x-button-add-new>
+
+        <h3>Search</h3>
 
         <form role="form">
 
             <div class="form-group">
 
-                <x-button-add-new data-ng-click="add()">Add new user</x-button-add-new>
-
-            </div>
-
-            <h3>Search</h3>
-
-            <div class="form-group">
-
                 <input class="form-control" placeholder="Email" data-ng-model="filter.email" type="search" autocomplete="on" list="user-email" autosave="user-email">
                 <datalist id="user-email">
-                    <option data-ng-repeat="user in users" value="{{user.email}}">
+                    <option data-ng-repeat="user in users | unique:'name' | orderBy:'name'" value="{{user.email}}">
                 </datalist>
             </div>
 
@@ -24,7 +20,7 @@
 
                 <input class="form-control" placeholder="First Name" data-ng-model="filter.firstName" type="search" autocomplete="on" list="user-firstname" autosave="user-firstname">
                 <datalist id="user-firstname">
-                    <option data-ng-repeat="user in users" value="{{user.firstName}}">
+                    <option data-ng-repeat="user in users | unique:'firstName' | orderBy:'firstName'" value="{{user.firstName}}">
                 </datalist>
 
             </div>
@@ -33,7 +29,7 @@
 
                 <input class="form-control" placeholder="Last Name" data-ng-model="filter.lastName" type="search" autocomplete="on" list="user-lastname" autosave="user-lastname">
                 <datalist id="user-lastname">
-                    <option data-ng-repeat="user in users" value="{{user.lastName}}">
+                    <option data-ng-repeat="user in users | unique:'lastName' | orderBy:'lastName'" value="{{user.lastName}}">
                 </datalist>
 
             </div>
@@ -41,7 +37,7 @@
             <div class="form-group">
 
                 <select class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole">
-                    <option value="">Roles</option>
+                    <option value="">Role</option>
                 </select>
 
             </div>
@@ -54,13 +50,13 @@
 
             </div>
 
-            <div class="form-group">
-
-                <button class="btn-search" data-ng-click="search(filter)"></button>
-
-            </div>
-
         </form>
+
+        <button class="btn-search" data-ng-show="sidebar" data-ng-click="search(filter)"><i class="icon-search"></i></button>
+        <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon-search"></i></button>
+
+        <button class="btn-toggle-sidebar" data-ng-show="sidebar" data-ng-click="sidebar = false"><i class="icon-chevron-left"></i></button>
+        <button class="btn-toggle-sidebar" data-ng-hide="sidebar" data-ng-click="sidebar = true"><i class="icon-chevron-right"></i></button>
 
     </aside>
 
@@ -115,7 +111,7 @@
 
                         <td>
 
-                            <button class="edit" data-ui-sref="user({ id: user.id })""><i class="icon-pencil"></i> Edit</button>
+                            <button class="edit" data-ui-sref="user-info({ id: user.id })""><i class="icon-pencil"></i> Edit</button>
 
                         </td>
 
