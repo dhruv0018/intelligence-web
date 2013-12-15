@@ -1,66 +1,38 @@
-<section class="school panel panel-primary">
+<section class="school">
 
-    <header class="panel-heading">
+    <aside class="sidebar">
 
-        <h1 class="panel-title">
+        <header data-ng-if="school.mascot">
 
-            <span ng-switch on="school">
+            <img class="logo" src="http://lorempixel.com/40/40/sports" class="pull-left" alt="Logo">
 
-                <span ng-switch-when="null">Add a</span>
-                <span ng-switch-default>Editing a</span>
-                <span>School</span>
+            <h1 data-ng-if="school.mascot">{{ school.mascot }}</h1>
 
-            </span>
+            <h2>{{ school.name }}</h2>
 
-        </h1>
+        </header>
 
-    </header>
+        <header data-ng-if="!school.mascot">
 
-    <div class="panel-body" ng-controller="SchoolController">
+            <img class="logo" src="http://lorempixel.com/40/40/sports" class="pull-left" alt="Logo">
 
-        <form role="form" action="">
+            <h1 class="name" data-ng-if="school.name">{{ school.name }}</h1>
+            <h1 class="name" data-ng-if="!school.name">New School</h1>
 
-            <dl class="form-group">
+        </header>
 
-                <dt><label class="control-label" for="name">School Name</label></dt>
-                <dd><input class="form-control" name="name" placeholder="Name" data-ng-model="school.name" type="text" required /></dd>
+        <nav role="navigation">
 
-                <dt><label class="control-label" for="conference">Conference</label></dt>
-                <dd><input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text" /></dd>
+            <ul class="nav nav-pills nav-stacked">
 
-                <dt><label class="control-label" for="division">Division</label></dt>
-                <dd><input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text" /></dd>
+                <li ui-sref-active="active"><a href data-ui-sref="school-info"><i class="icon-info-sign"></i> School Info</a></li>
 
-                <dt><label class="control-label" for="address1">Address 1</label></dt>
-                <dd><input class="form-control" name="address1" placeholder="Address 1" data-ng-model="school.address1" type="text" /></dd>
+            </ul>
 
-                <dt><label class="control-label" for="address1">Address 2</label></dt>
-                <dd><input class="form-control" name="address2" placeholder="Address 2" data-ng-model="school.address2" type="text" /></dd>
+        </nav>
 
-                <dt><label class="control-label" for="city">City</label></dt>
-                <dd><input class="form-control" name="city" placeholder="City" data-ng-model="school.city" type="text" required /></dd>
+    </aside>
 
-                <dt><label class="control-label" for="country">Country</label></dt>
-                <dd><input class="form-control" name="country" placeholder="Country" data-ng-model="school.country" type="text" required /></dd>
-
-                <dt><label class="control-label" for="state">State</label></dt>
-                <dd><input class="form-control" name="state" placeholder="State" data-ng-model="school.state" type="text" required /></dd>
-
-                <dt><label class="control-label" for="postal">Postal Code</label></dt>
-                <dd><input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="login.postal" type="text" /></dd>
-
-            </dl>
-
-            <div class="form-group">
-
-                <button class="btn btn-primary" data-ng-click="save(school)">Save</button>
-                <a class="pull-right" href data-ng-click="cancel()">cancel</a>
-
-            </div>
-
-        </form>
-
-    </div>
+    <main class="content" data-ui-view="content"></main>
 
 </section>
-

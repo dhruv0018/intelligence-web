@@ -17,30 +17,32 @@
 
 // Brand colors
 // -------------------------
-
-@brand-primary:         #F04924;
+@brand-primary:         rgb(239, 73, 36);
+@brand-secondary:       rgb(243, 150, 36);
 @brand-success:         #5cb85c;
 @brand-warning:         #f0ad4e;
 @brand-danger:          #d9534f;
 @brand-info:            #66afe9;
+@brand-blue:            rgb(11, 66, 91);
 
 // Scaffolding
 // -------------------------
 
 @body-bg:               #fff;
+@content-bg:            rgb(247, 248, 248);
 @text-color:            @gray-dark;
 
 // Links
 // -------------------------
 
 @link-color:            @brand-primary;
-@link-hover-color:      #F29523;
+@link-hover-color:      @brand-secondary;
 
 // Typography
 // -------------------------
 
 @font-family-sans-serif:  "FRANKLIN-GOTHIC-URW-COND", "Helvetica Neue", Helvetica, Arial, sans-serif;
-@font-family-serif:       Georgia, "Times New Roman", Times, serif;
+@font-family-serif:       "FRANKLIN-GOTHIC-URW-COND", Georgia, "Times New Roman", Times, serif;
 @font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
 
@@ -80,7 +82,7 @@
 
 @border-radius-base:             4px;
 @border-radius-large:            6px;
-@border-radius-small:            3px;
+@border-radius-small:            2px;
 
 @component-active-bg:            @brand-primary;
 
@@ -94,8 +96,8 @@
 @table-condensed-cell-padding:       5px;
 
 @table-bg:                           transparent; // overall background-color
-@table-bg-accent:                    #f9f9f9; // for striping
-@table-bg-hover:                     #f5f5f5;
+@table-bg-accent:                    rgb(251, 252, 252); // for striping
+@table-bg-hover:                     rgb(241, 246, 252);
 @table-bg-active:                    @table-bg-hover;
 
 @table-border-color:                 #ddd; // table and cell border
@@ -108,7 +110,7 @@
 
 @btn-default-color:              @gray-dark;
 @btn-default-bg:                 @gray-lighter;
-@btn-default-border:             @btn-default-bg;
+@btn-default-border:             rgb(217, 217, 216);
 
 @btn-primary-color:              #fff;
 @btn-primary-bg:                 @brand-primary;
@@ -170,13 +172,13 @@
 
 @dropdown-link-color:            @gray-dark;
 @dropdown-link-hover-color:      @brand-primary;
-@dropdown-link-hover-bg:         #F6F9FD;
+@dropdown-link-hover-bg:         rgb(241, 246, 252);
 
 @dropdown-link-disabled-color:   @gray-light;
 
 @dropdown-header-color:          @gray-light;
 
-@dropdown-caret-color:           #000;
+@dropdown-caret-color:           @gray-dark;
 
 
 // COMPONENT VARIABLES
@@ -248,7 +250,7 @@
 // Navbar links
 @navbar-default-link-color:                @gray-dark;
 @navbar-default-link-hover-color:          @brand-primary;
-@navbar-default-link-hover-bg:             #F6F9FD;
+@navbar-default-link-hover-bg:             rgb(246, 249, 253);
 @navbar-default-link-active-color:         @navbar-default-link-hover-color;
 @navbar-default-link-active-bg:            @navbar-default-link-hover-bg;
 @navbar-default-link-disabled-color:       #ccc;
@@ -260,7 +262,7 @@
 @navbar-default-brand-hover-bg:            transparent;
 
 // Navbar toggle
-@navbar-default-toggle-hover-bg:           #ddd;
+@navbar-default-toggle-hover-bg:           @navbar-default-link-hover-color;
 @navbar-default-toggle-icon-bar-bg:        #ccc;
 @navbar-default-toggle-border-color:       #ddd;
 
@@ -303,7 +305,7 @@
 // -------------------------
 
 @nav-link-padding:                          10px 15px;
-@nav-link-hover-bg:                         @gray-lighter;
+@nav-link-hover-bg:                         rgb(246, 249, 253);
 
 @nav-disabled-link-color:                   @gray-light;
 @nav-disabled-link-hover-color:             @gray-light;
@@ -324,8 +326,8 @@
 @nav-tabs-justified-active-link-border-color:     @body-bg;
 
 // Pills
-@nav-pills-active-link-hover-bg:            @component-active-bg;
-@nav-pills-active-link-hover-color:         #fff;
+@nav-pills-active-link-hover-bg:            #fff;
+@nav-pills-active-link-hover-color:         @gray-dark;
 
 
 // Pagination
@@ -431,9 +433,9 @@
 @modal-content-border-color:                   rgb(255, 255, 255);
 @modal-content-fallback-border-color:          rgb(255, 255, 255);
 
-@modal-backdrop-bg:           rgb(9, 66, 90);
-@modal-header-border-color:   rgb(255, 255, 255);
-@modal-footer-border-color:   @modal-header-border-color;
+@modal-backdrop-bg:           @brand-blue;
+@modal-header-border-color:   rgb(235, 235, 235);
+@modal-footer-border-color:   rgb(255, 255, 255);
 
 
 // Alerts
@@ -477,7 +479,7 @@
 @list-group-border:           rgb(255, 255, 255);
 @list-group-border-radius:    0;
 
-@list-group-hover-bg:         rgb(246, 249, 253);
+@list-group-hover-bg:         rgb(241, 246, 252);
 @list-group-active-color:     #fff;
 @list-group-active-bg:        @component-active-bg;
 @list-group-active-border:    @list-group-active-bg;

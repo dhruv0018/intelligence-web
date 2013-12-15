@@ -1,9 +1,14 @@
 {
     "name": "account",
     "templates": [
-        "template.html"
+        "template.html",
+        "contact-info.html",
+        "roles-list.html"
     ],
     "scripts": [
         "index.js"
+    ],
+    "styles": [
+        "styles.css"
     ]
 }

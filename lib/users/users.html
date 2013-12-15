@@ -1,48 +1,92 @@
-<section class="users panel panel-primary">
+<section class="users" data-ng-controller="UsersController">
 
-    <header class="panel-heading">
+    <aside class="sidebar" data-ng-init="sidebar = true" data-ui-toggle="sidebar">
 
-        <h1 class="panel-title">Users</h1>
+        <x-button-add-new data-ng-click="add()">Add a new user</x-button-add-new>
 
-    </header>
+        <h3>Search</h3>
 
-    <div class="panel-body" ng-controller="UsersController">
+        <form role="form">
 
-        <button class="btn btn-primary pull-right" data-ng-click="add()">Add User</button>
+            <div class="form-group">
+
+                <input class="form-control" placeholder="Email" data-ng-model="filter.email" type="search" autocomplete="on" list="user-email" autosave="user-email">
+                <datalist id="user-email">
+                    <option data-ng-repeat="user in users | unique:'name' | orderBy:'name'" value="{{user.email}}">
+                </datalist>
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" placeholder="First Name" data-ng-model="filter.firstName" type="search" autocomplete="on" list="user-firstname" autosave="user-firstname">
+                <datalist id="user-firstname">
+                    <option data-ng-repeat="user in users | unique:'firstName' | orderBy:'firstName'" value="{{user.firstName}}">
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" placeholder="Last Name" data-ng-model="filter.lastName" type="search" autocomplete="on" list="user-lastname" autosave="user-lastname">
+                <datalist id="user-lastname">
+                    <option data-ng-repeat="user in users | unique:'lastName' | orderBy:'lastName'" value="{{user.lastName}}">
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <select class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole">
+                    <option value="">Role</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <select class="form-control" data-ng-model="filter.isActive" data-ng-options="status.value as status.label for status in statuses">
+                    <option value="">Status</option>
+                </select>
+
+            </div>
+
+        </form>
+
+        <button class="btn-search" data-ng-show="sidebar" data-ng-click="search(filter)"><i class="icon-search"></i></button>
+        <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon-search"></i></button>
+
+        <button class="btn-toggle-sidebar" data-ng-show="sidebar" data-ng-click="sidebar = false"><i class="icon-chevron-left"></i></button>
+        <button class="btn-toggle-sidebar" data-ng-hide="sidebar" data-ng-click="sidebar = true"><i class="icon-chevron-right"></i></button>
+
+    </aside>
+
+    <div class="list">
 
         <div class="table-responsive">
 
-            <table class="table table-hover">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Email</th>
-                        <th>Name</th>
-                        <th>Last Accessed</th>
-                        <th>Roles</th>
-                        <th>Status</th>
-
-                    </tr>
-
-                </thead>
+            <table class="table table-striped table-hover">
 
                 <tbody>
 
-                    <tr data-ng-repeat="user in users" data-ng-click="edit(user)">
+                    <tr data-ng-repeat="user in users">
 
                         <td>{{user.email}}</td>
-                        <td>{{user.name}}</td>
-                        <td>{{user.lastAccessed}}</td>
+                        <td class="name"><a href>{{user.firstName}} {{user.lastName}}</a></td>
 
-                        <td>
+                        <td class="roles">
 
                             <ul>
 
-                                <li data-ng-repeat="role in user.roles">
+                                <li class="role-name" data-ng-repeat="role in user.roles">
 
-                                    {{role.type.name}}
+                                    <a href>
+
+                                        <span data-ng-if="user.is(HEAD_COACH)">Head Coach, Team to be implemented</span>
+                                        <span data-ng-if="user.is(ASSISTANT_COACH)">Assist. Coach, Team to be implemented</span>
+                                        <span data-ng-if="user.is(ATHLETE)">Athlete, Sport to be implemented</span>
+                                        <span data-ng-if="!user.is(HEAD_COACH) && !user.is(ASSISTANT_COACH) && !user.is(ATHLETE)">{{role.type.name}}</span>
+
+                                    </a>
 
                                 </li>
 
@@ -56,12 +100,18 @@
 
                                 <li data-ng-repeat="role in user.roles">
 
-                                    <span data-ng-if="user.isActive">Active</span>
-                                    <span data-ng-if="!user.isActive">Inactive</span>
+                                    <span data-ng-if="user.isActive" class="active">Active</span>
+                                    <span data-ng-if="!user.isActive" class="inactive">Inactive</span>
 
                                 </li>
 
                             </ul>
+
+                        </td>
+
+                        <td>
+
+                            <button class="edit" data-ui-sref="user-info({ id: user.id })""><i class="icon-pencil"></i> Edit</button>
 
                         </td>
 
@@ -70,6 +120,7 @@
                 </tbody>
 
             </table>
+            <p data-ng-show="noResults">No results found.</p>
 
         </div>
 

@@ -2,9 +2,19 @@
     "name": "users",
     "templates": [
         "user.html",
-        "users.html"
+        "adduser.html",
+        "newrole.html",
+        "users.html",
+        "user-info.html",
+        "user-roles.html"
     ],
     "scripts": [
         "index.js"
+    ],
+    "styles": [
+        "user.css",
+        "adduser.css",
+        "newrole.css",
+        "users.css"
     ]
 }

@@ -33,3 +33,6 @@
 
 # Ignore temporary files
 /tmp
+
+# Any intelliJ editor files
+.idea

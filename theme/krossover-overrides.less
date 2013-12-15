@@ -1,0 +1,85 @@
+/* Bootstrap Overrides
+ * Provides overrides for items specifically set by Bootstap. */
+
+
+@import (reference) "main.less";
+
+input {
+
+    box-shadow: none;
+}
+
+.form-control {
+
+    box-shadow: none;
+}
+
+.dropdown-menu {
+
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.nav-pills > li > a {
+
+    border-radius: 0;
+}
+
+.btn,
+.btn-lg,
+.btn-danger {
+
+    &,
+    &:focus,
+    &:active {
+
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+.btn,
+.btn-lg {
+
+    border-radius: @border-radius-small;
+}
+
+.navbar {
+
+  margin-bottom: 0;
+  border: none;
+}
+
+/**
+ * Browser specific
+ */
+
+
+/* NOTE:
+ * Although these prefixed values are not necessary anymore, because Bootstrap
+ * sets them explicitly with undesired styles they need to be overridden. */
+
+/* Mobile Safari */
+
+input {
+
+    -webkit-box-shadow: none;
+}
+
+select {
+
+    -webkit-appearance: none;
+}
+
+.form-control {
+
+    -webkit-appearance: none;
+}
+
+/* Firefox */
+
+select {
+
+    -moz-appearance: none;
+}
+

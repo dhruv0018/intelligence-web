@@ -1,0 +1,16 @@
+{
+    "name": "teams",
+    "templates": [
+        "team.html",
+        "teams.html",
+        "team-info.html",
+        "team-members.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "team.css",
+        "teams.css"
+    ]
+}

@@ -1,56 +1,91 @@
-<section class="schools panel panel-primary">
+<section class="schools" data-ng-controller="SchoolsController">
 
-    <header class="panel-heading">
+    <aside class="sidebar" data-ng-init="sidebar = true" data-ui-toggle="sidebar">
 
-        <h1 class="panel-title">Schools</h1>
+        <x-button-add-new data-ui-sref="school-info">Add a new school</x-button-add-new>
 
-    </header>
+        <h3>Search</h3>
 
-    <div class="panel-body" ng-controller="SchoolsController">
+        <form role="form">
 
-        <button class="btn btn-primary pull-right" data-ng-click="add()">Add School</button>
+            <div class="form-group">
+
+                <input class="form-control" name="name" placeholder="School Name" data-ng-model="filter.name" type="search" autocomplete="on" list="school-name" autosave="school-name">
+                <datalist id="school-name">
+                    <option data-ng-repeat="school in schools | unique:'name' | orderBy:'name'" value="{{school.name}}">
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="city" placeholder="City" data-ng-model="filter.city" type="search" autocomplete="on" list="school-city" autosave="school-city">
+                <datalist id="school-city">
+                    <option data-ng-repeat="school in schools | unique:'address.city' | orderBy:'address.city'" value="{{school.address.city}}">
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="state" placeholder="State" data-ng-model="filter.region" type="search" autocomplete="on" list="school-region" autosave="school-region">
+                <datalist id="school-region">
+                    <option data-ng-repeat="school in schools | unique:'address.regionCode' | orderBy:'address.regionCode'" value="{{school.address.regionCode}}">
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="country" placeholder="Country" data-ng-model="filter.country" type="search" autocomplete="on" list="school-country" autosave="school-country">
+                <datalist id="school-country">
+                    <option data-ng-repeat="school in schools | unique:'address.countryCode' | orderBy:'address.countryCode'" value="{{school.address.countryCode}}">
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="conference" placeholder="Conference" data-ng-model="filter.conference" type="search" autocomplete="on" list="school-conference" autosave="school-conference">
+                <datalist id="school-conference">
+                    <option data-ng-repeat="school in schools | unique:'conference' | orderBy:'conference'" value="{{school.conference}}">
+                </datalist>
+
+            </div>
+
+        </form>
+
+        <button class="btn-search" data-ng-show="sidebar" data-ng-click="search(filter)"><i class="icon-search"></i></button>
+        <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon-search"></i></button>
+
+        <button class="btn-toggle-sidebar" data-ng-show="sidebar" data-ng-click="sidebar = false"><i class="icon-chevron-left"></i></button>
+        <button class="btn-toggle-sidebar" data-ng-hide="sidebar" data-ng-click="sidebar = true"><i class="icon-chevron-right"></i></button>
+
+    </aside>
+
+    <div class="list">
 
         <div class="table-responsive">
 
-            <table class="table table-hover">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Name</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Country</th>
-                        <th>Conference</th>
-
-                    </tr>
-
-                </thead>
+            <table class="table table-striped table-hover">
 
                 <tbody>
 
-                    <!-- Use mock data for now -->
-                    <div ng-init="schools = [
-                        { id: 1, name: 'Team 1', city: 'Town 1', state: 'NY', country: 'USA', conference: 'None'},
-                        { id: 2, name: 'Team 2', city: 'Town 2', state: 'NY', country: 'USA', conference: 'None'},
-                        { id: 3, name: 'Team 3', city: 'Town 3', state: 'NY', country: 'USA', conference: 'None'}
-                        ]">
-
-                    <tr data-ng-repeat="school in schools" data-ng-click="edit(school)">
+                    <tr data-ng-repeat="school in schools">
 
                         <td>{{school.name}}</td>
-                        <td>{{school.city}}</td>
-                        <td>{{school.state}}</td>
-                        <td>{{school.country}}</td>
-                        <td>{{school.Conference}}</td>
+                        <td>{{school.address.city}}</td>
+                        <td>{{school.address.regionCode}}</td>
+                        <td>{{school.address.countryCode}}</td>
+                        <td>{{school.conference}}</td>
+                        <td><button class="edit" data-ui-sref="school-info({ id: school.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 
                 </tbody>
 
             </table>
-
+            <p data-ng-show="noResults">No results found.</p>
         </div>
 
     </div>

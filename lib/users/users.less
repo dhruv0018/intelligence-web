@@ -1,0 +1,41 @@
+@import (reference) "main.less";
+
+.users {
+
+    .date {
+
+        width: 10em;
+    }
+
+    .roles {
+
+        ul,
+        li {
+
+            width: 15em;
+            .text-overflow();
+        }
+    }
+
+    .name,
+    .role-name {
+
+        .capitalize;
+    }
+
+    .edit {
+
+        .btn;
+        .btn-default;
+        width: 100px;
+        visibility: hidden;
+    }
+
+    tr:hover {
+
+        .edit {
+
+            visibility: visible;
+        }
+    }
+}

@@ -1,24 +1,23 @@
-<section class="container">
+<section class="account">
 
-    <img src="http://lorempixel.com/200/200/sports/Pic-of-indexer" alt="Pic of indexer" class="img-thumbnail pull-right">
+    <aside class="sidebar">
 
-    <h1>Your Information</h1>
+        <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
 
-    <h2>{{name}}</h2>
+        <nav role="navigation">
 
-    <p><a href="#">change password</a></p>
+            <ul class="nav nav-pills nav-stacked">
 
-    <p><a href="#">change email address</a></p>
+                <li ui-sref-active="active"><a href data-ui-sref="contact-info"><i class="icon-info-sign"></i> Contact Info</a></li>
+                <li ui-sref-active="active"><a href data-ui-sref="roles-list"><i class="icon-trophy"></i> Roles</a></li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <main class="content" data-ui-view="content"></main>
 
 </section>
-
-<div class="panel panel-default" data-ng-show="isSuperAdmin">
-
-    <div class="panel-body">
-
-        You are a Super Admin
-
-    </div>
-
-</div>
 

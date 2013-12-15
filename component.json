@@ -4,13 +4,16 @@
         "lib"
     ],
     "local": [
+        "root",
         "login",
         "role",
         "roles",
         "header",
         "account",
         "users",
-        "schools"
+        "teams",
+        "schools",
+        "leagues"
     ],
     "dependencies": {
     },

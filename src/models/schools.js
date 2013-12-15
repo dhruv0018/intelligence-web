@@ -1,18 +1,53 @@
 var IntelligenceWebClient = require('../app');
 
-IntelligenceWebClient.factory('Schools', [
-    '$resource',
-    function($resource) {
+var SCHOOL_TYPE = {
 
-        var Schools = $resource(
+    COLLEGE: 1,
+    UNIVERSITY: 1,
+    HIGH_SCHOOL: 2,
+    OTHER: 3
+};
 
-            'https://www-dev.krossover.com/intelligence-api/v1/schools/:id', {
+IntelligenceWebClient.constant('SCHOOL_TYPE', SCHOOL_TYPE);
 
-            id: '@id'
+var SCHOOL_TYPES = [
 
-        });
+    {
+        id: SCHOOL_TYPE.UNIVERSITY,
+        name: 'University/College'
+    },
 
-        return Schools;
+    {
+        id: SCHOOL_TYPE.HIGH_SCHOOL,
+        name: 'High School'
+    },
+
+    {
+        id: SCHOOL_TYPE.OTHER,
+        name: 'Other'
+    }
+];
+
+IntelligenceWebClient.constant('SCHOOL_TYPES', SCHOOL_TYPES);
+
+IntelligenceWebClient.factory('SchoolsResource', [
+    'config', '$resource',
+    function(config, $resource) {
+
+        var SchoolsResource = $resource(
+
+            config.api.uri + 'schools/:id', {
+
+                id: '@id'
+
+            }, {
+
+                create: { method: 'POST' },
+                update: { method: 'PUT' }
+            }
+        );
+
+        return SchoolsResource;
     }
 ]);
 

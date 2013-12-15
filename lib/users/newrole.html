@@ -1,0 +1,103 @@
+<div class="role-new">
+
+    <div data-ng-if="users.is(role, HEAD_COACH) || users.is(role, ASSISTANT_COACH)">
+
+        <h4 data-ng-show="users.is(role, HEAD_COACH)">Head Coach</h4>
+        <h4 data-ng-show="users.is(role, ASSISTANT_COACH)">Assistant Coach</h4>
+
+        <form name="form" role="form">
+
+            <div class="form-group">
+
+                <select class="form-control" name="sport" data-ng-model="$parent.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
+
+                    <option value="">Pick a Sport</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <span data-ng-if="displayTeamsLoading">
+
+                    <select class="form-control" name="team" data-ng-model="role.teamId" disabled required>
+
+                        <option value="">Loading...</option>
+
+                    </select>
+
+                </span>
+
+                <span data-ng-if="displayTeams">
+
+                    <select class="form-control" name="team" data-ng-model="role.teamId" data-ng-options="team.id as team.name for team in teams" data-ng-disabled="!sportId" required>
+
+                        <option value="">Team name</option>
+
+                    </select>
+
+                </span>
+
+                <span data-ng-if="displayTeamsEmpty">
+
+                    <select class="form-control" name="team" data-ng-model="role.teamId" disabled required>
+
+                        <option value="">No Teams</option>
+
+                    </select>
+
+                </span>
+
+            </div>
+
+            <div class="form-group">
+
+                <button class="btn-role-new" href data-ng-disabled="form.$invalid" data-ng-click="addRole(role)"><i class="icon-plus-sign"></i> Add New Role</button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div data-ng-if="users.is(role, INDEXER)">
+
+        <h4>Indexer</h4>
+
+        <p>Pick work this person can do:</p>
+
+        <div class="row">
+
+            <div class="col-md-6"><input type="checkbox"> Basketball Indexing</div><div class="col-md-r"><input type="checkbox"> Basketball QA</div>
+            <div class="col-md-6"><input type="checkbox"> Football Indexing</div><div class="col-md-r"><input type="checkbox"> Football QA</div>
+            <div class="col-md-6"><input type="checkbox"> Lacrosse Indexing</div><div class="col-md-r"><input type="checkbox"> Lacrosse QA</div>
+
+        </div>
+
+        <div>
+
+            <a class="btn-role-new" href data-ng-click="addRole(role)"><i class="icon-plus-sign"></i> Add New Role</a>
+
+        </div>
+
+    </div>
+
+    <div data-ng-if="users.is(role, ATHLETE)">
+
+        <h4>Athlete</h4>
+
+        <p>Only coaches can add an athlete to a team roster</p>
+
+        <p>Only Athletes can add parents to their account</p>
+
+        <div>
+
+            <a class="btn-role-new" href data-ng-click="addRole(role)"><i class="icon-plus-sign"></i> Add New Role</a>
+
+        </div>
+
+    </div>
+
+</div>
+

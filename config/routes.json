@@ -1,0 +1,200 @@
+{
+    "401": {
+
+        "*": true
+    },
+
+    "404": {
+
+        "*": true
+    },
+
+    "500": {
+
+        "*": true
+    },
+
+    "501": {
+
+        "*": true
+    },
+
+    "error": {
+
+        "*": true
+    },
+
+    "login": {
+
+        "*": true
+    },
+
+    "locked": {
+
+        "*": true
+    },
+
+    "forgot": {
+
+        "*": true
+    },
+
+    "reset": {
+
+        "*": true
+    },
+
+    "roles": {
+
+        "*": true
+    },
+
+    "roles": {
+
+        "*": true
+    },
+
+    "account": {
+
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Parent": true,
+        "Athlete": true
+    },
+
+    "contact-info": {
+
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Parent": true,
+        "Athlete": true
+    },
+
+    "roles-list": {
+
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Parent": true,
+        "Athlete": true
+    },
+
+    "user": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "user-info": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "user-roles": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "users": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "team": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "team-info": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "team-members": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "teams": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "school": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "school-info": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "schools": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "game": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "games": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "report": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "reports": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "platform": {
+
+        "Super Admin": true
+    },
+
+    "league": {
+
+        "Super Admin": true
+    },
+
+    "league-info": {
+
+        "Super Admin": true
+    },
+
+    "leagues": {
+
+        "Super Admin": true
+    }
+}
+
