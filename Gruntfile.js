@@ -471,7 +471,7 @@ module.exports = function(grunt) {
             },
             json: {
                 files: ['*.json', 'config/*.json', 'lib/**/*.json'],
-                tasks: ['dev']
+                tasks: ['component:build', 'browserify:dev', 'copy:dev']
             },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
@@ -479,7 +479,11 @@ module.exports = function(grunt) {
             },
             css: {
                 files: ['src/**/*.css'],
-                tasks: ['csslint', 'recess', 'build-css', 'copy:dev']
+                tasks: ['csslint', 'recess', 'component:build', 'browserify:dev', 'copy:dev']
+            },
+            theme: {
+                files: ['theme/**/*.less'],
+                tasks: ['less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
             },
             theme: {
                 files: ['theme/**/*.less'],
