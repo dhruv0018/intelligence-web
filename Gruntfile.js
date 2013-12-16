@@ -485,10 +485,6 @@ module.exports = function(grunt) {
                 files: ['theme/**/*.less'],
                 tasks: ['less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
             },
-            theme: {
-                files: ['theme/**/*.less'],
-                tasks: ['less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
-            },
             less: {
                 files: ['lib/**/*.less'],
                 tasks: ['less:components', 'component:build', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
