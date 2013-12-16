@@ -18,6 +18,7 @@ require('./services/authentication');
 require('./services/authorization');
 require('./services/tokens');
 require('./services/session');
+require('./services/account');
 require('./services/users');
 require('./services/teams');
 require('./services/schools');
