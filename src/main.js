@@ -36,6 +36,7 @@ component('login');
 component('role');
 component('roles');
 component('header');
+component('alertbar');
 component('account');
 component('users');
 component('teams');
