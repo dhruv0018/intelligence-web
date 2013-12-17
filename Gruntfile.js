@@ -155,11 +155,21 @@ module.exports = function(grunt) {
                 dest: 'build/themed.css'
             },
             angular: {
-                src: ['vendor/angular/angular.js','vendor/angular-resource/angular-resource.js'],
+                src: [
+                    'vendor/angular/angular.js',
+                    'vendor/angular-resource/angular-resource.js',
+                    'vendor/angular-ui-utils/modules/unique/unique.js',
+                    'vendor/angular-ui-utils/modules/showhide/showhide.js',
+                    'vendor/angular-ui-router/release/angular-ui-router.js'],
                 dest: 'build/angular.js'
             },
             angularmin: {
-                src: ['vendor/angular/angular.min.js','vendor/angular-resource/angular-resource.min.js'],
+                src: [
+                    'vendor/angular/angular.min.js',
+                    'vendor/angular-resource/angular-resource.min.js',
+                    'vendor/angular-ui-utils/modules/unique/unique.js',  /* TODO: Minify this file! */
+                    'vendor/angular-ui-utils/modules/showhide/showhide.js',  /* TODO: Minify this file! */
+                    'vendor/angular-ui-router/release/angular-ui-router.min.js'],
                 dest: 'build/angular.min.js'
             }
         },
@@ -289,10 +299,6 @@ module.exports = function(grunt) {
                         angular: {
                             path: 'build/angular.min.js',
                             exports: 'angular'
-                        },
-                        angularui: {
-                            path: 'vendor/angular-ui-router/release/angular-ui-router.min.js',
-                            exports: 'angularui'
                         },
                         bootstrap: {
                             path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
@@ -464,24 +470,28 @@ module.exports = function(grunt) {
                 livereload: true
             },
             json: {
-                files: ['*.json', 'lib/**/*.json'],
-                tasks: ['dev']
+                files: ['*.json', 'config/*.json', 'lib/**/*.json'],
+                tasks: ['component:build', 'browserify:dev', 'copy:dev']
             },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
-                tasks: ['dev']
+                tasks: ['component:build', 'browserify:dev', 'copy:dev']
             },
             css: {
                 files: ['src/**/*.css'],
-                tasks: ['csslint', 'recess', 'build-css', 'copy:dev']
+                tasks: ['csslint', 'recess', 'component:build', 'browserify:dev', 'copy:dev']
+            },
+            theme: {
+                files: ['theme/**/*.less'],
+                tasks: ['less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
             },
             less: {
-                files: ['lib/**/*.less', 'theme/**/*.less'],
-                tasks: ['less', 'copy:dev']
+                files: ['lib/**/*.less'],
+                tasks: ['less:components', 'component:build', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
-                tasks: ['jsvalidate', 'jshint', 'component:build', 'browserify:dev', 'test', 'copy:dev']
+                tasks: ['jshint', 'component:build', 'browserify:dev', 'copy:dev']
             }
         }
 
@@ -492,7 +502,7 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['cucumberjs', 'karma', 'plato', 'complexity']);
+    grunt.registerTask('test', ['karma', 'plato']);
     grunt.registerTask('lint-html', ['html-inspector']);
     grunt.registerTask('lint', ['csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
