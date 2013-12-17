@@ -42,6 +42,14 @@ IntelligenceWebClient.service('AlertsService', [
 
             this.alerts.splice(index, 1);
         };
+
+        /**
+         * Clears all alerts.
+         */
+        this.clear = function() {
+
+            this.alerts.length = 0;
+        }
     }
 ]);
 
