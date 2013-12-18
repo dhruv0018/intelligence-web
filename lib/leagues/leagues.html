@@ -43,7 +43,7 @@
 
     </aside>
 
-    <div class="list">
+    <div class="list" data-ng-hide="noResults">
 
         <div class="table-responsive">
 
@@ -53,19 +53,25 @@
 
                     <tr data-ng-repeat="league in leagues">
 
-                        <td>{{league.name}}</td>
+                        <td><a data-ui-sref="league-info({ id: league.id })">{{league.name}}</a></td>
                         <td ng-repeat="sport in sports | filter:{id: league.sportId}">{{sport.name}}</td>
                         <td>{{league.gender}}</td>
-                        <td><button class="edit pull-right" data-ui-sref="league-info({ id: league.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 
                 </tbody>
 
             </table>
-            <p data-ng-show="noResults">No results found.</p>
 
         </div>
+
+    </div>
+
+    <div class="noresults" data-ng-show="noResults">
+
+        <i class="icon-search"></i>
+        <h1>No Results Found</h1>
+        <h2>Try your search again.</h2>
 
     </div>
 
