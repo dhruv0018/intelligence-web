@@ -27,9 +27,7 @@ IntelligenceWebClient.directive('krossoverVerifyPassword', [
                     /* Request authentication from the server. */
                     auth.validatePassword(null, password, function (error) {
 
-                        if (error) controller.$setValidity('password', false);
-
-                        else controller.$setValidity('password', true);
+                        controller.$setValidity('password', !error);
                     });
                 }
             });
