@@ -63,7 +63,7 @@
 
     </aside>
 
-    <div class="list">
+    <div class="list" data-ng-hide="noResults">
 
         <div class="table-responsive">
 
@@ -73,22 +73,22 @@
 
                     <tr data-ng-repeat="school in schools">
 
-                        <td>{{school.name}}</td>
+                        <td><a data-ui-sref="school-info({ id: school.id })">{{school.name}}</a></td>
                         <td>{{school.address.city}}</td>
                         <td>{{school.address.regionCode}}</td>
                         <td>{{school.address.countryCode}}</td>
                         <td>{{school.conference}}</td>
-                        <td><button class="edit" data-ui-sref="school-info({ id: school.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 
                 </tbody>
 
             </table>
-            <p data-ng-show="noResults">No results found.</p>
         </div>
 
     </div>
+
+    <p data-ng-show="noResults">No results found.</p>
 
 </section>
 

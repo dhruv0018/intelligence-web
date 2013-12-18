@@ -54,7 +54,7 @@
 
     </aside>
 
-    <div class="list">
+    <div class="list" data-ng-hide="noResults">
 
         <div class="table-responsive">
 
@@ -64,23 +64,22 @@
 
                     <tr data-ng-repeat="team in teams">
 
-                        <td>{{team.name}}</td>
+                        <td><a data-ui-sref="team-info({ id: team.id })">{{team.name}}</a></td>
                         <td>{{indexedSports[indexedLeagues[team.leagueId]['sportId']]['name']}}</td>
                         <td>{{indexedLeagues[team.leagueId]['name']}}</td>
                         <td>{{indexedSchools[team.schoolId]['name']}}</td>
-                        <td>Status N/A</td>
-                        <td><button class="edit" data-ui-sref="team-info({ id: team.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 
                 </tbody>
 
             </table>
-            <p data-ng-show="noResults">No results found.</p>
 
         </div>
 
     </div>
+
+    <p data-ng-show="noResults">No results found.</p>
 
 </section>
 
