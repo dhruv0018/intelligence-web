@@ -70,7 +70,7 @@
 
                     <tr data-ng-repeat="user in users">
 
-                        <td>{{user.email}}</td>
+                        <td class="email">{{user.email}}</td>
 
                         <td class="name"><a data-ui-sref="user-info({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></td>
 
@@ -78,7 +78,7 @@
 
                             <ul>
 
-                                <li class="role-name" data-ng-repeat="role in user.roles">
+                                <li data-ng-repeat="role in user.roles">
 
                                     <span data-ng-if="user.is(HEAD_COACH)">Head Coach, Team to be implemented</span>
                                     <span data-ng-if="user.is(ASSISTANT_COACH)">Assist. Coach, Team to be implemented</span>
