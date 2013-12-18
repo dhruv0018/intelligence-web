@@ -2,12 +2,54 @@
 
 .users {
 
-    .name a,
+    .name,
     .roles ul,
     .roles li {
 
-        width: 5em;
         .capitalize;
+    }
+
+    .email,
+    .name,
+    .roles ul,
+    .roles li {
+
         .text-overflow();
+    }
+
+    .email {
+
+        width: 150px;
+    }
+
+    .name {
+
+        width: 100px;
+    }
+
+    .roles ul,
+    .roles li {
+
+        width: 200px;
+    }
+
+    .active,
+    .inactive {
+
+        display: none;
+    }
+}
+
+/* Screens under 1025px */
+@media only screen
+and (min-width: 1025px) {
+
+    .users {
+
+        .active,
+        .inactive {
+
+            display: block;
+        }
     }
 }

@@ -70,9 +70,9 @@
 
                     <tr data-ng-repeat="user in users">
 
-                        <td class="email">{{user.email}}</td>
+                        <td><div class="email">{{user.email}}</div></td>
 
-                        <td class="name"><a data-ui-sref="user-info({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></td>
+                        <td><div class="name"><a data-ui-sref="user-info({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></div></td>
 
                         <td class="roles">
 
@@ -93,8 +93,8 @@
 
                         <td>
 
-                            <span data-ng-if="user.isActive" class="active">Active</span>
-                            <span data-ng-if="!user.isActive" class="inactive">Inactive</span>
+                            <div class="active" data-ng-if="user.isActive">Active</div>
+                            <div class="inactive" data-ng-if="!user.isActive">Inactive</div>
 
                         </td>
 
