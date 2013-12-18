@@ -1,0 +1,16 @@
+@import (reference) "main.less";
+
+.dropdown-toggle:after {
+
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -10.5px;
+    .icon(@chevron-down);
+}
+
+.open .dropdown-toggle:after {
+
+    .icon(@chevron-up);
+}
+

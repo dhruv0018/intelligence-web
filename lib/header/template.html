@@ -1,44 +1,52 @@
-<nav class="header" role="navigation" data-ng-show="isLoggedIn">
+<div class="rolebar"></div>
 
-    <div class="rolebar"></div>
+<nav class="header" role="navigation">
 
     <header class="navbar-header">
 
-        <a class="navbar-brand" href="/intelligence/">
-
-            <div class="logo-header">Krossover</div>
-
-        </a>
+        <a class="navbar-brand" href=""><div class="logo-header"></div></a>
 
     </header>
 
-    <ul class="menu nav navbar-nav">
+    <!-- Admin menu -->
+    <menu class="nav navbar-nav" data-ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
 
-        <li data-ng-show="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)"><a data-ui-sref="users">Users</a></li>
-        <li data-ng-show="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)"><a data-ui-sref="teams">Teams</a></li>
-        <li><a data-ui-sref="schools">Schools</a></li>
-        <li data-ng-show="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)"><a data-ui-sref="games">Games</a></li>
-        <li data-ng-show="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)"><a data-ui-sref="reports">Reports</a></li>
-        <li data-ng-show="currentUser.is(SUPER_ADMIN)"><a data-ui-sref="platform">Platform</a></li>
+        <li data-ui-sref-active="active"><a data-ui-sref="users">Users</a></li>
+        <li data-ui-sref-active="active"><a data-ui-sref="teams">Teams</a></li>
+        <li data-ui-sref-active="active"><a data-ui-sref="schools">Schools</a></li>
+        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="games">Games</a></li>
+        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="reports">Reports</a></li>
+        <li data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)"><a data-ui-sref="platform">Platform</a></li>
 
-    </ul>
+    </menu>
 
-    <ul class="nav navbar-nav navbar-right">
+    <!-- Coach menu -->
+    <menu class="nav navbar-nav" data-ng-if="currentUser.is(COACH)">
 
-        <li class="dropdown">
+        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="film">Film Home</a></li>
+        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="analytics">Analytics</a></li>
+        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="myteam">Team</a></li>
+        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="tape">Tape Exchange</a></li>
+        <li data-ui-sref-active="active"><a data-ng-href="{{config.links.support.uri}}">Support <i class="icon-external-link"></i></a></li>
+        <li data-ui-sref-active="active"><button class="btn btn-primary navbar-btn" data-ui-sref="addfilm">Add Film</button></li>
 
-            <a href="#" class="dropdown-toggle">
+    </menu>
+
+    <div class="nav navbar-nav navbar-right">
+
+        <div class="dropdown">
+
+            <button class="dropdown-toggle">
 
                 <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
-                <i class="icon-dropdown"></i>
 
-            </a>
+            </button>
 
             <ul class="dropdown-menu">
 
                 <li data-ng-repeat="role in currentUser.roles">
 
-                    <a href data-ng-click="switchRole(role)">
+                    <a href data-ng-click="account.changeCurrentUserRole(role)">
 
                         <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
@@ -48,15 +56,15 @@
 
                 <footer>
 
-                    <button href="#" data-ng-click="account()"><i class="icon-cog"></i> Your Account</button>
-                    <button href="#" data-ng-click="logout()"><i class="icon-signout"></i> Log out</button>
+                    <button class="btn-footer" data-ui-sref="contact-info" data-ng-disabled="$state.current.parent === 'account'"><i class="icon-cog"></i> Your Account</button>
+                    <button class="btn-footer" data-ng-click="logout()"><i class="icon-signout"></i> Log out</button>
 
                 </footer>
 
             </ul>
 
-        </li>
+        </div>
 
-    </ul>
+    </div>
 
 </div>
