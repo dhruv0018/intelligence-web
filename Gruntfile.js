@@ -160,6 +160,7 @@ module.exports = function(grunt) {
                     'vendor/angular-resource/angular-resource.js',
                     'vendor/angular-ui-utils/modules/unique/unique.js',
                     'vendor/angular-ui-utils/modules/showhide/showhide.js',
+                    'vendor/angular-ui-utils/modules/validate/validate.js',
                     'vendor/angular-ui-router/release/angular-ui-router.js'],
                 dest: 'build/angular.js'
             },
@@ -169,6 +170,7 @@ module.exports = function(grunt) {
                     'vendor/angular-resource/angular-resource.min.js',
                     'vendor/angular-ui-utils/modules/unique/unique.js',  /* TODO: Minify this file! */
                     'vendor/angular-ui-utils/modules/showhide/showhide.js',  /* TODO: Minify this file! */
+                    'vendor/angular-ui-utils/modules/validate/validate.js',  /* TODO: Minify this file! */
                     'vendor/angular-ui-router/release/angular-ui-router.min.js'],
                 dest: 'build/angular.min.js'
             }
