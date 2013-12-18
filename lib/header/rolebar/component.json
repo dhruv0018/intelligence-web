@@ -1,0 +1,9 @@
+{
+    "name": "rolebar",
+    "styles": [
+        "styles.css"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
