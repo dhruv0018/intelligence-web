@@ -1,10 +1,5 @@
 var TO = '';
-var ELEMENTS = 'E';
 var ATTRIBUTES = 'A';
-
-var component = require('../../build/build.js');
-
-var OAuth = component('oauth');
 
 var IntelligenceWebClient = require('../app');
 
@@ -25,22 +20,16 @@ IntelligenceWebClient.directive('krossoverVerifyPassword', [
              *       This is coming soon in core Angular. */
             $scope.$watch(attributes.ngModel, function() {
 
-                var email = session.currentUser.email;
                 var password = $scope.$eval(attributes.ngModel);
-
-                var oauth = $injector.instantiate(['config', OAuth]);
 
                 if (password && password.length >= 4) {
 
                     /* Request authentication from the server. */
-                    oauth.requestAuthCode(email, password, function(error) {
+                    auth.validatePassword(null, password, function (error) {
 
-                        $rootScope.$apply(function() {
+                        if (error) controller.$setValidity('password', false);
 
-                            if (error) controller.$setValidity('password', false);
-
-                            else controller.$setValidity('password', true);
-                        });
+                        else controller.$setValidity('password', true);
                     });
                 }
             });
