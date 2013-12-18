@@ -21,6 +21,8 @@ IntelligenceWebClient.directive('krossoverVerifyPassword', [
 
         function link($scope, element, attributes, controller) {
 
+            /* TODO: Debounce model changes to rate limit this.
+             *       This is coming soon in core Angular. */
             $scope.$watch(attributes.ngModel, function() {
 
                 var email = session.currentUser.email;
