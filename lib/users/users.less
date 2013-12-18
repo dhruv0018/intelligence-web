@@ -32,24 +32,28 @@
 
         width: 200px;
     }
-
-    .active,
-    .inactive {
-
-        display: none;
-    }
 }
 
 /* Screens under 1025px */
 @media only screen
-and (min-width: 1025px) {
+and (max-width: 1024px) {
 
     .users {
 
         .active,
         .inactive {
 
-            display: block;
+            display: none;
+        }
+
+        .nosidebar {
+
+            .active,
+            .inactive {
+
+                display: block;
+            }
         }
     }
 }
+
