@@ -58,12 +58,12 @@ IntelligenceWebClient.factory('UsersFactory', [
                     callback(user);
                 });
             },
-            
+
             getList: function(filter, success, error) {
 
                 var self = this;
                 filter = filter || {};
-                
+
                 if(!filter.start){
                     filter.start = 0;
                 }
@@ -82,8 +82,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                     }
                     return success ? success(users) : users;
                 }, error);
-                
-                
+
+
             },
 
             save: function(user) {
@@ -159,7 +159,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user = this;
                 }
 
-                user.roles && user.roles.splice(user.roles.indexOf(role), 1);
+                if (user.roles) user.roles.splice(user.roles.indexOf(role), 1);
             },
 
             /**

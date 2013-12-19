@@ -105,6 +105,7 @@ IntelligenceWebClient.factory('HttpInterceptor', [
             /* Intercept all responses. Includes any server responses that are
             * considered successful. Which are status codes up to the 400 level. */
             response: function(response) {
+            /* jshint camelcase:false */
 
                 /* Catch errors in 200 responses. */
                 if (response.data.error) {
