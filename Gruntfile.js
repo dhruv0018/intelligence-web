@@ -481,7 +481,11 @@ module.exports = function(grunt) {
                 livereload: true
             },
             json: {
-                files: ['*.json', 'config/*.json', 'lib/**/*.json'],
+                files: ['*.json'],
+                tasks: ['install', 'dev']
+            },
+            config: {
+                files: ['config/*.json', 'lib/**/*.json'],
                 tasks: ['component:build', 'browserify:dev', 'copy:dev']
             },
             html: {
