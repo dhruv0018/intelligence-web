@@ -14,6 +14,7 @@
 @gray:                   lighten(#000, 33.5%); // #555
 @gray-light:             lighten(#000, 60%);   // #999
 @gray-lighter:           #EBEBEB;
+@gray-lightest:          rgb(242, 242, 242);
 
 // Brand colors
 // -------------------------
@@ -376,8 +377,8 @@
 @state-success-bg:               #dff0d8;
 @state-success-border:           darken(spin(@state-success-bg, -10), 5%);
 
-@state-info-text:                #3a87ad;
-@state-info-bg:                  #d9edf7;
+@state-info-text:                @gray-dark;
+@state-info-bg:                  @gray-lightest;
 @state-info-border:              darken(spin(@state-info-bg, -10), 7%);
 
 

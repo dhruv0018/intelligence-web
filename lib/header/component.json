@@ -1,5 +1,11 @@
 {
     "name": "header",
+    "paths": [
+        "."
+    ],
+    "local": [
+        "rolebar"
+    ],
     "templates": [
         "template.html"
     ],
