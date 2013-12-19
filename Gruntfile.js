@@ -30,7 +30,14 @@ module.exports = function(grunt) {
                     config: grunt.file.readJSON('config/vm.json')
                 }
             },
-
+            qa: {
+                dest: 'src/config.js',
+                name: 'config',
+                constants: {
+                    pkg: grunt.file.readJSON('package.json'),
+                    config: grunt.file.readJSON('config/qa.json')
+                }
+            },
             prod: {
                 dest: 'src/config.js',
                 name: 'config',
@@ -537,6 +544,19 @@ module.exports = function(grunt) {
         'less',
         'concat:angular',
         'ngconstant:vm',
+        'component:build',
+        'browserify:dev',
+        'concat:build',
+        'autoprefixer',
+        'rework',
+        'copy:component-assets',
+        'copy:dev-assets',
+        'copy:dev']);
+
+    grunt.registerTask('qa', [
+        'less',
+        'concat:angular',
+        'ngconstant:qa',
         'component:build',
         'browserify:dev',
         'concat:build',
