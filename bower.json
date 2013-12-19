@@ -21,5 +21,8 @@
     },
     "exportsOverride": {
         "font-awesome": {}
+    },
+    "resolutions": {
+        "angular": "~1.2.*-build"
     }
 }
