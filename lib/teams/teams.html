@@ -12,7 +12,7 @@
 
                 <input class="form-control" name="name" placeholder="Team Name" data-ng-model="filter.name" type="search" autocomplete="on" list="team-name" autosave="team-name">
                 <datalist id="team-name">
-                    <option data-ng-repeat="team in teams | unique:'name' | orderBy:'name'" value="{{team.name}}">
+                    <option data-ng-repeat="team in teams | unique:'name' | orderBy:'name'" value="{{team.name}}"></option>
                 </datalist>
 
             </div>

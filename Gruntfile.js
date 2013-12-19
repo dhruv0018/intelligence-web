@@ -86,8 +86,10 @@ module.exports = function(grunt) {
 
         /* Linters */
 
-
-        'html-inspector': {
+        htmlhint: {
+            options: {
+                htmlhintrc: '.htmlhintrc'
+            },
             files: '<%= files.html %>'
         },
 
@@ -110,6 +112,14 @@ module.exports = function(grunt) {
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
+            },
+            files: '<%= files.js %>'
+        },
+
+        jsbeautifier: {
+            options: {
+                config: '.jsbeautifyrc',
+                mode: 'VERIFY_ONLY'
             },
             files: '<%= files.js %>'
         },
@@ -479,12 +489,16 @@ module.exports = function(grunt) {
                 livereload: true
             },
             json: {
-                files: ['*.json', 'config/*.json', 'lib/**/*.json'],
+                files: ['*.json'],
+                tasks: ['install', 'dev']
+            },
+            config: {
+                files: ['config/*.json', 'lib/**/*.json'],
                 tasks: ['component:build', 'browserify:dev', 'copy:dev']
             },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
-                tasks: ['component:build', 'browserify:dev', 'copy:dev']
+                tasks: ['htmlhint', 'component:build', 'browserify:dev', 'copy:dev']
             },
             css: {
                 files: ['src/**/*.css'],
@@ -512,8 +526,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['karma', 'plato']);
-    grunt.registerTask('lint-html', ['html-inspector']);
-    grunt.registerTask('lint', ['csslint', 'recess', 'jshint']);
+    grunt.registerTask('lint', ['htmlhint', 'csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('serve', ['connect']);

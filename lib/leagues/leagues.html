@@ -12,7 +12,7 @@
 
                 <input class="form-control" name="name" placeholder="League Name" data-ng-model="filter.name" type="search" autocomplete="on" list="league-name" autosave="league-name">
                 <datalist id="league-name">
-                    <option data-ng-repeat="league in leagues | unique:'name' | orderBy:'name'" value="{{league.name}}">
+                    <option data-ng-repeat="league in leagues | unique:'name' | orderBy:'name'" value="{{league.name}}"></option>
                 </datalist>
 
             </div>
