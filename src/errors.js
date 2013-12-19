@@ -105,6 +105,7 @@ IntelligenceWebClient.factory('HttpInterceptor', [
             /* Intercept all responses. Includes any server responses that are
             * considered successful. Which are status codes up to the 400 level. */
             response: function(response) {
+            /* jshint camelcase:false */
 
                 /* Catch errors in 200 responses. */
                 if (response.data.error) {
@@ -179,11 +180,20 @@ IntelligenceWebClient.run([
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
 
             ErrorReporter.reportError(error);
+            $state.go('error');
         });
 
-        $rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {
+        $rootScope.$on('roleChangeError', function(event, role) {
+
+            role = role || {};
+            role.type = role.type || {};
+            role.type.name = role.type.name || 'Unknown Role';
+
+            var error = new Error('Could not change role to "' + role.type.name + '"');
 
             ErrorReporter.reportError(error);
+
+            $state.go('error');
         });
     }
 ]);

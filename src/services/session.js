@@ -53,7 +53,8 @@ IntelligenceWebClient.service('SessionService', [
             user.persist = persist;
 
             /* Store user in memory. */
-            this.currentUser = user;
+            if (!this.currentUser) this.currentUser = user;
+            else if (!angular.equals(this.currentUser, user)) angular.copy(user, this.currentUser);
 
             /* Store user in the session. */
             sessionStorage.setItem(CURRENT_USER_KEY, this.serializeUser(user));

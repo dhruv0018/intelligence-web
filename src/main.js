@@ -3,7 +3,6 @@ var pkg = require('../package.json');
 var component = require('../build/build.js');
 
 require('angular');
-require('angularui');
 require('bootstrap');
 
 require('./app');
@@ -18,6 +17,8 @@ require('./services/authentication');
 require('./services/authorization');
 require('./services/tokens');
 require('./services/session');
+require('./services/account');
+require('./services/alerts');
 require('./services/users');
 require('./services/teams');
 require('./services/schools');
@@ -36,6 +37,7 @@ component('login');
 component('role');
 component('roles');
 component('header');
+component('alertbar');
 component('account');
 component('users');
 component('teams');

@@ -14,6 +14,7 @@
 @gray:                   lighten(#000, 33.5%); // #555
 @gray-light:             lighten(#000, 60%);   // #999
 @gray-lighter:           #EBEBEB;
+@gray-lightest:          rgb(242, 242, 242);
 
 // Brand colors
 // -------------------------
@@ -239,13 +240,13 @@
 
 // Basics of a navbar
 @navbar-height:                    61px;
-@navbar-margin-bottom:             @line-height-computed;
+@navbar-margin-bottom:             0;
 @navbar-default-color:             @gray-dark;
 @navbar-default-bg:                #FFF;
-@navbar-default-border:            darken(@navbar-default-bg, 6.5%);
+@navbar-default-border:            rgb(237, 237, 237);
 @navbar-border-radius:             0;
-@navbar-padding-horizontal:        floor(@grid-gutter-width / 2);
-@navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
+@navbar-padding-horizontal:        0;
+@navbar-padding-vertical:          0;
 
 // Navbar links
 @navbar-default-link-color:                @gray-dark;
@@ -376,8 +377,8 @@
 @state-success-bg:               #dff0d8;
 @state-success-border:           darken(spin(@state-success-bg, -10), 5%);
 
-@state-info-text:                #3a87ad;
-@state-info-bg:                  #d9edf7;
+@state-info-text:                @gray-dark;
+@state-info-bg:                  @gray-lightest;
 @state-info-border:              darken(spin(@state-info-bg, -10), 7%);
 
 

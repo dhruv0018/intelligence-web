@@ -12,7 +12,7 @@
 
                 <input class="form-control" name="name" placeholder="School Name" data-ng-model="filter.name" type="search" autocomplete="on" list="school-name" autosave="school-name">
                 <datalist id="school-name">
-                    <option data-ng-repeat="school in schools | unique:'name' | orderBy:'name'" value="{{school.name}}">
+                    <option data-ng-repeat="school in schools | unique:'name' | orderBy:'name'" value="{{school.name}}"></option>
                 </datalist>
 
             </div>
@@ -21,7 +21,7 @@
 
                 <input class="form-control" name="city" placeholder="City" data-ng-model="filter.city" type="search" autocomplete="on" list="school-city" autosave="school-city">
                 <datalist id="school-city">
-                    <option data-ng-repeat="school in schools | unique:'address.city' | orderBy:'address.city'" value="{{school.address.city}}">
+                    <option data-ng-repeat="school in schools | unique:'address.city' | orderBy:'address.city'" value="{{school.address.city}}"></option>
                 </datalist>
 
             </div>
@@ -30,7 +30,7 @@
 
                 <input class="form-control" name="state" placeholder="State" data-ng-model="filter.region" type="search" autocomplete="on" list="school-region" autosave="school-region">
                 <datalist id="school-region">
-                    <option data-ng-repeat="school in schools | unique:'address.regionCode' | orderBy:'address.regionCode'" value="{{school.address.regionCode}}">
+                    <option data-ng-repeat="school in schools | unique:'address.regionCode' | orderBy:'address.regionCode'" value="{{school.address.regionCode}}"></option>
                 </datalist>
 
             </div>
@@ -39,7 +39,7 @@
 
                 <input class="form-control" name="country" placeholder="Country" data-ng-model="filter.country" type="search" autocomplete="on" list="school-country" autosave="school-country">
                 <datalist id="school-country">
-                    <option data-ng-repeat="school in schools | unique:'address.countryCode' | orderBy:'address.countryCode'" value="{{school.address.countryCode}}">
+                    <option data-ng-repeat="school in schools | unique:'address.countryCode' | orderBy:'address.countryCode'" value="{{school.address.countryCode}}"></option>
                 </datalist>
 
             </div>
@@ -48,7 +48,7 @@
 
                 <input class="form-control" name="conference" placeholder="Conference" data-ng-model="filter.conference" type="search" autocomplete="on" list="school-conference" autosave="school-conference">
                 <datalist id="school-conference">
-                    <option data-ng-repeat="school in schools | unique:'conference' | orderBy:'conference'" value="{{school.conference}}">
+                    <option data-ng-repeat="school in schools | unique:'conference' | orderBy:'conference'" value="{{school.conference}}"></option>
                 </datalist>
 
             </div>
@@ -63,7 +63,7 @@
 
     </aside>
 
-    <div class="list">
+    <div class="list" data-ng-hide="noResults">
 
         <div class="table-responsive">
 
@@ -73,20 +73,26 @@
 
                     <tr data-ng-repeat="school in schools">
 
-                        <td>{{school.name}}</td>
+                        <td><a data-ui-sref="school-info({ id: school.id })">{{school.name}}</a></td>
                         <td>{{school.address.city}}</td>
                         <td>{{school.address.regionCode}}</td>
                         <td>{{school.address.countryCode}}</td>
                         <td>{{school.conference}}</td>
-                        <td><button class="edit" data-ui-sref="school-info({ id: school.id })"><i class="icon-pencil"></i> Edit</button></td>
 
                     </tr>
 
                 </tbody>
 
             </table>
-            <p data-ng-show="noResults">No results found.</p>
         </div>
+
+    </div>
+
+    <div class="noresults" data-ng-show="noResults">
+
+        <i class="icon-search"></i>
+        <h1>No Results Found</h1>
+        <h2>Try your search again.</h2>
 
     </div>
 

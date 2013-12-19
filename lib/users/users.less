@@ -2,40 +2,58 @@
 
 .users {
 
-    .date {
-
-        width: 10em;
-    }
-
-    .roles {
-
-        ul,
-        li {
-
-            width: 15em;
-            .text-overflow();
-        }
-    }
-
     .name,
-    .role-name {
+    .roles ul,
+    .roles li {
 
         .capitalize;
     }
 
-    .edit {
+    .email,
+    .name,
+    .roles ul,
+    .roles li {
 
-        .btn;
-        .btn-default;
-        width: 100px;
-        visibility: hidden;
+        .text-overflow();
     }
 
-    tr:hover {
+    .email {
 
-        .edit {
+        width: 150px;
+    }
 
-            visibility: visible;
+    .name {
+
+        width: 100px;
+    }
+
+    .roles ul,
+    .roles li {
+
+        width: 200px;
+    }
+}
+
+/* Screens under 1025px */
+@media only screen
+and (max-width: 1024px) {
+
+    .users {
+
+        .active,
+        .inactive {
+
+            display: none;
+        }
+
+        .nosidebar {
+
+            .active,
+            .inactive {
+
+                display: block;
+            }
         }
     }
 }
+
