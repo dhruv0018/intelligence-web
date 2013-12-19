@@ -195,6 +195,30 @@
     "leagues": {
 
         "Super Admin": true
+    },
+
+    "add-film": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "upload-film": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "game-info": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "your-team": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }
 
