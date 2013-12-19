@@ -116,6 +116,14 @@ module.exports = function(grunt) {
             files: '<%= files.js %>'
         },
 
+        jsbeautifier: {
+            options: {
+                config: '.jsbeautifyrc',
+                mode: 'VERIFY_ONLY'
+            },
+            files: '<%= files.js %>'
+        },
+
         jsvalidate: {
             files: ['<%= files.js']
         },
