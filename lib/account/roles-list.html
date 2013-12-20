@@ -8,24 +8,20 @@
 
 </span>
 
-<div class='row'>
-    <div class='col-sm-9'>
+<div class="row">
+    <div class="col-sm-9">
         <ul class="list-group">
-
             <li class="role list-group-item" data-ng-repeat="roleGroup in roleGroups">
-
                 <h3>{{ roleGroup.roleName }}</h3>
-
                 <ul>
                     <li class="role list-group-item" data-ng-repeat="role in roleGroup.userRoles">
-                        <x-krossover-role user="currentUser" role="role"></x-krossover-role>
+                        <x-krossover-role-list-item role="role"></x-krossover-role-list-item>
                     </li>
                 </ul>
-
             </li>
-
         </ul>
     </div>
-    <div class='col-sm-3'>
+    <div class="col-sm-3">
+        Add new role
     </div>
 </div>
