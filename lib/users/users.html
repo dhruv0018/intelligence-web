@@ -60,7 +60,7 @@
 
     </aside>
 
-    <div class="list">
+    <div class="list" data-ng-class="{nosidebar: !sidebar}" data-ng-hide="noResults">
 
         <div class="table-responsive">
 
@@ -70,38 +70,20 @@
 
                     <tr data-ng-repeat="user in users">
 
-                        <td>{{user.email}}</td>
-                        <td class="name"><a href>{{user.firstName}} {{user.lastName}}</a></td>
+                        <td><div class="email">{{user.email}}</div></td>
+
+                        <td><div class="name"><a data-ui-sref="user-info({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></div></td>
 
                         <td class="roles">
 
                             <ul>
 
-                                <li class="role-name" data-ng-repeat="role in user.roles">
-
-                                    <a href>
-
-                                        <span data-ng-if="user.is(HEAD_COACH)">Head Coach, Team to be implemented</span>
-                                        <span data-ng-if="user.is(ASSISTANT_COACH)">Assist. Coach, Team to be implemented</span>
-                                        <span data-ng-if="user.is(ATHLETE)">Athlete, Sport to be implemented</span>
-                                        <span data-ng-if="!user.is(HEAD_COACH) && !user.is(ASSISTANT_COACH) && !user.is(ATHLETE)">{{role.type.name}}</span>
-
-                                    </a>
-
-                                </li>
-
-                            </ul>
-
-                        </td>
-
-                        <td>
-
-                            <ul>
-
                                 <li data-ng-repeat="role in user.roles">
 
-                                    <span data-ng-if="user.isActive" class="active">Active</span>
-                                    <span data-ng-if="!user.isActive" class="inactive">Inactive</span>
+                                    <span data-ng-if="Users.is(role, HEAD_COACH)">Head Coach, {{ teams[role.teamId].name }}</span>
+                                    <span data-ng-if="Users.is(role, ASSISTANT_COACH)">Assist. Coach, {{ teams[role.teamId].name }}</span>
+                                    <span data-ng-if="Users.is(role, ATHLETE)">Athlete, {{ sports[leagues[teams[role.teamId].leagueId].sportId].name }}</span>
+                                    <span data-ng-if="!Users.is(role, HEAD_COACH) && !Users.is(role, ASSISTANT_COACH) && !Users.is(role, ATHLETE)">{{role.type.name}}</span>
 
                                 </li>
 
@@ -111,7 +93,8 @@
 
                         <td>
 
-                            <button class="edit" data-ui-sref="user-info({ id: user.id })""><i class="icon-pencil"></i> Edit</button>
+                            <div class="active" data-ng-if="user.isActive">Active</div>
+                            <div class="inactive" data-ng-if="!user.isActive">Inactive</div>
 
                         </td>
 
@@ -120,9 +103,16 @@
                 </tbody>
 
             </table>
-            <p data-ng-show="noResults">No results found.</p>
 
         </div>
+
+    </div>
+
+    <div class="noresults" data-ng-show="noResults">
+
+        <i class="icon-search"></i>
+        <h1>No Results Found</h1>
+        <h2>Try your search again.</h2>
 
     </div>
 
