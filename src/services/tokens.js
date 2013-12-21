@@ -32,28 +32,16 @@ IntelligenceWebClient.factory('TokensService', [
          */
         var getTokens = function(userId, password, callback) {
 
-            /* If the tokens are cached already, then there is no need to
-             * request them, so just return them. */
-            if (areTokensSet()) {
-
-                var tokens = new OAuth(getAccessToken(), getRefreshToken());
-
-                callback(null, tokens);
-            }
-
             /* Request authentication from the server. */
-            else {
+            var oauth = $injector.instantiate(['config', OAuth]);
 
-                var oauth = $injector.instantiate(['config', OAuth]);
+            oauth.getTokens(userId, password, function(error, tokens) {
 
-                oauth.getTokens(userId, password, function(error, tokens) {
+                $rootScope.$apply(function() {
 
-                    $rootScope.$apply(function() {
-
-                        callback(error, tokens);
-                    });
+                    callback(error, tokens);
                 });
-            }
+            });
         };
 
         /**
