@@ -16,10 +16,10 @@ IntelligenceWebClient.factory('LeaguesFactory', [
                 league = league || self;
 
                 if (league.id) {
-                    league.$update();
+                    return league.$update();
                 } else {
                     var newLeague = new LeaguesResource(league);
-                    newLeague.$create();
+                    return newLeague.$create();
                 }
             },
             getList: function(filter, success, error) {
