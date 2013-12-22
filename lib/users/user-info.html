@@ -1,4 +1,4 @@
-<form class="form-contact" role="form">
+<form class="form-contact" name="formUserInfo" role="form">
 
     <div class="row">
 
@@ -42,16 +42,17 @@
 
     </div>
 
+    <button class="btn btn-primary" type="submit" data-ng-click="save($storage.user)">Save</button>
+
+    <button class="btn toggle-lock-user" type="button" data-ng-model="$storage.user.isActive" data-ng-disabled="$storage.user.has(ADMIN) && !currentUser.is(SUPER_ADMIN)" data-btn-checkbox data-btn-checkbox-true="true" data-btn-checkbox-false="false">
+        <i class="icon-lock" data-ng-show="$storage.user.isActive"></i>
+        <i class="icon-unlock" data-ng-show="!$storage.user.isActive"></i>
+        {{ $storage.user.isActive ? "Lock" : "Unlock" }}
+    </button>
+
+    <button class="btn btn-danger" data-ng-click="auth.requestPasswordReset($storage.user.email)">Password Reset</button>
+
+    <a class="pull-right" href data-ui-sref="users">Cancel</a>
+
 </form>
 
-<button class="btn btn-primary" data-ng-disabled="disableSave" data-ng-click="save($storage.user)">Save</button>
-
-<button class="btn toggle-lock-user" type="button" data-ng-model="$storage.user.isActive" data-ng-disabled="$storage.user.has(ADMIN) && !currentUser.is(SUPER_ADMIN)" data-btn-checkbox data-btn-checkbox-true="true" data-btn-checkbox-false="false">
-    <i class="icon-lock" data-ng-show="$storage.user.isActive"></i>
-    <i class="icon-unlock" data-ng-show="!$storage.user.isActive"></i>
-    {{ $storage.user.isActive ? "Lock" : "Unlock" }}
-</button>
-
-<button class="btn btn-danger" data-ng-click="auth.requestPasswordReset($storage.user.email)">Password Reset</button>
-
-<a class="pull-right" href data-ui-sref="users">Cancel</a>
