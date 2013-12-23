@@ -2,7 +2,7 @@
 
     <div class="form-group" data-ng-class="{ 'has-error': resetForm.password.$invalid }">
 
-        <input class="form-field-login" name="password" type="password" data-ng-minlength="4" placeholder="New Password" data-ng-model="reset.password" oncopy="return false;" onpaste="return false;" required>
+        <input class="form-field-login" name="password" type="password" data-ng-minlength="4" placeholder="New Password" data-ng-model="reset.password" data-ng-trim="false" oncopy="return false;" onpaste="return false;" required>
 
         <span class="errors">
             <span class="error" data-ng-show="resetForm.password.$error.required">Required!</span>
@@ -14,7 +14,7 @@
 
     <div class="form-group" data-ng-class="{ 'has-error': resetForm.passwordVerify.$invalid }">
 
-        <input class="form-field-login" name="passwordVerify" type="password" data-ng-minlength="4" placeholder="Verify Password" data-ng-model="reset.passwordVerify" x-match="password" oncopy="return false;" onpaste="return false;" required>
+        <input class="form-field-login" name="passwordVerify" type="password" data-ng-minlength="4" placeholder="Verify Password" data-ng-model="reset.passwordVerify" data-ng-trim="false" data-ui-validate=" 'reset.password == $value' " data-ui-validate-watch=" 'reset.password' " oncopy="return false;" onpaste="return false;" required>
 
         <span class="errors">
             <span class="error" data-ng-show="resetForm.passwordVerify.$error.required">Required!</span>
