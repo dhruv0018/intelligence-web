@@ -10,7 +10,7 @@
 
     <div class="form-group">
 
-        <select class="form-control" name="league" data-ng-model="team.leagueId" data-ng-options="league.id as league.name for league in leagues | filter:{'sportId':sportId}" data-ng-disabled="!sportId" required>
+        <select class="form-control" name="league" data-ng-model="$storage.team.leagueId" data-ng-options="league.id as league.name for league in leagues | filter:{'sportId':sportId}" data-ng-disabled="!sportId" required>
             <option value="">League Name</option>
         </select>
 
@@ -18,7 +18,7 @@
 
     <div class="form-group">
 
-        <select class="form-control select-school" name="school" data-ng-model="team.schoolId" data-ng-options="school.id as school.name for school in schools" required>
+        <select class="form-control select-school" name="school" data-ng-model="$storage.team.schoolId" data-ng-options="school.id as school.name for school in schools" required>
             <option value="">School Name</option>
         </select>
 
@@ -28,7 +28,7 @@
 
     <div class="form-group">
 
-        <input class="form-control" name="name" placeholder="Team Name" data-ng-model="team.name" type="text" required>
+        <input class="form-control" name="name" placeholder="Team Name" data-ng-model="$storage.team.name" type="text" required>
 
     </div>
 
@@ -44,22 +44,22 @@
 
         <input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text" disabled>
 
-        <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="team.address.street1" type="text" disabled>
+        <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="$storage.team.address.street1" type="text" disabled>
 
-        <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="team.address.street2" type="text" disabled>
+        <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="$storage.team.address.street2" type="text" disabled>
 
-        <input class="form-control" name="city" placeholder="City" data-ng-model="team.address.city" type="text" required disabled>
+        <input class="form-control" name="city" placeholder="City" data-ng-model="$storage.team.address.city" type="text" required disabled>
 
-        <input class="form-control" name="country" placeholder="Country" data-ng-model="team.address.countryCode" type="text" required disabled>
+        <input class="form-control" name="country" placeholder="Country" data-ng-model="$storage.team.address.countryCode" type="text" required disabled>
 
-        <input class="form-control" name="state" placeholder="State" data-ng-model="team.address.regionCode" type="text" required disabled>
+        <input class="form-control" name="state" placeholder="State" data-ng-model="$storage.team.address.regionCode" type="text" required disabled>
 
-        <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="team.address.postalCode" type="text" disabled>
+        <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="$storage.team.address.postalCode" type="text" disabled>
 
     </div>
 
 </form>
 
-<button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(team)">Save</button>
+<button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save($storage.team)">Save</button>
 
 <a class="pull-right" href data-ui-sref="teams">Cancel</a>

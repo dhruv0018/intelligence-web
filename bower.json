@@ -12,6 +12,7 @@
         "angular-bootstrap": "~0.6.0",
         "angular-ui-utils": "~0.0.4",
         "angular-ui-router": "~0.2.7",
+        "ngstorage": "~0.3.0",
         "bootstrap": "~3.0.2",
         "font-awesome": "~3.2.1"
     },

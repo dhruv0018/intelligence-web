@@ -176,6 +176,7 @@ module.exports = function(grunt) {
             angular: {
                 src: [
                     'vendor/angular/angular.js',
+                    'vendor/ngstorage/ngStorage.js',
                     'vendor/angular-resource/angular-resource.js',
                     'vendor/angular-ui-utils/modules/unique/unique.js',
                     'vendor/angular-ui-utils/modules/showhide/showhide.js',
@@ -186,6 +187,7 @@ module.exports = function(grunt) {
             angularmin: {
                 src: [
                     'vendor/angular/angular.min.js',
+                    'vendor/ngstorage/ngStorage.min.js',
                     'vendor/angular-resource/angular-resource.min.js',
                     'vendor/angular-ui-utils/modules/unique/unique.js',  /* TODO: Minify this file! */
                     'vendor/angular-ui-utils/modules/showhide/showhide.js',  /* TODO: Minify this file! */

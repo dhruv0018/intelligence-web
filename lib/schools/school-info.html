@@ -6,19 +6,19 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="type" data-ng-model="school.type" data-ng-options="type.name for type in SCHOOL_TYPES track by type.id.toString()" required>
+                <select class="form-control" name="type" data-ng-model="$storage.school.type" data-ng-options="type.name for type in SCHOOL_TYPES track by type.id.toString()" required>
 
                     <option value="">Type</option>
 
                 </select>
 
-                <input class="form-control" name="name" placeholder="Name" data-ng-model="school.name" type="text" required>
+                <input class="form-control" name="name" placeholder="Name" data-ng-model="$storage.school.name" type="text" required>
 
-                <input class="form-control" name="mascot" placeholder="Mascot" data-ng-model="school.mascot" type="text">
+                <input class="form-control" name="mascot" placeholder="Mascot" data-ng-model="$storage.school.mascot" type="text">
 
-                <input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text">
+                <input class="form-control" name="conference" placeholder="Conference" data-ng-model="$storage.school.conference" type="text">
 
-                <input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text">
+                <input class="form-control" name="division" placeholder="Division" data-ng-model="$storage.school.division" type="text">
 
                 <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="school.address.street1" type="text">
 
@@ -51,7 +51,7 @@
 
             <ul>
 
-                <li data-ng-repeat="team in school.teams">
+                <li data-ng-repeat="team in teams">
 
                     <a data-ui-sref="team({ id: team.id } )">{{team.name}}</a>
 
