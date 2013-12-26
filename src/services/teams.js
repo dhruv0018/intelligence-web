@@ -8,8 +8,6 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
             resource: TeamsResource,
 
-            list: [],
-
             extendTeam: function(team) {
 
                 var self = this;
@@ -39,12 +37,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 filter = filter || {};
 
-                success = success || function() {
+                success = success || function(teams) {
 
-                    for (var i = 0; i < self.list.length; i++) {
-
-                        self.list[i] = self.extendTeam(self.list[i]);
-                    }
+                    return teams.forEach(self.extendTeam, self);
                 };
 
                 error = error || function() {
@@ -52,9 +47,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not load teams list');
                 };
 
-                self.list = self.resource.query(filter, success, error);
-
-                return self.list;
+                return self.resource.query(filter, success, error);
             },
 
             filter: function(filter, success, error) {
