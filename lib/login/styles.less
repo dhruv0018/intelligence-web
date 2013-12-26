@@ -32,23 +32,23 @@
     font-size: 26px;
     font-weight: 400;
     letter-spacing: -0.01em;
+
+    &.ng-dirty {
+
+        &.ng-invalid-notfound:focus
+        &.ng-invalid-password:focus {
+
+            border-color: red;
+        }
+
+        &.ng-invalid-notfound:focus + .error,
+        &.ng-invalid-password:focus + .error {
+
+            .show;
+        }
+    }
 }
 
-.form-field-login.ng-dirty.ng-invalid-notfound:focus,
-.form-field-login.ng-dirty.ng-invalid-password:focus {
-
-    border-color: red;
-}
-
-.errors {
-
-    .hide;
-}
-
-.error {
-
-    color: @brand-primary;
-}
 
 /**
  * Responsive sizes.
@@ -77,51 +77,6 @@ and (min-width: 480px) {
     .form-field-login {
 
         width: 404px;
-    }
-}
-
-/* Screens under 800px */
-@media only screen
-and (max-width: 799px) {
-
-    .form-field-login {
-
-        &.ng-dirty {
-
-            &.ng-invalid::placeholder {
-
-                color: red;
-            }
-        }
-    }
-}
-
-/* Screens over 800px */
-@media only screen
-and (min-width: 800px) {
-
-    .errors {
-
-        position: absolute;
-        top: 0;
-        left: 450px;
-        width: 200px;
-        height: 72px;
-        line-height: 72px;
-        margin-left: 15px;
-    }
-
-    .form-field-login {
-
-        &.ng-dirty {
-
-            &.ng-invalid:not(:focus) + .errors,
-            &.ng-invalid-notfound:focus + .errors,
-            &.ng-invalid-password:focus + .errors {
-
-                .show;
-            }
-        }
     }
 }
 
