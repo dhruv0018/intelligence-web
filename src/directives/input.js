@@ -84,7 +84,7 @@ IntelligenceWebClient.directive('input', [
 
             restrict: TO += ATTRIBUTES,
             priority: 1,
-            require: 'ngModel',
+            require: '?ngModel',
             scope: {
 
                 errors: '=',
@@ -95,6 +95,7 @@ IntelligenceWebClient.directive('input', [
         function link($scope, element, attributes, controller) {
 
             if (!attributes.errors) return;
+            if (!controller) return;
 
             /* Evaluate errors attribute for Angular expressions. */
             var errors = $scope.$eval(attributes.errors);
