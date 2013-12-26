@@ -250,6 +250,23 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
              * @class User
              * @method
+             * @returns {Boolean} true if user has no roles; false otherwise.
+             * Checks if the user has any roles.
+             */
+            hasNoRoles: function() {
+                var self = this;
+                var roles = self.roles;
+                
+                if (!roles || roles.length < 1 ){
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            
+            /**
+             * @class User
+             * @method
              * @param {Object} match - the role object to match.
              * @returns {Boolean} true if a match is found; false otherwise.
              * Checks if any of the users roles for a match to the role given.
