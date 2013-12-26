@@ -72,12 +72,12 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 if (team.schoolId) delete team.address;
 
-                if (team.id) team.$update();
+                if (team.id) return team.$update();
 
                 else {
 
                     var newTeam = new TeamsResource(team);
-                    newTeam.$create();
+                    return newTeam.$create();
                 }
             },
 
