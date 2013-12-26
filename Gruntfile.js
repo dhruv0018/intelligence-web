@@ -176,19 +176,23 @@ module.exports = function(grunt) {
             angular: {
                 src: [
                     'vendor/angular/angular.js',
+                    'vendor/ngstorage/ngStorage.js',
                     'vendor/angular-resource/angular-resource.js',
                     'vendor/angular-ui-utils/modules/unique/unique.js',
                     'vendor/angular-ui-utils/modules/showhide/showhide.js',
-                    'vendor/angular-ui-router/build/angular-ui-router.js'],
+                    'vendor/angular-ui-utils/modules/validate/validate.js',
+                    'vendor/angular-ui-router/release/angular-ui-router.js'],
                 dest: 'build/angular.js'
             },
             angularmin: {
                 src: [
                     'vendor/angular/angular.min.js',
+                    'vendor/ngstorage/ngStorage.min.js',
                     'vendor/angular-resource/angular-resource.min.js',
                     'vendor/angular-ui-utils/modules/unique/unique.js',  /* TODO: Minify this file! */
                     'vendor/angular-ui-utils/modules/showhide/showhide.js',  /* TODO: Minify this file! */
-                    'vendor/angular-ui-router/build/angular-ui-router.min.js'],
+                    'vendor/angular-ui-utils/modules/validate/validate.js',  /* TODO: Minify this file! */
+                    'vendor/angular-ui-router/release/angular-ui-router.min.js'],
                 dest: 'build/angular.min.js'
             }
         },
@@ -227,6 +231,12 @@ module.exports = function(grunt) {
         },
 
         copy: {
+            'theme-assets': {
+                expand: true,
+                cwd:    'theme',
+                src:    'assets/*.png',
+                dest:   'build'
+            },
             'component-assets': {
                 expand: true,
                 cwd:    'lib',
@@ -506,11 +516,11 @@ module.exports = function(grunt) {
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
+                tasks: ['newer:less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
             },
             less: {
                 files: ['lib/**/*.less'],
-                tasks: ['less:components', 'component:build', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
+                tasks: ['newer:less:components', 'component:build', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
@@ -542,6 +552,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:dev-assets',
         'copy:dev']);
@@ -571,6 +582,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:prod-assets',
         'copy:prod',
@@ -590,6 +602,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:prod-assets',
         'copy:prod',

@@ -97,7 +97,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* User ID's are assigned server side, if it is present that means
                 * the user is present on the server, so update them (PUT).
                 * If not present then this a new user so create them (POST). */
-                if (user.id) user.$update();
+                if (user.id) return user.$update();
 
                 else {
 
@@ -105,7 +105,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     newUser.password = 'password';
 
-                    newUser.$create();
+                    return newUser.$create();
                 }
             },
 

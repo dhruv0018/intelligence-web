@@ -1,4 +1,19 @@
-<p><a href="#">change password</a></p>
+<form role="form">
 
-<p><a href="#">change email address</a></p>
+    <div class="form-group">
+
+        <label for="email">Email</label>
+        <input class="form-control" type="email" data-ng-model="currentUser.email" disabled>
+
+    </div>
+
+    <div class="form-group">
+
+        <label for="password">Password</label>
+        <input class="form-control" type="password" value="****" disabled>
+        <button class="btn-link" data-ng-click="callChangePasswordModal()"><i class="icon-pencil"></i> Edit</button>
+
+    </div>
+
+</form>
 

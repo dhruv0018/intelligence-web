@@ -12,6 +12,8 @@
 
     .center-block;
     text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 
     &::after {
 
@@ -19,6 +21,34 @@
     }
 }
 
+.form-field-login {
+
+    .form-control;
+    .input-lg;
+    box-sizing: content-box;
+    border-width: 3px;
+    padding: 15px 20px;
+    height: 36px;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+.form-field-login.ng-dirty.ng-invalid-notfound:focus,
+.form-field-login.ng-dirty.ng-invalid-password:focus {
+
+    border-color: red;
+}
+
+.errors {
+
+    .hide;
+}
+
+.error {
+
+    color: @brand-primary;
+}
 
 /**
  * Responsive sizes.
@@ -33,11 +63,65 @@ and (max-width: 479px) {
 
         width: 100%;
     }
+
+    .form-field-login {
+
+        width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
+    }
 }
 
-.logo-login {
+/* Screens over 480px */
+@media only screen
+and (min-width: 480px) {
 
-    margin-top: 20px;
-    margin-bottom: 20px;
+    .form-field-login {
+
+        width: 404px;
+    }
+}
+
+/* Screens under 800px */
+@media only screen
+and (max-width: 799px) {
+
+    .form-field-login {
+
+        &.ng-dirty {
+
+            &.ng-invalid::placeholder {
+
+                color: red;
+            }
+        }
+    }
+}
+
+/* Screens over 800px */
+@media only screen
+and (min-width: 800px) {
+
+    .errors {
+
+        position: absolute;
+        top: 0;
+        left: 450px;
+        width: 200px;
+        height: 72px;
+        line-height: 72px;
+        margin-left: 15px;
+    }
+
+    .form-field-login {
+
+        &.ng-dirty {
+
+            &.ng-invalid:not(:focus) + .errors,
+            &.ng-invalid-notfound:focus + .errors,
+            &.ng-invalid-password:focus + .errors {
+
+                .show;
+            }
+        }
+    }
 }
 

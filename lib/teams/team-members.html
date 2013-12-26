@@ -1,4 +1,4 @@
-<div data-ng-if="!team.has(HEAD_COACH, true)">
+<div data-ng-if="!$storage.team.has(HEAD_COACH, true)">
 
     <a href data-ng-hide="addNewHeadCoach" data-ng-click="$parent.addNewHeadCoach = true">Add Head Coach</a>
 
@@ -35,7 +35,7 @@
 
     <tbody>
 
-        <tr class="member" data-ng-repeat="role in team.roles | filter:onlyCurrentRoles | orderBy:team.roles.type.name">
+        <tr class="member" data-ng-repeat="role in $storage.team.roles | filter:onlyCurrentRoles | orderBy:$storage.team.roles.type.name">
 
             <td>{{role.type.name}}</td>
             <td><a data-ui-sref="user({ id: role.userId })">{{members[role.userId].firstName}} {{members[role.userId].lastName}}</a></td>
@@ -53,7 +53,7 @@
 
     <tbody>
 
-        <tr class="member" data-ng-repeat="role in team.roles | filter:onlyPastRoles | orderBy:team.roles.type.name">
+        <tr class="member" data-ng-repeat="role in $storage.team.roles | filter:onlyPastRoles | orderBy:$storage.team.roles.type.name">
 
             <td>{{role.type.name}}</td>
             <td><a data-ui-sref="user({ id: role.userId })">{{members[role.userId].firstName}} {{members[role.userId].lastName}}</a></td>

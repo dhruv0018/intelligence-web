@@ -11,7 +11,7 @@ IntelligenceWebClient.directive('buttonAddNew', [
 
             restrict: TO += ELEMENTS,
             transclude: true,
-            template: '<button class="btn-add-new" data-ng-transclude><i class="btn btn-primary pull-right icon-plus"></i></button>'
+            template: '<button class="btn-add-new" data-ng-click="add()" data-ng-transclude><i class="btn btn-primary pull-right icon-plus"></i></button>'
         };
 
         return directive;
