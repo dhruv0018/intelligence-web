@@ -231,6 +231,12 @@ module.exports = function(grunt) {
         },
 
         copy: {
+            'theme-assets': {
+                expand: true,
+                cwd:    'theme',
+                src:    'assets/*.png',
+                dest:   'build'
+            },
             'component-assets': {
                 expand: true,
                 cwd:    'lib',
@@ -546,6 +552,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:dev-assets',
         'copy:dev']);
@@ -575,6 +582,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:prod-assets',
         'copy:prod',
@@ -594,6 +602,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:prod-assets',
         'copy:prod',
