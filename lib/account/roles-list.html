@@ -10,14 +10,12 @@
 
 <div class="row">
     <div class="col-sm-9">
-        <ul class="list-group">
-            <li class="role list-group-item" data-ng-repeat="roleGroup in roleGroups">
+        <ul class="list-group role-groups">
+            <li class="role-group list-group-item" data-ng-repeat="roleGroup in roleGroups">
                 <h3>{{ roleGroup.roleName }}</h3>
-                <ul>
-                    <li class="role list-group-item" data-ng-repeat="role in roleGroup.userRoles">
-                        <x-krossover-role-list-item role="role"></x-krossover-role-list-item>
-                    </li>
-                </ul>
+                <div class="role" data-ng-repeat="role in roleGroup.userRoles">
+                    <x-krossover-role-list-item role="role"></x-krossover-role-list-item>
+                </div>
             </li>
         </ul>
     </div>
