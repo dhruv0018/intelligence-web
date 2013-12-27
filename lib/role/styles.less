@@ -12,17 +12,37 @@
     .capitalize;
 }
 
+.account-roles {
+    background-color: #fff;
+}
+
 .role-team {
     font-size: 20px;
     letter-spacing: 0;
 }
 
-.role-actions button {
-    margin-left: 20px;
+.role-groups {
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: 0;
+    border: 1px solid @gray-lighter;
 }
 
 .role-groups .role-group {
-    border-bottom: 1px solid #777;
+    border-bottom: 1px solid @gray-lighter;
+    padding-bottom: 15px;
+}
+.role-groups .role-group:last-child {
+    border: none;
+}
+.role-group .role {
+    border-bottom: 1px solid @gray-lighter;
+}
+.role-group .role:last-child {
+    border-bottom: none;
+}
+.role-group h3 {
+    color:  @brand-blue;
 }
 
 .role-name {

@@ -1,29 +1,19 @@
 <div class="role-list-item {{ currentClass }}">
 
-    <div class="row description">
-        <div class="col-sm-8 location">
-            <div ng-if="role.teamId">
-                <div class="role-team">
-                    <span class="sport">sport</span>,
-                    <span class="school">{{ role.team.name }}</span>
-                </div>
-                <div class="role-tenure">
-                    {{ role.tenureRange }}
-                </div>
+    <div class="description">
+        <div ng-if="role.teamId">
+            <div class="role-team">
+                <span class="sport">sport</span>,
+                <span class="school">{{ role.team.name }}</span>
             </div>
-            <div class="role-teamless" ng-if="!role.teamId">
-                not a team
+            <div class="role-tenure">
+                {{ role.tenureRange }}
             </div>
         </div>
-        <div class="col-sm-4 role-actions" ng-if="role.isCurrent">
-            <button class="btn btn-xs pull-right">
-                Go to as
-                <i class="glyphicon glyphicon-user"></i>
-            </button>
-            <button class="btn btn-xs pull-right">
-                <i class="glyphicon glyphicon-remove"></i>
-                Remove
-            </button>
+        <div ng-if="!role.teamId">
+            <div class="role-teamless">
+                not a team
+            </div>
         </div>
     </div>
 
