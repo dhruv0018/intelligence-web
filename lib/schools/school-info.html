@@ -20,23 +20,23 @@
 
                 <input class="form-control" name="division" placeholder="Division" data-ng-model="$storage.school.division" type="text">
 
-                <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="school.address.street1" type="text">
+                <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="$storage.school.address.street1" type="text">
 
-                <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="school.address.street2" type="text">
+                <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="$storage.school.address.street2" type="text">
 
-                <input class="form-control" name="city" placeholder="City" data-ng-model="school.address.city" type="text" required>
+                <input class="form-control" name="city" placeholder="City" data-ng-model="$storage.school.address.city" type="text" required>
 
-                <input class="form-control" name="country" placeholder="Country" data-ng-model="school.address.countryCode" type="text" required>
+                <input class="form-control" name="country" placeholder="Country" data-ng-model="$storage.school.address.countryCode" type="text" required>
 
-                <input class="form-control" name="state" placeholder="State" data-ng-model="school.address.regionCode" type="text" required>
+                <input class="form-control" name="state" placeholder="State" data-ng-model="$storage.school.address.regionCode" type="text" required>
 
-                <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="school.address.postalCode" type="text">
+                <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="$storage.school.address.postalCode" type="text">
 
             </div>
 
             <div class="form-group">
 
-                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(school)">Save</button>
+                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save($storage.school)">Save</button>
                 <a class="pull-right" href data-ui-sref="schools">cancel</a>
 
             </div>
