@@ -1,5 +1,13 @@
 <form class="form-reset" name="resetForm" role="form" data-ng-submit="submitResetPassword()" novalidate>
 
+    <div class="form-group">
+
+        <h2>Forgot your password?</h2>
+
+        <h3>Please enter your new password</h3>
+
+    </div>
+
     <div class="form-group" data-ng-class="{ 'has-error': resetForm.password.$invalid }">
 
         <input class="form-field-login" name="password" type="password" data-ng-minlength="4" placeholder="New Password" data-ng-model="reset.password" data-ng-trim="false" oncopy="return false;" onpaste="return false;" required>
