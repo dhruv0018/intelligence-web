@@ -232,6 +232,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 if (!role) return false;
                 if (!match) throw new Error('No role to match specified');
+                if (!role.type || !match.type) return false;
 
                 var roleIds = role.type.id;
                 var matchIds = match.type.id;
