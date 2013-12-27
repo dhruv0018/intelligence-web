@@ -2,12 +2,16 @@
 
 .error {
 
-    .hide;
     color: red;
-    margin-left: 15px;
 }
 
 input {
+
+    & + .error {
+
+        .hide;
+        margin-left: 15px;
+    }
 
     &.ng-dirty.ng-invalid:not(:focus) {
 
