@@ -69,8 +69,8 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService',
-    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz) {
+    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'AlertsService',
+    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, alerts) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -98,6 +98,12 @@ IntelligenceWebClient.run([
 
                 $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
             }
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+
+            /* Clear any alerts. */
+            alerts.clear();
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {
