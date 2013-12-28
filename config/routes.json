@@ -219,6 +219,18 @@
 
         "Head Coach": true,
         "Assistant Coach": true
+    },
+
+    "opposing-team": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "instructions": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }
 
