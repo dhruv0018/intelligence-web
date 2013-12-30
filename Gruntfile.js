@@ -496,6 +496,7 @@ module.exports = function(grunt) {
 
         watch: {
             options: {
+                spawn: false,
                 livereload: true
             },
             json: {
