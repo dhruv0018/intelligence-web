@@ -28,6 +28,7 @@ require('./services/sports');
 require('./directives/match');
 require('./directives/form');
 require('./directives/button');
+require('./directives/input');
 require('./directives/submit');
 
 require('./directives/verify-password.js');

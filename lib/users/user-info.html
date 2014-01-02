@@ -44,10 +44,10 @@
 
     <button class="btn btn-primary" type="submit" data-ng-click="save($storage.user)">Save</button>
 
-    <button class="btn toggle-lock-user" type="button" data-ng-model="$storage.user.isActive" data-ng-disabled="$storage.user.has(ADMIN) && !currentUser.is(SUPER_ADMIN)" data-btn-checkbox data-btn-checkbox-true="true" data-btn-checkbox-false="false">
-        <i class="icon-lock" data-ng-show="$storage.user.isActive"></i>
-        <i class="icon-unlock" data-ng-show="!$storage.user.isActive"></i>
-        {{ $storage.user.isActive ? "Lock" : "Unlock" }}
+    <button class="btn toggle-lock-user" type="button" data-ng-model="$storage.user.isLocked" data-ng-disabled="$storage.user.has(ADMIN) && !currentUser.is(SUPER_ADMIN)" data-btn-checkbox data-btn-checkbox-true="true" data-btn-checkbox-false="false">
+        <i class="icon-lock" data-ng-show="!$storage.user.isLocked"></i>
+        <i class="icon-unlock" data-ng-show="$storage.user.isLocked"></i>
+        {{ $storage.user.isLocked ? "Unlock" : "Lock" }}
     </button>
 
     <button class="btn btn-danger" data-ng-click="auth.requestPasswordReset($storage.user.email)">Password Reset</button>

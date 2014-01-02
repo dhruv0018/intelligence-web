@@ -2,6 +2,8 @@
 
 .form-reset {
 
+    text-align: center;
+
     .form-horizontal;
 
     .form-group {
@@ -11,16 +13,36 @@
         position: relative;
     }
 
+    .form-group:first-child {
+
+        margin-bottom: 50px;
+    }
+
     .form-group:last-child {
 
         margin-top: 30px;
     }
-}
 
-.form-field-login.ng-dirty.ng-invalid-notfound:focus,
-.form-field-login.ng-dirty.ng-invalid-password:focus {
+    h2,
+    h3 {
 
-    border-color: red;
+        color: black;
+        font-weight: 400;
+    }
+
+    h2 {
+
+        letter-spacing: -0.01em;
+    }
+
+    h3 {
+
+        color: @brand-primary;
+        font-size: 16px;
+        text-transform: uppercase;
+        margin-top: 0;
+        letter-spacing: 0.1em;
+    }
 }
 
 .button-reset {
@@ -38,16 +60,6 @@
         .btn-primary;
     }
 
-}
-
-.errors {
-
-    .hide;
-}
-
-.error {
-
-    color: @brand-primary;
 }
 
 
@@ -92,51 +104,6 @@ and (min-width: 480px) {
 
         .pull-right;
         width: 150px;
-    }
-}
-
-/* Screens under 800px */
-@media only screen
-and (max-width: 799px) {
-
-    .form-field-login {
-
-        &.ng-dirty {
-
-            &.ng-invalid::placeholder {
-
-                color: red;
-            }
-        }
-    }
-}
-
-/* Screens over 800px */
-@media only screen
-and (min-width: 800px) {
-
-    .errors {
-
-        position: absolute;
-        top: 0;
-        left: 450px;
-        width: 200px;
-        height: 72px;
-        line-height: 72px;
-        margin-left: 15px;
-    }
-
-    .form-field-login {
-
-        &.ng-dirty {
-
-            &.ng-invalid:not(:focus) + .errors,
-            &.ng-invalid-notfound:focus + .errors,
-            &.ng-invalid-password:focus + .errors {
-
-                .show;
-            }
-        }
     }
 }
 
