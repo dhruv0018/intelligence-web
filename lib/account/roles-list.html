@@ -1,10 +1,9 @@
-
 <div class="row">
     <div class="col-sm-9 account-roles">
         <ul class="role-groups list-unstyled">
             <li class="role-group" data-ng-repeat="roleGroup in roleGroups">
                 <div class="col-sm-12">
-                    <h3>{{ roleGroup.roleName }}</h3>
+                    <h3 class="{{ roleGroup.teamRoleIndicatorClass }}">{{ roleGroup.roleName }}</h3>
                     <div class="role" data-ng-repeat="role in roleGroup.userRoles">
                         <x-krossover-role-list-item role="role"></x-krossover-role-list-item>
                     </div>

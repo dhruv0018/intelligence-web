@@ -28,21 +28,34 @@
     border: 1px solid @gray-lighter;
 }
 
-.role-groups .role-group {
-    border-bottom: 1px solid @gray-lighter;
-    padding-bottom: 15px;
-}
-.role-groups .role-group:last-child {
-    border: none;
-}
-.role-group .role {
-    border-bottom: 1px solid @gray-lighter;
-}
-.role-group .role:last-child {
-    border-bottom: none;
-}
-.role-group h3 {
-    color:  @brand-blue;
+.role-groups { 
+    .role-group {
+        border-bottom: 1px solid @gray-lighter;
+        padding: 0px;
+    }
+    .role-group:last-child {
+        border: none;
+    }
+    .role-group:nth-child(even) {
+        background-color: #fbfbfb;
+    }
+    .role-group {
+        .role-list-item {
+            border-bottom: 1px solid @gray-lighter;
+            padding-bottom: 20px;
+        }
+        .role-list-item:last-child {
+            border: none;
+        }
+        h3 {
+            color:  @brand-blue;
+            margin: 20px 0 16px;
+            &.teamlessRole {
+                margin-bottom: 0;
+            }
+        }
+
+    }
 }
 
 .role-name {
