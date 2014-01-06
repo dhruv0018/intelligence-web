@@ -1,0 +1,16 @@
+<div class="role-list-item {{ currentClass }}">
+
+    <div class="description">
+        <div ng-if="role.teamId">
+            <div class="role-team">
+                <span class="sport">sport</span>,
+                <span class="school">{{ role.team.name }}</span>
+            </div>
+            <div class="role-tenure">
+                {{ role.tenureRange }}
+            </div>
+        </div>
+    </div>
+
+</div>
+

@@ -1,7 +1,8 @@
 {
     "name": "role",
     "templates": [
-        "template.html"
+        "template.html",
+        "roleListItem.html"
     ],
     "styles": [
         "styles.css"
