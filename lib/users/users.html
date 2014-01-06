@@ -93,8 +93,9 @@
 
                         <td>
 
-                            <div class="active" data-ng-if="!user.hasNoRoles()">Active</div>
-                            <div class="inactive" data-ng-if="user.hasNoRoles()">Inactive</div>
+                            <div class="active" data-ng-if="!user.hasNoRoles() && !user.isLocked">Active</div>
+                            <div class="inactive" data-ng-if="user.hasNoRoles() && !user.isLocked">Inactive</div>
+                            <div class="status-locked" data-ng-if="user.isLocked">Locked</div>
 
                         </td>
 
