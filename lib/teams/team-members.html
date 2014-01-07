@@ -38,7 +38,7 @@
         <tr class="member" data-ng-repeat="role in $storage.team.roles | filter:onlyCurrentRoles | orderBy:$storage.team.roles.type.name">
 
             <td>{{role.type.name}}</td>
-            <td><a data-ui-sref="user({ id: role.userId })">{{members[role.userId].firstName}} {{members[role.userId].lastName}}</a></td>
+            <td><a data-ui-sref="user({ id: role.userId })">{{$storage.team.members[role.userId].firstName}} {{$storage.team.members[role.userId].lastName}}</a></td>
             <td><a href data-ng-click="team.removeRole(role)">remove</a></td>
 
         </tr>
@@ -56,7 +56,7 @@
         <tr class="member" data-ng-repeat="role in $storage.team.roles | filter:onlyPastRoles | orderBy:$storage.team.roles.type.name">
 
             <td>{{role.type.name}}</td>
-            <td><a data-ui-sref="user({ id: role.userId })">{{members[role.userId].firstName}} {{members[role.userId].lastName}}</a></td>
+            <td><a data-ui-sref="user({ id: role.userId })">{{$storage.team.members[role.userId].firstName}} {{$storage.team.members[role.userId].lastName}}</a></td>
 
         </tr>
 
