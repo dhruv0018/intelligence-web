@@ -75,18 +75,18 @@ IntelligenceWebClient.run([
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
-        $rootScope.$on('$stateChangeStart', function(event, to, toParams, from, fromParams) {
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
             /* If not accessing a public state and not logged in, then
              * redirect the user to login. */
-            if (!authz.isPublic(to) && !auth.isLoggedIn) {
+            if (!authz.isPublic(toState) && !auth.isLoggedIn) {
 
                 event.preventDefault();
                 $state.go('login');
             }
 
             /* Ensure the current user has access to the route. */
-            else if (!authz.isAuthorized(to)) {
+            else if (!authz.isAuthorized(toState)) {
 
                 event.preventDefault();
                 $state.go('401');
