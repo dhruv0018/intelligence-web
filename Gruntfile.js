@@ -178,6 +178,7 @@ module.exports = function(grunt) {
                     'vendor/angular/angular.js',
                     'vendor/ngstorage/ngStorage.js',
                     'vendor/angular-resource/angular-resource.js',
+                    'vendor/angular-sanitize/angular-sanitize.js',
                     'vendor/angular-ui-utils/ui-utils.js',
                     'vendor/angular-ui-router/release/angular-ui-router.js'],
                 dest: 'build/angular.js'
@@ -187,6 +188,7 @@ module.exports = function(grunt) {
                     'vendor/angular/angular.min.js',
                     'vendor/ngstorage/ngStorage.min.js',
                     'vendor/angular-resource/angular-resource.min.js',
+                    'vendor/angular-sanitize/angular-sanitize.min.js',
                     'vendor/angular-ui-utils/ui-utils.min.js',
                     'vendor/angular-ui-router/release/angular-ui-router.min.js'],
                 dest: 'build/angular.min.js'
