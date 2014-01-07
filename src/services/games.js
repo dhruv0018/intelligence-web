@@ -50,11 +50,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.resource.query(filter, success, error);
             },
 
-            filter: function(filter, success, error) {
-
-                return this.getList(filter, success, error);
-            },
-
             save: function(game) {
 
                 var self = this;
