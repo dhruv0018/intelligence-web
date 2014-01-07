@@ -3,8 +3,10 @@
     <div class="description">
         <div ng-if="role.teamId">
             <div class="role-team">
-                <span class="sport">sport</span>,
-                <span class="school">{{ role.team.name }}</span>
+                <span class="sport">{{ role.sport }}</span>,
+                <span class="school">
+                    <a data-ui-sref="team-info({ id: role.team.id })">{{ role.team.name }}</a>
+                </span>
             </div>
             <div class="role-tenure">
                 {{ role.tenureRange }}
@@ -13,4 +15,3 @@
     </div>
 
 </div>
-
