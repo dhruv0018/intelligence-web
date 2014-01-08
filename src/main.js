@@ -25,6 +25,7 @@ require('./services/schools');
 require('./services/leagues');
 require('./services/sports');
 
+require('./directives/alert');
 require('./directives/match');
 require('./directives/form');
 require('./directives/button');
