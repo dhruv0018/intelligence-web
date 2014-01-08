@@ -18,3 +18,18 @@ IntelligenceWebClient.directive('buttonAddNew', [
     }
 ]);
 
+IntelligenceWebClient.directive('buttonContinue', [
+    '$parse',
+    function($parse) {
+
+        var directive = {
+
+            restrict: TO += ELEMENTS,
+            replace: true,
+            transclude: true,
+            template: '<button class="btn-submit-continue" data-ng-click="save()"><span data-ng-transclude></span> <i class="icon-chevron-right pull-right"></i></button>'
+        };
+
+        return directive;
+    }
+]);
