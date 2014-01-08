@@ -12,6 +12,7 @@ require('./models/sports');
 require('./models/teams');
 require('./models/schools');
 require('./models/leagues');
+require('./models/games');
 
 require('./services/authentication');
 require('./services/authorization');
@@ -24,6 +25,7 @@ require('./services/teams');
 require('./services/schools');
 require('./services/leagues');
 require('./services/sports');
+require('./services/games');
 
 require('./directives/alert');
 require('./directives/match');
