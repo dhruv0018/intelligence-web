@@ -1,0 +1,115 @@
+@import (reference) "main.less";
+
+.game-info {
+
+    .box {
+
+        border: 1px solid transparent;
+
+        .box-header {
+
+            background-color: transparent;
+            border: 1px solid transparent;
+        }
+
+        .box-body {
+
+            background-color: transparent;
+
+            .table th {
+
+                text-align: left;
+            }
+
+            .table th.score,
+            .table td.score {
+
+                text-align: center;
+            }
+
+            .table td input[name="opponent"] {
+
+                text-align: left;
+            }
+
+            .table td {
+
+                vertical-align: middle;
+                background-color: white;
+            }
+
+            .table td {
+
+                padding: 15px;
+            }
+
+            .table td .row {
+
+                height: 100%;
+            }
+
+            .table td input {
+
+                height: 40px;
+            }
+
+            .table td h5 {
+
+                margin-left: 10px;
+            }
+
+            .table td h5,
+            .table td select,
+            .table td input {
+
+                color: rgb(87, 87, 87);
+                font-size: 20px;
+                font-weight: 500;
+            }
+
+            .table td h5,
+            .table td select {
+
+                text-align: left;
+            }
+
+            .table td select {
+
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+            .table td h6 {
+
+                font-size: 14px;
+                color: rgb(106, 106, 106);
+                margin-top: 0;
+            }
+
+            .table td.score h6 {
+
+                margin-bottom: 0;
+            }
+
+            .table td.score {
+
+                background-color: rgb(245, 245, 245);
+            }
+
+            .table td.score input {
+
+                border: 1px solid @gray-lighter;
+                border-radius: @border-radius-base;
+            }
+        }
+    }
+
+    h4 {
+
+        color: @brand-blue;
+        font-size: 18px;
+        letter-spacing: 0.01em;
+        margin-bottom: 5px;
+    }
+}
+
