@@ -19,16 +19,21 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return team;
             },
 
-            get: function(teamId, callback) {
+            get: function(teamId, success, error) {
 
                 var self = this;
 
-                self.resource.get({ id: teamId }, function(team) {
+                success = success || function(team) {
 
-                    team = self.extendTeam(team);
+                    return self.extendTeam(team);
+                };
 
-                    return callback(team);
-                });
+                error = error || function() {
+
+                    throw new Error('Could not get team');
+                };
+
+                return self.resource.get({ id: teamId }, success, error);
             },
 
             getList: function(filter, success, error) {
