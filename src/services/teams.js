@@ -55,22 +55,35 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return this.getList(filter, success, error);
             },
 
-            save: function(team) {
+            save: function(team, success, error) {
 
                 var self = this;
 
                 team = team || self;
 
-                delete team.list;
-
                 if (team.schoolId) delete team.address;
 
-                if (team.id) return team.$update();
+                parameters = {};
 
-                else {
+                success = success || function(team) {
 
-                    var newTeam = new TeamsResource(team);
-                    return newTeam.$create();
+                    return self.extendTeam(team);
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not save team');
+                };
+
+                if (team.id) {
+
+                    var updatedTeam = self.resource.update(parameters, team, success, error);
+                    return updatedTeam.$promise;
+
+                } else {
+
+                    var newTeam = self.resource.create(parameters, team, success, error);
+                    return newTeam.$promise;
                 }
             },
 
