@@ -1,3 +1,86 @@
 @import (reference) "main.less";
 
+.btn-submit-continue {
 
+    .btn;
+    .btn-lg;
+    .btn-primary;
+    .pull-right;
+    width: 200px;
+
+    i {
+
+        font-size: 16px;
+        line-height: 26px;
+    }
+}
+
+.box .box-header .btn-submit-continue {
+
+    .btn-sm;
+    width: 120px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    i {
+
+        font-size: 10px;
+        line-height: 21px;
+    }
+}
+
+.box + .btn-submit-continue {
+
+    margin-top: 30px;
+}
+
+.btn-group-vertical {
+
+    width: 100%;
+
+    .btn-radio {
+
+        .btn;
+        width: 100%;
+
+        &::before {
+
+            .icon(@circle);
+            color: @gray-lighter;
+            margin-right: 10px;
+
+        }
+
+        &.active {
+
+            color: rgb(54, 54, 54);
+            box-shadow: none;
+
+            &::before {
+
+                color: @brand-primary;
+            }
+        }
+
+        &:first-child {
+
+            border-top-left-radius: @border-radius-base;
+            border-top-right-radius: @border-radius-base;
+        }
+
+        text-align: left;
+        color: rgb(115, 115, 115);
+        background-color: white;
+        border-radius: 0;
+        border-top: 1px solid @gray-lighter;
+        border-left: 1px solid @gray-lighter;
+        border-right: 1px solid @gray-lighter;
+
+        &:last-child {
+
+            border-bottom: 1px solid @gray-lighter;
+            border-bottom-left-radius: @border-radius-base;
+            border-bottom-right-radius: @border-radius-base;
+        }
+    }
+}

@@ -52,4 +52,6 @@ component('teams');
 component('schools');
 component('leagues');
 
+component('coach');
+
 angular.bootstrap(document, [pkg.name]);
