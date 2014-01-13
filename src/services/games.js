@@ -50,18 +50,33 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.resource.query(filter, success, error);
             },
 
-            save: function(game) {
+            save: function(game, success, error) {
 
                 var self = this;
 
                 game = game || self;
 
-                if (game.id) return game.$update();
+                parameters = {};
 
-                else {
+                success = success || function(game) {
 
-                    var newGame = new GamesResource(game);
-                    return newGame.$create();
+                    return self.extendGame(game);
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not save game');
+                };
+
+                if (game.id) {
+
+                    var updatedGame = self.resource.update(parameters, game, success, error);
+                    return updatedGame.$promise;
+
+                } else {
+
+                    var newGame = self.resource.create(parameters, game, success, error);
+                    return newGame.$promise;
                 }
             }
         };
