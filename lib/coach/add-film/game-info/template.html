@@ -44,9 +44,9 @@
 
                                     <div class="btn-group-vertical">
 
-                                        <button type="button" class="btn-radio" data-ng-model="$storage.game.gameType" data-btn-radio="'conference'">Conference game</button>
-                                        <button type="button" class="btn-radio" data-ng-model="$storage.game.gameType" data-btn-radio="'nonconference'">Non-conference game</button>
-                                        <button type="button" class="btn-radio" data-ng-model="$storage.game.gameType" data-btn-radio="'Playoff'">Playoff game</button>
+                                        <button type="button" class="btn-radio" data-ng-model="$storage.game.gameType" data-btn-radio="'conference'" required>Conference game</button>
+                                        <button type="button" class="btn-radio" data-ng-model="$storage.game.gameType" data-btn-radio="'nonconference'" required>Non-conference game</button>
+                                        <button type="button" class="btn-radio" data-ng-model="$storage.game.gameType" data-btn-radio="'Playoff'" required>Playoff game</button>
 
                                     </div>
 
@@ -58,8 +58,8 @@
 
                                     <div class="btn-group-vertical">
 
-                                        <button type="button" class="btn-radio" data-ng-model="$storage.game.isHomeGame" data-btn-radio="'true'">Home</button>
-                                        <button type="button" class="btn-radio" data-ng-model="$storage.game.isHomeGame" data-btn-radio="'false'">Away</button>
+                                        <button type="button" class="btn-radio" data-ng-model="$storage.game.isHomeGame" data-btn-radio="'true'" required>Home</button>
+                                        <button type="button" class="btn-radio" data-ng-model="$storage.game.isHomeGame" data-btn-radio="'false'" required>Away</button>
 
                                     </div>
 
