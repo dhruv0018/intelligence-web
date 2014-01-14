@@ -1,9 +1,10 @@
 var pkg = require('../package.json');
 
 var IntelligenceWebClient = angular.module(pkg.name, [
+    'ngSanitize',
     'ngStorage',
     'ngResource',
-    'ngSanitize',
+    'ui.utils',
     'ui.router',
     'ui.bootstrap',
     'config',

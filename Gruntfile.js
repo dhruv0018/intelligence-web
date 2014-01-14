@@ -178,9 +178,8 @@ module.exports = function(grunt) {
                     'vendor/angular/angular.js',
                     'vendor/ngstorage/ngStorage.js',
                     'vendor/angular-resource/angular-resource.js',
-                    'vendor/angular-ui-utils/modules/unique/unique.js',
-                    'vendor/angular-ui-utils/modules/showhide/showhide.js',
-                    'vendor/angular-ui-utils/modules/validate/validate.js',
+                    'vendor/angular-sanitize/angular-sanitize.js',
+                    'vendor/angular-ui-utils/ui-utils.js',
                     'vendor/angular-ui-router/release/angular-ui-router.js'],
                 dest: 'build/angular.js'
             },
@@ -189,9 +188,8 @@ module.exports = function(grunt) {
                     'vendor/angular/angular.min.js',
                     'vendor/ngstorage/ngStorage.min.js',
                     'vendor/angular-resource/angular-resource.min.js',
-                    'vendor/angular-ui-utils/modules/unique/unique.js',  /* TODO: Minify this file! */
-                    'vendor/angular-ui-utils/modules/showhide/showhide.js',  /* TODO: Minify this file! */
-                    'vendor/angular-ui-utils/modules/validate/validate.js',  /* TODO: Minify this file! */
+                    'vendor/angular-sanitize/angular-sanitize.min.js',
+                    'vendor/angular-ui-utils/ui-utils.min.js',
                     'vendor/angular-ui-router/release/angular-ui-router.min.js'],
                 dest: 'build/angular.min.js'
             }
@@ -496,35 +494,36 @@ module.exports = function(grunt) {
 
         watch: {
             options: {
+                spawn: false,
                 livereload: true
             },
             json: {
                 files: ['*.json'],
-                tasks: ['install', 'dev']
+                tasks: ['install', 'dev', 'notify']
             },
             config: {
                 files: ['config/*.json', 'lib/**/*.json'],
-                tasks: ['component:build', 'browserify:dev', 'copy:dev']
+                tasks: ['component:build', 'browserify:dev', 'copy:dev', 'notify']
             },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
-                tasks: ['htmlhint', 'component:build', 'browserify:dev', 'copy:dev']
+                tasks: ['htmlhint', 'component:build', 'browserify:dev', 'copy:dev', 'notify']
             },
             css: {
                 files: ['src/**/*.css'],
-                tasks: ['csslint', 'recess', 'component:build', 'browserify:dev', 'copy:dev']
+                tasks: ['csslint', 'component:build', 'browserify:dev', 'copy:dev', 'notify']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
+                tasks: ['newer:less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
             },
             less: {
                 files: ['lib/**/*.less'],
-                tasks: ['newer:less:components', 'component:build', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
+                tasks: ['newer:less:components', 'component:build', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
-                tasks: ['jshint', 'component:build', 'browserify:dev', 'copy:dev']
+                tasks: ['jshint', 'component:build', 'browserify:dev', 'copy:dev', 'notify']
             }
         }
 
