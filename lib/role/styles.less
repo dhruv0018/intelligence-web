@@ -24,19 +24,22 @@
     .role-group {
         border-bottom: 1px solid @gray-lighter;
         padding: 0px;
-        .role-list-item.current {
-            color: @gray;
-        }
-        .role-list-item {
-            border-bottom: 1px solid @gray-lighter;
-            padding-bottom: 20px;
-            color: @gray-light;
-            .role-team {
-                font-size: 20px;
-                letter-spacing: 0;
+        .role {
+            margin-top: 20px;
+            .role-list-item.current {
+                color: @gray;
+            }
+            .role-list-item {
+                border-bottom: 1px solid @gray-lighter;
+                padding-bottom: 20px;
+                color: @gray-light;
+                .role-team {
+                    font-size: 20px;
+                    letter-spacing: 0;
+                }
             }
         }
-        .role-list-item:last-child {
+        .role:last-child .role-list-item {
             border: none;
         }
         h3 {
