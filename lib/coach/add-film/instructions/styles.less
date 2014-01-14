@@ -1,0 +1,137 @@
+@import (reference) "main.less";
+
+.instructions {
+
+    .col-md-8 .row:first-child .select-boxes {
+
+        border-top: 1px solid @gray-lighter;
+    }
+
+    .col-md-8 .row:last-child .col-md-12 {
+
+        padding: 0;
+        margin-top: 25px;
+
+        p {
+
+            font-size: 18px;
+            letter-spacing: -0.01em;
+        }
+
+        p b {
+
+            color: @brand-blue;
+            font-weight: 500;
+        }
+    }
+
+    .select-boxes {
+
+        padding: 0;
+        border-left: 1px solid @gray-lighter;
+        border-right: 1px solid @gray-lighter;
+        border-bottom: 1px solid @gray-lighter;
+
+        &:hover {
+
+            background-color: rgb(246, 249, 253);
+
+            .icon-bar-chart,
+            .icon-share {
+
+                color: @brand-primary;
+                border-color: @brand-primary;
+            }
+        }
+
+        h1 {
+
+            color: @brand-blue;
+            font-size: 24px;
+            margin-top: 0;
+        }
+
+        button {
+
+            .btn-blank;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            padding-top: 50px;
+            padding-left: 25px;
+            padding-right: 25px;
+            padding-bottom: 50px;
+
+            p,
+            b {
+                color: black;
+            }
+
+            p {
+
+                margin: 0;
+            }
+
+            .icon-bar-chart,
+            .icon-share {
+
+                width: 100px;
+                height: 100px;
+                color: @gray-lighter;
+                border: 5px solid @gray-lighter;
+                border-radius: 50%;
+                font-size: 50px;
+                margin-right: 25px;
+
+                &::before {
+
+                    width: 90px;
+                    line-height: 90px;
+                    text-align: center;
+                }
+            }
+
+            .icon-share::before {
+
+                margin-top: 3px;
+                margin-left: 3px;
+            }
+
+            .icon-check-empty {
+
+                color: @gray-dark;
+                font-size: 40px;
+                position: absolute;
+                right: 75px;
+                line-height: 100px;
+            }
+
+            &.active::after {
+
+                .icon(@ok);
+                color: @brand-secondary;
+                font-size: 40px;
+                position: absolute;
+                top: 45px;
+                right: 65px;
+                line-height: 100px;
+            }
+        }
+    }
+
+}
+
+/* FIXME: JUST TEMP */
+
+.instructions .select-boxes.disabled:hover {
+
+    background-color: white;
+
+    .icon-share {
+
+        color: @gray-lighter;
+        border: 5px solid @gray-lighter;
+    }
+}
+
