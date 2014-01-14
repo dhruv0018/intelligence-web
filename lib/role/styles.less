@@ -25,13 +25,14 @@
         border-bottom: 1px solid @gray-lighter;
         padding: 0px;
         .role {
-            margin-top: 20px;
+            margin-bottom: 0;
             .role-list-item.current {
                 color: @gray;
             }
             .role-list-item {
                 border-bottom: 1px solid @gray-lighter;
                 padding-bottom: 20px;
+                margin-bottom: 20px;
                 color: @gray-light;
                 .role-team {
                     font-size: 20px;
@@ -41,10 +42,11 @@
         }
         .role:last-child .role-list-item {
             border: none;
+            margin-bottom: 0;
         }
         h3 {
             color:  @brand-blue;
-            margin: 20px 0 16px;
+            margin: 20px 0 20px;
             &.teamlessRole {
                 margin-bottom: 0;
             }
