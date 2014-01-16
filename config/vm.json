@@ -8,6 +8,9 @@
     "api": {
         "uri": "https://localhost:4436/intelligence-api/v1/"
     },
+    "kvs": {
+        "uri": "http://v2-kvs-worker-1.qa.krossover.com/"
+    },
     "passwordReset": {
         "uri": "https://localhost:4436/intelligence-api/v1/password-reset/"
     },
