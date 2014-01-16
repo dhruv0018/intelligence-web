@@ -2,36 +2,51 @@
 
 .account {
 
-    .nav-tabs {
+    .role {
 
-        li a {
+        color: @gray-dark;
+        width: 350px;
+        margin-bottom: 50px;
 
-            padding-left: 75px;
+        .role-title {
+
+            display: none;
         }
     }
 
-    .nav-stacked {
+    .btn-link:hover {
 
-        margin-top: 100px;
+        text-decoration: none;
     }
 
-    .tab-content {
+    .form-control {
 
-        padding: 50px;
-        padding-right: 400px;
-        margin-top: -250px;
-
-        .role {
-
-            color: @gray-dark;
-            width: 350px;
-            margin-bottom: 50px;
-
-            .role-title {
-
-                display: none;
-            }
-        }
+        width: 350px;
     }
+
+    label {
+
+        color: @gray-dark;
+        display: block;
+    }
+
+    label,
+    button {
+
+        .uppercase;
+    }
+
+    input {
+
+        display: inline-block;
+    }
+}
+
+.buttons {
+
+    .form-group;
+    height: 47px;
+    margin-top: 25px;
+    margin-bottom: 0;
 }
 

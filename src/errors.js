@@ -97,14 +97,15 @@ IntelligenceWebClient.config([
  * Intercepts HTTP responses.
  */
 IntelligenceWebClient.factory('HttpInterceptor', [
-    '$q', '$location',
-    function factory($q, $location) {
+    '$q', '$location', 'TokensService',
+    function factory($q, $location, tokens) {
 
         return {
 
             /* Intercept all responses. Includes any server responses that are
             * considered successful. Which are status codes up to the 400 level. */
             response: function(response) {
+            /* jshint camelcase:false */
 
                 /* Catch errors in 200 responses. */
                 if (response.data.error) {
@@ -114,6 +115,7 @@ IntelligenceWebClient.factory('HttpInterceptor', [
                         ErrorReporter.reportError(new Error('Invalid access token'));
 
                         /* TODO: Don't go to login; refresh token. */
+                        tokens.removeTokens();
                         $location.path('/login');
                     }
 

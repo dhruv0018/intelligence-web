@@ -1,20 +1,15 @@
-<span data-ng-hide="currentUser.has(ATHLETE)">
-
-    <span data-ng-show="currentUser.has(COACH) || currentUser.has(PARENT) || currentUser.has(INDEXER)">
-
-        <p><a href data-ng-click="addAthleteRole()">Associate athlete role to myself</a></p>
-
-    </span>
-
-</span>
-
-<ul class="list-group">
-
-    <li class="role list-group-item" data-ng-repeat="role in currentUser.roles">
-
-        <x-krossover-role user="currentUser" role="role"></x-krossover-role>
-
-    </li>
-
-</ul>
-
+<div class="row">
+    <div class="col-sm-9 account-roles">
+        <ul class="role-groups list-unstyled">
+            <li class="role-group" data-ng-repeat="roleGroup in roleGroups">
+                <div class="col-sm-12">
+                    <h3 class="{{ roleGroup.teamRoleIndicatorClass }}">{{ roleGroup.roleName }}</h3>
+                    <div class="role" data-ng-repeat="role in roleGroup.userRoles">
+                        <x-krossover-role-list-item role="role"></x-krossover-role-list-item>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </li>
+        </ul>
+    </div>
+</div>

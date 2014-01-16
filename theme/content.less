@@ -1,11 +1,32 @@
 @import (reference) "main.less";
 
-.content {
+.content,
+.content-full {
 
-    color: @gray-dark;
     flex: 1;
-    padding: 50px;
     overflow-y: scroll;
+}
+
+/* TEMP */
+.content {
     background-color: @content-bg;
+}
+
+.content-full {
+
+    height: 100%;
+    background-color: white;
+}
+
+.content-topbar,
+.content-sidebar {
+
+    background-color: @content-bg;
+}
+
+/* TEMP */
+.content,
+.content-padded {
+    padding: 50px;
 }
 

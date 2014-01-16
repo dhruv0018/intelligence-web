@@ -2,7 +2,7 @@
 
     <aside class="sidebar" data-ng-init="sidebar = true" data-ui-toggle="sidebar">
 
-        <x-button-add-new data-ng-click="add()">Add a new user</x-button-add-new>
+        <x-button-add-new>Add a new user</x-button-add-new>
 
         <h3>Search</h3>
 
@@ -12,7 +12,7 @@
 
                 <input class="form-control" placeholder="Email" data-ng-model="filter.email" type="search" autocomplete="on" list="user-email" autosave="user-email">
                 <datalist id="user-email">
-                    <option data-ng-repeat="user in users | unique:'name' | orderBy:'name'" value="{{user.email}}">
+                    <option data-ng-repeat="user in users | unique:'name' | orderBy:'name'" value="{{user.email}}"></option>
                 </datalist>
             </div>
 
@@ -20,7 +20,7 @@
 
                 <input class="form-control" placeholder="First Name" data-ng-model="filter.firstName" type="search" autocomplete="on" list="user-firstname" autosave="user-firstname">
                 <datalist id="user-firstname">
-                    <option data-ng-repeat="user in users | unique:'firstName' | orderBy:'firstName'" value="{{user.firstName}}">
+                    <option data-ng-repeat="user in users | unique:'firstName' | orderBy:'firstName'" value="{{user.firstName}}"></option>
                 </datalist>
 
             </div>
@@ -29,7 +29,7 @@
 
                 <input class="form-control" placeholder="Last Name" data-ng-model="filter.lastName" type="search" autocomplete="on" list="user-lastname" autosave="user-lastname">
                 <datalist id="user-lastname">
-                    <option data-ng-repeat="user in users | unique:'lastName' | orderBy:'lastName'" value="{{user.lastName}}">
+                    <option data-ng-repeat="user in users | unique:'lastName' | orderBy:'lastName'" value="{{user.lastName}}"></option>
                 </datalist>
 
             </div>
@@ -44,7 +44,7 @@
 
             <div class="form-group">
 
-                <select class="form-control" data-ng-model="filter.isActive" data-ng-options="status.value as status.label for status in statuses">
+                <select class="form-control" data-ng-model="filter.hasNoRoles" data-ng-options="status.value as status.label for status in statuses">
                     <option value="">Status</option>
                 </select>
 
@@ -93,8 +93,9 @@
 
                         <td>
 
-                            <div class="active" data-ng-if="user.isActive">Active</div>
-                            <div class="inactive" data-ng-if="!user.isActive">Inactive</div>
+                            <div class="active" data-ng-if="!user.hasNoRoles() && !user.isLocked">Active</div>
+                            <div class="inactive" data-ng-if="user.hasNoRoles() && !user.isLocked">Inactive</div>
+                            <div class="status-locked" data-ng-if="user.isLocked">Locked</div>
 
                         </td>
 

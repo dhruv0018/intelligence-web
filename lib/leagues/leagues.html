@@ -2,7 +2,7 @@
 
     <aside class="sidebar" data-ng-init="sidebar = true" data-ui-toggle="sidebar">
 
-        <x-button-add-new data-ui-sref="league-info">Add a new league</x-button-add-new>
+        <x-button-add-new>Add a new league</x-button-add-new>
 
         <h3>Search</h3>
 
@@ -12,7 +12,7 @@
 
                 <input class="form-control" name="name" placeholder="League Name" data-ng-model="filter.name" type="search" autocomplete="on" list="league-name" autosave="league-name">
                 <datalist id="league-name">
-                    <option data-ng-repeat="league in leagues | unique:'name' | orderBy:'name'" value="{{league.name}}">
+                    <option data-ng-repeat="league in leagues | unique:'name' | orderBy:'name'" value="{{league.name}}"></option>
                 </datalist>
 
             </div>

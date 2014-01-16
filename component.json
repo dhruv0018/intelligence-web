@@ -14,7 +14,8 @@
         "users",
         "teams",
         "schools",
-        "leagues"
+        "leagues",
+        "coach"
     ],
     "dependencies": {
     },

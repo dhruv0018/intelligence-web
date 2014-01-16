@@ -12,10 +12,40 @@
 
     .center-block;
     text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 
     &::after {
 
         content: url("krossover-login-logo-320.png");
+    }
+}
+
+.form-field-login {
+
+    .form-control;
+    .input-lg;
+    box-sizing: content-box;
+    border-width: 3px;
+    padding: 15px 20px;
+    height: 36px;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+
+    &.ng-dirty {
+
+        &.ng-invalid-notfound:focus
+        &.ng-invalid-password:focus {
+
+            border-color: red;
+        }
+
+        &.ng-invalid-notfound:focus + .error,
+        &.ng-invalid-password:focus + .error {
+
+            .show;
+        }
     }
 }
 
@@ -33,11 +63,20 @@ and (max-width: 479px) {
 
         width: 100%;
     }
+
+    .form-field-login {
+
+        width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
+    }
 }
 
-.logo-login {
+/* Screens over 480px */
+@media only screen
+and (min-width: 480px) {
 
-    margin-top: 20px;
-    margin-bottom: 20px;
+    .form-field-login {
+
+        width: 404px;
+    }
 }
 

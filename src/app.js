@@ -1,7 +1,10 @@
 var pkg = require('../package.json');
 
 var IntelligenceWebClient = angular.module(pkg.name, [
+    'ngSanitize',
+    'ngStorage',
     'ngResource',
+    'ui.utils',
     'ui.router',
     'ui.bootstrap',
     'config',
@@ -14,7 +17,8 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'users',
     'teams',
     'schools',
-    'leagues'
+    'leagues',
+    'coach'
 ]);
 
 exports = module.exports = IntelligenceWebClient;

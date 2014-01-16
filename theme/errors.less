@@ -1,0 +1,34 @@
+@import (reference) "main.less";
+
+.error {
+
+    color: red;
+}
+
+input {
+
+    & + .error {
+
+        .hide;
+        margin-left: 15px;
+    }
+
+    &.ng-dirty.ng-invalid:not(:focus) {
+
+        & + .error {
+
+            .show;
+        }
+
+        &::placeholder {
+
+            color: red;
+        }
+    }
+}
+
+.errors {
+
+    text-align: center;
+}
+

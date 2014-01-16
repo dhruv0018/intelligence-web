@@ -69,24 +69,24 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService',
-    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz) {
+    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'AlertsService',
+    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, alerts) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
-        $rootScope.$on('$stateChangeStart', function(event, to, toParams, from, fromParams) {
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
             /* If not accessing a public state and not logged in, then
              * redirect the user to login. */
-            if (!authz.isPublic(to) && !auth.isLoggedIn) {
+            if (!authz.isPublic(toState) && !auth.isLoggedIn) {
 
                 event.preventDefault();
                 $state.go('login');
             }
 
             /* Ensure the current user has access to the route. */
-            else if (!authz.isAuthorized(to)) {
+            else if (!authz.isAuthorized(toState)) {
 
                 event.preventDefault();
                 $state.go('401');
@@ -100,12 +100,18 @@ IntelligenceWebClient.run([
             }
         });
 
+        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+
+            /* Clear any alerts. */
+            alerts.clear();
+        });
+
         $rootScope.$on('roleChangeSuccess', function(event, role) {
 
             /* Ensure the current user still has access to the current state. */
             if (!authz.isAuthorized($state.current)) {
 
-                $state.go('401');
+                $state.go('contact-info');
             }
         });
     }

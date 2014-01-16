@@ -1,0 +1,12 @@
+{
+    "name": "coach",
+    "paths": [
+        "."
+    ],
+    "local": [
+        "add-film"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

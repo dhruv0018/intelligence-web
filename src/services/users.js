@@ -58,12 +58,12 @@ IntelligenceWebClient.factory('UsersFactory', [
                     callback(user);
                 });
             },
-            
+
             getList: function(filter, success, error) {
 
                 var self = this;
                 filter = filter || {};
-                
+
                 if(!filter.start){
                     filter.start = 0;
                 }
@@ -82,8 +82,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                     }
                     return success ? success(users) : users;
                 }, error);
-                
-                
+
+
             },
 
             save: function(user) {
@@ -97,7 +97,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* User ID's are assigned server side, if it is present that means
                 * the user is present on the server, so update them (PUT).
                 * If not present then this a new user so create them (POST). */
-                if (user.id) user.$update();
+                if (user.id) return user.$update();
 
                 else {
 
@@ -105,7 +105,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     newUser.password = 'password';
 
-                    newUser.$create();
+                    return newUser.$create();
                 }
             },
 
@@ -159,7 +159,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user = this;
                 }
 
-                user.roles && user.roles.splice(user.roles.indexOf(role), 1);
+                if (user.roles) user.roles.splice(user.roles.indexOf(role), 1);
             },
 
             /**
@@ -247,6 +247,23 @@ IntelligenceWebClient.factory('UsersFactory', [
                 });
             },
 
+            /**
+             * @class User
+             * @method
+             * @returns {Boolean} true if user has no roles; false otherwise.
+             * Checks if the user has any roles.
+             */
+            hasNoRoles: function() {
+                var self = this;
+                var roles = self.roles;
+                
+                if (!roles || roles.length < 1 ){
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            
             /**
              * @class User
              * @method

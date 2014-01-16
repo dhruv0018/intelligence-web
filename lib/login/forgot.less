@@ -1,10 +1,5 @@
 @import (reference) "main.less";
 
-.button-forgot {
-
-    .uppercase;
-}
-
 .form-forgot {
 
     text-align: center;
@@ -41,50 +36,17 @@
     }
 }
 
-.form-field-login {
-
-    .form-control;
-    .input-lg;
-    box-sizing: content-box;
-    border-width: 3px;
-    padding: 20px;
-    height: 26px;
-    font-size: 26px;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-
-}
-
-.form-field-login.ng-dirty.ng-invalid-notfound:focus,
-.form-field-login.ng-dirty.ng-invalid-password:focus {
-
-    border-color: red;
-}
-
 .button-forgot {
 
-    & {
-
-        .btn;
-        .btn-lg;
-    }
+    .btn;
+    .btn-lg;
+    height: 62px;
+    .uppercase;
 
     &:enabled {
 
         .btn-primary;
     }
-
-    height: 62px;
-}
-
-.errors {
-
-    .hide;
-}
-
-.error {
-
-    color: @brand-primary;
 }
 
 
@@ -105,11 +67,6 @@ and (max-width: 479px) {
 
     }
 
-    .form-field-login {
-
-        width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
-    }
-
     .button-forgot {
 
         width: 100%;
@@ -120,11 +77,6 @@ and (max-width: 479px) {
 @media only screen
 and (min-width: 480px) {
 
-    .form-field-login {
-
-        width: 404px;
-    }
-
     .button-forgot {
 
         .pull-right;
@@ -132,57 +84,3 @@ and (min-width: 480px) {
     }
 }
 
-/* Screens under 800px */
-@media only screen
-and (max-width: 799px) {
-
-    .form-field-login {
-
-        &.ng-dirty {
-
-            &.ng-invalid::placeholder {
-
-                color: red;
-            }
-        }
-    }
-}
-
-/* Screens over 800px */
-@media only screen
-and (min-width: 800px) {
-
-    .errors {
-
-        position: absolute;
-        top: 0;
-        left: 450px;
-        width: 200px;
-        height: 72px;
-        line-height: 72px;
-        margin-left: 15px;
-    }
-
-    .form-field-login {
-
-        &.ng-dirty {
-
-            &.ng-invalid:not(:focus) + .errors,
-            &.ng-invalid-notfound:focus + .errors {
-
-                .show;
-            }
-        }
-    }
-}
-
-
-/**
- * Browser fixes.
- */
-
-
-.button-signin {
-
-    background-color: @btn-default-bg;
-}
