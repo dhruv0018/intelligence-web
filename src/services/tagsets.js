@@ -69,6 +69,14 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                             }
                         });
                         break;
+                    case 'STANDALONE':
+                        tags =  $filter('filter')(this.tags, {isStart: true, isEnd: true});
+                        tags.forEach(function(tag) {
+                            if(!tag.children) {
+                                results.push(tag);
+                            }
+                        });
+                        break;
                 }
                 
                 
