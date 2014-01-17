@@ -26,7 +26,7 @@ IntelligenceWebClient.factory('TagsetsResource', [
 
             }, {
 
-                create: { method: 'POST' }, //
+                create: { method: 'POST' },
                 update: { method: 'PUT' }
             }
         );
