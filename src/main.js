@@ -7,7 +7,8 @@ require('bootstrap');
 
 require('./app');
 
-require('./models/kvs');
+require('./constants/kvs-whitelist');
+
 require('./models/users');
 require('./models/sports');
 require('./models/teams');
