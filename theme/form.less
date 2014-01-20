@@ -1,10 +1,46 @@
 @import (reference) "main.less";
 
-select {
+
+select,
+select.form-control {
 
     color: @gray-dark;
     padding: 0.5em;
     border: 1px solid rgb(221, 221, 221);
     border-radius: @border-radius-base;
+    background-image: url("assets/select.png");
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+input[type="color"] {
+
+    width: 32px;
+    height: 32px;
+    border: none;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-appearance: none;
+
+    &::-webkit-color-swatch-wrapper {
+
+        padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+
+        border: none;
+    }
+
+    &::after {
+
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        bottom: 0;
+        left: ~"calc( 50% - 16px )";
+        content: url("assets/color-mask.png");
+    }
 }
 

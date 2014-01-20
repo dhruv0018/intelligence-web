@@ -1,0 +1,12 @@
+{
+    "name": "your-team",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.css"
+    ]
+}

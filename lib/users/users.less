@@ -32,6 +32,18 @@
 
         width: 200px;
     }
+    
+    .status-locked {
+        color: rgb(203, 153, 33);
+        position: relative;
+        
+        &::before{
+            position: absolute;
+            left: -13px;
+            font-size: 14px;
+            .icon(@lock);
+        } 
+    }
 }
 
 /* Screens under 1025px */
@@ -41,7 +53,8 @@ and (max-width: 1024px) {
     .users {
 
         .active,
-        .inactive {
+        .inactive,
+        .status-locked {
 
             display: none;
         }
@@ -49,7 +62,8 @@ and (max-width: 1024px) {
         .nosidebar {
 
             .active,
-            .inactive {
+            .inactive,
+            .status-locked {
 
                 display: block;
             }

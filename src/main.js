@@ -12,6 +12,9 @@ require('./models/sports');
 require('./models/teams');
 require('./models/schools');
 require('./models/leagues');
+require('./models/games');
+require('./models/players');
+require('./models/tagsets');
 
 require('./services/authentication');
 require('./services/authorization');
@@ -24,9 +27,18 @@ require('./services/teams');
 require('./services/schools');
 require('./services/leagues');
 require('./services/sports');
+require('./services/games');
+require('./services/players');
+require('./services/tagsets');
 
+require('./directives/alert');
 require('./directives/match');
+require('./directives/form');
 require('./directives/button');
+require('./directives/input');
+require('./directives/submit');
+
+require('./directives/verify-password.js');
 
 require('./config');
 require('./routes');
@@ -43,5 +55,7 @@ component('users');
 component('teams');
 component('schools');
 component('leagues');
+
+component('coach');
 
 angular.bootstrap(document, [pkg.name]);

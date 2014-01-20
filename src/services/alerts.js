@@ -49,7 +49,7 @@ IntelligenceWebClient.service('AlertsService', [
         this.clear = function() {
 
             this.alerts.length = 0;
-        }
+        };
     }
 ]);
 

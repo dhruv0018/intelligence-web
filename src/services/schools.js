@@ -39,12 +39,12 @@ IntelligenceWebClient.factory('SchoolsFactory', [
 
                 if (school.id) {
 
-                    school.$update();
+                    return school.$update();
 
                 } else {
 
                     var newSchool = new SchoolsResource(school);
-                    newSchool.$create();
+                    return newSchool.$create();
                 }
             }
         };

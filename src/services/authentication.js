@@ -1,3 +1,7 @@
+var component = require('../../build/build.js');
+
+var OAuth = component('oauth');
+
 var IntelligenceWebClient = require('../app');
 
 /**
@@ -9,8 +13,8 @@ var IntelligenceWebClient = require('../app');
  * @type {service}
  */
 IntelligenceWebClient.service('AuthenticationService', [
-    '$rootScope', '$http', 'config', 'TokensService', 'SessionService',
-    function($rootScope, $http, config, tokens, session) {
+    '$rootScope', '$injector', '$http', 'config', 'TokensService', 'SessionService',
+    function($rootScope, $injector, $http, config, tokens, session) {
 
         return {
 
@@ -120,6 +124,37 @@ IntelligenceWebClient.service('AuthenticationService', [
                     throw new Error('Password reset processing error: Http Status : ' + status);
                 };
                 $http(request).success(success).error(error);
+            },
+
+            /**
+             * Validates the password for a given email and password. If no
+             * email is given, then the current users email address is used.
+             * @param {String} email - an email address; used as a unique
+             * identifier.
+             * @param {String} password - a password for the given email.
+             * @callback {function(error)} callback - returns an error if the
+             * password is invalid, otherwise will return null, indicating a
+             * valid password.
+             */
+            validatePassword: function(email, password, callback) {
+
+                /* Attempt to retrieve the current users email if none given. */
+                email = email || session.retrieveCurrentUser().email;
+
+                /* Make sure that both email and password are present. */
+                if (!email) throw new Error('Missing email');
+                if (!password) throw new Error('Missing password');
+
+                var oauth = $injector.instantiate(['config', OAuth]);
+
+                /* Request authentication from the server. */
+                oauth.requestAuthCode(email, password, function(error) {
+
+                    $rootScope.$apply(function() {
+
+                        callback(error);
+                    });
+                });
             }
         };
     }

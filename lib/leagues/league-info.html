@@ -6,13 +6,13 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="sport" data-ng-model="league.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
+                <select class="form-control" name="sport" data-ng-model="$storage.league.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
                     <option value="">Sport</option>
                 </select>
 
-                <input class="form-control" name="name" placeholder="Name" data-ng-model="league.name" type="text" required />
+                <input class="form-control" name="name" placeholder="Name" data-ng-model="$storage.league.name" type="text" required />
 
-                <select class="form-control" name="gender" data-ng-model="league.gender" data-ng-options="gender for gender in genders" required>
+                <select class="form-control" name="gender" data-ng-model="$storage.league.gender" data-ng-options="gender for gender in genders" required>
                     <option value="">Gender</option>
                 </select>
 
@@ -20,7 +20,7 @@
 
             <div class="form-group">
 
-                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(league)">Save</button>
+                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save($storage.league)">Save</button>
                 <a class="pull-right" href data-ui-sref="leagues">cancel</a>
 
             </div>

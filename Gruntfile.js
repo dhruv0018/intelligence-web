@@ -93,8 +93,10 @@ module.exports = function(grunt) {
 
         /* Linters */
 
-
-        'html-inspector': {
+        htmlhint: {
+            options: {
+                htmlhintrc: '.htmlhintrc'
+            },
             files: '<%= files.html %>'
         },
 
@@ -117,6 +119,14 @@ module.exports = function(grunt) {
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
+            },
+            files: '<%= files.js %>'
+        },
+
+        jsbeautifier: {
+            options: {
+                config: '.jsbeautifyrc',
+                mode: 'VERIFY_ONLY'
             },
             files: '<%= files.js %>'
         },
@@ -173,18 +183,20 @@ module.exports = function(grunt) {
             angular: {
                 src: [
                     'vendor/angular/angular.js',
+                    'vendor/ngstorage/ngStorage.js',
                     'vendor/angular-resource/angular-resource.js',
-                    'vendor/angular-ui-utils/modules/unique/unique.js',
-                    'vendor/angular-ui-utils/modules/showhide/showhide.js',
+                    'vendor/angular-sanitize/angular-sanitize.js',
+                    'vendor/angular-ui-utils/ui-utils.js',
                     'vendor/angular-ui-router/release/angular-ui-router.js'],
                 dest: 'build/angular.js'
             },
             angularmin: {
                 src: [
                     'vendor/angular/angular.min.js',
+                    'vendor/ngstorage/ngStorage.min.js',
                     'vendor/angular-resource/angular-resource.min.js',
-                    'vendor/angular-ui-utils/modules/unique/unique.js',  /* TODO: Minify this file! */
-                    'vendor/angular-ui-utils/modules/showhide/showhide.js',  /* TODO: Minify this file! */
+                    'vendor/angular-sanitize/angular-sanitize.min.js',
+                    'vendor/angular-ui-utils/ui-utils.min.js',
                     'vendor/angular-ui-router/release/angular-ui-router.min.js'],
                 dest: 'build/angular.min.js'
             }
@@ -224,6 +236,12 @@ module.exports = function(grunt) {
         },
 
         copy: {
+            'theme-assets': {
+                expand: true,
+                cwd:    'theme',
+                src:    'assets/*.png',
+                dest:   'build'
+            },
             'component-assets': {
                 expand: true,
                 cwd:    'lib',
@@ -483,31 +501,36 @@ module.exports = function(grunt) {
 
         watch: {
             options: {
+                spawn: false,
                 livereload: true
             },
             json: {
-                files: ['*.json', 'config/*.json', 'lib/**/*.json'],
-                tasks: ['component:build', 'browserify:dev', 'copy:dev']
+                files: ['*.json'],
+                tasks: ['install', 'dev', 'notify']
+            },
+            config: {
+                files: ['config/*.json', 'lib/**/*.json'],
+                tasks: ['component:build', 'browserify:dev', 'copy:dev', 'notify']
             },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
-                tasks: ['component:build', 'browserify:dev', 'copy:dev']
+                tasks: ['htmlhint', 'component:build', 'browserify:dev', 'copy:dev', 'notify']
             },
             css: {
                 files: ['src/**/*.css'],
-                tasks: ['csslint', 'recess', 'component:build', 'browserify:dev', 'copy:dev']
+                tasks: ['csslint', 'component:build', 'browserify:dev', 'copy:dev', 'notify']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
+                tasks: ['newer:less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
             },
             less: {
                 files: ['lib/**/*.less'],
-                tasks: ['less:components', 'component:build', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev']
+                tasks: ['newer:less:components', 'component:build', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
-                tasks: ['jshint', 'component:build', 'browserify:dev', 'copy:dev']
+                tasks: ['jshint', 'component:build', 'browserify:dev', 'copy:dev', 'notify']
             }
         }
 
@@ -519,8 +542,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['karma', 'plato']);
-    grunt.registerTask('lint-html', ['html-inspector']);
-    grunt.registerTask('lint', ['csslint', 'recess', 'jshint']);
+    grunt.registerTask('lint', ['htmlhint', 'csslint', 'recess', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('serve', ['connect']);
@@ -536,6 +558,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:dev-assets',
         'copy:dev']);
@@ -578,6 +601,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:prod-assets',
         'copy:prod',
@@ -597,6 +621,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:prod-assets',
         'copy:prod',

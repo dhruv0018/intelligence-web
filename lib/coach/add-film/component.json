@@ -1,0 +1,27 @@
+{
+    "name": "add-film",
+    "paths": [
+        "."
+    ],
+    "local": [
+        "plan",
+        "game-info",
+        "your-team",
+        "opposing-team",
+        "instructions"
+    ],
+    "templates": [
+        "template.html",
+        "start.html",
+        "upload.html",
+        "uploading.html"
+    ],
+    "scripts": [
+        "index.js",
+        "upload.js",
+        "uploading.js"
+    ],
+    "styles": [
+        "styles.css"
+    ]
+}
