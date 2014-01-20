@@ -4,7 +4,7 @@
 
         <div class="row">
 
-            <div class="upload-files col-md-12">
+            <div class="upload-files col-md-12" data-flow-drop data-ng-class="class" data-flow-drag-enter="class='files-drop-enter'" data-flow-drag-leave="class='files-drop-leave'">
 
                 <div class="row">
 
@@ -18,14 +18,28 @@
 
                         <div class="col-md-12">
 
-                            <div class="choose-files">
+                            <div class="choose-files" data-ng-hide="$flow.files.length">
 
                                 <i class="icon-file"></i>
                                 <h1>Choose files to upload…</h1>
 
                             </div>
 
-                            <button class="btn-upload-start" data-ui-sref="game-info">Start uploading...<i class="icon-chevron-right pull-right"></i></button>
+                            <table class="table table-hover table-striped" flow-transfers>
+
+                                <tbody>
+
+                                    <tr ng-repeat="file in transfers">
+
+                                        <td>{{ $index+1 }} {{ file.name }}</td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                            <button class="btn-upload-start" data-ng-click="upload()" data-ng-disabled="!$flow.files.length">Start uploading…<i class="icon-chevron-right pull-right"></i></button>
 
                         </div>
 
