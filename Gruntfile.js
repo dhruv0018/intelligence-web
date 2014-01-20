@@ -581,7 +581,7 @@ module.exports = function(grunt) {
         'install',
         'less',
         'concat:angularmin',
-        'ngconstant:prod',
+        'ngconstant:qa',
         'component:build',
         'browserify:prod',
         'concat:build',
