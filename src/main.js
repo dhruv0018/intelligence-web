@@ -7,6 +7,7 @@ require('bootstrap');
 
 require('./app');
 
+require('./models/kvs');
 require('./models/users');
 require('./models/sports');
 require('./models/teams');
