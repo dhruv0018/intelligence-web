@@ -2,8 +2,8 @@
 
     <div class="upload-progress">
 
-        <button class="cancel-upload"><i class="icon-remove"></i> Cancel</button>
-        <progressbar class="progressbar progress-striped active" value="50"></progressbar>
+        <button class="cancel-upload" data-ng-click="cancel()"><i class="icon-remove"></i> Cancel</button>
+        <progressbar class="progressbar progress-striped" data-ng-class="{ active: $flow.isUploading() }" type="{{ complete ? 'success' : 'danger' }}" max="1" value="$flow.progress()"></progressbar>
 
     </div>
 
@@ -12,15 +12,16 @@
 
 <tabset>
 
-<div class="uploading" data-ng-if="uploading">
-    <h1>You’re uploading a regular game…</h1>
-    <h2>Fill out the rest of the game information</h2>
-</div>
+    <div class="uploading" data-ng-if="$flow.isUploading()">
+        <h1>You’re uploading a regular game…</h1>
+        <h2>Fill out the rest of the game information</h2>
+    </div>
 
-<div class="uploaded" data-ng-if="uploaded">
-    <h1>Your upload is complete!</h1>
-    <h2>Now your’re ready to submit your game to us.</h2>
-</div>
+    <div class="uploaded" data-ng-if="complete">
+        <h1>Your upload is complete!</h1>
+        <h2>Now your’re ready to submit your game to us.</h2>
+    </div>
+
     <tab heading="Instructions" data-ui-sref="instructions" active="tabs.instructions.active" disabled="tabs.instructions.disabled">
 
         <div data-ui-view="instructions"></div>
