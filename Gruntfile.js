@@ -577,18 +577,23 @@ module.exports = function(grunt) {
         'copy:dev']);
 
     grunt.registerTask('qa', [
+        'clean:prod',
+        'install',
         'less',
-        'concat:angular',
-        'ngconstant:qa',
+        'concat:angularmin',
+        'ngconstant:prod',
         'component:build',
-        'browserify:dev',
+        'browserify:prod',
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
-        'copy:dev-assets',
-        'copy:dev']);
-
+        'copy:prod-assets',
+        'copy:prod',
+        'htmlmin',
+        'csso',
+        'ver:prod']);
 
     grunt.registerTask('prod', [
         'clean:prod',
