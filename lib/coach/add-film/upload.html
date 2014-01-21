@@ -32,6 +32,7 @@
                                     <tr ng-repeat="file in transfers">
 
                                         <td>{{ $index+1 }}. {{ file.name }} — {{ file.size | bytes }}</td>
+                                        <td class="col-xs-1"><button class="btn-remove" data-ng-click="file.cancel()"><i class="icon-remove"></i></button></td>
 
                                     </tr>
 
