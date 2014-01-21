@@ -30,7 +30,14 @@ module.exports = function(grunt) {
                     config: grunt.file.readJSON('config/vm.json')
                 }
             },
-
+            qa: {
+                dest: 'src/config.js',
+                name: 'config',
+                constants: {
+                    pkg: grunt.file.readJSON('package.json'),
+                    config: grunt.file.readJSON('config/qa.json')
+                }
+            },
             prod: {
                 dest: 'src/config.js',
                 name: 'config',
@@ -569,6 +576,24 @@ module.exports = function(grunt) {
         'copy:dev-assets',
         'copy:dev']);
 
+    grunt.registerTask('qa', [
+        'clean:prod',
+        'install',
+        'less',
+        'concat:angularmin',
+        'ngconstant:qa',
+        'component:build',
+        'browserify:prod',
+        'concat:build',
+        'autoprefixer',
+        'rework',
+        'copy:theme-assets',
+        'copy:component-assets',
+        'copy:prod-assets',
+        'copy:prod',
+        'htmlmin',
+        'csso',
+        'ver:prod']);
 
     grunt.registerTask('prod', [
         'clean:prod',

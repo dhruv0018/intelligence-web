@@ -1,0 +1,22 @@
+{
+    "oauth": {
+        "uri": "https://v2-qa.krossover.com/intelligence-api/oauth/",
+        "clientId": "cid",
+        "clientSecret": "csecret",
+        "state": "xyz"
+    },
+    "api": {
+        "uri": "https://v2-qa.krossover.com/intelligence-api/v1/"
+    },
+    "passwordReset": {
+        "uri": "https://v2-qa.krossover.com/intelligence-api/v1/password-reset/"
+    },
+    "links": {
+        "signup": {
+            "uri": "http://krossover.com/sign-up.php"
+        },
+        "support": {
+            "uri": "http://support.krossover.com"
+        }
+    }
+}
