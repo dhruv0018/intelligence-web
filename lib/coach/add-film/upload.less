@@ -164,6 +164,7 @@
 .add-film {
 
     .uploading,
+    .error,
     .uploaded {
 
         color: @brand-blue;
@@ -180,12 +181,14 @@
     }
 
     .uploading h1,
+    .error h1,
     .uploaded h1 {
 
         font-size: 24px;
     }
 
     .uploading h2,
+    .error h2,
     .uploaded h2 {
 
         font-size: 18px;
@@ -195,6 +198,11 @@
     .uploaded h1 {
 
         color: rgb(50, 157, 80);
+    }
+
+    .error h1 {
+
+        color: red;
     }
 
     .tabbable {

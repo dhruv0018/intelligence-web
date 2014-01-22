@@ -17,6 +17,11 @@
         <h2>Fill out the rest of the game information</h2>
     </div>
 
+    <div class="error" data-ng-if="error">
+        <h1>There was an error with your upload!</h1>
+        <h2>Please try to submit your game again.</h2>
+    </div>
+
     <div class="uploaded" data-ng-if="complete">
         <h1>Your upload is complete!</h1>
         <h2>Now your’re ready to submit your game to us.</h2>
