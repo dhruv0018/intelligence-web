@@ -13,6 +13,8 @@
         "angular-ui-utils": "~0.1.0",
         "angular-ui-router": "0.2.7",
         "ngstorage": "~0.3.0",
+        "ng-flow": "~2",
+        "flow.js": "~2",
         "bootstrap": "~3.0.2",
         "font-awesome": "~3.2.1"
     },
