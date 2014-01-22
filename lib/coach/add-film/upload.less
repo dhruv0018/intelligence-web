@@ -46,6 +46,18 @@
                 font-size: 100px;
             }
 
+            &:hover {
+
+                color: @brand-secondary;
+                border: 3px solid @brand-secondary;
+            }
+
+            &:active {
+
+                .box-shadow(none);
+                color: @brand-success;
+                border: 3px solid @brand-success;
+            }
         }
 
         &.files-drop-enter .choose-files {
