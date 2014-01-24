@@ -23,6 +23,7 @@
         "angular-scenario": "~1.2.*-build"
     },
     "exportsOverride": {
+        "ng-flow": {},
         "font-awesome": {}
     },
     "resolutions": {
