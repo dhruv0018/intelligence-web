@@ -36,3 +36,6 @@
 
 # Any intelliJ editor files
 .idea
+
+# Vagrant machines
+.vagrant
