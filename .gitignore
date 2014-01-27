@@ -34,6 +34,9 @@
 # Ignore temporary files
 /tmp
 
+# NPM debug logs
+npm-debug.log
+
 # Any intelliJ editor files
 .idea
 
