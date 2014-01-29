@@ -1,18 +1,15 @@
 {
     "oauth": {
-        "uri": "https://www-dev.krossover.com/intelligence-api/oauth/",
+        "uri": "https://v2-qa.krossover.com/intelligence-api/oauth/",
         "clientId": "cid",
         "clientSecret": "csecret",
         "state": "xyz"
     },
     "api": {
-        "uri": "https://www-dev.krossover.com/intelligence-api/v1/"
-    },
-    "kvs": {
-        "uri": "http://v2-kvs-worker-1.qa.krossover.com/"
+        "uri": "https://v2-qa.krossover.com/intelligence-api/v1/"
     },
     "passwordReset": {
-        "uri": "https://www-dev.krossover.com/intelligence-api/v1/password-reset/"
+        "uri": "https://v2-qa.krossover.com/intelligence-api/v1/password-reset/"
     },
     "links": {
         "signup": {

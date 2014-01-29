@@ -16,7 +16,8 @@ IntelligenceWebClient.factory('LeaguesFactory', [
                 league = league || self;
 
                 if (league.id) {
-                    return league.$update();
+                    var updateLeague = new LeaguesResource(league);
+                    return updateLeague.$update();
                 } else {
                     var newLeague = new LeaguesResource(league);
                     return newLeague.$create();

@@ -38,8 +38,9 @@ IntelligenceWebClient.factory('SchoolsFactory', [
                 delete school.teams;
 
                 if (school.id) {
-
-                    return school.$update();
+                    
+                    var updateSchool = new SchoolsResource(school);
+                    return updateSchool.$update();
 
                 } else {
 

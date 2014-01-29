@@ -7,6 +7,8 @@ require('bootstrap');
 
 require('./app');
 
+require('./constants/kvs-whitelist');
+
 require('./models/users');
 require('./models/sports');
 require('./models/teams');
@@ -41,6 +43,7 @@ require('./directives/submit');
 require('./directives/verify-password.js');
 
 require('./config');
+require('./flow');
 require('./routes');
 require('./errors');
 
