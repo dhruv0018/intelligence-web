@@ -1,6 +1,8 @@
 Krossover Intelligence Web Client
 =================================
 
+![Build Status](https://www.codeship.io/projects/976f2ba0-6b3e-0131-6c18-16513a5a3791/status)
+
 This is the Krossover Intelligence web client. It is the front end for the
 Krossover Intelligence product.
 
