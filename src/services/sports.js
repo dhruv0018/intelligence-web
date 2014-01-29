@@ -28,13 +28,13 @@ IntelligenceWebClient.factory('SportsFactory', [
                 sport = sport || self;
 
                 if (sport.id) {
-
-                    sport.$update();
+                    var updateSport = new SportsResource(sport);
+                    return updateSport.$update();
 
                 } else {
 
                     var newSport = new SportsResource(sport);
-                    newSport.$create();
+                    return newSport.$create();
                 }
             }
         };
