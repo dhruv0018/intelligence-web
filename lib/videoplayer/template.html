@@ -1,52 +1,40 @@
-<videogular
-    vg-player-ready="onPlayerReady"
-    vg-complete="onCompleteVideo"
-    vg-update-time="onUpdateTime"
-    vg-update-size="onUpdateSize"
-    vg-update-volume="onUpdateVolume"
-    vg-update-state="onUpdateState"
-    vg-width="config.width"
-    vg-height="config.height"
-    vg-theme="config.theme.url"
-    vg-autoplay="config.autoPlay"
-    vg-stretch="config.stretch.value"
-    vg-responsive="true">
+<data-videogular data-vg-player-ready="onPlayerReady" data-vg-complete="onCompleteVideo" data-vg-update-time="onUpdateTime" data-vg-update-size="onUpdateSize" data-vg-update-volume="onUpdateVolume" data-vg-update-state="onUpdateState" data-vg-width="config.width" data-vg-height="config.height" data-vg-theme="config.theme.url" data-vg-autoplay="config.autoPlay" data-vg-stretch="config.stretch.value" data-vg-responsive="true">
 
     <video preload="metadata">
 
-        <source data-ng-repeat="source in config.sources" data-ng-src="{{ source.src }}" type="{{ source.type }}"></source>
+        <source data-ng-repeat="source in sources" data-ng-src="{{ source.src }}" type="{{ source.type }}"></source>
 
     </video>
 
-    <vg-buffering></vg-buffering>
+    <data-vg-buffering></data-vg-buffering>
 
-    <vg-controls vg-autohide="false" style="height: 50px;">
+    <data-vg-controls data-vg-autohide="false" style="height: 50px;">
 
-        <krossover-play-pause-button class="video-control"></krossover-play-pause-button>
+        <x-krossover-play-pause-button class="video-control"></x-krossover-play-pause-button>
 
-        <vg-scrubBar class="video-control">
+        <data-vg-scrubbar class="video-control">
 
-            <vg-scrubbarcurrenttime></vg-scrubbarcurrenttime>
+            <data-vg-scrubbarcurrenttime></data-vg-scrubbarcurrenttime>
 
-        </vg-scrubBar>
+        </data-vg-scrubbar>
 
-        <vg-timeDisplay class="video-control"><span class="time-current">{{ currentTime }}</span> <span class="time-divider">/</span> {{ totalTime }}</vg-timeDisplay>
+        <data-vg-timedisplay class="video-control"><span class="time-current">{{ currentTime }}</span> <span class="time-divider">/</span> {{ totalTime }}</data-vg-timedisplay>
 
-        <krossover-fast-backward-button class="video-control"></krossover-fast-backward-button>
-        <krossover-fast-forward-button class="video-control"></krossover-fast-forward-button>
+        <x-krossover-fast-backward-button class="video-control"></x-krossover-fast-backward-button>
+        <x-krossover-fast-forward-button class="video-control"></x-krossover-fast-forward-button>
 
-        <krossover-slow-backward-button class="video-control"></krossover-slow-backward-button>
-        <krossover-slow-forward-button class="video-control"></krossover-slow-forward-button>
+        <x-krossover-slow-backward-button class="video-control"></x-krossover-slow-backward-button>
+        <x-krossover-slow-forward-button class="video-control"></x-krossover-slow-forward-button>
 
-        <vg-volume class="video-control">
+        <data-vg-volume class="video-control">
 
-            <krossover-mute-button></krossover-mute-button>
-            <vg-volumebar></vg-volumebar>
+            <x-krossover-mute-button></x-krossover-mute-button>
+            <data-vg-volumebar></data-vg-volumebar>
 
-        </vg-volume>
+        </data-vg-volume>
 
-        <krossover-fullscreen-button class="video-control"></krossover-fullscreen-button>
+        <x-krossover-fullscreen-button class="video-control"></x-krossover-fullscreen-button>
 
-    </vg-controls>
+    </data-vg-controls>
 
-</videogular>
+</data-videogular>
