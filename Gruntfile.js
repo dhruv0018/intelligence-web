@@ -281,6 +281,16 @@ module.exports = function(grunt) {
                 cwd:    'build/assets',
                 src:    '**',
                 dest:   'prod/intelligence/assets'
+            },
+            bootstrap: {
+                files: {
+                    'build/bootstrap.js': 'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
+                }
+            },
+            bootstrapmin: {
+                files: {
+                    'build/bootstrap.min.js': 'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
+                }
             }
         },
 
@@ -320,12 +330,8 @@ module.exports = function(grunt) {
                             path: 'build/angular.js',
                             exports: 'angular'
                         },
-                        angularui: {
-                            path: 'vendor/angular-ui-router/release/angular-ui-router.js',
-                            exports: 'angularui'
-                        },
                         bootstrap: {
-                            path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
+                            path: 'build/bootstrap.js',
                             exports: 'bootstrap'
                         }
                     }
@@ -343,7 +349,7 @@ module.exports = function(grunt) {
                             exports: 'angular'
                         },
                         bootstrap: {
-                            path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
+                            path: 'build/bootstrap.min.js',
                             exports: 'bootstrap'
                         }
                     }
