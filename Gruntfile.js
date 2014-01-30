@@ -579,6 +579,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dev', [
         'copy:less',
+        'copy:bootstrap',
         'less',
         'concat:angular',
         'ngconstant:dev',
