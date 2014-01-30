@@ -80,5 +80,7 @@ component('schools');
 component('leagues');
 
 component('coach');
+component('videoplayer');
 
 angular.bootstrap(document, [pkg.name]);
+
