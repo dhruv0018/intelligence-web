@@ -62,6 +62,8 @@ require('./directives/submit');
 
 require('./directives/verify-password.js');
 
+require('./directives/krossover/videoplayer');
+
 require('./config');
 require('./flow');
 require('./routes');
