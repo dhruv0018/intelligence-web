@@ -561,7 +561,7 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('deploy', ['dev', 'shell:dev']);
-    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
+    grunt.registerTask('default', ['install', 'component:install', 'bower:install', 'dev', 'connect:dev', 'watch']);
 
     grunt.registerTask('prep', [
         'copy:bootstrap',
@@ -600,6 +600,7 @@ module.exports = function(grunt) {
     grunt.registerTask('qa', [
         'clean:prod',
         'install',
+        'component:install',
         'less',
         'concat:angularmin',
         'ngconstant:qa',
@@ -619,6 +620,7 @@ module.exports = function(grunt) {
     grunt.registerTask('prod', [
         'clean:prod',
         'install',
+        'component:install',
         'less',
         'concat:angularmin',
         'ngconstant:prod',
@@ -639,6 +641,7 @@ module.exports = function(grunt) {
         'clean:dist',
         'clean:prod',
         'install',
+        'component:install',
         'less',
         'concat:angularmin',
         'ngconstant:dist',

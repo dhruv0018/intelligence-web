@@ -61,7 +61,6 @@
         "connect-modrewrite": "~0.5.8"
     },
     "scripts": {
-        "postinstall": "node_modules/.bin/grunt component:install bower:install",
         "test": "node_modules/.bin/grunt test"
     }
 }
