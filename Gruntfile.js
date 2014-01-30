@@ -214,8 +214,8 @@ module.exports = function(grunt) {
             options: {
                 paths: [
                     'theme',
-                    'vendor/bootstrap/less',
-                    'vendor/font-awesome/less'
+                    'build/bootstrap/less',
+                    'build/font-awesome/less'
                 ]
             },
             theme: {
@@ -291,6 +291,12 @@ module.exports = function(grunt) {
                 files: {
                     'build/bootstrap.min.js': 'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
                 }
+            },
+            less: {
+                expand: true,
+                cwd:    'vendor',
+                src:    '**/*.less',
+                dest:   'build'
             }
         },
 
@@ -564,6 +570,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['install', 'component:install', 'bower:install', 'dev', 'connect:dev', 'watch']);
 
     grunt.registerTask('prep', [
+        'copy:less',
         'copy:bootstrap',
         'copy:bootstrapmin',
         'concat:angular',
@@ -571,6 +578,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('dev', [
+        'copy:less',
         'less',
         'concat:angular',
         'ngconstant:dev',
