@@ -205,7 +205,7 @@ module.exports = function(grunt) {
                     'vendor/angular-resource/angular-resource.min.js',
                     'vendor/angular-sanitize/angular-sanitize.min.js',
                     'vendor/angular-ui-utils/ui-utils.min.js',
-                    'vendor/angular-ui-router/release/angular-ui-router.min.js'],
+                    'vendor/angular-ui-router/release/angular-ui-router.js'],
                 dest: 'build/angular.min.js'
             }
         },
