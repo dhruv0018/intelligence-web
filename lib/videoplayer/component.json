@@ -2,6 +2,9 @@
     "name": "videoplayer",
     "templates": [
         "template.html",
+        "buffering.html",
+        "controls.html",
+        "volume-bar.html",
         "krossover-play-pause-button.html",
         "krossover-fast-backward-button.html",
         "krossover-fast-forward-button.html",
