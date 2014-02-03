@@ -64,23 +64,20 @@
     <div data-ng-if="users.is(role, INDEXER)">
 
         <h4>Indexer</h4>
+        <form>
+            <div class="form-group">
+                <select class="form-control" name="indexerGroup" data-ng-model="role.indexerGroupId" data-ng-options="key as value for (key,value) in INDEXER_GROUPS_ID" required>
 
-        <p>Pick work this person can do:</p>
+                    <option value="">Pick an Office/Marketplace</option>
 
-        <div class="row">
+                </select>
+            </div>
+            <div>
 
-            <div class="col-md-6"><input type="checkbox"> Basketball Indexing</div><div class="col-md-r"><input type="checkbox"> Basketball QA</div>
-            <div class="col-md-6"><input type="checkbox"> Football Indexing</div><div class="col-md-r"><input type="checkbox"> Football QA</div>
-            <div class="col-md-6"><input type="checkbox"> Lacrosse Indexing</div><div class="col-md-r"><input type="checkbox"> Lacrosse QA</div>
+                <a class="btn-role-new" href data-ng-click="addRole(role)"><i class="icon-plus-sign"></i> Add New Role</a>
 
-        </div>
-
-        <div>
-
-            <a class="btn-role-new" href data-ng-click="addRole(role)"><i class="icon-plus-sign"></i> Add New Role</a>
-
-        </div>
-
+            </div>
+        </form>
     </div>
 
     <div data-ng-if="users.is(role, ATHLETE)">
