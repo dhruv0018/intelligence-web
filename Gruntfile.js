@@ -214,8 +214,8 @@ module.exports = function(grunt) {
             options: {
                 paths: [
                     'theme',
-                    'vendor/bootstrap/less',
-                    'vendor/font-awesome/less'
+                    'build/bootstrap/less',
+                    'build/font-awesome/less'
                 ]
             },
             theme: {
@@ -281,6 +281,22 @@ module.exports = function(grunt) {
                 cwd:    'build/assets',
                 src:    '**',
                 dest:   'prod/intelligence/assets'
+            },
+            bootstrap: {
+                files: {
+                    'build/bootstrap.js': 'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
+                }
+            },
+            bootstrapmin: {
+                files: {
+                    'build/bootstrap.min.js': 'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
+                }
+            },
+            less: {
+                expand: true,
+                cwd:    'vendor',
+                src:    '**/*.less',
+                dest:   'build'
             }
         },
 
@@ -320,12 +336,8 @@ module.exports = function(grunt) {
                             path: 'build/angular.js',
                             exports: 'angular'
                         },
-                        angularui: {
-                            path: 'vendor/angular-ui-router/release/angular-ui-router.js',
-                            exports: 'angularui'
-                        },
                         bootstrap: {
-                            path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
+                            path: 'build/bootstrap.js',
                             exports: 'bootstrap'
                         }
                     }
@@ -343,7 +355,7 @@ module.exports = function(grunt) {
                             exports: 'angular'
                         },
                         bootstrap: {
-                            path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
+                            path: 'build/bootstrap.min.js',
                             exports: 'bootstrap'
                         }
                     }
@@ -555,9 +567,19 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('deploy', ['dev', 'shell:dev']);
-    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
+    grunt.registerTask('default', ['install', 'component:install', 'bower:install', 'dev', 'connect:dev', 'watch']);
+
+    grunt.registerTask('prep', [
+        'copy:less',
+        'copy:bootstrap',
+        'copy:bootstrapmin',
+        'concat:angular',
+        'concat:angularmin'
+    ]);
 
     grunt.registerTask('dev', [
+        'copy:less',
+        'copy:bootstrap',
         'less',
         'concat:angular',
         'ngconstant:dev',
@@ -587,8 +609,8 @@ module.exports = function(grunt) {
     grunt.registerTask('qa', [
         'clean:prod',
         'install',
+        'component:install',
         'less',
-        'concat:angularmin',
         'ngconstant:qa',
         'component:build',
         'browserify:prod',
@@ -606,8 +628,8 @@ module.exports = function(grunt) {
     grunt.registerTask('prod', [
         'clean:prod',
         'install',
+        'component:install',
         'less',
-        'concat:angularmin',
         'ngconstant:prod',
         'component:build',
         'browserify:prod',
@@ -626,8 +648,8 @@ module.exports = function(grunt) {
         'clean:dist',
         'clean:prod',
         'install',
+        'component:install',
         'less',
-        'concat:angularmin',
         'ngconstant:dist',
         'component:build',
         'browserify:prod',
