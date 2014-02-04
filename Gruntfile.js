@@ -179,34 +179,6 @@ module.exports = function(grunt) {
             build: {
                 src: ['build/build.css', 'build/theme.css'],
                 dest: 'build/themed.css'
-            },
-            angular: {
-                src: [
-                    'vendor/angular/angular.js',
-                    'vendor/ngstorage/ngStorage.js',
-                    'vendor/flow.js/src/flow.js',
-                    'vendor/ng-flow/src/directives/*.js',
-                    'vendor/ng-flow/src/angular-flow.js',
-                    'vendor/ng-flow/src/provider.js',
-                    'vendor/angular-resource/angular-resource.js',
-                    'vendor/angular-sanitize/angular-sanitize.js',
-                    'vendor/angular-ui-utils/ui-utils.js',
-                    'vendor/angular-ui-router/release/angular-ui-router.js'],
-                dest: 'build/angular.js'
-            },
-            angularmin: {
-                src: [
-                    'vendor/angular/angular.min.js',
-                    'vendor/ngstorage/ngStorage.min.js',
-                    'vendor/flow.js/src/flow.js', /* TODO: Minify this file. */
-                    'vendor/ng-flow/src/directives/*.js', /* TODO: Minify these files. */
-                    'vendor/ng-flow/src/angular-flow.js', /* TODO: Minify this file. */
-                    'vendor/ng-flow/src/provider.js', /* TODO: Minify this file. */
-                    'vendor/angular-resource/angular-resource.min.js',
-                    'vendor/angular-sanitize/angular-sanitize.min.js',
-                    'vendor/angular-ui-utils/ui-utils.min.js',
-                    'vendor/angular-ui-router/release/angular-ui-router.js'],
-                dest: 'build/angular.min.js'
             }
         },
 
@@ -581,7 +553,6 @@ module.exports = function(grunt) {
         'copy:less',
         'copy:bootstrap',
         'less',
-        'concat:angular',
         'ngconstant:dev',
         'component:build',
         'browserify:dev',
@@ -595,7 +566,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('vm', [
         'less',
-        'concat:angular',
         'ngconstant:vm',
         'component:build',
         'browserify:dev',
