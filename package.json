@@ -76,7 +76,7 @@
         "connect-modrewrite": "~0.5.8"
     },
     "scripts": {
-        "install": "napa",
+        "install": "napa; component install",
         "test": "node_modules/.bin/grunt test"
     }
 }
