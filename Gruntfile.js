@@ -303,16 +303,6 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     transform: ['decomponentify'],
-                    shim: {
-                        angular: {
-                            path: 'build/angular.js',
-                            exports: 'angular'
-                        },
-                        bootstrap: {
-                            path: 'build/bootstrap.js',
-                            exports: 'bootstrap'
-                        }
-                    }
                 },
                 files: {
                     'build/bundle.js': ['src/main.js']
@@ -321,16 +311,6 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     transform: ['decomponentify'],
-                    shim: {
-                        angular: {
-                            path: 'build/angular.min.js',
-                            exports: 'angular'
-                        },
-                        bootstrap: {
-                            path: 'build/bootstrap.min.js',
-                            exports: 'bootstrap'
-                        }
-                    }
                 },
                 files: {
                     'build/bundle.js': ['src/main.js']
