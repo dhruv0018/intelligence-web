@@ -186,8 +186,8 @@ module.exports = function(grunt) {
             options: {
                 paths: [
                     'theme',
-                    'build/bootstrap/less',
-                    'build/font-awesome/less'
+                    'node_modules/bootstrap/less',
+                    'node_modules/font-awesome/Font-Awesome-3.2.1/less'
                 ]
             },
             theme: {
@@ -253,22 +253,6 @@ module.exports = function(grunt) {
                 cwd:    'build/assets',
                 src:    '**',
                 dest:   'prod/intelligence/assets'
-            },
-            bootstrap: {
-                files: {
-                    'build/bootstrap.js': 'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
-                }
-            },
-            bootstrapmin: {
-                files: {
-                    'build/bootstrap.min.js': 'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
-                }
-            },
-            less: {
-                expand: true,
-                cwd:    'vendor',
-                src:    '**/*.less',
-                dest:   'build'
             }
         },
 
