@@ -7,14 +7,29 @@
         "type": "git",
         "url": "git@bitbucket.org:krossoverintelligence/intelligence-web-client.git"
     },
-    "dependencies": {
+    "napa": {
+        "angular": "angular/bower-angular",
+        "angular-sanitize": "angular/bower-angular-sanitize",
+        "angular-mocks": "angular/bower-angular-mocks",
+        "angular-scenario": "angular/bower-angular-scenario",
+        "angular-resource": "angular/bower-angular-resource",
+        "angular-bootstrap": "angular-ui/bootstrap-bower",
+        "angular-ui-utils": "angular-ui/ui-utils#bower",
+        "angular-ui-router": "angular-ui/ui-router",
+        "ngStorage": "gsklee/ngStorage",
+        "flow": "flowjs/ng-flow",
+        "flowjs": "flowjs/flow.js",
+        "bootstrap": "twbs/bootstrap",
+        "font-awesome": "FortAwesome/Font-Awesome#v3.2.1"
     },
+    "dependencies": {},
     "devDependencies": {
         "connect-modrewrite": "~0.5.8",
         "component": "0.x",
         "component-html": "0.0.3",
         "component-json": "~0.1.4",
         "decomponentify": "0.0.3",
+        "napa": "~0.3.0",
         "grunt": "~0.4.1",
         "load-grunt-tasks": "~0.3.0",
         "grunt-ng-constant": "~0.4.5",
@@ -61,6 +76,7 @@
         "connect-modrewrite": "~0.5.8"
     },
     "scripts": {
+        "install": "napa",
         "test": "node_modules/.bin/grunt test"
     }
 }
