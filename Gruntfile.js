@@ -259,14 +259,6 @@ module.exports = function(grunt) {
 
         /* Build process - JS */
 
-        bower: {
-            install: {
-                options: {
-                    targetDir: 'vendor'
-                }
-            }
-        },
-
         component: {
             install: {
                 options: {
