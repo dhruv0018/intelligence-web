@@ -505,17 +505,8 @@ module.exports = function(grunt) {
     grunt.registerTask('deploy', ['dev', 'shell:dev']);
     grunt.registerTask('default', ['install', 'component:install', 'bower:install', 'dev', 'connect:dev', 'watch']);
 
-    grunt.registerTask('prep', [
-        'copy:less',
-        'copy:bootstrap',
-        'copy:bootstrapmin',
-        'concat:angular',
-        'concat:angularmin'
-    ]);
 
     grunt.registerTask('dev', [
-        'copy:less',
-        'copy:bootstrap',
         'less',
         'ngconstant:dev',
         'component:build',
