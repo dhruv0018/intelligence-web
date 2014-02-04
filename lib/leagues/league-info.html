@@ -15,7 +15,7 @@
                 <select class="form-control" name="gender" data-ng-model="$storage.league.gender" data-ng-options="gender for gender in genders" required>
                     <option value="">Gender</option>
                 </select>
-                <select class="form-control" name="tagset" data-ng-model="$storage.league.tagSetId" data-ng-options="tagset.id as tagset.name for tagset in tagsets" required>
+                <select class="form-control" name="tagset" data-ng-model="$storage.league.tagSetId" data-ng-options="tagset.id as tagset.name for tagset in tagsets">
                     <option value="">Tag Set</option>
                 </select>
                 <input class="form-control" name="season-start-month" placeholder="Season Start Month" data-ng-model="$storage.league.seasonStartMonth" type="text" required />
