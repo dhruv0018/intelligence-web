@@ -179,34 +179,6 @@ module.exports = function(grunt) {
             build: {
                 src: ['build/build.css', 'build/theme.css'],
                 dest: 'build/themed.css'
-            },
-            angular: {
-                src: [
-                    'vendor/angular/angular.js',
-                    'vendor/ngstorage/ngStorage.js',
-                    'vendor/flow.js/src/flow.js',
-                    'vendor/ng-flow/src/directives/*.js',
-                    'vendor/ng-flow/src/angular-flow.js',
-                    'vendor/ng-flow/src/provider.js',
-                    'vendor/angular-resource/angular-resource.js',
-                    'vendor/angular-sanitize/angular-sanitize.js',
-                    'vendor/angular-ui-utils/ui-utils.js',
-                    'vendor/angular-ui-router/release/angular-ui-router.js'],
-                dest: 'build/angular.js'
-            },
-            angularmin: {
-                src: [
-                    'vendor/angular/angular.min.js',
-                    'vendor/ngstorage/ngStorage.min.js',
-                    'vendor/flow.js/src/flow.js', /* TODO: Minify this file. */
-                    'vendor/ng-flow/src/directives/*.js', /* TODO: Minify these files. */
-                    'vendor/ng-flow/src/angular-flow.js', /* TODO: Minify this file. */
-                    'vendor/ng-flow/src/provider.js', /* TODO: Minify this file. */
-                    'vendor/angular-resource/angular-resource.min.js',
-                    'vendor/angular-sanitize/angular-sanitize.min.js',
-                    'vendor/angular-ui-utils/ui-utils.min.js',
-                    'vendor/angular-ui-router/release/angular-ui-router.js'],
-                dest: 'build/angular.min.js'
             }
         },
 
@@ -214,8 +186,8 @@ module.exports = function(grunt) {
             options: {
                 paths: [
                     'theme',
-                    'build/bootstrap/less',
-                    'build/font-awesome/less'
+                    'node_modules/bootstrap/less',
+                    'node_modules/font-awesome/Font-Awesome-3.2.1/less'
                 ]
             },
             theme: {
@@ -281,35 +253,11 @@ module.exports = function(grunt) {
                 cwd:    'build/assets',
                 src:    '**',
                 dest:   'prod/intelligence/assets'
-            },
-            bootstrap: {
-                files: {
-                    'build/bootstrap.js': 'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
-                }
-            },
-            bootstrapmin: {
-                files: {
-                    'build/bootstrap.min.js': 'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
-                }
-            },
-            less: {
-                expand: true,
-                cwd:    'vendor',
-                src:    '**/*.less',
-                dest:   'build'
             }
         },
 
 
         /* Build process - JS */
-
-        bower: {
-            install: {
-                options: {
-                    targetDir: 'vendor'
-                }
-            }
-        },
 
         component: {
             install: {
@@ -331,16 +279,6 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     transform: ['decomponentify'],
-                    shim: {
-                        angular: {
-                            path: 'build/angular.js',
-                            exports: 'angular'
-                        },
-                        bootstrap: {
-                            path: 'build/bootstrap.js',
-                            exports: 'bootstrap'
-                        }
-                    }
                 },
                 files: {
                     'build/bundle.js': ['src/main.js']
@@ -349,16 +287,6 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     transform: ['decomponentify'],
-                    shim: {
-                        angular: {
-                            path: 'build/angular.min.js',
-                            exports: 'angular'
-                        },
-                        bootstrap: {
-                            path: 'build/bootstrap.min.js',
-                            exports: 'bootstrap'
-                        }
-                    }
                 },
                 files: {
                     'build/bundle.js': ['src/main.js']
@@ -567,21 +495,10 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('deploy', ['dev', 'shell:dev']);
-    grunt.registerTask('default', ['install', 'component:install', 'bower:install', 'dev', 'connect:dev', 'watch']);
-
-    grunt.registerTask('prep', [
-        'copy:less',
-        'copy:bootstrap',
-        'copy:bootstrapmin',
-        'concat:angular',
-        'concat:angularmin'
-    ]);
+    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
     grunt.registerTask('dev', [
-        'copy:less',
-        'copy:bootstrap',
         'less',
-        'concat:angular',
         'ngconstant:dev',
         'component:build',
         'browserify:dev',
@@ -595,7 +512,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('vm', [
         'less',
-        'concat:angular',
         'ngconstant:vm',
         'component:build',
         'browserify:dev',
@@ -608,8 +524,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('qa', [
         'clean:prod',
-        'install',
-        'component:install',
         'less',
         'ngconstant:qa',
         'component:build',
@@ -628,7 +542,6 @@ module.exports = function(grunt) {
     grunt.registerTask('prod', [
         'clean:prod',
         'install',
-        'component:install',
         'less',
         'ngconstant:prod',
         'component:build',
@@ -648,7 +561,6 @@ module.exports = function(grunt) {
         'clean:dist',
         'clean:prod',
         'install',
-        'component:install',
         'less',
         'ngconstant:dist',
         'component:build',

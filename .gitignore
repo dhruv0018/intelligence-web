@@ -10,9 +10,6 @@
 # Ignore production files
 /prod
 
-# Ignore vendor files
-/vendor
-
 # Ignore components
 /components
 
