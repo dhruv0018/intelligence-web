@@ -153,6 +153,25 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return members;
             },
 
+            getHeadCoachRole: function() {
+
+                if (!this.roles) return undefined;
+
+                /* Filter out all of the head coach roles for the team. */
+                var headCoachRoles = this.roles.filter(function(role) {
+
+                    return users.is(role, ROLES.HEAD_COACH);
+                });
+
+                /* Filter out all of the head coach roles that are current. */
+                var currentHeadCoachRoles = headCoachRoles.filter(function(coach) {
+
+                    return coach.tenureEnd === null;
+                });
+
+                return currentHeadCoachRoles.pop();
+            },
+
             has: function(match, matchIsCurrent) {
 
                 var self = this;
