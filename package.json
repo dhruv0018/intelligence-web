@@ -15,7 +15,7 @@
         "angular-resource": "angular/bower-angular-resource",
         "angular-bootstrap": "angular-ui/bootstrap-bower",
         "angular-ui-utils": "angular-ui/ui-utils#bower",
-        "angular-ui-router": "angular-ui/ui-router",
+        "angular-ui-router": "angular-ui/ui-router#0.2.7",
         "ngStorage": "gsklee/ngStorage",
         "flow": "flowjs/ng-flow",
         "flowjs": "flowjs/flow.js",
