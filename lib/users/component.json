@@ -12,9 +12,9 @@
         "index.js"
     ],
     "styles": [
-        "user.css",
-        "adduser.css",
-        "newrole.css",
-        "users.css"
+        "user.less",
+        "adduser.less",
+        "newrole.less",
+        "users.less"
     ]
 }

@@ -10,7 +10,7 @@
         "index.js"
     ],
     "styles": [
-        "team.css",
-        "teams.css"
+        "team.less",
+        "teams.less"
     ]
 }

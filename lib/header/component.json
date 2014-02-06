@@ -14,7 +14,7 @@
         "krossover_logo_2013_small.png"
     ],
     "styles": [
-        "styles.css"
+        "styles.less"
     ],
     "scripts": [
         "index.js"

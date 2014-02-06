@@ -9,7 +9,7 @@
         "index.js"
     ],
     "styles": [
-        "league.css",
-        "leagues.css"
+        "league.less",
+        "leagues.less"
     ]
 }
