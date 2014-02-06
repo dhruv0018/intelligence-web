@@ -259,19 +259,27 @@ module.exports = function(grunt) {
 
         /* Build process - JS */
 
-        component: {
-            install: {
+        componentbuild: {
+            dev: {
                 options: {
-                    action: 'install'
-                }
+                    name: 'build',
+                    dev: true,
+                    sourceUrls: true,
+                    prefix: 'assets',
+                    copy: true
+                },
+                src: '.',
+                dest: './build'
             },
-            build: {
+            prod: {
                 options: {
-                    args: {
-                        prefix: 'assets',
-                        use: 'component-html,component-json'
+                    name: 'build',
+                    prefix: 'assets',
+                    copy: true
                     }
-                }
+                },
+                src: '.',
+                dest: './build'
             }
         },
 
@@ -500,7 +508,7 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', [
         'less',
         'ngconstant:dev',
-        'component:build',
+        'componentbuild:dev',
         'browserify:dev',
         'concat:build',
         'autoprefixer',
@@ -513,7 +521,7 @@ module.exports = function(grunt) {
     grunt.registerTask('vm', [
         'less',
         'ngconstant:vm',
-        'component:build',
+        'componentbuild:dev',
         'browserify:dev',
         'concat:build',
         'autoprefixer',
@@ -526,7 +534,7 @@ module.exports = function(grunt) {
         'clean:prod',
         'less',
         'ngconstant:qa',
-        'component:build',
+        'componentbuild:prod',
         'browserify:prod',
         'concat:build',
         'autoprefixer',
@@ -544,7 +552,7 @@ module.exports = function(grunt) {
         'install',
         'less',
         'ngconstant:prod',
-        'component:build',
+        'componentbuild:prod',
         'browserify:prod',
         'concat:build',
         'autoprefixer',
@@ -563,7 +571,7 @@ module.exports = function(grunt) {
         'install',
         'less',
         'ngconstant:dist',
-        'component:build',
+        'componentbuild:prod',
         'browserify:prod',
         'concat:build',
         'autoprefixer',
