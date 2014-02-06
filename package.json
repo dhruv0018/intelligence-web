@@ -26,8 +26,6 @@
     "devDependencies": {
         "connect-modrewrite": "~0.5.8",
         "component": "0.x",
-        "component-html": "0.0.3",
-        "component-json": "~0.1.4",
         "decomponentify": "0.0.3",
         "napa": "~0.3.0",
         "grunt": "~0.4.1",
