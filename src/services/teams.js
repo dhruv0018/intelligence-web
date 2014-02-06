@@ -68,6 +68,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 team = team || self;
 
+                delete team.league;
+                delete team.members;
+
                 if (team.schoolId) delete team.address;
 
                 parameters = {};
