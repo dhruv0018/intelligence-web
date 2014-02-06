@@ -187,7 +187,6 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
-                    'theme',
                     'node_modules/bootstrap/less',
                     'node_modules/font-awesome/Font-Awesome-3.2.1/less'
                 ]
@@ -196,13 +195,6 @@ module.exports = function(grunt) {
                 files: {
                     'build/theme.css': ['theme/**/*.less']
                 }
-            },
-            components: {
-                expand: true,
-                cwd:    'lib',
-                src:    '**/*.less',
-                dest:   'lib',
-                ext:    '.css'
             }
         },
 
