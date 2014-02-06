@@ -2,6 +2,8 @@
 
 'use strict';
 
+var less = require('component-less');
+
 var modRewrite = require('connect-modrewrite');
 
 module.exports = function(grunt) {
@@ -266,7 +268,26 @@ module.exports = function(grunt) {
                     dev: true,
                     sourceUrls: true,
                     prefix: 'assets',
-                    copy: true
+                    copy: true,
+                    configure: function(builder){
+
+                        var lessc = function(builder) {
+
+                            var options = {
+                                env: {
+                                    paths: [
+                                        'theme',
+                                        'node_modules/bootstrap/less',
+                                        'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                                    ]
+                                }
+                            };
+
+                            return less(builder, options);
+                        };
+
+                        builder.use(lessc);
+                    }
                 },
                 src: '.',
                 dest: './build'
@@ -275,7 +296,25 @@ module.exports = function(grunt) {
                 options: {
                     name: 'build',
                     prefix: 'assets',
-                    copy: true
+                    copy: true,
+                    configure: function(builder){
+
+                        var lessc = function(builder) {
+
+                            var options = {
+                                env: {
+                                    paths: [
+                                        'theme',
+                                        'node_modules/bootstrap/less',
+                                        'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                                    ]
+                                }
+                            };
+
+                            return less(builder, options);
+                        };
+
+                        builder.use(lessc);
                     }
                 },
                 src: '.',

@@ -26,6 +26,7 @@
     "devDependencies": {
         "connect-modrewrite": "~0.5.8",
         "component": "0.x",
+        "component-less": "jasonmorganson/component-less",
         "decomponentify": "0.0.3",
         "napa": "~0.3.0",
         "grunt": "~0.4.1",
