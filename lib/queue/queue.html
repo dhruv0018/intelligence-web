@@ -93,11 +93,29 @@
                         <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
                         <td>{{ GAME_STATUSES[GAME_STATUS_IDS[game.status]].name }}</td>
 
-                        <td data-ng-hide="game.indexedBy"><a href>assign</a></td>
-                        <td data-ng-show="game.indexedBy">{{ users[game.indexedBy].firstName }} {{ users[game.indexedBy].lastName }}</td>
+                        <td>
 
-                        <td data-ng-hide="game.qualityAssuredBy"><a href>assign</a></td>
-                        <td data-ng-show="game.qualityAssuredBy">{{ users[game.qualityAssuredBy].firstName }} {{ users[game.qualityAssuredBy].lastName }}</td>
+                            <button class="btn btn-link" data-ng-if="!game.hasIndexerAssignment()" data-ng-click="assign('indexer', game.id)">Assign</button>
+
+                            <ul data-ng-if="game.hasIndexerAssignment()" data-ng-repeat="assignment in game.indexerAssignments">
+
+                                <li data-ng-if="!assignment.isQa">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</li>
+
+                            </ul>
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-link" data-ng-if="!game.hasQaAssignment()" data-ng-click="assign('assurer', game.id)">Assign</button>
+
+                            <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments">
+
+                                <li data-ng-if="assignment.isQa">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</li>
+
+                            </ul>
+
+                        </td>
 
                     </tr>
 

@@ -123,6 +123,40 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var roster = rosters.pop();
 
                 return roster;
+            },
+
+            hasQaAssignment: function() {
+
+                var self = this;
+
+                var assignments = self.indexerAssignments;
+
+                if (assignments && assignments.length > 0) {
+
+                    assignments.some(function(assignment) {
+
+                        return assignment.isQa;
+                    });
+                }
+
+                return false;
+            },
+
+            hasIndexerAssignment: function() {
+
+                var self = this;
+
+                var assignments = self.indexerAssignments;
+
+                if (assignments && assignments.length > 0) {
+
+                    assignments.some(function(assignment) {
+
+                        return !assignment.isQa;
+                    });
+                }
+
+                return false;
             }
         };
 
