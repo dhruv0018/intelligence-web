@@ -18,11 +18,11 @@
                 <select class="form-control" name="tagset" data-ng-model="$storage.league.tagSetId" data-ng-options="tagset.id as tagset.name for tagset in tagsets">
                     <option value="">Tag Set</option>
                 </select>
-                <input class="form-control" name="number-of-periods" placeholder="Number of Periods" data-ng-model="$storage.league.numberOfPeriods" type="text" />
-                <input class="form-control" name="season-start-month" placeholder="Season Start Month" data-ng-model="$storage.league.seasonStartMonth" type="text" required />
-                <input class="form-control" name="season-start-day" placeholder="Season Start Day" data-ng-model="$storage.league.seasonStartDay" type="text" required />
-                <input class="form-control" name="season-end-month" placeholder="Season End Month" data-ng-model="$storage.league.seasonEndMonth" type="text" required />
-                <input class="form-control" name="season-end-day" placeholder="Season End Day" data-ng-model="$storage.league.seasonEndDay" type="text" required />
+                <input class="form-control" name="number-of-periods" placeholder="Number of Periods" data-ng-model="$storage.league.numberOfPeriods" type="number" min="1" />
+                <input class="form-control" name="season-start-month" placeholder="Season Start Month" data-ng-model="$storage.league.seasonStartMonth" type="number"  min="1" required />
+                <input class="form-control" name="season-start-day" placeholder="Season Start Day" data-ng-model="$storage.league.seasonStartDay" type="number"  min="1" required />
+                <input class="form-control" name="season-end-month" placeholder="Season End Month" data-ng-model="$storage.league.seasonEndMonth" type="number"  min="1" required />
+                <input class="form-control" name="season-end-day" placeholder="Season End Day" data-ng-model="$storage.league.seasonEndDay" type="number" min="1" required />
                 
             </div>
 
