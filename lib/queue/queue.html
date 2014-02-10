@@ -115,7 +115,7 @@
 
                     <tr data-ng-repeat="game in queue">
 
-                        <td>{{sports[leagues[teams[game.teamId].leagueId]['sportId']]['name']}}</td>
+                        <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                         <td>{{ game.id }}</td>
                         <td><a data-ui-sref="game-info({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
                         <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
