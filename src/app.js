@@ -19,6 +19,7 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'teams',
     'schools',
     'leagues',
+    'admin',
     'coach'
 ]);
 

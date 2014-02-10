@@ -1,0 +1,6 @@
+{
+    "name": "admin",
+    "scripts": [
+        "index.js"
+    ]
+}
