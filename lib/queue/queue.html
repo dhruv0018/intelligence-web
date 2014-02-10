@@ -43,27 +43,54 @@
 
             <div class="form-group">
 
-                <input class="form-control" name="coach" placeholder="Coach Name" data-ng-model="filter.coachName" type="search" autocomplete="on" list="queue-coaches" autosave="queue-coaches">
-                <datalist id="queue-coaches">
-                    <option data-ng-repeat="coach in coaches | unique:'name' | orderBy:'name'" value="{{coach.name}}"></option>
+                <input class="form-control" name="coach-firstname" placeholder="Coach First Name" data-ng-model="filter.coachFirstName" type="search" autocomplete="on" list="queue-coach-firstnames" autosave="queue-coach-firstnames">
+                <datalist id="queue-coach-firstnames">
+                    <option data-ng-repeat="coach in users | filter:ROLE_TYPE.COACH" value="{{coach.firstName}}"></option>
                 </datalist>
 
             </div>
 
             <div class="form-group">
 
-                <input class="form-control" name="indexer" placeholder="Indexer Name" data-ng-model="filter.indexerName" type="search" autocomplete="on" list="queue-indexers" autosave="queue-indexers">
-                <datalist id="queue-indexers">
-                    <option data-ng-repeat="indexer in indexers | unique:'name' | orderBy:'name'" value="{{indexer.name}}"></option>
+                <input class="form-control" name="coach-lastname" placeholder="Coach Last Name" data-ng-model="filter.coachLastName" type="search" autocomplete="on" list="queue-coach-lastnames" autosave="queue-coach-lastnames">
+                <datalist id="queue-coach-lastnames">
+                    <option data-ng-repeat="coach in users | filter:ROLE_TYPE.COACH | unique:'lastName' | orderBy:'lastName'" value="{{coach.lastName}}"></option>
                 </datalist>
 
             </div>
 
             <div class="form-group">
 
-                <input class="form-control" name="assurer" placeholder="QA Name" data-ng-model="filter.assurerName" type="search" autocomplete="on" list="queue-assurers" autosave="queue-assurers">
-                <datalist id="queue-assurers">
-                    <option data-ng-repeat="assurer in assurers | unique:'name' | orderBy:'name'" value="{{assurer.name}}"></option>
+                <input class="form-control" name="indexer-firstname" placeholder="Indexer First Name" data-ng-model="filter.indexerFirstName" type="search" autocomplete="on" list="queue-indexer-firstnames" autosave="queue-indexer-firstnames">
+                <datalist id="queue-indexer-firstnames">
+                    <option data-ng-repeat="indexer in users | filter:ROLE_TYPE.INDEXER | unique:'firstName' | orderBy:'firstName'" value="{{indexer.firstName}}"></option>
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="indexer-lastname" placeholder="Indexer Last Name" data-ng-model="filter.indexerLastName" type="search" autocomplete="on" list="queue-indexer-lastnames" autosave="queue-indexer-lastnames">
+                <datalist id="queue-indexer-lastnames">
+                    <option data-ng-repeat="indexer in users | filter:ROLE_TYPE.INDEXER | unique:'lastName' | orderBy:'lastName'" value="{{indexer.lastName}}"></option>
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="assurer-firstname" placeholder="QA First Name" data-ng-model="filter.qaFirstName" type="search" autocomplete="on" list="queue-assurer-firstnames" autosave="queue-assurer-firstnames">
+                <datalist id="queue-assurer-firstnames">
+                    <option data-ng-repeat="assurer in users | filter:ROLE_TYPE.INDEXER | unique:'firstName' | orderBy:'firstName'" value="{{assurer.firstName}}"></option>
+                </datalist>
+
+            </div>
+
+            <div class="form-group">
+
+                <input class="form-control" name="assurer-lastname" placeholder="QA Last Name" data-ng-model="filter.qaLastName" type="search" autocomplete="on" list="queue-assurer-lastnames" autosave="queue-assurer-lastnames">
+                <datalist id="queue-assurer-lastnames">
+                    <option data-ng-repeat="assurer in users | filter:ROLE_TYPE.INDEXER | unique:'lastName' | orderBy:'lastName'" value="{{assurer.lastName}}"></option>
                 </datalist>
 
             </div>
