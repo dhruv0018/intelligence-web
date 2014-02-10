@@ -34,7 +34,7 @@
 
             <div class="form-group">
 
-                <input class="form-control" name="team" placeholder="Team Name" data-ng-model="filter.teamName" type="search" autocomplete="on" list="queue-teams" autosave="queue-teams">
+                <input class="form-control" name="team" placeholder="Team Name" data-ng-model="filter.team" type="search" autocomplete="on" list="queue-teams" autosave="queue-teams">
                 <datalist id="queue-teams">
                     <option data-ng-repeat="team in teams | unique:'name' | orderBy:'name'" value="{{team.name}}"></option>
                 </datalist>
