@@ -17,6 +17,7 @@
             <div class="form-group">
 
                 <select class="form-control" name="status" data-ng-model="filter.status">
+                    <option value="">Status</option>
                     <option data-ng-value="status.id" data-ng-selected="status.id === filter.status" data-ng-repeat="status in GAME_STATUSES">{{status.name}}</option>
                 </select>
 
