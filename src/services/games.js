@@ -19,16 +19,23 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return game;
             },
 
-            get: function(gameId, callback) {
+            get: function(gameId, success, error) {
 
                 var self = this;
 
-                self.resource.get({ id: gameId }, function(game) {
+                var callback = function(game) {
 
                     game = self.extendGame(game);
 
-                    return callback(game);
-                });
+                    return success ? success(game) : game;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get game');
+                };
+
+                return self.resource.get({ id: gameId }, callback, error);
             },
 
             getList: function(filter, success, error) {
