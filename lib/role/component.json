@@ -5,7 +5,7 @@
         "roleListItem.html"
     ],
     "styles": [
-        "styles.css"
+        "styles.less"
     ],
     "scripts": [
         "index.js"

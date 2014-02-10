@@ -1,7 +1,7 @@
 {
     "name": "rolebar",
     "styles": [
-        "styles.css"
+        "styles.less"
     ],
     "scripts": [
         "index.js"

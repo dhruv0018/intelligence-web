@@ -2,6 +2,8 @@
 
 'use strict';
 
+var less = require('component-less');
+
 var modRewrite = require('connect-modrewrite');
 
 module.exports = function(grunt) {
@@ -185,7 +187,6 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
-                    'theme',
                     'node_modules/bootstrap/less',
                     'node_modules/font-awesome/Font-Awesome-3.2.1/less'
                 ]
@@ -194,13 +195,6 @@ module.exports = function(grunt) {
                 files: {
                     'build/theme.css': ['theme/**/*.less']
                 }
-            },
-            components: {
-                expand: true,
-                cwd:    'lib',
-                src:    '**/*.less',
-                dest:   'lib',
-                ext:    '.css'
             }
         },
 
@@ -259,19 +253,64 @@ module.exports = function(grunt) {
 
         /* Build process - JS */
 
-        component: {
-            install: {
+        componentbuild: {
+            dev: {
                 options: {
-                    action: 'install'
-                }
-            },
-            build: {
-                options: {
-                    args: {
-                        prefix: 'assets',
-                        use: 'component-html,component-json'
+                    name: 'build',
+                    dev: true,
+                    sourceUrls: true,
+                    prefix: 'assets',
+                    copy: true,
+                    configure: function(builder){
+
+                        var lessc = function(builder) {
+
+                            var options = {
+                                env: {
+                                    paths: [
+                                        'theme',
+                                        'node_modules/bootstrap/less',
+                                        'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                                    ]
+                                }
+                            };
+
+                            return less(builder, options);
+                        };
+
+                        builder.use(lessc);
                     }
-                }
+                },
+                src: '.',
+                dest: './build'
+            },
+            prod: {
+                options: {
+                    name: 'build',
+                    prefix: 'assets',
+                    copy: true,
+                    configure: function(builder){
+
+                        var lessc = function(builder) {
+
+                            var options = {
+                                env: {
+                                    paths: [
+                                        'theme',
+                                        'node_modules/bootstrap/less',
+                                        'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                                    ]
+                                }
+                            };
+
+                            return less(builder, options);
+                        };
+
+                        builder.use(lessc);
+                    }
+                },
+                src: '.',
+                dest: './build'
             }
         },
 
@@ -500,7 +539,7 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', [
         'less',
         'ngconstant:dev',
-        'component:build',
+        'componentbuild:dev',
         'browserify:dev',
         'concat:build',
         'autoprefixer',
@@ -513,7 +552,7 @@ module.exports = function(grunt) {
     grunt.registerTask('vm', [
         'less',
         'ngconstant:vm',
-        'component:build',
+        'componentbuild:dev',
         'browserify:dev',
         'concat:build',
         'autoprefixer',
@@ -526,7 +565,7 @@ module.exports = function(grunt) {
         'clean:prod',
         'less',
         'ngconstant:qa',
-        'component:build',
+        'componentbuild:prod',
         'browserify:prod',
         'concat:build',
         'autoprefixer',
@@ -544,7 +583,7 @@ module.exports = function(grunt) {
         'install',
         'less',
         'ngconstant:prod',
-        'component:build',
+        'componentbuild:prod',
         'browserify:prod',
         'concat:build',
         'autoprefixer',
@@ -563,7 +602,7 @@ module.exports = function(grunt) {
         'install',
         'less',
         'ngconstant:dist',
-        'component:build',
+        'componentbuild:prod',
         'browserify:prod',
         'concat:build',
         'autoprefixer',

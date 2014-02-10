@@ -10,6 +10,6 @@
         "index.js"
     ],
     "styles": [
-        "styles.css"
+        "styles.less"
     ]
 }
