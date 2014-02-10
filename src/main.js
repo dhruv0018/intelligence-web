@@ -2,8 +2,23 @@ var pkg = require('../package.json');
 
 var component = require('../build/build.js');
 
-require('angular');
-require('bootstrap');
+require('angular/angular');
+require('angular-sanitize/angular-sanitize');
+require('angular-resource/angular-resource');
+require('angular-bootstrap/ui-bootstrap-tpls');
+require('angular-ui-utils/ui-utils-bower/ui-utils');
+require('angular-ui-router/ui-router-0.2.7/release/angular-ui-router');
+require('ngStorage/ngStorage');
+require('flowjs');
+require('flow/src/angular-flow');
+require('flow/src/provider');
+require('flow/src/directives/btn');
+require('flow/src/directives/drop');
+require('flow/src/directives/drag-events');
+require('flow/src/directives/init');
+require('flow/src/directives/events');
+require('flow/src/directives/transfers');
+require('flow/src/directives/img');
 
 require('./app');
 

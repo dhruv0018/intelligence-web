@@ -101,6 +101,24 @@ var ROLES = {
     }
 };
 
+var INDEXER_GROUPS_ID = {
+    1: 'US Marketplace',
+    2: 'India Marketplace',
+    3: 'India Office',
+    4: 'Philippines Office'
+};
+
+IntelligenceWebClient.constant('INDEXER_GROUPS_ID', INDEXER_GROUPS_ID);
+
+var INDEXER_GROUPS = {
+    US_MARKETPLACE: 1,
+    INDIA_MARKETPLACE: 2,
+    INDIA_OFFICE: 3,
+    PHILIPPINES_OFFICE: 4
+};
+
+IntelligenceWebClient.constant('INDEXER_GROUPS', INDEXER_GROUPS);
+
 IntelligenceWebClient.constant('ROLES', ROLES);
 
 IntelligenceWebClient.factory('UsersResource', [

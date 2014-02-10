@@ -2,6 +2,8 @@
 
 'use strict';
 
+var less = require('component-less');
+
 var modRewrite = require('connect-modrewrite');
 
 module.exports = function(grunt) {
@@ -179,56 +181,20 @@ module.exports = function(grunt) {
             build: {
                 src: ['build/build.css', 'build/theme.css'],
                 dest: 'build/themed.css'
-            },
-            angular: {
-                src: [
-                    'vendor/angular/angular.js',
-                    'vendor/ngstorage/ngStorage.js',
-                    'vendor/flow.js/src/flow.js',
-                    'vendor/ng-flow/src/directives/*.js',
-                    'vendor/ng-flow/src/angular-flow.js',
-                    'vendor/ng-flow/src/provider.js',
-                    'vendor/angular-resource/angular-resource.js',
-                    'vendor/angular-sanitize/angular-sanitize.js',
-                    'vendor/angular-ui-utils/ui-utils.js',
-                    'vendor/angular-ui-router/release/angular-ui-router.js'],
-                dest: 'build/angular.js'
-            },
-            angularmin: {
-                src: [
-                    'vendor/angular/angular.min.js',
-                    'vendor/ngstorage/ngStorage.min.js',
-                    'vendor/flow.js/src/flow.js', /* TODO: Minify this file. */
-                    'vendor/ng-flow/src/directives/*.js', /* TODO: Minify these files. */
-                    'vendor/ng-flow/src/angular-flow.js', /* TODO: Minify this file. */
-                    'vendor/ng-flow/src/provider.js', /* TODO: Minify this file. */
-                    'vendor/angular-resource/angular-resource.min.js',
-                    'vendor/angular-sanitize/angular-sanitize.min.js',
-                    'vendor/angular-ui-utils/ui-utils.min.js',
-                    'vendor/angular-ui-router/release/angular-ui-router.min.js'],
-                dest: 'build/angular.min.js'
             }
         },
 
         less: {
             options: {
                 paths: [
-                    'theme',
-                    'vendor/bootstrap/less',
-                    'vendor/font-awesome/less'
+                    'node_modules/bootstrap/less',
+                    'node_modules/font-awesome/Font-Awesome-3.2.1/less'
                 ]
             },
             theme: {
                 files: {
                     'build/theme.css': ['theme/**/*.less']
                 }
-            },
-            components: {
-                expand: true,
-                cwd:    'lib',
-                src:    '**/*.less',
-                dest:   'lib',
-                ext:    '.css'
             }
         },
 
@@ -287,27 +253,64 @@ module.exports = function(grunt) {
 
         /* Build process - JS */
 
-        bower: {
-            install: {
+        componentbuild: {
+            dev: {
                 options: {
-                    targetDir: 'vendor'
-                }
-            }
-        },
+                    name: 'build',
+                    dev: true,
+                    sourceUrls: true,
+                    prefix: 'assets',
+                    copy: true,
+                    configure: function(builder){
 
-        component: {
-            install: {
-                options: {
-                    action: 'install'
-                }
-            },
-            build: {
-                options: {
-                    args: {
-                        prefix: 'assets',
-                        use: 'component-html,component-json'
+                        var lessc = function(builder) {
+
+                            var options = {
+                                env: {
+                                    paths: [
+                                        'theme',
+                                        'node_modules/bootstrap/less',
+                                        'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                                    ]
+                                }
+                            };
+
+                            return less(builder, options);
+                        };
+
+                        builder.use(lessc);
                     }
-                }
+                },
+                src: '.',
+                dest: './build'
+            },
+            prod: {
+                options: {
+                    name: 'build',
+                    prefix: 'assets',
+                    copy: true,
+                    configure: function(builder){
+
+                        var lessc = function(builder) {
+
+                            var options = {
+                                env: {
+                                    paths: [
+                                        'theme',
+                                        'node_modules/bootstrap/less',
+                                        'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                                    ]
+                                }
+                            };
+
+                            return less(builder, options);
+                        };
+
+                        builder.use(lessc);
+                    }
+                },
+                src: '.',
+                dest: './build'
             }
         },
 
@@ -315,20 +318,6 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     transform: ['decomponentify'],
-                    shim: {
-                        angular: {
-                            path: 'build/angular.js',
-                            exports: 'angular'
-                        },
-                        angularui: {
-                            path: 'vendor/angular-ui-router/release/angular-ui-router.js',
-                            exports: 'angularui'
-                        },
-                        bootstrap: {
-                            path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
-                            exports: 'bootstrap'
-                        }
-                    }
                 },
                 files: {
                     'build/bundle.js': ['src/main.js']
@@ -337,16 +326,6 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     transform: ['decomponentify'],
-                    shim: {
-                        angular: {
-                            path: 'build/angular.min.js',
-                            exports: 'angular'
-                        },
-                        bootstrap: {
-                            path: 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
-                            exports: 'bootstrap'
-                        }
-                    }
                 },
                 files: {
                     'build/bundle.js': ['src/main.js']
@@ -559,9 +538,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dev', [
         'less',
-        'concat:angular',
         'ngconstant:dev',
-        'component:build',
+        'componentbuild:dev',
         'browserify:dev',
         'concat:build',
         'autoprefixer',
@@ -573,9 +551,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('vm', [
         'less',
-        'concat:angular',
         'ngconstant:vm',
-        'component:build',
+        'componentbuild:dev',
         'browserify:dev',
         'concat:build',
         'autoprefixer',
@@ -586,11 +563,9 @@ module.exports = function(grunt) {
 
     grunt.registerTask('qa', [
         'clean:prod',
-        'install',
         'less',
-        'concat:angularmin',
         'ngconstant:qa',
-        'component:build',
+        'componentbuild:prod',
         'browserify:prod',
         'concat:build',
         'autoprefixer',
@@ -607,9 +582,8 @@ module.exports = function(grunt) {
         'clean:prod',
         'install',
         'less',
-        'concat:angularmin',
         'ngconstant:prod',
-        'component:build',
+        'componentbuild:prod',
         'browserify:prod',
         'concat:build',
         'autoprefixer',
@@ -627,9 +601,8 @@ module.exports = function(grunt) {
         'clean:prod',
         'install',
         'less',
-        'concat:angularmin',
         'ngconstant:dist',
-        'component:build',
+        'componentbuild:prod',
         'browserify:prod',
         'concat:build',
         'autoprefixer',
