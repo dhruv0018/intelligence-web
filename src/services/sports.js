@@ -22,7 +22,7 @@ IntelligenceWebClient.factory('SportsFactory', [
                     throw new Error('Could not get sport');
                 };
 
-                return self.resource.get({ id: id }, success, error);
+                return self.resource.get({ id: id }, callback, error);
             },
 
             getList: function(filter, success, error, index) {
