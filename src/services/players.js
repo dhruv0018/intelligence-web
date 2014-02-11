@@ -8,15 +8,64 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
             resource: PlayersResource,
 
-            getList: function(filter, success, error) {
+            extendPlayer: function(player) {
 
                 var self = this;
 
+                /* Copy all of the properties from the retrieved $resource
+                 * "player" object. */
+                angular.extend(player, self);
+
+                return player;
+            },
+
+            get: function(id, success, error) {
+
+                var self = this;
+
+                var callback = function(player) {
+
+                    player = self.extendPlayer(player);
+
+                    return success ? success(player) : player;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get player');
+                };
+
+                return self.resource.get({ id: id }, callback, error);
+            },
+
+            getList: function(filter, success, error, index) {
+
+                var self = this;
+
+                if (angular.isFunction(filter)) {
+
+                    index = error;
+                    error = success;
+                    success = filter;
+                    filter = null;
+                }
+
                 filter = filter || {};
 
-                success = success || function(players) {
+                var callback = function(players) {
 
-                    return players;
+                    var indexedPlayers = {};
+
+                    players.forEach(function(player) {
+
+                        player = self.extendPlayer(player);
+
+                        indexedPlayers[player.id] = player;
+                    });
+
+                    players = index ? indexedPlayers : players;
+
+                    return success ? success(players) : players;
                 };
 
                 error = error || function() {
@@ -24,7 +73,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     throw new Error('Could not load players list');
                 };
 
-                return this.resource.query(filter, success, error);
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(rosterId, players) {
