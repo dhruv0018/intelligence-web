@@ -43,6 +43,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || 1000;
 
                 var callback = function(games) {
 
