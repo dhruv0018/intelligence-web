@@ -42,6 +42,14 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 var self = this;
 
+                if (angular.isFunction(filter)) {
+
+                    index = error;
+                    error = success;
+                    success = filter;
+                    filter = null;
+                }
+
                 filter = filter || {};
                 filter.start = filter.start || 0;
                 filter.count = filter.count || 1000;
