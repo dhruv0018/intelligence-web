@@ -47,16 +47,23 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return user;
             },
 
-            get: function(userId, callback) {
+            get: function(id, success, error) {
 
                 var self = this;
 
-                self.resource.get({ id: userId }, function(user) {
+                var callback = function(user) {
 
                     user = self.extendUser(user);
 
-                    callback(user);
-                });
+                    return success ? success(user) : user;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get user');
+                };
+
+                return self.resource.get({ id: id }, callback, error);
             },
 
             getList: function(filter, success, error) {
@@ -75,11 +82,13 @@ IntelligenceWebClient.factory('UsersFactory', [
                 filter.start = filter.start || 0;
                 filter.count = filter.count || 1000;
 
+                var callback = function(users) {
 
-                error = error || function() {
 
-                    throw new Error('Could not load users list');
-                };
+                    users.forEach(function(user) {
+
+                        user = self.extendUser(user);
+                    });
 
                 return self.resource.query(filter, function(users){
                     for(var i = 0; i < users.length; i++){
@@ -88,7 +97,12 @@ IntelligenceWebClient.factory('UsersFactory', [
                     return success ? success(users) : users;
                 }, error);
 
+                error = error || function() {
 
+                    throw new Error('Could not load users list');
+                };
+
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(user) {
@@ -103,7 +117,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 * the user is present on the server, so update them (PUT).
                 * If not present then this a new user so create them (POST). */
                 if (user.id) {
-                    
+
                     var updateUser = new UsersResource(user);
                     return updateUser.$update();
 
@@ -265,14 +279,14 @@ IntelligenceWebClient.factory('UsersFactory', [
             hasNoRoles: function() {
                 var self = this;
                 var roles = self.roles;
-                
+
                 if (!roles || roles.length < 1 ){
                     return true;
                 } else {
                     return false;
                 }
             },
-            
+
             /**
              * @class User
              * @method
