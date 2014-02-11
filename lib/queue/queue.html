@@ -8,8 +8,9 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="sport" data-ng-model="filter.sport" data-ng-options="sport.id as sport.name for sport in sports">
+                <select class="form-control" name="sport" data-ng-model="filter.sport">
                     <option value="">Pick a Sport</option>
+                    <option data-ng-value="sport.id" data-ng-selected="sport.id === filter.sport" data-ng-repeat="sport in sports">{{sport.name}}</option>
                 </select>
 
             </div>
