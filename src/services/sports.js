@@ -8,7 +8,7 @@ IntelligenceWebClient.factory('SportsFactory', [
 
             resource: SportsResource,
 
-            get: function(sportId, success, error) {
+            get: function(id, success, error) {
 
                 var self = this;
 
@@ -22,7 +22,7 @@ IntelligenceWebClient.factory('SportsFactory', [
                     throw new Error('Could not get sport');
                 };
 
-                return self.resource.get({ id: sportId }, success, error);
+                return self.resource.get({ id: id }, success, error);
             },
 
             getList: function(filter, success, error, index) {

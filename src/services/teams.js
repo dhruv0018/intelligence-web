@@ -19,7 +19,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return team;
             },
 
-            get: function(teamId, success, error) {
+            get: function(id, success, error) {
 
                 var self = this;
 
@@ -35,7 +35,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not get team');
                 };
 
-                return self.resource.get({ id: teamId }, callback, error);
+                return self.resource.get({ id: id }, callback, error);
             },
 
             getList: function(filter, success, error, index) {
