@@ -75,12 +75,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                 filter.start = filter.start || 0;
                 filter.count = filter.count || 1000;
 
-                if(!filter.start){
-                    filter.start = 0;
-                }
-                if(!filter.count){
-                    filter.count = 1000;
-                }
 
                 error = error || function() {
 
