@@ -58,7 +58,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     var indexedGames = {};
 
-                    games.forEach(function(games) {
+                    games.forEach(function(game) {
 
                         game = self.extendGame(game);
 
