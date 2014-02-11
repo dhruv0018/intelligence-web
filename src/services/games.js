@@ -19,7 +19,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return game;
             },
 
-            get: function(gameId, success, error) {
+            get: function(id, success, error) {
 
                 var self = this;
 
@@ -44,9 +44,14 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 filter = filter || {};
 
-                success = success || function(games) {
+                var callback = function(games) {
 
-                    return games.forEach(self.extendGame, self);
+                    games.forEach(function(games) {
+
+                        game = self.extendGame(game);
+                    });
+
+                    return success ? success(games) : games;
                 };
 
                 error = error || function() {

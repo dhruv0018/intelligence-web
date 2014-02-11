@@ -12,9 +12,9 @@ IntelligenceWebClient.factory('SportsFactory', [
 
                 var self = this;
 
-                success = success || function(sport) {
+                var callback = function(sport) {
 
-                    return sport;
+                    return success ? success(sport) : sport;
                 };
 
                 error = error || function() {
@@ -29,8 +29,15 @@ IntelligenceWebClient.factory('SportsFactory', [
 
                 var self = this;
                 filter = filter || {};
+
+                var callback = function(sports) {
+
+                    return success ? success(sports) : sports;
+                };
+
                 error = error || function() {
-                    throw new Error('Could not load leagues list');
+
+                    throw new Error('Could not load sports list');
                 };
 
                 return self.resource.query(filter, function(results){
