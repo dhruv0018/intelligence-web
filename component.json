@@ -14,6 +14,7 @@
         "users",
         "teams",
         "schools",
+        "queue",
         "leagues",
         "coach",
         "videoplayer"
