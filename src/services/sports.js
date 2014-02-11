@@ -58,9 +58,7 @@ IntelligenceWebClient.factory('SportsFactory', [
                     throw new Error('Could not load sports list');
                 };
 
-                return self.resource.query(filter, function(results){
-                    return success ? success(results) : results;
-                }, error);
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(sport) {

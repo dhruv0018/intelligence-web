@@ -66,7 +66,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return self.resource.get({ id: id }, callback, error);
             },
 
-            getList: function(filter, success, error) {
+            getList: function(filter, success, error, index) {
 
                 var self = this;
 
