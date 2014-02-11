@@ -38,7 +38,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return self.resource.get({ id: teamId }, callback, error);
             },
 
-            getList: function(filter, success, error) {
+            getList: function(filter, success, error, index) {
 
                 var self = this;
 
@@ -56,10 +56,16 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 var callback = function(teams) {
 
+                    var indexedTeams = {};
+
+                    teams.forEach(function(team) {
 
                         team = self.extendTeam(team);
 
+                        indexedTeams[team.id] = team;
                     });
+
+                    teams = index ? indexedTeams : teams;
 
                     return success ? success(teams) : teams;
                 };

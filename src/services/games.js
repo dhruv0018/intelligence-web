@@ -38,7 +38,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.resource.get({ id: gameId }, callback, error);
             },
 
-            getList: function(filter, success, error) {
+            getList: function(filter, success, error, index) {
 
                 var self = this;
 
@@ -56,10 +56,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var callback = function(games) {
 
+                    var indexedGames = {};
+
                     games.forEach(function(games) {
 
                         game = self.extendGame(game);
+
+                        indexedGames[game.id] = game;
                     });
+
+                    games = index ? indexedGames : games;
 
                     return success ? success(games) : games;
                 };
