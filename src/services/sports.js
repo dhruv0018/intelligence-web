@@ -28,6 +28,15 @@ IntelligenceWebClient.factory('SportsFactory', [
             getList: function(filter, success, error, index) {
 
                 var self = this;
+
+                if (angular.isFunction(filter)) {
+
+                    index = error;
+                    error = success;
+                    success = filter;
+                    filter = null;
+                }
+
                 filter = filter || {};
 
                 var callback = function(sports) {
