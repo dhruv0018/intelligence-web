@@ -75,7 +75,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     throw new Error('Could not load games list');
                 };
 
-                return self.resource.query(filter, success, error);
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(game, success, error) {
