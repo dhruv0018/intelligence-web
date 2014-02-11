@@ -125,6 +125,43 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return roster;
             },
 
+            assignee: function() {
+
+                if (!this.indexerAssignments) return undefined;
+
+                /* The last assignment in the array is the current one. */
+                return this.indexerAssignments.slice(-1).pop();
+            },
+
+            isAssignedToQa: function(assignee) {
+
+                var assignee = assignee || this.assignee();
+
+                if (!assignee) return false;
+
+                return assignee.isQa;
+            },
+
+            isAssignedToIndexer: function(assignee) {
+
+                return !isAssignedToQa(assignee);
+            },
+
+            canBeAssignedToQa: function() {
+
+                /* A game needs to be indexed before it can be assigned to QA. */
+                return this.hasIndexerAssignment();
+            },
+
+            canBeAssignedToIndexer: function() {
+
+                /* If the game is in QA it can not be assigned to a regular indexer. */
+                if (this.isAssignedToQa()) return false;
+
+                /* TODO: Fill in other business logic here. */
+                return true;
+            },
+
             hasQaAssignment: function() {
 
                 var self = this;
@@ -135,7 +172,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     assignments.some(function(assignment) {
 
-                        return assignment.isQa;
+                        return self.isAssignedToQa(assignment);
                     });
                 }
 
@@ -152,7 +189,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     assignments.some(function(assignment) {
 
-                        return !assignment.isQa;
+                        return self.isAssignedToIndexer(assignment);
                     });
                 }
 
