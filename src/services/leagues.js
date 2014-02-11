@@ -43,6 +43,15 @@ IntelligenceWebClient.factory('LeaguesFactory', [
 
                 var callback = function(leagues) {
 
+                    var indexedLeagues = {};
+
+                    leagues.forEach(function(league) {
+
+                        indexedLeagues[league.id] = league;
+                    });
+
+                    leagues = index ? indexedLeagues : leagues;
+
                     return success ? success(leagues) : leagues;
                 };
 

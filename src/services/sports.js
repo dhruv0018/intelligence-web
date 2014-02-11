@@ -41,6 +41,15 @@ IntelligenceWebClient.factory('SportsFactory', [
 
                 var callback = function(sports) {
 
+                    var indexedSports = {};
+
+                    sports.forEach(function(sport) {
+
+                        indexedSports[sport.id] = sport;
+                    });
+
+                    sports = index ? indexedSports : sports;
+
                     return success ? success(sports) : sports;
                 };
 
