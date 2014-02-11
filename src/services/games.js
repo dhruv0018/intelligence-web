@@ -35,7 +35,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     throw new Error('Could not get game');
                 };
 
-                return self.resource.get({ id: gameId }, callback, error);
+                return self.resource.get({ id: id }, callback, error);
             },
 
             getList: function(filter, success, error, index) {
