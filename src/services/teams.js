@@ -44,9 +44,14 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 filter = filter || {};
 
-                success = success || function(teams) {
+                var callback = function(teams) {
 
-                    return teams.forEach(self.extendTeam, self);
+
+                        team = self.extendTeam(team);
+
+                    });
+
+                    return success ? success(teams) : teams;
                 };
 
                 error = error || function() {
@@ -54,12 +59,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not load teams list');
                 };
 
-                return self.resource.query(filter, success, error);
-            },
-
-            filter: function(filter, success, error) {
-
-                return this.getList(filter, success, error);
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(team, success, error) {
