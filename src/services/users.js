@@ -84,18 +84,19 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var callback = function(users) {
 
+                    var indexedUsers = {};
 
                     users.forEach(function(user) {
 
                         user = self.extendUser(user);
+
+                        indexedUsers[user.id] = user;
                     });
 
-                return self.resource.query(filter, function(users){
-                    for(var i = 0; i < users.length; i++){
-                        users[i] = self.extendUser(users[i]);
-                    }
+                    users = index ? indexedUsers : users;
+
                     return success ? success(users) : users;
-                }, error);
+                };
 
                 error = error || function() {
 
