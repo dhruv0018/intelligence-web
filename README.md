@@ -6,10 +6,10 @@ Krossover Intelligence product.
 
 ## Build Status
 ### master branch
-[ ![Codeship Status for krossoverintelligence/intelligence-web-client](https://www.codeship.io/projects/976f2ba0-6b3e-0131-6c18-16513a5a3791/status?branch=master)](https://www.codeship.io/projects/12988)
+[ ![Codeship Status for krossoverintelligence/kvs](https://www.codeship.io/projects/0d800020-75a8-0131-d068-3eb47c6d1583/status?branch=master)](https://www.codeship.io/projects/13863)
 
 ### QA branch
-[ ![Codeship Status for krossoverintelligence/intelligence-web-client](https://www.codeship.io/projects/976f2ba0-6b3e-0131-6c18-16513a5a3791/status?branch=qa)](https://www.codeship.io/projects/12988)
+[ ![Codeship Status for krossoverintelligence/kvs](https://www.codeship.io/projects/0d800020-75a8-0131-d068-3eb47c6d1583/status?branch=qa)](https://www.codeship.io/projects/13863)
 
 # Getting Started with the web client
 
