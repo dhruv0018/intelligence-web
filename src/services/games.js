@@ -208,8 +208,18 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Check if all current indexer assignments are completed. */
                 return assignments.every(function(assignment) {
 
-                    return self.isAssignedToIndexer(assignment) ?
-                           self.isAssignmentCompleted(assignment) : true;
+                    /* If it is an indexer assignment. */
+                    if (self.isAssignedToIndexer(assignment)) {
+
+                        /* Make sure the assignment was completed. */
+                        return self.isAssignmentCompleted(assignment);
+
+                    /* Otherwise; if the assignment is unknown. */
+                    } else {
+
+                        /* Make the assumption that it is alright to assign to an indexer. */
+                        return true;
+                    }
                 });
             },
 
@@ -232,10 +242,24 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Check if all current Indexer and QA assignments are completed. */
                 return assignments.every(function(assignment) {
 
-                    return self.isAssignedToIndexer(assignment) ?
-                           self.isAssignmentCompleted(assignment) :
-                           self.isAssignedToQa(assignment) ?
-                           self.isAssignmentCompleted(assignment) : true;
+                    /* If it is an indexer assignment. */
+                    if (self.isAssignedToIndexer(assignment)) {
+
+                        /* It needs to be completed before QA. */
+                        return self.isAssignmentCompleted(assignment);
+
+                    /* Or if it is a QA assignment. */
+                    } else if (self.isAssignedToQa(assignment)) {
+
+                        /* Make sure the assignment was completed. */
+                        return self.isAssignmentCompleted(assignment);
+
+                    /* Otherwise; if the assignment is unknown. */
+                    } else {
+
+                        /* Make the assumption that it is alright to assign to QA. */
+                        return true;
+                    }
                 });
             },
         };
