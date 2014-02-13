@@ -332,6 +332,12 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     transform: ['decomponentify'],
+                    shim: {
+                        flowjs: {
+                            path: 'node_modules/flowjs/src/flow.js',
+                            exports: 'flowjs'
+                        }
+                    }
                 },
                 files: {
                     'build/bundle.js': ['src/main.js']
