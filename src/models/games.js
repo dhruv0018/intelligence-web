@@ -9,6 +9,17 @@ var GAME_TYPES = [
 
 IntelligenceWebClient.constant('GAME_TYPES', GAME_TYPES);
 
+var GAME_NOTE_TYPES = {
+
+    COACH_NOTE: 1,
+    INDEXER_NOTE: 2,
+    QA_NOTE: 3,
+    SET_ASIDE_NOTE: 4,
+    COACH_COMPLAINT_NOTE: 5
+};
+
+IntelligenceWebClient.constant('GAME_NOTE_TYPES', GAME_NOTE_TYPES);
+
 IntelligenceWebClient.factory('GamesResource', [
     'config', '$resource',
     function(config, $resource) {

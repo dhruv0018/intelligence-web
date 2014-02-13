@@ -497,15 +497,15 @@ module.exports = function(grunt) {
             },
             config: {
                 files: ['config/*.json', 'lib/**/*.json'],
-                tasks: ['component:build', 'browserify:dev', 'copy:dev', 'notify']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
             },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
-                tasks: ['htmlhint', 'component:build', 'browserify:dev', 'copy:dev', 'notify']
+                tasks: ['htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
             },
             css: {
                 files: ['src/**/*.css'],
-                tasks: ['csslint', 'component:build', 'browserify:dev', 'copy:dev', 'notify']
+                tasks: ['csslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
             },
             theme: {
                 files: ['theme/**/*.less'],
@@ -513,11 +513,11 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['lib/**/*.less'],
-                tasks: ['newer:less:components', 'component:build', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
+                tasks: ['newer:less:components', 'componentbuild:dev', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
             },
             js: {
                 files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
-                tasks: ['jshint', 'component:build', 'browserify:dev', 'copy:dev', 'notify']
+                tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
             }
         }
 
