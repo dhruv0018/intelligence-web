@@ -1,15 +1,12 @@
 {
     "name": "queue",
     "templates": [
-        "game.html",
         "queue.html"
     ],
     "scripts": [
-        "game.js",
         "index.js"
     ],
     "styles": [
-        "game.less",
         "queue.less"
     ]
 }
