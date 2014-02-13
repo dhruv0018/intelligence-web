@@ -7,6 +7,15 @@
         "type": "git",
         "url": "git@bitbucket.org:krossoverintelligence/intelligence-web-client.git"
     },
+    "browser": {
+        "flow.js": "./node_modules/flowjs/src/flow.js"
+    },
+    "browserify-shim": {
+        "./node_modules/flowjs/src/flow.js": "Flow"
+    },
+    "browserify": {
+        "transform": [ "browserify-shim" ]
+    },
     "napa": {
         "angular": "angular/bower-angular",
         "angular-sanitize": "angular/bower-angular-sanitize",
@@ -33,6 +42,7 @@
         "component": "0.x",
         "component-less": "jasonmorganson/component-less",
         "decomponentify": "0.0.3",
+        "browserify-shim": "~3.2.2",
         "napa": "~0.3.0",
         "grunt": "~0.4.1",
         "load-grunt-tasks": "~0.3.0",
@@ -78,6 +88,7 @@
         "mocha": "~1.17.1",
         "connect-modrewrite": "~0.5.8"
     },
+    "main": "./src/main.js",
     "scripts": {
         "install": "napa; component install",
         "test": "node_modules/.bin/grunt test"
