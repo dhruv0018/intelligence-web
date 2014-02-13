@@ -317,6 +317,7 @@ module.exports = function(grunt) {
         browserify: {
             dev: {
                 options: {
+                    debug: true,
                     transform: ['decomponentify'],
                     shim: {
                         flowjs: {
