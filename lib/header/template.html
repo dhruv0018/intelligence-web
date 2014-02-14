@@ -18,6 +18,14 @@
 
     </menu>
 
+    <!-- Indexer menu -->
+    <menu class="nav navbar-nav" data-ng-if="currentUser.is(INDEXER)">
+
+        <li data-ui-sref-active="active"><a data-ui-sref="indexer-games">Games</a></li>
+        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="indexer-history">History</a></li>
+
+    </menu>
+
     <!-- Coach menu -->
     <menu class="nav navbar-nav" data-ng-if="currentUser.is(COACH)">
 
