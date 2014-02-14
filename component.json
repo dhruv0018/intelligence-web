@@ -15,6 +15,7 @@
         "teams",
         "schools",
         "leagues",
+        "indexer",
         "coach"
     ],
     "dependencies": {
