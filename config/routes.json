@@ -207,6 +207,11 @@
         "Indexer": true
     },
 
+    "indexing": {
+
+        "Indexer": true
+    },
+
     "add-film": {
 
         "Head Coach": true,

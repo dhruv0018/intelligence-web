@@ -75,6 +75,7 @@ component('schools');
 component('leagues');
 
 component('indexer');
+component('indexing');
 component('coach');
 
 angular.bootstrap(document, [pkg.name]);
