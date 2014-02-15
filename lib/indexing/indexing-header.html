@@ -6,18 +6,34 @@
 
     </header>
 
-    <!-- Indexing menu -->
-    <menu class="nav navbar-nav navbar-right">
+    <div class="info">
 
-        <li><button class="btn btn-primary navbar-btn" data-ui-sref="indexer-games-indexing-notes">Notes</button></li>
-        <li><button class="btn btn-primary navbar-btn" data-ui-sref="indexer-games-indexing-playlist">Play List</button></li>
+        <h2>Quarter 1</h2>
+
+        <h1>
+
+            <div class="color" style="background-color: {{ game.primaryJerseyColor }};"></div>
+
+            {{ teamName }} <b>{{ game.finalScore }}</b> vs <b>{{ game.opposingFinalScore }}</b> {{ opposingTeamName }}
+
+            <div class="color" style="background-color: {{ game.opposingPrimaryJerseyColor }};"></div>
+
+        </h1>
+
+    </div>
+
+    <!-- Indexing menu -->
+    <menu class="options">
+
+        <li class="notes"><button class="navbar-btn btn btn-blank" data-ui-sref="indexing-notes" disabled><i class="icon-file-text-alt"></i> Notes</button></li>
+        <li class="playlist"><button class="navbar-btn btn btn-blank" data-ui-sref="indexing-playlist" disabled><i class="icon-list-alt"></i> Play List</button></li>
 
     </menu>
 
     <!-- QA menu -->
-    <menu class="nav navbar-nav navbar-right">
+    <menu class="qa">
 
-        <li><button class="btn btn-primary navbar-btn" data-ng-click="sendToQa()">Send to QA</button></li>
+        <li><button class="navbar-btn btn btn-blank" data-ng-disabled="!isReadyForQa" data-ng-click="sendToQa()">Send to QA</button></li>
 
     </menu>
 
