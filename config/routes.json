@@ -197,6 +197,11 @@
         "Super Admin": true
     },
 
+    "indexer-game": {
+
+        "Indexer": true
+    },
+
     "indexer-games": {
 
         "Indexer": true
