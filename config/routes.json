@@ -197,6 +197,11 @@
         "Super Admin": true
     },
 
+    "indexer-games": {
+
+        "Indexer": true
+    },
+
     "add-film": {
 
         "Head Coach": true,
