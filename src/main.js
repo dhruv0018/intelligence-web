@@ -49,6 +49,7 @@ require('./services/games');
 require('./services/players');
 require('./services/tagsets');
 require('./services/plays');
+require('./services/indexing');
 
 require('./directives/alert');
 require('./directives/match');
