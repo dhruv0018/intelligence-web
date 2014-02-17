@@ -58,7 +58,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                     tags.forEach(function(tagset) {
 
-                        tagset = self.extendGame(tagset);
+                        tagset = self.extendTagset(tagset);
 
                         self.indexedTags[tagset.id] = tagset;
                     });
@@ -78,7 +78,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             getIndexedTags: function() {
 
-                return self.indexedTags;
+                return this.indexedTags;
             },
 
             getTagsByType: function(type) {
