@@ -529,7 +529,11 @@ module.exports = function(grunt) {
                 tasks: ['newer:less:components', 'componentbuild:dev', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
             },
             js: {
-                files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
+                files: ['src/**/*.js'],
+                tasks: ['jshint', 'browserify:dev', 'copy:dev', 'notify']
+            },
+            components: {
+                files: ['lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
                 tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
             }
         }
