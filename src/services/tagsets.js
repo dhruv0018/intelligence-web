@@ -8,8 +8,6 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             resource: TagsetsResource,
 
-            indexedTags: {},
-
             extendTagset: function(tagset) {
 
                 var self = this;
@@ -56,14 +54,16 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 var callback = function(tagsets) {
 
+                    var indexedTagsets = {};
+
                     tagsets.forEach(function(tagset) {
 
                         tagset = self.extendTagset(tagset);
 
-                        self.indexedTags[tagset.id] = tagset;
+                        indexedTagsets[tagset.id] = tagset;
                     });
 
-                    tags = index ? self.indexedTags : tags;
+                    tagsets = index ? indexedTagsets : tagsets;
 
                     return success ? success(tagsets) : tagsets;
                 };
