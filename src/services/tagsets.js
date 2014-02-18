@@ -8,8 +8,6 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             resource: TagsetsResource,
 
-            indexedTags: {},
-
             extendTagset: function(tagset) {
 
                 var self = this;
@@ -54,23 +52,25 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 filter = filter || {};
 
-                var callback = function(tags) {
+                var callback = function(tagsets) {
 
-                    tags.forEach(function(tagset) {
+                    var indexedTagsets = {};
+
+                    tagsets.forEach(function(tagset) {
 
                         tagset = self.extendTagset(tagset);
 
-                        self.indexedTags[tagset.id] = tagset;
+                        indexedTagsets[tagset.id] = tagset;
                     });
 
-                    tags = index ? self.indexedTags : tags;
+                    tagsets = index ? indexedTagsets : tagsets;
 
-                    return success ? success(tags) : tags;
+                    return success ? success(tagsets) : tagsets;
                 };
 
                 error = error || function() {
 
-                    throw new Error('Could not load tags');
+                    throw new Error('Could not load tagsets');
                 };
 
                 return self.resource.query(filter, callback, error);
@@ -78,7 +78,14 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             getIndexedTags: function() {
 
-                return this.indexedTags;
+                var indexedTags = {};
+
+                this.tags.forEach(function(tag) {
+
+                    indexedTags[tag.id] = tag;
+                });
+
+                return indexedTags;
             },
 
             getTagsByType: function(type) {
