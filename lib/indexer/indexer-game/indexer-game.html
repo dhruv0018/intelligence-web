@@ -129,52 +129,6 @@
 
                     </tr>
 
-                    <tr>
-
-                        <td colspan="4">
-
-                            <h3><i class="icon-pushpin"></i> Coaches Notes:</h3>
-
-                            <div data-ng-repeat="note in game.notes">
-
-                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.COACH_NOTE">{{ note.content }}</p>
-
-                            </div>
-
-                            <hr>
-
-                            <h3><i class="icon-pushpin"></i> Krossover Notes:</h3>
-
-                            <div data-ng-repeat="note in game.notes">
-
-                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.INDEXER_NOTE || note.noteTypeId == GAME_NOTE_TYPES.QA_NOTE">{{ note.content }}</p>
-
-                            </div>
-
-                            <hr>
-
-                            <h3><i class="icon-pushpin"></i> Set Aside Notes:</h3>
-
-                            <div data-ng-repeat="note in game.notes">
-
-                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.SET_ASIDE_NOTE">{{ note.content }}</p>
-
-                            </div>
-
-                            <hr>
-
-                            <h3><i class="icon-pushpin"></i> Coach's feedback on indexing:</h3>
-
-                            <div data-ng-repeat="note in game.notes">
-
-                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.COACH_COMPLAINT_NOTE">{{ note.content }}</p>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
                 </tbody>
 
             </table>
