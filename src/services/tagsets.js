@@ -54,9 +54,9 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 filter = filter || {};
 
-                var callback = function(tags) {
+                var callback = function(tagsets) {
 
-                    tags.forEach(function(tagset) {
+                    tagsets.forEach(function(tagset) {
 
                         tagset = self.extendTagset(tagset);
 
@@ -65,12 +65,12 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                     tags = index ? self.indexedTags : tags;
 
-                    return success ? success(tags) : tags;
+                    return success ? success(tagsets) : tagsets;
                 };
 
                 error = error || function() {
 
-                    throw new Error('Could not load tags');
+                    throw new Error('Could not load tagsets');
                 };
 
                 return self.resource.query(filter, callback, error);
