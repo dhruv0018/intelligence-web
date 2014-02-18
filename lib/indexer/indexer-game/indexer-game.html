@@ -139,11 +139,17 @@
 
     <aside class="sidebar sidebar-right">
 
-        <button class="btn-start-indexing" data-ui-sref="indexing({ id: game.id })">Start Indexing <i class="icon-chevron-right pull-right"></i></button>
+        <button class="btn-start-indexing" data-ui-sref="indexing({ id: game.id })" data-ng-disabled="!isReady">
+
+            <span data-ng-show="isReady">Start <span data-ng-show="isIndexingReady">Indexing</span><span data-ng-show="isQaReady">QA</span> <i class="icon-chevron-right pull-right"></i></span>
+            <span data-ng-hide="isReady">Not Ready</span>
+
+        </button>
 
         <ul>
 
             <li><button class="btn btn-link" data-ui-sref="raw-film({ id: game.videoId })" disabled><i class="icon-play-sign"></i> View raw film</button></li>
+            <li><button class="btn btn-link" data-ui-sref="indexer-read-notes" disabled><i class="icon-save"></i> Read notes</button></li>
 
         </ul>
 
