@@ -45,7 +45,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
                             self.tagset = tagsets.get(league.tagSetId, function(tagset) {
 
-                                self.tags = tagsset.getIndexedTags();
+                                self.tags = tagset.getIndexedTags();
 
                                 deferred.resolve(self);
                             });
