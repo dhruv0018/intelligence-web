@@ -78,7 +78,14 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             getIndexedTags: function() {
 
-                return this.indexedTags;
+                var indexedTags = {};
+
+                this.tags.forEach(function(tag) {
+
+                    indexedTags[tag.id] = tag;
+                });
+
+                return indexedTags;
             },
 
             getTagsByType: function(type) {
