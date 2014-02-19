@@ -7,7 +7,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
         var TagsetsFactory = {
 
             resource: TagsetsResource,
-            
+
             extendTagset: function(tagset) {
 
                 var self = this;
@@ -15,46 +15,79 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 /* Copy all of the properties from the retrieved $resource
                  * "tagset" object. */
                 angular.extend(tagset, self);
-                
+
                 return tagset;
             },
-            
-            get: function(tagsetId, success, error) {
+
+            get: function(id, success, error) {
 
                 var self = this;
+
+                var callback = function(tagset) {
+
+                    tagset = self.extendTagset(tagset);
+
+                    return success ? success(tagset) : tagset;
+                };
+
                 error = error || function() {
+
                     throw new Error('Could not get tagset');
                 };
 
-                return self.resource.get({ id: tagsetId }, function(tagset) {
-                    self.extendTagset(tagset); // making sure tagset is definitely extended before returning
-                    return success? success(tagset) : tagset;
-                }, error);
+                return self.resource.get({ id: id }, callback, error);
             },
 
-            getList: function(filter, success, error) {
+            getList: function(filter, success, error, index) {
 
                 var self = this;
+
+                if (angular.isFunction(filter)) {
+
+                    index = error;
+                    error = success;
+                    success = filter;
+                    filter = null;
+                }
+
                 filter = filter || {};
-                error = error || function() {
-                    throw new Error('Could not load tagsets list');
+
+                var callback = function(tagsets) {
+
+                    var indexedTagsets = {};
+
+                    tagsets.forEach(function(tagset) {
+
+                        tagset = self.extendTagset(tagset);
+
+                        indexedTagsets[tagset.id] = tagset;
+                    });
+
+                    tagsets = index ? indexedTagsets : tagsets;
+
+                    return success ? success(tagsets) : tagsets;
                 };
 
-                return self.resource.query(filter, function(tagsets) {
-                    tagsets.forEach(self.extendTagset, self); // making sure tagsets are definitely extended before returning
-                    return success? success(tagsets) : tagsets;
-                }, error);
+                error = error || function() {
+
+                    throw new Error('Could not load tagsets');
+                };
+
+                return self.resource.query(filter, callback, error);
             },
-            
+
             getIndexedTags: function() {
-                indexedTags = {};
-                this.tags.forEach( function(tag) {
+
+                var indexedTags = {};
+
+                this.tags.forEach(function(tag) {
+
                     indexedTags[tag.id] = tag;
                 });
-            
+
                 return indexedTags;
             },
-            
+
             getTagsByType: function(type) {
                 results = [];
                 switch(type) {
@@ -78,8 +111,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                         });
                         break;
                 }
-                
-                
+
+
                 return results;
             }
         };

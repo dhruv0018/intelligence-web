@@ -19,6 +19,11 @@ require('flow/src/directives/init');
 require('flow/src/directives/events');
 require('flow/src/directives/transfers');
 require('flow/src/directives/img');
+require('videogular/videogular');
+require('videogular-controls/controls');
+require('videogular-buffering/buffering');
+require('videogular-overlay-play/overlay-play');
+require('videogular-poster/poster');
 
 require('./app');
 
@@ -57,6 +62,8 @@ require('./directives/submit');
 
 require('./directives/verify-password.js');
 
+require('./directives/krossover/videoplayer');
+
 require('./config');
 require('./flow');
 require('./routes');
@@ -75,5 +82,7 @@ component('schools');
 component('leagues');
 
 component('coach');
+component('videoplayer');
 
 angular.bootstrap(document, [pkg.name]);
+

@@ -318,6 +318,12 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     transform: ['decomponentify'],
+                    shim: {
+                        flowjs: {
+                            path: 'node_modules/flowjs/src/flow.js',
+                            exports: 'flowjs'
+                        }
+                    }
                 },
                 files: {
                     'build/bundle.js': ['src/main.js']
@@ -326,6 +332,12 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     transform: ['decomponentify'],
+                    shim: {
+                        flowjs: {
+                            path: 'node_modules/flowjs/src/flow.js',
+                            exports: 'flowjs'
+                        }
+                    }
                 },
                 files: {
                     'build/bundle.js': ['src/main.js']
@@ -441,7 +453,7 @@ module.exports = function(grunt) {
 
                             /* Redirect hash urls to index.html */
                             modRewrite([
-                                '!\\.html|\\.js|\\.css|\\.png$ /intelligence/index.html [L]'
+                                '!\\.html|\\.js|\\.css|\\.png|\\.mp4$ /intelligence/index.html [L]'
                             ]),
 
                             /* Serve static files. */

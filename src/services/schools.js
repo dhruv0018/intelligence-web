@@ -8,25 +8,74 @@ IntelligenceWebClient.factory('SchoolsFactory', [
 
             resource: SchoolsResource,
 
-            list: [],
-            get: function(id, callback) {
+            extendSchool: function(school) {
+
                 var self = this;
-                self.resource.get({ id: id }, function(school){
-                    return callback(school);
-                });
+
+                /* Copy all of the properties from the retrieved $resource
+                 * "school" object. */
+                angular.extend(school, self);
+
+                return school;
             },
 
-            getList: function(filter, success, error) {
+            get: function(id, success, error) {
 
                 var self = this;
-                filter = filter || {};
-                error = error || function() {
-                    throw new Error('Could not load leagues list');
+
+                var callback = function(school) {
+
+                    school = self.extendSchool(school);
+
+                    return success ? success(school) : school;
                 };
 
-                return self.resource.query(filter, function(results){
-                    return success ? success(results) : results;
-                }, error);
+                error = error || function() {
+
+                    throw new Error('Could not get school');
+                };
+
+                return self.resource.get({ id: id }, callback, error);
+            },
+
+            getList: function(filter, success, error, index) {
+
+                var self = this;
+
+                if (angular.isFunction(filter)) {
+
+                    index = error;
+                    error = success;
+                    success = filter;
+                    filter = null;
+                }
+
+                filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || 1000;
+
+                var callback = function(schools) {
+
+                    var indexedSchools = {};
+
+                    schools.forEach(function(school) {
+
+                        school = self.extendSchool(school);
+
+                        indexedSchools[school.id] = school;
+                    });
+
+                    schools = index ? indexedSchools : schools;
+
+                    return success ? success(schools) : schools;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not load schools list');
+                };
+
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(school) {
@@ -38,7 +87,7 @@ IntelligenceWebClient.factory('SchoolsFactory', [
                 delete school.teams;
 
                 if (school.id) {
-                    
+
                     var updateSchool = new SchoolsResource(school);
                     return updateSchool.$update();
 

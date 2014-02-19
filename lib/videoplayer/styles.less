@@ -1,0 +1,281 @@
+@import (reference) "main.less";
+
+@video-controls-bg: rgb(225, 225, 225);
+@video-controls-border: rgb(200, 200, 200);
+
+x-krossover-videoplayer {
+
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+data-videogular {
+
+    position: relative;
+    background-color: black;
+    overflow: hidden;
+    display: block;
+    user-select: none;
+    border-bottom: 1px solid @video-controls-border;
+}
+
+data-videogular.fullscreen {
+
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+data-videogular video {
+
+    position: absolute;
+    width: 100%;
+    height: auto;
+}
+
+
+/********************/
+/* Buffering plugin */
+/********************/
+data-vg-buffering {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.bufferingContainer {
+    width: 100%;
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    margin-top: -50px;
+
+    zoom: 1;
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+}
+
+/* Loading Spinner
+ * http://www.alessioatzeni.com/blog/css3-loading-animation-loop/
+ */
+.loadingSpinner {
+    background-color: rgba(0,0,0,0);
+    border:5px solid rgba(255,255,255,1);
+    opacity:.9;
+    border-top:5px solid rgba(0,0,0,0);
+    border-left:5px solid rgba(0,0,0,0);
+    border-radius:50px;
+    box-shadow: 0 0 35px #FFFFFF;
+    width:50px;
+    height:50px;
+    margin: 0 auto;
+    -moz-animation:spin .5s infinite linear;
+    -webkit-animation:spin .5s infinite linear;
+}
+
+.stop {
+    -webkit-animation-play-state:paused;
+    -moz-animation-play-state:paused;
+}
+
+@-moz-keyframes spin {
+    0% { -moz-transform:rotate(0deg); }
+    100% { -moz-transform:rotate(360deg); }
+}
+@-moz-keyframes spinoff {
+    0% { -moz-transform:rotate(0deg); }
+    100% { -moz-transform:rotate(-360deg); }
+}
+@-webkit-keyframes spin {
+    0% { -webkit-transform:rotate(0deg); }
+    100% { -webkit-transform:rotate(360deg); }
+}
+@-webkit-keyframes spinoff {
+    0% { -webkit-transform:rotate(0deg); }
+    100% { -webkit-transform:rotate(-360deg); }
+}
+
+/*********************/
+/* Controlbar plugin */
+/*********************/
+data-vg-controls {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+}
+data-vg-controls #controls-container {
+    width: 100%;
+    height: 50px;
+    background-color: @video-controls-bg;
+    position: absolute;
+    display: table;
+    zoom: 1;
+}
+
+data-vg-controls #controls-container .video-control {
+
+    color: @gray-dark;
+    font-family: "FRANKLIN-GOTHIC-URW-COND", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: -0.01em;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+data-vg-controls #controls-container .video-control {
+
+    border-left: 1px solid rgb(200, 200, 200);
+}
+
+data-vg-controls #controls-container .video-control:last-child {
+
+    border-right: 1px solid rgb(200, 200, 200);
+}
+
+x-krossover-play-pause-button {
+    display: table-cell;
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    border-right: none;
+
+    i {
+
+        font-size: 18px;
+    }
+}
+
+data-vg-timedisplay {
+    display: table-cell;
+    font-size: 14px;
+    width: 150px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: default;
+}
+
+.time-current {
+
+    font-weight: 600;
+}
+
+.time-divider {
+
+    font-size: 12px;
+}
+
+data-vg-scrubbar {
+    width: auto;
+    display: table-cell;
+    cursor: pointer;
+    background-color: @brand-blue;
+}
+
+data-vg-scrubBarCurrentTime {
+    width: 100%;
+    height: 50px;
+    display: block;
+    cursor: pointer;
+    border-right: 3px solid red;
+}
+
+data-vg-volume {
+    display: table-cell;
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+data-vg-volumebar {
+    width: 50px;
+    height: 100px;
+    top: -100px;
+    margin-left: -25px;
+    vertical-align: middle;
+    text-align: center;
+    position: absolute;
+    cursor: pointer;
+}
+
+.verticalVolumeBar {
+
+    border: 1px solid @video-controls-border;
+}
+
+x-krossover-fast-backward-button {
+    display: table-cell;
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+x-krossover-fast-forward-button {
+    display: table-cell;
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+x-krossover-slow-backward-button {
+    display: table-cell;
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+x-krossover-slow-forward-button {
+    display: table-cell;
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+x-krossover-fullscreen-button {
+    display: table-cell;
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+data-vg-volumebar .verticalVolumeBar {
+    position: absolute;
+    width: 50px;
+    height: 100px;
+    background-color: @video-controls-bg;
+    border-color: @video-controls-border;
+}
+
+data-vg-volumebar .volumeBackground {
+    width: 10px;
+    height: 70px;
+    left: 20px;
+    top: 15px;
+    background-color: rgb(201, 201, 201);
+    position: absolute;
+    border-radius: 5px;
+}
+
+data-vg-volumebar .volumeValue {
+    width: 10px;
+    height: 100%;
+    background-color: @brand-blue;
+    position: absolute;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+data-vg-volumebar .volumeClickArea {
+    width: 20px;
+    height: 100%;
+    position: absolute;
+}
+

@@ -19,7 +19,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return team;
             },
 
-            get: function(teamId, success, error) {
+            get: function(id, success, error) {
 
                 var self = this;
 
@@ -35,18 +35,39 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not get team');
                 };
 
-                return self.resource.get({ id: teamId }, callback, error);
+                return self.resource.get({ id: id }, callback, error);
             },
 
-            getList: function(filter, success, error) {
+            getList: function(filter, success, error, index) {
 
                 var self = this;
 
+                if (angular.isFunction(filter)) {
+
+                    index = error;
+                    error = success;
+                    success = filter;
+                    filter = null;
+                }
+
                 filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || 1000;
 
-                success = success || function(teams) {
+                var callback = function(teams) {
 
-                    return teams.forEach(self.extendTeam, self);
+                    var indexedTeams = {};
+
+                    teams.forEach(function(team) {
+
+                        team = self.extendTeam(team);
+
+                        indexedTeams[team.id] = team;
+                    });
+
+                    teams = index ? indexedTeams : teams;
+
+                    return success ? success(teams) : teams;
                 };
 
                 error = error || function() {
@@ -54,12 +75,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not load teams list');
                 };
 
-                return self.resource.query(filter, success, error);
-            },
-
-            filter: function(filter, success, error) {
-
-                return this.getList(filter, success, error);
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(team, success, error) {

@@ -19,27 +19,55 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return game;
             },
 
-            get: function(gameId, callback) {
+            get: function(id, success, error) {
 
                 var self = this;
 
-                self.resource.get({ id: gameId }, function(game) {
+                var callback = function(game) {
 
                     game = self.extendGame(game);
 
-                    return callback(game);
-                });
+                    return success ? success(game) : game;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get game');
+                };
+
+                return self.resource.get({ id: id }, callback, error);
             },
 
-            getList: function(filter, success, error) {
+            getList: function(filter, success, error, index) {
 
                 var self = this;
 
+                if (angular.isFunction(filter)) {
+
+                    index = error;
+                    error = success;
+                    success = filter;
+                    filter = null;
+                }
+
                 filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || 1000;
 
-                success = success || function(games) {
+                var callback = function(games) {
 
-                    return games.forEach(self.extendGame, self);
+                    var indexedGames = {};
+
+                    games.forEach(function(game) {
+
+                        game = self.extendGame(game);
+
+                        indexedGames[game.id] = game;
+                    });
+
+                    games = index ? indexedGames : games;
+
+                    return success ? success(games) : games;
                 };
 
                 error = error || function() {
@@ -47,7 +75,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     throw new Error('Could not load games list');
                 };
 
-                return self.resource.query(filter, success, error);
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(game, success, error) {

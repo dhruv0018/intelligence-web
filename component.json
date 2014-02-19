@@ -15,7 +15,8 @@
         "teams",
         "schools",
         "leagues",
-        "coach"
+        "coach",
+        "videoplayer"
     ],
     "dependencies": {
     },

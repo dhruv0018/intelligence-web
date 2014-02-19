@@ -47,43 +47,63 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return user;
             },
 
-            get: function(userId, callback) {
+            get: function(id, success, error) {
 
                 var self = this;
 
-                self.resource.get({ id: userId }, function(user) {
+                var callback = function(user) {
 
                     user = self.extendUser(user);
 
-                    callback(user);
-                });
+                    return success ? success(user) : user;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get user');
+                };
+
+                return self.resource.get({ id: id }, callback, error);
             },
 
-            getList: function(filter, success, error) {
+            getList: function(filter, success, error, index) {
 
                 var self = this;
-                filter = filter || {};
 
-                if(!filter.start){
-                    filter.start = 0;
+                if (angular.isFunction(filter)) {
+
+                    index = error;
+                    error = success;
+                    success = filter;
+                    filter = null;
                 }
-                if(!filter.count){
-                    filter.count = 1000;
-                }
+
+                filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || 1000;
+
+                var callback = function(users) {
+
+                    var indexedUsers = {};
+
+                    users.forEach(function(user) {
+
+                        user = self.extendUser(user);
+
+                        indexedUsers[user.id] = user;
+                    });
+
+                    users = index ? indexedUsers : users;
+
+                    return success ? success(users) : users;
+                };
 
                 error = error || function() {
 
                     throw new Error('Could not load users list');
                 };
 
-                return self.resource.query(filter, function(users){
-                    for(var i = 0; i < users.length; i++){
-                        users[i] = self.extendUser(users[i]);
-                    }
-                    return success ? success(users) : users;
-                }, error);
-
-
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(user) {
@@ -98,7 +118,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 * the user is present on the server, so update them (PUT).
                 * If not present then this a new user so create them (POST). */
                 if (user.id) {
-                    
+
                     var updateUser = new UsersResource(user);
                     return updateUser.$update();
 
@@ -232,6 +252,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 if (!role) return false;
                 if (!match) throw new Error('No role to match specified');
+                if (!role.type || !match.type) return false;
 
                 var roleIds = role.type.id;
                 var matchIds = match.type.id;
@@ -259,14 +280,14 @@ IntelligenceWebClient.factory('UsersFactory', [
             hasNoRoles: function() {
                 var self = this;
                 var roles = self.roles;
-                
+
                 if (!roles || roles.length < 1 ){
                     return true;
                 } else {
                     return false;
                 }
             },
-            
+
             /**
              * @class User
              * @method
