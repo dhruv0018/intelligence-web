@@ -17,7 +17,8 @@
         "leagues",
         "indexer",
         "indexing",
-        "coach"
+        "coach",
+        "videoplayer"
     ],
     "dependencies": {
     },
