@@ -1,0 +1,114 @@
+@import (reference) "main.less";
+
+.header-indexing {
+
+    .info,
+    .options,
+    .qa {
+
+        .nav;
+        .navbar-nav;
+    }
+
+    .info {
+
+        position: absolute;
+        left: 76px;
+        width: 100%;
+        padding-top: 10px;
+        padding-right: 376px;
+    }
+
+    .options {
+
+        position: absolute;
+        right: 100px;
+        width: 200px;
+    }
+
+    .qa {
+
+        position: absolute;
+        right: 0;
+        width: 100px;
+
+        li {
+
+            border: none;
+        }
+    }
+
+    .btn {
+
+        color: @gray-darker;
+
+        &:hover,
+        &:focus {
+
+            color: @brand-primary;
+        }
+    }
+
+    .btn {
+
+        font-size: 18px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+    }
+
+    a.navbar-brand {
+
+        line-height: 35px;
+
+        &,
+        &:hover,
+        &:focus {
+
+            color: @brand-primary;
+        }
+    }
+
+    .info {
+
+        text-align: center;
+
+        h1 {
+
+            color: @gray-darker;
+            margin: 0;
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        h2 {
+
+            color: @gray-darker;
+            margin: 0;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+        }
+
+        .color {
+
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid @gray-dark;
+        }
+    }
+
+    .notes,
+    .playlist {
+
+        width: 100px;
+    }
+
+    .notes {
+
+        border-left: 1px solid @navbar-default-border;
+        border-right: none;
+    }
+}
