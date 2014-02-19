@@ -1,0 +1,125 @@
+@import (reference) "main.less";
+
+.header {
+
+    .navbar;
+    .navbar-default;
+
+    border-bottom: 1px solid rgb(216, 216, 216);
+    box-shadow: 0 1px 3px rgb(230, 229, 228);
+
+    .navbar-header,
+    menu li {
+
+        border-right: 1px solid @navbar-default-border;
+    }
+
+    menu {
+
+        .text-center;
+
+        li {
+
+            a {
+
+                padding-left: 10px;
+                padding-right: 10px;
+                letter-spacing: -0.01em;
+
+                &:hover,
+                &:focus {
+
+                    color: @brand-primary;
+                }
+            }
+        }
+    }
+}
+
+
+/* Responsive sizes */
+
+
+/* All screens */
+
+.header {
+
+    .navbar-brand {
+
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+/* Screens under 480px high */
+@media only screen
+and (max-height: 480px) {
+
+    .header {
+
+        flex: 0 0 @header-sm-height;
+        min-height: @header-sm-height;
+
+        .nav,
+        .navbar-brand,
+        .dropdown,
+        .dropdown-toggle {
+
+            height: @header-sm-height;
+        }
+
+        .navbar-brand {
+
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
+        menu li a {
+
+            line-height: @header-sm-height;
+        }
+
+        .navbar-btn {
+
+            height: @header-sm-height;
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            border: 0;
+            border-radius: 0;
+        }
+    }
+}
+
+/* Screens over 481px high */
+@media only screen
+and (min-height: 481px) {
+
+    .header {
+
+        flex: 0 0 @header-lg-height;
+        min-height: @header-lg-height;
+
+        .nav,
+        .navbar-brand,
+        .dropdown,
+        .dropdown-toggle {
+
+            height: @header-lg-height;
+        }
+
+        .navbar-brand {
+
+            padding-top: 13px;
+            padding-bottom: 13px;
+        }
+
+        menu li a {
+
+            line-height: @header-lg-height;
+        }
+    }
+}
+
