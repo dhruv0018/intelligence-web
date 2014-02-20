@@ -28,10 +28,7 @@
                         <th>Teams</th>
                         <th>Colors</th>
                         <th>Reported Scores</th>
-                        <th>
-                            <!-- TODO: Get Indexed Scores -->
-                            <!-- Indexed Scores -->
-                        </th>
+                        <th>Indexed Scores</th>
 
                     </tr>
 
@@ -76,9 +73,9 @@
 
                         </td>
 
-                        <td>
+                        <td class="score">
 
-                            <!-- TODO: Get Customer Team Indexed Score -->
+                            <h2 data-ng-class="{ correct: game.finalScore === game.indexedScore, incorrect: game.indexedScore && game.finalScore !== game.indexedScore }">{{ game.indexedScore || '--' }}<span data-ng-if="game.indexedScore"><i class="icon-ok" data-ng-show="game.finalScore === game.indexedScore"></i><i class="icon-remove" data-ng-hide="game.finalScore === game.indexedScore"></i></span></h2>
 
                         </td>
 
@@ -121,9 +118,9 @@
 
                         </td>
 
-                        <td>
+                        <td class="score">
 
-                            <!-- TODO: Get Opposing Team Indexed Score -->
+                            <h2 data-ng-class="{ correct: game.opposingFinalScore === game.opposingIndexedScore, incorrect: game.opposingIndexedScore && game.opposingFinalScore !== game.opposingIndexedScore }">{{ game.opposingIndexedScore || '--' }}<span data-ng-if="game.opposingIndexedScore"><i class="icon-ok" data-ng-show="game.opposingFinalScore === game.opposingIndexedScore"></i><i class="icon-remove" data-ng-hide="game.opposingFinalScore === game.opposingIndexedScore"></i></span></h2>
 
                         </td>
 
