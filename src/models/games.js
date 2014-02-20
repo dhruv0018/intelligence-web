@@ -16,9 +16,9 @@ IntelligenceWebClient.constant('GAME_STATUS_IDS', GAME_STATUS_IDS);
 
 var GAME_STATUSES = {
 
-    NONE: {
+    NOT_INDEXED: {
         id: 0,
-        name: 'None'
+        name: 'Not Indexed'
     },
 
     READY_FOR_INDEX: {
@@ -49,11 +49,6 @@ var GAME_STATUSES = {
     INDEXED: {
         id: 6,
         name: 'Indexed'
-    },
-
-    NOT_INDEXED: {
-        id: 7,
-        name: 'Not Indexed'
     }
 };
 
