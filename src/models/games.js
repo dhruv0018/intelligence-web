@@ -2,14 +2,13 @@ var IntelligenceWebClient = require('../app');
 
 var GAME_STATUS_IDS = {
 
-    0: 'NONE',
+    0: 'NOT_INDEXED',
     1: 'READY_FOR_INDEX',
     2: 'INDEXING',
     3: 'READY_FOR_QA',
     4: 'QAING',
     5: 'SET_ASIDE',
-    6: 'INDEXED',
-    7: 'NOT_INDEXED'
+    6: 'INDEXED'
 };
 
 IntelligenceWebClient.constant('GAME_STATUS_IDS', GAME_STATUS_IDS);
