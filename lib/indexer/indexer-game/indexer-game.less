@@ -193,11 +193,28 @@
 
                 vertical-align: middle;
 
+                .correct {
+
+                    color: green;
+                }
+
+                .incorrect {
+
+                    color: red;
+                }
+
                 h2 {
 
+                    position: relative;
                     margin: 0;
                     color: @gray-darker;
                     font-weight: 600;
+
+                    i {
+
+                        position: absolute;
+                        right: 10px;
+                    }
                 }
             }
         }
