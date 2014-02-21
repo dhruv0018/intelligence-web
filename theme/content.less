@@ -1,14 +1,21 @@
 @import (reference) "main.less";
 
 .content,
-.content-full {
+.content-full,
+.content-main {
 
     flex: 1;
     overflow-y: scroll;
 }
 
+.content-wrapper {
+
+    flex: 1;
+}
+
 /* TEMP */
-.content {
+.content,
+.content-main {
     background-color: @content-bg;
 }
 
@@ -16,6 +23,11 @@
 
     height: 100%;
     background-color: white;
+}
+
+.content-full-height {
+
+    height: 100%;
 }
 
 .content-topbar,
