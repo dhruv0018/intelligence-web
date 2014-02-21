@@ -1,0 +1,12 @@
+{
+    "name": "queue",
+    "templates": [
+        "queue.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "queue.less"
+    ]
+}

@@ -79,6 +79,7 @@ component('account');
 component('users');
 component('teams');
 component('schools');
+component('queue');
 component('leagues');
 
 component('coach');

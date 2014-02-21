@@ -1,5 +1,64 @@
 var IntelligenceWebClient = require('../app');
 
+var GAME_STATUS_IDS = {
+
+    0: 'NONE',
+    1: 'READY_FOR_INDEX',
+    2: 'INDEXING',
+    3: 'READY_FOR_QA',
+    4: 'QAING',
+    5: 'SET_ASIDE',
+    6: 'INDEXED',
+    7: 'NOT_INDEXED'
+};
+
+IntelligenceWebClient.constant('GAME_STATUS_IDS', GAME_STATUS_IDS);
+
+var GAME_STATUSES = {
+
+    NONE: {
+        id: 0,
+        name: 'None'
+    },
+
+    READY_FOR_INDEX: {
+        id: 1,
+        name: 'Ready for indexing'
+    },
+
+    INDEXING: {
+        id: 2,
+        name: 'Indexing'
+    },
+
+    READY_FOR_QA: {
+        id: 3,
+        name: 'Ready for QA'
+    },
+
+    QAING: {
+        id: 4,
+        name: 'In QA'
+    },
+
+    SET_ASIDE: {
+        id: 5,
+        name: 'Set aside'
+    },
+
+    INDEXED: {
+        id: 6,
+        name: 'Indexed'
+    },
+
+    NOT_INDEXED: {
+        id: 7,
+        name: 'Not Indexed'
+    }
+};
+
+IntelligenceWebClient.constant('GAME_STATUSES', GAME_STATUSES);
+
 var GAME_TYPES = [
 
     { name: 'Conference Game', value: 'conference', checked: true },
