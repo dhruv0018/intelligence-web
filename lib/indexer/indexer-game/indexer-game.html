@@ -75,7 +75,7 @@
 
                         <td class="score">
 
-                            <h2 data-ng-class="{ correct: game.finalScore === game.indexedScore, incorrect: game.finalScore !== game.indexedScore }">{{ game.indexedScore || '--' }}<span data-ng-if="game.indexedScore"><i class="icon-ok" data-ng-show="game.finalScore === game.indexedScore"></i><i class="icon-remove" data-ng-hide="game.finalScore === game.indexedScore"></i></span></h2>
+                            <h2 data-ng-class="{ correct: game.finalScore === game.indexedScore, incorrect: game.indexedScore && game.finalScore !== game.indexedScore }">{{ game.indexedScore || '--' }}<span data-ng-if="game.indexedScore"><i class="icon-ok" data-ng-show="game.finalScore === game.indexedScore"></i><i class="icon-remove" data-ng-hide="game.finalScore === game.indexedScore"></i></span></h2>
 
                         </td>
 
