@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'GamesResource',
-    function(GamesResource) {
+    'GAME_STATUSES', 'GamesResource',
+    function(GAME_STATUSES, GamesResource) {
 
         var GamesFactory = {
 
@@ -123,7 +123,145 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var roster = rosters.pop();
 
                 return roster;
-            }
+            },
+
+            currentAssignment: function() {
+
+                if (!this.indexerAssignments) return undefined;
+
+                /* The last assignment in the array is the current one. */
+                return this.indexerAssignments.slice(-1).pop();
+            },
+
+            isAssignmentCompleted: function(assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return false;
+
+                return assignment.timeFinished !== null;
+            },
+
+            isAssignedToIndexer: function(assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return false;
+
+                return !assignment.isQa;
+            },
+
+            isAssignedToQa: function(assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return false;
+
+                return assignment.isQa;
+            },
+
+            hasIndexerAssignment: function() {
+
+                var self = this;
+
+                var assignments = self.indexerAssignments;
+
+                if (!assignments) return false;
+
+                return assignments.some(function(assignment) {
+
+                    return self.isAssignedToIndexer(assignment);
+                });
+            },
+
+            hasQaAssignment: function() {
+
+                var self = this;
+
+                var assignments = self.indexerAssignments;
+
+                if (!assignments) return false;
+
+                return assignments.some(function(assignment) {
+
+                    return self.isAssignedToQa(assignment);
+                });
+            },
+
+            canBeAssignedToIndexer: function() {
+
+                var self = this;
+
+                switch (self.status) {
+
+                    case GAME_STATUSES.INDEXING:
+                    case GAME_STATUSES.READY_FOR_QA:
+                    case GAME_STATUSES.QAING:
+                    case GAME_STATUSES.INDEXED:
+                        return false;
+                }
+
+                var assignments = self.indexerAssignments;
+
+                if (!assignments) return true;
+
+                /* Check if all current indexer assignments are completed. */
+                return assignments.every(function(assignment) {
+
+                    /* If it is an indexer assignment. */
+                    if (self.isAssignedToIndexer(assignment)) {
+
+                        /* Make sure the assignment was completed. */
+                        return self.isAssignmentCompleted(assignment);
+
+                    /* Otherwise; if the assignment is unknown. */
+                    } else {
+
+                        /* Make the assumption that it is alright to assign to an indexer. */
+                        return true;
+                    }
+                });
+            },
+
+            canBeAssignedToQa: function() {
+
+                var self = this;
+
+                switch (self.status) {
+
+                    case GAME_STATUSES.READY_FOR_INDEX:
+                    case GAME_STATUSES.INDEXING:
+                    case GAME_STATUSES.NOT_INDEXED:
+                        return false;
+                }
+
+                var assignments = self.indexerAssignments;
+
+                if (!assignments) return true;
+
+                /* Check if all current Indexer and QA assignments are completed. */
+                return assignments.every(function(assignment) {
+
+                    /* If it is an indexer assignment. */
+                    if (self.isAssignedToIndexer(assignment)) {
+
+                        /* It needs to be completed before QA. */
+                        return self.isAssignmentCompleted(assignment);
+
+                    /* Or if it is a QA assignment. */
+                    } else if (self.isAssignedToQa(assignment)) {
+
+                        /* Make sure the assignment was completed. */
+                        return self.isAssignmentCompleted(assignment);
+
+                    /* Otherwise; if the assignment is unknown. */
+                    } else {
+
+                        /* Make the assumption that it is alright to assign to QA. */
+                        return true;
+                    }
+                });
+            },
         };
 
         return GamesFactory;
