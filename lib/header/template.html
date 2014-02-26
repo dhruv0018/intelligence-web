@@ -1,5 +1,3 @@
-<x-krossover-rolebar></x-krossover-rolebar>
-
 <nav class="header header-default" role="navigation">
 
     <header class="navbar-header">
@@ -17,6 +15,14 @@
         <li data-ui-sref-active="active"><a data-ui-sref="queue">Queue</a></li>
         <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="reports">Reports</a></li>
         <li data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)"><a data-ui-sref="platform">Platform</a></li>
+
+    </menu>
+
+    <!-- Indexer menu -->
+    <menu class="nav navbar-nav" data-ng-if="currentUser.is(INDEXER)">
+
+        <li data-ui-sref-active="active"><a data-ui-sref="indexer-games">Games</a></li>
+        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="indexer-history">History</a></li>
 
     </menu>
 

@@ -16,6 +16,8 @@
         "schools",
         "queue",
         "leagues",
+        "indexer",
+        "indexing",
         "coach",
         "videoplayer"
     ],
