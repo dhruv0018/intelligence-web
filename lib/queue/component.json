@@ -2,7 +2,8 @@
     "name": "queue",
     "templates": [
         "game.html",
-        "queue.html"
+        "queue.html",
+        "select-indexer.html"
     ],
     "scripts": [
         "game.js",
