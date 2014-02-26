@@ -198,6 +198,44 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return !!assignment.timeFinished;
             },
 
+            areIndexerAssignmentsCompleted: function() {
+
+                var assignments = self.indexerAssignments;
+
+                /* If there are no assignments, consider assignments incomplete. */
+                if (!assignments) return false;
+
+                return assignments.map(function(assignment) {
+
+                    /* If it is an indexer assignment. */
+                    if (self.isAssignedToQa(assignment)) return assignment;
+
+                }).every(function(assignment) {
+
+                    /* Make sure the assignment was completed. */
+                    return self.isAssignmentCompleted(assignment);
+                });
+            },
+
+            areQaAssignmentsCompleted: function() {
+
+                var assignments = self.indexerAssignments;
+
+                /* If there are no assignments, consider assignments incomplete. */
+                if (!assignments) return false;
+
+                return assignments.map(function(assignment) {
+
+                    /* If it is a QA assignment. */
+                    if (self.isAssignedToQa(assignment)) return assignment;
+
+                }).every(function(assignment) {
+
+                    /* Make sure the assignment was completed. */
+                    return self.isAssignmentCompleted(assignment);
+                });
+            },
+
             isAssignedToUser: function(user, assignment) {
 
                 assignment = assignment || this.currentAssignment();
