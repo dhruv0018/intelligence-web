@@ -133,13 +133,79 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.indexerAssignments.slice(-1).pop();
             },
 
+            userAssignment: function(user) {
+
+                var self = this;
+
+                var assignments = self.indexerAssignments;
+
+                if (!assignments) return undefined;
+
+                /* Find the users assignment in the assignments. */
+                var index = assignments.map(function(assignment) {
+
+                    return assignment.userId;
+
+                }).indexOf(user.id);
+
+                /* Return the assignment if found. */
+                return !!~index ? assignments[index] : undefined;
+            },
+
+            startAssignment: function(user, assignment) {
+
+                var self = this;
+
+                self.indexerAssignments = self.indexerAssignments || [];
+
+                assignment = assignment || self.currentAssignment();
+
+                if (assignment.timeStarted) throw new Error('Assignment already started');
+                if (self.isAssignmentCompleted(assignment)) throw new Error('Assignment already completed');
+                if (!self.isAssignedToUser(user, assignment)) throw new Error('Assignment not assigned to user');
+
+                /* Set the start time of the assignment. */
+                assignment.timeStarted = new Date(Date.now()).toISOString();
+
+                /* Find the assignment in the assignments. */
+                var index = self.indexerAssignments.map(function(indexerAssignment) {
+
+                    return indexerAssignment.id;
+
+                }).indexOf(assignment.id);
+
+                /* If the assignment is in the assignments already, then update;
+                 * or if its not already in, then add it to the assignments. */
+                if (!!~index) self.indexerAssignments[index] = assignment;
+                else self.indexerAssignments.push(assignment);
+            },
+
+            isAssignmentStarted: function(assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return false;
+
+                return !!assignment.timeStarted;
+            },
+
             isAssignmentCompleted: function(assignment) {
 
                 assignment = assignment || this.currentAssignment();
 
                 if (!assignment) return false;
 
-                return assignment.timeFinished !== null;
+                return !!assignment.timeFinished;
+            },
+
+            isAssignedToUser: function(user, assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!user) return false;
+                if (!assignment) return false;
+
+                return assignment.userId == user.id;
             },
 
             isAssignedToIndexer: function(assignment) {
@@ -188,16 +254,26 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
             },
 
+            hasAssignment: function() {
+
+                return this.hasIndexerAssignment() || this.hasQaAssignment();
+            },
+
+            canBeAssigned: function() {
+
+                return this.canBeAssignedToIndexer() || this.canBeAssignedToQa();
+            },
+
             canBeAssignedToIndexer: function() {
 
                 var self = this;
 
-                switch (self.status) {
+                switch (self.status.id) {
 
-                    case GAME_STATUSES.INDEXING:
-                    case GAME_STATUSES.READY_FOR_QA:
-                    case GAME_STATUSES.QAING:
-                    case GAME_STATUSES.INDEXED:
+                    case GAME_STATUSES.READY_FOR_INDEX.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.QAING.id:
+                    case GAME_STATUSES.INDEXED.id:
                         return false;
                 }
 
@@ -227,17 +303,18 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                switch (self.status) {
+                switch (self.status.id) {
 
-                    case GAME_STATUSES.READY_FOR_INDEX:
-                    case GAME_STATUSES.INDEXING:
-                    case GAME_STATUSES.NOT_INDEXED:
+                    case GAME_STATUSES.READY_FOR_INDEX.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.INDEXING.id:
+                    case GAME_STATUSES.NOT_INDEXED.id:
                         return false;
                 }
 
                 var assignments = self.indexerAssignments;
 
-                if (!assignments) return true;
+                if (!assignments) return false;
 
                 /* Check if all current Indexer and QA assignments are completed. */
                 return assignments.every(function(assignment) {
