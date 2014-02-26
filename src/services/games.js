@@ -133,7 +133,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.indexerAssignments.slice(-1).pop();
             },
 
-            userAssignment: function(user) {
+            userAssignment: function(userId) {
 
                 var self = this;
 
@@ -146,13 +146,13 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     return assignment.userId;
 
-                }).indexOf(user.id);
+                }).indexOf(userId);
 
                 /* Return the assignment if found. */
                 return !!~index ? assignments[index] : undefined;
             },
 
-            startAssignment: function(user, assignment) {
+            startAssignment: function(userId, assignment) {
 
                 var self = this;
 
@@ -162,7 +162,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (assignment.timeStarted) throw new Error('Assignment already started');
                 if (self.isAssignmentCompleted(assignment)) throw new Error('Assignment already completed');
-                if (!self.isAssignedToUser(user, assignment)) throw new Error('Assignment not assigned to user');
+                if (!self.isAssignedToUser(userId, assignment)) throw new Error('Assignment not assigned to user');
 
                 /* Set the start time of the assignment. */
                 assignment.timeStarted = new Date(Date.now()).toISOString();
@@ -236,14 +236,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
             },
 
-            isAssignedToUser: function(user, assignment) {
+            isAssignedToUser: function(userId, assignment) {
 
                 assignment = assignment || this.currentAssignment();
 
-                if (!user) return false;
+                if (!userId) return false;
                 if (!assignment) return false;
 
-                return assignment.userId == user.id;
+                return assignment.userId == userId;
             },
 
             isAssignedToIndexer: function(assignment) {
@@ -381,13 +381,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
             },
 
-            assignToUser: function(user, isQa) {
+            assignToUser: function(userId, isQa) {
 
                 var self = this;
 
                 self.indexerAssignments = self.indexerAssignments || [];
-
-                var userId = angular.isObject(user) ? user.id : user;
 
                 var assignment = {
 
@@ -401,18 +399,18 @@ IntelligenceWebClient.factory('GamesFactory', [
                 self.status = isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
             },
 
-            assignToIndexer: function(user) {
+            assignToIndexer: function(userId) {
 
                 var isQa = false;
 
-                this.assignToUser(user, isQa);
+                this.assignToUser(userId, isQa);
             },
 
-            assignToQa: function(user) {
+            assignToQa: function(userId) {
 
                 var isQa = true;
 
-                this.assignToUser(user, isQa);
+                this.assignToUser(userId, isQa);
             }
         };
 
