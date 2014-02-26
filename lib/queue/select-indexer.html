@@ -1,0 +1,27 @@
+<header class="modal-header">
+
+    <span class="modal-title"><i class="icon-user"></i> Select <span data-ng-hide="isQa">Indexer</span><span data-ng-show="isQa">QA</span></span>
+
+</header>
+
+<div class="modal-body">
+
+    <div class="content-padded">
+
+        <select data-ng-model="indexerId">
+
+            <option data-ng-repeat="indexer in users | filter:ROLE_TYPE.INDEXER" value="{{indexer.id}}">{{ indexer.firstName + ' ' + indexer.lastName }}</option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<footer class="modal-footer">
+
+    <button class="btn btn-warning pull-left" data-ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary pull-right" data-ng-if="!isQa" data-ng-click="selectedGame.assignToIndexer(indexerId); ok()">Assign Indexer</button>
+    <button class="btn btn-primary pull-right" data-ng-if="isQa" data-ng-click="selectedGame.assignToQa(indexerId); ok()">Assign QA</button>
+
+</footer>
