@@ -379,6 +379,40 @@ IntelligenceWebClient.factory('GamesFactory', [
                     /* Make sure all indexer assignments are completed. */
                     return self.areIndexerAssignmentsCompleted();
                 }
+            },
+
+            assignToUser: function(user, isQa) {
+
+                var self = this;
+
+                self.indexerAssignments = self.indexerAssignments || [];
+
+                var userId = angular.isObject(user) ? user.id : user;
+
+                var assignment = {
+
+                    gameId: self.id,
+                    userId: userId,
+                    isQa: isQa
+                };
+
+                self.indexerAssignments.push(assignment);
+
+                self.status = isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
+            },
+
+            assignToIndexer: function(user) {
+
+                var isQa = false;
+
+                this.assignToUser(user, isQa);
+            },
+
+            assignToQa: function(user) {
+
+                var isQa = true;
+
+                this.assignToUser(user, isQa);
             }
         };
 
