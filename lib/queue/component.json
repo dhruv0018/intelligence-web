@@ -11,6 +11,7 @@
     ],
     "styles": [
         "game.less",
-        "queue.less"
+        "queue.less",
+        "select-indexer.less"
     ]
 }
