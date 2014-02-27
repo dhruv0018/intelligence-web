@@ -17,36 +17,43 @@ var GAME_STATUSES = {
 
     NOT_INDEXED: {
         id: 0,
+        type: 'error',
         name: 'Not Indexed'
     },
 
     READY_FOR_INDEX: {
         id: 1,
+        type: 'success',
         name: 'Indexing, not started'
     },
 
     INDEXING: {
         id: 2,
+        type: 'warning',
         name: 'Indexing, in progress'
     },
 
     READY_FOR_QA: {
         id: 3,
+        type: 'success',
         name: 'QA, not started'
     },
 
     QAING: {
         id: 4,
+        type: 'warning',
         name: 'QA, in progress'
     },
 
     SET_ASIDE: {
         id: 5,
+        type: 'warning',
         name: 'Set aside'
     },
 
     INDEXED: {
         id: 6,
+        type: 'success',
         name: 'Game Status: Delivered'
     }
 };
