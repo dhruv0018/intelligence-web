@@ -62,6 +62,7 @@ require('./directives/form');
 require('./directives/button');
 require('./directives/input');
 require('./directives/submit');
+require('./directives/keyboard');
 
 require('./directives/verify-password.js');
 

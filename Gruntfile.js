@@ -323,6 +323,10 @@ module.exports = function(grunt) {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
                             exports: 'flowjs'
+                        },
+                        Mousetrap: {
+                            path: 'node_modules/Mousetrap/mousetrap.js',
+                            exports: 'Mousetrap'
                         }
                     }
                 },
@@ -337,6 +341,10 @@ module.exports = function(grunt) {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
                             exports: 'flowjs'
+                        },
+                        Mousetrap: {
+                            path: 'node_modules/Mousetrap/mousetrap.js',
+                            exports: 'Mousetrap'
                         }
                     }
                 },
