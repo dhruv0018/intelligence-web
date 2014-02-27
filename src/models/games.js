@@ -22,22 +22,22 @@ var GAME_STATUSES = {
 
     READY_FOR_INDEX: {
         id: 1,
-        name: 'Ready for indexing'
+        name: 'Indexing, not started'
     },
 
     INDEXING: {
         id: 2,
-        name: 'Indexing'
+        name: 'Indexing, in progress'
     },
 
     READY_FOR_QA: {
         id: 3,
-        name: 'Ready for QA'
+        name: 'QA, not started'
     },
 
     QAING: {
         id: 4,
-        name: 'In QA'
+        name: 'QA, in progress'
     },
 
     SET_ASIDE: {
@@ -47,7 +47,7 @@ var GAME_STATUSES = {
 
     INDEXED: {
         id: 6,
-        name: 'Indexed'
+        name: 'Game Status: Delivered'
     }
 };
 
