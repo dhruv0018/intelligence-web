@@ -26,7 +26,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 var callback = function(plays) {
 
                     var indexedPlays = {};
-                    
+
                     plays.forEach(function(play) {
 
                         play = self.extendPlay(play);
@@ -58,12 +58,28 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 if (play.id) {
 
                     var updatePlay = new PlaysResource(play);
+
+                    play.events = play.events.map(function(event) {
+
+                        event.playId = play.id;
+                        return event;
+                    });
+
                     return updatePlay.$update();
 
                 } else {
 
+                    var events = play.events;
                     var newPlay = new PlaysResource(play);
-                    return newPlay.$create();
+
+                    delete newPlay.events;
+
+                    return newPlay.$create().then(function(play) {
+
+                        play = self.extendPlay(play);
+                        play.events = events;
+                        return play.save();
+                    });
                 }
             }
         };

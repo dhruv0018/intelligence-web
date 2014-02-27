@@ -112,6 +112,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
+                if (!self.rosters) return undefined;
+
                 return self.rosters[teamId];
             },
 
@@ -148,7 +150,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 self.indexerAssignments = self.indexerAssignments || [];
 
-                assignment = assignment || self.currentAssignment();
+                assignment = assignment || self.currentAssignment() || {};
 
                 if (assignment.timeStarted) throw new Error('Assignment already started');
                 if (self.isAssignmentCompleted(assignment)) throw new Error('Assignment already completed');
