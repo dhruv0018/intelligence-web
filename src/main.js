@@ -76,6 +76,7 @@ component('root');
 component('login');
 component('role');
 component('roles');
+component('rolebar');
 component('header');
 component('alertbar');
 component('account');
