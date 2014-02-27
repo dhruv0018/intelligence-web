@@ -187,7 +187,7 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
-                    'node_modules/bootstrap/less',
+                    'node_modules/bootstrap/bootstrap-3.1.1/less',
                     'node_modules/font-awesome/Font-Awesome-3.2.1/less'
                 ]
             },
@@ -269,7 +269,7 @@ module.exports = function(grunt) {
                                 env: {
                                     paths: [
                                         'theme',
-                                        'node_modules/bootstrap/less',
+                                        'node_modules/bootstrap/bootstrap-3.1.1/less',
                                         'node_modules/font-awesome/Font-Awesome-3.2.1/less'
                                     ]
                                 }
@@ -297,7 +297,7 @@ module.exports = function(grunt) {
                                 env: {
                                     paths: [
                                         'theme',
-                                        'node_modules/bootstrap/less',
+                                        'node_modules/bootstrap/bootstrap-3.1.1/less',
                                         'node_modules/font-awesome/Font-Awesome-3.2.1/less'
                                     ]
                                 }
@@ -317,6 +317,7 @@ module.exports = function(grunt) {
         browserify: {
             dev: {
                 options: {
+                    debug: true,
                     transform: ['decomponentify'],
                     shim: {
                         flowjs: {
@@ -536,7 +537,11 @@ module.exports = function(grunt) {
                 tasks: ['newer:less:components', 'componentbuild:dev', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
             },
             js: {
-                files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
+                files: ['src/**/*.js'],
+                tasks: ['jshint', 'browserify:dev', 'copy:dev', 'notify']
+            },
+            components: {
+                files: ['lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
                 tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
             }
         }
