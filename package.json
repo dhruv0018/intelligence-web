@@ -33,7 +33,7 @@
         "videogular-buffering": "2fdevs/bower-videogular-buffering",
         "videogular-overlay-play": "2fdevs/bower-videogular-overlay-play",
         "videogular-poster": "2fdevs/bower-videogular-poster",
-        "bootstrap": "twbs/bootstrap",
+        "bootstrap": "twbs/bootstrap#v3.1.1",
         "font-awesome": "FortAwesome/Font-Awesome#v3.2.1"
     },
     "dependencies": {},
