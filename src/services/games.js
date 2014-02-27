@@ -114,17 +114,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!self.rosters) return undefined;
 
-                /* Find any rosters with matching teamIds. */
-                var rosters = self.rosters.filter(function(roster) {
-
-                    return roster.teamId == teamId; /* FIXME: teamId in roster might be integer or string */
-
-                });
-
-                /* Pop just one roster. */
-                var roster = rosters.pop();
-
-                return roster;
+                return self.rosters[teamId];
             },
 
             currentAssignment: function() {
