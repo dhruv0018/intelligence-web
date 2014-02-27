@@ -582,6 +582,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:dev-assets',
         'copy:dev']);
