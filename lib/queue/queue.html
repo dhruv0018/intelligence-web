@@ -136,6 +136,8 @@
 
                         <td>
 
+                            <div data-ng-if="!game.hasQaAssignment() && !game.canBeAssignedToQa()">--</div>
+
                             <button class="btn btn-default" data-ng-if="game.canBeAssignedToQa()" data-ng-click="selectIndexer(game, true)">Select QA</button>
 
                             <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1">
