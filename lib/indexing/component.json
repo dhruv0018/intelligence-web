@@ -1,0 +1,15 @@
+{
+    "name": "indexing",
+    "scripts": [
+        "index.js",
+        "indexing-controller.js"
+    ],
+    "styles": [
+        "indexing.less",
+        "indexing-header.less"
+    ],
+    "templates": [
+        "indexing.html",
+        "indexing-header.html"
+    ]
+}

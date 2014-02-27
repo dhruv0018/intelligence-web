@@ -112,17 +112,9 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                /* Find any rosters with matching teamIds. */
-                var rosters = self.rosters.filter(function(roster) {
+                if (!self.rosters) return undefined;
 
-                    return roster.teamId == teamId; /* FIXME: teamId in roster might be integer or string */
-
-                });
-
-                /* Pop just one roster. */
-                var roster = rosters.pop();
-
-                return roster;
+                return self.rosters[teamId];
             },
 
             currentAssignment: function() {
@@ -133,13 +125,117 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.indexerAssignments.slice(-1).pop();
             },
 
+            userAssignment: function(userId) {
+
+                var self = this;
+
+                var assignments = self.indexerAssignments;
+
+                if (!assignments) return undefined;
+
+                /* Find the users assignment in the assignments. */
+                var index = assignments.map(function(assignment) {
+
+                    return assignment.userId;
+
+                }).indexOf(userId);
+
+                /* Return the assignment if found. */
+                return !!~index ? assignments[index] : undefined;
+            },
+
+            startAssignment: function(userId, assignment) {
+
+                var self = this;
+
+                self.indexerAssignments = self.indexerAssignments || [];
+
+                assignment = assignment || self.currentAssignment() || {};
+
+                if (assignment.timeStarted) throw new Error('Assignment already started');
+                if (self.isAssignmentCompleted(assignment)) throw new Error('Assignment already completed');
+                if (!self.isAssignedToUser(userId, assignment)) throw new Error('Assignment not assigned to user');
+
+                /* Set the start time of the assignment. */
+                assignment.timeStarted = new Date(Date.now()).toISOString();
+
+                /* Find the assignment in the assignments. */
+                var index = self.indexerAssignments.map(function(indexerAssignment) {
+
+                    return indexerAssignment.id;
+
+                }).indexOf(assignment.id);
+
+                /* If the assignment is in the assignments already, then update;
+                 * or if its not already in, then add it to the assignments. */
+                if (!!~index) self.indexerAssignments[index] = assignment;
+                else self.indexerAssignments.push(assignment);
+            },
+
+            isAssignmentStarted: function(assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return false;
+
+                return !!assignment.timeStarted;
+            },
+
             isAssignmentCompleted: function(assignment) {
 
                 assignment = assignment || this.currentAssignment();
 
                 if (!assignment) return false;
 
-                return assignment.timeFinished !== null;
+                return !!assignment.timeFinished;
+            },
+
+            areIndexerAssignmentsCompleted: function() {
+
+                var assignments = self.indexerAssignments;
+
+                /* If there are no assignments, consider assignments incomplete. */
+                if (!assignments) return false;
+
+                return assignments.map(function(assignment) {
+
+                    /* If it is an indexer assignment. */
+                    if (self.isAssignedToQa(assignment)) return assignment;
+
+                }).every(function(assignment) {
+
+                    /* Make sure the assignment was completed. */
+                    return self.isAssignmentCompleted(assignment);
+                });
+            },
+
+            areQaAssignmentsCompleted: function() {
+
+                var assignments = self.indexerAssignments;
+
+                /* If there are no assignments, consider assignments incomplete. */
+                if (!assignments) return false;
+
+                return assignments.map(function(assignment) {
+
+                    /* If it is a QA assignment. */
+                    if (self.isAssignedToQa(assignment)) return assignment;
+
+                }).every(function(assignment) {
+
+                    /* Make sure the assignment was completed. */
+                    return self.isAssignmentCompleted(assignment);
+                });
+            },
+
+            isAssignedToUser: function(userId, assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!userId) return false;
+                if (!assignment) return false;
+
+                return assignment.userId == userId;
             },
 
             isAssignedToIndexer: function(assignment) {
@@ -188,39 +284,67 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
             },
 
+            hasAssignment: function() {
+
+                return this.hasIndexerAssignment() || this.hasQaAssignment();
+            },
+
+            canBeAssigned: function() {
+
+                return this.canBeAssignedToIndexer() || this.canBeAssignedToQa();
+            },
+
+            canBeStartedByIndexer: function() {
+
+                var self = this;
+
+                switch (self.status) {
+
+                    case GAME_STATUSES.READY_FOR_INDEX.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.QAING.id:
+                    case GAME_STATUSES.INDEXED.id:
+                        return false;
+                }
+
+                return true;
+            },
+
+            canBeStartedByQa: function() {
+
+                var self = this;
+
+                switch (self.status) {
+
+                    case GAME_STATUSES.READY_FOR_INDEX.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.INDEXING.id:
+                    case GAME_STATUSES.NOT_INDEXED.id:
+                        return false;
+                }
+
+                /* Check if all current Indexer are completed. */
+                return self.areIndexerAssignmentsCompleted();
+            },
+
             canBeAssignedToIndexer: function() {
 
                 var self = this;
 
                 switch (self.status) {
 
-                    case GAME_STATUSES.INDEXING:
-                    case GAME_STATUSES.READY_FOR_QA:
-                    case GAME_STATUSES.QAING:
-                    case GAME_STATUSES.INDEXED:
+                    case GAME_STATUSES.INDEXING.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.QAING.id:
+                    case GAME_STATUSES.INDEXED.id:
                         return false;
                 }
 
-                var assignments = self.indexerAssignments;
+                /* If there are no assignments yet, then the game can be assigned. */
+                if (!self.indexerAssignments) return true;
 
-                if (!assignments) return true;
-
-                /* Check if all current indexer assignments are completed. */
-                return assignments.every(function(assignment) {
-
-                    /* If it is an indexer assignment. */
-                    if (self.isAssignedToIndexer(assignment)) {
-
-                        /* Make sure the assignment was completed. */
-                        return self.isAssignmentCompleted(assignment);
-
-                    /* Otherwise; if the assignment is unknown. */
-                    } else {
-
-                        /* Make the assumption that it is alright to assign to an indexer. */
-                        return true;
-                    }
-                });
+                /* Otherwise; check if all current indexer assignments are completed. */
+                else return self.areIndexerAssignmentsCompleted();
             },
 
             canBeAssignedToQa: function() {
@@ -229,39 +353,57 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 switch (self.status) {
 
-                    case GAME_STATUSES.READY_FOR_INDEX:
-                    case GAME_STATUSES.INDEXING:
-                    case GAME_STATUSES.NOT_INDEXED:
+                    case GAME_STATUSES.READY_FOR_INDEX.id:
+                    case GAME_STATUSES.INDEXING.id:
+                    case GAME_STATUSES.NOT_INDEXED.id:
                         return false;
                 }
 
-                var assignments = self.indexerAssignments;
+                /* If the game has a QA assignment. */
+                if (self.hasQaAssignment()) {
 
-                if (!assignments) return true;
+                    /* Make sure all QA assignments are completed. */
+                    return self.areQaAssignmentsCompleted();
+                }
 
-                /* Check if all current Indexer and QA assignments are completed. */
-                return assignments.every(function(assignment) {
+                else {
 
-                    /* If it is an indexer assignment. */
-                    if (self.isAssignedToIndexer(assignment)) {
-
-                        /* It needs to be completed before QA. */
-                        return self.isAssignmentCompleted(assignment);
-
-                    /* Or if it is a QA assignment. */
-                    } else if (self.isAssignedToQa(assignment)) {
-
-                        /* Make sure the assignment was completed. */
-                        return self.isAssignmentCompleted(assignment);
-
-                    /* Otherwise; if the assignment is unknown. */
-                    } else {
-
-                        /* Make the assumption that it is alright to assign to QA. */
-                        return true;
-                    }
-                });
+                    /* Make sure all indexer assignments are completed. */
+                    return self.areIndexerAssignmentsCompleted();
+                }
             },
+
+            assignToUser: function(userId, isQa) {
+
+                var self = this;
+
+                self.indexerAssignments = self.indexerAssignments || [];
+
+                var assignment = {
+
+                    gameId: self.id,
+                    userId: userId,
+                    isQa: isQa
+                };
+
+                self.indexerAssignments.push(assignment);
+
+                self.status = isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
+            },
+
+            assignToIndexer: function(userId) {
+
+                var isQa = false;
+
+                this.assignToUser(userId, isQa);
+            },
+
+            assignToQa: function(userId) {
+
+                var isQa = true;
+
+                this.assignToUser(userId, isQa);
+            }
         };
 
         return GamesFactory;
