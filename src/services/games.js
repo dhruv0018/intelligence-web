@@ -112,6 +112,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
+                if (!self.rosters) return undefined;
+
                 /* Find any rosters with matching teamIds. */
                 var rosters = self.rosters.filter(function(roster) {
 
