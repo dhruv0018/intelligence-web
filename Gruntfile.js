@@ -559,7 +559,7 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('deploy', ['dev', 'shell:dev']);
-    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
+    grunt.registerTask('default', ['install', 'vm', 'connect:dev', 'watch']);
 
     grunt.registerTask('dev', [
         'less',
@@ -582,6 +582,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:dev-assets',
         'copy:dev']);
