@@ -170,6 +170,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                  * or if its not already in, then add it to the assignments. */
                 if (!!~index) self.indexerAssignments[index] = assignment;
                 else self.indexerAssignments.push(assignment);
+
+                /* Update the game status. */
+                self.status = assignment.isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
             },
 
             isAssignmentStarted: function(assignment) {
