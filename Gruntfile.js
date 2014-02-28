@@ -534,7 +534,7 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['lib/**/*.less'],
-                tasks: ['newer:less:components', 'componentbuild:dev', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
             },
             js: {
                 files: ['src/**/*.js'],
