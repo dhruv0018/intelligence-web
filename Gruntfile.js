@@ -317,11 +317,16 @@ module.exports = function(grunt) {
         browserify: {
             dev: {
                 options: {
+                    debug: true,
                     transform: ['decomponentify'],
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
                             exports: 'flowjs'
+                        },
+                        Mousetrap: {
+                            path: 'node_modules/Mousetrap/mousetrap.js',
+                            exports: 'Mousetrap'
                         }
                     }
                 },
@@ -336,6 +341,10 @@ module.exports = function(grunt) {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
                             exports: 'flowjs'
+                        },
+                        Mousetrap: {
+                            path: 'node_modules/Mousetrap/mousetrap.js',
+                            exports: 'Mousetrap'
                         }
                     }
                 },
@@ -528,7 +537,11 @@ module.exports = function(grunt) {
                 tasks: ['newer:less:components', 'componentbuild:dev', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
             },
             js: {
-                files: ['src/**/*.js', 'lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
+                files: ['src/**/*.js'],
+                tasks: ['jshint', 'browserify:dev', 'copy:dev', 'notify']
+            },
+            components: {
+                files: ['lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
                 tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
             }
         }
@@ -546,7 +559,7 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('deploy', ['dev', 'shell:dev']);
-    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
+    grunt.registerTask('default', ['install', 'vm', 'connect:dev', 'watch']);
 
     grunt.registerTask('dev', [
         'less',
@@ -569,6 +582,7 @@ module.exports = function(grunt) {
         'concat:build',
         'autoprefixer',
         'rework',
+        'copy:theme-assets',
         'copy:component-assets',
         'copy:dev-assets',
         'copy:dev']);

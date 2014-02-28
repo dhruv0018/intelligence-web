@@ -4,7 +4,7 @@ IntelligenceWebClient.factory('PlayersResource', [
     'config', '$resource',
     function(config, $resource) {
 
-        var base = 'batch/players';
+        var base = 'players';
 
         var url = config.api.uri + base;
 
@@ -14,7 +14,7 @@ IntelligenceWebClient.factory('PlayersResource', [
 
         var actions = {
 
-            create: { method: 'POST', isArray: true }
+            create: { method: 'POST', isArray: true, url: config.api.uri + 'batch/players' }
         };
 
         return $resource(url, paramDefaults, actions);

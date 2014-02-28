@@ -112,17 +112,9 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                /* Find any rosters with matching teamIds. */
-                var rosters = self.rosters.filter(function(roster) {
+                if (!self.rosters) return undefined;
 
-                    return roster.teamId == teamId; /* FIXME: teamId in roster might be integer or string */
-
-                });
-
-                /* Pop just one roster. */
-                var roster = rosters.pop();
-
-                return roster;
+                return self.rosters[teamId];
             },
 
             currentAssignment: function() {
@@ -158,7 +150,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 self.indexerAssignments = self.indexerAssignments || [];
 
-                assignment = assignment || self.currentAssignment();
+                assignment = assignment || self.currentAssignment() || {};
 
                 if (assignment.timeStarted) throw new Error('Assignment already started');
                 if (self.isAssignmentCompleted(assignment)) throw new Error('Assignment already completed');
