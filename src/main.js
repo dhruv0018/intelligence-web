@@ -62,6 +62,7 @@ require('./directives/form');
 require('./directives/button');
 require('./directives/input');
 require('./directives/submit');
+require('./directives/keyboard');
 
 require('./directives/verify-password.js');
 
@@ -76,6 +77,7 @@ component('root');
 component('login');
 component('role');
 component('roles');
+component('rolebar');
 component('header');
 component('alertbar');
 component('account');
