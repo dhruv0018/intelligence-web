@@ -387,7 +387,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 self.indexerAssignments.push(assignment);
 
-                self.status = isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
+                self.status = isQa ? GAME_STATUSES.READY_FOR_QA.id : GAME_STATUSES.READY_FOR_INDEXING.id;
             },
 
             assignToIndexer: function(userId) {
