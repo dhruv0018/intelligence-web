@@ -300,7 +300,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 switch (self.status) {
 
-                    case GAME_STATUSES.READY_FOR_INDEX.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                     case GAME_STATUSES.READY_FOR_QA.id:
                     case GAME_STATUSES.QAING.id:
                     case GAME_STATUSES.INDEXED.id:
@@ -316,7 +316,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 switch (self.status) {
 
-                    case GAME_STATUSES.READY_FOR_INDEX.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                     case GAME_STATUSES.READY_FOR_QA.id:
                     case GAME_STATUSES.INDEXING.id:
                     case GAME_STATUSES.NOT_INDEXED.id:
@@ -353,7 +353,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 switch (self.status) {
 
-                    case GAME_STATUSES.READY_FOR_INDEX.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                     case GAME_STATUSES.INDEXING.id:
                     case GAME_STATUSES.NOT_INDEXED.id:
                         return false;
