@@ -1,5 +1,8 @@
 {
     "name": "rolebar",
+    "templates": [
+        "template.html"
+    ],
     "styles": [
         "styles.less"
     ],

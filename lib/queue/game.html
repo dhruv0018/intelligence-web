@@ -1,4 +1,4 @@
-<section class="indexer-games-game-info">
+<section class="game">
 
     <div class="content-wrapper">
 
@@ -126,6 +126,52 @@
 
                     </tr>
 
+                    <tr>
+
+                        <td colspan="4">
+
+                            <h3><i class="icon-pushpin"></i> Coaches Notes:</h3>
+
+                            <div data-ng-repeat="note in game.notes">
+
+                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.COACH_NOTE">{{ note.content }}</p>
+
+                            </div>
+
+                            <hr>
+
+                            <h3><i class="icon-pushpin"></i> Krossover Notes:</h3>
+
+                            <div data-ng-repeat="note in game.notes">
+
+                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.INDEXER_NOTE || note.noteTypeId == GAME_NOTE_TYPES.QA_NOTE">{{ note.content }}</p>
+
+                            </div>
+
+                            <hr>
+
+                            <h3><i class="icon-pushpin"></i> Set Aside Notes:</h3>
+
+                            <div data-ng-repeat="note in game.notes">
+
+                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.SET_ASIDE_NOTE">{{ note.content }}</p>
+
+                            </div>
+
+                            <hr>
+
+                            <h3><i class="icon-pushpin"></i> Coach's feedback on indexing:</h3>
+
+                            <div data-ng-repeat="note in game.notes">
+
+                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.COACH_COMPLAINT_NOTE">{{ note.content }}</p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
                 </tbody>
 
             </table>
@@ -136,17 +182,11 @@
 
     <aside class="sidebar sidebar-right">
 
-        <button class="btn-start-indexing" data-ui-sref="indexing({ id: game.id })" data-ng-disabled="!isReady">
-
-            <span data-ng-show="isReady">Start <span data-ng-show="isIndexingReady">Indexing</span><span data-ng-show="isQaReady">QA</span> <i class="icon-chevron-right pull-right"></i></span>
-            <span data-ng-hide="isReady">Not Ready</span>
-
-        </button>
-
         <ul>
 
             <li><button class="btn btn-link" data-ui-sref="raw-film({ id: game.videoId })" disabled><i class="icon-play-sign"></i> View raw film</button></li>
-            <li><button class="btn btn-link" data-ui-sref="indexer-read-notes" disabled><i class="icon-save"></i> Read notes</button></li>
+            <li><button class="btn btn-link" data-ui-sref="add-coach-feedback" disabled><i class="icon-pencil"></i> Add coach's feedback</button></li>
+            <li><button class="btn btn-link" data-ng-click="delete(game)" disabled><i class="icon-remove-sign"></i> Delete game</button></li>
 
         </ul>
 
@@ -166,6 +206,29 @@
 
         <h4>Date uploaded</h4>
         <time>Jun 23, 1014</time>
+
+        <hr>
+
+        <h4>Indexer</h4>
+
+        <button class="btn btn-link" data-ng-if="!game.hasIndexerAssignment()" data-ng-click="assign('indexer', game.id)">Assign Game</button>
+
+        <ul data-ng-if="game.hasIndexerAssignment()" data-ng-repeat="assignment in game.indexerAssignments">
+
+            <li data-ng-if="!assignment.isQa">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</li>
+
+        </ul>
+
+        <h4>QA</h4>
+
+        <div data-ng-if="!game.hasIndexerAssignment()">--</div>
+        <button class="btn btn-link" data-ng-if="game.hasIndexerAssignment() && !game.hasQaAssignment()" data-ng-click="assign('assurer', game.id)">Assign Game</button>
+
+        <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments">
+
+            <li data-ng-if="assignment.isQa">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</li>
+
+        </ul>
 
     </aside>
 

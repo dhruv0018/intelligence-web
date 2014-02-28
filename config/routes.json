@@ -159,7 +159,7 @@
         "Admin": true
     },
 
-    "games": {
+    "queue": {
 
         "Super Admin": true,
         "Admin": true
