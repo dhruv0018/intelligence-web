@@ -170,6 +170,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                  * or if its not already in, then add it to the assignments. */
                 if (!!~index) self.indexerAssignments[index] = assignment;
                 else self.indexerAssignments.push(assignment);
+
+                /* Update the game status. */
+                self.status = assignment.isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
             },
 
             isAssignmentStarted: function(assignment) {
@@ -300,7 +303,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 switch (self.status) {
 
-                    case GAME_STATUSES.READY_FOR_INDEX.id:
                     case GAME_STATUSES.READY_FOR_QA.id:
                     case GAME_STATUSES.QAING.id:
                     case GAME_STATUSES.INDEXED.id:
@@ -316,9 +318,9 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 switch (self.status) {
 
-                    case GAME_STATUSES.READY_FOR_INDEX.id:
-                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                     case GAME_STATUSES.INDEXING.id:
+                    case GAME_STATUSES.QAING.id:
                     case GAME_STATUSES.NOT_INDEXED.id:
                         return false;
                 }
@@ -353,7 +355,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 switch (self.status) {
 
-                    case GAME_STATUSES.READY_FOR_INDEX.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                     case GAME_STATUSES.INDEXING.id:
                     case GAME_STATUSES.NOT_INDEXED.id:
                         return false;
@@ -388,7 +390,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 self.indexerAssignments.push(assignment);
 
-                self.status = isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
+                self.status = isQa ? GAME_STATUSES.READY_FOR_QA.id : GAME_STATUSES.READY_FOR_INDEXING.id;
             },
 
             assignToIndexer: function(userId) {
