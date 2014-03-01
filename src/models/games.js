@@ -17,7 +17,7 @@ var GAME_STATUSES = {
 
     NOT_INDEXED: {
         id: 0,
-        type: 'error',
+        type: 'warning',
         name: 'Not Indexed'
     },
 
