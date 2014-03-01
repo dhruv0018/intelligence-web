@@ -3,7 +3,7 @@ var IntelligenceWebClient = require('../app');
 var GAME_STATUS_IDS = {
 
     0: 'NOT_INDEXED',
-    1: 'READY_FOR_INDEX',
+    1: 'READY_FOR_INDEXING',
     2: 'INDEXING',
     3: 'READY_FOR_QA',
     4: 'QAING',
@@ -21,7 +21,7 @@ var GAME_STATUSES = {
         name: 'Not Indexed'
     },
 
-    READY_FOR_INDEX: {
+    READY_FOR_INDEXING: {
         id: 1,
         type: 'success',
         name: 'Indexing, not started'
