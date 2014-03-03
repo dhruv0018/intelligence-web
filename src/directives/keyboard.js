@@ -21,6 +21,11 @@ IntelligenceWebClient.directive('keybinding', [
 
                 element.triggerHandler('click');
             });
+
+            element.on('$destroy', function() {
+
+                Mousetrap.unbind(attributes.keybinding);
+            });
         }
 
         return directive;
