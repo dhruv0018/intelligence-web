@@ -120,7 +120,7 @@
                         <td>{{ game.id }}</td>
                         <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
                         <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
-                        <td>{{ GAME_STATUSES[GAME_STATUS_IDS[game.status]].name }}</td>
+                        <td>{{ game.getStatus().name }}</td>
 
                         <td>
 
