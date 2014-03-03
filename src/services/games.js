@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'GAME_STATUSES', 'GamesResource',
-    function(GAME_STATUSES, GamesResource) {
+    'GAME_STATUSES', 'GAME_STATUS_IDS', 'GamesResource',
+    function(GAME_STATUSES, GAME_STATUS_IDS, GamesResource) {
 
         var GamesFactory = {
 
@@ -106,6 +106,37 @@ IntelligenceWebClient.factory('GamesFactory', [
                     var newGame = self.resource.create(parameters, game, success, error);
                     return newGame.$promise;
                 }
+            },
+
+            getStatus: function() {
+
+                var self = this;
+
+                /* Get the game status as a mapped ID. */
+                var statusId = self.status ? GAME_STATUS_IDS[self.status] : undefined;
+
+                /* Lookup the game status by ID. */
+                var status = statusId ? GAME_STATUSES[statusId] : undefined;
+
+                if (!status) return undefined;
+
+                /* If the game is in set aside status. */
+                if (status.id === GAME_STATUSES.SET_ASIDE.id) {
+
+                    /* If the game was assigned to an indexer. */
+                    if (self.isAssignedToIndexer(self.currentAssignment())) {
+
+                        status.name += ', from indexing';
+                    }
+
+                    /* If the game was assigned to QA. */
+                    else if (self.isAssignedToQa(self.currentAssignment())) {
+
+                        status.name += ', from QA';
+                    }
+                }
+
+                return status;
             },
 
             getRoster: function(teamId) {
