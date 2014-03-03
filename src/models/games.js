@@ -17,7 +17,7 @@ var GAME_STATUSES = {
 
     NOT_INDEXED: {
         id: 0,
-        type: 'error',
+        type: 'warning',
         name: 'Not Indexed'
     },
 
@@ -55,6 +55,14 @@ var GAME_STATUSES = {
         id: 6,
         type: 'success',
         name: 'Game Status: Delivered'
+    },
+
+    /* TODO: This needs to be worked out still,
+     * added as a placeholder for no, to not forget. */
+    DELETED: {
+        id: 7,
+        type: 'danger',
+        name: 'Deleted'
     }
 };
 
