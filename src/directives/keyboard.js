@@ -19,7 +19,7 @@ IntelligenceWebClient.directive('keybinding', [
 
             Mousetrap.bind(attributes.keybinding, function() {
 
-                element.triggerHandler('ngClick');
+                element.triggerHandler('click');
             });
         }
 
