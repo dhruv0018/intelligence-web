@@ -121,7 +121,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!status) return undefined;
 
                 /* If the game is in set aside status. */
-                if (status.id === GAME_STATUSES.SET_ASIDE.id) {
+                if (status.id === GAME_STATUSES.SET_ASIDE.id && status.name === GAME_STATUSES.SET_ASIDE.name) {
 
                     /* If the game was assigned to an indexer. */
                     if (self.isAssignedToIndexer(self.currentAssignment())) {
