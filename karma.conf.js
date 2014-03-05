@@ -10,7 +10,7 @@ module.exports = function(config) {
 
         files: [
             'dev/intelligence/*.js',
-            'vendor/angular-mocks/angular-mocks.js',
+            'node_modules/angular-mocks/angular-mocks.js',
             'test/unit/**/*.js',
             {pattern: 'src/**/*.js', included: false},
             {pattern: 'lib/**/*.js', included: false}
