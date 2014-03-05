@@ -21,35 +21,66 @@ describe('TokensService', function() {
         expect(TokensService).to.respondTo('getRefreshToken');
     }));
 
-    describe('get tokens', function () {
+    describe('get tokens', function() {
 
         var userId = 'test2@test.com';
         var password = 'webmaster';
 
-        it('should return the tokens given valid user credentials', inject(function(TokensService) {
+        beforeEach(inject(function($httpBackend, config) {
+
+            var code = {
+
+                code: "60089ca5f66c2a7bca280ad6023f3bcfa94091e8"
+            };
+
+            var tokens = {
+
+                access_token: "9a3b602b404b28f85966bd47683eef973e79e103",
+                expires_in: 3600,
+                token_type: "Bearer",
+                scope: null,
+                refresh_token: "c0897c9b7bbc8e9dfa062a5524897ff199f35942"
+            };
+
+            $httpBackend.whenGET(config.oauth.uri + 'authorize').respond(code);
+            $httpBackend.whenGET(config.oauth.uri + 'token').respond(tokens);
+        }));
+
+        it('should return the tokens given valid user credentials', inject(function($httpBackend, TokensService) {
 
             TokensService.getTokens(userId, password, function(tokens) {
+
+                $httpBackend.flush();
 
                 tokens.accessToken.should.not.be.undefined;
                 tokens.refreshToken.should.not.be.undefined;
                 tokens.accessToken.should.be.a('string');
                 tokens.refreshToken.should.be.a('string');
             });
+
         }));
 
-        it('should return the same tokens while the same user is logged in', inject(function(TokensService) {
+        it('should return the same tokens while the same user is logged in', inject(function($httpBackend, TokensService) {
 
             var initial;
 
             TokensService.getTokens(userId, password, function(tokens) {
 
+                $httpBackend.flush();
+
                 initial = tokens;
             });
+
 
             TokensService.getTokens(userId, password, function(tokens) {
 
                 expect(tokens).to.eql(initial);
             });
+        }));
+
+        afterEach(inject(function(TokensService) {
+
+            TokensService.removeTokens();
         }));
     });
 
