@@ -4,8 +4,6 @@ var should = chai.should();
 
 describe('SessionService', function() {
 
-    var url = 'https://www-dev.krossover.com/intelligence-api/v1/users/test@test.com';
-
     var user = {
         "id":"1",
         "firstName":"test",
@@ -36,21 +34,21 @@ describe('SessionService', function() {
 
     describe('retrieving users', function() {
 
-        beforeEach(inject(function($httpBackend) {
+        var userId = 'test@test.com';
 
-            $httpBackend.when('GET', url).respond(user);
+        beforeEach(inject(function($httpBackend, config) {
+
+            var url = config.api.uri + 'users/' + userId;
+
+            $httpBackend.whenGET(url).respond(user);
         }));
 
         it('given valid credentials should be a valid user', inject(function($httpBackend, SessionService) {
 
-            var userId = 'test@test.com';
-
-            $httpBackend.expectGET(url);
-
+            SessionService.clearCurrentUser();
             SessionService.retrieveCurrentUser(userId, function(user) {
 
-                user.should.not.be.undefined;
-                user.should.be.an('object');
+                expect(user).to.not.be.undefined;
             });
 
             $httpBackend.flush();
@@ -61,14 +59,15 @@ describe('SessionService', function() {
 
         var testUser;
 
-        beforeEach(inject(function($httpBackend, SessionService) {
+        beforeEach(inject(function($httpBackend, config, SessionService) {
 
             var userId = 'test@test.com';
 
-            $httpBackend.when('GET', url).respond(user);
+            var url = config.api.uri + 'users/' + userId;
 
-            $httpBackend.expectGET(url);
+            $httpBackend.whenGET(url).respond(user);
 
+            SessionService.clearCurrentUser();
             SessionService.retrieveCurrentUser(userId, function(retrievedUser) {
 
                 testUser = retrievedUser;
