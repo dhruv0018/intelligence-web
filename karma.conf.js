@@ -29,7 +29,7 @@ module.exports = function(config) {
 
         browsers: ['PhantomJS'],
 
-        reporters: ['progress', 'coverage'],
+        reporters: ['progress', 'coverage', 'osx'],
 
         coverageReporter: {
             dir: 'test/coverage',
