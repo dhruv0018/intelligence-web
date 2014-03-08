@@ -387,82 +387,130 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.areIndexerAssignmentsCompleted();
             },
 
+            /**
+             * Determines if the game can be assigned to an indexer.
+             * Indexer assignments follow the following rules:
+             *  - If the game status is "Indexing, not started":
+             *    The game be assigned to an indexer.
+             *  - If the game status is "Set aside":
+             *    The game must have been set aside from indexing in order for,
+             *    The game be assigned to an indexer.
+             * @return true if the game be assigned to an indexer.
+             */
             canBeAssignedToIndexer: function() {
 
                 var self = this;
 
-                switch (self.status) {
+                /* If the game is in the "Indexing, not started" status, it can
+                 * be assigned to an indexer. */
+                if (self.status == GAME_STATUSES.READY_FOR_INDEXING.id) return true;
 
-                    case GAME_STATUSES.INDEXING.id:
-                    case GAME_STATUSES.READY_FOR_QA.id:
-                    case GAME_STATUSES.QAING.id:
-                    case GAME_STATUSES.INDEXED.id:
-                        return false;
-                }
+                /* Or; if the game is in the "Set Aside" status, and was set
+                 * aside from indexing, then it can be assigned to and indexer. */
+                else if (self.status == GAME_STATUSES.SET_ASIDE.id && self.setAsideFromIndexing()) return true;
 
-                /* If there are no assignments yet, then the game can be assigned. */
-                if (!self.indexerAssignments) return true;
-
-                /* Otherwise; check if all current indexer assignments are completed. */
-                else return self.areIndexerAssignmentsCompleted();
+                /* Otherwise; the game can not be assigned to an indexer. */
+                else return false;
             },
 
+            /**
+             * Determines if the game can be assigned to QA.
+             * QA assignments follow the following rules:
+             *  - If the game status is "QA, not started":
+             *    The game be assigned to QA.
+             *  - If the game status is "Set aside":
+             *    The game must have been set aside from QA in order for,
+             *    The game be assigned to QA.
+             * @return true if the game be assigned to QA.
+             */
             canBeAssignedToQa: function() {
 
                 var self = this;
 
-                switch (self.status) {
+                /* If the game is in the "Qa, not started" status, it can
+                 * be assigned to QA. */
+                if (self.status == GAME_STATUSES.READY_FOR_QA.id) return true;
 
-                    case GAME_STATUSES.READY_FOR_INDEXING.id:
-                    case GAME_STATUSES.INDEXING.id:
-                    case GAME_STATUSES.NOT_INDEXED.id:
-                        return false;
-                }
+                /* Or; if the game is in the "Set Aside" status, and was set
+                 * aside from QA, then it can be assigned to QA. */
+                else if (self.status == GAME_STATUSES.SET_ASIDE.id && self.setAsideFromQa()) return true;
 
-                /* If the game has a QA assignment. */
-                if (self.hasQaAssignment()) {
+                /* Otherwise; the game can not be assigned to QA. */
+                else return false;
+            },
 
-                    /* Make sure all QA assignments are completed. */
-                    return self.areQaAssignmentsCompleted();
+            /**
+             * Assigns the game to an indexer.
+             * The game must first be assignable to an indexer. The assignment
+             * is appended to the list of assignments on the game.
+             * @param {Integer} userId - the user ID of the user to assign the
+             * game to.
+             * @throws {Error} if the game is not assignable to an indexer.
+             */
+            assignToIndexer: function(userId) {
+
+                var self = this;
+
+                /* Ensure the game can be assigned. */
+                if (self.canBeAssignedToIndexer()) {
+
+                    self.indexerAssignments = self.indexerAssignments || [];
+
+                    var assignment = {
+
+                        gameId: self.id,
+                        userId: userId,
+                        isQa: false
+                    };
+
+                    /* Add assignment. */
+                    self.indexerAssignments.push(assignment);
+
+                    /* Update game status. */
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
                 }
 
                 else {
 
-                    /* Make sure all indexer assignments are completed. */
-                    return self.areIndexerAssignmentsCompleted();
+                    throw new Error('Could not assign game to indexer');
                 }
             },
 
-            assignToUser: function(userId, isQa) {
+            /**
+             * Assigns the game to QA.
+             * The game must first be assignable to QA. The assignment
+             * is appended to the list of assignments on the game.
+             * @param {Integer} userId - the user ID of the user to assign the
+             * game to.
+             * @throws {Error} if the game is not assignable to QA.
+             */
+            assignToQa: function(userId) {
 
                 var self = this;
 
-                self.indexerAssignments = self.indexerAssignments || [];
+                /* Ensure the game can be assigned. */
+                if(self.canBeAssignedToQa()) {
 
-                var assignment = {
+                    self.indexerAssignments = self.indexerAssignments || [];
 
-                    gameId: self.id,
-                    userId: userId,
-                    isQa: isQa
-                };
+                    var assignment = {
 
-                self.indexerAssignments.push(assignment);
+                        gameId: self.id,
+                        userId: userId,
+                        isQa: true
+                    };
 
-                self.status = isQa ? GAME_STATUSES.READY_FOR_QA.id : GAME_STATUSES.READY_FOR_INDEXING.id;
-            },
+                    /* Add assignment. */
+                    self.indexerAssignments.push(assignment);
 
-            assignToIndexer: function(userId) {
+                    /* Update game status. */
+                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                }
 
-                var isQa = false;
+                else {
 
-                this.assignToUser(userId, isQa);
-            },
-
-            assignToQa: function(userId) {
-
-                var isQa = true;
-
-                this.assignToUser(userId, isQa);
+                    throw new Error('Could not assign game for QA');
+                }
             }
         };
 
