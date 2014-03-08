@@ -124,19 +124,41 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (status.id === GAME_STATUSES.SET_ASIDE.id && status.name === GAME_STATUSES.SET_ASIDE.name) {
 
                     /* If the game was assigned to an indexer. */
-                    if (self.isAssignedToIndexer(self.currentAssignment())) {
+                    if (self.setAsideFromIndexing()) {
 
                         status.name += ', from indexing';
                     }
 
                     /* If the game was assigned to QA. */
-                    else if (self.isAssignedToQa(self.currentAssignment())) {
+                    else if (self.setAsideFromQa()) {
 
                         status.name += ', from QA';
                     }
                 }
 
                 return status;
+            },
+
+            setAsideFromIndexing: function() {
+
+                var self = this;
+
+                /* If the game was not set aside, return false. */
+                if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
+
+                /* Return true if the game was assigned to an indexer. */
+                return self.isAssignedToIndexer(self.currentAssignment()) ? true : false;
+            },
+
+            setAsideFromQa: function() {
+
+                var self = this;
+
+                /* If the game was not set aside, return false. */
+                if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
+
+                /* Return true if the game was assigned to QA. */
+                return self.isAssignedToQa(self.currentAssignment()) ? true : false;
             },
 
             getRoster: function(teamId) {
