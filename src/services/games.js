@@ -350,43 +350,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.canBeAssignedToIndexer() || this.canBeAssignedToQa();
             },
 
-            canBeStarted: function() {
-
-                return this.canBeStartedByIndexer() || this.canBeStartedByQa();
-            },
-
-            canBeStartedByIndexer: function() {
-
-                var self = this;
-
-                switch (self.status) {
-
-                    case GAME_STATUSES.READY_FOR_QA.id:
-                    case GAME_STATUSES.QAING.id:
-                    case GAME_STATUSES.INDEXED.id:
-                        return false;
-                }
-
-                return true;
-            },
-
-            canBeStartedByQa: function() {
-
-                var self = this;
-
-                switch (self.status) {
-
-                    case GAME_STATUSES.READY_FOR_INDEXING.id:
-                    case GAME_STATUSES.INDEXING.id:
-                    case GAME_STATUSES.QAING.id:
-                    case GAME_STATUSES.NOT_INDEXED.id:
-                        return false;
-                }
-
-                /* Check if all current Indexer are completed. */
-                return self.areIndexerAssignmentsCompleted();
-            },
-
             /**
              * Determines if the game can be assigned to an indexer.
              * Indexer assignments follow the following rules:

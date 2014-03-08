@@ -30,9 +30,6 @@ describe('GamesFactory', function() {
         expect(GamesFactory).to.respondTo('canBeAssigned');
         expect(GamesFactory).to.respondTo('canBeAssignedToIndexer');
         expect(GamesFactory).to.respondTo('canBeAssignedToQa');
-        expect(GamesFactory).to.respondTo('canBeStarted');
-        expect(GamesFactory).to.respondTo('canBeStartedByIndexer');
-        expect(GamesFactory).to.respondTo('canBeStartedByQa');
         expect(GamesFactory).to.respondTo('assignToIndexer');
         expect(GamesFactory).to.respondTo('assignToQa');
     }));
