@@ -46,7 +46,7 @@ describe('SessionService', function() {
         it('given valid credentials should be a valid user', inject(function($httpBackend, SessionService) {
 
             SessionService.clearCurrentUser();
-            SessionService.retrieveCurrentUser(userId, function(user) {
+            SessionService.retrieveCurrentUser(userId, function(error, user) {
 
                 expect(user).to.not.be.undefined;
             });
