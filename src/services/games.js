@@ -350,6 +350,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.canBeAssignedToIndexer() || this.canBeAssignedToQa();
             },
 
+            canBeStarted: function() {
+
+                return this.canBeStartedByIndexer() || this.canBeStartedByQa();
+            },
+
             canBeStartedByIndexer: function() {
 
                 var self = this;
