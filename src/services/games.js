@@ -345,11 +345,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
 
-            canBeAssigned: function() {
-
-                return this.canBeAssignedToIndexer() || this.canBeAssignedToQa();
-            },
-
             /**
              * Determines if the game can be assigned to an indexer.
              * Indexer assignments follow the following rules:

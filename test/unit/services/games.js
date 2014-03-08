@@ -27,7 +27,6 @@ describe('GamesFactory', function() {
         expect(GamesFactory).to.respondTo('hasAssignment');
         expect(GamesFactory).to.respondTo('hasIndexerAssignment');
         expect(GamesFactory).to.respondTo('hasQaAssignment');
-        expect(GamesFactory).to.respondTo('canBeAssigned');
         expect(GamesFactory).to.respondTo('canBeAssignedToIndexer');
         expect(GamesFactory).to.respondTo('canBeAssignedToQa');
         expect(GamesFactory).to.respondTo('assignToIndexer');
