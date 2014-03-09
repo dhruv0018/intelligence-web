@@ -19,8 +19,6 @@ describe('GamesFactory', function() {
         expect(GamesFactory).to.respondTo('startAssignment');
         expect(GamesFactory).to.respondTo('isAssignmentStarted');
         expect(GamesFactory).to.respondTo('isAssignmentCompleted');
-        expect(GamesFactory).to.respondTo('areIndexerAssignmentsCompleted');
-        expect(GamesFactory).to.respondTo('areQaAssignmentsCompleted');
         expect(GamesFactory).to.respondTo('isAssignedToUser');
         expect(GamesFactory).to.respondTo('isAssignedToIndexer');
         expect(GamesFactory).to.respondTo('isAssignedToQa');
