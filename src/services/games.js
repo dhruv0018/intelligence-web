@@ -150,12 +150,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             /**
              * Determines if the game can be assigned to an indexer.
-             * Indexer assignments follow the following rules:
+             * Indexer assignments follow the these rules:
              *  - If the game status is "Indexing, not started":
-             *    The game be assigned to an indexer.
+             *    1. Then the game can be assigned to an indexer.
              *  - If the game status is "Set aside":
-             *    The game must have been set aside from indexing in order for,
-             *    The game be assigned to an indexer.
+             *    1. The game must have been set aside from indexing.
+             *    2. Then the game can be assigned to an indexer.
              * @return true if the game be assigned to an indexer.
              */
             canBeAssignedToIndexer: function() {
@@ -176,19 +176,19 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             /**
              * Determines if the game can be assigned to QA.
-             * QA assignments follow the following rules:
+             * Indexer assignments follow the these rules:
              *  - If the game status is "QA, not started":
-             *    The game be assigned to QA.
+             *    1. Then the game can be assigned to an indexer.
              *  - If the game status is "Set aside":
-             *    The game must have been set aside from QA in order for,
-             *    The game be assigned to QA.
+             *    1. The game must have been set aside from QA.
+             *    2. Then the game can be assigned to QA.
              * @return true if the game be assigned to QA.
              */
             canBeAssignedToQa: function() {
 
                 var self = this;
 
-                /* If the game is in the "Qa, not started" status, it can
+                /* If the game is in the "QA, not started" status, it can
                  * be assigned to QA. */
                 if (self.status == GAME_STATUSES.READY_FOR_QA.id) return true;
 
