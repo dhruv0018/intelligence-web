@@ -343,5 +343,58 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('userId', userId);
         }]));
     });
+
+    describe('startAssignment', function() {
+
+        it('should start indexer assignment', inject([
+           'GAME_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, games) {
+
+            var userId = 1;
+            var isQa = false;
+
+            var game = {
+
+                status: GAME_STATUSES.READY_FOR_INDEXING.id
+            };
+
+            game = games.extendGame(game);
+
+            game.assignToIndexer(userId);
+
+            /* Simulate server call and insert assignment ID. */
+            game.indexerAssignments[0].id = 1;
+
+            game.startAssignment(userId);
+
+            expect(game.currentAssignment()).to.have.property('timeStarted');
+            game.status.should.equal(GAME_STATUSES.INDEXING.id);
+        }]));
+
+        it('should start QA assignment', inject([
+           'GAME_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, games) {
+
+            var userId = 1;
+            var isQa = true;
+
+            var game = {
+
+                status: GAME_STATUSES.READY_FOR_QA.id
+            };
+
+            game = games.extendGame(game);
+
+            game.assignToQa(userId);
+
+            /* Simulate server call and insert assignment ID. */
+            game.indexerAssignments[0].id = 1;
+
+            game.startAssignment(userId);
+
+            expect(game.currentAssignment()).to.have.property('timeStarted');
+            game.status.should.equal(GAME_STATUSES.QAING.id);
+        }]));
+    });
 });
 
