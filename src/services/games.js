@@ -274,20 +274,32 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
             },
 
+            /**
+             * Starts an assignment.
+             * @param {Integer} userId - the user ID of the user for which the
+             * assignment should be started
+             * @param {Object} [assignment] - the assignment to start. Defaults
+             * to the games current assignment.
+             * @throws {Error} if there is no assignment to start.
+             * @throws {Error} on a bad assignment.
+             * @throws {Error} if no assignments have been made.
+             * @throws {Error} when the assignment has already been started.
+             * @throws {Error} when the assignment has already been completed.
+             * @throws {Error} if the assignment is not assigned to the user.
+             * @throws {Error} if the assignment can not be found.
+             */
             startAssignment: function(userId, assignment) {
 
                 var self = this;
 
-                self.indexerAssignments = self.indexerAssignments || [];
+                assignment = assignment || self.currentAssignment();
 
-                assignment = assignment || self.currentAssignment() || {};
-
-                if (assignment.timeStarted) throw new Error('Assignment already started');
+                if (!assignment) throw new Error('No assignment to start');
+                if (!assignment.id) throw new Error('Bad assignment');
+                if (!self.indexerAssignments) throw new Error('No assignments made');
+                if (self.isAssignmentStarted(assignment)) throw new Error('Assignment already started');
                 if (self.isAssignmentCompleted(assignment)) throw new Error('Assignment already completed');
                 if (!self.isAssignedToUser(userId, assignment)) throw new Error('Assignment not assigned to user');
-
-                /* Set the start time of the assignment. */
-                assignment.timeStarted = new Date(Date.now()).toISOString();
 
                 /* Find the assignment in the assignments. */
                 var index = self.indexerAssignments.map(function(indexerAssignment) {
@@ -296,10 +308,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 }).indexOf(assignment.id);
 
-                /* If the assignment is in the assignments already, then update;
-                 * or if its not already in, then add it to the assignments. */
-                if (!!~index) self.indexerAssignments[index] = assignment;
-                else self.indexerAssignments.push(assignment);
+                if (!~index) throw new Error('Assignment not found');
+
+                /* Set the start time of the assignment. */
+                assignment.timeStarted = new Date(Date.now()).toISOString();
+
+                self.indexerAssignments[index] = assignment;
 
                 /* Update the game status. */
                 self.status = assignment.isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
