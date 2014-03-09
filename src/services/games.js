@@ -139,28 +139,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return status;
             },
 
-            setAsideFromIndexing: function() {
-
-                var self = this;
-
-                /* If the game was not set aside, return false. */
-                if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
-
-                /* Return true if the game was assigned to an indexer. */
-                return self.isAssignedToIndexer(self.currentAssignment()) ? true : false;
-            },
-
-            setAsideFromQa: function() {
-
-                var self = this;
-
-                /* If the game was not set aside, return false. */
-                if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
-
-                /* Return true if the game was assigned to QA. */
-                return self.isAssignedToQa(self.currentAssignment()) ? true : false;
-            },
-
             getRoster: function(teamId) {
 
                 var self = this;
@@ -168,143 +146,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.rosters) return undefined;
 
                 return self.rosters[teamId];
-            },
-
-            currentAssignment: function() {
-
-                if (!this.indexerAssignments) return undefined;
-
-                /* The last assignment in the array is the current one. */
-                return this.indexerAssignments.slice(-1).pop();
-            },
-
-            userAssignment: function(userId) {
-
-                var self = this;
-
-                var assignments = self.indexerAssignments;
-
-                if (!assignments) return undefined;
-
-                /* Find the users assignment in the assignments. */
-                var index = assignments.map(function(assignment) {
-
-                    return assignment.userId;
-
-                }).indexOf(userId);
-
-                /* Return the assignment if found. */
-                return !!~index ? assignments[index] : undefined;
-            },
-
-            startAssignment: function(userId, assignment) {
-
-                var self = this;
-
-                self.indexerAssignments = self.indexerAssignments || [];
-
-                assignment = assignment || self.currentAssignment() || {};
-
-                if (assignment.timeStarted) throw new Error('Assignment already started');
-                if (self.isAssignmentCompleted(assignment)) throw new Error('Assignment already completed');
-                if (!self.isAssignedToUser(userId, assignment)) throw new Error('Assignment not assigned to user');
-
-                /* Set the start time of the assignment. */
-                assignment.timeStarted = new Date(Date.now()).toISOString();
-
-                /* Find the assignment in the assignments. */
-                var index = self.indexerAssignments.map(function(indexerAssignment) {
-
-                    return indexerAssignment.id;
-
-                }).indexOf(assignment.id);
-
-                /* If the assignment is in the assignments already, then update;
-                 * or if its not already in, then add it to the assignments. */
-                if (!!~index) self.indexerAssignments[index] = assignment;
-                else self.indexerAssignments.push(assignment);
-
-                /* Update the game status. */
-                self.status = assignment.isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
-            },
-
-            isAssignmentStarted: function(assignment) {
-
-                assignment = assignment || this.currentAssignment();
-
-                if (!assignment) return false;
-
-                return !!assignment.timeStarted;
-            },
-
-            isAssignmentCompleted: function(assignment) {
-
-                assignment = assignment || this.currentAssignment();
-
-                if (!assignment) return false;
-
-                return !!assignment.timeFinished;
-            },
-
-            isAssignedToUser: function(userId, assignment) {
-
-                assignment = assignment || this.currentAssignment();
-
-                if (!userId) return false;
-                if (!assignment) return false;
-
-                return assignment.userId == userId;
-            },
-
-            isAssignedToIndexer: function(assignment) {
-
-                assignment = assignment || this.currentAssignment();
-
-                if (!assignment) return false;
-
-                return !assignment.isQa;
-            },
-
-            isAssignedToQa: function(assignment) {
-
-                assignment = assignment || this.currentAssignment();
-
-                if (!assignment) return false;
-
-                return assignment.isQa;
-            },
-
-            hasIndexerAssignment: function() {
-
-                var self = this;
-
-                var assignments = self.indexerAssignments;
-
-                if (!assignments) return false;
-
-                return assignments.some(function(assignment) {
-
-                    return self.isAssignedToIndexer(assignment);
-                });
-            },
-
-            hasQaAssignment: function() {
-
-                var self = this;
-
-                var assignments = self.indexerAssignments;
-
-                if (!assignments) return false;
-
-                return assignments.some(function(assignment) {
-
-                    return self.isAssignedToQa(assignment);
-                });
-            },
-
-            hasAssignment: function() {
-
-                return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
 
             /**
@@ -431,7 +272,166 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     throw new Error('Could not assign game for QA');
                 }
-            }
+            },
+
+            startAssignment: function(userId, assignment) {
+
+                var self = this;
+
+                self.indexerAssignments = self.indexerAssignments || [];
+
+                assignment = assignment || self.currentAssignment() || {};
+
+                if (assignment.timeStarted) throw new Error('Assignment already started');
+                if (self.isAssignmentCompleted(assignment)) throw new Error('Assignment already completed');
+                if (!self.isAssignedToUser(userId, assignment)) throw new Error('Assignment not assigned to user');
+
+                /* Set the start time of the assignment. */
+                assignment.timeStarted = new Date(Date.now()).toISOString();
+
+                /* Find the assignment in the assignments. */
+                var index = self.indexerAssignments.map(function(indexerAssignment) {
+
+                    return indexerAssignment.id;
+
+                }).indexOf(assignment.id);
+
+                /* If the assignment is in the assignments already, then update;
+                 * or if its not already in, then add it to the assignments. */
+                if (!!~index) self.indexerAssignments[index] = assignment;
+                else self.indexerAssignments.push(assignment);
+
+                /* Update the game status. */
+                self.status = assignment.isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
+            },
+
+            currentAssignment: function() {
+
+                if (!this.indexerAssignments) return undefined;
+
+                /* The last assignment in the array is the current one. */
+                return this.indexerAssignments.slice(-1).pop();
+            },
+
+            userAssignment: function(userId) {
+
+                var self = this;
+
+                var assignments = self.indexerAssignments;
+
+                if (!assignments) return undefined;
+
+                /* Find the users assignment in the assignments. */
+                var index = assignments.map(function(assignment) {
+
+                    return assignment.userId;
+
+                }).indexOf(userId);
+
+                /* Return the assignment if found. */
+                return !!~index ? assignments[index] : undefined;
+            },
+
+            isAssignmentStarted: function(assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return false;
+
+                return !!assignment.timeStarted;
+            },
+
+            isAssignmentCompleted: function(assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return false;
+
+                return !!assignment.timeFinished;
+            },
+
+            isAssignedToUser: function(userId, assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!userId) return false;
+                if (!assignment) return false;
+
+                return assignment.userId == userId;
+            },
+
+            isAssignedToIndexer: function(assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return false;
+
+                return !assignment.isQa;
+            },
+
+            isAssignedToQa: function(assignment) {
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return false;
+
+                return assignment.isQa;
+            },
+
+            hasIndexerAssignment: function() {
+
+                var self = this;
+
+                var assignments = self.indexerAssignments;
+
+                if (!assignments) return false;
+
+                return assignments.some(function(assignment) {
+
+                    return self.isAssignedToIndexer(assignment);
+                });
+            },
+
+            hasQaAssignment: function() {
+
+                var self = this;
+
+                var assignments = self.indexerAssignments;
+
+                if (!assignments) return false;
+
+                return assignments.some(function(assignment) {
+
+                    return self.isAssignedToQa(assignment);
+                });
+            },
+
+            hasAssignment: function() {
+
+                return this.hasIndexerAssignment() || this.hasQaAssignment();
+            },
+
+            setAsideFromIndexing: function() {
+
+                var self = this;
+
+                /* If the game was not set aside, return false. */
+                if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
+
+                /* Return true if the game was assigned to an indexer. */
+                return self.isAssignedToIndexer(self.currentAssignment()) ? true : false;
+            },
+
+            setAsideFromQa: function() {
+
+                var self = this;
+
+                /* If the game was not set aside, return false. */
+                if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
+
+                /* Return true if the game was assigned to QA. */
+                return self.isAssignedToQa(self.currentAssignment()) ? true : false;
+            },
         };
 
         return GamesFactory;
