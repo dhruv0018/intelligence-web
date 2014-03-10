@@ -3,14 +3,14 @@
     <div class="upload-progress">
 
         <button class="cancel-upload" data-ng-disabled="!$flow.isUploading()" data-ng-click="cancel()"><i class="icon-remove"></i> Cancel</button>
-        <progressbar class="progressbar progress-striped" data-ng-class="{ active: $flow.isUploading() }" type="{{ complete ? 'success' : 'danger' }}" max="1" value="$flow.progress()"></progressbar>
+        <x-progressbar class="progressbar progress-striped" data-ng-class="{ active: $flow.isUploading() }" type="{{ complete ? 'success' : 'danger' }}" max="1" value="$flow.progress()"></x-progressbar>
 
     </div>
 
 </header>
 
 
-<tabset>
+<x-tabset>
 
     <div class="uploading" data-ng-if="$flow.isUploading()">
         <h1>You’re uploading a regular game…</h1>
@@ -27,29 +27,29 @@
         <h2>Now your’re ready to submit your game to us.</h2>
     </div>
 
-    <tab heading="Instructions" data-ui-sref="instructions" active="tabs.instructions.active" disabled="tabs.instructions.disabled">
+    <x-tab heading="Instructions" data-ui-sref="instructions" active="tabs.instructions.active" disabled="tabs.instructions.disabled">
 
         <div data-ui-view="instructions"></div>
 
-    </tab>
+    </x-tab>
 
-    <tab heading="Opposing Team" data-ui-sref="opposing-team" active="tabs['opposing-team'].active" disabled="tabs['opposing-team'].disabled">
+    <x-tab heading="Opposing Team" data-ui-sref="opposing-team" active="tabs['opposing-team'].active" disabled="tabs['opposing-team'].disabled">
 
         <div data-ui-view="opposing-team"></div>
 
-    </tab>
+    </x-tab>
 
-    <tab heading="Your Team" data-ui-sref="your-team" active="tabs['your-team'].active" disabled="tabs['your-team'].disabled">
+    <x-tab heading="Your Team" data-ui-sref="your-team" active="tabs['your-team'].active" disabled="tabs['your-team'].disabled">
 
         <div data-ui-view="your-team"></div>
 
-    </tab>
+    </x-tab>
 
-    <tab heading="Basic Game Info" data-ui-sref="game-info" active="tabs['game-info'].active" disabled="tabs['game-info'].disabled">
+    <x-tab heading="Basic Game Info" data-ui-sref="game-info" active="tabs['game-info'].active" disabled="tabs['game-info'].disabled">
 
         <div data-ui-view="game-info"></div>
 
-    </tab>
+    </x-tab>
 
-</tabset>
+</x-tabset>
 
