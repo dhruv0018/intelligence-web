@@ -48,34 +48,10 @@ describe('TokensService', function() {
 
         it('should return the tokens given valid user credentials', inject(function($httpBackend, TokensService) {
 
-            TokensService.getTokens(userId, password, function(tokens) {
-
-                $httpBackend.flush();
-
-                tokens.accessToken.should.not.be.undefined;
-                tokens.refreshToken.should.not.be.undefined;
-                tokens.accessToken.should.be.a('string');
-                tokens.refreshToken.should.be.a('string');
-            });
-
         }));
 
         it('should return the same tokens while the same user is logged in', inject(function($httpBackend, TokensService) {
 
-            var initial;
-
-            TokensService.getTokens(userId, password, function(tokens) {
-
-                $httpBackend.flush();
-
-                initial = tokens;
-            });
-
-
-            TokensService.getTokens(userId, password, function(tokens) {
-
-                expect(tokens).to.eql(initial);
-            });
         }));
 
         afterEach(inject(function(TokensService) {
