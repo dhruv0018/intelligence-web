@@ -541,8 +541,12 @@ module.exports = function(grunt) {
                 tasks: ['jshint', 'browserify:dev', 'copy:dev', 'notify']
             },
             components: {
-                files: ['lib/**/*.js', 'test/unit/**/*.js', 'test/acceptance/**/*.js'],
+                files: ['lib/**/*.js'],
                 tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
+            },
+            tests: {
+                files: ['test/unit/**/*.js', 'test/acceptance/**/*.js'],
+                tasks: ['jshint', 'karma']
             }
         }
 
