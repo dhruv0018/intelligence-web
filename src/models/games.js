@@ -17,37 +17,52 @@ var GAME_STATUSES = {
 
     NOT_INDEXED: {
         id: 0,
+        type: 'warning',
         name: 'Not Indexed'
     },
 
     READY_FOR_INDEXING: {
         id: 1,
-        name: 'Ready for indexing'
+        type: 'success',
+        name: 'Indexing, not started'
     },
 
     INDEXING: {
         id: 2,
-        name: 'Indexing'
+        type: 'warning',
+        name: 'Indexing, in progress'
     },
 
     READY_FOR_QA: {
         id: 3,
-        name: 'Ready for QA'
+        type: 'success',
+        name: 'QA, not started'
     },
 
     QAING: {
         id: 4,
-        name: 'In QA'
+        type: 'warning',
+        name: 'QA, in progress'
     },
 
     SET_ASIDE: {
         id: 5,
+        type: 'warning',
         name: 'Set aside'
     },
 
     INDEXED: {
         id: 6,
-        name: 'Indexed'
+        type: 'success',
+        name: 'Game Status: Delivered'
+    },
+
+    /* TODO: This needs to be worked out still,
+     * added as a placeholder for no, to not forget. */
+    DELETED: {
+        id: 7,
+        type: 'danger',
+        name: 'Deleted'
     }
 };
 
