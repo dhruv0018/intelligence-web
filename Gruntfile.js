@@ -491,10 +491,11 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['karma', 'plato']);
     grunt.registerTask('lint', ['htmlhint', 'csslint', 'recess', 'jshint']);
+    grunt.registerTask('test', ['karma']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
+    grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
