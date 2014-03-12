@@ -53,7 +53,6 @@
         "grunt-cli": "~0.1.9",
         "grunt-dox": "~0.5.0",
         "grunt-ver": "~0.2.4",
-        "grunt-shell": "~0.6.4",
         "grunt-notify": "~0.2.16",
         "grunt-newer": "~0.6.0",
         "grunt-contrib-clean": "~0.5.0",

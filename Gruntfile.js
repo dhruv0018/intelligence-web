@@ -464,12 +464,6 @@ module.exports = function(grunt) {
             }
         },
 
-        shell: {
-            dev: {
-                command: 'scp -r dev/intelligence virtual@www.dev.krossover.com:/var/www',
-            }
-        },
-
         watch: {
             options: {
                 spawn: false,
@@ -525,7 +519,6 @@ module.exports = function(grunt) {
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('deploy', ['dev', 'shell:dev']);
     grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
     grunt.registerTask('dev', [
