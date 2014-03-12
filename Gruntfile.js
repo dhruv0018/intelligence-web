@@ -496,9 +496,11 @@ module.exports = function(grunt) {
 
     grunt.registerTask('qa', [
         'clean',
+        'lint',
         'ngconstant:qa',
         'componentbuild:prod',
         'browserify:prod',
+        'test',
         'less',
         'concat:build',
         'autoprefixer',
@@ -512,9 +514,11 @@ module.exports = function(grunt) {
 
     grunt.registerTask('prod', [
         'clean',
+        'lint',
         'ngconstant:prod',
         'componentbuild:prod',
         'browserify:prod',
+        'test',
         'less',
         'concat:build',
         'autoprefixer',
