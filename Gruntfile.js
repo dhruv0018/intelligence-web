@@ -24,14 +24,6 @@ module.exports = function(grunt) {
                     config: grunt.file.readJSON('config/dev.json')
                 }
             },
-            vm: {
-                dest: 'src/config.js',
-                name: 'config',
-                constants: {
-                    pkg: grunt.file.readJSON('package.json'),
-                    config: grunt.file.readJSON('config/vm.json')
-                }
-            },
             qa: {
                 dest: 'src/config.js',
                 name: 'config',
@@ -534,24 +526,11 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('deploy', ['dev', 'shell:dev']);
-    grunt.registerTask('default', ['install', 'vm', 'connect:dev', 'watch']);
+    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
     grunt.registerTask('dev', [
         'less',
         'ngconstant:dev',
-        'componentbuild:dev',
-        'browserify:dev',
-        'concat:build',
-        'autoprefixer',
-        'rework',
-        'copy:theme-assets',
-        'copy:component-assets',
-        'copy:dev-assets',
-        'copy:dev']);
-
-    grunt.registerTask('vm', [
-        'less',
-        'ngconstant:vm',
         'componentbuild:dev',
         'browserify:dev',
         'concat:build',
