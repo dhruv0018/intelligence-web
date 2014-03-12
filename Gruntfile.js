@@ -24,14 +24,6 @@ module.exports = function(grunt) {
                     config: grunt.file.readJSON('config/dev.json')
                 }
             },
-            vm: {
-                dest: 'src/config.js',
-                name: 'config',
-                constants: {
-                    pkg: grunt.file.readJSON('package.json'),
-                    config: grunt.file.readJSON('config/vm.json')
-                }
-            },
             qa: {
                 dest: 'src/config.js',
                 name: 'config',
@@ -46,14 +38,6 @@ module.exports = function(grunt) {
                 constants: {
                     pkg: grunt.file.readJSON('package.json'),
                     config: grunt.file.readJSON('config/prod.json')
-                }
-            },
-            dist: {
-                dest: 'src/config.js',
-                name: 'config',
-                constants: {
-                    pkg: grunt.file.readJSON('package.json'),
-                    config: grunt.file.readJSON('config/dist.json')
                 }
             }
         },
@@ -102,11 +86,6 @@ module.exports = function(grunt) {
             files: '<%= files.html %>'
         },
 
-        recess: {
-            options: require('./.recessrc'),
-            files: '<%= files.css %>'
-        },
-
         csslint: {
             options: {
                 csslintrc: '.csslintrc'
@@ -125,18 +104,6 @@ module.exports = function(grunt) {
             files: '<%= files.js %>'
         },
 
-        jsbeautifier: {
-            options: {
-                config: '.jsbeautifyrc',
-                mode: 'VERIFY_ONLY'
-            },
-            files: '<%= files.js %>'
-        },
-
-        jsvalidate: {
-            files: ['<%= files.js']
-        },
-
 
         /* Minifiers */
 
@@ -153,7 +120,7 @@ module.exports = function(grunt) {
         csso: {
             prod: {
                 files: {
-                    'prod/intelligence/styles.css': ['build/reworked.css']
+                    'prod/intelligence/styles.css': ['build/prefixed.css']
                 }
             }
         },
@@ -205,10 +172,6 @@ module.exports = function(grunt) {
             }
         },
 
-        rework: {
-            'build/reworked.css': 'build/prefixed.css',
-        },
-
         copy: {
             'theme-assets': {
                 expand: true,
@@ -226,7 +189,7 @@ module.exports = function(grunt) {
                 files: {
                     'dev/intelligence/.htaccess': 'src/.htaccess',
                     'dev/intelligence/index.html': 'src/index.html',
-                    'dev/intelligence/styles.css': 'build/reworked.css',
+                    'dev/intelligence/styles.css': 'build/prefixed.css',
                     'dev/intelligence/scripts.js': 'build/bundle.js'
                 }
             },
@@ -370,40 +333,12 @@ module.exports = function(grunt) {
                         'prod/intelligence/index.html'
                     ]
                 }]
-            },
-            dist: {
-                forceVersion: '<%= pkg.version %>',
-                phases: [{
-                    files: [
-                        'dist/<%= pkg.name %>.zip'
-                    ],
-                }]
-            }
-        },
-
-        compress: {
-            dist: {
-                options: {
-                    archive: 'dist/<%= pkg.name %>.zip'
-                },
-                src: [
-                    'prod/intelligence/index.html',
-                    'prod/intelligence/*.css',
-                    'prod/intelligence/*.js'
-                ]
             }
         },
 
 
         /* Testing */
 
-
-        cucumberjs: {
-            features: 'test/acceptance/features',
-            options: {
-                steps: 'test/acceptance/step_definitions'
-            }
-        },
 
         karma: {
             unit: {
@@ -420,17 +355,6 @@ module.exports = function(grunt) {
             docs: {
                 src: ['src', 'lib'],
                 dest: 'docs'
-            }
-        },
-
-        complexity: {
-            report: {
-                options: {
-                    cyclomatic: 5,
-                    halstead: 25,
-                    maintainability: 50
-                },
-                files: '<%= files.js %>'
             }
         },
 
@@ -501,12 +425,6 @@ module.exports = function(grunt) {
             }
         },
 
-        shell: {
-            dev: {
-                command: 'scp -r dev/intelligence virtual@www.dev.krossover.com:/var/www',
-            }
-        },
-
         watch: {
             options: {
                 spawn: false,
@@ -545,11 +463,10 @@ module.exports = function(grunt) {
                 tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
             },
             tests: {
-                files: ['test/unit/**/*.js', 'test/acceptance/**/*.js'],
+                files: ['test/unit/**/*.js'],
                 tasks: ['jshint', 'karma']
             }
         }
-
     });
 
 
@@ -557,49 +474,36 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['karma', 'plato']);
-    grunt.registerTask('lint', ['htmlhint', 'csslint', 'recess', 'jshint']);
+    grunt.registerTask('test', ['karma']);
+    grunt.registerTask('lint', ['htmlhint', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
+    grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('deploy', ['dev', 'shell:dev']);
-    grunt.registerTask('default', ['install', 'vm', 'connect:dev', 'watch']);
+    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
     grunt.registerTask('dev', [
-        'less',
         'ngconstant:dev',
         'componentbuild:dev',
         'browserify:dev',
-        'concat:build',
-        'autoprefixer',
-        'rework',
-        'copy:theme-assets',
-        'copy:component-assets',
-        'copy:dev-assets',
-        'copy:dev']);
-
-    grunt.registerTask('vm', [
         'less',
-        'ngconstant:vm',
-        'componentbuild:dev',
-        'browserify:dev',
         'concat:build',
         'autoprefixer',
-        'rework',
         'copy:theme-assets',
         'copy:component-assets',
         'copy:dev-assets',
         'copy:dev']);
 
     grunt.registerTask('qa', [
-        'clean:prod',
-        'less',
+        'clean',
+        'lint',
         'ngconstant:qa',
         'componentbuild:prod',
         'browserify:prod',
+        'test',
+        'less',
         'concat:build',
         'autoprefixer',
-        'rework',
         'copy:theme-assets',
         'copy:component-assets',
         'copy:prod-assets',
@@ -609,15 +513,15 @@ module.exports = function(grunt) {
         'ver:prod']);
 
     grunt.registerTask('prod', [
-        'clean:prod',
-        'install',
-        'less',
+        'clean',
+        'lint',
         'ngconstant:prod',
         'componentbuild:prod',
         'browserify:prod',
+        'test',
+        'less',
         'concat:build',
         'autoprefixer',
-        'rework',
         'copy:theme-assets',
         'copy:component-assets',
         'copy:prod-assets',
@@ -625,24 +529,4 @@ module.exports = function(grunt) {
         'htmlmin',
         'csso',
         'ver:prod']);
-
-    grunt.registerTask('dist', [
-        'clean:dist',
-        'clean:prod',
-        'install',
-        'less',
-        'ngconstant:dist',
-        'componentbuild:prod',
-        'browserify:prod',
-        'concat:build',
-        'autoprefixer',
-        'rework',
-        'copy:theme-assets',
-        'copy:component-assets',
-        'copy:prod-assets',
-        'copy:prod',
-        'htmlmin',
-        'csso',
-        'compress',
-        'ver:dist']);
 };
