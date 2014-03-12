@@ -86,11 +86,6 @@ module.exports = function(grunt) {
             files: '<%= files.html %>'
         },
 
-        recess: {
-            options: require('./.recessrc'),
-            files: '<%= files.css %>'
-        },
-
         csslint: {
             options: {
                 csslintrc: '.csslintrc'
@@ -491,8 +486,8 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('lint', ['htmlhint', 'csslint', 'recess', 'jshint']);
     grunt.registerTask('test', ['karma']);
+    grunt.registerTask('lint', ['htmlhint', 'csslint', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
