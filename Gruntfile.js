@@ -152,42 +152,6 @@ module.exports = function(grunt) {
             }
         },
 
-        copy: {
-            'theme-assets': {
-                expand: true,
-                cwd:    'theme',
-                src:    'assets/*.png',
-                dest:   'build'
-            },
-            'component-assets': {
-                expand: true,
-                cwd:    'lib',
-                src:    '**/*.png',
-                dest:   'build/assets'
-            },
-            assets: {
-                expand: true,
-                cwd:    'build/assets',
-                src:    '**',
-                dest:   'public/intelligence/assets'
-            },
-            dev: {
-                files: {
-                    'build/index.html': 'src/index.html',
-                    'build/styles.css': 'build/prefixed.css',
-                    'build/scripts.js': 'build/bundle.js'
-                }
-            },
-            build: {
-                files: {
-                    'public/intelligence/.htaccess': 'src/.htaccess',
-                    'public/intelligence/index.html': 'build/index.html',
-                    'public/intelligence/styles.css': 'build/prefixed.css',
-                    'public/intelligence/scripts.js': 'build/bundle.js'
-                }
-            }
-        },
-
 
         /* Build process - JS */
 
@@ -295,6 +259,41 @@ module.exports = function(grunt) {
 
         /* Distribution/Deployment */
 
+        copy: {
+            'theme-assets': {
+                expand: true,
+                cwd:    'theme',
+                src:    'assets/*.png',
+                dest:   'build'
+            },
+            'component-assets': {
+                expand: true,
+                cwd:    'lib',
+                src:    '**/*.png',
+                dest:   'build/assets'
+            },
+            assets: {
+                expand: true,
+                cwd:    'build/assets',
+                src:    '**',
+                dest:   'public/intelligence/assets'
+            },
+            dev: {
+                files: {
+                    'build/index.html': 'src/index.html',
+                    'build/styles.css': 'build/prefixed.css',
+                    'build/scripts.js': 'build/bundle.js'
+                }
+            },
+            build: {
+                files: {
+                    'public/intelligence/.htaccess': 'src/.htaccess',
+                    'public/intelligence/index.html': 'build/index.html',
+                    'public/intelligence/styles.css': 'build/prefixed.css',
+                    'public/intelligence/scripts.js': 'build/bundle.js'
+                }
+            }
+        },
 
         ver: {
             prod: {
