@@ -483,10 +483,10 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
     grunt.registerTask('dev', [
-        'less',
         'ngconstant:dev',
         'componentbuild:dev',
         'browserify:dev',
+        'less',
         'concat:build',
         'autoprefixer',
         'copy:theme-assets',
@@ -496,10 +496,10 @@ module.exports = function(grunt) {
 
     grunt.registerTask('qa', [
         'clean',
-        'less',
         'ngconstant:qa',
         'componentbuild:prod',
         'browserify:prod',
+        'less',
         'concat:build',
         'autoprefixer',
         'copy:theme-assets',
@@ -512,10 +512,10 @@ module.exports = function(grunt) {
 
     grunt.registerTask('prod', [
         'clean',
-        'less',
         'ngconstant:prod',
         'componentbuild:prod',
         'browserify:prod',
+        'less',
         'concat:build',
         'autoprefixer',
         'copy:theme-assets',
