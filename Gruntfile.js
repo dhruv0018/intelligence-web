@@ -47,14 +47,6 @@ module.exports = function(grunt) {
                     pkg: grunt.file.readJSON('package.json'),
                     config: grunt.file.readJSON('config/prod.json')
                 }
-            },
-            dist: {
-                dest: 'src/config.js',
-                name: 'config',
-                constants: {
-                    pkg: grunt.file.readJSON('package.json'),
-                    config: grunt.file.readJSON('config/dist.json')
-                }
             }
         },
 
@@ -370,27 +362,6 @@ module.exports = function(grunt) {
                         'prod/intelligence/index.html'
                     ]
                 }]
-            },
-            dist: {
-                forceVersion: '<%= pkg.version %>',
-                phases: [{
-                    files: [
-                        'dist/<%= pkg.name %>.zip'
-                    ],
-                }]
-            }
-        },
-
-        compress: {
-            dist: {
-                options: {
-                    archive: 'dist/<%= pkg.name %>.zip'
-                },
-                src: [
-                    'prod/intelligence/index.html',
-                    'prod/intelligence/*.css',
-                    'prod/intelligence/*.js'
-                ]
             }
         },
 
@@ -625,24 +596,4 @@ module.exports = function(grunt) {
         'htmlmin',
         'csso',
         'ver:prod']);
-
-    grunt.registerTask('dist', [
-        'clean:dist',
-        'clean:prod',
-        'install',
-        'less',
-        'ngconstant:dist',
-        'componentbuild:prod',
-        'browserify:prod',
-        'concat:build',
-        'autoprefixer',
-        'rework',
-        'copy:theme-assets',
-        'copy:component-assets',
-        'copy:prod-assets',
-        'copy:prod',
-        'htmlmin',
-        'csso',
-        'compress',
-        'ver:dist']);
 };
