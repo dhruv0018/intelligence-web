@@ -127,10 +127,6 @@ module.exports = function(grunt) {
 
         concat: {
             theme: {
-                src: ['theme/**/*.css'],
-                dest: 'build/theme.css'
-            },
-            build: {
                 src: ['build/build.css', 'build/theme.css'],
                 dest: 'build/themed.css'
             }
@@ -472,7 +468,7 @@ module.exports = function(grunt) {
         'componentbuild:dev',
         'browserify:dev',
         'less',
-        'concat:build',
+        'concat:theme',
         'autoprefixer',
         'copy:theme-assets',
         'copy:component-assets',
@@ -487,7 +483,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'test',
         'less',
-        'concat:build',
+        'concat:theme',
         'autoprefixer',
         'copy:theme-assets',
         'copy:component-assets',
@@ -505,7 +501,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'test',
         'less',
-        'concat:build',
+        'concat:theme',
         'autoprefixer',
         'copy:theme-assets',
         'copy:component-assets',
