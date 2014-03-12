@@ -5,6 +5,9 @@ FROM ubuntu:precise
 RUN echo "deb http://us.archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list
 RUN apt-get update -y
 
+# Install git
+RUN apt-get -y install git-core
+
 # Install NodeJS
 RUN apt-get install -y python-software-properties python g++ make
 RUN apt-add-repository ppa:chris-lea/node.js
