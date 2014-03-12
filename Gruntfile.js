@@ -475,7 +475,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['karma']);
-    grunt.registerTask('lint', ['htmlhint', 'csslint', 'jshint']);
+    grunt.registerTask('lint', ['htmlhint', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
