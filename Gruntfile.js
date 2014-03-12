@@ -137,7 +137,7 @@ module.exports = function(grunt) {
         csso: {
             prod: {
                 files: {
-                    'prod/intelligence/styles.css': ['build/reworked.css']
+                    'prod/intelligence/styles.css': ['build/prefixed.css']
                 }
             }
         },
@@ -189,10 +189,6 @@ module.exports = function(grunt) {
             }
         },
 
-        rework: {
-            'build/reworked.css': 'build/prefixed.css',
-        },
-
         copy: {
             'theme-assets': {
                 expand: true,
@@ -210,7 +206,7 @@ module.exports = function(grunt) {
                 files: {
                     'dev/intelligence/.htaccess': 'src/.htaccess',
                     'dev/intelligence/index.html': 'src/index.html',
-                    'dev/intelligence/styles.css': 'build/reworked.css',
+                    'dev/intelligence/styles.css': 'build/prefixed.css',
                     'dev/intelligence/scripts.js': 'build/bundle.js'
                 }
             },
@@ -528,7 +524,6 @@ module.exports = function(grunt) {
         'browserify:dev',
         'concat:build',
         'autoprefixer',
-        'rework',
         'copy:theme-assets',
         'copy:component-assets',
         'copy:dev-assets',
@@ -542,7 +537,6 @@ module.exports = function(grunt) {
         'browserify:prod',
         'concat:build',
         'autoprefixer',
-        'rework',
         'copy:theme-assets',
         'copy:component-assets',
         'copy:prod-assets',
@@ -560,7 +554,6 @@ module.exports = function(grunt) {
         'browserify:prod',
         'concat:build',
         'autoprefixer',
-        'rework',
         'copy:theme-assets',
         'copy:component-assets',
         'copy:prod-assets',
