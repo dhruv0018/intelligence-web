@@ -512,7 +512,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('prod', [
         'clean',
-        'install',
         'less',
         'ngconstant:prod',
         'componentbuild:prod',
