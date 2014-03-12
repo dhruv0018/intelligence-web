@@ -125,13 +125,6 @@ module.exports = function(grunt) {
 
         /* Build process - CSS */
 
-        concat: {
-            theme: {
-                src: ['build/build.css', 'build/theme.css'],
-                dest: 'build/themed.css'
-            }
-        },
-
         less: {
             options: {
                 paths: [
@@ -143,6 +136,13 @@ module.exports = function(grunt) {
                 files: {
                     'build/theme.css': ['theme/**/*.less']
                 }
+            }
+        },
+
+        concat: {
+            theme: {
+                src: ['build/build.css', 'build/theme.css'],
+                dest: 'build/themed.css'
             }
         },
 
