@@ -15,30 +15,15 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
-        ngconstant: {
+        env: {
             dev: {
-                dest: 'src/config.js',
-                name: 'config',
-                constants: {
-                    pkg: grunt.file.readJSON('package.json'),
-                    config: grunt.file.readJSON('config/dev.json')
-                }
+                NODE_ENV: 'development',
             },
             qa: {
-                dest: 'src/config.js',
-                name: 'config',
-                constants: {
-                    pkg: grunt.file.readJSON('package.json'),
-                    config: grunt.file.readJSON('config/qa.json')
-                }
+                NODE_ENV: 'qa',
             },
             prod: {
-                dest: 'src/config.js',
-                name: 'config',
-                constants: {
-                    pkg: grunt.file.readJSON('package.json'),
-                    config: grunt.file.readJSON('config/prod.json')
-                }
+                NODE_ENV: 'production',
             }
         },
 
@@ -281,7 +266,7 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     debug: true,
-                    transform: ['decomponentify'],
+                    transform: ['decomponentify', 'envify'],
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
@@ -299,7 +284,7 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
-                    transform: ['decomponentify'],
+                    transform: ['decomponentify', 'envify'],
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
@@ -483,7 +468,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
     grunt.registerTask('dev', [
-        'ngconstant:dev',
+        'env:dev',
         'componentbuild:dev',
         'browserify:dev',
         'less',
@@ -497,7 +482,7 @@ module.exports = function(grunt) {
     grunt.registerTask('qa', [
         'clean',
         'lint',
-        'ngconstant:qa',
+        'env:qa',
         'componentbuild:prod',
         'browserify:prod',
         'test',
@@ -515,7 +500,7 @@ module.exports = function(grunt) {
     grunt.registerTask('prod', [
         'clean',
         'lint',
-        'ngconstant:prod',
+        'env:prod',
         'componentbuild:prod',
         'browserify:prod',
         'test',
