@@ -495,7 +495,7 @@ module.exports = function(grunt) {
         'copy:dev']);
 
     grunt.registerTask('qa', [
-        'clean:prod',
+        'clean',
         'less',
         'ngconstant:qa',
         'componentbuild:prod',
@@ -511,7 +511,7 @@ module.exports = function(grunt) {
         'ver:prod']);
 
     grunt.registerTask('prod', [
-        'clean:prod',
+        'clean',
         'install',
         'less',
         'ngconstant:prod',
