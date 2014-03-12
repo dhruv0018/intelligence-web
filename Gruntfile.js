@@ -357,13 +357,6 @@ module.exports = function(grunt) {
         /* Testing */
 
 
-        cucumberjs: {
-            features: 'test/acceptance/features',
-            options: {
-                steps: 'test/acceptance/step_definitions'
-            }
-        },
-
         karma: {
             unit: {
                 configFile: 'karma.conf.js',
@@ -498,11 +491,10 @@ module.exports = function(grunt) {
                 tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
             },
             tests: {
-                files: ['test/unit/**/*.js', 'test/acceptance/**/*.js'],
+                files: ['test/unit/**/*.js'],
                 tasks: ['jshint', 'karma']
             }
         }
-
     });
 
 
