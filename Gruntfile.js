@@ -8,6 +8,8 @@ var modRewrite = require('connect-modrewrite');
 
 module.exports = function(grunt) {
 
+    require('time-grunt')(grunt);
+
     /* Load all grunt tasks. */
     require('load-grunt-tasks')(grunt);
 
@@ -15,30 +17,15 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
-        ngconstant: {
+        env: {
             dev: {
-                dest: 'src/config.js',
-                name: 'config',
-                constants: {
-                    pkg: grunt.file.readJSON('package.json'),
-                    config: grunt.file.readJSON('config/dev.json')
-                }
+                NODE_ENV: 'development',
             },
             qa: {
-                dest: 'src/config.js',
-                name: 'config',
-                constants: {
-                    pkg: grunt.file.readJSON('package.json'),
-                    config: grunt.file.readJSON('config/qa.json')
-                }
+                NODE_ENV: 'qa',
             },
             prod: {
-                dest: 'src/config.js',
-                name: 'config',
-                constants: {
-                    pkg: grunt.file.readJSON('package.json'),
-                    config: grunt.file.readJSON('config/prod.json')
-                }
+                NODE_ENV: 'production',
             }
         },
 
@@ -53,7 +40,7 @@ module.exports = function(grunt) {
                 src: [
                     'src/**/*.css',
                     'lib/**/*.css',
-                    'build/theme.css'
+                    'theme/**/*.css'
                 ]
             },
             less: {
@@ -72,8 +59,7 @@ module.exports = function(grunt) {
 
         clean: {
             build: ['build'],
-            dev: ['dev'],
-            prod: ['prod']
+            public: ['public']
         },
 
 
@@ -112,7 +98,7 @@ module.exports = function(grunt) {
             prod: {
                 options: require('./.htmlminrc'),
                 files: {
-                    'prod/intelligence/index.html': 'src/index.html'
+                    'build/index.html': 'src/index.html'
                 }
             }
         },
@@ -120,7 +106,7 @@ module.exports = function(grunt) {
         csso: {
             prod: {
                 files: {
-                    'prod/intelligence/styles.css': ['build/prefixed.css']
+                    'build/styles.css': ['build/prefixed.css']
                 }
             }
         },
@@ -129,7 +115,7 @@ module.exports = function(grunt) {
             options: require('./.uglifyrc'),
             prod: {
                 files: {
-                    'prod/intelligence/scripts.js': ['build/bundle.js']
+                    'build/scripts.js': ['build/bundle.js']
                 }
             }
         },
@@ -140,22 +126,11 @@ module.exports = function(grunt) {
 
         /* Build process - CSS */
 
-        concat: {
-            theme: {
-                src: ['theme/**/*.css'],
-                dest: 'build/theme.css'
-            },
-            build: {
-                src: ['build/build.css', 'build/theme.css'],
-                dest: 'build/themed.css'
-            }
-        },
-
         less: {
             options: {
                 paths: [
                     'node_modules/bootstrap/less',
-                    'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                    'node_modules/font-awesome/less'
                 ]
             },
             theme: {
@@ -165,51 +140,17 @@ module.exports = function(grunt) {
             }
         },
 
+        concat: {
+            theme: {
+                src: ['build/build.css', 'build/theme.css'],
+                dest: 'build/themed.css'
+            }
+        },
+
         autoprefixer: {
             src: {
                 src: 'build/themed.css',
                 dest: 'build/prefixed.css'
-            }
-        },
-
-        copy: {
-            'theme-assets': {
-                expand: true,
-                cwd:    'theme',
-                src:    'assets/*.png',
-                dest:   'build'
-            },
-            'component-assets': {
-                expand: true,
-                cwd:    'lib',
-                src:    '**/*.png',
-                dest:   'build/assets'
-            },
-            dev: {
-                files: {
-                    'dev/intelligence/.htaccess': 'src/.htaccess',
-                    'dev/intelligence/index.html': 'src/index.html',
-                    'dev/intelligence/styles.css': 'build/prefixed.css',
-                    'dev/intelligence/scripts.js': 'build/bundle.js'
-                }
-            },
-            'dev-assets': {
-                expand: true,
-                cwd:    'build/assets',
-                src:    '**',
-                dest:   'dev/intelligence/assets'
-            },
-            prod: {
-                files: {
-                    'prod/intelligence/.htaccess': 'src/.htaccess',
-                    'prod/intelligence/scripts.js': 'build/bundle.js'
-                }
-            },
-            'prod-assets': {
-                expand: true,
-                cwd:    'build/assets',
-                src:    '**',
-                dest:   'prod/intelligence/assets'
             }
         },
 
@@ -233,7 +174,7 @@ module.exports = function(grunt) {
                                     paths: [
                                         'theme',
                                         'node_modules/bootstrap/less',
-                                        'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                                        'node_modules/font-awesome/less'
                                     ]
                                 }
                             };
@@ -261,7 +202,7 @@ module.exports = function(grunt) {
                                     paths: [
                                         'theme',
                                         'node_modules/bootstrap/less',
-                                        'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                                        'node_modules/font-awesome/less'
                                     ]
                                 }
                             };
@@ -281,7 +222,7 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     debug: true,
-                    transform: ['decomponentify'],
+                    transform: ['decomponentify', 'envify'],
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
@@ -299,7 +240,7 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
-                    transform: ['decomponentify'],
+                    transform: ['decomponentify', 'envify'],
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
@@ -320,17 +261,52 @@ module.exports = function(grunt) {
 
         /* Distribution/Deployment */
 
+        copy: {
+            'theme-assets': {
+                expand: true,
+                cwd:    'theme',
+                src:    'assets/*.png',
+                dest:   'build'
+            },
+            'component-assets': {
+                expand: true,
+                cwd:    'lib',
+                src:    '**/*.png',
+                dest:   'build/assets'
+            },
+            assets: {
+                expand: true,
+                cwd:    'build/assets',
+                src:    '**',
+                dest:   'public/intelligence/assets'
+            },
+            dev: {
+                files: {
+                    'build/index.html': 'src/index.html',
+                    'build/styles.css': 'build/prefixed.css',
+                    'build/scripts.js': 'build/bundle.js'
+                }
+            },
+            build: {
+                files: {
+                    'public/intelligence/.htaccess': 'src/.htaccess',
+                    'public/intelligence/index.html': 'build/index.html',
+                    'public/intelligence/styles.css': 'build/prefixed.css',
+                    'public/intelligence/scripts.js': 'build/bundle.js'
+                }
+            }
+        },
 
         ver: {
             prod: {
                 forceVersion: '<%= pkg.version %>',
                 phases: [{
                     files: [
-                        'prod/intelligence/*.js',
-                        'prod/intelligence/*.css'
+                        'public/intelligence/*.js',
+                        'public/intelligence/*.css'
                     ],
                     references: [
-                        'prod/intelligence/index.html'
+                        'public/intelligence/index.html'
                     ]
                 }]
             }
@@ -379,7 +355,7 @@ module.exports = function(grunt) {
                     hostname: '*',
                     port: 8000,
                     protocol: 'http',
-                    base: 'dev',
+                    base: 'public',
                     livereload: true,
                     middleware: function (connect, options) {
                         return [
@@ -404,7 +380,7 @@ module.exports = function(grunt) {
                     hostname: '*',
                     port: 8001,
                     protocol: 'https',
-                    base: 'prod',
+                    base: 'public',
                     middleware: function (connect, options) {
                         return [
 
@@ -432,39 +408,48 @@ module.exports = function(grunt) {
             },
             json: {
                 files: ['*.json'],
-                tasks: ['install', 'dev', 'notify']
+                tasks: ['install', 'dev', 'notify:build']
             },
             config: {
                 files: ['config/*.json', 'lib/**/*.json'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             html: {
                 files: ['src/**/*.html', 'lib/**/*.html'],
-                tasks: ['htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
+                tasks: ['htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             css: {
                 files: ['src/**/*.css'],
-                tasks: ['csslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
+                tasks: ['csslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
+                tasks: ['newer:less:theme', 'concat:build', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             less: {
                 files: ['lib/**/*.less'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'concat:build', 'autoprefixer', 'rework', 'copy:dev', 'notify']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['jshint', 'browserify:dev', 'copy:dev', 'notify']
+                tasks: ['jshint', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             components: {
                 files: ['lib/**/*.js'],
-                tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'notify']
+                tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             tests: {
                 files: ['test/unit/**/*.js'],
                 tasks: ['jshint', 'karma']
+            }
+        },
+
+        notify: {
+            build: {
+                options: {
+                    title: '<%= pkg.name %>',
+                    message: 'Build Ready'
+                }
             }
         }
     });
@@ -480,53 +465,54 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
+    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'notify:build', 'watch']);
 
     grunt.registerTask('dev', [
-        'ngconstant:dev',
+        'env:dev',
         'componentbuild:dev',
         'browserify:dev',
         'less',
-        'concat:build',
+        'concat:theme',
         'autoprefixer',
         'copy:theme-assets',
         'copy:component-assets',
-        'copy:dev-assets',
-        'copy:dev']);
+        'copy:assets',
+        'copy:dev',
+        'copy:build']);
 
     grunt.registerTask('qa', [
         'clean',
         'lint',
-        'ngconstant:qa',
+        'env:qa',
         'componentbuild:prod',
         'browserify:prod',
         'test',
         'less',
-        'concat:build',
+        'concat:theme',
         'autoprefixer',
-        'copy:theme-assets',
-        'copy:component-assets',
-        'copy:prod-assets',
-        'copy:prod',
         'htmlmin',
         'csso',
+        'copy:theme-assets',
+        'copy:component-assets',
+        'copy:assets',
+        'copy:build',
         'ver:prod']);
 
     grunt.registerTask('prod', [
         'clean',
         'lint',
-        'ngconstant:prod',
+        'env:prod',
         'componentbuild:prod',
         'browserify:prod',
         'test',
         'less',
-        'concat:build',
+        'concat:theme',
         'autoprefixer',
-        'copy:theme-assets',
-        'copy:component-assets',
-        'copy:prod-assets',
-        'copy:prod',
         'htmlmin',
         'csso',
+        'copy:theme-assets',
+        'copy:component-assets',
+        'copy:assets',
+        'copy:build',
         'ver:prod']);
 };
