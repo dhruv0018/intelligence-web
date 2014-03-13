@@ -8,6 +8,8 @@ var modRewrite = require('connect-modrewrite');
 
 module.exports = function(grunt) {
 
+    require('time-grunt')(grunt);
+
     /* Load all grunt tasks. */
     require('load-grunt-tasks')(grunt);
 
