@@ -128,7 +128,7 @@ module.exports = function(grunt) {
             options: {
                 paths: [
                     'node_modules/bootstrap/less',
-                    'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                    'node_modules/font-awesome/less'
                 ]
             },
             theme: {
@@ -172,7 +172,7 @@ module.exports = function(grunt) {
                                     paths: [
                                         'theme',
                                         'node_modules/bootstrap/less',
-                                        'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                                        'node_modules/font-awesome/less'
                                     ]
                                 }
                             };
@@ -200,7 +200,7 @@ module.exports = function(grunt) {
                                     paths: [
                                         'theme',
                                         'node_modules/bootstrap/less',
-                                        'node_modules/font-awesome/Font-Awesome-3.2.1/less'
+                                        'node_modules/font-awesome/less'
                                     ]
                                 }
                             };
