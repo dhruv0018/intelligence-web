@@ -299,6 +299,8 @@ module.exports = function(grunt) {
 
         ver: {
             prod: {
+                baseDir: 'public/intelligence',
+                versionFile: 'build/version.json',
                 forceVersion: '<%= pkg.version %>',
                 phases: [{
                     files: [
