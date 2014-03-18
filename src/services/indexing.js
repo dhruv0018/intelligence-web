@@ -1,45 +1,28 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('IndexingService', [
-    '$q', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'TagsetsFactory', 'PlaysFactory',
-    function($q, leagues, teams, games, tagsets, PlaysFactory) {
+    '$q', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'TagsetsFactory', 'PlaysFactory', 'PlayersFactory',
+    function($q, leagues, teams, games, tagsets, plays, players) {
 
-        var HOME = 0;
-        var AWAY = 1;
+        var VARIABLE_PATTERN = /(__\d?__)/;
 
         var IndexingService = {
 
-            HOME: HOME,
-            AWAY: AWAY,
-
-            teams: [],
-            colors: [],
-            scores: [],
-
+            self: null,
 
             init: function(gameId) {
 
-                var self = this;
+                self = this;
                 var promises = [];
                 var deferred = $q.defer();
-
-                /* FIXME: Just temp */
-                self.period = {
-
-                    name: 'Quarter',
-                    value: 1
-                };
-
-                self.scores[HOME] = 0;
-                self.scores[AWAY] = 0;
+                var promisedTags = $q.defer();
+                var promisedOpposingTeam = $q.defer();
+                var promisedPlayers = $q.defer();
+                var promisedPlays = $q.defer();
 
                 self.game = games.get(gameId, function(game) {
 
-                    self.colors[HOME] = game.primaryJerseyColor;
-                    self.colors[AWAY] = game.opposingPrimaryJerseyColor;
-
-                    self.teams[AWAY] = teams.get(game.opposingTeamId);
-                    self.teams[HOME] = teams.get(game.teamId, function(team) {
+                    self.team = teams.get(game.teamId, function(team) {
 
                         self.league = leagues.get(team.leagueId, function(league) {
 
@@ -47,25 +30,121 @@ IntelligenceWebClient.factory('IndexingService', [
 
                                 self.tags = tagset.getIndexedTags();
 
-                                deferred.resolve(self);
+                                promisedTags.resolve();
                             });
                         });
                     });
 
+                    self.opposingTeam = teams.get(game.opposingTeamId, function() {
+
+                        promisedOpposingTeam.resolve();
+                    });
+
+                    var teamRoster = game.getRoster(game.teamId);
+                    var teamPlayers = players.getList({ roster: teamRoster.id }, function() {
+
+                        var opposingTeamRoster = game.getRoster(game.opposingTeamId);
+                        var opposingTeamPlayers = players.getList({ roster: opposingTeamRoster.id }, function() {
+
+                            var players = teamPlayers.concat(opposingTeamPlayers);
+
+                            var indexedPlayers = {};
+
+                            players.forEach(function(player) {
+
+                                indexedPlayers[player.id] = player;
+                            });
+
+                            self.players = indexedPlayers;
+
+                            promisedPlayers.resolve();
+                        });
+                    });
+
+                    self.plays = plays.getList(gameId, function() {
+
+                        promisedPlays.resolve();
+                    });
+                });
+
+                promises.push(promisedTags.promise);
+                promises.push(promisedOpposingTeam.promise);
+                promises.push(promisedPlayers.promise);
+                promises.push(promisedPlays.promise);
+
+                $q.all(promises).then(function() {
+
+                    deferred.resolve(self);
                 });
 
                 return deferred.promise;
             },
 
-            getFirstTags: function() {
+            getStartTags: function() {
 
-                var tags = [];
-                var tagset = this.tagset;
+                return this.tagset.getStartTags();
+            },
 
-                tags.push.apply(tags, tagset.getTagsByType('START'));
-                tags.push.apply(tags, tagset.getTagsByType('STANDALONE'));
+            getNextTags: function(tagId) {
 
-                return tags;
+                var tags = this.tags;
+                var tag = tags[tagId];
+
+                if (tag.children) {
+
+                    return tag.children.map(function(childId) {
+
+                        return tags[childId];
+                    });
+
+                } else {
+
+                    return this.getStartTags();
+                }
+            },
+
+            isEndTag: function(tagId) {
+
+                return this.tags[tagId].isEnd;
+            },
+
+            isEndEvent: function(event) {
+
+                return event && event.tag && this.isEndTag(event.tag.id);
+            },
+
+            buildScript: function(event) {
+
+                if (!event || !event.tag || !event.tag.id) return [];
+
+                var tagId = event.tag.id;
+                var tag = self.tags[tagId];
+
+                /* If the tag has variables. */
+                if (tag.tagVariables) {
+
+                    /* Parse the variable options. */
+                    tag.tagVariables.forEach(function(variable, index) {
+
+                        variable.index = index + 1;
+                        variable.options = angular.isString(variable.options) ? JSON.parse(variable.options) : variable.options;
+                    });
+
+                    /* Split up script into array items and replace variables
+                     * with the actual variable object. */
+                    var variableIndex = 0;
+                    var scriptItems = tag.indexerScript.split(VARIABLE_PATTERN);
+                    scriptItems.forEach(function(item, index) {
+
+                        if (item.search(VARIABLE_PATTERN) !== -1) {
+
+                            scriptItems[index] = tag.tagVariables[variableIndex];
+                            variableIndex++;
+                        }
+                    });
+
+                    return scriptItems;
+                }
             }
         };
 
