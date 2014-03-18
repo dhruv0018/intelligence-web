@@ -40,17 +40,6 @@
 
     .btn {
 
-        color: @gray-darker;
-
-        &:hover,
-        &:focus {
-
-            color: @brand-primary;
-        }
-    }
-
-    .btn {
-
         font-size: 18px;
         font-weight: 400;
         letter-spacing: -0.01em;
@@ -104,6 +93,34 @@
     .playlist {
 
         width: 100px;
+
+        button {
+
+            &:focus,
+            &:hover {
+
+                color: @gray-darker;
+            }
+
+            &:active,
+            &.active {
+
+                color: @brand-primary;
+            }
+
+            &:active,
+            &.active {
+
+                box-shadow: none;
+            }
+
+            &:focus,
+            &:active:focus,
+            &.active:focus {
+
+                outline: none;
+            }
+        }
     }
 
     .notes {
