@@ -81,6 +81,22 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         return play.save();
                     });
                 }
+            },
+
+            remove: function(play) {
+
+                var self = this;
+
+                play = play || self;
+
+                if (play.id) {
+
+                    return self.resource.remove(play);
+
+                } else {
+
+                    throw new Error('Can not remove play from server that has not been previously saved remotely');
+                }
             }
         };
 
