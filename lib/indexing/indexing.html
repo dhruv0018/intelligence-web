@@ -4,9 +4,7 @@
 
         <div class="alert-editing" data-ng-show="indexing.state === 'INDEXING' && indexing.currentEvent.id"><button class="btn-delete-event" data-ng-click="indexing.deleteCurrentEvent()"><i class="icon-remove"></i> Delete Event</button><h5>Click the variable you wish to edit.</h5></div>
 
-        <div class="error-video" data-ng-hide="sources.length"><h1>Could not load video</h1></div>
-
-        <x-krossover-videoplayer data-ng-if="sources.length"></x-krossover-videoplayer>
+        <x-krossover-videoplayer></x-krossover-videoplayer>
 
         <div class="indexing-block">
 
