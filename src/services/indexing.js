@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('IndexingService', [
-    '$q', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'TagsetsFactory', 'PlaysFactory', 'PlayersFactory',
-    function($q, leagues, teams, games, tagsets, plays, players) {
+    '$q', '$sce', 'VIDEO_STATUSES', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'TagsetsFactory', 'PlaysFactory', 'PlayersFactory',
+    function($q, $sce, VIDEO_STATUSES, leagues, teams, games, tagsets, plays, players) {
 
         var VARIABLE_PATTERN = /(__\d?__)/;
 
@@ -61,6 +61,24 @@ IntelligenceWebClient.factory('IndexingService', [
                     });
 
                     self.plays = plays.getList(gameId);
+
+                    self.game.video.sources = [];
+
+                    if (self.game.video.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                        self.game.video.videoTranscodeProfiles.forEach(function(profile) {
+
+                            if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                                var source = {
+                                    type: 'video/mp4',
+                                    src: $sce.trustAsResourceUrl(profile.videoUrl)
+                                };
+
+                                self.game.video.sources.push(source);
+                            }
+                        });
+                    }
                 });
 
                 promises.push(promisedTags.promise);
