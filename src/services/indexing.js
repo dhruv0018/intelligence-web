@@ -18,7 +18,6 @@ IntelligenceWebClient.factory('IndexingService', [
                 var promisedTags = $q.defer();
                 var promisedOpposingTeam = $q.defer();
                 var promisedPlayers = $q.defer();
-                var promisedPlays = $q.defer();
 
                 self.game = games.get(gameId, function(game) {
 
@@ -61,16 +60,12 @@ IntelligenceWebClient.factory('IndexingService', [
                         });
                     });
 
-                    self.plays = plays.getList(gameId, function() {
-
-                        promisedPlays.resolve();
-                    });
+                    self.plays = plays.getList(gameId);
                 });
 
                 promises.push(promisedTags.promise);
                 promises.push(promisedOpposingTeam.promise);
                 promises.push(promisedPlayers.promise);
-                promises.push(promisedPlays.promise);
 
                 $q.all(promises).then(function() {
 
