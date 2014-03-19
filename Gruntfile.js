@@ -426,7 +426,7 @@ module.exports = function(grunt) {
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:build', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:less:theme', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             less: {
                 files: ['lib/**/*.less'],
