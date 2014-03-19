@@ -85,15 +85,29 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 }
             },
 
-            remove: function(play) {
+            remove: function(play, success, error) {
 
                 var self = this;
 
+                var parameters = {};
+
                 play = play || self;
+
+                success = success || function(play) {
+
+                    return self.extendPlay(play);
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not remove play');
+
+                };
 
                 if (play.id) {
 
-                    return self.resource.remove(play);
+                    var deletedPlay = self.resource.remove(parameters, play, success, error);
+                    return deletedPlay.$promise;
 
                 } else {
 
