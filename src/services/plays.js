@@ -39,9 +39,11 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     return success ? success(plays) : plays;
                 };
 
-                error = error || function() {
+                error = error || function(response) {
 
-                    throw new Error('Could not load plays list');
+                    if (response.status === 404) return [];
+
+                    else throw new Error('Could not load plays list');
                 };
 
                 return self.resource.query({gameId: gameId}, callback, error);
