@@ -17,7 +17,14 @@ IntelligenceWebClient.directive('keybinding', [
 
         function link($scope, element, attributes) {
 
-            Mousetrap.bind(attributes.keybinding, function() {
+            var keybinding = attributes.keybinding;
+
+            if (keybinding.length === 2) {
+
+                keybinding = keybinding.split('').join(' ');
+            }
+
+            Mousetrap.bind(keybinding, function() {
 
                 if (!attributes.disabled) {
 
