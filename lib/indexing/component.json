@@ -13,5 +13,8 @@
         "indexing.html",
         "indexing-header.html",
         "delete-play.html"
-    ]
+    ],
+    "dependencies": {
+        "moment/moment": "2.5.1"
+    }
 }

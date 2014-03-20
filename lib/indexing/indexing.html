@@ -92,7 +92,7 @@
             <div class="play" data-ng-repeat="play in indexing.plays">
 
                 <!-- TODO: Period advancement -->
-                <!-- <h4 class="period">{{ 'Q1' }}</h4><time> — --><time>{{ play.startTime }} — {{ play.endTime }}</time>
+                <!-- <h4 class="period">{{ 'Q1' }}</h4><time> — --><time>{{ play.startTime | time }} — {{ play.endTime | time }}</time>
 
                 <!-- TODO: Team with possession -->
                 <!--<h3>{{ indexing.teams[HOME].name }}</h3>-->
