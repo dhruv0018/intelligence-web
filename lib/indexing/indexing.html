@@ -53,8 +53,6 @@
 
                     <!-- Save status buttons -->
                     <button class="btn-indexing-saving" data-ng-if="indexing.state === 'SAVING'"><i class="icon-spinner icon-spin icon-large"></i> Saving...</button>
-                    <button class="btn-indexing-saved" data-ng-if="indexing.state === 'SAVED'" data-keybinding="enter" data-ng-click="indexing.start()"><i class="icon-ok"></i> Event Saved <div class="btn btn-default">Continue (Return)</div></button>
-                    <button class="btn-indexing-save-error" data-ng-if="indexing.state === 'SAVE_ERROR'" data-ng-click="indexing.save()"><i class="icon-remove"></i> Event Not Saved</button>
 
                     <!-- Delete button -->
                     <button class="btn-indexing-event-deleted" data-ng-if="indexing.state === 'EVENT_DELETED'" data-ng-click="indexing.start()"><i class="icon-remove"></i> Event Deleted</button>
