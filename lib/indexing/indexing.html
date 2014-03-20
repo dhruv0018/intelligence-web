@@ -47,7 +47,7 @@
                     <button class="btn-indexing-start" data-ng-if="indexing.state === 'READY'" data-keybinding="enter" data-ng-click="indexing.start()"><i class="icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
 
                     <!-- State movement buttons -->
-                    <button class="btn-back" data-ng-if="indexing.state === 'INDEXING'" data-keybinding="esc" data-ng-click="indexing.back()">Back (Esc)</button>
+                    <button class="btn-back" data-ng-if="indexing.state === 'INDEXING'" data-ng-click="indexing.back()">Back (Esc)</button>
                     <button class="btn-save" data-ng-if="indexing.state === 'INDEXING' && !indexing.currentTags.length && indexing.savable()" data-keybinding="enter" data-ng-click="indexing.save()" data-ng-disabled="formIndexing.$invalid">Save Event (Return)</button>
                     <button class="btn-next" data-ng-if="indexing.state === 'INDEXING' && !indexing.currentTags.length && !indexing.savable()" data-keybinding="enter" data-ng-click="indexing.next()" data-ng-disabled="formIndexing.$invalid">Next (Return)</button>
 
