@@ -55,7 +55,29 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play = play || self;
 
-                delete play.teams;
+                play.startTime = play.events
+
+                .map(function(event) {
+
+                    return angular.isNumber(event.time) ? event.time : 0;
+                })
+
+                .reduce(function(previous, current) {
+
+                    return previous < current ? previous : current;
+                });
+
+                play.endTime = play.events
+
+                .map(function(event) {
+
+                    return angular.isNumber(event.time) ? event.time : 0;
+                })
+
+                .reduce(function(previous, current) {
+
+                    return previous > current ? previous : current;
+                });
 
                 if (play.id) {
 
