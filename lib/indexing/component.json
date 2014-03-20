@@ -6,10 +6,15 @@
     ],
     "styles": [
         "indexing.less",
-        "indexing-header.less"
+        "indexing-header.less",
+        "delete-play.less"
     ],
     "templates": [
         "indexing.html",
-        "indexing-header.html"
-    ]
+        "indexing-header.html",
+        "delete-play.html"
+    ],
+    "dependencies": {
+        "moment/moment": "2.5.1"
+    }
 }
