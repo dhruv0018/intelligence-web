@@ -39,9 +39,11 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     return success ? success(plays) : plays;
                 };
 
-                error = error || function() {
+                error = error || function(response) {
 
-                    throw new Error('Could not load plays list');
+                    if (response.status === 404) return [];
+
+                    else throw new Error('Could not load plays list');
                 };
 
                 return self.resource.query({gameId: gameId}, callback, error);
@@ -80,6 +82,22 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         play.events = events;
                         return play.save();
                     });
+                }
+            },
+
+            remove: function(play) {
+
+                var self = this;
+
+                play = play || self;
+
+                if (play.id) {
+
+                    return self.resource.remove(play);
+
+                } else {
+
+                    throw new Error('Can not remove play from server that has not been previously saved remotely');
                 }
             }
         };

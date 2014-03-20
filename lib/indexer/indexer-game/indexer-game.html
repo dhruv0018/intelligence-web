@@ -136,7 +136,7 @@
 
     <aside class="sidebar sidebar-right">
 
-        <button class="btn-start-indexing" data-ng-if="game.hasAssignment() || game.canBeStartedByIndexer() || game.canBeStartedByQa()" data-ng-click="goIndexing()">
+        <button class="btn-start-indexing" data-ng-if="game.hasAssignment() || game.canBeStarted()" data-ng-click="goIndexing()">
 
             <span data-ng-hide="game.isAssignmentStarted()">Start </span>
             <span data-ng-show="game.isAssignmentStarted()">Continue </span>
