@@ -59,6 +59,8 @@
                     <button class="btn-indexing-saved" data-ng-if="indexing.state === 'SAVED'" data-keybinding="enter" data-ng-click="indexing.start()"><i class="icon-ok"></i> Event Saved <div class="btn btn-default">Continue (Return)</div></button>
                     <button class="btn-indexing-save-error" data-ng-if="indexing.state === 'SAVE_ERROR'" data-ng-click="indexing.save()"><i class="icon-remove"></i> Event Not Saved</button>
 
+                    <!-- Delete button -->
+                    <button class="btn-indexing-event-deleted" data-ng-if="indexing.state === 'EVENT_DELETED'" data-ng-click="indexing.start()"><i class="icon-remove"></i> Event Deleted</button>
 
                 </div>
 
@@ -108,18 +110,18 @@
                     <!-- Event -->
                     <li class="event" data-ng-repeat="event in play.events">
 
-                        <button class="btn-select-event" data-ng-class="{ active: indexing.currentEvent.id === event.id }" data-ng-click="indexing.selectEvent(play, event)">
+                        <button class="btn-select-event" data-ng-class="{ active: indexing.currentEvent.id === event.id }" data-ng-click="indexing.selectEvent(play, event)" data-ng-disabled="!indexing.state">
 
                             <span class="item" data-ng-repeat="item in buildScript(event)">
 
                                 <!-- String item -->
-                                <p data-ng-if="isString(item)">{{ item }} </p>
+                                <p data-ng-if="isString(item)">{{ item }}&nbsp;</p>
 
                                 <!-- Dropdown variable -->
                                 <a class="dropdown" data-ng-if="item.type === 'DROPDOWN'" disabled>{{ event.variableValues[item.index] }}</a>
 
                                 <!-- Player dropdown variable -->
-                                <a class="player-dropdown" data-ng-if="item.type === 'PLAYER_DROPDOWN'" disabled>{{ indexing.players[indexing.currentEvent.variableValues[item.index]].firstName }} {{ indexing.players[indexing.currentEvent.variableValues[item.index]].lastName }}</a>
+                                <a class="player-dropdown" data-ng-if="item.type === 'PLAYER_DROPDOWN'" disabled>{{ indexing.players[event.variableValues[item.index]].firstName }} {{ indexing.players[event.variableValues[item.index]].lastName }}</a>
 
                             </span>
 
