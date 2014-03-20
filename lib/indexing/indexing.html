@@ -4,9 +4,7 @@
 
         <div class="alert-editing" data-ng-show="indexing.state === 'INDEXING' && indexing.currentEvent.id"><button class="btn-delete-event" data-ng-click="indexing.deleteCurrentEvent()"><i class="icon-remove"></i> Delete Event</button><h5>Click the variable you wish to edit.</h5></div>
 
-        <div class="error-video" data-ng-hide="sources.length"><h1>Could not load video</h1></div>
-
-        <x-krossover-videoplayer data-ng-if="sources.length"></x-krossover-videoplayer>
+        <x-krossover-videoplayer></x-krossover-videoplayer>
 
         <div class="indexing-block">
 
@@ -48,19 +46,13 @@
                     <!-- Start button -->
                     <button class="btn-indexing-start" data-ng-if="indexing.state === 'READY'" data-keybinding="enter" data-ng-click="indexing.start()"><i class="icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
 
-                    <!-- Index button -->
-                    <button class="btn-indexing-index" data-ng-if="indexing.state === 'PLAYING'" data-ng-click="indexing.index()"><i class="icon-info-sign"></i> Press <b>space</b> to index</button>
-
                     <!-- State movement buttons -->
-                    <button class="btn-back" data-ng-if="indexing.state === 'INDEXING'" data-keybinding="esc" data-ng-click="indexing.back()">Back (Esc)</button>
+                    <button class="btn-back" data-ng-if="indexing.state === 'INDEXING'" data-ng-click="indexing.back()">Back (Esc)</button>
                     <button class="btn-save" data-ng-if="indexing.state === 'INDEXING' && !indexing.currentTags.length && indexing.savable()" data-keybinding="enter" data-ng-click="indexing.save()" data-ng-disabled="formIndexing.$invalid">Save Event (Return)</button>
                     <button class="btn-next" data-ng-if="indexing.state === 'INDEXING' && !indexing.currentTags.length && !indexing.savable()" data-keybinding="enter" data-ng-click="indexing.next()" data-ng-disabled="formIndexing.$invalid">Next (Return)</button>
 
                     <!-- Save status buttons -->
                     <button class="btn-indexing-saving" data-ng-if="indexing.state === 'SAVING'"><i class="icon-spinner icon-spin icon-large"></i> Saving...</button>
-                    <button class="btn-indexing-saved" data-ng-if="indexing.state === 'SAVED'" data-keybinding="enter" data-ng-click="indexing.start()"><i class="icon-ok"></i> Event Saved <div class="btn btn-default">Continue (Return)</div></button>
-                    <button class="btn-indexing-save-error" data-ng-if="indexing.state === 'SAVE_ERROR'" data-ng-click="indexing.save()"><i class="icon-remove"></i> Event Not Saved</button>
-
 
                 </div>
 
@@ -100,7 +92,7 @@
             <div class="play" data-ng-repeat="play in indexing.plays">
 
                 <!-- TODO: Period advancement -->
-                <!-- <h4 class="period">{{ 'Q1' }}</h4><time> — --><time>{{ play.startTime }} — {{ play.endTime }}</time>
+                <!-- <h4 class="period">{{ 'Q1' }}</h4><time> — --><time>{{ play.startTime | time }} — {{ play.endTime | time }}</time>
 
                 <!-- TODO: Team with possession -->
                 <!--<h3>{{ indexing.teams[HOME].name }}</h3>-->
@@ -110,18 +102,18 @@
                     <!-- Event -->
                     <li class="event" data-ng-repeat="event in play.events">
 
-                        <button class="btn-select-event" data-ng-class="{ active: indexing.currentEvent.id === event.id }" data-ng-click="indexing.selectEvent(play, event)">
+                        <button class="btn-select-event" data-ng-class="{ active: indexing.currentEvent.id === event.id }" data-ng-click="indexing.selectEvent(play, event)" data-ng-disabled="!indexing.state">
 
                             <span class="item" data-ng-repeat="item in buildScript(event)">
 
                                 <!-- String item -->
-                                <p data-ng-if="isString(item)">{{ item }} </p>
+                                <p data-ng-if="isString(item)">{{ item }}&nbsp;</p>
 
                                 <!-- Dropdown variable -->
                                 <a class="dropdown" data-ng-if="item.type === 'DROPDOWN'" disabled>{{ event.variableValues[item.index] }}</a>
 
                                 <!-- Player dropdown variable -->
-                                <a class="player-dropdown" data-ng-if="item.type === 'PLAYER_DROPDOWN'" disabled>{{ indexing.players[indexing.currentEvent.variableValues[item.index]].firstName }} {{ indexing.players[indexing.currentEvent.variableValues[item.index]].lastName }}</a>
+                                <a class="player-dropdown" data-ng-if="item.type === 'PLAYER_DROPDOWN'" disabled>{{ indexing.players[event.variableValues[item.index]].firstName }} {{ indexing.players[event.variableValues[item.index]].lastName }}</a>
 
                             </span>
 
