@@ -32,27 +32,30 @@ module.exports = function(grunt) {
         files: {
             html: {
                 src: [
-                    'src/**/*.html',
-                    'lib/**/*.html'
+                    'app/**/*.html',
+                    'lib/**/*.html',
+                    'src/**/*.html'
                 ]
             },
             css: {
                 src: [
-                    'src/**/*.css',
+                    'app/**/*.css',
                     'lib/**/*.css',
                     'theme/**/*.css'
                 ]
             },
             less: {
                 src: [
+                    'app/**/*.less',
                     'lib/**/*.less',
                     'theme/**/*.less'
                 ]
             },
             js: {
                 src: [
-                    'src/**/*.js',
-                    'lib/**/*.js'
+                    'app/**/*.js',
+                    'lib/**/*.js',
+                    'src/**/*.js'
                 ]
             }
         },
@@ -413,31 +416,31 @@ module.exports = function(grunt) {
                 tasks: ['install', 'dev', 'notify:build']
             },
             config: {
-                files: ['config/*.json', 'lib/**/*.json'],
+                files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
                 tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             html: {
-                files: ['src/**/*.html', 'lib/**/*.html'],
+                files: '<%= files.html %>',
                 tasks: ['htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             css: {
-                files: ['src/**/*.css'],
+                files: ['app/**/*.css', 'lib/**/*.css'],
                 tasks: ['csslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+            },
+            less: {
+                files: ['app/**/*.less', 'lib/**/*.less'],
+                tasks: ['componentbuild:dev', 'browserify:dev', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:build', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
-            },
-            less: {
-                files: ['lib/**/*.less'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:less:theme', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             js: {
                 files: ['src/**/*.js'],
                 tasks: ['jshint', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             components: {
-                files: ['lib/**/*.js'],
+                files: ['app/**/*.js', 'lib/**/*.js'],
                 tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             tests: {
