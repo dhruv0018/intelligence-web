@@ -50,39 +50,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   end
 
-  config.vm.provision :shell, inline: $script
+  # Provision using Docker
+  config.vm.provision "docker" do |docker|
+
+    # Build docker image
+    docker.build_image "/vagrant", args: "-t " + vidu
+
+    # Run the container
+    docker.run vidu, args: "-p 8000:8000"
+
+  end
 
 end
-
-$script = <<SCRIPT
-
-# Update package list
-sudo apt-get update -y
-
-# Install git
-sudo apt-get install -y git
-
-# Install Node.js dependencies
-sudo apt-get install -y python-software-properties python g++ make
-
-# Add (Un)Official Node.js PPA
-sudo apt-add-repository ppa:chris-lea/node.js
-sudo apt-get update -y
-
-# Install Node.js
-sudo apt-get install -y nodejs
-
-# Install Grunt.js
-sudo npm install --silent -g grunt-cli
-
-# Sync the local repo with a copy in the VM
-rsync --archive --delete --filter=':- .gitignore' /vagrant/ /home/vagrant
-
-# Install dependencies
-npm install --silent
-
-# Run Grunt
-grunt
-
-SCRIPT
 

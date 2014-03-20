@@ -6,8 +6,8 @@ require('angular/angular');
 require('angular-sanitize/angular-sanitize');
 require('angular-resource/angular-resource');
 require('angular-bootstrap/ui-bootstrap-tpls');
-require('angular-ui-utils/ui-utils-bower/ui-utils');
-require('angular-ui-router/ui-router-0.2.7/release/angular-ui-router');
+require('angular-ui-utils/ui-utils');
+require('angular-ui-router/release/angular-ui-router');
 require('ngStorage/ngStorage');
 require('flowjs');
 require('flow/src/angular-flow');
@@ -63,6 +63,7 @@ require('./directives/button');
 require('./directives/input');
 require('./directives/submit');
 require('./directives/keyboard');
+require('./directives/draggable');
 
 require('./directives/verify-password.js');
 

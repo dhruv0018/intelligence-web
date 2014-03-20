@@ -72,32 +72,67 @@
             border: 3px solid @brand-secondary;
         }
 
-        .table {
+        .files {
 
+            .table;
+            .table-striped;
+            /* FIXME: Drag and drop doesnt play well with .table-hover; */
             table-layout: fixed;
             word-wrap: break-word;
-        }
 
-        tbody {
+            tbody {
 
-            border-bottom: 1px solid @gray-lighter;
+                border-bottom: 1px solid @gray-lighter;
 
-            td {
+                td {
 
-                .text-overflow();
-                text-align: left;
-            }
+                    .text-overflow();
+                    text-align: left;
+                    line-height: 23px;
+                }
 
-            td.col-xs-1 {
+                td.drag {
 
-                text-align: right;
+                    .col-xs-1;
+                }
 
-                button {
+                td.remove {
 
-                    padding-top: 0;
-                    padding-bottom: 0;
+                    .col-xs-1;
+                    text-align: right;
+
+                    button {
+
+                        padding-top: 0;
+                        padding-bottom: 0;
+                    }
+                }
+
+                tr,
+                tr.active {
+
+                    cursor: row-resize;
+                    cursor: url('/intelligence/assets/move.png'), row-resize;
+                    cursor: url('/intelligence/assets/move.png') 16 16, row-resize;
+                }
+
+                tr.active td {
+
+                    background-color: @table-bg-active;
                 }
             }
+        }
+
+        .btn-choose-files {
+
+            .btn;
+            .btn-lg;
+            .btn-default;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px;
+            margin-bottom: 15px;
         }
 
         .btn-upload-start {
@@ -105,7 +140,10 @@
             .btn;
             .btn-lg;
             .btn-primary;
-            margin-top: 50px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 15px;
             margin-bottom: 50px;
 
             i {
