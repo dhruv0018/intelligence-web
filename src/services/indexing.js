@@ -19,6 +19,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 var promisedOpposingTeam = $q.defer();
                 var promisedPlayers = $q.defer();
 
+                self.period = 1;
+
                 self.game = games.get(gameId, function(game) {
 
                     self.team = teams.get(game.teamId, function(team) {

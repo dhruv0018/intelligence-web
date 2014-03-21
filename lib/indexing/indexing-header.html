@@ -1,4 +1,4 @@
-<nav class="header header-indexing" data-ng-controller="indexing.Controller as indexing">
+<nav class="header header-indexing" data-ng-controller="indexing.Header.Controller as header">
 
     <header class="navbar-header">
 
@@ -8,16 +8,15 @@
 
     <div class="info">
 
-        <!-- TODO: Period advancement –>
-        <!--<h2>{{ indexing.league.periodLabel }} {{ indexing.period }}</h2>-->
+        <h2>{{ indexing.league.periodLabel }} {{ indexing.period }}</h2>
 
         <h1>
 
-            <div class="color" style="background-color: {{ indexing.colors[HOME] }};"></div>
+            <div class="color" style="background-color: {{ indexing.game.primaryJerseyColor }};"></div>
 
-            {{ indexing.teams[HOME].name }} <b>{{ indexing.scores[HOME] }}</b> vs <b>{{ indexing.scores[AWAY] }}</b> {{ indexing.teams[AWAY].name }}
+            {{ indexing.team.name }} <b>{{ indexing.game.finalScore }}</b> vs <b>{{ indexing.game.opposingFinalScore }}</b> {{ indexing.opposingTeam.name }}
 
-            <div class="color" style="background-color: {{ indexing.colors[AWAY] }};"></div>
+            <div class="color" style="background-color: {{ indexing.game.opposingPrimaryJerseyColor }};"></div>
 
         </h1>
 
@@ -26,15 +25,15 @@
     <!-- Indexing menu -->
     <menu class="options">
 
-        <li class="notes"><button class="navbar-btn btn btn-blank ng-class: { active: indexing.sidebar.notes }" data-ng-click="toggleNotes()"><i class="icon-file-text-alt"></i> Notes</button></li>
-        <li class="playlist"><button class="navbar-btn btn btn-blank ng-class: { active: indexing.sidebar.playlist }" data-ng-click="togglePlaylist()"><i class="icon-list-alt"></i> Play List</button></li>
+        <li class="notes"><button class="navbar-btn btn btn-blank ng-class: { active: sidebar.notes }" data-ng-click="toggleNotes()"><i class="icon-file-text-alt"></i> Notes</button></li>
+        <li class="playlist"><button class="navbar-btn btn btn-blank ng-class: { active: sidebar.playlist }" data-ng-click="togglePlaylist()"><i class="icon-list-alt"></i> Play List</button></li>
 
     </menu>
 
     <!-- QA menu -->
     <menu class="qa">
 
-        <li><button class="navbar-btn btn btn-blank" data-ng-disabled="!isReadyForQa" data-ng-click="sendToQa()">Send to QA</button></li>
+        <li><button class="navbar-btn btn btn-blank" data-ng-click="sendToQa()">Send to QA</button></li>
 
     </menu>
 
