@@ -88,7 +88,7 @@
             <!-- Play -->
             <div class="play" data-ng-class="{ active: main.currentPlay.id === play.id }" data-ng-repeat="play in indexing.plays">
 
-                <h4 class="period">{{ indexing.league.periodLabel }} {{ indexing.period }}</h4>
+                <h4 class="period">{{ indexing.league.periodAbbreviationLabel }} {{ indexing.period }}</h4>
                 <time>{{ play.startTime | time }} — {{ play.endTime | time }}</time>
                 <h4>{{ indexing.team.name }} <b>{{ play.teamScore }}</b> vs <b>{{ play.opposingScore }}</b> {{ indexing.opposingTeam.name }}</h4>
 
