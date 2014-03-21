@@ -97,7 +97,7 @@
                     <!-- Event -->
                     <li class="event" data-ng-repeat="event in play.events">
 
-                        <button class="btn-select-event" data-ng-class="{ active: main.currentEvent.id === event.id }" data-ng-click="main.selectEvent(play, event)" data-ng-disabled="!indexing.isReady">
+                        <button class="btn-select-event" data-ng-class="{ active: main.currentEvent.id === event.id }" data-ng-click="main.selectEvent(play, event)" data-ng-disabled="!isReady">
 
                             <span class="item" data-ng-repeat="item in buildScript(event)">
 
