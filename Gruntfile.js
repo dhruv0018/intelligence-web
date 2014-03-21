@@ -143,13 +143,6 @@ module.exports = function(grunt) {
             }
         },
 
-        concat: {
-            theme: {
-                src: ['build/build.css', 'build/theme.css'],
-                dest: 'build/themed.css'
-            }
-        },
-
         autoprefixer: {
             src: {
                 src: 'build/themed.css',
@@ -157,6 +150,23 @@ module.exports = function(grunt) {
             }
         },
 
+
+        /* Build process - Concatenations */
+
+
+        concat: {
+            mousetrap: {
+                src: [
+                    'node_modules/Mousetrap/mousetrap.js',
+                    'node_modules/Mousetrap/plugins/global-bind/mousetrap-global-bind.js'
+                ],
+                dest: 'build/mousetrap.js'
+            },
+            theme: {
+                src: ['build/build.css', 'build/theme.css'],
+                dest: 'build/themed.css'
+            }
+        },
 
         /* Build process - JS */
 
@@ -232,7 +242,7 @@ module.exports = function(grunt) {
                             exports: 'flowjs'
                         },
                         Mousetrap: {
-                            path: 'node_modules/Mousetrap/mousetrap.js',
+                            path: 'build/mousetrap.js',
                             exports: 'Mousetrap'
                         }
                     }
@@ -250,7 +260,7 @@ module.exports = function(grunt) {
                             exports: 'flowjs'
                         },
                         Mousetrap: {
-                            path: 'node_modules/Mousetrap/mousetrap.js',
+                            path: 'build/mousetrap.js',
                             exports: 'Mousetrap'
                         }
                     }
@@ -475,6 +485,7 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', [
         'env:dev',
         'componentbuild:dev',
+        'concat:mousetrap',
         'browserify:dev',
         'less',
         'concat:theme',
@@ -490,6 +501,7 @@ module.exports = function(grunt) {
         'lint',
         'env:qa',
         'componentbuild:prod',
+        'concat:mousetrap',
         'browserify:prod',
         'test',
         'less',
@@ -508,6 +520,7 @@ module.exports = function(grunt) {
         'lint',
         'env:prod',
         'componentbuild:prod',
+        'concat:mousetrap',
         'browserify:prod',
         'test',
         'less',
