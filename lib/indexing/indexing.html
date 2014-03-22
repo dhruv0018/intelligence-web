@@ -84,7 +84,7 @@
 
                         <button class="btn-select-event" data-ng-class="{ active: main.currentEvent.id === event.id }" data-ng-click="main.selectEvent(play, event)" data-ng-disabled="!isReady">
 
-                            <x-item item="item" event="event" data-ng-repeat="item in buildScript(event)"></x-item>
+                            <x-item item="item" event="event" data-ng-repeat="item in buildScript(event)" disabled></x-item>
 
                         </button>
 
