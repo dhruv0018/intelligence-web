@@ -1,5 +1,5 @@
 {
-    "name": "item",
+    "name": "text",
     "templates": [
         "template.html"
     ],
@@ -8,13 +8,5 @@
     ],
     "scripts": [
         "index.js"
-    ],
-    "paths": [
-        "."
-    ],
-    "local": [
-        "text",
-        "dropdown",
-        "player-dropdown"
     ]
 }
