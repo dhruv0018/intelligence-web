@@ -46,7 +46,7 @@
                 <div class="controls">
 
                     <!-- Start button -->
-                    <button class="btn-indexing-start" data-ng-if="isReady && !isStarted" data-ng-click="main.index()"><i class="icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
+                    <button class="btn-indexing-start" data-ng-if="isReady && !isIndexing" data-ng-click="main.index()"><i class="icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
 
                     <!-- State movement buttons -->
                     <button class="btn-back" data-ng-if="isIndexing" data-ng-click="main.back()">Back (Esc)</button>
