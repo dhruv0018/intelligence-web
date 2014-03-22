@@ -1,7 +1,7 @@
 <span class="player-dropdown">
 
+    <pre>{{ indexing.players[event.variableValues[item.index]] | json }}</pre>
     <a class="player-dropdown" data-ng-if="event.variableValues[item.index]" data-ng-disabled="disabled" data-ng-click="event.variableValues[item.index] = null">{{ indexing.players[event.variableValues[item.index]].firstName }} {{ indexing.players[event.variableValues[item.index]].lastName }}</a>
-    <select class="player-dropdown" data-ng-if="!event.variableValues[item.index] && item.index !== 1" data-ng-model="event.variableValues[item.index]" data-ng-required="item.isRequired" data-ng-options="player.id as player.firstName + ' ' + player.lastName for (key, player) in indexing.players" onchange="this.blur();" tabindex="{{ item.index }}"></select>
-    <select class="player-dropdown" data-ng-if="!event.variableValues[item.index] && item.index === 1" data-ng-model="event.variableValues[item.index]" data-ng-required="item.isRequired" data-ng-options="player.id as player.firstName + ' ' + player.lastName for (key, player) in indexing.players" onchange="this.blur();" tabindex="{{ item.index }}" autofocus></select>
+    <select class="player-dropdown" data-ng-if="!event.variableValues[item.index]" data-ng-model="event.variableValues[item.index]" data-ng-required="item.isRequired" data-ng-options="player.id as player.firstName + ' ' + player.lastName for (key, player) in indexing.players" onchange="this.blur();" tabindex="{{ item.index }}" data-autofocus-when="{{ item.index === 1 }}"></select>
 
 </span>
