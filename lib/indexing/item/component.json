@@ -13,6 +13,7 @@
         "."
     ],
     "local": [
+        "static",
         "text",
         "dropdown",
         "player-dropdown"
