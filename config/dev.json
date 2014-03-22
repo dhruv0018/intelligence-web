@@ -18,5 +18,10 @@
         "signup": {
             "uri": "http://krossover.com/sign-up.php"
         }
+    },
+    "indexing": {
+        "video": {
+            "jump": 3
+        }
     }
 }

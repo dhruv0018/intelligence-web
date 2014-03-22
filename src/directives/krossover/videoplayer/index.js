@@ -16,8 +16,8 @@ var IntelligenceWebClient = require('../../../app');
 
 
 IntelligenceWebClient.directive('krossoverPlayPauseButton', [
-    'VG_EVENTS', 'VG_STATES',
-    function(VG_EVENTS, VG_STATES) {
+    'config', 'VG_EVENTS', 'VG_STATES',
+    function(config, VG_EVENTS, VG_STATES) {
 
         return {
 
@@ -158,7 +158,7 @@ IntelligenceWebClient.directive('krossoverJumpBackwardButton', [
 
                     var video = API.videoElement[0];
                     var currentTime = video.currentTime;
-                    var time = currentTime - VIDEO_JUMP_TIME;
+                    var time = currentTime - config.indexing.video.jump;
 
                     API.seekTime(time);
                 }
@@ -184,7 +184,7 @@ IntelligenceWebClient.directive('krossoverJumpForwardButton', [
 
                     var video = API.videoElement[0];
                     var currentTime = video.currentTime;
-                    var time = currentTime + VIDEO_JUMP_TIME;
+                    var time = currentTime + config.indexing.video.jump;
 
                     API.seekTime(time);
                 }
