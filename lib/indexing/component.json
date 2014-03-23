@@ -2,16 +2,22 @@
     "name": "indexing",
     "scripts": [
         "index.js",
-        "indexing-controller.js"
+        "indexing-controller.js",
+        "indexing-sidebar-notes-controller.js",
+        "indexing-sidebar-playlist-controller.js"
     ],
     "styles": [
         "indexing.less",
         "indexing-header.less",
+        "indexing-sidebar-notes.less",
+        "indexing-sidebar-playlist.less",
         "delete-play.less"
     ],
     "templates": [
         "indexing.html",
         "indexing-header.html",
+        "indexing-sidebar-notes.html",
+        "indexing-sidebar-playlist.html",
         "delete-play.html"
     ],
     "paths": [
