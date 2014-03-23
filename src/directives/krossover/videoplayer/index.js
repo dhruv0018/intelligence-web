@@ -3,14 +3,8 @@ var TO = '';
 var ELEMENTS = 'E';
 var ATTRIBUTES = 'A';
 
-/* Video play rate limit. */
-var VIDEO_PLAYRATE_SPEEDLIMIT = 2;
-
 /* Step rate when changing play rate. */
 var VIDEO_PLAYRATE_STEP = 0.1;  // Use 10% speed steps
-
-/* Time in seconds to move video when jumping. */
-var VIDEO_JUMP_TIME = 3;  // Jumps 3 seconds
 
 var IntelligenceWebClient = require('../../../app');
 
@@ -70,7 +64,7 @@ IntelligenceWebClient.directive('krossoverFastBackwardButton', [
 
                     /* NOTE: Negative values for playback rate mean backwards. */
 
-                    var VIDEO_PLAYRATE_REVERSE_SPEEDLIMIT = -1 * VIDEO_PLAYRATE_SPEEDLIMIT;
+                    var VIDEO_PLAYRATE_REVERSE_SPEEDLIMIT = -1 * config.indexing.video.speedlimit;
 
                     var video = API.videoElement[0];
 
@@ -113,6 +107,8 @@ IntelligenceWebClient.directive('krossoverFastForwardButton', [
             link: function($scope, element, attributes, API) {
 
                 function onClickFastForward(event) {
+
+                    var VIDEO_PLAYRATE_SPEEDLIMIT = config.indexing.video.speedlimit;
 
                     var video = API.videoElement[0];
 

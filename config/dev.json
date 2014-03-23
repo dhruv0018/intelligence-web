@@ -21,7 +21,8 @@
     },
     "indexing": {
         "video": {
-            "jump": 3
+            "jump": 3,
+            "speedlimit": 2
         }
     }
 }
