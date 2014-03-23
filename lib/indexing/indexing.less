@@ -93,19 +93,6 @@
         }
     }
 
-    .btn-indexing-saving {
-
-        .btn-indexing-main;
-
-        &,
-        &:focus,
-        &:hover {
-
-            color: white;
-            background-color: @brand-success;
-        }
-    }
-
     .btn-next,
     .btn-save,
     .btn-back {
@@ -143,64 +130,6 @@
         height: 50px;
         padding-top: 10px;
         padding-right: 91px;
-
-        .item {
-
-            display: inline-block;
-
-            .dropdown {
-
-            }
-
-            .player-dropdown {
-
-            }
-
-            h3 {
-
-                color: @brand-blue;
-                display: inline-block;
-                margin: 0;
-            }
-
-            a,
-            select {
-
-                .form-control;
-                display: inline-block;
-                height: 33px;
-                line-height: 21px;
-            }
-
-            a {
-                .btn-link;
-                padding: 0;
-                font-size: 20px;
-                font-style: normal;
-                font-weight: 500;
-
-                &:focus,
-                &:hover {
-
-                    text-decoration: none;
-                }
-            }
-
-            select {
-
-                width: auto;
-                padding-top: 5px;
-                padding-bottom: 5px;
-            }
-
-            h3 {
-
-                height: 21px;
-                line-height: 21px;
-                padding-top: 6px;
-                padding-bottom: 6px;
-            }
-        }
     }
 
     .tags {
@@ -300,13 +229,6 @@
             &.active {
 
                 background-color: rgb(246, 249, 253);
-            }
-
-            h3 {
-
-                color: @brand-blue;
-                font-size: 18px;
-                margin-top: 0;
             }
 
             h4 {
@@ -436,12 +358,13 @@
 
             &.active {
 
-                p {
+                .static {
 
                     color: @gray-light;
                 }
 
-                a {
+                button {
+
                     &,
                     &[disabled] {
 
@@ -457,26 +380,12 @@
 
         .item {
 
-            &,
-            a,
-            p,
-            .dropdown,
-            .player-dropdown {
-
-                display: inline-block;
-            }
-
-            p {
+            .static {
 
                 color: @gray-dark;
-                margin: 0;
             }
 
-            a {
-                .btn-link;
-                padding-left: 0.1em;
-                padding-right: 0.1em;
-
+            button {
 
                 &[disabled] {
 
@@ -490,8 +399,9 @@
                 }
             }
 
-            a,
-            p {
+            .static,
+            button {
+
                 font-size: 16px;
                 font-style: normal;
                 font-weight: 500;
