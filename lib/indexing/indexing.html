@@ -2,7 +2,7 @@
 
     <main class="content-full">
 
-        <div class="alert-editing" data-ng-show="isIndexing && main.currentEvent.id"><button class="btn-delete-event" data-ng-click="main.deleteCurrentEvent()"><i class="icon-remove"></i> Delete Event</button><h5>Click the variable you wish to edit.</h5></div>
+        <div class="alert-editing" data-ng-show="isIndexing && event.current.id"><button class="btn-delete-event" data-ng-click="main.deleteCurrentEvent()"><i class="icon-remove"></i> Delete Event</button><h5>Click the variable you wish to edit.</h5></div>
 
         <x-krossover-videoplayer></x-krossover-videoplayer>
 
@@ -22,7 +22,7 @@
                     <!-- Script -->
                     <div class="script" data-ng-hide="main.currentTags.length">
 
-                        <x-item item="item" event="main.currentEvent" data-ng-repeat="item in buildScript(main.currentEvent)"></x-item>
+                        <x-item item="item" event="event.current" data-ng-repeat="item in buildScript(event.current)"></x-item>
 
                     </div>
 
@@ -73,7 +73,7 @@
         <div class="plays">
 
             <!-- Play -->
-            <div class="play" data-ng-class="{ active: main.currentPlay.id === play.id }" data-ng-repeat="play in indexing.plays">
+            <div class="play" data-ng-class="{ active: currentPlay.id === play.id }" data-ng-repeat="play in indexing.plays">
 
                 <h4><span class="period">{{ indexing.league.periodAbbreviationLabel }} {{ indexing.period }}</span><span class="dash"> — </span><time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time><span class="dash"> — </span><span class="team">{{ indexing.team.name }}</span> <span class="score">{{ play.teamScore }}</span><span class="vs"> vs </span><span class="score">{{ play.opposingScore }}</span> <span class="team">{{ indexing.opposingTeam.name }}</span></h4>
 
@@ -82,7 +82,7 @@
                     <!-- Event -->
                     <li class="event" data-ng-repeat="event in play.events">
 
-                        <button class="btn-select-event" data-ng-class="{ active: main.currentEvent.id === event.id }" data-ng-click="main.selectEvent(play, event)" data-ng-disabled="!isReady">
+                        <button class="btn-select-event" data-ng-class="{ active: event.current.id === event.id }" data-ng-click="main.selectEvent(play, event)" data-ng-disabled="!isReady">
 
                             <x-item item="item" event="event" data-ng-repeat="item in buildScript(event)" data-ng-disabled="true"></x-item>
 
