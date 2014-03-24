@@ -6,7 +6,7 @@
 
         <h3>Search</h3>
 
-        <form role="form">
+        <form role="form" data-ng-submit="search(filter)">
 
             <div class="form-group">
 
@@ -33,13 +33,13 @@
 
             </div>
 
+            <button class="btn-search" data-ng-show="sidebar" data-ng-click="search(filter)" type="submit"><i class="icon-search"></i></button>
+            <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon-search"></i></button>
+
+            <button class="btn-toggle-sidebar" data-ng-show="sidebar" data-ng-click="sidebar = false"><i class="icon-chevron-left"></i></button>
+            <button class="btn-toggle-sidebar" data-ng-hide="sidebar" data-ng-click="sidebar = true"><i class="icon-chevron-right"></i></button>
+
         </form>
-
-        <button class="btn-search" data-ng-show="sidebar" data-ng-click="search(filter)"><i class="icon-search"></i></button>
-        <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon-search"></i></button>
-
-        <button class="btn-toggle-sidebar" data-ng-show="sidebar" data-ng-click="sidebar = false"><i class="icon-chevron-left"></i></button>
-        <button class="btn-toggle-sidebar" data-ng-hide="sidebar" data-ng-click="sidebar = true"><i class="icon-chevron-right"></i></button>
 
     </aside>
 
