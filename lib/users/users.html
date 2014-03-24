@@ -36,7 +36,7 @@
 
             <div class="form-group">
 
-                <select class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole">
+                <select class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES">
                     <option value="">Role</option>
                 </select>
 
