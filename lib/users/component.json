@@ -15,6 +15,8 @@
         "directives.js",
         "user-service.js",
         "user-controller.js",
+        "user-info-controller.js",
+        "user-roles-controller.js",
         "users-controller.js"
     ],
     "styles": [
