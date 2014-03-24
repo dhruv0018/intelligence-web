@@ -60,7 +60,7 @@
 
     </aside>
 
-    <div class="list" data-ng-class="{nosidebar: !sidebar}" data-ng-hide="noResults">
+    <div class="list" data-ng-class="{nosidebar: !sidebar}" data-ng-show="users.length">
 
         <div class="table-responsive">
 
@@ -109,7 +109,7 @@
 
     </div>
 
-    <div class="noresults" data-ng-show="noResults">
+    <div class="noresults" data-ng-hide="users.length">
 
         <i class="icon-search"></i>
         <h1>No Results Found</h1>
