@@ -56,35 +56,17 @@
 
     "account": {
 
-        "Super Admin": true,
-        "Admin": true,
-        "Indexer": true,
-        "Head Coach": true,
-        "Assistant Coach": true,
-        "Parent": true,
-        "Athlete": true
+        "*": true
     },
 
     "contact-info": {
 
-        "Super Admin": true,
-        "Admin": true,
-        "Indexer": true,
-        "Head Coach": true,
-        "Assistant Coach": true,
-        "Parent": true,
-        "Athlete": true
+        "*": true
     },
 
     "roles-list": {
 
-        "Super Admin": true,
-        "Admin": true,
-        "Indexer": true,
-        "Head Coach": true,
-        "Assistant Coach": true,
-        "Parent": true,
-        "Athlete": true
+        "*": true
     },
 
     "user": {

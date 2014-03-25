@@ -2,19 +2,11 @@
 
 .roles {
 
-    .modal-dialog {
-
-        width: 350px;
-        margin-top: 100px;
-        padding: 0;
-    }
-
     .modal-header {
 
         position: absolute;
         top: -50px;
-        left: -40px;
-        width: 430px;
+        width: 600px;
         border: none;
         padding: 0;
     }
@@ -37,17 +29,33 @@
 
     .list-group-item {
 
+        padding: 0;
+        border: none;
         border-bottom: 2px solid rgb(230, 229, 228);
+
+        &:last-child {
+
+            border-bottom: none;
+        }
+    }
+
+    .btn-role {
+
+        .btn;
+        .btn-blank;
+        width: 100%;
+        text-align: left;
 
         &:hover {
 
             background-color: rgb(246, 249, 253);
 
-            &::before {
+            &::after {
 
-                .icon(@check);
+                .icon(@ok);
+                color: @brand-secondary;
                 position: absolute;
-                top: 31px;
+                top: 25px;
                 right: 10px;
             }
         }
@@ -56,11 +64,9 @@
 
             .icon(@check-empty);
             position: absolute;
-            top: 31px;
+            top: 25px;
             right: (10px + 2px); /* Add an extra couple pixels to account for difference between checked icon */
         }
-
-
     }
 
     .role-title {
@@ -81,11 +87,6 @@ and (max-device-width: 480px)
 and (orientation: portrait) {
 
     .roles {
-
-        .modal-dialog {
-
-            width: 300px;
-        }
 
         .modal-header {
 

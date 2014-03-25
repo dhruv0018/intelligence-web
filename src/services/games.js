@@ -113,12 +113,10 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 /* Get the game status as a mapped ID. */
-                var statusId = self.status ? GAME_STATUS_IDS[self.status] : undefined;
+                var statusId = GAME_STATUS_IDS[self.status];
 
                 /* Lookup the game status by ID. */
-                var status = statusId ? GAME_STATUSES[statusId] : undefined;
-
-                if (!status) return undefined;
+                var status = GAME_STATUSES[statusId];
 
                 /* If the game is in set aside status. */
                 if (status.id === GAME_STATUSES.SET_ASIDE.id && status.name === GAME_STATUSES.SET_ASIDE.name) {
