@@ -10,13 +10,13 @@
 
         <ul class="list-group">
 
-            <li class="role list-group-item" data-ng-repeat="role in currentUser.roles">
+            <li class="list-group-item" data-ng-repeat="role in currentUser.roles">
 
-                <a href="#" data-ng-click="setDefaultRole(role)">
+                <button class="btn-role" data-ng-click="setDefaultRole(role)">
 
                     <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
-                </a>
+                </button>
 
             </li>
 
