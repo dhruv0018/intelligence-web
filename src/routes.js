@@ -102,8 +102,6 @@ IntelligenceWebClient.run([
 
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
 
-            /* Clear any alerts. */
-            alerts.clear();
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {
