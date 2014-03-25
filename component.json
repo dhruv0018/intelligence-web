@@ -8,6 +8,7 @@
         "login",
         "role",
         "roles",
+        "rolebar",
         "header",
         "alertbar",
         "account",
@@ -15,8 +16,12 @@
         "users",
         "teams",
         "schools",
+        "queue",
         "leagues",
-        "coach"
+        "indexer",
+        "indexing",
+        "coach",
+        "videoplayer"
     ],
     "dependencies": {
     },

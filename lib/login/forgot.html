@@ -1,30 +1,33 @@
-<form class="form-forgot" name="form" role="form" data-ng-submit="submitForgotPassword()" novalidate>
+<div class="login-forgot">
 
-    <div class="form-group">
+    <form class="form-forgot" name="form" role="form" data-ng-submit="submitForgotPassword()" novalidate>
 
-        <h2>Forgot your password?</h2>
+        <div class="form-group">
 
-        <p>Enter your email address to reset your password.</p>
-        <p>You may need to check your spam folder or unblock no-reply@krossover.com</p>
+            <h2>Forgot your password?</h2>
 
-    </div>
+            <p>Enter your email address to reset your password.</p>
+            <p>You may need to check your spam folder or unblock no-reply@krossover.com</p>
 
-    <div class="form-group">
+        </div>
 
-        <input class="form-field-login" name="email" type="email" placeholder="Email" data-ng-model="$parent.login.email" data-ng-change="form.email.$setValidity('notfound', true);" data-errors="{ required: 'Required!', email: 'This is not a valid email.', notfound: 'No account found for that email.' }" autofocus required>
+        <div class="form-group">
 
-    </div>
+            <input class="form-field-login" name="email" type="email" placeholder="Email" data-ng-model="$parent.login.email" data-ng-change="form.email.$setValidity('notfound', true);" data-errors="{ required: 'Required!', email: 'This is not a valid email.', notfound: 'No account found for that email.' }" autofocus required>
 
-    <div class="form-group">
+        </div>
 
-        <button class="button-forgot" type="submit" data-ng-disabled="form.$invalid || $parent.login.submitted">
+        <div class="form-group">
 
-            <span data-ng-hide="$parent.login.submitted">Submit</span>
-            <span data-ng-show="$parent.login.submitted">Submitting...</span>
+            <button class="button-forgot" type="submit" data-ng-disabled="form.$invalid || $parent.login.submitted">
 
-        </button>
+                <span data-ng-hide="$parent.login.submitted">Submit</span>
+                <span data-ng-show="$parent.login.submitted">Submitting...</span>
 
-    </div>
+            </button>
 
-</form>
+        </div>
 
+    </form>
+
+</div>

@@ -9,8 +9,8 @@ module.exports = function(config) {
         basePath: '',
 
         files: [
-            'dev/intelligence/*.js',
-            'vendor/angular-mocks/angular-mocks.js',
+            'build/bundle.js',
+            'node_modules/angular-mocks/angular-mocks.js',
             'test/unit/**/*.js',
             {pattern: 'src/**/*.js', included: false},
             {pattern: 'lib/**/*.js', included: false}
@@ -29,7 +29,7 @@ module.exports = function(config) {
 
         browsers: ['PhantomJS'],
 
-        reporters: ['progress', 'coverage'],
+        reporters: ['progress', 'coverage', 'osx'],
 
         coverageReporter: {
             dir: 'test/coverage',

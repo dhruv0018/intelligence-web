@@ -22,12 +22,12 @@
         "reset.html"
     ],
     "styles": [
-        "styles.css",
-        "signup.css",
-        "login.css",
-        "locked.css",
-        "forgot.css",
-        "reset.css"
+        "styles.less",
+        "signup.less",
+        "login.less",
+        "locked.less",
+        "forgot.less",
+        "reset.less"
     ],
     "scripts": [
         "index.js"

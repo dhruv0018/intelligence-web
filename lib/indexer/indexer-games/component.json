@@ -1,0 +1,12 @@
+{
+    "name": "indexer-games",
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "indexer-games.less"
+    ],
+    "templates": [
+        "indexer-games.html"
+    ]
+}

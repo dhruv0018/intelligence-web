@@ -1,11 +1,5 @@
 {
     "name": "header",
-    "paths": [
-        "."
-    ],
-    "local": [
-        "rolebar"
-    ],
     "templates": [
         "template.html"
     ],
@@ -14,7 +8,7 @@
         "krossover_logo_2013_small.png"
     ],
     "styles": [
-        "styles.css"
+        "styles.less"
     ],
     "scripts": [
         "index.js"

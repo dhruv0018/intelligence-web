@@ -9,7 +9,7 @@
         "index.js"
     ],
     "styles": [
-        "school.css",
-        "schools.css"
+        "school.less",
+        "schools.less"
     ]
 }

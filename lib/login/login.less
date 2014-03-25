@@ -1,94 +1,95 @@
 @import (reference) "main.less";
 
-.password-reset,
-.user-remember,
-.button-signin {
+.login-login {
 
-    .uppercase;
-}
+    .password-reset,
+    .user-remember,
+    .button-signin {
 
-.form-login {
-
-    .form-horizontal;
-
-    .form-group {
-
-        margin-left: 0;
-        margin-right: 0;
-        position: relative;
+        .uppercase;
     }
 
-    .form-group:last-child {
+    .form-login {
 
-        margin-top: 30px;
-    }
-}
+        .form-horizontal;
 
-.password-reset {
+        .form-group {
 
-    .text-right;
-}
+            margin-left: 0;
+            margin-right: 0;
+            position: relative;
+        }
 
-.user-remember,
-.button-signin {
+        .form-group:last-child {
 
-    height: 62px;
-}
-
-.user-remember {
-
-    .pull-left;
-    line-height: 62px;
-    user-select: none;
-
-    label {
-
-        cursor: pointer;
-        font-weight: 500;
-
-        &::before {
-
-            .icon(@ok);
-            display: inline-block;
-            color: @gray-lighter;
-            width: 28px;
-            height: 28px;
-            line-height: 24px;
-            border-radius: 14px;
-            border: 2px solid @input-border;
-            padding-left: 5px;
-            margin-right: 10px;
+            margin-top: 30px;
         }
     }
 
-    input[type="checkbox"] {
+    .password-reset {
 
-        display: none;
+        .text-right;
+    }
 
-        &:checked + label,
-        &:checked + label::before {
+    .user-remember,
+    .button-signin {
 
-            color: @brand-primary;
-            border-color: @brand-primary;
+        height: 62px;
+    }
+
+    .user-remember {
+
+        .pull-left;
+        line-height: 62px;
+        user-select: none;
+
+        label {
+
+            cursor: pointer;
+            font-weight: 500;
+
+            &::before {
+
+                .icon(@ok);
+                display: inline-block;
+                color: @gray-lighter;
+                width: 28px;
+                height: 28px;
+                line-height: 24px;
+                border-radius: 14px;
+                border: 2px solid @input-border;
+                padding-left: 5px;
+                margin-right: 10px;
+            }
+        }
+
+        input[type="checkbox"] {
+
+            display: none;
+
+            &:checked + label,
+            &:checked + label::before {
+
+                color: @brand-primary;
+                border-color: @brand-primary;
+            }
+        }
+    }
+
+    .button-signin {
+
+        & {
+
+            .btn;
+            .btn-lg;
+        }
+
+        &:enabled {
+
+            .btn-primary;
         }
     }
 }
-
-.button-signin {
-
-    & {
-
-        .btn;
-        .btn-lg;
-    }
-
-    &:enabled {
-
-        .btn-primary;
-    }
-
-}
-
 
 /**
  * Responsive sizes.
@@ -99,27 +100,30 @@
 @media only screen
 and (max-width: 479px) {
 
-    .form-login {
+    .login-login {
 
-        width: 100%;
-        padding-left: 20px;
-        padding-right: 20px;
+        .form-login {
 
-    }
+            width: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
 
-    .button-signin {
+        }
 
-        width: 100%;
-    }
+        .button-signin {
 
-    .password-reset {
+            width: 100%;
+        }
 
-        .text-center;
-    }
+        .password-reset {
 
-    .user-remember {
+            .text-center;
+        }
 
-        .hide;
+        .user-remember {
+
+            .hide;
+        }
     }
 }
 
@@ -127,10 +131,13 @@ and (max-width: 479px) {
 @media only screen
 and (min-width: 480px) {
 
-    .button-signin {
+    .login-login {
 
-        .pull-right;
-        width: 150px;
+        .button-signin {
+
+            .pull-right;
+            width: 150px;
+        }
     }
 }
 
@@ -140,7 +147,10 @@ and (min-width: 480px) {
  */
 
 
-.button-signin {
+.login-login {
 
-    background-color: @btn-default-bg;
+    .button-signin {
+
+        background-color: @btn-default-bg;
+    }
 }

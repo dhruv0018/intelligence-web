@@ -2,7 +2,7 @@
     "name": "add-film",
     "dependencies": {
         "component/path": "*",
-        "visionmedia/superagent": "*"
+        "visionmedia/superagent": "0.15.4"
     },
     "paths": [
         "."
@@ -26,7 +26,7 @@
         "uploading.js"
     ],
     "styles": [
-        "styles.css",
-        "upload.css"
+        "styles.less",
+        "upload.less"
     ]
 }

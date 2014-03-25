@@ -56,35 +56,17 @@
 
     "account": {
 
-        "Super Admin": true,
-        "Admin": true,
-        "Indexer": true,
-        "Head Coach": true,
-        "Assistant Coach": true,
-        "Parent": true,
-        "Athlete": true
+        "*": true
     },
 
     "contact-info": {
 
-        "Super Admin": true,
-        "Admin": true,
-        "Indexer": true,
-        "Head Coach": true,
-        "Assistant Coach": true,
-        "Parent": true,
-        "Athlete": true
+        "*": true
     },
 
     "roles-list": {
 
-        "Super Admin": true,
-        "Admin": true,
-        "Indexer": true,
-        "Head Coach": true,
-        "Assistant Coach": true,
-        "Parent": true,
-        "Athlete": true
+        "*": true
     },
 
     "user": {
@@ -159,7 +141,7 @@
         "Admin": true
     },
 
-    "games": {
+    "queue": {
 
         "Super Admin": true,
         "Admin": true
@@ -195,6 +177,21 @@
     "leagues": {
 
         "Super Admin": true
+    },
+
+    "indexer-game": {
+
+        "Indexer": true
+    },
+
+    "indexer-games": {
+
+        "Indexer": true
+    },
+
+    "indexing": {
+
+        "Indexer": true
     },
 
     "add-film": {

@@ -19,13 +19,15 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return team;
             },
 
-            get: function(teamId, success, error) {
+            get: function(id, success, error) {
 
                 var self = this;
 
-                success = success || function(team) {
+                var callback = function(team) {
 
-                    return self.extendTeam(team);
+                    team = self.extendTeam(team);
+
+                    return success ? success(team) : team;
                 };
 
                 error = error || function() {
@@ -33,18 +35,39 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not get team');
                 };
 
-                return self.resource.get({ id: teamId }, success, error);
+                return self.resource.get({ id: id }, callback, error);
             },
 
-            getList: function(filter, success, error) {
+            getList: function(filter, success, error, index) {
 
                 var self = this;
 
+                if (angular.isFunction(filter)) {
+
+                    index = error;
+                    error = success;
+                    success = filter;
+                    filter = null;
+                }
+
                 filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || 1000;
 
-                success = success || function(teams) {
+                var callback = function(teams) {
 
-                    return teams.forEach(self.extendTeam, self);
+                    var indexedTeams = {};
+
+                    teams.forEach(function(team) {
+
+                        team = self.extendTeam(team);
+
+                        indexedTeams[team.id] = team;
+                    });
+
+                    teams = index ? indexedTeams : teams;
+
+                    return success ? success(teams) : teams;
                 };
 
                 error = error || function() {
@@ -52,12 +75,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not load teams list');
                 };
 
-                return self.resource.query(filter, success, error);
-            },
-
-            filter: function(filter, success, error) {
-
-                return this.getList(filter, success, error);
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(team, success, error) {
@@ -65,6 +83,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 var self = this;
 
                 team = team || self;
+
+                delete team.league;
+                delete team.members;
 
                 if (team.schoolId) delete team.address;
 
@@ -130,6 +151,25 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 }
 
                 return members;
+            },
+
+            getHeadCoachRole: function() {
+
+                if (!this.roles) return undefined;
+
+                /* Filter out all of the head coach roles for the team. */
+                var headCoachRoles = this.roles.filter(function(role) {
+
+                    return users.is(role, ROLES.HEAD_COACH);
+                });
+
+                /* Filter out all of the head coach roles that are current. */
+                var currentHeadCoachRoles = headCoachRoles.filter(function(coach) {
+
+                    return coach.tenureEnd === null;
+                });
+
+                return currentHeadCoachRoles.pop();
             },
 
             has: function(match, matchIsCurrent) {

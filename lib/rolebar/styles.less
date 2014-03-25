@@ -1,0 +1,31 @@
+@import (reference) "main.less";
+
+.rolebar {
+
+    height: 5px;
+
+    &.x-krossover-admin,
+    &.x-krossover-super-admin {
+
+        background-color: @brand-secondary;
+    }
+
+    &.x-krossover-indexer,
+    &.x-krossover-head-coach,
+    &.x-krossover-assistant-coach {
+
+        background-color: @brand-primary;
+    }
+
+    &.x-krossover-parent,
+    &.x-krossover-athlete {
+
+        background-color: @brand-blue;
+    }
+
+    &.x-krossover-unknown {
+
+        background-color: @gray-light;
+    }
+}
+
