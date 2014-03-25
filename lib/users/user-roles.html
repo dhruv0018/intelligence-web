@@ -12,9 +12,9 @@
 
 <ul class="list-group">
 
-    <li class="role-new list-group-item" data-ng-repeat="role in $storage.user.newRoles">
+    <li class="role-new list-group-item" data-ng-repeat="role in user.newRoles">
 
-        <x-krossover-new-role user="$storage.user" role="role"></x-krossover-new-role>
+        <x-krossover-new-role user="user" role="role"></x-krossover-new-role>
 
     </li>
 
@@ -22,21 +22,21 @@
 
 <ul class="list-group">
 
-    <li class="role list-group-item" data-ng-repeat="role in $storage.user.roles">
+    <li class="role list-group-item" data-ng-repeat="role in user.roles">
 
         <span data-ng-show="currentUser.hasAccess(role)">
 
-            <a class="btn pull-right" href data-ng-click="users.removeRole($storage.user, role)">Remove</a>
+            <a class="btn pull-right" href data-ng-click="users.removeRole(user, role)">Remove</a>
 
         </span>
 
-        <x-krossover-role user="$storage.user" role="role"></x-krossover-role>
+        <x-krossover-role user="user" role="role"></x-krossover-role>
 
     </li>
 
 </ul>
 
-<button class="btn btn-primary" data-ng-disabled="formUserInfo.$invalid" data-ng-click="save($storage.user)">Save</button>
+<button class="btn btn-primary" data-ng-disabled="formUserInfo.$invalid" data-ng-click="save(user)">Save</button>
 
 <a class="pull-right" href data-ui-sref="users">Cancel</a>
 
