@@ -1,0 +1,53 @@
+<section class="indexing">
+
+    <main class="content-full">
+
+        <div class="alert-editing" data-ng-show="isIndexing && event.current.id"><button class="btn-delete-event" data-ng-click="main.deleteCurrentEvent()"><i class="icon-remove"></i> Delete Event</button><h5>Click the variable you wish to edit.</h5></div>
+
+        <x-krossover-videoplayer></x-krossover-videoplayer>
+
+        <div class="indexing-block">
+
+            <form name="formIndexing" role="form" novalidate>
+
+                <span data-ng-if="isIndexing">
+
+                    <!-- Tags -->
+                    <div class="tags" data-ng-show="tags.current.length">
+
+                        <button class="tag" data-ng-repeat="tag in tags.current" data-keybinding="{{ tag.shortcutKey.toLowerCase() }}" data-ng-click="main.selectTag(tag.id)" tabindex="{{ $index+1 }}">{{ tag.name }} ({{ tag.shortcutKey.toLowerCase() }})</button>
+
+                    </div>
+
+                    <!-- Script -->
+                    <div class="script" data-ng-hide="tags.current.length">
+
+                        <x-item item="item" event="event.current" data-ng-repeat="item in buildScript(event.current)"></x-item>
+
+                    </div>
+
+                </span>
+
+                <div class="controls">
+
+                    <!-- Start button -->
+                    <button class="btn-indexing-start" data-ng-if="isReady && !isIndexing" data-ng-click="main.index()"><i class="icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
+
+                    <!-- State movement buttons -->
+                    <button class="btn-back" data-ng-if="isIndexing" data-ng-click="main.back()">Back (Esc)</button>
+                    <button class="btn-save" data-ng-if="isIndexing && !tags.current.length && main.savable()" data-ng-click="main.save()" data-ng-disabled="formIndexing.$invalid">Save Event (Return)</button>
+                    <button class="btn-next" data-ng-if="isIndexing && !tags.current.length && !main.savable()" data-ng-click="main.next()" data-ng-disabled="formIndexing.$invalid">Next (Return)</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <aside class="sidebar-notes" data-ui-view="sidebar-notes" data-ui-toggle="sidebar.notes"></aside>
+
+    <aside class="sidebar-playlist" data-ui-view="sidebar-playlist" data-ui-toggle="sidebar.playlist"></aside>
+
+</section>

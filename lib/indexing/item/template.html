@@ -1,0 +1,15 @@
+<span class="item">
+
+    <!-- Static item -->
+    <x-static data-ng-if="isString(item)" item="item"></x-static>
+
+    <!-- Text variable -->
+    <x-text data-ng-if="item.type === 'TEXT'" item="item" event="event"></x-text>
+
+    <!-- Dropdown variable -->
+    <x-dropdown data-ng-if="item.type === 'DROPDOWN'" item="item" event="event" data-ng-disabled="disabled"></x-dropdown>
+
+    <!-- Player dropdown variable -->
+    <x-player-dropdown data-ng-if="item.type === 'PLAYER_DROPDOWN'" item="item" event="event" data-ng-disabled="disabled"></x-player-dropdown>
+
+</span>

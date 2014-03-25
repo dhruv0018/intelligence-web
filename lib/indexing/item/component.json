@@ -1,0 +1,21 @@
+{
+    "name": "item",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "paths": [
+        "."
+    ],
+    "local": [
+        "static",
+        "text",
+        "dropdown",
+        "player-dropdown"
+    ]
+}

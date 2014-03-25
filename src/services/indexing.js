@@ -41,11 +41,29 @@ IntelligenceWebClient.factory('IndexingService', [
                         promisedOpposingTeam.resolve();
                     });
 
-                    var teamRoster = game.getRoster(game.teamId);
-                    var teamPlayers = players.getList({ roster: teamRoster.id }, function() {
+                    self.teamRoster = game.getRoster(game.teamId);
+                    players.getList({ roster: self.teamRoster.id }, function(teamPlayers) {
 
-                        var opposingTeamRoster = game.getRoster(game.opposingTeamId);
-                        var opposingTeamPlayers = players.getList({ roster: opposingTeamRoster.id }, function() {
+                        var indexedTeamPlayers = {};
+
+                        teamPlayers.forEach(function(player) {
+
+                            indexedTeamPlayers[player.id] = player;
+                        });
+
+                        self.teamPlayers = indexedTeamPlayers;
+
+                        self.opposingTeamRoster = game.getRoster(game.opposingTeamId);
+                        players.getList({ roster: self.opposingTeamRoster.id }, function(opposingTeamPlayers) {
+
+                            var indexedOpposingTeamPlayers = {};
+
+                            opposingTeamPlayers.forEach(function(player) {
+
+                                indexedOpposingTeamPlayers[player.id] = player;
+                            });
+
+                            self.opposingTeamPlayers = indexedOpposingTeamPlayers;
 
                             var players = teamPlayers.concat(opposingTeamPlayers);
 

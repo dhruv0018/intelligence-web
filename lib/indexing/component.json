@@ -2,17 +2,35 @@
     "name": "indexing",
     "scripts": [
         "index.js",
-        "indexing-controller.js"
+        "filters.js",
+        "tags-service.js",
+        "play-service.js",
+        "event-service.js",
+        "header-controller.js",
+        "main-controller.js",
+        "sidebar-notes-controller.js",
+        "sidebar-playlist-controller.js",
+        "modal-delete-play-controller.js"
     ],
     "styles": [
-        "indexing.less",
-        "indexing-header.less",
-        "delete-play.less"
+        "styles.less",
+        "header.less",
+        "sidebar-notes.less",
+        "sidebar-playlist.less",
+        "modal-delete-play.less"
     ],
     "templates": [
-        "indexing.html",
-        "indexing-header.html",
-        "delete-play.html"
+        "template.html",
+        "header.html",
+        "sidebar-notes.html",
+        "sidebar-playlist.html",
+        "modal-delete-play.html"
+    ],
+    "paths": [
+        "."
+    ],
+    "local": [
+        "item"
     ],
     "dependencies": {
         "moment/moment": "2.5.1"
