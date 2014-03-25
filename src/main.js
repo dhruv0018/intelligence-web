@@ -88,9 +88,11 @@ component('schools');
 component('queue');
 component('leagues');
 
+component('admin');
+component('coach');
 component('indexer');
 component('indexing');
-component('coach');
+
 component('videoplayer');
 
 document.write('<base href="' + document.location + '">');  // jshint ignore:line
