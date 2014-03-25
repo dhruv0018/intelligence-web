@@ -1,14 +1,8 @@
 # Ignore build files
 /build
 
-# Ignore dev files
-/dev
-
-# Ignore qa files
-/qa
-
-# Ignore production files
-/prod
+# Ignore public files
+/public
 
 # Ignore components
 /components
