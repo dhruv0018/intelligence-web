@@ -1,35 +1,38 @@
-<form class="form-reset" name="resetForm" role="form" data-ng-submit="submitResetPassword()" novalidate>
+<div class="login-reset">
 
-    <div class="form-group">
+    <form class="form-reset" name="resetForm" role="form" data-ng-submit="submitResetPassword()" novalidate>
 
-        <h2>Forgot your password?</h2>
+        <div class="form-group">
 
-        <h3>Please enter your new password</h3>
+            <h2>Forgot your password?</h2>
 
-    </div>
+            <h3>Please enter your new password</h3>
 
-    <div class="form-group">
+        </div>
 
-        <input class="form-field-login" name="password" type="password" data-ng-minlength="4" placeholder="New Password" data-ng-model="reset.password" data-ng-trim="false" data-errors="{ required: 'Required!', minlength: 'Password must be at least 4 characters long.'}" oncopy="return false;" onpaste="return false;" required>
+        <div class="form-group">
 
-    </div>
+            <input class="form-field-login" name="password" type="password" data-ng-minlength="4" placeholder="New Password" data-ng-model="reset.password" data-ng-trim="false" data-errors="{ required: 'Required!', minlength: 'Password must be at least 4 characters long.'}" oncopy="return false;" onpaste="return false;" required>
 
-    <div class="form-group">
+        </div>
 
-        <input class="form-field-login" name="passwordVerify" type="password" data-ng-minlength="4" placeholder="Retype Password" data-ng-model="reset.passwordVerify" data-ng-trim="false" data-ui-validate=" 'reset.password == $value' " data-ui-validate-watch=" 'reset.password' " data-errors="{ required: 'Required!', validator: 'Passwords do not match.'}" oncopy="return false;" onpaste="return false;" required>
+        <div class="form-group">
 
-    </div>
+            <input class="form-field-login" name="passwordVerify" type="password" data-ng-minlength="4" placeholder="Retype Password" data-ng-model="reset.passwordVerify" data-ng-trim="false" data-ui-validate=" 'reset.password == $value' " data-ui-validate-watch=" 'reset.password' " data-errors="{ required: 'Required!', validator: 'Passwords do not match.'}" oncopy="return false;" onpaste="return false;" required>
 
-    <div class="form-group">
+        </div>
 
-        <button class="button-reset" type="submit" data-ng-disabled="resetForm.$invalid || reset.submitted">
+        <div class="form-group">
 
-            <span data-ng-hide="reset.submitted">Submit</span>
-            <span data-ng-show="reset.submitted">Submitting...</span>
+            <button class="button-reset" type="submit" data-ng-disabled="resetForm.$invalid || reset.submitted">
 
-        </button>
+                <span data-ng-hide="reset.submitted">Submit</span>
+                <span data-ng-show="reset.submitted">Submitting...</span>
 
-    </div>
+            </button>
 
-</form>
+        </div>
 
+    </form>
+
+</div>
