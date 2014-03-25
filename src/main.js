@@ -65,6 +65,7 @@ require('./directives/input');
 require('./directives/submit');
 require('./directives/keyboard');
 require('./directives/draggable');
+require('./directives/autofocus');
 
 require('./directives/verify-password.js');
 

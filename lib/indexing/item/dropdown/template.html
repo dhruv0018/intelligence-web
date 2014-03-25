@@ -1,0 +1,11 @@
+<span class="dropdown">
+
+    <a class="dropdown" data-ng-if="event.variableValues[item.index]" data-ng-disabled="disabled" data-ng-click="event.variableValues[item.index] = null">{{ event.variableValues[item.index] }}</a>
+
+    <select class="dropdown" data-ng-if="!event.variableValues[item.index]" data-ng-model="event.variableValues[item.index]" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-autofocus-when="{{ item.index === 1 }}">
+
+        <option data-ng-keybinding="option" data-ng-repeat="option in item.options" value="{{ option }}">{{ option }}</option>
+
+    </select>
+
+</span>

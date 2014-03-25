@@ -22,22 +22,7 @@
                     <!-- Script -->
                     <div class="script" data-ng-hide="main.currentTags.length">
 
-                        <span class="item" data-ng-repeat="item in buildScript(main.currentEvent)">
-
-                            <!-- String item -->
-                            <h3 data-ng-if="isString(item)">{{ item }}&nbsp;</h3>
-
-                            <!-- Dropdown variable -->
-                            <a class="dropdown" data-ng-if="item.type === 'DROPDOWN' && main.currentEvent.variableValues[item.index]" data-ng-click="main.currentEvent.variableValues[item.index] = null">{{ main.currentEvent.variableValues[item.index] }}</a>
-                            <select class="dropdown" data-ng-if="item.type === 'DROPDOWN' && !main.currentEvent.variableValues[item.index] && item.index !== 1" data-ng-model="main.currentEvent.variableValues[item.index]" data-ng-required="item.isRequired" data-ng-options="option as option for option in item.options" onchange="this.blur();" tabindex="{{ item.index }}"></select>
-                            <select class="dropdown" data-ng-if="item.type === 'DROPDOWN' && !main.currentEvent.variableValues[item.index] && item.index === 1" data-ng-model="main.currentEvent.variableValues[item.index]" data-ng-required="item.isRequired" data-ng-options="option as option for option in item.options" onchange="this.blur();" tabindex="{{ item.index }}" autofocus></select>
-
-                            <!-- Player dropdown variable -->
-                            <a class="player-dropdown" data-ng-if="item.type === 'PLAYER_DROPDOWN' && main.currentEvent.variableValues[item.index]" data-ng-click="main.currentEvent.variableValues[item.index] = null">{{ indexing.players[main.currentEvent.variableValues[item.index]].firstName }} {{ indexing.players[main.currentEvent.variableValues[item.index]].lastName }}</a>
-                            <select class="player-dropdown" data-ng-if="item.type === 'PLAYER_DROPDOWN' && !main.currentEvent.variableValues[item.index] && item.index !== 1" data-ng-model="main.currentEvent.variableValues[item.index]" data-ng-required="item.isRequired" data-ng-options="player.id as player.firstName + ' ' + player.lastName for (key, player) in indexing.players" onchange="this.blur();" tabindex="{{ item.index }}"></select>
-                            <select class="player-dropdown" data-ng-if="item.type === 'PLAYER_DROPDOWN' && !main.currentEvent.variableValues[item.index] && item.index === 1" data-ng-model="main.currentEvent.variableValues[item.index]" data-ng-required="item.isRequired" data-ng-options="player.id as player.firstName + ' ' + player.lastName for (key, player) in indexing.players" onchange="this.blur();" tabindex="{{ item.index }}" autofocus></select>
-
-                        </span>
+                        <x-item item="item" event="main.currentEvent" data-ng-repeat="item in buildScript(main.currentEvent)"></x-item>
 
                     </div>
 
@@ -46,7 +31,7 @@
                 <div class="controls">
 
                     <!-- Start button -->
-                    <button class="btn-indexing-start" data-ng-if="isReady && !isStarted" data-ng-click="main.index()"><i class="icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
+                    <button class="btn-indexing-start" data-ng-if="isReady && !isIndexing" data-ng-click="main.index()"><i class="icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
 
                     <!-- State movement buttons -->
                     <button class="btn-back" data-ng-if="isIndexing" data-ng-click="main.back()">Back (Esc)</button>
@@ -90,9 +75,7 @@
             <!-- Play -->
             <div class="play" data-ng-class="{ active: main.currentPlay.id === play.id }" data-ng-repeat="play in indexing.plays">
 
-                <h4 class="period">{{ indexing.league.periodAbbreviationLabel }} {{ indexing.period }}</h4>
-                <time>{{ play.startTime | time }} — {{ play.endTime | time }}</time>
-                <h4>{{ indexing.team.name }} <b>{{ play.teamScore }}</b> vs <b>{{ play.opposingScore }}</b> {{ indexing.opposingTeam.name }}</h4>
+                <h4><span class="period">{{ indexing.league.periodAbbreviationLabel }} {{ indexing.period }}</span><span class="dash"> — </span><time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time><span class="dash"> — </span><span class="team">{{ indexing.team.name }}</span> <span class="score">{{ play.teamScore }}</span><span class="vs"> vs </span><span class="score">{{ play.opposingScore }}</span> <span class="team">{{ indexing.opposingTeam.name }}</span></h4>
 
                 <ul class="events">
 
@@ -101,18 +84,7 @@
 
                         <button class="btn-select-event" data-ng-class="{ active: main.currentEvent.id === event.id }" data-ng-click="main.selectEvent(play, event)" data-ng-disabled="!isReady">
 
-                            <span class="item" data-ng-repeat="item in buildScript(event)">
-
-                                <!-- String item -->
-                                <p data-ng-if="isString(item)">{{ item }}&nbsp;</p>
-
-                                <!-- Dropdown variable -->
-                                <a class="dropdown" data-ng-if="item.type === 'DROPDOWN'" disabled>{{ event.variableValues[item.index] }}</a>
-
-                                <!-- Player dropdown variable -->
-                                <a class="player-dropdown" data-ng-if="item.type === 'PLAYER_DROPDOWN'" disabled>{{ indexing.players[event.variableValues[item.index]].firstName }} {{ indexing.players[event.variableValues[item.index]].lastName }}</a>
-
-                            </span>
+                            <x-item item="item" event="event" data-ng-repeat="item in buildScript(event)" disabled></x-item>
 
                         </button>
 

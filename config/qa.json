@@ -21,5 +21,10 @@
         "support": {
             "uri": "http://support.krossover.com"
         }
+    },
+    "indexing": {
+        "video": {
+            "jump": 3
+        }
     }
 }

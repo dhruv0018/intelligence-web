@@ -14,6 +14,12 @@
         "indexing-header.html",
         "delete-play.html"
     ],
+    "paths": [
+        "."
+    ],
+    "local": [
+        "item"
+    ],
     "dependencies": {
         "moment/moment": "2.5.1"
     }
