@@ -66,6 +66,7 @@ require('./directives/submit');
 require('./directives/keyboard');
 require('./directives/draggable');
 require('./directives/autofocus');
+require('./directives/autotab');
 
 require('./directives/verify-password.js');
 
@@ -94,6 +95,8 @@ component('admin');
 component('coach');
 component('indexer');
 component('indexing');
+
+component('videoplayer');
 
 component('videoplayer');
 

@@ -1,6 +1,38 @@
 @import (reference) "main.less";
 
-.item {
+.indexing .item {
 
+    &,
+    button,
+    select {
+
+        display: inline-block;
+    }
+
+    button {
+
+        .btn;
+        .btn-link;
+        padding: 0;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+
+        &:focus,
+        &:hover {
+
+            text-decoration: none;
+        }
+    }
+
+    select {
+
+        .form-control;
+        height: 33px;
+        line-height: 21px;
+        width: auto;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
 }
 

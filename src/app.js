@@ -24,7 +24,7 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'admin',
     'coach',
     'indexer',
-    'indexing',
+    'Indexing',
     'videoplayer'
 ]);
 
