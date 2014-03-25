@@ -1,51 +1,54 @@
 @import (reference) "main.less";
 
-.form-forgot {
+.login-forgot {
 
-    text-align: center;
+    .form-forgot {
 
-    .form-horizontal;
+        text-align: center;
 
-    .form-group {
+        .form-horizontal;
 
-        margin-left: 0;
-        margin-right: 0;
-        position: relative;
+        .form-group {
+
+            margin-left: 0;
+            margin-right: 0;
+            position: relative;
+        }
+
+        .form-group:last-child {
+
+            margin-top: 30px;
+        }
+
+        h2,
+        p {
+
+            color: black;
+        }
+
+        h2 {
+
+            letter-spacing: -0.01em;
+        }
+
+        p {
+
+            letter-spacing: 0.01em;
+            margin-bottom: 0;
+        }
     }
 
-    .form-group:last-child {
+    .button-forgot {
 
-        margin-top: 30px;
-    }
+        .btn;
+        .btn-lg;
+        height: 62px;
+        .uppercase;
 
-    h2,
-    p {
+        &:enabled {
 
-        color: black;
-    }
-
-    h2 {
-
-        letter-spacing: -0.01em;
-    }
-
-    p {
-
-        letter-spacing: 0.01em;
-        margin-bottom: 0;
-    }
-}
-
-.button-forgot {
-
-    .btn;
-    .btn-lg;
-    height: 62px;
-    .uppercase;
-
-    &:enabled {
-
-        .btn-primary;
+            .btn-primary;
+        }
     }
 }
 
@@ -59,17 +62,20 @@
 @media only screen
 and (max-width: 479px) {
 
-    .form-forgot {
+    .login-forgot {
 
-        width: 100%;
-        padding-left: 20px;
-        padding-right: 20px;
+        .form-forgot {
 
-    }
+            width: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
 
-    .button-forgot {
+        }
 
-        width: 100%;
+        .button-forgot {
+
+            width: 100%;
+        }
     }
 }
 
@@ -77,10 +83,13 @@ and (max-width: 479px) {
 @media only screen
 and (min-width: 480px) {
 
-    .button-forgot {
+    .login-forgot {
 
-        .pull-right;
-        width: 150px;
+        .button-forgot {
+
+            .pull-right;
+            width: 150px;
+        }
     }
 }
 
