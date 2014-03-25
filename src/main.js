@@ -93,6 +93,8 @@ component('coach');
 component('indexer');
 component('indexing');
 
+component('videoplayer');
+
 document.write('<base href="' + document.location + '">');  // jshint ignore:line
 
 angular.bootstrap(document, [pkg.name]);
