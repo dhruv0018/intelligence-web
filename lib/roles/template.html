@@ -1,34 +1,26 @@
-<div class="roles modal">
+<div class="roles">
 
-    <div class="modal-dialog">
+    <header class="modal-header">
 
-        <div class="modal-content">
+        <h3 class="modal-title"><i class="icon-group"></i> Before we begin, choose your default role:</h3>
 
-            <header class="modal-header">
+    </header>
 
-                <h3 class="modal-title"><i class="icon-group"></i> Before we begin, choose your default role:</h3>
+    <div class="modal-body">
 
-            </header>
+        <ul class="list-group">
 
-            <div class="modal-body">
+            <li class="role list-group-item" data-ng-repeat="role in currentUser.roles">
 
-                <ul class="list-group">
+                <a href="#" data-ng-click="setDefaultRole(role)">
 
-                    <li class="role list-group-item" data-ng-repeat="role in currentUser.roles">
+                    <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
-                        <a href="#" data-ng-click="setDefaultRole(role)">
+                </a>
 
-                            <x-krossover-role user="currentUser" role="role"></x-krossover-role>
+            </li>
 
-                        </a>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
+        </ul>
 
     </div>
 
