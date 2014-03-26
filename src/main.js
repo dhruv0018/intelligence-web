@@ -38,6 +38,7 @@ require('./models/games');
 require('./models/players');
 require('./models/tagsets');
 require('./models/plays');
+require('./models/positionsets');
 
 require('./services/authentication');
 require('./services/authorization');
@@ -55,6 +56,7 @@ require('./services/players');
 require('./services/tagsets');
 require('./services/plays');
 require('./services/indexing');
+require('./services/positionsets');
 
 require('./directives/alert');
 require('./directives/match');
