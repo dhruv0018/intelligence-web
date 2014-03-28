@@ -181,23 +181,23 @@ IntelligenceWebClient.factory('IndexingService', [
             },
             
             calculateScore: function(playId){
-                plays = this.plays;
-                game = this.game;
+                var plays = this.plays;
+                var game = this.game;
                 
                 /* initialize scores */
-                scores = {};
+                var scores = {};
                 scores[game.teamId] = 0;
                 scores[game.opposingTeamId] = 0;
                 
-                for (i = 0; i < plays.length; i++){
-                    play = plays[i];
+                for (var i = 0; i < plays.length; i++){
+                    var play = plays[i];
                     
-                    events = play.events;
+                    var events = play.events;
                     for (j = 0; j < events.length; j++){
-                        event = events[j];
-                        teamId = this.getScoreTeam(event);
+                        var event = events[j];
+                        var teamId = this.getScoreTeam(event);
                         if(teamId){
-                            scores[teamId] += parseInt(event.tag.pointsAssigned);
+                            scores[teamId] += parseInt(event.tag.pointsAssigned, 10);
                         }
                     }
                     
@@ -207,10 +207,10 @@ IntelligenceWebClient.factory('IndexingService', [
             },
 
             getScoreTeam: function(event){
-                tag = event.tag;
-                game = this.game;
-                teamId = null;
-                values = [];
+                var tag = event.tag;
+                var game = this.game;
+                var teamId = null;
+                var values = [];
                 
                 angular.forEach(event.variableValues, function(item, key){
                     values.push(item);
@@ -218,8 +218,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 
                 
                 if(tag.pointsAssigned && values){
-                    value = values[0];
-                    valueTeam = this.getValueTeam(value);
+                    var value = values[0];
+                    var valueTeam = this.getValueTeam(value);
                     
                     if(tag.assignThisTeam){
                         teamId = valueTeam;
@@ -232,10 +232,10 @@ IntelligenceWebClient.factory('IndexingService', [
             },
 
             getValueTeam: function(variableValue){
-                game = this.game;
-                teamPlayers = this.teamPlayers;
+                var game = this.game;
+                var teamPlayers = this.teamPlayers;
                 variableValue = variableValue || '';
-                teamId = null;
+                var teamId = null;
                 
                 if(variableValue.type === 'Team'){
                     teamId = variableValue.value;
