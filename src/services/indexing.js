@@ -178,6 +178,72 @@ IntelligenceWebClient.factory('IndexingService', [
 
                     return scriptItems;
                 }
+            },
+            
+            calculateScore: function(playId){
+                plays = this.plays;
+                game = this.game;
+                
+                /* initialize scores */
+                scores = {};
+                scores[game.teamId] = 0;
+                scores[game.opposingTeamId] = 0;
+                
+                for (i = 0; i < plays.length; i++){
+                    play = plays[i];
+                    
+                    events = play.events;
+                    for (j = 0; j < events.length; j++){
+                        event = events[j];
+                        teamId = this.getScoreTeam(event);
+                        if(teamId){
+                            scores[teamId] += parseInt(event.tag.pointsAssigned);
+                        }
+                    }
+                    
+                    if(play.id === playId){ break; } // stop when we hit the passed in PlayId
+                }
+                return scores;
+            },
+
+            getScoreTeam: function(event){
+                tag = event.tag;
+                game = this.game;
+                teamId = null;
+                values = [];
+                
+                angular.forEach(event.variableValues, function(item, key){
+                    values.push(item);
+                });
+                
+                
+                if(tag.pointsAssigned && values){
+                    value = values[0];
+                    valueTeam = this.getValueTeam(value);
+                    
+                    if(tag.assignThisTeam){
+                        teamId = valueTeam;
+                    } else {
+                        teamId = (valueTeam === game.teamId) ? game.opposingTeamId : game.teamId;
+                    }
+                }
+                
+                return teamId;
+            },
+
+            getValueTeam: function(variableValue){
+                game = this.game;
+                teamPlayers = this.teamPlayers;
+                variableValue = variableValue || '';
+                teamId = null;
+                
+                if(variableValue.type === 'Team'){
+                    teamId = variableValue.value;
+                } else if(variableValue.type === 'Player'){
+                    teamId = (teamPlayers[variableValue.value]) ? game.teamId : game.opposingTeamId;
+                }
+                
+                return teamId;
             }
         };
 
