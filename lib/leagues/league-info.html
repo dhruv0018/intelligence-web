@@ -18,6 +18,9 @@
                 <select class="form-control" name="tagset" data-ng-model="$storage.league.tagSetId" data-ng-options="tagset.id as tagset.name for tagset in tagsets">
                     <option value="">Tag Set</option>
                 </select>
+                <select class="form-control" name="positionset" data-ng-model="$storage.league.positionSetId" data-ng-options="positionset.id as positionset.name for positionset in positionsets">
+                    <option value="">Position Set</option>
+                </select>
                 <input class="form-control" name="number-of-periods" placeholder="Number of Periods" data-ng-model="$storage.league.numberOfPeriods" type="number" min="1" />
                 <input class="form-control" name="period-label" placeholder="Period Label" data-ng-model="$storage.league.periodLabel" type="text" />
                 <input class="form-control" name="period-abbreviation" placeholder="Period Abbreviation" data-ng-model="$storage.league.periodAbbreviationLabel" type="text" />
