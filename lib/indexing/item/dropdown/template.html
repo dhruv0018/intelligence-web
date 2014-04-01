@@ -1,8 +1,8 @@
 <span class="dropdown">
 
-    <button class="dropdown" data-ng-if="event.variableValues[item.index]" data-ng-disabled="disabled" data-ng-click="event.variableValues[item.index] = null">{{ event.variableValues[item.index] }}</button>
+    <button class="dropdown" data-ng-if="event.variableValues[item.index]" data-ng-click="event.variableValues[item.index] = null">{{ event.variableValues[item.index] }}</button>
 
-    <select class="dropdown" data-ng-if="!event.variableValues[item.index]" data-ng-model="event.variableValues[item.index]" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-autofocus-when="{{ item.index === 1 }}" data-autotab>
+    <select class="dropdown" data-ng-if="!event.variableValues[item.index]" data-ng-model="event.variableValues[item.index]" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
 
         <option data-ng-keybinding="option" data-ng-repeat="option in item.options" value="{{ option }}">{{ option }}</option>
 

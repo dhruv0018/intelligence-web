@@ -8,7 +8,7 @@
 <div class="plays">
 
     <!-- Play -->
-    <div class="play" data-ng-class="{ active: play.current.id === play.id }" data-ng-repeat="play in indexing.plays track by $index">
+    <div class="play" data-ng-class="{ active: play.current.id === play.id }" data-ng-repeat="play in indexing.plays track by $index | orderBy:startTime ">
 
         <h4><span class="period">{{ indexing.league.periodAbbreviationLabel }} {{ indexing.period }}</span><span class="dash"> — </span><time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time><span class="dash"> — </span><span class="team">{{ indexing.team.name }}</span> <span class="score">{{ play.teamScore }}</span><span class="vs"> vs </span><span class="score">{{ play.opposingScore }}</span> <span class="team">{{ indexing.opposingTeam.name }}</span></h4>
 
@@ -17,9 +17,9 @@
             <!-- Event -->
             <li class="event" data-ng-repeat="event in play.events track by $index">
 
-                <button class="btn-select-event" data-ng-class="{ active: event.current.id === event.id }" data-ng-click="selectEvent(play, event)" data-ng-disabled="!isReady">
+                <button class="btn-select-event" data-ng-class="{ active: event.current.id === event.id }" data-ng-click="selectEvent(play, event)" data-ng-disabled="!indexing.isReady">
 
-                    <x-item item="item" event="event" data-ng-repeat="item in buildScript(event)" data-ng-disabled="true" onload="this.scrollIntoView()"></x-item>
+                    <x-item item="item" event="event" data-ng-repeat="item in buildScript(event)" onload="this.scrollIntoView()"></x-item>
 
                 </button>
 
@@ -29,7 +29,7 @@
 
         <hr>
 
-        <button class="btn-delete-play" data-ng-click="deletePlay(play)"><i class="icon-remove"></i> Delete Play</button>
+        <button class="btn-delete-play" data-ng-click="deletePlay(play)" data-ng-disabled="!indexing.isReady"><i class="icon-remove"></i> Delete Play</button>
 
     </div>
 
