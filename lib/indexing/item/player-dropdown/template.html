@@ -1,6 +1,6 @@
 <span class="player-dropdown">
 
-    <button class="player-dropdown" data-ng-if="event.variableValues[item.index]" data-ng-disabled="disabled" data-ng-click="event.variableValues[item.index] = null">{{ indexing.players[event.variableValues[item.index]].firstName }} {{ indexing.players[event.variableValues[item.index]].lastName }}</button>
+    <button class="player-dropdown" data-ng-if="event.variableValues[item.index]" data-ng-click="event.variableValues[item.index] = null">{{ indexing.players[event.variableValues[item.index]].firstName }} {{ indexing.players[event.variableValues[item.index]].lastName }}</button>
 
     <select class="player-dropdown" data-ng-if="!event.variableValues[item.index]" data-ng-model="event.variableValues[item.index]" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-autofocus-when="{{ item.index === 1 }}" data-autotab>
 
