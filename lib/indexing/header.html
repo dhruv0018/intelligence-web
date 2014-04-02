@@ -33,7 +33,8 @@
     <!-- QA menu -->
     <menu class="qa">
 
-        <li><button class="navbar-btn btn btn-blank" data-ng-click="sendToQa()">Send to QA</button></li>
+        <li data-ng-if="indexing.game.status === GAME_STATUSES.INDEXING.id"><button class="navbar-btn btn btn-blank" data-ng-click="sendToQa()">Send to QA</button></li>
+        <li data-ng-if="indexing.game.status === GAME_STATUSES.QAING.id"><button class="navbar-btn btn btn-blank" data-ng-click="sendToTeam()">Send to Team</button></li>
 
     </menu>
 

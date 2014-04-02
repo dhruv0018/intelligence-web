@@ -10,21 +10,24 @@
         "main-controller.js",
         "sidebar-notes-controller.js",
         "sidebar-playlist-controller.js",
-        "modal-delete-play-controller.js"
+        "modal-delete-play-controller.js",
+        "modal-send-to-team-controller.js"
     ],
     "styles": [
         "styles.less",
         "header.less",
         "sidebar-notes.less",
         "sidebar-playlist.less",
-        "modal-delete-play.less"
+        "modal-delete-play.less",
+        "modal-send-to-team.less"
     ],
     "templates": [
         "template.html",
         "header.html",
         "sidebar-notes.html",
         "sidebar-playlist.html",
-        "modal-delete-play.html"
+        "modal-delete-play.html",
+        "modal-send-to-team.html"
     ],
     "paths": [
         "."
