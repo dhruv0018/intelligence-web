@@ -1,0 +1,28 @@
+<x-tabset>
+
+    <x-tab heading="Instructions" data-ui-sref="instructions" active="tabs.instructions.active" disabled="tabs.instructions.disabled">
+
+        <div data-ui-view="instructions"></div>
+
+    </x-tab>
+
+    <x-tab heading="Opposing Team" data-ui-sref="opposing-team" active="tabs['opposing-team'].active" disabled="tabs['opposing-team'].disabled">
+
+        <div data-ui-view="opposing-team"></div>
+
+    </x-tab>
+
+    <x-tab heading="Your Team" data-ui-sref="your-team" active="tabs['your-team'].active" disabled="tabs['your-team'].disabled">
+
+        <div data-ui-view="your-team"></div>
+
+    </x-tab>
+
+    <x-tab heading="Basic Game Info" data-ui-sref="game-info" active="tabs['game-info'].active" disabled="tabs['game-info'].disabled">
+
+        <div data-ui-view="game-info"></div>
+
+    </x-tab>
+
+</x-tabset>
+

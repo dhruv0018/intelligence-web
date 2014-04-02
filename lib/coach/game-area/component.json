@@ -7,10 +7,21 @@
     "paths": [
         "."
     ],
+    "local": [
+        "game-info",
+        "your-team",
+        "opposing-team",
+        "instructions"
+    ],
     "templates": [
-        "template.html"
+        "template.html",
+        "uploading.html"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "uploading.js"
+    ],
+    "styles": [
+        "styles.less"
     ]
 }
