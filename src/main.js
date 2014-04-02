@@ -37,6 +37,7 @@ require('./models/leagues');
 require('./models/games');
 require('./models/players');
 require('./models/tagsets');
+require('./models/positionsets');
 require('./models/plays');
 require('./models/video');
 
@@ -54,6 +55,7 @@ require('./services/sports');
 require('./services/games');
 require('./services/players');
 require('./services/tagsets');
+require('./services/positionsets');
 require('./services/plays');
 require('./services/indexing');
 
@@ -98,10 +100,6 @@ component('indexer');
 component('indexing');
 
 component('videoplayer');
-
-component('videoplayer');
-
-document.write('<base href="' + document.location + '">');  // jshint ignore:line
 
 angular.bootstrap(document, [pkg.name]);
 
