@@ -11,7 +11,8 @@
         "sidebar-notes-controller.js",
         "sidebar-playlist-controller.js",
         "modal-delete-play-controller.js",
-        "modal-send-to-team-controller.js"
+        "modal-send-to-team-controller.js",
+        "modal-add-indexer-note-controller.js"
     ],
     "styles": [
         "styles.less",
@@ -19,7 +20,8 @@
         "sidebar-notes.less",
         "sidebar-playlist.less",
         "modal-delete-play.less",
-        "modal-send-to-team.less"
+        "modal-send-to-team.less",
+        "modal-add-indexer-note.less"
     ],
     "templates": [
         "template.html",
@@ -27,7 +29,8 @@
         "sidebar-notes.html",
         "sidebar-playlist.html",
         "modal-delete-play.html",
-        "modal-send-to-team.html"
+        "modal-send-to-team.html",
+        "modal-add-indexer-note.html"
     ],
     "paths": [
         "."
