@@ -1,5 +1,5 @@
 {
-    "name": "instructions",
+    "name": "game-area-instructions",
     "templates": [
         "template.html"
     ],

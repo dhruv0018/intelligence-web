@@ -230,6 +230,12 @@
         "Assistant Coach": true
     },
 
+    "ga-info-instructions": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "your-team": {
 
         "Head Coach": true,

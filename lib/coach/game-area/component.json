@@ -11,7 +11,7 @@
         "game-area-info",
         "your-team",
         "opposing-team",
-        "instructions"
+        "game-area-instructions"
     ],
     "templates": [
         "template.html",
