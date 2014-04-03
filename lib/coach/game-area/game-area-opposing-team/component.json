@@ -1,0 +1,12 @@
+{
+    "name": "game-area-opposing-team",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}
