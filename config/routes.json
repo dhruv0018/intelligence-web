@@ -212,6 +212,24 @@
         "Assistant Coach": true
     },
 
+    "your-team": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "opposing-team": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "instructions": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "game-area": {
 
         "Head Coach": true,
@@ -242,19 +260,7 @@
         "Assistant Coach": true
     },
 
-    "your-team": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "opposing-team": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "instructions": {
+    "ga-info-your-team": {
 
         "Head Coach": true,
         "Assistant Coach": true

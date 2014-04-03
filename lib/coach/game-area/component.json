@@ -9,7 +9,7 @@
     ],
     "local": [
         "game-area-info",
-        "your-team",
+        "game-area-your-team",
         "game-area-opposing-team",
         "game-area-instructions"
     ],
