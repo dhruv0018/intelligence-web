@@ -15,7 +15,7 @@
     ],
     "templates": [
         "template.html",
-        "uploading.html"
+        "gameAreaInformation.html"
     ],
     "scripts": [
         "index.js",
