@@ -30,12 +30,17 @@
 
     </menu>
 
-    <!-- QA menu -->
-    <menu class="qa">
+    <!-- Send to QA menu -->
+    <menu class="send-to-qa" data-ng-if="indexing.game.status === GAME_STATUSES.INDEXING.id">
 
-        <li data-ng-if="indexing.game.status === GAME_STATUSES.INDEXING.id"><button class="navbar-btn btn btn-blank" data-ng-click="sendToQa()">Send to QA</button></li>
-        <li data-ng-if="indexing.game.status === GAME_STATUSES.QAING.id"><button class="navbar-btn btn btn-blank" data-ng-click="sendToTeam()">Send to Team</button></li>
+        <li><button class="navbar-btn btn btn-blank" data-ng-click="sendToQa()">Send to QA</button></li>
 
     </menu>
 
+    <!-- Send to team menu -->
+    <menu class="send-to-team" data-ng-if="indexing.game.status === GAME_STATUSES.QAING.id">
+
+        <li><button class="navbar-btn btn btn-blank" data-ng-click="sendToTeam()">Send to Team</button></li>
+
+    </menu>
 </nav>
