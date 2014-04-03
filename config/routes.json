@@ -218,6 +218,12 @@
         "Assistant Coach": true
     },
 
+    "game-area-information": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "your-team": {
 
         "Head Coach": true,
