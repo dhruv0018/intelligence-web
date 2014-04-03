@@ -444,6 +444,17 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Return true if the game was assigned to QA. */
                 return self.isAssignedToQa(self.currentAssignment()) ? true : false;
             },
+            findNoteContentByType: function(notes, noteTypeId) {
+
+                for(var index = 0; index < notes.length; index++) {
+                    if(notes[index].noteTypeId === noteTypeId) {
+                        return notes[index].content;
+                    }
+                }
+                //no note existed with the desired note type id
+                //returning blank content
+                return '';
+            }
         };
 
         return GamesFactory;
