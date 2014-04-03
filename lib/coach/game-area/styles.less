@@ -1,204 +1,79 @@
 @import (reference) "main.less";
 
-.upload-start {
+.game-area {
 
-    .container;
-    letter-spacing: -0.01em;
+  .nav-tabs {
+    margin-top:10px;
+    padding-right: 100px;
+    padding-bottom: 20px;
 
-    h3 {
+    & > li {
 
-        color: @brand-blue;
-    }
+      float: right;
+      margin-left: 10px;
 
-    .upload-select {
+      &:first-child {
 
-        .make-row();
+        margin-right: 100px;
+      }
 
-        .select-game {
+      & > a {
 
-            .make-md-column(9);
-
-            h3 {
-
-                margin-left: -15px;
-            }
-
-            .titlebar {
-
-                background-color: @brand-blue;
-                border: 1px solid @brand-blue;
-                text-align: center;
-
-                h3 {
-
-                    color: white;
-                    margin: 0;
-                    padding: 10px;
-                    font-size: 18px;
-                    font-weight: 200;
-                }
-            }
-        }
-
-        .select-boxes {
-
-            padding: 0;
-            border-left: 1px solid @gray-lighter;
-            border-bottom: 1px solid @gray-lighter;
-
-            &:last-child {
-
-                border-right: 1px solid @gray-lighter;
-            }
-
-            &:hover {
-
-                background-color: rgb(246, 249, 253);
-
-                i {
-
-                    color: @brand-primary;
-                    border-color: @brand-primary;
-                }
-            }
-
-            h1 {
-
-                color: @brand-blue;
-                font-size: 24px;
-                margin-top: 0;
-            }
-
-            button {
-
-                .btn-blank;
-                width: 100%;
-                text-align: left;
-                display: flex;
-                align-items: center;
-                padding-top: 50px;
-                padding-left: 25px;
-                padding-right: 25px;
-                padding-bottom: 50px;
-
-                p,
-                b {
-                    color: black;
-                }
-
-                i {
-
-                    position: absolute;
-                    right: 20px;
-                    width: 100px;
-                    height: 100px;
-                    color: @gray-lighter;
-                    border: 5px solid @gray-lighter;
-                    border-radius: 50%;
-                    font-size: 50px;
-
-                    &::before {
-
-                        width: 90px;
-                        line-height: 90px;
-                        text-align: center;
-                    }
-                }
-            }
-        }
-
-        .select-sidebar {
-
-            .pull-right;
-            .make-md-column(4);
-        }
-
-        .bar-plan {
-
-            margin-left: 10px;
-            padding-left: 25px;
-            border-left: 1px solid @gray-lighter;
-
-            h3 {
-
-                margin-top: 0;
-            }
-        }
-    }
-
-
-    .link-box {
-
-        height: 86px;
-        padding: 20px;
-        border: 1px solid @gray-lighter;
-
-        p {
-
-            color: @brand-blue;
-            font-weight: 500;
-            letter-spacing: -0.01em;
-            margin-bottom: 0;
-        }
-
-        i {
-
-            color: @gray-lighter;
-            font-size: 40px;
-        }
+        color: @gray-light;
+        border-color: @gray-lighter;
+        border-radius: 6px;
+        text-transform: capitalize;
+        cursor: pointer;
+        letter-spacing: 0.01em;
+        margin-right: 0;
 
         &:hover {
 
-            background-color: rgb(246, 249, 253);
-
-            i,
-            p {
-
-                color: @brand-primary;
-            }
-
-            i {
-
-                border-color: @brand-primary;
-            }
+          color: white;
+          border-color: @brand-blue;
+          background-color: @brand-blue;
         }
+      }
     }
 
-    .help {
+    & > li.active > a {
 
-        .col-md-4:first-child {
+      &,
+      &:hover {
 
-            padding-left: 0;
+        color: white;
+        border-color: @brand-blue;
+        background-color: @brand-blue;
+
+        &:before,
+        &:after {
+
+          content: "";
+          width: 0;
+          height: 0;
+          position: absolute;
+          left: 50%;
+          bottom: -21px;
         }
 
-        .col-md-4 {
+        &:before {
 
-            padding-left: 5px;
-            padding-right: 5px;
-
-            a:hover {
-
-                text-decoration: none;
-            }
+          border-bottom: 11px solid rgb(221, 221, 221);
+          border-left: 11px solid transparent;
+          border-right: 11px solid transparent;
+          margin-left: -11px;
         }
 
-        .col-md-4:last-child {
+        &:after {
 
-            padding-right: 0;
+          border-bottom: 10px solid @content-bg;
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+          margin-left: -10px;
         }
+      }
     }
+  }
 }
 
-/* FIXME: JUST TEMP */
-
-.upload-start .upload-select .select-boxes.disabled:hover {
-
-    background-color: white;
-
-    i {
-
-        color: @gray-lighter;
-        border: 5px solid @gray-lighter;
-    }
-}
 

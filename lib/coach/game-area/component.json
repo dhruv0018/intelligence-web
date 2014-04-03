@@ -19,7 +19,7 @@
     ],
     "scripts": [
         "index.js",
-        "uploading.js"
+        "gameAreaInformation.js"
     ],
     "styles": [
         "styles.less"
