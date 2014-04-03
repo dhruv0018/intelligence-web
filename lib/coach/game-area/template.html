@@ -1,12 +1,13 @@
 <section class="game-area">
-    <div class="row">
-        <select ng-model="dataType">
-            <option value="video">Video</option>
-            <option value="game-info">Game Information</option>
-        </select>
-    </div>
 
-    <main class="content-full" data-ui-view="content"></main>
+    <main class="content-full">
+        <select class="content-selector" ng-model="dataType">
+            <option value="video">Video</option>
+            <option value="game-info">Game Info</option>
+        </select>
+        <div class="main-highlight" data-ui-view="content"></div>
+    </main>
+
 </section>
 
 
