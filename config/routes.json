@@ -218,7 +218,13 @@
         "Assistant Coach": true
     },
 
-    "game-area-information": {
+    "ga-info": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "ga-info-basic": {
 
         "Head Coach": true,
         "Assistant Coach": true
