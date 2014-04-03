@@ -166,7 +166,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 /* Filter out all of the head coach roles that are current. */
                 var currentHeadCoachRoles = headCoachRoles.filter(function(coach) {
 
-                    return coach.tenureEnd === null;
+                    return !coach.tenureEnd;
                 });
 
                 return currentHeadCoachRoles.pop();
