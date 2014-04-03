@@ -2,11 +2,13 @@
 
     <main class="content-full">
         <header>
-            <p class="match-up"> {{$storage.game.datePlayed}} <strong>{{$storage.team.name}} versus. {{$storage.opposingTeam.name}}</strong> </p>
-            <select ng-model="dataType">
-                <option value="video">Video</option>
-                <option value="game-info">Game Info</option>
-            </select>
+            <div>
+                <span class="match-up">{{$storage.game.datePlayed}} <strong>{{$storage.team.name}} versus. {{$storage.opposingTeam.name}}</strong></span>
+                <select ng-model="dataType">
+                    <option value="video">Video</option>
+                    <option value="game-info">Game Info</option>
+                </select>
+            </div>
         </header>
         <div class="main-highlight" data-ui-view="content"></div>
     </main>
