@@ -1,11 +1,26 @@
 @import (reference) "main.less";
 
 .game-area {
-  .content-selector{
-    float:right;
-    margin:25px 25px 0 0;
-    padding-right:25px;
+  header{
+
+    & > * {
+      margin:25px;
+    }
+
+    .match-up{
+      color: @brand-blue;
+      padding:10px;
+      float:left;
+    }
+
+    select{
+      float:right;
+      padding-right:25px;
+      margin-right:25px;
+    }
+
   }
+
 
   .main-highlight{
     margin-top: 75px;
