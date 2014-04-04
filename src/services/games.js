@@ -454,6 +454,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 //no note existed with the desired note type id
                 //returning blank content
                 return '';
+            },
+            formatInputData : function(game) {
+                var localDate = new Date(game.datePlayed);
+                var msPerMin = 60000;
+
+                game.datePlayed = new Date(localDate.valueOf() + localDate.getTimezoneOffset() * msPerMin);
+                game.isHomeGame = game.isHomeGame + '';
+
+                return game;
             }
         };
 
