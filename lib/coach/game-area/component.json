@@ -8,10 +8,7 @@
         "."
     ],
     "local": [
-        "game-area-info",
-        "game-area-your-team",
-        "game-area-opposing-team",
-        "game-area-instructions"
+        "game-area-info"
     ],
     "templates": [
         "template.html",
