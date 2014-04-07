@@ -10,6 +10,8 @@ IntelligenceWebClient.factory('PlayersResource', [
 
         var paramDefaults = {
 
+            id: '@id'
+
         };
 
         var actions = {
