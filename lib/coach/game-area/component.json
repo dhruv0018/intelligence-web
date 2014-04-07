@@ -7,9 +7,6 @@
     "paths": [
         "."
     ],
-    "local": [
-        "game-area-info"
-    ],
     "templates": [
         "template.html",
         "gameAreaInformation.html"
