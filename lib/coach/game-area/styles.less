@@ -1,13 +1,14 @@
 @import (reference) "main.less";
 
 .game-area {
-  header{
 
+  header{
+    background: @content-bg;
     border-bottom: 1px solid @gray-lighter;
     padding-bottom: 10px;
 
     & > * {
-      margin:25px;
+     padding:25px;
     }
 
     a{
@@ -27,6 +28,15 @@
       margin-right:25px;
     }
 
+  }
+
+  div.main-highlight{
+    min-height:100%;
+    background-color: @content-bg;
+  }
+
+  .tabbable{
+    background:@body-bg;
   }
 
 }
