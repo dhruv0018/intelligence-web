@@ -6,7 +6,7 @@ IntelligenceWebClient.factory('PlayersResource', [
 
         var base = 'players';
 
-        var url = config.api.uri + base;
+        var url = config.api.uri + base + '/:id';
 
         var paramDefaults = {
 

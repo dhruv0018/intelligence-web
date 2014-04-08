@@ -22,7 +22,7 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'queue',
     'leagues',
     'admin',
-    'coach',
+    'Coach',
     'indexer',
     'Indexing',
     'videoplayer'
