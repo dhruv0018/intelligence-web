@@ -12,8 +12,7 @@
         "game-info",
         "your-team",
         "opposing-team",
-        "instructions",
-        "athlete"
+        "instructions"
     ],
     "templates": [
         "template.html",
