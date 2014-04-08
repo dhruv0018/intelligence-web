@@ -1,6 +1,69 @@
 @import (reference) "main.less";
 
 .film-home {
+	
+	.filter-bar {
+
+		width: 100%;
+		border-bottom: 1px solid rgb(221,221,221);
+		background-color: #f7f8f8;
+		padding: 20px;
+		line-height: normal;
+
+		ul {
+			border: none;
+		}
+
+		h3 {
+			color: @brand-blue;
+			font-size: 16px;
+			margin-top: 8px;
+			margin-bottom: 8px;
+		}
+
+		.btn-filter {
+			background-color: @gray-lighter;
+			font-weight: 400;
+			margin-left: 5px;
+			margin-right: 5px;
+			border-radius: 4px;
+			padding-top: 4px;
+			padding-bottom: 4px;
+			font-size: 16px;
+		}
+		.btn-filter:active, .btn-filter:hover {
+			background-color: @brand-primary;
+			color: white;
+		}
+	}
+
+	.film-search {
+		
+
+		position: relative;
+		float: right;
+
+		.film-search-input {
+			display: inline;
+			position: relative;
+			float: left;
+			width: 250px;
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+
+		.btn-film-search {
+			display: inline;
+			position: relative;
+			float: right;
+			padding-top: 6px;
+			padding-bottom: 6px;
+			padding-left: 20px;
+			padding-right: 20px;
+			border: 1px solid rgb(221,221,221);
+		}
+	}
+
 
 }
 
