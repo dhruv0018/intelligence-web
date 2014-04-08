@@ -87,6 +87,7 @@ component('roles');
 component('rolebar');
 component('header');
 component('alertbar');
+component('plan');
 component('account');
 component('users');
 component('teams');
