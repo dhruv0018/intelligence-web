@@ -3,6 +3,12 @@
     "templates": [
         "template.html"
     ],
+    "paths": [
+        "."
+    ],
+    "local": [
+        "athlete"
+    ],
     "scripts": [
         "index.js"
     ]
