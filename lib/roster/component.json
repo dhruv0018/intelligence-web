@@ -1,0 +1,9 @@
+{
+    "name": "roster",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
