@@ -194,6 +194,12 @@
         "Indexer": true
     },
 
+    "Coach.FilmHome": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "add-film": {
 
         "Head Coach": true,
