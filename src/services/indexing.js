@@ -201,7 +201,7 @@ IntelligenceWebClient.factory('IndexingService', [
                         }
                     }
                     
-                    if(play.id === playId){ break; } // stop when we hit the passed in PlayId
+                    if(angular.equals(play, calculatedPlay)){ break; } // stop when we hit the passed in play
                 }
                 return scores;
             },
