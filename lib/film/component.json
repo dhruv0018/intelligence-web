@@ -1,5 +1,5 @@
 {
-    "name": "thumbnail",
+    "name": "film",
     "templates": [
         "template.html"
     ],
