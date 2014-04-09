@@ -1,3 +1,6 @@
 <div>
-    <img src="http://lorempixel.com/200/200/sports" alt="Avatar">
+    <img ng-if="thumbnail" width="{{width}}" height="{{height}}" src="{{thumbnail.url}}" alt="thumbnail">
+
+    <img ng-if="!thumbnail" src="http://lorempixel.com/{{width}}/{{height}}/sports" alt="thumbnail">
+
 </div>
