@@ -22,7 +22,9 @@
         "indexer",
         "indexing",
         "coach",
-        "videoplayer"
+        "videoplayer",
+        "athlete",
+        "coach-info"
     ],
     "dependencies": {
     },
