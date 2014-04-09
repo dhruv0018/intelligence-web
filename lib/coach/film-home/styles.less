@@ -22,6 +22,7 @@
 		}
 
 		.btn-filter {
+			.btn;
 			background-color: @gray-lighter;
 			font-weight: 400;
 			margin-left: 5px;
@@ -30,40 +31,39 @@
 			padding-top: 4px;
 			padding-bottom: 4px;
 			font-size: 16px;
+			&:active, 
+			&:hover {
+				background-color: @brand-primary;
+				color: white;
+			}
 		}
-		.btn-filter:active, .btn-filter:hover {
-			background-color: @brand-primary;
-			color: white;
+
+		.film-search {
+			
+
+			.pull-right;
+
+			.film-search-input {
+				.form-control;
+				.pull-left;
+				display: inline;
+				width: 250px;
+				margin-left: 5px;
+				margin-right: 5px;
+			}
+
+			.btn-film-search {
+				.btn-filter;
+				.pull-right;
+				display: inline;
+				padding-top: 6px;
+				padding-bottom: 6px;
+				padding-left: 20px;
+				padding-right: 20px;
+				border: 1px solid rgb(221,221,221);
+			}
 		}
 	}
-
-	.film-search {
-		
-
-		position: relative;
-		float: right;
-
-		.film-search-input {
-			display: inline;
-			position: relative;
-			float: left;
-			width: 250px;
-			margin-left: 5px;
-			margin-right: 5px;
-		}
-
-		.btn-film-search {
-			display: inline;
-			position: relative;
-			float: right;
-			padding-top: 6px;
-			padding-bottom: 6px;
-			padding-left: 20px;
-			padding-right: 20px;
-			border: 1px solid rgb(221,221,221);
-		}
-	}
-
 
 }
 
