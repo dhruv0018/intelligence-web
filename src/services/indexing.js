@@ -180,7 +180,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
             },
             
-            calculateScore: function(playId){
+            calculateScore: function(calculatedPlay){
                 var plays = this.plays;
                 var game = this.game;
                 
