@@ -204,9 +204,11 @@ IntelligenceWebClient.factory('GamesFactory', [
              * is appended to the list of assignments on the game.
              * @param {Integer} userId - the user ID of the user to assign the
              * game to.
+             * @param {Date} deadline - date the indexer must complete
+             * assignment by
              * @throws {Error} if the game is not assignable to an indexer.
              */
-            assignToIndexer: function(userId) {
+            assignToIndexer: function(userId, deadline) {
 
                 var self = this;
 
@@ -215,11 +217,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     self.indexerAssignments = self.indexerAssignments || [];
 
+                    deadline = new Date(deadline).toISOString();
+                    var timeAssigned = new Date().toISOString();
+
                     var assignment = {
 
                         gameId: self.id,
                         userId: userId,
-                        isQa: false
+                        isQa: false,
+                        deadline: deadline,
+                        timeAssigned: timeAssigned
                     };
 
                     /* Add assignment. */
@@ -241,9 +248,11 @@ IntelligenceWebClient.factory('GamesFactory', [
              * is appended to the list of assignments on the game.
              * @param {Integer} userId - the user ID of the user to assign the
              * game to.
+             * @param {Date} deadline - date the indexer must complete
+             * assignment by
              * @throws {Error} if the game is not assignable to QA.
              */
-            assignToQa: function(userId) {
+            assignToQa: function(userId, deadline) {
 
                 var self = this;
 
@@ -252,11 +261,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     self.indexerAssignments = self.indexerAssignments || [];
 
+                    deadline = new Date(deadline).toISOString();
+                    var timeAssigned = new Date().toISOString();
+
                     var assignment = {
 
                         gameId: self.id,
                         userId: userId,
-                        isQa: true
+                        isQa: true,
+                        deadline: deadline,
+                        timeAssigned: timeAssigned
                     };
 
                     /* Add assignment. */

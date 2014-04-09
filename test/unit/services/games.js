@@ -187,6 +187,7 @@ describe('GamesFactory', function() {
 
             var userId = 1;
             var isQa = false;
+            var deadline = new Date().toISOString();
 
             var game = {
 
@@ -195,12 +196,13 @@ describe('GamesFactory', function() {
 
             game = games.extendGame(game);
 
-            game.assignToIndexer(userId);
+            game.assignToIndexer(userId, deadline);
 
             game.indexerAssignments.should.exist;
             game.indexerAssignments.should.not.be.empty;
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
+            expect(game.currentAssignment()).to.have.property('deadline', deadline);
             game.status.should.equal(GAME_STATUSES.READY_FOR_INDEXING.id);
         }]));
 
@@ -209,6 +211,7 @@ describe('GamesFactory', function() {
            function(GAME_STATUSES, games) {
 
             var userId = 2;
+            var deadline = new Date().toISOString();
 
             var game = {
 
@@ -218,7 +221,7 @@ describe('GamesFactory', function() {
             game = games.extendGame(game);
 
             expect(function() {
-                game.assignToIndexer(userId);
+                game.assignToIndexer(userId, deadline);
             }).to.throw(Error);
 
             expect(game.indexerAssignments).to.not.exist;
@@ -232,6 +235,7 @@ describe('GamesFactory', function() {
 
             var userId = 2;
             var isQa = false;
+            var deadline = new Date().toISOString();
 
             var game = {
 
@@ -240,12 +244,13 @@ describe('GamesFactory', function() {
 
             game = games.extendGame(game);
 
-            game.assignToIndexer(userId);
+            game.assignToIndexer(userId, deadline);
 
             game.indexerAssignments.should.exist;
             game.indexerAssignments.should.not.be.empty;
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
+            expect(game.currentAssignment()).to.have.property('deadline', deadline);
             game.status.should.equal(GAME_STATUSES.READY_FOR_INDEXING.id);
 
             /* Change game status to "Set Aside". */
@@ -254,10 +259,11 @@ describe('GamesFactory', function() {
 
             /* Make another indexer assignment. */
             userId = 3;
-            game.assignToIndexer(userId);
+            game.assignToIndexer(userId, deadline);
 
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
+            expect(game.currentAssignment()).to.have.property('deadline', deadline);
         }]));
     });
 
@@ -269,6 +275,7 @@ describe('GamesFactory', function() {
 
             var userId = 3;
             var isQa = true;
+            var deadline = new Date().toISOString();
 
             var game = {
 
@@ -277,12 +284,13 @@ describe('GamesFactory', function() {
 
             game = games.extendGame(game);
 
-            game.assignToQa(userId);
+            game.assignToQa(userId, deadline);
 
             game.indexerAssignments.should.exist;
             game.indexerAssignments.should.not.be.empty;
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
+            expect(game.currentAssignment()).to.have.property('deadline', deadline);
 
             game.status.should.equal(GAME_STATUSES.READY_FOR_QA.id);
         }]));
@@ -292,6 +300,7 @@ describe('GamesFactory', function() {
            function(GAME_STATUSES, games) {
 
             var userId = 2;
+            var deadline = new Date().toISOString();
 
             var game = {
 
@@ -301,7 +310,7 @@ describe('GamesFactory', function() {
             game = games.extendGame(game);
 
             expect(function() {
-                game.assignToQa(userId);
+                game.assignToQa(userId, deadline);
             }).to.throw(Error);
 
             expect(game.indexerAssignments).to.not.exist;
@@ -315,6 +324,7 @@ describe('GamesFactory', function() {
 
             var userId = 2;
             var isQa = true;
+            var deadline = new Date().toISOString();
 
             var game = {
 
@@ -323,12 +333,13 @@ describe('GamesFactory', function() {
 
             game = games.extendGame(game);
 
-            game.assignToQa(userId);
+            game.assignToQa(userId, deadline);
 
             game.indexerAssignments.should.exist;
             game.indexerAssignments.should.not.be.empty;
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
+            expect(game.currentAssignment()).to.have.property('deadline', deadline);
             game.status.should.equal(GAME_STATUSES.READY_FOR_QA.id);
 
             /* Change game status to "Set Aside". */
@@ -337,10 +348,11 @@ describe('GamesFactory', function() {
 
             /* Make another QA assignment. */
             userId = 3;
-            game.assignToQa(userId);
+            game.assignToQa(userId, deadline);
 
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
+            expect(game.currentAssignment()).to.have.property('deadline', deadline);
         }]));
     });
 
@@ -352,6 +364,7 @@ describe('GamesFactory', function() {
 
             var userId = 1;
             var isQa = false;
+            var deadline = new Date().toISOString();
 
             var game = {
 
@@ -360,7 +373,7 @@ describe('GamesFactory', function() {
 
             game = games.extendGame(game);
 
-            game.assignToIndexer(userId);
+            game.assignToIndexer(userId, deadline);
 
             /* Simulate server call and insert assignment ID. */
             game.indexerAssignments[0].id = 1;
@@ -377,6 +390,7 @@ describe('GamesFactory', function() {
 
             var userId = 1;
             var isQa = true;
+            var deadline = new Date().toISOString();
 
             var game = {
 
@@ -385,7 +399,7 @@ describe('GamesFactory', function() {
 
             game = games.extendGame(game);
 
-            game.assignToQa(userId);
+            game.assignToQa(userId, deadline);
 
             /* Simulate server call and insert assignment ID. */
             game.indexerAssignments[0].id = 1;

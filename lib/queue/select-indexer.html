@@ -17,14 +17,16 @@
 
             </select>
 
+            <input class="form-control" name="date" type="date" data-ng-model="deadline" required>
+
         </form>
 
     </div>
 
     <footer class="modal-footer">
 
-        <button class="btn-assign" data-ng-if="!isQa" data-ng-disabled="assign.$invalid" data-ng-click="selectedGame.assignToIndexer(indexerId); ok()">Assign Indexer</button>
-        <button class="btn-assign" data-ng-if="isQa" data-ng-disabled="assign.$invalid" data-ng-click="selectedGame.assignToQa(indexerId); ok()">Assign QA</button>
+        <button class="btn-assign" data-ng-if="!isQa" data-ng-disabled="assign.$invalid" data-ng-click="selectedGame.assignToIndexer(indexerId, deadline); ok()">Assign Indexer</button>
+        <button class="btn-assign" data-ng-if="isQa" data-ng-disabled="assign.$invalid" data-ng-click="selectedGame.assignToQa(indexerId, deadline); ok()">Assign QA</button>
 
     </footer>
 
