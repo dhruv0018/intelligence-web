@@ -25,6 +25,7 @@
         "videoplayer",
         "athlete",
         "coach-info",
+        "thumbnail",
         "roster"
     ],
     "dependencies": {

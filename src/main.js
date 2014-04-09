@@ -101,6 +101,7 @@ component('videoplayer');
 component('roster');
 component('athlete');
 component('coach-info');
+component('thumbnail');
 
 angular.bootstrap(document, [pkg.name]);
 
