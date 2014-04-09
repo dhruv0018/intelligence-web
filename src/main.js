@@ -100,6 +100,7 @@ component('videoplayer');
 
 component('roster');
 component('athlete');
+component('team-info');
 component('coach-info');
 component('thumbnail');
 component('film');
