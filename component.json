@@ -24,7 +24,8 @@
         "coach",
         "videoplayer",
         "athlete",
-        "coach-info"
+        "coach-info",
+        "roster"
     ],
     "dependencies": {
     },
