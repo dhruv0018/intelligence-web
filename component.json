@@ -26,7 +26,8 @@
         "athlete",
         "coach-info",
         "thumbnail",
-        "roster"
+        "roster",
+        "film"
     ],
     "dependencies": {
     },
