@@ -1,0 +1,9 @@
+{
+    "name": "thumbnail",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
