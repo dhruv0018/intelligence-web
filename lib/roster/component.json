@@ -6,9 +6,6 @@
     "paths": [
         "."
     ],
-    "local": [
-        "athlete"
-    ],
     "scripts": [
         "index.js"
     ]
