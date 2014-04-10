@@ -27,13 +27,16 @@
                 <li><button class="btn-filter">Scouting Film</button></li>
                 <li><button class="btn-filter">Scrimmage</button></li>
                 <li><button class="btn-filter">All</button></li>
+
             
             <form data-ng-submit="search(filter)" class="film-search">
                     <input type="text" class="film-search-input" ng-model="filter.query" placeholder="Search for film"/>
+
                     <button class="btn-film-search" type="submit">Go</button>
             </form>
             </ul>
         </header>
+
         <!-- NG-REPEAT FILM DIRECTIVES -->
 
 
@@ -44,6 +47,10 @@
             <krossover-film class="col-md-6" data-game="game"></krossover-film>
 
         </div>
+
+
+
+
 
 
     </main>
