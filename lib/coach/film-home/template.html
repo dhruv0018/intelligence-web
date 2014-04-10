@@ -14,10 +14,24 @@
         <krossover-roster data-roster-id="mocks.data.rosterId"></krossover-roster>
     </aside>
 
-    <main class="content">
+    <main class="content-full">
 
         <!-- Search and filter bar -->
-
+        <header class="filter-bar">
+            <ul class="nav nav-tabs">
+                <li><h3>Filter Film:</h3></li>
+                <li><button class="btn-filter">Game Film</button></li>
+                <li><button class="btn-filter">Reels</button></li>
+                <li><button class="btn-filter">Scouting Film</button></li>
+                <li><button class="btn-filter">Scrimmage</button></li>
+                <li><button class="btn-filter">All</button></li>
+            
+            <form class="film-search">
+                    <input type="text" class="film-search-input" placeholder="Search for film"/>
+                    <button class="btn-film-search" type="submit">Go</button>
+            </form>
+            </ul>
+        </header>
         <!-- NG-REPEAT FILM DIRECTIVES -->
         <krossover-film ng-repeat="game in mocks.data.games" data-game="game"></krossover-film>
     </main>
