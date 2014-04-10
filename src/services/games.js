@@ -444,6 +444,26 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Return true if the game was assigned to QA. */
                 return self.isAssignedToQa(self.currentAssignment()) ? true : false;
             },
+            findNoteContentByType: function(notes, noteTypeId) {
+
+                for(var index = 0; index < notes.length; index++) {
+                    if(notes[index].noteTypeId === noteTypeId) {
+                        return notes[index].content;
+                    }
+                }
+                //no note existed with the desired note type id
+                //returning blank content
+                return '';
+            },
+            formatInputData : function(game) {
+                var localDate = new Date(game.datePlayed);
+                var msPerMin = 60000;
+
+                game.datePlayed = new Date(localDate.valueOf() + localDate.getTimezoneOffset() * msPerMin);
+                game.isHomeGame = game.isHomeGame + '';
+
+                return game;
+            }
         };
 
         return GamesFactory;
