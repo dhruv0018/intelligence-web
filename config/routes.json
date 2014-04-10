@@ -206,6 +206,12 @@
         "Assistant Coach": true
     },
 
+    "Coach.GameArea": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "add-film": {
 
         "Head Coach": true,

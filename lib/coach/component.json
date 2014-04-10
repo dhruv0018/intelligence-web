@@ -4,7 +4,9 @@
         "."
     ],
     "local": [
+        "coach-game",
         "film-home",
+        "game-area",
         "add-film"
     ],
     "scripts": [
