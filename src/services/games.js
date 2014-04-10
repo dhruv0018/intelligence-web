@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'GAME_STATUSES', 'GAME_STATUS_IDS', 'GamesResource',
-    function(GAME_STATUSES, GAME_STATUS_IDS, GamesResource) {
+    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'VIDEO_STATUSES', 'GamesResource',
+    function($sce, GAME_STATUSES, GAME_STATUS_IDS, VIDEO_STATUSES, GamesResource) {
 
         var GamesFactory = {
 
@@ -144,6 +144,31 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.rosters) return undefined;
 
                 return self.rosters[teamId];
+            },
+
+            getVideoSources: function() {
+
+                var self = this;
+
+                var sources = [];
+
+                if (self.video.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                    self.video.videoTranscodeProfiles.forEach(function(profile) {
+
+                        if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                            var source = {
+                                type: 'video/mp4',
+                                src: $sce.trustAsResourceUrl(profile.videoUrl)
+                            };
+
+                            sources.push(source);
+                        }
+                    });
+                }
+
+                return sources;
             },
 
             /**
