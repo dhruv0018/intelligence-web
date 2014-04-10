@@ -28,7 +28,7 @@
                 <li><button class="btn-filter">Scrimmage</button></li>
                 <li><button class="btn-filter">All</button></li>
 
-            
+
             <form data-ng-submit="search(filter)" class="film-search">
                     <input type="text" class="film-search-input" ng-model="filter.query" placeholder="Search for film"/>
 
@@ -37,21 +37,7 @@
             </ul>
         </header>
 
-        <!-- NG-REPEAT FILM DIRECTIVES -->
-
-
-
-
-        <div class="row" data-ng-repeat="game in games">
-
-            <krossover-film class="col-md-6" data-game="game"></krossover-film>
-
-        </div>
-
-
-
-
-
+        <krossover-film data-ng-repeat="game in games" data-game="game"></krossover-film>
 
     </main>
 
