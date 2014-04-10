@@ -3,7 +3,7 @@
     <main class="content-full">
         <header>
             <div>
-                <span class="match-up">{{$storage.game.datePlayed | date: 'MMM d, yyyy'}} <strong>{{$storage.team.name}} versus. {{$storage.opposingTeam.name}}</strong></span>
+                <span class="match-up">{{$storage.game.datePlayed | date: 'MMM d, yyyy'}} {{$storage.team.name}} versus. {{$storage.opposingTeam.name}}</span>
                 <a data-ng-href="#/coach/game-area/"><i class="icon-print"></i>Print</a>
                 <a data-ng-href="#/coach/game-area/"><i class="icon-globe"></i>Share</a>
                 <select ng-model="dataType">
