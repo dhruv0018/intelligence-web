@@ -1,0 +1,9 @@
+{
+    "name": "coach-info",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

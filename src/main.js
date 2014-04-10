@@ -83,6 +83,7 @@ component('roles');
 component('rolebar');
 component('header');
 component('alertbar');
+component('plan');
 component('account');
 component('users');
 component('teams');
@@ -96,6 +97,13 @@ component('indexer');
 component('indexing');
 
 component('videoplayer');
+
+component('roster');
+component('athlete');
+component('team-info');
+component('coach-info');
+component('thumbnail');
+component('film');
 
 angular.bootstrap(document, [pkg.name]);
 

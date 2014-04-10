@@ -5,7 +5,8 @@
     ],
     "local": [
         "add-film",
-        "game-area"
+        "game-area",
+        "film-home"
     ],
     "scripts": [
         "index.js"

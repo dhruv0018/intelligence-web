@@ -1,0 +1,9 @@
+{
+    "name": "athlete",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
