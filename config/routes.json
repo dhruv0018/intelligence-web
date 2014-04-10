@@ -252,30 +252,6 @@
 
         "Head Coach": true,
         "Assistant Coach": true
-    },
-
-    "ga-info-basic": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "ga-info-instructions": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "ga-info-opposing-team": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "ga-info-your-team": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
     }
 }
 
