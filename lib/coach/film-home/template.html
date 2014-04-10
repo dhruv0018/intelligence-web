@@ -35,7 +35,14 @@
             </ul>
         </header>
         <!-- NG-REPEAT FILM DIRECTIVES -->
-        <krossover-film ng-repeat="game in games" data-game="game"></krossover-film>
+
+
+        <div class="row" data-ng-repeat="game in mocks.data.games">
+
+            <krossover-film class="col-md-6" data-game="game"></krossover-film>
+
+        </div>
+
     </main>
 
 </section>
