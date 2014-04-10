@@ -1,0 +1,27 @@
+<x-tabset class="coach-game">
+
+    <x-tab heading="Instructions" active="tabs['instructions'].active" disabled="tabs['instructions'].disabled" select="tabs.activateTab('instructions')">
+
+        <krossover-coach-game-instructions></krossover-coach-game-instructions>
+
+    </x-tab>
+
+    <x-tab heading="Opposing Team" active="tabs['opposing-team'].active" disabled="tabs['opposing-team'].disabled" select="tabs.activateTab('opposing-team')">
+
+        <krossover-coach-game-opposing-team></krossover-coach-game-opposing-team>
+
+    </x-tab>
+
+    <x-tab heading="Your Team" active="tabs['your-team'].active" disabled="tabs['your-team'].disabled" select="tabs.activateTab('your-team')">
+
+        <krossover-coach-game-your-team></krossover-coach-game-your-team>
+
+    </x-tab>
+
+    <x-tab heading="Basic Game Info" active="tabs['game-info'].active" disabled="tabs['game-info'].disabled" select="tabs.activateTab('game-info')">
+
+        <krossover-coach-game-info></krossover-coach-game-info>
+
+    </x-tab>
+
+</x-tabset>
