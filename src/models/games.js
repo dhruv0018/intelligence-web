@@ -77,7 +77,7 @@ var GAME_TYPE_IDS = {
 
 IntelligenceWebClient.constant('GAME_TYPES_IDS', GAME_TYPES_IDS);
 
-var GAME_TYPES = [
+var GAME_TYPES = {
 
     CONFERENCE: {
 
@@ -96,7 +96,7 @@ var GAME_TYPES = [
         id: 'playoff',
         name: 'Playoff'
     }
-];
+};
 
 IntelligenceWebClient.constant('GAME_TYPES', GAME_TYPES);
 
