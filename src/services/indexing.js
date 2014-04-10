@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('IndexingService', [
-    '$q', '$sce', 'VIDEO_STATUSES', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'TagsetsFactory', 'PlaysFactory', 'PlayersFactory',
-    function($q, $sce, VIDEO_STATUSES, leagues, teams, games, tagsets, plays, players) {
+    '$q', '$sce', 'TAG_VARIABLE_TYPE', 'VIDEO_STATUSES', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'TagsetsFactory', 'PlaysFactory', 'PlayersFactory',
+    function($q, $sce, TAG_VARIABLE_TYPE, VIDEO_STATUSES, leagues, teams, games, tagsets, plays, players) {
 
         var VARIABLE_PATTERN = /(__\d?__)/;
 
@@ -180,7 +180,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
             },
             
-            calculateScore: function(playId){
+            calculateScore: function(calculatedPlay){
                 var plays = this.plays;
                 var game = this.game;
                 
@@ -201,7 +201,7 @@ IntelligenceWebClient.factory('IndexingService', [
                         }
                     }
                     
-                    if(play.id === playId){ break; } // stop when we hit the passed in PlayId
+                    if(angular.equals(play, calculatedPlay)){ break; } // stop when we hit the passed in play
                 }
                 return scores;
             },
@@ -237,9 +237,9 @@ IntelligenceWebClient.factory('IndexingService', [
                 variableValue = variableValue || '';
                 var teamId = null;
                 
-                if(variableValue.type === 'Team'){
+                if(variableValue.type === TAG_VARIABLE_TYPE.TEAM_DROPDOWN){
                     teamId = variableValue.value;
-                } else if(variableValue.type === 'Player'){
+                } else if(variableValue.type === TAG_VARIABLE_TYPE.PLAYER_DROPDOWN){
                     teamId = (teamPlayers[variableValue.value]) ? game.teamId : game.opposingTeamId;
                 }
                 
