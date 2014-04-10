@@ -8,5 +8,8 @@
     ],
     "scripts": [
         "index.js"
+    ],
+    "styles": [
+        "styles.less"
     ]
 }
