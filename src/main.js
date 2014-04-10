@@ -39,6 +39,7 @@ require('./models/players');
 require('./models/tagsets');
 require('./models/positionsets');
 require('./models/plays');
+require('./models/video');
 
 require('./services/authentication');
 require('./services/authorization');
