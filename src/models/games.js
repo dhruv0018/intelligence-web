@@ -68,7 +68,7 @@ var GAME_STATUSES = {
 
 IntelligenceWebClient.constant('GAME_STATUSES', GAME_STATUSES);
 
-var GAME_TYPE_IDS = {
+var GAME_TYPES_IDS = {
 
     'conference': 'CONFERENCE',
     'nonconference': 'NON_CONFERENCE',
