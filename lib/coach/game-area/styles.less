@@ -1,0 +1,43 @@
+@import (reference) "main.less";
+
+.game-area {
+
+  header{
+    background: @content-bg;
+    border-bottom: 1px solid @gray-lighter;
+    padding-bottom: 10px;
+
+    & > * {
+     padding:25px;
+    }
+
+    a{
+      padding:10px;
+      float:right;
+    }
+
+    .match-up{
+      color: @brand-blue;
+      padding:10px;
+    }
+
+    select{
+      float:right;
+      width:200px;
+      padding-right:25px;
+      margin-right:25px;
+    }
+
+  }
+
+  div.main-highlight{
+    min-height:100%;
+  }
+
+  .tabbable{
+    background:@body-bg;
+  }
+
+}
+
+
