@@ -9,11 +9,13 @@
     ],
     "templates": [
         "template.html",
-        "gameAreaInformation.html"
+        "gameAreaInformation.html",
+        "gameAreaFilm.html"
     ],
     "scripts": [
         "index.js",
-        "gameAreaInformation.js"
+        "gameAreaInformation.js",
+        "gameAreaFilm.js"
     ],
     "styles": [
         "styles.less"

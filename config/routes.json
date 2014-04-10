@@ -252,6 +252,11 @@
 
         "Head Coach": true,
         "Assistant Coach": true
+    },
+
+    "ga-film": {
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }
 
