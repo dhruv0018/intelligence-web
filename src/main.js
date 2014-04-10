@@ -98,5 +98,12 @@ component('indexing');
 
 component('videoplayer');
 
+component('roster');
+component('athlete');
+component('team-info');
+component('coach-info');
+component('thumbnail');
+component('film');
+
 angular.bootstrap(document, [pkg.name]);
 
