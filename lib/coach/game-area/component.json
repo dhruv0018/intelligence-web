@@ -10,12 +10,16 @@
     "templates": [
         "template.html",
         "gameAreaInformation.html",
-        "gameAreaFilm.html"
+        "gameAreaFilm.html",
+        "gameAreaStatistics.html",
+        "gameAreaShotChart.html"
     ],
     "scripts": [
         "index.js",
         "gameAreaInformation.js",
-        "gameAreaFilm.js"
+        "gameAreaFilm.js",
+        "gameAreaStatistics.js",
+        "gameAreaShotChart.js"
     ],
     "styles": [
         "styles.less"
