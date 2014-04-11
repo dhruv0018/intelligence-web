@@ -16,6 +16,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                  * "game" object. */
                 angular.extend(game, self);
 
+                self.rosters = self.rosters || {};
+                self.notes = self.notes || [];
+
                 return game;
             },
 
@@ -144,6 +147,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.rosters) return undefined;
 
                 return self.rosters[teamId];
+            },
+
+            getIndexOfNoteByType: function(type) {
+
+                return this.notes.map(function(note) {
+
+                    return note.noteTypeId;
+
+                }).indexOf(type);
             },
 
             getVideoSources: function() {
