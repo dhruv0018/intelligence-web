@@ -1,0 +1,23 @@
+{
+    "name": "game-area",
+    "dependencies": {
+        "component/path": "*",
+        "visionmedia/superagent": "0.15.4"
+    },
+    "paths": [
+        "."
+    ],
+    "templates": [
+        "template.html",
+        "gameAreaInformation.html",
+        "gameAreaFilm.html"
+    ],
+    "scripts": [
+        "index.js",
+        "gameAreaInformation.js",
+        "gameAreaFilm.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

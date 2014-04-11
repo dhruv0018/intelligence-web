@@ -1,12 +1,12 @@
 {
-    "name": "athlete",
+    "name": "coach-info",
     "templates": [
         "template.html"
     ],
     "scripts": [
         "index.js"
     ],
-    "styles":[
+    "styles": [
         "styles.less"
     ]
 }

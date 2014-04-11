@@ -1,12 +1,12 @@
 {
-    "name": "athlete",
+    "name": "film",
     "templates": [
         "template.html"
     ],
     "scripts": [
         "index.js"
     ],
-    "styles":[
+    "styles": [
         "styles.less"
     ]
 }

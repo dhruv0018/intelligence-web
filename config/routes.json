@@ -240,6 +240,23 @@
 
         "Head Coach": true,
         "Assistant Coach": true
+    },
+
+    "game-area": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "ga-info": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "ga-film": {
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }
 

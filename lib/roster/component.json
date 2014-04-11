@@ -1,12 +1,15 @@
 {
-    "name": "athlete",
+    "name": "roster",
     "templates": [
         "template.html"
+    ],
+    "paths": [
+        "."
     ],
     "scripts": [
         "index.js"
     ],
-    "styles":[
+    "styles": [
         "styles.less"
     ]
 }
