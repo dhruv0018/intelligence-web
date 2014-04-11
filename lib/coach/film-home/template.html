@@ -21,11 +21,11 @@
         <header class="filter-bar">
             <ul class="nav nav-tabs">
                 <li><h3>Filter Film:</h3></li>
-                <li><button class="btn-filter">Game Film</button></li>
-                <li><button ng-hide="true" class="btn-filter">Reels</button></li>
-                <li><button ng-disabled="true" class="btn-filter">Scouting Film</button></li>
-                <li><button ng-disabled="true" class="btn-filter">Scrimmage</button></li>
-                <li><button class="btn-filter">All</button></li>
+                <li><button ng-disabled="filters['all'] ? true: false" class="btn-filter" ng-model="filters['film']" btn-checkbox>Game Film</button></li>
+                <li><button ng-hide="true" ng-model="filters['reels']" class="btn-filter" btn-checkbox>Reels</button></li>
+                <li><button ng-disabled="true" ng-model="filters['scouting']" class="btn-filter" btn-checkbox>Scouting Film</button></li>
+                <li><button ng-disabled="true" ng-model="filters['scrimmage']" class="btn-filter" btn-checkbox>Scrimmage</button></li>
+                <li><button class="btn-filter" ng-model="filters['all']" btn-checkbox>All</button></li>
 
 
             <form data-ng-submit="search(filter)" class="film-search">
