@@ -3,9 +3,8 @@
     <aside class="sidebar">
 
         <!-- TEAM DIRECTIVE -->
-
         <krossover-team-info data-team="team"></krossover-team-info>
-
+        <hr>
         <!-- NG-REPEAT COACH DIRECTIVES -->
         <krossover-head-coach-info data-team="team"></krossover-head-coach-info>
         <hr>
@@ -37,8 +36,10 @@
             </ul>
         </header>
 
-        <krossover-film data-ng-repeat="game in games" data-game="game"></krossover-film>
-
+        <!-- NG-REPEAT FILM DIRECTIVES -->
+        <div class="films-area">
+            <krossover-film ng-repeat="game in games" data-game="game"></krossover-film>
+        </div>
     </main>
 
 </section>

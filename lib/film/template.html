@@ -1,5 +1,5 @@
 <div class="krossover-film">
-   <div>
+   <div class="film-info-header">
        {{game.datePlayed}}
 
        <br/>
@@ -7,15 +7,18 @@
        <strong>Game Film: </strong>
 
        <a ng-href="coach/game-area/{{game.id}}">
-           {{team.name}} {{game.finalScore}} vs {{opposingTeam.name}} {{game.opposingFinalScore}}
+           {{team.name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{opposingTeam.name}}
        </a>
+       <br/>
+       <!--To be made dynamic later -->
+       Uploaded by you
 
    </div>
    <krossover-thumbnail width="400" data-game="game"></krossover-thumbnail>
 
     <div>
 
-        <a data-ng-href="#/coach/game-area/">
+        <a data-ng-href="#/coach/game-area/" class="sharegame">
             <i class="icon-globe"></i>Share
         </a>
 
