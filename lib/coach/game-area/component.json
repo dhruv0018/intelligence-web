@@ -10,12 +10,14 @@
     "templates": [
         "template.html",
         "gameAreaInformation.html",
-        "gameAreaFilm.html"
+        "gameAreaFilm.html",
+        "gameAreaStatistics.html"
     ],
     "scripts": [
         "index.js",
         "gameAreaInformation.js",
-        "gameAreaFilm.js"
+        "gameAreaFilm.js",
+        "gameAreaStatistics.js"
     ],
     "styles": [
         "styles.less"
