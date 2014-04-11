@@ -4,9 +4,10 @@
         "."
     ],
     "local": [
-        "add-film",
+        "coach-game",
+        "film-home",
         "game-area",
-        "film-home"
+        "add-film"
     ],
     "scripts": [
         "index.js"
