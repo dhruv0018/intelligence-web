@@ -262,6 +262,10 @@
     "ga-statistics": {
         "Head Coach": true,
         "Assistant Coach": true
+    },
+    "ga-shot-chart": {
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }
 
