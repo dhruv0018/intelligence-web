@@ -149,6 +149,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.rosters[teamId];
             },
 
+            getIndexOfNoteByType: function(type) {
+
+                return this.notes.map(function(note) {
+
+                    return note.noteTypeId;
+
+                }).indexOf(type);
+            },
+
             /**
              * Determines if the game can be assigned to an indexer.
              * Indexer assignments follow the these rules:
