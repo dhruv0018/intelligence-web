@@ -16,8 +16,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                  * "game" object. */
                 angular.extend(game, self);
 
-                self.rosters = self.rosters || {};
-                self.notes = self.notes || [];
+                game.rosters = game.rosters || {};
+                game.notes = game.notes || [];
 
                 return game;
             },
