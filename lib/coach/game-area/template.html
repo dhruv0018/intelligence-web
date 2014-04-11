@@ -1,9 +1,18 @@
 <section class="game-area">
 
     <main class="content-full">
-
-        <krossover-coach-game data-game="game"></krossover-coach-game>
-
+        <header>
+            <div>
+                <span class="match-up">{{$storage.game.datePlayed | date: 'MMM d, yyyy'}} {{$storage.team.name}} versus. {{$storage.opposingTeam.name}}</span>
+                <a data-ng-href="#/coach/game-area/"><i class="icon-print"></i>Print</a>
+                <a data-ng-href="#/coach/game-area/"><i class="icon-globe"></i>Share</a>
+                <select ng-model="dataType">
+                    <option value="video">Video</option>
+                    <option value="game-info">Game Info</option>
+                </select>
+            </div>
+        </header>
+        <div class="main-highlight" data-ui-view="content"></div>
     </main>
 
 </section>
