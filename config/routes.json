@@ -263,6 +263,15 @@
     "ga-film": {
         "Head Coach": true,
         "Assistant Coach": true
+    },
+
+    "ga-statistics": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+    "ga-shot-chart": {
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }
 
