@@ -7,8 +7,11 @@
                 <a data-ng-href="#/coach/game-area/"><i class="icon-print"></i>Print</a>
                 <a data-ng-href="#/coach/game-area/"><i class="icon-globe"></i>Share</a>
                 <select ng-model="dataType">
-                    <option value="video">Video</option>
-                    <option value="game-info">Game Info</option>
+                    <option ng-if="$storage.gameStatus !== 'INDEXED'" value="video"> Raw Film </option>
+                    <option ng-if="$storage.gameStatus === 'INDEXED'" value="video"> Breakdown </option>
+                    <option value="game-info">
+                        Game Info
+                    </option>
                 </select>
             </div>
         </header>
