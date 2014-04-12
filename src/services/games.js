@@ -540,6 +540,33 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Return true if the game was assigned to QA. */
                 return self.isAssignedToQa(self.currentAssignment()) ? true : false;
             },
+
+            canBeIndexed: function() {
+
+                var self = this;
+
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return false;
+
+                var now = new Date();
+                var deadline = new Date(assignment.deadline);
+
+                /* Ensure the current assignments deadline has not expired. */
+                if (deadline < now) return false;
+
+                switch (self.status) {
+
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
+                    case GAME_STATUSES.INDEXING.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.QAING.id:
+                        return true;
+                }
+
+                return false;
+            },
+
             findNoteContentByType: function(notes, noteTypeId) {
 
                 for(var index = 0; index < notes.length; index++) {
