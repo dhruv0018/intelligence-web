@@ -68,12 +68,35 @@ var GAME_STATUSES = {
 
 IntelligenceWebClient.constant('GAME_STATUSES', GAME_STATUSES);
 
-var GAME_TYPES = [
+var GAME_TYPES_IDS = {
 
-    { name: 'Conference Game', value: 'conference', checked: true },
-    { name: 'Non-Conference Game', value: 'nonconfernece', checked: false },
-    { name: 'Playoff Game', value: 'playoff', checked: false }
-];
+    'conference': 'CONFERENCE',
+    'nonconference': 'NON_CONFERENCE',
+    'playoff': 'PLAYOFF'
+};
+
+IntelligenceWebClient.constant('GAME_TYPES_IDS', GAME_TYPES_IDS);
+
+var GAME_TYPES = {
+
+    CONFERENCE: {
+
+        id: 'conference',
+        name: 'Conference Game'
+    },
+
+    NON_CONFERENCE: {
+
+        id: 'non-conference',
+        name: 'Non-Conference Game'
+    },
+
+    PLAYOFF: {
+
+        id: 'playoff',
+        name: 'Playoff'
+    }
+};
 
 IntelligenceWebClient.constant('GAME_TYPES', GAME_TYPES);
 

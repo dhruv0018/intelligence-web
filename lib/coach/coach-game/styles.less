@@ -1,0 +1,82 @@
+@import (reference) "main.less";
+
+.coach-game {
+
+    .tabbable {
+
+        position: relative;
+    }
+
+    .nav-tabs {
+
+        padding-right: 100px;
+        padding-bottom: 20px;
+
+        & > li {
+
+            float: right;
+            margin-left: 10px;
+
+            &:first-child {
+
+                margin-right: 100px;
+            }
+
+            & > a {
+
+                color: @gray-light;
+                border-color: @gray-lighter;
+                border-radius: 6px;
+                text-transform: capitalize;
+                cursor: pointer;
+                letter-spacing: 0.01em;
+                margin-right: 0;
+
+                &:hover {
+
+                    color: white;
+                    border-color: @brand-blue;
+                    background-color: @brand-blue;
+                }
+            }
+        }
+
+        & > li.active > a {
+
+            &,
+            &:hover {
+
+                color: white;
+                border-color: @brand-blue;
+                background-color: @brand-blue;
+
+                &:before,
+                &:after {
+
+                    content: "";
+                    width: 0;
+                    height: 0;
+                    position: absolute;
+                    left: 50%;
+                    bottom: -21px;
+                }
+
+                &:before {
+
+                    border-bottom: 11px solid rgb(221, 221, 221);
+                    border-left: 11px solid transparent;
+                    border-right: 11px solid transparent;
+                    margin-left: -11px;
+                }
+
+                &:after {
+
+                    border-bottom: 10px solid @content-bg;
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    margin-left: -10px;
+                }
+            }
+        }
+    }
+}

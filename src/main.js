@@ -37,7 +37,9 @@ require('./models/leagues');
 require('./models/games');
 require('./models/players');
 require('./models/tagsets');
+require('./models/positionsets');
 require('./models/plays');
+require('./models/video');
 
 require('./services/authentication');
 require('./services/authorization');
@@ -53,6 +55,7 @@ require('./services/sports');
 require('./services/games');
 require('./services/players');
 require('./services/tagsets');
+require('./services/positionsets');
 require('./services/plays');
 require('./services/indexing');
 
@@ -81,6 +84,7 @@ component('roles');
 component('rolebar');
 component('header');
 component('alertbar');
+component('plan');
 component('account');
 component('users');
 component('teams');
@@ -94,6 +98,13 @@ component('indexer');
 component('indexing');
 
 component('videoplayer');
+
+component('roster');
+component('athlete');
+component('team-info');
+component('coach-info');
+component('thumbnail');
+component('film');
 
 angular.bootstrap(document, [pkg.name]);
 

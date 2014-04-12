@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'GAME_STATUSES', 'GAME_STATUS_IDS', 'GamesResource',
-    function(GAME_STATUSES, GAME_STATUS_IDS, GamesResource) {
+    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'VIDEO_STATUSES', 'GamesResource',
+    function($sce, GAME_STATUSES, GAME_STATUS_IDS, VIDEO_STATUSES, GamesResource) {
 
         var GamesFactory = {
 
@@ -15,6 +15,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Copy all of the properties from the retrieved $resource
                  * "game" object. */
                 angular.extend(game, self);
+
+                game.rosters = game.rosters || {};
+                game.notes = game.notes || [];
 
                 return game;
             },
@@ -144,6 +147,40 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.rosters) return undefined;
 
                 return self.rosters[teamId];
+            },
+
+            getIndexOfNoteByType: function(type) {
+
+                return this.notes.map(function(note) {
+
+                    return note.noteTypeId;
+
+                }).indexOf(type);
+            },
+
+            getVideoSources: function() {
+
+                var self = this;
+
+                var sources = [];
+
+                if (self.video.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                    self.video.videoTranscodeProfiles.forEach(function(profile) {
+
+                        if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                            var source = {
+                                type: 'video/mp4',
+                                src: $sce.trustAsResourceUrl(profile.videoUrl)
+                            };
+
+                            sources.push(source);
+                        }
+                    });
+                }
+
+                return sources;
             },
 
             /**
@@ -444,6 +481,26 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Return true if the game was assigned to QA. */
                 return self.isAssignedToQa(self.currentAssignment()) ? true : false;
             },
+            findNoteContentByType: function(notes, noteTypeId) {
+
+                for(var index = 0; index < notes.length; index++) {
+                    if(notes[index].noteTypeId === noteTypeId) {
+                        return notes[index].content;
+                    }
+                }
+                //no note existed with the desired note type id
+                //returning blank content
+                return '';
+            },
+            formatInputData : function(game) {
+                var localDate = new Date(game.datePlayed);
+                var msPerMin = 60000;
+
+                game.datePlayed = new Date(localDate.valueOf() + localDate.getTimezoneOffset() * msPerMin);
+                game.isHomeGame = game.isHomeGame + '';
+
+                return game;
+            }
         };
 
         return GamesFactory;

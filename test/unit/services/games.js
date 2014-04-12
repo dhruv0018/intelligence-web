@@ -396,5 +396,48 @@ describe('GamesFactory', function() {
             game.status.should.equal(GAME_STATUSES.QAING.id);
         }]));
     });
+
+    describe('isAssignmentStarted', function() {
+
+        var game;
+
+        var userId = 1;
+
+        beforeEach(inject([
+           'GAME_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, games) {
+
+                game = {
+
+                    status: GAME_STATUSES.READY_FOR_INDEXING.id
+                };
+
+                game = games.extendGame(game);
+
+                game.assignToIndexer(userId);
+
+                /* Simulate server call and insert assignment ID. */
+                game.indexerAssignments[0].id = 1;
+            }
+        ]));
+
+        it('should return false if no indexer assignments are started', inject([
+           function() {
+
+            expect(game.currentAssignment()).to.not.have.property('timeStarted');
+
+            game.isAssignmentStarted().should.be.false;
+        }]));
+
+        it('should return true if an indexer assignment is started', inject([
+           function() {
+
+            game.startAssignment(userId);
+
+            expect(game.currentAssignment()).to.have.property('timeStarted');
+
+            game.isAssignmentStarted().should.be.true;
+        }]));
+    });
 });
 

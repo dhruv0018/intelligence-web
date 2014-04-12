@@ -1,0 +1,46 @@
+<section class="film-home">
+
+    <aside class="sidebar">
+
+        <!-- TEAM DIRECTIVE -->
+        <krossover-team-info data-team="team"></krossover-team-info>
+        <hr>
+        <!-- NG-REPEAT COACH DIRECTIVES -->
+        <krossover-head-coach-info data-team="team"></krossover-head-coach-info>
+        <hr>
+
+        <h3>Team Roster</h3>
+
+        <!-- ROSTER DIRECTIVE -->
+        <krossover-roster data-roster-id="rosterId"></krossover-roster>
+    </aside>
+
+    <main class="content-full">
+
+        <!-- Search and filter bar -->
+        <header class="filter-bar">
+            <ul class="nav nav-tabs">
+                <li><h3>Filter Film:</h3></li>
+                <li><button class="btn-filter">Game Film</button></li>
+                <li><button ng-hide="true" class="btn-filter">Reels</button></li>
+                <li><button ng-disabled="true" class="btn-filter">Scouting Film</button></li>
+                <li><button ng-disabled="true" class="btn-filter">Scrimmage</button></li>
+                <li><button class="btn-filter">All</button></li>
+
+
+            <form data-ng-submit="search(filter)" class="film-search">
+                    <input type="text" class="film-search-input" ng-model="filter.query" placeholder="Search for film"/>
+
+                    <button class="btn-film-search" type="submit">Go</button>
+            </form>
+            </ul>
+        </header>
+
+        <!-- NG-REPEAT FILM DIRECTIVES -->
+        <div class="films-area">
+            <krossover-film ng-repeat="game in games" data-game="game"></krossover-film>
+        </div>
+    </main>
+
+</section>
+

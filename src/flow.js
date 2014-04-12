@@ -8,7 +8,6 @@ IntelligenceWebClient.config([
 
         flow.defaults = {
 
-            target: config.kvs.uri + 'upload/part/',
             maxChunkRetries: 100,
             chunkRetryInterval: ONE_SECOND * 2
         };
