@@ -372,9 +372,8 @@ IntelligenceWebClient.factory('GamesFactory', [
              * Finishes an assignment.
              * @param {Integer} userId - the user ID of the user for which the
              * assignment should be finished.
-             * @param {Object} [assignment] - the assignment to finished. If
-             * not specified, the users assignment will be looked up. Defaults
-             * to the games current assignment.
+             * @param {Object} [assignment] - the assignment to finish.
+             * Defaults to the games current assignment.
              * @throws {Error} if there is no assignment to finish.
              * @throws {Error} on a bad assignment.
              * @throws {Error} if no assignments have been made.
@@ -387,7 +386,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                assignment = assignment || self.userAssignment(userId) || self.currentAssignment();
+                assignment = assignment || self.currentAssignment();
 
                 if (!assignment) throw new Error('No assignment to finish');
                 if (!assignment.id) throw new Error('Bad assignment');

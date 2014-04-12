@@ -453,5 +453,60 @@ describe('GamesFactory', function() {
             game.isAssignmentStarted().should.be.true;
         }]));
     });
+
+    describe('finishAssignment', function() {
+
+        it('should finish indexer assignment', inject([
+           'GAME_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, games) {
+
+            var userId = 1;
+            var isQa = false;
+
+            var game = {
+
+                status: GAME_STATUSES.READY_FOR_INDEXING.id
+            };
+
+            game = games.extendGame(game);
+
+            game.assignToIndexer(userId);
+
+            /* Simulate server call and insert assignment ID. */
+            game.indexerAssignments[0].id = 1;
+
+            game.startAssignment(userId);
+            game.finishAssignment(userId);
+
+            expect(game.currentAssignment()).to.have.property('timeFinished');
+            game.status.should.equal(GAME_STATUSES.READY_FOR_QA.id);
+        }]));
+
+        it('should finish QA assignment', inject([
+           'GAME_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, games) {
+
+            var userId = 1;
+            var isQa = true;
+
+            var game = {
+
+                status: GAME_STATUSES.READY_FOR_QA.id
+            };
+
+            game = games.extendGame(game);
+
+            game.assignToQa(userId);
+
+            /* Simulate server call and insert assignment ID. */
+            game.indexerAssignments[0].id = 1;
+
+            game.startAssignment(userId);
+            game.finishAssignment(userId);
+
+            expect(game.currentAssignment()).to.have.property('timeFinished');
+            game.status.should.equal(GAME_STATUSES.INDEXED.id);
+        }]));
+    });
 });
 
