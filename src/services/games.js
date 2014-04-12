@@ -326,9 +326,9 @@ IntelligenceWebClient.factory('GamesFactory', [
             /**
              * Starts an assignment.
              * @param {Integer} userId - the user ID of the user for which the
-             * assignment should be started
-             * @param {Object} [assignment] - the assignment to start. Defaults
-             * to the games current assignment.
+             * assignment should be started.
+             * @param {Object} [assignment] - the assignment to start.
+             * Defaults to the games current assignment.
              * @throws {Error} if there is no assignment to start.
              * @throws {Error} on a bad assignment.
              * @throws {Error} if no assignments have been made.
@@ -360,7 +360,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!~index) throw new Error('Assignment not found');
 
                 /* Set the start time of the assignment. */
-                assignment.timeStarted = new Date(Date.now()).toISOString();
+                assignment.timeStarted = new Date().toISOString();
 
                 self.indexerAssignments[index] = assignment;
 
