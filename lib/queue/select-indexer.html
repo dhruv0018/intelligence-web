@@ -13,7 +13,7 @@
             <select data-ng-model="indexerId" required>
 
                 <option value="">Select indexer</option>
-                <option data-ng-repeat="indexer in users | filter:ROLE_TYPE.INDEXER" value="{{indexer.id}}">{{ indexer.firstName + ' ' + indexer.lastName }}</option>
+                <option data-ng-repeat="indexer in indexers" value="{{ indexer.id }}">{{ indexer.firstName + ' ' + indexer.lastName }}</option>
 
             </select>
 
