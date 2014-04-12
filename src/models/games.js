@@ -87,7 +87,7 @@ var GAME_TYPES = {
 
     NON_CONFERENCE: {
 
-        id: 'nonconference',
+        id: 'non-conference',
         name: 'Non-Conference Game'
     },
 
