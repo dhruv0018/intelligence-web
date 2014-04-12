@@ -413,50 +413,41 @@ module.exports = function(grunt) {
             },
             json: {
                 files: ['*.json'],
-                tasks: ['install', 'dev', 'notify:build']
+                tasks: ['install', 'dev']
             },
             config: {
                 files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
             },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
-                tasks: ['htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
             },
             css: {
                 files: ['app/**/*.css', 'lib/**/*.css'],
-                tasks: ['csslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['csslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
             },
             less: {
                 files: ['app/**/*.less', 'lib/**/*.less'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:less:theme', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build']
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['jshint', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['jshint', 'browserify:dev', 'copy:dev', 'copy:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
             },
             tests: {
                 files: ['test/unit/**/*.js'],
                 tasks: ['jshint', 'karma']
             }
         },
-
-        notify: {
-            build: {
-                options: {
-                    title: '<%= pkg.name %>',
-                    message: 'Build Ready'
-                }
-            }
-        }
     });
 
 
@@ -470,7 +461,7 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'notify:build', 'watch']);
+    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
     grunt.registerTask('dev', [
         'env:dev',
