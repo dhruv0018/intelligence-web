@@ -368,6 +368,52 @@ IntelligenceWebClient.factory('GamesFactory', [
                 self.status = assignment.isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
             },
 
+            /**
+             * Finishes an assignment.
+             * @param {Integer} userId - the user ID of the user for which the
+             * assignment should be finished.
+             * @param {Object} [assignment] - the assignment to finished. If
+             * not specified, the users assignment will be looked up. Defaults
+             * to the games current assignment.
+             * @throws {Error} if there is no assignment to finish.
+             * @throws {Error} on a bad assignment.
+             * @throws {Error} if no assignments have been made.
+             * @throws {Error} when the assignment has not been started.
+             * @throws {Error} when the assignment has already been finished.
+             * @throws {Error} if the assignment is not assigned to the user.
+             * @throws {Error} if the assignment can not be found.
+             */
+            finishAssignment: function(userId, assignment) {
+
+                var self = this;
+
+                assignment = assignment || self.userAssignment(userId) || self.currentAssignment();
+
+                if (!assignment) throw new Error('No assignment to finish');
+                if (!assignment.id) throw new Error('Bad assignment');
+                if (!self.indexerAssignments) throw new Error('No assignments made');
+                if (!self.isAssignmentStarted(assignment)) throw new Error('Assignment not started');
+                if (self.isAssignmentCompleted(assignment)) throw new Error('Assignment already finished');
+                if (!self.isAssignedToUser(userId, assignment)) throw new Error('Assignment not assigned to user');
+
+                /* Find the assignment in the assignments. */
+                var index = self.indexerAssignments.map(function(indexerAssignment) {
+
+                    return indexerAssignment.id;
+
+                }).indexOf(assignment.id);
+
+                if (!~index) throw new Error('Assignment not found');
+
+                /* Set the finish time of the assignment. */
+                assignment.timeFinished = new Date().toISOString();
+
+                self.indexerAssignments[index] = assignment;
+
+                /* Update the game status. */
+                self.status = assignment.isQa ? GAME_STATUSES.INDEXED.id : GAME_STATUSES.READY_FOR_QA.id;
+            },
+
             currentAssignment: function() {
 
                 if (!this.indexerAssignments) return undefined;
