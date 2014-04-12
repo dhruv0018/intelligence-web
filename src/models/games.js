@@ -71,7 +71,7 @@ IntelligenceWebClient.constant('GAME_STATUSES', GAME_STATUSES);
 var GAME_TYPES_IDS = {
 
     'conference': 'CONFERENCE',
-    'nonconference': 'NON_CONFERENCE',
+    'non-conference': 'NON_CONFERENCE',
     'playoff': 'PLAYOFF'
 };
 
@@ -87,7 +87,7 @@ var GAME_TYPES = {
 
     NON_CONFERENCE: {
 
-        id: 'nonconference',
+        id: 'non-conference',
         name: 'Non-Conference Game'
     },
 
