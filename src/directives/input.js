@@ -86,8 +86,7 @@ IntelligenceWebClient.directive('input', [
             priority: 1,
             require: '?ngModel',
             scope: {
-
-                errors: '=',
+                errors: '='
             },
             link: link
         };

@@ -8,7 +8,6 @@
         "."
     ],
     "local": [
-        "plan",
         "game-info",
         "your-team",
         "opposing-team",

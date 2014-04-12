@@ -15,6 +15,8 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'rolebar',
     'header',
     'alertbar',
+    'plan',
+    'team-info',
     'account',
     'Users',
     'teams',
@@ -22,7 +24,7 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'queue',
     'leagues',
     'admin',
-    'coach',
+    'Coach',
     'indexer',
     'Indexing',
     'videoplayer'

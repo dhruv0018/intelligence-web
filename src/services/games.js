@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'GAME_STATUSES', 'GAME_STATUS_IDS', 'GamesResource',
-    function(GAME_STATUSES, GAME_STATUS_IDS, GamesResource) {
+    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'VIDEO_STATUSES', 'GamesResource',
+    function($sce, GAME_STATUSES, GAME_STATUS_IDS, VIDEO_STATUSES, GamesResource) {
 
         var GamesFactory = {
 
@@ -15,6 +15,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Copy all of the properties from the retrieved $resource
                  * "game" object. */
                 angular.extend(game, self);
+
+                game.rosters = game.rosters || {};
+                game.notes = game.notes || [];
 
                 return game;
             },
@@ -146,6 +149,40 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.rosters[teamId];
             },
 
+            getIndexOfNoteByType: function(type) {
+
+                return this.notes.map(function(note) {
+
+                    return note.noteTypeId;
+
+                }).indexOf(type);
+            },
+
+            getVideoSources: function() {
+
+                var self = this;
+
+                var sources = [];
+
+                if (self.video.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                    self.video.videoTranscodeProfiles.forEach(function(profile) {
+
+                        if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                            var source = {
+                                type: 'video/mp4',
+                                src: $sce.trustAsResourceUrl(profile.videoUrl)
+                            };
+
+                            sources.push(source);
+                        }
+                    });
+                }
+
+                return sources;
+            },
+
             /**
              * Determines if the game can be assigned to an indexer.
              * Indexer assignments follow the these rules:
@@ -204,9 +241,11 @@ IntelligenceWebClient.factory('GamesFactory', [
              * is appended to the list of assignments on the game.
              * @param {Integer} userId - the user ID of the user to assign the
              * game to.
+             * @param {Date} deadline - date the indexer must complete
+             * assignment by
              * @throws {Error} if the game is not assignable to an indexer.
              */
-            assignToIndexer: function(userId) {
+            assignToIndexer: function(userId, deadline) {
 
                 var self = this;
 
@@ -215,11 +254,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     self.indexerAssignments = self.indexerAssignments || [];
 
+                    deadline = new Date(deadline).toISOString();
+                    var timeAssigned = new Date().toISOString();
+
                     var assignment = {
 
                         gameId: self.id,
                         userId: userId,
-                        isQa: false
+                        isQa: false,
+                        deadline: deadline,
+                        timeAssigned: timeAssigned
                     };
 
                     /* Add assignment. */
@@ -241,9 +285,11 @@ IntelligenceWebClient.factory('GamesFactory', [
              * is appended to the list of assignments on the game.
              * @param {Integer} userId - the user ID of the user to assign the
              * game to.
+             * @param {Date} deadline - date the indexer must complete
+             * assignment by
              * @throws {Error} if the game is not assignable to QA.
              */
-            assignToQa: function(userId) {
+            assignToQa: function(userId, deadline) {
 
                 var self = this;
 
@@ -252,11 +298,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     self.indexerAssignments = self.indexerAssignments || [];
 
+                    deadline = new Date(deadline).toISOString();
+                    var timeAssigned = new Date().toISOString();
+
                     var assignment = {
 
                         gameId: self.id,
                         userId: userId,
-                        isQa: true
+                        isQa: true,
+                        deadline: deadline,
+                        timeAssigned: timeAssigned
                     };
 
                     /* Add assignment. */
@@ -444,6 +495,26 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Return true if the game was assigned to QA. */
                 return self.isAssignedToQa(self.currentAssignment()) ? true : false;
             },
+            findNoteContentByType: function(notes, noteTypeId) {
+
+                for(var index = 0; index < notes.length; index++) {
+                    if(notes[index].noteTypeId === noteTypeId) {
+                        return notes[index].content;
+                    }
+                }
+                //no note existed with the desired note type id
+                //returning blank content
+                return '';
+            },
+            formatInputData : function(game) {
+                var localDate = new Date(game.datePlayed);
+                var msPerMin = 60000;
+
+                game.datePlayed = new Date(localDate.valueOf() + localDate.getTimezoneOffset() * msPerMin);
+                game.isHomeGame = game.isHomeGame + '';
+
+                return game;
+            }
         };
 
         return GamesFactory;

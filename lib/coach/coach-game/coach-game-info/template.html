@@ -1,0 +1,204 @@
+<div class="game-info">
+
+    <div class="row">
+
+        <div class="box col-md-12">
+
+            <div class="box-content row">
+
+                <header class="box-header col-md-12">
+
+                    <x-button-continue data-ng-disabled="tabs['your-team'].disabled">Save and Submit</x-button-continue>
+
+                </header>
+
+                <div class="box-body col-md-12">
+
+                    <form class="form-game-info" name="formGameInfo" role="form">
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+
+                                    <h4>*Date of game</h4>
+
+                                    <input class="form-control" name="date" type="date" data-ng-model="game.datePlayed" required>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <h4>*Season</h4>
+
+                                    <select class="form-control" name="season" data-ng-model="season" data-ng-options="season.name for season in seasons" disabled>
+                                        <option value="">Season</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <h4>*Game type</h4>
+
+                                    <div class="btn-group-vertical">
+
+                                        <button type="button" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.CONFERENCE.id" required>{{ GAME_TYPES.CONFERENCE.name }}</button>
+                                        <button type="button" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.NON_CONFERENCE.id" required>{{ GAME_TYPES.NON_CONFERENCE.name }}</button>
+                                        <button type="button" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.PLAYOFF.id" required>{{ GAME_TYPES.PLAYOFF.name }}</button>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <h4>*Home/Away</h4>
+
+                                    <div class="btn-group-vertical">
+
+                                        <button type="button" class="btn-radio" data-ng-model="game.isHomeGame" data-btn-radio="'true'" required>Home</button>
+                                        <button type="button" class="btn-radio" data-ng-model="game.isHomeGame" data-btn-radio="'false'" required>Away</button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-9">
+
+                                <h4 class="pull-left">*Opponents &amp; Score</h4>
+                                <h4 class="pull-right">*Required</h4>
+
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered">
+
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>Teams</th>
+                                                <th class="score">Scores</th>
+                                                <th>Colors</th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                            <tr>
+
+                                                <td><h5>{{data.team.name}}</h5></td>
+
+                                                <td class="score">
+
+                                                    <div class="row">
+
+                                                        <div class="col-xs-12">
+
+                                                            <h6>Final</h6>
+                                                            <input name="yourscore" size="3" data-ng-model="game.finalScore" required>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <div class="row">
+
+                                                        <div class="col-xs-6">
+
+                                                            <h6>Primary</h6>
+                                                            <input class="form-control" name="yourprimarycolor" type="color" data-ng-model="game.primaryJerseyColor">
+
+                                                        </div>
+
+                                                        <div class="col-xs-6">
+
+                                                            <h6>Secondary</h6>
+                                                            <input class="form-control" name="yourprimarycolor" type="color" data-ng-model="game.secondaryJerseyColor">
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+
+                                                <td>
+
+                                                    <input class="form-control" name="opponent" placeholder="Opponent" data-ng-model="data.opposingTeam.name" >
+
+                                                </td>
+
+                                                <td class="score">
+
+                                                    <h6>Final</h6>
+                                                    <input name="opponentscore" size="3" data-ng-model="game.opposingFinalScore" required>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <div class="row">
+
+                                                        <div class="col-xs-6">
+
+                                                            <h6>Primary</h6>
+                                                            <input class="form-control" name="theirprimarycolor" type="color" data-ng-model="game.opposingPrimaryJerseyColor">
+
+                                                        </div>
+
+                                                        <div class="col-xs-6">
+
+                                                            <h6>Secondary</h6>
+                                                            <input class="form-control" name="theirprimarycolor" type="color" data-ng-model="game.opposingSecondaryJerseyColor">
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <h4>Any problems with the game film we should know about:</h4>
+                                    <textarea class="form-control" name="notes" rows="8" cols="40" placeholder="Explain here…" data-ng-model="game.notes[noteIndex].content"></textarea>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <x-button-continue data-ng-disabled="tabs['your-team'].disabled">Save and Submit</x-button-continue>
+
+        </div>
+
+    </div>
+
+</div>
