@@ -420,7 +420,7 @@ module.exports = function(grunt) {
                 tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             html: {
-                files: ['lib/**/*.html'],
+                files: ['app/**/*.html', 'lib/**/*.html'],
                 tasks: ['htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             css: {
