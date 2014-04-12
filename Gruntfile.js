@@ -19,13 +19,13 @@ module.exports = function(grunt) {
 
         env: {
             dev: {
-                NODE_ENV: 'development',
+                NODE_ENV: 'development'
             },
             qa: {
-                NODE_ENV: 'qa',
+                NODE_ENV: 'qa'
             },
             prod: {
-                NODE_ENV: 'production',
+                NODE_ENV: 'production'
             }
         },
 
@@ -420,7 +420,7 @@ module.exports = function(grunt) {
                 tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             html: {
-                files: '<%= files.html %>',
+                files: ['app/**/*.html', 'lib/**/*.html'],
                 tasks: ['htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             css: {
