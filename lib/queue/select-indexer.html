@@ -13,11 +13,13 @@
             <select data-ng-model="indexerId" required>
 
                 <option value="">Select indexer</option>
-                <option data-ng-repeat="indexer in users | filter:ROLE_TYPE.INDEXER" value="{{indexer.id}}">{{ indexer.firstName + ' ' + indexer.lastName }}</option>
+                <option data-ng-repeat="indexer in indexers" value="{{ indexer.id }}">{{ indexer.firstName + ' ' + indexer.lastName }}</option>
 
             </select>
 
-            <input class="form-control" name="date" type="date" data-ng-model="deadline" required>
+            <data-timepicker class="time" data-ng-model="deadline"></data-timepicker>
+
+            <data-datepicker class="date" data-ng-model="deadline" data-min="minDate" data-show-weeks="false"></data-datepicker>
 
         </form>
 
