@@ -6,7 +6,7 @@
 
        <strong>Game Film: </strong>
 
-       <a ng-href="coach/game/{{game.id}}">
+       <a ui-sref="Coach.GameArea({id:game.id})">
            {{team.name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{opposingTeam.name}}
        </a>
        <br/>
@@ -18,11 +18,11 @@
 
     <div>
 
-        <a data-ng-href="#" class="sharegame">
+        <a data-ng-disabled="true" data-ng-href="#" class="sharegame">
             <i class="icon-globe"></i>Share
         </a>
 
-        <a data-ng-href="#">
+        <a data-ng-disabled="true" data-ng-href="#">
             <i class="icon-link"></i>Embed
         </a>
 
