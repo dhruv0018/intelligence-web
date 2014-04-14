@@ -241,9 +241,11 @@ IntelligenceWebClient.factory('GamesFactory', [
              * is appended to the list of assignments on the game.
              * @param {Integer} userId - the user ID of the user to assign the
              * game to.
+             * @param {Date} deadline - date the indexer must complete
+             * assignment by
              * @throws {Error} if the game is not assignable to an indexer.
              */
-            assignToIndexer: function(userId) {
+            assignToIndexer: function(userId, deadline) {
 
                 var self = this;
 
@@ -252,11 +254,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     self.indexerAssignments = self.indexerAssignments || [];
 
+                    deadline = new Date(deadline).toISOString();
+                    var timeAssigned = new Date().toISOString();
+
                     var assignment = {
 
                         gameId: self.id,
                         userId: userId,
-                        isQa: false
+                        isQa: false,
+                        deadline: deadline,
+                        timeAssigned: timeAssigned
                     };
 
                     /* Add assignment. */
@@ -278,9 +285,11 @@ IntelligenceWebClient.factory('GamesFactory', [
              * is appended to the list of assignments on the game.
              * @param {Integer} userId - the user ID of the user to assign the
              * game to.
+             * @param {Date} deadline - date the indexer must complete
+             * assignment by
              * @throws {Error} if the game is not assignable to QA.
              */
-            assignToQa: function(userId) {
+            assignToQa: function(userId, deadline) {
 
                 var self = this;
 
@@ -289,11 +298,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     self.indexerAssignments = self.indexerAssignments || [];
 
+                    deadline = new Date(deadline).toISOString();
+                    var timeAssigned = new Date().toISOString();
+
                     var assignment = {
 
                         gameId: self.id,
                         userId: userId,
-                        isQa: true
+                        isQa: true,
+                        deadline: deadline,
+                        timeAssigned: timeAssigned
                     };
 
                     /* Add assignment. */
@@ -312,9 +326,9 @@ IntelligenceWebClient.factory('GamesFactory', [
             /**
              * Starts an assignment.
              * @param {Integer} userId - the user ID of the user for which the
-             * assignment should be started
-             * @param {Object} [assignment] - the assignment to start. Defaults
-             * to the games current assignment.
+             * assignment should be started.
+             * @param {Object} [assignment] - the assignment to start.
+             * Defaults to the games current assignment.
              * @throws {Error} if there is no assignment to start.
              * @throws {Error} on a bad assignment.
              * @throws {Error} if no assignments have been made.
@@ -346,12 +360,57 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!~index) throw new Error('Assignment not found');
 
                 /* Set the start time of the assignment. */
-                assignment.timeStarted = new Date(Date.now()).toISOString();
+                assignment.timeStarted = new Date().toISOString();
 
                 self.indexerAssignments[index] = assignment;
 
                 /* Update the game status. */
                 self.status = assignment.isQa ? GAME_STATUSES.QAING.id : GAME_STATUSES.INDEXING.id;
+            },
+
+            /**
+             * Finishes an assignment.
+             * @param {Integer} userId - the user ID of the user for which the
+             * assignment should be finished.
+             * @param {Object} [assignment] - the assignment to finish.
+             * Defaults to the games current assignment.
+             * @throws {Error} if there is no assignment to finish.
+             * @throws {Error} on a bad assignment.
+             * @throws {Error} if no assignments have been made.
+             * @throws {Error} when the assignment has not been started.
+             * @throws {Error} when the assignment has already been finished.
+             * @throws {Error} if the assignment is not assigned to the user.
+             * @throws {Error} if the assignment can not be found.
+             */
+            finishAssignment: function(userId, assignment) {
+
+                var self = this;
+
+                assignment = assignment || self.currentAssignment();
+
+                if (!assignment) throw new Error('No assignment to finish');
+                if (!assignment.id) throw new Error('Bad assignment');
+                if (!self.indexerAssignments) throw new Error('No assignments made');
+                if (!self.isAssignmentStarted(assignment)) throw new Error('Assignment not started');
+                if (self.isAssignmentCompleted(assignment)) throw new Error('Assignment already finished');
+                if (!self.isAssignedToUser(userId, assignment)) throw new Error('Assignment not assigned to user');
+
+                /* Find the assignment in the assignments. */
+                var index = self.indexerAssignments.map(function(indexerAssignment) {
+
+                    return indexerAssignment.id;
+
+                }).indexOf(assignment.id);
+
+                if (!~index) throw new Error('Assignment not found');
+
+                /* Set the finish time of the assignment. */
+                assignment.timeFinished = new Date().toISOString();
+
+                self.indexerAssignments[index] = assignment;
+
+                /* Update the game status. */
+                self.status = assignment.isQa ? GAME_STATUSES.INDEXED.id : GAME_STATUSES.READY_FOR_QA.id;
             },
 
             currentAssignment: function() {
@@ -481,6 +540,33 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Return true if the game was assigned to QA. */
                 return self.isAssignedToQa(self.currentAssignment()) ? true : false;
             },
+
+            canBeIndexed: function() {
+
+                var self = this;
+
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return false;
+
+                var now = new Date();
+                var deadline = new Date(assignment.deadline);
+
+                /* Ensure the current assignments deadline has not expired. */
+                if (deadline < now) return false;
+
+                switch (self.status) {
+
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
+                    case GAME_STATUSES.INDEXING.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.QAING.id:
+                        return true;
+                }
+
+                return false;
+            },
+
             findNoteContentByType: function(notes, noteTypeId) {
 
                 for(var index = 0; index < notes.length; index++) {

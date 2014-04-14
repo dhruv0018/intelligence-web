@@ -136,13 +136,13 @@
 
     <aside class="sidebar sidebar-right">
 
-        <button class="btn-start-indexing" data-ng-if="game.hasAssignment() || game.canBeStartedByIndexer() || game.canBeStartedByQa()" data-ng-click="goIndexing()">
+        <button class="btn-start-indexing" data-ng-disabled="!game.canBeIndexed()" data-ui-sref="indexing({ id: game.id })">
 
             <span data-ng-hide="game.isAssignmentStarted()">Start </span>
             <span data-ng-show="game.isAssignmentStarted()">Continue </span>
 
-            <span data-ng-show="game.hasIndexerAssignment() || game.canBeStartedByIndexer()">Indexing</span>
-            <span data-ng-show="game.hasQaAssignment() || game.canBeStartedByQa()">QA</span>
+            <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
+            <span data-ng-show="game.isAssignedToQa()">QA</span>
 
             <i class="icon-chevron-right pull-right"></i>
 
