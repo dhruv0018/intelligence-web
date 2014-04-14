@@ -268,7 +268,7 @@ module.exports = function(grunt) {
             'theme-assets': {
                 expand: true,
                 cwd:    'theme',
-                src:    'assets/*.png',
+                src:    'assets/**/*.png|jpg',
                 dest:   'build'
             },
             'component-assets': {
