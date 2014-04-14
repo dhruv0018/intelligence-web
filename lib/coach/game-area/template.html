@@ -3,14 +3,14 @@
     <main class="content-full">
         <header>
             <div>
-                <span class="match-up">{{$storage.game.datePlayed | date: 'MMM d, yyyy'}} {{$storage.team.name}} versus. {{$storage.opposingTeam.name}}</span>
-                <a data-ng-href="#/coach/game-area/"><i class="icon-print"></i>Print</a>
-                <a data-ng-href="#/coach/game-area/"><i class="icon-globe"></i>Share</a>
+                {{$storage.game.datePlayed | date: 'MMM d, yyyy'}} <span class="match-up">{{$storage.team.name}} {{$storage.game.finalScore}} vs {{$storage.game.opposingFinalScore}} {{$storage.opposingTeam.name}}</span>
+                <a data-ng-href="#/coach/game-area/"><i class="icon-download"></i> Download</a>
+                <a data-ng-href="#/coach/game-area/"><i class="icon-globe"></i> Share</a>
                 <select ng-model="dataType">
                     <option ng-if="gameStatus !== 'INDEXED'" value="video"> Raw Film </option>
                     <option ng-if="gameStatus === 'INDEXED'" value="video"> Breakdown </option>
                     <option value="game-info">
-                        Game Info
+                        Game Information
                     </option>
                     <option ng-if="hasStatistics" value="statistics">
                         Statistics

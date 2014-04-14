@@ -6,6 +6,7 @@
     background: @content-bg;
     border-bottom: 1px solid @gray-lighter;
     padding-bottom: 10px;
+    letter-spacing: normal;
 
     & > * {
      padding:25px;
@@ -41,10 +42,9 @@
   .game-area-film{
 
     .player{
-      width:600px;
-      height:400px;
-      margin:10% auto;
-      float:left;
+      width: 70%;
+      max-width: 1000px;
+      margin: 5% auto;
     }
 
     .sidebar{
@@ -52,6 +52,10 @@
       float:left;
     }
 
+  }
+
+  .broken-down {
+    color: @brand-success;
   }
 
 }
