@@ -212,6 +212,30 @@
         "Assistant Coach": true
     },
 
+    "Coach.Team": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "Coach.Team.All": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "Coach.Team.Active": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "Coach.Team.Inactive": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "add-film": {
 
         "Head Coach": true,
