@@ -164,20 +164,23 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var sources = [];
 
-                if (self.video.status === VIDEO_STATUSES.COMPLETE.id) {
+                if (self.video && self.video.status) {
 
-                    self.video.videoTranscodeProfiles.forEach(function(profile) {
+                    if (self.video.status === VIDEO_STATUSES.COMPLETE.id) {
 
-                        if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
+                        self.video.videoTranscodeProfiles.forEach(function(profile) {
 
-                            var source = {
-                                type: 'video/mp4',
-                                src: $sce.trustAsResourceUrl(profile.videoUrl)
-                            };
+                            if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
 
-                            sources.push(source);
-                        }
-                    });
+                                var source = {
+                                    type: 'video/mp4',
+                                    src: $sce.trustAsResourceUrl(profile.videoUrl)
+                                };
+
+                                sources.push(source);
+                            }
+                        });
+                    }
                 }
 
                 return sources;
