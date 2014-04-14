@@ -13,7 +13,7 @@
         "gameAreaFilm.html",
         "gameAreaStatistics.html",
         "gameAreaShotChart.html",
-        "deleteGame.html"
+        "deletegame.html"
     ],
     "scripts": [
         "index.js",
