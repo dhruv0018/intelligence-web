@@ -453,5 +453,161 @@ describe('GamesFactory', function() {
             game.isAssignmentStarted().should.be.true;
         }]));
     });
+
+    describe('finishAssignment', function() {
+
+        it('should finish indexer assignment', inject([
+           'GAME_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, games) {
+
+            var userId = 1;
+            var isQa = false;
+
+            var game = {
+
+                status: GAME_STATUSES.READY_FOR_INDEXING.id
+            };
+
+            game = games.extendGame(game);
+
+            game.assignToIndexer(userId);
+
+            /* Simulate server call and insert assignment ID. */
+            game.indexerAssignments[0].id = 1;
+
+            game.startAssignment(userId);
+            game.finishAssignment(userId);
+
+            expect(game.currentAssignment()).to.have.property('timeFinished');
+            game.status.should.equal(GAME_STATUSES.READY_FOR_QA.id);
+        }]));
+
+        it('should finish QA assignment', inject([
+           'GAME_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, games) {
+
+            var userId = 1;
+            var isQa = true;
+
+            var game = {
+
+                status: GAME_STATUSES.READY_FOR_QA.id
+            };
+
+            game = games.extendGame(game);
+
+            game.assignToQa(userId);
+
+            /* Simulate server call and insert assignment ID. */
+            game.indexerAssignments[0].id = 1;
+
+            game.startAssignment(userId);
+            game.finishAssignment(userId);
+
+            expect(game.currentAssignment()).to.have.property('timeFinished');
+            game.status.should.equal(GAME_STATUSES.INDEXED.id);
+        }]));
+    });
+
+    describe('canBeIndexed', function() {
+
+        var game;
+
+        beforeEach(inject([
+           'GAME_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, games) {
+
+                game = {};
+
+                game = games.extendGame(game);
+            }
+        ]));
+
+        it('should return false if no indexer assignments exist', inject([
+           function() {
+
+            expect(game.canBeIndexed()).to.be.false;
+        }]));
+
+        it('should return false if the deadline has expired', inject([
+            'GAME_STATUSES',
+           function(GAME_STATUSES) {
+
+            var userId = 1;
+            var isQa = false;
+            var now = new Date();
+            var deadline = now.setMinutes(now.getMinutes() - 1);
+
+            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+
+            game.assignToIndexer(userId, deadline);
+
+            expect(game.canBeIndexed()).to.be.false;
+        }]));
+
+        it('should return true if the deadline has not expired', inject([
+            'GAME_STATUSES',
+           function(GAME_STATUSES) {
+
+            var userId = 1;
+            var isQa = false;
+            var now = new Date();
+            var deadline = now.setMinutes(now.getMinutes() + 1);
+
+            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+
+            game.assignToIndexer(userId, deadline);
+
+            expect(game.canBeIndexed()).to.be.true;
+        }]));
+
+        it('should return false when the game is not in the proper status', inject([
+            'GAME_STATUSES',
+           function(GAME_STATUSES) {
+
+            var userId = 1;
+            var isQa = false;
+            var now = new Date();
+            var deadline = now.setMinutes(now.getMinutes() + 1);
+
+            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+
+            game.assignToIndexer(userId, deadline);
+
+           [GAME_STATUSES.NOT_INDEXED.id,
+            GAME_STATUSES.SET_ASIDE.id,
+            GAME_STATUSES.INDEXED.id]
+            .forEach(function(status) {
+
+                game.status = status;
+                expect(game.canBeIndexed()).to.be.false;
+            });
+        }]));
+
+        it('should return true when the game is in the proper status', inject([
+            'GAME_STATUSES',
+           function(GAME_STATUSES) {
+
+            var userId = 1;
+            var isQa = false;
+            var now = new Date();
+            var deadline = now.setMinutes(now.getMinutes() + 1);
+
+            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+
+            game.assignToIndexer(userId, deadline);
+
+           [GAME_STATUSES.READY_FOR_INDEXING.id,
+            GAME_STATUSES.READY_FOR_INDEXING.id,
+            GAME_STATUSES.INDEXING.id,
+            GAME_STATUSES.READY_FOR_QA.id,
+            GAME_STATUSES.QAING.id]
+            .forEach(function(status) {
+
+                game.status = status;
+                expect(game.canBeIndexed()).to.be.true;
+            });
+        }]));
+    });
 });
 
