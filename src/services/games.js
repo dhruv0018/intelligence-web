@@ -18,6 +18,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 game.rosters = game.rosters || {};
                 game.notes = game.notes || [];
+                game.isDeleted = game.isDeleted || false;
 
                 return game;
             },

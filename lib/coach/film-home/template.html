@@ -38,7 +38,7 @@
 
         <!-- NG-REPEAT FILM DIRECTIVES -->
         <div class="films-area">
-            <krossover-film ng-repeat="game in games" data-game="game"></krossover-film>
+            <krossover-film ng-repeat="game in games| filter: {isDeleted: false}" data-game="game"></krossover-film>
         </div>
     </main>
 
