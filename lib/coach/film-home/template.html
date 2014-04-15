@@ -21,11 +21,11 @@
         <header class="filter-bar">
             <ul class="nav nav-tabs">
                 <li><h3>Filter Film:</h3></li>
-                <li><button class="btn-filter">Game Film</button></li>
-                <li><button ng-hide="true" class="btn-filter">Reels</button></li>
-                <li><button ng-disabled="true" class="btn-filter">Scouting Film</button></li>
-                <li><button ng-disabled="true" class="btn-filter">Scrimmage</button></li>
-                <li><button class="btn-filter">All</button></li>
+                <li><button class="btn-filter" ng-model="filters.others['film']" btn-checkbox>Game Film</button></li>
+                <li><button ng-hide="true" ng-model="filters.others['reels']" class="btn-filter" btn-checkbox>Reels</button></li>
+                <li><button ng-disabled="true" ng-model="filters.others['scouting']" class="btn-filter" btn-checkbox>Scouting Film</button></li>
+                <li><button ng-disabled="true" ng-model="filters.others['scrimmage']" class="btn-filter" btn-checkbox>Scrimmage</button></li>
+                <li><button class="btn-filter" ng-model="filters['all']" btn-checkbox>All</button></li>
 
 
             <form data-ng-submit="search(filter)" class="film-search">
@@ -38,7 +38,7 @@
 
         <!-- NG-REPEAT FILM DIRECTIVES -->
         <div class="films-area">
-            <krossover-film ng-repeat="game in games" data-game="game"></krossover-film>
+            <krossover-film ng-repeat="game in games| filter: {isDeleted: false}" data-game="game"></krossover-film>
         </div>
     </main>
 
