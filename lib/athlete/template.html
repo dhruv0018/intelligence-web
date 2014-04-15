@@ -1,5 +1,6 @@
 <div class="krossover-athlete">
-    <img src="http://lorempixel.com/40/40/sports" alt="Avatar">
+    <img src="{{athlete.picture.url}}" width="40" height="40" alt="Avatar">
+    <!--<img ng-if="!athlete.picture.url" src="http://lorempixel.com/40/40/sports" alt="Avatar">-->
     <a href="#">
         <div>{{athlete.jerseyNumbers[rosterId]}}</div>
         <div>{{athlete.firstName}} {{athlete.lastName[0] + '.'}}</div>
