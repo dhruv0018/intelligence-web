@@ -7,13 +7,12 @@
     border-bottom: 1px solid @gray-lighter;
     padding-bottom: 10px;
     letter-spacing: normal;
-
-    & > * {
-     padding:25px;
-    }
+    padding: 0px 25px;
+    height: 50px;
+    line-height: 50px;
 
     a{
-      padding:10px;
+      padding: 0px 10px;
       float:right;
     }
 
@@ -25,14 +24,35 @@
     select{
       float:right;
       width:200px;
+      height: 34px;
+      line-height: 34px;
       padding-right:25px;
-      margin-right:25px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+      margin: 8px 25px 8px 0px;
     }
 
   }
 
   div.main-highlight{
     min-height:100%;
+    
+    .game-area-game-information {
+      background-color: @content-bg;
+      padding-bottom: 61px;
+    }
+  }
+
+  .game-info {
+    .btn-submit-continue {
+      margin-right: 15px;
+    }
+
+    header {
+      .btn-submit-continue {
+        margin-right: 0px;
+      }
+    }
   }
 
   .tabbable{
@@ -41,10 +61,12 @@
 
   .game-area-film{
 
+    padding: 5% 0px;
+
     .player{
       width: 70%;
       max-width: 1000px;
-      margin: 5% auto;
+      margin: auto;
     }
 
     .sidebar{
@@ -55,9 +77,20 @@
   }
 
   .broken-down {
+    position: relative;
+    top: 45px;
+    left: 100px;
+    z-index: 1;
     color: @brand-success;
+    letter-spacing: normal;
   }
 
+}
+
+.game-remove {
+  .pull-right;
+  margin-top: 20px;
+  margin-right: 100px;
 }
 
 .delete-game{
