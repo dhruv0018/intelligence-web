@@ -26,7 +26,8 @@
                                     <tr>
 
                                         <th>Jersey Number</th>
-                                        <th>Player</th>
+                                        <th>Player First Name</th>
+                                        <th>Player Last Name</th>
                                         <th>Position</th>
 
                                     </tr>
@@ -35,17 +36,34 @@
 
                                 <tbody>
 
-                                    <tr data-ng-repeat="player in data.opposingTeam.players">
+                                    <!--<tr data-ng-repeat="player in data.opposingTeam.players">-->
 
-                                        <td><input size="3" data-ng-model="player.jerseyNumbers[rosterId]" required></td>
+                                        <!--<td><input size="3" data-ng-model="player.jerseyNumbers[rosterId]" required></td>-->
 
-                                        <td><input class="name" placeholder="Name" data-ng-model="player.name" required></td>
+                                        <!--<td><input class="name" placeholder="Name" data-ng-model="player.name" required></td>-->
+
+                                        <!--<td>-->
+
+                                            <!--<input size="3" data-ng-model="player.position" disabled>-->
+
+                                            <!--<button class="remove" data-ng-click="removePlayer(player)"><i class="icon-remove"></i></button>-->
+
+                                        <!--</td>-->
+
+                                    <!--</tr>-->
+
+                                    <tr data-ng-repeat="player in mockTeam">
+
+                                        <td><input size="3" data-ng-model="player.jerseyNumbers['9001']" required></td>
+
+                                        <td><input class="name" placeholder="first name" data-ng-model="player.firstName" required></td>
+                                        <td><input class="name" placeholder="last name" data-ng-model="player.lastName" required></td>
 
                                         <td>
 
-                                            <input size="3" data-ng-model="player.position" disabled>
+                                        <input size="3" data-ng-model="player.position" disabled>
 
-                                            <button class="remove" data-ng-click="removePlayer(player)"><i class="icon-remove"></i></button>
+                                        <button class="remove" data-ng-click="removePlayer(player)"><i class="icon-remove"></i></button>
 
                                         </td>
 
