@@ -30,16 +30,17 @@
                 <li><button class="btn-filter" ng-model="filters['all']" btn-checkbox>All</button></li>
 
 
-            <form data-ng-submit="search(filter)" class="film-search">
-                    <input type="text" class="film-search-input" ng-model="filter.query" placeholder="Search for film"/>
+            <form data-ng-submit="search(query)" class="film-search">
+                    <input type="text" class="film-search-input" ng-model="query" placeholder="Search for film"/>
 
                     <button class="btn-film-search" type="submit">Go</button>
             </form>
             </ul>
         </header>
 
+        <no-results ng-if="games.length === 0"></no-results>
         <!-- NG-REPEAT FILM DIRECTIVES -->
-        <div class="films-area">
+        <div ng-if="games.length > 0" class="films-area">
             <krossover-film ng-repeat="game in games| filter: {isDeleted: false}" data-game="game"></krossover-film>
         </div>
     </main>
