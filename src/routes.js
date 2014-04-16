@@ -77,7 +77,7 @@ IntelligenceWebClient.run([
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
-            console.log('route change');
+
             /* If not accessing a public state and not logged in, then
              * redirect the user to login. */
             if (!authz.isPublic(toState) && !auth.isLoggedIn) {
@@ -99,11 +99,6 @@ IntelligenceWebClient.run([
 
                 $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
             }
-        });
-
-        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-
-            console.log('route success');
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {
