@@ -2,9 +2,11 @@
 
     <div class="broken-down" data-ng-if="isIndexed">This game was broken down and returned on {{ returnedDate | date:'mediumDate' }}</div>
 
-    <krossover-coach-game data-game="game"></krossover-coach-game>
+    <div class="info-container">
+	    <krossover-coach-game data-game="game"></krossover-coach-game>
 
-    <a class="game-remove" ng-click="confirmation()">
-        <i class="icon-remove"></i> Delete this game and all the data associated with it
-    </a>
+	    <a class="game-remove" ng-click="confirmation()">
+	        <i class="icon-remove"></i> Delete this game and all the data associated with it
+	    </a>
+	</div>
 </div>

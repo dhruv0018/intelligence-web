@@ -2,7 +2,8 @@
 
 .team-info {
 
-	padding-left: 10px;
+	position: relative;
+    padding-left: 10px;
 	padding-right: 10px;
 
     .mascot {
@@ -22,11 +23,16 @@
 
     .mascot-info {
     	display: inline-block;
+        position: relative;
+        top: -5px;
     	width: 70%;
-    	height: 45px;
-
+    	height: 100%;
+        line-height: 45px;
+        color: @brand-blue;
+        
         h1 {
             text-transform: none;
+            font-weight: 500;
         }
     }
 }
