@@ -22,10 +22,7 @@
         <header class="filter-bar">
             <ul class="nav nav-tabs">
                 <li><h3>Filter Film:</h3></li>
-                <li><button class="btn-filter" ng-model="filters.others['regular']" btn-checkbox>Regular</button></li>
-                <li><button ng-hide="true" ng-model="filters.others['reels']" class="btn-filter" btn-checkbox>Reels</button></li>
-                <li><button ng-model="filters.others['scouting']" class="btn-filter" btn-checkbox>Scouting Film</button></li>
-                <li><button ng-model="filters.others['scrimmage']" class="btn-filter" btn-checkbox>Scrimmage</button></li>
+                <li><button ng-repeat="(key, value) in filters.others" button class="btn-filter" ng-model="filters.others[key]" btn-checkbox>{{key|uppercase}}</button></li>
                 <li><button class="btn-filter" ng-model="filters['all']" btn-checkbox>All</button></li>
 
 
@@ -40,7 +37,7 @@
         <no-results ng-if="games.length === 0"></no-results>
         <!-- NG-REPEAT FILM DIRECTIVES -->
         <div ng-if="games.length > 0" class="films-area">
-            <krossover-film ng-repeat="game in games| filter: {isDeleted: false}| testfilter: filters" data-game="game" data-teams="teams"></krossover-film>
+            <krossover-film ng-repeat="game in games| filter: {isDeleted: false}| gameFilter: filters" data-game="game" data-teams="teams"></krossover-film>
         </div>
     </main>
 
