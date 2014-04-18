@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('GamesFactory', [
-    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'VIDEO_STATUSES', 'GamesResource',
-    function($sce, GAME_STATUSES, GAME_STATUS_IDS, VIDEO_STATUSES, GamesResource) {
+    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'GamesResource',
+    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, GamesResource) {
 
         var GamesFactory = {
 
@@ -19,6 +19,10 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.rosters = game.rosters || {};
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
+
+                //TODO change this scheme to adjust to new type scheme
+                game.filterType = (game.gameType.length > 0) ? GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filter : '';
+
 
                 return game;
             },

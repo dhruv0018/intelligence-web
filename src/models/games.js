@@ -82,23 +82,47 @@ var GAME_TYPES = {
     CONFERENCE: {
 
         id: 'conference',
-        name: 'Conference Game'
+        name: 'Conference Game',
+        filter: 'regular',
+        filterName: 'Regular'
     },
 
     NON_CONFERENCE: {
 
         id: 'non-conference',
-        name: 'Non-Conference Game'
+        name: 'Non-Conference Game',
+        filter: 'regular',
+        filterName: 'Regular'
     },
 
     PLAYOFF: {
 
         id: 'playoff',
-        name: 'Playoff'
+        name: 'Playoff',
+        filter: 'regular',
+        filterName: 'Regular'
+    },
+
+    SCOUTING: {
+        id: 'scouting',
+        name: 'Scouting',
+        filter: 'scouting',
+        filterName: 'Scouting'
+    },
+
+    SCRIMMAGE: {
+        id: 'scrimmage',
+        name: 'Scrimmage',
+        filter: 'scrimmage',
+        filterName: 'Scrimmage'
     }
+
 };
 
+
+
 IntelligenceWebClient.constant('GAME_TYPES', GAME_TYPES);
+
 
 var GAME_NOTE_TYPES = {
 
