@@ -28,7 +28,8 @@
         "coach-info",
         "thumbnail",
         "roster",
-        "film"
+        "film",
+        "profile-placeholder"
     ],
     "dependencies": {
     },
