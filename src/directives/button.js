@@ -3,6 +3,36 @@ var ELEMENTS = 'E';
 
 var IntelligenceWebClient = require('../app');
 
+
+IntelligenceWebClient.directive('button', [
+    '$rootScope',
+    function($rootScope) {
+
+        var directive = {
+
+            restrict: TO += ELEMENTS,
+            link: link
+        };
+
+        function link($scope, element, attributes, controller) {
+
+            var disabled = attributes.disabled;
+
+            $rootScope.$on('$stateChangeStart', function() {
+
+                attributes.$set('disabled', true);
+            });
+
+            $rootScope.$on('$stateChangeSuccess', function() {
+
+                attributes.$set('disabled', !!disabled);
+            });
+        }
+
+        return directive;
+    }
+]);
+
 IntelligenceWebClient.directive('buttonAddNew', [
     '$parse',
     function($parse) {
