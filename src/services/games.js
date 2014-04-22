@@ -20,6 +20,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
+                //TODO temporarily forces all games to render in breakdown mode
+                game.status = 6;
+
                 return game;
             },
 
