@@ -107,6 +107,7 @@ component('coach-info');
 component('thumbnail');
 component('film');
 component('profile-placeholder');
+component('add-player');
 
 angular.bootstrap(document, [pkg.name]);
 

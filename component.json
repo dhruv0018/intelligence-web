@@ -30,7 +30,8 @@
         "thumbnail",
         "roster",
         "film",
-        "profile-placeholder"
+        "profile-placeholder",
+        "add-player"
     ],
     "dependencies": {
     },
