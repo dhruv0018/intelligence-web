@@ -94,6 +94,7 @@ component('teams');
 component('schools');
 component('queue');
 component('leagues');
+component('no-results');
 
 component('admin');
 component('coach');
