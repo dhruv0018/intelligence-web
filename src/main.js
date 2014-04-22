@@ -106,6 +106,7 @@ component('team-info');
 component('coach-info');
 component('thumbnail');
 component('film');
+component('profile-placeholder');
 
 angular.bootstrap(document, [pkg.name]);
 
