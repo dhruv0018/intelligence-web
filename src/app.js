@@ -23,12 +23,14 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'schools',
     'queue',
     'leagues',
+    'no-results',
     'admin',
     'Coach',
     'indexer',
     'indexing',
     'videoplayer',
-    'mascot-placeholder'
+    'mascot-placeholder',
+    'profile-placeholder'
 ]);
 
 exports = module.exports = IntelligenceWebClient;

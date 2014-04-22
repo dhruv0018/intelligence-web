@@ -19,6 +19,7 @@
         "schools",
         "queue",
         "leagues",
+        "no-results",
         "indexer",
         "indexing",
         "coach",
@@ -29,7 +30,8 @@
         "thumbnail",
         "roster",
         "film",
-        "mascot-placeholder"
+        "mascot-placeholder",
+        "profile-placeholder"
     ],
     "dependencies": {
     },

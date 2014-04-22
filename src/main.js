@@ -91,6 +91,7 @@ component('teams');
 component('schools');
 component('queue');
 component('leagues');
+component('no-results');
 
 component('admin');
 component('coach');
@@ -106,6 +107,7 @@ component('coach-info');
 component('thumbnail');
 component('film');
 component('mascot-placeholder');
+component('profile-placeholder');
 
 angular.bootstrap(document, [pkg.name]);
 
