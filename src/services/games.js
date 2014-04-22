@@ -22,6 +22,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 //TODO change this scheme to adjust to new type scheme
                 game.filterType = (game.gameType.length > 0) ? GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filter : '';
+                game.adjustedDate = self.formatInputDate(game);
 
 
                 return game;
@@ -586,14 +587,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 //returning blank content
                 return '';
             },
-            formatInputData : function(game) {
+            formatInputDate : function(game) {
                 var localDate = new Date(game.datePlayed);
                 var msPerMin = 60000;
 
-                game.datePlayed = new Date(localDate.valueOf() + localDate.getTimezoneOffset() * msPerMin);
-                game.isHomeGame = game.isHomeGame + '';
-
-                return game;
+                return +new Date(localDate.valueOf() + localDate.getTimezoneOffset() * msPerMin);
             }
         };
 
