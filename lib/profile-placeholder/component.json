@@ -1,0 +1,12 @@
+{
+    "name": "profile-placeholder",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
