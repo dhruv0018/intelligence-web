@@ -587,12 +587,26 @@ IntelligenceWebClient.factory('GamesFactory', [
                 //returning blank content
                 return '';
             },
-            formatInputDate : function(game) {
+            formatInputDate: function(game) {
                 var localDate = new Date(game.datePlayed);
                 var msPerMin = 60000;
 
                 return +new Date(localDate.valueOf() + localDate.getTimezoneOffset() * msPerMin);
+            },
+            transformIndexed: function(games){
+                var indexedGames = {};
+                var self = this;
+
+                games.forEach(function(game) {
+
+                    game = self.extendGame(game);
+
+                    indexedGames[game.id] = game;
+                });
+
+                return indexedGames;
             }
+
         };
 
         return GamesFactory;
