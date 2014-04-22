@@ -92,14 +92,13 @@
 
 .info-container {
   position: relative;
-  height: 100%;
-  min-height: 100%;
 
   .game-remove {
     position: relative;
-    top: -100px;
+    top: 10px;
     right: 100px;
     .pull-right;
+    cursor: pointer;
   }
 }
 
@@ -108,7 +107,9 @@
 
   .warning{
     text-align: center;
-    margin: 10px 0 10px 0;
+    letter-spacing: normal;
+    margin: 40px 0 40px 0;
+
   }
 
   h4 {
@@ -116,6 +117,15 @@
     font-size: 18px;
     letter-spacing: 0.01em;
     margin-bottom: 5px;
+  }
+
+  a {
+    cursor: pointer;
+  }
+
+  .no-delete {
+    .pull-right;
+    margin-top: 10px;
   }
 
 }

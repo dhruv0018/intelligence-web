@@ -109,12 +109,8 @@
 
     </div>
 
-    <div class="noresults" data-ng-hide="users.length">
-
-        <i class="icon-search"></i>
-        <h1>No Results Found</h1>
-        <h2>Try your search again.</h2>
-
+    <div class="no-results-container">
+        <no-results data-ng-hide="users.length"></no-results>
     </div>
 
 </section>
