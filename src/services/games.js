@@ -21,7 +21,10 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.isDeleted = game.isDeleted || false;
 
                 //TODO change this scheme to adjust to new type scheme
-                game.filterType = (game.gameType.length > 0) ? GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filter : '';
+                if(typeof game.gameType !== 'undefined') {
+                    game.filterType = (game.gameType.length > 0) ? GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filter : '';
+                }
+
 
 
                 return game;
