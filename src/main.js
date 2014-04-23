@@ -106,6 +106,7 @@ component('team-info');
 component('coach-info');
 component('thumbnail');
 component('film');
+component('mascot-placeholder');
 component('profile-placeholder');
 component('add-player');
 
