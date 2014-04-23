@@ -473,6 +473,11 @@ module.exports = function(grunt) {
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
 
+    grunt.registerTask('build', [
+        'env:dev',
+        'componentbuild:dev',
+        'browserify:dev']);
+
     grunt.registerTask('dev', [
         'env:dev',
         'componentbuild:dev',
