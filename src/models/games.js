@@ -68,8 +68,11 @@ var GAME_STATUSES = {
 
 IntelligenceWebClient.constant('GAME_STATUSES', GAME_STATUSES);
 
+//TODO remove fallbacks after new scheme adopted
 var GAME_TYPES_IDS = {
-
+    'conference': 'CONFERENCE',
+    'non-conference': 'NON_CONFERENCE',
+    'playoff': 'PLAYOFF',
     1: 1,
     2: 2,
     3: 3,
@@ -79,8 +82,23 @@ var GAME_TYPES_IDS = {
 
 IntelligenceWebClient.constant('GAME_TYPES_IDS', GAME_TYPES_IDS);
 
+//TODO remove fallbacks after new scheme adopted
 var GAME_TYPES = {
+    CONFERENCE: {
+        id: 'conference',
+        name: 'Conference Game'
+    },
 
+    NON_CONFERENCE: {
+        id: 'non-conference',
+        name: 'Non-Conference Game'
+    },
+
+    PLAYOFF: {
+
+        id: 'playoff',
+        name: 'Playoff'
+    },
     1: {
         id: 1,
         name: 'Conference Game'
