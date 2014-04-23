@@ -30,6 +30,7 @@
         "thumbnail",
         "roster",
         "film",
+        "mascot-placeholder",
         "profile-placeholder"
     ],
     "dependencies": {
