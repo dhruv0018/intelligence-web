@@ -101,7 +101,7 @@ IntelligenceWebClient.run([
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-
+            //Used for debugging
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {

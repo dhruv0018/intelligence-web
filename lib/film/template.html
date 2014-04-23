@@ -7,12 +7,11 @@
        <strong>Game Film: </strong>
 
        <a ui-sref="Coach.GameArea({id:game.id})">
-           {{team.name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{opposingTeam.name}}
+           {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
        </a>
        <br/>
        <!--To be made dynamic later -->
        Uploaded by you
-
    </div>
    <krossover-thumbnail width="400" data-game="game"></krossover-thumbnail>
 
