@@ -37,7 +37,7 @@
         <no-results ng-if="games.length === 0"></no-results>
         <!-- NG-REPEAT FILM DIRECTIVES -->
         <div ng-if="games.length > 0" class="films-area">
-            <krossover-film ng-repeat="game in games | filter: {isDeleted: false}| gameFilter: filters  | orderBy: '-adjustedDate'" data-game="game" data-teams="teams"></krossover-film>
+            <krossover-film ng-repeat="game in games | filter: {isDeleted: false}| gameFilter: filters | orderBy: '-datePlayed'" data-game="game" data-teams="teams"></krossover-film>
         </div>
     </main>
 

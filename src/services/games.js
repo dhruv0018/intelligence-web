@@ -22,7 +22,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 //TODO change this scheme to adjust to new type scheme
                 game.filterType = (game.gameType.length > 0) ? GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filter : '';
-                game.adjustedDate = self.formatInputDate(game);
 
 
                 return game;
@@ -586,12 +585,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 //no note existed with the desired note type id
                 //returning blank content
                 return '';
-            },
-            formatInputDate: function(game) {
-                var localDate = new Date(game.datePlayed);
-                var msPerMin = 60000;
-
-                return +new Date(localDate.valueOf() + localDate.getTimezoneOffset() * msPerMin);
             },
             transformIndexed: function(games){
                 var indexedGames = {};
