@@ -16,7 +16,8 @@ IntelligenceWebClient.factory('PlayersResource', [
 
         var actions = {
 
-            create: { method: 'POST', isArray: true, url: config.api.uri + 'batch/players' }
+            create: { method: 'POST', isArray: true, url: config.api.uri + 'batch/players' },
+            update: { method: 'PUT' }
         };
 
         return $resource(url, paramDefaults, actions);
