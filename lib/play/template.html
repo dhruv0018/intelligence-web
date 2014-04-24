@@ -1,0 +1,11 @@
+<div class="play">
+
+    <h4><span class="period">{{ indexing.league.periodAbbreviationLabel }} {{ indexing.period }}</span><span class="dash"> — </span><time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time><span class="dash"> — </span><span class="team">{{ indexing.team.name }}</span> <span class="score">{{ play.teamScore }}</span><span class="vs"> vs </span><span class="score">{{ play.opposingScore }}</span> <span class="team">{{ indexing.opposingTeam.name }}</span></h4>
+
+    <krossover-events data-events="play.events"></krossover-events>
+
+    <hr>
+
+    <button class="btn-delete-play" data-ng-click="deletePlay(play)"><i class="icon-remove"></i> Delete Play</button>
+
+</div>

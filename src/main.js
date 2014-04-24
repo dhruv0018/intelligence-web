@@ -100,6 +100,12 @@ component('coach');
 component('indexer');
 component('indexing');
 
+component('item');
+component('event');
+component('events');
+component('play');
+component('plays');
+
 component('videoplayer');
 
 component('roster');
