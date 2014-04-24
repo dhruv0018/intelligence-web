@@ -16,7 +16,17 @@ IntelligenceWebClient.factory('TeamsFactory', [
                  * "team" object. */
                 angular.extend(team, self);
 
-                return team;
+                if (!team.roster) {
+
+                    team.roster = {
+
+                        teamId: team.id
+                    };
+
+                    return team.save();
+                }
+
+                else return team;
             },
 
             get: function(id, success, error) {
