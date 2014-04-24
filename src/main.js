@@ -108,6 +108,7 @@ component('thumbnail');
 component('film');
 component('mascot-placeholder');
 component('profile-placeholder');
+component('role-icon');
 
 angular.bootstrap(document, [pkg.name]);
 
