@@ -47,6 +47,32 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 return self.resource.query({gameId: gameId}, callback, error);
             },
 
+            filterPlays: function(filterId, options, success, error) {
+                var self = this;
+
+                console.log('inside of filter Plays');
+                console.log(filterId);
+
+                var filter = {
+                    plays: options.plays,
+                    options: options.options
+                };
+
+                var newPlayList = new PlaysResource(filter);
+
+                var callback = function(plays) {
+                    return plays;
+                };
+
+                error = error || function() {
+                    throw new Error('could not filter plays');
+                };
+
+                console.log(newPlayList);
+
+                return newPlayList.$filter({filterId: filterId.filterId}, callback, error);
+            },
+
             save: function(play) {
 
                 var self = this;

@@ -24,9 +24,10 @@ IntelligenceWebClient.factory('PlaysResource', [
             },
             filter: {
                 method: 'POST',
-                url: config.api.url + 'plays/:filterId',
-                params: { filterId: '@filterId' },
-                isArray: true
+                url: config.api.uri + 'plays/filter/:filterId',
+                params: {
+                    filterId: '@filterId'
+                }
             },
             create: { method: 'POST' },
             update: { method: 'PUT' }
