@@ -108,6 +108,7 @@ component('thumbnail');
 component('film');
 component('mascot-placeholder');
 component('profile-placeholder');
+component('sport-placeholder');
 
 angular.bootstrap(document, [pkg.name]);
 
