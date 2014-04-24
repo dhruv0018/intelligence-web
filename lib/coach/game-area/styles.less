@@ -62,6 +62,38 @@
     background:@body-bg;
   }
 
+  .game-area-film-filters{
+    &:after{
+      visibility: hidden;
+      display: block;
+      font-size: 0;
+      content: " ";
+      clear: both;
+      height: 0;
+    }
+
+    > *{
+      padding: 30px;
+    }
+
+    .play-count{
+      border-right: 1px solid @gray-lighter;
+    }
+
+    border-bottom:1px solid @gray-lighter;
+
+    .filter-dropdown{
+      ul{
+        width:600px;
+        li{
+          padding:0 30px 0 30px;
+          border-right: 1px solid @gray-lighter;
+        }
+      }
+    }
+
+  }
+
   .game-area-film{
 
     padding: 5% 0px;
