@@ -1,1 +1,41 @@
-<h1>Inactive team members</h1>
+<div class="team-inactive">
+
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+
+            <thead>
+
+                <tr>
+
+                    <th>Jersey Number</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Position</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr data-ng-repeat="player in roster | filter:isInactive">
+
+                    <td>{{ player.jerseyNumbers[rosterId] }}</td>
+
+                    <td>{{ player.firstName }}</td>
+
+                    <td>{{ player.lastName }}</td>
+
+                    <td>{{ player.position }}</td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
