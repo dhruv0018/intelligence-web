@@ -33,7 +33,7 @@
 
                             <input size="3" data-ng-model="player.position">
 
-                            <button class="remove" data-ng-click="removePlayer(player)"><i class="icon-remove"></i></button>
+                            <button class="btn btn-blank pull-right" data-ng-click="player.rosterStatuses[rosterId] = false"><i class="icon-remove"></i></button>
 
                         </td>
 
@@ -45,9 +45,9 @@
 
         </div>
 
-        <button class="btn-add-player" data-ng-click="addNewPlayer()">Add New Player <i class="icon-plus"></i></button>
+        <button class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon-plus"></i></button>
 
-        <button class="btn-upload">Upload Excel File <i class="icon-upload-alt"></i><input type="file" onchange="angular.element(this).scope().uploadPlayers(this.files)"></button>
+        <button class="btn btn-primary pull-right" data-ng-click="save()">Save</button>
 
     </form>
 
