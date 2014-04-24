@@ -47,28 +47,33 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 return self.resource.query({gameId: gameId}, callback, error);
             },
 
-            filterPlays: function(filterId, options, success, error) {
+            filterPlays: function(filterId, resources, success, error) {
                 var self = this;
 
-                console.log('inside of filter Plays');
-                console.log(filterId);
+                var playIds = [];
+
+                angular.forEach(resources.plays, function(play) {
+                    playIds.push(play.id);
+                });
 
                 var filter = {
-                    plays: options.plays,
-                    options: options.options
+                    plays: {},
+                    options: {
+                        teamId: resources.game.teamId
+                    }
                 };
+
+                filter.plays[resources.game.id] = playIds;
 
                 var newPlayList = new PlaysResource(filter);
 
-                var callback = function(plays) {
+                var callback = success || function(plays) {
                     return plays;
                 };
 
                 error = error || function() {
                     throw new Error('could not filter plays');
                 };
-
-                console.log(newPlayList);
 
                 return newPlayList.$filter({filterId: filterId.filterId}, callback, error);
             },
