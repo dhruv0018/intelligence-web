@@ -32,12 +32,6 @@
         "modal-send-to-team.html",
         "modal-add-indexer-note.html"
     ],
-    "paths": [
-        "."
-    ],
-    "local": [
-        "item"
-    ],
     "dependencies": {
         "moment/moment": "2.5.1"
     }
