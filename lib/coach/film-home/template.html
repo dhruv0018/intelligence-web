@@ -12,9 +12,8 @@
         <h3>Team Roster</h3>
 
         <!-- ROSTER DIRECTIVE -->
-        <!--<krossover-roster data-roster-id="rosterId"></krossover-roster>-->
+        <krossover-roster data-roster-id="rosterId" data-roster="mockRoster"></krossover-roster>
 
-        <krossover-athlete data-ng-repeat="player in mockRoster" data-athlete="player" data-roster-id="9001"></krossover-athlete>
     </aside>
 
     <main class="content-full">
@@ -23,24 +22,22 @@
         <header class="filter-bar">
             <ul class="nav nav-tabs">
                 <li><h3>Filter Film:</h3></li>
-                <li><button class="btn-filter" ng-model="filters.others['film']" btn-checkbox>Game Film</button></li>
-                <li><button ng-hide="true" ng-model="filters.others['reels']" class="btn-filter" btn-checkbox>Reels</button></li>
-                <li><button ng-disabled="true" ng-model="filters.others['scouting']" class="btn-filter" btn-checkbox>Scouting Film</button></li>
-                <li><button ng-disabled="true" ng-model="filters.others['scrimmage']" class="btn-filter" btn-checkbox>Scrimmage</button></li>
+                <li><button ng-repeat="(key, value) in filters.others" button class="btn-filter" ng-model="filters.others[key]" btn-checkbox>{{key|uppercase}}</button></li>
                 <li><button class="btn-filter" ng-model="filters['all']" btn-checkbox>All</button></li>
 
 
-            <form data-ng-submit="search(filter)" class="film-search">
-                    <input type="text" class="film-search-input" ng-model="filter.query" placeholder="Search for film"/>
+            <form data-ng-submit="search(query)" class="film-search">
+                    <input type="text" class="film-search-input" ng-model="query" placeholder="Search for film"/>
 
                     <button class="btn-film-search" type="submit">Go</button>
             </form>
             </ul>
         </header>
 
+        <no-results ng-if="games.length === 0"></no-results>
         <!-- NG-REPEAT FILM DIRECTIVES -->
-        <div class="films-area">
-            <krossover-film ng-repeat="game in games| filter: {isDeleted: false}" data-game="game"></krossover-film>
+        <div ng-if="games.length > 0" class="films-area">
+            <krossover-film ng-repeat="game in games | filter: {isDeleted: false}| gameFilter: filters | orderBy: '-datePlayed'" data-game="game" data-teams="teams"></krossover-film>
         </div>
     </main>
 
