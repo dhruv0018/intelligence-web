@@ -9,13 +9,21 @@
         </a>
         <ul class="dropdown-menu">
             <li class="pull-left">
-                <button ng-click="testFilter()">test the filters</button>
+                <div>
+                    <a class="btn btn-primary" ng-click="setFilter('39')">test the filters</a>
+                </div>
             </li>
             <li class="pull-left">
-                col2
+                <div ng-repeat="(key,value) in filtersetCategories">
+                    <a class="btn btn-primary">{{value.name}}</a>
+                </div>
             </li>
             <li class="pull-left">
-                col3
+                <div ng-repeat="(key,value) in filtersetCategories">
+                    <div ng-repeat="(innerkey, innerValue) in value.subFilters">
+                        <a class="btn btn-primary" ng-click="setFilter(innerValue.id)">{{innerValue.name}}</a>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
