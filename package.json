@@ -42,7 +42,7 @@
     "dependencies": {},
     "devDependencies": {
         "less": "~1.7.0",
-        "component": "1.0.x",
+        "component": "0.19.8",
         "component-html": "0.0.3",
         "component-less": "jasonmorganson/component-less",
         "browserify": "~3.32.1",
