@@ -15,15 +15,7 @@
         <ul class="events">
 
             <!-- Event -->
-            <li class="event" data-ng-repeat="event in play.events track by $index">
-
-                <button class="btn-select-event" data-ng-class="{ active: event.current.id === event.id }" data-ng-click="selectEvent(play, event)" data-ng-disabled="!indexing.isReady">
-
-                    <krossover-event data-event="event"></krossover-event>
-
-                </button>
-
-            </li>
+            <krossover-event data-play="play" data-event="event" data-selected="selectEvent(play, event)" data-ng-repeat="event in play.events track by $index"></krossover-event>
 
         </ul>
 
