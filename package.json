@@ -87,7 +87,7 @@
     },
     "main": "./src/main.js",
     "scripts": {
-        "install": "node_modules/.bin/napa; node_modules/.bin/component install",
+        "install": "napa; component install",
         "test": "node_modules/.bin/grunt test"
     }
 }
