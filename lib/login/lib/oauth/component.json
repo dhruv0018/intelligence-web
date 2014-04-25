@@ -1,7 +1,7 @@
 {
   "name": "oauth",
   "dependencies": {
-    "visionmedia/superagent": "0.15.4"
+    "visionmedia/superagent": "0.16.0"
   },
   "scripts": [
     "index.js"

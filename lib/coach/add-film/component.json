@@ -1,8 +1,8 @@
 {
     "name": "add-film",
     "dependencies": {
-        "component/path": "*",
-        "visionmedia/superagent": "0.15.4"
+        "component/path": "1.0.0",
+        "visionmedia/superagent": "0.16.0"
     },
     "paths": [
         "."
