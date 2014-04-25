@@ -7,17 +7,6 @@
 
 <div class="plays">
 
-    <!-- Play -->
-    <div class="play" data-ng-class="{ active: play.current.id === play.id }" data-ng-repeat="play in indexing.plays | orderBy:'startTime' | scores track by $index">
-
-        <h4><span class="period">{{ indexing.league.periodAbbreviationLabel }} {{ indexing.period }}</span><span class="dash"> — </span><time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time><span class="dash"> — </span><span class="team">{{ indexing.team.name }}</span> <span class="score">{{ play.score[indexing.team.id] }}</span><span class="vs">&nbsp;vs&nbsp;</span><span class="score">{{ play.score[indexing.opposingTeam.id] }}</span> <span class="team">{{ indexing.opposingTeam.name }}</span></h4>
-
-        <krossover-events data-play="play" data-events="play.events" data-videoplayer="VideoPlayer"></krossover-events>
-
-        <hr>
-
-        <button class="btn-delete-play" data-ng-click="deletePlay(play)" data-ng-disabled="!indexing.isReady"><i class="icon-remove"></i> Delete Play</button>
-
-    </div>
+    <krossover-play data-play="play" data-team="indexing.team" data-opposing-team="indexing.opposingTeam" data-league="indexing.league" data-videoplayer="VideoPlayer" data-ng-repeat="play in indexing.plays | orderBy:'startTime' | scores track by $index"></krossover-play>
 
 </div>
