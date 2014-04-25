@@ -29,6 +29,7 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'indexer',
     'indexing',
     'videoplayer',
+    'sport-placeholder',
     'role-icon',
     'add-player',
     'mascot-placeholder',
