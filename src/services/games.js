@@ -1,8 +1,8 @@
 var IntelligenceWebClient = require('../app');
 
 IntelligenceWebClient.factory('GamesFactory', [
-    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'VIDEO_STATUSES', 'GamesResource',
-    function($sce, GAME_STATUSES, GAME_STATUS_IDS, VIDEO_STATUSES, GamesResource) {
+    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'GamesResource',
+    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, GamesResource) {
 
         var GamesFactory = {
 
@@ -20,8 +20,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
+
                 //TODO temporarily forces all games to render in breakdown mode
                 game.status = 6;
+
+                //TODO change this scheme to adjust to new type scheme
+                if(typeof game.gameType !== 'undefined') {
+                    game.filterType = (game.gameType.length > 0) ? GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filter : '';
+                }
 
                 return game;
             },
@@ -585,15 +591,20 @@ IntelligenceWebClient.factory('GamesFactory', [
                 //returning blank content
                 return '';
             },
-            formatInputData : function(game) {
-                var localDate = new Date(game.datePlayed);
-                var msPerMin = 60000;
+            transformIndexed: function(games){
+                var indexedGames = {};
+                var self = this;
 
-                game.datePlayed = new Date(localDate.valueOf() + localDate.getTimezoneOffset() * msPerMin);
-                game.isHomeGame = game.isHomeGame + '';
+                games.forEach(function(game) {
 
-                return game;
+                    game = self.extendGame(game);
+
+                    indexedGames[game.id] = game;
+                });
+
+                return indexedGames;
             }
+
         };
 
         return GamesFactory;
