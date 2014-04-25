@@ -1,13 +1,22 @@
 @import (reference) "main.less";
 
 .placeholder-picture {
-	color: rgb(225,225,225);
-	width: 110px;
-	height: 110px;
-	line-height: 110px;
+	@size: 110px;
+    color: rgb(225,225,225);
+	width: @size;
+	height: @size;
+	line-height: @size;
 	font-size: 70px;
 	text-align: center;
 	border: 1px solid rgb(225,225,225);
 	border-radius: @border-radius-small;
+
+    &.small{
+      @size: 35px;
+      width:@size;
+      height:@size;
+      line-height: @size;
+      font-size: 30px;
+    }
 
 }
