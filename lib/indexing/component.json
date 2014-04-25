@@ -3,9 +3,6 @@
     "scripts": [
         "index.js",
         "filters.js",
-        "tags-service.js",
-        "play-service.js",
-        "event-service.js",
         "header-controller.js",
         "main-controller.js",
         "sidebar-notes-controller.js",
