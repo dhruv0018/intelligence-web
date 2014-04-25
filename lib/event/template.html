@@ -1,6 +1,6 @@
 <li class="event">
 
-    <button class="btn-select-event" data-ng-class="{ active: event.current.id === event.id }" data-ng-click="select(play, event)">
+    <button class="btn-select-event" data-ng-class="{ active: event.id == currentEventId }" data-ng-click="selectEvent(play, event)">
 
         <krossover-item item="item" event="event" data-ng-repeat="item in items"></krossover-item>
 
