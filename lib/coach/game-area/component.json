@@ -1,8 +1,7 @@
 {
     "name": "game-area",
     "dependencies": {
-        "component/path": "1.0.0",
-        "visionmedia/superagent": "0.16.0"
+        "component/path": "1.0.0"
     },
     "paths": [
         "."
