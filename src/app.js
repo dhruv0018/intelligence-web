@@ -22,7 +22,7 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'Event',
     'Events',
     'Play',
-    'Plays'
+    'Plays',
     'Users',
     'teams',
     'schools',

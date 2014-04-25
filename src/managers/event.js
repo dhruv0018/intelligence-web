@@ -6,7 +6,7 @@ var IntelligenceWebClient = require('../app');
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    'IndexingService', 'Indexing.TagsService', 'PlayManager',
+    'IndexingService', 'TagsManager', 'PlayManager',
     function service(indexing, tags, play) {
 
         var model = {

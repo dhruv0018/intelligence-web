@@ -59,6 +59,10 @@ require('./services/positionsets');
 require('./services/plays');
 require('./services/indexing');
 
+require('./managers/tags');
+require('./managers/play');
+require('./managers/event');
+
 require('./directives/alert');
 require('./directives/match');
 require('./directives/form');
