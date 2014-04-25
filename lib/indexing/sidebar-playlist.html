@@ -5,8 +5,5 @@
 
 </header>
 
-<div class="plays">
+<krossover-plays data-plays="indexing.plays" data-team="indexing.team" data-opposing-team="indexing.opposingTeam" data-league="indexing.league" data-videoplayer="VideoPlayer"></krossover-plays>
 
-    <krossover-play data-play="play" data-team="indexing.team" data-opposing-team="indexing.opposingTeam" data-league="indexing.league" data-videoplayer="VideoPlayer" data-ng-repeat="play in indexing.plays | orderBy:'startTime' | scores track by $index"></krossover-play>
-
-</div>
