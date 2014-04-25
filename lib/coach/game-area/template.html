@@ -4,7 +4,7 @@
         <header>
             <div>
 
-                {{$storage.game.datePlayed | date: 'MMM d, yyyy'}} <span class="match-up">{{$storage.team.name}} {{$storage.game.finalScore}} vs {{$storage.game.opposingFinalScore}} {{$storage.opposingTeam.name}}</span>
+                {{game.datePlayed | date: 'MMM d, yyyy'}} <span class="match-up">{{team.name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{opposingTeam.name}}</span>
                 <a data-ng-href="#"><i class="icon-download"></i> Download</a>
                 <a data-ng-href="#"><i class="icon-globe"></i> Share</a>
 
