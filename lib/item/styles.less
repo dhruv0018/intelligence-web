@@ -9,6 +9,20 @@
         display: inline-block;
     }
 
+    .static {
+
+        color: @gray-dark;
+    }
+
+    .static,
+    button {
+
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+    }
+
     button {
 
         .btn;
@@ -22,6 +36,17 @@
         &:hover {
 
             text-decoration: none;
+        }
+
+        &[disabled] {
+
+            opacity: 1;
+
+            &,
+            &:hover {
+
+                color: @brand-primary;
+            }
         }
     }
 
