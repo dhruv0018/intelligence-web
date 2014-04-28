@@ -70,6 +70,7 @@ Roles.controller('RolesController', [
     function controller($scope, $state, $modalInstance, session) {
 
         $scope.currentUser = session.currentUser;
+        $scope.roles = session.currentUser.roles;
 
         $scope.setDefaultRole = function(role) {
 
