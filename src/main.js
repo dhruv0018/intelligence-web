@@ -61,6 +61,10 @@ require('./services/plays');
 require('./services/indexing');
 require('./services/filtersets');
 
+require('./managers/tags');
+require('./managers/play');
+require('./managers/event');
+
 require('./directives/alert');
 require('./directives/match');
 require('./directives/form');
@@ -69,6 +73,9 @@ require('./directives/input');
 require('./directives/submit');
 require('./directives/keyboard');
 require('./directives/draggable');
+require('./directives/focus');
+require('./directives/autofocus');
+require('./directives/autotab');
 
 require('./directives/verify-password.js');
 
@@ -100,6 +107,12 @@ component('coach');
 component('indexer');
 component('indexing');
 
+component('item');
+component('event');
+component('events');
+component('play');
+component('plays');
+
 component('videoplayer');
 
 component('roster');
@@ -110,6 +123,7 @@ component('thumbnail');
 component('film');
 component('mascot-placeholder');
 component('profile-placeholder');
+component('sport-placeholder');
 component('role-icon');
 component('add-player');
 

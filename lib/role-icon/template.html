@@ -3,7 +3,7 @@
 </div>
 
 <div class="role-icon" data-ng-if="currentUser.is(COACH)">
-	<sport-placeholder></sport-placeholder>
+	<sport-placeholder data-sport="sports[leagues[teams[role.teamId].leagueId].sportId]"></sport-placeholder>
 </div>
 
 <!-- Athlete to be done later

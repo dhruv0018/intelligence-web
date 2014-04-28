@@ -17,12 +17,7 @@ IntelligenceWebClient.directive('keybinding', [
 
         function link($scope, element, attributes) {
 
-            var keybinding = attributes.keybinding;
-
-            if (keybinding.length === 2) {
-
-                keybinding = keybinding.split('').join(' ');
-            }
+            var keybinding = parseKeybinding(attributes.keybinding);
 
             Mousetrap.bind(keybinding, function() {
 
@@ -34,9 +29,19 @@ IntelligenceWebClient.directive('keybinding', [
 
             element.on('$destroy', function() {
 
-                Mousetrap.unbind(attributes.keybinding);
+                var keybinding = parseKeybinding(attributes.keybinding);
+
+                Mousetrap.unbind(keybinding);
             });
         }
+
+        var parseKeybinding = function(keybinding) {
+
+            keybinding = keybinding.toLowerCase();
+            keybinding = keybinding.split('').join(' ');
+
+            return keybinding;
+        };
 
         return directive;
     }

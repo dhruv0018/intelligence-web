@@ -143,6 +143,9 @@ IntelligenceWebClient.factory('HttpInterceptor', [
                     $location.path('/login');
                     break;
 
+                case 404: /* Not Found */
+                    break;
+
                 case 500: /* Server Error */
                     ErrorReporter.reportError(new Error('Server error', response.data));
                     $location.path('/500').replace();
