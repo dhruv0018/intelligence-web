@@ -7,8 +7,9 @@
         <a class="dropdown-toggle">
             Filter Plays
         </a>
-        <span ng-repeat="filter in activeFilters track by filter.id" class="btn btn-primary">
+        <span ng-repeat="filter in activeFilters track by filter.id" class="btn btn-default">
             {{filter.name}}
+            <i ng-click="removeFilter($index)" class="icon-remove"></i>
         </span>
         <ul ng-click="$event.stopPropagation();" class="dropdown-menu">
             <li class="pull-left">
