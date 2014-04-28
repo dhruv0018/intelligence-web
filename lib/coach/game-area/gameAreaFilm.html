@@ -7,7 +7,7 @@
         <a class="dropdown-toggle">
             Filter Plays
         </a>
-        <span ng-repeat="filter in activeFilters track by filter.id" class="btn btn-default">
+        <span ng-repeat="filter in activeFilters track by filter.id" class="btn btn-default active-filter">
             {{filter.name}}
             <i ng-click="removeFilter($index)" class="icon-remove"></i>
         </span>
