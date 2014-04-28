@@ -1,3 +1,4 @@
+require('./gameAreaLog.js');
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -7,7 +8,8 @@ var angular = window.angular;
  */
 var GameAreaStatistics = angular.module('game-area-statistics', [
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'game-area-log'
 ]);
 
 GameAreaStatistics.run([
