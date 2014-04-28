@@ -102,7 +102,10 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return player;
                 });
 
-                newPlayers = self.resource.create(newPlayers).$promise;
+                if (!!newPlayers.length) {
+
+                    newPlayers = self.resource.create(newPlayers).$promise;
+                }
 
                 currentPlayers = currentPlayers.map(function(player) {
 

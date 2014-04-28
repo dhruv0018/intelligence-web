@@ -3,9 +3,6 @@
     "scripts": [
         "index.js",
         "filters.js",
-        "tags-service.js",
-        "play-service.js",
-        "event-service.js",
         "header-controller.js",
         "main-controller.js",
         "sidebar-notes-controller.js",
@@ -31,12 +28,6 @@
         "modal-delete-play.html",
         "modal-send-to-team.html",
         "modal-add-indexer-note.html"
-    ],
-    "paths": [
-        "."
-    ],
-    "local": [
-        "item"
     ],
     "dependencies": {
         "moment/moment": "2.5.1"

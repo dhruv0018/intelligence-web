@@ -1,18 +1,11 @@
-/* Fetch angular from the browser scope */
-var angular = window.angular;
+var IntelligenceWebClient = require('../app');
 
 /**
- * Indexing page module.
- * @module Indexing
- */
-var Indexing = angular.module('Indexing');
-
-/**
- * @module Indexing
- * @name TagsService
+ * @module IntelligenceWebClient
+ * @name TagsManager
  * @type {service}
  */
-Indexing.service('Indexing.TagsService', [
+IntelligenceWebClient.service('TagsManager', [
     'IndexingService',
     function service(indexing) {
 
