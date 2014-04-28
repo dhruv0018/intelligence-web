@@ -23,7 +23,7 @@ GameAreaStatistics.config([
 
         var gameArea = {
             name: 'ga-statistics',
-            url: '',
+            url: '/statistics',
             parent: 'Coach.GameArea',
             views: {
                 'content@Coach.GameArea': {
