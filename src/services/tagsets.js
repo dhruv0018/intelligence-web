@@ -114,6 +114,14 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
 
                 return results;
+            },
+
+            getStartTags: function() {
+
+                return this.tags.filter(function(tag) {
+
+                    return tag.isStart;
+                });
             }
         };
 

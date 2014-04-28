@@ -39,9 +39,11 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     return success ? success(plays) : plays;
                 };
 
-                error = error || function() {
+                error = error || function(response) {
 
-                    throw new Error('Could not load plays list');
+                    if (response.status === 404) return [];
+
+                    else throw new Error('Could not load plays list');
                 };
 
                 return self.resource.query({gameId: gameId}, callback, error);
@@ -53,7 +55,29 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play = play || self;
 
-                delete play.teams;
+                play.startTime = play.events
+
+                .map(function(event) {
+
+                    return angular.isNumber(event.time) ? event.time : 0;
+                })
+
+                .reduce(function(previous, current) {
+
+                    return previous < current ? previous : current;
+                });
+
+                play.endTime = play.events
+
+                .map(function(event) {
+
+                    return angular.isNumber(event.time) ? event.time : 0;
+                })
+
+                .reduce(function(previous, current) {
+
+                    return previous > current ? previous : current;
+                });
 
                 if (play.id) {
 
@@ -80,6 +104,36 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         play.events = events;
                         return play.save();
                     });
+                }
+            },
+
+            remove: function(play, success, error) {
+
+                var self = this;
+
+                var parameters = {};
+
+                play = play || self;
+
+                success = success || function(play) {
+
+                    return self.extendPlay(play);
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not remove play');
+
+                };
+
+                if (play.id) {
+
+                    var deletedPlay = self.resource.remove(parameters, play, success, error);
+                    return deletedPlay.$promise;
+
+                } else {
+
+                    throw new Error('Can not remove play from server that has not been previously saved remotely');
                 }
             }
         };

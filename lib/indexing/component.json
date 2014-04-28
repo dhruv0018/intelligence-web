@@ -2,14 +2,34 @@
     "name": "indexing",
     "scripts": [
         "index.js",
-        "indexing-controller.js"
+        "filters.js",
+        "header-controller.js",
+        "main-controller.js",
+        "sidebar-notes-controller.js",
+        "sidebar-playlist-controller.js",
+        "modal-delete-play-controller.js",
+        "modal-send-to-team-controller.js",
+        "modal-add-indexer-note-controller.js"
     ],
     "styles": [
-        "indexing.less",
-        "indexing-header.less"
+        "styles.less",
+        "header.less",
+        "sidebar-notes.less",
+        "sidebar-playlist.less",
+        "modal-delete-play.less",
+        "modal-send-to-team.less",
+        "modal-add-indexer-note.less"
     ],
     "templates": [
-        "indexing.html",
-        "indexing-header.html"
-    ]
+        "template.html",
+        "header.html",
+        "sidebar-notes.html",
+        "sidebar-playlist.html",
+        "modal-delete-play.html",
+        "modal-send-to-team.html",
+        "modal-add-indexer-note.html"
+    ],
+    "dependencies": {
+        "moment/moment": "2.5.1"
+    }
 }

@@ -1,0 +1,12 @@
+<span class="player-dropdown">
+
+    <button class="player-dropdown" data-ng-if="event.variableValues[item.index].value" data-ng-click="event.variableValues[item.index].value = null">{{ indexing.players[event.variableValues[item.index].value].firstName }} {{ indexing.players[event.variableValues[item.index].value].lastName }}</button>
+
+    <select class="player-dropdown" data-ng-if="!event.variableValues[item.index].value" data-ng-model="event.variableValues[item.index].value" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
+
+        <option data-keybinding="{{ indexing.teamPlayers[player.id].jerseyNumbers[indexing.teamRoster.id] }}" value="{{ player.id }}" data-ng-repeat="player in indexing.teamPlayers">{{ indexing.teamPlayers[player.id].jerseyNumbers[indexing.teamRoster.id] }} — {{ player.firstName }} {{ player.lastName }}</option>
+        <option data-keybinding="{{ indexing.opposingTeamPlayers[player.id].jerseyNumbers[indexing.opposingTeamRoster.id] }}" value="{{ player.id }}" data-ng-repeat="player in indexing.opposingTeamPlayers">{{ indexing.opposingTeamPlayers[player.id].jerseyNumbers[indexing.opposingTeamRoster.id] }} — {{ player.firstName }} {{ player.lastName }}</option>
+
+    </select>
+
+</span>

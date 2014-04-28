@@ -3,9 +3,6 @@ var TO = '';
 var ELEMENTS = 'E';
 var ATTRIBUTES = 'A';
 
-/* Video play rate limit. */
-var VIDEO_PLAYRATE_SPEEDLIMIT = 2;
-
 /* Step rate when changing play rate. */
 var VIDEO_PLAYRATE_STEP = 0.1;  // Use 10% speed steps
 
@@ -13,8 +10,8 @@ var IntelligenceWebClient = require('../../../app');
 
 
 IntelligenceWebClient.directive('krossoverPlayPauseButton', [
-    'VG_EVENTS', 'VG_STATES',
-    function(VG_EVENTS, VG_STATES) {
+    'config', 'VG_EVENTS', 'VG_STATES',
+    function(config, VG_EVENTS, VG_STATES) {
 
         return {
 
@@ -67,7 +64,7 @@ IntelligenceWebClient.directive('krossoverFastBackwardButton', [
 
                     /* NOTE: Negative values for playback rate mean backwards. */
 
-                    var VIDEO_PLAYRATE_REVERSE_SPEEDLIMIT = -1 * VIDEO_PLAYRATE_SPEEDLIMIT;
+                    var VIDEO_PLAYRATE_REVERSE_SPEEDLIMIT = -1 * config.indexing.video.speedlimit;
 
                     var video = API.videoElement[0];
 
@@ -111,6 +108,8 @@ IntelligenceWebClient.directive('krossoverFastForwardButton', [
 
                 function onClickFastForward(event) {
 
+                    var VIDEO_PLAYRATE_SPEEDLIMIT = config.indexing.video.speedlimit;
+
                     var video = API.videoElement[0];
 
                     /* If video is going backwards.*/
@@ -140,73 +139,53 @@ IntelligenceWebClient.directive('krossoverFastForwardButton', [
     }
 ]);
 
-IntelligenceWebClient.directive('krossoverSlowBackwardButton', [
+IntelligenceWebClient.directive('krossoverJumpBackwardButton', [
     function() {
 
         return {
 
             restrict: TO += ELEMENTS,
             require: '^videogular',
-            templateUrl: 'krossover-slow-backward-button.html',
+            templateUrl: 'krossover-jump-backward-button.html',
 
             link: function($scope, element, attributes, API) {
 
-                function onClickSlowBackward(event) {
+                function onClickJumpBackward(event) {
 
                     var video = API.videoElement[0];
+                    var currentTime = video.currentTime;
+                    var time = currentTime - config.indexing.video.jump;
 
-                    /* If video is already stepping backwards. */
-                    if (video.playbackRate === -VIDEO_PLAYRATE_STEP) {
-
-                        /* Set the play rate to play normal. */
-                        video.playbackRate = 1;
-                        API.pause();
-
-                    } else {
-
-                        /* Set the play rate to play backwards very slowly. */
-                        video.playbackRate = -VIDEO_PLAYRATE_STEP;
-                        API.play();
-                    }
+                    API.seekTime(time);
                 }
 
-                element.bind('click', onClickSlowBackward);
+                element.bind('click', onClickJumpBackward);
             }
         };
     }
 ]);
 
-IntelligenceWebClient.directive('krossoverSlowForwardButton', [
+IntelligenceWebClient.directive('krossoverJumpForwardButton', [
     function() {
 
         return {
 
             restrict: TO += ELEMENTS,
             require: '^videogular',
-            templateUrl: 'krossover-slow-forward-button.html',
+            templateUrl: 'krossover-jump-forward-button.html',
 
             link: function($scope, element, attributes, API) {
 
-                function onClickSlowForward(event) {
+                function onClickJumpForward(event) {
 
                     var video = API.videoElement[0];
+                    var currentTime = video.currentTime;
+                    var time = currentTime + config.indexing.video.jump;
 
-                    /* If video is already stepping backwards. */
-                    if (video.playbackRate === VIDEO_PLAYRATE_STEP) {
-
-                        /* Set the play rate to play normal. */
-                        video.playbackRate = 1;
-                        API.pause();
-
-                    } else {
-
-                        /* Set the play rate to play forwards very slowly. */
-                        video.playbackRate = VIDEO_PLAYRATE_STEP;
-                        API.play();
-                    }
+                    API.seekTime(time);
                 }
 
-                element.bind('click', onClickSlowForward);
+                element.bind('click', onClickJumpForward);
             }
         };
     }

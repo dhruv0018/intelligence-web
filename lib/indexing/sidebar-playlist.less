@@ -1,0 +1,227 @@
+@import (reference) "main.less";
+
+.indexing {
+
+    main {
+
+        position: relative;
+    }
+
+    .alert-editing {
+
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        padding-left: 30px;
+        padding-right: 30px;
+        background-color: @alert-warning-bg;
+
+        h5 {
+
+            display: inline;
+            color: black;
+            font-size: 18px;
+            font-weight: 500;
+            font-style: italic;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-delete-event {
+
+            .btn;
+            .btn-link;
+            .pull-right;
+            height: 50px;
+            text-transform: uppercase;
+
+            &:focus,
+            &:hover {
+
+                text-decoration: none;
+            }
+        }
+    }
+
+    .indexing-block {
+
+        margin: 0 auto;
+        height: 100px;
+        width: ~"calc(100% - 61px - 50px - 100px - 10px)";
+        position: absolute;
+        top: 50px;
+        left: 0;
+        right: 0;
+        padding-bottom: 50px;
+    }
+
+    .indexing-block.fullscreen {
+
+        width: ~"calc(100% - 20px)";
+        position: fixed;
+        z-index: 2147483647;
+    }
+
+    .controls {
+
+        text-align: center;
+    }
+
+    .btn-indexing-main {
+
+        .btn;
+        width: 350px;
+        height: 50px;
+        border-radius: 25px;
+        font-size: 24px;
+        font-weight: 400;
+        position: relative;
+        top: 25px;
+    }
+
+    .btn-indexing-start {
+
+        .btn-indexing-main;
+
+        &,
+        &:focus,
+        &:hover {
+
+            color: white;
+            background-color: @brand-blue;
+        }
+    }
+
+    .btn-next,
+    .btn-save,
+    .btn-back {
+
+        .btn;
+        .btn-sm;
+        .btn-default;
+
+        font-weight: 600;
+
+        &:focus,
+        &:hover {
+
+            .btn-primary;
+        }
+    }
+
+    .btn-next,
+    .btn-save {
+
+        position: absolute;
+        left: 0;
+        bottom: 10px;
+    }
+
+    .btn-back {
+
+        position: absolute;
+        top: 10px;
+        right: 0;
+    }
+
+    .script {
+
+        height: 50px;
+        padding-top: 10px;
+        padding-right: 91px;
+    }
+
+    .tags {
+
+        padding-top: 10px;
+        padding-right: 91px;
+        line-height: 40px;
+    }
+
+    .tag {
+
+        .btn;
+        .btn-sm;
+        .btn-default;
+
+        margin-bottom: 10px;
+        margin-right: 10px;
+        font-weight: 600;
+
+        &:focus,
+        &:hover {
+
+            .btn-primary;
+        }
+
+        &:last-child {
+
+            margin-right: 0;
+        }
+    }
+
+    .sidebar-notes,
+    .sidebar-playlist {
+
+        width: 350px;
+
+        flex: 0 0 350px;
+        border-left: 1px solid rgb(216, 216, 216);
+        overflow-y: auto;
+
+        &.ui-hide {
+
+            flex: 0 0 0;
+        }
+
+        header {
+
+            position: relative;
+            background-color: @brand-blue;
+
+            h6 {
+
+                color: white;
+                margin-top: 0;
+                margin-left: 10px;
+                margin-bottom: 0;
+            }
+
+            .btn-close {
+
+                .btn;
+                .btn-blank;
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 0;
+                padding-right: 10px;
+
+                &,
+                &:focus,
+                &:hover {
+
+                    color: white;
+                }
+            }
+
+            &,
+            h6,
+            .btn-close {
+
+                height: 30px;
+                line-height: 30px;
+            }
+        }
+    }
+
+    x-krossover-videoplayer {
+
+        margin-top: 150px;
+        margin-left: auto;
+        margin-right: auto;
+        width: ~"calc(100% - 61px - 50px - 100px - 10px)";
+        height: ~"calc(100% - 61px - 50px - 100px - 10px)";
+    }
+}
