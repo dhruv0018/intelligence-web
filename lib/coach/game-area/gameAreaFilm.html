@@ -7,6 +7,9 @@
         <a class="dropdown-toggle">
             Filter Plays
         </a>
+        <span ng-repeat="filter in activeFilters track by filter.id" class="btn btn-primary">
+            {{filter.name}}
+        </span>
         <ul ng-click="$event.stopPropagation();" class="dropdown-menu">
             <li class="pull-left">
                 <div>
@@ -21,7 +24,7 @@
             <li class="pull-left">
                 <div ng-repeat="(key,value) in filtersetCategories">
                     <div ng-repeat="(innerkey, innerValue) in value.subFilters">
-                        <a ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn btn-primary" ng-click="setFilter(innerValue.id)">
+                        <a ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn btn-primary" ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
                     </div>
