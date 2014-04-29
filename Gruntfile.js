@@ -511,12 +511,10 @@ module.exports = function(grunt) {
 
     grunt.registerTask('qa', [
         'clean',
-        'lint',
         'env:qa',
         'componentbuild:prod',
         'concat:mousetrap',
         'browserify:prod',
-        'test',
         'less',
         'componentbuild:styles',
         'concat:theme',
@@ -531,13 +529,11 @@ module.exports = function(grunt) {
 
     grunt.registerTask('prod', [
         'clean',
-        'lint',
         'env:prod',
         'componentbuild:prod',
         'concat:mousetrap',
         'browserify:prod',
         'componentbuild:styles',
-        'test',
         'less',
         'concat:theme',
         'autoprefixer',
