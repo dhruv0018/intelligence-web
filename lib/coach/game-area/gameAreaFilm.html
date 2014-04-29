@@ -14,18 +14,25 @@
         <ul ng-click="$event.stopPropagation();" class="dropdown-menu">
             <li class="pull-left">
                 <div>
-                    <a class="btn btn-primary" ng-click="setFilter('39')">test the filters</a>
+                    <a class="btn" ng-click="setTeam(team.id)" ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
+                        {{team.name}}
+                    </a>
+                </div>
+                <div>
+                    <a class="btn" ng-click="setTeam(opposingTeam.id)" ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
+                        {{opposingTeam.name}}
+                    </a>
                 </div>
             </li>
             <li class="pull-left">
                 <div ng-repeat="(key,value) in filtersetCategories">
-                    <a ng-click="setFilterCategory(value.id)" class="btn btn-primary">{{value.name}}</a>
+                    <a ng-click="setFilterCategory(value.id)" class="btn" ng-class="{'btn-default':(value.id !== filterCategory), 'btn-primary':(value.id === filterCategory)}">{{value.name}}</a>
                 </div>
             </li>
             <li class="pull-left">
                 <div ng-repeat="(key,value) in filtersetCategories">
                     <div ng-repeat="(innerkey, innerValue) in value.subFilters">
-                        <a ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn btn-primary" ng-click="setFilter(innerValue)">
+                        <a ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn btn-default" ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
                     </div>
