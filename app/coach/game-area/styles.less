@@ -150,10 +150,16 @@
       font-size: 16px;
       &.active,
       &:active,
+      &:focus,
       &:hover {
         background-color: @brand-primary;
         color: white;
       }
+    }
+
+    .active-stats-btn {
+        background-color: @brand-primary;
+        color: white;
     }
   }
 
@@ -161,6 +167,40 @@
 
     th, td {
       text-align: center;
+    }
+
+    .fixed-table {
+      table-layout: fixed;
+    }
+
+    .logheader {
+
+      color: white;
+      
+      .topth {
+        font-weight: 400;
+        border:thin solid black;
+        background-color: @brand-blue;
+      }
+    }
+
+    .hometeamrow {
+    }
+
+    .awayteamrow {
+      background-color: @gray-lightest;
+
+    }
+
+    .statcell {
+        border-right: none;
+        border-left: none;
+      }
+
+    .setnumber {
+      font-size: 30px;
+      color: black;
+      vertical-align: middle;
     }
 
     .firstrow {

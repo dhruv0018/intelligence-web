@@ -12,6 +12,8 @@
         "gameAreaFilm.html",
         "gameAreaStatistics.html",
         "gameAreaLog.html",
+        "gameAreaHomeStats.html",
+        "gameAreaAwayStats.html",
         "gameAreaShotChart.html",
         "deleteGame.html"
     ],
@@ -21,6 +23,8 @@
         "gameAreaFilm.js",
         "gameAreaStatistics.js",
         "gameAreaLog.js",
+        "gameAreaHomeStats.js",
+        "gameAreaAwayStats.js",
         "gameAreaShotChart.js"
     ],
     "styles": [
