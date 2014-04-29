@@ -306,7 +306,7 @@ module.exports = function(grunt) {
                 files: {
                     'public/intelligence/.htaccess': 'src/.htaccess',
                     'public/intelligence/index.html': 'build/index.html',
-                    'public/intelligence/styles.css': 'build/prefixed.css',
+                    'public/intelligence/styles.css': 'build/styles.css',
                     'public/intelligence/scripts.js': 'build/bundle.js'
                 }
             }
