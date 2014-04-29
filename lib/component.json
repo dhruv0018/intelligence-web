@@ -1,0 +1,10 @@
+{
+    "name": "lib",
+    "repository": "",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "directives"
+    ]
+}
