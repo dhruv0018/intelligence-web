@@ -155,7 +155,23 @@ Login.controller('LoginController', [
             auth.logoutUser();
 
             /* Login the user. */
-            auth.loginUser(email, password, persist, function(error, user) {
+            auth.loginUser(email, password, persist).then(function(user) {
+
+                if (user) {
+
+                    /* If the user has more than one role, but has not selected
+                     * a default one yet. */
+                    if (user.roles && user.roles.length > 1 && !user.defaultRole) {
+
+                        $state.go('roles', false);
+
+                    } else {
+
+                        $state.go('contact-info');
+                    }
+                }
+
+            }, function(error) {
 
                 if (error) {
 
@@ -187,20 +203,6 @@ Login.controller('LoginController', [
                     }
 
                     else throw error;
-                }
-
-                else if (user) {
-
-                    /* If the user has more than one role, but has not selected
-                     * a default one yet. */
-                    if (user.roles && user.roles.length > 1 && !user.defaultRole) {
-
-                        $state.go('roles', false);
-
-                    } else {
-
-                        $state.go('contact-info');
-                    }
                 }
             });
         };
