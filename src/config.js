@@ -1,3 +1,5 @@
+var package = require('../package.json');
+
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -8,7 +10,7 @@ var prod = require('../config/prod.json');
 
 var Config = angular.module('config', []);
 
-Config.constant('pkg', pkg);
+Config.constant('package', package);
 
 if (process.env.NODE_ENV === 'development') {
 
