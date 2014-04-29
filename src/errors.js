@@ -171,10 +171,13 @@ IntelligenceWebClient.factory('HttpInterceptor', [
     }
 ]);
 
-IntelligenceWebClient.config(function($httpProvider) {
+IntelligenceWebClient.config([
+    '$httpProvider',
+    function($httpProvider) {
 
-    $httpProvider.interceptors.push('HttpInterceptor');
-});
+        $httpProvider.interceptors.push('HttpInterceptor');
+    }
+]);
 
 IntelligenceWebClient.run([
     '$rootScope', '$location', '$state',
