@@ -489,9 +489,10 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'notify:build', 'watch']);
 
     grunt.registerTask('build', [
-        'env:dev',
-        'componentbuild:dev',
-        'browserify:dev']);
+        'env:prod',
+        'componentbuild:prod',
+        'concat:mousetrap',
+        'browserify:prod']);
 
     grunt.registerTask('dev', [
         'env:dev',
