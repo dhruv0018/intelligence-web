@@ -1,6 +1,11 @@
 var ONE_SECOND = 1000; // Number of milliseconds in a second.
 
-var IntelligenceWebClient = require('./app');
+var package = require('../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.config([
     'config', 'flowFactoryProvider',

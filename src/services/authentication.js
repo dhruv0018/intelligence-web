@@ -1,8 +1,13 @@
-var component = require('../../build/build.js');
+//var component = require('../../build/build.js');
 
-var OAuth = component('oauth');
+//var OAuth = component('oauth');
 
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 /**
  * A service to manage logging users in and out. It handles getting the OAuth

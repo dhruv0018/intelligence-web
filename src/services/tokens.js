@@ -1,11 +1,12 @@
 var ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
 var REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
 
-var component = require('../../build/build.js');
+var package = require('../../package.json');
 
-var OAuth = component('oauth');
+/* Fetch angular from the browser scope */
+var angular = window.angular;
 
-var IntelligenceWebClient = require('../app');
+var IntelligenceWebClient = angular.module(package.name);
 
 /**
  * A service to manage OAuth tokens. It handles retrieving them from the server

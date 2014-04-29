@@ -1,5 +1,9 @@
+var package = require('../../package.json');
 
-var IntelligenceWebClient = require('../app');
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 /**
  * A service to manage a users account state. It handles setting the users role
