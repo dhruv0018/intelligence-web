@@ -423,43 +423,56 @@ module.exports = function(grunt) {
                 spawn: false,
                 livereload: true
             },
-            json: {
-                files: ['*.json'],
-                tasks: ['install', 'dev']
+            packagejson: {
+                files: ['package.json'],
+                tasks: ['install', 'dev', 'notify:build']
+            },
+            componentjson: {
+                files: ['component.json'],
+                tasks: ['componentbuild:install', 'dev', 'notify:build']
             },
             config: {
                 files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
-                tasks: ['htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
+                tasks: ['newer:htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             css: {
                 files: ['app/**/*.css', 'lib/**/*.css'],
-                tasks: ['csslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
+                tasks: ['newer:csslint', 'componentbuild:styles', 'copy:dev', 'copy:build', 'notify:build']
             },
             less: {
                 files: ['app/**/*.less', 'lib/**/*.less'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build']
+                tasks: ['componentbuild:styles', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build']
+                tasks: ['newer:less:theme', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['jshint', 'browserify:dev', 'copy:dev', 'copy:build']
+                tasks: ['newer:jshint', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
+                tasks: ['newer:jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             tests: {
                 files: ['test/unit/**/*.js'],
-                tasks: ['jshint', 'karma']
+                tasks: ['newer:jshint', 'karma']
             }
         },
+
+        notify: {
+            build: {
+                options: {
+                    title: '<%= pkg.name %>',
+                    message: 'Build Ready'
+                }
+            }
+        }
     });
 
 
