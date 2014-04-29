@@ -1,6 +1,5 @@
-var pkg = require('../package.json');
+var package = require('../package.json');
 
-var component = require('../build/build.js');
 
 require('angular/angular');
 require('angular-sanitize/angular-sanitize');
@@ -24,8 +23,20 @@ require('videogular-controls/controls');
 require('videogular-buffering/buffering');
 require('videogular-overlay-play/overlay-play');
 require('videogular-poster/poster');
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+/* Components */
+require('../build/build');
+
+/* App dependencies */
+require('./config');
 
 require('./app');
+
+require('./flow');
+require('./routes');
+require('./errors');
 
 require('./constants/kvs-whitelist');
 
