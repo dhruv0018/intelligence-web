@@ -1,0 +1,20 @@
+{
+    "name": "app",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "root",
+        "login",
+        "roles",
+        "header",
+        "account",
+        "admin",
+        "indexer",
+        "indexing",
+        "coach"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

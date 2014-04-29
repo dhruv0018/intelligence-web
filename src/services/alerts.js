@@ -1,4 +1,9 @@
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 /**
  * A service for alert notifications displayed to the user.

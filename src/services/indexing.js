@@ -1,4 +1,9 @@
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('IndexingService', [
     '$q', '$sce', 'TAG_VARIABLE_TYPE', 'VIDEO_STATUSES', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'TagsetsFactory', 'PlaysFactory', 'PlayersFactory',

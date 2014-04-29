@@ -1,0 +1,16 @@
+{
+    "name": "admin",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "users",
+        "teams",
+        "schools",
+        "queue",
+        "leagues"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

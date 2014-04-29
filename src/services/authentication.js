@@ -1,8 +1,13 @@
-var component = require('../../build/build.js');
+//var component = require('../../build/build.js');
 
-var OAuth = component('oauth');
+//var OAuth = component('oauth');
 
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 /**
  * A service to manage logging users in and out. It handles getting the OAuth
@@ -13,8 +18,8 @@ var IntelligenceWebClient = require('../app');
  * @type {service}
  */
 IntelligenceWebClient.service('AuthenticationService', [
-    '$rootScope', '$injector', '$http', 'config', 'TokensService', 'SessionService',
-    function($rootScope, $injector, $http, config, tokens, session) {
+    '$rootScope', '$injector', '$q', '$http', 'config', 'TokensService', 'SessionService',
+    function($rootScope, $injector, $q, $http, config, tokens, session) {
 
         return {
 
@@ -27,9 +32,8 @@ IntelligenceWebClient.service('AuthenticationService', [
              * @param {String} password - a password for the users email.
              * @param {Boolean} persist - a flag which indicates if the users
              * login should be persisted. If true, it will be persisted.
-             * @callback {function(user)} callback - returns the current user.
              */
-            loginUser: function(email, password, persist, callback) {
+            loginUser: function(email, password, persist) {
 
                 /* Make sure that both email and password are present. */
                 if (!email) throw new Error('Missing email');
@@ -49,9 +53,9 @@ IntelligenceWebClient.service('AuthenticationService', [
 
                 /* Get the OAuth tokens by verifying the users email and password
                  * though the API. Optionally persisting the tokens and user. */
-                tokens.getTokens(email, password, function(error, authTokens) {
+                return tokens.getTokens(email, password).then(function(authTokens) {
 
-                    if (error) return callback(error);
+                    var promisedUser = $q.defer();
 
                     /* Store the tokens. Optionally persisting. */
                     tokens.setTokens(authTokens, persist);
@@ -62,13 +66,15 @@ IntelligenceWebClient.service('AuthenticationService', [
                     /* Retrieve the user from the session. */
                     session.retrieveCurrentUser(email, function(error, user) {
 
-                        if (error) return callback(error);
+                        if (error) throw error;
 
                         /* Store the user in the session. Optionally persisting. */
                         session.storeCurrentUser(user, persist);
 
-                        callback(null, user);
+                        promisedUser.resolve(user);
                     });
+
+                    return promisedUser.promise;
                 });
             },
 

@@ -2,7 +2,7 @@
 
 'use strict';
 
-var less = require('component-less');
+var less = require("component-builder-less");
 
 var modRewrite = require('connect-modrewrite');
 
@@ -171,71 +171,78 @@ module.exports = function(grunt) {
         /* Build process - JS */
 
         componentbuild: {
+            install: {
+                options: {
+                    install: true
+                },
+                src: '.',
+                dest: './build'
+            },
+            files: {
+                options: {
+                    copy: true,
+                    scripts: false,
+                    styles: false,
+                    files: true
+                },
+                src: '.',
+                dest: './build/assets'
+            },
+            styles: {
+                options: {
+                    scripts: false,
+                    styles: true,
+                    files: false,
+                    prefix: 'assets/',
+                    stylePlugins: function(builder) {
+                        builder.use('styles', less({
+                            paths: [
+                                'theme',
+                                'node_modules/bootstrap/less',
+                                'node_modules/font-awesome/less'
+                            ]
+                        }));
+                    }
+                },
+                src: '.',
+                dest: './build'
+            },
             dev: {
                 options: {
-                    name: 'build',
-                    dev: true,
-                    sourceUrls: true,
-                    prefix: 'assets',
-                    copy: true,
-                    configure: function(builder){
-
-                        var lessc = function(builder) {
-
-                            var options = {
-                                env: {
-                                    paths: [
-                                        'theme',
-                                        'node_modules/bootstrap/less',
-                                        'node_modules/font-awesome/less'
-                                    ]
-                                }
-                            };
-
-                            return less(builder, options);
-                        };
-
-                        builder.use(lessc);
-                    }
+                    development: false,
+                    standalone: true,
+                    require: true,
+                    verbose: true,
+                    copy: false,
+                    scripts: true,
+                    styles: false,
+                    files: false
                 },
                 src: '.',
                 dest: './build'
             },
             prod: {
                 options: {
-                    name: 'build',
-                    prefix: 'assets',
-                    copy: true,
-                    configure: function(builder){
-
-                        var lessc = function(builder) {
-
-                            var options = {
-                                env: {
-                                    paths: [
-                                        'theme',
-                                        'node_modules/bootstrap/less',
-                                        'node_modules/font-awesome/less'
-                                    ]
-                                }
-                            };
-
-                            return less(builder, options);
-                        };
-
-                        builder.use(lessc);
-                    }
+                    development: false,
+                    standalone: true,
+                    require: true,
+                    verbose: true,
+                    copy: false,
+                    scripts: true,
+                    styles: false,
+                    files: false
                 },
                 src: '.',
                 dest: './build'
-            }
+            },
         },
 
         browserify: {
             dev: {
                 options: {
                     debug: true,
-                    transform: ['decomponentify', 'envify'],
+                    transform: ['envify'],
+                    noParse: ['./build/build.js'],
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
@@ -253,7 +260,8 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
-                    transform: ['decomponentify', 'envify'],
+                    transform: ['envify'],
+                    noParse: ['./build/build.js'],
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
@@ -280,12 +288,6 @@ module.exports = function(grunt) {
                 cwd:    'theme',
                 src:    'assets/**',
                 dest:   'build'
-            },
-            'component-assets': {
-                expand: true,
-                cwd:    'lib',
-                src:    '**/*.png',
-                dest:   'build/assets'
             },
             assets: {
                 expand: true,
@@ -421,43 +423,56 @@ module.exports = function(grunt) {
                 spawn: false,
                 livereload: true
             },
-            json: {
-                files: ['*.json'],
-                tasks: ['install', 'dev']
+            packagejson: {
+                files: ['package.json'],
+                tasks: ['install', 'dev', 'notify:build']
+            },
+            componentjson: {
+                files: ['component.json'],
+                tasks: ['componentbuild:install', 'dev', 'notify:build']
             },
             config: {
                 files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
-                tasks: ['htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
+                tasks: ['newer:htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             css: {
                 files: ['app/**/*.css', 'lib/**/*.css'],
-                tasks: ['csslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
+                tasks: ['newer:csslint', 'componentbuild:styles', 'copy:dev', 'copy:build', 'notify:build']
             },
             less: {
                 files: ['app/**/*.less', 'lib/**/*.less'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build']
+                tasks: ['componentbuild:styles', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build']
+                tasks: ['newer:less:theme', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['jshint', 'browserify:dev', 'copy:dev', 'copy:build']
+                tasks: ['newer:jshint', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build']
+                tasks: ['newer:jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             tests: {
                 files: ['test/unit/**/*.js'],
-                tasks: ['jshint', 'karma']
+                tasks: ['newer:jshint', 'karma']
             }
         },
+
+        notify: {
+            build: {
+                options: {
+                    title: '<%= pkg.name %>',
+                    message: 'Build Ready'
+                }
+            }
+        }
     });
 
 
@@ -471,23 +486,25 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
+    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'notify:build', 'watch']);
 
     grunt.registerTask('build', [
-        'env:dev',
-        'componentbuild:dev',
-        'browserify:dev']);
+        'env:prod',
+        'componentbuild:prod',
+        'concat:mousetrap',
+        'browserify:prod']);
 
     grunt.registerTask('dev', [
         'env:dev',
         'componentbuild:dev',
         'concat:mousetrap',
         'browserify:dev',
+        'componentbuild:styles',
         'less',
         'concat:theme',
         'autoprefixer',
+        'componentbuild:files',
         'copy:theme-assets',
-        'copy:component-assets',
         'copy:assets',
         'copy:dev',
         'copy:build']);
@@ -501,12 +518,13 @@ module.exports = function(grunt) {
         'browserify:prod',
         'test',
         'less',
+        'componentbuild:styles',
         'concat:theme',
         'autoprefixer',
         'htmlmin',
         'csso',
+        'componentbuild:files',
         'copy:theme-assets',
-        'copy:component-assets',
         'copy:assets',
         'copy:build',
         'ver:prod']);
@@ -518,14 +536,15 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'concat:mousetrap',
         'browserify:prod',
+        'componentbuild:styles',
         'test',
         'less',
         'concat:theme',
         'autoprefixer',
         'htmlmin',
         'csso',
+        'componentbuild:files',
         'copy:theme-assets',
-        'copy:component-assets',
         'copy:assets',
         'copy:build',
         'ver:prod']);

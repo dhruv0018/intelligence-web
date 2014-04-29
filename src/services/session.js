@@ -1,6 +1,11 @@
 var CURRENT_USER_KEY = 'CURRENT_USER';
 
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 /**
  * A service to manage the current user in the session. It handles both storing
