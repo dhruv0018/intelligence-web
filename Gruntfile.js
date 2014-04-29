@@ -6,6 +6,17 @@ var less = require("component-builder-less");
 
 var modRewrite = require('connect-modrewrite');
 
+var htmlminifier = require('builder-html-minifier')
+
+var htmlminifierOptions = {
+    removeComments: true,
+    collapseWhitespace: true,
+    collapseBooleanAttributes: true,
+    removeEmptyElements: true,
+    removeEmptyAttributes: true,
+    removeOptionalTags: true
+}
+
 module.exports = function(grunt) {
 
     require('time-grunt')(grunt);
@@ -230,7 +241,10 @@ module.exports = function(grunt) {
                     copy: false,
                     scripts: true,
                     styles: false,
-                    files: false
+                    files: false,
+                    scriptPlugins: function(builder) {
+                        builder.use('templates', htmlminifier(htmlminifierOptions));
+                    }
                 },
                 src: '.',
                 dest: './build'
