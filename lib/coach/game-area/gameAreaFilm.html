@@ -32,7 +32,7 @@
             <li class="pull-left">
                 <div ng-repeat="(key,value) in filtersetCategories">
                     <div ng-repeat="(innerkey, innerValue) in value.subFilters">
-                        <a ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn btn-default" ng-click="setFilter(innerValue)">
+                        <a ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn" ng-class="{'btn-default': (!activeFilters.contains(innerValue.id)), 'btn-primary':(activeFilters.contains(innerValue.id))}" ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
                     </div>
