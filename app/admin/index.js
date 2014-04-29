@@ -1,3 +1,9 @@
+require('users');
+require('teams');
+require('schools');
+require('queue');
+require('leagues');
+
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -5,7 +11,12 @@ var angular = window.angular;
  * Admin module.
  * @module Admin
  */
-var Admin = angular.module('admin', [
+var Admin = angular.module('Admin', [
+    'Users',
+    'teams',
+    'schools',
+    'queue',
+    'leagues'
 ]);
 
 /**

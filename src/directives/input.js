@@ -2,7 +2,12 @@ var TO = '';
 var ELEMENTS = 'E';
 var ATTRIBUTES = 'A';
 
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 /**
  * A directive to handle the visibility of the error element following input

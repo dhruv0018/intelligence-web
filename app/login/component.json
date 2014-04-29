@@ -1,15 +1,5 @@
 {
     "name": "login",
-    "dependencies": {
-    },
-    "development": {
-    },
-    "paths": [
-        "lib"
-    ],
-    "local": [
-        "oauth"
-    ],
     "images": [
         "krossover-login-logo-320.png"
     ],

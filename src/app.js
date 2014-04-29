@@ -1,6 +1,9 @@
-var pkg = require('../package.json');
+var package = require('../package.json');
 
-var IntelligenceWebClient = angular.module(pkg.name, [
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name, [
     'ngSanitize',
     'ngStorage',
     'ngResource',
@@ -9,36 +12,7 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'ui.router',
     'ui.bootstrap',
     'config',
-    'login',
-    'role',
-    'roles',
-    'rolebar',
-    'header',
-    'alertbar',
-    'plan',
-    'team-info',
-    'account',
-    'Item',
-    'Event',
-    'Events',
-    'Play',
-    'Plays',
-    'Users',
-    'teams',
-    'schools',
-    'queue',
-    'leagues',
-    'no-results',
-    'admin',
-    'Coach',
-    'indexer',
-    'Indexing',
-    'videoplayer',
-    'sport-placeholder',
-    'role-icon',
-    'add-player',
-    'mascot-placeholder',
-    'profile-placeholder'
+    'App',
+    'Directives'
 ]);
 
-exports = module.exports = IntelligenceWebClient;

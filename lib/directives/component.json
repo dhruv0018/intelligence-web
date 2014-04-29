@@ -1,0 +1,33 @@
+{
+    "name": "directives",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "role",
+        "rolebar",
+        "alertbar",
+        "plan",
+        "item",
+        "event",
+        "events",
+        "play",
+        "plays",
+        "no-results",
+        "videoplayer",
+        "athlete",
+        "team-info",
+        "coach-info",
+        "thumbnail",
+        "roster",
+        "film",
+        "sport-placeholder",
+        "role-icon",
+        "add-player",
+        "mascot-placeholder",
+        "profile-placeholder"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

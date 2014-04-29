@@ -6,8 +6,12 @@ var ATTRIBUTES = 'A';
 /* Step rate when changing play rate. */
 var VIDEO_PLAYRATE_STEP = 0.1;  // Use 10% speed steps
 
-var IntelligenceWebClient = require('../../../app');
+var package = require('../../../../package.json');
 
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.directive('krossoverPlayPauseButton', [
     'config', 'VG_EVENTS', 'VG_STATES',

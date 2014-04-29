@@ -5,12 +5,12 @@ var template = require('./template.html');
 var angular = window.angular;
 
 /**
- * Header
- * @module IntelligenceWebClient
+ * Root module
+ * @module Root
  */
-var IntelligenceWebClient = angular.module('intelligence-web-client');
+var Root = angular.module('root', []);
 
-IntelligenceWebClient.run([
+Root.run([
     '$rootScope', '$window',
     function run($rootScope, $window){
 
@@ -27,7 +27,7 @@ IntelligenceWebClient.run([
 ]);
 
 /* Cache the template file */
-IntelligenceWebClient.run([
+Root.run([
     '$templateCache',
     function run($templateCache) {
 
@@ -35,7 +35,7 @@ IntelligenceWebClient.run([
     }
 ]);
 
-IntelligenceWebClient.config([
+Root.config([
     '$stateProvider',
     function config($stateProvider) {
 
@@ -56,11 +56,11 @@ IntelligenceWebClient.config([
 
 /**
  * Root controller.
- * @module IntelligenceWebClient
+ * @module Root
  * @name RootController
  * @type {Controller}
  */
-IntelligenceWebClient.controller('RootController', [
+Root.controller('RootController', [
     '$scope', '$state', 'SessionService', 'AuthenticationService',
     function controller($scope, $state, session, auth) {
 
