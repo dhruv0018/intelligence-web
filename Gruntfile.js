@@ -486,7 +486,7 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'watch']);
+    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'notify:build', 'watch']);
 
     grunt.registerTask('build', [
         'env:dev',
@@ -498,11 +498,12 @@ module.exports = function(grunt) {
         'componentbuild:dev',
         'concat:mousetrap',
         'browserify:dev',
+        'componentbuild:styles',
         'less',
         'concat:theme',
         'autoprefixer',
+        'componentbuild:files',
         'copy:theme-assets',
-        'copy:component-assets',
         'copy:assets',
         'copy:dev',
         'copy:build']);
@@ -512,16 +513,18 @@ module.exports = function(grunt) {
         'lint',
         'env:qa',
         'componentbuild:prod',
+        'replace:require',
         'concat:mousetrap',
         'browserify:prod',
         'test',
         'less',
+        'componentbuild:styles',
         'concat:theme',
         'autoprefixer',
         'htmlmin',
         'csso',
+        'componentbuild:files',
         'copy:theme-assets',
-        'copy:component-assets',
         'copy:assets',
         'copy:build',
         'ver:prod']);
@@ -531,16 +534,18 @@ module.exports = function(grunt) {
         'lint',
         'env:prod',
         'componentbuild:prod',
+        'replace:require',
         'concat:mousetrap',
         'browserify:prod',
+        'componentbuild:styles',
         'test',
         'less',
         'concat:theme',
         'autoprefixer',
         'htmlmin',
         'csso',
+        'componentbuild:files',
         'copy:theme-assets',
-        'copy:component-assets',
         'copy:assets',
         'copy:build',
         'ver:prod']);
