@@ -2,7 +2,7 @@
 
 'use strict';
 
-var less = require('component-less');
+var less = require("component-builder-less");
 
 var modRewrite = require('connect-modrewrite');
 
@@ -171,71 +171,78 @@ module.exports = function(grunt) {
         /* Build process - JS */
 
         componentbuild: {
+            install: {
+                options: {
+                    install: true
+                },
+                src: '.',
+                dest: './build'
+            },
+            files: {
+                options: {
+                    copy: true,
+                    scripts: false,
+                    styles: false,
+                    files: true
+                },
+                src: '.',
+                dest: './build/assets'
+            },
+            styles: {
+                options: {
+                    scripts: false,
+                    styles: true,
+                    files: false,
+                    prefix: 'assets/',
+                    stylePlugins: function(builder) {
+                        builder.use('styles', less({
+                            paths: [
+                                'theme',
+                                'node_modules/bootstrap/less',
+                                'node_modules/font-awesome/less'
+                            ]
+                        }));
+                    }
+                },
+                src: '.',
+                dest: './build'
+            },
             dev: {
                 options: {
-                    name: 'build',
-                    dev: true,
-                    sourceUrls: true,
-                    prefix: 'assets',
-                    copy: true,
-                    configure: function(builder){
-
-                        var lessc = function(builder) {
-
-                            var options = {
-                                env: {
-                                    paths: [
-                                        'theme',
-                                        'node_modules/bootstrap/less',
-                                        'node_modules/font-awesome/less'
-                                    ]
-                                }
-                            };
-
-                            return less(builder, options);
-                        };
-
-                        builder.use(lessc);
-                    }
+                    development: false,
+                    standalone: true,
+                    require: true,
+                    verbose: true,
+                    copy: false,
+                    scripts: true,
+                    styles: false,
+                    files: false
                 },
                 src: '.',
                 dest: './build'
             },
             prod: {
                 options: {
-                    name: 'build',
-                    prefix: 'assets',
-                    copy: true,
-                    configure: function(builder){
-
-                        var lessc = function(builder) {
-
-                            var options = {
-                                env: {
-                                    paths: [
-                                        'theme',
-                                        'node_modules/bootstrap/less',
-                                        'node_modules/font-awesome/less'
-                                    ]
-                                }
-                            };
-
-                            return less(builder, options);
-                        };
-
-                        builder.use(lessc);
-                    }
+                    development: false,
+                    standalone: true,
+                    require: true,
+                    verbose: true,
+                    copy: false,
+                    scripts: true,
+                    styles: false,
+                    files: false
                 },
                 src: '.',
                 dest: './build'
-            }
+            },
         },
 
         browserify: {
             dev: {
                 options: {
                     debug: true,
-                    transform: ['decomponentify', 'envify'],
+                    transform: ['envify'],
+                    noParse: ['./build/build.js'],
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
@@ -253,7 +260,8 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
-                    transform: ['decomponentify', 'envify'],
+                    transform: ['envify'],
+                    noParse: ['./build/build.js'],
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
@@ -280,12 +288,6 @@ module.exports = function(grunt) {
                 cwd:    'theme',
                 src:    'assets/**',
                 dest:   'build'
-            },
-            'component-assets': {
-                expand: true,
-                cwd:    'lib',
-                src:    '**/*.png',
-                dest:   'build/assets'
             },
             assets: {
                 expand: true,
