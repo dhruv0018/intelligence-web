@@ -61,7 +61,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 var filter = {
                     plays: {},
                     options: {
-                        teamId: resources.game.teamId
+                        teamId: resources.teamId
                     }
                 };
 
