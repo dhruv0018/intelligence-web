@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.config([
-    'config', 'flowFactoryProvider',
-    function (config, flow) {
+    'flowFactoryProvider',
+    function (flow) {
 
         flow.defaults = {
 
