@@ -49,11 +49,11 @@ GameAreaFilm.controller('GameAreaFilmController', [
         $scope.filterCategory = 1;
         $scope.activeFilters = [];
 
-//        $scope.activeFilters.contains = function(id){
-//            return this.some(function(filter){
-//                return id === filter.id;
-//            });
-//        };
+        $scope.activeFilters.contains = function(id){
+            return this.some(function(filter){
+                return id === filter.id;
+            });
+        };
 
         $scope.$watch('filterId', function(filterId) {
 //            $scope.resources = {
