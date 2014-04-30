@@ -55,28 +55,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
             });
         };
 
-        $scope.$watch('filterId', function(filterId) {
-//            $scope.resources = {
-//                game: $scope.game,
-//                plays: $scope.plays,
-//                teamId: $scope.teamId
-//            };
-//
-//            console.log($scope.resources);
-//
-//            if(filterId > 0) {
-//                plays.filterPlays({
-//                    filterId: $scope.filterId
-//                }, $scope.resources, function(plays) {
-//                    $scope.plays = plays[$scope.gameId];
-//                });
-//            }
-        });
-
-        $scope.$watch('plays', function(plays) {
-            console.log(plays);
-        });
-
         $scope.$watch('activeFilters', function(activeFilters) {
             if (activeFilters.length > 0) {
                 $scope.resources = {
@@ -91,14 +69,10 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
                 //TODO refactor this when we have time
                 angular.forEach($scope.activeFilters, function(filter) {
-                    console.log(filter);
                     $scope.remainingFilters.push(filter);
                 });
 
-                console.log($scope.remainingFilters);
-
                 $scope.plays = $scope.recursiveFilter($scope.remainingFilters);
-                console.log(plays);
             }
 
             if (activeFilters.length === 0) {
@@ -108,21 +82,15 @@ GameAreaFilm.controller('GameAreaFilmController', [
         }, true);
 
         $scope.recursiveFilter = function (activeFilters) {
-            if (activeFilters.length === 0) {
+            if (activeFilters.length === 0 || $scope.resources.plays.length === 0) {
                 return $scope.plays;
             }
-
-            console.log('in recursive function ');
-            console.log(activeFilters);
 
             plays.filterPlays({
                 filterId: activeFilters.shift().id
             }, $scope.resources, function(plays) {
 
-                console.log(plays);
-
                 $scope.plays = plays[$scope.game.id];
-                console.log($scope.plays);
 
                 $scope.resources = {
                     game: $scope.game,
@@ -150,7 +118,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
         };
 
         $scope.setTeam = function(teamId) {
-            console.log(teamId);
             $scope.teamId = teamId;
         };
 
@@ -161,8 +128,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
         $scope.removeFilter = function(index) {
             $scope.activeFilters.splice(index, 1);
         };
-
-
 
 
         data.then(function(data){
@@ -178,7 +143,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
                     data.plays = plays;
                     $scope.totalPlays = plays;
                     $scope.plays = plays;
-                    console.log(data);
+
                     //TODO remove hardcoded exclusion list
                     $scope.exclusion = [1, 2, 3, 41, 15, 31, 27];
 
