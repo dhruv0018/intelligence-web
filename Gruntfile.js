@@ -318,7 +318,7 @@ module.exports = function(grunt) {
                     'public/intelligence/.htaccess': 'src/.htaccess',
                     'public/intelligence/index.html': 'build/index.html',
                     'public/intelligence/styles.css': 'build/styles.css',
-                    'public/intelligence/scripts.js': 'build/bundle.js'
+                    'public/intelligence/scripts.js': 'build/scripts.js'
                 }
             }
         },
@@ -526,6 +526,7 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'concat:mousetrap',
         'browserify:prod',
+        'uglify',
         'less',
         'componentbuild:styles',
         'concat:theme',
@@ -544,6 +545,7 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'concat:mousetrap',
         'browserify:prod',
+        'uglify',
         'componentbuild:styles',
         'less',
         'concat:theme',
@@ -556,3 +558,4 @@ module.exports = function(grunt) {
         'copy:build',
         'ver:prod']);
 };
+
