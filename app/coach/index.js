@@ -87,6 +87,9 @@ Coach.service('Coach.Data', [
             roster: data.rosterId
         }, function (players) {
             promisedRoster.resolve(players);
+        }, function(failure) {
+            //TODO load empty
+            promisedRoster.resolve([]);
         });
 
         promises = {

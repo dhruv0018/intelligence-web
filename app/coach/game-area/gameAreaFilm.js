@@ -49,10 +49,14 @@ GameAreaFilm.controller('GameAreaFilmController', [
         $scope.filterCategory = 2;
         $scope.activeFilters = [];
 
-        $scope.activeFilters.contains = function(id){
-            return this.some(function(filter){
+        $scope.contains = function(array, id){
+            return array.some(function(filter){
                 return id === filter.id;
             });
+        };
+
+        $scope.clearFilters  = function() {
+            $scope.activeFilters = [];
         };
 
         $scope.$watch('activeFilters', function(activeFilters) {
@@ -136,56 +140,60 @@ GameAreaFilm.controller('GameAreaFilmController', [
             $scope.teamId = $scope.team.id;
             $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
             $scope.league = data.league;
-            try {
-                $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
-                $scope.sources = $scope.game.getVideoSources();
-                plays.getList($scope.gameId, function (plays) {
-                    data.plays = plays;
-                    $scope.totalPlays = plays;
-                    $scope.plays = plays;
+            $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
 
-                    //TODO remove hardcoded exclusion list
-                    $scope.exclusion = [1, 2, 3, 41, 15, 31, 27];
+            if ($scope.gameStatus === 'INDEXED') {
+                try {
+                    $scope.sources = $scope.game.getVideoSources();
+                    plays.getList($scope.gameId, function (plays) {
+                        data.plays = plays;
+                        $scope.totalPlays = plays;
+                        $scope.plays = plays;
 
-                    //TODO fix hardcoded filter set id
-                    filtersets.get('1', function(filterset) {
-                        $scope.playerFilter = {};
-                        angular.forEach(filterset.filters, function(filter) {
-                            $scope.filtersetCategories[filter.filterCategoryId].subFilters = $scope.filtersetCategories[filter.filterCategoryId].subFilters || [];
+                        //TODO remove hardcoded exclusion list
+                        $scope.exclusion = [1, 2, 3, 41, 15, 31, 27];
 
-                            //TODO figure out a better way to deal with players at a later date
-                            if (filter.name === 'Player') {
-                                $scope.playerFilter = filter;
-                            }
+                        //TODO fix hardcoded filter set id
+                        filtersets.get('1', function(filterset) {
+                            $scope.playerFilter = {};
+                            angular.forEach(filterset.filters, function(filter) {
+                                $scope.filtersetCategories[filter.filterCategoryId].subFilters = $scope.filtersetCategories[filter.filterCategoryId].subFilters || [];
 
-                            var excluded = $scope.exclusion.some(function(excludedFilterId) {
-                                return filter.id === excludedFilterId;
+                                //TODO figure out a better way to deal with players at a later date
+                                if (filter.name === 'Player') {
+                                    $scope.playerFilter = filter;
+                                }
+
+                                var excluded = $scope.exclusion.some(function(excludedFilterId) {
+                                    return filter.id === excludedFilterId;
+                                });
+
+                                if (!excluded) {
+                                    $scope.filtersetCategories[filter.filterCategoryId].subFilters.push(filter);
+                                }
+
                             });
 
-                            if (!excluded) {
-                                $scope.filtersetCategories[filter.filterCategoryId].subFilters.push(filter);
-                            }
+                            angular.forEach(data.roster, function(player) {
+                                var playerFilter = {
+                                    id: $scope.playerFilter.id,
+                                    playerId: player.id,
+                                    name: player.firstName[0] + '. ' + player.lastName,
+                                    filterCategoryId: $scope.playerFilter.filterCategoryId
+                                };
+                                $scope.filtersetCategories[$scope.playerFilter.filterCategoryId].subFilters.push(playerFilter);
+                            });
 
                         });
-
-                        angular.forEach(data.roster, function(player) {
-                            var playerFilter = {
-                                id: $scope.playerFilter.id,
-                                playerId: player.id,
-                                name: player.firstName[0] + '. ' + player.lastName,
-                                filterCategoryId: $scope.playerFilter.filterCategoryId
-                            };
-                            $scope.filtersetCategories[$scope.playerFilter.filterCategoryId].subFilters.push(playerFilter);
-                        });
-
                     });
-                });
 
 
-            } catch (e) {
-                console.log('corrupted game');
-                console.log(e);
+                } catch (e) {
+                    console.log('corrupted game');
+                    console.log(e);
+                }
             }
+
         });
     }
 ]);
