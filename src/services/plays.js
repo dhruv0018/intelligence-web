@@ -54,6 +54,37 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 return self.resource.query({gameId: gameId}, callback, error);
             },
 
+            filterPlays: function(filterId, resources, success, error) {
+                var self = this;
+
+                var playIds = [];
+
+                angular.forEach(resources.plays, function(play) {
+                    playIds.push(play.id);
+                });
+
+                var filter = {
+                    plays: {},
+                    options: {
+                        teamId: resources.teamId
+                    }
+                };
+
+                filter.plays[resources.game.id] = playIds;
+
+                var newPlayList = new PlaysResource(filter);
+
+                var callback = success || function(plays) {
+                    return plays;
+                };
+
+                error = error || function() {
+                    throw new Error('could not filter plays');
+                };
+
+                return newPlayList.$filter({filterId: filterId.filterId}, callback, error);
+            },
+
             save: function(play) {
 
                 var self = this;

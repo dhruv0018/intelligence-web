@@ -27,6 +27,13 @@ IntelligenceWebClient.factory('PlaysResource', [
                 params: { gameId: '@gameId' },
                 isArray: true
             },
+            filter: {
+                method: 'POST',
+                url: config.api.uri + 'plays/filter/:filterId',
+                params: {
+                    filterId: '@filterId'
+                }
+            },
             create: { method: 'POST' },
             update: { method: 'PUT' }
         };
@@ -34,3 +41,4 @@ IntelligenceWebClient.factory('PlaysResource', [
         return $resource(url, paramDefaults, actions);
     }
 ]);
+

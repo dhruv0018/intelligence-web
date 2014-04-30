@@ -31,6 +31,7 @@ require('./models/tagsets');
 require('./models/positionsets');
 require('./models/plays');
 require('./models/video');
+require('./models/filtersets');
 
 require('./services/authentication');
 require('./services/authorization');
@@ -49,6 +50,7 @@ require('./services/tagsets');
 require('./services/positionsets');
 require('./services/plays');
 require('./services/indexing');
+require('./services/filtersets');
 
 require('./managers/tags');
 require('./managers/play');
