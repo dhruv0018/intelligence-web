@@ -27,7 +27,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
 
                 //TODO temporarily forces all games to render in breakdown mode
-                game.status = 6;
+                //game.status = 6;
 
                 //TODO change this scheme to adjust to new type scheme
                 if(typeof game.gameType !== 'undefined') {

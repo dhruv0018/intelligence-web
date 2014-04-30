@@ -6,6 +6,14 @@ var less = require("component-builder-less");
 
 var modRewrite = require('connect-modrewrite');
 
+var htmlminifier = require('builder-html-minifier')
+
+var htmlminifierOptions = {
+    removeComments: true,
+    collapseWhitespace: true,
+    collapseBooleanAttributes: true
+}
+
 module.exports = function(grunt) {
 
     require('time-grunt')(grunt);
@@ -106,7 +114,7 @@ module.exports = function(grunt) {
             }
         },
 
-        csso: {
+        cssmin: {
             prod: {
                 files: {
                     'build/styles.css': ['build/prefixed.css']
@@ -230,11 +238,14 @@ module.exports = function(grunt) {
                     copy: false,
                     scripts: true,
                     styles: false,
-                    files: false
+                    files: false,
+                    scriptPlugins: function(builder) {
+                        builder.use('templates', htmlminifier(htmlminifierOptions));
+                    }
                 },
                 src: '.',
                 dest: './build'
-            },
+            }
         },
 
         browserify: {
@@ -302,12 +313,17 @@ module.exports = function(grunt) {
                     'build/scripts.js': 'build/bundle.js'
                 }
             },
-            build: {
+            prod: {
                 files: {
                     'public/intelligence/.htaccess': 'src/.htaccess',
+                    'public/intelligence/manifest.appcache': 'manifest.appcache'
+                }
+            },
+            build: {
+                files: {
                     'public/intelligence/index.html': 'build/index.html',
-                    'public/intelligence/styles.css': 'build/prefixed.css',
-                    'public/intelligence/scripts.js': 'build/bundle.js'
+                    'public/intelligence/styles.css': 'build/styles.css',
+                    'public/intelligence/scripts.js': 'build/scripts.js'
                 }
             }
         },
@@ -323,7 +339,8 @@ module.exports = function(grunt) {
                         'public/intelligence/*.css'
                     ],
                     references: [
-                        'public/intelligence/index.html'
+                        'public/intelligence/index.html',
+                        'public/intelligence/manifest.appcache'
                     ]
                 }]
             }
@@ -482,7 +499,7 @@ module.exports = function(grunt) {
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['karma']);
     grunt.registerTask('lint', ['htmlhint', 'jshint']);
-    grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
+    grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['connect']);
@@ -511,41 +528,42 @@ module.exports = function(grunt) {
 
     grunt.registerTask('qa', [
         'clean',
-        'lint',
         'env:qa',
         'componentbuild:prod',
         'concat:mousetrap',
         'browserify:prod',
-        'test',
+        'uglify',
         'less',
         'componentbuild:styles',
         'concat:theme',
         'autoprefixer',
+        'cssmin',
         'htmlmin',
-        'csso',
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
         'copy:build',
+        'copy:prod',
         'ver:prod']);
 
     grunt.registerTask('prod', [
         'clean',
-        'lint',
         'env:prod',
         'componentbuild:prod',
         'concat:mousetrap',
         'browserify:prod',
+        'uglify',
         'componentbuild:styles',
-        'test',
         'less',
         'concat:theme',
         'autoprefixer',
+        'cssmin',
         'htmlmin',
-        'csso',
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
         'copy:build',
+        'copy:prod',
         'ver:prod']);
 };
+

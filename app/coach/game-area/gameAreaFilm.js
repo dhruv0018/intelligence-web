@@ -46,36 +46,18 @@ GameAreaFilm.controller('GameAreaFilmController', [
         $scope.gameId = $state.params.id;
         $scope.filterId = null;
         $scope.teamId = null;
-        $scope.filterCategory = 1;
+        $scope.filterCategory = 2;
         $scope.activeFilters = [];
 
-        $scope.activeFilters.contains = function(id){
-            return this.some(function(filter){
+        $scope.contains = function(array, id){
+            return array.some(function(filter){
                 return id === filter.id;
             });
         };
 
-        $scope.$watch('filterId', function(filterId) {
-//            $scope.resources = {
-//                game: $scope.game,
-//                plays: $scope.plays,
-//                teamId: $scope.teamId
-//            };
-//
-//            console.log($scope.resources);
-//
-//            if(filterId > 0) {
-//                plays.filterPlays({
-//                    filterId: $scope.filterId
-//                }, $scope.resources, function(plays) {
-//                    $scope.plays = plays[$scope.gameId];
-//                });
-//            }
-        });
-
-        $scope.$watch('plays', function(plays) {
-            console.log(plays);
-        });
+        $scope.clearFilters  = function() {
+            $scope.activeFilters = [];
+        };
 
         $scope.$watch('activeFilters', function(activeFilters) {
             if (activeFilters.length > 0) {
@@ -91,14 +73,10 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
                 //TODO refactor this when we have time
                 angular.forEach($scope.activeFilters, function(filter) {
-                    console.log(filter);
                     $scope.remainingFilters.push(filter);
                 });
 
-                console.log($scope.remainingFilters);
-
                 $scope.plays = $scope.recursiveFilter($scope.remainingFilters);
-                console.log(plays);
             }
 
             if (activeFilters.length === 0) {
@@ -108,21 +86,15 @@ GameAreaFilm.controller('GameAreaFilmController', [
         }, true);
 
         $scope.recursiveFilter = function (activeFilters) {
-            if (activeFilters.length === 0) {
+            if (activeFilters.length === 0 || $scope.resources.plays.length === 0) {
                 return $scope.plays;
             }
-
-            console.log('in recursive function ');
-            console.log(activeFilters);
 
             plays.filterPlays({
                 filterId: activeFilters.shift().id
             }, $scope.resources, function(plays) {
 
-                console.log(plays);
-
                 $scope.plays = plays[$scope.game.id];
-                console.log($scope.plays);
 
                 $scope.resources = {
                     game: $scope.game,
@@ -150,7 +122,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
         };
 
         $scope.setTeam = function(teamId) {
-            console.log(teamId);
             $scope.teamId = teamId;
         };
 
@@ -163,64 +134,66 @@ GameAreaFilm.controller('GameAreaFilmController', [
         };
 
 
-
-
         data.then(function(data){
             $scope.game = data.game;
             $scope.team = data.coachTeam;
             $scope.teamId = $scope.team.id;
             $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
             $scope.league = data.league;
-            try {
-                $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
-                $scope.sources = $scope.game.getVideoSources();
-                plays.getList($scope.gameId, function (plays) {
-                    data.plays = plays;
-                    $scope.totalPlays = plays;
-                    $scope.plays = plays;
-                    console.log(data);
-                    //TODO remove hardcoded exclusion list
-                    $scope.exclusion = [1, 2, 3, 41, 15, 31, 27];
+            $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
+            $scope.sources = $scope.game.getVideoSources();
+            
+            if ($scope.gameStatus === 'INDEXED') {
+                try {
+                    plays.getList($scope.gameId, function (plays) {
+                        data.plays = plays;
+                        $scope.totalPlays = plays;
+                        $scope.plays = plays;
 
-                    //TODO fix hardcoded filter set id
-                    filtersets.get('1', function(filterset) {
-                        $scope.playerFilter = {};
-                        angular.forEach(filterset.filters, function(filter) {
-                            $scope.filtersetCategories[filter.filterCategoryId].subFilters = $scope.filtersetCategories[filter.filterCategoryId].subFilters || [];
+                        //TODO remove hardcoded exclusion list
+                        $scope.exclusion = [1, 2, 3, 41, 15, 31, 27];
 
-                            //TODO figure out a better way to deal with players at a later date
-                            if (filter.name === 'Player') {
-                                $scope.playerFilter = filter;
-                            }
+                        //TODO fix hardcoded filter set id
+                        filtersets.get('1', function(filterset) {
+                            $scope.playerFilter = {};
+                            angular.forEach(filterset.filters, function(filter) {
+                                $scope.filtersetCategories[filter.filterCategoryId].subFilters = $scope.filtersetCategories[filter.filterCategoryId].subFilters || [];
 
-                            var excluded = $scope.exclusion.some(function(excludedFilterId) {
-                                return filter.id === excludedFilterId;
+                                //TODO figure out a better way to deal with players at a later date
+                                if (filter.name === 'Player') {
+                                    $scope.playerFilter = filter;
+                                }
+
+                                var excluded = $scope.exclusion.some(function(excludedFilterId) {
+                                    return filter.id === excludedFilterId;
+                                });
+
+                                if (!excluded) {
+                                    $scope.filtersetCategories[filter.filterCategoryId].subFilters.push(filter);
+                                }
+
                             });
 
-                            if (!excluded) {
-                                $scope.filtersetCategories[filter.filterCategoryId].subFilters.push(filter);
-                            }
+                            angular.forEach(data.roster, function(player) {
+                                var playerFilter = {
+                                    id: $scope.playerFilter.id,
+                                    playerId: player.id,
+                                    name: player.firstName[0] + '. ' + player.lastName,
+                                    filterCategoryId: $scope.playerFilter.filterCategoryId
+                                };
+                                $scope.filtersetCategories[$scope.playerFilter.filterCategoryId].subFilters.push(playerFilter);
+                            });
 
                         });
-
-                        angular.forEach(data.roster, function(player) {
-                            var playerFilter = {
-                                id: $scope.playerFilter.id,
-                                playerId: player.id,
-                                name: player.firstName[0] + '. ' + player.lastName,
-                                filterCategoryId: $scope.playerFilter.filterCategoryId
-                            };
-                            $scope.filtersetCategories[$scope.playerFilter.filterCategoryId].subFilters.push(playerFilter);
-                        });
-
                     });
-                });
 
 
-            } catch (e) {
-                console.log('corrupted game');
-                console.log(e);
+                } catch (e) {
+                    console.log('corrupted game');
+                    console.log(e);
+                }
             }
+
         });
     }
 ]);
