@@ -141,10 +141,10 @@ GameAreaFilm.controller('GameAreaFilmController', [
             $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
             $scope.league = data.league;
             $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
-
+            $scope.sources = $scope.game.getVideoSources();
+            
             if ($scope.gameStatus === 'INDEXED') {
                 try {
-                    $scope.sources = $scope.game.getVideoSources();
                     plays.getList($scope.gameId, function (plays) {
                         data.plays = plays;
                         $scope.totalPlays = plays;
