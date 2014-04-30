@@ -46,7 +46,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
         $scope.gameId = $state.params.id;
         $scope.filterId = null;
         $scope.teamId = null;
-        $scope.filterCategory = 1;
+        $scope.filterCategory = 2;
         $scope.activeFilters = [];
 
         $scope.activeFilters.contains = function(id){
