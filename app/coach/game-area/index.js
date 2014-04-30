@@ -73,7 +73,7 @@ GameArea.controller('Coach.GameArea.controller', [
 
         //TODO remove later when we have data for shot charts and statistics
         $scope.hasShotChart = false;
-        $scope.hasStatistics = false;
+        $scope.hasStatistics = true;
 
         data.then(function(data) {
             $scope.game = data.indexedGames[$scope.gameId];

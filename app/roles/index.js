@@ -77,7 +77,7 @@ Roles.controller('RolesController', [
             session.storeCurrentUser($scope.currentUser);
 
             $modalInstance.close();
-            $state.go('account');
+            $state.go('contact-info');
         };
     }
 ]);

@@ -1,3 +1,6 @@
+require('./gameAreaLog.js');
+require('./gameAreaHomeStats.js');
+require('./gameAreaAwayStats.js');
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -7,7 +10,10 @@ var angular = window.angular;
  */
 var GameAreaStatistics = angular.module('game-area-statistics', [
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'game-area-log',
+    'game-area-homestats',
+    'game-area-awaystats'
 ]);
 
 GameAreaStatistics.run([
@@ -23,7 +29,7 @@ GameAreaStatistics.config([
 
         var gameArea = {
             name: 'ga-statistics',
-            url: '',
+            url: '/statistics',
             parent: 'Coach.GameArea',
             views: {
                 'content@Coach.GameArea': {
@@ -42,6 +48,8 @@ GameAreaStatistics.controller('GameAreaStatisticsController', [
     '$scope', '$state', '$stateParams', 'GamesFactory',
     function controller($scope, $state, $stateParams, games) {
 
+        $state.go('ga-log');
 
+        $scope.statsSelector = 'ga-log';
     }
 ]);
