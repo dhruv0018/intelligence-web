@@ -53,27 +53,30 @@ Login.config([
                     }
                 },
 
-                onEnter: function($state, AuthenticationService, SessionService) {
+                onEnter: [
+                    '$state', 'AuthenticationService', 'SessionService',
+                    function($state, auth, session) {
 
-                    if (AuthenticationService.isLoggedIn) {
+                        if (auth.isLoggedIn) {
 
-                        var currentUser = SessionService.retrieveCurrentUser();
+                            var currentUser = session.retrieveCurrentUser();
 
-                        /* If the user has more than one role, but has not
-                         * selected a default one yet. */
-                        if (currentUser &&
-                            currentUser.roles &&
-                            currentUser.roles.length > 1 &&
-                            !currentUser.defaultRole) {
+                            /* If the user has more than one role, but has not
+                            * selected a default one yet. */
+                            if (currentUser &&
+                                currentUser.roles &&
+                                currentUser.roles.length > 1 &&
+                                !currentUser.defaultRole) {
 
-                            $state.go('roles', false);
+                                $state.go('roles', false);
 
-                        } else {
+                            } else {
 
-                            $state.go('contact-info');
+                                $state.go('contact-info');
+                            }
                         }
                     }
-                }
+                ]
             })
 
             .state('locked', {
