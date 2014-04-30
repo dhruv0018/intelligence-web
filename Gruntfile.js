@@ -11,10 +11,7 @@ var htmlminifier = require('builder-html-minifier')
 var htmlminifierOptions = {
     removeComments: true,
     collapseWhitespace: true,
-    collapseBooleanAttributes: true,
-    removeEmptyElements: true,
-    removeEmptyAttributes: true,
-    removeOptionalTags: true
+    collapseBooleanAttributes: true
 }
 
 module.exports = function(grunt) {
@@ -533,8 +530,8 @@ module.exports = function(grunt) {
         'componentbuild:styles',
         'concat:theme',
         'autoprefixer',
-        'htmlmin',
         'cssmin',
+        'htmlmin',
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
@@ -551,8 +548,8 @@ module.exports = function(grunt) {
         'less',
         'concat:theme',
         'autoprefixer',
-        'htmlmin',
         'cssmin',
+        'htmlmin',
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',

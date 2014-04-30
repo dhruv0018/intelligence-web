@@ -47,9 +47,9 @@
     "devDependencies": {
         "browserify": "~3.32.1",
         "browserify-shim": "~3.4.1",
+        "builder-html-minifier": "^1.0.0",
         "component": "1.0.x",
         "component-builder-less": "0.0.2",
-        "builder-html-minifier": "^1.0.0",
         "connect-modrewrite": "~0.5.8",
         "envify": "~1.2.1",
         "grunt": "~0.4.1",
