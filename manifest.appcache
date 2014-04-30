@@ -1,0 +1,9 @@
+CACHE MANIFEST
+
+CACHE:
+index.html
+styles.css
+scripts.js
+
+NETWORK:
+*
