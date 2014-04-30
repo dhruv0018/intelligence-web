@@ -31,15 +31,18 @@
                 </div>
             </li>
             <li class="pull-left">
-                <div ng-hide="value.id === 1 || value.id === 8 || value.id === 7" ng-repeat="(key,value) in filtersetCategories">
+                <div ng-hide="value.id === 8 || value.id === 7" ng-repeat="(key,value) in filtersetCategories">
                     <a ng-click="setFilterCategory(value.id)" class="btn" ng-class="{'btn-default':(value.id !== filterCategory), 'btn-primary':(value.id === filterCategory)}">{{value.name}}</a>
                 </div>
             </li>
             <li class="pull-left">
                 <div ng-repeat="(key,value) in filtersetCategories">
                     <div ng-repeat="(innerkey, innerValue) in value.subFilters">
-                        <a ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" ng-click="setFilter(innerValue)">
+                        <a ng-if="!innerValue.customFilter" ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
+                        </a>
+                        <a ng-hide="innerValue.filterCategoryId !== filterCategory" ng-if="innerValue.customFilter" class="btn btn-default" ng-click="setFilter(innerValue)">
+                            custom: {{innerValue.name}}
                         </a>
                     </div>
                 </div>
