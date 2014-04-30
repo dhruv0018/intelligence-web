@@ -117,7 +117,7 @@ module.exports = function(grunt) {
             }
         },
 
-        csso: {
+        cssmin: {
             prod: {
                 files: {
                     'build/styles.css': ['build/prefixed.css']
@@ -248,7 +248,7 @@ module.exports = function(grunt) {
                 },
                 src: '.',
                 dest: './build'
-            },
+            }
         },
 
         browserify: {
@@ -496,7 +496,7 @@ module.exports = function(grunt) {
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['karma']);
     grunt.registerTask('lint', ['htmlhint', 'jshint']);
-    grunt.registerTask('min', ['htmlmin', 'csso', 'uglify']);
+    grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['connect']);
@@ -534,7 +534,7 @@ module.exports = function(grunt) {
         'concat:theme',
         'autoprefixer',
         'htmlmin',
-        'csso',
+        'cssmin',
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
@@ -552,7 +552,7 @@ module.exports = function(grunt) {
         'concat:theme',
         'autoprefixer',
         'htmlmin',
-        'csso',
+        'cssmin',
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
