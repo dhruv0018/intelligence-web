@@ -302,9 +302,14 @@ module.exports = function(grunt) {
                     'build/scripts.js': 'build/bundle.js'
                 }
             },
-            build: {
+            prod: {
                 files: {
                     'public/intelligence/.htaccess': 'src/.htaccess',
+                    'public/intelligence/manifest.appcache': 'manifest.appcache'
+                }
+            },
+            build: {
+                files: {
                     'public/intelligence/index.html': 'build/index.html',
                     'public/intelligence/styles.css': 'build/prefixed.css',
                     'public/intelligence/scripts.js': 'build/bundle.js'
@@ -323,7 +328,8 @@ module.exports = function(grunt) {
                         'public/intelligence/*.css'
                     ],
                     references: [
-                        'public/intelligence/index.html'
+                        'public/intelligence/index.html',
+                        'public/intelligence/manifest.appcache'
                     ]
                 }]
             }
@@ -527,6 +533,7 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:assets',
         'copy:build',
+        'copy:prod',
         'ver:prod']);
 
     grunt.registerTask('prod', [
@@ -547,5 +554,6 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:assets',
         'copy:build',
+        'copy:prod',
         'ver:prod']);
 };
