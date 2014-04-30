@@ -48,6 +48,11 @@ GameArea.config([
                     templateUrl: 'coach/game-area/template.html',
                     controller: 'Coach.GameArea.controller'
                 }
+            },
+            resolve: {
+                'indexingData': ['$stateParams', 'IndexingService', function($stateParams, indexing) {
+                    return indexing.init($stateParams.id);
+                }]
             }
         });
     }
@@ -60,8 +65,9 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', '$localStorage', 'GAME_STATUS_IDS', 'Coach.Data',
-    function controller($scope, $state, $stateParams, $localStorage, GAME_STATUS_IDS, data) {
+    '$scope', '$state', '$stateParams', '$localStorage', 'GAME_STATUS_IDS', 'Coach.Data', 'indexingData',
+    function controller($scope, $state, $stateParams, $localStorage, GAME_STATUS_IDS, data, indexingData) {
+
 
         $scope.gameId = $stateParams.id;
 
@@ -71,6 +77,7 @@ GameArea.controller('Coach.GameArea.controller', [
 
         data.then(function(data) {
             $scope.game = data.indexedGames[$scope.gameId];
+            $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
 
             //TODO change to onEnter event when we get resolves working
             if ($scope.game.isDeleted) {
@@ -78,10 +85,9 @@ GameArea.controller('Coach.GameArea.controller', [
             }
 
             data.game = $scope.game;
-
-            $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
             $scope.team = data.teams[$scope.game.teamId];
             $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
+
         });
 
         //view selector

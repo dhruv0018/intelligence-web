@@ -47,8 +47,8 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory',
-    function($q, session, teams, games, players) {
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'LeaguesFactory', 'IndexingService',
+    function($q, session, teams, games, players, leagues, indexing) {
         var promises = {};
         var deferred = $q.defer();
         var promisedGames = $q.defer();
@@ -56,6 +56,7 @@ Coach.service('Coach.Data', [
         var promisedTeam = $q.defer();
         var promisedTeams = $q.defer();
         var promisedRoster = $q.defer();
+        var promisedLeague = $q.defer();
 
         //TODO get real teamroster id
         var data = {
@@ -73,6 +74,10 @@ Coach.service('Coach.Data', [
         teams.getList(function(teams) {
             promisedTeams.resolve(teams);
             promisedTeam.resolve(teams[data.teamId]);
+
+            leagues.get(teams[data.teamId].leagueId, function(league) {
+                promisedLeague.resolve(league);
+            });
         }, function() {
             console.log('failure to get the teams');
         }, true);
@@ -82,6 +87,9 @@ Coach.service('Coach.Data', [
             roster: data.rosterId
         }, function (players) {
             promisedRoster.resolve(players);
+        }, function(failure) {
+            //TODO load empty
+            promisedRoster.resolve([]);
         });
 
         promises = {
@@ -89,6 +97,7 @@ Coach.service('Coach.Data', [
             indexedGames: promisedIndexedGames.promise,
             coachTeam: promisedTeam.promise,
             teams: promisedTeams.promise,
+            league: promisedLeague.promise,
             roster: promisedRoster.promise,
             rosterId: $q.when({id: data.rosterId})
         };
