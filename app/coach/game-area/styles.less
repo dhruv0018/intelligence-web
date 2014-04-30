@@ -63,6 +63,9 @@
   }
 
   .game-area-film-filters{
+    height: 55px;
+    padding-top: 16px;
+
     &:after{
       visibility: hidden;
       display: block;
@@ -72,41 +75,67 @@
       height: 0;
     }
 
-    > *{
-      padding: 30px;
-    }
-
     .active-filter{
       margin-left:5px;
     }
 
     .play-count{
       border-right: 1px solid @gray-lighter;
-      width:400px;
+      width:290px;
+      padding-left: 20px;
+      letter-spacing: normal;
     }
 
     border-bottom:1px solid @gray-lighter;
 
     .filter-dropdown{
+      margin-left: 20px;
+
       .btn{
         text-align: left;
         border-radius: @border-radius-base;
       }
       ul{
-        width:940px;
+        padding-top: 25px;
+        width: 650px;
+        opacity: .95;
+
         li{
-          padding:0 30px 0 30px;
+          position: relative;
+          display: inline-block;
+          height: 315px;
+          vertical-align: top;
+          padding:0 20px 0 20px;
           border-right: 1px solid @gray-lighter;
-          min-height:400px;
+          overflow-y: auto;
+
           a{
-            min-width:250px;
-            margin-bottom:10px;
+            width:170px;
+            margin-bottom: 7px;
+            padding-bottom: 2px;
+            padding-top: 2px;
             border-radius:@border-radius-small;
+            letter-spacing: normal;
+            font-weight: 400;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
 
           &:last-of-type{
             border:none;
           }
+        }
+      }
+
+      .dropdown-toggle {
+        letter-spacing: normal;
+        text-decoration: none;
+        cursor: pointer;
+
+        .icon-chevron-down {
+          font-size: 12px;
+          margin-left: 5px;
         }
       }
     }
@@ -116,13 +145,15 @@
   .game-area-film{
     .player{
       padding-top:5%;
+      padding-left:10%;
+      display: inline-block;
       width: 70%;
-      max-width: 1000px;
+      max-width: 820px;
       margin: auto;
     }
 
     .sidebar{
-      width:400px;
+      width:290px;
       float:left;
     }
 
