@@ -20,4 +20,5 @@ require('videogular-controls/controls');
 require('videogular-buffering/buffering');
 require('videogular-overlay-play/overlay-play');
 require('videogular-poster/poster');
+require('Mousetrap');
 
