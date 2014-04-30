@@ -56,7 +56,7 @@
           <krossover-plays data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="league" data-videoplayer="VideoPlayer"></krossover-plays>
         </aside>
 
-        <div class="player">
+        <div class="player" ng-class="{'breakdown-player':(gameStatus === 'INDEXED')}">
             <x-krossover-videoplayer></x-krossover-videoplayer>
         </div>
 
