@@ -323,7 +323,7 @@ module.exports = function(grunt) {
                 files: {
                     'public/intelligence/index.html': 'build/index.html',
                     'public/intelligence/styles.css': 'build/styles.css',
-                    'public/intelligence/scripts.js': 'build/scripts.js'
+                    'public/intelligence/scripts.js': 'build/bundle.js'
                 }
             }
         },
