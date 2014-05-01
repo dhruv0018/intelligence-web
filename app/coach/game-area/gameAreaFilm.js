@@ -61,22 +61,54 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
         $scope.$watch('activeFilters', function(activeFilters) {
             if (activeFilters.length > 0) {
+                var recombining = false;
+
                 $scope.resources = {
                     game: $scope.game,
                     plays: $scope.totalPlays,
                     teamId: $scope.teamId
                 };
 
-                console.log($scope.activeFilters);
+                var lastFilter = activeFilters[activeFilters.length - 1];
+                console.log(lastFilter);
 
-                $scope.remainingFilters = [];
+                if(lastFilter.id === 1 && activeFilters.length > 1){
+                    var previousFilter = activeFilters[activeFilters.length - 2];
+                    console.log('here is the previous filter');
+                    console.log(previousFilter);
 
-                //TODO refactor this when we have time
-                angular.forEach($scope.activeFilters, function(filter) {
-                    $scope.remainingFilters.push(filter);
-                });
+                    if (previousFilter.associatePlayer) {
+                        console.log('time to recombine');
+                        recombining = true;
+                        var uncombinedFilters = activeFilters.slice(-2);
+                        console.log(uncombinedFilters);
+                        var combinedFilter = {
+                            id: uncombinedFilters[uncombinedFilters.length - 2].id,
+                            teamId: uncombinedFilters[uncombinedFilters.length - 1].teamId,
+                            playerId: uncombinedFilters[uncombinedFilters.length - 1].playerId,
+                            name: uncombinedFilters[uncombinedFilters.length - 2].name + ' by ' + uncombinedFilters[uncombinedFilters.length - 1].name,
+                            filterCategoryId: uncombinedFilters[uncombinedFilters.length - 1].filterCategoryId,
+                            customFilter: true
+                        };
+                        console.log(combinedFilter);
+                        activeFilters.splice(-2, 2, combinedFilter);
+                    }
 
-                //$scope.plays = $scope.recursiveFilter($scope.remainingFilters);
+                }
+
+                if (!recombining) {
+                    console.log('this shouldnt fire if recombining');
+
+                    $scope.remainingFilters = [];
+
+                    //TODO refactor this when we have time
+                    angular.forEach($scope.activeFilters, function(filter) {
+                        $scope.remainingFilters.push(filter);
+                    });
+
+                    $scope.plays = $scope.recursiveFilter($scope.remainingFilters);
+                }
+
             }
 
             if (activeFilters.length === 0) {
