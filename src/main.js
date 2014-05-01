@@ -49,6 +49,7 @@ require('./services/players');
 require('./services/tagsets');
 require('./services/positionsets');
 require('./services/plays');
+require('./services/events');
 require('./services/indexing');
 require('./services/filtersets');
 
