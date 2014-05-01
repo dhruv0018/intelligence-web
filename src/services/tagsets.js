@@ -11,6 +11,9 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
         var TagsetsFactory = {
 
+            list: [],
+            collection: {},
+
             resource: TagsetsResource,
 
             extendTagset: function(tagset) {
@@ -59,16 +62,15 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 var callback = function(tagsets) {
 
-                    var indexedTagsets = {};
-
                     tagsets.forEach(function(tagset) {
 
                         tagset = self.extendTagset(tagset);
 
-                        indexedTagsets[tagset.id] = tagset;
+                        self.list.push(tagset);
+                        self.collection[tagset.id] = tagset;
                     });
 
-                    tagsets = index ? indexedTagsets : tagsets;
+                    tagsets = index ? self.collection : tagsets;
 
                     return success ? success(tagsets) : tagsets;
                 };
