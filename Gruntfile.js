@@ -452,6 +452,10 @@ module.exports = function(grunt) {
                 files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
                 tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
+            index: {
+                files: ['src/index.html'],
+                tasks: ['newer:htmlhint', 'copy:dev', 'copy:build', 'notify:build']
+            },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
                 tasks: ['newer:htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
