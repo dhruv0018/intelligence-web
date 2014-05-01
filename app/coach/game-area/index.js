@@ -65,8 +65,8 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', '$localStorage', 'GAME_STATUS_IDS', 'Coach.Data', 'indexingData',
-    function controller($scope, $state, $stateParams, $localStorage, GAME_STATUS_IDS, data, indexingData) {
+    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'Coach.Data', 'indexingData',
+    function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, data, indexingData) {
 
 
         $scope.gameId = $stateParams.id;
@@ -88,6 +88,39 @@ GameArea.controller('Coach.GameArea.controller', [
             $scope.team = data.teams[$scope.game.teamId];
             $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
 
+//TODO possibly add this here later instead of on gameAreaFilm file
+//            plays.getList($scope.gameId, function (plays) {
+//                data.plays = plays;
+//            }
+
+
+            players.getList({
+                roster: $scope.game.rosters[$scope.team.id].id
+            }, function (players) {
+                data.teamGameRoster = {
+                    teamId: $scope.team.id,
+                    players: players
+                };
+            }, function(failure) {
+                data.teamGameRoster = {
+                    teamId: $scope.team.id,
+                    players: []
+                };
+            });
+
+            players.getList({
+                roster: $scope.game.rosters[$scope.opposingTeam.id].id
+            }, function (players) {
+                data.opposingTeamGameRoster = {
+                    teamId: $scope.opposingTeam.id,
+                    players: players
+                };
+            }, function(failure) {
+                data.opposingTeamGameRoster = {
+                    teamId: $scope.opposingTeam.id,
+                    players: []
+                };
+            });
         });
 
         //view selector
