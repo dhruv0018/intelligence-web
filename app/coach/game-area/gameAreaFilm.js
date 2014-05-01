@@ -76,7 +76,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
                     $scope.remainingFilters.push(filter);
                 });
 
-                $scope.plays = $scope.recursiveFilter($scope.remainingFilters);
+                //$scope.plays = $scope.recursiveFilter($scope.remainingFilters);
             }
 
             if (activeFilters.length === 0) {
@@ -120,9 +120,13 @@ GameAreaFilm.controller('GameAreaFilmController', [
         $scope.setFilter = function(filter) {
             $scope.filterId = filter.id;
 
-            var isPresent = $scope.activeFilters.some(function(filter) {
-                return filter.id === $scope.filterId;
-            });
+            var isPresent = false;
+
+            if (!filter.customFilter) {
+                isPresent = $scope.activeFilters.some(function(filter) {
+                    return filter.id === $scope.filterId;
+                });
+            }
 
             if (!isPresent) {
                 $scope.activeFilters.push(filter);
