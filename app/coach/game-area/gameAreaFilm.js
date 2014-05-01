@@ -61,22 +61,47 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
         $scope.$watch('activeFilters', function(activeFilters) {
             if (activeFilters.length > 0) {
+                var recombining = false;
+
                 $scope.resources = {
                     game: $scope.game,
                     plays: $scope.totalPlays,
                     teamId: $scope.teamId
                 };
 
-                console.log($scope.activeFilters);
+                var lastFilter = activeFilters[activeFilters.length - 1];
 
-                $scope.remainingFilters = [];
+                if(lastFilter.id === 1 && activeFilters.length > 1){
+                    var previousFilter = activeFilters[activeFilters.length - 2];
 
-                //TODO refactor this when we have time
-                angular.forEach($scope.activeFilters, function(filter) {
-                    $scope.remainingFilters.push(filter);
-                });
+                    if (previousFilter.associatePlayer) {
+                        recombining = true;
+                        var uncombinedFilters = activeFilters.slice(-2);
+                        var combinedFilter = {
+                            id: uncombinedFilters[uncombinedFilters.length - 2].id,
+                            teamId: uncombinedFilters[uncombinedFilters.length - 1].teamId,
+                            playerId: uncombinedFilters[uncombinedFilters.length - 1].playerId,
+                            name: uncombinedFilters[uncombinedFilters.length - 2].name + ' by ' + uncombinedFilters[uncombinedFilters.length - 1].name,
+                            filterCategoryId: uncombinedFilters[uncombinedFilters.length - 1].filterCategoryId,
+                            customFilter: true
+                        };
+                        activeFilters.splice(-2, 2, combinedFilter);
+                    }
 
-                $scope.plays = $scope.recursiveFilter($scope.remainingFilters);
+                }
+
+                if (!recombining) {
+
+                    $scope.remainingFilters = [];
+
+                    //TODO refactor this when we have time
+                    angular.forEach($scope.activeFilters, function(filter) {
+                        $scope.remainingFilters.push(filter);
+                    });
+
+                    $scope.plays = $scope.recursiveFilter($scope.remainingFilters);
+                }
+
             }
 
             if (activeFilters.length === 0) {
@@ -90,8 +115,15 @@ GameAreaFilm.controller('GameAreaFilmController', [
                 return $scope.plays;
             }
 
+            var currentFilter = activeFilters.shift();
+
+            if (currentFilter.playerId) {
+                $scope.resources.playerId = currentFilter.playerId;
+            }
+
+
             plays.filterPlays({
-                filterId: activeFilters.shift().id
+                filterId: currentFilter.id
             }, $scope.resources, function(plays) {
 
                 $scope.plays = plays[$scope.game.id];
@@ -111,9 +143,13 @@ GameAreaFilm.controller('GameAreaFilmController', [
         $scope.setFilter = function(filter) {
             $scope.filterId = filter.id;
 
-            var isPresent = $scope.activeFilters.some(function(filter) {
-                return filter.id === $scope.filterId;
-            });
+            var isPresent = false;
+
+            if (!filter.customFilter) {
+                isPresent = $scope.activeFilters.some(function(filter) {
+                    return filter.id === $scope.filterId;
+                });
+            }
 
             if (!isPresent) {
                 $scope.activeFilters.push(filter);
@@ -142,7 +178,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
             $scope.league = data.league;
             $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
             $scope.sources = $scope.game.getVideoSources();
-            
+
             if ($scope.gameStatus === 'INDEXED') {
                 try {
                     plays.getList($scope.gameId, function (plays) {
@@ -174,17 +210,34 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
                             });
 
-                            angular.forEach(data.roster, function(player) {
+                            angular.forEach(data.opposingTeamGameRoster.players, function(player) {
+
                                 var playerFilter = {
                                     id: $scope.playerFilter.id,
+                                    teamId: data.opposingTeamGameRoster.teamId,
                                     playerId: player.id,
                                     name: player.firstName[0] + '. ' + player.lastName,
-                                    filterCategoryId: $scope.playerFilter.filterCategoryId
+                                    filterCategoryId: $scope.playerFilter.filterCategoryId,
+                                    customFilter: true
+                                };
+                                $scope.filtersetCategories[$scope.playerFilter.filterCategoryId].subFilters.push(playerFilter);
+                            });
+
+                            angular.forEach(data.teamGameRoster.players, function(player) {
+
+                                var playerFilter = {
+                                    id: $scope.playerFilter.id,
+                                    teamId: data.teamGameRoster.teamId,
+                                    playerId: player.id,
+                                    name: player.firstName[0] + '. ' + player.lastName,
+                                    filterCategoryId: $scope.playerFilter.filterCategoryId,
+                                    customFilter: true
                                 };
                                 $scope.filtersetCategories[$scope.playerFilter.filterCategoryId].subFilters.push(playerFilter);
                             });
 
                         });
+
                     });
 
 
