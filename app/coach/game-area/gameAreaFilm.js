@@ -92,7 +92,10 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
             var currentFilter = activeFilters.shift();
 
-            console.log(currentFilter);
+            if (currentFilter.playerId) {
+                $scope.resources.playerId = currentFilter.playerId;
+            }
+
 
             plays.filterPlays({
                 filterId: currentFilter.id
@@ -103,11 +106,10 @@ GameAreaFilm.controller('GameAreaFilmController', [
                 $scope.resources = {
                     game: $scope.game,
                     plays: $scope.plays,
-                    teamId: $scope.teamId,
-                    playerId: 48
+                    teamId: $scope.teamId
                 };
 
-                console.log($scope.resources);
+                //console.log($scope.resources);
 
                 return $scope.recursiveFilter(activeFilters);
             });
@@ -149,7 +151,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
             $scope.league = data.league;
             $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
             $scope.sources = $scope.game.getVideoSources();
-            
+
             if ($scope.gameStatus === 'INDEXED') {
                 try {
                     plays.getList($scope.gameId, function (plays) {
@@ -181,9 +183,24 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
                             });
 
-                            angular.forEach(data.roster, function(player) {
+                            angular.forEach(data.opposingTeamGameRoster.players, function(player) {
+
                                 var playerFilter = {
                                     id: $scope.playerFilter.id,
+                                    teamId: data.opposingTeamGameRoster.teamId,
+                                    playerId: player.id,
+                                    name: player.firstName[0] + '. ' + player.lastName,
+                                    filterCategoryId: $scope.playerFilter.filterCategoryId,
+                                    customFilter: true
+                                };
+                                $scope.filtersetCategories[$scope.playerFilter.filterCategoryId].subFilters.push(playerFilter);
+                            });
+
+                            angular.forEach(data.teamGameRoster.players, function(player) {
+
+                                var playerFilter = {
+                                    id: $scope.playerFilter.id,
+                                    teamId: data.teamGameRoster.teamId,
                                     playerId: player.id,
                                     name: player.firstName[0] + '. ' + player.lastName,
                                     filterCategoryId: $scope.playerFilter.filterCategoryId,
@@ -193,6 +210,9 @@ GameAreaFilm.controller('GameAreaFilmController', [
                             });
 
                         });
+
+                        console.log($scope.filtersetCategories);
+                        console.log('test');
                     });
 
 

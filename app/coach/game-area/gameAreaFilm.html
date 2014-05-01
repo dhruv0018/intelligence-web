@@ -41,8 +41,8 @@
                         <a ng-if="!innerValue.customFilter" ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
-                        <a ng-hide="innerValue.filterCategoryId !== filterCategory" ng-if="innerValue.customFilter" class="btn btn-default" ng-click="setFilter(innerValue)">
-                            custom: {{innerValue.name}}
+                        <a ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" ng-if="innerValue.customFilter" class="btn btn-default" ng-click="setFilter(innerValue)">
+                            {{innerValue.name}}
                         </a>
                     </div>
                 </div>
