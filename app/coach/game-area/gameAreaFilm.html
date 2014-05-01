@@ -35,7 +35,7 @@
             </li>
 
             <li>
-                <div ng-hide="value.id === 8 || value.id === 7" ng-repeat="(key,value) in filtersetCategories">
+                <div ng-repeat="(key,value) in filtersetCategories">
                     <a ng-click="setFilterCategory(value.id)" class="btn" ng-class="{'btn-default':(value.id !== filterCategory), 'btn-primary':(value.id === filterCategory)}">{{value.name}}</a>
                 </div>
             </li>
