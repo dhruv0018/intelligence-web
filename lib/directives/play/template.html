@@ -12,13 +12,16 @@
         <span class="score">{{ play.score[opposingTeam.id] }}</span>
         <span class="team">{{ opposingTeam.name }}</span>
 
+        <!--<span class="playplay"><i class="icon-play-sign"></i></span>-->
     </h4>
 
     <krossover-events data-play="play" data-events="play.events" data-league="league" data-videoplayer="videoplayer"></krossover-events>
 
     <hr>
 
-    <button class="btn-delete-play" data-ng-click="deletePlay(play)"><i class="icon-remove"></i> Delete Play</button>
+    <!--<button class="btn-delete-play" data-ng-click="deletePlay(play)"><i class="icon-remove"></i> Delete Play</button>-->
+    <button class="play-link disabled"><i class="icon-plus"></i> Add to reel</button>
+    <button class="play-link pull-right disabled"><i class="icon-tag"></i> Label Play</button>
 
 </div>
 
