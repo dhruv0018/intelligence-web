@@ -26,7 +26,14 @@ Team.service('Coach.Team.Data', [
 
             if (team.roster) {
 
-                return players.getList({ roster: team.roster.id }).$promise;
+                return players.getList({ roster: team.roster.id }).$promise.then(function(playersList) {
+
+                    return playersList;
+
+                }, function() {
+
+                    return [];
+                });
             }
 
             else return [];

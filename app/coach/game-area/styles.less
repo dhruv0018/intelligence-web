@@ -63,6 +63,9 @@
   }
 
   .game-area-film-filters{
+    height: 55px;
+    padding-top: 16px;
+
     &:after{
       visibility: hidden;
       display: block;
@@ -72,41 +75,76 @@
       height: 0;
     }
 
-    > *{
-      padding: 30px;
-    }
-
     .active-filter{
-      margin-left:5px;
+      margin-left: 10px;
+      margin-right: 10px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      letter-spacing: normal;
+      font-weight: 400;
+
+      i {
+        margin-left: 5px;
+      }
     }
 
     .play-count{
       border-right: 1px solid @gray-lighter;
-      width:400px;
+      width:290px;
+      padding-left: 20px;
+      letter-spacing: normal;
     }
 
     border-bottom:1px solid @gray-lighter;
 
     .filter-dropdown{
+      margin-left: 20px;
+
       .btn{
         text-align: left;
         border-radius: @border-radius-base;
       }
       ul{
-        width:940px;
+        padding-top: 25px;
+        width: 650px;
+        opacity: .95;
+
         li{
-          padding:0 30px 0 30px;
+          position: relative;
+          display: inline-block;
+          height: 315px;
+          vertical-align: top;
+          padding:0 20px 0 20px;
           border-right: 1px solid @gray-lighter;
-          min-height:400px;
+          overflow-y: auto;
+
           a{
-            min-width:250px;
-            margin-bottom:10px;
+            width:170px;
+            margin-bottom: 7px;
+            padding-bottom: 2px;
+            padding-top: 2px;
             border-radius:@border-radius-small;
+            letter-spacing: normal;
+            font-weight: 400;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
 
           &:last-of-type{
             border:none;
           }
+        }
+      }
+
+      .dropdown-toggle {
+        letter-spacing: normal;
+        text-decoration: none;
+        cursor: pointer;
+
+        .icon-chevron-down {
+          font-size: 12px;
+          margin-left: 5px;
         }
       }
     }
@@ -117,12 +155,18 @@
     .player{
       padding-top:5%;
       width: 70%;
-      max-width: 1000px;
+      max-width: 820px;
       margin: auto;
     }
 
+    .breakdown-player {
+      padding-left:10%;
+      display: inline-block;
+    }
+
     .sidebar{
-      width:400px;
+      width:290px;
+      min-height: 100%;
       float:left;
     }
 
@@ -177,5 +221,141 @@
     margin-top: 10px;
   }
 
+}
+
+.statsPage {
+  
+  padding: 60px;
+
+  .stats-btn-group {
+    text-align: center;
+    margin-bottom: 20px;
+
+    .stats-btn {
+      .btn;
+      background-color: @gray-lighter;
+      font-weight: 400;
+      margin-left: 5px;
+      margin-right: 5px;
+      border-radius: 4px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      font-size: 16px;
+      &.active,
+      &:active,
+      &:focus,
+      &:hover {
+        background-color: @brand-primary;
+        color: white;
+      }
+    }
+
+    .active-stats-btn {
+        background-color: @brand-primary;
+        color: white;
+    }
+  }
+
+  .table-responsive {
+
+    th, td {
+      text-align: center;
+    }
+
+    .fixed-table {
+      table-layout: fixed;
+    }
+
+    .logheader {
+
+      color: white;
+      
+      .topth {
+        font-weight: 400;
+        border:thin solid black;
+        background-color: @brand-blue;
+      }
+    }
+
+    .hometeamrow {
+    }
+
+    .awayteamrow {
+      background-color: @gray-lightest;
+
+    }
+
+    .statcell {
+        border-right: none;
+        border-left: none;
+      }
+
+    .setnumber {
+      font-size: 30px;
+      color: black;
+      vertical-align: middle;
+    }
+
+    .firstrow {
+      
+      color: white;
+      
+      .topth {
+        font-weight: 400;
+        border: thin solid black;
+        border-bottom: none;
+        background-color: @brand-blue;
+      }
+
+      td {
+        border-bottom: none;
+      }
+    }
+    .secondrow {
+    
+      color: white;
+        
+      .startsection {
+        border-left: thin solid black;
+      }
+
+      th {
+        font-weight: 400;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: thin solid black;
+        background-color: @brand-blue;
+      }
+
+      .endsection {
+        border-right: thin solid black;
+      }
+
+      td {
+        border-bottom: none;
+        border-top: none;
+      }
+    }
+    .contentrow {
+      td:first-child {
+        border: none;
+      }
+    }
+  }
+  .bottom-links {
+
+    .pull-right;
+    letter-spacing: normal;
+
+    .middlelink {
+      margin-right: 10px;
+      margin-left: 10px;
+      padding-right: 10px;
+      padding-left: 10px;
+      border-right: thin solid @gray-lighter;
+      border-left: thin solid @gray-lighter;
+    }
+  }
 }
 
