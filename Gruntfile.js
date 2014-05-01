@@ -412,7 +412,7 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     hostname: '*',
-                    port: 8001,
+                    port: 80,
                     protocol: 'https',
                     base: 'public',
                     middleware: function (connect, options) {
