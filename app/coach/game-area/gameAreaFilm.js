@@ -70,18 +70,13 @@ GameAreaFilm.controller('GameAreaFilmController', [
                 };
 
                 var lastFilter = activeFilters[activeFilters.length - 1];
-                console.log(lastFilter);
 
                 if(lastFilter.id === 1 && activeFilters.length > 1){
                     var previousFilter = activeFilters[activeFilters.length - 2];
-                    console.log('here is the previous filter');
-                    console.log(previousFilter);
 
                     if (previousFilter.associatePlayer) {
-                        console.log('time to recombine');
                         recombining = true;
                         var uncombinedFilters = activeFilters.slice(-2);
-                        console.log(uncombinedFilters);
                         var combinedFilter = {
                             id: uncombinedFilters[uncombinedFilters.length - 2].id,
                             teamId: uncombinedFilters[uncombinedFilters.length - 1].teamId,
@@ -90,14 +85,12 @@ GameAreaFilm.controller('GameAreaFilmController', [
                             filterCategoryId: uncombinedFilters[uncombinedFilters.length - 1].filterCategoryId,
                             customFilter: true
                         };
-                        console.log(combinedFilter);
                         activeFilters.splice(-2, 2, combinedFilter);
                     }
 
                 }
 
                 if (!recombining) {
-                    console.log('this shouldnt fire if recombining');
 
                     $scope.remainingFilters = [];
 
@@ -140,8 +133,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
                     plays: $scope.plays,
                     teamId: $scope.teamId
                 };
-
-                //console.log($scope.resources);
 
                 return $scope.recursiveFilter(activeFilters);
             });
@@ -247,8 +238,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
                         });
 
-                        console.log($scope.filtersetCategories);
-                        console.log('test');
                     });
 
 
