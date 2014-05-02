@@ -56,7 +56,6 @@
 </div>
 
 <div class="game-area-film">
-    <div>
         <aside ng-if="gameStatus === 'INDEXED'"  class="sidebar">
           <!--<div ng-repeat="play in plays">Play Number: {{play.id}}</div>-->
           <krossover-plays data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="league" data-videoplayer="VideoPlayer"></krossover-plays>
@@ -65,6 +64,4 @@
         <div class="player" ng-class="{'breakdown-player':(gameStatus === 'INDEXED')}">
             <x-krossover-videoplayer></x-krossover-videoplayer>
         </div>
-
-    </div>
 </div>
