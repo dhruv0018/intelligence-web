@@ -99,6 +99,7 @@ GameArea.controller('Coach.GameArea.controller', [
             }, function (players) {
                 data.teamGameRoster = {
                     teamId: $scope.team.id,
+                    rosterId: $scope.game.rosters[$scope.team.id].id,
                     players: players
                 };
 
@@ -115,6 +116,7 @@ GameArea.controller('Coach.GameArea.controller', [
             }, function (players) {
                 data.opposingTeamGameRoster = {
                     teamId: $scope.opposingTeam.id,
+                    rosterId: $scope.game.rosters[$scope.opposingTeam.id].id,
                     players: players
                 };
 
