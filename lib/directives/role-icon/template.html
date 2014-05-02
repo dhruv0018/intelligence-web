@@ -1,0 +1,13 @@
+<div class="role-icon" data-ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN) || currentUser.is(INDEXER)">
+	<profile-placeholder></profile-placeholder>
+</div>
+
+<div class="role-icon" data-ng-if="currentUser.is(COACH)">
+	<sport-placeholder data-sport="sports[leagues[teams[role.teamId].leagueId].sportId]"></sport-placeholder>
+</div>
+
+<!-- Athlete to be done later
+<div class="role-icon" data-ng-if="currentUser.is(ATHLETE)">
+	<sport-placeholder></sport-placeholder>
+</div>
+-->

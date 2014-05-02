@@ -1,0 +1,117 @@
+@import (reference) "main.less";
+
+.event {
+
+    .list-group-item;
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    border-left: 2px solid @gray-dark;
+    padding: 0;
+    background-color: transparent;
+
+    &:first-child,
+    &:last-child {
+
+        left: 2px;
+        border-left-style: hidden;
+
+        &::before {
+
+            left: -2px;
+            position: absolute;
+        }
+    }
+
+    &:first-child::before {
+
+        content: "";
+        bottom: 0;
+        height: 50%;
+        border-left: 2px solid @gray-dark;
+    }
+
+    &:last-child::before {
+
+        content: "";
+        top: 0;
+        height: 50%;
+        border-left: 2px solid @gray-dark;
+    }
+
+    &:only-child::before {
+
+        left: 2px;
+        border-left-style: hidden;
+    }
+}
+
+.btn-select-event {
+
+    .btn-blank;
+    position: relative;
+    height: 32px;
+    line-height: 32px;
+    padding-left: 10px;
+    background-color: transparent;
+
+    &::before {
+
+        content: "";
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        left: -9px;
+        top: 11px;
+        border: 1px solid @gray-dark;
+        border-radius: 50%;
+        background-color: @gray-lightest;
+    }
+
+    &:hover::before,
+    &.active::before {
+
+        background-color: @brand-primary;
+    }
+
+    &::after {
+
+        content: "";
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        left: -5px;
+        top: 15px;
+        border-radius: 50%;
+        background-color: @gray-dark;
+    }
+
+    &:hover::after,
+    &.active::after {
+
+        background-color: white;
+    }
+
+    &.active {
+
+        .static {
+
+            color: @gray-light;
+        }
+
+        button {
+
+            &,
+            &[disabled] {
+
+                &,
+                &:hover {
+
+                    color: @gray-light;
+                }
+            }
+        }
+    }
+}
+

@@ -1,10 +1,18 @@
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('TagsetsFactory', [
     'TagsetsResource', '$filter',
     function(TagsetsResource, $filter) {
 
         var TagsetsFactory = {
+
+            list: [],
+            collection: {},
 
             resource: TagsetsResource,
 
@@ -54,16 +62,15 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 var callback = function(tagsets) {
 
-                    var indexedTagsets = {};
-
                     tagsets.forEach(function(tagset) {
 
                         tagset = self.extendTagset(tagset);
 
-                        indexedTagsets[tagset.id] = tagset;
+                        self.list.push(tagset);
+                        self.collection[tagset.id] = tagset;
                     });
 
-                    tagsets = index ? indexedTagsets : tagsets;
+                    tagsets = index ? self.collection : tagsets;
 
                     return success ? success(tagsets) : tagsets;
                 };
@@ -114,6 +121,14 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
 
                 return results;
+            },
+
+            getStartTags: function() {
+
+                return this.tags.filter(function(tag) {
+
+                    return tag.isStart;
+                });
             }
         };
 

@@ -1,0 +1,25 @@
+{
+    "name": "login",
+    "images": [
+        "krossover-login-logo-320.png"
+    ],
+    "templates": [
+        "template.html",
+        "signup.html",
+        "login.html",
+        "locked.html",
+        "forgot.html",
+        "reset.html"
+    ],
+    "styles": [
+        "styles.less",
+        "signup.less",
+        "login.less",
+        "locked.less",
+        "forgot.less",
+        "reset.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

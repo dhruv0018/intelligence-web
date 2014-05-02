@@ -1,0 +1,45 @@
+<section class="film-home">
+
+    <aside class="sidebar">
+
+        <!-- TEAM DIRECTIVE -->
+        <krossover-team-info data-team="team"></krossover-team-info>
+        <hr>
+        <!-- NG-REPEAT COACH DIRECTIVES -->
+        <krossover-head-coach-info data-team="team"></krossover-head-coach-info>
+        <hr>
+
+        <h3>Team Roster</h3>
+
+        <!-- ROSTER DIRECTIVE -->
+        <krossover-roster data-roster-id="rosterId" data-roster="mockRoster"></krossover-roster>
+
+    </aside>
+
+    <main class="content-full">
+
+        <!-- Search and filter bar -->
+        <header class="filter-bar">
+            <ul class="nav nav-tabs">
+                <li><h3>Filter Film:</h3></li>
+                <li><button ng-repeat="(key, value) in filters.others" button class="btn-filter" ng-model="filters.others[key]" btn-checkbox>{{key}}</button></li>
+                <li><button class="btn-filter" ng-model="filters['all']" btn-checkbox>All</button></li>
+
+
+            <form data-ng-submit="search(query)" class="film-search">
+                    <input type="text" class="film-search-input" ng-model="query" placeholder="Search for film"/>
+
+                    <button class="btn-film-search" type="submit">Go</button>
+            </form>
+            </ul>
+        </header>
+
+        <no-results ng-if="games.length === 0"></no-results>
+        <!-- NG-REPEAT FILM DIRECTIVES -->
+        <div ng-if="games.length > 0" class="films-area">
+            <krossover-film ng-repeat="game in games | filter: {isDeleted: false}| gameFilter: filters | orderBy: '-datePlayed'" data-game="game" data-teams="teams"></krossover-film>
+        </div>
+    </main>
+
+</section>
+

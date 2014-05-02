@@ -1,0 +1,22 @@
+<div class="role">
+
+    <role-icon></role-icon>
+
+    <div class="sport"></div>
+
+    <div class="role-title">
+
+        <span data-ng-if="users.is(role, COACH)">Coach {{user.lastName}}</span>
+        <span data-ng-if="!users.is(role, COACH)">{{user.firstName}} {{user.lastName}}</span>
+
+    </div>
+
+    <div class="role-name">
+
+        <span data-ng-if="users.is(role, COACH)"><a data-ui-sref="team({ id: role.teamId })">{{team.name}}</a></span>
+        <span data-ng-if="!users.is(role, COACH)">{{role.type.name || 'Inactive'}}</span>
+
+    </div>
+
+</div>
+

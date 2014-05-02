@@ -1,4 +1,9 @@
-var IntelligenceWebClient = require('./app');
+var package = require('../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 /**
  * Error reporter to manage how error reporting is handled.
@@ -143,6 +148,9 @@ IntelligenceWebClient.factory('HttpInterceptor', [
                     $location.path('/login');
                     break;
 
+                case 404: /* Not Found */
+                    break;
+
                 case 500: /* Server Error */
                     ErrorReporter.reportError(new Error('Server error', response.data));
                     $location.path('/500').replace();
@@ -163,10 +171,13 @@ IntelligenceWebClient.factory('HttpInterceptor', [
     }
 ]);
 
-IntelligenceWebClient.config(function($httpProvider) {
+IntelligenceWebClient.config([
+    '$httpProvider',
+    function($httpProvider) {
 
-    $httpProvider.interceptors.push('HttpInterceptor');
-});
+        $httpProvider.interceptors.push('HttpInterceptor');
+    }
+]);
 
 IntelligenceWebClient.run([
     '$rootScope', '$location', '$state',

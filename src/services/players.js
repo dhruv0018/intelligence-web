@@ -1,8 +1,13 @@
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('PlayersFactory', [
-    'PlayersResource',
-    function(PlayersResource) {
+    '$q', 'PlayersResource',
+    function($q, PlayersResource) {
 
         var PlayersFactory = {
 
@@ -78,32 +83,46 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
             save: function(rosterId, players) {
 
-                /* Filter out players which are marked as did not play. */
-                players = players.filter(function(player) {
+                var self = this;
 
-                    return player.played;
+                if (!rosterId) throw new Error('No roster ID');
+                if (!players) throw new Error('No players to save');
+
+                var filter = { roster: rosterId };
+
+                var currentPlayers = players.filter(function(player) {
+
+                    return player.id;
                 });
 
-                /* Modify players. */
-                players = players.map(function(player) {
+                var newPlayers = players.filter(function(player) {
 
-                    /* Split name into first and last if its given. */
-                    if (player.name) {
+                    return !player.id;
+                });
 
-                        player.firstName = player.name.split(' ').shift();
-                        player.lastName = player.name.split(' ').pop();
-                    }
+                newPlayers = newPlayers.map(function(player) {
 
-                    player.rosterIds = player.rosterIds || [];
-
-                    /* If the given rosterId is not present in the list then add it. */
-                    if (player.rosterIds.indexOf(rosterId) === -1) player.rosterIds.push(rosterId);
+                    player.rosterIds = [rosterId];
 
                     return player;
                 });
 
-                var newPlayers = this.resource.create(players);
-                return newPlayers.$promise;
+                if (!!newPlayers.length) {
+
+                    newPlayers = self.resource.create(newPlayers).$promise;
+                }
+
+                currentPlayers = currentPlayers.map(function(player) {
+
+                    return self.resource.update(player).$promise;
+                });
+
+                var allPlayers = currentPlayers.concat(newPlayers);
+
+                return $q.all(allPlayers).then(function() {
+
+                    return self.getList(filter).$promise;
+                });
             }
         };
 

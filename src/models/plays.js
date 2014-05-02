@@ -1,4 +1,9 @@
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('PlaysResource', [
     'config', '$resource',
@@ -22,6 +27,13 @@ IntelligenceWebClient.factory('PlaysResource', [
                 params: { gameId: '@gameId' },
                 isArray: true
             },
+            filter: {
+                method: 'POST',
+                url: config.api.uri + 'plays/filter/:filterId',
+                params: {
+                    filterId: '@filterId'
+                }
+            },
             create: { method: 'POST' },
             update: { method: 'PUT' }
         };
@@ -29,3 +41,4 @@ IntelligenceWebClient.factory('PlaysResource', [
         return $resource(url, paramDefaults, actions);
     }
 ]);
+

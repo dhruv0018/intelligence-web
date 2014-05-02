@@ -1,0 +1,30 @@
+{
+    "name": "add-film",
+    "dependencies": {
+        "component/path": "1.0.0"
+    },
+    "paths": [
+        "."
+    ],
+    "local": [
+        "game-info",
+        "your-team",
+        "opposing-team",
+        "instructions"
+    ],
+    "templates": [
+        "template.html",
+        "start.html",
+        "upload.html",
+        "uploading.html"
+    ],
+    "scripts": [
+        "index.js",
+        "upload.js",
+        "uploading.js"
+    ],
+    "styles": [
+        "styles.less",
+        "upload.less"
+    ]
+}

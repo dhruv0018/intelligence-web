@@ -1,0 +1,63 @@
+@import (reference) "main.less";
+
+.item {
+
+    &,
+    button,
+    select {
+
+        display: inline-block;
+    }
+
+    .static {
+
+        color: @gray-dark;
+    }
+
+    .static,
+    button {
+
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+    }
+
+    button {
+
+        .btn;
+        .btn-link;
+        padding: 0;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+
+        &:focus,
+        &:hover {
+
+            text-decoration: none;
+        }
+
+        &[disabled] {
+
+            opacity: 1;
+
+            &,
+            &:hover {
+
+                color: @brand-primary;
+            }
+        }
+    }
+
+    select {
+
+        .form-control;
+        height: 33px;
+        line-height: 21px;
+        width: auto;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+}
+

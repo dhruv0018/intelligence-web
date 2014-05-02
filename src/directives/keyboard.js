@@ -4,7 +4,12 @@ var ATTRIBUTES = 'A';
 
 var Mousetrap = require('Mousetrap');
 
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.directive('keybinding', [
     function() {
@@ -17,12 +22,7 @@ IntelligenceWebClient.directive('keybinding', [
 
         function link($scope, element, attributes) {
 
-            var keybinding = attributes.keybinding;
-
-            if (keybinding.length === 2) {
-
-                keybinding = keybinding.split('').join(' ');
-            }
+            var keybinding = parseKeybinding(attributes.keybinding);
 
             Mousetrap.bind(keybinding, function() {
 
@@ -34,9 +34,19 @@ IntelligenceWebClient.directive('keybinding', [
 
             element.on('$destroy', function() {
 
-                Mousetrap.unbind(attributes.keybinding);
+                var keybinding = parseKeybinding(attributes.keybinding);
+
+                Mousetrap.unbind(keybinding);
             });
         }
+
+        var parseKeybinding = function(keybinding) {
+
+            keybinding = keybinding.toLowerCase();
+            keybinding = keybinding.split('').join(' ');
+
+            return keybinding;
+        };
 
         return directive;
     }

@@ -1,4 +1,9 @@
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('PlayersResource', [
     'config', '$resource',
@@ -16,7 +21,8 @@ IntelligenceWebClient.factory('PlayersResource', [
 
         var actions = {
 
-            create: { method: 'POST', isArray: true, url: config.api.uri + 'batch/players' }
+            create: { method: 'POST', isArray: true, url: config.api.uri + 'batch/players' },
+            update: { method: 'PUT' }
         };
 
         return $resource(url, paramDefaults, actions);

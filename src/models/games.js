@@ -1,4 +1,9 @@
-var IntelligenceWebClient = require('../app');
+var package = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 var GAME_STATUS_IDS = {
 
@@ -86,12 +91,16 @@ IntelligenceWebClient.constant('GAME_TYPES_IDS', GAME_TYPES_IDS);
 var GAME_TYPES = {
     CONFERENCE: {
         id: 'conference',
-        name: 'Conference Game'
+        name: 'Conference Game',
+        filter: 'regular',
+        filterName: 'Regular'
     },
 
     NON_CONFERENCE: {
         id: 'non-conference',
-        name: 'Non-Conference Game'
+        name: 'Non-Conference Game',
+        filter: 'regular',
+        filterName: 'Regular'
     },
 
     PLAYOFF: {
@@ -126,7 +135,10 @@ var GAME_TYPES = {
     }
 };
 
+
+
 IntelligenceWebClient.constant('GAME_TYPES', GAME_TYPES);
+
 
 var GAME_NOTE_TYPES = {
 

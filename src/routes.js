@@ -1,6 +1,9 @@
-var IntelligenceWebClient = require('./app');
+var package = require('../package.json');
 
-require('./services/authentication');
+/* Fetch angular from the browser scope */
+var angular = window.angular;
+
+var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.config([
     '$locationProvider',
@@ -101,7 +104,7 @@ IntelligenceWebClient.run([
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-
+            //Used for debugging
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {

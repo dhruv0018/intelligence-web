@@ -1,0 +1,9 @@
+<div class="krossover-athlete">
+    <img ng-if="athlete.picture.url" src="{{athlete.picture.url}}" width="40" height="40" alt="Avatar">
+    <profile-placeholder ng-if="!athlete.picture.url" data-size="small"></profile-placeholder>
+
+    <a href="#">
+        <div>{{athlete.jerseyNumbers[rosterId]}}</div>
+        <div>{{athlete.firstName[0] + '.'}} {{athlete.lastName}}</div>
+    </a>
+</div>

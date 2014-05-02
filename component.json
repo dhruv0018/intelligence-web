@@ -1,43 +1,14 @@
 {
     "name": "intelligence-web-client",
     "paths": [
+        ".",
         "lib"
     ],
-    "local": [
-        "root",
-        "login",
-        "role",
-        "roles",
-        "rolebar",
-        "header",
-        "alertbar",
-        "plan",
-        "account",
-        "admin",
-        "users",
-        "teams",
-        "schools",
-        "queue",
-        "leagues",
-        "no-results",
-        "indexer",
-        "indexing",
-        "coach",
-        "videoplayer",
-        "athlete",
-        "team-info",
-        "coach-info",
-        "thumbnail",
-        "roster",
-        "film",
-        "mascot-placeholder",
-        "profile-placeholder"
-    ],
-    "dependencies": {
-    },
-    "styles": [
+    "locals": [
+        "app",
+        "directives"
     ],
     "scripts": [
-        "src/main.js"
+        "index.js"
     ]
 }
