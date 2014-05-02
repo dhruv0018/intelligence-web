@@ -547,7 +547,6 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:assets',
         'copy:build',
-        'copy:prod',
         'ver:prod']);
 
     grunt.registerTask('prod', [
