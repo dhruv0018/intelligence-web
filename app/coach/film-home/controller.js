@@ -24,7 +24,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
             $scope.games = data.games;
             $scope.team = data.coachTeam;
             $scope.teams = data.teams;
-            $scope.mockRoster = data.roster;
+            $scope.roster = data.roster;
             $scope.rosterId = data.rosterId.id;
         });
 
