@@ -32,10 +32,10 @@ IntelligenceWebClient.factory('IndexingService', [
 
                         self.league = leagues.get(team.leagueId, function(league) {
 
-                            self.tagset = tagsets.get(league.tagSetId, function(tagset) {
+                            tagsets.getList().$promise.then(function() {
 
-                                self.tags = tagset.getIndexedTags();
-
+                                self.tagset = tagsets.collection[league.tagSetId];
+                                self.tags = self.tagset.getIndexedTags();
                                 promisedTags.resolve();
                             });
                         });

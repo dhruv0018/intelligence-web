@@ -5,6 +5,16 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
+var VIDEO_STATUS_IDS = {
+
+    1: 'INCOMPLETE',
+    2: 'UPLOADED',
+    4: 'COMPLETE',
+    8: 'FAILED'
+};
+
+IntelligenceWebClient.constant('VIDEO_STATUS_IDS', VIDEO_STATUS_IDS);
+
 var VIDEO_STATUSES = {
 
     INCOMPLETE: {

@@ -1,6 +1,8 @@
 <div ng-if="gameStatus === 'INDEXED'" class="game-area-film-filters">
     <div class="play-count pull-left">
         Viewing: All Plays ({{plays.length}})
+
+        <!--<span class="playall"><i class="icon-play-sign"></i> Play All</span>-->
     </div>
 
     <div class="filter-dropdown pull-left dropdown">
@@ -9,7 +11,7 @@
             <i class="icon-chevron-down"></i>
         </a>
 
-        <span ng-repeat="filter in activeFilters track by filter.id" class="btn btn-default active-filter">
+        <span ng-repeat="filter in activeFilters track by $index" class="btn btn-default active-filter">
             {{filter.name}}
             <i ng-click="removeFilter($index)" class="icon-remove"></i>
         </span>
@@ -31,15 +33,19 @@
                     </a>
                 </div>
             </li>
+
             <li>
-                <div ng-hide="value.id === 1 || value.id === 8 || value.id === 7" ng-repeat="(key,value) in filtersetCategories">
+                <div ng-repeat="(key,value) in filtersetCategories">
                     <a ng-click="setFilterCategory(value.id)" class="btn" ng-class="{'btn-default':(value.id !== filterCategory), 'btn-primary':(value.id === filterCategory)}">{{value.name}}</a>
                 </div>
             </li>
             <li>
                 <div ng-repeat="(key,value) in filtersetCategories">
                     <div ng-repeat="(innerkey, innerValue) in value.subFilters">
-                        <a ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" ng-click="setFilter(innerValue)">
+                        <a ng-if="!innerValue.customFilter" ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" ng-click="setFilter(innerValue)">
+                            {{innerValue.name}}
+                        </a>
+                        <a ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" ng-if="innerValue.customFilter" class="btn btn-default" ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
                     </div>
@@ -50,7 +56,6 @@
 </div>
 
 <div class="game-area-film">
-    <div>
         <aside ng-if="gameStatus === 'INDEXED'"  class="sidebar">
           <!--<div ng-repeat="play in plays">Play Number: {{play.id}}</div>-->
           <krossover-plays data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="league" data-videoplayer="VideoPlayer"></krossover-plays>
@@ -59,6 +64,4 @@
         <div class="player" ng-class="{'breakdown-player':(gameStatus === 'INDEXED')}">
             <x-krossover-videoplayer></x-krossover-videoplayer>
         </div>
-
-    </div>
 </div>

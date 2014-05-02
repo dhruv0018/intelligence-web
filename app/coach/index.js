@@ -47,8 +47,8 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'LeaguesFactory', 'IndexingService',
-    function($q, session, teams, games, players, leagues, indexing) {
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'LeaguesFactory', 'TagsetsFactory', 'IndexingService',
+    function($q, session, teams, games, players, leagues, tagsets, indexing) {
         var promises = {};
         var deferred = $q.defer();
         var promisedGames = $q.defer();
@@ -76,7 +76,11 @@ Coach.service('Coach.Data', [
             promisedTeam.resolve(teams[data.teamId]);
 
             leagues.get(teams[data.teamId].leagueId, function(league) {
-                promisedLeague.resolve(league);
+
+                tagsets.getList().$promise.then(function(tagset) {
+
+                    promisedLeague.resolve(league);
+                });
             });
         }, function() {
             console.log('failure to get the teams');

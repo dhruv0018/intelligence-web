@@ -323,7 +323,7 @@ module.exports = function(grunt) {
                 files: {
                     'public/intelligence/index.html': 'build/index.html',
                     'public/intelligence/styles.css': 'build/styles.css',
-                    'public/intelligence/scripts.js': 'build/scripts.js'
+                    'public/intelligence/scripts.js': 'build/bundle.js'
                 }
             }
         },
@@ -412,7 +412,7 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     hostname: '*',
-                    port: 8001,
+                    port: 80,
                     protocol: 'https',
                     base: 'public',
                     middleware: function (connect, options) {
@@ -451,6 +451,10 @@ module.exports = function(grunt) {
             config: {
                 files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
                 tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+            },
+            index: {
+                files: ['src/index.html'],
+                tasks: ['newer:htmlhint', 'copy:dev', 'copy:build', 'notify:build']
             },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
@@ -543,7 +547,6 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:assets',
         'copy:build',
-        'copy:prod',
         'ver:prod']);
 
     grunt.registerTask('prod', [
@@ -552,7 +555,6 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'concat:mousetrap',
         'browserify:prod',
-        'uglify',
         'componentbuild:styles',
         'less',
         'concat:theme',

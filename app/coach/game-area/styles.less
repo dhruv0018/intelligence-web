@@ -39,10 +39,10 @@
     min-height:100%;
     
     .game-area-game-information {
+      position: relative;
       height: 100%;
       min-height: 100%;
       background-color: @content-bg;
-      padding-bottom: 61px;
     }
   }
 
@@ -92,7 +92,14 @@
       border-right: 1px solid @gray-lighter;
       width:290px;
       padding-left: 20px;
+      padding-right: 20px;
       letter-spacing: normal;
+
+      .playall {
+        .pull-right;
+        color: @brand-primary;
+        cursor: pointer;
+      }
     }
 
     border-bottom:1px solid @gray-lighter;
@@ -152,6 +159,8 @@
   }
 
   .game-area-film{
+    height: 100%;
+
     .player{
       padding-top:5%;
       width: 70%;
@@ -166,25 +175,30 @@
 
     .sidebar{
       width:290px;
-      min-height: 100%;
+      max-height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
       float:left;
+      padding: 0px;
     }
 
   }
 
   .broken-down {
-    position: relative;
-    top: 45px;
+    position: absolute;
     left: 100px;
     z-index: 1;
     color: @brand-success;
     letter-spacing: normal;
+    line-height: 43px;
   }
 
 }
 
 .info-container {
   position: relative;
+  background-color: @content-bg;
+  padding-bottom: 61px;
 
   .game-remove {
     position: relative;
