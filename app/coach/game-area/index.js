@@ -101,6 +101,8 @@ GameArea.controller('Coach.GameArea.controller', [
                     teamId: $scope.team.id,
                     players: players
                 };
+
+                $scope.teamGameRoster = data.teamGameRoster;
             }, function(failure) {
                 data.teamGameRoster = {
                     teamId: $scope.team.id,
