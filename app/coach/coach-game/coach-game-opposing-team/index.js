@@ -42,7 +42,7 @@ OpposingTeam.directive('krossoverCoachGameOpposingTeam', [
             controller: 'Coach.Game.OpposingTeam.controller',
 
             scope: {
-
+                opposingTeamRoster: '=?',
                 game: '=?'
             }
         };
@@ -64,178 +64,11 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         $scope.tabs = tabs;
         $scope.data = data;
 
-        data.opposingTeam.players = data.opposingTeam.players || [];
 
-        $scope.mockTeam = [
-            {
-                firstName: 'Hector',
-                lastName: 'Rosa',
-                position: 'MB',
-                jerseyNumbers: {
-                    '9001': 22
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0000.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Billy',
-                lastName: 'Blau',
-                position: 'MH',
-                jerseyNumbers: {
-                    '9001': 33
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0001.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Greg',
-                lastName: 'Grunhilda',
-                position: 'RH',
-                jerseyNumbers: {
-                    '9001': 44
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0002.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Walter',
-                lastName: 'Gelber',
-                position: 'LH',
-                jerseyNumbers: {
-                    '9001': 55
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0003.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Ringo',
-                lastName: 'Braun',
-                position: 'DS',
-                jerseyNumbers: {
-                    '9001': 66
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0004.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Richard',
-                lastName: 'Beige',
-                position: 'H',
-                jerseyNumbers: {
-                    '9001': 77
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0005.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Kurt',
-                lastName: 'Violett',
-                position: 'B',
-                jerseyNumbers: {
-                    '9001': 88
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0006.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Illian',
-                lastName: 'Mauve',
-                position: 'OB',
-                jerseyNumbers: {
-                    '9001': 99
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0007.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'David',
-                lastName: 'Weisse',
-                position: 'S',
-                jerseyNumbers: {
-                    '9001': 14
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0008.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Alfonso',
-                lastName: 'Schwarz',
-                position: 'H',
-                jerseyNumbers: {
-                    '9001': 25
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0009.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Anthony',
-                lastName: 'Grau',
-                position: 'B',
-                jerseyNumbers: {
-                    '9001': 36
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0000.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Stan',
-                lastName: 'Turk',
-                position: 'DS',
-                jerseyNumbers: {
-                    '9001': 47
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0001.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Arnold',
-                lastName: 'Silber',
-                position: 'H',
-                jerseyNumbers: {
-                    '9001': 58
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0002.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Scott',
-                lastName: 'Gold',
-                position: 'B',
-                jerseyNumbers: {
-                    '9001': 69
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0003.jpg'
-                },
-                played: true
-            }
-        ];
+        $scope.$watch('opposingTeamRoster', function(opposingTeamRoster){
+            console.log('inside of players watch');
+            console.log(opposingTeamRoster);
+        });
 
         /*
          * Scope watches.
