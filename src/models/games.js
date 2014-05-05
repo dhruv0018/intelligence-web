@@ -78,60 +78,47 @@ var GAME_TYPES_IDS = {
     'conference': 'CONFERENCE',
     'non-conference': 'NON_CONFERENCE',
     'playoff': 'PLAYOFF',
-    1: 1,
-    2: 2,
-    3: 3,
-    4: 4,
-    5: 5
+    1: 'CONFERENCE',
+    2: 'NON_CONFERENCE',
+    3: 'PLAYOFF',
+    4: 'SCOUTING',
+    5: 'SCRIMMAGE'
 };
 
 IntelligenceWebClient.constant('GAME_TYPES_IDS', GAME_TYPES_IDS);
 
-//TODO remove fallbacks after new scheme adopted
 var GAME_TYPES = {
     CONFERENCE: {
-        id: 'conference',
+        id: 1,
         name: 'Conference Game',
         filter: 'regular',
         filterName: 'Regular'
     },
 
     NON_CONFERENCE: {
-        id: 'non-conference',
+        id: 2,
         name: 'Non-Conference Game',
         filter: 'regular',
         filterName: 'Regular'
     },
 
     PLAYOFF: {
-
-        id: 'playoff',
-        name: 'Playoff'
-    },
-    1: {
-        id: 1,
-        name: 'Conference Game'
-    },
-
-    2: {
-        id: 2,
-        name: 'Non-Conference Game'
-    },
-
-    3: {
-
         id: 3,
-        name: 'Playoff'
+        name: 'Playoff',
+        filter: 'regular',
+        filterName: 'Regular'
     },
-
-    4: {
+    SCOUTING: {
         id: 4,
-        name: 'Scouting'
+        name: 'Scouting',
+        filter: 'scouting',
+        filterName: 'Scouting'
     },
-
-    5: {
+    SCRIMMAGE: {
         id: 5,
-        name: 'Scrimmage'
+        name: 'Scrimmage',
+        filter: 'scrimmage',
+        filterName: 'Scrimmage'
     }
 };
 
