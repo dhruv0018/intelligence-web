@@ -536,7 +536,6 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'concat:mousetrap',
         'browserify:prod',
-        'uglify',
         'less',
         'componentbuild:styles',
         'concat:theme',
