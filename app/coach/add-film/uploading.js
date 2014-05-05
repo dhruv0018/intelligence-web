@@ -24,7 +24,8 @@ var UploadingFilm = angular.module('uploading-film', [
     'game-info',
     'your-team',
     'opposing-team',
-    'instructions'
+    'instructions',
+    'Coach.Game'
 ]);
 
 /* Cache the template file */
