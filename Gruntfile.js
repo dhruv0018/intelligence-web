@@ -238,10 +238,7 @@ module.exports = function(grunt) {
                     copy: false,
                     scripts: true,
                     styles: false,
-                    files: false,
-                    scriptPlugins: function(builder) {
-                        builder.use('templates', htmlminifier(htmlminifierOptions));
-                    }
+                    files: false
                 },
                 src: '.',
                 dest: './build'
