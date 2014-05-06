@@ -65,7 +65,11 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
 
         /* FIXME: Remove, this is just temp. */
-        $scope.players = [];
+        //$scope.players = $scope.roster;
+        $scope.$watch('roster', function(roster){
+            console.log('in the your team ctrl');
+            console.log(roster);
+        });
 
         /* END TEMP */
 

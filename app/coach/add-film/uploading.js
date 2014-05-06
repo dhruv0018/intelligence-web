@@ -83,12 +83,19 @@ UploadingFilm.value('UploadingFilmTabs', {
  * @type {Controller}
  */
 UploadingFilm.controller('UploadingFilmController', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'UploadingFilmTabs',
-    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, tabs) {
+    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'UploadingFilmTabs', 'Coach.Data',
+    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, tabs, data) {
 
         $scope.$storage = $localStorage;
 
         $scope.tabs = tabs;
+
+        data.then(function(coachData) {
+            $scope.roster = {
+                rosterId: coachData.coachTeam.roster.id,
+                players: coachData.roster
+            };
+        });
 
         tabs['game-info']     = { active: true, disabled: false };
         tabs['your-team']     = { active: false, disabled: true };
