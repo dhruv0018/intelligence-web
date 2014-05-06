@@ -203,7 +203,12 @@ IntelligenceWebClient.run([
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
 
             ErrorReporter.reportError(error);
-            $state.go('error');
+
+            alerts.add({
+
+                type: 'danger',
+                message: 'Error: ' + error
+            });
         });
 
         $rootScope.$on('roleChangeError', function(event, role) {
