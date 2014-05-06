@@ -58,14 +58,19 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($scope, $state, $localStorage, GAME_TYPES, GAME_NOTE_TYPES, tabs, data, session, teams, leagues, games) {
         console.log('inside of the game info controller');
         console.log(session);
         $scope.GAME_TYPES = GAME_TYPES;
 
         $scope.tabs = tabs;
-        $scope.data = data;
+
+        data.then(function(coachData) {
+            $scope.data = coachData;
+            $scope.data.team = coachData.coachTeam;
+            $scope.data.opposingTeam = {};
+        });
 
         $scope.$watch('game.teamId', function(teamId) {
 
@@ -143,32 +148,42 @@ Info.controller('Coach.Game.Info.controller', [
 
             console.log(isHomeGame);
 
-            var opposingTeam = {
-                leagueId: '',
-                primaryAwayColor: null,
-                primaryHomeColor: null,
-                secondaryAwayColor: null,
-                secondaryHomeColor: null
+            var newOpposingTeam = {
+                isCustomerTeam: false,
+                leagueId: $scope.data.team.leagueId,
+                primaryAwayColor: isHomeGame ? game.opposingPrimaryColor : null,
+                primaryHomeColor: isHomeGame ? null : game.opposingPrimaryColor,
+                secondaryAwayColor: isHomeGame ? game.opposingSecondaryColor : null,
+                secondaryHomeColor: isHomeGame ? null : game.opposingSecondaryColor
             };
 
-            teams.save(opposingTeam, function(opposingTeam) {
+            angular.extend($scope.data.opposingTeam, $scope.data.opposingTeam, newOpposingTeam);
+            console.log($scope.data.opposingTeam);
+
+            teams.save($scope.data.opposingTeam, function(opposingTeam) {
                 console.log(opposingTeam);
+
+                game.opposingTeam = opposingTeam;
+                game.opposingTeamId = opposingTeam.id;
+
+                game.rosters = {};
+                game.rosters[$scope.data.team.id] = {};
+                game.rosters[game.opposingTeamId] = {};
+
+                game.teamId = session.currentUser.currentRole.teamId;
+                game.uploaderUserId = session.currentUser.id;
+                game.uploaderTeamId = session.currentUser.currentRole.teamId;
+
+                /* Convert value from btn-radio back to boolean. */
+                game.isHomeGame = game.isHomeGame === 'true';
+
+                games.save(game, function(game) {
+                    $scope.game = game;
+                    tabs.activateTab('your-team');
+                });
+
             });
 
-            //TODO keeping track of new stuff, remove later
-            game.teamId = session.currentUser.currentRole.teamId;
-            game.uploaderUserId = session.currentUser.id;
-            game.uploaderTeamId = session.currentUser.currentRole.teamId;
-
-            /* Convert value from btn-radio back to boolean. */
-            game.isHomeGame = game.isHomeGame === 'true';
-
-            games.save(game, function(game) {
-
-                $scope.game = game;
-            });
-
-            tabs.activateTab('your-team');
         };
     }
 ]);
