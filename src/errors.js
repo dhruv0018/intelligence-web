@@ -221,7 +221,11 @@ IntelligenceWebClient.run([
 
             ErrorReporter.reportError(error);
 
-            $state.go('error');
+            alerts.add({
+
+                type: 'warning',
+                message: error
+            });
         });
     }
 ]);
