@@ -45,7 +45,7 @@
 
                                         <td>{{player.position}}</td>
 
-                                        <td data-ng-click="player.played = !player.played">
+                                        <td data-ng-click="player.rosterStatuses[rosterId] = !player.played">
 
                                             <i class="icon-check" data-ng-show="!player.played"></i>
                                             <i class="icon-check-empty" data-ng-show="player.played"></i>

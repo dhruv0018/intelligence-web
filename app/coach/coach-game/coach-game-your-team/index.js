@@ -57,11 +57,16 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
  * @type {controller}
  */
 YourTeam.controller('Coach.Game.YourTeam.controller', [
-    '$scope', '$state', '$localStorage', 'Coach.Game.Tabs', 'Coach.Game.Data', 'PlayersFactory',
+    '$scope', '$state', '$localStorage', 'Coach.Game.Tabs', 'Coach.Data', 'PlayersFactory',
     function controller($scope, $state, $localStorage, tabs, data, players) {
 
         $scope.tabs = tabs;
-        $scope.data = data;
+        //$scope.data = data;
+
+        data.then(function(coachData) {
+            console.log('inside of the team ctrl');
+            $scope.data = coachData;
+        });
 
 
         /* FIXME: Remove, this is just temp. */
@@ -77,15 +82,16 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         $scope.$watch('game', function(game) {
 
-            if (game && game.getRoster && game.teamId) {
-
-                var roster = game.getRoster(game.teamId);
-
-                if (roster) {
-
-                    $scope.rosterId = roster.id;
-                }
-            }
+//            if (game && game.getRoster && game.teamId) {
+//
+//                var roster = game.getRoster(game.teamId);
+//
+//                if (roster) {
+//
+//                    $scope.rosterId = roster.id;
+//                }
+//            }
+            console.log(game);
         });
 
 
@@ -102,7 +108,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         $scope.save = function() {
 
-            players.save($scope.rosterId, $scope.players);
+            players.save($scope.roster.rosterId, $scope.players);
             tabs.activateTab('opposing-team');
         };
     }

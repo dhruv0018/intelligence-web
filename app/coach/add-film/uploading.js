@@ -95,6 +95,8 @@ UploadingFilm.controller('UploadingFilmController', [
                 rosterId: coachData.coachTeam.roster.id,
                 players: coachData.roster
             };
+
+            $scope.game = data.game;
         });
 
         tabs['game-info']     = { active: true, disabled: false };

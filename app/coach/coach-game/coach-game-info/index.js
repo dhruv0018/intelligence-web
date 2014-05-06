@@ -179,6 +179,7 @@ Info.controller('Coach.Game.Info.controller', [
 
                 games.save(game, function(game) {
                     $scope.game = game;
+                    data.game = game;
                     tabs.activateTab('your-team');
                 });
 
