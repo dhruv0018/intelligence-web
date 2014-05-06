@@ -102,8 +102,8 @@ IntelligenceWebClient.config([
  * Intercepts HTTP responses.
  */
 IntelligenceWebClient.factory('HttpInterceptor', [
-    '$q', '$location', 'TokensService',
-    function factory($q, $location, tokens) {
+    '$q', '$location', 'AlertsService', 'TokensService',
+    function factory($q, $location, alerts, tokens) {
 
         return {
 
@@ -152,16 +152,27 @@ IntelligenceWebClient.factory('HttpInterceptor', [
                     break;
 
                 case 500: /* Server Error */
-                    ErrorReporter.reportError(new Error('Server error', response.data));
-                    $location.path('/500').replace();
-                    break;
 
-                case 501: /* Not Implemented */
-                    $location.path('/501').replace();
+                    ErrorReporter.reportError(new Error('Server error', response.data));
+
+                    alerts.add({
+
+                        type: 'danger',
+                        message: 'Server Error'
+                    });
+
                     break;
 
                 default:
+
                     ErrorReporter.reportError(new Error('Error response', response.data));
+
+                    alerts.add({
+
+                        type: 'danger',
+                        message: 'Error'
+                    });
+
                     break;
                 }
 
