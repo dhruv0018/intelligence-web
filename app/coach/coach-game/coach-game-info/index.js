@@ -60,7 +60,8 @@ Info.directive('krossoverCoachGameInfo', [
 Info.controller('Coach.Game.Info.controller', [
     '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($scope, $state, $localStorage, GAME_TYPES, GAME_NOTE_TYPES, tabs, data, session, teams, leagues, games) {
-
+        console.log('inside of the game info controller');
+        console.log(session);
         $scope.GAME_TYPES = GAME_TYPES;
 
         $scope.tabs = tabs;
@@ -137,6 +138,27 @@ Info.controller('Coach.Game.Info.controller', [
         $scope.save = function() {
 
             var game = angular.copy($scope.game);
+
+            var isHomeGame = game.isHomeGame == 'true';
+
+            console.log(isHomeGame);
+
+            var opposingTeam = {
+                leagueId: '',
+                primaryAwayColor: null,
+                primaryHomeColor: null,
+                secondaryAwayColor: null,
+                secondaryHomeColor: null
+            };
+
+            teams.save(opposingTeam, function(opposingTeam) {
+                console.log(opposingTeam);
+            });
+
+            //TODO keeping track of new stuff, remove later
+            game.teamId = session.currentUser.currentRole.teamId;
+            game.uploaderUserId = session.currentUser.id;
+            game.uploaderTeamId = session.currentUser.currentRole.teamId;
 
             /* Convert value from btn-radio back to boolean. */
             game.isHomeGame = game.isHomeGame === 'true';
