@@ -108,7 +108,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         $scope.save = function() {
 
-            players.save($scope.roster.rosterId, $scope.players);
+            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.roster.players);
             tabs.activateTab('opposing-team');
         };
     }
