@@ -8,19 +8,7 @@
 
     <div class="modal-body">
 
-        <ul class="list-group">
-
-            <li class="list-group-item" data-ng-repeat="role in currentUser.roles">
-
-                <button class="btn-role" data-ng-click="setDefaultRole(role)">
-
-                    <x-krossover-role user="currentUser" role="role"></x-krossover-role>
-
-                </button>
-
-            </li>
-
-        </ul>
+        <x-krossover-role class="btn-role" data-user="currentUser" data-role="role" data-ng-click="setDefaultRole(role)" data-ng-repeat="role in roles"></x-krossover-role>
 
     </div>
 
