@@ -62,6 +62,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         $scope.tabs = tabs;
         $scope.gameRoster = [];
+        $scope.gameRosterId = null;
         //$scope.data = data;
 
         data.then(function(coachData) {
@@ -99,6 +100,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
             players.getList({
                 roster: game.rosters[game.teamId].id
             }, function(gameRoster) {
+                $scope.gameRosterId = game.rosters[game.teamId].id;
                 console.log('here is the game roster');
                 console.log(gameRoster);
                 console.log('here is the team roster');
@@ -108,7 +110,8 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
                 angular.forEach($scope.roster.players, function(teamRosterPlayer) {
                     teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
-                    teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = false;
+                    teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.roster.rosterId];
+                    teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
                     $scope.gameRoster.push(teamRosterPlayer);
                 });
 
@@ -121,17 +124,22 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         });
 
+        $scope.$watch('gameRoster', function(gameRoster) {
+            console.log(gameRoster);
+        }, true);
+
 
 
 
 
         $scope.$watch('formYourTeam.$invalid', function(invalid) {
+            console.log("state of the form");
+            console.log(invalid);
 
             tabs['opposing-team'].disabled = invalid;
         });
 
         $scope.$watch('tabs["your-team"].disabled', function(disabled) {
-
             tabs['opposing-team'].disabled = disabled;
         });
 
