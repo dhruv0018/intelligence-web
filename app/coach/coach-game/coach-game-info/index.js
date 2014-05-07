@@ -58,7 +58,7 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($scope, $state, $localStorage, GAME_TYPES, GAME_NOTE_TYPES, tabs, data, session, teams, leagues, games) {
         console.log('inside of the game info controller');
         console.log(session);
@@ -68,8 +68,9 @@ Info.controller('Coach.Game.Info.controller', [
 
         data.then(function(coachData) {
             $scope.data = coachData;
-            $scope.data.team = coachData.coachTeam;
-            $scope.data.opposingTeam = {};
+            console.log(coachData);
+            //$scope.data.team = coachData.coachTeam;
+            //$scope.data.opposingTeam = {};
         });
 
         $scope.$watch('game.teamId', function(teamId) {

@@ -62,7 +62,13 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
     function controller(config, $rootScope, $scope, $state, $localStorage, $http, tabs, data, games, players) {
 
         $scope.tabs = tabs;
-        $scope.data = data;
+//        $scope.data = data;
+
+        data.then(function(coachData) {
+            console.log('inside the opposing team ctrl');
+            $scope.data = coachData;
+            console.log($scope.data);
+        });
 
 
         $scope.$watch('opposingTeamRoster', function(opposingTeamRoster){
@@ -110,12 +116,12 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                 jerseyNumbers: {}
             };
 
-            data.opposingTeam.players.push(player);
+            $scope.data.opposingTeam.players.push(player);
         };
 
         $scope.removePlayer = function(player) {
 
-            if (player) data.opposingTeam.players.splice(data.opposingTeam.players.indexOf(player), 1);
+            if (player) $scope.data.opposingTeam.players.splice($scope.data.opposingTeam.players.indexOf(player), 1);
         };
 
         $scope.uploadPlayers = function(files) {
@@ -132,17 +138,6 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                     headers: { 'Content-Type': undefined },
                     transformRequest: angular.identity
                 })
-
-                .success(function(data) {
-
-                    data.opposingTeam.players = data.map(function(player) {
-
-                        player.name = player.firstName + ' ' + player.lastName;
-                        player.played = true;
-                        return player;
-                    });
-                })
-
                 .error(function() {
 
                     $rootScope.$broadcast('alert', {
@@ -155,7 +150,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
 
         $scope.save = function() {
 
-            players.save($scope.rosterId, data.opposingTeam.players);
+            players.save($scope.rosterId, $scope.data.opposingTeam.players);
             tabs.activateTab('instructions');
         };
     }

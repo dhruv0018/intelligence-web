@@ -78,7 +78,25 @@ var data = {
  * @name Game.Data
  * @type {value}
  */
-Game.value('Coach.Game.Data', data);
+Game.service('Coach.Game.Data', ['$q', 'Coach.Data',
+    function($q, coachData) {
+
+        var promisedGameData = $q.defer();
+
+        coachData.then(function(coachData){
+            var gameData = coachData;
+            gameData.team = coachData.coachTeam;
+            gameData.opposingTeam = {
+                players: []
+            };
+
+            promisedGameData.resolve(gameData);
+        });
+
+        return promisedGameData.promise;
+    }
+
+]);
 
 /**
  * Game directive.
