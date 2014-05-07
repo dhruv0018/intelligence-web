@@ -66,7 +66,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         //$scope.data = data;
 
         data.then(function(coachData) {
-            console.log('inside of the team ctrl');
+            //console.log('inside of the team ctrl');
             $scope.data = coachData;
         });
 
@@ -76,8 +76,8 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         /* FIXME: Remove, this is just temp. */
         //$scope.players = $scope.roster;
         $scope.$watch('roster', function(roster){
-            console.log('in the your team ctrl');
-            console.log(roster);
+            //console.log('in the your team ctrl');
+            //console.log(roster);
         }, true);
 
         /* END TEMP */
@@ -95,18 +95,18 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 //                    $scope.rosterId = roster.id;
 //                }
 //            }
-            console.log(game);
+            //console.log(game);
 
             players.getList({
                 roster: game.rosters[game.teamId].id
             }, function(gameRoster) {
                 $scope.gameRosterId = game.rosters[game.teamId].id;
-                console.log('here is the game roster');
-                console.log(gameRoster);
-                console.log('here is the team roster');
-                console.log($scope.roster);
+              //  console.log('here is the game roster');
+                //console.log(gameRoster);
+                //console.log('here is the team roster');
+                //console.log($scope.roster);
                 $scope.gameRoster.push(gameRoster[0]);
-                console.log($scope.gameRoster);
+                //console.log($scope.gameRoster);
 
                 angular.forEach($scope.roster.players, function(teamRosterPlayer) {
                     teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
@@ -115,8 +115,8 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     $scope.gameRoster.push(teamRosterPlayer);
                 });
 
-                console.log('here is the adusted game roster');
-                console.log($scope.gameRoster);
+                //console.log('here is the adusted game roster');
+                //console.log($scope.gameRoster);
                 
             });
 
@@ -125,17 +125,10 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         });
 
         $scope.$watch('gameRoster', function(gameRoster) {
-            console.log(gameRoster);
+            //console.log(gameRoster);
         }, true);
 
-
-
-
-
         $scope.$watch('formYourTeam.$invalid', function(invalid) {
-            console.log("state of the form");
-            console.log(invalid);
-
             tabs['opposing-team'].disabled = invalid;
         });
 

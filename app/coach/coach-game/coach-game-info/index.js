@@ -60,15 +60,15 @@ Info.directive('krossoverCoachGameInfo', [
 Info.controller('Coach.Game.Info.controller', [
     '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($scope, $state, $localStorage, GAME_TYPES, GAME_NOTE_TYPES, tabs, data, session, teams, leagues, games) {
-        console.log('inside of the game info controller');
-        console.log(session);
+        //console.log('inside of the game info controller');
+        //console.log(session);
         $scope.GAME_TYPES = GAME_TYPES;
 
         $scope.tabs = tabs;
 
         data.then(function(coachData) {
             $scope.data = coachData;
-            console.log(coachData);
+            //console.log(coachData);
             //$scope.data.team = coachData.coachTeam;
             //$scope.data.opposingTeam = {};
         });
@@ -147,7 +147,7 @@ Info.controller('Coach.Game.Info.controller', [
 
             var isHomeGame = game.isHomeGame == 'true';
 
-            console.log(isHomeGame);
+            //console.log(isHomeGame);
 
             var newOpposingTeam = {
                 isCustomerTeam: false,
@@ -159,10 +159,10 @@ Info.controller('Coach.Game.Info.controller', [
             };
 
             angular.extend($scope.data.opposingTeam, $scope.data.opposingTeam, newOpposingTeam);
-            console.log($scope.data.opposingTeam);
+            //console.log($scope.data.opposingTeam);
 
             teams.save($scope.data.opposingTeam, function(opposingTeam) {
-                console.log(opposingTeam);
+                //console.log(opposingTeam);
 
                 game.opposingTeam = opposingTeam;
                 game.opposingTeamId = opposingTeam.id;

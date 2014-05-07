@@ -149,8 +149,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         };
 
         $scope.save = function() {
-
-            players.save($scope.rosterId, $scope.data.opposingTeam.players);
+            players.save($scope.game.rosters[$scope.game.opposingTeamId].id, $scope.data.opposingTeam.players);
             tabs.activateTab('instructions');
         };
     }
