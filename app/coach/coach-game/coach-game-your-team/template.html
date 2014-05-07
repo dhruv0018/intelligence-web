@@ -33,7 +33,7 @@
 
                                 <tbody>
 
-                                    <tr data-ng-repeat="player in roster.players">
+                                    <tr ng-hide="player.isUnknown" data-ng-repeat="player in gameRoster">
 
                                         <!--<td><img src="http://lorempixel.com/40/40/sports" alt="Avatar"></td>-->
                                         <td><img width="40" height="40" src="{{player.picture.url}}" alt="Avatar"></td>

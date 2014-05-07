@@ -57,10 +57,11 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
  * @type {controller}
  */
 YourTeam.controller('Coach.Game.YourTeam.controller', [
-    '$scope', '$state', '$localStorage', 'Coach.Game.Tabs', 'Coach.Data', 'PlayersFactory',
-    function controller($scope, $state, $localStorage, tabs, data, players) {
+    '$scope', '$state', '$localStorage', 'Coach.Game.Tabs', 'Coach.Data', 'PlayersFactory', 'TeamsFactory',
+    function controller($scope, $state, $localStorage, tabs, data, players, teams) {
 
         $scope.tabs = tabs;
+        $scope.gameRoster = [];
         //$scope.data = data;
 
         data.then(function(coachData) {
@@ -69,12 +70,14 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         });
 
 
+
+
         /* FIXME: Remove, this is just temp. */
         //$scope.players = $scope.roster;
         $scope.$watch('roster', function(roster){
             console.log('in the your team ctrl');
             console.log(roster);
-        });
+        }, true);
 
         /* END TEMP */
 
@@ -92,7 +95,33 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 //                }
 //            }
             console.log(game);
+
+            players.getList({
+                roster: game.rosters[game.teamId].id
+            }, function(gameRoster) {
+                console.log('here is the game roster');
+                console.log(gameRoster);
+                console.log('here is the team roster');
+                console.log($scope.roster);
+                $scope.gameRoster.push(gameRoster[0]);
+                console.log($scope.gameRoster);
+
+                angular.forEach($scope.roster.players, function(teamRosterPlayer) {
+                    teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
+                    teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = false;
+                    $scope.gameRoster.push(teamRosterPlayer);
+                });
+
+                console.log('here is the adusted game roster');
+                console.log($scope.gameRoster);
+                
+            });
+
+
+
         });
+
+
 
 
 
