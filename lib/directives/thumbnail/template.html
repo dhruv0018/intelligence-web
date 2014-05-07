@@ -1,7 +1,12 @@
 <div class="krossover-thumbnail">
     <a ui-sref="Coach.GameArea({id:game.id})">
-        <img ng-if="thumbnail" class="img-responsive" width="{{width}}" height="{{height}}" src="{{thumbnail.url}}" alt="thumbnail">
+        <img data-ng-if="thumbnail.length > 0" class="img-responsive" src="{{thumbnail}}" alt="thumbnail">
+
+        <!--TODO Tory to add src and asset-->
+        <div data-ng-if="thumbnail.length === 0" class="no-thumbnail">
+        	<i class="krossover krossover-logo"></i>
+        </div>
     </a>
 
-    <!--<img ng-if="!thumbnail" class="img-responsive" src="http://lorempixel.com/{{width}}/{{height}}/sports" alt="thumbnail">-->
+
 </div>
