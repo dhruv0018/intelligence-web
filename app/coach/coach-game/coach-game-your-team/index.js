@@ -115,8 +115,8 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     $scope.gameRoster.push(teamRosterPlayer);
                 });
 
-                //console.log('here is the adusted game roster');
-                //console.log($scope.gameRoster);
+                console.log('here is the adusted game roster');
+                console.log($scope.gameRoster);
                 
             });
 

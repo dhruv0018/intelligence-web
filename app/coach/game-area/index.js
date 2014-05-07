@@ -65,7 +65,7 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'Coach.Data', 'indexingData',
+    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'Coach.Game.Data', 'indexingData',
     function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, data, indexingData) {
 
 
@@ -77,6 +77,9 @@ GameArea.controller('Coach.GameArea.controller', [
 
         data.then(function(data) {
             $scope.game = data.indexedGames[$scope.gameId];
+            $scope.data = data;
+
+
             $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
 
             //TODO change to onEnter event when we get resolves working
@@ -87,6 +90,9 @@ GameArea.controller('Coach.GameArea.controller', [
             data.game = $scope.game;
             $scope.team = data.teams[$scope.game.teamId];
             $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
+            console.log('the opposing team is');
+            console.log($scope.opposingTeam);
+            $scope.data.opposingTeam.name = $scope.opposingTeam.name;
 
 //TODO possibly add this here later instead of on gameAreaFilm file
 //            plays.getList($scope.gameId, function (plays) {

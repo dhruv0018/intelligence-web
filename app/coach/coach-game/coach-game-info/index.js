@@ -68,7 +68,7 @@ Info.controller('Coach.Game.Info.controller', [
 
         data.then(function(coachData) {
             $scope.data = coachData;
-            //console.log(coachData);
+            console.log(coachData);
             //$scope.data.team = coachData.coachTeam;
             //$scope.data.opposingTeam = {};
         });
