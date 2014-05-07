@@ -99,7 +99,7 @@ IntelligenceWebClient.run([
              * use the access token in the authorization header. */
             if (tokens.areTokensSet()) {
 
-                $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
+                $http.defaults.headers.common.Authorization = tokens.getTokenType() + ' ' + tokens.getAccessToken();
             }
         });
 
