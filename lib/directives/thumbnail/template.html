@@ -1,9 +1,9 @@
 <div class="krossover-thumbnail">
     <a ui-sref="Coach.GameArea({id:game.id})">
-        <img ng-if="thumbnail.length > 0" class="img-responsive" src="{{thumbnail}}" alt="thumbnail">
+        <img data-ng-if="thumbnail.length > 0" class="img-responsive" src="{{thumbnail}}" alt="thumbnail">
 
         <!--TODO Tory to add src and asset-->
-        <div ng-if="thumbnail.length === 0" class="no-thumbnail">
+        <div data-ng-if="thumbnail.length === 0" class="no-thumbnail">
         	<i class="krossover krossover-logo"></i>
         </div>
     </a>
