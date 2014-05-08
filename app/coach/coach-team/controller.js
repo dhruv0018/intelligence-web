@@ -94,7 +94,7 @@ Team.controller('Coach.Team.controller', [
             $scope.rosterId = data.rosterId;
         });
 
-        $scope.state = $state.current.name;
+        $scope.state = 'Coach.Team.All';
 
         $scope.$watch('state', function(state) {
 
