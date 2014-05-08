@@ -126,6 +126,11 @@ IntelligenceWebClient.factory('PlayersFactory', [
             },
             toggleActivation: function(rosterId){
                 this.rosterStatuses[rosterId] = !this.rosterStatuses[rosterId];
+            },
+            constructActiveRoster: function(roster, rosterId){
+                return roster.filter(function(player) {
+                    return player.rosterStatuses[rosterId] === true;
+                });
             }
         };
 
