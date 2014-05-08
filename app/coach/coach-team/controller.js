@@ -91,7 +91,8 @@ Team.controller('Coach.Team.controller', [
             $scope.team = data.team;
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
-            $scope.positions = data.coachData.positionSet.positions[0].positions
+            $scope.positions = data.coachData.positionSet[0].positions;
+            console.log($scope.positions);
         });
 
         $scope.state = 'Coach.Team.All';
