@@ -155,6 +155,18 @@ IntelligenceWebClient.factory('HttpInterceptor', [
 
                     break;
 
+                case 405: /* Method Not Allowed */
+
+                    ErrorReporter.reportError(new Error('Method not allowed', response.data));
+
+                    alerts.add({
+
+                        type: 'warning',
+                        message: 'Method Not Allowed'
+                    });
+
+                    break;
+
                 case 500: /* Server Error */
 
                     ErrorReporter.reportError(new Error('Server error', response.data));
