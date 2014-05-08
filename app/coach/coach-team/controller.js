@@ -81,8 +81,8 @@ Team.service('Coach.Team.Data', [
  * @type {controller}
  */
 Team.controller('Coach.Team.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'ROLES', 'Coach.Team.Data',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, ROLES, data) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'ROLES', 'Coach.Team.Data', 'PlayersFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, ROLES, data, players) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
@@ -92,14 +92,26 @@ Team.controller('Coach.Team.controller', [
             $scope.team = data.team;
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
+            console.log($scope.rosterId);
         });
 
-        $scope.state = $state.current.name;
+        $scope.state = 'Coach.Team.All';
 
         $scope.$watch('state', function(state) {
 
             if (state) $state.go(state);
         });
+
+        $scope.save = function() {
+            
+            players.save($scope.rosterId, $scope.roster).then(function(players) {
+                $scope.roster = players;
+
+                data.then(function(data) {
+                    data.roster = players;
+                });
+            });
+        };
     }
 ]);
 

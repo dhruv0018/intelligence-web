@@ -21,6 +21,10 @@ Team.controller('Coach.Team.Inactive.controller', [
 
             return player.rosterStatuses[$scope.rosterId] === false;
         };
+
+        $scope.activate = function(player) {
+            player.rosterStatuses[$scope.rosterId] = true;
+        };
     }
 ]);
 

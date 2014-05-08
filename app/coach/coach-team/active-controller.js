@@ -48,16 +48,6 @@ Team.controller('Coach.Team.Active.controller', [
             }
         };
 
-        $scope.save = function() {
-
-            players.save($scope.rosterId, $scope.roster).then(function(players) {
-                $scope.roster = players;
-
-                data.then(function(data) {
-                    data.roster = players;
-                });
-            });
-        };
     }
 ]);
 

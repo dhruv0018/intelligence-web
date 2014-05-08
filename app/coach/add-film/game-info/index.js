@@ -101,6 +101,8 @@ GameInfo.controller('GameInfoController', [
                 $scope.$storage.game.rosters[$scope.$storage.game.teamId] = {};
                 $scope.$storage.game.rosters[$scope.$storage.game.opposingTeamId] = {};
 
+                $scope.$storage.game.uploaderUserId = session.currentUser.id;
+                $scope.$storage.game.uploaderTeamId = session.currentUser.currentRole.teamId;
                 games.save($scope.$storage.game).then(function(game) {
 
                     $scope.$storage.game = game;
