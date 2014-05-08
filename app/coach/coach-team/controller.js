@@ -101,7 +101,7 @@ Team.controller('Coach.Team.controller', [
         });
 
         $scope.save = function() {
-            
+
             players.save($scope.rosterId, $scope.roster).then(function(players) {
                 $scope.roster = players;
 
