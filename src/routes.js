@@ -74,7 +74,9 @@ IntelligenceWebClient.run([
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-            //Used for debugging
+
+            /* Clear any alerts. */
+            alerts.clear();
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {
