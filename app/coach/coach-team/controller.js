@@ -13,8 +13,8 @@ var Team = angular.module('Coach.Team');
  * @type {service}
  */
 Team.service('Coach.Team.Data', [
-    '$q', 'SessionService', 'TeamsFactory', 'PlayersFactory',
-    function($q, session, teams, players) {
+    '$q', 'SessionService', 'TeamsFactory', 'PlayersFactory', 'Coach.Data',
+    function($q, session, teams, players, data) {
 
         var teamId = session.currentUser.currentRole.teamId;
 
@@ -64,7 +64,7 @@ Team.service('Coach.Team.Data', [
         });
 
         var data = {
-
+            coachData: data,
             team: team,
             roster: roster,
             rosterId: rosterId
@@ -88,11 +88,10 @@ Team.controller('Coach.Team.controller', [
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
         data.then(function(data) {
-
             $scope.team = data.team;
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
-            console.log($scope.rosterId);
+            $scope.positions = data.coachData.positionSet.positions[0].positions
         });
 
         $scope.state = 'Coach.Team.All';
