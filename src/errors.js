@@ -142,6 +142,19 @@ IntelligenceWebClient.factory('HttpInterceptor', [
 
                 switch (response.status) {
 
+                case 401: /* Unauthorized */
+                case 403: /* Forbidden */
+
+                    // Do not report 401's or 403's as errors.
+
+                    break;
+
+                case 404: /* Not Found */
+
+                    // Do not report 404's as errors.
+
+                    break;
+
                 case 500: /* Server Error */
 
                     ErrorReporter.reportError(new Error('Server error', response.data));
