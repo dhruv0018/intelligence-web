@@ -88,11 +88,9 @@ Team.controller('Coach.Team.controller', [
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
         data.then(function(data) {
-
             $scope.team = data.team;
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
-            console.log($scope.rosterId);
         });
 
         $scope.state = 'Coach.Team.All';
