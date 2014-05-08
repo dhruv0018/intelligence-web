@@ -93,7 +93,6 @@ Coach.service('Coach.Data', [
                 }, function (players) {
                     promisedRoster.resolve(players);
                 }, function(failure) {
-                    //TODO load empty
                     promisedRoster.resolve([]);
                 });
             } else {

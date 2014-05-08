@@ -92,6 +92,7 @@ Team.controller('Coach.Team.controller', [
             $scope.team = data.team;
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
+            console.log($scope.rosterId);
         });
 
         $scope.state = 'Coach.Team.All';
@@ -102,7 +103,7 @@ Team.controller('Coach.Team.controller', [
         });
 
         $scope.save = function() {
-
+            
             players.save($scope.rosterId, $scope.roster).then(function(players) {
                 $scope.roster = players;
 

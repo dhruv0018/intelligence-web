@@ -26,6 +26,10 @@ FilmHome.controller('Coach.FilmHome.controller', [
             $scope.teams = data.teams;
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId.id;
+            $scope.activeRoster = $scope.roster.filter(function(player) {
+                return player.rosterStatuses[$scope.rosterId] === true;
+            });
+
         });
 
         $scope.filters = filtersData.filters;
