@@ -42,10 +42,10 @@
             <li>
                 <div ng-repeat="(key,value) in filtersetCategories">
                     <div ng-repeat="(innerkey, innerValue) in value.subFilters">
-                        <a ng-if="!innerValue.customFilter" ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" ng-click="setFilter(innerValue)">
+                        <a ng-if="!innerValue.customFilter" ng-hide="innerValue.filterCategoryId !== filterCategory" class="dropdown-toggle btn"  ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
-                        <a ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" ng-if="innerValue.customFilter" class="btn btn-default" ng-click="setFilter(innerValue)">
+                        <a ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" ng-if="innerValue.customFilter" class="dropdown-toggle btn btn-default" ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
                     </div>
