@@ -83,8 +83,8 @@ UploadingFilm.value('UploadingFilmTabs', {
  * @type {Controller}
  */
 UploadingFilm.controller('UploadingFilmController', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'UploadingFilmTabs', 'Coach.Data',
-    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, tabs, data) {
+    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'PlayersFactory', 'UploadingFilmTabs', 'Coach.Data',
+    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, players, tabs, data) {
 
         $scope.$storage = $localStorage;
 
@@ -93,8 +93,9 @@ UploadingFilm.controller('UploadingFilmController', [
         data.then(function(coachData) {
             $scope.roster = {
                 rosterId: coachData.coachTeam.roster.id,
-                players: coachData.roster
+                players: players.constructActiveRoster(coachData.roster, coachData.coachTeam.roster.id)
             };
+            
 
             $scope.game = data.game;
         });
