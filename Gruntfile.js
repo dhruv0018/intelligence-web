@@ -238,10 +238,7 @@ module.exports = function(grunt) {
                     copy: false,
                     scripts: true,
                     styles: false,
-                    files: false,
-                    scriptPlugins: function(builder) {
-                        builder.use('templates', htmlminifier(htmlminifierOptions));
-                    }
+                    files: false
                 },
                 src: '.',
                 dest: './build'
@@ -313,9 +310,13 @@ module.exports = function(grunt) {
                     'build/scripts.js': 'build/bundle.js'
                 }
             },
-            prod: {
+            htaccess: {
                 files: {
-                    'public/intelligence/.htaccess': 'src/.htaccess',
+                    'public/intelligence/.htaccess': 'src/.htaccess'
+                }
+            },
+            manifests: {
+                files: {
                     'public/intelligence/manifest.appcache': 'manifest.appcache'
                 }
             },
@@ -536,7 +537,6 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'concat:mousetrap',
         'browserify:prod',
-        'uglify',
         'less',
         'componentbuild:styles',
         'concat:theme',
@@ -547,6 +547,7 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:assets',
         'copy:build',
+        'copy:htaccess',
         'ver:prod']);
 
     grunt.registerTask('prod', [
@@ -565,7 +566,8 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:assets',
         'copy:build',
-        'copy:prod',
+        'copy:htaccess',
+        'copy:manifests',
         'ver:prod']);
 };
 

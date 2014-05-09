@@ -39,7 +39,7 @@ Team.controller('Coach.Team.Active.controller', [
 
             if (player && player.id) {
 
-                player.rosterStatuses[$scope.rosterId] = false;
+                player.toggleActivation($scope.rosterId);
             }
 
             else {
@@ -48,16 +48,6 @@ Team.controller('Coach.Team.Active.controller', [
             }
         };
 
-        $scope.save = function() {
-
-            players.save($scope.rosterId, $scope.roster).then(function(players) {
-                $scope.roster = players;
-
-                data.then(function(data) {
-                    data.roster = players;
-                });
-            });
-        };
     }
 ]);
 
