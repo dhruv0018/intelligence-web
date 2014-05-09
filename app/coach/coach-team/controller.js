@@ -104,11 +104,11 @@ Team.controller('Coach.Team.controller', [
         });
 
         $scope.save = function() {
-//            var firstPlayer = $scope.roster[0];
-//            var position = {};
-//            position[$scope.rosterId] = firstPlayer.selectedPosition;
-//            firstPlayer.positions.push(position);
-//            console.log(firstPlayer);
+            var firstPlayer = $scope.roster[3];
+            var position = firstPlayer.selectedPosition;
+            firstPlayer.positions = {};
+            firstPlayer.positions[$scope.rosterId] = [position];
+            console.log(firstPlayer);
 
             players.save($scope.rosterId, $scope.roster).then(function(players) {
                 $scope.roster = players;
