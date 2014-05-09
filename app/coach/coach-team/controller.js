@@ -104,6 +104,17 @@ Team.controller('Coach.Team.controller', [
 
         });
 
+        $scope.$watch('roster', function(roster){
+            angular.forEach($scope.roster, function(player){
+                console.log(player);
+
+                if (typeof player.positions[$scope.rosterId] !== 'undefined' && player.positions[$scope.rosterId].length > 0) {
+                    player.selectedPosition = player.positions[$scope.rosterId][0];
+                    console.log(player.selectedPosition);
+                }
+            });
+        }, true);
+
         $scope.state = 'Coach.Team.All';
 
         $scope.$watch('state', function(state) {
