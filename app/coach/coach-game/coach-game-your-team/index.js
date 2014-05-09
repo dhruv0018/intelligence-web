@@ -63,70 +63,33 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.tabs = tabs;
         $scope.gameRoster = [];
         $scope.gameRosterId = null;
-        //$scope.data = data;
 
         data.then(function(coachData) {
-            //console.log('inside of the team ctrl');
             $scope.data = coachData;
         });
 
 
-
-
-        /* FIXME: Remove, this is just temp. */
-        //$scope.players = $scope.roster;
-        $scope.$watch('roster', function(roster){
-            //console.log('in the your team ctrl');
-            //console.log(roster);
-        }, true);
-
-        /* END TEMP */
-
-
-
         $scope.$watch('game', function(game) {
-
-//            if (game && game.getRoster && game.teamId) {
-//
-//                var roster = game.getRoster(game.teamId);
-//
-//                if (roster) {
-//
-//                    $scope.rosterId = roster.id;
-//                }
-//            }
-            //console.log(game);
 
             players.getList({
                 roster: game.rosters[game.teamId].id
             }, function(gameRoster) {
                 $scope.gameRosterId = game.rosters[game.teamId].id;
-              //  console.log('here is the game roster');
-                //console.log(gameRoster);
-                //console.log('here is the team roster');
-                //console.log($scope.roster);
-                $scope.gameRoster.push(gameRoster[0]);
-                //console.log($scope.gameRoster);
+                //fresh game roster with only a single unknown player
+                if (gameRoster.length === 1) {
+                    $scope.gameRoster.push(gameRoster[0]);
 
-                angular.forEach($scope.roster.players, function(teamRosterPlayer) {
-                    teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
-                    teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.roster.rosterId];
-                    teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
-                    $scope.gameRoster.push(teamRosterPlayer);
-                });
-
-                console.log('here is the adusted game roster');
-                console.log($scope.gameRoster);
-                
+                    angular.forEach($scope.roster.players, function(teamRosterPlayer) {
+                        teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
+                        teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.roster.rosterId];
+                        teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
+                        $scope.gameRoster.push(teamRosterPlayer);
+                    });
+                } else {
+                    $scope.gameRoster = gameRoster;
+                }
             });
-
-
-
         });
-
-        $scope.$watch('gameRoster', function(gameRoster) {
-            //console.log(gameRoster);
-        }, true);
 
         $scope.$watch('formYourTeam.$invalid', function(invalid) {
             tabs['opposing-team'].disabled = invalid;
@@ -137,8 +100,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         });
 
         $scope.save = function() {
-
-            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.roster.players);
+            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.gameRoster);
             tabs.activateTab('opposing-team');
         };
     }
