@@ -31,7 +31,8 @@
 
                         <td>
 
-                            <input size="3" data-ng-model="player.position">
+                            <!--<input size="3" data-ng-model="player.position">-->
+                            <select data-ng-model="player.selectedPosition" ng-options="position.name for position in positions"></select>
 
                             <button class="btn btn-blank pull-right" data-ng-click="deactivate(player)"><i class="icon-remove"></i></button>
 

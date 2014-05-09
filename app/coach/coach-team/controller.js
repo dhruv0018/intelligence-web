@@ -92,6 +92,7 @@ Team.controller('Coach.Team.controller', [
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
             $scope.positions = data.coachData.positionSet[0].positions;
+            $scope.adjustedPositions = {};
             console.log($scope.positions);
         });
 
@@ -103,7 +104,12 @@ Team.controller('Coach.Team.controller', [
         });
 
         $scope.save = function() {
-            
+//            var firstPlayer = $scope.roster[0];
+//            var position = {};
+//            position[$scope.rosterId] = firstPlayer.selectedPosition;
+//            firstPlayer.positions.push(position);
+//            console.log(firstPlayer);
+
             players.save($scope.rosterId, $scope.roster).then(function(players) {
                 $scope.roster = players;
 
