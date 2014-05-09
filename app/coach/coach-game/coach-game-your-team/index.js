@@ -66,10 +66,14 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         data.then(function(coachData) {
             $scope.data = coachData;
+            console.log($scope.data);
         });
 
 
         $scope.$watch('game', function(game) {
+            console.log('inside the game watch in the your team ctrl---The Game below is ---');
+            console.log(game);
+            console.log($scope.game);
 
             players.getList({
                 roster: game.rosters[game.teamId].id

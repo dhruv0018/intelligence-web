@@ -161,30 +161,39 @@ Info.controller('Coach.Game.Info.controller', [
             angular.extend($scope.data.opposingTeam, $scope.data.opposingTeam, newOpposingTeam);
             //console.log($scope.data.opposingTeam);
 
-            teams.save($scope.data.opposingTeam, function(opposingTeam) {
-                //console.log(opposingTeam);
+            if(typeof game.opposingTeamId === 'undefined'){
+                teams.save($scope.data.opposingTeam, function(opposingTeam) {
+                    //console.log(opposingTeam);
 
-                game.opposingTeam = opposingTeam;
-                game.opposingTeamId = opposingTeam.id;
+                    game.opposingTeam = opposingTeam;
+                    game.opposingTeamId = opposingTeam.id;
 
-                game.rosters = {};
-                game.rosters[$scope.data.team.id] = {};
-                game.rosters[game.opposingTeamId] = {};
+                    game.rosters = {};
+                    game.rosters[$scope.data.team.id] = {};
+                    game.rosters[game.opposingTeamId] = {};
 
-                game.teamId = session.currentUser.currentRole.teamId;
-                game.uploaderUserId = session.currentUser.id;
-                game.uploaderTeamId = session.currentUser.currentRole.teamId;
+                    game.teamId = session.currentUser.currentRole.teamId;
+                    game.uploaderUserId = session.currentUser.id;
+                    game.uploaderTeamId = session.currentUser.currentRole.teamId;
 
-                /* Convert value from btn-radio back to boolean. */
-                game.isHomeGame = game.isHomeGame === 'true';
+                    /* Convert value from btn-radio back to boolean. */
+                    game.isHomeGame = game.isHomeGame === 'true';
 
+                    games.save(game, function(game) {
+                        $scope.game = game;
+                        data.game = game;
+                        tabs.activateTab('your-team');
+                    });
+
+                });
+            } else {
                 games.save(game, function(game) {
                     $scope.game = game;
                     data.game = game;
                     tabs.activateTab('your-team');
                 });
+            }
 
-            });
 
         };
     }
