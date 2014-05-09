@@ -41,7 +41,14 @@ Game.config([
                     templateUrl: 'game.html',
                     controller: 'GameController'
                 }
-            }
+            },
+            onExit: [
+                'AlertsService',
+                function(alerts) {
+
+                    alerts.clear();
+                }
+            ]
         };
 
         $stateProvider.state(game);
