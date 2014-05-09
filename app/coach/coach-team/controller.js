@@ -92,8 +92,16 @@ Team.controller('Coach.Team.controller', [
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
             $scope.positions = data.coachData.positionSet[0].positions;
-            $scope.adjustedPositions = {};
-            console.log($scope.positions);
+
+            angular.forEach($scope.roster, function(player){
+                console.log(player);
+
+                if (typeof player.positions[$scope.rosterId] !== 'undefined' && player.positions[$scope.rosterId].length > 0) {
+                    player.selectedPosition = player.positions[$scope.rosterId][0];
+                    console.log(player.selectedPosition);
+                }
+            });
+
         });
 
         $scope.state = 'Coach.Team.All';
@@ -104,11 +112,14 @@ Team.controller('Coach.Team.controller', [
         });
 
         $scope.save = function() {
-            var firstPlayer = $scope.roster[3];
-            var position = firstPlayer.selectedPosition;
-            firstPlayer.positions = {};
-            firstPlayer.positions[$scope.rosterId] = [position];
-            console.log(firstPlayer);
+
+            angular.forEach($scope.roster, function(player){
+                if(player.selectedPosition){
+                    var positions = {};
+                    positions[$scope.rosterId] = [player.selectedPosition];
+                    player.positions = positions;
+                }
+            });
 
             players.save($scope.rosterId, $scope.roster).then(function(players) {
                 $scope.roster = players;
