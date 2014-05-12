@@ -25,6 +25,7 @@ IntelligenceWebClient.factory('TokensService', [
     function(config, $injector, $interval, $sessionStorage, $localStorage) {
 
         var $http;
+        var session;
 
         var TokenService = {
 
@@ -47,8 +48,6 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             refresh: undefined,
-
-            persist: false,
 
             /**
             * Requests an authorization code from the server.
@@ -248,6 +247,28 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
+            * Refreshes the OAuth access token.
+            * @return {object} - the OAuth tokens
+            */
+            refreshToken: function() {
+
+                var self = this;
+
+                session = session || $injector.get('SessionService');
+
+                var currentUser = session.retrieveCurrentUser();
+                var persist = currentUser ? currentUser.persist : false;
+
+                return self.requestTokenRefresh().then(function(tokens) {
+
+                    /* Store the tokens. Optionally persisting. */
+                    self.setTokens(tokens, persist);
+
+                    return tokens;
+                });
+            },
+
+            /**
             * Sets the tokens. Will store the tokens in memory, the session,
             * and optionally persistently.
             * @param {OAuth} tokens - an OAuth object that contains the tokens.
@@ -269,7 +290,7 @@ IntelligenceWebClient.factory('TokensService', [
                 if (this.tokens.refreshToken) {
 
                     /* Automatically refresh the access token after it expires. */
-                    this.refresh = $interval(this.requestTokenRefresh.bind(this), this.tokens.expiration);
+                    this.refresh = $interval(this.refreshToken.bind(this), this.tokens.expiration);
                 }
 
                 /* If the refresh token is not present. */
