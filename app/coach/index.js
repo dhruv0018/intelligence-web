@@ -88,7 +88,7 @@ Coach.service('Coach.Data', [
                 });
 
                 if (league.positionSetId) {
-                    positions.getList(league.positonSetId, function(positionSet){
+                    positions.get(league.positionSetId, function(positionSet){
                         promisedPositionSet.resolve(positionSet);
                     });
                 }
