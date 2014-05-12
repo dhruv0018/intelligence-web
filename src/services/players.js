@@ -17,6 +17,10 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 var self = this;
 
+                if (window.Array.isArray(self.positions)) {
+                    self.positions = {};
+                }
+
                 /* Copy all of the properties from the retrieved $resource
                  * "player" object. */
                 angular.extend(player, self);
