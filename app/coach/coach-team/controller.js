@@ -130,20 +130,23 @@ Team.controller('Coach.Team.controller', [
         $scope.save = function() {
             angular.forEach($scope.roster, function(player){
                 //angular quirk, why does it set models to false
-                player.positions = player.selectedPositions[$scope.rosterId].filter(function(position){
+                player.selectedPositions[$scope.rosterId] = player.selectedPositions[$scope.rosterId].filter(function(position) {
                     return position !== false;
                 });
+                player.positions = {};
+                player.positions[$scope.rosterId] = player.selectedPositions[$scope.rosterId];
+
             });
 
             console.log($scope.roster);
 
-//            players.save($scope.rosterId, $scope.roster).then(function(players) {
-//                $scope.roster = players;
-//
-//                data.then(function(data) {
-//                    data.roster = players;
-//                });
-//            });
+            players.save($scope.rosterId, $scope.roster).then(function(players) {
+                $scope.roster = players;
+
+                data.then(function(data) {
+                    data.roster = players;
+                });
+            });
         };
     }
 ]);
