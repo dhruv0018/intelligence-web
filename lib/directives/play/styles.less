@@ -5,12 +5,17 @@
     padding-top: 10px;
     padding-left: 15px;
     padding-right: 15px;
-    border-bottom: 1px solid rgb(216, 216, 216);
+    border-bottom: 1px solid rgb(216, 216, 216) !important;
 
     &:hover,
     &.active {
 
         background-color: rgb(246, 249, 253);
+    }
+
+    a.accordion-toggle {
+        display: block;
+        text-decoration: none;
     }
 
     h4 {
@@ -21,6 +26,7 @@
         letter-spacing: -0.01em;
         margin-top: 5px;
         margin-bottom: 5px;
+        text-decoration: none;
 
         .dash,
         .period,
@@ -45,7 +51,7 @@
             padding-bottom: 10px;
         }
 
-        &.collapsed {
+        &.playCollapsed {
             color: @gray-light;
         }
     }
@@ -96,6 +102,7 @@
         letter-spacing: 0.01em;
         padding-top: 10px;
         padding-left: 0;
+        padding-right: 0;
         padding-bottom: 10px;
         border-left-width: 0;
 
