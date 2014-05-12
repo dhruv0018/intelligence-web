@@ -85,7 +85,7 @@ var GAME_TYPES_IDS = {
 IntelligenceWebClient.constant('GAME_TYPES_IDS', GAME_TYPES_IDS);
 
 var GAME_TYPES = {
-    
+
     CONFERENCE: {
 
         id: 1,
@@ -109,6 +109,7 @@ var GAME_TYPES = {
         filter: 'regular',
         filterName: 'Regular'
     },
+
     SCOUTING: {
 
         id: 4,
@@ -116,6 +117,7 @@ var GAME_TYPES = {
         filter: 'scouting',
         filterName: 'Scouting'
     },
+    
     SCRIMMAGE: {
 
         id: 5,
