@@ -73,11 +73,8 @@ var GAME_STATUSES = {
 
 IntelligenceWebClient.constant('GAME_STATUSES', GAME_STATUSES);
 
-//TODO remove fallbacks after new scheme adopted
 var GAME_TYPES_IDS = {
-    'conference': 'CONFERENCE',
-    'non-conference': 'NON_CONFERENCE',
-    'playoff': 'PLAYOFF',
+    
     1: 'CONFERENCE',
     2: 'NON_CONFERENCE',
     3: 'PLAYOFF',
@@ -89,6 +86,7 @@ IntelligenceWebClient.constant('GAME_TYPES_IDS', GAME_TYPES_IDS);
 
 var GAME_TYPES = {
     CONFERENCE: {
+
         id: 1,
         name: 'Conference Game',
         filter: 'regular',
@@ -96,6 +94,7 @@ var GAME_TYPES = {
     },
 
     NON_CONFERENCE: {
+
         id: 2,
         name: 'Non-Conference Game',
         filter: 'regular',
@@ -103,18 +102,21 @@ var GAME_TYPES = {
     },
 
     PLAYOFF: {
+
         id: 3,
         name: 'Playoff',
         filter: 'regular',
         filterName: 'Regular'
     },
     SCOUTING: {
+
         id: 4,
         name: 'Scouting',
         filter: 'scouting',
         filterName: 'Scouting'
     },
     SCRIMMAGE: {
+
         id: 5,
         name: 'Scrimmage',
         filter: 'scrimmage',
