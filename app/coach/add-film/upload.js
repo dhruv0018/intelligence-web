@@ -153,7 +153,9 @@ UploadFilm.controller('UploadFilmController', [
 
                     $scope.game = {
                         /* Store the GUID with the game. */
-                        guid: guid
+                        video:{
+                            guid: guid
+                        }
                     };
 
                     coachData.game = $scope.game;
