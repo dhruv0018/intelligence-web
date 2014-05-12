@@ -111,11 +111,11 @@ Indexing.config([
  * @name Sidebar
  * @type {Value}
  */
-Indexing.value('Indexing.Sidebar', [{
+Indexing.value('Indexing.Sidebar', {
 
     notes: false,
     playlist: true
-}]);
+});
 
 /* File dependencies. */
 require('./filters');
