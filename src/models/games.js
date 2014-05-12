@@ -117,7 +117,7 @@ var GAME_TYPES = {
         filter: 'scouting',
         filterName: 'Scouting'
     },
-    
+
     SCRIMMAGE: {
 
         id: 5,
@@ -125,6 +125,7 @@ var GAME_TYPES = {
         filter: 'scrimmage',
         filterName: 'Scrimmage'
     }
+    
 };
 
 
