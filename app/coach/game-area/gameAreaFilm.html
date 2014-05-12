@@ -13,7 +13,7 @@
 
         <span ng-repeat="filter in activeFilters track by $index" class="btn btn-default active-filter">
             {{filter.name}}
-            <i ng-click="removeFilter($index)" class="icon-remove"></i>
+            <i data-ng-click="removeFilter($index)" class="icon-remove"></i>
         </span>
 
         <a ng-show="activeFilters.length > 0" ng-click="clearFilters()">
@@ -23,12 +23,12 @@
         <ul ng-click="$event.stopPropagation();" class="dropdown-menu">
             <li>
                 <div>
-                    <a class="btn" ng-click="setTeam(team.id)" ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
+                    <a class="btn" ng-click="setTeam(team.id)" data-ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
                         {{team.name}}
                     </a>
                 </div>
                 <div>
-                    <a class="btn" ng-click="setTeam(opposingTeam.id)" ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
+                    <a class="btn" ng-click="setTeam(opposingTeam.id)" data-ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
                         {{opposingTeam.name}}
                     </a>
                 </div>
@@ -36,16 +36,16 @@
 
             <li>
                 <div ng-repeat="(key,value) in filtersetCategories">
-                    <a ng-click="setFilterCategory(value.id)" class="btn" ng-class="{'btn-default':(value.id !== filterCategory), 'btn-primary':(value.id === filterCategory)}">{{value.name}}</a>
+                    <a data-ng-click="setFilterCategory(value.id)" class="btn" data-ng-class="{'btn-default':(value.id !== filterCategory), 'btn-primary':(value.id === filterCategory)}">{{value.name}}</a>
                 </div>
             </li>
             <li>
                 <div ng-repeat="(key,value) in filtersetCategories">
                     <div ng-repeat="(innerkey, innerValue) in value.subFilters">
-                        <a ng-if="!innerValue.customFilter" ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" ng-click="setFilter(innerValue)">
+                        <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="dropdown-toggle btn"  data-ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
-                        <a ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" ng-if="innerValue.customFilter" class="btn btn-default" ng-click="setFilter(innerValue)">
+                        <a data-ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" data-ng-if="innerValue.customFilter" class="dropdown-toggle btn btn-default" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
                     </div>
@@ -63,7 +63,7 @@
           <no-results data-ng-hide="plays.length"></no-results>
         </aside>
 
-        <div class="player" ng-class="{'breakdown-player':(gameStatus === 'INDEXED')}">
+        <div class="player" data-ng-class="{'breakdown-player':(gameStatus === 'INDEXED')}">
             <x-krossover-videoplayer></x-krossover-videoplayer>
         </div>
 </div>

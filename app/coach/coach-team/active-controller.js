@@ -14,8 +14,8 @@ var Team = angular.module('Coach.Team');
  * @type {controller}
  */
 Team.controller('Coach.Team.Active.controller', [
-    '$scope', 'PlayersFactory',
-    function controller($scope, players) {
+    '$scope', 'PlayersFactory', 'Coach.Data',
+    function controller($scope, players, data) {
 
         $scope.isActive = function(player) {
 
@@ -39,7 +39,7 @@ Team.controller('Coach.Team.Active.controller', [
 
             if (player && player.id) {
 
-                player.rosterStatuses[$scope.rosterId] = false;
+                player.toggleActivation($scope.rosterId);
             }
 
             else {
@@ -48,13 +48,6 @@ Team.controller('Coach.Team.Active.controller', [
             }
         };
 
-        $scope.save = function() {
-
-            players.save($scope.rosterId, $scope.roster).then(function(players) {
-
-                $scope.roster = players;
-            });
-        };
     }
 ]);
 
