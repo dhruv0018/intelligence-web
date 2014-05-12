@@ -17,15 +17,17 @@ var FilmHome = angular.module('Coach.FilmHome');
  * @type {controller}
  */
 FilmHome.controller('Coach.FilmHome.controller', [
-    '$rootScope', '$scope', '$state', 'GamesFactory', 'Coach.Data', 'Coach.FilmHome.GameFilters',
-    function controller($rootScope, $scope, $state, games, data, filtersData) {
+    '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory', 'Coach.Data', 'Coach.FilmHome.GameFilters',
+    function controller($rootScope, $scope, $state, games, players, data, filtersData) {
 
         data.then(function (data) {
             $scope.games = data.games;
             $scope.team = data.coachTeam;
             $scope.teams = data.teams;
-            $scope.mockRoster = data.roster;
+            $scope.roster = data.roster;
             $scope.rosterId = data.rosterId.id;
+            $scope.activeRoster = players.constructActiveRoster($scope.roster, $scope.rosterId);
+
         });
 
         $scope.filters = filtersData.filters;
