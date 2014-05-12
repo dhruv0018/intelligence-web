@@ -23,16 +23,16 @@ Team.controller('Coach.Team.Active.controller', [
         };
 
         $scope.addNewPlayer = function() {
-
             var player = {
 
                 jerseyNumbers: {},
                 rosterStatuses: {},
-                positions: {}
+                positions: {},
+                selectedPositions: {}
             };
 
-            player.positions[$scope.rosterId] = [];
-
+            player.selectedPositions[$scope.rosterId] = {};
+            
             player.rosterStatuses[$scope.rosterId] = true;
 
             $scope.roster.push(player);

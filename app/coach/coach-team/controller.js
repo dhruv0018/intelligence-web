@@ -97,22 +97,27 @@ Team.controller('Coach.Team.controller', [
                 console.log(player);
 
                 if (typeof player.positions[$scope.rosterId] !== 'undefined' && player.positions[$scope.rosterId].length > 0) {
-                    player.selectedPosition = player.positions[$scope.rosterId][0];
-                    console.log(player.selectedPosition);
+                    player.selectedPositions = player.positions;
+                    console.log(player.selectedPositions);
+                } else {
+                    player.selectedPositions = {};
+                    player.selectedPositions[$scope.rosterId] = [];
+                    console.log(player.selectedPositions);
                 }
             });
 
         });
 
         $scope.$watch('roster', function(roster){
-            angular.forEach($scope.roster, function(player){
-                console.log(player);
-
-                if (typeof player.positions[$scope.rosterId] !== 'undefined' && player.positions[$scope.rosterId].length > 0) {
-                    player.selectedPosition = player.positions[$scope.rosterId][0];
-                    console.log(player.selectedPosition);
-                }
-            });
+//            angular.forEach($scope.roster, function(player){
+//                console.log(player);
+//
+//                if (typeof player.positions[$scope.rosterId] !== 'undefined' && player.positions[$scope.rosterId].length > 0) {
+//                    player.selectedPosition = player.positions[$scope.rosterId][0];
+//                    console.log(player.selectedPosition);
+//                }
+//            });
+            //console.log(roster);
         }, true);
 
         $scope.state = 'Coach.Team.All';
@@ -123,22 +128,22 @@ Team.controller('Coach.Team.controller', [
         });
 
         $scope.save = function() {
-
             angular.forEach($scope.roster, function(player){
-                if(player.selectedPosition){
-                    var positions = {};
-                    positions[$scope.rosterId] = [player.selectedPosition];
-                    player.positions = positions;
-                }
-            });
-
-            players.save($scope.rosterId, $scope.roster).then(function(players) {
-                $scope.roster = players;
-
-                data.then(function(data) {
-                    data.roster = players;
+                //angular quirk, why does it set models to false
+                player.positions = player.selectedPositions[$scope.rosterId].filter(function(position){
+                    return position !== false;
                 });
             });
+
+            console.log($scope.roster);
+
+//            players.save($scope.rosterId, $scope.roster).then(function(players) {
+//                $scope.roster = players;
+//
+//                data.then(function(data) {
+//                    data.roster = players;
+//                });
+//            });
         };
     }
 ]);

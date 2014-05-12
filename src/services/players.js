@@ -17,9 +17,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 var self = this;
 
-                if (window.Array.isArray(self.positions)) {
-                    self.positions = {};
-                }
+//                if (window.Array.isArray(player.positions)) {
+//                    player.positions = {};
+//                }
 
                 /* Copy all of the properties from the retrieved $resource
                  * "player" object. */
