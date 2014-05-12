@@ -74,7 +74,7 @@ var GAME_STATUSES = {
 IntelligenceWebClient.constant('GAME_STATUSES', GAME_STATUSES);
 
 var GAME_TYPES_IDS = {
-    
+
     1: 'CONFERENCE',
     2: 'NON_CONFERENCE',
     3: 'PLAYOFF',
@@ -85,6 +85,7 @@ var GAME_TYPES_IDS = {
 IntelligenceWebClient.constant('GAME_TYPES_IDS', GAME_TYPES_IDS);
 
 var GAME_TYPES = {
+    
     CONFERENCE: {
 
         id: 1,
