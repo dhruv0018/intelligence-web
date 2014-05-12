@@ -106,7 +106,7 @@ UploadingFilm.controller('UploadingFilmController', [
 
         var deleteVideo = function() {
 
-            var game = $scope.$storage.game;
+            var game = $scope.game;
 
             if (game && game.video && game.video.guid) {
 
