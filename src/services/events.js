@@ -33,36 +33,35 @@ IntelligenceWebClient.factory('EventsService', [
                 var tag = tags[tagId];
 
                 /* If the tag has variables. */
-                if (tag.tagVariables) {
+                if (!tag.tagVariables) return [];
 
-                    /* Parse the variable options. */
-                    tag.tagVariables.forEach(function(variable, index) {
+                /* Parse the variable options. */
+                tag.tagVariables.forEach(function(variable, index) {
 
-                        variable.index = index + 1;
-                        variable.options = angular.isString(variable.options) ? JSON.parse(variable.options) : variable.options;
-                    });
+                    variable.index = index + 1;
+                    variable.options = angular.isString(variable.options) ? JSON.parse(variable.options) : variable.options;
+                });
 
-                    /* Split up script into array items and replace variables
-                     * with the actual variable object. */
-                    var variableIndex = 0;
-                    var scriptItems = tag[scriptType].split(VARIABLE_PATTERN);
+                /* Split up script into array items and replace variables
+                    * with the actual variable object. */
+                var variableIndex = 0;
+                var scriptItems = tag[scriptType].split(VARIABLE_PATTERN);
 
-                    scriptItems = scriptItems.filter(function(item) {
+                scriptItems = scriptItems.filter(function(item) {
 
-                        return item !== '';
-                    });
+                    return item !== '';
+                });
 
-                    scriptItems.forEach(function(item, index) {
+                scriptItems.forEach(function(item, index) {
 
-                        if (item.search(VARIABLE_PATTERN) !== -1) {
+                    if (item.search(VARIABLE_PATTERN) !== -1) {
 
-                            scriptItems[index] = tag.tagVariables[variableIndex];
-                            variableIndex++;
-                        }
-                    });
+                        scriptItems[index] = tag.tagVariables[variableIndex];
+                        variableIndex++;
+                    }
+                });
 
-                    return scriptItems;
-                }
+                return scriptItems;
             }
         };
 
