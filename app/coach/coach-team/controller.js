@@ -91,7 +91,7 @@ Team.controller('Coach.Team.controller', [
             $scope.team = data.team;
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
-            $scope.positions = data.coachData.positionSet[0].positions;
+            $scope.positions = data.coachData.positionSet.positions;
 
             angular.forEach($scope.roster, function(player){
                 console.log(player);
