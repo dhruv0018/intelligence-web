@@ -67,18 +67,24 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         data.then(function(coachData) {
             $scope.data = coachData;
 
-            $scope.data.opposingTeam = {
-                players: coachData.opposingTeamGameRoster.players
-            };
+            if (coachData.opposingTeamGameRoster) {
+                $scope.data.opposingTeam = {
+                    players: coachData.opposingTeamGameRoster.players
+                };
+            }
         });
 
         $scope.$watch('game', function(game) {
-            $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
+            if(game.rosters){
+                $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
+            }
         });
 
-        $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster){                        
-            if (typeof opposingTeamRoster !== 'undefined' || opposingTeamRoster.length === 0) {
-                $scope.addNewPlayer();
+        $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster){
+            if (typeof opposingTeamRoster !== 'undefined') {
+                if(opposingTeamRoster.length === 0) {
+                    $scope.addNewPlayer();
+                }
             }
         });
 

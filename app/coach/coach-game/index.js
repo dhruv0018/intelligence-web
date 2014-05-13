@@ -97,15 +97,6 @@ Game.directive('krossoverCoachGame', [
         };
 
         function link($scope, element, attributes, controller) {
-            $scope.$watch('roster', function(roster) {
-                console.log(roster);
-            });
-
-            console.log('in the coach game directive');
-            $scope.$watch('opposingTeamRoster', function(opposingTeamRoster) {
-                console.log('in the opposing team watch in the coach game directive');
-                console.log(opposingTeamRoster);
-            });
 
             element.on('$destroy', function() {
 

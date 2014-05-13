@@ -70,28 +70,26 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
 
         $scope.$watch('game', function(game) {
-            console.log('inside the game watch in the your team ctrl---The Game below is ---');
-            console.log(game);
-            console.log($scope.game);
+            if(game.rosters) {
+                players.getList({
+                    roster: game.rosters[game.teamId].id
+                }, function(gameRoster) {
+                    $scope.gameRosterId = game.rosters[game.teamId].id;
+                    //fresh game roster with only a single unknown player
+                    if (gameRoster.length === 1) {
+                        $scope.gameRoster.push(gameRoster[0]);
 
-            players.getList({
-                roster: game.rosters[game.teamId].id
-            }, function(gameRoster) {
-                $scope.gameRosterId = game.rosters[game.teamId].id;
-                //fresh game roster with only a single unknown player
-                if (gameRoster.length === 1) {
-                    $scope.gameRoster.push(gameRoster[0]);
-
-                    angular.forEach($scope.roster.players, function(teamRosterPlayer) {
-                        teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
-                        teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.roster.rosterId];
-                        teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
-                        $scope.gameRoster.push(teamRosterPlayer);
-                    });
-                } else {
-                    $scope.gameRoster = gameRoster;
-                }
-            });
+                        angular.forEach($scope.roster.players, function(teamRosterPlayer) {
+                            teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
+                            teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.roster.rosterId];
+                            teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
+                            $scope.gameRoster.push(teamRosterPlayer);
+                        });
+                    } else {
+                        $scope.gameRoster = gameRoster;
+                    }
+                });
+            }
         });
 
         $scope.$watch('formYourTeam.$invalid', function(invalid) {
