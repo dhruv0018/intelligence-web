@@ -67,9 +67,14 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         data.then(function(coachData) {
             console.log('inside the opposing team ctrl');
             $scope.data = coachData;
+
+
             $scope.data.opposingTeam = {
                 players: coachData.opposingTeamGameRoster.players
             };
+
+
+
             console.log($scope.data);
         });
 

@@ -60,43 +60,12 @@ Info.directive('krossoverCoachGameInfo', [
 Info.controller('Coach.Game.Info.controller', [
     '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($scope, $state, $localStorage, GAME_TYPES, GAME_NOTE_TYPES, tabs, data, session, teams, leagues, games) {
-        //console.log('inside of the game info controller');
-        //console.log(session);
         $scope.GAME_TYPES = GAME_TYPES;
 
         $scope.tabs = tabs;
 
         data.then(function(coachData) {
             $scope.data = coachData;
-            console.log(coachData);
-            //$scope.data.team = coachData.coachTeam;
-            //$scope.data.opposingTeam = {};
-        });
-
-        $scope.$watch('game.teamId', function(teamId) {
-
-            if (teamId) {
-
-                teams.get(teamId, function(team) {
-
-                    data.team = team;
-                    data.opposingTeam.leagueId = team.leagueId;
-                    $scope.game.teamId = team.id;
-                    $scope.game.primaryJerseyColor = $scope.game.primaryJerseyColor || team.primaryJerseyColor;
-                    $scope.game.secondaryJerseyColor = $scope.game.secondaryJerseyColor || team.secondaryJerseyColor;
-                });
-            }
-        });
-
-        $scope.$watch('game.opposingTeamId', function(opposingTeamId) {
-
-            if (opposingTeamId) {
-
-                teams.get(opposingTeamId, function(team) {
-
-                    data.opposingTeam = team;
-                });
-            }
         });
 
         $scope.$watch('game.isHomeGame', function(isHomeGame) {
