@@ -66,7 +66,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         data.then(function(coachData) {
             $scope.data = coachData;
-            console.log($scope.data);
         });
 
 

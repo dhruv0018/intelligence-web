@@ -116,8 +116,6 @@ Info.controller('Coach.Game.Info.controller', [
 
             var isHomeGame = game.isHomeGame == 'true';
 
-            //console.log(isHomeGame);
-
             var newOpposingTeam = {
                 isCustomerTeam: false,
                 leagueId: $scope.data.team.leagueId,
@@ -128,11 +126,9 @@ Info.controller('Coach.Game.Info.controller', [
             };
 
             angular.extend($scope.data.opposingTeam, $scope.data.opposingTeam, newOpposingTeam);
-            //console.log($scope.data.opposingTeam);
 
             if(typeof game.opposingTeamId === 'undefined'){
                 teams.save($scope.data.opposingTeam, function(opposingTeam) {
-                    //console.log(opposingTeam);
 
                     game.opposingTeam = opposingTeam;
                     game.opposingTeamId = opposingTeam.id;
