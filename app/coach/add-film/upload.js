@@ -178,7 +178,7 @@ UploadFilm.controller('UploadFilmController', [
 
                     $scope.$flow.upload();
 
-                    $state.go('game-info');
+                    $state.go('uploading-film');
                 }
 
                 else {

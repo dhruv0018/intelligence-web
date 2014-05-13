@@ -248,6 +248,12 @@
         "Assistant Coach": true
     },
 
+    "uploading-film": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "game-info": {
 
         "Head Coach": true,

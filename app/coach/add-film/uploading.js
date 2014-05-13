@@ -21,10 +21,6 @@ var UploadingFilm = angular.module('uploading-film', [
     'ui.router',
     'ui.bootstrap',
     'plan',
-    'game-info',
-    'your-team',
-    'opposing-team',
-    'instructions',
     'Coach.Game'
 ]);
 
