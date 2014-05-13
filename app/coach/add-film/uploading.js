@@ -1,9 +1,4 @@
 /* Component dependencies. */
-require('game-info');
-require('your-team');
-require('opposing-team');
-require('instructions');
-
 /* Component settings */
 var templateUrl = 'coach/add-film/uploading.html';
 

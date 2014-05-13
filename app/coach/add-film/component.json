@@ -6,12 +6,6 @@
     "paths": [
         "."
     ],
-    "local": [
-        "game-info",
-        "your-team",
-        "opposing-team",
-        "instructions"
-    ],
     "templates": [
         "template.html",
         "start.html",
