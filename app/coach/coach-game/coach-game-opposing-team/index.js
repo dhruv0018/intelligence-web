@@ -66,7 +66,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
 
         data.then(function(coachData) {
             $scope.data = coachData;
-
+            console.log($scope.data);
             if (coachData.opposingTeamGameRoster) {
                 $scope.data.opposingTeam = {
                     players: coachData.opposingTeamGameRoster.players

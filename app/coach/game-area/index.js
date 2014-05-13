@@ -148,6 +148,15 @@ GameArea.controller('Coach.GameArea.controller', [
                 $state.go('Coach.GameArea');
             }
         });
+
+        $scope.$on('$destroy', function(){
+            data.then(function(coachData){
+                delete coachData.game;
+                delete coachData.teamGameRoster;
+                delete coachData.opposingTeam;
+                delete coachData.opposingTeamGameRoster;
+            });
+        });
     }
 ]);
 
