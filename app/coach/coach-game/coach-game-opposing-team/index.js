@@ -76,6 +76,12 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
         });
 
+        $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster){                        
+            if (typeof opposingTeamRoster !== 'undefined' || opposingTeamRoster.length === 0) {
+                $scope.addNewPlayer();
+            }
+        });
+
         /*
          * Scope watches.
          */
