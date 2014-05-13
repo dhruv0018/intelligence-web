@@ -120,11 +120,13 @@ GameArea.controller('Coach.GameArea.controller', [
             players.getList({
                 roster: $scope.game.rosters[$scope.opposingTeam.id].id
             }, function (players) {
+                console.log("**********HEre is the team game roster");
                 data.opposingTeamGameRoster = {
                     teamId: $scope.opposingTeam.id,
                     rosterId: $scope.game.rosters[$scope.opposingTeam.id].id,
                     players: players
                 };
+                console.log(data.opposingTeamGameRoster);
 
                 $scope.opposingTeamGameRoster = data.opposingTeamGameRoster;
             }, function(failure) {

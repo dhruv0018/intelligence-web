@@ -101,7 +101,9 @@ Game.directive('krossoverCoachGame', [
                 console.log(roster);
             });
 
+            console.log('in the coach game directive');
             $scope.$watch('opposingTeamRoster', function(opposingTeamRoster) {
+                console.log('in the opposing team watch in the coach game directive');
                 console.log(opposingTeamRoster);
             });
 
