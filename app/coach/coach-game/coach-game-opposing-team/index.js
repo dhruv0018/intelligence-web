@@ -73,22 +73,13 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             console.log($scope.data);
         });
 
+        $scope.$watch('game', function(game) {
+            $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
+        });
+
         /*
          * Scope watches.
          */
-
-        $scope.$watch('game', function(game) {
-
-//            if (game && game.getRoster && game.opposingTeamId) {
-//
-//                var roster = game.getRoster(game.opposingTeamId);
-//
-//                if (roster) {
-//
-//                    $scope.rosterId = roster.id;
-//                }
-//            }
-        });
 
         $scope.$watch('formOpposingTeam.$invalid', function(invalid) {
 
