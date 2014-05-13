@@ -90,8 +90,6 @@ GameArea.controller('Coach.GameArea.controller', [
             data.game = $scope.game;
             $scope.team = data.teams[$scope.game.teamId];
             $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
-            console.log('the opposing team is');
-            console.log($scope.opposingTeam);
             $scope.data.opposingTeam.name = $scope.opposingTeam.name;
 
 //TODO possibly add this here later instead of on gameAreaFilm file
@@ -120,13 +118,11 @@ GameArea.controller('Coach.GameArea.controller', [
             players.getList({
                 roster: $scope.game.rosters[$scope.opposingTeam.id].id
             }, function (players) {
-                console.log("**********HEre is the team game roster");
                 data.opposingTeamGameRoster = {
                     teamId: $scope.opposingTeam.id,
                     rosterId: $scope.game.rosters[$scope.opposingTeam.id].id,
                     players: players
                 };
-                console.log(data.opposingTeamGameRoster);
 
                 $scope.opposingTeamGameRoster = data.opposingTeamGameRoster;
             }, function(failure) {

@@ -66,6 +66,7 @@ Info.controller('Coach.Game.Info.controller', [
 
         data.then(function(coachData) {
             $scope.data = coachData;
+            console.log(coachData);
         });
 
         $scope.$watch('game.isHomeGame', function(isHomeGame) {
