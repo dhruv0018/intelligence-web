@@ -151,7 +151,13 @@ IntelligenceWebClient.factory('HttpInterceptor', [
 
                 case 404: /* Not Found */
 
-                    // Do not report 404's as errors.
+                    /* Resolve GET requests instead of rejecting them. */
+                    if (response.config.method === 'GET') {
+
+                        /* If an ID is present, the request is for a singular
+                         * object, otherwise it is for an array of objects. */
+                        return response.config.params.id ? {} : [];
+                    }
 
                     break;
 
