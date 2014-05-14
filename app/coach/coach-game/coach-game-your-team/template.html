@@ -36,7 +36,7 @@
                                     <tr ng-if="!player.isUnknown" data-ng-repeat="player in gameRoster track by $index">
 
                                         <!--<td><img src="http://lorempixel.com/40/40/sports" alt="Avatar"></td>-->
-                                        <td><img width="40" height="40" src="{{player.picture.url}}" alt="Avatar"></td>
+                                        <td><profile-placeholder data-size="small"></profile-placeholder></td>
 
                                         <!--<td><input size="3" data-ng-model="player.jerseyNumbers[rosterId]" required></td>-->
                                         <td><input size="3" data-ng-model="player.jerseyNumbers[gameRosterId]" required></td>
