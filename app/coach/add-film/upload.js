@@ -147,8 +147,6 @@ UploadFilm.controller('UploadFilmController', [
                     console.log('KVS GUID: ' + guid);
 
                     /* Create video object on the game. */
-                    //$scope.$storage.game.video = {
-
                     $scope.game = {
                         /* Store the GUID with the game. */
                         video:{
