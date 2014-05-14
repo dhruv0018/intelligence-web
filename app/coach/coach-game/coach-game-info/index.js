@@ -136,8 +136,11 @@ Info.controller('Coach.Game.Info.controller', [
 
             angular.extend($scope.data.opposingTeam, $scope.data.opposingTeam, newOpposingTeam);
 
+            //new game
             if(typeof game.opposingTeamId === 'undefined'){
                 teams.save($scope.data.opposingTeam, function(opposingTeam) {
+                    $scope.data.opposingTeam = opposingTeam;
+                    $scope.data.opposingTeam.players = [];
 
                     game.opposingTeam = opposingTeam;
                     game.opposingTeamId = opposingTeam.id;
