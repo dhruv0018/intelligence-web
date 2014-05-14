@@ -95,15 +95,19 @@ Team.controller('Coach.Team.controller', [
             $scope.positions = data.coachData.positionSet.positions;
 
             angular.forEach($scope.roster, function(player){
-                console.log(player);
+                player.selectedPositions = {};
+
+                angular.forEach($scope.positions, function(position){
+                    player.selectedPositions[position.id] = false;
+                });
 
                 if (typeof player.positions[$scope.rosterId] !== 'undefined' && player.positions[$scope.rosterId].length > 0) {
-                    player.selectedPositions = player.positions;
-                    console.log(player.selectedPositions);
-                } else {
-                    player.selectedPositions = {};
-                    player.selectedPositions[$scope.rosterId] = [];
-                    console.log(player.selectedPositions);
+
+                    angular.forEach(player.positions[$scope.rosterId], function(position){
+                        player.selectedPositions[position.id] = true;
+                    });
+
+                    console.log(player);
                 }
             });
 
@@ -134,6 +138,8 @@ Team.controller('Coach.Team.controller', [
 
             angular.forEach($scope.roster, function(player){
                 //angular quirk, why does it set models to false
+                console.log(player);
+
                 player.selectedPositions[$scope.rosterId] = player.selectedPositions[$scope.rosterId].filter(function(position) {
                     return position !== false;
                 });

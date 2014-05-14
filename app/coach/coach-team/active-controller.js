@@ -31,7 +31,7 @@ Team.controller('Coach.Team.Active.controller', [
                 selectedPositions: {}
             };
 
-            player.selectedPositions[$scope.rosterId] = {};
+            player.selectedPositions[$scope.rosterId] = [];
             
             player.rosterStatuses[$scope.rosterId] = true;
 

@@ -37,7 +37,7 @@
 
                                 <ul ng-click="$event.stopPropagation();" class="dropdown-menu">
                                     <li ng-repeat="position in positions">
-                                        <button type="button" class="btn" data-ng-model="player.selectedPositions[rosterId][$index]" btn-checkbox-true="position" btn-checkbox>{{position.name}}</button>
+                                        <button type="button" class="btn" ng-class="{'btn-primary': player.selectedPositions[position.id]}" data-ng-model="player.selectedPositions[position.id]" btn-checkbox-true="true" btn-checkbox>{{position.name}}</button>
                                     </li>
                                 </ul>
                             </div>
