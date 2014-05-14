@@ -65,7 +65,7 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'Coach.Data', 'indexingData',
+    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'Coach.Game.Data', 'indexingData',
     function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, data, indexingData) {
 
 
@@ -77,6 +77,9 @@ GameArea.controller('Coach.GameArea.controller', [
 
         data.then(function(data) {
             $scope.game = data.indexedGames[$scope.gameId];
+            $scope.data = data;
+
+
             $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
 
             //TODO change to onEnter event when we get resolves working
@@ -87,6 +90,7 @@ GameArea.controller('Coach.GameArea.controller', [
             data.game = $scope.game;
             $scope.team = data.teams[$scope.game.teamId];
             $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
+            $scope.data.opposingTeam.name = $scope.opposingTeam.name;
 
 //TODO possibly add this here later instead of on gameAreaFilm file
 //            plays.getList($scope.gameId, function (plays) {
@@ -99,8 +103,11 @@ GameArea.controller('Coach.GameArea.controller', [
             }, function (players) {
                 data.teamGameRoster = {
                     teamId: $scope.team.id,
+                    rosterId: $scope.game.rosters[$scope.team.id].id,
                     players: players
                 };
+
+                $scope.teamGameRoster = data.teamGameRoster;
             }, function(failure) {
                 data.teamGameRoster = {
                     teamId: $scope.team.id,
@@ -113,8 +120,11 @@ GameArea.controller('Coach.GameArea.controller', [
             }, function (players) {
                 data.opposingTeamGameRoster = {
                     teamId: $scope.opposingTeam.id,
+                    rosterId: $scope.game.rosters[$scope.opposingTeam.id].id,
                     players: players
                 };
+
+                $scope.opposingTeamGameRoster = data.opposingTeamGameRoster;
             }, function(failure) {
                 data.opposingTeamGameRoster = {
                     teamId: $scope.opposingTeam.id,
@@ -137,6 +147,15 @@ GameArea.controller('Coach.GameArea.controller', [
             } else {
                 $state.go('Coach.GameArea');
             }
+        });
+
+        $scope.$on('$destroy', function(){
+            data.then(function(coachData){
+                delete coachData.game;
+                delete coachData.teamGameRoster;
+                delete coachData.opposingTeam;
+                delete coachData.opposingTeamGameRoster;
+            });
         });
     }
 ]);
