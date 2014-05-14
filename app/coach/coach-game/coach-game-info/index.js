@@ -71,7 +71,7 @@ Info.controller('Coach.Game.Info.controller', [
             //TODO find a better way using the service, not sure why the data isn't being passed forward
             if (typeof coachData.opposingTeam.name === 'undefined') {
                 teams.get($scope.data.game.opposingTeamId, function(opposingTeam){
-                   $scope.data.opposingTeam.name = opposingTeam.name;
+                    angular.extend($scope.data.opposingTeam, opposingTeam, coachData.opposingTeam);
                 });
             }
 
@@ -161,6 +161,8 @@ Info.controller('Coach.Game.Info.controller', [
 
                 });
             } else {
+                teams.save($scope.data.opposingTeam);
+
                 games.save(game, function(game) {
                     $scope.game = game;
                     data.game = game;
