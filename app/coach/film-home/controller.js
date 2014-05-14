@@ -17,8 +17,8 @@ var FilmHome = angular.module('Coach.FilmHome');
  * @type {controller}
  */
 FilmHome.controller('Coach.FilmHome.controller', [
-    '$rootScope', '$scope', '$state', 'GamesFactory', 'Coach.Data', 'Coach.FilmHome.GameFilters',
-    function controller($rootScope, $scope, $state, games, data, filtersData) {
+    '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory', 'Coach.Data', 'Coach.FilmHome.GameFilters',
+    function controller($rootScope, $scope, $state, games, players, data, filtersData) {
 
         data.then(function (data) {
             $scope.games = data.games;
@@ -26,9 +26,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
             $scope.teams = data.teams;
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId.id;
-            $scope.activeRoster = $scope.roster.filter(function(player) {
-                return player.rosterStatuses[$scope.rosterId] === true;
-            });
+            $scope.activeRoster = players.constructActiveRoster($scope.roster, $scope.rosterId);
 
         });
 

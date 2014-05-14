@@ -42,7 +42,7 @@ Team.controller('Coach.Team.Active.controller', [
 
             if (player && player.id) {
 
-                player.rosterStatuses[$scope.rosterId] = false;
+                player.toggleActivation($scope.rosterId);
             }
 
             else {
