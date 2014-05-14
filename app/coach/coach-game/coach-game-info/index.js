@@ -67,6 +67,14 @@ Info.controller('Coach.Game.Info.controller', [
         data.then(function(coachData) {
             $scope.data = coachData;
             console.log(coachData);
+
+            //TODO find a better way using the service, not sure why the data isn't being passed forward
+            if (typeof coachData.opposingTeam.name === 'undefined') {
+                teams.get($scope.data.game.opposingTeamId, function(opposingTeam){
+                   $scope.data.opposingTeam.name = opposingTeam.name;
+                });
+            }
+
         });
 
         $scope.$watch('game.isHomeGame', function(isHomeGame) {
