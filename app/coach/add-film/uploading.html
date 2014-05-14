@@ -10,7 +10,7 @@
 </header>
 
 
-<x-tabset>
+<div class="upload-status">
 
     <div class="uploading" data-ng-if="$flow.isUploading()">
         <h1>You’re uploading a regular game…</h1>
@@ -27,31 +27,8 @@
         <h2>Now your’re ready to submit your game to us.</h2>
     </div>
 
-    <!--<x-tab heading="Instructions" data-ui-sref="instructions" active="tabs.instructions.active" disabled="tabs.instructions.disabled">-->
+</div>
 
-        <!--<div data-ui-view="instructions"></div>-->
-
-    <!--</x-tab>-->
-
-    <!--<x-tab heading="Opposing Team" data-ui-sref="opposing-team" active="tabs['opposing-team'].active" disabled="tabs['opposing-team'].disabled">-->
-
-        <!--<div data-ui-view="opposing-team"></div>-->
-
-    <!--</x-tab>-->
-
-    <!--<x-tab heading="Your Team" data-ui-sref="your-team" active="tabs['your-team'].active" disabled="tabs['your-team'].disabled">-->
-
-        <!--<div data-ui-view="your-team"></div>-->
-
-    <!--</x-tab>-->
-
-    <!--<x-tab heading="Basic Game Info" data-ui-sref="game-info" active="tabs['game-info'].active" disabled="tabs['game-info'].disabled">-->
-
-        <!--<div data-ui-view="game-info"></div>-->
-
-    <!--</x-tab>-->
-
-</x-tabset>
-
+<div class="game-info-container">
 <krossover-coach-game data-game="game" data-roster="roster"></krossover-coach-game>
-
+</div>

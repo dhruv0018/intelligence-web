@@ -24,7 +24,14 @@
 
                                     <h4>*Date of game</h4>
 
-                                    <input class="form-control" name="date" type="date" data-ng-model="game.datePlayed" required>
+                                    <div>
+                                        <p class="input-group">
+                                            <input type="text" class="form-control" datepicker-popup="shortDate" ng-model="game.datePlayed" show-weeks="false" show-button-bar="false" is-open="true"/>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" ng-click="open($event)"><i class="icon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
 
                                 </div>
 
