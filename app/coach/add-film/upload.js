@@ -99,8 +99,6 @@ UploadFilm.controller('UploadFilmController', [
 
         $scope.$storage = $localStorage;
 
-        //$scope.$storage.game = {};
-        $scope.game = {};
         delete $scope.$storage.opposingTeam;
 
         $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
