@@ -69,7 +69,7 @@ Info.controller('Coach.Game.Info.controller', [
             console.log(coachData);
 
             //TODO find a better way using the service, not sure why the data isn't being passed forward
-            if (typeof coachData.opposingTeam.name === 'undefined') {
+            if (typeof coachData.opposingTeam.name === 'undefined' && typeof coachData.game.id !== 'undefined') {
                 teams.get($scope.data.game.opposingTeamId, function(opposingTeam){
                     angular.extend($scope.data.opposingTeam, opposingTeam, coachData.opposingTeam);
                 });
