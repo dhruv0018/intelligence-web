@@ -25,43 +25,55 @@ IntelligenceWebClient.factory('EventsService', [
 
             buildScript: function(scriptType, tagset, event) {
 
-                if (!tagset) return [];
-                if (!event || !event.tag || !event.tag.id) return [];
+                if (tagset && event && event.tag && event.tag.id) {
 
-                var tagId = event.tag.id;
-                var tags = tagset.getIndexedTags();
-                var tag = tags[tagId];
+                    var tagId = event.tag.id;
+                    var tags = tagset.getIndexedTags();
 
-                /* If the tag has variables. */
-                if (!tag.tagVariables) return [];
+                    if (tags) {
 
-                /* Parse the variable options. */
-                tag.tagVariables.forEach(function(variable, index) {
+                        var tag = tags[tagId];
 
-                    variable.index = index + 1;
-                    variable.options = angular.isString(variable.options) ? JSON.parse(variable.options) : variable.options;
-                });
+                        if (tag && tag.tagVariables) {
 
-                /* Split up script into array items and replace variables
-                    * with the actual variable object. */
-                var variableIndex = 0;
-                var scriptItems = tag[scriptType].split(VARIABLE_PATTERN);
+                            var script = tag[scriptType];
 
-                scriptItems = scriptItems.filter(function(item) {
+                            /* Mark the index of each variable. */
+                            tag.tagVariables.forEach(function(variable, index) {
 
-                    return item !== '';
-                });
+                                variable.index = index + 1;
 
-                scriptItems.forEach(function(item, index) {
 
-                    if (item.search(VARIABLE_PATTERN) !== -1) {
+                                /** TODO: Move this to the DROPDOWN item
+                                 * directive. */
+                                variable.options = angular.isString(variable.options) ? JSON.parse(variable.options) : variable.options;
+                            });
 
-                        scriptItems[index] = tag.tagVariables[variableIndex];
-                        variableIndex++;
+                            /* Split up script into array items and replace variables
+                             * with the actual variable object. */
+                            var variableIndex = 0;
+
+                            return script.split(VARIABLE_PATTERN)
+
+                            .filter(function(item) {
+
+                                return item !== '';
+                            })
+
+                            .map(function(item) {
+
+                                if (item.search(VARIABLE_PATTERN) !== -1) {
+
+                                    return tag.tagVariables[variableIndex++];
+                                }
+
+                                else return item;
+                            });
+                        }
                     }
-                });
+                }
 
-                return scriptItems;
+                return [];
             }
         };
 
