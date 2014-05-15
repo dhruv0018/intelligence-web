@@ -31,9 +31,16 @@
 
                         <td>
                             <div class="dropdown">
+
                                 <a class="dropdown-toggle">
                                     <i class="icon-plus"></i> Add Position
                                 </a>
+
+                                <br/>
+
+                                <span ng-show="value" ng-repeat="(key, value) in player.selectedPositions">
+                                    {{positions[key].name}}
+                                </span>
 
                                 <ul ng-click="$event.stopPropagation();" class="positions-dropdown dropdown-menu">
                                     <li ng-repeat="position in positions">
