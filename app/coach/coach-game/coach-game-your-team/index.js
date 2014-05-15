@@ -63,6 +63,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.tabs = tabs;
         $scope.gameRoster = [];
         $scope.gameRosterId = null;
+        $scope.retrievedRoster = false;
 
         data.then(function(coachData) {
             $scope.data = coachData;
@@ -70,7 +71,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
 
         $scope.$watch('game', function(game) {
-            if(game.rosters) {
+            if(game.rosters && $scope.retrievedRoster === false) {
                 players.getList({
                     roster: game.rosters[game.teamId].id
                 }, function(gameRoster) {
@@ -88,6 +89,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     } else {
                         $scope.gameRoster = gameRoster;
                     }
+                    $scope.retrievedRoster = true;
                 });
             }
         });
