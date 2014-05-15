@@ -91,26 +91,8 @@ Team.controller('Coach.Team.controller', [
             $scope.team = data.team;
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
-
             $scope.positions = data.coachData.positionSet.indexedPositions;
-            console.log($scope.positions);
-
-            angular.forEach($scope.roster, function(player){
-                player.selectedPositions = {};
-
-                angular.forEach($scope.positions, function(position){
-                    player.selectedPositions[position.id] = false;
-                });
-
-                if (typeof player.positions[$scope.rosterId] !== 'undefined' && player.positions[$scope.rosterId].length > 0) {
-
-                    angular.forEach(player.positions[$scope.rosterId], function(position){
-                        player.selectedPositions[position.id] = true;
-                    });
-                    console.log(player);
-                }
-            });
-
+            $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
         });
 
         $scope.state = 'Coach.Team.All';

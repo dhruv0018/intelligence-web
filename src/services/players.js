@@ -17,10 +17,6 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 var self = this;
 
-//                if (window.Array.isArray(player.positions)) {
-//                    player.positions = {};
-//                }
-
                 /* Copy all of the properties from the retrieved $resource
                  * "player" object. */
                 angular.extend(player, self);
@@ -135,6 +131,26 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 return roster.filter(function(player) {
                     return player.rosterStatuses[rosterId] === true;
                 });
+            },
+            constructPositionDropdown: function(roster, rosterId, positions){
+                angular.forEach(roster, function(player){
+                    //constructs position dropdown
+                    player.selectedPositions = {};
+
+                    //adds each position checkboxes for each player
+                    angular.forEach(positions, function(position){
+                        player.selectedPositions[position.id] = false;
+                    });
+
+                    //sets the positions that already exist on the players
+                    if (typeof player.positions[rosterId] !== 'undefined' && player.positions[rosterId].length > 0) {
+                        angular.forEach(player.positions[rosterId], function(position){
+                            player.selectedPositions[position.id] = true;
+                        });
+                    }
+                });
+
+                return roster;
             }
         };
 
