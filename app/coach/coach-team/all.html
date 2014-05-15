@@ -19,7 +19,7 @@
 
             <tbody>
 
-                <tr data-ng-repeat="player in roster">
+                <tr data-ng-repeat="player in roster | orderBy: sortPlayers(rosterId)">
 
                     <td>{{ player.jerseyNumbers[rosterId] }}</td>
 
