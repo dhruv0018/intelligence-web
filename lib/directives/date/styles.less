@@ -1,2 +1,54 @@
 @import (reference) "main.less";
 
+.pickdate {
+
+	.dropdown-menu {
+
+		&:focus {
+			outline: none;
+		}
+		
+		li:focus {
+			outline: none;
+		}
+
+		div:focus {
+			outline: none;
+		}
+	}
+
+	.date-btn {
+		border: none;
+		background-color: transparent;
+		width: 100%;
+		text-align: center;
+
+		&:hover {
+			color: @brand-secondary;
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	table.date-table {
+
+		&:focus {
+			outline: none;
+		}
+
+		thead > tr > th.day-header {
+			text-align: center;
+		}
+
+		tbody > tr > td.d-column {
+			padding: 1px;
+		}
+
+		tbody > tr > td.my-column {
+			padding: 4px;
+		}
+	}
+
+}

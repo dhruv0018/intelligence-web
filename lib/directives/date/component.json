@@ -1,7 +1,11 @@
 {
     "name": "date",
     "templates": [
-        "template.html"
+        "template.html",
+        "day.html",
+        "month.html",
+        "year.html",
+        "datepicker.html"
     ],
     "styles": [
         "styles.less"

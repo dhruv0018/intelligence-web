@@ -1,6 +1,6 @@
-<div data-ng-controller="dateController">
+<div class="pickdate" data-ng-controller="dateController">
     <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="shortDate" ng-model="game.datePlayed" show-weeks="false" show-button-bar="false" is-open="opened"/>
+        <input type="text" class="form-control" data-datepicker-popup="shortDate" data-ng-model="game.datePlayed" data-is-open="opened"/>
         <span class="input-group-btn">
             <button class="btn btn-default" ng-click="open($event)"><i class="icon-calendar"></i></button>
         </span>
