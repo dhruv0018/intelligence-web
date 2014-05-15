@@ -477,6 +477,7 @@ describe('TokensService', function() {
                     refreshToken: 'REFRESH_TOKEN'
                 };
 
+                tokens.removeTokens();
                 tokens.areTokensSet().should.be.false;
                 tokens.setTokens(tokensFixture);
                 tokens.areTokensSet().should.be.true;
