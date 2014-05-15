@@ -60,43 +60,20 @@ Info.directive('krossoverCoachGameInfo', [
 Info.controller('Coach.Game.Info.controller', [
     '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($scope, $state, $localStorage, GAME_TYPES, GAME_NOTE_TYPES, tabs, data, session, teams, leagues, games) {
-        //console.log('inside of the game info controller');
-        //console.log(session);
         $scope.GAME_TYPES = GAME_TYPES;
 
         $scope.tabs = tabs;
 
         data.then(function(coachData) {
             $scope.data = coachData;
-            console.log(coachData);
-            //$scope.data.team = coachData.coachTeam;
-            //$scope.data.opposingTeam = {};
-        });
 
-        $scope.$watch('game.teamId', function(teamId) {
-
-            if (teamId) {
-
-                teams.get(teamId, function(team) {
-
-                    data.team = team;
-                    data.opposingTeam.leagueId = team.leagueId;
-                    $scope.game.teamId = team.id;
-                    $scope.game.primaryJerseyColor = $scope.game.primaryJerseyColor || team.primaryJerseyColor;
-                    $scope.game.secondaryJerseyColor = $scope.game.secondaryJerseyColor || team.secondaryJerseyColor;
+            //TODO find a better way using the service, not sure why the data isn't being passed forward
+            if (typeof coachData.opposingTeam.name === 'undefined' && coachData.game && coachData.game.id) {
+                teams.get($scope.data.game.opposingTeamId, function(opposingTeam){
+                    angular.extend($scope.data.opposingTeam, opposingTeam, coachData.opposingTeam);
                 });
             }
-        });
 
-        $scope.$watch('game.opposingTeamId', function(opposingTeamId) {
-
-            if (opposingTeamId) {
-
-                teams.get(opposingTeamId, function(team) {
-
-                    data.opposingTeam = team;
-                });
-            }
         });
 
         $scope.$watch('game.isHomeGame', function(isHomeGame) {
@@ -147,8 +124,6 @@ Info.controller('Coach.Game.Info.controller', [
 
             var isHomeGame = game.isHomeGame == 'true';
 
-            //console.log(isHomeGame);
-
             var newOpposingTeam = {
                 isCustomerTeam: false,
                 leagueId: $scope.data.team.leagueId,
@@ -159,32 +134,44 @@ Info.controller('Coach.Game.Info.controller', [
             };
 
             angular.extend($scope.data.opposingTeam, $scope.data.opposingTeam, newOpposingTeam);
-            //console.log($scope.data.opposingTeam);
 
-            teams.save($scope.data.opposingTeam, function(opposingTeam) {
-                //console.log(opposingTeam);
+            //new game
+            if(typeof game.opposingTeamId === 'undefined'){
+                teams.save($scope.data.opposingTeam, function(opposingTeam) {
+                    $scope.data.opposingTeam = opposingTeam;
+                    $scope.data.opposingTeam.players = [];
 
-                game.opposingTeam = opposingTeam;
-                game.opposingTeamId = opposingTeam.id;
+                    game.opposingTeam = opposingTeam;
+                    game.opposingTeamId = opposingTeam.id;
 
-                game.rosters = {};
-                game.rosters[$scope.data.team.id] = {};
-                game.rosters[game.opposingTeamId] = {};
+                    game.rosters = {};
+                    game.rosters[$scope.data.team.id] = {};
+                    game.rosters[game.opposingTeamId] = {};
 
-                game.teamId = session.currentUser.currentRole.teamId;
-                game.uploaderUserId = session.currentUser.id;
-                game.uploaderTeamId = session.currentUser.currentRole.teamId;
+                    game.teamId = session.currentUser.currentRole.teamId;
+                    game.uploaderUserId = session.currentUser.id;
+                    game.uploaderTeamId = session.currentUser.currentRole.teamId;
 
-                /* Convert value from btn-radio back to boolean. */
-                game.isHomeGame = game.isHomeGame === 'true';
+                    /* Convert value from btn-radio back to boolean. */
+                    game.isHomeGame = game.isHomeGame === 'true';
+
+                    games.save(game, function(game) {
+                        $scope.game = game;
+                        data.game = game;
+                        tabs.activateTab('your-team');
+                    });
+
+                });
+            } else {
+                teams.save($scope.data.opposingTeam);
 
                 games.save(game, function(game) {
                     $scope.game = game;
                     data.game = game;
                     tabs.activateTab('your-team');
                 });
+            }
 
-            });
 
         };
     }

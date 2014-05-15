@@ -99,8 +99,6 @@ UploadFilm.controller('UploadFilmController', [
 
         $scope.$storage = $localStorage;
 
-        //$scope.$storage.game = {};
-        $scope.game = {};
         delete $scope.$storage.opposingTeam;
 
         $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
@@ -149,11 +147,11 @@ UploadFilm.controller('UploadFilmController', [
                     console.log('KVS GUID: ' + guid);
 
                     /* Create video object on the game. */
-                    //$scope.$storage.game.video = {
-
                     $scope.game = {
                         /* Store the GUID with the game. */
-                        guid: guid
+                        video:{
+                            guid: guid
+                        }
                     };
 
                     coachData.game = $scope.game;
@@ -176,7 +174,7 @@ UploadFilm.controller('UploadFilmController', [
 
                     $scope.$flow.upload();
 
-                    $state.go('game-info');
+                    $state.go('uploading-film');
                 }
 
                 else {

@@ -90,8 +90,6 @@ GameArea.controller('Coach.GameArea.controller', [
             data.game = $scope.game;
             $scope.team = data.teams[$scope.game.teamId];
             $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
-            console.log('the opposing team is');
-            console.log($scope.opposingTeam);
             $scope.data.opposingTeam.name = $scope.opposingTeam.name;
 
 //TODO possibly add this here later instead of on gameAreaFilm file
@@ -149,6 +147,15 @@ GameArea.controller('Coach.GameArea.controller', [
             } else {
                 $state.go('Coach.GameArea');
             }
+        });
+
+        $scope.$on('$destroy', function(){
+            data.then(function(coachData){
+                delete coachData.game;
+                delete coachData.teamGameRoster;
+                delete coachData.opposingTeam;
+                delete coachData.opposingTeamGameRoster;
+            });
         });
     }
 ]);

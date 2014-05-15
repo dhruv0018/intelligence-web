@@ -62,36 +62,35 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
     function controller(config, $rootScope, $scope, $state, $localStorage, $http, tabs, data, games, players) {
 
         $scope.tabs = tabs;
-//        $scope.data = data;
+        $scope.data = {};
 
         data.then(function(coachData) {
-            console.log('inside the opposing team ctrl');
             $scope.data = coachData;
             console.log($scope.data);
+            if (coachData.opposingTeamGameRoster) {
+                $scope.data.opposingTeam = {
+                    players: coachData.opposingTeamGameRoster.players
+                };
+            }
         });
 
+        $scope.$watch('game', function(game) {
+            if(game.rosters){
+                $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
+            }
+        });
 
-        $scope.$watch('opposingTeamRoster', function(opposingTeamRoster){
-            console.log('inside of players watch');
-            console.log(opposingTeamRoster);
+        $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster){
+            if (typeof opposingTeamRoster !== 'undefined') {
+                if(opposingTeamRoster.length === 0) {
+                    $scope.addNewPlayer();
+                }
+            }
         });
 
         /*
          * Scope watches.
          */
-
-        $scope.$watch('game', function(game) {
-
-            if (game && game.getRoster && game.opposingTeamId) {
-
-                var roster = game.getRoster(game.opposingTeamId);
-
-                if (roster) {
-
-                    $scope.rosterId = roster.id;
-                }
-            }
-        });
 
         $scope.$watch('formOpposingTeam.$invalid', function(invalid) {
 
