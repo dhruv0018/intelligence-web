@@ -35,17 +35,12 @@
                                     <i class="icon-plus"></i> Add Position
                                 </a>
 
-                                <ul ng-click="$event.stopPropagation();" class="dropdown-menu">
+                                <ul ng-click="$event.stopPropagation();" class="positions-dropdown dropdown-menu">
                                     <li ng-repeat="position in positions">
                                         <button type="button" class="btn" ng-class="{'btn-primary': player.selectedPositions[position.id]}" data-ng-model="player.selectedPositions[position.id]" btn-checkbox-true="true" btn-checkbox>{{position.name}}</button>
                                     </li>
                                 </ul>
                             </div>
-
-                            <!--<input size="3" data-ng-model="player.position">-->
-                            <!--<select data-ng-model="player.selectedPosition" ng-options="position.name for position in positions">-->
-                                <!--<option value="">{{ (player.selectedPosition.name) ? player.selectedPosition.name : 'Choose your position' }}</option>-->
-                            <!--</select>-->
 
                             <button class="btn btn-blank pull-right" data-ng-click="deactivate(player)"><i class="icon-remove"></i></button>
 
