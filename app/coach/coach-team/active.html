@@ -21,7 +21,7 @@
 
                 <tbody>
 
-                    <tr data-ng-repeat="player in roster | filter:isActive">
+                    <tr data-ng-repeat="player in roster | filter:isActive| orderBy: sortPlayers">
 
                         <td><input size="3" data-ng-model="player.jerseyNumbers[rosterId]" required></td>
 
