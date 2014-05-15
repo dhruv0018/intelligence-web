@@ -1,4 +1,4 @@
-<data-alert class="alert alert-dismissable" data-ng-repeat="alert in alerts" type="alert.type" data-close="close($index)">
+<data-alert class="alert alert-dismissable" data-ng-repeat="alert in alerts" data-type="{{ alert.type }}" data-close="close($index)">
 
     <span data-ng-bind-html="alert.message"></span>
 
