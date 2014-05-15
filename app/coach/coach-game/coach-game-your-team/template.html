@@ -43,7 +43,9 @@
 
                                         <td class="name">{{player.firstName}} {{player.lastName}}</td>
 
-                                        <td>{{player.position}}</td>
+                                        <td>
+                                            <data-positions-dropdown data-player="player" data-positions="positions"></data-positions-dropdown>
+                                        </td>
 
                                         <td data-ng-click="player.rosterStatuses[gameRosterId] = !player.rosterStatuses[gameRosterId]">
                                             <i class="icon-check" data-ng-show="!player.rosterStatuses[gameRosterId]"></i>

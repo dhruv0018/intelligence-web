@@ -66,8 +66,6 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
 
         data.then(function(coachData) {
             $scope.data = coachData;
-            console.log($scope.data);
-
             $scope.positions = coachData.positionSet.indexedPositions;
 
             if (coachData.opposingTeamGameRoster) {

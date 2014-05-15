@@ -67,6 +67,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         data.then(function(coachData) {
             $scope.data = coachData;
+            $scope.positions = coachData.positionSet.indexedPositions;
         });
 
 
@@ -89,6 +90,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     } else {
                         $scope.gameRoster = gameRoster;
                     }
+                    $scope.gameRoster = players.constructPositionDropdown($scope.gameRoster, $scope.gameRosterId, $scope.positions);
                     $scope.retrievedRoster = true;
                 });
             }
@@ -103,6 +105,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         });
 
         $scope.save = function() {
+            $scope.gameRoster = players.getPositionsFromDowndown($scope.gameRoster, $scope.gameRosterId, $scope.positions);
             players.save($scope.game.rosters[$scope.game.teamId].id, $scope.gameRoster);
             tabs.activateTab('opposing-team');
         };
