@@ -90,7 +90,6 @@ GameArea.controller('Coach.GameArea.controller', [
             data.game = $scope.game;
             $scope.team = data.teams[$scope.game.teamId];
             $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
-            $scope.data.opposingTeam.name = $scope.opposingTeam.name;
 
 //TODO possibly add this here later instead of on gameAreaFilm file
 //            plays.getList($scope.gameId, function (plays) {

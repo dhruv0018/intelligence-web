@@ -72,8 +72,11 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
 
             if (coachData.opposingTeamGameRoster) {
                 $scope.data.opposingTeam = {
-                    players: players.constructPositionDropdown(coachData.opposingTeamGameRoster.players, coachData.game.rosters[coachData.game.opposingTeamId].id, $scope.positions)
+                    players: []
                 };
+                $scope.data.opposingTeam.players = players.constructPositionDropdown(coachData.opposingTeamGameRoster.players,
+                                                                                     coachData.game.rosters[coachData.game.opposingTeamId].id,
+                                                                                     $scope.positions);
             }
         });
 
@@ -120,7 +123,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                 positions: {},
                 selectedPositions: {}
             };
-            player.selectedPositions[$scope.rosterId] = [];
+            player.selectedPositions[$scope.opposingTeamRosterId] = [];
             $scope.data.opposingTeam.players.push(player);
         };
 
@@ -154,7 +157,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         };
 
         $scope.save = function() {
-            $scope.data.opposingTeam.players = players.getPositionsFromDowndown($scope.data.opposingTeam.players, $scope.rosterId, $scope.positions);
+            $scope.data.opposingTeam.players = players.getPositionsFromDowndown($scope.data.opposingTeam.players, $scope.opposingTeamRosterId, $scope.positions);
             players.save($scope.game.rosters[$scope.game.opposingTeamId].id, $scope.data.opposingTeam.players);
             tabs.activateTab('instructions');
         };
