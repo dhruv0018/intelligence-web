@@ -103,25 +103,7 @@ Team.controller('Coach.Team.controller', [
         });
 
         $scope.save = function() {
-
-            angular.forEach($scope.roster, function(player){
-                //todo have backend convert this to object always, no reason to be an array
-                player.positions = {};
-
-                //ensures that positions are strictly based on those selected via the ui
-                player.positions[$scope.rosterId] = [];
-
-                angular.forEach(player.selectedPositions, function(position, key){
-                    player.positions[$scope.rosterId] = player.positions[$scope.rosterId] || [];
-
-                    //the position is selected
-                    if(position === true){
-                        player.positions[$scope.rosterId].push($scope.positions[key]);
-                    }
-                });
-                console.log(player);
-            });
-
+            $scope.roster = players.getPositionsFromDowndown($scope.roster, $scope.rosterId, $scope.positions);
             players.save($scope.rosterId, $scope.roster).then(function(players) {
                 $scope.roster = players;
 

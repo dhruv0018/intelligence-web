@@ -151,6 +151,25 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 });
 
                 return roster;
+            },
+            getPositionsFromDowndown: function(roster, rosterId, positions){
+                angular.forEach(roster, function(player){
+                    //todo have backend convert this to object always, no reason to be an array
+                    player.positions = {};
+
+                    //ensures that positions are strictly based on those selected via the ui
+                    player.positions[rosterId] = [];
+
+                    angular.forEach(player.selectedPositions, function(position, key){
+                        player.positions[rosterId] = player.positions[rosterId] || [];
+
+                        //the position is selected
+                        if(position === true){
+                            player.positions[rosterId].push(positions[key]);
+                        }
+                    });
+                });
+                return roster;
             }
         };
 
