@@ -15,7 +15,9 @@ var angular = window.angular;
  * Game info page module.
  * @module Info
  */
-var Info = angular.module('Coach.Game.Info', []);
+var Info = angular.module('Coach.Game.Info', [
+    'ui.bootstrap'
+]);
 
 /* Cache the template file */
 Info.run([
@@ -74,6 +76,12 @@ Info.controller('Coach.Game.Info.controller', [
                 });
             }
 
+        });
+
+        $scope.$watch('game', function(game){
+            if (typeof game.datePlayed !== 'undefined') {
+                game = games.unadjustTime(game);
+            }
         });
 
         $scope.$watch('game.isHomeGame', function(isHomeGame) {
@@ -172,8 +180,7 @@ Info.controller('Coach.Game.Info.controller', [
                 });
             }
 
-
         };
+
     }
 ]);
-
