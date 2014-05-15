@@ -25,11 +25,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
-                //TODO change this scheme to adjust to new type scheme
-                if(typeof game.gameType !== 'undefined' && !window.isNaN(game.gameType)) {
-                    game.filterType = (game.gameType > -1) ? GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filter : '';
-                }
-
                 return game;
             },
 
