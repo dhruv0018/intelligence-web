@@ -608,6 +608,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
 
                 return indexedGames;
+            },
+            unadjustTime: function(game){
+                var datePlayed = new Date(game.datePlayed);
+
+                //un-adjusting the time
+                datePlayed.setTime(datePlayed.getTime() + datePlayed.getTimezoneOffset() * 60000);
+                game.datePlayed = datePlayed;
+
+                return game;
             }
 
         };

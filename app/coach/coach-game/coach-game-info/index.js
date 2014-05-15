@@ -76,6 +76,10 @@ Info.controller('Coach.Game.Info.controller', [
 
         });
 
+        $scope.$watch('game', function(game){
+            game = games.unadjustTime(game);
+        });
+
         $scope.$watch('game.isHomeGame', function(isHomeGame) {
 
             if (isHomeGame) {
