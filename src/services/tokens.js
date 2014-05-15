@@ -1,5 +1,9 @@
+var TOKEN_TYPE_KEY = 'TOKEN_TYPE';
 var ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
 var REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
+
+var DEFAULT_TOKEN_TYPE = 'Bearer';
+var DEFAULT_TOKEN_EXPIRATION = 3600 * 1000;
 
 var package = require('../../package.json');
 
@@ -17,280 +21,372 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.factory('TokensService', [
-    'config', '$injector',
-    function(config, $injector) {
+    'config', '$injector', '$interval', '$sessionStorage', '$localStorage',
+    function(config, $injector, $interval, $sessionStorage, $localStorage) {
 
         var $http;
+        var session;
 
-        /** OAuth access token */
-        this.accessToken = null;
+        var TokenService = {
 
-        /** OAuth refresh token */
-        this.refreshToken = null;
+            /** OAuth authorization code */
+            code: null,
 
-        /**
-        * Requests an authorization code from the server.
-        * @param {string} username - username to use
-        * @param {string} password - users password
-        */
-        var requestAuthCode = function(username, password) {
+            tokens: {
 
-            $http = $http || $injector.get('$http');
+                /** The type of token */
+                tokenType: DEFAULT_TOKEN_TYPE,
 
-            var url = config.oauth.uri + 'authorize';
-            url += '?response_type=' + 'code';
-            url += '&client_id=' + config.oauth.clientId;
-            url += '&state=' + config.oauth.state;
+                /** OAuth access token */
+                accessToken: null,
 
-            var data = 'authorized=yes';
-            data += '&username=' + username;
-            data += '&password=' + password;
+                /** OAuth refresh token */
+                refreshToken: null,
 
-            var request = {
+                /** The time until the access token expires. */
+                expiration: DEFAULT_TOKEN_EXPIRATION
+            },
 
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                url: url,
-                data: data
-            };
+            refresh: undefined,
 
-            return $http(request)
-            .success(receiveAuthCode)
-            .error(handleAuthError)
-            .then(function() {
+            /**
+            * Requests an authorization code from the server.
+            * @param {string} username - username to use
+            * @param {string} password - users password
+            */
+            requestAuthCode: function(username, password) {
+
+                var self = this;
+
+                $http = $http || $injector.get('$http');
+
+                var url = config.oauth.uri + 'authorize';
+                url += '?response_type=' + 'code';
+                url += '&client_id=' + config.oauth.clientId;
+                url += '&state=' + config.oauth.state;
+
+                var data = 'authorized=yes';
+                data += '&username=' + username;
+                data += '&password=' + password;
+
+                var request = {
+
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    url: url,
+                    data: data
+                };
+
+                return $http(request)
+                .then(self.receiveAuthCode.bind(self), self.handleAuthError);
+            },
+
+            /**
+            * Receives and parses the server response from the authorization request.
+            * @param {string} response - the response from requestAuthCode to parse
+            * @return {string} - the code received
+            */
+            receiveAuthCode: function(response) {
+
+                if (!response || !response.data || !response.data.code) throw new Error('No authorization code received');
+
+                this.code = response.data.code;
+
+                /* TODO: Change to use logging framework */
+                console.log('OAuth Auth Code: ' + this.code);
 
                 return this.code;
-            });
-        };
+            },
 
-        /**
-        * Receives and parses the server response from the authorization request.
-        * @param {string} response - the response from requestAuthCode to parse
-        * @callback {function(error, code)} callback
-        */
-        var receiveAuthCode = function(response) {
+            handleAuthError: function(response) {
 
-            if (!response || !response.code) return new Error('No authorization code received');
+                switch(response.status) {
 
-            this.code = response.code;
+                    /* Unauthorized */
+                    case 401:
 
-            /* TODO: Change to use logging framework */
-            console.log('OAuth Auth Code: ' + this.code);
+                        var NotAuthorizedError = new Error('Not authorized');
+                        NotAuthorizedError.name = 'NotAuthorizedError';
+                        throw NotAuthorizedError;
 
-            return this.code;
-        };
+                    /* Forbidden */
+                    case 403:
 
-        var handleAuthError = function(response, status, headers, config) {
+                        var ForbiddenError = new Error('User is forbidden');
+                        ForbiddenError.name = 'ForbiddenError';
+                        throw ForbiddenError;
 
-            switch(status) {
+                    /* Not Found */
+                    case 404:
 
-                /* Unauthorized */
-                case 401:
+                        var NotFoundError = new Error('User not found');
+                        NotFoundError.name = 'NotFoundError';
+                        throw NotFoundError;
 
-                    var NotAuthorizedError = new Error('Not authorized');
-                    NotAuthorizedError.name = 'NotAuthorizedError';
-                    return NotAuthorizedError;
+                    /* Default */
+                    default:
 
-                /* Forbidden */
-                case 403:
+                        var AuthorizationError = new Error('Error authorizing');
+                        AuthorizationError.name = 'AuthorizationError';
+                        throw AuthorizationError;
+                }
+            },
 
-                    var ForbiddenError = new Error('User is forbidden');
-                    ForbiddenError.name = 'ForbiddenError';
-                    return ForbiddenError;
+            /**
+            * Requests an OAuth tokens from the server.
+            * @param {string} code - authorization code retrieved from requestAuthCode
+            * @return {object} - the OAuth tokens
+            */
+            requestTokens: function(code) {
 
-                /* Not Found */
-                case 404:
+                var self = this;
 
-                    var NotFoundError = new Error('User not found');
-                    NotFoundError.name = 'NotFoundError';
-                    return NotFoundError;
+                $http = $http || $injector.get('$http');
 
-                /* Default */
-                default:
+                var url = config.oauth.uri + 'token';
 
-                    var AuthorizationError = new Error('Error authorizing');
-                    AuthorizationError.name = 'AuthorizationError';
-                    return AuthorizationError;
-            }
-        };
+                var data = 'grant_type=authorization_code';
+                data += '&code=' + code;
 
-        /**
-        * Requests an OAuth tokens from the server.
-        * @param {string} code - authorization code retrieved from requestAuthCode
-        */
-        var requestTokens = function(code) {
+                var auth = config.oauth.clientId + ':' + config.oauth.clientSecret;
 
-            $http = $http || $injector.get('$http');
+                var headers = {
 
-            var url = config.oauth.uri + 'token';
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic ' + btoa(auth)
+                };
 
-            var data = 'grant_type=authorization_code';
-            data += '&code=' + code;
+                var request = {
 
-            var auth = config.oauth.clientId + ':' + config.oauth.clientSecret;
+                    method: 'POST',
+                    headers: headers,
+                    url: url,
+                    data: data
+                };
 
-            var headers = {
+                return $http(request).then(self.receiveTokens);
+            },
 
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + btoa(auth)
-            };
+            /**
+            * Receives and parses the server response from the access token request.
+            * @param {error} error - error to pass along
+            * @param {string} response - the response from requestAccessToken to parse
+            */
+            receiveTokens: function(response) {
+                /*jshint sub:true*/
 
-            var request = {
+                var tokens = {
 
-                method: 'POST',
-                headers: headers,
-                url: url,
-                data: data
-            };
+                    tokenType: response.data['token_type'],
+                    accessToken: response.data['access_token'],
+                    refreshToken: response.data['refresh_token'],
+                    expiration: response.data['expires_in']
+                };
 
-            return $http(request)
-            .success(receiveTokens)
-            .then(function() {
+                /* TODO: Change to use logging framework */
+                console.log('OAuth Access Token: ' + tokens.accessToken);
+                console.log('OAuth Refresh Token: ' + tokens.refreshToken);
 
-                return this.tokens;
-            });
-        };
+                return tokens;
+            },
 
-        /**
-        * Receives and parses the server response from the access token request.
-        * @param {error} error - error to pass along
-        * @param {string} response - the response from requestAccessToken to parse
-        */
-        var receiveTokens = function(response) {
-        /* jshint camelcase:false */
+            /**
+            * Requests a refresh of the OAuth access token.
+            * @return {object} - the OAuth tokens
+            */
+            requestTokenRefresh: function() {
 
-            var accessToken = response.access_token;
-            var refreshToken = response.refresh_token;
+                var self = this;
 
-            this.tokens = {
+                $http = $http || $injector.get('$http');
 
-                accessToken: accessToken,
-                refreshToken: refreshToken
-            };
+                var url = config.oauth.uri + 'token';
 
-            if (accessToken) {
+                var data = 'grant_type=refresh_token';
+                data += '&refresh_token=' + self.tokens.refreshToken;
 
-                this.accessToken = accessToken;
+                var auth = config.oauth.clientId + ':' + config.oauth.clientSecret;
 
-            } else {
-                throw new Error('No access token recieved!');
-            }
+                var headers = {
 
-            if (refreshToken)
-                this.refreshToken = refreshToken;
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic ' + btoa(auth)
+                };
 
-            /* TODO: Change to use logging framework */
-            console.log('OAuth Access Token: ' + accessToken);
-            console.log('OAuth Refresh Token: ' + refreshToken);
+                var request = {
 
-            return this.tokens;
-        };
+                    method: 'POST',
+                    headers: headers,
+                    url: url,
+                    data: data
+                };
 
-        /**
-         * Gets the tokens. Tokens are obtained by handshaking with the server
-         * and providing user credentials to authorize. A users credentials
-         * include an unique identifier and password. If the credentials are
-         * authenticated the server returns an access and refresh OAuth token.
-         * @param {String} username - a unique identifier for a user.
-         * @param {String} password - a password for the users identifier.
-         */
-        var getTokens = function(username, password) {
+                return $http(request).then(self.receiveTokens);
+            },
 
-            return requestAuthCode(username, password).then(function(code) {
+            /**
+            * Gets the tokens. Tokens are obtained by handshaking with the server
+            * and providing user credentials to authorize. A users credentials
+            * include an unique identifier and password. If the credentials are
+            * authenticated the server returns an access and refresh OAuth token.
+            * @param {String} username - a unique identifier for a user.
+            * @param {String} password - a password for the users identifier.
+            * @return {object} - the OAuth tokens
+            */
+            getTokens: function(username, password) {
 
-                return requestTokens(code).then(function(tokens) {
+                var self = this;
+
+                return self.requestAuthCode(username, password).then(function(code) {
+
+                    return self.requestTokens(code).then(function(tokens) {
+
+                        return tokens;
+                    });
+                });
+            },
+
+            /**
+            * Refreshes the OAuth access token.
+            * @return {object} - the OAuth tokens
+            */
+            refreshToken: function() {
+
+                var self = this;
+
+                session = session || $injector.get('SessionService');
+
+                var currentUser = session.retrieveCurrentUser();
+                var persist = currentUser ? currentUser.persist : false;
+
+                return self.requestTokenRefresh().then(function(tokens) {
+
+                    /* Store the tokens. Optionally persisting. */
+                    self.setTokens(tokens, persist);
 
                     return tokens;
                 });
-            });
-        };
+            },
 
-        /**
-         * Sets the tokens. Will store the tokens in memory, the session,
-         * and optionally persistently.
-         * @param {OAuth} tokens - an OAuth object that contains the tokens.
-         * @param {Boolean} persist - if true the tokens will be persisted.
-         */
-        var setTokens = function(tokens, persist) {
+            /**
+            * Sets the tokens. Will store the tokens in memory, the session,
+            * and optionally persistently.
+            * @param {OAuth} tokens - an OAuth object that contains the tokens.
+            * @param {Boolean} persist - if true the tokens will be persisted.
+            */
+            setTokens: function(tokens, persist) {
 
-            this.accessToken = tokens.accessToken;
-            this.refreshToken = tokens.refreshToken;
+                if (!tokens.accessToken) throw new Error('No access token');
 
-            sessionStorage[ACCESS_TOKEN_KEY] = tokens.accessToken;
-            sessionStorage[REFRESH_TOKEN_KEY] = tokens.refreshToken;
+                if (tokens.tokenType) this.tokens.tokenType = tokens.tokenType;
+                this.tokens.accessToken = tokens.accessToken;
+                if (tokens.refreshToken) this.tokens.refreshToken = tokens.refreshToken;
+                if (tokens.expiration) this.tokens.expiration = Number(tokens.expiration) * 1000;
 
-            if (persist) {
+                /* Cancel any previous refresh intervals. */
+                $interval.cancel(this.refresh);
 
-                localStorage[ACCESS_TOKEN_KEY] = tokens.accessToken;
-                localStorage[REFRESH_TOKEN_KEY] = tokens.refreshToken;
+                /* If a refresh token is present. */
+                if (this.tokens.refreshToken) {
+
+                    /* Automatically refresh the access token after it expires. */
+                    this.refresh = $interval(this.refreshToken.bind(this), this.tokens.expiration);
+                }
+
+                /* If the refresh token is not present. */
+                else {
+
+                    /* Remove the access token after expiration. */
+                    this.refresh = $interval(this.removeTokens.bind(this), this.tokens.expiration);
+                }
+
+                $sessionStorage[TOKEN_TYPE_KEY] = tokens.tokenType;
+                $sessionStorage[ACCESS_TOKEN_KEY] = tokens.accessToken;
+                $sessionStorage[REFRESH_TOKEN_KEY] = tokens.refreshToken;
+
+                if (persist) {
+
+                    $localStorage[TOKEN_TYPE_KEY] = tokens.tokenType;
+                    $localStorage[ACCESS_TOKEN_KEY] = tokens.accessToken;
+                    $localStorage[REFRESH_TOKEN_KEY] = tokens.refreshToken;
+                }
+            },
+
+            /**
+            * Removes the tokens from all storage.
+            */
+            removeTokens: function() {
+
+                $interval.cancel(this.refresh);
+
+                /* Remove from memory. */
+                delete this.tokens.accessToken;
+                delete this.tokens.refreshToken;
+
+                /* Remove from the session. */
+                delete $sessionStorage[TOKEN_TYPE_KEY];
+                delete $sessionStorage[ACCESS_TOKEN_KEY];
+                delete $sessionStorage[REFRESH_TOKEN_KEY];
+
+                /* Remove from persistent storage. */
+                delete $localStorage[TOKEN_TYPE_KEY];
+                delete $localStorage[ACCESS_TOKEN_KEY];
+                delete $localStorage[REFRESH_TOKEN_KEY];
+            },
+
+            /**
+            * Returns the OAuth token type if stored or undefined if not.
+            * @returns {String} the token type as a string.
+            */
+            getTokenType: function() {
+
+                var tokenType = this.tokens.tokenType ||
+                                $sessionStorage[TOKEN_TYPE_KEY] ||
+                                $localStorage[TOKEN_TYPE_KEY] ||
+                                undefined;
+
+                return tokenType;
+            },
+
+            /**
+            * Returns the OAuth access token if stored or undefined if not.
+            * @returns {String} the access token as a string.
+            */
+            getAccessToken: function() {
+
+                var accessToken = this.tokens.accessToken ||
+                                  $sessionStorage[ACCESS_TOKEN_KEY] ||
+                                  $localStorage[ACCESS_TOKEN_KEY] ||
+                                  undefined;
+
+                return accessToken;
+            },
+
+            /**
+            * Returns the OAuth refresh token if stored or undefined if not.
+            * @returns {String} the refresh token as a string.
+            */
+            getRefreshToken: function() {
+
+                var refreshToken = this.tokens.refreshToken ||
+                                   $sessionStorage[REFRESH_TOKEN_KEY] ||
+                                   $localStorage[REFRESH_TOKEN_KEY] ||
+                                   undefined;
+
+                return refreshToken;
+            },
+
+            /**
+            * Checks if the tokens are currently stored in any way.
+            * @returns {Boolean} true if the tokens are stored; false otherwise.
+            */
+            areTokensSet: function() {
+
+                return this.getAccessToken() !== undefined && this.getRefreshToken() !== undefined;
             }
         };
 
-        /**
-         * Removes the tokens from all storage.
-         */
-        var removeTokens = function() {
-
-            /* Remove from memory. */
-            delete this.accessToken;
-            delete this.refreshToken;
-
-            /* Remove from the session. */
-            sessionStorage.removeItem(ACCESS_TOKEN_KEY);
-            sessionStorage.removeItem(REFRESH_TOKEN_KEY);
-
-            /* Remove from persistent storage. */
-            localStorage.removeItem(ACCESS_TOKEN_KEY);
-            localStorage.removeItem(REFRESH_TOKEN_KEY);
-        };
-
-        /**
-         * Returns the OAuth access token if stored or undefined if not.
-         * @returns {String} the access token as a string.
-         */
-        var getAccessToken = function() {
-
-            var accessToken = this.accessToken ||
-                              sessionStorage[ACCESS_TOKEN_KEY] ||
-                              localStorage[ACCESS_TOKEN_KEY] ||
-                              undefined;
-
-            return accessToken;
-        };
-
-        /**
-         * Returns the OAuth refresh token if stored or undefined if not.
-         * @returns {String} the refresh token as a string.
-         */
-        var getRefreshToken = function() {
-
-            var refreshToken = this.refreshToken ||
-                               sessionStorage[REFRESH_TOKEN_KEY] ||
-                               localStorage[REFRESH_TOKEN_KEY] ||
-                               undefined;
-
-            return refreshToken;
-        };
-
-        /**
-         * Checks if the tokens are currently stored in any way.
-         * @returns {Boolean} true if the tokens are stored; false otherwise.
-         */
-        var areTokensSet = function() {
-
-            return getAccessToken() !== undefined && getRefreshToken() !== undefined;
-        };
-
-        /* Public API. */
-        return {
-
-            getTokens: getTokens,
-            setTokens: setTokens,
-            areTokensSet: areTokensSet,
-            removeTokens: removeTokens,
-            getAccessToken: getAccessToken,
-            getRefreshToken: getRefreshToken
-        };
+        return TokenService;
     }
 ]);
 
