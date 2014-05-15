@@ -90,7 +90,7 @@ Coach.service('Coach.Data', [
                 if (league.positionSetId) {
                     positions.get(league.positionSetId, function(positionSet){
                         promisedPositionSet.resolve(positionSet);
-                    });
+                    }, null, true);
                 }
             });
 

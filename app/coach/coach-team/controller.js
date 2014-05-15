@@ -63,14 +63,14 @@ Team.service('Coach.Team.Data', [
             }
         });
 
-        var data = {
+        var teamData = {
             coachData: data,
             team: team,
             roster: roster,
             rosterId: rosterId
         };
 
-        return $q.all(data);
+        return $q.all(teamData);
     }
 ]);
 
@@ -92,7 +92,8 @@ Team.controller('Coach.Team.controller', [
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
 
-            $scope.positions = data.coachData.positionSet.positions;
+            $scope.positions = data.coachData.positionSet.indexedPositions;
+            console.log($scope.positions);
 
             angular.forEach($scope.roster, function(player){
                 player.selectedPositions = {};
@@ -106,26 +107,11 @@ Team.controller('Coach.Team.controller', [
                     angular.forEach(player.positions[$scope.rosterId], function(position){
                         player.selectedPositions[position.id] = true;
                     });
-
                     console.log(player);
                 }
             });
 
-
-
         });
-
-        $scope.$watch('roster', function(roster){
-//            angular.forEach($scope.roster, function(player){
-//                console.log(player);
-//
-//                if (typeof player.positions[$scope.rosterId] !== 'undefined' && player.positions[$scope.rosterId].length > 0) {
-//                    player.selectedPosition = player.positions[$scope.rosterId][0];
-//                    console.log(player.selectedPosition);
-//                }
-//            });
-            //console.log(roster);
-        }, true);
 
         $scope.state = 'Coach.Team.All';
 
@@ -137,18 +123,19 @@ Team.controller('Coach.Team.controller', [
         $scope.save = function() {
 
             angular.forEach($scope.roster, function(player){
-                //angular quirk, why does it set models to false
-                console.log(player);
+                //ensures that positions are strictly based on those selected via the ui
+                player.positions[$scope.rosterId] = [];
 
-                player.selectedPositions[$scope.rosterId] = player.selectedPositions[$scope.rosterId].filter(function(position) {
-                    return position !== false;
+                angular.forEach(player.selectedPositions, function(position, key){
+                    player.positions[$scope.rosterId] = player.positions[$scope.rosterId] || [];
+
+                    //the position is selected
+                    if(position === true){
+                        player.positions[$scope.rosterId].push($scope.positions[key]);
+                    }
                 });
-                player.positions = {};
-                player.positions[$scope.rosterId] = player.selectedPositions[$scope.rosterId];
-
+                console.log(player);
             });
-
-            console.log($scope.roster);
 
             players.save($scope.rosterId, $scope.roster).then(function(players) {
                 $scope.roster = players;
