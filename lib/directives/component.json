@@ -25,7 +25,8 @@
         "role-icon",
         "add-player",
         "mascot-placeholder",
-        "profile-placeholder"
+        "profile-placeholder",
+        "positions-dropdown"
     ],
     "scripts": [
         "index.js"
