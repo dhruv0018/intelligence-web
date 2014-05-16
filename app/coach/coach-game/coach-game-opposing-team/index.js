@@ -42,7 +42,7 @@ OpposingTeam.directive('krossoverCoachGameOpposingTeam', [
             controller: 'Coach.Game.OpposingTeam.controller',
 
             scope: {
-
+                opposingTeamRoster: '=?',
                 game: '=?'
             }
         };
@@ -62,197 +62,40 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
     function controller(config, $rootScope, $scope, $state, $localStorage, $http, tabs, data, games, players) {
 
         $scope.tabs = tabs;
-        $scope.data = data;
+        $scope.data = {};
 
-        data.opposingTeam.players = data.opposingTeam.players || [];
+        data.then(function(coachData) {
+            $scope.data = coachData;
+            $scope.positions = coachData.positionSet.indexedPositions;
 
-        $scope.mockTeam = [
-            {
-                firstName: 'Hector',
-                lastName: 'Rosa',
-                position: 'MB',
-                jerseyNumbers: {
-                    '9001': 22
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0000.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Billy',
-                lastName: 'Blau',
-                position: 'MH',
-                jerseyNumbers: {
-                    '9001': 33
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0001.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Greg',
-                lastName: 'Grunhilda',
-                position: 'RH',
-                jerseyNumbers: {
-                    '9001': 44
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0002.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Walter',
-                lastName: 'Gelber',
-                position: 'LH',
-                jerseyNumbers: {
-                    '9001': 55
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0003.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Ringo',
-                lastName: 'Braun',
-                position: 'DS',
-                jerseyNumbers: {
-                    '9001': 66
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0004.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Richard',
-                lastName: 'Beige',
-                position: 'H',
-                jerseyNumbers: {
-                    '9001': 77
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0005.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Kurt',
-                lastName: 'Violett',
-                position: 'B',
-                jerseyNumbers: {
-                    '9001': 88
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0006.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Illian',
-                lastName: 'Mauve',
-                position: 'OB',
-                jerseyNumbers: {
-                    '9001': 99
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0007.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'David',
-                lastName: 'Weisse',
-                position: 'S',
-                jerseyNumbers: {
-                    '9001': 14
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0008.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Alfonso',
-                lastName: 'Schwarz',
-                position: 'H',
-                jerseyNumbers: {
-                    '9001': 25
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0009.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Anthony',
-                lastName: 'Grau',
-                position: 'B',
-                jerseyNumbers: {
-                    '9001': 36
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0000.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Stan',
-                lastName: 'Turk',
-                position: 'DS',
-                jerseyNumbers: {
-                    '9001': 47
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0001.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Arnold',
-                lastName: 'Silber',
-                position: 'H',
-                jerseyNumbers: {
-                    '9001': 58
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0002.jpg'
-                },
-                played: true
-            },
-            {
-                firstName: 'Scott',
-                lastName: 'Gold',
-                position: 'B',
-                jerseyNumbers: {
-                    '9001': 69
-                },
-                picture: {
-                    url: 'assets/tmp/roster/0003.jpg'
-                },
-                played: true
+            if (coachData.opposingTeamGameRoster) {
+                $scope.data.opposingTeam = {
+                    players: []
+                };
+                $scope.data.opposingTeam.players = players.constructPositionDropdown(coachData.opposingTeamGameRoster.players,
+                                                                                     coachData.game.rosters[coachData.game.opposingTeamId].id,
+                                                                                     $scope.positions);
             }
-        ];
+        });
 
         /*
          * Scope watches.
          */
 
         $scope.$watch('game', function(game) {
+            if(game.rosters){
+                $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
+            }
+        });
 
-            if (game && game.getRoster && game.opposingTeamId) {
-
-                var roster = game.getRoster(game.opposingTeamId);
-
-                if (roster) {
-
-                    $scope.rosterId = roster.id;
+        $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster){
+            if (typeof opposingTeamRoster !== 'undefined') {
+                if(opposingTeamRoster.length === 0) {
+                    $scope.addNewPlayer();
                 }
             }
         });
+
 
         $scope.$watch('formOpposingTeam.$invalid', function(invalid) {
 
@@ -274,15 +117,17 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             var player = {
 
                 played: true,
-                jerseyNumbers: {}
+                jerseyNumbers: {},
+                positions: {},
+                selectedPositions: {}
             };
-
-            data.opposingTeam.players.push(player);
+            player.selectedPositions[$scope.opposingTeamRosterId] = [];
+            $scope.data.opposingTeam.players.push(player);
         };
 
         $scope.removePlayer = function(player) {
 
-            if (player) data.opposingTeam.players.splice(data.opposingTeam.players.indexOf(player), 1);
+            if (player) $scope.data.opposingTeam.players.splice($scope.data.opposingTeam.players.indexOf(player), 1);
         };
 
         $scope.uploadPlayers = function(files) {
@@ -299,17 +144,6 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                     headers: { 'Content-Type': undefined },
                     transformRequest: angular.identity
                 })
-
-                .success(function(data) {
-
-                    data.opposingTeam.players = data.map(function(player) {
-
-                        player.name = player.firstName + ' ' + player.lastName;
-                        player.played = true;
-                        return player;
-                    });
-                })
-
                 .error(function() {
 
                     $rootScope.$broadcast('alert', {
@@ -321,8 +155,8 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         };
 
         $scope.save = function() {
-
-            players.save($scope.rosterId, data.opposingTeam.players);
+            $scope.data.opposingTeam.players = players.getPositionsFromDowndown($scope.data.opposingTeam.players, $scope.opposingTeamRosterId, $scope.positions);
+            players.save($scope.game.rosters[$scope.game.opposingTeamId].id, $scope.data.opposingTeam.players);
             tabs.activateTab('instructions');
         };
     }

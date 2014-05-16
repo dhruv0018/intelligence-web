@@ -24,18 +24,7 @@
 
                                     <h4>*Date of game</h4>
 
-                                    <input class="form-control" name="date" type="date" data-ng-model="game.datePlayed" required>
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    <h4>*Season</h4>
-
-                                    <select class="form-control" name="season" data-ng-model="season" data-ng-options="season.name for season in seasons" disabled>
-                                        <option value="">Season</option>
-                                    </select>
-
+                                    <data-date></data-date>
                                 </div>
 
                                 <div class="form-group">
@@ -181,7 +170,7 @@
                                 <div class="form-group">
 
                                     <h4>Any problems with the game film we should know about:</h4>
-                                    <textarea class="form-control" name="notes" rows="8" cols="40" placeholder="Explain here…" data-ng-model="game.notes[noteIndex].content"></textarea>
+                                    <textarea class="form-control" name="notes" rows="8" cols="40" placeholder="Explain here…" data-ng-model="game.notes[GAME_NOTE_TYPES.COACH_NOTE][0].content"></textarea>
 
                                 </div>
 

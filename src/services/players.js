@@ -131,6 +131,45 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 return roster.filter(function(player) {
                     return player.rosterStatuses[rosterId] === true;
                 });
+            },
+            constructPositionDropdown: function(roster, rosterId, positions){
+                angular.forEach(roster, function(player){
+                    //constructs position dropdown
+                    player.selectedPositions = {};
+
+                    //adds each position checkboxes for each player
+                    angular.forEach(positions, function(position){
+                        player.selectedPositions[position.id] = false;
+                    });
+
+                    //sets the positions that already exist on the players
+                    if (typeof player.positions[rosterId] !== 'undefined' && player.positions[rosterId].length > 0) {
+                        angular.forEach(player.positions[rosterId], function(position){
+                            player.selectedPositions[position.id] = true;
+                        });
+                    }
+                });
+
+                return roster;
+            },
+            getPositionsFromDowndown: function(roster, rosterId, positions){
+                angular.forEach(roster, function(player){
+                    //todo have backend convert this to object always, no reason to be an array
+                    player.positions = {};
+
+                    //ensures that positions are strictly based on those selected via the ui
+                    player.positions[rosterId] = [];
+
+                    angular.forEach(player.selectedPositions, function(position, key){
+                        player.positions[rosterId] = player.positions[rosterId] || [];
+
+                        //the position is selected
+                        if(position === true){
+                            player.positions[rosterId].push(positions[key]);
+                        }
+                    });
+                });
+                return roster;
             }
         };
 

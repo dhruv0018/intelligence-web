@@ -64,10 +64,26 @@ input {
     border-radius: 0;
 }
 
+/* Accordion Style Overrides */
+
+
 /**
  * Browser specific
  */
+.panel-group, .panel {
+    border: none;
+    border-radius: 0;
+}
 
+.panel-default > .panel-heading {
+    background-color: transparent;
+    padding: 0;
+}
+
+.panel-body {
+    padding: 0;
+    border-top: none !important;
+}
 
 /* NOTE:
  * Although these prefixed values are not necessary anymore, because Bootstrap

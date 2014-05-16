@@ -5,7 +5,7 @@
     padding-top: 10px;
     padding-left: 15px;
     padding-right: 15px;
-    border-bottom: 1px solid rgb(216, 216, 216);
+    border-bottom: 1px solid rgb(216, 216, 216) !important;
 
     &:hover,
     &.active {
@@ -13,12 +13,20 @@
         background-color: rgb(246, 249, 253);
     }
 
+    a.accordion-toggle {
+        display: block;
+        text-decoration: none;
+    }
+
     h4 {
 
-        color: @gray-dark;
-        font-size: 14px;
+        color: black;
+        font-size: 16px;
         font-weight: 200;
         letter-spacing: -0.01em;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        text-decoration: none;
 
         .dash,
         .period,
@@ -34,21 +42,30 @@
 
             position: relative;
             top: 3px;
-            width: 5ex;
+            width: 12ex;
             .text-overflow();
         }
 
-        .playplay {
-            .pull-right;
-            font-size: 24px;
-            color: @gray-light;
-            cursor: pointer;
+        &.vs {
+            font-weight:500;
+            padding-bottom: 10px;
+        }
 
-            &:active,
-            &:focus,
-            &:hover {
-                color: @brand-primary;
-            }
+        &.playCollapsed {
+            color: @gray-light;
+        }
+    }
+
+    .playplay {
+        .pull-right;
+        font-size: 24px;
+        color: @gray-light;
+        cursor: pointer;
+
+        &:active,
+        &:focus,
+        &:hover {
+            color: @brand-primary;
         }
     }
 
@@ -85,6 +102,7 @@
         letter-spacing: 0.01em;
         padding-top: 10px;
         padding-left: 0;
+        padding-right: 0;
         padding-bottom: 10px;
         border-left-width: 0;
 

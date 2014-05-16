@@ -477,6 +477,7 @@ describe('TokensService', function() {
                     refreshToken: 'REFRESH_TOKEN'
                 };
 
+                tokens.removeTokens();
                 tokens.areTokensSet().should.be.false;
                 tokens.setTokens(tokensFixture);
                 tokens.areTokensSet().should.be.true;
@@ -486,11 +487,10 @@ describe('TokensService', function() {
         ]));
 
         afterEach(inject([
-            '$sessionStorage', '$localStorage',
-            function($sessionStorage, $localStorage) {
+            'TokensService',
+            function(tokens) {
 
-                $sessionStorage.$reset();
-                $localStorage.$reset();
+                tokens.removeTokens();
             }
         ]));
     });

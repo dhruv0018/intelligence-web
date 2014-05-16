@@ -90,40 +90,35 @@ var GAME_TYPES = {
 
         id: 1,
         name: 'Conference Game',
-        filter: 'regular',
-        filterName: 'Regular'
+        filterType: 'regular'
     },
 
     NON_CONFERENCE: {
 
         id: 2,
         name: 'Non-Conference Game',
-        filter: 'regular',
-        filterName: 'Regular'
+        filterType: 'regular'
     },
 
     PLAYOFF: {
 
         id: 3,
         name: 'Playoff',
-        filter: 'regular',
-        filterName: 'Regular'
+        filterType: 'regular'
     },
 
     SCOUTING: {
 
         id: 4,
         name: 'Scouting',
-        filter: 'scouting',
-        filterName: 'Scouting'
+        filterType: 'scouting'
     },
 
     SCRIMMAGE: {
 
         id: 5,
         name: 'Scrimmage',
-        filter: 'scrimmage',
-        filterName: 'Scrimmage'
+        filterType: 'scrimmage'
     }
     
 };
