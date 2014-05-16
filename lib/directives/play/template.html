@@ -7,6 +7,7 @@
             <time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time>
 
              <span class="playplay" data-ng-if="!currentUser.is(INDEXER)" data-ng-click="$event.stopPropagation();"><i class="icon-play-sign"></i></span>
+
         </h4>
         <h4 data-ng-class="{'playCollapsed': !status.open}" class="vs">
             <span class="team">{{ team.name }}</span>
@@ -15,7 +16,7 @@
             <span class="score">{{ play.score[opposingTeam.id] }}</span>
             <span class="team">{{ opposingTeam.name }}</span>
 
-            <h1>{{ summaryScript }}</h1>
+            <div>{{ summaryScript }}</div>
         </h4>
     </accordion-heading>
     <div>
