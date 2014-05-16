@@ -80,12 +80,16 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     if (gameRoster.length === 1) {
                         $scope.gameRoster.push(gameRoster[0]);
 
-                        angular.forEach($scope.roster.players, function(teamRosterPlayer) {
-                            teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
-                            teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.roster.rosterId];
-                            teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
-                            $scope.gameRoster.push(teamRosterPlayer);
+                        angular.forEach($scope.data.roster, function(teamRosterPlayer) {
+                            if (teamRosterPlayer.rosterStatuses[$scope.data.rosterId.id]) {
+                                teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
+                                teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.data.rosterId.id];
+                                teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
+                                $scope.gameRoster.push(teamRosterPlayer);
+                            }
                         });
+
+
                     } else {
                         $scope.gameRoster = gameRoster;
                     }
