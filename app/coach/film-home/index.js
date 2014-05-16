@@ -88,13 +88,15 @@ FilmHome.service('Coach.FilmHome.GameFilters', ['GAME_TYPES', function (otherFil
     };
 
     angular.forEach(otherFiltersConfiguration, function (filter) {
-        this.filters.others[filter.filter] = false;
+        this.filters.others[filter.filterType] = false;
     }, filtersData);
 
     return filtersData;
 }]);
 
-FilmHome.filter('gameFilter', ['Coach.FilmHome.GameFilters', function (filters) {
+FilmHome.filter('gameFilter',
+    ['Coach.FilmHome.GameFilters','GAME_TYPES_IDS', 'GAME_TYPES',
+    function (filters, GAME_TYPES_IDS, GAME_TYPES) {
 
     return function(games, options) {
         if (options.all === true) {
@@ -105,7 +107,7 @@ FilmHome.filter('gameFilter', ['Coach.FilmHome.GameFilters', function (filters) 
 
         angular.forEach(games, function(game) {
             angular.forEach(filters.listEnabled(), function(filter) {
-                if (game.filterType === filter) {
+                if (GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filterType === filter) {
                     filteredCollection.push(game);
                 }
             });
