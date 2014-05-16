@@ -69,23 +69,28 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             console.log($scope.data);
             if (coachData.opposingTeamGameRoster) {
                 $scope.data.opposingTeam = {
-                    players: coachData.opposingTeamGameRoster.players
+                    players: coachData.opposingTeamGameRoster.players || []
                 };
             }
         });
 
         $scope.$watch('game', function(game) {
             if(game.rosters){
-                console.log($scope.opposingTeamRosterId);
                 $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
             }
         });
 
+
         $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster){
             if (typeof opposingTeamRoster !== 'undefined') {
                 if(opposingTeamRoster.length === 0) {
-                    $scope.addNewPlayer();
+                    //$scope.addNewPlayer();
+                    console.log($scope.opposingTeamRosterId);
                 }
+            } else {
+                $scope.data.opposingTeam = {
+                    players: []
+                };
             }
         });
 
@@ -144,7 +149,12 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                     transformRequest: angular.identity
                 })
                 .success(function(success){
-                    $scope.players = success;
+                    if (typeof $scope.data.opposingTeam === 'undefined') {
+                        $scope.data.opposingTeam = {
+                            players: success
+                        };
+                    }
+                    $scope.data.opposingTeam.players = success;
 
                 })
                 .error(function() {
@@ -162,9 +172,15 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             tabs.activateTab('instructions');
         };
 
-        $scope.sortByRosterStatus = function(player){
-            return player.rosterStatuses[$scope.opposingTeamRosterId];
-        };
+        //TODO to implement later
+//        $scope.sortByRosterStatus = function(player){
+//            if(typeof player.rosterStatuses[$scope.opposingTeamRosterId] !=='undefined'){
+//                return player.rosterStatuses[$scope.opposingTeamRosterId];
+//            } else {
+//                return false;
+//            }
+//
+//        };
     }
 ]);
 
