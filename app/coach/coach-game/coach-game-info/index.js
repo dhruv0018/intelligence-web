@@ -63,6 +63,7 @@ Info.controller('Coach.Game.Info.controller', [
     '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($scope, $state, $localStorage, GAME_TYPES, GAME_NOTE_TYPES, tabs, data, session, teams, leagues, games) {
         $scope.GAME_TYPES = GAME_TYPES;
+        $scope.GAME_NOTE_TYPES = GAME_NOTE_TYPES;
 
         $scope.tabs = tabs;
 
@@ -82,6 +83,10 @@ Info.controller('Coach.Game.Info.controller', [
             if (typeof game.datePlayed !== 'undefined') {
                 game = games.unadjustTime(game);
             }
+
+            game.notes = game.notes || {};
+            game.notes[GAME_NOTE_TYPES.COACH_NOTE] = game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId:GAME_NOTE_TYPES.COACH_NOTE,content:''}];
+            
         });
 
         $scope.$watch('game.isHomeGame', function(isHomeGame) {
@@ -92,34 +97,6 @@ Info.controller('Coach.Game.Info.controller', [
                 $scope.game.isHomeGame = String(isHomeGame);
             }
         });
-
-        var updateGameNotes = function(notes) {
-
-            /* If no coach note exists. */
-            if (!notes || !notes.length) {
-
-                $scope.game.notes = $scope.game.notes || [];
-
-                /* Create a new coach note. */
-                $scope.game.notes.unshift({
-                    noteTypeId: GAME_NOTE_TYPES.COACH_NOTE,
-                    content: ''
-                });
-
-                $scope.noteIndex = 0;
-            }
-
-            /* If the game is an existing resource with extended methods. */
-            if ($scope.game.getIndexOfNoteByType) {
-
-                /* Get the index of the coach note. */
-                $scope.noteIndex = $scope.game.getIndexOfNoteByType(GAME_NOTE_TYPES.COACH_NOTE);
-            }
-        };
-
-        updateGameNotes();
-
-        $scope.$watch('game.notes', updateGameNotes);
 
         $scope.$watch('formGameInfo.$invalid', function(invalid) {
 

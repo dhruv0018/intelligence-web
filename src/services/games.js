@@ -155,15 +155,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.rosters[teamId];
             },
 
-            getIndexOfNoteByType: function(type) {
-
-                return this.notes.map(function(note) {
-
-                    return note.noteTypeId;
-
-                }).indexOf(type);
-            },
-
             getVideoSources: function() {
 
                 var self = this;
