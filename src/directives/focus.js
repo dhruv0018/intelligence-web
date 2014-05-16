@@ -53,6 +53,12 @@ IntelligenceWebClient.directive('focusWhen', [
                     $scope.focusWhen = false;
                 });
             });
+
+            element.on('$destroy', function() {
+
+                element.unbind('focus');
+                element.unbind('blur');
+            });
         }
 
         return directive;
