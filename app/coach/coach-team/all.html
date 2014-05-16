@@ -19,7 +19,7 @@
 
             <tbody>
 
-                <tr data-ng-repeat="player in roster">
+                <tr data-ng-repeat="player in roster | orderBy: sortPlayers">
 
                     <td>{{ player.jerseyNumbers[rosterId] }}</td>
 
@@ -27,7 +27,15 @@
 
                     <td>{{ player.lastName }}</td>
 
-                    <td>{{ player.position }}</td>
+                    <td>
+                        <span data-ng-repeat="position in player.positions[rosterId]">
+                            {{position.name}}
+
+                            <span data-ng-hide="$last">
+                                ,
+                            </span>
+                        </span>
+                    </td>
 
                 </tr>
 
