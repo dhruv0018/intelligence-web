@@ -31,8 +31,7 @@
                         <span ng-repeat="position in player.positions[rosterId]">
                             {{position.name}}
 
-                            <!--Todo: find out why $index === $last does not work-->
-                            <span ng-hide="$index === player.positions[rosterId].length -1">
+                            <span ng-hide="$last">
                                 ,
                             </span>
                         </span>

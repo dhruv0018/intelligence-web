@@ -23,6 +23,7 @@ Team.controller('Coach.Team.Active.controller', [
         };
 
         $scope.addNewPlayer = function() {
+
             var player = {
 
                 jerseyNumbers: {},
