@@ -36,7 +36,7 @@
 
                                 <tbody>
 
-                                    <tr ng-if="!player.isUnknown" data-ng-repeat="player in data.opposingTeam.players">
+                                    <tr ng-if="!player.isUnknown" data-ng-repeat="player in data.opposingTeam.players | filter: sortByRosterStatus">
 
                                         <td><input size="3" data-ng-model="player.jerseyNumbers[opposingTeamRosterId]" required></td>
 

@@ -76,6 +76,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
 
         $scope.$watch('game', function(game) {
             if(game.rosters){
+                console.log($scope.opposingTeamRosterId);
                 $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
             }
         });
@@ -112,15 +113,21 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             var player = {
 
                 played: true,
-                jerseyNumbers: {}
+                jerseyNumbers: {},
+                rosterStatuses: {}
             };
-
+            player.rosterStatuses[$scope.opposingTeamRosterId] = true;
             $scope.data.opposingTeam.players.push(player);
         };
 
         $scope.removePlayer = function(player) {
 
-            if (player) $scope.data.opposingTeam.players.splice($scope.data.opposingTeam.players.indexOf(player), 1);
+            if (typeof player.id === 'undefined'){
+                $scope.data.opposingTeam.players.splice($scope.data.opposingTeam.players.indexOf(player), 1);
+            } else {
+                player.rosterStatuses[$scope.opposingTeamRosterId] = false;
+            }
+
         };
 
         $scope.uploadPlayers = function(files) {
@@ -150,6 +157,10 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         $scope.save = function() {
             players.save($scope.game.rosters[$scope.game.opposingTeamId].id, $scope.data.opposingTeam.players);
             tabs.activateTab('instructions');
+        };
+
+        $scope.sortByRosterStatus = function(player){
+            return player.rosterStatuses[$scope.opposingTeamRosterId];
         };
     }
 ]);
