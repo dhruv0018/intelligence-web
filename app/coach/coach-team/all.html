@@ -28,10 +28,10 @@
                     <td>{{ player.lastName }}</td>
 
                     <td>
-                        <span ng-repeat="position in player.positions[rosterId]">
+                        <span data-ng-repeat="position in player.positions[rosterId]">
                             {{position.name}}
 
-                            <span ng-hide="$last">
+                            <span data-ng-hide="$last">
                                 ,
                             </span>
                         </span>
