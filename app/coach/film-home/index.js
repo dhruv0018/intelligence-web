@@ -94,7 +94,8 @@ FilmHome.service('Coach.FilmHome.GameFilters', ['GAME_TYPES', function (otherFil
     return filtersData;
 }]);
 
-FilmHome.filter('gameFilter', ['Coach.FilmHome.GameFilters','GAME_TYPES_IDS', 'GAME_TYPES',
+FilmHome.filter('gameFilter',
+    ['Coach.FilmHome.GameFilters','GAME_TYPES_IDS', 'GAME_TYPES',
     function (filters, GAME_TYPES_IDS, GAME_TYPES) {
 
     return function(games, options) {
