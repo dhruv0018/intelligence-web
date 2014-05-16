@@ -9,7 +9,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.directive('focusWhen', [
-    function() {
+    '$timeout',
+    function($timeout) {
 
         var directive = {
 
@@ -26,7 +27,11 @@ IntelligenceWebClient.directive('focusWhen', [
 
                 if (focus === true) {
 
-                    element[0].focus();
+                    $timeout(function() {
+
+                        element[0].focus();
+
+                    }, 0);
                 }
             });
 
