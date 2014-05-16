@@ -131,11 +131,10 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         };
 
         $scope.uploadPlayers = function(files) {
-
             var file = files[0];
             var data = new FormData();
 
-            data.append('rosterId', $scope.rosterId);
+            data.append('rosterId', $scope.opposingTeamRosterId);
             data.append('roster', file);
 
             $http.post(config.api.uri + 'batch/players/file',
@@ -143,6 +142,10 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                 data, {
                     headers: { 'Content-Type': undefined },
                     transformRequest: angular.identity
+                })
+                .success(function(success){
+                    $scope.players = success;
+
                 })
                 .error(function() {
 
