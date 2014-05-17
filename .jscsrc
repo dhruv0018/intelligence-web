@@ -126,6 +126,7 @@
     "disallowTrailingWhitespace": true,
     "requireLineFeedAtFileEnd": true,
     "requireCapitalizedConstructors": true,
+    "safeContextKeyword": ["self"],
     "excludeFiles": [
         "src/services/users.js",
         "src/services/authentication.js"
