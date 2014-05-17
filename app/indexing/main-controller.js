@@ -261,7 +261,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
         /**
          * Deletes an event.
-         * @param {Object} event - the event to delete.
+         * @param {Object} selectedEvent - the event to delete.
          */
         this.deleteEvent = function(selectedEvent) {
 
