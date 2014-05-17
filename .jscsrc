@@ -118,6 +118,7 @@
     ],
     "requireCamelCaseOrUpperCaseIdentifiers": true,
     "disallowKeywords": ["with"],
+    "disallowMultipleLineStrings": true,
     "excludeFiles": [
         "src/services/users.js",
         "src/services/authentication.js"
