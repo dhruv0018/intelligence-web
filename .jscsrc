@@ -110,6 +110,12 @@
         "!=",
         "!=="
     ],
+    "disallowImplicitTypeConversion": [
+        "numeric",
+        /*"boolean",*/
+        /*"binary",*/
+        "string"
+    ],
     "disallowKeywords": ["with"],
     "excludeFiles": [
         "src/services/users.js",
