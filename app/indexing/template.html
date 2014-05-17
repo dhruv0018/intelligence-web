@@ -22,7 +22,7 @@
                     <!-- Script -->
                     <div class="script" data-ng-if="indexing.showScript">
 
-                        <krossover-item data-item="item" data-event="event.current" data-ng-repeat="item in indexerScript(indexing.tagset, event.current)"></krossover-item>
+                        <krossover-item data-item="item" data-event="event.current" data-ng-repeat="item in indexerScript(indexing.tagset, event.current) track by $index"></krossover-item>
 
                     </div>
 
