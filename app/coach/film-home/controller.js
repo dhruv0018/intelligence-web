@@ -34,11 +34,11 @@ FilmHome.controller('Coach.FilmHome.controller', [
 
         $scope.$watch('filters.all', function (all) {
 
-            if(all === true) {
+            if (all === true) {
                 filtersData.disableOthers();
             }
 
-            else if(filtersData.othersDisabled === true) {
+            else if (filtersData.othersDisabled === true) {
                 $scope.filters.all = true;
             }
         });

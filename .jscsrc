@@ -10,5 +10,16 @@
         /*"case",*/
         /*"default"*/
     ],
+    "requireSpaceAfterKeywords": [
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "switch",
+        "return",
+        "try",
+        "catch"
+    ],
     "disallowKeywords": ["with"]
 }

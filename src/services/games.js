@@ -30,7 +30,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 //game.status = 6;
 
                 //TODO change this scheme to adjust to new type scheme
-                if(typeof game.gameType !== 'undefined') {
+                if (typeof game.gameType !== 'undefined') {
                     game.filterType = (game.gameType.length > 0) ? GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filter : '';
                 }
 
@@ -312,7 +312,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 /* Ensure the game can be assigned. */
-                if(self.canBeAssignedToQa()) {
+                if (self.canBeAssignedToQa()) {
 
                     self.indexerAssignments = self.indexerAssignments || [];
 
@@ -587,8 +587,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             findNoteContentByType: function(notes, noteTypeId) {
 
-                for(var index = 0; index < notes.length; index++) {
-                    if(notes[index].noteTypeId === noteTypeId) {
+                for (var index = 0; index < notes.length; index++) {
+                    if (notes[index].noteTypeId === noteTypeId) {
                         return notes[index].content;
                     }
                 }

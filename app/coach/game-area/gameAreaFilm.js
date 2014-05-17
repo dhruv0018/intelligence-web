@@ -71,7 +71,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
                 var lastFilter = activeFilters[activeFilters.length - 1];
 
-                if(lastFilter.id === 1 && activeFilters.length > 1){
+                if (lastFilter.id === 1 && activeFilters.length > 1){
                     var previousFilter = activeFilters[activeFilters.length - 2];
 
                     if (previousFilter.associatePlayer) {

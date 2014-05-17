@@ -90,7 +90,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                 if (indexing.isIndexing) {
 
-                    if(self.savable()) self.save();
+                    if (self.savable()) self.save();
                     else if (self.nextable()) self.next();
                 }
 

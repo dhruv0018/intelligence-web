@@ -139,7 +139,7 @@ UploadFilm.controller('UploadFilmController', [
 
             .success(function(data) {
 
-                if(data && data.guid) {
+                if (data && data.guid) {
 
                     /* The GUID from KVS. */
                     var guid = data.guid;

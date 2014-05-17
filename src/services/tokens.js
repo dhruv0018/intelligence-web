@@ -100,7 +100,7 @@ IntelligenceWebClient.factory('TokensService', [
 
             handleAuthError: function(response) {
 
-                switch(response.status) {
+                switch (response.status) {
 
                     /* Unauthorized */
                     case 401:

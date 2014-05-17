@@ -201,12 +201,12 @@ IntelligenceWebClient.factory('IndexingService', [
                     for (j = 0; j < events.length; j++){
                         var event = events[j];
                         var teamId = this.getScoreTeam(event);
-                        if(teamId){
+                        if (teamId){
                             scores[teamId] += parseInt(event.tag.pointsAssigned, 10);
                         }
                     }
-                    
-                    if(angular.equals(play, calculatedPlay)){ break; } // stop when we hit the passed in play
+
+                    if (angular.equals(play, calculatedPlay)){ break; } // stop when we hit the passed in play
                 }
                 return scores;
             },
@@ -220,13 +220,13 @@ IntelligenceWebClient.factory('IndexingService', [
                 angular.forEach(event.variableValues, function(item, key){
                     values.push(item);
                 });
-                
-                
-                if(tag.pointsAssigned && values){
+
+
+                if (tag.pointsAssigned && values){
                     var value = values[0];
                     var valueTeam = this.getValueTeam(value);
-                    
-                    if(tag.assignThisTeam){
+
+                    if (tag.assignThisTeam){
                         teamId = valueTeam;
                     } else {
                         teamId = (valueTeam === game.teamId) ? game.opposingTeamId : game.teamId;
@@ -241,10 +241,10 @@ IntelligenceWebClient.factory('IndexingService', [
                 var teamPlayers = this.teamPlayers;
                 variableValue = variableValue || '';
                 var teamId = null;
-                
-                if(variableValue.type === TAG_VARIABLE_TYPE.TEAM_DROPDOWN){
+
+                if (variableValue.type === TAG_VARIABLE_TYPE.TEAM_DROPDOWN){
                     teamId = variableValue.value;
-                } else if(variableValue.type === TAG_VARIABLE_TYPE.PLAYER_DROPDOWN){
+                } else if (variableValue.type === TAG_VARIABLE_TYPE.PLAYER_DROPDOWN){
                     teamId = (teamPlayers[variableValue.value]) ? game.teamId : game.opposingTeamId;
                 }
                 
