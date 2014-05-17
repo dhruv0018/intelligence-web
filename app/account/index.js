@@ -124,7 +124,7 @@ Account.controller('AccountController', [
         $scope.roleGroups = [];
 
         /**
-         * loop through the ROLE_ID hash, and organize it so the role names 
+         * loop through the ROLE_ID hash, and organize it so the role names
          * are paired with the user's roles that matches
          */
         var i = 1;

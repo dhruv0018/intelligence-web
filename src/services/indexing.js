@@ -188,7 +188,7 @@ IntelligenceWebClient.factory('IndexingService', [
             calculateScore: function(calculatedPlay) {
                 var plays = this.plays;
                 var game = this.game;
-                
+
                 /* initialize scores */
                 var scores = {};
                 scores[game.teamId] = 0;
@@ -196,7 +196,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 for (var i = 0; i < plays.length; i++) {
                     var play = plays[i];
-                    
+
                     var events = play.events;
                     for (j = 0; j < events.length; j++) {
                         var event = events[j];
@@ -232,7 +232,7 @@ IntelligenceWebClient.factory('IndexingService', [
                         teamId = (valueTeam === game.teamId) ? game.opposingTeamId : game.teamId;
                     }
                 }
-                
+
                 return teamId;
             },
 
@@ -247,7 +247,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 } else if (variableValue.type === TAG_VARIABLE_TYPE.PLAYER_DROPDOWN) {
                     teamId = (teamPlayers[variableValue.value]) ? game.teamId : game.opposingTeamId;
                 }
-                
+
                 return teamId;
             }
         };

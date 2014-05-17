@@ -100,15 +100,15 @@ Leagues.controller('LeagueController', [
             });
             return sports;
         });
-        
+
         $scope.tagsets = tagsets.getList();
-        
+
         $scope.positionsets = positionsets.getList();
-        
+
         $scope.genders = ['male', 'female', 'coed'];
 
         $scope.save = function(league) {
-            
+
             leagues.save(league).then(function() {
                 delete $scope.$storage.league;
                 $state.go('leagues');

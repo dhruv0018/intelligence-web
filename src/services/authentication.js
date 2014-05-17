@@ -103,7 +103,7 @@ IntelligenceWebClient.service('AuthenticationService', [
 
                 throw new Error('Illegal attempt to override function isLoggedIn');
             },
-            
+
             requestPasswordReset: function(email, success, error) {
                 var endpoint = config.passwordReset.uri + email;
                 var request = {
@@ -116,7 +116,7 @@ IntelligenceWebClient.service('AuthenticationService', [
                 };
                 $http(request).success(success).error(error);
             },
-            
+
             processPasswordReset: function(token, password, success, error) {
                 var endpoint = config.passwordReset.uri + token;
                 var request = {
