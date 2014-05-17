@@ -123,6 +123,7 @@
     "validateLineBreaks": "LF",
     "validateQuoteMarks": "'",
     "validateIndentation": 4,
+    "disallowTrailingWhitespace": true,
     "excludeFiles": [
         "src/services/users.js",
         "src/services/authentication.js"
