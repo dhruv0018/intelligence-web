@@ -1,3 +1,14 @@
 {
-  "disallowKeywords": ["with"]
+    "requireCurlyBraces": [
+        /*"if",*/
+        /*"else",*/
+        "for",
+        "while",
+        "do",
+        "try",
+        "catch"
+        /*"case",*/
+        /*"default"*/
+    ],
+    "disallowKeywords": ["with"]
 }
