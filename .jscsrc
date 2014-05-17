@@ -35,6 +35,7 @@
     "disallowSpacesInsideParentheses": true,
     "disallowDanglingUnderscores": true,
     "disallowSpaceAfterObjectKeys": true,
+    "requireCommaBeforeLineBreak": true,
     "disallowKeywords": ["with"],
     "excludeFiles": [
         "src/services/users.js",
