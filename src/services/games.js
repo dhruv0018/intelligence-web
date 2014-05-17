@@ -596,7 +596,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 //returning blank content
                 return '';
             },
-            transformIndexed: function(games){
+            transformIndexed: function(games) {
                 var indexedGames = {};
                 var self = this;
 

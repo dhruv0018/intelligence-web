@@ -139,13 +139,13 @@ Queue.controller('QueueController', [
 
                 games.getList(filter,
 
-                    function success(games){
+                    function success(games) {
 
                         $scope.queue = games;
                         $scope.noResults = false;
                     },
 
-                    function error(){
+                    function error() {
 
                         $scope.queue = [];
                         $scope.noResults = true;

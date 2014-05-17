@@ -87,15 +87,15 @@ Leagues.controller('LeagueController', [
 
         if (!league || leagueId !== league.id) {
 
-            leagues.get(leagueId, function(league){
+            leagues.get(leagueId, function(league) {
 
                 $scope.$storage.league = league;
             });
         }
 
         $scope.indexedSports = {};
-        $scope.sports = sports.getList({}, function(sports){
-            sports.forEach(function(sport){
+        $scope.sports = sports.getList({}, function(sports) {
+            sports.forEach(function(sport) {
                 $scope.indexedSports[sport.id] = sport;
             });
             return sports;
@@ -148,11 +148,11 @@ Leagues.controller('LeaguesController', [
 
         $scope.search = function(filter) {
             leagues.getList(filter,
-                    function(leagues){
+                    function(leagues) {
                         $scope.leagues = leagues;
                         $scope.noResults = false;
                     },
-                    function(){
+                    function() {
                         $scope.leagues = [];
                         $scope.noResults = true;
                     }

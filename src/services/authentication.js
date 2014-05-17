@@ -111,7 +111,7 @@ IntelligenceWebClient.service('AuthenticationService', [
                     url: endpoint
                 };
                 success = success || {};
-                error = error || function(data, status){
+                error = error || function(data, status) {
                     throw new Error('Password reset request error: Http Status : ' + status);
                 };
                 $http(request).success(success).error(error);
@@ -126,7 +126,7 @@ IntelligenceWebClient.service('AuthenticationService', [
                     headers: {'Content-type' : 'application/x-www-form-urlencoded'}
                 };
                 success = success || {};
-                error = error || function(data, status){
+                error = error || function(data, status) {
                     throw new Error('Password reset processing error: Http Status : ' + status);
                 };
                 $http(request).success(success).error(error);
