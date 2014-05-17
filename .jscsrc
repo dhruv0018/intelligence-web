@@ -36,6 +36,22 @@
     "disallowDanglingUnderscores": true,
     "disallowSpaceAfterObjectKeys": true,
     "requireCommaBeforeLineBreak": true,
+    "requireOperatorBeforeLineBreak": [
+        "?",
+        "+",
+        "-",
+        "/",
+        "*",
+        "=",
+        "==",
+        "===",
+        "!=",
+        "!==",
+        ">",
+        ">=",
+        "<",
+        "<="
+    ],
     "disallowKeywords": ["with"],
     "excludeFiles": [
         "src/services/users.js",
