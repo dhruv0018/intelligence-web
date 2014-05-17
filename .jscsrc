@@ -33,6 +33,7 @@
     "disallowEmptyBlocks": true,
     "disallowSpacesInsideArrayBrackets": true,
     "disallowSpacesInsideParentheses": true,
+    "disallowDanglingUnderscores": true,
     "disallowKeywords": ["with"],
     "excludeFiles": [
         "src/services/users.js",
