@@ -122,6 +122,7 @@
     /*"disallowMultipleLineBreaks": true,*/
     "validateLineBreaks": "LF",
     "validateQuoteMarks": "'",
+    "validateIndentation": 4,
     "excludeFiles": [
         "src/services/users.js",
         "src/services/authentication.js"
