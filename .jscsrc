@@ -32,6 +32,7 @@
     "disallowMultipleVarDecl": true,
     "disallowEmptyBlocks": true,
     "disallowSpacesInsideArrayBrackets": true,
+    "disallowSpacesInsideParentheses": true,
     "disallowKeywords": ["with"],
     "excludeFiles": [
         "src/services/users.js",
