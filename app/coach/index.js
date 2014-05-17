@@ -61,9 +61,9 @@ Coach.service('Coach.Data', [
 
         //TODO get real teamroster id
         var data = {
-            teamId : session.currentUser.currentRole.teamId,
+            teamId: session.currentUser.currentRole.teamId,
             games: promisedGames,
-            team : promisedTeam,
+            team: promisedTeam,
             roster: {}
         };
 
