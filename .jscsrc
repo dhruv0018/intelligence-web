@@ -30,6 +30,7 @@
         "beforeOpeningRoundBrace": true
     },
     "disallowMultipleVarDecl": true,
+    "disallowEmptyBlocks": true,
     "disallowKeywords": ["with"],
     "excludeFiles": [
         "src/services/users.js",
