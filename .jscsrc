@@ -125,6 +125,7 @@
     "validateIndentation": 4,
     "disallowTrailingWhitespace": true,
     "requireLineFeedAtFileEnd": true,
+    "requireCapitalizedConstructors": true,
     "excludeFiles": [
         "src/services/users.js",
         "src/services/authentication.js"
