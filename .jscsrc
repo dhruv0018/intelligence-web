@@ -116,6 +116,7 @@
         /*"binary",*/
         "string"
     ],
+    "requireCamelCaseOrUpperCaseIdentifiers": true,
     "disallowKeywords": ["with"],
     "excludeFiles": [
         "src/services/users.js",
