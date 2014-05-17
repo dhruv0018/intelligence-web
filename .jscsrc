@@ -29,6 +29,7 @@
     "disallowSpacesInFunctionExpression": {
         "beforeOpeningRoundBrace": true
     },
+    "disallowMultipleVarDecl": true,
     "disallowKeywords": ["with"],
     "excludeFiles": [
         "src/services/users.js",
