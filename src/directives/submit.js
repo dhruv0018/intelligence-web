@@ -9,7 +9,7 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.directive('button', [
-    function () {
+    function() {
 
         var directive = {
 

@@ -102,7 +102,7 @@ UploadFilm.controller('UploadFilmController', [
         $scope.$storage.game = {};
         delete $scope.$storage.opposingTeam;
 
-        $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
+        $scope.$on('flow::fileAdded', function(event, $flow, flowFile) {
 
             /* Check the if the file extension is allowed. */
 

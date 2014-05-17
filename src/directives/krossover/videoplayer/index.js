@@ -205,7 +205,7 @@ IntelligenceWebClient.directive('krossoverMuteButton', [
             require: '^videogular',
             templateUrl: 'krossover-mute-button.html',
 
-            controller: function ($scope) {
+            controller: function($scope) {
 
                 /* NOTE: Uses FontAwesome icon classes. */
                 $scope.muteIcon = 'icon-volume-off';

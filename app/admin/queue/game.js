@@ -65,12 +65,12 @@ Game.controller('ModalController', [
     '$rootScope', '$scope', '$state', '$modal', '$modalInstance', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
     function controller($rootScope, $scope, $state, $modal, $modalInstance, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users) {
 
-        $scope.ok = function () {
+        $scope.ok = function() {
 
             $modalInstance.close();
         };
 
-        $scope.cancel = function () {
+        $scope.cancel = function() {
 
             $modalInstance.dismiss('cancel');
         };

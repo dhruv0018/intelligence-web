@@ -90,7 +90,7 @@ Coach.service('Coach.Data', [
             if (data.roster) {
                 players.getList({
                     roster: data.roster.id
-                }, function (players) {
+                }, function(players) {
                     promisedRoster.resolve(players);
                 }, function(failure) {
                     promisedRoster.resolve([]);

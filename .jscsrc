@@ -22,5 +22,16 @@
         "catch"
     ],
     "requireSpaceBeforeBlockStatements": true,
-    "disallowKeywords": ["with"]
+    "requireSpacesInConditionalExpression": true,
+    "requireSpacesInFunctionExpression": {
+        "beforeOpeningCurlyBrace": true
+    },
+    "disallowSpacesInFunctionExpression": {
+        "beforeOpeningRoundBrace": true
+    },
+    "disallowKeywords": ["with"],
+    "excludeFiles": [
+        "src/services/users.js",
+        "src/services/authentication.js"
+    ]
 }

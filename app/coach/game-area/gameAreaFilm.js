@@ -110,7 +110,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
         }, true);
 
-        $scope.recursiveFilter = function (activeFilters) {
+        $scope.recursiveFilter = function(activeFilters) {
             if (activeFilters.length === 0 || $scope.resources.plays.length === 0) {
                 return $scope.plays;
             }
@@ -181,7 +181,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
             if ($scope.gameStatus === 'INDEXED') {
                 try {
-                    plays.getList($scope.gameId, function (plays) {
+                    plays.getList($scope.gameId, function(plays) {
                         data.plays = plays;
                         $scope.totalPlays = plays;
                         $scope.plays = plays;
