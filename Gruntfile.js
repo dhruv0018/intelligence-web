@@ -443,6 +443,20 @@ module.exports = function(grunt) {
             }
         },
 
+
+        /* Git integration */
+
+
+        githooks: {
+            all: {
+                'pre-commit': 'lint test'
+            }
+        },
+
+
+        /* Watches */
+
+
         watch: {
             options: {
                 spawn: false,
@@ -515,7 +529,7 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'notify:build', 'watch']);
+    grunt.registerTask('default', ['githooks', 'install', 'dev', 'connect:dev', 'notify:build', 'watch']);
 
     grunt.registerTask('build', [
         'env:prod',
