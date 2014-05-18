@@ -67,7 +67,7 @@ module.exports = {
      |--------------------------------------------------------------------------
      | https://github.com/shakyShane/browser-sync/wiki/options#wiki-startPath
      */
-    startPath: null,
+    startPath: 'intelligence/login',
 
     /*
      |--------------------------------------------------------------------------
