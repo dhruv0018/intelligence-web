@@ -1,3 +1,5 @@
+var modRewrite = require('connect-modrewrite');
+
 /*
  |--------------------------------------------------------------------------
  | Browser-sync config file
@@ -39,7 +41,17 @@ module.exports = {
      |--------------------------------------------------------------------------
      | https://github.com/shakyShane/browser-sync/wiki/options#wiki-server
      */
-    server: false,
+    server: {
+
+        baseDir: 'public',
+        middleware: [
+
+            /* Redirect hash urls to index.html */
+            modRewrite([
+                '^[^\\.]*$ /intelligence/index.html [L]'
+            ])
+        ]
+    },
 
     /*
      |--------------------------------------------------------------------------
