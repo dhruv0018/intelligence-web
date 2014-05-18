@@ -449,7 +449,8 @@ module.exports = function(grunt) {
 
         githooks: {
             all: {
-                'pre-commit': 'lint test'
+                'pre-commit': 'lint',
+                'pre-push': 'test'
             }
         },
 
