@@ -23,6 +23,10 @@
         "default-case": true,
         "no-eq-null": true,
         "no-self-compare": true,
-        "radix": true
+        "radix": true,
+
+        "no-new-require": true,
+        "no-mixed-requires": [1, true],
+        "no-path-concat": true
     }
 }
