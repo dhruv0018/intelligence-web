@@ -14,6 +14,9 @@
         "no-use-before-define": false,
         "no-comma-dangle": false,
         "space-infix-ops": false,
-        "no-extra-boolean-cast": false
+        "no-extra-boolean-cast": false,
+
+        "no-extra-parens": true,
+        "valid-jsdoc": true
     }
 }
