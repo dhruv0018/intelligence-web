@@ -392,7 +392,17 @@ module.exports = function(grunt) {
         /* Development */
 
 
-        browserSync: require('./bs-config.js'),
+        browserSync: {
+            dev: {
+                bsFiles: [
+                    'public/intelligence/index.html',
+                    'public/intelligence/styles.css',
+                    'public/intelligence/scripts.js',
+                    'public/intelligence/assets/**/*.png'
+                ],
+                options: require('./bs-config.js')
+            }
+        },
 
         connect: {
             dev: {
