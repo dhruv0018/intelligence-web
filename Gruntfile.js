@@ -392,6 +392,8 @@ module.exports = function(grunt) {
         /* Development */
 
 
+        browserSync: require('./bs-config.js'),
+
         connect: {
             dev: {
                 options: {
