@@ -71,6 +71,7 @@
         "grunt-dox": "~0.5.0",
         "grunt-env": "~0.4.1",
         "grunt-eslint": "^0.4.0",
+        "grunt-githooks": "^0.3.1",
         "grunt-htmlhint": "~0.4.0",
         "grunt-install-dependencies": "~0.1.0",
         "grunt-jscs-checker": "^0.4.4",
