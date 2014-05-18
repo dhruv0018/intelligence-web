@@ -14,6 +14,8 @@ var modRewrite = require('connect-modrewrite');
  */
 module.exports = {
 
+    watchTask: true,
+
     /*
      |--------------------------------------------------------------------------
      | Files to watch

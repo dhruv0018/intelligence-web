@@ -4,8 +4,6 @@
 
 var less = require("component-builder-less");
 
-var modRewrite = require('connect-modrewrite');
-
 var htmlminifier = require('builder-html-minifier')
 
 module.exports = function(grunt) {
@@ -404,57 +402,9 @@ module.exports = function(grunt) {
             }
         },
 
-        connect: {
-            dev: {
-                options: {
-                    hostname: '*',
-                    port: 8000,
-                    protocol: 'http',
-                    base: 'public',
-                    livereload: true,
-                    middleware: function (connect, options) {
-                        return [
 
-                            /* Redirect hash urls to index.html */
-                            modRewrite([
-                                '!\\.html|\\.js|\\.css|\\.png|\\.jpg|\\.mp4$ /intelligence/index.html [L]'
-                            ]),
+        /* Watches */
 
-                            /* Serve static files. */
-                            connect.static(options.base),
-
-                            /* Make empty directories browsable. */
-                            connect.directory(options.base)
-
-                        ];
-                    }
-                }
-            },
-            prod: {
-                options: {
-                    hostname: '*',
-                    port: 80,
-                    protocol: 'https',
-                    base: 'public',
-                    middleware: function (connect, options) {
-                        return [
-
-                            /* Redirect hash urls to index.html */
-                            modRewrite([
-                                '!\\.html|\\.js|\\.css|\\.png|\\.jpg|\\.mp4$ /intelligence/index.html [L]'
-                            ]),
-
-                            /* Serve static files. */
-                            connect.static(options.base),
-
-                            /* Make empty directories browsable. */
-                            connect.directory(options.base)
-
-                        ];
-                    }
-                }
-            }
-        },
 
 
         /* Git integration */
@@ -542,8 +492,8 @@ module.exports = function(grunt) {
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
-    grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('default', ['githooks', 'install', 'dev', 'connect:dev', 'notify:build', 'watch']);
+    grunt.registerTask('serve', ['browserSync']);
+    grunt.registerTask('default', ['githooks', 'install', 'dev', 'notify:build', 'serve', 'watch']);
 
     grunt.registerTask('build', [
         'env:prod',
