@@ -18,7 +18,12 @@ module.exports = {
      |--------------------------------------------------------------------------
      | https://github.com/shakyShane/browser-sync/wiki/options#wiki-files
      */
-    files: [],
+    files: [
+        'public/intelligence/index.html',
+        'public/intelligence/styles.css',
+        'public/intelligence/scripts.js',
+        'public/intelligence/assets/**/*.png'
+    ],
 
     /*
      |--------------------------------------------------------------------------
