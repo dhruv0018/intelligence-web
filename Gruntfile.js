@@ -8,12 +8,6 @@ var modRewrite = require('connect-modrewrite');
 
 var htmlminifier = require('builder-html-minifier')
 
-var htmlminifierOptions = {
-    removeComments: true,
-    collapseWhitespace: true,
-    collapseBooleanAttributes: true
-}
-
 module.exports = function(grunt) {
 
     require('time-grunt')(grunt);
