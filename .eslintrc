@@ -17,6 +17,12 @@
         "no-extra-boolean-cast": false,
 
         "no-extra-parens": true,
-        "valid-jsdoc": true
+        "valid-jsdoc": true,
+
+        "block-scoped-var": true,
+        "default-case": true,
+        "no-eq-null": true,
+        "no-self-compare": true,
+        "radix": true
     }
 }
