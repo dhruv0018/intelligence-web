@@ -153,6 +153,10 @@ module.exports = {
      | https://github.com/shakyShane/browser-sync/wiki/options#wiki-host
      */
     host: null,
+    ports: {
+        min: 8000,
+        max: 8100
+    },
 
     /*
      |--------------------------------------------------------------------------
