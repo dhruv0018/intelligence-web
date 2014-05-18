@@ -437,7 +437,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }).indexOf(userId);
 
                 /* Return the assignment if found. */
-                return !!~index ? assignments[index] : undefined;
+                return ~index ? assignments[index] : undefined;
             },
 
             isAssignmentStarted: function(assignment) {

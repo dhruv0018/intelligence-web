@@ -107,7 +107,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return player;
                 });
 
-                if (!!newPlayers.length) {
+                if (newPlayers.length) {
 
                     newPlayers = self.resource.create(newPlayers).$promise;
                 }
