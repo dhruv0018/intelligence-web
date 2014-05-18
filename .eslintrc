@@ -1,0 +1,19 @@
+{
+    "env": {
+        "node": true,
+        "browser": true
+    },
+    "rules": {
+        "quotes": "single",
+        "strict": false,
+        "curly": false,
+        "eqeqeq": false,
+        "no-undef": false,
+        "no-unused-vars": false,
+        "dot-notation": false,
+        "no-use-before-define": false,
+        "no-comma-dangle": false,
+        "space-infix-ops": false,
+        "no-extra-boolean-cast": false
+    }
+}
