@@ -56,6 +56,7 @@ Coach.service('Coach.Data', [
         var promisedTeam = $q.defer();
         var promisedTeams = $q.defer();
         var promisedRoster = $q.defer();
+        var promisedRosterId = $q.defer();
         var promisedLeague = $q.defer();
 
         //TODO get real teamroster id
@@ -63,7 +64,7 @@ Coach.service('Coach.Data', [
             teamId : session.currentUser.currentRole.teamId,
             games: promisedGames,
             team : promisedTeam,
-            rosterId: '25'
+            roster: {}
         };
 
         games.getList({teamId: data.teamId}, function(gamesList) {
@@ -75,6 +76,9 @@ Coach.service('Coach.Data', [
             promisedTeams.resolve(teams);
             promisedTeam.resolve(teams[data.teamId]);
 
+            data.roster = teams[data.teamId].roster;
+            promisedRosterId.resolve({id: data.roster.id});
+
             leagues.get(teams[data.teamId].leagueId, function(league) {
 
                 tagsets.getList().$promise.then(function(tagset) {
@@ -82,19 +86,22 @@ Coach.service('Coach.Data', [
                     promisedLeague.resolve(league);
                 });
             });
+
+            if (data.roster) {
+                players.getList({
+                    roster: data.roster.id
+                }, function (players) {
+                    promisedRoster.resolve(players);
+                }, function(failure) {
+                    promisedRoster.resolve([]);
+                });
+            } else {
+                promisedRoster.resolve([]);
+            }
+
         }, function() {
             console.log('failure to get the teams');
         }, true);
-
-
-        players.getList({
-            roster: data.rosterId
-        }, function (players) {
-            promisedRoster.resolve(players);
-        }, function(failure) {
-            //TODO load empty
-            promisedRoster.resolve([]);
-        });
 
         promises = {
             games: promisedGames.promise,
@@ -103,7 +110,7 @@ Coach.service('Coach.Data', [
             teams: promisedTeams.promise,
             league: promisedLeague.promise,
             roster: promisedRoster.promise,
-            rosterId: $q.when({id: data.rosterId})
+            rosterId: promisedRosterId.promise
         };
 
         return $q.all(promises);

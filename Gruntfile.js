@@ -101,6 +101,13 @@ module.exports = function(grunt) {
             files: '<%= files.js %>'
         },
 
+        jscs: {
+            options: {
+                config: '.jscsrc'
+            },
+            files: '<%= files.js %>'
+        },
+
 
         /* Minifiers */
 
@@ -475,15 +482,15 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:jshint', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:jshint', 'newer:jscs', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:jshint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             tests: {
                 files: ['test/unit/**/*.js'],
-                tasks: ['newer:jshint', 'karma']
+                tasks: ['newer:jshint', 'newer:jscs', 'karma']
             }
         },
 
@@ -503,7 +510,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['karma']);
-    grunt.registerTask('lint', ['htmlhint', 'jshint']);
+    grunt.registerTask('lint', ['htmlhint', 'jshint', 'jscs']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
