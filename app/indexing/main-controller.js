@@ -197,9 +197,11 @@ Indexing.controller('Indexing.Main.Controller', [
             /* Get the next set of tags based on the tag in the current event. */
             tags.current = indexing.getNextTags(tagId);
 
-            event.reset();
-
+            /* Snap video back to time of current event. */
+            $scope.VideoPlayer.seekTime(event.current.time);
             $scope.VideoPlayer.play();
+
+            event.reset();
         };
 
         /**
