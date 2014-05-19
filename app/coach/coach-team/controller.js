@@ -105,8 +105,7 @@ Team.controller('Coach.Team.controller', [
         $scope.save = function() {
             $scope.roster = players.getPositionsFromDowndown($scope.roster, $scope.rosterId, $scope.positions);
             players.save($scope.rosterId, $scope.roster).then(function(roster) {
-                $scope.roster = roster;
-                $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
+                $scope.roster = players.constructPositionDropdown(roster, $scope.rosterId, $scope.positions);
 
                 data.then(function(data) {
                     data.roster = roster;
