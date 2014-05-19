@@ -1,14 +1,7 @@
-<div data-flow-init>
+<form>
 
-    <button data-flow-btn>
-        <i class="icon-upload-alt"></i> Choose files to upload…
-    </button>
+    <button><input type="file" onchange="angular.element(this).scope().upload(this.files)"></button>
 
-    <button ng-click="upload()">
-        Upload file...
-    </button>
 
-    <div ng-repeat="file in $flow.files">
-        {{$index+1}} {{file.name}} {{file.msg}}
-    </div>
-</div>
+
+</form>

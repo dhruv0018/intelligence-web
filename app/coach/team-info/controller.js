@@ -19,20 +19,28 @@ var TeamInfo = angular.module('Coach.TeamInfo');
 TeamInfo.controller('Coach.TeamInfo.controller', [
     '$rootScope', '$scope', '$state', '$http', 'config', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
     function controller($rootScope, $scope, $state, $http, config, games, players, data) {
-        console.log($scope.$parent);
 
         data.then(function(data){
             $scope.data = data;
-            console.log($scope.data);
         });
 
         $scope.upload = function(files){
             var url = config.api.uri + 'teams/' + $scope.data.coachTeam.id + '/image/file';
-            var data = {ima};
 
-            $http.post(url, data, options)
+            var data = new FormData();
 
-                .success(function(data) {
+            data.append('imageFile', files[0]);
+
+            $http.post(url, data, {
+                    headers: { 'Content-Type': undefined },
+                    transformRequest: angular.identity
+                })
+                .success(function(imageData){
+                    console.log(imageData);
+                })
+                .error(function() {
+                    console.log('the image upload failed');
+                });
         };
     }
 ]);
