@@ -70,11 +70,9 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
 
             if (coachData.opposingTeamGameRoster) {
                 $scope.data.opposingTeam = {
-                    players: []
+                    players: coachData.opposingTeamGameRoster.players || []
                 };
-                $scope.data.opposingTeam.players = players.constructPositionDropdown(coachData.opposingTeamGameRoster.players,
-                                                                                     coachData.game.rosters[coachData.game.opposingTeamId].id,
-                                                                                     $scope.positions);
+                $scope.data.opposingTeam.players = players.constructPositionDropdown(coachData.opposingTeamGameRoster.players, coachData.game.rosters[coachData.game.opposingTeamId].id, $scope.positions);
             }
         });
 
@@ -93,6 +91,10 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                 if(opposingTeamRoster.length === 0) {
                     $scope.addNewPlayer();
                 }
+            } else {
+                $scope.data.opposingTeam = {
+                    players: []
+                };
             }
         });
 
@@ -119,15 +121,22 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                 played: true,
                 jerseyNumbers: {},
                 positions: {},
-                selectedPositions: {}
+                selectedPositions: {},
+                rosterStatuses: {}
             };
             player.selectedPositions[$scope.opposingTeamRosterId] = [];
+            player.rosterStatuses[$scope.opposingTeamRosterId] = true;
             $scope.data.opposingTeam.players.push(player);
         };
 
         $scope.removePlayer = function(player) {
 
-            if (player) $scope.data.opposingTeam.players.splice($scope.data.opposingTeam.players.indexOf(player), 1);
+            if (typeof player.id === 'undefined'){
+                $scope.data.opposingTeam.players.splice($scope.data.opposingTeam.players.indexOf(player), 1);
+            } else {
+                player.rosterStatuses[$scope.opposingTeamRosterId] = false;
+            }
+
         };
 
         $scope.uploadPlayers = function(files) {
@@ -135,7 +144,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             var file = files[0];
             var data = new FormData();
 
-            data.append('rosterId', $scope.rosterId);
+            data.append('rosterId', $scope.opposingTeamRosterId);
             data.append('roster', file);
 
             $http.post(config.api.uri + 'batch/players/file',
@@ -143,6 +152,14 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                 data, {
                     headers: { 'Content-Type': undefined },
                     transformRequest: angular.identity
+                })
+                .success(function(uploadedPlayers){
+                    if (typeof $scope.data.opposingTeam === 'undefined') {
+                        $scope.data.opposingTeam = {
+                            players: uploadedPlayers
+                        };
+                    }
+                    $scope.data.opposingTeam.players = players.constructPositionDropdown(uploadedPlayers, $scope.opposingTeamRosterId, $scope.positions);
                 })
                 .error(function() {
 
@@ -159,6 +176,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             players.save($scope.game.rosters[$scope.game.opposingTeamId].id, $scope.data.opposingTeam.players);
             tabs.activateTab('instructions');
         };
+
     }
 ]);
 
