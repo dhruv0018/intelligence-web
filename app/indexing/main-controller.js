@@ -34,6 +34,9 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = indexing.game.video.sources;
 
+        console.log('$scope.indexing');
+        console.log($scope.indexing);
+
         if (!indexing.game.isAssignmentStarted()) {
 
             var userId = session.currentUser.id;
