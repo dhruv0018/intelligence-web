@@ -159,7 +159,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                             players: uploadedPlayers
                         };
                     }
-                    $scope.data.opposingTeam.players = players.constructPositionDropdown(success, $scope.opposingTeamRosterId, $scope.positions);
+                    $scope.data.opposingTeam.players = players.constructPositionDropdown(uploadedPlayers, $scope.opposingTeamRosterId, $scope.positions);
                 })
                 .error(function() {
 
