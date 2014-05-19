@@ -4,6 +4,7 @@ require('film-home');
 require('game-area');
 require('coach-team');
 require('add-film');
+require('team-info');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -18,6 +19,7 @@ var Coach = angular.module('Coach', [
     'Coach.FilmHome',
     'Coach.GameArea',
     'Coach.Team',
+    'Coach.TeamInfo',
     'add-film'
 ]);
 

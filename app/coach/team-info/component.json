@@ -1,0 +1,13 @@
+{
+    "name": "team-info",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}
