@@ -19,7 +19,7 @@
 
             <tbody>
 
-                <tr data-ng-repeat="player in roster | filter:isInactive">
+                <tr data-ng-repeat="player in roster | filter:isInactive | orderBy: sortPlayers">
 
                     <td>{{ player.jerseyNumbers[rosterId] }}</td>
 
@@ -28,7 +28,13 @@
                     <td>{{ player.lastName }}</td>
 
                     <td>
-                        {{ player.position }}
+                        <span data-ng-repeat="position in player.positions[rosterId]">
+                            {{position.name}}
+
+                            <span data-ng-hide="$last">
+                                ,
+                            </span>
+                        </span>
                         <button class="btn btn-blank pull-right" data-ng-click="player.toggleActivation(rosterId)"><i class="icon-remove"></i></button>
                     </td>
 

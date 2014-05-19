@@ -1,0 +1,18 @@
+<div class="positions-dropdown dropdown">
+
+    <a class="dropdown-toggle">
+        <i class="icon-plus"></i> Add Position
+    </a>
+
+    <br/>
+
+    <span data-ng-show="value" data-ng-repeat="(key, value) in player.selectedPositions">
+        {{positions[key].name}}
+    </span>
+
+    <ul ng-click="$event.stopPropagation();" class="dropdown-menu">
+        <li ng-repeat="position in positions">
+            <button type="button" class="btn" data-ng-class="{'btn-primary': player.selectedPositions[position.id]}" data-ng-model="player.selectedPositions[position.id]" btn-checkbox-true="true" btn-checkbox>{{position.name}}</button>
+        </li>
+    </ul>
+</div>

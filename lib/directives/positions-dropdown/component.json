@@ -1,12 +1,12 @@
 {
-    "name": "opposing-team",
+    "name": "positions-dropdown",
     "templates": [
         "template.html"
     ],
-    "scripts": [
-        "index.js"
-    ],
     "styles": [
         "styles.less"
+    ],
+    "scripts": [
+        "index.js"
     ]
 }

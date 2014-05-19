@@ -75,9 +75,11 @@ IntelligenceWebClient.constant('GAME_STATUSES', GAME_STATUSES);
 
 var GAME_TYPES_IDS = {
 
-    'conference': 'CONFERENCE',
-    'non-conference': 'NON_CONFERENCE',
-    'playoff': 'PLAYOFF'
+    1: 'CONFERENCE',
+    2: 'NON_CONFERENCE',
+    3: 'PLAYOFF',
+    4: 'SCOUTING',
+    5: 'SCRIMMAGE'
 };
 
 IntelligenceWebClient.constant('GAME_TYPES_IDS', GAME_TYPES_IDS);
@@ -86,42 +88,39 @@ var GAME_TYPES = {
 
     CONFERENCE: {
 
-        id: 'conference',
+        id: 1,
         name: 'Conference Game',
-        filter: 'regular',
-        filterName: 'Regular'
+        filterType: 'regular'
     },
 
     NON_CONFERENCE: {
 
-        id: 'non-conference',
+        id: 2,
         name: 'Non-Conference Game',
-        filter: 'regular',
-        filterName: 'Regular'
+        filterType: 'regular'
     },
 
     PLAYOFF: {
 
-        id: 'playoff',
+        id: 3,
         name: 'Playoff',
-        filter: 'regular',
-        filterName: 'Regular'
+        filterType: 'regular'
     },
 
     SCOUTING: {
-        id: 'scouting',
+
+        id: 4,
         name: 'Scouting',
-        filter: 'scouting',
-        filterName: 'Scouting'
+        filterType: 'scouting'
     },
 
     SCRIMMAGE: {
-        id: 'scrimmage',
-        name: 'Scrimmage',
-        filter: 'scrimmage',
-        filterName: 'Scrimmage'
-    }
 
+        id: 5,
+        name: 'Scrimmage',
+        filterType: 'scrimmage'
+    }
+    
 };
 
 
