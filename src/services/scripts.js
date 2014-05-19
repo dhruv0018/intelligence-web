@@ -5,13 +5,13 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
-IntelligenceWebClient.factory('EventsService', [
+IntelligenceWebClient.factory('ScriptsService', [
     '$q', '$sce', 'TAG_VARIABLE_TYPE', 'VIDEO_STATUSES', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'TagsetsFactory', 'PlaysFactory', 'PlayersFactory',
     function($q, $sce, TAG_VARIABLE_TYPE, VIDEO_STATUSES, leagues, teams, games, tagsets, plays, players) {
 
         var VARIABLE_PATTERN = /(__\d?__)/;
 
-        var EventsService = {
+        var ScriptsService = {
 
             userScript: function(tagset, event) {
 
@@ -77,6 +77,6 @@ IntelligenceWebClient.factory('EventsService', [
             }
         };
 
-        return EventsService;
+        return ScriptsService;
     }
 ]);

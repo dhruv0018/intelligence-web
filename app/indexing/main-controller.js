@@ -17,8 +17,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$window', '$rootScope', '$scope', '$sce', '$state', '$stateParams', '$modal', 'VIDEO_STATUSES', 'GAME_STATUSES', 'VG_EVENTS', 'SessionService', 'AlertsService', 'IndexingService', 'EventsService', 'PlaysFactory', 'PlayersFactory', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
-    function controller(config, $window, $rootScope, $scope, $sce, $state, $stateParams, $modal, VIDEO_STATUSES, GAME_STATUSES, VG_EVENTS, session, alerts, indexing, events, plays, players, tags, play, event, sidebar) {
+    'config', '$window', '$rootScope', '$scope', '$sce', '$state', '$stateParams', '$modal', 'VIDEO_STATUSES', 'GAME_STATUSES', 'VG_EVENTS', 'SessionService', 'AlertsService', 'IndexingService', 'ScriptsService', 'PlaysFactory', 'PlayersFactory', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
+    function controller(config, $window, $rootScope, $scope, $sce, $state, $stateParams, $modal, VIDEO_STATUSES, GAME_STATUSES, VG_EVENTS, session, alerts, indexing, scripts, plays, players, tags, play, event, sidebar) {
 
         var self = this;
 
@@ -31,7 +31,7 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.event = event;
         $scope.sidebar = sidebar;
         $scope.indexing = indexing;
-        $scope.indexerScript = events.indexerScript.bind(events);
+        $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = indexing.game.video.sources;
 
         if (!indexing.game.isAssignmentStarted()) {
