@@ -294,7 +294,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 /* Ensure the game can be assigned. */
-                if(self.canBeAssignedToQa()) {
+                if (self.canBeAssignedToQa()) {
 
                     self.indexerAssignments = self.indexerAssignments || [];
 
@@ -569,8 +569,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             findNoteContentByType: function(notes, noteTypeId) {
 
-                for(var index = 0; index < notes.length; index++) {
-                    if(notes[index].noteTypeId === noteTypeId) {
+                for (var index = 0; index < notes.length; index++) {
+                    if (notes[index].noteTypeId === noteTypeId) {
                         return notes[index].content;
                     }
                 }
@@ -578,7 +578,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 //returning blank content
                 return '';
             },
-            transformIndexed: function(games){
+            transformIndexed: function(games) {
                 var indexedGames = {};
                 var self = this;
 
@@ -591,7 +591,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return indexedGames;
             },
-            unadjustTime: function(game){
+            unadjustTime: function(game) {
                 var datePlayed = new Date(game.datePlayed);
 
                 //un-adjusting the time

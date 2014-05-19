@@ -286,7 +286,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 var self = this;
                 var roles = self.roles;
 
-                if (!roles || roles.length < 1 ){
+                if (!roles || roles.length < 1 ) {
                     return true;
                 } else {
                     return false;

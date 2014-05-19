@@ -81,14 +81,14 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
          */
 
         $scope.$watch('game', function(game) {
-            if(game.rosters){
+            if (game.rosters) {
                 $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
             }
         });
 
-        $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster){
+        $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster) {
             if (typeof opposingTeamRoster !== 'undefined') {
-                if(opposingTeamRoster.length === 0) {
+                if (opposingTeamRoster.length === 0) {
                     $scope.addNewPlayer();
                 }
             } else {
@@ -131,7 +131,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
 
         $scope.removePlayer = function(player) {
 
-            if (typeof player.id === 'undefined'){
+            if (typeof player.id === 'undefined') {
                 $scope.data.opposingTeam.players.splice($scope.data.opposingTeam.players.indexOf(player), 1);
             } else {
                 player.rosterStatuses[$scope.opposingTeamRosterId] = false;
@@ -153,7 +153,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                     headers: { 'Content-Type': undefined },
                     transformRequest: angular.identity
                 })
-                .success(function(uploadedPlayers){
+                .success(function(uploadedPlayers) {
                     if (typeof $scope.data.opposingTeam === 'undefined') {
                         $scope.data.opposingTeam = {
                             players: uploadedPlayers
