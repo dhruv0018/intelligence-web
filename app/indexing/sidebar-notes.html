@@ -1,10 +1,19 @@
 <header>
 
-    <h6>Notes</h6>
+    <h6>Edit Note</h6>
     <button class="btn-close" data-ng-click="sidebar.playlist = false"><i class="icon-remove"></i></button>
 
 </header>
 
 <div class="notes">
+	<select ng-model="selectedNoteText">
+		<option ng-repeat="noteText in noteValues" value="{{noteText}}">{{noteText}}</option>
+	</select>
+    <textarea ng-show="selectedNoteText === noteValues[noteValues.length-1]" ng-model="otherNoteValue"></textarea>
+    <button class="btn btn-primary" ng-click="editSaveNote()">Save Note</button>
+
+    <krossover-notes-list></krossover-notes-list>
 
 </div>
+
+
