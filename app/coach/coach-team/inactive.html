@@ -27,7 +27,10 @@
 
                     <td>{{ player.lastName }}</td>
 
-                    <td>{{ player.position }}</td>
+                    <td>
+                        {{ player.position }}
+                        <button class="btn btn-blank pull-right" data-ng-click="player.toggleActivation(rosterId)"><i class="icon-remove"></i></button>
+                    </td>
 
                 </tr>
 
@@ -35,6 +38,7 @@
 
         </table>
 
+        <button class="btn btn-primary pull-right" data-ng-click="save()">Save</button>
     </div>
 
 </div>

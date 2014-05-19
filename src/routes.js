@@ -37,36 +37,6 @@ IntelligenceWebClient.config([
                         template: '<div class="jumbotron"><h1 class="alert alert-info">Not Found</h1></div>',
                     }
                 }
-            })
-
-            .state('500', {
-                url: '/500',
-                parent: 'root',
-                views: {
-                    'main@root': {
-                        template: '<div class="jumbotron"><h1 class="alert alert-danger">Server Error</h1></div>',
-                    }
-                }
-            })
-
-            .state('501', {
-                url: '/501',
-                parent: 'root',
-                views: {
-                    'main@root': {
-                        template: '<div class="jumbotron"><h1 class="alert alert-warning">Not Implemented</h1></div>',
-                    }
-                }
-            })
-
-            .state('error', {
-                url: '/error',
-                parent: 'root',
-                views: {
-                    'main@root': {
-                        template: '<div class="jumbotron"><h1 class="alert alert-danger">Error</h1></div>',
-                    }
-                }
             });
     }
 ]);
@@ -99,7 +69,7 @@ IntelligenceWebClient.run([
              * use the access token in the authorization header. */
             if (tokens.areTokensSet()) {
 
-                $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
+                $http.defaults.headers.common.Authorization = tokens.getTokenType() + ' ' + tokens.getAccessToken();
             }
         });
 

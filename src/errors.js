@@ -102,8 +102,8 @@ IntelligenceWebClient.config([
  * Intercepts HTTP responses.
  */
 IntelligenceWebClient.factory('HttpInterceptor', [
-    '$q', '$location', 'TokensService',
-    function factory($q, $location, tokens) {
+    '$q', '$location', 'AlertsService', 'TokensService',
+    function factory($q, $location, alerts, tokens) {
 
         return {
 
@@ -144,24 +144,57 @@ IntelligenceWebClient.factory('HttpInterceptor', [
 
                 case 401: /* Unauthorized */
                 case 403: /* Forbidden */
-                    ErrorReporter.reportError(new Error('Unauthorized'));
-                    $location.path('/login');
+
+                    // Do not report 401's or 403's as errors.
+
                     break;
 
                 case 404: /* Not Found */
+
+                    /* Resolve GET requests instead of rejecting them. */
+                    if (response.config.method === 'GET') {
+
+                        /* If an ID is present, the request is for a singular
+                         * object, otherwise it is for an array of objects. */
+                        return response.config.params.id ? {} : [];
+                    }
+
+                    break;
+
+                case 405: /* Method Not Allowed */
+
+                    ErrorReporter.reportError(new Error('Method not allowed', response.data));
+
+                    alerts.add({
+
+                        type: 'warning',
+                        message: 'Method Not Allowed'
+                    });
+
                     break;
 
                 case 500: /* Server Error */
-                    ErrorReporter.reportError(new Error('Server error', response.data));
-                    $location.path('/500').replace();
-                    break;
 
-                case 501: /* Not Implemented */
-                    $location.path('/501').replace();
+                    ErrorReporter.reportError(new Error('Server error', response.data));
+
+                    alerts.add({
+
+                        type: 'danger',
+                        message: 'Server Error'
+                    });
+
                     break;
 
                 default:
+
                     ErrorReporter.reportError(new Error('Error response', response.data));
+
+                    alerts.add({
+
+                        type: 'danger',
+                        message: 'Error'
+                    });
+
                     break;
                 }
 
@@ -192,7 +225,12 @@ IntelligenceWebClient.run([
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
 
             ErrorReporter.reportError(error);
-            $state.go('error');
+
+            alerts.add({
+
+                type: 'danger',
+                message: 'Error: ' + error
+            });
         });
 
         $rootScope.$on('roleChangeError', function(event, role) {
@@ -205,7 +243,11 @@ IntelligenceWebClient.run([
 
             ErrorReporter.reportError(error);
 
-            $state.go('error');
+            alerts.add({
+
+                type: 'warning',
+                message: error
+            });
         });
     }
 ]);
