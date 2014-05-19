@@ -86,7 +86,6 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             }
         });
 
-
         $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster){
             if (typeof opposingTeamRoster !== 'undefined') {
                 if(opposingTeamRoster.length === 0) {
@@ -141,6 +140,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         };
 
         $scope.uploadPlayers = function(files) {
+
             var file = files[0];
             var data = new FormData();
 
@@ -153,10 +153,10 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                     headers: { 'Content-Type': undefined },
                     transformRequest: angular.identity
                 })
-                .success(function(success){
+                .success(function(uploadedPlayers){
                     if (typeof $scope.data.opposingTeam === 'undefined') {
                         $scope.data.opposingTeam = {
-                            players: success
+                            players: uploadedPlayers
                         };
                     }
                     $scope.data.opposingTeam.players = players.constructPositionDropdown(success, $scope.opposingTeamRosterId, $scope.positions);
@@ -177,15 +177,6 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             tabs.activateTab('instructions');
         };
 
-        //TODO to implement later
-//        $scope.sortByRosterStatus = function(player){
-//            if(typeof player.rosterStatuses[$scope.opposingTeamRosterId] !=='undefined'){
-//                return player.rosterStatuses[$scope.opposingTeamRosterId];
-//            } else {
-//                return false;
-//            }
-//
-//        };
     }
 ]);
 

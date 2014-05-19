@@ -89,8 +89,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                                 $scope.gameRoster.push(teamRosterPlayer);
                             }
                         });
-
-
                     } else {
                         $scope.gameRoster = gameRoster;
                     }
