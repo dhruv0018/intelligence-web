@@ -126,8 +126,8 @@ Teams.controller('TeamController', [
         });
 
         $scope.indexedSports = {};
-        $scope.sports = sports.getList({}, function(sports){
-            sports.forEach(function(sport){
+        $scope.sports = sports.getList({}, function(sports) {
+            sports.forEach(function(sport) {
                 $scope.indexedSports[sport.id] = sport;
             });
             return sports;
@@ -225,20 +225,20 @@ Teams.controller('TeamsController', [
         $scope.indexedLeagues = {};
         $scope.indexedSports = {};
         $scope.indexedSchools = {};
-        $scope.sports = sports.getList({}, function(sports){
-            sports.forEach(function(sport){
+        $scope.sports = sports.getList({}, function(sports) {
+            sports.forEach(function(sport) {
                 $scope.indexedSports[sport.id] = sport;
             });
             return sports;
         });
-        $scope.leagues = leagues.getList({}, function(leagues){
-            leagues.forEach(function(league){
+        $scope.leagues = leagues.getList({}, function(leagues) {
+            leagues.forEach(function(league) {
                 $scope.indexedLeagues[league.id] = league;
             });
             return leagues;
         });
-        $scope.schools = schools.getList({}, function(schools){
-            schools.forEach(function(school){
+        $scope.schools = schools.getList({}, function(schools) {
+            schools.forEach(function(school) {
                 $scope.indexedSchools[school.id] = school;
             });
             return schools;
@@ -253,11 +253,11 @@ Teams.controller('TeamsController', [
 
         $scope.search = function(filter) {
             teams.getList(filter,
-                    function(teams){
+                    function(teams) {
                         $scope.teams = teams;
                         $scope.noResults = false;
                     },
-                    function(){
+                    function() {
                         $scope.teams = [];
                         $scope.noResults = true;
                     }

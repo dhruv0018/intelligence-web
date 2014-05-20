@@ -97,14 +97,14 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             getTagsByType: function(type) {
                 results = [];
-                switch(type) {
+                switch (type) {
                     case 'START':
                         results = $filter('filter')(this.tags, {isStart: true, isEnd: false});
                         break;
                     case 'FLOAT':
                         tags =  $filter('filter')(this.tags, {isStart: false, isEnd: false});
                         tags.forEach(function(tag) {
-                            if(!tag.children) {
+                            if (!tag.children) {
                                 results.push(tag);
                             }
                         });
@@ -112,7 +112,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                     case 'STANDALONE':
                         tags =  $filter('filter')(this.tags, {isStart: true, isEnd: true});
                         tags.forEach(function(tag) {
-                            if(!tag.children) {
+                            if (!tag.children) {
                                 results.push(tag);
                             }
                         });

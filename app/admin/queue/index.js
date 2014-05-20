@@ -58,12 +58,12 @@ Queue.controller('ModalController', [
     '$rootScope', '$scope', '$state', '$modal', '$modalInstance', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
     function controller($rootScope, $scope, $state, $modal, $modalInstance, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users) {
 
-        $scope.ok = function () {
+        $scope.ok = function() {
 
             $modalInstance.close();
         };
 
-        $scope.cancel = function () {
+        $scope.cancel = function() {
 
             $modalInstance.dismiss('cancel');
         };
@@ -139,13 +139,13 @@ Queue.controller('QueueController', [
 
                 games.getList(filter,
 
-                    function success(games){
+                    function success(games) {
 
                         $scope.queue = games;
                         $scope.noResults = false;
                     },
 
-                    function error(){
+                    function error() {
 
                         $scope.queue = [];
                         $scope.noResults = true;

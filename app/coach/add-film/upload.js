@@ -101,7 +101,7 @@ UploadFilm.controller('UploadFilmController', [
 
         delete $scope.$storage.opposingTeam;
 
-        $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
+        $scope.$on('flow::fileAdded', function(event, $flow, flowFile) {
 
             /* Check the if the file extension is allowed. */
 
@@ -138,7 +138,7 @@ UploadFilm.controller('UploadFilmController', [
 
             .success(function(data) {
 
-                if(data && data.guid) {
+                if (data && data.guid) {
 
                     /* The GUID from KVS. */
                     var guid = data.guid;
@@ -149,7 +149,7 @@ UploadFilm.controller('UploadFilmController', [
                     /* Create video object on the game. */
                     $scope.game = {
                         /* Store the GUID with the game. */
-                        video:{
+                        video: {
                             guid: guid
                         }
                     };

@@ -159,10 +159,12 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             addRole: function(user, role) {
 
+                var self = this;
+
                 if (!role) {
 
                     role = user;
-                    user = this;
+                    user = self;
                 }
 
                 role.userId = user.id;
@@ -181,10 +183,12 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             removeRole: function(user, role) {
 
+                var self = this;
+
                 if (!role) {
 
                     role = user;
-                    user = this;
+                    user = self;
                 }
 
                 if (user.roles) user.roles.splice(user.roles.indexOf(role), 1);
@@ -286,7 +290,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 var self = this;
                 var roles = self.roles;
 
-                if (!roles || roles.length < 1 ){
+                if (!roles || roles.length < 1) {
                     return true;
                 } else {
                     return false;
@@ -323,7 +327,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @returns {Boolean} true if role has access to verify; false otherwise.
              * Verifies that the given role has access to the requested role.
              */
-            hasAccess:function(role, verify) {
+            hasAccess: function(role, verify) {
 
                 if (!verify) {
 

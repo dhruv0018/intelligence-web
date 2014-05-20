@@ -124,14 +124,14 @@ Account.controller('AccountController', [
         $scope.roleGroups = [];
 
         /**
-         * loop through the ROLE_ID hash, and organize it so the role names 
+         * loop through the ROLE_ID hash, and organize it so the role names
          * are paired with the user's roles that matches
          */
         var i = 1;
-        var roleFilter = function (role, j, roles) {
+        var roleFilter = function(role, j, roles) {
             return parseInt(role.type.id, 10) === i;
         };
-        var hasTeam = function (role) {
+        var hasTeam = function(role) {
             return role.teamId !== null;
         };
         for (i = 1; i <= Object.keys(ROLE_ID).length; i += 1) {

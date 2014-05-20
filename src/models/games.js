@@ -120,7 +120,6 @@ var GAME_TYPES = {
         name: 'Scrimmage',
         filterType: 'scrimmage'
     }
-    
 };
 
 

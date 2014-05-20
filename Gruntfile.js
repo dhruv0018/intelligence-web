@@ -403,10 +403,6 @@ module.exports = function(grunt) {
         },
 
 
-        /* Watches */
-
-
-
         /* Git integration */
 
 
