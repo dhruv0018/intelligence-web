@@ -30,6 +30,7 @@ require('./services/indexing');
 require('./constants/users');
 require('./constants/games');
 require('./constants/schools');
+require('./constants/videos');
 require('./constants/tagsets');
 require('./constants/filtersets');
 require('./constants/kvs-whitelist');
