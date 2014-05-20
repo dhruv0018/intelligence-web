@@ -121,9 +121,9 @@ IntelligenceWebClient.service('AuthenticationService', [
                 var endpoint = config.passwordReset.uri + token;
                 var request = {
                     method: 'POST',
-                    data: 'password='+password,
+                    data: 'password=' + password,
                     url: endpoint,
-                    headers: {'Content-type' : 'application/x-www-form-urlencoded'}
+                    headers: {'Content-type': 'application/x-www-form-urlencoded'}
                 };
                 success = success || {};
                 error = error || function(data, status) {
