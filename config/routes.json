@@ -223,6 +223,11 @@
         "Assistant Coach": true
     },
 
+    "Coach.Team.Info.Information": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "Coach.Team.All": {
 
         "Head Coach": true,

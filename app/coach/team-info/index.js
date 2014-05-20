@@ -15,6 +15,7 @@ TeamInfo.run([
     '$templateCache',
     function run($templateCache) {
         $templateCache.put('coach/team-info/template.html', require('./template.html'));
+        $templateCache.put('coach/team-info/information.html', require('./information.html'));
     }
 ]);
 
@@ -34,7 +35,16 @@ TeamInfo.config([
                 views: {
                     'main@root': {
                         templateUrl: 'coach/team-info/template.html',
-                        controller: 'Coach.TeamInfo.controller'
+                        controller: 'Coach.Team.Info.controller'
+                    }
+                }
+            })
+            .state('Coach.Team.Info.Information', {
+                url: '/information',
+                views:{
+                    'content@Coach.Team.Info':{
+                        templateUrl:'coach/team-info/information.html',
+                        controller: 'Coach.Team.Info.Information.controller'
                     }
                 }
             });
@@ -42,6 +52,7 @@ TeamInfo.config([
 ]);
 
 require('./controller');
+require('./information-controller');
 
 
 
