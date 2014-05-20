@@ -123,6 +123,9 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     play.events = play.events.map(function(event) {
 
                         event.playId = play.id;
+
+                        delete event.activeEventVariableIndex;
+
                         return event;
                     });
 
