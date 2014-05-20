@@ -237,6 +237,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                 /* Remove the event from the play. */
                 event.delete(event.current);
+                event.reset();
 
                 /* Drop back to tagging state. */
                 indexing.showTags = true;
