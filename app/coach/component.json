@@ -8,7 +8,8 @@
         "film-home",
         "game-area",
         "coach-team",
-        "add-film"
+        "add-film",
+        "team-info"
     ],
     "scripts": [
         "index.js"
