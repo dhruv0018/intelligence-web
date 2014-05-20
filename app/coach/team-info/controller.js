@@ -5,7 +5,7 @@ var angular = window.angular;
  * TeamInfo page module.
  * @module FilmHome
  */
-var TeamInfo = angular.module('Coach.TeamInfo');
+var TeamInfo = angular.module('Coach.Team.Info');
 
 
 

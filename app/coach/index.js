@@ -19,7 +19,7 @@ var Coach = angular.module('Coach', [
     'Coach.FilmHome',
     'Coach.GameArea',
     'Coach.Team',
-    'Coach.TeamInfo',
+    'Coach.Team.Info',
     'add-film'
 ]);
 

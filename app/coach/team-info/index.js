@@ -5,7 +5,7 @@ var angular = window.angular;
  * Team Info module.
  * @module Team
  */
-var TeamInfo = angular.module('Coach.TeamInfo', [
+var TeamInfo = angular.module('Coach.Team.Info', [
     'ui.router',
     'ui.bootstrap'
 ]);
@@ -29,7 +29,7 @@ TeamInfo.config([
 
         $stateProvider
 
-            .state('Coach.TeamInfo', {
+            .state('Coach.Team.Info', {
                 url: '/team-info',
                 views: {
                     'main@root': {
