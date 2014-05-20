@@ -1,7 +1,23 @@
-<form>
+<section class="team-info">
 
-    <button><input type="file" onchange="angular.element(this).scope().upload(this.files)"></button>
+    <aside class="sidebar">
 
+        <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
 
+        <nav role="navigation">
 
-</form>
+            <ul class="nav nav-pills nav-stacked">
+
+                <li ui-sref-active="active"><a data-ui-sref="Coach.Team.Info.Information"><i class="icon-trophy"></i> Team Info</a></li>
+                <li ui-sref-active="active"><a href="#"><i class="icon-flag"></i> Plans and packages</a></li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <main class="content" data-ui-view="content"></main>
+
+</section>
+

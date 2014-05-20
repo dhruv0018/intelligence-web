@@ -1,0 +1,26 @@
+<div class="information">
+
+    <div class="uploadLogo pull-left">
+        <img ng-hide="!data.coachTeam.imageUrl || data.coachTeam.imageUrl.length === 0" data-ng-src="{{data.coachTeam.imageUrl}}" class="logo" alt="logo">
+        <form>
+            <button class="btn-upload">Upload Logo <i class="icon-upload-alt"></i><input type="file" onchange="angular.element(this).scope().upload(this.files)"></button>
+        </form>
+    </div>
+
+    <div class="primary-information pull-left">
+        <div>
+            <h3>School Name</h3>
+            <input type="text" name="schoolName">
+        </div>
+
+        <div>
+            <h3>Team Name</h3>
+            <input type="text" name="teamName">
+        </div>
+
+        <button class="btn btn-primary pull-right">
+            Save
+        </button>
+    </div>
+
+</div>

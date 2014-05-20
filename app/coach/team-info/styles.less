@@ -1,1 +1,58 @@
 @import (reference) "main.less";
+
+.team-info{
+
+  .information{
+    height:300px;
+    padding:10px;
+    background: @body-bg;
+    border-radius: @border-radius-small;
+    border: 1px solid @gray-border;
+
+
+    > div {
+      margin: 0 30px 0 30px;
+    }
+
+    .uploadLogo{
+      margin-top: 30px;
+
+      .logo{
+        border:1px solid @gray-border;
+        width: 100px;
+        height:100px;
+        margin-bottom:30px;
+      }
+
+      .btn-upload{
+        position: relative;
+
+        input[type="file"] {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          opacity: 0;
+          cursor: pointer;
+        }
+
+      }
+    }
+
+    .primary-information{
+      width:80%;
+
+      input{
+        width: 100%;
+      }
+
+      button{
+        margin-top: 10px;
+      }
+
+    }
+
+  }
+
+}
