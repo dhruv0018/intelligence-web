@@ -103,7 +103,7 @@ IntelligenceWebClient.service('AuthenticationService', [
 
                 throw new Error('Illegal attempt to override function isLoggedIn');
             },
-            
+
             requestPasswordReset: function(email, success, error) {
                 var endpoint = config.passwordReset.uri + email;
                 var request = {
@@ -111,22 +111,22 @@ IntelligenceWebClient.service('AuthenticationService', [
                     url: endpoint
                 };
                 success = success || {};
-                error = error || function(data, status){
+                error = error || function(data, status) {
                     throw new Error('Password reset request error: Http Status : ' + status);
                 };
                 $http(request).success(success).error(error);
             },
-            
+
             processPasswordReset: function(token, password, success, error) {
                 var endpoint = config.passwordReset.uri + token;
                 var request = {
                     method: 'POST',
-                    data: 'password='+password,
+                    data: 'password=' + password,
                     url: endpoint,
-                    headers: {'Content-type' : 'application/x-www-form-urlencoded'}
+                    headers: {'Content-type': 'application/x-www-form-urlencoded'}
                 };
                 success = success || {};
-                error = error || function(data, status){
+                error = error || function(data, status) {
                     throw new Error('Password reset processing error: Http Status : ' + status);
                 };
                 $http(request).success(success).error(error);

@@ -90,7 +90,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                 if (indexing.isIndexing) {
 
-                    if(self.savable()) self.save();
+                    if (self.savable()) self.save();
                     else if (self.nextable()) self.next();
                 }
 
@@ -263,7 +263,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
         /**
          * Deletes an event.
-         * @param {Object} event - the event to delete.
+         * @param {Object} selectedEvent - the event to delete.
          */
         this.deleteEvent = function(selectedEvent) {
 

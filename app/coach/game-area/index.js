@@ -99,7 +99,7 @@ GameArea.controller('Coach.GameArea.controller', [
 
             players.getList({
                 roster: $scope.game.rosters[$scope.team.id].id
-            }, function (players) {
+            }, function(players) {
                 data.teamGameRoster = {
                     teamId: $scope.team.id,
                     rosterId: $scope.game.rosters[$scope.team.id].id,
@@ -116,7 +116,7 @@ GameArea.controller('Coach.GameArea.controller', [
 
             players.getList({
                 roster: $scope.game.rosters[$scope.opposingTeam.id].id
-            }, function (players) {
+            }, function(players) {
                 data.opposingTeamGameRoster = {
                     teamId: $scope.opposingTeam.id,
                     rosterId: $scope.game.rosters[$scope.opposingTeam.id].id,
@@ -134,7 +134,7 @@ GameArea.controller('Coach.GameArea.controller', [
 
         //view selector
         $scope.dataType = 'video';
-        $scope.$watch('dataType', function (data) {
+        $scope.$watch('dataType', function(data) {
             if ($scope.dataType === 'game-info') {
                 $state.go('ga-info');
             } else if ($scope.dataType === 'video') {
@@ -148,8 +148,8 @@ GameArea.controller('Coach.GameArea.controller', [
             }
         });
 
-        $scope.$on('$destroy', function(){
-            data.then(function(coachData){
+        $scope.$on('$destroy', function() {
+            data.then(function(coachData) {
                 delete coachData.game;
                 delete coachData.teamGameRoster;
                 delete coachData.opposingTeam;

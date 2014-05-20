@@ -137,11 +137,11 @@ Schools.controller('SchoolsController', [
 
         $scope.search = function(filter) {
             schools.getList(filter,
-                function(schools){
+                function(schools) {
                     $scope.schools = schools;
                     $scope.noResults = false;
                 },
-                function(){
+                function() {
                     $scope.schools = [];
                     $scope.noResults = true;
                 }

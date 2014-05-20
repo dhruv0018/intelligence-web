@@ -53,3 +53,4 @@ GameAreaStatistics.controller('GameAreaStatisticsController', [
         $scope.statsSelector = 'ga-log';
     }
 ]);
+
