@@ -34,9 +34,6 @@ TeamInfo.controller('Coach.Team.Info.Information.controller', [
             })
             .success(function(team){
                 data.coachTeam = $scope.data.coachTeam = team;
-
-                console.log($scope.data);
-                console.log(data.coachTeam);
             })
             .error(function() {
                 console.log('the image upload failed');
