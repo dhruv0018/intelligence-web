@@ -1,1 +1,23 @@
-This is the team info page
+<section class="team-info">
+
+    <aside class="sidebar">
+
+        <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
+
+        <nav role="navigation">
+
+            <ul class="nav nav-pills nav-stacked">
+
+                <li ui-sref-active="active"><a href="#"><i class="icon-trophy"></i> Team Info</a></li>
+                <li ui-sref-active="active"><a href="#"><i class="icon-info-sign"></i> Plans and packages</a></li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <main class="content" data-ui-view="content"></main>
+
+</section>
+
