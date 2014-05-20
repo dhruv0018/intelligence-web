@@ -1,0 +1,35 @@
+{
+    "env": {
+        "node": true,
+        "browser": true
+    },
+    "rules": {
+        "quotes": "single",
+        "strict": false,
+        "curly": false,
+        "eqeqeq": false,
+        "no-undef": false,
+        "no-unused-vars": false,
+        "dot-notation": false,
+        "no-use-before-define": false,
+        "no-comma-dangle": false,
+        "space-infix-ops": false,
+
+        "no-extra-parens": true,
+        "valid-jsdoc": true,
+
+        "block-scoped-var": true,
+        "default-case": true,
+        "no-eq-null": true,
+        "no-self-compare": true,
+        "radix": true,
+
+        "no-new-require": true,
+        "no-mixed-requires": [1, true],
+        "no-path-concat": true,
+
+        "consistent-this": [2, "self"],
+        "no-nested-ternary": true,
+        "no-lonely-if": true
+    }
+}

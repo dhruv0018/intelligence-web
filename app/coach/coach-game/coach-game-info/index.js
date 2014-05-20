@@ -72,21 +72,21 @@ Info.controller('Coach.Game.Info.controller', [
 
             //TODO find a better way using the service, not sure why the data isn't being passed forward
             if (typeof coachData.opposingTeam.name === 'undefined' && coachData.game && coachData.game.id) {
-                teams.get($scope.data.game.opposingTeamId, function(opposingTeam){
+                teams.get($scope.data.game.opposingTeamId, function(opposingTeam) {
                     angular.extend($scope.data.opposingTeam, opposingTeam, coachData.opposingTeam);
                 });
             }
 
         });
 
-        $scope.$watch('game', function(game){
+        $scope.$watch('game', function(game) {
             if (typeof game.datePlayed !== 'undefined') {
                 game = games.unadjustTime(game);
             }
 
             game.notes = game.notes || {};
-            game.notes[GAME_NOTE_TYPES.COACH_NOTE] = game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId:GAME_NOTE_TYPES.COACH_NOTE,content:''}];
-            
+            game.notes[GAME_NOTE_TYPES.COACH_NOTE] = game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE,content: ''}];
+
         });
 
         $scope.$watch('game.isHomeGame', function(isHomeGame) {
@@ -121,7 +121,7 @@ Info.controller('Coach.Game.Info.controller', [
             angular.extend($scope.data.opposingTeam, $scope.data.opposingTeam, newOpposingTeam);
 
             //new game
-            if(typeof game.opposingTeamId === 'undefined'){
+            if (typeof game.opposingTeamId === 'undefined') {
                 teams.save($scope.data.opposingTeam, function(opposingTeam) {
                     $scope.data.opposingTeam = opposingTeam;
                     $scope.data.opposingTeam.players = [];
@@ -161,3 +161,4 @@ Info.controller('Coach.Game.Info.controller', [
 
     }
 ]);
+

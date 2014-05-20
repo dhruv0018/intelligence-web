@@ -64,9 +64,9 @@ Coach.service('Coach.Data', [
 
         //TODO get real teamroster id
         var data = {
-            teamId : session.currentUser.currentRole.teamId,
+            teamId: session.currentUser.currentRole.teamId,
             games: promisedGames,
-            team : promisedTeam,
+            team: promisedTeam,
             roster: {}
         };
 
@@ -90,7 +90,7 @@ Coach.service('Coach.Data', [
                 });
 
                 if (league.positionSetId) {
-                    positions.get(league.positionSetId, function(positionSet){
+                    positions.get(league.positionSetId, function(positionSet) {
                         promisedPositionSet.resolve(positionSet);
                     }, null, true);
                 }
@@ -99,7 +99,7 @@ Coach.service('Coach.Data', [
             if (data.roster) {
                 players.getList({
                     roster: data.roster.id
-                }, function (players) {
+                }, function(players) {
                     promisedRoster.resolve(players);
                 }, function(failure) {
                     promisedRoster.resolve([]);
@@ -138,7 +138,7 @@ Coach.service('Coach.Game.Data', ['$q', 'Coach.Data',
 
         var promisedGameData = $q.defer();
 
-        coachData.then(function(coachData){
+        coachData.then(function(coachData) {
             var gameData = coachData;
             gameData.team = coachData.coachTeam;
             gameData.opposingTeam = {

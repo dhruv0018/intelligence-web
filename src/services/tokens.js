@@ -100,7 +100,7 @@ IntelligenceWebClient.factory('TokensService', [
 
             handleAuthError: function(response) {
 
-                switch(response.status) {
+                switch (response.status) {
 
                     /* Unauthorized */
                     case 401:
@@ -169,7 +169,6 @@ IntelligenceWebClient.factory('TokensService', [
 
             /**
             * Receives and parses the server response from the access token request.
-            * @param {error} error - error to pass along
             * @param {string} response - the response from requestAccessToken to parse
             */
             receiveTokens: function(response) {
