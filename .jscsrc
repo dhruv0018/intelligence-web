@@ -133,7 +133,7 @@
         "requireParamTypes": true
     },
     "excludeFiles": [
-        "src/services/users.js",
+        "src/factories/users.js",
         "src/services/authentication.js"
     ]
 }
