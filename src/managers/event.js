@@ -66,7 +66,7 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.clearActiveEventVariableValue = function() {
 
-            this.current.variableValues[this.current.activeEventVariableIndex] = null;
+            this.current.variableValues[this.current.activeEventVariableIndex].value = null;
         };
 
         /**
