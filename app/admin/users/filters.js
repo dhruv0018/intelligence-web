@@ -9,7 +9,7 @@ var Users = angular.module('Users');
 
 Users.filter('EditableRolesByRole', [
     'ROLES', 'UsersFactory',
-    function (ROLES, users) {
+    function(ROLES, users) {
 
         return function(roles, role) {
 

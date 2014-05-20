@@ -45,3 +45,4 @@ GameAreaHomeStats.controller('GameAreaHomeStatsController', [
 
     }
 ]);
+

@@ -107,7 +107,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return player;
                 });
 
-                if (!!newPlayers.length) {
+                if (newPlayers.length) {
 
                     newPlayers = self.resource.create(newPlayers).$promise;
                 }
@@ -124,27 +124,27 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return self.getList(filter).$promise;
                 });
             },
-            toggleActivation: function(rosterId){
+            toggleActivation: function(rosterId) {
                 this.rosterStatuses[rosterId] = !this.rosterStatuses[rosterId];
             },
-            constructActiveRoster: function(roster, rosterId){
+            constructActiveRoster: function(roster, rosterId) {
                 return roster.filter(function(player) {
                     return player.rosterStatuses[rosterId] === true;
                 });
             },
-            constructPositionDropdown: function(roster, rosterId, positions){
-                angular.forEach(roster, function(player){
+            constructPositionDropdown: function(roster, rosterId, positions) {
+                angular.forEach(roster, function(player) {
                     //constructs position dropdown
                     player.selectedPositions = {};
 
                     //adds each position checkboxes for each player
-                    angular.forEach(positions, function(position){
+                    angular.forEach(positions, function(position) {
                         player.selectedPositions[position.id] = false;
                     });
 
                     //sets the positions that already exist on the players
                     if (typeof player.positions[rosterId] !== 'undefined' && player.positions[rosterId].length > 0) {
-                        angular.forEach(player.positions[rosterId], function(position){
+                        angular.forEach(player.positions[rosterId], function(position) {
                             player.selectedPositions[position.id] = true;
                         });
                     }
@@ -152,8 +152,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 return roster;
             },
-            getPositionsFromDowndown: function(roster, rosterId, positions){
-                angular.forEach(roster, function(player){
+            getPositionsFromDowndown: function(roster, rosterId, positions) {
+                angular.forEach(roster, function(player) {
                     //todo have backend convert this to object always, no reason to be an array
                     if(window.Array.isArray(player.positions)){
                         player.positions = {};
@@ -161,11 +161,11 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     //ensures that positions are strictly based on those selected via the ui
                     player.positions[rosterId] = [];
 
-                    angular.forEach(player.selectedPositions, function(position, key){
+                    angular.forEach(player.selectedPositions, function(position, key) {
                         player.positions[rosterId] = player.positions[rosterId] || [];
 
                         //the position is selected
-                        if(position === true){
+                        if (position === true) {
                             player.positions[rosterId].push(positions[key]);
                         }
                     });

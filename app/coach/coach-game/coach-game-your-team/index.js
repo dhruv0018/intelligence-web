@@ -72,7 +72,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
 
         $scope.$watch('game', function(game) {
-            if(game.rosters && $scope.retrievedRoster === false) {
+            if (game.rosters && $scope.retrievedRoster === false) {
                 players.getList({
                     roster: game.rosters[game.teamId].id
                 }, function(gameRoster) {

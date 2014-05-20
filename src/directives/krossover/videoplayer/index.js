@@ -24,7 +24,7 @@ IntelligenceWebClient.directive('krossoverPlayPauseButton', [
             scope: false,
             templateUrl: 'krossover-play-pause-button.html',
 
-            controller: function($scope){
+            controller: function($scope) {
 
                 $scope.VG_STATES = VG_STATES;
                 $scope.currentState = VG_STATES.STOP;
@@ -205,7 +205,7 @@ IntelligenceWebClient.directive('krossoverMuteButton', [
             require: '^videogular',
             templateUrl: 'krossover-mute-button.html',
 
-            controller: function ($scope){
+            controller: function($scope) {
 
                 /* NOTE: Uses FontAwesome icon classes. */
                 $scope.muteIcon = 'icon-volume-off';
@@ -290,7 +290,7 @@ IntelligenceWebClient.directive('krossoverMuteButton', [
 
 IntelligenceWebClient.directive('krossoverFullscreenButton', [
     'VG_EVENTS',
-    function(VG_EVENTS){
+    function(VG_EVENTS) {
 
         return {
 

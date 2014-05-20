@@ -4,15 +4,7 @@
 
 var less = require("component-builder-less");
 
-var modRewrite = require('connect-modrewrite');
-
 var htmlminifier = require('builder-html-minifier')
-
-var htmlminifierOptions = {
-    removeComments: true,
-    collapseWhitespace: true,
-    collapseBooleanAttributes: true
-}
 
 module.exports = function(grunt) {
 
@@ -97,6 +89,20 @@ module.exports = function(grunt) {
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
+            },
+            files: '<%= files.js %>'
+        },
+
+        eslint: {
+            options: {
+                config: '.eslintrc'
+            },
+            target: '<%= files.js %>'
+        },
+
+        jscs: {
+            options: {
+                config: '.jscsrc'
             },
             files: '<%= files.js %>'
         },
@@ -384,57 +390,32 @@ module.exports = function(grunt) {
         /* Development */
 
 
-        connect: {
+        browserSync: {
             dev: {
-                options: {
-                    hostname: '*',
-                    port: 8000,
-                    protocol: 'http',
-                    base: 'public',
-                    livereload: true,
-                    middleware: function (connect, options) {
-                        return [
-
-                            /* Redirect hash urls to index.html */
-                            modRewrite([
-                                '!\\.html|\\.js|\\.css|\\.png|\\.jpg|\\.mp4$ /intelligence/index.html [L]'
-                            ]),
-
-                            /* Serve static files. */
-                            connect.static(options.base),
-
-                            /* Make empty directories browsable. */
-                            connect.directory(options.base)
-
-                        ];
-                    }
-                }
-            },
-            prod: {
-                options: {
-                    hostname: '*',
-                    port: 80,
-                    protocol: 'https',
-                    base: 'public',
-                    middleware: function (connect, options) {
-                        return [
-
-                            /* Redirect hash urls to index.html */
-                            modRewrite([
-                                '!\\.html|\\.js|\\.css|\\.png|\\.jpg|\\.mp4$ /intelligence/index.html [L]'
-                            ]),
-
-                            /* Serve static files. */
-                            connect.static(options.base),
-
-                            /* Make empty directories browsable. */
-                            connect.directory(options.base)
-
-                        ];
-                    }
-                }
+                bsFiles: [
+                    'public/intelligence/index.html',
+                    'public/intelligence/styles.css',
+                    'public/intelligence/scripts.js',
+                    'public/intelligence/assets/**/*.png'
+                ],
+                options: require('./bs-config.js')
             }
         },
+
+
+        /* Git integration */
+
+
+        githooks: {
+            all: {
+                'pre-commit': 'lint',
+                'pre-push': 'test'
+            }
+        },
+
+
+        /* Watches */
+
 
         watch: {
             options: {
@@ -475,15 +456,15 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:jshint', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
             tests: {
                 files: ['test/unit/**/*.js'],
-                tasks: ['newer:jshint', 'karma']
+                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'karma']
             }
         },
 
@@ -503,12 +484,12 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['karma']);
-    grunt.registerTask('lint', ['htmlhint', 'jshint']);
+    grunt.registerTask('lint', ['htmlhint', 'jshint', 'eslint', 'jscs']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
-    grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('default', ['install', 'dev', 'connect:dev', 'notify:build', 'watch']);
+    grunt.registerTask('serve', ['browserSync']);
+    grunt.registerTask('default', ['githooks', 'install', 'dev', 'notify:build', 'serve', 'watch']);
 
     grunt.registerTask('build', [
         'env:prod',

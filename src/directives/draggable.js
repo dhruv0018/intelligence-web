@@ -63,7 +63,7 @@ IntelligenceWebClient.directive('draggable',
             dragIndex = $scope.$index;
 
             event.dataTransfer.effectAllowed = 'move';
-            event.dataTransfer.setDragImage(dragImage, dragImage.width/2, dragImage.height/2);
+            event.dataTransfer.setDragImage(dragImage, dragImage.width / 2, dragImage.height / 2);
         }
 
         function dragover(event) {
