@@ -15,15 +15,14 @@ IntelligenceWebClient.directive('focusWhen', [
         var directive = {
 
             restrict: TO += ATTRIBUTES,
-            scope: {
-                focusWhen: '&'
-            },
             link: link
         };
 
         function link($scope, element, attributes) {
 
-            $scope.$watch('focusWhen()', function(focus) {
+            attributes.$observe('focusWhen', function(focusWhen) {
+
+                var focus = $scope.$eval(focusWhen);
 
                 if (focus === true) {
 
