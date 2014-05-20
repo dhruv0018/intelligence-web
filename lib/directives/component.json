@@ -25,7 +25,8 @@
         "role-icon",
         "add-player",
         "mascot-placeholder",
-        "profile-placeholder"
+        "profile-placeholder",
+        "notes-list"
     ],
     "scripts": [
         "index.js"

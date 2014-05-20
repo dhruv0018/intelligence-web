@@ -1,0 +1,12 @@
+<div class="notes-list">
+<header>
+<h6>All Notes</h6>
+</header>
+	<ul>
+		<li ng-class-odd="'shaded'" ng-repeat="note in indexing.game.notes[GAME_NOTE_TYPE_INDEXER_NOTE]">
+			<span class="time">{{note.gameTime}}</span>
+			<span>{{note.content}}</span>
+		</li>
+	</ul>
+</div>
+

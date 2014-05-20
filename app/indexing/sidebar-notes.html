@@ -6,11 +6,13 @@
 </header>
 
 <div class="notes">
-	<select ng-model="selectedNoteText">
-		<option ng-repeat="noteText in noteValues" value="{{noteText}}">{{noteText}}</option>
-	</select>
-    <textarea ng-show="selectedNoteText === noteValues[noteValues.length-1]" ng-model="otherNoteValue"></textarea>
-    <button class="btn btn-primary" ng-click="editSaveNote()">Save Note</button>
+	<div class="note-choice">
+		<select ng-model="selectedNoteText">
+			<option ng-repeat="noteText in noteValues" value="{{noteText}}">{{noteText}}</option>
+		</select>
+	    <textarea ng-show="selectedNoteText === noteValues[noteValues.length-1]" ng-model="otherNoteValue"></textarea>
+	    <button class="btn btn-primary save-note" ng-click="editSaveNote()">Save Note</button>
+    </div>
 
     <krossover-notes-list></krossover-notes-list>
 
