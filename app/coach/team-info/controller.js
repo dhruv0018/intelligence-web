@@ -19,7 +19,7 @@ var TeamInfo = angular.module('Coach.Team.Info');
 TeamInfo.controller('Coach.Team.Info.controller', [
     '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
     function controller($rootScope, $scope, $state, games, players, data) {
-        console.log('Inside the team info controller');
+        $state.go('Coach.Team.Info.Information');
     }
 ]);
 
