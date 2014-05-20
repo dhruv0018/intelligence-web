@@ -33,31 +33,6 @@ IntelligenceWebClient.directive('focusWhen', [
                     }, 0);
                 }
             });
-
-            element.bind('focus', function() {
-
-                $scope.$apply(function() {
-
-                    if (!$scope.focusWhen) {
-
-                        $scope.focusWhen = true;
-                    }
-                });
-            });
-
-            element.bind('blur', function() {
-
-                $scope.$apply(function() {
-
-                    $scope.focusWhen = false;
-                });
-            });
-
-            element.on('$destroy', function() {
-
-                element.unbind('focus');
-                element.unbind('blur');
-            });
         }
 
         return directive;
