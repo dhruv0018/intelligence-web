@@ -3,7 +3,6 @@
 .team-info{
 
   .information{
-    width:1200px;
     height:300px;
     padding:10px;
     background: @body-bg;
@@ -20,10 +19,25 @@
 
       .logo{
         border:1px solid @gray-border;
-        min-height:80px;
+        width: 100px;
+        height:100px;
         margin-bottom:30px;
       }
 
+      .btn-upload{
+        position: relative;
+
+        input[type="file"] {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          opacity: 0;
+          cursor: pointer;
+        }
+
+      }
     }
 
     .primary-information{
