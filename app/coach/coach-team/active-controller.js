@@ -67,6 +67,11 @@ Team.controller('Coach.Team.Active.controller', [
                     transformRequest: angular.identity
                 })
                 .success(function(uploadedPlayers) {
+                    //TODO ask backend to make uploaded players come down from server as having played by default
+                    uploadedPlayers = uploadedPlayers.map(function(player) {
+                        player.rosterStatuses[$scope.rosterId] = true;
+                        return player;
+                    });
                     $scope.roster = players.constructPositionDropdown(uploadedPlayers, $scope.rosterId, $scope.positions);
                 })
                 .error(function() {
