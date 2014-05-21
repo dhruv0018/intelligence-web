@@ -52,6 +52,11 @@ Team.controller('Coach.Team.Active.controller', [
             }
         };
 
+        $scope.uploadRoster = function(files) {
+            console.log('got the files');
+            console.log(files);
+        };
+
     }
 ]);
 
