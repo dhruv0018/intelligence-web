@@ -1,4 +1,6 @@
 {
+    "node": true,
+    "browser": true,
     "indent"        : 4,
     "newcap"        : true,
     "camelcase"     : true,

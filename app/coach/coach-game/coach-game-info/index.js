@@ -15,7 +15,9 @@ var angular = window.angular;
  * Game info page module.
  * @module Info
  */
-var Info = angular.module('Coach.Game.Info', []);
+var Info = angular.module('Coach.Game.Info', [
+    'ui.bootstrap'
+]);
 
 /* Cache the template file */
 Info.run([
@@ -60,36 +62,31 @@ Info.directive('krossoverCoachGameInfo', [
 Info.controller('Coach.Game.Info.controller', [
     '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($scope, $state, $localStorage, GAME_TYPES, GAME_NOTE_TYPES, tabs, data, session, teams, leagues, games) {
-
         $scope.GAME_TYPES = GAME_TYPES;
+        $scope.GAME_NOTE_TYPES = GAME_NOTE_TYPES;
 
         $scope.tabs = tabs;
-        $scope.data = data;
 
-        $scope.$watch('game.teamId', function(teamId) {
+        data.then(function(coachData) {
+            $scope.data = coachData;
 
-            if (teamId) {
-
-                teams.get(teamId, function(team) {
-
-                    data.team = team;
-                    data.opposingTeam.leagueId = team.leagueId;
-                    $scope.game.teamId = team.id;
-                    $scope.game.primaryJerseyColor = $scope.game.primaryJerseyColor || team.primaryJerseyColor;
-                    $scope.game.secondaryJerseyColor = $scope.game.secondaryJerseyColor || team.secondaryJerseyColor;
+            //TODO find a better way using the service, not sure why the data isn't being passed forward
+            if (typeof coachData.opposingTeam.name === 'undefined' && coachData.game && coachData.game.id) {
+                teams.get($scope.data.game.opposingTeamId, function(opposingTeam) {
+                    angular.extend($scope.data.opposingTeam, opposingTeam, coachData.opposingTeam);
                 });
             }
+
         });
 
-        $scope.$watch('game.opposingTeamId', function(opposingTeamId) {
-
-            if (opposingTeamId) {
-
-                teams.get(opposingTeamId, function(team) {
-
-                    data.opposingTeam = team;
-                });
+        $scope.$watch('game', function(game) {
+            if (typeof game.datePlayed !== 'undefined') {
+                game = games.unadjustTime(game);
             }
+
+            game.notes = game.notes || {};
+            game.notes[GAME_NOTE_TYPES.COACH_NOTE] = game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE,content: ''}];
+
         });
 
         $scope.$watch('game.isHomeGame', function(isHomeGame) {
@@ -101,34 +98,6 @@ Info.controller('Coach.Game.Info.controller', [
             }
         });
 
-        var updateGameNotes = function(notes) {
-
-            /* If no coach note exists. */
-            if (!notes || !notes.length) {
-
-                $scope.game.notes = $scope.game.notes || [];
-
-                /* Create a new coach note. */
-                $scope.game.notes.unshift({
-                    noteTypeId: GAME_NOTE_TYPES.COACH_NOTE,
-                    content: ''
-                });
-
-                $scope.noteIndex = 0;
-            }
-
-            /* If the game is an existing resource with extended methods. */
-            if ($scope.game.getIndexOfNoteByType) {
-
-                /* Get the index of the coach note. */
-                $scope.noteIndex = $scope.game.getIndexOfNoteByType(GAME_NOTE_TYPES.COACH_NOTE);
-            }
-        };
-
-        updateGameNotes();
-
-        $scope.$watch('game.notes', updateGameNotes);
-
         $scope.$watch('formGameInfo.$invalid', function(invalid) {
 
             tabs['your-team'].disabled = invalid;
@@ -138,16 +107,58 @@ Info.controller('Coach.Game.Info.controller', [
 
             var game = angular.copy($scope.game);
 
-            /* Convert value from btn-radio back to boolean. */
-            game.isHomeGame = game.isHomeGame === 'true';
+            var isHomeGame = game.isHomeGame == 'true';
 
-            games.save(game, function(game) {
+            var newOpposingTeam = {
+                isCustomerTeam: false,
+                leagueId: $scope.data.team.leagueId,
+                primaryAwayColor: isHomeGame ? game.opposingPrimaryColor : null,
+                primaryHomeColor: isHomeGame ? null : game.opposingPrimaryColor,
+                secondaryAwayColor: isHomeGame ? game.opposingSecondaryColor : null,
+                secondaryHomeColor: isHomeGame ? null : game.opposingSecondaryColor
+            };
 
-                $scope.game = game;
-            });
+            angular.extend($scope.data.opposingTeam, $scope.data.opposingTeam, newOpposingTeam);
 
-            tabs.activateTab('your-team');
+            //new game
+            if (typeof game.opposingTeamId === 'undefined') {
+                teams.save($scope.data.opposingTeam, function(opposingTeam) {
+                    $scope.data.opposingTeam = opposingTeam;
+                    $scope.data.opposingTeam.players = [];
+
+                    game.opposingTeam = opposingTeam;
+                    game.opposingTeamId = opposingTeam.id;
+
+                    game.rosters = {};
+                    game.rosters[$scope.data.team.id] = {};
+                    game.rosters[game.opposingTeamId] = {};
+
+                    game.teamId = session.currentUser.currentRole.teamId;
+                    game.uploaderUserId = session.currentUser.id;
+                    game.uploaderTeamId = session.currentUser.currentRole.teamId;
+
+                    /* Convert value from btn-radio back to boolean. */
+                    game.isHomeGame = game.isHomeGame === 'true';
+
+                    games.save(game, function(game) {
+                        $scope.game = game;
+                        data.game = game;
+                        tabs.activateTab('your-team');
+                    });
+
+                });
+            } else {
+                teams.save($scope.data.opposingTeam);
+
+                games.save(game, function(game) {
+                    $scope.game = game;
+                    data.game = game;
+                    tabs.activateTab('your-team');
+                });
+            }
+
         };
+
     }
 ]);
 

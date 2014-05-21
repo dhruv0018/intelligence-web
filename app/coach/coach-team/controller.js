@@ -13,8 +13,8 @@ var Team = angular.module('Coach.Team');
  * @type {service}
  */
 Team.service('Coach.Team.Data', [
-    '$q', 'SessionService', 'TeamsFactory', 'PlayersFactory',
-    function($q, session, teams, players) {
+    '$q', 'SessionService', 'TeamsFactory', 'PlayersFactory', 'Coach.Data',
+    function($q, session, teams, players, data) {
 
         var teamId = session.currentUser.currentRole.teamId;
 
@@ -63,14 +63,14 @@ Team.service('Coach.Team.Data', [
             }
         });
 
-        var data = {
-
+        var teamData = {
+            coachData: data,
             team: team,
             roster: roster,
             rosterId: rosterId
         };
 
-        return $q.all(data);
+        return $q.all(teamData);
     }
 ]);
 
@@ -91,6 +91,8 @@ Team.controller('Coach.Team.controller', [
             $scope.team = data.team;
             $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
+            $scope.positions = data.coachData.positionSet.indexedPositions;
+            $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
         });
 
         $scope.state = 'Coach.Team.All';
@@ -101,7 +103,7 @@ Team.controller('Coach.Team.controller', [
         });
 
         $scope.save = function() {
-
+            $scope.roster = players.getPositionsFromDowndown($scope.roster, $scope.rosterId, $scope.positions);
             players.save($scope.rosterId, $scope.roster).then(function(players) {
                 $scope.roster = players;
 
@@ -109,6 +111,10 @@ Team.controller('Coach.Team.controller', [
                     data.roster = players;
                 });
             });
+        };
+
+        $scope.sortPlayers = function(player) {
+            return Number(player.jerseyNumbers[$scope.rosterId]);
         };
     }
 ]);

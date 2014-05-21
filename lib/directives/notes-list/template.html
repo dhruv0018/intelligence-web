@@ -3,8 +3,8 @@
 <h6>All Notes</h6>
 </header>
 	<ul>
-		<li ng-class-odd="'shaded'" ng-repeat="note in indexing.game.notes[GAME_NOTE_TYPE_INDEXER_NOTE]">
-			<span class="time">{{note.gameTime}}</span>
+		<li ng-class-odd="'shaded'" ng-repeat="note in indexing.game.notes[GAME_NOTE_TYPE_INDEXER_NOTE]" ng-class="{last:$last}">
+			<span class="time">{{note.gameTime|secondsToTime}}</span>
 			<span>{{note.content}}</span>
 		</li>
 	</ul>

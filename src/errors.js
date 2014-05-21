@@ -110,6 +110,7 @@ IntelligenceWebClient.factory('HttpInterceptor', [
             /* Intercept all responses. Includes any server responses that are
             * considered successful. Which are status codes up to the 400 level. */
             response: function(response) {
+            /* jshint sub:true */
             /* jshint camelcase:false */
 
                 /* Catch errors in 200 responses. */
@@ -128,7 +129,7 @@ IntelligenceWebClient.factory('HttpInterceptor', [
 
                         ErrorReporter.reportError(new Error('Error response\n' +
                             response.data.error + ': ' +
-                            response.data.error_description));
+                            response.data['error_description']));
                     }
 
                     return $q.reject(response);

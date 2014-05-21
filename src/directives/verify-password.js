@@ -10,7 +10,7 @@ var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.directive('krossoverVerifyPassword', [
     '$rootScope', '$injector', 'config', 'SessionService', 'AuthenticationService',
-    function ($rootScope, $injector, config, session, auth) {
+    function($rootScope, $injector, config, session, auth) {
 
         var directive = {
 
@@ -30,7 +30,7 @@ IntelligenceWebClient.directive('krossoverVerifyPassword', [
                 if (password && password.length >= 4) {
 
                     /* Request authentication from the server. */
-                    auth.validatePassword(null, password, function (error) {
+                    auth.validatePassword(null, password, function(error) {
 
                         controller.$setValidity('password', !error);
                     });

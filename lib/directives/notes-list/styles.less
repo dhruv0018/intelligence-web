@@ -8,16 +8,21 @@
 
         li {
             background: #fff;
-            border: 1px solid #eee;
-            border-bottom: 0px;
+            border-top: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
             padding: 3px;
 
             &:hover {
                 background: #F6F9FE;
             }   
 
-            .shaded {
-                background: #ccc;
+            &.shaded {
+                background: #FCFCFC;
+            }
+
+            &.last {
+                border-bottom: 1px solid #eee;
             }
         }
 

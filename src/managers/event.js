@@ -78,13 +78,15 @@ IntelligenceWebClient.service('EventManager', [
 
             var self = this;
 
-            return self.current &&
-                   self.current.variableValues &&
-                   Object.keys(self.current.variableValues).every(function(eventVariableIndex) {
+            if (self.current && self.current.variableValues) {
 
-                return self.eventVariableValue(eventVariableIndex) === 0 ? true :
-                     !!self.eventVariableValue(eventVariableIndex);
-            });
+                return Object.keys(self.current.variableValues).every(function(eventVariableIndex) {
+
+                    return self.eventVariableValue(eventVariableIndex) === 0 ? true : !!self.eventVariableValue(eventVariableIndex);
+                });
+            }
+
+            return false;
         };
 
         /**
