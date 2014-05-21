@@ -8,6 +8,7 @@ var angular = window.angular;
  * @module Platform
  */
 var Platform = angular.module('platform', [
+    'plan-defaults',
     'leagues'
 ]);
 

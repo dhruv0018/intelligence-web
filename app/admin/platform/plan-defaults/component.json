@@ -1,0 +1,12 @@
+{
+    "name": "plan-defaults",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

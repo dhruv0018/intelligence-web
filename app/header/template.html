@@ -14,9 +14,9 @@
         <li data-ui-sref-active="active"><a data-ui-sref="schools">Schools</a></li>
         <li data-ui-sref-active="active"><a data-ui-sref="queue">Queue</a></li>
         <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="reports">Reports</a></li>
-        <li class="header-dropdown" data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)"><a class="dropdown-toggle" data-ui-sref="#">Platform</a>
+        <li class="header-dropdown" data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)"><a class="dropdown-toggle">Platform</a>
             <ul class="dropdown-menu">
-                <li class="disabled"><a href="#">Plan Defaults</a></li>
+                <li><a data-ui-sref="plan-defaults">Plan Defaults</a></li>
                 <li><a data-ui-sref="leagues">Leagues</a></li>
                 <li data-ng-hide="true"><a href="#">Indexing Pricing</a></li>
                 <li data-ng-hide="true"><a href="#">Action Rules</a></li>
