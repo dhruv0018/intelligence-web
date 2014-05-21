@@ -156,7 +156,7 @@ module.exports = {
      */
     host: null,
     ports: {
-        min: 8000,
+        min: 7998,
         max: 8100
     },
 
