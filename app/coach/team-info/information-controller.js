@@ -22,19 +22,22 @@ TeamInfo.controller('Coach.Team.Info.Information.controller', [
             $scope.data = data;
         });
 
-        $scope.upload = function(files) {
+        $scope.setLogo = function(files) {
+            $scope.logo = files[0];
+
             reader.readAsDataURL(files[0]);
 
             reader.onload = function() {
                 $scope.data.coachTeam.imageUrl = reader.result;
                 $scope.$apply();
             };
+        };
+
+        $scope.save = function() {
+            var data = new FormData();
+            data.append('imageFile', $scope.logo);
 
             var url = config.api.uri + 'teams/' + $scope.data.coachTeam.id + '/image/file';
-
-            var data = new FormData();
-
-            data.append('imageFile', files[0]);
 
             $http.post(url, data, {
                 headers: { 'Content-Type': undefined },
@@ -48,6 +51,7 @@ TeamInfo.controller('Coach.Team.Info.Information.controller', [
             });
         };
     }
+
 ]);
 
 
