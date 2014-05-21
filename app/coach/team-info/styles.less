@@ -3,8 +3,7 @@
 .team-info{
 
   .information{
-    height:300px;
-    padding:10px;
+    padding:20px;
     background: @body-bg;
     border-radius: @border-radius-small;
     border: 1px solid @gray-border;
@@ -15,16 +14,31 @@
     }
 
     .uploadLogo{
-      margin-top: 30px;
+      .pull-left;
+      padding: 20px 30px 10px 30px;
+      border:1px solid @gray-border;
 
       .logo{
-        border:1px solid @gray-border;
         width: 100px;
         height:100px;
-        margin-bottom:30px;
+        margin-bottom:20px;
+
       }
 
+      .placeholder-mascot {
+        width: 100px;
+        height: 100px;
+        margin: auto;
+        margin-bottom: 20px;
+        font-size: 80px;
+        padding-top: 15px;
+        border: none;
+      }
+
+
       .btn-upload{
+        .btn;
+        .btn-default;
         position: relative;
 
         input[type="file"] {
@@ -41,10 +55,19 @@
     }
 
     .primary-information{
-      width:80%;
+      display: inline-block;
+      width: 60%;
+      text-transform: uppercase;
+
+      h4 {
+        font-weight: 400;
+        color: @gray-darker;
+      }
 
       input{
         width: 100%;
+        background-color: @content-bg;
+        margin-bottom: 20px;
       }
 
       button{
