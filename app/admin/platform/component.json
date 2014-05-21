@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "plan-defaults",
         "leagues"
     ],
     "scripts": [
