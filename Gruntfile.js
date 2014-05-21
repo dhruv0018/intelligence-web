@@ -419,7 +419,8 @@ module.exports = function(grunt) {
 
         watch: {
             options: {
-                spawn: false
+                spawn: false,
+                interupt: true
             },
             packagejson: {
                 files: ['package.json'],
