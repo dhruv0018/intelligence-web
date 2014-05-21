@@ -8,8 +8,19 @@ var angular = window.angular;
  * @module Platform
  */
 var Platform = angular.module('platform', [
-    'plan-defaults',
+    'ui.router',
+    'ui.bootstrap',
     'leagues'
+]);
+
+/* Cache the template file */
+Platform.run([
+    '$templateCache',
+    function run($templateCache) {
+
+        $templateCache.put('platform.html', require('./platform.html'));
+        $templateCache.put('plan-defaults.html', require('./plan-defaults.html'));
+    }
 ]);
 
 /**
@@ -21,14 +32,35 @@ Platform.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var platform = {
-            name: 'platform',
-            url: '/platform',
-            parent: 'base',
-            abstract: true
-        };
+        $stateProvider
 
-        $stateProvider.state(platform);
+            .state('platform', {
+                url: '/platform',
+                parent: 'base',
+                abstract: true,
+                views: {
+                    'main@root': {
+                        templateUrl: 'platform.html',
+                        controller: 'PlatformController'
+                    }
+                }
+            })
+
+            .state('plan-defaults', {
+                url: '',
+                parent: 'platform',
+                views: {
+                    'content@platform': {
+                        templateUrl: 'plan-defaults.html',
+                        controller: 'PlatformController'
+                    }
+                }
+            });
+    }
+]);
+
+Platform.controller('PlatformController', [
+    function controller() {
     }
 ]);
 
