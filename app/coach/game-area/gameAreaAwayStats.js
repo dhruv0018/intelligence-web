@@ -45,3 +45,4 @@ GameAreaAwayStats.controller('GameAreaAwayStatsController', [
 
     }
 ]);
+

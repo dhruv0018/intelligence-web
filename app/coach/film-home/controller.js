@@ -20,7 +20,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
     '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory', 'Coach.Data', 'Coach.FilmHome.GameFilters',
     function controller($rootScope, $scope, $state, games, players, data, filtersData) {
 
-        data.then(function (data) {
+        data.then(function(data) {
             $scope.games = data.games;
             $scope.team = data.coachTeam;
             $scope.teams = data.teams;
@@ -32,18 +32,18 @@ FilmHome.controller('Coach.FilmHome.controller', [
 
         $scope.filters = filtersData.filters;
 
-        $scope.$watch('filters.all', function (all) {
+        $scope.$watch('filters.all', function(all) {
 
-            if(all === true) {
+            if (all === true) {
                 filtersData.disableOthers();
             }
 
-            else if(filtersData.othersDisabled === true) {
+            else if (filtersData.othersDisabled === true) {
                 $scope.filters.all = true;
             }
         });
 
-        $scope.$watchCollection('filters.others', function (others) {
+        $scope.$watchCollection('filters.others', function(others) {
             filtersData.watchOthers();
         });
 

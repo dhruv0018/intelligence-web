@@ -57,22 +57,22 @@ GameAreaInformation.controller('GameAreaInformationController', [
             }
         });
 
-        $scope.confirmation = function () {
+        $scope.confirmation = function() {
             $modal.open({
 
                 templateUrl: 'coach/game-area/deleteGame.html',
-                controller: ['$scope', '$state', '$modalInstance', 'GamesFactory', 'Coach.Data', function ($scope, $state, $modalInstance, games, data) {
+                controller: ['$scope', '$state', '$modalInstance', 'GamesFactory', 'Coach.Data', function($scope, $state, $modalInstance, games, data) {
                     data.then(function(data) {
                         $scope.game = data.game;
                     });
 
-                    $scope.deleteGame = function () {
+                    $scope.deleteGame = function() {
                         $scope.game.isDeleted = true;
 
-                        games.save($scope.game, function () {
+                        games.save($scope.game, function() {
                             $modalInstance.close();
                             $state.go('Coach.FilmHome');
-                        }, function () {
+                        }, function() {
                             $modalInstance.close();
                         });
                     };

@@ -45,3 +45,4 @@ GameAreaLog.controller('GameAreaLogController', [
 
     }
 ]);
+

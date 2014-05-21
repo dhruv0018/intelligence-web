@@ -9,7 +9,7 @@ var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.config([
     'flowFactoryProvider',
-    function (flow) {
+    function(flow) {
 
         flow.defaults = {
 
@@ -19,7 +19,7 @@ IntelligenceWebClient.config([
 
         flow.factory = function(options) {
 
-            Flow.FlowChunk.prototype.getParams = function () {
+            Flow.FlowChunk.prototype.getParams = function() {
 
                 return {
 

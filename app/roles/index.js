@@ -35,7 +35,11 @@ Roles.config([
 
             .state('roles', {
 
-                onEnter: [ 'RolesModal', function(RolesModal) {} ]
+                onEnter: [
+                    'RolesModal',
+                    function(RolesModal) {
+                    }
+                ]
 
             });
     }

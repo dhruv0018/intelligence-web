@@ -12,9 +12,9 @@ var Root = angular.module('root', []);
 
 Root.run([
     '$rootScope', '$window',
-    function run($rootScope, $window){
+    function run($rootScope, $window) {
 
-        angular.element($window).bind('resize',function(){
+        angular.element($window).bind('resize',function() {
 
             var resize = {
 
