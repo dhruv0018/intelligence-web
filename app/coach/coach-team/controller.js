@@ -116,6 +116,7 @@ Team.controller('Coach.Team.controller', [
         $scope.sortPlayers = function(player) {
             return Number(player.jerseyNumbers[$scope.rosterId]);
         };
+
     }
 ]);
 

@@ -14,8 +14,9 @@ var Team = angular.module('Coach.Team');
  * @type {controller}
  */
 Team.controller('Coach.Team.Active.controller', [
-    '$scope', 'PlayersFactory', 'Coach.Data',
-    function controller($scope, players, data) {
+    '$rootScope', '$scope', '$http', 'PlayersFactory', 'config', 'Coach.Data',
+    function controller($rootScope, $scope, $http, players, config, data) {
+        console.log($scope.positions);
 
         $scope.isActive = function(player) {
 
@@ -53,8 +54,29 @@ Team.controller('Coach.Team.Active.controller', [
         };
 
         $scope.uploadRoster = function(files) {
-            console.log('got the files');
-            console.log(files);
+            var file = files[0];
+            var data = new FormData();
+
+            data.append('rosterId', $scope.rosterId);
+            data.append('roster', file);
+
+            $http.post(config.api.uri + 'batch/players/file',
+
+                data, {
+                    headers: { 'Content-Type': undefined },
+                    transformRequest: angular.identity
+                })
+                .success(function(uploadedPlayers) {
+                    $scope.roster = players.constructPositionDropdown(uploadedPlayers, $scope.rosterId, $scope.positions);
+                })
+                .error(function() {
+
+                    $rootScope.$broadcast('alert', {
+
+                        type: 'danger',
+                        message: 'There was a problem. Please try again.'
+                    });
+                });
         };
 
     }
