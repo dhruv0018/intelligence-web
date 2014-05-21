@@ -1,13 +1,25 @@
 <span class="item">
 
-    <!-- Static item -->
-    <krossover-item-static data-ng-if="isString(item)" item="item"></krossover-item-static>
+    <!-- Gap variable -->
+    <krossover-item-gap data-ng-if="item.type === 'GAP'" item="item" event="event"></krossover-item-gap>
 
     <!-- Text variable -->
     <krossover-item-text data-ng-if="item.type === 'TEXT'" item="item" event="event"></krossover-item-text>
 
+    <!-- Yard variable -->
+    <krossover-item-yard data-ng-if="item.type === 'YARD'" item="item" event="event"></krossover-item-yard>
+
+    <!-- Static item -->
+    <krossover-item-static data-ng-if="isString(item)" item="item"></krossover-item-static>
+
     <!-- Dropdown variable -->
     <krossover-item-dropdown data-ng-if="item.type === 'DROPDOWN'" item="item" event="event"></krossover-item-dropdown>
+
+    <!-- Formation variable -->
+    <krossover-item-formation data-ng-if="item.type === 'FORMATION'" item="item" event="event"></krossover-item-formation>
+
+    <!-- Passing zone variable -->
+    <krossover-item-passing-zone data-ng-if="item.type === 'PASSING_ZONE'" item="item" event="event"></krossover-item-passing-zone>
 
     <!-- Team dropdown variable -->
     <krossover-item-team-dropdown data-ng-if="item.type === 'TEAM_DROPDOWN'" item="item" event="event"></krossover-item-team-dropdown>

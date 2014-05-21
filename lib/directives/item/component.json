@@ -13,9 +13,13 @@
         "."
     ],
     "local": [
-        "static",
+        "gap",
         "text",
+        "yard",
+        "static",
         "dropdown",
+        "formation",
+        "passing-zone",
         "team-dropdown",
         "player-dropdown"
     ]
