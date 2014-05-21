@@ -8,9 +8,13 @@
         "."
     ],
     "locals": [
-        "leagues"
+        "leagues",
+        "new-plan"
     ],
     "scripts": [
         "index.js"
+    ],
+    "styles": [
+        "styles.less"
     ]
 }
