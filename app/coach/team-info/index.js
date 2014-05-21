@@ -41,9 +41,9 @@ TeamInfo.config([
             })
             .state('Coach.Team.Info.Information', {
                 url: '/information',
-                views:{
-                    'content@Coach.Team.Info':{
-                        templateUrl:'coach/team-info/information.html',
+                views: {
+                    'content@Coach.Team.Info': {
+                        templateUrl: 'coach/team-info/information.html',
                         controller: 'Coach.Team.Info.Information.controller'
                     }
                 }
