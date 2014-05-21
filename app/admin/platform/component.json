@@ -1,10 +1,13 @@
 {
     "name": "platform",
+    "templates": [
+        "platform.html",
+        "plan-defaults.html"
+    ],
     "paths": [
         "."
     ],
     "locals": [
-        "plan-defaults",
         "leagues"
     ],
     "scripts": [
