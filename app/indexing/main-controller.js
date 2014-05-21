@@ -17,8 +17,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$window', '$rootScope', '$scope', '$sce', '$state', '$stateParams', '$modal', 'VIDEO_STATUSES', 'GAME_STATUSES', 'VG_EVENTS', 'SessionService', 'AlertsService', 'IndexingService', 'ScriptsService', 'PlaysFactory', 'PlayersFactory', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
-    function controller(config, $window, $rootScope, $scope, $sce, $state, $stateParams, $modal, VIDEO_STATUSES, GAME_STATUSES, VG_EVENTS, session, alerts, indexing, scripts, plays, players, tags, play, event, sidebar) {
+    'config', '$rootScope', '$scope', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
+    function controller(config, $rootScope, $scope, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar) {
 
         var self = this;
 
