@@ -1,4 +1,5 @@
 require('leagues');
+require('new-plan');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -10,7 +11,8 @@ var angular = window.angular;
 var Platform = angular.module('platform', [
     'ui.router',
     'ui.bootstrap',
-    'leagues'
+    'leagues',
+    'new-plan'
 ]);
 
 /* Cache the template file */
@@ -60,7 +62,14 @@ Platform.config([
 ]);
 
 Platform.controller('PlatformController', [
-    function controller() {
+    '$scope', '$modal',
+    function controller($scope, $modal) {
+        $scope.addPlan = function() {
+            $modal.open({
+                templateUrl: 'app/admin/platform/new-plan/new-plan.html',
+                controller: 'NewPlanController'
+            });
+        };
     }
 ]);
 
