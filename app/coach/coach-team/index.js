@@ -38,70 +38,7 @@ Team.config([
             views: {
                 'main@root': {
                     templateUrl: 'coach/team/template.html',
-                    controller: 'Coach.Team.controller',
-                    resolve: {
-                        'Coach.Team.Data': [
-                            '$q', 'SessionService', 'TeamsFactory', 'PlayersFactory', 'Coach.Data',
-                            function($q, session, teams, players, data) {
-
-                                var teamId = session.currentUser.currentRole.teamId;
-
-                                if (!teamId) return $q.reject(new Error('Could not get current users team'));
-
-                                var team = teams.get(teamId).$promise;
-
-                                var roster = team.then(function(team) {
-
-                                    if (team.roster) {
-
-                                        return players.getList({ roster: team.roster.id }).$promise.then(function(playersList) {
-
-                                            return playersList;
-
-                                        }, function() {
-
-                                            return [];
-                                        });
-                                    }
-
-                                    else return [];
-                                });
-
-                                var rosterId = team.then(function(team) {
-
-                                    if (team.roster) {
-
-                                        return team.roster.id;
-                                    }
-
-                                    else {
-
-                                        team.roster = {
-
-                                            teamId: team.id
-                                        };
-
-                                        return team.save().then(function() {
-
-                                            return teams.get(teamId).$promise.then(function(team) {
-
-                                                return team.roster.id;
-                                            });
-                                        });
-                                    }
-                                });
-
-                                var teamData = {
-                                    coachData: data,
-                                    team: team,
-                                    roster: roster,
-                                    rosterId: rosterId
-                                };
-
-                                return $q.all(teamData);
-                            }
-                        ]
-                    }
+                    controller: 'Coach.Team.controller'
                 }
             }
         })
