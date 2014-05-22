@@ -16,7 +16,6 @@ var Team = angular.module('Coach.Team');
 Team.controller('Coach.Team.Active.controller', [
     '$rootScope', '$scope', '$http', 'PlayersFactory', 'config', 'Coach.Data',
     function controller($rootScope, $scope, $http, players, config, data) {
-        console.log($scope.positions);
 
         $scope.isActive = function(player) {
 
@@ -67,12 +66,13 @@ Team.controller('Coach.Team.Active.controller', [
                     transformRequest: angular.identity
                 })
                 .success(function(uploadedPlayers) {
-                    //TODO ask backend to make uploaded players come down from server as having played by default
-                    uploadedPlayers = uploadedPlayers.map(function(player) {
-                        player.rosterStatuses[$scope.rosterId] = true;
-                        return player;
+                    players.getList({
+                        roster: $scope.rosterId
+                    }, function(roster) {
+                        angular.extend($scope.roster, $scope.roster, roster);
+                        $scope.roster = players.constructPositionDropdown(roster, $scope.rosterId, $scope.positions);
                     });
-                    $scope.roster = players.constructPositionDropdown(uploadedPlayers, $scope.rosterId, $scope.positions);
+
                 })
                 .error(function() {
 
