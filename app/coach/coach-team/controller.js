@@ -8,73 +8,6 @@ var angular = window.angular;
 var Team = angular.module('Coach.Team');
 
 /**
- * Coach team page data service.
- * @module Team
- * @type {service}
- */
-Team.service('Coach.Team.Data', [
-    '$q', 'SessionService', 'TeamsFactory', 'PlayersFactory', 'Coach.Data',
-    function($q, session, teams, players, data) {
-
-        var teamId = session.currentUser.currentRole.teamId;
-
-        if (!teamId) return $q.reject(new Error('Could not get current users team'));
-
-        var team = teams.get(teamId).$promise;
-
-        var roster = team.then(function(team) {
-
-            if (team.roster) {
-
-                return players.getList({ roster: team.roster.id }).$promise.then(function(playersList) {
-
-                    return playersList;
-
-                }, function() {
-
-                    return [];
-                });
-            }
-
-            else return [];
-        });
-
-        var rosterId = team.then(function(team) {
-
-            if (team.roster) {
-
-                return team.roster.id;
-            }
-
-            else {
-
-                team.roster = {
-
-                    teamId: team.id
-                };
-
-                return team.save().then(function() {
-
-                    return teams.get(teamId).$promise.then(function(team) {
-
-                        return team.roster.id;
-                    });
-                });
-            }
-        });
-
-        var teamData = {
-            coachData: data,
-            team: team,
-            roster: roster,
-            rosterId: rosterId
-        };
-
-        return $q.all(teamData);
-    }
-]);
-
-/**
  * Team controller.
  * @module Team
  * @name Team.controller
@@ -88,13 +21,12 @@ Team.controller('Coach.Team.controller', [
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
-        data.then(function(data) {
-            $scope.team = data.team;
-            angular.extend($scope.roster, data.roster, $scope.roster);
-            $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
-            $scope.rosterId = data.rosterId;
-            $scope.positions = data.coachData.positionSet.indexedPositions;
-        });
+        $scope.team = data.team;
+        angular.extend($scope.roster, data.roster, $scope.roster);
+        $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
+        $scope.rosterId = data.rosterId;
+        $scope.positions = data.coachData.positionSet.indexedPositions;
+
 
         $scope.state = 'Coach.Team.All';
 
