@@ -59,6 +59,10 @@
         <aside ng-if="gameStatus === 'INDEXED'"  class="sidebar">
           <!--<div ng-repeat="play in plays">Play Number: {{play.id}}</div>-->
           <krossover-plays data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="league" data-videoplayer="VideoPlayer"></krossover-plays>
+          <div class="expandrow">
+            <button><i class="icon-plus"></i> Expand All</button>
+            <button><i class="icon-minus"></i> Collapse All</button>
+          </div>
 
           <no-results data-ng-hide="plays.length"></no-results>
         </aside>
