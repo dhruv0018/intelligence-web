@@ -1,0 +1,12 @@
+<div class="notes-list">
+<header>
+<h6>All Notes</h6>
+</header>
+	<ul>
+		<li data-ng-class-odd="'shaded'" data-ng-repeat="note in indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] | orderBy:'gameTime'" data-ng-class="{last:$last}">
+			<span class="time">{{note.gameTime|secondsToTime}}</span>
+			<span>{{note.content}}</span>
+		</li>
+	</ul>
+</div>
+
