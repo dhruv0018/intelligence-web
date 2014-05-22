@@ -8,7 +8,47 @@
 
     <div class="modal-body">
 
-        
+        <label>Create a new plan</label>
+
+        <div class="form-group">
+            <label>Name of Plan</label>
+            <input class="form-control" placeholder="Name" data-ng-model="$storage.plan.name" type="text" required >
+
+            <label>For what sport</label>
+            <select class="form-control" name="sport" ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sports">
+                <option value="">Sport</option>
+            </select>
+
+            <label>For what leagues?</label>
+            <div class="form-group" ng-repeat="league in leagues | filter:{'sportId':sportId}" required>
+                <input type="checkbox"> {{ league.name }}
+            </div>
+
+            <label>Dates of the plan</label>
+            <br>
+            <label>from</label>
+            <select class="form-control"></select>
+            <label>to</label>
+            <select class="form-control"></select>
+
+            <br>
+
+            <label>Max games per season</label>
+            <input class="form-control" type="text" required>
+
+            <label>Default # of regular games</label>
+            <input class="form-control" type="text" required> per week <br>
+
+            <label>Default # of scouting games</label>
+            <input class="form-control" type="text" required> per week <br>
+
+            <label>Default turnaround time</label>
+            <select class="form-control"></select>
+
+            <button class="btn btn-primary" ng-click="savePlan()">Save</button>
+
+
+        </div>
 
     </div>
 
