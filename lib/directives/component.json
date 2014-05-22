@@ -28,7 +28,8 @@
         "mascot-placeholder",
         "profile-placeholder",
         "notes-list",
-        "positions-dropdown"
+        "positions-dropdown",
+        "uploader"
     ],
     "scripts": [
         "index.js"

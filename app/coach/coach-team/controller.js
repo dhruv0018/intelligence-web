@@ -90,10 +90,10 @@ Team.controller('Coach.Team.controller', [
 
         data.then(function(data) {
             $scope.team = data.team;
-            angular.extend($scope.roster, data.roster, $scope.roster);
-            $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
             $scope.rosterId = data.rosterId;
             $scope.positions = data.coachData.positionSet.indexedPositions;
+            angular.extend($scope.roster, data.roster, $scope.roster);
+            $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
         });
 
         $scope.state = 'Coach.Team.All';

@@ -1,0 +1,12 @@
+{
+    "name": "uploader",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}
