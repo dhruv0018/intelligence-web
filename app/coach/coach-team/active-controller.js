@@ -14,8 +14,8 @@ var Team = angular.module('Coach.Team');
  * @type {controller}
  */
 Team.controller('Coach.Team.Active.controller', [
-    '$rootScope', '$scope', '$http', 'PlayersFactory', 'config', 'Coach.Data',
-    function controller($rootScope, $scope, $http, players, config, data) {
+    '$rootScope', '$scope', '$http', 'PlayersFactory', 'config', 'Coach.Data', 'AlertsService',
+    function controller($rootScope, $scope, $http, players, config, data, alerts) {
 
         $scope.isActive = function(player) {
 
@@ -74,12 +74,18 @@ Team.controller('Coach.Team.Active.controller', [
                     });
 
                 })
-                .error(function() {
-
-                    $rootScope.$broadcast('alert', {
-
-                        type: 'danger',
-                        message: 'There was a problem. Please try again.'
+                .error(function(failure) {
+                    angular.forEach(failure.errors, function(error, key) {
+                        alerts.add({
+                            type: 'danger',
+                            message: (function() {
+                                var columnFailures = [];
+                                angular.forEach(error, function(subError, key) {
+                                    columnFailures.push(key + ' : ' + subError);
+                                });
+                                return 'Row ' + key + ' - ' + columnFailures.join(' ');
+                            }())
+                        });
                     });
                 });
         };
