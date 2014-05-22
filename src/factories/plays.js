@@ -123,6 +123,19 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     play.events = play.events.map(function(event) {
 
                         event.playId = play.id;
+
+                        delete event.activeEventVariableIndex;
+
+                        var indexedVariableValues = {};
+
+                        for (var key in event.variableValues) {
+
+                            var value = event.variableValues[key];
+                            indexedVariableValues[value.id] = value;
+                        }
+
+                        event.variableValues = indexedVariableValues;
+
                         return event;
                     });
 
