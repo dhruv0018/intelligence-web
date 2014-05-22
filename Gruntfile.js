@@ -370,7 +370,7 @@ module.exports = function(grunt) {
 
         dox: {
             docs: {
-                src: ['src', 'lib'],
+                src: ['app', 'lib', 'src'],
                 dest: 'docs'
             }
         },
