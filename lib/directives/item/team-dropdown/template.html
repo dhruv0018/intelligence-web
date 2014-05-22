@@ -1,8 +1,13 @@
 <span class="team-dropdown">
 
-    <button class="team-dropdown" data-ng-if="event.variableValues[item.id].value" data-ng-click="event.variableValues[item.id].value = null">{{ indexing.players[event.variableValues[item.id].value].firstName }} {{ indexing.players[event.variableValues[item.id].value].lastName }}</button>
+    <button class="team-dropdown" data-ng-if="event.variableValues[item.index].value" data-ng-click="event.variableValues[item.index].value = null">
 
-    <select class="team-dropdown" data-ng-if="!event.variableValues[item.id].value" data-ng-model="event.variableValues[item.id].value" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
+        <span data-ng-if="event.variableValues[item.index].value == indexing.team.id">{{ indexing.team.name }}</span>
+        <span data-ng-if="event.variableValues[item.index].value == indexing.opposingTeam.id">{{ indexing.opposingTeam.name }}</span>
+
+    </button>
+
+    <select class="team-dropdown" data-ng-if="!event.variableValues[item.index].value" data-ng-model="event.variableValues[item.index].value" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
 
         <option value="{{ indexing.team.id }}">{{ indexing.team.name }}</option>
         <option value="{{ indexing.opposingTeam.id }}">{{ indexing.opposingTeam.name }}</option>
