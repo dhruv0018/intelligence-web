@@ -3,7 +3,7 @@
 <h6>All Notes</h6>
 </header>
 	<ul>
-		<li ng-class-odd="'shaded'" ng-repeat="note in indexing.game.notes[GAME_NOTE_TYPE_INDEXER_NOTE] | orderBy:'gameTime'" ng-class="{last:$last}">
+		<li data-ng-class-odd="'shaded'" data-ng-repeat="note in indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] | orderBy:'gameTime'" data-ng-class="{last:$last}">
 			<span class="time">{{note.gameTime|secondsToTime}}</span>
 			<span>{{note.content}}</span>
 		</li>

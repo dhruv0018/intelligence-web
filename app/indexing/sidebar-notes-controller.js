@@ -27,7 +27,7 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
             $scope.$apply();
         });
 
-        $scope.editSaveNote = function() {
+        $scope.saveIndexingNote = function() {
 
             var noteValueToSave = $scope.selectedNoteText;
 
@@ -35,12 +35,16 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
                 noteValueToSave = $scope.otherNoteValue;
             }
 
-            $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE].push({
-                'content': noteValueToSave,
-                'gameId': $scope.indexing.game.id,
-                'noteTypeId': GAME_NOTE_TYPES.INDEXER_NOTE,
-                'gameTime': $scope.currentTimestamp
-            });
+            var newIndexingNote = {
+                content: noteValueToSave,
+                gameId: $scope.indexing.game.id,
+                noteTypeId: GAME_NOTE_TYPES.INDEXER_NOTE,
+                gameTime: $scope.currentTimestamp
+            };
+
+            $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] = $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] || [];
+            $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE].push(newIndexingNote);
+
 
             $scope.indexing.game.save();
         };

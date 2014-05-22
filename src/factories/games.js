@@ -106,6 +106,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 };
 
                 if (game.id) {
+
                     var updatedGame = self.resource.update(parameters, game, success, error);
                     return updatedGame.$promise;
 
