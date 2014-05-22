@@ -90,7 +90,7 @@ Coach.service('Coach.Data', [
                 });
             } else {
                 promisedRoster.resolve([]);
-                promisedRosterId.resolve({id: -1});
+                promisedRosterId.resolve({id: null});
             }
 
             leagues.get(teams[data.teamId].leagueId, function(league) {
