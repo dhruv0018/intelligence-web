@@ -16,6 +16,7 @@
         "static",
         "text",
         "dropdown",
+        "team-dropdown",
         "player-dropdown"
     ]
 }
