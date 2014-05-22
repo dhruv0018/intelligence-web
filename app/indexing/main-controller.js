@@ -17,8 +17,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$window', '$rootScope', '$scope', '$sce', '$state', '$stateParams', '$modal', 'VIDEO_STATUSES', 'GAME_STATUSES', 'VG_EVENTS', 'SessionService', 'AlertsService', 'IndexingService', 'PlaysFactory', 'PlayersFactory', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
-    function controller(config, $window, $rootScope, $scope, $sce, $state, $stateParams, $modal, VIDEO_STATUSES, GAME_STATUSES, VG_EVENTS, session, alerts, indexing, plays, players, tags, play, event, sidebar) {
+    'config', '$rootScope', '$scope', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
+    function controller(config, $rootScope, $scope, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar) {
 
         var self = this;
 
@@ -31,7 +31,7 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.event = event;
         $scope.sidebar = sidebar;
         $scope.indexing = indexing;
-        $scope.buildScript = indexing.buildScript;
+        $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = indexing.game.video.sources;
 
         if (!indexing.game.isAssignmentStarted()) {
@@ -237,6 +237,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                 /* Remove the event from the play. */
                 event.delete(event.current);
+                event.reset();
 
                 /* Drop back to tagging state. */
                 indexing.showTags = true;

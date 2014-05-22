@@ -85,6 +85,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                             if (teamRosterPlayer.rosterStatuses[$scope.data.rosterId.id]) {
                                 teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
                                 teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.data.rosterId.id];
+                                teamRosterPlayer.positions[game.rosters[game.teamId].id] = teamRosterPlayer.positions[$scope.data.rosterId.id];
                                 teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
                                 $scope.gameRoster.push(teamRosterPlayer);
                             }

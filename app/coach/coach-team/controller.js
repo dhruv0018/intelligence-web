@@ -83,16 +83,17 @@ Team.service('Coach.Team.Data', [
 Team.controller('Coach.Team.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'ROLES', 'Coach.Team.Data', 'PlayersFactory',
     function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, ROLES, data, players) {
+        $scope.roster = [];
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
         data.then(function(data) {
             $scope.team = data.team;
-            $scope.roster = data.roster;
+            angular.extend($scope.roster, data.roster, $scope.roster);
+            $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
             $scope.rosterId = data.rosterId;
             $scope.positions = data.coachData.positionSet.indexedPositions;
-            $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
         });
 
         $scope.state = 'Coach.Team.All';
@@ -104,11 +105,11 @@ Team.controller('Coach.Team.controller', [
 
         $scope.save = function() {
             $scope.roster = players.getPositionsFromDowndown($scope.roster, $scope.rosterId, $scope.positions);
-            players.save($scope.rosterId, $scope.roster).then(function(players) {
-                $scope.roster = players;
+            players.save($scope.rosterId, $scope.roster).then(function(roster) {
+                $scope.roster = players.constructPositionDropdown(roster, $scope.rosterId, $scope.positions);
 
                 data.then(function(data) {
-                    data.roster = players;
+                    data.roster = roster;
                 });
             });
         };

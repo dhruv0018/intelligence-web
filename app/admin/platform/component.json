@@ -1,0 +1,12 @@
+{
+    "name": "platform",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "leagues"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

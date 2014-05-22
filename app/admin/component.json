@@ -8,7 +8,7 @@
         "teams",
         "schools",
         "queue",
-        "leagues"
+        "platform"
     ],
     "scripts": [
         "index.js"

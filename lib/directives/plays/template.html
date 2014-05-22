@@ -1,5 +1,9 @@
 <div class="plays">
 
-    <krossover-play data-play="play" data-team="team" data-opposing-team="opposingTeam" data-league="league" data-videoplayer="videoplayer" data-ng-repeat="play in plays | orderBy:'startTime'  track by $index"></krossover-play>
+    <accordion data-close-others="true">
+
+        <krossover-play data-play="play" data-team="team" data-opposing-team="opposingTeam" data-league="league" data-videoplayer="videoplayer" data-ng-repeat="play in plays | orderBy:orderBy track by $index"></krossover-play>
+
+    </accordion>
 
 </div>
