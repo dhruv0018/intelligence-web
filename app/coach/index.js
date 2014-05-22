@@ -78,23 +78,9 @@ Coach.service('Coach.Data', [
             promisedTeam.resolve(teams[data.teamId]);
 
             data.roster = teams[data.teamId].roster;
-            promisedRosterId.resolve({id: data.roster.id});
 
-            leagues.get(teams[data.teamId].leagueId, function(league) {
-
-                tagsets.getList().$promise.then(function(tagset) {
-
-                    promisedLeague.resolve(league);
-                });
-
-                if (league.positionSetId) {
-                    positions.get(league.positionSetId, function(positionSet) {
-                        promisedPositionSet.resolve(positionSet);
-                    }, null, true);
-                }
-            });
-
-            if (data.roster) {
+            if (typeof data.roster !== 'undefined') {
+                promisedRosterId.resolve({id: data.roster.id});
                 players.getList({
                     roster: data.roster.id
                 }, function(players) {
@@ -104,7 +90,21 @@ Coach.service('Coach.Data', [
                 });
             } else {
                 promisedRoster.resolve([]);
+                promisedRosterId.resolve({id: -1});
             }
+
+            leagues.get(teams[data.teamId].leagueId, function(league) {
+
+                tagsets.getList().$promise.then(function(tagset) {
+                    promisedLeague.resolve(league);
+                });
+
+                if (league.positionSetId) {
+                    positions.get(league.positionSetId, function(positionSet) {
+                        promisedPositionSet.resolve(positionSet);
+                    }, null, true);
+                }
+            });
 
         }, function() {
             console.log('failure to get the teams');
