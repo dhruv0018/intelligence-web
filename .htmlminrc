@@ -6,8 +6,9 @@ http://perfectionkills.com/experimenting-with-html-minifier/#options
 
 exports = module.exports = {
 
+    removeComments: true,
     collapseWhitespace: true,
-    removeComments: true
+    collapseBooleanAttributes: true
 }
 
 

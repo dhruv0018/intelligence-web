@@ -218,6 +218,16 @@
         "Assistant Coach": true
     },
 
+    "Coach.Team.Info": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "Coach.Team.Info.Information": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "Coach.Team.All": {
 
         "Head Coach": true,
@@ -248,25 +258,7 @@
         "Assistant Coach": true
     },
 
-    "game-info": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "your-team": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "opposing-team": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "instructions": {
+    "uploading-film": {
 
         "Head Coach": true,
         "Assistant Coach": true

@@ -1,9 +1,4 @@
 /* Component dependencies. */
-require('game-info');
-require('your-team');
-require('opposing-team');
-require('instructions');
-
 /* Component settings */
 var templateUrl = 'coach/add-film/uploading.html';
 
@@ -21,10 +16,7 @@ var UploadingFilm = angular.module('uploading-film', [
     'ui.router',
     'ui.bootstrap',
     'plan',
-    'game-info',
-    'your-team',
-    'opposing-team',
-    'instructions'
+    'Coach.Game'
 ]);
 
 /* Cache the template file */
@@ -82,12 +74,21 @@ UploadingFilm.value('UploadingFilmTabs', {
  * @type {Controller}
  */
 UploadingFilm.controller('UploadingFilmController', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'UploadingFilmTabs',
-    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, tabs) {
+    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'PlayersFactory', 'UploadingFilmTabs', 'Coach.Data',
+    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, players, tabs, data) {
 
         $scope.$storage = $localStorage;
 
         $scope.tabs = tabs;
+
+        data.then(function(coachData) {
+            $scope.roster = {
+                rosterId: coachData.coachTeam.roster.id,
+                players: players.constructActiveRoster(coachData.roster, coachData.coachTeam.roster.id)
+            };
+
+            $scope.game = data.game;
+        });
 
         tabs['game-info']     = { active: true, disabled: false };
         tabs['your-team']     = { active: false, disabled: true };
@@ -96,7 +97,7 @@ UploadingFilm.controller('UploadingFilmController', [
 
         var deleteVideo = function() {
 
-            var game = $scope.$storage.game;
+            var game = $scope.game;
 
             if (game && game.video && game.video.guid) {
 

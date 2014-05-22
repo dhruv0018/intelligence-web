@@ -73,14 +73,6 @@ var data = {
 };
 
 /**
- * Game data value service.
- * @module Game
- * @name Game.Data
- * @type {value}
- */
-Game.value('Coach.Game.Data', data);
-
-/**
  * Game directive.
  * @module Game
  * @name Game
@@ -98,18 +90,15 @@ Game.directive('krossoverCoachGame', [
             link: link,
 
             scope: {
-
+                roster: '=?',
+                opposingTeamRoster: '=?',
                 game: '=?'
             }
         };
 
         function link($scope, element, attributes, controller) {
 
-            element.on('$destroy', function() {
 
-                data.team = {};
-                data.oppsoingTeam = {};
-            });
         }
 
         return krossoverCoachGame;

@@ -17,6 +17,11 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
 
                 var self = this;
 
+                positionset.indexedPositions = {};
+                angular.forEach(positionset.positions, function(position) {
+                    positionset.indexedPositions[position.id] = position;
+                });
+
                 /* Copy all of the properties from the retrieved $resource
                  * "positionset" object. */
                 angular.extend(positionset, self);

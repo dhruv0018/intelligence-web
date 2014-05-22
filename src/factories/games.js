@@ -25,15 +25,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
-
-                //TODO temporarily forces all games to render in breakdown mode
-                //game.status = 6;
-
-                //TODO change this scheme to adjust to new type scheme
-                if(typeof game.gameType !== 'undefined') {
-                    game.filterType = (game.gameType.length > 0) ? GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filter : '';
-                }
-
                 return game;
             },
 
@@ -162,15 +153,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.rosters) return undefined;
 
                 return self.rosters[teamId];
-            },
-
-            getIndexOfNoteByType: function(type) {
-
-                return this.notes.map(function(note) {
-
-                    return note.noteTypeId;
-
-                }).indexOf(type);
             },
 
             getVideoSources: function() {
@@ -312,7 +294,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 /* Ensure the game can be assigned. */
-                if(self.canBeAssignedToQa()) {
+                if (self.canBeAssignedToQa()) {
 
                     self.indexerAssignments = self.indexerAssignments || [];
 
@@ -455,7 +437,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }).indexOf(userId);
 
                 /* Return the assignment if found. */
-                return !!~index ? assignments[index] : undefined;
+                return ~index ? assignments[index] : undefined;
             },
 
             isAssignmentStarted: function(assignment) {
@@ -587,8 +569,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             findNoteContentByType: function(notes, noteTypeId) {
 
-                for(var index = 0; index < notes.length; index++) {
-                    if(notes[index].noteTypeId === noteTypeId) {
+                for (var index = 0; index < notes.length; index++) {
+                    if (notes[index].noteTypeId === noteTypeId) {
                         return notes[index].content;
                     }
                 }
@@ -596,7 +578,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 //returning blank content
                 return '';
             },
-            transformIndexed: function(games){
+            transformIndexed: function(games) {
                 var indexedGames = {};
                 var self = this;
 
@@ -608,6 +590,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
 
                 return indexedGames;
+            },
+            unadjustTime: function(game) {
+                var datePlayed = new Date(game.datePlayed);
+
+                //un-adjusting the time
+                datePlayed.setTime(datePlayed.getTime() + datePlayed.getTimezoneOffset() * 60000);
+                game.datePlayed = datePlayed;
+
+                return game;
             }
 
         };

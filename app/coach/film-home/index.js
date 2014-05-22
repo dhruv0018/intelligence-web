@@ -25,8 +25,6 @@ FilmHome.run([
     }
 ]);
 
-
-
 /**
  * FilmHome page state router.
  * @module FilmHome
@@ -38,26 +36,26 @@ FilmHome.config([
 
         $stateProvider
 
-            .state('Coach.FilmHome', {
-                url: '/film-home',
-                views: {
-                    'main@root': {
-                        templateUrl: 'coach/film-home/template.html',
-                        controller: 'Coach.FilmHome.controller'
-                    }
+        .state('Coach.FilmHome', {
+            url: '/film-home',
+            views: {
+                'main@root': {
+                    templateUrl: 'coach/film-home/template.html',
+                    controller: 'Coach.FilmHome.controller'
                 }
-            });
+            }
+        });
     }
 ]);
 
-FilmHome.service('Coach.FilmHome.GameFilters', ['GAME_TYPES', function (otherFiltersConfiguration) {
+FilmHome.service('Coach.FilmHome.GameFilters', ['GAME_TYPES', function(otherFiltersConfiguration) {
     var filtersData = {
         filters: {
             'all': true,
             'others': {}
         },
         othersDisabled: true,
-        disableOthers: function () {
+        disableOthers: function() {
 
             Object.keys(this.filters.others).forEach(function(filterName) {
 
@@ -67,7 +65,7 @@ FilmHome.service('Coach.FilmHome.GameFilters', ['GAME_TYPES', function (otherFil
 
             this.othersDisabled = true;
         },
-        watchOthers: function () {
+        watchOthers: function() {
 
             this.othersDisabled = Object.keys(this.filters.others).every(function(filterName) {
 
@@ -77,7 +75,7 @@ FilmHome.service('Coach.FilmHome.GameFilters', ['GAME_TYPES', function (otherFil
 
             this.filters.all = this.othersDisabled;
         },
-        listEnabled: function () {
+        listEnabled: function() {
 
             var enabledFilters = Object.keys(this.filters.others).filter(function(filterName) {
                 return this.filters.others[filterName] === true;
@@ -87,34 +85,36 @@ FilmHome.service('Coach.FilmHome.GameFilters', ['GAME_TYPES', function (otherFil
         }
     };
 
-    angular.forEach(otherFiltersConfiguration, function (filter) {
-        this.filters.others[filter.filter] = false;
+    angular.forEach(otherFiltersConfiguration, function(filter) {
+        this.filters.others[filter.filterType] = false;
     }, filtersData);
 
     return filtersData;
 }]);
 
-FilmHome.filter('gameFilter', ['Coach.FilmHome.GameFilters', function (filters) {
+FilmHome.filter('gameFilter', [
+    'Coach.FilmHome.GameFilters','GAME_TYPES_IDS', 'GAME_TYPES',
+    function(filters, GAME_TYPES_IDS, GAME_TYPES) {
 
-    return function(games, options) {
-        if (options.all === true) {
-            return games;
-        }
+        return function(games, options) {
+            if (options.all === true) {
+                return games;
+            }
 
-        var filteredCollection = [];
+            var filteredCollection = [];
 
-        angular.forEach(games, function(game) {
-            angular.forEach(filters.listEnabled(), function(filter) {
-                if (game.filterType === filter) {
-                    filteredCollection.push(game);
-                }
+            angular.forEach(games, function(game) {
+                angular.forEach(filters.listEnabled(), function(filter) {
+                    if (GAME_TYPES[GAME_TYPES_IDS[game.gameType]].filterType === filter) {
+                        filteredCollection.push(game);
+                    }
+                });
             });
-        });
 
-        return filteredCollection;
-    };
-
-}]);
+            return filteredCollection;
+        };
+    }
+]);
 
 /* File dependencies */
 require('./controller');

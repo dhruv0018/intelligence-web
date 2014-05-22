@@ -21,11 +21,13 @@
         "thumbnail",
         "roster",
         "film",
+        "date",
         "sport-placeholder",
         "role-icon",
         "add-player",
         "mascot-placeholder",
-        "profile-placeholder"
+        "profile-placeholder",
+        "positions-dropdown"
     ],
     "scripts": [
         "index.js"

@@ -8,13 +8,13 @@
 
     <x-tab heading="Opposing Team" active="tabs['opposing-team'].active" disabled="tabs['opposing-team'].disabled" select="tabs.activateTab('opposing-team')">
 
-        <krossover-coach-game-opposing-team data-game="game"></krossover-coach-game-opposing-team>
+        <krossover-coach-game-opposing-team data-game="game" data-opposing-team-roster="opposingTeamRoster"></krossover-coach-game-opposing-team>
 
     </x-tab>
 
     <x-tab heading="Your Team" active="tabs['your-team'].active" disabled="tabs['your-team'].disabled" select="tabs.activateTab('your-team')">
 
-        <krossover-coach-game-your-team data-game="game"></krossover-coach-game-your-team>
+        <krossover-coach-game-your-team data-game="game" data-roster="roster"></krossover-coach-game-your-team>
 
     </x-tab>
 

@@ -90,7 +90,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                 if (indexing.isIndexing) {
 
-                    if(self.savable()) self.save();
+                    if (self.savable()) self.save();
                     else if (self.nextable()) self.next();
                 }
 
@@ -197,9 +197,11 @@ Indexing.controller('Indexing.Main.Controller', [
             /* Get the next set of tags based on the tag in the current event. */
             tags.current = indexing.getNextTags(tagId);
 
-            event.reset();
-
+            /* Snap video back to time of current event. */
+            $scope.VideoPlayer.seekTime(event.current.time);
             $scope.VideoPlayer.play();
+
+            event.reset();
         };
 
         /**
@@ -261,7 +263,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
         /**
          * Deletes an event.
-         * @param {Object} event - the event to delete.
+         * @param {Object} selectedEvent - the event to delete.
          */
         this.deleteEvent = function(selectedEvent) {
 

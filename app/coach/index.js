@@ -4,6 +4,7 @@ require('film-home');
 require('game-area');
 require('coach-team');
 require('add-film');
+require('team-info');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -18,6 +19,7 @@ var Coach = angular.module('Coach', [
     'Coach.FilmHome',
     'Coach.GameArea',
     'Coach.Team',
+    'Coach.Team.Info',
     'add-film'
 ]);
 
@@ -47,8 +49,8 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'LeaguesFactory', 'TagsetsFactory', 'IndexingService',
-    function($q, session, teams, games, players, leagues, tagsets, indexing) {
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory','IndexingService',
+    function($q, session, teams, games, players, leagues, tagsets, positions, indexing) {
         var promises = {};
         var deferred = $q.defer();
         var promisedGames = $q.defer();
@@ -58,12 +60,13 @@ Coach.service('Coach.Data', [
         var promisedRoster = $q.defer();
         var promisedRosterId = $q.defer();
         var promisedLeague = $q.defer();
+        var promisedPositionSet = $q.defer();
 
         //TODO get real teamroster id
         var data = {
-            teamId : session.currentUser.currentRole.teamId,
+            teamId: session.currentUser.currentRole.teamId,
             games: promisedGames,
-            team : promisedTeam,
+            team: promisedTeam,
             roster: {}
         };
 
@@ -85,12 +88,18 @@ Coach.service('Coach.Data', [
 
                     promisedLeague.resolve(league);
                 });
+
+                if (league.positionSetId) {
+                    positions.get(league.positionSetId, function(positionSet) {
+                        promisedPositionSet.resolve(positionSet);
+                    }, null, true);
+                }
             });
 
             if (data.roster) {
                 players.getList({
                     roster: data.roster.id
-                }, function (players) {
+                }, function(players) {
                     promisedRoster.resolve(players);
                 }, function(failure) {
                     promisedRoster.resolve([]);
@@ -110,9 +119,36 @@ Coach.service('Coach.Data', [
             teams: promisedTeams.promise,
             league: promisedLeague.promise,
             roster: promisedRoster.promise,
-            rosterId: promisedRosterId.promise
+            rosterId: promisedRosterId.promise,
+            positionSet: promisedPositionSet.promise
         };
 
         return $q.all(promises);
     }
+]);
+
+/**
+ * Game data value service.
+ * @module Game
+ * @name Game.Data
+ * @type {value}
+ */
+Coach.service('Coach.Game.Data', ['$q', 'Coach.Data',
+    function($q, coachData) {
+
+        var promisedGameData = $q.defer();
+
+        coachData.then(function(coachData) {
+            var gameData = coachData;
+            gameData.team = coachData.coachTeam;
+            gameData.opposingTeam = {
+                players: []
+            };
+
+            promisedGameData.resolve(gameData);
+        });
+
+        return promisedGameData.promise;
+    }
+
 ]);

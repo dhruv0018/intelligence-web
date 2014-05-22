@@ -65,8 +65,7 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         $scope.data = data;
 
         $scope.save = function() {
-
-            games.save(game);
+            games.save($scope.game);
         };
     }
 ]);
