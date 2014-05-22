@@ -16,9 +16,10 @@ var TeamInfo = angular.module('Coach.Team.Info');
  * @name FilmInfo.controller
  * @type {controller}
  */
+
 TeamInfo.controller('Coach.Team.Info.controller', [
-    '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
-    function controller($rootScope, $scope, $state, games, players, data) {
+    '$rootScope', '$scope', '$state', '$http', 'config', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
+    function controller($rootScope, $scope, $state, $http, config, games, players, data) {
         $state.go('Coach.Team.Info.Information');
     }
 ]);
