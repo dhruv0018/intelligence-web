@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Notes.Controller', [
-    '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS',
-    function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS) {
+    '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS', 'GamesFactory',
+    function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games) {
 
         $scope.noteValues = ['Camera did not follow play', 'Jersey not visible', 'Gap in film', 'Scoreboard shot', 'Other'];
 
@@ -45,8 +45,15 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
             $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] = $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] || [];
             $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE].push(newIndexingNote);
 
-
-            $scope.indexing.game.save();
+            //there is still a race condition bug here that if the user clicks send to qa
+            //or back button the game will be saved to the server again with
+            //the notes still not having id's and the notes will be created twice
+            //the following code would need to be atomic to prevent that from happening
+            $scope.indexing.game.save().then(function() {
+                games.get($scope.indexing.game.id, function(result) {
+                    $scope.indexing.game = result;
+                });
+            });
         };
     }
 ]);
