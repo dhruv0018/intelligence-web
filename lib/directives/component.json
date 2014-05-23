@@ -27,7 +27,8 @@
         "add-player",
         "mascot-placeholder",
         "profile-placeholder",
-        "positions-dropdown"
+        "positions-dropdown",
+        "uploader"
     ],
     "scripts": [
         "index.js"

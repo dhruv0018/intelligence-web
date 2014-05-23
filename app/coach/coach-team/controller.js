@@ -83,15 +83,16 @@ Team.service('Coach.Team.Data', [
 Team.controller('Coach.Team.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'ROLES', 'Coach.Team.Data', 'PlayersFactory',
     function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, ROLES, data, players) {
+        $scope.roster = [];
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
         data.then(function(data) {
             $scope.team = data.team;
-            $scope.roster = data.roster;
             $scope.rosterId = data.rosterId;
             $scope.positions = data.coachData.positionSet.indexedPositions;
+            angular.extend($scope.roster, data.roster, $scope.roster);
             $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
         });
 
