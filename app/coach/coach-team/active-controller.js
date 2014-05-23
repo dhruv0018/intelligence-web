@@ -70,7 +70,7 @@ Team.controller('Coach.Team.Active.controller', [
                         roster: $scope.data.rosterId
                     }, function(roster) {
                         angular.extend($scope.data.roster, $scope.data.roster, roster);
-                        $scope.data.roster = players.constructPositionDropdown(roster, $scope.data.rosterId, $scope.data.positions);
+                        $scope.data.roster = players.constructPositionDropdown(roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
                     });
 
                 })
