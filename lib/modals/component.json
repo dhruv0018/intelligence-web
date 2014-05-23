@@ -1,0 +1,12 @@
+{
+    "name": "modals",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "raw-film"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
