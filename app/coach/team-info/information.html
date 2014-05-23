@@ -1,22 +1,25 @@
 <div class="information">
 
-    <div class="uploadLogo pull-left">
-        <div class="logo">Logo</div>
-        <button> Upload Logo </button>
+    <div class="uploadLogo">
+        <img data-ng-if="data.coachTeam.imageUrl || !data.coachTeam.imageUrl.length === 0" data-ng-src="{{data.coachTeam.imageUrl}}" class="logo" alt="logo">
+        <mascot-placeholder data-ng-if="!data.coachTeam.imageUrl || data.coachTeam.imageUrl.length === 0"></mascot-placeholder>
+        <form>
+            <button class="btn-upload">Upload Logo <i class="icon-upload-alt"></i><input type="file" onchange="angular.element(this).scope().setLogo(this.files)"></button>
+        </form>
     </div>
 
-    <div class="primary-information pull-left">
+    <div class="primary-information">
         <div>
-            <h3>School Name</h3>
-            <input type="text" name="schoolName">
+            <h4>School Name</h4>
+            <input class="form-control" type="text" name="schoolName">
         </div>
 
         <div>
-            <h3>Team Name</h3>
-            <input type="text" name="teamName">
+            <h4>Team Name</h4>
+            <input class="form-control" type="text" name="teamName">
         </div>
 
-        <button class="btn btn-primary pull-right">
+        <button data-ng-click="save()" class="btn btn-primary pull-right">
             Save
         </button>
     </div>
