@@ -1,14 +1,14 @@
-<accordion-group data-is-open="expandAll" class="play"  data-ng-class="{ active: play.id == currentPlayId }">
+<accordion-group data-is-open="isOpen" data-is-disabled="expandAll" class="play"  data-ng-class="{ active: play.id == currentPlayId }">
 
     <accordion-heading>
-        <h4 data-ng-class="{'playCollapsed': !status.open}">
+        <h4 data-ng-class="{'playCollapsed': !isOpen}">
             <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
             <span class="dash"> — </span>
             <time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time>
 
              <span class="playplay" data-ng-if="!currentUser.is(INDEXER)" data-ng-click="$event.stopPropagation();"><i class="icon-play-sign"></i></span>
         </h4>
-        <h4 data-ng-class="{'playCollapsed': !status.open}" class="vs">
+        <h4 data-ng-class="{'playCollapsed': !isOpen}" class="vs">
             <span class="team">{{ team.name }}</span>
             <span class="score">{{ play.score[team.id] }}</span>
             <span class="vs">&nbsp;vs&nbsp;</span>
