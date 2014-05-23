@@ -147,6 +147,7 @@ UploadFilm.controller('UploadFilmController', [
                     console.log('KVS GUID: ' + guid);
 
                     /* Store the GUID with the game. */
+                    $scope.game.datePlayed = new Date();
                     $scope.game.video = {
                         guid: guid
                     };
