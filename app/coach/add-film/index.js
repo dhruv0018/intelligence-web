@@ -46,8 +46,7 @@ AddFilm.config([
                     controller: 'AddFilmController'
                 },
                 'content@add-film': {
-                    templateUrl: 'coach/add-film/start.html',
-                    controller: 'AddFilmController'
+                    templateUrl: 'coach/add-film/start.html'
                 }
             },
             onExit: [
@@ -72,7 +71,7 @@ AddFilm.config([
 AddFilm.controller('AddFilmController', [
     '$scope', '$state',
     function controller($scope, $state) {
-
+        $scope.game = {};
     }
 ]);
 

@@ -146,12 +146,9 @@ UploadFilm.controller('UploadFilmController', [
                     /* TODO: Change to use logging framework */
                     console.log('KVS GUID: ' + guid);
 
-                    /* Create video object on the game. */
-                    $scope.game = {
-                        /* Store the GUID with the game. */
-                        video: {
-                            guid: guid
-                        }
+                    /* Store the GUID with the game. */
+                    $scope.game.video = {
+                        guid: guid
                     };
 
                     coachData.game = $scope.game;
