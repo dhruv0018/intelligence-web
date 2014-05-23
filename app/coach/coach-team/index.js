@@ -40,6 +40,9 @@ Team.config([
                     templateUrl: 'coach/team/template.html',
                     controller: 'Coach.Team.controller'
                 }
+            },
+            resolve: {
+                'Coach.Team.Data': 'Coach.Team.Data'
             }
         })
 

@@ -19,7 +19,7 @@ Team.controller('Coach.Team.Active.controller', [
 
         $scope.isActive = function(player) {
 
-            return player.rosterStatuses[$scope.rosterId] !== false;
+            return player.rosterStatuses[$scope.data.rosterId] !== false;
         };
 
         $scope.addNewPlayer = function() {
@@ -32,23 +32,23 @@ Team.controller('Coach.Team.Active.controller', [
                 selectedPositions: {}
             };
 
-            player.selectedPositions[$scope.rosterId] = [];
+            player.selectedPositions[$scope.data.rosterId] = [];
 
-            player.rosterStatuses[$scope.rosterId] = true;
+            player.rosterStatuses[$scope.data.rosterId] = true;
 
-            $scope.roster.push(player);
+            $scope.data.roster.push(player);
         };
 
         $scope.deactivate = function(player) {
 
             if (player && player.id) {
 
-                player.toggleActivation($scope.rosterId);
+                player.toggleActivation($scope.data.rosterId);
             }
 
             else {
 
-                $scope.roster.splice($scope.roster.indexOf(player), 1);
+                $scope.roster.splice($scope.data.roster.indexOf(player), 1);
             }
         };
 
@@ -56,7 +56,7 @@ Team.controller('Coach.Team.Active.controller', [
             var file = files[0];
             var data = new FormData();
 
-            data.append('rosterId', $scope.rosterId);
+            data.append('rosterId', $scope.data.rosterId);
             data.append('roster', file);
 
             $http.post(config.api.uri + 'batch/players/file',
@@ -67,10 +67,10 @@ Team.controller('Coach.Team.Active.controller', [
                 })
                 .success(function(uploadedPlayers) {
                     players.getList({
-                        roster: $scope.rosterId
+                        roster: $scope.data.rosterId
                     }, function(roster) {
-                        angular.extend($scope.roster, $scope.roster, roster);
-                        $scope.roster = players.constructPositionDropdown(roster, $scope.rosterId, $scope.positions);
+                        angular.extend($scope.data.roster, $scope.data.roster, roster);
+                        $scope.data.roster = players.constructPositionDropdown(roster, $scope.data.rosterId, $scope.data.positions);
                     });
 
                 })
