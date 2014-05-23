@@ -66,7 +66,7 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.clearActiveEventVariableValue = function() {
 
-            this.current.variableValues[this.current.activeEventVariableIndex] = null;
+            this.current.variableValues[this.current.activeEventVariableIndex].value = null;
         };
 
         /**
@@ -125,14 +125,17 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.delete = function(event) {
 
+            /* Find the index of the event. */
+            var eventIndex = play.current.events.indexOf(this.current);
+
             /* Remove current event from the current play. */
-            play.current.events.splice(play.current.events.indexOf(this.current), 1);
+            play.current.events.splice(eventIndex, 1);
 
             /* If there are other events left in the play. */
             if (play.current.events.length > 0) {
 
                 /* Set the current event to the previous event. */
-                var previousEventIndex = play.current.events.length - 1;
+                var previousEventIndex = eventIndex - 1;
                 var previousEvent = play.current.events[previousEventIndex];
                 angular.copy(previousEvent, event.current);
                 play.save();
