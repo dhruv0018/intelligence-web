@@ -42,8 +42,7 @@
   }
 
   div.main-highlight{
-    height: 100%;
-    min-height:100%;
+    height: calc(~"100% - 50px");
     
     .game-area-game-information {
       position: relative;
@@ -154,7 +153,7 @@
   }
 
   .game-area-film{
-    height: 100%;
+    height: calc(~"100% - 55px");
 
     .player{
       padding-top:5%;
@@ -171,10 +170,41 @@
       width:290px;
       height: 100%;
       max-height: 100%;
-      overflow-y: auto;
+      position: relative;
+      overflow-y: hidden;
       overflow-x: hidden;
       float:left;
       padding: 0px;
+      -webkit-transform: translateZ(0);
+
+      .expandrow {
+        position: absolute;
+        bottom: 0px;
+        border-top: thin solid @gray-border;
+        background-color: white;
+        width: 100%;
+        height: 50px;
+        padding: 0px 5px 0px 5px;
+
+        button {
+          .btn;
+          .btn-link;
+          font-size: 16px;
+          font-weight: 400;
+          letter-spacing: 0.01em;
+          padding-top: 10px;
+          padding-left: 0;
+          padding-right: 0;
+          padding-bottom: 10px;
+          border-left-width: 0;
+
+          &:focus,
+          &:hover {
+
+              text-decoration: none;
+          }
+        }
+      }
     }
 
   }
