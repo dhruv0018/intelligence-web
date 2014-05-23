@@ -370,7 +370,7 @@ module.exports = function(grunt) {
 
         dox: {
             docs: {
-                src: ['src', 'lib'],
+                src: ['app', 'lib', 'src'],
                 dest: 'docs'
             }
         },
@@ -420,7 +420,7 @@ module.exports = function(grunt) {
         watch: {
             options: {
                 spawn: false,
-                livereload: true
+                interupt: true
             },
             packagejson: {
                 files: ['package.json'],
