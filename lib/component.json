@@ -5,6 +5,7 @@
         "."
     ],
     "locals": [
+        "modals",
         "directives"
     ]
 }
