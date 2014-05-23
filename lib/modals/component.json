@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "roles",
         "raw-film"
     ],
     "scripts": [
