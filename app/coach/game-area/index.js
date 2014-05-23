@@ -156,6 +156,8 @@ GameArea.controller('Coach.GameArea.controller', [
                 delete coachData.opposingTeamGameRoster;
             });
         });
+
+        $scope.expandAll = false;
     }
 ]);
 
