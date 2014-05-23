@@ -89,8 +89,6 @@ Team.controller('Coach.Team.controller', [
 
         $scope.data = data;
         $scope.roster = players.constructPositionDropdown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
-
-
         $scope.state = 'Coach.Team.All';
 
         $scope.$watch('state', function(state) {
