@@ -126,6 +126,19 @@
 
                     </tr>
 
+                    <tr>
+
+                        <td colspan="4">
+                            <h3><i class="icon-pushpin"></i> Coaches Notes:</h3>
+                            <div>
+                                <ul>
+                                    <li ng-repeat="note in game.notes[GAME_NOTE_TYPES.COACH_NOTE]">{{note.content}}</li>
+                                </ul>
+                            </div>
+                        </td>
+
+                    </tr>
+
                 </tbody>
 
             </table>
