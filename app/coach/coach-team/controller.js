@@ -88,7 +88,6 @@ Team.controller('Coach.Team.controller', [
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
         $scope.data = data;
-        console.log($scope.data);
         $scope.roster = players.constructPositionDropdown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
 
 
