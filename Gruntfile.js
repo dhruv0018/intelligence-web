@@ -123,7 +123,7 @@ module.exports = function(grunt) {
         cssmin: {
             prod: {
                 files: {
-                    'build/styles.css': ['build/prefixed.css']
+                    'build/styles.css': ['build/withfonts.css']
                 }
             }
         },
@@ -179,6 +179,10 @@ module.exports = function(grunt) {
             theme: {
                 src: ['build/build.css', 'build/theme.css'],
                 dest: 'build/themed.css'
+            },
+            fonts: {
+                src: ['fonts.css', 'build/prefixed.css'],
+                dest: 'build/withfonts.css'
             }
         },
 
@@ -312,7 +316,7 @@ module.exports = function(grunt) {
             dev: {
                 files: {
                     'build/index.html': 'src/index.html',
-                    'build/styles.css': 'build/prefixed.css',
+                    'build/styles.css': 'build/withfonts.css',
                     'build/scripts.js': 'build/bundle.js'
                 }
             },
@@ -506,6 +510,7 @@ module.exports = function(grunt) {
         'less',
         'concat:theme',
         'autoprefixer',
+        'concat:fonts',
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
@@ -522,6 +527,7 @@ module.exports = function(grunt) {
         'componentbuild:styles',
         'concat:theme',
         'autoprefixer',
+        'concat:fonts',
         'cssmin',
         'htmlmin',
         'componentbuild:files',
@@ -541,6 +547,7 @@ module.exports = function(grunt) {
         'less',
         'concat:theme',
         'autoprefixer',
+        'concat:fonts',
         'cssmin',
         'htmlmin',
         'componentbuild:files',
