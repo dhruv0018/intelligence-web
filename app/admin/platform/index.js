@@ -62,8 +62,20 @@ Platform.config([
 ]);
 
 Platform.controller('PlatformController', [
-    '$scope', '$modal',
-    function controller($scope, $modal) {
+    '$scope', '$modal',  'LeaguesFactory', 'PlansFactory',
+    function controller($scope, $modal, leagues, plans) {
+        console.log('check1');
+
+        $scope.plans = plans.getList({}, function(plans) {
+            return plans;
+        });
+
+        $scope.leagues = leagues.getList({}, function(leagues) {
+            return leagues;
+        });
+
+        console.log($scope.plans);
+
         $scope.addPlan = function() {
             $modal.open({
                 templateUrl: 'app/admin/platform/new-plan/new-plan.html',

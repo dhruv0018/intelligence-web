@@ -27,6 +27,8 @@ IntelligenceWebClient.factory('PlansFactory', [
 
             getList: function(filter, success, error, index) {
 
+                console.log('its happening');
+
                 var self = this;
 
                 if (angular.isFunction(filter)) {
@@ -38,11 +40,30 @@ IntelligenceWebClient.factory('PlansFactory', [
                 }
 
                 filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || 1000;
 
                 var callback = function(plans) {
 
+                    var indexedPlans = {};
+
+                    plans.forEach(function(plan) {
+                        plan = self.extendPlan(plan);
+
+                        indexedPlans[plan.id] = plan;
+                    });
+                    plans = index ? indexedPlans : plans;
+
+                    return success ? success(plans) : plans;
 
                 };
+
+                error = error || function() {
+
+                    throw new Error('Could not load plans list');
+                };
+
+                return self.resource.query(filter, callback, error);
             },
 
             save: function(plan) {

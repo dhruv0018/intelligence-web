@@ -32,7 +32,6 @@ NewPlan.controller('NewPlanController', [
     '$scope', '$state', '$modalInstance', 'SessionService', 'SportsFactory', 'LeaguesFactory',
     function controller($scope, $state, $modalInstance, session, sports, leagues) {
 
-        console.log('new plan');
         $scope.sports = sports.getList({}, function(sports) {
             return sports;
         });
@@ -45,6 +44,8 @@ NewPlan.controller('NewPlanController', [
 
         $scope.savePlan = function() {
             console.log('save');
+
+            //
             // grab the data, package it up in to the plans object and then create a plan
         };
 
