@@ -123,7 +123,7 @@ module.exports = function(grunt) {
         cssmin: {
             prod: {
                 files: {
-                    'build/styles.css': ['build/withfonts.css']
+                    'build/styles.css': ['build/prefixed.css']
                 }
             }
         },
@@ -159,7 +159,7 @@ module.exports = function(grunt) {
 
         autoprefixer: {
             src: {
-                src: 'build/themed.css',
+                src: 'build/unprefixed.css',
                 dest: 'build/prefixed.css'
             }
         },
@@ -176,13 +176,9 @@ module.exports = function(grunt) {
                 ],
                 dest: 'build/mousetrap.js'
             },
-            theme: {
-                src: ['build/build.css', 'build/theme.css'],
-                dest: 'build/themed.css'
-            },
-            fonts: {
-                src: ['fonts.css', 'build/prefixed.css'],
-                dest: 'build/withfonts.css'
+            unprefixed: {
+                src: ['fonts.css', 'build/build.css', 'build/theme.css'],
+                dest: 'build/unprefixed.css'
             }
         },
 
@@ -316,7 +312,7 @@ module.exports = function(grunt) {
             dev: {
                 files: {
                     'build/index.html': 'src/index.html',
-                    'build/styles.css': 'build/withfonts.css',
+                    'build/styles.css': 'build/prefixed.css',
                     'build/scripts.js': 'build/bundle.js'
                 }
             },
@@ -508,9 +504,8 @@ module.exports = function(grunt) {
         'browserify:dev',
         'componentbuild:styles',
         'less',
-        'concat:theme',
+        'concat:unprefixed',
         'autoprefixer',
-        'concat:fonts',
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
@@ -525,9 +520,8 @@ module.exports = function(grunt) {
         'browserify:prod',
         'less',
         'componentbuild:styles',
-        'concat:theme',
+        'concat:unprefixed',
         'autoprefixer',
-        'concat:fonts',
         'cssmin',
         'htmlmin',
         'componentbuild:files',
@@ -545,9 +539,8 @@ module.exports = function(grunt) {
         'browserify:prod',
         'componentbuild:styles',
         'less',
-        'concat:theme',
+        'concat:unprefixed',
         'autoprefixer',
-        'concat:fonts',
         'cssmin',
         'htmlmin',
         'componentbuild:files',
