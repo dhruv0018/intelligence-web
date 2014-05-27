@@ -19,7 +19,7 @@ Team.controller('Coach.Team.Inactive.controller', [
 
         $scope.isInactive = function(player) {
 
-            return player.rosterStatuses[$scope.rosterId] === false;
+            return player.rosterStatuses[$scope.data.rosterId] === false;
         };
     }
 ]);
