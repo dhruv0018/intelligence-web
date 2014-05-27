@@ -2,24 +2,64 @@
 
 .new-plan-modal {
 
-    .modal-header {
-
-        position: absolute;
-        top: -50px;
-        width: 600px;
-        border: none;
-        padding: 0;
-    }
+    letter-spacing: normal;
 
     .modal-title {
 
-        color: white;
-        font-size: 22px;
+        text-align: left;
     }
 
     .modal-body {
 
-        padding: 0;
+        padding: 20px;
+    }
+
+    .plan-modal-firstrow-column {
+        width: 49%;
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+
+    .leaguebox-container {
+        
+        padding: 10px;
+
+        .leagueboxes {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    }
+
+    .plandate-container {
+
+        padding: 10px;
+
+        label {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        select {
+            display: inline;
+            width: 40%;
+            margin-right: 10px;
+        }
+    }
+
+    .gamesrow {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        div {
+            width: 49%;
+            display: inline-block;
+            margin-bottom: 10px;
+
+            input, select {
+                width: 50%;
+                display: inline-block;
+            }
+        }
     }
 
     .list-group {
