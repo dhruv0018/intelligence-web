@@ -159,7 +159,7 @@ module.exports = function(grunt) {
 
         autoprefixer: {
             src: {
-                src: 'build/themed.css',
+                src: 'build/unprefixed.css',
                 dest: 'build/prefixed.css'
             }
         },
@@ -176,9 +176,9 @@ module.exports = function(grunt) {
                 ],
                 dest: 'build/mousetrap.js'
             },
-            theme: {
-                src: ['build/build.css', 'build/theme.css'],
-                dest: 'build/themed.css'
+            unprefixed: {
+                src: ['fonts.css', 'build/build.css', 'build/theme.css'],
+                dest: 'build/unprefixed.css'
             }
         },
 
@@ -504,7 +504,7 @@ module.exports = function(grunt) {
         'browserify:dev',
         'componentbuild:styles',
         'less',
-        'concat:theme',
+        'concat:unprefixed',
         'autoprefixer',
         'componentbuild:files',
         'copy:theme-assets',
@@ -520,7 +520,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'less',
         'componentbuild:styles',
-        'concat:theme',
+        'concat:unprefixed',
         'autoprefixer',
         'cssmin',
         'htmlmin',
@@ -539,7 +539,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'componentbuild:styles',
         'less',
-        'concat:theme',
+        'concat:unprefixed',
         'autoprefixer',
         'cssmin',
         'htmlmin',
