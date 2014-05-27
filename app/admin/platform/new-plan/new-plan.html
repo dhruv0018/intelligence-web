@@ -12,7 +12,7 @@
             <div>
                 <div class="plan-modal-firstrow-column">
                     <label>Name of Plan</label>
-                    <input class="form-control" placeholder="Name" data-ng-model="$storage.plan.name" type="text" required >
+                    <input class="form-control" placeholder="Name" data-ng-model="plan.name" type="text" required >
                 </div>
                 <div class="plan-modal-firstrow-column pull-right">
                     <label>For what sport</label>
@@ -23,7 +23,7 @@
             </div>
             <label>For what leagues?</label>
             <div class="leaguebox-container">
-                <div class="form-group leagueboxes" ng-repeat="league in leagues | filter:{'sportId':sportId}" required>
+                <div class="form-group leagueboxes" ng-repeat="league in leagues | filter:{'sportId':sportId}" ng-model="plan.leagueIds" required>
                     <input type="checkbox"> {{ league.name }}
                 </div>
             </div>
@@ -31,31 +31,31 @@
             <label>Dates of the plan</label>
             <div class="plandate-container">
                 <label>from</label>
-                <div class="dateholder"><date></date></div>
+                <div class="dateholder"><date ng-model="plan.startDay"></date></div>
                 <label>to</label>
-                <div class="dateholder"><date></date></div>
+                <div class="dateholder"><date ng-model="plan.endDay"></date></div>
             </div>
             <div class="gamesrow">
                 <div>
                     <label>Max games per season</label>
-                    <input class="form-control" type="text" required>
+                    <input class="form-control" type="text" ng-model="plan.maxAnyGames" required>
                 </div>
                 <div>
                     <label>Default # of regular games</label>
-                    <input class="form-control" type="text" required> per week
+                    <input class="form-control" type="text" ng-model="plan.maxRegularGames" required> per week
                 </div>
             </div>
             <div class="gamesrow">
                 <div>
                     <label>Default # of scouting games</label>
-                    <input class="form-control" type="text" required> per week
+                    <input class="form-control" type="text" ng-model="plan.maxScoutingGames" required> per week
                 </div>
                 <div>
                     <label>Default turnaround time</label>
                     <select class="form-control"></select>
                 </div>
             </div>
-            <button class="btn btn-primary" ng-click="savePlan()">Save</button>
+            <button class="btn btn-primary" ng-click="savePlan(plan)">Save</button>
 
 
         </div>
