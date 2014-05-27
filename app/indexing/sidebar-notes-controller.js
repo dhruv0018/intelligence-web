@@ -17,6 +17,34 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
     '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS', 'GamesFactory',
     function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games) {
 
+        var Mousetrap = window.Mousetrap;
+
+        //adding mousetrap pause and unpause functionality
+        //should be pulled out as moustrap extension
+        Mousetrap = (function enablePause(Mousetrap) {
+            var mt = Mousetrap;
+            var originalStopCallback = mt.stopCallback;
+            var enabled = true;
+
+            mt.stopCallback = function(e, element, combo) {
+                if (!enabled) {
+                    return true;
+                }
+
+                return originalStopCallback(e, element, combo);
+            };
+
+            mt.pause = function() {
+                enabled = false;
+            };
+
+            mt.unpause = function() {
+                enabled = true;
+            };
+
+            return mt;
+        })(Mousetrap);
+
         $scope.noteValues = ['Camera did not follow play', 'Jersey not visible', 'Gap in film', 'Scoreboard shot', 'Other'];
 
         $scope.selectedNoteText = $scope.noteValues[0];
@@ -27,12 +55,21 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
             $scope.$apply();
         });
 
+        $scope.clearKeyListeners = function() {
+            Mousetrap.pause();
+        };
+
+        $scope.unclearKeyListeners = function(element) {
+            Mousetrap.unpause();
+        };
+
         $scope.saveIndexingNote = function() {
 
             var noteValueToSave = $scope.selectedNoteText;
 
             if ($scope.selectedNoteText === $scope.noteValues[$scope.noteValues.length - 1]) {
                 noteValueToSave = $scope.otherNoteValue;
+                $scope.otherNoteValue = '';
             }
 
             var newIndexingNote = {
