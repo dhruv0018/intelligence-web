@@ -172,6 +172,10 @@ Login.controller('LoginController', [
 
                         $state.go('contact-info');
                     }
+
+                    console.log(user);
+                    user.lastAccessed = new Date();
+                    user.save();
                 }
 
             }, function(error) {
