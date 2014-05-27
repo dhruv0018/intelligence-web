@@ -449,11 +449,11 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['app/**/*.less', 'lib/**/*.less'],
-                tasks: ['componentbuild:styles', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['componentbuild:styles', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:less:theme', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             js: {
                 files: ['src/**/*.js'],
