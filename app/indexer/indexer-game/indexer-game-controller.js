@@ -67,8 +67,6 @@ Game.controller('indexer-game.Controller', [
             });
         });
 
-        $scope.viewRawFilm = function(game) {
-            RawFilmModal.open(game);
-        };
+        $scope.RawFilmModal = RawFilmModal;
     }
 ]);
