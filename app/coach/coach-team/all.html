@@ -37,7 +37,8 @@
                         </span>
                     </td>
                     <td>
-                        <a ng-if="player.userId" ng-click="players.resendEmail(player, data.team)">Resend Invitation</a>
+
+                        <a data-ng-if="player.userId" data-ng-click="players.resendEmail(player, data.team)">Resend Invitation</a>
                     </td>
 
                 </tr>
