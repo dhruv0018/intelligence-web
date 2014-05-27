@@ -1,6 +1,5 @@
 require('root');
 require('login');
-require('roles');
 require('header');
 require('account');
 require('admin');
@@ -18,7 +17,6 @@ var angular = window.angular;
 var App = angular.module('App', [
     'root',
     'login',
-    'roles',
     'header',
     'account',
     'Admin',

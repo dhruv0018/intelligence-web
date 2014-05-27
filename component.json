@@ -6,6 +6,7 @@
     ],
     "locals": [
         "app",
+        "modals",
         "directives"
     ],
     "scripts": [
