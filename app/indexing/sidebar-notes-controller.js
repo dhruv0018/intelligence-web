@@ -17,6 +17,8 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
     '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS', 'GamesFactory',
     function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games) {
 
+        var Mousetrap = window.Mousetrap;
+
         $scope.noteValues = ['Camera did not follow play', 'Jersey not visible', 'Gap in film', 'Scoreboard shot', 'Other'];
 
         $scope.selectedNoteText = $scope.noteValues[0];
@@ -27,12 +29,21 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
             $scope.$apply();
         });
 
+        $scope.clearKeyListeners = function() {
+            Mousetrap.pause();
+        };
+
+        $scope.unclearKeyListeners = function(element) {
+            Mousetrap.unpause();
+        };
+
         $scope.saveIndexingNote = function() {
 
             var noteValueToSave = $scope.selectedNoteText;
 
             if ($scope.selectedNoteText === $scope.noteValues[$scope.noteValues.length - 1]) {
                 noteValueToSave = $scope.otherNoteValue;
+                $scope.otherNoteValue = '';
             }
 
             var newIndexingNote = {
