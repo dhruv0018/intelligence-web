@@ -73,11 +73,12 @@ IntelligenceWebClient.factory('PlansFactory', [
                 plan = plan || self;
 
                 if (plan.id) {
+                    console.log('updating a plan');
                     var updatePlan = new PlansResource(plan);
                     return updatePlan.$update();
 
                 } else {
-
+                    console.log(plan);
                     var newPlan = new PlansResource(plan);
                     return newPlan.$create();
                 }

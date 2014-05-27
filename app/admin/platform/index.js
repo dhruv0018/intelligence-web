@@ -64,7 +64,6 @@ Platform.config([
 Platform.controller('PlatformController', [
     '$scope', '$modal',  'LeaguesFactory', 'PlansFactory',
     function controller($scope, $modal, leagues, plans) {
-        console.log('check1');
 
         $scope.plans = plans.getList({}, function(plans) {
             return plans;
