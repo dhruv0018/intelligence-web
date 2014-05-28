@@ -1,12 +1,10 @@
 {
-    "name": "modals",
+    "name": "platform",
     "paths": [
         "."
     ],
     "locals": [
-        "roles",
-        "raw-film",
-        "delete-game"
+        "leagues"
     ],
     "scripts": [
         "index.js"
