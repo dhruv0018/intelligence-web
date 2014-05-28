@@ -36,7 +36,10 @@ Coach.config([
             name: 'Coach',
             url: '/coach',
             parent: 'base',
-            abstract: true
+            abstract: true,
+            resolve: {
+                'Coach.Data': 'Coach.Data'
+            }
         };
 
         $stateProvider.state(Coach);
