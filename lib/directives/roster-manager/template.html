@@ -1,3 +1,51 @@
 <div class="krossover-roster-manager">
-    <div>Working roster manager</div>
+    <form class="form-team-active" name="formTeamActive" role="form" novalidate>
+
+        <div class="table-responsive">
+
+            <table class="table table-striped">
+
+                <thead>
+
+                <tr>
+
+                    <th>Jersey Number</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Position</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr data-ng-repeat="player in roster | filter:isActive">
+
+                    <td><input size="3" data-ng-model="player.jerseyNumbers[rosterId]" required></td>
+
+                    <td><input class="name" placeholder="First Name" data-ng-model="player.firstName" required></td>
+
+                    <td><input class="name" placeholder="Last Name" data-ng-model="player.lastName" required></td>
+
+                    <td>
+                        <data-positions-dropdown data-player="player" data-positions="data.coachData.positionSet.indexedPositions"></data-positions-dropdown>
+                        <button class="btn btn-blank pull-right" data-ng-click="deactivate(player)"><i class="icon-remove"></i></button>
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <button class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon-plus"></i></button>
+
+        <data-krossover-uploader data-upload-label="Upload Roster" data-on-upload="uploadRoster(files)"></data-krossover-uploader>
+
+        <button class="btn btn-primary pull-right" data-ng-click="save()">Save</button>
+
+    </form>
 </div>
