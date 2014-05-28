@@ -1,0 +1,29 @@
+<div class="delete-film">
+
+    <header class="modal-header">
+
+        <h3 class="modal-title">
+            Delete Game
+
+            <a class="pull-right" ng-click="$close()">
+                <i class="icon-remove"></i>
+            </a>
+        </h3>
+
+    </header>
+
+    <div class="modal-body">
+        <p class="warning">
+            Deleting this game will delete all the information associated with it.
+        </p>
+
+        <button ng-click="deleteGame()" class="btn btn-danger">
+            Yes, I understand
+        </button>
+
+        <a class="pull-right" ng-click="$close()">
+            <i class="icon-remove"></i> No, don't delete my game
+        </a>
+    </div>
+
+</div>
