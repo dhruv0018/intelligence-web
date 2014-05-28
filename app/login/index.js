@@ -174,7 +174,7 @@ Login.controller('LoginController', [
                     }
 
                     console.log(user);
-                    user.lastAccessed = new Date();
+                    user.lastAccessed = '2014-11-30 12:00:00';
                     user.save();
                 }
 
