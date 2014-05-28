@@ -1,13 +1,41 @@
 @import (reference) "main.less";
 
-.adminCoachFeedback {
+.notes-list {
 
-    padding: 20px;
+    ul {
+        .list-unstyled;
+        padding: 15px;
 
-    textarea {
-        display: block;
-        width: 350px;
-        height: 150px;
-        margin-bottom: 20px;
+        li {
+            background: #fff;
+            border-top: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            padding: 3px;  
+
+            &.shaded {
+                background: #FCFCFC;
+            }
+
+            &.last {
+                border-bottom: 1px solid #eee;
+            }
+        }
+
+        li:hover {
+            background: #F6F9FE;
+        } 
+
+        .time {
+            display: inline-block;
+            width: 70px;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+
+    h6 {
+        color: rgb(115, 116, 116);
+        background-color: rgb(11, 66, 91);
     }
 }
