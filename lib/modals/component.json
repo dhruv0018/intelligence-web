@@ -1,0 +1,14 @@
+{
+    "name": "modals",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "roles",
+        "raw-film",
+        "delete-game"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

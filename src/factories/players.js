@@ -124,6 +124,14 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return self.getList(filter).$promise;
                 });
             },
+            resendEmail: function(player, team) {
+                var self = this;
+
+                return self.resource.resendEmail({
+                    userId: player.userId,
+                    teamId: team.id
+                });
+            },
             toggleActivation: function(rosterId) {
                 this.rosterStatuses[rosterId] = !this.rosterStatuses[rosterId];
             },

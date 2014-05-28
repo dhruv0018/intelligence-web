@@ -21,6 +21,24 @@ IntelligenceWebClient.factory('PlaysFactory', [
                  * "play" object. */
                 angular.extend(play, self);
 
+                if (play.events) {
+
+                    play.events = play.events.map(function(event) {
+
+                        var indexedVariableValues = {};
+
+                        for (var key in event.variableValues) {
+
+                            var value = event.variableValues[key];
+                            indexedVariableValues[value.index] = value;
+                        }
+
+                        event.variableValues = indexedVariableValues;
+
+                        return event;
+                    });
+                }
+
                 return play;
             },
 
@@ -120,13 +138,30 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     var updatePlay = new PlaysResource(play);
 
-                    play.events = play.events.map(function(event) {
+                    updatePlay.events = play.events.map(function(event) {
 
                         event.playId = play.id;
+
+                        delete event.activeEventVariableIndex;
+
+                        var indexedVariableValues = {};
+
+                        for (var key in event.variableValues) {
+
+                            var value = event.variableValues[key];
+                            indexedVariableValues[value.id] = value;
+                        }
+
+                        event.variableValues = indexedVariableValues;
+
                         return event;
                     });
 
-                    return updatePlay.$update();
+                    return updatePlay.$update().then(function(play) {
+
+                        play = self.extendPlay(play);
+                        return play;
+                    });
 
                 } else {
 
