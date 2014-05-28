@@ -1,123 +1,13 @@
 @import (reference) "main.less";
 
-.play {
+.adminCoachFeedback {
 
-    padding-top: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-    border-bottom: 1px solid rgb(216, 216, 216) !important;
+    padding: 20px;
 
-    &:hover,
-    &.active {
-
-        background-color: rgb(246, 249, 253);
-    }
-
-    a.accordion-toggle {
+    textarea {
         display: block;
-        text-decoration: none;
-    }
-
-    h4 {
-
-        color: black;
-        font-size: 16px;
-        font-weight: 200;
-        letter-spacing: -0.01em;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        text-decoration: none;
-
-        .dash,
-        .period,
-        .time,
-        .team,
-        .vs,
-        .score {
-
-            display: inline-block;
-        }
-
-        .team {
-
-            position: relative;
-            top: 3px;
-            max-width: 12ex;
-            .text-overflow();
-        }
-
-        &.vs {
-            font-weight:500;
-            padding-bottom: 10px;
-        }
-
-        &.playCollapsed {
-            color: @gray-light;
-        }
-
-        .playSummary {
-            margin-top: 5px;
-            margin-bottom: 0;
-        }
-    }
-
-    .playplay {
-        .pull-right;
-        font-size: 24px;
-        color: @gray-light;
-        cursor: pointer;
-
-        &:active,
-        &:focus,
-        &:hover {
-            color: @brand-primary;
-        }
-    }
-
-    hr {
-
-        margin-bottom: 0;
-    }
-
-    .btn-delete-play {
-
-        .btn;
-        .btn-link;
-        font-size: 14px;
-        font-weight: 500;
-        letter-spacing: 0.01em;
-        color: @gray-darker;
-        text-transform: uppercase;
-        padding-top: 10px;
-        padding-left: 0;
-        padding-bottom: 10px;
-        border-left-width: 0;
-
-        &:focus,
-        &:hover {
-            color: @brand-primary;
-            text-decoration: none;
-        }
-    }
-
-    .play-link {
-        .btn;
-        .btn-link;
-        font-size: 14px;
-        font-weight: 400;
-        letter-spacing: 0.01em;
-        padding-top: 10px;
-        padding-left: 0;
-        padding-right: 0;
-        padding-bottom: 10px;
-        border-left-width: 0;
-
-        &:focus,
-        &:hover {
-
-            text-decoration: none;
-        }
-
+        width: 350px;
+        height: 150px;
+        margin-bottom: 20px;
     }
 }
-
