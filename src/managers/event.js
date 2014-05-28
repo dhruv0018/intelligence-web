@@ -107,7 +107,6 @@ IntelligenceWebClient.service('EventManager', [
 
             if (!play.current) {
 
-                play.reset();
                 play.create();
             }
 

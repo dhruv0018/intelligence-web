@@ -1,7 +1,6 @@
 <span class="text">
 
-    <a class="text" data-ng-if="event.variableValues[item.index]" data-ng-disabled="disabled" data-ng-click="event.variableValues[item.index] = null">{{ event.variableValues[item.index] }}</a>
-    <input class="text" data-ng-if="!event.variableValues[item.index] && item.index !== 1" data-ng-model="event.variableValues[item.index]" data-ng-required="item.isRequired" tabindex="{{ item.index }}">
-    <input class="text" data-ng-if="!event.variableValues[item.index] && item.index === 1" data-ng-model="event.variableValues[item.index]" data-ng-required="item.isRequired" tabindex="{{ item.index }}" autofocus>
+    <a class="text" data-ng-if="event.variableValues[item.index].value" data-ng-disabled="disabled" data-ng-click="event.variableValues[item.index].value = null">{{ event.variableValues[item.index].value }}</a>
+    <input class="text" data-ng-if="!event.variableValues[item.index].value" data-ng-model="event.variableValues[item.index].value" data-ng-required="item.isRequired" tabindex="{{ item.index }}" autofocus>
 
 </span>
