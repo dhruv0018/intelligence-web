@@ -120,7 +120,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     var updatePlay = new PlaysResource(play);
 
-                    play.events = play.events.map(function(event) {
+                    updatePlay.events = play.events.map(function(event) {
 
                         event.playId = play.id;
 
@@ -139,7 +139,11 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         return event;
                     });
 
-                    return updatePlay.$update();
+                    return updatePlay.$update().then(function(play) {
+
+                        play = self.extendPlay(play);
+                        return play;
+                    });
 
                 } else {
 
