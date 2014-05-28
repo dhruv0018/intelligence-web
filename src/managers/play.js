@@ -49,33 +49,6 @@ IntelligenceWebClient.service('PlayManager', [
         };
 
         /**
-         * Saves a play.
-         */
-        this.save = function() {
-
-            var play = this.current;
-            var playIndex = indexing.plays.indexOf(play);
-
-            plays.save(play).then(
-
-                function success(play) {
-
-                    indexing.plays[playIndex] = play;
-                    indexing.plays[playIndex].score = indexing.calculateScore(play.id);
-                },
-
-                function error() {
-
-                    alerts.add({
-
-                        type: 'danger',
-                        message: 'Failed to save play'
-                    });
-                }
-            );
-        };
-
-        /**
          * Removes a play.
          * @param {Object} play - play to be removed.
          */
@@ -111,6 +84,33 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* If not, then just remove it locally. */
             else removePlay(play);
+        };
+
+        /**
+         * Saves a play.
+         */
+        this.save = function() {
+
+            var play = this.current;
+            var playIndex = indexing.plays.indexOf(play);
+
+            plays.save(play).then(
+
+                function success(play) {
+
+                    indexing.plays[playIndex] = play;
+                    indexing.plays[playIndex].score = indexing.calculateScore(play.id);
+                },
+
+                function error() {
+
+                    alerts.add({
+
+                        type: 'danger',
+                        message: 'Failed to save play'
+                    });
+                }
+            );
         };
     }
 ]);
