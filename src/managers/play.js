@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    '$modal', 'AlertsService', 'PlaysFactory', 'IndexingService', 'TagsManager',
-    function service($modal, alerts, plays, indexing, tags) {
+    'AlertsService', 'PlaysFactory', 'IndexingService',
+    function service(alerts, plays, indexing) {
 
         var model = {
 
@@ -44,34 +44,8 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.create = function() {
 
+            this.reset();
             indexing.plays.push(this.current);
-        };
-
-        /**
-         * Saves a play.
-         */
-        this.save = function() {
-
-            var play = this.current;
-            var playIndex = indexing.plays.indexOf(play);
-
-            plays.save(play).then(
-
-                function success(play) {
-
-                    indexing.plays[playIndex] = play;
-                    indexing.plays[playIndex].score = indexing.calculateScore(play.id);
-                },
-
-                function error() {
-
-                    alerts.add({
-
-                        type: 'danger',
-                        message: 'Failed to save play'
-                    });
-                }
-            );
         };
 
         /**
@@ -110,6 +84,33 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* If not, then just remove it locally. */
             else removePlay(play);
+        };
+
+        /**
+         * Saves a play.
+         */
+        this.save = function() {
+
+            var play = this.current;
+            var playIndex = indexing.plays.indexOf(play);
+
+            plays.save(play).then(
+
+                function success(play) {
+
+                    indexing.plays[playIndex] = play;
+                    indexing.plays[playIndex].score = indexing.calculateScore(play.id);
+                },
+
+                function error() {
+
+                    alerts.add({
+
+                        type: 'danger',
+                        message: 'Failed to save play'
+                    });
+                }
+            );
         };
     }
 ]);
