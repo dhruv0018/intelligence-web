@@ -173,8 +173,7 @@ Login.controller('LoginController', [
                         $state.go('contact-info');
                     }
 
-                    console.log(user);
-                    user.lastAccessed = '2014-11-30 12:00:00';
+                    user.lastAccessed = new Date().toISOString();
                     user.save();
                 }
 
