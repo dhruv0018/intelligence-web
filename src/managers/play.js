@@ -44,6 +44,7 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.create = function() {
 
+            this.reset();
             indexing.plays.push(this.current);
         };
 
