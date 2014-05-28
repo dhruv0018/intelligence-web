@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    '$modal', 'AlertsService', 'PlaysFactory', 'IndexingService', 'TagsManager',
-    function service($modal, alerts, plays, indexing, tags) {
+    'AlertsService', 'PlaysFactory', 'IndexingService',
+    function service(alerts, plays, indexing) {
 
         var model = {
 
