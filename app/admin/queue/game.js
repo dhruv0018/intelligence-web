@@ -41,14 +41,7 @@ Game.config([
                     templateUrl: 'game.html',
                     controller: 'GameController'
                 }
-            },
-            onExit: [
-                'AlertsService',
-                function(alerts) {
-
-                    alerts.clear();
-                }
-            ]
+            }
         };
 
         $stateProvider.state(game);
@@ -84,8 +77,8 @@ Game.controller('ModalController', [
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'AlertsService', 'UsersFactory', 'GamesFactory', 'SchoolsFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'RawFilm.Modal',
-    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  alerts, users, games, schools, teams, sports, leagues, RawFilmModal) {
+    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'AlertsService', 'UsersFactory', 'GamesFactory', 'SchoolsFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'RawFilm.Modal', 'DeleteGame.Modal',
+    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  alerts, users, games, schools, teams, sports, leagues, RawFilmModal, DeleteGameModal) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -93,6 +86,8 @@ Game.controller('GameController', [
         $scope.GAME_NOTE_TYPES = GAME_NOTE_TYPES;
 
         var gameId = $stateParams.id;
+        $scope.DeleteGameModal = DeleteGameModal;
+        $scope.RawFilmModal = RawFilmModal;
 
         games.get(gameId, function(game) {
 
@@ -178,6 +173,5 @@ Game.controller('GameController', [
             });
         };
 
-        $scope.RawFilmModal = RawFilmModal;
     }
 ]);

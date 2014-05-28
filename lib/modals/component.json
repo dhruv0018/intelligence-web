@@ -5,7 +5,8 @@
     ],
     "locals": [
         "roles",
-        "raw-film"
+        "raw-film",
+        "delete-game"
     ],
     "scripts": [
         "index.js"
