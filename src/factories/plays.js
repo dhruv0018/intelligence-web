@@ -21,6 +21,24 @@ IntelligenceWebClient.factory('PlaysFactory', [
                  * "play" object. */
                 angular.extend(play, self);
 
+                if (play.events) {
+
+                    play.events = play.events.map(function(event) {
+
+                        var indexedVariableValues = {};
+
+                        for (var key in event.variableValues) {
+
+                            var value = event.variableValues[key];
+                            indexedVariableValues[value.index] = value;
+                        }
+
+                        event.variableValues = indexedVariableValues;
+
+                        return event;
+                    });
+                }
+
                 return play;
             },
 
