@@ -74,7 +74,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                 };
                 $scope.data.opposingTeam.players = players.constructPositionDropdown(coachData.opposingTeamGameRoster.players, coachData.game.rosters[coachData.game.opposingTeamId].id, $scope.positions);
             }
-            console.log($scope.data);
+            console.log($scope.positions);
         });
 
         $scope.$watch('game', function(game) {
