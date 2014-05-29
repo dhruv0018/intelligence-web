@@ -27,6 +27,7 @@ require('./services/alerts');
 require('./services/scripts');
 require('./services/indexing');
 
+require('./constants/gaps');
 require('./constants/users');
 require('./constants/games');
 require('./constants/schools');
