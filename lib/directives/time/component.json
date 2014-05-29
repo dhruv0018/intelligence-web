@@ -9,5 +9,8 @@
     ],
     "scripts": [
         "index.js"
-    ]
+    ],
+    "dependencies": {
+        "moment/moment": "2.5.1"
+    }
 }
