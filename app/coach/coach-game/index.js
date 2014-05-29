@@ -98,7 +98,6 @@ Game.directive('krossoverCoachGame', [
 
         function link($scope, element, attributes, controller) {
 
-
         }
 
         return krossoverCoachGame;
@@ -114,6 +113,10 @@ Game.directive('krossoverCoachGame', [
 Game.controller('Coach.Game.controller', [
     '$scope', 'Coach.Game.Tabs',
     function controller($scope, tabs) {
+        $scope.headings = {
+            opposingTeam: 'Opposing Team',
+            yourTeam: 'Your Team'
+        };
 
         $scope.tabs = tabs;
 

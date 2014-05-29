@@ -79,6 +79,15 @@ Info.controller('Coach.Game.Info.controller', [
                 });
             }
 
+            if ($scope.game.gameType < 3) {
+                $scope.$parent.$parent.headings.yourTeam = coachData.coachTeam.name;
+            }
+
+
+        });
+
+        $scope.$watch('data.opposingTeam.name', function(opposingTeamName) {
+            $scope.$parent.$parent.headings.opposingTeam = opposingTeamName;
         });
 
         $scope.$watch('game', function(game) {
