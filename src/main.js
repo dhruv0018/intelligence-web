@@ -24,7 +24,7 @@ require('./services/tokens');
 require('./services/session');
 require('./services/account');
 require('./services/alerts');
-require('./services/events');
+require('./services/scripts');
 require('./services/indexing');
 
 require('./constants/users');

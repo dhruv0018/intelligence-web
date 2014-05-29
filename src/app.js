@@ -13,6 +13,7 @@ var IntelligenceWebClient = angular.module(package.name, [
     'ui.bootstrap',
     'config',
     'App',
+    'Modals',
     'Directives'
 ]);
 

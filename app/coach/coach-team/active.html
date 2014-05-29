@@ -21,16 +21,16 @@
 
                 <tbody>
 
-                    <tr data-ng-repeat="player in roster | filter:isActive| orderBy: sortPlayers">
+                    <tr data-ng-repeat="player in data.roster | filter:isActive">
 
-                        <td><input size="3" data-ng-model="player.jerseyNumbers[rosterId]" required></td>
+                        <td><input size="3" data-ng-model="player.jerseyNumbers[data.rosterId]" required></td>
 
                         <td><input class="name" placeholder="First Name" data-ng-model="player.firstName" required></td>
 
                         <td><input class="name" placeholder="Last Name" data-ng-model="player.lastName" required></td>
 
                         <td>
-                            <data-positions-dropdown data-player="player" data-positions="positions"></data-positions-dropdown>
+                            <data-positions-dropdown data-player="player" data-positions="data.coachData.positionSet.indexedPositions"></data-positions-dropdown>
                             <button class="btn btn-blank pull-right" data-ng-click="deactivate(player)"><i class="icon-remove"></i></button>
                         </td>
 
@@ -43,6 +43,8 @@
         </div>
 
         <button class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon-plus"></i></button>
+
+        <data-krossover-uploader data-upload-label="Upload Roster" data-on-upload="uploadRoster(files)"></data-krossover-uploader>
 
         <button class="btn btn-primary pull-right" data-ng-click="save()">Save</button>
 

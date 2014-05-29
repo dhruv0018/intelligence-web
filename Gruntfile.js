@@ -159,7 +159,7 @@ module.exports = function(grunt) {
 
         autoprefixer: {
             src: {
-                src: 'build/themed.css',
+                src: 'build/unprefixed.css',
                 dest: 'build/prefixed.css'
             }
         },
@@ -176,9 +176,9 @@ module.exports = function(grunt) {
                 ],
                 dest: 'build/mousetrap.js'
             },
-            theme: {
-                src: ['build/build.css', 'build/theme.css'],
-                dest: 'build/themed.css'
+            unprefixed: {
+                src: ['fonts.css', 'build/build.css', 'build/theme.css'],
+                dest: 'build/unprefixed.css'
             }
         },
 
@@ -370,7 +370,7 @@ module.exports = function(grunt) {
 
         dox: {
             docs: {
-                src: ['src', 'lib'],
+                src: ['app', 'lib', 'src'],
                 dest: 'docs'
             }
         },
@@ -448,11 +448,11 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['app/**/*.less', 'lib/**/*.less'],
-                tasks: ['componentbuild:styles', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['componentbuild:styles', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:theme', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:less:theme', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
             },
             js: {
                 files: ['src/**/*.js'],
@@ -504,7 +504,7 @@ module.exports = function(grunt) {
         'browserify:dev',
         'componentbuild:styles',
         'less',
-        'concat:theme',
+        'concat:unprefixed',
         'autoprefixer',
         'componentbuild:files',
         'copy:theme-assets',
@@ -520,7 +520,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'less',
         'componentbuild:styles',
-        'concat:theme',
+        'concat:unprefixed',
         'autoprefixer',
         'cssmin',
         'htmlmin',
@@ -539,7 +539,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'componentbuild:styles',
         'less',
-        'concat:theme',
+        'concat:unprefixed',
         'autoprefixer',
         'cssmin',
         'htmlmin',

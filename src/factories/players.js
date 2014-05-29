@@ -124,6 +124,14 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return self.getList(filter).$promise;
                 });
             },
+            resendEmail: function(player, team) {
+                var self = this;
+
+                return self.resource.resendEmail({
+                    userId: player.userId,
+                    teamId: team.id
+                });
+            },
             toggleActivation: function(rosterId) {
                 this.rosterStatuses[rosterId] = !this.rosterStatuses[rosterId];
             },
@@ -155,8 +163,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
             getPositionsFromDowndown: function(roster, rosterId, positions) {
                 angular.forEach(roster, function(player) {
                     //todo have backend convert this to object always, no reason to be an array
-                    player.positions = {};
-
+                    if (window.Array.isArray(player.positions)) {
+                        player.positions = {};
+                    }
                     //ensures that positions are strictly based on those selected via the ui
                     player.positions[rosterId] = [];
 

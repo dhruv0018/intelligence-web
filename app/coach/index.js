@@ -4,6 +4,7 @@ require('film-home');
 require('game-area');
 require('coach-team');
 require('add-film');
+require('team-info');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -18,6 +19,7 @@ var Coach = angular.module('Coach', [
     'Coach.FilmHome',
     'Coach.GameArea',
     'Coach.Team',
+    'Coach.Team.Info',
     'add-film'
 ]);
 
@@ -78,23 +80,9 @@ Coach.service('Coach.Data', [
             promisedTeam.resolve(teams[data.teamId]);
 
             data.roster = teams[data.teamId].roster;
-            promisedRosterId.resolve({id: data.roster.id});
 
-            leagues.get(teams[data.teamId].leagueId, function(league) {
-
-                tagsets.getList().$promise.then(function(tagset) {
-
-                    promisedLeague.resolve(league);
-                });
-
-                if (league.positionSetId) {
-                    positions.get(league.positionSetId, function(positionSet) {
-                        promisedPositionSet.resolve(positionSet);
-                    }, null, true);
-                }
-            });
-
-            if (data.roster) {
+            if (typeof data.roster !== 'undefined') {
+                promisedRosterId.resolve({id: data.roster.id});
                 players.getList({
                     roster: data.roster.id
                 }, function(players) {
@@ -104,7 +92,21 @@ Coach.service('Coach.Data', [
                 });
             } else {
                 promisedRoster.resolve([]);
+                promisedRosterId.resolve({id: null});
             }
+
+            leagues.get(teams[data.teamId].leagueId, function(league) {
+
+                tagsets.getList().$promise.then(function(tagset) {
+                    promisedLeague.resolve(league);
+                });
+
+                if (league.positionSetId) {
+                    positions.get(league.positionSetId, function(positionSet) {
+                        promisedPositionSet.resolve(positionSet);
+                    }, null, true);
+                }
+            });
 
         }, function() {
             console.log('failure to get the teams');

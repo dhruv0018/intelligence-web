@@ -83,18 +83,12 @@ Team.service('Coach.Team.Data', [
 Team.controller('Coach.Team.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'ROLES', 'Coach.Team.Data', 'PlayersFactory',
     function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, ROLES, data, players) {
-
+        $scope.players = players;
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
-        data.then(function(data) {
-            $scope.team = data.team;
-            $scope.roster = data.roster;
-            $scope.rosterId = data.rosterId;
-            $scope.positions = data.coachData.positionSet.indexedPositions;
-            $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
-        });
-
+        $scope.data = data;
+        $scope.roster = players.constructPositionDropdown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
         $scope.state = 'Coach.Team.All';
 
         $scope.$watch('state', function(state) {
@@ -103,18 +97,16 @@ Team.controller('Coach.Team.controller', [
         });
 
         $scope.save = function() {
-            $scope.roster = players.getPositionsFromDowndown($scope.roster, $scope.rosterId, $scope.positions);
-            players.save($scope.rosterId, $scope.roster).then(function(players) {
-                $scope.roster = players;
+            $scope.roster = players.getPositionsFromDowndown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
 
-                data.then(function(data) {
-                    data.roster = players;
-                });
+            players.save($scope.data.rosterId, $scope.data.roster).then(function(roster) {
+                $scope.roster = players.constructPositionDropdown(roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+                data.roster = roster;
             });
         };
 
         $scope.sortPlayers = function(player) {
-            return Number(player.jerseyNumbers[$scope.rosterId]);
+            return Number(player.jerseyNumbers[data.rosterId]);
         };
     }
 ]);
