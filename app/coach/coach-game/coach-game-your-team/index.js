@@ -79,8 +79,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     $scope.gameRosterId = game.rosters[game.teamId].id;
                     //fresh game roster with only a single unknown player
                     if (gameRoster.length === 1) {
-                        $scope.gameRoster.push(gameRoster[0]);
-
                         angular.forEach($scope.data.roster, function(teamRosterPlayer) {
                             if (teamRosterPlayer.rosterStatuses[$scope.data.rosterId.id]) {
                                 teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);

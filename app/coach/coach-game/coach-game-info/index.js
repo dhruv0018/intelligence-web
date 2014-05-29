@@ -46,7 +46,7 @@ Info.directive('krossoverCoachGameInfo', [
             scope: {
 
                 game: '=?'
-            },
+            }
         };
 
         return krossoverCoachGameInfo;

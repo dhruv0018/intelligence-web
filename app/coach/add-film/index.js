@@ -49,10 +49,20 @@ AddFilm.config([
                     templateUrl: 'coach/add-film/start.html'
                 }
             },
+            resolve: {
+                'Coach.Game.Data': 'Coach.Game.Data'
+            },
+            onEnter: [
+                'AlertsService', 'Coach.Game.Data',
+                function(alerts, gameData) {
+                    console.log(gameData);
+                    alerts.clear();
+                }
+            ],
             onExit: [
-                'AlertsService',
-                function(alerts) {
-
+                'AlertsService', 'Coach.Game.Data',
+                function(alerts, gameData) {
+                    console.log(gameData);
                     alerts.clear();
                 }
             ]

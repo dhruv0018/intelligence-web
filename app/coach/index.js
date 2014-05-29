@@ -140,7 +140,6 @@ Coach.service('Coach.Game.Data', ['$q', 'Coach.Data',
 
         coachData.then(function(coachData) {
             var gameData = coachData;
-            gameData.team = coachData.coachTeam;
             gameData.opposingTeam = {
                 players: []
             };
