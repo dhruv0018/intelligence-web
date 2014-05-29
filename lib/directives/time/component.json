@@ -1,0 +1,13 @@
+{
+    "name": "time",
+    "templates": [
+        "template.html",
+        "timepicker.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
