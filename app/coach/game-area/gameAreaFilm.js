@@ -40,14 +40,15 @@ GameAreaFilm.config([
 ]);
 
 GameAreaFilm.controller('GameAreaFilmController', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'GAME_STATUS_IDS', 'FILTERSET_CATEGORIES', 'Coach.Data',
-    function controller($scope, $state, $stateParams, games, plays, filtersets, GAME_STATUS_IDS, FILTERSET_CATEGORIES, data) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'GAME_STATUS_IDS', 'FILTERSET_CATEGORIES', 'Coach.Data', 'PlayManager',
+    function controller($scope, $state, $stateParams, games, plays, filtersets, GAME_STATUS_IDS, FILTERSET_CATEGORIES, data, play) {
         $scope.filtersetCategories = angular.copy(FILTERSET_CATEGORIES);
         $scope.gameId = $state.params.id;
         $scope.filterId = null;
         $scope.teamId = null;
         $scope.filterCategory = 1;
         $scope.activeFilters = [];
+        $scope.play = play;
 
         $scope.contains = function(array, id) {
             return array.some(function(filter) {
