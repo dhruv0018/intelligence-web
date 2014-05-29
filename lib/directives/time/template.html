@@ -1,8 +1,10 @@
 <div class="picktime">
-    <div><i class="icon-chevron-up" data-ng-click="hoursUp()"></i></div>
     <div>
     	<input type="number" class="hoursInput" data-ng-model="hours" min="{{min}}" max="{{max}}" required>
-    	hours
     </div>
-    <div><i class="icon-chevron-down" data-ng-click="hoursDown()"></i></div>
+    <div>
+    	<i class="icon-chevron-up" data-ng-click="hoursUp()"></i>
+    	<i class="icon-chevron-down" data-ng-click="hoursDown()"></i>
+    </div>
+    hours
 </div>
