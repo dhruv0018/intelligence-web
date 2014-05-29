@@ -130,7 +130,7 @@ var GAME_NOTE_TYPES = {
     INDEXER_NOTE: 2,
     QA_NOTE: 3,
     SET_ASIDE_NOTE: 4,
-    COACH_COMPLAINT_NOTE: 5
+    COACH_FEEDBACK_NOTE: 5
 };
 
 IntelligenceWebClient.constant('GAME_NOTE_TYPES', GAME_NOTE_TYPES);

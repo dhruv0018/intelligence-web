@@ -53,6 +53,7 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
                 gameTime: $scope.currentTimestamp
             };
 
+            $scope.indexing.game.notes = $scope.indexing.game.notes || {};
             $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] = $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] || [];
             $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE].push(newIndexingNote);
 
@@ -60,11 +61,7 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
             //or back button the game will be saved to the server again with
             //the notes still not having id's and the notes will be created twice
             //the following code would need to be atomic to prevent that from happening
-            $scope.indexing.game.save().then(function() {
-                games.get($scope.indexing.game.id, function(result) {
-                    $scope.indexing.game = result;
-                });
-            });
+            $scope.indexing.game.saveNotes();
         };
     }
 ]);
