@@ -79,7 +79,7 @@ Info.controller('Coach.Game.Info.controller', [
                 });
             }
 
-            if ($scope.game.gameType < 3) {
+            if (games.isRegular($scope.game)) {
                 $scope.$parent.$parent.headings.yourTeam = coachData.coachTeam.name;
             }
 
