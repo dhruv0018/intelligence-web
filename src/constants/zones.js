@@ -99,7 +99,7 @@ var ZONES = {
         shortcut: 'DM'
     },
     DEEP_RIGHT: {
-        name: 'Deep Middle',
+        name: 'Deep Right',
         value: 15,
         shortcut: 'DR'
     }
