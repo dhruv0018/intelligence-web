@@ -1,8 +1,7 @@
 {
     "name": "time",
     "templates": [
-        "template.html",
-        "timepicker.html"
+        "template.html"
     ],
     "styles": [
         "styles.less"
