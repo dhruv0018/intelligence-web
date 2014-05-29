@@ -27,8 +27,6 @@ require('./services/alerts');
 require('./services/scripts');
 require('./services/indexing');
 
-require('./constants/gaps');
-require('./constants/zones');
 require('./constants/users');
 require('./constants/games');
 require('./constants/schools');
@@ -36,6 +34,8 @@ require('./constants/videos');
 require('./constants/tagsets');
 require('./constants/filtersets');
 require('./constants/kvs-whitelist');
+require('./constants/football/gaps');
+require('./constants/football/zones');
 
 require('./models/users');
 require('./models/sports');
