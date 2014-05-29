@@ -6,13 +6,13 @@
 
     </x-tab>
 
-    <x-tab ng-if="!games.isRegular(game)" heading="{{ (headings.opposingTeam.length > 0) ? headings.opposingTeam : 'Opposing Team' }}" active="tabs['opposing-team'].active" disabled="tabs['opposing-team'].disabled" select="tabs.activateTab('opposing-team')">
+    <x-tab heading="{{ (headings.opposingTeam.length > 0) ? headings.opposingTeam : 'Opposing Team' }}" active="tabs['opposing-team'].active" disabled="tabs['opposing-team'].disabled" select="tabs.activateTab('opposing-team')">
 
         <krossover-coach-game-opposing-team data-game="game" data-opposing-team-roster="opposingTeamRoster"></krossover-coach-game-opposing-team>
 
     </x-tab>
 
-    <x-tab ng-if="!games.isRegular(game)" heading="{{headings.yourTeam}}" active="tabs['your-team'].active" disabled="tabs['your-team'].disabled" select="tabs.activateTab('your-team')">
+    <x-tab ng-if="games.isRegular(game)" heading="{{headings.yourTeam}}" active="tabs['your-team'].active" disabled="tabs['your-team'].disabled" select="tabs.activateTab('your-team')">
 
         <krossover-coach-game-your-team data-game="game" data-roster="roster"></krossover-coach-game-your-team>
 

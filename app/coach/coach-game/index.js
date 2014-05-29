@@ -111,8 +111,10 @@ Game.directive('krossoverCoachGame', [
  * @type {controller}
  */
 Game.controller('Coach.Game.controller', [
-    '$scope', 'Coach.Game.Tabs',
-    function controller($scope, tabs) {
+    '$scope', 'Coach.Game.Tabs', 'GamesFactory',
+    function controller($scope, tabs, games) {
+        $scope.games = games;
+
         $scope.headings = {
             opposingTeam: 'Opposing Team',
             yourTeam: 'Your Team'
