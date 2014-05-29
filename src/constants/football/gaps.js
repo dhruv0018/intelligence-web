@@ -1,4 +1,4 @@
-var package = require('../../package.json');
+var package = require('../../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
