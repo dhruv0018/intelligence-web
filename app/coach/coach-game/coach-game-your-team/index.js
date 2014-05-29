@@ -107,6 +107,14 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
             tabs['opposing-team'].disabled = disabled;
         });
 
+        //TODO super dangerous, to discuss, putting the team roster here without a game roster id will start changing the team roster
+//        $scope.$watch('roster', function(roster) {
+//            console.log(roster);
+//            if (roster.players) {
+//                $scope.gameRoster = players.constructPositionDropdown(roster.players, $scope.gameRosterId, $scope.positions);
+//            }
+//        });
+
         $scope.save = function() {
             $scope.gameRoster = players.getPositionsFromDowndown($scope.gameRoster, $scope.gameRosterId, $scope.positions);
             players.save($scope.game.rosters[$scope.game.teamId].id, $scope.gameRoster);
