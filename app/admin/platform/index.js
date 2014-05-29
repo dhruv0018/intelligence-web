@@ -73,8 +73,6 @@ Platform.controller('PlatformController', [
             return leagues;
         });
 
-        console.log($scope.plans);
-
         $scope.addPlan = function() {
             $modal.open({
                 templateUrl: 'app/admin/platform/new-plan/new-plan.html',

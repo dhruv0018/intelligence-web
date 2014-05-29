@@ -39,11 +39,18 @@ NewPlan.controller('NewPlanController', [
 
             return leagues;
         });
-        console.log($scope.leagues);
-        console.log($scope.sports);
+
+        // do some date formatting here
 
         $scope.savePlan = function(plan) {
-            plans.save(plan);
+            // plans.save(plan);
+            console.log(plan);
+
+            var startDate = plan.startDate;
+            var endDate = plan.endDate;
+
+            console.log(startDate);
+            console.log(endDate);
         };
 
     }

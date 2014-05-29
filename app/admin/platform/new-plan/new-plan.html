@@ -12,7 +12,7 @@
             <div>
                 <div class="plan-modal-firstrow-column">
                     <label>Name of Plan</label>
-                    <input class="form-control" placeholder="Name" data-ng-model="plan.name" type="text" required >
+                    <input class="form-control" placeholder="Name" data-ng-model="plan.name" type="text" required>
                 </div>
                 <div class="plan-modal-firstrow-column pull-right">
                     <label>For what sport</label>
@@ -31,9 +31,9 @@
             <label>Dates of the plan</label>
             <div class="plandate-container">
                 <label>from</label>
-                <div class="dateholder"><date ng-model="plan.startDay"></date></div>
+                <div class="dateholder"><date ng-model="plan.startDate"></date></div>
                 <label>to</label>
-                <div class="dateholder"><date ng-model="plan.endDay"></date></div>
+                <div class="dateholder"><date ng-model="plan.endDate"></date></div>
             </div>
             <div class="gamesrow">
                 <div>
@@ -52,10 +52,10 @@
                 </div>
                 <div>
                     <label>Default turnaround time</label>
-                    <select class="form-control"></select>
+                    <select class="form-control">{{ turnaroundTimes }}</select>
                 </div>
             </div>
-            <button class="btn btn-primary" ng-click="savePlan(plan)">Save</button>
+            <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="savePlan(plan)">Save</button>
 
 
         </div>
