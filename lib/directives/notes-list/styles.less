@@ -8,22 +8,23 @@
 
         li {
             background: #fff;
-            border: 1px solid #eee;
-            border-bottom: 0px;
-            padding: 3px;
+            border-top: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            padding: 3px;  
 
-            &:hover {
-                background: #F6F9FE;
+            &.shaded {
+                background: #FCFCFC;
             }
 
-            .shaded {
-                background: #ccc;
+            &.last {
+                border-bottom: 1px solid #eee;
             }
         }
 
         li:hover {
             background: #F6F9FE;
-        }
+        } 
 
         .time {
             display: inline-block;
