@@ -17,10 +17,18 @@ Indexing.controller('Indexing.Modal.AddIndexerNote.Controller', [
     '$scope', '$modalInstance', 'GAME_NOTE_TYPES', 'IndexingService', 'TeamsFactory', 'UsersFactory',
     function controller($scope, $modalInstance, GAME_NOTE_TYPES, indexing, teams, users) {
 
-        indexing.game.notes = indexing.game.notes || [];
-        indexing.game.notes.unshift({
-            noteTypeId: GAME_NOTE_TYPES.QA_NOTE
-        });
+        $scope.GAME_NOTE_TYPES = GAME_NOTE_TYPES;
+
+        indexing.game.notes = indexing.game.notes || {};
+        indexing.game.notes[GAME_NOTE_TYPES.QA_NOTE] = indexing.game.notes[GAME_NOTE_TYPES.QA_NOTE] ||
+            function() {
+                var qaNote = {
+                    noteTypeId: GAME_NOTE_TYPES.QA_NOTE,
+                    content: ''
+                };
+
+                return [qaNote];
+            };
 
         $scope.game = indexing.game;
 
@@ -38,8 +46,9 @@ Indexing.controller('Indexing.Modal.AddIndexerNote.Controller', [
         });
 
         $scope.submit = function() {
-
-            $modalInstance.close();
+            indexing.game.saveNotes().then(function() {
+                $modalInstance.close();
+            });
         };
     }
 ]);
