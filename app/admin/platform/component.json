@@ -16,5 +16,8 @@
     ],
     "styles": [
         "styles.less"
-    ]
+    ],
+    "dependencies": {
+        "moment/moment": "2.5.1"
+    }
 }

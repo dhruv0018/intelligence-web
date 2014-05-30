@@ -1,5 +1,6 @@
 require('leagues');
 require('new-plan');
+var moment = require('moment');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -66,18 +67,18 @@ Platform.controller('PlatformController', [
     function controller($scope, $modal, leagues, plans) {
 
         $scope.plans = plans.getList({}, function(plans) {
+            plans.forEach(function(plan) {
+                plan.startMonth = moment(plan.startMonth).month();
+                plan.endMonth = moment(plan.endMonth).month();
+            });
+            console.log(plans);
             return plans;
         });
 
         $scope.leagues = leagues.getList({}, function(leagues) {
             return leagues;
-        });
+        }, null, true);
 
-        angular.forEach($scope.plans, function() {
-
-        });
-
-        console.log($scope.leagues);
         console.log($scope.plans);
 
         $scope.addPlan = function() {
