@@ -70,7 +70,10 @@ Coach.service('Coach.Data', [
             roster: {}
         };
 
-        games.getList({teamId: data.teamId}, function(gamesList) {
+        games.getList({
+        //TODO we need an uploaderTeamId filter
+        //    teamId: data.teamId
+        }, function(gamesList) {
             promisedGames.resolve(gamesList);
             promisedIndexedGames.resolve(games.transformIndexed(gamesList));
         });

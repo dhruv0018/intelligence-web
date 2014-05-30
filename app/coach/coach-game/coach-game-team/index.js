@@ -66,14 +66,14 @@ Team.controller('Coach.Game.Team.controller', [
         data.then(function(coachData) {
             $scope.data = coachData;
             $scope.positions = coachData.positionSet.indexedPositions;
-
-            if (coachData.scoutingTeamGameRoster) {
-                $scope.data.team = {
-                    players: coachData.scoutingTeamGameRoster.players || []
-                };
-                $scope.data.team.players = players.constructPositionDropdown(coachData.scoutingTeamGameRoster.players, coachData.game.rosters[coachData.game.teamId].id, $scope.positions);
+            if (coachData.teamGameRoster) {
+                $scope.data.team = coachData.teams[$scope.game.teamId];
+//                $scope.data.team = {
+//                    players: coachData.teamGameRoster.players || []
+//                };
+                //$scope.data.team.players = coachData.teamGameRoster.players || [];
+                $scope.data.team.players = players.constructPositionDropdown(coachData.teamGameRoster.players, coachData.game.rosters[coachData.game.teamId].id, $scope.positions);
             }
-            console.log($scope.positions);
         });
 
         $scope.$watch('game', function(game) {
