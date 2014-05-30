@@ -1,5 +1,6 @@
 /* Component resources */
 var template = require('./new-plan.html');
+var moment = require('moment');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -43,8 +44,6 @@ NewPlan.controller('NewPlanController', [
             return leagues;
         });
 
-        // do some date formatting here
-
         /**
          * Toggles the leagues presence in the default plan.
          * @param {Number} leagueId - the ID of the league to toggle.
@@ -66,16 +65,40 @@ NewPlan.controller('NewPlanController', [
             }
         };
 
+        $scope.maxTurnaroundTimes = [
+            {time: '12-24', value: 24},
+            {time: '24-36', value: 36},
+            {time: '36-48', value: 48}
+        ];
+
+
         $scope.savePlan = function(plan) {
             // plans.save(plan);
+            // console.log($scope.defaultPlan);
+            plan.leagueIds = $scope.defaultPlan.leagueIds;
+
+            var startDate = moment(plan.startDate);
+            var endDate = moment(plan.endDate);
+
+            plan.startDay = moment(startDate).date();
+            plan.startMonth = moment(startDate).month() + 1;
+
+            plan.endDay = moment(endDate).date();
+            plan.endMonth = moment(endDate).month() + 1;
+
+            plan.maxTurnaroundTime = plan.turnaroundInterval.value;
+
+            // clean up extra attributes
+            delete plan.startDate;
+            delete plan.endDate;
+            delete plan.turnaroundInterval;
+
             console.log(plan);
 
-            var startDate = plan.startDate;
-            var endDate = plan.endDate;
+            plans.save(plan);
 
-            console.log(startDate);
-            console.log(endDate);
+            $modalInstance.dismiss();
+
         };
-
     }
 ]);

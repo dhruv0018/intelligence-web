@@ -27,8 +27,6 @@ IntelligenceWebClient.factory('PlansFactory', [
 
             getList: function(filter, success, error, index) {
 
-                console.log('its happening');
-
                 var self = this;
 
                 if (angular.isFunction(filter)) {
@@ -73,12 +71,10 @@ IntelligenceWebClient.factory('PlansFactory', [
                 plan = plan || self;
 
                 if (plan.id) {
-                    console.log('updating a plan');
                     var updatePlan = new PlansResource(plan);
                     return updatePlan.$update();
 
                 } else {
-                    console.log(plan);
                     var newPlan = new PlansResource(plan);
                     return newPlan.$create();
                 }
