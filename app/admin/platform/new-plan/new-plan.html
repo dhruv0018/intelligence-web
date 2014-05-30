@@ -37,6 +37,10 @@
             </div>
             <div class="gamesrow">
                 <div>
+                    <label>Max games per plan</label>
+                    <input class="form-control" type="text" ng-model="plan.maxGamesPerPlan" required>
+                </div>
+                <div>
                     <label>Max games per season</label>
                     <input class="form-control" type="text" ng-model="plan.maxAnyGames" required>
                 </div>
@@ -52,7 +56,8 @@
                 </div>
                 <div>
                     <label>Default turnaround time</label>
-                    <select class="form-control">{{ turnaroundTimes }}</select>
+                    <select class="form-control" ng-model="plan.turnaroundInterval" ng-options="time.time for time in maxTurnaroundTimes">{{ maxTurnaroundTimes }}</select>
+                    <option value="time.value"></option>
                 </div>
             </div>
             <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="savePlan(plan)">Save</button>

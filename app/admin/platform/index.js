@@ -73,6 +73,13 @@ Platform.controller('PlatformController', [
             return leagues;
         });
 
+        angular.forEach($scope.plans, function() {
+
+        });
+
+        console.log($scope.leagues);
+        console.log($scope.plans);
+
         $scope.addPlan = function() {
             $modal.open({
                 templateUrl: 'app/admin/platform/new-plan/new-plan.html',
