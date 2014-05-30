@@ -32,6 +32,9 @@ NewPlan.controller('NewPlanController', [
     '$scope', '$state', '$modalInstance', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'PlansFactory',
     function controller($scope, $state, $modalInstance, session, sports, leagues, plans) {
 
+        $scope.defaultPlan = {};
+        $scope.defaultPlan.leagueIds = [];
+
         $scope.sports = sports.getList({}, function(sports) {
             return sports;
         });
@@ -41,6 +44,27 @@ NewPlan.controller('NewPlanController', [
         });
         console.log($scope.leagues);
         console.log($scope.sports);
+
+        /**
+         * Toggles the leagues presence in the default plan.
+         * @param {Number} leagueId - the ID of the league to toggle.
+         */
+        $scope.toggleLeagueId = function(leagueId) {
+
+            /* If the league is present in the plan already. */
+            if (~$scope.defaultPlan.leagueIds.indexOf(leagueId)) {
+
+                /* Remove the league from the plan. */
+                $scope.defaultPlan.leagueIds.splice($scope.defaultPlan.leagueIds.indexOf(leagueId), 1);
+            }
+
+            /* Otherwise; if the league is not present in the plan. */
+            else {
+
+                /* Add the league to the plan. */
+                $scope.defaultPlan.leagueIds.push(leagueId);
+            }
+        };
 
         $scope.savePlan = function(plan) {
             plans.save(plan);
