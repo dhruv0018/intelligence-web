@@ -13,6 +13,15 @@ IntelligenceWebClient.factory('PlansFactory', [
 
             resource: PlansResource,
 
+            extendPlan: function(plan) {
+
+                var self = this;
+
+                angular.extend(plan, self);
+
+                return plan;
+            },
+
             get: function(id, success, error) {
 
                 var self = this;
@@ -44,7 +53,6 @@ IntelligenceWebClient.factory('PlansFactory', [
                 var callback = function(plans) {
 
                     var indexedPlans = {};
-
                     plans.forEach(function(plan) {
                         plan = self.extendPlan(plan);
 
