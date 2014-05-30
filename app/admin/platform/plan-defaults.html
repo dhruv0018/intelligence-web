@@ -26,12 +26,12 @@
             <tbody>
                 <tr ng-repeat="plan in plans">
                     <td>{{ plan.name }}</td>
-                    <td>{{ plan.startDay }}-{{ plan.endDay }}</td>
+                    <td>{{ plan.startMonth }} {{ plan.startDay }}-{{ plan.endMonth }} {{plan.endDay }}</td>
                     <td>{{ plan.maxAnyGames }}</td>
                     <td>{{ plan.maxRegularGames }}</td>
                     <td>{{ plan.maxScoutingGames }}</td>
                     <td>{{ plan.maxTurnaroundTime - 12}}-{{ plan.maxTurnaroundTime }} hrs</td>
-                    <td>{{ plan.leagueIds }}</td>
+                    <td><ul><li ng-repeat="leagueId in plan.leagueIds">{{ leagues[leagueId].name }}</li></ul></td>
                 </tr>
             </tbody>
         </table>
