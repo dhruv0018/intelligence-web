@@ -60,57 +60,57 @@ Team.controller('Coach.Game.Team.controller', [
     'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'Coach.Game.Tabs', 'Coach.Game.Data', 'GamesFactory', 'PlayersFactory',
     function controller(config, $rootScope, $scope, $state, $localStorage, $http, tabs, data, games, players) {
         console.log('working scrimmage team');
-//        $scope.tabs = tabs;
-//        $scope.data = {};
-//
-//        data.then(function(coachData) {
-//            $scope.data = coachData;
-//            $scope.positions = coachData.positionSet.indexedPositions;
-//
-//            if (coachData.opposingTeamGameRoster) {
-//                $scope.data.opposingTeam = {
-//                    players: coachData.opposingTeamGameRoster.players || []
-//                };
-//                $scope.data.opposingTeam.players = players.constructPositionDropdown(coachData.opposingTeamGameRoster.players, coachData.game.rosters[coachData.game.opposingTeamId].id, $scope.positions);
-//            }
-//            console.log($scope.positions);
-//        });
-//
-//        $scope.$watch('game', function(game) {
-//            if (game.rosters) {
-//                $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
-//            }
-//        });
-//
-//        $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster) {
-//            if (typeof opposingTeamRoster !== 'undefined') {
-//                if (opposingTeamRoster.length === 0) {
-//                    $scope.addNewPlayer();
-//                }
-//            } else {
-//                $scope.data.opposingTeam = {
-//                    players: []
-//                };
-//            }
-//        });
-//
-//
-//        $scope.$watch('formOpposingTeam.$invalid', function(invalid) {
+        $scope.tabs = tabs;
+        $scope.data = {};
+
+        data.then(function(coachData) {
+            $scope.data = coachData;
+            $scope.positions = coachData.positionSet.indexedPositions;
+
+            if (coachData.scoutingTeamGameRoster) {
+                $scope.data.team = {
+                    players: coachData.scoutingTeamGameRoster.players || []
+                };
+                $scope.data.team.players = players.constructPositionDropdown(coachData.scoutingTeamGameRoster.players, coachData.game.rosters[coachData.game.teamId].id, $scope.positions);
+            }
+            console.log($scope.positions);
+        });
+
+        $scope.$watch('game', function(game) {
+            if (game.rosters) {
+                $scope.scoutingTeamId = game.rosters[game.teamId].id;
+            }
+        });
+
+        $scope.$watch('data.team.players', function(scoutingTeam) {
+            if (typeof scoutingTeam !== 'undefined') {
+                if (scoutingTeam.length === 0) {
+                    console.log(scoutingTeam);
+                }
+            } else {
+                $scope.data.team = {
+                    players: []
+                };
+            }
+        });
+
+
+//        $scope.$watch('formScoutingTeam.$invalid', function(invalid) {
 //
 //            tabs.instructions.disabled = invalid;
 //        });
 //
 //
-//        $scope.$watch('tabs["opposing-team"].disabled', function(disabled) {
+//        $scope.$watch('tabs["scouting-team"].disabled', function(disabled) {
 //
-//            tabs.instructions.disabled = disabled;
+//            tabs['opposing-team'].disabled = disabled;
 //        });
-//
-//        $scope.save = function() {
-//            $scope.data.opposingTeam.players = players.getPositionsFromDowndown($scope.data.opposingTeam.players, $scope.opposingTeamRosterId, $scope.positions);
-//            players.save($scope.game.rosters[$scope.game.opposingTeamId].id, $scope.data.opposingTeam.players);
-//            tabs.activateTab('instructions');
-//        };
+
+        $scope.save = function() {
+            $scope.data.team.players = players.getPositionsFromDowndown($scope.data.team.players, $scope.scoutingTeamId, $scope.positions);
+            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.data.team.players);
+            tabs.activateTab('opposing-team');
+        };
 
     }
 ]);

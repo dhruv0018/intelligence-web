@@ -71,7 +71,7 @@ Info.controller('Coach.Game.Info.controller', [
 
         data.then(function(coachData) {
             $scope.data = coachData;
-
+            console.log($scope.data);
             //TODO find a better way using the service, not sure why the data isn't being passed forward
             if (typeof coachData.opposingTeam.name === 'undefined' && coachData.game && coachData.game.id) {
                 teams.get($scope.data.game.opposingTeamId, function(opposingTeam) {
@@ -88,6 +88,10 @@ Info.controller('Coach.Game.Info.controller', [
 
         $scope.$watch('data.opposingTeam.name', function(opposingTeamName) {
             $scope.$parent.$parent.headings.opposingTeam = opposingTeamName;
+        });
+
+        $scope.$watch('data.team.name', function(teamName) {
+            $scope.$parent.$parent.headings.scoutingTeam = teamName;
         });
 
         $scope.$watch('game', function(game) {
@@ -122,7 +126,7 @@ Info.controller('Coach.Game.Info.controller', [
 
             var newOpposingTeam = {
                 isCustomerTeam: false,
-                leagueId: $scope.data.team.leagueId,
+                leagueId: $scope.data.coachTeam.leagueId,
                 primaryAwayColor: isHomeGame ? game.opposingPrimaryColor : null,
                 primaryHomeColor: isHomeGame ? null : game.opposingPrimaryColor,
                 secondaryAwayColor: isHomeGame ? game.opposingSecondaryColor : null,
@@ -133,6 +137,7 @@ Info.controller('Coach.Game.Info.controller', [
 
             //new game
             if (typeof game.opposingTeamId === 'undefined') {
+
                 teams.save($scope.data.opposingTeam, function(opposingTeam) {
                     $scope.data.opposingTeam = opposingTeam;
                     $scope.data.opposingTeam.players = [];
@@ -141,31 +146,80 @@ Info.controller('Coach.Game.Info.controller', [
                     game.opposingTeamId = opposingTeam.id;
 
                     game.rosters = {};
-                    game.rosters[$scope.data.team.id] = {};
-                    game.rosters[game.opposingTeamId] = {};
 
-                    game.teamId = session.currentUser.currentRole.teamId;
-                    game.uploaderUserId = session.currentUser.id;
-                    game.uploaderTeamId = session.currentUser.currentRole.teamId;
+                    if (games.isRegular(game)) {
+                        game.rosters[$scope.data.coachTeam.id] = {};
+                        game.rosters[game.opposingTeamId] = {};
+                        game.teamId = session.currentUser.currentRole.teamId;
+                        game.uploaderUserId = session.currentUser.id;
+                        game.uploaderTeamId = session.currentUser.currentRole.teamId;
 
-                    /* Convert value from btn-radio back to boolean. */
-                    game.isHomeGame = game.isHomeGame === 'true';
+                        /* Convert value from btn-radio back to boolean. */
+                        game.isHomeGame = game.isHomeGame === 'true';
+
+                        games.save(game, function(game) {
+                            $scope.game = game;
+                            data.game = game;
+                            tabs.activateTab('your-team');
+                        });
+                    } else {
+
+                        var scoutingTeam = {
+                            name: $scope.data.team.name,
+                            isCustomerTeam: false,
+                            leagueId: $scope.data.coachTeam.leagueId,
+                            primaryAwayColor: game.primaryJerseyColor,
+                            primaryHomeColor: game.primaryJerseyColor,
+                            secondaryAwayColor: game.secondaryJerseyColor,
+                            secondaryHomeColor: game.secondaryJerseyColor
+                        };
+
+                        teams.save(scoutingTeam, function(scoutingTeam) {
+                            $scope.data.team = scoutingTeam;
+                            $scope.data.team.players = [];
+                            console.log($scope.data.team);
+                            $scope.scoutingTeamId = $scope.data.team.id;
+
+                            game.rosters[$scope.data.team.id] = {};
+                            game.rosters[game.opposingTeamId] = {};
+                            game.teamId = $scope.data.team.id;
+                            game.uploaderUserId = session.currentUser.id;
+                            game.uploaderTeamId = session.currentUser.currentRole.teamId;
+
+
+                            games.save(game, function(game) {
+                                $scope.game = game;
+                                data.game = game;
+                                tabs.activateTab('scouting-team');
+                            });
+                        });
+
+                    }
+
+                });
+            } else {
+
+                if (games.isRegular(game)) {
+                    teams.save($scope.data.opposingTeam);
 
                     games.save(game, function(game) {
                         $scope.game = game;
                         data.game = game;
                         tabs.activateTab('your-team');
                     });
+                } else {
+                    teams.save($scope.data.opposingTeam, function(opposingTeam) {
+                        teams.save($scope.data.team, function(team) {
+                            games.save(game, function(game) {
+                                $scope.game = game;
+                                data.game = game;
+                                tabs.activateTab('scouting-team');
+                            });
+                        });
 
-                });
-            } else {
-                teams.save($scope.data.opposingTeam);
+                    });
+                }
 
-                games.save(game, function(game) {
-                    $scope.game = game;
-                    data.game = game;
-                    tabs.activateTab('your-team');
-                });
             }
 
         };

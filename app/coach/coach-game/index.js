@@ -120,7 +120,8 @@ Game.controller('Coach.Game.controller', [
 
         $scope.headings = {
             opposingTeam: 'Opposing Team',
-            yourTeam: 'Your Team'
+            yourTeam: 'Your Team',
+            scoutingTeam: 'Team'
         };
 
         $scope.tabs = tabs;
