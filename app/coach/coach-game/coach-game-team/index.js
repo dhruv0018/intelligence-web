@@ -42,7 +42,8 @@ Team.directive('krossoverCoachGameTeam', [
             controller: 'Coach.Game.Team.controller',
             scope: {
                 game: '=?',
-                scoutingRoster: '=?'
+                scoutingRoster: '=?',
+                validation: '=?'
             }
         };
 
@@ -68,10 +69,6 @@ Team.controller('Coach.Game.Team.controller', [
             $scope.positions = coachData.positionSet.indexedPositions;
             if (coachData.teamGameRoster) {
                 $scope.data.team = coachData.teams[$scope.game.teamId];
-//                $scope.data.team = {
-//                    players: coachData.teamGameRoster.players || []
-//                };
-                //$scope.data.team.players = coachData.teamGameRoster.players || [];
                 $scope.data.team.players = players.constructPositionDropdown(coachData.teamGameRoster.players, coachData.game.rosters[coachData.game.teamId].id, $scope.positions);
             }
         });
@@ -91,6 +88,12 @@ Team.controller('Coach.Game.Team.controller', [
                 $scope.data.team = {
                     players: []
                 };
+            }
+        });
+
+        $scope.$watch('validation', function(validation) {
+            if (typeof validation !== 'undefined') {
+                console.log(validation);
             }
         });
 

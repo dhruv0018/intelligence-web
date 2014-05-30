@@ -124,6 +124,12 @@ Game.controller('Coach.Game.controller', [
             scoutingTeam: 'Team'
         };
 
+        $scope.validation = {
+            opposingTeam: true,
+            yourTeam: true,
+            scoutingTeam: true
+        };
+
         $scope.tabs = tabs;
 
         $scope.game = $scope.game || {};

@@ -97,10 +97,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
             }
         });
 
-        $scope.$watch('formYourTeam.$invalid', function(invalid) {
-            tabs['opposing-team'].disabled = invalid;
-        });
-
         $scope.$watch('tabs["your-team"].disabled', function(disabled) {
             tabs['opposing-team'].disabled = disabled;
         });
