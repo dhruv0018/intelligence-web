@@ -1,0 +1,29 @@
+<div class="team">
+
+    <div class="row">
+
+        <div class="box col-md-12">
+
+            <div class="box-content row">
+
+                <header class="box-header col-md-12">
+
+                    <h3 class="box-title">Choose one of the following options</h3>
+                    <x-button-continue data-ng-disabled="tabs.instructions.disabled">Save and Submit</x-button-continue>
+
+                </header>
+
+                <div class="box-body col-md-12">
+                    <data-krossover-roster-manager data-roster-id="opposingTeamRosterId" data-roster="data.opposingTeam.players" data-positions="positions"></data-krossover-roster-manager>
+                </div>
+
+            </div>
+
+        </div>
+
+        <x-button-continue class="btn-save-bottom" data-ng-disabled="tabs.instructions.disabled">Save and Submit</x-button-continue>
+
+    </div>
+
+</div>
+

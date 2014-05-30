@@ -18,6 +18,12 @@
 
     </x-tab>
 
+    <x-tab ng-if="!games.isRegular(game)" heading="{{headings.scoutingTeam}}" active="tabs['scouting-your-team'].active" disabled="tabs['scouting-team'].disabled" select="tabs.activateTab('scouting-team')">
+
+        <krossover-coach-game-team data-game="game" data-scouting-roster="scoutingRoster"></krossover-coach-game-team>
+
+    </x-tab>
+
     <x-tab heading="Basic Game Info" active="tabs['game-info'].active" disabled="tabs['game-info'].disabled" select="tabs.activateTab('game-info')">
 
         <krossover-coach-game-info data-game="game"></krossover-coach-game-info>
