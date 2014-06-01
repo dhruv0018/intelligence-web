@@ -35,14 +35,8 @@ NewPlan.controller('NewPlanController', [
 
         $scope.defaultPlan = {};
         $scope.defaultPlan.leagueIds = [];
-
-        $scope.sports = sports.getList({}, function(sports) {
-            return sports;
-        });
-        $scope.leagues = leagues.getList({}, function(leagues) {
-
-            return leagues;
-        });
+        $scope.sports = sports.getList();
+        $scope.leagues = leagues.getList();
 
         /**
          * Toggles the leagues presence in the default plan.
@@ -73,8 +67,6 @@ NewPlan.controller('NewPlanController', [
 
 
         $scope.savePlan = function(plan) {
-            // plans.save(plan);
-            // console.log($scope.defaultPlan);
             plan.leagueIds = $scope.defaultPlan.leagueIds;
 
             var startDate = moment(plan.startDate);
@@ -93,11 +85,9 @@ NewPlan.controller('NewPlanController', [
             delete plan.endDate;
             delete plan.turnaroundInterval;
 
-            console.log(plan);
-
             plans.save(plan);
 
-            $modalInstance.dismiss();
+            $modalInstance.close();
 
         };
     }
