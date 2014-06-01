@@ -63,8 +63,8 @@ Platform.config([
 ]);
 
 Platform.controller('PlatformController', [
-    '$scope', '$modal',  'LeaguesFactory', 'PlansFactory',
-    function controller($scope, $modal, leagues, plans) {
+    '$scope', '$modal',  'LeaguesFactory', 'PlansFactory', 'SportsFactory',
+    function controller($scope, $modal, leagues, plans, sports) {
 
         plans.getList().$promise.then(function(plans) {
 
@@ -80,6 +80,8 @@ Platform.controller('PlatformController', [
             });
             $scope.plans = plans;
         });
+
+        $scope.sports = sports.getList();
 
 
         $scope.leagues = leagues.getList({}, function(leagues) {
