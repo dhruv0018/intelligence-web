@@ -67,24 +67,17 @@ Platform.controller('PlatformController', [
     function controller($scope, $modal, leagues, plans) {
 
         plans.getList().$promise.then(function(plans) {
-            // $scope.plans = plans;
 
             angular.forEach(plans, function(plan) {
-                // console.log(plan);
                 var startMonth = moment(plan.startMonth) - 1;
                 var endMonth = moment(plan.endMonth) - 1;
 
                 startMonth = moment().month(startMonth);
                 endMonth = moment().month(endMonth);
 
-
                 plan.endMonth = moment(endMonth).format('MMM');
                 plan.startMonth = moment(startMonth).format('MMM');
-
-
-                console.log(plan.startMonth);
             });
-            // console.log(plans);
             $scope.plans = plans;
         });
 
@@ -93,15 +86,9 @@ Platform.controller('PlatformController', [
             return leagues;
         }, null, true);
 
-        // $scope.plans.$promise.then(function(plan) {
-        //     console.log('wutwut');
-        //     console.log(plan);
-        // // });
-
-        // console.log($scope.plans);
-        // $scope.plans.forEach(function(plan) {
-        //     console.log('wut');
-        // });
+        $scope.test = function() {
+            console.log('wut');
+        };
 
         $scope.addPlan = function() {
             $modal.open({
