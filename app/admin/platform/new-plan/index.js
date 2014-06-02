@@ -42,7 +42,6 @@ NewPlan.controller('NewPlanController', [
          * Toggles the leagues presence in the default plan.
          */
         $scope.toggleLeagueId = function(league) {
-            console.log(league.id);
 
             /* If the league is present in the plan already. */
             if (~$scope.defaultPlan.leagueIds.indexOf(league.id)) {
@@ -67,7 +66,6 @@ NewPlan.controller('NewPlanController', [
 
         $scope.savePlan = function(plan) {
             plan.leagueIds = $scope.defaultPlan.leagueIds;
-            console.log(plan.leagueIds);
 
             var startDate = moment(plan.startDate);
             var endDate = moment(plan.endDate);
@@ -84,7 +82,6 @@ NewPlan.controller('NewPlanController', [
             delete plan.startDate;
             delete plan.endDate;
             delete plan.turnaroundInterval;
-            console.log(plan);
 
             plans.save(plan);
 
