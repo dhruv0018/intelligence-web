@@ -92,6 +92,13 @@ Platform.controller('PlatformController', [
             console.log('wut');
         };
 
+        $scope.editPlan = function(plan) {
+            $modal.open({
+                templateUrl: 'app/admin/platform/new-plan/new-plan.html',
+                controller: 'NewPlanController'
+            });
+        };
+
         $scope.addPlan = function() {
             $modal.open({
                 templateUrl: 'app/admin/platform/new-plan/new-plan.html',

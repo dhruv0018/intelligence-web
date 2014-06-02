@@ -23,8 +23,8 @@
             </div>
             <label>For what leagues?</label>
             <div class="leaguebox-container">
-                <div class="form-group leagueboxes" data-ng-repeat="league in leagues | filter:{'sportId':sportId}" data-ng-model="plan.leagueIds" required>
-                    <input type="checkbox" data-ng-checked="{{ defaultPlan.leagueIds.indexOf(league.id) !== -1 }}" data-ng-click="toggleLeagueId(league.id)"> {{ league.name }}
+                <div class="form-group leagueboxes" data-ng-repeat="league in leagues | filter:{'sportId':sportId}" required>
+                    <input type="checkbox" data-ng-checked="{{ defaultPlan.leagueIds.indexOf(league.id) !== -1 }}" data-ng-click="toggleLeagueId(league)"> {{ league.name }}
                 </div>
             </div>
 

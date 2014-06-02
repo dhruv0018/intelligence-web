@@ -40,23 +40,22 @@ NewPlan.controller('NewPlanController', [
 
         /**
          * Toggles the leagues presence in the default plan.
-         * @param {Number} leagueId - the ID of the league to toggle.
          */
-        $scope.toggleLeagueId = function(leagueId) {
-            leagueId = leagueId - 1;
+        $scope.toggleLeagueId = function(league) {
+            console.log(league.id);
 
             /* If the league is present in the plan already. */
-            if (~$scope.defaultPlan.leagueIds.indexOf(leagueId)) {
+            if (~$scope.defaultPlan.leagueIds.indexOf(league.id)) {
 
                 /* Remove the league from the plan. */
-                $scope.defaultPlan.leagueIds.splice($scope.defaultPlan.leagueIds.indexOf(leagueId), 1);
+                $scope.defaultPlan.leagueIds.splice($scope.defaultPlan.leagueIds.indexOf(league.id), 1);
             }
 
             /* Otherwise; if the league is not present in the plan. */
             else {
 
                 /* Add the league to the plan. */
-                $scope.defaultPlan.leagueIds.push(leagueId);
+                $scope.defaultPlan.leagueIds.push(league.id);
             }
         };
 
@@ -68,6 +67,7 @@ NewPlan.controller('NewPlanController', [
 
         $scope.savePlan = function(plan) {
             plan.leagueIds = $scope.defaultPlan.leagueIds;
+            console.log(plan.leagueIds);
 
             var startDate = moment(plan.startDate);
             var endDate = moment(plan.endDate);
@@ -84,6 +84,7 @@ NewPlan.controller('NewPlanController', [
             delete plan.startDate;
             delete plan.endDate;
             delete plan.turnaroundInterval;
+            console.log(plan);
 
             plans.save(plan);
 
