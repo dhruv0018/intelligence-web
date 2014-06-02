@@ -72,7 +72,7 @@ Coach.service('Coach.Data', [
 
         games.getList({
         //TODO we need an uploaderTeamId filter
-        //    teamId: data.teamId
+            uploaderTeamId: data.teamId
         }, function(gamesList) {
             promisedGames.resolve(gamesList);
             promisedIndexedGames.resolve(games.transformIndexed(gamesList));
