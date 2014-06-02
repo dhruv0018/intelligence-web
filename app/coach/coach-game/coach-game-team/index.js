@@ -91,23 +91,16 @@ Team.controller('Coach.Game.Team.controller', [
             }
         });
 
-        $scope.$watch('validation', function(validation) {
-            if (typeof validation !== 'undefined') {
-                console.log(validation);
+        $scope.$watch('validation.scoutingTeam', function(valid) {
+            if (!valid) {
+                tabs['opposing-team'].disabled = true;
+                tabs['opposing-team'].active = false;
+            } else {
+                tabs['opposing-team'].disabled = false;
+                tabs['opposing-team'].active = true;
             }
+
         });
-
-
-//        $scope.$watch('formScoutingTeam.$invalid', function(invalid) {
-//
-//            tabs.instructions.disabled = invalid;
-//        });
-//
-//
-//        $scope.$watch('tabs["scouting-team"].disabled', function(disabled) {
-//
-//            tabs['opposing-team'].disabled = disabled;
-//        });
 
         $scope.save = function() {
             $scope.data.team.players = players.getPositionsFromDowndown($scope.data.team.players, $scope.scoutingTeamId, $scope.positions);
