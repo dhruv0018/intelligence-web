@@ -336,3 +336,27 @@ Indexing.controller('Indexing.Main.Controller', [
     }
 ]);
 
+Indexing.directive('clearKeyListeners', [
+    function directive() {
+
+        var Mousetrap = window.Mousetrap;
+        function link(scope, element, attributes) {
+            element.on('focus', function() {
+                window.Mousetrap.pause();
+            });
+
+            element.on('blur', function() {
+                window.Mousetrap.unpause();
+            });
+        }
+
+        var ClearKeyListeners = {
+            restrict: 'A',
+            link: link,
+            controller: 'Indexing.Main.Controller'
+        };
+
+        return ClearKeyListeners;
+    }
+]);
+

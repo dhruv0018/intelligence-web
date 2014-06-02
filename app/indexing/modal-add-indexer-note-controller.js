@@ -19,16 +19,13 @@ Indexing.controller('Indexing.Modal.AddIndexerNote.Controller', [
 
         $scope.GAME_NOTE_TYPES = GAME_NOTE_TYPES;
 
-        indexing.game.notes = indexing.game.notes || {};
-        indexing.game.notes[GAME_NOTE_TYPES.QA_NOTE] = indexing.game.notes[GAME_NOTE_TYPES.QA_NOTE] ||
-            function() {
-                var qaNote = {
-                    noteTypeId: GAME_NOTE_TYPES.QA_NOTE,
-                    content: ''
-                };
+        var qaNote = {
+            noteTypeId: GAME_NOTE_TYPES.QA_NOTE,
+            content: ''
+        };
 
-                return [qaNote];
-            };
+        indexing.game.notes = indexing.game.notes || {};
+        indexing.game.notes[GAME_NOTE_TYPES.QA_NOTE] = indexing.game.notes[GAME_NOTE_TYPES.QA_NOTE] || [qaNote];
 
         $scope.game = indexing.game;
 
@@ -46,7 +43,7 @@ Indexing.controller('Indexing.Modal.AddIndexerNote.Controller', [
         });
 
         $scope.submit = function() {
-            indexing.game.saveNotes().then(function() {
+            $scope.game.saveNotes().then(function() {
                 $modalInstance.close();
             });
         };
