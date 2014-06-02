@@ -1,7 +1,7 @@
 <div class="select-indexer">
 
     <header class="modal-header">
-
+        <i class="icon-remove pull-right" data-ng-click="cancel()"></i>
         <div class="modal-title">Select indexer to <span data-ng-hide="isQa">index</span><span data-ng-show="isQa">QA</span> this game</div>
 
     </header>
@@ -9,18 +9,17 @@
     <div class="modal-body">
 
         <form name="assign">
+            <div class="assign-box first-box">
+                <select data-ng-model="indexerId" required>
 
-            <select data-ng-model="indexerId" required>
+                    <option value="">Select indexer</option>
+                    <option data-ng-repeat="indexer in indexers" value="{{ indexer.id }}">{{ indexer.firstName + ' ' + indexer.lastName }}</option>
 
-                <option value="">Select indexer</option>
-                <option data-ng-repeat="indexer in indexers" value="{{ indexer.id }}">{{ indexer.firstName + ' ' + indexer.lastName }}</option>
-
-            </select>
-
-            <data-timepicker class="time" data-ng-model="deadline"></data-timepicker>
-
-            <data-datepicker class="date" data-ng-model="deadline" data-min="minDate" data-show-weeks="false"></data-datepicker>
-
+                </select>
+            </div>
+            <div class="assign-box">
+                <add-time data-ng-model="deadline" min="2" max="48"></add-time>
+            </div>
         </form>
 
     </div>

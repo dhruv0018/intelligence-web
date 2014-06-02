@@ -172,6 +172,7 @@ module.exports = function(grunt) {
             mousetrap: {
                 src: [
                     'node_modules/Mousetrap/mousetrap.js',
+                    'node_modules/Mousetrap/plugins/pause/mousetrap-pause.js',
                     'node_modules/Mousetrap/plugins/global-bind/mousetrap-global-bind.js'
                 ],
                 dest: 'build/mousetrap.js'
