@@ -342,11 +342,11 @@ Indexing.directive('clearKeyListeners', [
         var Mousetrap = window.Mousetrap;
         function link(scope, element, attributes) {
             element.on('focus', function() {
-                window.Mousetrap.pause();
+                Mousetrap.pause();
             });
 
             element.on('blur', function() {
-                window.Mousetrap.unpause();
+                Mousetrap.unpause();
             });
         }
 
