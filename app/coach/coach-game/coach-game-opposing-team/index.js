@@ -95,15 +95,13 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             }
         });
 
-        $scope.$watch('formOpposingTeam.$invalid', function(invalid) {
+        $scope.$watch('validation.opposingTeam', function(valid) {
+            if (!valid) {
+                tabs.instructions.disabled = true;
+            } else {
+                tabs.instructions.disabled = false;
+            }
 
-            tabs.instructions.disabled = invalid;
-        });
-
-
-        $scope.$watch('tabs["opposing-team"].disabled', function(disabled) {
-
-            tabs.instructions.disabled = disabled;
         });
 
         $scope.save = function() {
