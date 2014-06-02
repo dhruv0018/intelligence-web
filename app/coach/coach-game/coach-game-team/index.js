@@ -60,7 +60,6 @@ Team.directive('krossoverCoachGameTeam', [
 Team.controller('Coach.Game.Team.controller', [
     'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'Coach.Game.Tabs', 'Coach.Game.Data', 'GamesFactory', 'PlayersFactory',
     function controller(config, $rootScope, $scope, $state, $localStorage, $http, tabs, data, games, players) {
-        console.log('working scrimmage team');
         $scope.tabs = tabs;
         $scope.data = {};
 
@@ -82,7 +81,7 @@ Team.controller('Coach.Game.Team.controller', [
         $scope.$watch('data.team.players', function(scoutingTeam) {
             if (typeof scoutingTeam !== 'undefined') {
                 if (scoutingTeam.length === 0) {
-                    console.log(scoutingTeam);
+                    console.log('no team');
                 }
             } else {
                 $scope.data.team = {
