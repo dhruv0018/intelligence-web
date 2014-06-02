@@ -148,9 +148,14 @@ UploadFilm.controller('UploadFilmController', [
 
                     /* Store the GUID with the game. */
                     $scope.game.datePlayed = new Date();
+
                     $scope.game.video = {
                         guid: guid
                     };
+
+                    if (games.isRegular($scope.game)) {
+                        $scope.game.isHomeGame = 'true';
+                    }
 
                     coachData.game = $scope.game;
 

@@ -96,12 +96,17 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         });
 
         $scope.$watch('validation.opposingTeam', function(valid) {
-            if (!valid) {
-                tabs.instructions.disabled = true;
-            } else {
+            if (valid) {
                 tabs.instructions.disabled = false;
+            } else {
+                tabs.instructions.disabled = true;
             }
+        });
 
+        $scope.$watch('tabs["opposing-team"].disabled', function(disabled) {
+            if (disabled) {
+                tabs.instructions.disabled = disabled;
+            }
         });
 
         $scope.save = function() {

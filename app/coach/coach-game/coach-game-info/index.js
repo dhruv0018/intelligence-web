@@ -114,8 +114,8 @@ Info.controller('Coach.Game.Info.controller', [
         });
 
         $scope.$watch('formGameInfo.$invalid', function(invalid) {
-
             tabs['your-team'].disabled = invalid;
+            tabs['scouting-team'].disabled = invalid;
         });
 
         $scope.save = function() {
