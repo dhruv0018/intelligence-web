@@ -256,7 +256,9 @@ module.exports = function(grunt) {
                 options: {
                     debug: true,
                     transform: ['envify'],
-                    noParse: ['./build/build.js'],
+                    browserifyOptions: {
+                        noParse: ['./build/build.js']
+                    },
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
@@ -275,7 +277,9 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     transform: ['envify'],
-                    noParse: ['./build/build.js'],
+                    browserifyOptions: {
+                        noParse: ['./build/build.js']
+                    },
                     shim: {
                         flowjs: {
                             path: 'node_modules/flowjs/src/flow.js',
