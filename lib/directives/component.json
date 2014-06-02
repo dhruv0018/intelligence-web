@@ -28,8 +28,10 @@
         "add-player",
         "mascot-placeholder",
         "profile-placeholder",
+        "notes-list",
         "positions-dropdown",
-        "uploader"
+        "uploader",
+        "feedback-modal"
     ],
     "scripts": [
         "index.js"
