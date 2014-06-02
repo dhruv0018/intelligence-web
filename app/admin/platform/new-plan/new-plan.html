@@ -2,7 +2,7 @@
 
     <header class="modal-header">
 
-        <h3 class="modal-title">Create a new plan<i class="pull-right icon-remove"></i></h3>
+        <h3 class="modal-title">Create a new plan<i class="pull-right icon-remove" data-ng-click="cancel()"></i></h3>
 
     </header>
 
@@ -44,16 +44,18 @@
                     <label>Max games per season</label>
                     <input class="form-control" type="text" data-ng-model="plan.maxAnyGames" required>
                 </div>
+            </div>
+            <div class="gamesrow">
                 <div>
                     <label>Default # of regular games</label>
                     <input class="form-control" type="text" data-ng-model="plan.maxRegularGames" required> per week
                 </div>
-            </div>
-            <div class="gamesrow">
                 <div>
                     <label>Default # of scouting games</label>
                     <input class="form-control" type="text" data-ng-model="plan.maxScoutingGames" required> per week
                 </div>
+            </div>
+            <div class="gamesrow">
                 <div>
                     <label>Default turnaround time</label>
                     <select class="form-control" data-ng-model="plan.turnaroundInterval" data-ng-options="time.time for time in maxTurnaroundTimes">{{ maxTurnaroundTimes }}</select>

@@ -90,5 +90,9 @@ NewPlan.controller('NewPlanController', [
             $modalInstance.close();
 
         };
+
+        $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+        };
     }
 ]);
