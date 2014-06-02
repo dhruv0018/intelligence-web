@@ -66,11 +66,7 @@ NewPlan.controller('NewPlanController', [
             {time: '36-48', value: 48}
         ];
 
-        console.log($scope.leagues);
-
-
         $scope.savePlan = function(plan) {
-            console.log($scope.defaultPlan);
             plan.leagueIds = $scope.defaultPlan.leagueIds;
 
             var startDate = moment(plan.startDate);
