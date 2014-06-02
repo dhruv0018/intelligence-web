@@ -43,6 +43,7 @@ NewPlan.controller('NewPlanController', [
          * @param {Number} leagueId - the ID of the league to toggle.
          */
         $scope.toggleLeagueId = function(leagueId) {
+            leagueId = leagueId - 1;
 
             /* If the league is present in the plan already. */
             if (~$scope.defaultPlan.leagueIds.indexOf(leagueId)) {
@@ -65,8 +66,11 @@ NewPlan.controller('NewPlanController', [
             {time: '36-48', value: 48}
         ];
 
+        console.log($scope.leagues);
+
 
         $scope.savePlan = function(plan) {
+            console.log($scope.defaultPlan);
             plan.leagueIds = $scope.defaultPlan.leagueIds;
 
             var startDate = moment(plan.startDate);
