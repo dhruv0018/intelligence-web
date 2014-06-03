@@ -81,7 +81,7 @@ Team.controller('Coach.Game.Team.controller', [
         $scope.$watch('data.team.players', function(scoutingTeam) {
             if (typeof scoutingTeam !== 'undefined') {
                 if (scoutingTeam.length === 0) {
-                    console.log('no team');
+                    $scope.validation.scoutingTeam = false;
                 }
             } else {
                 $scope.data.team = {

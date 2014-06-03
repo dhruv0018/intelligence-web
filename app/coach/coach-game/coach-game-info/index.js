@@ -82,8 +82,6 @@ Info.controller('Coach.Game.Info.controller', [
             if (games.isRegular($scope.game)) {
                 $scope.$parent.$parent.headings.yourTeam = coachData.coachTeam.name;
             }
-
-
         });
 
         $scope.$watch('data.opposingTeam.name', function(opposingTeamName) {
@@ -95,13 +93,8 @@ Info.controller('Coach.Game.Info.controller', [
         });
 
         $scope.$watch('game', function(game) {
-            if (typeof game.datePlayed !== 'undefined') {
-                game = games.unadjustTime(game);
-            }
-
             game.notes = game.notes || {};
             game.notes[GAME_NOTE_TYPES.COACH_NOTE] = game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE,content: ''}];
-
         });
 
         $scope.$watch('game.isHomeGame', function(isHomeGame) {

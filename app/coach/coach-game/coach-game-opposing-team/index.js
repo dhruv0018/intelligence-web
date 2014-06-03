@@ -85,7 +85,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster) {
             if (typeof opposingTeamRoster !== 'undefined') {
                 if (opposingTeamRoster.length === 0) {
-                    console.log(opposingTeamRoster);
+                    $scope.validation.opposingTeam = false;
                 }
             } else {
                 $scope.data.opposingTeam = {
