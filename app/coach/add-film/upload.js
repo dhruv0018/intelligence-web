@@ -96,7 +96,7 @@ UploadFilm.filter('bytes', function() {
 UploadFilm.controller('UploadFilmController', [
     'config', 'ALLOWED_FILE_EXTENSIONS', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'AlertsService', 'SessionService', 'GamesFactory', 'Coach.Data',
     function controller(config, ALLOWED_FILE_EXTENSIONS, $rootScope, $scope, $state, $localStorage, $http, alerts, session, games, coachData) {
-
+        $scope.games = games;
         $scope.$storage = $localStorage;
 
         delete $scope.$storage.opposingTeam;
