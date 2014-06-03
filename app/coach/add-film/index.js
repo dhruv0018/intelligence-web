@@ -55,14 +55,13 @@ AddFilm.config([
             onEnter: [
                 'AlertsService', 'Coach.Game.Data',
                 function(alerts, gameData) {
-                    console.log(gameData);
                     alerts.clear();
                 }
             ],
             onExit: [
-                'AlertsService', 'Coach.Game.Data',
-                function(alerts, gameData) {
-                    console.log(gameData);
+                'AlertsService', 'Coach.Game.Data', 'Coach.Game.Tabs',
+                function(alerts, gameData, tabs) {
+                    tabs.reset();
                     alerts.clear();
                 }
             ]

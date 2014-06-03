@@ -53,7 +53,14 @@ GameArea.config([
                 'indexingData': ['$stateParams', 'IndexingService', function($stateParams, indexing) {
                     return indexing.init($stateParams.id);
                 }]
-            }
+            },
+            onExit: [
+                'AlertsService', 'Coach.Game.Data', 'Coach.Game.Tabs',
+                function(alerts, gameData, tabs) {
+                    tabs.reset();
+                    alerts.clear();
+                }
+            ]
         });
     }
 ]);

@@ -47,7 +47,33 @@ var tabs = {
     'your-team':     { active: false, disabled: true },
     'scouting-team':    { active: false, disabled: true },
     'opposing-team': { active: false, disabled: true },
-    'instructions':    { active: false, disabled: true }
+    'instructions':    { active: false, disabled: true },
+    reset: function() {
+        this['game-info'] = {
+            active: true,
+            disabled: false
+        };
+
+        this['your-team'] = {
+            active: false,
+            disabled: true
+        };
+
+        this['scouting-team'] = {
+            active: false,
+            disabled: true
+        };
+
+        this['opposing-team'] = {
+            active: false,
+            disabled: true
+        };
+
+        this.instructions = {
+            active: false,
+            disabled: true
+        };
+    }
 };
 
 Object.defineProperty(tabs, 'activateTab', {
