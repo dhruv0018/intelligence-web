@@ -1,15 +1,30 @@
 <span class="item">
 
-    <!-- Static item -->
-    <krossover-item-static data-ng-if="isString(item)" item="item"></krossover-item-static>
+    <!-- Gap variable -->
+    <krossover-item-gap data-ng-if="item.type === 'GAP'" data-item="item" data-event="event"></krossover-item-gap>
 
     <!-- Text variable -->
-    <krossover-item-text data-ng-if="item.type === 'TEXT'" item="item" event="event"></krossover-item-text>
+    <krossover-item-text data-ng-if="item.type === 'TEXT'" data-item="item" data-event="event"></krossover-item-text>
+
+    <!-- Yard variable -->
+    <krossover-item-yard data-ng-if="item.type === 'YARD'" data-item="item" data-event="event"></krossover-item-yard>
+
+    <!-- Static item -->
+    <krossover-item-static data-ng-if="isString(item)" data-item="item"></krossover-item-static>
 
     <!-- Dropdown variable -->
-    <krossover-item-dropdown data-ng-if="item.type === 'DROPDOWN'" item="item" event="event"></krossover-item-dropdown>
+    <krossover-item-dropdown data-ng-if="item.type === 'DROPDOWN'" data-item="item" data-event="event"></krossover-item-dropdown>
+
+    <!-- Formation variable -->
+    <krossover-item-formation data-ng-if="item.type === 'FORMATION'" data-item="item" data-event="event"></krossover-item-formation>
+
+    <!-- Passing zone variable -->
+    <krossover-item-passing-zone data-ng-if="item.type === 'PASSING_ZONE'" data-item="item" data-event="event"></krossover-item-passing-zone>
+
+    <!-- Team dropdown variable -->
+    <krossover-item-team-dropdown data-ng-if="item.type === 'TEAM_DROPDOWN'" data-item="item" data-event="event"></krossover-item-team-dropdown>
 
     <!-- Player dropdown variable -->
-    <krossover-item-player-dropdown data-ng-if="item.type === 'PLAYER_DROPDOWN'" item="item" event="event"></krossover-item-player-dropdown>
+    <krossover-item-player-dropdown data-ng-if="item.type === 'PLAYER_DROPDOWN'" data-item="item" data-event="event"></krossover-item-player-dropdown>
 
 </span>

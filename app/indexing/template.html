@@ -4,29 +4,26 @@
 
         <div class="alert-editing" data-ng-show="indexing.eventSelected"><button class="btn-delete-event" data-ng-click="main.deleteEvent(event.current)"><i class="icon-remove"></i> Delete Event</button><h5>Click the variable you wish to edit.</h5></div>
 
-        <x-krossover-videoplayer></x-krossover-videoplayer>
+        <button class="btn-back" data-ng-if="indexing.isIndexing" data-ng-click="main.back()">Back (Esc)</button>
 
         <div class="indexing-block">
 
-            <form name="formIndexing" role="form" novalidate>
+            <form class="indexing-form" name="formIndexing" role="form" novalidate>
 
-                <span data-ng-if="indexing.isIndexing">
+                <!-- Tags -->
+                <div class="tags" data-ng-if="indexing.isIndexing && indexing.showTags">
 
-                    <!-- Tags -->
-                    <div class="tags" data-ng-if="indexing.showTags">
+                    <button class="tag" data-ng-repeat="tag in tags.current" data-keybinding="{{ tag.shortcutKey.toLowerCase() }}" data-ng-click="main.selectTag(tag.id)" tabindex="{{ $index+1 }}">{{ tag.name }} ({{ tag.shortcutKey.toLowerCase() }})</button>
 
-                        <button class="tag" data-ng-repeat="tag in tags.current" data-keybinding="{{ tag.shortcutKey.toLowerCase() }}" data-ng-click="main.selectTag(tag.id)" tabindex="{{ $index+1 }}">{{ tag.name }} ({{ tag.shortcutKey.toLowerCase() }})</button>
+                </div>
 
-                    </div>
+                <!-- Script -->
+                <div class="script" data-ng-if="indexing.isIndexing && indexing.showScript">
 
-                    <!-- Script -->
-                    <div class="script" data-ng-if="indexing.showScript">
+                    <krossover-item data-item="item" data-event="event.current" data-ng-repeat="item in indexerScript(indexing.tagset, event.current) track by $index"></krossover-item>
 
-                        <krossover-item item="item" event="event.current" data-ng-repeat="item in buildScript(event.current)"></krossover-item>
+                </div>
 
-                    </div>
-
-                </span>
 
                 <div class="controls">
 
@@ -34,7 +31,6 @@
                     <button class="btn-indexing-start" data-ng-if="indexing.isReady && !indexing.isIndexing" data-ng-click="main.index()"><i class="icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
 
                     <!-- State movement buttons -->
-                    <button class="btn-back" data-ng-if="indexing.isIndexing" data-ng-click="main.back()">Back (Esc)</button>
                     <button class="btn-save" data-ng-if="indexing.isIndexing && indexing.showScript && main.savable()" data-ng-click="main.save()" data-ng-disabled="formIndexing.$invalid">Save Event (Return)</button>
                     <button class="btn-next" data-ng-if="indexing.isIndexing && indexing.showScript && !main.savable()" data-ng-click="main.next()" data-ng-disabled="formIndexing.$invalid">Next (Return)</button>
 
@@ -43,6 +39,8 @@
             </form>
 
         </div>
+
+        <x-krossover-videoplayer></x-krossover-videoplayer>
 
     </main>
 
