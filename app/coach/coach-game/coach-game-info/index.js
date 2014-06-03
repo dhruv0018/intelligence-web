@@ -85,11 +85,12 @@ Info.controller('Coach.Game.Info.controller', [
         });
 
         $scope.$watch('data.opposingTeam.name', function(opposingTeamName) {
-            $scope.$parent.$parent.headings.opposingTeam = opposingTeamName;
+            console.log($scope.data);
+            $scope.data.headings.opposingTeam = opposingTeamName;
         });
 
         $scope.$watch('data.team.name', function(teamName) {
-            $scope.$parent.$parent.headings.scoutingTeam = teamName;
+            $scope.data.headings.scoutingTeam = teamName;
         });
 
         $scope.$watch('game', function(game) {

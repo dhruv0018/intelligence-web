@@ -49,12 +49,6 @@ var tabs = {
     'opposing-team': { active: false, disabled: true },
     'instructions':    { active: false, disabled: true },
     reset: function() {
-        delete this['game-info'];
-        delete this['your-team'];
-        delete this['scouting-team'];
-        delete this['opposing-team'];
-        delete this.instructions;
-
         this['game-info'] = {
             active: true,
             disabled: false
@@ -146,15 +140,18 @@ Game.directive('krossoverCoachGame', [
  * @type {controller}
  */
 Game.controller('Coach.Game.controller', [
-    '$scope', 'Coach.Game.Tabs', 'GamesFactory',
-    function controller($scope, tabs, games) {
+    '$scope', 'Coach.Game.Tabs', 'Coach.Game.Data', 'GamesFactory',
+    function controller($scope, tabs, gameData, games) {
         $scope.games = games;
 
-        $scope.headings = {
-            opposingTeam: 'Opposing Team',
-            yourTeam: 'Your Team',
-            scoutingTeam: 'Team'
-        };
+        gameData.then(function(gameData) {
+            gameData.headings = {
+                opposingTeam: 'Opposing Team',
+                yourTeam: gameData.coachTeam.name,
+                scoutingTeam: 'Team'
+            };
+            $scope.gameData = gameData;
+        });
 
         $scope.validation = {
             opposingTeam: false,
