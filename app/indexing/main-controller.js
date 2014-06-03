@@ -45,7 +45,7 @@ Indexing.controller('Indexing.Main.Controller', [
         /* Bind keys. */
 
 
-        var _globalCallbacks = {
+        var globalCallbacks = {
             'space': true,
             'left': true,
             'right': true,
@@ -53,18 +53,18 @@ Indexing.controller('Indexing.Main.Controller', [
             'esc': true
         };
 
-        _originalStopCallback = Mousetrap.stopCallback;
+        originalStopCallback = Mousetrap.stopCallback;
 
-        Mousetrap.stopCallback = function(e, element, combo, sequence) {
+        Mousetrap.stopCallback = function(event, element, combo, sequence) {
 
             if (indexing.isIndexing) {
 
-                if (_globalCallbacks[combo] || _globalCallbacks[sequence]) {
+                if (globalCallbacks[combo] || globalCallbacks[sequence]) {
                     return false;
                 }
             }
 
-            return _originalStopCallback(e, element, combo);
+            return originalStopCallback(event, element, combo);
         };
 
         Mousetrap.bind('space', function() {
