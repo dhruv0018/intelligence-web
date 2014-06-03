@@ -13,15 +13,16 @@ var ZONE_IDS = {
     4: 'LOSS_RIGHT',
     5: 'LOSS_FAR_RIGHT',
     6: 'LEFT_FLAT',
-    7: 'HOLE_MIDDLE',
-    8: 'RIGHT_HOOK',
-    9: 'RIGHT_FLAT',
-    10: 'LEFT',
-    11: 'MIDDLE',
-    12: 'RIGHT',
-    13: 'DEEP_LEFT',
-    14: 'DEEP_MIDDLE',
-    15: 'DEEP_RIGHT'
+    7: 'LEFT_HOOK',
+    8: 'HOLE_MIDDLE',
+    9: 'RIGHT_HOOK',
+    10: 'RIGHT_FLAT',
+    11: 'LEFT',
+    12: 'MIDDLE',
+    13: 'RIGHT',
+    14: 'DEEP_LEFT',
+    15: 'DEEP_MIDDLE',
+    16: 'DEEP_RIGHT'
 };
 
 IntelligenceWebClient.constant('ZONE_IDS', ZONE_IDS);
