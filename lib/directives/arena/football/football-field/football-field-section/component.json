@@ -1,5 +1,5 @@
 {
-    "name": "football-field",
+    "name": "football-field-section",
     "templates": [
         "template.html"
     ],
@@ -8,11 +8,5 @@
     ],
     "scripts": [
         "index.js"
-    ],
-    "paths": [
-        "."
-    ],
-    "local": [
-        "football-field-section"
     ]
 }
