@@ -61,6 +61,9 @@ AddFilm.config([
             onExit: [
                 'AlertsService', 'Coach.Game.Data', 'Coach.Game.Tabs',
                 function(alerts, gameData, tabs) {
+                    delete gameData.opposingTeam;
+                    delete gameData.team;
+
                     tabs.reset();
                     alerts.clear();
                 }
