@@ -87,12 +87,12 @@ Coach.service('Coach.Data', [
                     roster: data.roster.id
                 }, function(players) {
                     var mergedRoster = [];
-                    angular.forEach(players, function(player){
+                    angular.forEach(players, function(player) {
                         if (player.userId) {
                             //lost in the merger
                             var playerId = player.id;
 
-                            users.get(player.userId, function(user){
+                            users.get(player.userId, function(user) {
                                 angular.extend(player, user, player);
                                 player.id = playerId;
                                 mergedRoster.push(player);
