@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'GamesResource',
-    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, GamesResource) {
+    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'GamesResource', '$q',
+    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, GamesResource, $q) {
 
         var GamesFactory = {
 
@@ -115,6 +115,26 @@ IntelligenceWebClient.factory('GamesFactory', [
                     var newGame = self.resource.create(parameters, game, success, error);
                     return newGame.$promise;
                 }
+            },
+
+            saveNotes: function() {
+
+                var deferred = $q.defer();
+
+                var self = this;
+                self.save().then(function() {
+
+                    deferred.notify('saved');
+
+                    GamesResource.get({ id: self.id }, function(result) {
+                        self.notes = result.notes;
+                        deferred.resolve(result.notes);
+                    }, function() {
+                        deferred.reject(null);
+                    });
+                });
+
+                return deferred.promise;
             },
 
             getStatus: function() {

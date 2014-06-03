@@ -169,13 +169,6 @@ module.exports = function(grunt) {
 
 
         concat: {
-            mousetrap: {
-                src: [
-                    'node_modules/Mousetrap/mousetrap.js',
-                    'node_modules/Mousetrap/plugins/global-bind/mousetrap-global-bind.js'
-                ],
-                dest: 'build/mousetrap.js'
-            },
             unprefixed: {
                 src: ['fonts.css', 'build/build.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
@@ -254,18 +247,11 @@ module.exports = function(grunt) {
         browserify: {
             dev: {
                 options: {
-                    debug: true,
-                    transform: ['envify'],
-                    noParse: ['./build/build.js'],
-                    shim: {
-                        flowjs: {
-                            path: 'node_modules/flowjs/src/flow.js',
-                            exports: 'flowjs'
-                        },
-                        Mousetrap: {
-                            path: 'build/mousetrap.js',
-                            exports: 'Mousetrap'
-                        }
+                    bundleOptions: {
+                        debug: true,
+                    },
+                    browserifyOptions: {
+                        noParse: ['./build/build.js']
                     }
                 },
                 files: {
@@ -274,17 +260,8 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
-                    transform: ['envify'],
-                    noParse: ['./build/build.js'],
-                    shim: {
-                        flowjs: {
-                            path: 'node_modules/flowjs/src/flow.js',
-                            exports: 'flowjs'
-                        },
-                        Mousetrap: {
-                            path: 'build/mousetrap.js',
-                            exports: 'Mousetrap'
-                        }
+                    browserifyOptions: {
+                        noParse: ['./build/build.js']
                     }
                 },
                 files: {
@@ -494,13 +471,11 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
         'env:prod',
         'componentbuild:prod',
-        'concat:mousetrap',
         'browserify:prod']);
 
     grunt.registerTask('dev', [
         'env:dev',
         'componentbuild:dev',
-        'concat:mousetrap',
         'browserify:dev',
         'componentbuild:styles',
         'less',
@@ -516,7 +491,6 @@ module.exports = function(grunt) {
         'clean',
         'env:qa',
         'componentbuild:prod',
-        'concat:mousetrap',
         'browserify:prod',
         'less',
         'componentbuild:styles',
@@ -535,7 +509,6 @@ module.exports = function(grunt) {
         'clean',
         'env:prod',
         'componentbuild:prod',
-        'concat:mousetrap',
         'browserify:prod',
         'componentbuild:styles',
         'less',
