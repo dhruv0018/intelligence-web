@@ -398,3 +398,65 @@
   }
 }
 
+.formations-teams-header {
+  border-bottom: thin solid @gray-border;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 50px;
+  color: @brand-blue;
+  letter-spacing: normal;
+
+  .team-on-offense {
+    line-height: 50px;
+    border-right: 2px solid @gray-border;
+    margin-right: 15px;
+
+    .home-team {
+      border-right: thin solid @gray-border;
+      margin-left: 20px;
+      padding-right: 15px;
+      color: @gray-light;
+    }
+
+    .away-team {
+      color: @gray-light;
+      margin-right: 15px;
+      margin-left: 15px;
+    }
+  }
+
+  select {
+    background-image: none;
+    background-color: white;
+    color: @gray-light;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+.formations-chart-container {
+  border: thin solid @gray-border;
+  width: 80%;
+  margin: 20px auto;
+  letter-spacing: normal;
+
+  .field-header {
+    color: white;
+    background-color: @brand-blue;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 400;
+
+    .field-info {
+      margin-right: 30px;
+
+      span {
+        font-weight: 500;
+      }
+    }
+  }
+}
+
