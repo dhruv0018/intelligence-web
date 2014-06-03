@@ -7,20 +7,21 @@
         "type": "git",
         "url": "git@bitbucket.org:krossoverintelligence/intelligence-web-client.git"
     },
-    "browser": {
-        "angular.js": "./node_modules/angular/angular.js",
-        "flow.js": "./node_modules/flowjs/src/flow.js",
-        "mousetrap.js": "./node_modules/Mousetrap/mousetrap.js"
-    },
-    "browserify-shim": {
-        "angular.js": "angular",
-        "flow.js": "flowjs",
-        "mousetrap.js": "Mousetrap"
-    },
     "browserify": {
         "transform": [
+            "envify",
             "browserify-shim"
         ]
+    },
+    "browserify-shim": {
+        "angular": "angular",
+        "flow": "flowjs",
+        "mousetrap": "Mousetrap"
+    },
+    "browser": {
+        "angular": "./node_modules/angular/angular.js",
+        "flow": "./node_modules/flowjs/src/flow.js",
+        "mousetrap": "./node_modules/Mousetrap/mousetrap.js"
     },
     "napa": {
         "angular": "angular/bower-angular",
