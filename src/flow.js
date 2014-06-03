@@ -5,6 +5,8 @@ var package = require('../package.json');
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+var Flow = require('flowjs');
+
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.config([

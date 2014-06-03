@@ -255,18 +255,11 @@ module.exports = function(grunt) {
         browserify: {
             dev: {
                 options: {
-                    debug: true,
-                    transform: ['envify'],
-                    noParse: ['./build/build.js'],
-                    shim: {
-                        flowjs: {
-                            path: 'node_modules/flowjs/src/flow.js',
-                            exports: 'flowjs'
-                        },
-                        Mousetrap: {
-                            path: 'build/mousetrap.js',
-                            exports: 'Mousetrap'
-                        }
+                    bundleOptions: {
+                        debug: true,
+                    },
+                    browserifyOptions: {
+                        noParse: ['./build/build.js']
                     }
                 },
                 files: {
@@ -275,17 +268,8 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
-                    transform: ['envify'],
-                    noParse: ['./build/build.js'],
-                    shim: {
-                        flowjs: {
-                            path: 'node_modules/flowjs/src/flow.js',
-                            exports: 'flowjs'
-                        },
-                        Mousetrap: {
-                            path: 'build/mousetrap.js',
-                            exports: 'Mousetrap'
-                        }
+                    browserifyOptions: {
+                        noParse: ['./build/build.js']
                     }
                 },
                 files: {
