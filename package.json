@@ -15,13 +15,11 @@
     },
     "browserify-shim": {
         "angular": "angular",
-        "flow": "flowjs",
-        "mousetrap": "Mousetrap"
+        "flow": "flowjs"
     },
     "browser": {
         "angular": "./node_modules/angular/angular.js",
-        "flow": "./node_modules/flowjs/src/flow.js",
-        "mousetrap": "./node_modules/Mousetrap/mousetrap.js"
+        "flow": "./node_modules/flowjs/src/flow.js"
     },
     "napa": {
         "angular": "angular/bower-angular",
