@@ -254,7 +254,9 @@ module.exports = function(grunt) {
         browserify: {
             dev: {
                 options: {
-                    debug: true,
+                    bundleOptions: {
+                        debug: true,
+                    },
                     browserifyOptions: {
                         noParse: ['./build/build.js']
                     }
