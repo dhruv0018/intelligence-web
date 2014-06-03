@@ -37,6 +37,7 @@
       padding-top: 0px;
       padding-bottom: 0px;
       margin: 8px 25px 8px 0px;
+      background-color: white;
     }
 
   }
@@ -409,9 +410,7 @@
 
   .team-on-offense {
     line-height: 50px;
-    border-right: 2px solid @gray-border;
-    margin-right: 15px;
-
+    
     .home-team {
       border-right: thin solid @gray-border;
       margin-left: 20px;
@@ -426,13 +425,36 @@
     }
   }
 
+  .show-from {
+    border-left: 2px solid @gray-border;
+    padding-left: 15px;
+  }
+}
+
+.show-from {
+
   select {
     background-image: none;
     background-color: white;
     color: @gray-light;
     margin-left: 10px;
     margin-right: 10px;
+    min-width: 10px;
   }
+
+  .create-report-btn {
+    .pull-right;
+    .btn;
+    background-color: @brand-primary;
+    color: white;
+    border-radius: @border-radius-base;
+    font-weight: 400;
+
+    &:hover {
+      color: white;
+    }
+  }
+
 }
 
 .formations-chart-container {
@@ -456,6 +478,37 @@
       span {
         font-weight: 500;
       }
+    }
+  }
+}
+
+.down-distance-info-container {
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border: thin solid @gray-border;
+  background-color: @content-bg;
+  letter-spacing: normal;
+  font-weight: 500;
+  color: black;
+
+  div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  select {
+    background-color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: @gray-light;
+    font-weight: 400;
+
+    &.first-choices {
+      width: 75px;
+    }
+    &.second-choices {
+      width: 100px;
     }
   }
 }

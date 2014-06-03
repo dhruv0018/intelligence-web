@@ -16,6 +16,7 @@
         "gameAreaAwayStats.html",
         "gameAreaShotChart.html",
         "gameAreaFormations.html",
+        "gameAreaDownDistance.html",
         "deleteGame.html"
     ],
     "scripts": [
@@ -27,7 +28,8 @@
         "gameAreaHomeStats.js",
         "gameAreaAwayStats.js",
         "gameAreaShotChart.js",
-        "gameAreaFormations.js"
+        "gameAreaFormations.js",
+        "gameAreaDownDistance.js"
     ],
     "styles": [
         "styles.less"

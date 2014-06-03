@@ -3,6 +3,7 @@ require('./gameAreaFilm.js');
 require('./gameAreaStatistics.js');
 require('./gameAreaShotChart.js');
 require('./gameAreaFormations.js');
+require('./gameAreaDownDistance.js');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -20,7 +21,8 @@ var GameArea = angular.module('Coach.GameArea', [
     'game-area-film',
     'game-area-statistics',
     'game-area-shot-chart',
-    'game-area-formations'
+    'game-area-formations',
+    'game-area-down-distance'
 ]);
 
 /* Cache the template file */
@@ -77,6 +79,7 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.hasShotChart = false;
         $scope.hasStatistics = true;
         $scope.hasFormations = true;
+        $scope.hasDownAndDistance = true;
 
         data.then(function(data) {
             $scope.game = data.indexedGames[$scope.gameId];
@@ -148,6 +151,8 @@ GameArea.controller('Coach.GameArea.controller', [
                 $state.go('ga-shot-chart');
             } else if ($scope.dataType === 'formation-report') {
                 $state.go('ga-formations');
+            } else if ($scope.dataType === 'down-distance-report') {
+                $state.go('ga-down-distance');
             } else {
                 $state.go('Coach.GameArea');
             }
