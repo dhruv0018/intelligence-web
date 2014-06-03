@@ -62,7 +62,6 @@ Coach.service('Coach.Data', [
         var promisedLeague = $q.defer();
         var promisedPositionSet = $q.defer();
 
-        //TODO get real teamroster id
         var data = {
             teamId: session.currentUser.currentRole.teamId,
             games: promisedGames,
