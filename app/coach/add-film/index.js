@@ -46,7 +46,8 @@ AddFilm.config([
                     controller: 'AddFilmController'
                 },
                 'content@add-film': {
-                    templateUrl: 'coach/add-film/start.html'
+                    templateUrl: 'coach/add-film/start.html',
+                    controller: 'StartController'
                 }
             },
             resolve: {
@@ -75,8 +76,16 @@ AddFilm.config([
  */
 AddFilm.controller('AddFilmController', [
     '$scope', '$state',
-    function controller($scope, $state) {
+    function controller($scope, $state, games) {
+        $scope.games = games;
         $scope.game = {};
+    }
+]);
+
+AddFilm.controller('StartController', [
+    '$scope', 'GAME_TYPES',
+    function($scope, GAME_TYPES) {
+        $scope.GAME_TYPES = GAME_TYPES;
     }
 ]);
 

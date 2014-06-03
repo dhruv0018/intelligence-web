@@ -22,11 +22,12 @@
 
                         <div class="row">
 
-                            <div ng-click="game.gameType = 1" class="select-boxes col-md-6">
+                            <div data-ng-click="game.gameType = GAME_TYPES['CONFERENCE'].id" class="select-boxes col-md-6">
 
                                 <button type="button" data-ui-sref="upload-film">
 
                                     <div>
+                                        {{games}}
                                         <h1>Regular Game</h1>
                                         <h2>Includes: regular season, conference and non conference, and playoff games.</h2>
                                         <b>3 breakdowns left this week</b>
@@ -40,7 +41,7 @@
 
                             <div class="select-boxes col-md-6">
 
-                                <button type="button" ng-click="game.gameType = 4" data-ui-sref="upload-film">
+                                <button type="button" data-ng-click="game.gameType = GAME_TYPES['SCOUTING'].id" data-ui-sref="upload-film">
 
                                     <i class="icon-upload-alt"></i>
                                     <div>
