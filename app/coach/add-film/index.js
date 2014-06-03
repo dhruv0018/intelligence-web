@@ -52,20 +52,13 @@ AddFilm.config([
             resolve: {
                 'Coach.Game.Data': 'Coach.Game.Data'
             },
-            onEnter: [
-                'AlertsService', 'Coach.Game.Data',
-                function(alerts, gameData) {
-                    alerts.clear();
-                }
-            ],
             onExit: [
-                'AlertsService', 'Coach.Game.Data', 'Coach.Game.Tabs',
-                function(alerts, gameData, tabs) {
+                'Coach.Game.Data', 'Coach.Game.Tabs',
+                function(gameData, tabs) {
                     delete gameData.opposingTeam;
                     delete gameData.team;
 
                     tabs.reset();
-                    alerts.clear();
                 }
             ]
         };
