@@ -71,7 +71,6 @@ Coach.service('Coach.Data', [
         };
 
         games.getList({
-        //TODO we need an uploaderTeamId filter
             uploaderTeamId: data.teamId
         }, function(gamesList) {
             promisedGames.resolve(gamesList);

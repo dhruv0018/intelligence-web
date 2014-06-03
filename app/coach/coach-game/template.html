@@ -12,13 +12,13 @@
 
     </x-tab>
 
-    <x-tab ng-if="games.isRegular(game)" heading="{{gameData.headings.yourTeam}}" active="tabs['your-team'].active" disabled="!game.id || tabs['your-team'].disabled" select="tabs.activateTab('your-team')">
+    <x-tab data-ng-if="games.isRegular(game)" heading="{{gameData.headings.yourTeam}}" active="tabs['your-team'].active" disabled="!game.id || tabs['your-team'].disabled" select="tabs.activateTab('your-team')">
 
         <krossover-coach-game-your-team data-game="game" data-roster="roster"></krossover-coach-game-your-team>
 
     </x-tab>
 
-    <x-tab ng-if="!games.isRegular(game)" heading="{{ (gameData.headings.scoutingTeam.length > 0) ? gameData.headings.scoutingTeam: 'Team'}}" active="tabs['scouting-team'].active" disabled="!game.id || tabs['scouting-team'].disabled" select="tabs.activateTab('scouting-team')">
+    <x-tab data-ng-if="!games.isRegular(game)" heading="{{ (gameData.headings.scoutingTeam.length > 0) ? gameData.headings.scoutingTeam: 'Team'}}" active="tabs['scouting-team'].active" disabled="!game.id || tabs['scouting-team'].disabled" select="tabs.activateTab('scouting-team')">
 
         <krossover-coach-game-team data-validation="validation" data-game="game" data-scouting-roster="scoutingRoster"></krossover-coach-game-team>
 

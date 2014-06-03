@@ -8,8 +8,8 @@
 
                 <header class="box-header col-md-12">
 
-                    <x-button-continue ng-if="games.isRegular(game)" data-ng-disabled="tabs['your-team'].disabled">Save and Submit</x-button-continue>
-                    <x-button-continue ng-if="!games.isRegular(game)" data-ng-disabled="tabs['scouting-team'].disabled">Save and Submit</x-button-continue>
+                    <x-button-continue data-ng-if="games.isRegular(game)" data-ng-disabled="tabs['your-team'].disabled">Save and Submit</x-button-continue>
+                    <x-button-continue data-ng-if="!games.isRegular(game)" data-ng-disabled="tabs['scouting-team'].disabled">Save and Submit</x-button-continue>
 
                 </header>
 
@@ -35,16 +35,16 @@
 
                                     <div class="btn-group-vertical">
 
-                                        <button type="button" ng-if="games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.CONFERENCE.id" required>{{ GAME_TYPES.CONFERENCE.name }}</button>
-                                        <button type="button" ng-if="games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.NON_CONFERENCE.id" required>{{ GAME_TYPES.NON_CONFERENCE.name }}</button>
-                                        <button type="button" ng-if="games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.PLAYOFF.id" required>{{ GAME_TYPES.PLAYOFF.name }}</button>
-                                        <button type="button" ng-if="!games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.SCOUTING.id" required>{{ GAME_TYPES.SCOUTING.name }}</button>
-                                        <button type="button" ng-if="!games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.SCRIMMAGE.id" required>{{ GAME_TYPES.SCRIMMAGE.name }}</button>
+                                        <button type="button" data-ng-if="games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.CONFERENCE.id" required>{{ GAME_TYPES.CONFERENCE.name }}</button>
+                                        <button type="button" data-ng-if="games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.NON_CONFERENCE.id" required>{{ GAME_TYPES.NON_CONFERENCE.name }}</button>
+                                        <button type="button" data-ng-if="games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.PLAYOFF.id" required>{{ GAME_TYPES.PLAYOFF.name }}</button>
+                                        <button type="button" data-ng-if="!games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.SCOUTING.id" required>{{ GAME_TYPES.SCOUTING.name }}</button>
+                                        <button type="button" data-ng-if="!games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.SCRIMMAGE.id" required>{{ GAME_TYPES.SCRIMMAGE.name }}</button>
                                     </div>
 
                                 </div>
 
-                                <div ng-if="games.isRegular(game)" class="form-group">
+                                <div data-ng-if="games.isRegular(game)" class="form-group">
 
                                     <h4>*Home/Away</h4>
 
@@ -85,7 +85,7 @@
                                             <tr>
 
                                                 <td>
-                                                    <h5 ng-if="games.isRegular(game)">{{data.coachTeam.name}}</h5>
+                                                    <h5 data-ng-if="games.isRegular(game)">{{data.coachTeam.name}}</h5>
                                                     <input class="form-control" ng-if="!games.isRegular(game)" name="team" placeholder="Team" data-ng-model="data.team.name">
                                                 </td>
 
@@ -190,8 +190,8 @@
 
             </div>
 
-            <x-button-continue ng-if="games.isRegular(game)" data-ng-disabled="tabs['your-team'].disabled">Save and Submit</x-button-continue>
-            <x-button-continue ng-if="!games.isRegular(game)" data-ng-disabled="tabs['scouting-team'].disabled">Save and Submit</x-button-continue>
+            <x-button-continue data-ng-if="games.isRegular(game)" data-ng-disabled="tabs['your-team'].disabled">Save and Submit</x-button-continue>
+            <x-button-continue data-ng-if="!games.isRegular(game)" data-ng-disabled="tabs['scouting-team'].disabled">Save and Submit</x-button-continue>
 
         </div>
 

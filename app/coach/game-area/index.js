@@ -55,14 +55,13 @@ GameArea.config([
                 }]
             },
             onExit: [
-                'AlertsService', 'Coach.Game.Data', 'Coach.Game.Tabs',
-                function(alerts, gameData, tabs) {
+                'Coach.Game.Data', 'Coach.Game.Tabs',
+                function(gameData, tabs) {
                     delete gameData.team;
                     delete gameData.teamGameRoster;
                     delete gameData.opposingTeamGameRoster;
 
                     tabs.reset();
-                    alerts.clear();
                 }
             ]
         });
