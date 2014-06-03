@@ -49,6 +49,12 @@ var tabs = {
     'opposing-team': { active: false, disabled: true },
     'instructions':    { active: false, disabled: true },
     reset: function() {
+        delete this['game-info'];
+        delete this['your-team'];
+        delete this['scouting-team'];
+        delete this['opposing-team'];
+        delete this.instructions;
+
         this['game-info'] = {
             active: true,
             disabled: false
