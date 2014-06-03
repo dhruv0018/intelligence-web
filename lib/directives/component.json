@@ -31,7 +31,8 @@
         "notes-list",
         "positions-dropdown",
         "uploader",
-        "feedback-modal"
+        "feedback-modal",
+        "arena"
     ],
     "scripts": [
         "index.js"
