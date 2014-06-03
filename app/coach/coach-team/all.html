@@ -12,6 +12,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Position</th>
+                    <th>Last Access</th>
 
                 </tr>
 
@@ -35,6 +36,10 @@
                                 ,
                             </span>
                         </span>
+                    </td>
+
+                    <td>
+                        <span ng-if="player.lastAccessed">{{users.getLastAccessed(player) | date: 'shortDate'}}</span>
                     </td>
 
                 </tr>

@@ -15,7 +15,6 @@ var Team = angular.module('Coach.Team');
 Team.service('Coach.Team.Data', [
     '$q', 'SessionService', 'TeamsFactory', 'PlayersFactory', 'Coach.Data',
     function($q, session, teams, players, data) {
-
         var teamId = session.currentUser.currentRole.teamId;
 
         if (!teamId) return $q.reject(new Error('Could not get current users team'));
@@ -66,8 +65,8 @@ Team.service('Coach.Team.Data', [
         var teamData = {
             coachData: data,
             team: team,
-            roster: roster,
-            rosterId: rosterId
+            rosterId: rosterId,
+            roster: roster
         };
 
         return $q.all(teamData);
@@ -81,13 +80,19 @@ Team.service('Coach.Team.Data', [
  * @type {controller}
  */
 Team.controller('Coach.Team.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'ROLES', 'Coach.Team.Data', 'PlayersFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, ROLES, data, players) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'ROLES', 'Coach.Team.Data', 'PlayersFactory', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, ROLES, data, players, users) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
+        $scope.users = users;
         $scope.data = data;
+
+        if (typeof $scope.data.coachData.roster !== 'undefined') {
+            $scope.data.roster = $scope.data.coachData.roster;
+        }
+
         $scope.roster = players.constructPositionDropdown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
         $scope.state = 'Coach.Team.All';
 
