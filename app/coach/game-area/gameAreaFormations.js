@@ -38,7 +38,7 @@ GameAreaFormations.config([
     }
 ]);
 
-GameAreaFormations.controller('GameAreFormationsController', [
+GameAreaFormations.controller('GameAreaFormationsController', [
     '$scope', '$state', '$stateParams', 'GamesFactory',
     function controller($scope, $state, $stateParams, games) {
 
