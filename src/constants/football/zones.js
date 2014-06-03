@@ -58,49 +58,54 @@ var ZONES = {
         value: 6,
         shortcut: 'LF'
     },
+    LEFT_HOOK: {
+        name: 'Left Hook',
+        value: 7,
+        shortcut: 'LH'
+    },
     HOLE_MIDDLE: {
         name: 'Hole Middle',
-        value: 7,
+        value: 8,
         shortcut: 'HM'
     },
     RIGHT_HOOK: {
         name: 'Right Hook',
-        value: 8,
+        value: 9,
         shortcut: 'RH'
     },
     RIGHT_FLAT: {
         name: 'Right Flat',
-        value: 9,
+        value: 10,
         shortcut: 'RF'
     },
     LEFT: {
         name: 'Left',
-        value: 10,
+        value: 11,
         shortcut: 'L'
     },
     MIDDLE: {
         name: 'Middle',
-        value: 11,
+        value: 12,
         shortcut: 'M'
     },
     RIGHT: {
         name: 'Right',
-        value: 12,
+        value: 13,
         shortcut: 'R'
     },
     DEEP_LEFT: {
         name: 'Deep Left',
-        value: 13,
+        value: 14,
         shortcut: 'DL'
     },
     DEEP_MIDDLE: {
         name: 'Deep Middle',
-        value: 14,
+        value: 15,
         shortcut: 'DM'
     },
     DEEP_RIGHT: {
         name: 'Deep Right',
-        value: 15,
+        value: 16,
         shortcut: 'DR'
     }
 };
