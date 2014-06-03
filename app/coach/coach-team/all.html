@@ -40,7 +40,7 @@
 
                     <td>
                         <a data-ng-if="player.userId && !player.lastAccessed" data-ng-click="players.resendEmail(player, data.team)">Resend Invitation</a>
-                        <span ng-if="player.lastAccessed">{{users.getLastAccessed(player) | date: 'shortDate'}}</span>
+                        <span data-ng-if="player.lastAccessed">{{users.getLastAccessed(player) | date: 'shortDate'}}</span>
                     </td>
 
                 </tr>
