@@ -46,7 +46,7 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "browserify": "~4.1.7",
+        "browserify": "^4.1.8",
         "browserify-shim": "~3.5.0",
         "builder-html-minifier": "^1.0.0",
         "component": "1.0.x",
