@@ -170,7 +170,6 @@ Info.controller('Coach.Game.Info.controller', [
                         teams.save(scoutingTeam, function(scoutingTeam) {
                             $scope.data.team = scoutingTeam;
                             $scope.data.team.players = [];
-                            console.log($scope.data.team);
                             $scope.scoutingTeamId = $scope.data.team.id;
 
                             game.rosters[$scope.data.team.id] = {};
