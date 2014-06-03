@@ -169,14 +169,6 @@ module.exports = function(grunt) {
 
 
         concat: {
-            mousetrap: {
-                src: [
-                    'node_modules/Mousetrap/mousetrap.js',
-                    'node_modules/Mousetrap/plugins/pause/mousetrap-pause.js',
-                    'node_modules/Mousetrap/plugins/global-bind/mousetrap-global-bind.js'
-                ],
-                dest: 'build/mousetrap.js'
-            },
             unprefixed: {
                 src: ['fonts.css', 'build/build.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
@@ -479,13 +471,11 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
         'env:prod',
         'componentbuild:prod',
-        'concat:mousetrap',
         'browserify:prod']);
 
     grunt.registerTask('dev', [
         'env:dev',
         'componentbuild:dev',
-        'concat:mousetrap',
         'browserify:dev',
         'componentbuild:styles',
         'less',
@@ -501,7 +491,6 @@ module.exports = function(grunt) {
         'clean',
         'env:qa',
         'componentbuild:prod',
-        'concat:mousetrap',
         'browserify:prod',
         'less',
         'componentbuild:styles',
@@ -520,7 +509,6 @@ module.exports = function(grunt) {
         'clean',
         'env:prod',
         'componentbuild:prod',
-        'concat:mousetrap',
         'browserify:prod',
         'componentbuild:styles',
         'less',

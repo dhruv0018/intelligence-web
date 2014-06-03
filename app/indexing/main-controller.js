@@ -41,10 +41,33 @@ Indexing.controller('Indexing.Main.Controller', [
             indexing.game.save();
         }
 
+
         /* Bind keys. */
 
 
-        Mousetrap.bindGlobal('space', function() {
+        var _globalCallbacks = {
+            'space': true,
+            'left': true,
+            'right': true,
+            'enter': true,
+            'esc': true
+        };
+
+        _originalStopCallback = Mousetrap.stopCallback;
+
+        Mousetrap.stopCallback = function(e, element, combo, sequence) {
+
+            if (indexing.isIndexing) {
+
+                if (_globalCallbacks[combo] || _globalCallbacks[sequence]) {
+                    return false;
+                }
+            }
+
+            return _originalStopCallback(e, element, combo);
+        };
+
+        Mousetrap.bind('space', function() {
 
             $scope.$apply(function() {
 
@@ -54,7 +77,7 @@ Indexing.controller('Indexing.Main.Controller', [
             return false;
         });
 
-        Mousetrap.bindGlobal('left', function() {
+        Mousetrap.bind('left', function() {
 
             $scope.$apply(function() {
 
@@ -69,7 +92,7 @@ Indexing.controller('Indexing.Main.Controller', [
             return false;
         });
 
-        Mousetrap.bindGlobal('right', function() {
+        Mousetrap.bind('right', function() {
 
             $scope.$apply(function() {
 
@@ -84,7 +107,7 @@ Indexing.controller('Indexing.Main.Controller', [
             return false;
         });
 
-        Mousetrap.bindGlobal('enter', function() {
+        Mousetrap.bind('enter', function() {
 
             $scope.$apply(function() {
 
@@ -100,7 +123,7 @@ Indexing.controller('Indexing.Main.Controller', [
             return false;
         });
 
-        Mousetrap.bindGlobal('esc', function() {
+        Mousetrap.bind('esc', function() {
 
             $scope.$apply(function() {
 
