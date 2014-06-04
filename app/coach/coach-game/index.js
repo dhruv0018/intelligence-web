@@ -7,6 +7,7 @@ require('coach-game-info');
 require('coach-game-your-team');
 require('coach-game-opposing-team');
 require('coach-game-instructions');
+require('coach-game-team');
 
 /* Component settings */
 var templateUrl = 'coach/game/template.html';
@@ -27,7 +28,8 @@ var Game = angular.module('Coach.Game', [
     'Coach.Game.Info',
     'Coach.Game.YourTeam',
     'Coach.Game.OpposingTeam',
-    'Coach.Game.Instructions'
+    'Coach.Game.Instructions',
+    'Coach.Game.Team'
 ]);
 
 /* Cache the template file */
@@ -43,8 +45,35 @@ var tabs = {
 
     'game-info':     { active: true, disabled: false },
     'your-team':     { active: false, disabled: true },
+    'scouting-team':    { active: false, disabled: true },
     'opposing-team': { active: false, disabled: true },
-    instructions:    { active: false, disabled: true },
+    'instructions':    { active: false, disabled: true },
+    reset: function() {
+        this['game-info'] = {
+            active: true,
+            disabled: false
+        };
+
+        this['your-team'] = {
+            active: false,
+            disabled: true
+        };
+
+        this['scouting-team'] = {
+            active: false,
+            disabled: true
+        };
+
+        this['opposing-team'] = {
+            active: false,
+            disabled: true
+        };
+
+        this.instructions = {
+            active: false,
+            disabled: true
+        };
+    }
 };
 
 Object.defineProperty(tabs, 'activateTab', {
@@ -98,7 +127,6 @@ Game.directive('krossoverCoachGame', [
 
         function link($scope, element, attributes, controller) {
 
-
         }
 
         return krossoverCoachGame;
@@ -112,8 +140,24 @@ Game.directive('krossoverCoachGame', [
  * @type {controller}
  */
 Game.controller('Coach.Game.controller', [
-    '$scope', 'Coach.Game.Tabs',
-    function controller($scope, tabs) {
+    '$scope', 'Coach.Game.Tabs', 'Coach.Game.Data', 'GamesFactory',
+    function controller($scope, tabs, gameData, games) {
+        $scope.games = games;
+
+        gameData.then(function(gameData) {
+            gameData.headings = {
+                opposingTeam: 'Opposing Team',
+                yourTeam: gameData.coachTeam.name,
+                scoutingTeam: 'Team'
+            };
+            $scope.gameData = gameData;
+        });
+
+        $scope.validation = {
+            opposingTeam: false,
+            yourTeam: false,
+            scoutingTeam: false
+        };
 
         $scope.tabs = tabs;
 

@@ -47,14 +47,19 @@ AddFilm.config([
                 },
                 'content@add-film': {
                     templateUrl: 'coach/add-film/start.html',
-                    controller: 'AddFilmController'
+                    controller: 'StartController'
                 }
             },
+            resolve: {
+                'Coach.Game.Data': 'Coach.Game.Data'
+            },
             onExit: [
-                'AlertsService',
-                function(alerts) {
+                'Coach.Game.Data', 'Coach.Game.Tabs',
+                function(gameData, tabs) {
+                    delete gameData.opposingTeam;
+                    delete gameData.team;
 
-                    alerts.clear();
+                    tabs.reset();
                 }
             ]
         };
@@ -71,8 +76,16 @@ AddFilm.config([
  */
 AddFilm.controller('AddFilmController', [
     '$scope', '$state',
-    function controller($scope, $state) {
+    function controller($scope, $state, games) {
+        $scope.games = games;
+        $scope.game = {};
+    }
+]);
 
+AddFilm.controller('StartController', [
+    '$scope', 'GAME_TYPES',
+    function($scope, GAME_TYPES) {
+        $scope.GAME_TYPES = GAME_TYPES;
     }
 ]);
 

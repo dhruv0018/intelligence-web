@@ -54,8 +54,8 @@ Header.config([
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES',
-    function controller(config, $scope, $state, auth, session, account, ROLES) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'Coach.Game.Tabs',
+    function controller(config, $scope, $state, auth, session, account, ROLES, tabs) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
@@ -63,6 +63,8 @@ Header.controller('HeaderController', [
         $scope.COACH = ROLES.COACH;
 
         $scope.config = config;
+
+        $scope.$state = $state;
 
         $scope.currentUser = session.currentUser;
 
@@ -73,6 +75,8 @@ Header.controller('HeaderController', [
             auth.logoutUser();
             $state.go('login');
         };
+
+        $scope.tabs = tabs;
     }
 ]);
 

@@ -53,7 +53,17 @@ GameArea.config([
                 'indexingData': ['$stateParams', 'IndexingService', function($stateParams, indexing) {
                     return indexing.init($stateParams.id);
                 }]
-            }
+            },
+            onExit: [
+                'Coach.Game.Data', 'Coach.Game.Tabs',
+                function(gameData, tabs) {
+                    delete gameData.team;
+                    delete gameData.teamGameRoster;
+                    delete gameData.opposingTeamGameRoster;
+
+                    tabs.reset();
+                }
+            ]
         });
     }
 ]);
