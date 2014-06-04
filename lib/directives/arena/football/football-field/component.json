@@ -13,6 +13,7 @@
         "."
     ],
     "local": [
-        "football-field-section"
+        "football-field-section",
+        "football-field-line-of-scrimmage"
     ]
 }
