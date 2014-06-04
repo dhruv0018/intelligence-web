@@ -62,7 +62,6 @@ Coach.service('Coach.Data', [
         var promisedLeague = $q.defer();
         var promisedPositionSet = $q.defer();
 
-        //TODO get real teamroster id
         var data = {
             teamId: session.currentUser.currentRole.teamId,
             games: promisedGames,
@@ -70,7 +69,9 @@ Coach.service('Coach.Data', [
             roster: {}
         };
 
-        games.getList({teamId: data.teamId}, function(gamesList) {
+        games.getList({
+            uploaderTeamId: data.teamId
+        }, function(gamesList) {
             promisedGames.resolve(gamesList);
             promisedIndexedGames.resolve(games.transformIndexed(gamesList));
         });
@@ -156,7 +157,6 @@ Coach.service('Coach.Game.Data', ['$q', 'Coach.Data',
 
         coachData.then(function(coachData) {
             var gameData = coachData;
-            gameData.team = coachData.coachTeam;
             gameData.opposingTeam = {
                 players: []
             };

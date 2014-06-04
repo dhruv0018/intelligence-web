@@ -10,7 +10,10 @@
 
                     <div class="titlebar col-md-12">
 
-                        <h3>Uploading a regular game</h3>
+                        <h3>
+                            <span data-ng-show="games.isRegular(game)">Uploading a regular game</span>
+                            <span data-ng-show="!games.isRegular(game)">Uploading a scouting/scrimmage game</span>
+                        </h3>
 
                     </div>
 
@@ -63,7 +66,6 @@
         </div>
 
         <div>
-
             <h3>To ensure a smooth upload:</h3>
             <p>Prevent your computer, especially laptops, from going to sleep. Here's how for <a href="FIXME">Macs</a> and <a href="FIXME">PCs</a>.</p>
             <p>Test the speed of your internet connection. <a href="FIXME">Here's how</a>.</p>

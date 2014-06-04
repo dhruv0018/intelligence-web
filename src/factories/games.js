@@ -619,8 +619,10 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.datePlayed = datePlayed;
 
                 return game;
+            },
+            isRegular: function(game) {
+                return GAME_TYPES[GAME_TYPES_IDS[game.gameType]].type === 'regular';
             }
-
         };
 
         return GamesFactory;
