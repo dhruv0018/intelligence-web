@@ -82,9 +82,7 @@ Info.controller('Coach.Game.Info.controller', [
         });
 
         $scope.$watch('game', function(game) {
-            if (typeof game.datePlayed !== 'undefined') {
-                game = games.unadjustTime(game);
-            } else {
+            if (!game.datePlayed) {
                 $scope.game.datePlayed = Date.now();
             }
 
