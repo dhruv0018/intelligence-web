@@ -38,7 +38,8 @@ Games.config([
                     }
                 },
                 resolve: {
-                    'Indexer.Games.Data': ['$q', 'Indexer.Games.Data',
+                    'Indexer.Games.Data': [
+                        '$q', 'Indexer.Games.Data',
                         function($q, data) {
                             return $q.all(data);
                         }

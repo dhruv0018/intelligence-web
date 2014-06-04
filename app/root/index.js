@@ -51,7 +51,12 @@ Root.config([
                     }
                 },
                 resolve: {
-                    'Root.Data': 'Root.Data'
+                    'Root.Data': [
+                        '$q', 'Root.Data',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             });
     }
