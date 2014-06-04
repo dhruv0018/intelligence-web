@@ -434,25 +434,17 @@
 .show-from {
 
   select {
-    background-image: none;
+    width: 110px;
     background-color: white;
     color: @gray-light;
     margin-left: 10px;
     margin-right: 10px;
-    min-width: 10px;
   }
 
   .create-report-btn {
     .pull-right;
     .btn;
-    background-color: @brand-primary;
-    color: white;
-    border-radius: @border-radius-base;
-    font-weight: 400;
-
-    &:hover {
-      color: white;
-    }
+    .btn-primary;
   }
 
 }
@@ -462,6 +454,10 @@
   width: 80%;
   margin: 20px auto;
   letter-spacing: normal;
+
+  a.accordion-toggle:hover {
+    text-decoration: none;
+  }
 
   .field-header {
     color: white;
@@ -479,6 +475,16 @@
         font-weight: 500;
       }
     }
+
+    i {
+      line-height: 50px;
+      font-size: 30px;
+    }
+  }
+
+  .field-header-collapsed {
+    background-color: @gray-lighter;
+    color: @brand-blue;
   }
 
   .field {

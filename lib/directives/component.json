@@ -32,6 +32,7 @@
         "positions-dropdown",
         "uploader",
         "feedback-modal",
+        "formation-chart",
         "arena"
     ],
     "scripts": [

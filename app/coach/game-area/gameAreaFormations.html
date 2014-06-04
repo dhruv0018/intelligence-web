@@ -7,32 +7,15 @@
     <span class="show-from">
         Show formations from:
         <select>
-            <option>0</option>
+            <option>Whole Field</option>
+            <option>Red Zone</option>
         </select>
-        to
-        <select>
-            <option>100</option>
-        </select>
-        yards
     </span>
 </div>
 
-<div class="formations-chart-container">
-    <div class="field-header">
-        <span class="field-info">
-            <span>Backfield:</span> I-Form
-        </span>
-        <span class="field-info">
-            <span>TEs:</span> Right
-        </span>
-        <span class="field-info">
-            <span>WRs:</span> Right
-        </span>
-        <span class="field-info">
-            <span>20</span> snaps
-        </span>
-    </div>
-    <div class="field">
-        <krossover-arena type="FOOTBALL"></krossover-arena>
-    </div>
-</div>
+<accordion close-others="true">
+    <formation-chart></formation-chart>
+    <formation-chart></formation-chart>
+    <formation-chart></formation-chart>
+    <formation-chart></formation-chart>
+</accordion>
