@@ -1,5 +1,6 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+var moment = require('moment');
 
 /**
  * Indexer Games module.
@@ -66,8 +67,12 @@ Games.service('Indexer.Games.Data', [
         games.getList({
             indexerFirstName: currentUser.firstName,
             indexerLastName: currentUser.lastName
-        }, function(games) {
-            promisedGames.resolve(games);
+        }, function(indexerGames) {
+            var filteredGames = indexerGames.filter(function(game) {
+                return game.isAssignedToUser(currentUser.id);
+            });
+
+            promisedGames.resolve(filteredGames);
         });
 
         users.getList({
@@ -108,7 +113,13 @@ Games.service('Indexer.Games.Data', [
 Games.controller('indexer-games.Controller', [
     '$scope', '$state', '$localStorage', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'SessionService', 'Indexer.Games.Data',
     function controller($scope, $state, $localStorage, GAME_TYPES, teams, leagues, games, session, data) {
+        $scope.currentUser = session.currentUser;
         $scope.data = data;
-        console.log($scope.data);
+        $scope.moment = moment;
+        console.log(moment);
+
+        angular.forEach($scope.data.games, function(game) {
+            game.timeLeft = new Date(game.currentAssignment().deadline) - new Date();
+        });
     }
 ]);
