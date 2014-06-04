@@ -172,6 +172,9 @@ Login.controller('LoginController', [
 
                         $state.go('contact-info');
                     }
+
+                    user.lastAccessed = new Date().toISOString();
+                    user.save();
                 }
 
             }, function(error) {
