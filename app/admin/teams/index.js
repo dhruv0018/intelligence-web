@@ -141,10 +141,10 @@ Teams.controller('TeamPlansController', [
             $scope.save($scope.team);
         };
 
-        $scope.save = function(team) {
+        $scope.save = function(team, navigateAway) {
             teams.save(team).then(function() {
                 delete $scope.$storage.team;
-                $state.go('teams');
+                if (navigateAway) $state.go('teams');
             });
         };
     }
