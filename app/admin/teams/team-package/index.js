@@ -41,7 +41,7 @@ TeamPackage.controller('TeamPackageController', [
         $scope.teamPackageObj.startDate = new Date();
         $scope.teamPackageObj.endDate = new Date();
 
-        //Set $scope.editTeamPackageObj to team package object to edit
+        //Set PackageIndex to package index to edit
         //before opening modal
         if (Team.teamPackages[PackageIndex]) {
             $scope.edit = true;

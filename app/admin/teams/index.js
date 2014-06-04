@@ -98,7 +98,6 @@ Teams.controller('TeamPlansController', [
     function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
 
         $scope.team = $scope.$storage.team;
-        console.log('teamClicked' + $scope.team);
 
         var openPackageModal = function(editTeamPackageObjIndex) {
             var modalInstance = $modal.open({
@@ -113,8 +112,6 @@ Teams.controller('TeamPlansController', [
             });
 
             modalInstance.result.then(function(teamWithPackagesToSave) {
-                console.log('res', teamWithPackagesToSave);
-                console.log($scope);
                 $scope.save(teamWithPackagesToSave);
             });
         };
