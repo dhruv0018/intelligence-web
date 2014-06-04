@@ -36,23 +36,17 @@
             </thead>
             <tbody>
                 <tr data-ng-hide="team.teamPackages.length">
-                    <td colspan="3" class="plan-container">
+                    <td colspan="3" class="package-container">
                         No packages have been added to this team.
                     </td>
                 </tr>
                 <tr data-ng-hide="!team.teamPackages.length">
-                    <td colspan="3">
-                        Plan Name???
-                    </td>
-                </tr>
-                <tr data-ng-hide="!team.teamPackages.length">
                     <td>
-                        <p>Starts: {{team.teamPackages[team.teamPackages.length-1].startDate | date : 'shortDate' }}</p>
-                        <p>Ends: {{team.teamPackages[team.teamPackages.length-1].endDate | date : 'shortDate' }}</p>
+                        <p>Starts: {{team.teamPackages[team.teamPackages.length-1].startDate | UTCDate | date : 'MMM d/yy' }}</p>
+                        <p>Ends: {{team.teamPackages[team.teamPackages.length-1].endDate | UTCDate | date : 'MMM d/yy' }}</p>
                     </td>
                     <td>
-                        <p>{{team.teamPackages[team.teamPackages.length-1].maxGamesPerPackage}} Regular Games</p>
-                        <p>0 Scouting/Practice</p>
+                        <p>{{team.teamPackages[team.teamPackages.length-1].maxGamesPerPackage}} Games</p>
                     </td>
                     <td>
                         <p>{{team.teamPackages[team.teamPackages.length-1].minTurnaroundTime}}-{{team.teamPackages[team.teamPackages.length-1].maxTurnaroundTime}} Hour Turnaround Time</p>

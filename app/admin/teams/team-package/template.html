@@ -2,13 +2,13 @@
 
     <header class="modal-header">
 
-        <h3 class="modal-title">Add a package for this team<i class="pull-right icon-remove" data-ng-click="cancel()"></i></h3>
+        <h3 class="modal-title"><span data-ng-show="!edit">Add</span><span data-ng-show="edit">Edit</span> a package for this team<i class="pull-right icon-remove" data-ng-click="cancel()"></i></h3>
 
     </header>
 
     <div class="modal-body">
 
-        <label><span>Number of Games</span><input data-ng-model="teamPackageObj.maxGamesPerPackage" /></label>
+        <label class="number-of-games"><span>Number of Games</span><input type="number" data-ng-model="teamPackageObj.maxGamesPerPackage" /></label>
         <label>
             <span>Turnaround Time</span>
             <select data-ng-model="teamPackageObj.maxTurnaroundTime">

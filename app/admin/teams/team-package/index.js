@@ -32,10 +32,7 @@ TeamPackage.controller('TeamPackageController', [
     '$scope', '$state', '$modalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
     function controller($scope, $state, $modalInstance, session, Team, PackageIndex, TURNAROUND_TIME_RANGES, TURNAROUND_TIME_MIN_TIME_LOOKUP) {
 
-        var edit = false;
-        console.log($scope);
-        console.log(Team);
-        console.log(PackageIndex);
+        $scope.edit = false;
 
         Team.teamPackages = Team.teamPackages || [];
         $scope.TURNAROUND_TIME_RANGES = TURNAROUND_TIME_RANGES;
@@ -47,9 +44,9 @@ TeamPackage.controller('TeamPackageController', [
         //Set $scope.editTeamPackageObj to team package object to edit
         //before opening modal
         if (Team.teamPackages[PackageIndex]) {
-            edit = true;
+            $scope.edit = true;
 
-            $scope.teamPackageObj = Team.teamPackages[PackageIndex];
+            $scope.teamPackageObj = angular.copy(Team.teamPackages[PackageIndex]);
 
             if (angular.isString($scope.teamPackageObj.startDate) && !isNaN(new Date($scope.teamPackageObj.startDate).getTime())) $scope.teamPackageObj.startDate = new Date($scope.teamPackageObj.startDate);
             if (angular.isString($scope.teamPackageObj.endDate) && !isNaN(new Date($scope.teamPackageObj.endDate).getTime())) $scope.teamPackageObj.endDate = new Date($scope.teamPackageObj.endDate);
@@ -66,10 +63,10 @@ TeamPackage.controller('TeamPackageController', [
             $scope.teamPackageObj.minTurnaroundTime = TURNAROUND_TIME_MIN_TIME_LOOKUP[$scope.teamPackageObj.maxTurnaroundTime];
 
             //TODO: validation?
-            console.log(edit, $scope);
-            console.log(Team);
-            if (!edit) {
+            if (!$scope.edit) {
                 Team.teamPackages.push($scope.teamPackageObj);
+            } else {
+                Team.teamPackages[PackageIndex] = $scope.teamPackageObj;
             }
 
             $modalInstance.close(Team);
