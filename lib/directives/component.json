@@ -32,7 +32,8 @@
         "positions-dropdown",
         "uploader",
         "roster-manager",
-        "feedback-modal"
+        "feedback-modal",
+        "open-modal"
     ],
     "scripts": [
         "index.js"
