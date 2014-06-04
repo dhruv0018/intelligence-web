@@ -29,24 +29,24 @@ TeamPackage.run([
  * @type {Controller}
  */
 TeamPackage.controller('TeamPackageController', [
-    '$scope', '$state', '$modalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
-    function controller($scope, $state, $modalInstance, session, Team, PackageIndex, TURNAROUND_TIME_RANGES, TURNAROUND_TIME_MIN_TIME_LOOKUP) {
+    '$scope', '$state', '$modalInstance', 'SessionService', 'team', 'packageIndex', 'TURNAROUND_TIME_RANGES', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
+    function controller($scope, $state, $modalInstance, session, team, packageIndex, TURNAROUND_TIME_RANGES, TURNAROUND_TIME_MIN_TIME_LOOKUP) {
 
         $scope.edit = false;
 
-        Team.teamPackages = Team.teamPackages || [];
+        team.teamPackages = team.teamPackages || [];
         $scope.TURNAROUND_TIME_RANGES = TURNAROUND_TIME_RANGES;
         $scope.teamPackageObj = {};
 
         $scope.teamPackageObj.startDate = new Date();
         $scope.teamPackageObj.endDate = new Date();
 
-        //Set PackageIndex to package index to edit
+        //Set packageIndex to package index to edit
         //before opening modal
-        if (Team.teamPackages[PackageIndex]) {
+        if (team.teamPackages[packageIndex]) {
             $scope.edit = true;
 
-            $scope.teamPackageObj = angular.copy(Team.teamPackages[PackageIndex]);
+            $scope.teamPackageObj = angular.copy(team.teamPackages[packageIndex]);
 
             if (angular.isString($scope.teamPackageObj.startDate) && !isNaN(new Date($scope.teamPackageObj.startDate).getTime())) $scope.teamPackageObj.startDate = new Date($scope.teamPackageObj.startDate);
             if (angular.isString($scope.teamPackageObj.endDate) && !isNaN(new Date($scope.teamPackageObj.endDate).getTime())) $scope.teamPackageObj.endDate = new Date($scope.teamPackageObj.endDate);
@@ -64,12 +64,12 @@ TeamPackage.controller('TeamPackageController', [
 
             //TODO: validation?
             if (!$scope.edit) {
-                Team.teamPackages.push($scope.teamPackageObj);
+                team.teamPackages.push($scope.teamPackageObj);
             } else {
-                Team.teamPackages[PackageIndex] = $scope.teamPackageObj;
+                team.teamPackages[packageIndex] = $scope.teamPackageObj;
             }
 
-            $modalInstance.close(Team);
+            $modalInstance.close(team);
         };
     }
 ]);
