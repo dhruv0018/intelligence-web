@@ -1,5 +1,5 @@
 {
-    "name": "football-field-formation",
+    "name": "football-field-run-report",
     "templates": [
         "template.html"
     ],
@@ -13,6 +13,6 @@
         "."
     ],
     "local": [
-        "football-field-run-report"
+        "football-field-gap-report"
     ]
 }
