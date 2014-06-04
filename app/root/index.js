@@ -89,7 +89,6 @@ Root.service('Root.Data', [
             sports: promisedSports.promise
         };
 
-        //return $q.all(promises);
         return promises;
     }
 ]);
