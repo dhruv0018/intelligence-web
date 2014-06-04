@@ -2,11 +2,17 @@
 
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="200px" viewbox="0 0 800 200" preserveaspectratio="none">
 
-        <g id="gridlines">
-            <g id="top-line" class="down-line">
-                <rect x="0" y="0" width="800" height="2"/>
+        <g id="lines">
+            <g class="line">
+                <rect width="800" data-ng-attr-height="{{hashThickness}}" x="0" y="0" />
             </g>
-            <g id="left-sideline-marks" class="hash-mark">
+            <g class="line">
+                <rect width="800" data-ng-attr-height="{{hashThickness}}" x="0" y="100" />
+            </g>
+        </g>
+
+        <g id="hashes">
+            <g class="hash">
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" x="0" y="20" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" x="0" y="40" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" x="0" y="60" />
@@ -16,7 +22,7 @@
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" x="0" y="160" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" x="0" y="180" />
             </g>
-            <g id="left-hashes" class="hash-mark">
+            <g class="hash">
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 / 3 }}" y="20" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 / 3 }}" y="40" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 / 3 }}" y="60" />
@@ -26,7 +32,7 @@
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 / 3 }}" y="160" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 / 3 }}" y="180" />
             </g>
-            <g id="right-hashes" class="hash-mark">
+            <g class="hash">
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - (800 / 3) + hashWidth }}" y="20" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - (800 / 3) + hashWidth }}" y="40" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - (800 / 3) + hashWidth }}" y="60" />
@@ -36,7 +42,7 @@
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - (800 / 3) + hashWidth }}" y="160" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - (800 / 3) + hashWidth }}" y="180" />
             </g>
-            <g id="right-sideline-marks" class="hash-mark">
+            <g class="hash">
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - hashWidth }}" y="20" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - hashWidth }}" y="40" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - hashWidth }}" y="60" />
@@ -45,9 +51,6 @@
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - hashWidth }}" y="140" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - hashWidth }}" y="160" />
                 <rect data-ng-attr-width="{{hashWidth}}" data-ng-attr-height="{{hashThickness}}" data-ng-attr-x="{{ 800 - hashWidth }}" y="180" />
-            </g>
-            <g id="bottom-line" class="down-line">
-                <rect x="0" y="100" width="800" height="2"/>
             </g>
         </g>
 
