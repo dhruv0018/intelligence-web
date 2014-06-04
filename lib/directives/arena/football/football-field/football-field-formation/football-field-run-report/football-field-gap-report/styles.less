@@ -1,0 +1,70 @@
+@import (reference) "main.less";
+
+.arena {
+
+    .football-field {
+
+        .football-field-gap-report {
+
+            float: left;
+            width: 20px;
+            height: 20px;
+            margin-left: 3px;
+            margin-right: 3px;
+
+            a {
+
+                font-weight: 500;
+
+                &:hover {
+
+                    text-decoration: none;
+                }
+            }
+
+            .runs {
+
+                background-color: @gray-lighter;
+                border-radius: @border-radius-small;
+                text-align: center;
+
+                &:hover {
+
+                    color: white;
+                    background-color: @brand-blue;
+                }
+            }
+
+            .tooltip {
+
+                .tooltip-arrow {
+
+                    border-bottom-color: rgba(11, 66, 91, 0.5);
+                }
+
+                .tooltip-inner {
+
+                    background-color: rgba(11, 66, 91, 0.5);
+                }
+
+                h1,
+                h2 {
+
+                    color: yellow;
+                    margin: 0;
+                }
+
+                h1 {
+
+                    font-size: 20px;
+                }
+
+                h2 {
+
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+
