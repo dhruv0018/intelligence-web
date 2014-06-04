@@ -35,10 +35,69 @@ Games.config([
                         templateUrl: 'indexer-games.html',
                         controller: 'indexer-games.Controller'
                     }
+                },
+                resolve: {
+                    'Indexer.Games.Data': ['$q', 'Indexer.Games.Data',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             });
     }
 ]);
+
+/**
+ * Games service
+ * @module Games
+ * @name Service
+ * @type {Service}
+ */
+Games.service('Indexer.Games.Data', [
+    '$q', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory','SessionService', 'Root.Data',
+    function($q, users, games, teams, leagues, session, rootData) {
+        var promisedUsers = $q.defer();
+        var promisedTeams = $q.defer();
+        var promisedGames = $q.defer();
+        var promisedLeagues = $q.defer();
+
+        var currentUser = session.currentUser;
+
+        games.getList({
+            indexerFirstName: currentUser.firstName,
+            indexerLastName: currentUser.lastName
+        }, function(games) {
+            promisedGames.resolve(games);
+        });
+
+        users.getList({
+        }, function(users) {
+            promisedUsers.resolve(users);
+        });
+
+        teams.getList({
+        }, function(teams) {
+            promisedTeams.resolve(teams);
+        });
+
+        leagues.getList({
+        }, function(leagues) {
+            promisedLeagues.resolve(leagues);
+        });
+
+        var promises = {
+            users: promisedUsers.promise,
+            teams: promisedTeams.promise,
+            games: promisedGames.promise,
+            leagues: promisedLeagues.promise,
+            sports: rootData.sports
+        };
+
+        return promises;
+    }
+]);
+
+
 
 /**
  * Games controller.
@@ -47,8 +106,9 @@ Games.config([
  * @type {Controller}
  */
 Games.controller('indexer-games.Controller', [
-    '$scope', '$state', '$localStorage', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($scope, $state, $localStorage, GAME_TYPES, teams, leagues, games) {
-
+    '$scope', '$state', '$localStorage', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'SessionService', 'Indexer.Games.Data',
+    function controller($scope, $state, $localStorage, GAME_TYPES, teams, leagues, games, session, data) {
+        $scope.data = data;
+        console.log($scope.data);
     }
 ]);

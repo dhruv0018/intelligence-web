@@ -33,8 +33,6 @@
     				<p>Click here to sign up to index or QA a game.</p>
     			</div>
     	</div>
-    	
-        <p><a data-ui-sref="indexer-game({ id: gameId })">Game </a><input size="3" data-ng-model="gameId"></p>
 
         <div class="box-body">
 	        <h3>Your Game Queue</h3>
@@ -50,21 +48,13 @@
 		        	</tr>
 	        	</thead>
 	        	<tbody>
-	        		<tr>
+	        		<tr data-ng-repeat="game in data.games">
+	        			<td>{{game.id}}</td>
+	        			<td><a data-ui-sref="indexer-game({ id: game.id })">{{data.teams[game.teamId].name}} vs {{data.teams[game.opposingTeamId].name}}</a></td>
+                        <td>{{data.users[game.uploaderUserId].firstName}} {{data.users[game.uploaderUserId].lastName}}</td>
+	        			<td>{{data.sports[data.leagues[data.teams[game.teamId].leagueId].sportId].name}}</td>
 	        			<td></td>
-	        			<td></td>
-	        			<td></td>
-	        			<td></td>
-	        			<td></td>
-	        			<td></td>
-	        		</tr>
-	        		<tr>
-	        			<td></td>
-	        			<td></td>
-	        			<td></td>
-	        			<td></td>
-	        			<td></td>
-	        			<td></td>
+                        <td></td>
 	        		</tr>
 	        	</tbody>
 

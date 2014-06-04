@@ -49,6 +49,9 @@ Root.config([
                         templateUrl: 'root.html',
                         controller: 'RootController'
                     }
+                },
+                resolve: {
+                    'Root.Data': 'Root.Data'
                 }
             });
     }
@@ -70,3 +73,24 @@ Root.controller('RootController', [
         }
     }
 ]);
+
+
+Root.service('Root.Data', [
+    '$q', 'SportsFactory',
+    function($q, sports) {
+        var promisedSports = $q.defer();
+
+        sports.getList({
+        }, function(sports) {
+            promisedSports.resolve(sports);
+        });
+
+        var promises = {
+            sports: promisedSports.promise
+        };
+
+        //return $q.all(promises);
+        return promises;
+    }
+]);
+
