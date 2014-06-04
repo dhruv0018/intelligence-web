@@ -1,3 +1,50 @@
 <div class="excel-upload">
-    working excel upload
+    <header class="modal-header">
+
+        <h3 class="modal-title">
+            Upload Roster via Excel
+
+            <a class="pull-right" ng-click="$close()">
+                <i class="icon-remove"></i>
+            </a>
+        </h3>
+
+    </header>
+
+    <div class="modal-body">
+        <ul>
+            <li>
+                <strong> Step 1:</strong> Download our <a href>excel roster file</a>
+            </li>
+            <li>
+                <strong>Step 2:</strong> Enter your roster into the excel file.
+            </li>
+            <li>
+                Read these important notes about entering information into the excel file
+                <br/>
+                <i>Entering an email will create a Krossover account for the Athlete. Use these abbreviations for position:</i>
+                <div class="pull-left">
+                    <!--<div data-ng-repeat="position in positions">-->
+                        <!--{{position.description}} {{position.name}}-->
+                    <!--</div>-->
+                </div>
+                <div>
+                    Separate multiple positions with a comma, like this:
+                    <!--<div data-ng-repeat="position in positions">-->
+                        <!--{{position.name}}-->
+                    <!--</div>-->
+                </div>
+            </li>
+            <li>
+                Once the roster is in the excel file, select it <br/>
+                <a href>
+                    <i class="icon-upload-alt"></i> Select excel roster file
+                </a>
+            </li>
+        </ul>
+
+        <button>
+            Select Roster Upload
+        </button>
+    </div>
 </div>
