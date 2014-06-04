@@ -29,7 +29,7 @@ TeamPackage.run([
  * @type {Controller}
  */
 TeamPackage.controller('TeamPackageController', [
-    '$scope', '$state', '$modalInstance', 'SessionService', 'team', 'packageIndex', 'TURNAROUND_TIME_RANGES', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
+    '$scope', '$state', '$modalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
     function controller($scope, $state, $modalInstance, session, team, packageIndex, TURNAROUND_TIME_RANGES, TURNAROUND_TIME_MIN_TIME_LOOKUP) {
 
         $scope.edit = false;

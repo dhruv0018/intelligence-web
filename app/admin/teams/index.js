@@ -137,14 +137,11 @@ Teams.controller('TeamPlansController', [
         };
 
         $scope.removeLastPackage = function() {
-
-            return;//not implemented yet
-            //$scope.team.teamPackages.splice($scope.team.teamPackages.length - 1, 1);
-            //$scope.save();
+            $scope.team.teamPackages.splice($scope.team.teamPackages.length - 1, 1);
+            $scope.save($scope.team);
         };
 
         $scope.save = function(team) {
-
             teams.save(team).then(function() {
                 delete $scope.$storage.team;
                 $state.go('teams');
