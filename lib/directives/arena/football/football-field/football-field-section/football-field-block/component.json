@@ -1,5 +1,5 @@
 {
-    "name": "football-field",
+    "name": "football-field-block",
     "templates": [
         "template.html"
     ],
@@ -13,8 +13,6 @@
         "."
     ],
     "local": [
-        "football-field-section",
-        "football-field-line-of-scrimmage",
-        "football-field-formation"
+        "football-field-pass-report"
     ]
 }

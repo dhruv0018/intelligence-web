@@ -1,5 +1,5 @@
 {
-    "name": "football-field-section",
+    "name": "football-field-formation",
     "templates": [
         "template.html"
     ],
@@ -8,11 +8,5 @@
     ],
     "scripts": [
         "index.js"
-    ],
-    "paths": [
-        "."
-    ],
-    "local": [
-        "football-field-block"
     ]
 }
