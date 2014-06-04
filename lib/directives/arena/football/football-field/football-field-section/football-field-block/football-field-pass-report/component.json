@@ -1,5 +1,5 @@
 {
-    "name": "football-field-block",
+    "name": "football-field-pass-report",
     "templates": [
         "template.html"
     ],
@@ -8,11 +8,5 @@
     ],
     "scripts": [
         "index.js"
-    ],
-    "paths": [
-        "."
-    ],
-    "local": [
-        "football-field-pass-report"
     ]
 }
