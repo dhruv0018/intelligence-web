@@ -1,0 +1,25 @@
+<div class="team-package-modal">
+
+    <header class="modal-header">
+
+        <h3 class="modal-title">Add a package for this team<i class="pull-right icon-remove" data-ng-click="cancel()"></i></h3>
+
+    </header>
+
+    <div class="modal-body">
+
+        <label><span>Number of Games</span><input data-ng-model="teamPackageObj.maxGamesPerPackage" /></label>
+        <label>
+            <span>Turnaround Time</span>
+            <select data-ng-model="teamPackageObj.maxTurnaroundTime">
+                <option data-ng-repeat="turnaroundTime in TURNAROUND_TIME_RANGES" value="{{turnaroundTime.value}}" data-ng-selected="{{turnaroundTime.value == teamPackageObj.maxTurnaroundTime}}">{{turnaroundTime.name}}</option>
+            </select>
+        </label>
+        <label><span>Start Date</span><date data-ng-model="teamPackageObj.startDate"></date></label>
+        <label><span>End Date</span><date data-ng-model="teamPackageObj.endDate"></date></label>
+
+        <button class="btn btn-primary" data-ng-click="saveTeamPackage()">Save</button>
+
+    </div>
+
+</div>

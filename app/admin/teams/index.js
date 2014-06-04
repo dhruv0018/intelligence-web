@@ -90,6 +90,73 @@ Teams.config([
 /**
  * Team controller. Controls the view for adding and editing a single team.
  * @module Teams
+ * @name TeamPlanController
+ * @type {Controller}
+ */
+Teams.controller('TeamPlansController', [
+    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
+    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
+
+        $scope.team = $scope.$storage.team;
+        console.log('teamClicked' + $scope.team);
+
+        var openPackageModal = function(editTeamPackageObjIndex) {
+            var modalInstance = $modal.open({
+                scope: $scope,
+                size: 'sm',
+                templateUrl: 'app/admin/teams/team-package/team-package.html',
+                controller: 'TeamPackageController',
+                resolve: {
+                    Team: function() { return $scope.team; },
+                    PackageIndex: function() { return editTeamPackageObjIndex; }
+                }
+            });
+
+            modalInstance.result.then(function(teamWithPackagesToSave) {
+                console.log('res', teamWithPackagesToSave);
+                console.log($scope);
+                $scope.save(teamWithPackagesToSave);
+            });
+        };
+
+        $scope.addNewPlan = function() {
+
+            $modal.open({
+
+                templateUrl: 'app/admin/teams/team-plan/team-plan.html',
+                controller: 'TeamPlanController',
+                resolve: {
+                    Team: function() { return $scope.team; }
+                }
+            });
+        };
+
+        $scope.addNewPackage = function() {
+            openPackageModal();
+        };
+
+        $scope.editLastPackage = function() {
+            openPackageModal($scope.team.teamPackages.length - 1);
+        };
+
+        $scope.removeLastPackage = function() {
+            $scope.team.teamPackages.splice($scope.team.teamPackages.length - 1, 1);
+            $scope.save();
+        };
+
+        $scope.save = function(team) {
+
+            teams.save(team).then(function() {
+                delete $scope.$storage.team;
+                $state.go('teams');
+            });
+        };
+    }
+]);
+
+/**
+ * Team controller. Controls the view for adding and editing a single team.
+ * @module Teams
  * @name TeamController
  * @type {Controller}
  */
