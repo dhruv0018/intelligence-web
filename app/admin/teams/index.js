@@ -137,8 +137,10 @@ Teams.controller('TeamPlansController', [
         };
 
         $scope.removeLastPackage = function() {
-            $scope.team.teamPackages.splice($scope.team.teamPackages.length - 1, 1);
-            $scope.save();
+
+            return;//not implemented yet
+            //$scope.team.teamPackages.splice($scope.team.teamPackages.length - 1, 1);
+            //$scope.save();
         };
 
         $scope.save = function(team) {
