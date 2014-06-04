@@ -58,11 +58,7 @@ Games.config([
 Games.service('Indexer.Games.Data', [
     '$q', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory','SessionService', 'Root.Data',
     function($q, users, games, teams, leagues, session, rootData) {
-        var promisedUsers = $q.defer();
-        var promisedTeams = $q.defer();
         var promisedGames = $q.defer();
-        var promisedLeagues = $q.defer();
-
         var currentUser = session.currentUser;
 
         games.getList({
@@ -72,30 +68,14 @@ Games.service('Indexer.Games.Data', [
             var filteredGames = indexerGames.filter(function(game) {
                 return game.isAssignedToUser(currentUser.id);
             });
-
             promisedGames.resolve(filteredGames);
         });
 
-        users.getList({
-        }, function(users) {
-            promisedUsers.resolve(users);
-        });
-
-        teams.getList({
-        }, function(teams) {
-            promisedTeams.resolve(teams);
-        });
-
-        leagues.getList({
-        }, function(leagues) {
-            promisedLeagues.resolve(leagues);
-        });
-
         var promises = {
-            users: promisedUsers.promise,
-            teams: promisedTeams.promise,
+            users: users.getList().$promise,
+            teams: teams.getList().$promise,
+            leagues: leagues.getList().$promise,
             games: promisedGames.promise,
-            leagues: promisedLeagues.promise,
             sports: rootData.sports
         };
 
