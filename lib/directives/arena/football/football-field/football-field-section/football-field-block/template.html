@@ -1,3 +1,15 @@
 <div class="football-field-block" style="width: {{width}}">
 
+    <div class="above-line" style="width: {{width}}">
+
+        <h1>{{ numOfPasses }} Passes</h1>
+
+    </div>
+
+    <div class="below-line" style="width: {{width}}">
+
+        <h2>{{ numOfCompletions }} Complete ({{ 100 * numOfCompletions / numOfPasses | number:0 }}%)</h2>
+
+    </div>
+
 </div>
