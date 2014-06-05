@@ -59,6 +59,10 @@ Games.service('Indexer.Games.Data', [
     '$q', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory','SessionService', 'Base.Data',
     function($q, users, games, teams, leagues, session, data) {
         var promisedGames = $q.defer();
+        var promisedUsers = $q.defer();
+        var promisedTeams = $q.defer();
+        //var promisedLeagues = $q.defer();
+
         var currentUser = session.currentUser;
 
         games.getList({
@@ -71,10 +75,25 @@ Games.service('Indexer.Games.Data', [
             promisedGames.resolve(filteredGames);
         });
 
+        users.getList({
+        }, function(users) {
+            promisedUsers.resolve(users);
+        }, null, true);
+
+        teams.getList({
+        }, function(teams) {
+            promisedTeams.resolve(teams);
+        }, null, true);
+
+//        promisedLeagues.getList({
+//        }, function(leauges){
+//            promisedLeagues.resolve(leauges);
+//        }, null, true);
+
         var promises = {
-            users: users.getList().$promise,
-            teams: teams.getList().$promise,
-            leagues: leagues.getList().$promise,
+            users: promisedUsers.promise,
+            teams: promisedTeams.promise,
+            //leagues: promisedLeagues.promise,
             games: promisedGames.promise,
             sports: data.sports
         };
@@ -98,6 +117,8 @@ Games.controller('indexer-games.Controller', [
         $scope.currentUser = session.currentUser;
         $scope.data = data;
         $scope.moment = moment;
+
+        console.log($scope.data);
 
         angular.forEach($scope.data.games, function(game) {
             game.timeLeft = new Date(game.currentAssignment().deadline) - new Date();

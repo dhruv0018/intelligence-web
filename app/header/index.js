@@ -60,8 +60,15 @@ Header.service('Base.Data', [
     '$q', 'SportsFactory',
     function($q, sports) {
 
+        var promisedSports = $q.defer();
+
+        sports.getList({
+        }, function(sports) {
+            promisedSports.resolve(sports);
+        }, null, true);
+
         var promises = {
-            sports: sports.getList().$promise
+            sports: promisedSports.promise
         };
 
         return promises;
