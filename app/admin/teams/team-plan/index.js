@@ -44,7 +44,7 @@ TeamPlan.controller('TeamPlanController', [
             $scope.teamPlan.endDate = new Date($scope.teamPlan.endDate);
         }
 
-        if ($scope.teamPlan === 'undefined') {
+        if (!$scope.teamPlan) {
             $scope.teamPlan = {
                 startDate: null,
                 endDate: null,
@@ -53,8 +53,6 @@ TeamPlan.controller('TeamPlanController', [
                 maxRegularGames: 0,
                 maxScoutingGames: 0,
                 maxAnyGames: 0,
-                //maxTurnaroundTime: 48,
-                //id: 0,
             };
         }
 
