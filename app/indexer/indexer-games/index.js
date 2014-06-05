@@ -61,7 +61,7 @@ Games.service('Indexer.Games.Data', [
         var promisedGames = $q.defer();
         var promisedUsers = $q.defer();
         var promisedTeams = $q.defer();
-        //var promisedLeagues = $q.defer();
+        var promisedLeagues = $q.defer();
 
         var currentUser = session.currentUser;
 
@@ -85,15 +85,15 @@ Games.service('Indexer.Games.Data', [
             promisedTeams.resolve(teams);
         }, null, true);
 
-//        promisedLeagues.getList({
-//        }, function(leauges){
-//            promisedLeagues.resolve(leauges);
-//        }, null, true);
+        leagues.getList({
+        }, function(leauges) {
+            promisedLeagues.resolve(leauges);
+        }, null, true);
 
         var promises = {
             users: promisedUsers.promise,
             teams: promisedTeams.promise,
-            //leagues: promisedLeagues.promise,
+            leagues: promisedLeagues.promise,
             games: promisedGames.promise,
             sports: data.sports
         };
