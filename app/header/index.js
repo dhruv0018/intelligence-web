@@ -44,8 +44,8 @@ Header.config([
                     }
                 },
                 resolve: {
-                    'Header.Data': [
-                        '$q', 'Header.Data',
+                    'Base.Data': [
+                        '$q', 'Base.Data',
                         function($q, data) {
                             return $q.all(data);
                         }
@@ -56,7 +56,7 @@ Header.config([
 ]);
 
 
-Header.service('Header.Data', [
+Header.service('Base.Data', [
     '$q', 'SportsFactory',
     function($q, sports) {
 

@@ -56,7 +56,7 @@ Games.config([
  * @type {Service}
  */
 Games.service('Indexer.Games.Data', [
-    '$q', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory','SessionService', 'Header.Data',
+    '$q', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory','SessionService', 'Base.Data',
     function($q, users, games, teams, leagues, session, data) {
         var promisedGames = $q.defer();
         var currentUser = session.currentUser;
