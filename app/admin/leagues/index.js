@@ -77,8 +77,8 @@ Leagues.config([
  * @type {Controller}
  */
 Leagues.controller('LeagueController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', 'LeaguesFactory', 'TeamsResource', 'SportsFactory', 'TagsetsFactory', 'PositionsetsFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, leagues, teams, sports, tagsets, positionsets) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', 'LeaguesFactory', 'TeamsResource', 'SportsFactory', 'TagsetsFactory', 'PositionsetsFactory', 'FiltersetsFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $localStorage, leagues, teams, sports, tagsets, positionsets, filtersets) {
 
         $scope.$storage = $localStorage;
 
@@ -104,6 +104,8 @@ Leagues.controller('LeagueController', [
         $scope.tagsets = tagsets.getList();
 
         $scope.positionsets = positionsets.getList();
+
+        $scope.filtersets = filtersets.getList();
 
         $scope.genders = ['male', 'female', 'coed'];
 
