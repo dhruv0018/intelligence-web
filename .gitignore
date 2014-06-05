@@ -33,3 +33,5 @@ npm-debug.log
 
 # Vagrant machines
 .vagrant
+
+.DS_Store
