@@ -76,10 +76,6 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             }
         });
 
-        /*
-         * Scope watches.
-         */
-
         $scope.$watch('game', function(game) {
             if (game.rosters) {
                 $scope.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
@@ -89,7 +85,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         $scope.$watch('data.opposingTeam.players', function(opposingTeamRoster) {
             if (typeof opposingTeamRoster !== 'undefined') {
                 if (opposingTeamRoster.length === 0) {
-                    $scope.addNewPlayer();
+                    $scope.validation.opposingTeam = false;
                 }
             } else {
                 $scope.data.opposingTeam = {
@@ -98,78 +94,19 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             }
         });
 
-
-        $scope.$watch('formOpposingTeam.$invalid', function(invalid) {
-
-            tabs.instructions.disabled = invalid;
+        $scope.$watch('validation.opposingTeam', function(valid) {
+            if (valid) {
+                tabs.instructions.disabled = false;
+            } else {
+                tabs.instructions.disabled = true;
+            }
         });
-
 
         $scope.$watch('tabs["opposing-team"].disabled', function(disabled) {
-
-            tabs.instructions.disabled = disabled;
-        });
-
-        /*
-         * Scope methods.
-         */
-
-        $scope.addNewPlayer = function() {
-
-            var player = {
-
-                played: true,
-                jerseyNumbers: {},
-                positions: {},
-                selectedPositions: {},
-                rosterStatuses: {}
-            };
-            player.selectedPositions[$scope.opposingTeamRosterId] = [];
-            player.rosterStatuses[$scope.opposingTeamRosterId] = true;
-            $scope.data.opposingTeam.players.push(player);
-        };
-
-        $scope.removePlayer = function(player) {
-
-            if (typeof player.id === 'undefined') {
-                $scope.data.opposingTeam.players.splice($scope.data.opposingTeam.players.indexOf(player), 1);
-            } else {
-                player.rosterStatuses[$scope.opposingTeamRosterId] = false;
+            if (disabled) {
+                tabs.instructions.disabled = disabled;
             }
-
-        };
-
-        $scope.uploadPlayers = function(files) {
-
-            var file = files[0];
-            var data = new FormData();
-
-            data.append('rosterId', $scope.opposingTeamRosterId);
-            data.append('roster', file);
-
-            $http.post(config.api.uri + 'batch/players/file',
-
-                data, {
-                    headers: { 'Content-Type': undefined },
-                    transformRequest: angular.identity
-                })
-                .success(function(uploadedPlayers) {
-                    if (typeof $scope.data.opposingTeam === 'undefined') {
-                        $scope.data.opposingTeam = {
-                            players: uploadedPlayers
-                        };
-                    }
-                    $scope.data.opposingTeam.players = players.constructPositionDropdown(uploadedPlayers, $scope.opposingTeamRosterId, $scope.positions);
-                })
-                .error(function() {
-
-                    $rootScope.$broadcast('alert', {
-
-                        type: 'danger',
-                        message: 'There was a problem. Please try again.'
-                    });
-                });
-        };
+        });
 
         $scope.save = function() {
             $scope.data.opposingTeam.players = players.getPositionsFromDowndown($scope.data.opposingTeam.players, $scope.opposingTeamRosterId, $scope.positions);

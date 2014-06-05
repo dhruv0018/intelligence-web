@@ -79,6 +79,8 @@ UploadingFilm.controller('UploadingFilmController', [
 
         $scope.$storage = $localStorage;
 
+        $scope.games = games;
+
         $scope.tabs = tabs;
 
         data.then(function(coachData) {

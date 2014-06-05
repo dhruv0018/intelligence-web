@@ -31,7 +31,9 @@
         "notes-list",
         "positions-dropdown",
         "uploader",
-        "feedback-modal"
+        "roster-manager",
+        "feedback-modal",
+        "open-modal"
     ],
     "scripts": [
         "index.js"
