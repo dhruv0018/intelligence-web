@@ -34,46 +34,15 @@ describe('SessionService', function() {
 
     describe('retrieving users', function() {
 
-        var userId = 'test@test.com';
-
-        beforeEach(inject(function($httpBackend, config) {
-
-            var url = config.api.uri + 'users/' + userId;
-
-            $httpBackend.whenGET(url).respond(user);
-        }));
-
-        it('given valid credentials should be a valid user', inject(function($httpBackend, SessionService) {
-
-            SessionService.clearCurrentUser();
-            SessionService.retrieveCurrentUser(userId, function(error, user) {
-
-                expect(user).to.not.be.undefined;
-            });
-
-            $httpBackend.flush();
-        }));
     });
 
     describe('storing users', function() {
 
         var testUser;
 
-        beforeEach(inject(function($httpBackend, config, SessionService) {
-
-            var userId = 'test@test.com';
-
-            var url = config.api.uri + 'users/' + userId;
-
-            $httpBackend.whenGET(url).respond(user);
+        beforeEach(inject(function(SessionService) {
 
             SessionService.clearCurrentUser();
-            SessionService.retrieveCurrentUser(userId, function(retrievedUser) {
-
-                testUser = retrievedUser;
-            });
-
-            $httpBackend.flush();
         }));
 
         it('should save a user in memory', inject(function(SessionService) {
