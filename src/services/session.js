@@ -106,21 +106,18 @@ IntelligenceWebClient.service('SessionService', [
             if (this.currentUser) {
 
                 user = this.currentUser;
-                return user;
             }
 
             /* Retrieve user from session. */
             else if (sessionStorage[CURRENT_USER_KEY]) {
 
                 user = self.deserializeUser(sessionStorage[CURRENT_USER_KEY]);
-                return user;
             }
 
             /* Retrieve user from browser. */
             else if (localStorage[CURRENT_USER_KEY]) {
 
                 user = self.deserializeUser(localStorage[CURRENT_USER_KEY]);
-                return user;
             }
 
             return user;
