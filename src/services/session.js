@@ -94,21 +94,13 @@ IntelligenceWebClient.service('SessionService', [
 
         /**
          * Retrieves the current user. Will first check if the user is stored in
-         * memory, then checks the session, then looks in the browser. If the
-         * user cannot be found in storage, then retrieves it from the server.
-         * @param {String} userId - a unique identifier for the user.
-         * @callback {function(user)} callback - returns the current user.
+         * memory, then checks the session, then looks in the browser.
          */
-        this.retrieveCurrentUser = function(userId, callback) {
+        this.retrieveCurrentUser = function() {
 
             var self = this;
 
-            var user;
-
-            callback = callback || function(error, user) {
-
-                return user;
-            };
+            var user = null;
 
             /* Retrieve user from memory. */
             if (this.currentUser) {
@@ -131,22 +123,7 @@ IntelligenceWebClient.service('SessionService', [
                 return user;
             }
 
-            /* Retrieve user from server. */
-            else if (userId) {
-
-                users.get(userId, function(user) {
-
-                    self.storeCurrentUser(user);
-                    return callback(null, user);
-                });
-            }
-
-            /* No stored user could be found and not enough information provided
-             * to retrieve one, so throw an error. */
-            else {
-
-                return callback(new Error('Could not retrieve user', null));
-            }
+            return user;
         };
     }
 ]);
