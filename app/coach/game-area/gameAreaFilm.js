@@ -187,7 +187,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
                         $scope.plays = plays;
 
                         //TODO remove hardcoded exclusion list
-                        $scope.exclusion = [1, 2, 3, 41, 15, 31, 27];
+                        $scope.exclusion = [1];
 
                         //TODO fix hardcoded filter set id
                         filtersets.get('1', function(filterset) {
