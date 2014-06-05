@@ -1,5 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+require('team-plan');
+require('team-package');
 
 /**
  * Teams page module.
@@ -9,7 +11,9 @@ var Teams = angular.module('teams', [
     'ui.router',
     'ui.bootstrap',
     'ui.unique',
-    'ui.showhide'
+    'ui.showhide',
+    'team-plan',
+    'team-package'
 ]);
 
 /* Cache the template file */
@@ -20,6 +24,7 @@ Teams.run([
         $templateCache.put('team.html', require('./team.html'));
         $templateCache.put('teams.html', require('./teams.html'));
         $templateCache.put('team-info.html', require('./team-info.html'));
+        $templateCache.put('team-plans.html', require('./team-plans.html'));
         $templateCache.put('team-members.html', require('./team-members.html'));
     }
 ]);
@@ -74,6 +79,17 @@ Teams.config([
                 }
             })
 
+            .state('team-plans', {
+                url: '',
+                parent: 'team',
+                views: {
+                    'content@team': {
+                        templateUrl: 'team-plans.html',
+                        controller: 'TeamPlansController'
+                    }
+                }
+            })
+
             .state('team-members', {
                 url: '',
                 parent: 'team',
@@ -90,12 +106,94 @@ Teams.config([
 /**
  * Team controller. Controls the view for adding and editing a single team.
  * @module Teams
+ * @name TeamPlanController
+ * @type {Controller}
+ */
+Teams.controller('TeamPlansController', [
+    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
+    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
+
+        $scope.team = $scope.$storage.team;
+
+        // Get the current or upcoming plan(s)
+
+        var curDate = new Date();
+        var editTeamPlanIndex;
+
+        var updateVisiblePlans = function() {
+            $scope.visiblePlans = [];
+
+            for (i = 0; i < $scope.team.teamPlans.length; i++) {
+                var planEndDate = new Date($scope.team.teamPlans[i].endDate);
+                if (planEndDate.getYear() >= curDate.getYear() &&
+                    planEndDate.getMonth() >= curDate.getMonth() &&
+                    planEndDate.getDate() >= curDate.getDate()) {
+
+                    $scope.visiblePlans.push($scope.team.teamPlans[i]);
+                    editTeamPlanIndex = i;
+
+                    // Support only one active plan for now. May want to show all active later.
+                    break;
+                }
+            }
+
+            $scope.hasPlans = ($scope.team.teamPlans.length > 0);
+            $scope.noVisiblePlans = ($scope.visiblePlans.length < 1);
+        };
+
+        updateVisiblePlans();
+
+        var openTeamPlanModal = function(teamPlanIndex) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/admin/teams/team-plan/team-plan.html',
+                controller: 'TeamPlanController',
+                resolve: {
+                    Team: function() { return $scope.team; },
+                    TeamPlanIndex: function() { return teamPlanIndex; }
+                }
+            });
+
+            modalInstance.result.then(function() {
+                updateVisiblePlans();
+            });
+        };
+
+        $scope.addNewPlan = function() {
+
+            openTeamPlanModal();
+        };
+
+        $scope.editTeamPlan = function() {
+            openTeamPlanModal(editTeamPlanIndex);
+        };
+
+        $scope.addNewPackage = function() {
+            $modal.open({
+
+                templateUrl: 'app/admin/teams/team-package/team-package.html',
+                controller: 'TeamPackageController'
+            });
+        };
+
+        $scope.save = function(team) {
+
+            teams.save(team).then(function() {
+                delete $scope.$storage.team;
+                $state.go('teams');
+            });
+        };
+    }
+]);
+
+/**
+ * Team controller. Controls the view for adding and editing a single team.
+ * @module Teams
  * @name TeamController
  * @type {Controller}
  */
 Teams.controller('TeamController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, ROLES, users, teams, sports, leagues, schools) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
+    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
@@ -200,6 +298,22 @@ Teams.controller('TeamController', [
             $scope.team.roles = $scope.team.roles || [];
             $scope.team.roles.push(newCoachRole);
             $scope.addNewHeadCoach = false;
+        };
+
+        $scope.addNewPlan = function() {
+            $modal.open({
+
+                templateUrl: 'app/admin/teams/team-plan/team-plan.html',
+                controller: 'TeamPlanController'
+            });
+        };
+
+        $scope.addNewPackage = function() {
+            $modal.open({
+
+                templateUrl: 'app/admin/teams/team-package/team-package.html',
+                controller: 'TeamPackageController'
+            });
         };
 
         $scope.save = function(team) {

@@ -1,0 +1,69 @@
+@import (reference) "main.less";
+
+.team-package-modal {
+
+    letter-spacing: normal;
+
+    .modal-header {
+        
+    }
+
+    .modal-title {
+
+        text-align: left;
+
+        i {
+            color: @brand-danger;
+            cursor: pointer;
+        }
+    }
+
+    .modal-body {
+
+        padding: 0;
+    }
+
+    .list-group {
+
+        margin: 0;
+    }
+
+    .list-group-item {
+
+        padding: 0;
+        border: none;
+        border-bottom: 2px solid rgb(230, 229, 228);
+
+        &:last-child {
+
+            border-bottom: none;
+        }
+    }
+
+}
+
+/* iPhone in portrait */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 480px)
+and (orientation: portrait) {
+
+    .team-package-modal {
+
+        .modal-header {
+
+            width: 320px;
+            padding: 15px;
+            top: -100px;
+            left: 0;
+        }
+
+        .list-group-item {
+
+            &::before {
+
+                content: "";
+            }
+        }
+    }
+}

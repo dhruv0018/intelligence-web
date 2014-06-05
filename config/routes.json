@@ -105,6 +105,12 @@
         "Admin": true
     },
 
+    "team-plans": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "team-members": {
 
         "Super Admin": true,
@@ -175,6 +181,11 @@
     },
 
     "leagues": {
+
+        "Super Admin": true
+    },
+
+    "plan-defaults": {
 
         "Super Admin": true
     },

@@ -18,7 +18,7 @@
         }
     }
 
-    table {
+    table.members {
 
         max-width: 400px;
     }
@@ -30,6 +30,48 @@
             padding: 8px;
             border: none;
             text-transform: capitalize;
+        }
+    }
+
+    .plans-content {
+        background-color: white;
+        border: thin solid @gray-border;
+        padding: 20px;
+
+        .plan-first {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 72%;
+            min-width: 565px;
+
+            thead > tr > th {
+                text-align: left;
+            }
+
+            td.plan-container {
+                height: 125px;
+                vertical-align: middle;
+            }
+
+            td.plan-options {
+                text-align: left;
+                height: 21px;
+                line-height: 21px;
+            }
+
+            .edit-plan {
+                padding-right: 10px;
+                border-right: thin solid @gray-border;
+                margin-right: 5px;
+            }
+        }
+
+        .plan-button {
+            .pull-right;
+            width: 25%;
+            min-width: 197px;
         }
     }
 }

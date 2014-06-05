@@ -16,7 +16,7 @@ var Admin = angular.module('Admin', [
     'teams',
     'schools',
     'queue',
-    'leagues'
+    'leagues',
 ]);
 
 /**
