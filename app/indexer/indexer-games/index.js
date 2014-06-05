@@ -56,8 +56,8 @@ Games.config([
  * @type {Service}
  */
 Games.service('Indexer.Games.Data', [
-    '$q', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory','SessionService', 'Root.Data',
-    function($q, users, games, teams, leagues, session, rootData) {
+    '$q', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory','SessionService', 'Header.Data',
+    function($q, users, games, teams, leagues, session, data) {
         var promisedGames = $q.defer();
         var currentUser = session.currentUser;
 
@@ -76,7 +76,7 @@ Games.service('Indexer.Games.Data', [
             teams: teams.getList().$promise,
             leagues: leagues.getList().$promise,
             games: promisedGames.promise,
-            sports: rootData.sports
+            sports: data.sports
         };
 
         return promises;

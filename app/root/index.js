@@ -49,14 +49,6 @@ Root.config([
                         templateUrl: 'root.html',
                         controller: 'RootController'
                     }
-                },
-                resolve: {
-                    'Root.Data': [
-                        '$q', 'Root.Data',
-                        function($q, data) {
-                            return $q.all(data);
-                        }
-                    ]
                 }
             });
     }
@@ -80,15 +72,4 @@ Root.controller('RootController', [
 ]);
 
 
-Root.service('Root.Data', [
-    '$q', 'SportsFactory',
-    function($q, sports) {
-
-        var promises = {
-            sports: sports.getList().$promise
-        };
-
-        return promises;
-    }
-]);
 
