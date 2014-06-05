@@ -114,7 +114,6 @@ IntelligenceWebClient.service('SessionService', [
             if (this.currentUser) {
 
                 user = this.currentUser;
-                self.storeCurrentUser(user);
                 return user;
             }
 
@@ -122,7 +121,6 @@ IntelligenceWebClient.service('SessionService', [
             else if (sessionStorage[CURRENT_USER_KEY]) {
 
                 user = self.deserializeUser(sessionStorage[CURRENT_USER_KEY]);
-                self.storeCurrentUser(user);
                 return user;
             }
 
@@ -130,7 +128,6 @@ IntelligenceWebClient.service('SessionService', [
             else if (localStorage[CURRENT_USER_KEY]) {
 
                 user = self.deserializeUser(localStorage[CURRENT_USER_KEY]);
-                self.storeCurrentUser(user);
                 return user;
             }
 
