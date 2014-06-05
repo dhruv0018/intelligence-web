@@ -83,15 +83,9 @@ Root.controller('RootController', [
 Root.service('Root.Data', [
     '$q', 'SportsFactory',
     function($q, sports) {
-        var promisedSports = $q.defer();
-
-        sports.getList({
-        }, function(sports) {
-            promisedSports.resolve(sports);
-        });
 
         var promises = {
-            sports: promisedSports.promise
+            sports: sports.getList().$promise
         };
 
         return promises;
