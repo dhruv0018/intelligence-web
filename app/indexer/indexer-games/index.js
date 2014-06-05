@@ -118,8 +118,6 @@ Games.controller('indexer-games.Controller', [
         $scope.data = data;
         $scope.moment = moment;
 
-        console.log($scope.data);
-
         angular.forEach($scope.data.games, function(game) {
             game.timeLeft = new Date(game.currentAssignment().deadline) - new Date();
         });
