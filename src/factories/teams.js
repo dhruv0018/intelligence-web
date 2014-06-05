@@ -30,21 +30,20 @@ IntelligenceWebClient.factory('TeamsFactory', [
             });
         };
 
-        var stringifyDateObjects = function() {
+        var stringifyDateObjects = function(team) {
             dateModifyArray.map(function(arrayToModify) {
 
-               /* if (typeof team[arrayToModify] === 'undefined') return;
+                if (typeof team[arrayToModify] === 'undefined') return;
 
                 angular.forEach(team[arrayToModify], function(value, key) {
 
-                    dateModifyArrayProperties.split(' ').map(function(dateProperty) {
+                    dateModifyArrayProperties.map(function(dateProperty) {
 
                         if (typeof value[dateProperty] === 'undefined') return;
 
-                        var dateObj;
-                        if (angular.isString(value[dateProperty]) && !isNaN((dateObj = new Date(value[dateProperty])).getTime())) value[dateProperty] = dateObj;
+                        if (value[dateProperty] instanceof Date) value[dateProperty] = value[dateProperty].toISOString();
                     });
-                });*/
+                });
             });
         };
 
@@ -81,10 +80,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not get team');
                 };
 
-                var retResource = self.resource.get({ id: id }, callback, error);
-                console.log('retResource', retResource.teamPackages);
-
-                return retResource;
+                return self.resource.get({ id: id }, callback, error);
             },
 
             getList: function(filter, success, error, index) {
@@ -157,11 +153,13 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 if (team.id) {
 
                     var updatedTeam = self.resource.update(parameters, team, success, error);
+                    parseDateStringsIntoObjects(updatedTeam);
                     return updatedTeam.$promise;
 
                 } else {
 
                     var newTeam = self.resource.create(parameters, team, success, error);
+                    parseDateStringsIntoObjects(newTeam);
                     return newTeam.$promise;
                 }
             },

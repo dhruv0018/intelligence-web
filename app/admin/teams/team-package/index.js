@@ -47,9 +47,6 @@ TeamPackage.controller('TeamPackageController', [
             $scope.edit = true;
 
             $scope.teamPackageObj = angular.copy(team.teamPackages[packageIndex]);
-
-            if (angular.isString($scope.teamPackageObj.startDate) && !isNaN(new Date($scope.teamPackageObj.startDate).getTime())) $scope.teamPackageObj.startDate = new Date($scope.teamPackageObj.startDate);
-            if (angular.isString($scope.teamPackageObj.endDate) && !isNaN(new Date($scope.teamPackageObj.endDate).getTime())) $scope.teamPackageObj.endDate = new Date($scope.teamPackageObj.endDate);
         }
 
         $scope.cancel = function() {
@@ -58,8 +55,6 @@ TeamPackage.controller('TeamPackageController', [
 
         $scope.saveTeamPackage = function() {
 
-            $scope.teamPackageObj.startDate = $scope.teamPackageObj.startDate.toISOString();
-            $scope.teamPackageObj.endDate = $scope.teamPackageObj.endDate.toISOString();
             $scope.teamPackageObj.minTurnaroundTime = TURNAROUND_TIME_MIN_TIME_LOOKUP[$scope.teamPackageObj.maxTurnaroundTime];
 
             //TODO: validation?

@@ -97,7 +97,28 @@ Teams.controller('TeamPlansController', [
     '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
     function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
 
+        var dirtyTeam = false;
         $scope.team = $scope.$storage.team;
+        $scope.activePackageId = -1;
+
+        $scope.$watch(function() { return dirtyTeam; }, function(newTeamValue) {
+            var currentDate = new Date();
+            var teamPackage;
+
+            $scope.activePackage = {};
+            $scope.activePackageId = -1;
+            for (var i = 0; i < $scope.team.teamPackages.length; i++) {
+                teamPackage = $scope.team.teamPackages[i];
+                if (teamPackage.endDate.getYear() >= currentDate.getYear() &&
+                    teamPackage.endDate.getMonth() >= currentDate.getMonth() &&
+                    teamPackage.endDate.getDate() >= currentDate.getDate()) {
+
+                    $scope.activePackage = teamPackage;
+                    $scope.activePackageId = i;
+                    break;
+                }
+            }
+        });
 
         var openPackageModal = function(editTeamPackageObjIndex) {
             var modalInstance = $modal.open({
@@ -136,13 +157,14 @@ Teams.controller('TeamPlansController', [
             openPackageModal($scope.team.teamPackages.length - 1);
         };
 
-        $scope.removeLastPackage = function() {
-            $scope.team.teamPackages.splice($scope.team.teamPackages.length - 1, 1);
+        $scope.removeActivePackage = function() {
+            $scope.team.teamPackages.splice($scope.activePackageId, 1);
             $scope.save($scope.team);
         };
 
         $scope.save = function(team, navigateAway) {
             teams.save(team).then(function() {
+                dirtyTeam = !dirtyTeam;
                 if (navigateAway) {
                     delete $scope.$storage.team;
                     $state.go('teams');

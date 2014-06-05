@@ -27,7 +27,7 @@
         </table>
     </div>
     <div>
-        <div class="plan-button"><x-button-add-new data-ng-click="addNewPackage()">Add new package</x-button-add-new></div>
+        <div data-ng-hide="activePackageId >= 0" class="plan-button"><x-button-add-new data-ng-click="addNewPackage()">Add new package</x-button-add-new></div>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -35,29 +35,29 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-hide="team.teamPackages.length">
+                <tr data-ng-hide="activePackageId >= 0">
                     <td colspan="3" class="package-container">
                         No packages have been added to this team.
                     </td>
                 </tr>
-                <tr data-ng-show="team.teamPackages.length">
+                <tr data-ng-show="activePackageId >= 0">
                     <td>
-                        <p>Starts: {{team.teamPackages[team.teamPackages.length-1].startDate | UTCDate | date : 'MMM d/yy' }}</p>
-                        <p>Ends: {{team.teamPackages[team.teamPackages.length-1].endDate | UTCDate | date : 'MMM d/yy' }}</p>
+                        <p>Starts: {{activePackage.startDate | date : 'MMM d/yy' }}</p>
+                        <p>Ends: {{activePackage.endDate | date : 'MMM d/yy' }}</p>
                     </td>
                     <td>
-                        <p>{{team.teamPackages[team.teamPackages.length-1].maxGamesPerPackage}} Games</p>
+                        <p>{{activePackage.maxGamesPerPackage}} Games</p>
                     </td>
                     <td>
-                        <p>{{team.teamPackages[team.teamPackages.length-1].minTurnaroundTime}}-{{team.teamPackages[team.teamPackages.length-1].maxTurnaroundTime}} Hour Turnaround Time</p>
+                        <p>{{activePackage.minTurnaroundTime}}-{{activePackage.maxTurnaroundTime}} Hour Turnaround Time</p>
                     </td>
                 </tr>
-                <tr data-ng-show="team.teamPackages.length">
+                <tr data-ng-show="activePackageId >= 0">
                     <td colspan="3" class="plan-options">
                         <a href><i class="icon-calendar"></i> View Archive</a>
                         <span class="pull-right">
                             <a data-ng-click="editLastPackage()" href class="edit-plan"><i class="icon-edit"></i> Edit</a>
-                            <a href data-ng-click="removeLastPackage()"><i class="icon-remove"></i> Remove</a>
+                            <a href data-ng-click="removeActivePackage()"><i class="icon-remove"></i> Remove</a>
                         </span>
                     </td>
                 </tr>
