@@ -38,13 +38,7 @@ describe('SessionService', function() {
         }
     ]));
 
-    describe('retrieving users', function() {
-
-    });
-
     describe('storing users', function() {
-
-        var testUser;
 
         beforeEach(inject([
             'SessionService',
@@ -92,6 +86,45 @@ describe('SessionService', function() {
                 session.clearCurrentUser();
                 session.isCurrentUserStored().should.be.false;
                 expect(sessionStorage['CURRENT_USER']).to.be.undefined;
+            }
+        ]));
+    });
+
+    describe('retrieving users', function() {
+
+        it('should retrieve a user from memory', inject([
+            'SessionService',
+            function(session) {
+
+                session.storeCurrentUser(user);
+                session.isCurrentUserStored().should.be.true;
+                session.retrieveCurrentUser().should.eql(user);
+            }
+        ]));
+
+        it('should retrieve a user from the session', inject([
+            'SessionService',
+            function(session) {
+
+                session.storeCurrentUser(user);
+                session.isCurrentUserStored().should.be.true;
+                expect(sessionStorage['CURRENT_USER']).to.be.a('string');
+                session.currentUser = null;
+                session.retrieveCurrentUser().should.eql(session.deserializeUser(user);
+            }
+        ]));
+
+        it('should retrieve a user from persistent storage', inject([
+            'SessionService',
+            function(session) {
+
+                var persist = true;
+                session.storeCurrentUser(user, persist);
+                session.isCurrentUserStored().should.be.true;
+                expect(localStorage['CURRENT_USER']).to.be.a('string');
+                session.currentUser = null;
+                sessionStorage.removeItem('CURRENT_USER');
+                session.retrieveCurrentUser().should.eql(session.deserializeUser(user);
             }
         ]));
     });
