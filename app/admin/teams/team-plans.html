@@ -40,7 +40,7 @@
                         No packages have been added to this team.
                     </td>
                 </tr>
-                <tr data-ng-hide="!team.teamPackages.length">
+                <tr data-ng-show="team.teamPackages.length">
                     <td>
                         <p>Starts: {{team.teamPackages[team.teamPackages.length-1].startDate | UTCDate | date : 'MMM d/yy' }}</p>
                         <p>Ends: {{team.teamPackages[team.teamPackages.length-1].endDate | UTCDate | date : 'MMM d/yy' }}</p>
@@ -52,7 +52,7 @@
                         <p>{{team.teamPackages[team.teamPackages.length-1].minTurnaroundTime}}-{{team.teamPackages[team.teamPackages.length-1].maxTurnaroundTime}} Hour Turnaround Time</p>
                     </td>
                 </tr>
-                <tr data-ng-hide="!team.teamPackages.length">
+                <tr data-ng-show="team.teamPackages.length">
                     <td colspan="3" class="plan-options">
                         <a href><i class="icon-calendar"></i> View Archive</a>
                         <span class="pull-right">

@@ -9,6 +9,45 @@ IntelligenceWebClient.factory('TeamsFactory', [
     '$rootScope','ROLES', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'UsersFactory',
     function($rootScope, ROLES, TeamsResource, schools, usersResource, users) {
 
+        var dateModifyArray = 'teamPackages teamPlans'.split(' ');
+        var dateModifyArrayProperties = 'startDate endDate'.split(' ');
+
+        var parseDateStringsIntoObjects = function(team) {
+            dateModifyArray.map(function(arrayToModify) {
+
+                if (typeof team[arrayToModify] === 'undefined') return;
+
+                angular.forEach(team[arrayToModify], function(value, key) {
+
+                    dateModifyArrayProperties.map(function(dateProperty) {
+
+                        if (typeof value[dateProperty] === 'undefined') return;
+
+                        var dateObj;
+                        if (angular.isString(value[dateProperty]) && !isNaN((dateObj = new Date(value[dateProperty])).getTime())) value[dateProperty] = dateObj;
+                    });
+                });
+            });
+        };
+
+        var stringifyDateObjects = function() {
+            dateModifyArray.map(function(arrayToModify) {
+
+               /* if (typeof team[arrayToModify] === 'undefined') return;
+
+                angular.forEach(team[arrayToModify], function(value, key) {
+
+                    dateModifyArrayProperties.split(' ').map(function(dateProperty) {
+
+                        if (typeof value[dateProperty] === 'undefined') return;
+
+                        var dateObj;
+                        if (angular.isString(value[dateProperty]) && !isNaN((dateObj = new Date(value[dateProperty])).getTime())) value[dateProperty] = dateObj;
+                    });
+                });*/
+            });
+        };
+
         var TeamsFactory = {
 
             resource: TeamsResource,
@@ -32,6 +71,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                     team = self.extendTeam(team);
 
+                    parseDateStringsIntoObjects(team);
+
                     return success ? success(team) : team;
                 };
 
@@ -40,7 +81,10 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not get team');
                 };
 
-                return self.resource.get({ id: id }, callback, error);
+                var retResource = self.resource.get({ id: id }, callback, error);
+                console.log('retResource', retResource.teamPackages);
+
+                return retResource;
             },
 
             getList: function(filter, success, error, index) {
@@ -66,6 +110,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     teams.forEach(function(team) {
 
                         team = self.extendTeam(team);
+
+                        parseDateStringsIntoObjects(team);
 
                         indexedTeams[team.id] = team;
                     });
@@ -105,6 +151,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                     throw new Error('Could not save team');
                 };
+
+                stringifyDateObjects(team);
 
                 if (team.id) {
 
