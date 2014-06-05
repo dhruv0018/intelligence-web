@@ -21,7 +21,7 @@ IntelligenceWebClient.service('AuthenticationService', [
     '$rootScope', '$injector', '$q', '$http', 'config', 'TokensService', 'SessionService', 'UsersFactory',
     function($rootScope, $injector, $q, $http, config, tokens, session, users) {
 
-        return {
+        var AuthenticationService = {
 
             /**
              * Logs a user in using their email address and password. If the
@@ -157,6 +157,8 @@ IntelligenceWebClient.service('AuthenticationService', [
                 });
             }
         };
+
+        return AuthenticationService;
     }
 ]);
 
