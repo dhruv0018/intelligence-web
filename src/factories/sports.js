@@ -11,6 +11,10 @@ IntelligenceWebClient.factory('SportsFactory', [
 
         var SportsFactory = {
 
+            list: [],
+
+            collection: {},
+
             resource: SportsResource,
 
             get: function(id, success, error) {
@@ -28,6 +32,45 @@ IntelligenceWebClient.factory('SportsFactory', [
                 };
 
                 return self.resource.get({ id: id }, callback, error);
+            },
+
+            getAll: function(filter, success, error, index) {
+
+                var self = this;
+
+                filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || 100;
+
+                var callback = function(sports) {
+
+                    self.list.concat(sports);
+
+                    sports.forEach(function(sport) {
+
+                        self.collection[sport.id] = sport;
+                    });
+
+                    if (sports.length < filter.count) {
+
+                        return success ? success(sports) : sports;
+                    }
+
+                    else {
+
+                        filter.start = filter.count + 1;
+                        filter.count += 100;
+
+                        return getAll(filter);
+                    }
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not load sports list');
+                };
+
+                return self.resource.query(filter, callback, error).$promise;
             },
 
             getList: function(filter, success, error, index) {
