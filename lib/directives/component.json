@@ -31,9 +31,11 @@
         "notes-list",
         "positions-dropdown",
         "uploader",
-        "feedback-modal",
         "formation-chart",
-        "arena"
+        "arena",
+        "roster-manager",
+        "feedback-modal",
+        "open-modal"
     ],
     "scripts": [
         "index.js"
