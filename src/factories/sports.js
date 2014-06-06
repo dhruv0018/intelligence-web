@@ -5,7 +5,7 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
-IntelligenceWebClient.service('SportssStorage', [
+IntelligenceWebClient.service('SportsStorage', [
     function() {
 
         this.list = [];
@@ -60,24 +60,14 @@ IntelligenceWebClient.factory('SportsFactory', [
 
                 return query.$promise.then(function(sports) {
 
-                    self.storage.list = self.storage.list.concat(sports);
+                    self.storage.list = sports;
 
                     sports.forEach(function(sport) {
 
                         self.storage.collection[sport.id] = sport;
                     });
 
-                    if (sports.length < filter.count) {
-
-                        return self.storage.collection;
-                    }
-
-                    else {
-
-                        filter.start = filter.start + filter.count + 1;
-
-                        return self.getAll(filter);
-                    }
+                    return self.storage.collection;
                 });
             },
 
