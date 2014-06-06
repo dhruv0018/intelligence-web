@@ -79,5 +79,5 @@ require('./directives/autotab');
 require('./directives/verify-password.js');
 require('./directives/krossover/videoplayer');
 
-angular.bootstrap(document, [package.name]);
+//angular.bootstrap(document, [package.name]);
 
