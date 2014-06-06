@@ -62,6 +62,8 @@ Info.directive('krossoverCoachGameInfo', [
 Info.controller('Coach.Game.Info.controller', [
     '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($scope, $state, $localStorage, GAME_TYPES, GAME_NOTE_TYPES, tabs, data, session, teams, leagues, games) {
+        $scope.todaysDate = Date.now();
+
         $scope.games = games;
 
         $scope.GAME_TYPES = GAME_TYPES;
@@ -94,6 +96,9 @@ Info.controller('Coach.Game.Info.controller', [
         });
 
         $scope.$watch('game', function(game) {
+            if (!game.datePlayed) {
+                $scope.game.datePlayed = Date.now();
+            }
             game.notes = game.notes || {};
             game.notes[GAME_NOTE_TYPES.COACH_NOTE] = game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE,content: ''}];
         });
