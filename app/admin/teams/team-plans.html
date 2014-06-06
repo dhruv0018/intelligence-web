@@ -14,11 +14,12 @@
                         No plans have been added to this team.
                     </td>
                 </tr>
+                {{visiblePlans|json}}
                 <tr data-ng-repeat="plan in visiblePlans">
                     <td>
                         <p>{{ plan.name }}</p>
-                        <p>Starts: {{ plan.startDate }}</p>
-                        <p>Ends: {{ plan.endDate }}</p>
+                        <p>Starts: {{ plan.startDate | date : 'MMM d/yy' }}</p>
+                        <p>Ends: {{ plan.endDate | date : 'MMM d/yy' }}</p>
                     </td>
                     <td>
                         <p>{{ plan.maxRegularGames }} Regular Games</p>
@@ -52,6 +53,7 @@
                         No packages have been added to this team.
                     </td>
                 </tr>
+                {{activePackage|json}}
                 <tr data-ng-show="activePackageId >= 0">
                     <td>
                         <p>Starts: {{activePackage.startDate | date : 'MMM d/yy' }}</p>

@@ -33,22 +33,25 @@ TeamPlan.controller('TeamPlanController', [
     function controller($scope, $state, $modalInstance, TURNAROUND_TIME_RANGES, session, plans, teams, team, teamPlanIndex) {
 
         $scope.team = team;
+        $scope.team.teamPlans = $scope.team.teamPlans || [];
         $scope.defaultPlan = {};
         $scope.turnaroundTimes = {};
         $scope.turnaroundTimes.options = TURNAROUND_TIME_RANGES;
 
-        if ($scope.team.teamPlans[teamPlanIndex]) {
+        console.log($scope);
+
+        if ($scope.team && $scope.team.teamPlans[teamPlanIndex]) {
             $scope.editing = true;
             $scope.teamPlan = angular.copy($scope.team.teamPlans[teamPlanIndex]);
-            $scope.teamPlan.startDate = new Date($scope.teamPlan.startDate);
-            $scope.teamPlan.endDate = new Date($scope.teamPlan.endDate);
+        } else {
+            console.log('undefined');
         }
 
         if (!$scope.teamPlan) {
             $scope.teamPlan = {
-                startDate: null,
-                endDate: null,
-                name: null,
+                startDate: new Date(),
+                endDate: new Date(),
+                name: '',
                 maxGamesPerPlan: 0,
                 maxRegularGames: 0,
                 maxScoutingGames: 0,
@@ -76,6 +79,8 @@ TeamPlan.controller('TeamPlanController', [
                     plan.endDate.month(plan.endMonth - 1);
                     $scope.teamPlan.endDate = plan.endDate.toDate();
                 }
+
+                console.log($scope.teamPlan);
             }
         });
 
@@ -97,9 +102,7 @@ TeamPlan.controller('TeamPlanController', [
                 team.teamPlans.push($scope.teamPlan);
             }
 
-            teams.save(team);
-
-            $modalInstance.close();
+            $modalInstance.close(team);
         };
 
     }
