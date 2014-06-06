@@ -115,6 +115,7 @@ Teams.controller('TeamPlansController', [
 
         $scope.team = $scope.$storage.team;
         $scope.activePackageId = -1;
+        $scope.noVisiblePlans = true;
 
         var curDate = new Date();
         var editTeamPlanIndex;

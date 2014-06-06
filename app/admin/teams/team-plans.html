@@ -1,7 +1,7 @@
 <div class="box-body plans-content">
 
     <div class="plan-first">
-        <div class="plan-button"><x-button-add-new data-ng-click="addNewPlan()">Add new plan</x-button-add-new></div>
+        <div data-ng-show="noVisiblePlans" class="plan-button"><x-button-add-new data-ng-click="addNewPlan()">Add new plan</x-button-add-new></div>
         <table class="table table-bordered">
             <thead>
                 <tr>
