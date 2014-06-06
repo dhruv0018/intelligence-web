@@ -304,6 +304,16 @@
     "ga-shot-chart": {
         "Head Coach": true,
         "Assistant Coach": true
+    },
+
+    "ga-formations": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "ga-down-distance": {
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }
 
