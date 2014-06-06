@@ -42,10 +42,39 @@ Header.config([
                         templateUrl: 'header.html',
                         controller: 'HeaderController'
                     }
+                },
+                resolve: {
+                    'Base.Data': [
+                        '$q', 'Base.Data',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             });
     }
 ]);
+
+
+Header.service('Base.Data', [
+    '$q', 'SportsFactory',
+    function($q, sports) {
+
+        var promisedSports = $q.defer();
+
+        sports.getList({
+        }, function(sports) {
+            promisedSports.resolve(sports);
+        }, null, true);
+
+        var promises = {
+            sports: promisedSports.promise
+        };
+
+        return promises;
+    }
+]);
+
 
 /**
  * Header controller.
