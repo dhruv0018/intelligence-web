@@ -15,6 +15,8 @@
         "gameAreaHomeStats.html",
         "gameAreaAwayStats.html",
         "gameAreaShotChart.html",
+        "gameAreaFormations.html",
+        "gameAreaDownDistance.html",
         "deleteGame.html"
     ],
     "scripts": [
@@ -25,7 +27,9 @@
         "gameAreaLog.js",
         "gameAreaHomeStats.js",
         "gameAreaAwayStats.js",
-        "gameAreaShotChart.js"
+        "gameAreaShotChart.js",
+        "gameAreaFormations.js",
+        "gameAreaDownDistance.js"
     ],
     "styles": [
         "styles.less"

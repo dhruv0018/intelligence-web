@@ -179,6 +179,11 @@
         "Super Admin": true
     },
 
+    "plan-defaults": {
+
+        "Super Admin": true
+    },
+
     "indexer-game": {
 
         "Indexer": true
@@ -302,6 +307,16 @@
     },
 
     "ga-shot-chart": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "ga-formations": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "ga-down-distance": {
         "Head Coach": true,
         "Assistant Coach": true
     }
