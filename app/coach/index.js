@@ -49,8 +49,8 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory','IndexingService',
-    function($q, session, teams, games, players, leagues, tagsets, positions, indexing) {
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory','IndexingService',
+    function($q, session, teams, games, players, users, leagues, tagsets, positions, indexing) {
         var promises = {};
         var deferred = $q.defer();
         var promisedGames = $q.defer();
@@ -62,7 +62,6 @@ Coach.service('Coach.Data', [
         var promisedLeague = $q.defer();
         var promisedPositionSet = $q.defer();
 
-        //TODO get real teamroster id
         var data = {
             teamId: session.currentUser.currentRole.teamId,
             games: promisedGames,
@@ -70,7 +69,9 @@ Coach.service('Coach.Data', [
             roster: {}
         };
 
-        games.getList({teamId: data.teamId}, function(gamesList) {
+        games.getList({
+            uploaderTeamId: data.teamId
+        }, function(gamesList) {
             promisedGames.resolve(gamesList);
             promisedIndexedGames.resolve(games.transformIndexed(gamesList));
         });
@@ -86,10 +87,26 @@ Coach.service('Coach.Data', [
                 players.getList({
                     roster: data.roster.id
                 }, function(players) {
-                    promisedRoster.resolve(players);
+                    var mergedRoster = [];
+                    angular.forEach(players, function(player) {
+                        if (player.userId) {
+                            //lost in the merger
+                            var playerId = player.id;
+
+                            users.get(player.userId, function(user) {
+                                angular.extend(player, user, player);
+                                player.id = playerId;
+                                mergedRoster.push(player);
+                            });
+                        } else {
+                            mergedRoster.push(player);
+                        }
+                    });
+                    promisedRoster.resolve(mergedRoster);
                 }, function(failure) {
                     promisedRoster.resolve([]);
                 });
+
             } else {
                 promisedRoster.resolve([]);
                 promisedRosterId.resolve({id: null});
@@ -140,7 +157,6 @@ Coach.service('Coach.Game.Data', ['$q', 'Coach.Data',
 
         coachData.then(function(coachData) {
             var gameData = coachData;
-            gameData.team = coachData.coachTeam;
             gameData.opposingTeam = {
                 players: []
             };

@@ -32,6 +32,7 @@ GameAreaInformation.config([
                     controller: 'GameAreaInformationController'
                 }
             }
+
         };
 
         $stateProvider.state(gameArea);

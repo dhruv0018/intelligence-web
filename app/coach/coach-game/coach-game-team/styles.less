@@ -1,0 +1,65 @@
+@import (reference) "main.less";
+
+.scouting-team {
+
+    div.row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    div.box {
+        padding: 0;
+    }
+
+    .box-body {
+
+        .table {
+            width:100%;
+
+            th,
+            td {
+
+                width: 188px;
+            }
+
+            td {
+
+                input.name {
+
+                    text-align: left;
+                }
+
+                .toggle-played {
+
+                    &,
+                    &.active {
+
+                        .btn;
+                        .btn-blank;
+                    }
+                }
+
+                .remove {
+
+                    .btn;
+                    .btn-blank;
+                    .pull-right;
+                    color: red;
+                }
+
+                .toggle-played,
+                .remove {
+
+                    width: 60px;
+                    height: 60px;
+                }
+            }
+        }
+
+        .btn-save-bottom {
+
+            margin-top: 30px;
+        }
+
+    }
+}

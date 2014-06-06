@@ -42,10 +42,39 @@ Header.config([
                         templateUrl: 'header.html',
                         controller: 'HeaderController'
                     }
+                },
+                resolve: {
+                    'Base.Data': [
+                        '$q', 'Base.Data',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             });
     }
 ]);
+
+
+Header.service('Base.Data', [
+    '$q', 'SportsFactory',
+    function($q, sports) {
+
+        var promisedSports = $q.defer();
+
+        sports.getList({
+        }, function(sports) {
+            promisedSports.resolve(sports);
+        }, null, true);
+
+        var promises = {
+            sports: promisedSports.promise
+        };
+
+        return promises;
+    }
+]);
+
 
 /**
  * Header controller.
@@ -54,8 +83,8 @@ Header.config([
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES',
-    function controller(config, $scope, $state, auth, session, account, ROLES) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'Coach.Game.Tabs',
+    function controller(config, $scope, $state, auth, session, account, ROLES, tabs) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
@@ -63,6 +92,8 @@ Header.controller('HeaderController', [
         $scope.COACH = ROLES.COACH;
 
         $scope.config = config;
+
+        $scope.$state = $state;
 
         $scope.currentUser = session.currentUser;
 
@@ -73,6 +104,8 @@ Header.controller('HeaderController', [
             auth.logoutUser();
             $state.go('login');
         };
+
+        $scope.tabs = tabs;
     }
 ]);
 

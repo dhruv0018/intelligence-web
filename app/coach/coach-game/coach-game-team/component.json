@@ -1,0 +1,12 @@
+{
+    "name": "coach-game-team",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}
