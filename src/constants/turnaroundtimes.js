@@ -22,5 +22,12 @@ var TURNAROUND_TIME_RANGES = [
     }
 ];
 
+var TURNAROUND_TIME_MIN_TIME_LOOKUP = {
+    24: 12,
+    36: 24,
+    48: 36
+};
+
 IntelligenceWebClient.constant('TURNAROUND_TIME_RANGES', TURNAROUND_TIME_RANGES);
+IntelligenceWebClient.constant('TURNAROUND_TIME_MIN_TIME_LOOKUP', TURNAROUND_TIME_MIN_TIME_LOOKUP);
 

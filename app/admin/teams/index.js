@@ -212,7 +212,7 @@ Teams.controller('TeamPlansController', [
             openTeamPlanModal(editTeamPlanIndex);
         };
 
-        $scope.editLastPackage = function() {
+        $scope.editActivePackage = function() {
             openPackageModal($scope.activePackageId);
         };
 
