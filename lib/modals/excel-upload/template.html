@@ -23,21 +23,29 @@
                 Read these important notes about entering information into the excel file
                 <br/>
                 <i>Entering an email will create a Krossover account for the Athlete. Use these abbreviations for position:</i>
-                <div class="pull-left">
-                    <!--<div data-ng-repeat="position in positions">-->
-                        <!--{{position.description}} {{position.name}}-->
-                    <!--</div>-->
+
+                <div class="positions-list shaded">
+                    <div class="position" data-ng-class="{'pull-left': !$last}" data-ng-repeat="position in positions">
+                        {{position.description}} {{position.name}}
+                    </div>
                 </div>
-                <div>
+
+                <div class="positions-list">
                     Separate multiple positions with a comma, like this:
-                    <!--<div data-ng-repeat="position in positions">-->
-                        <!--{{position.name}}-->
-                    <!--</div>-->
+                    <div>
+                        <span data-ng-repeat="position in positions">
+                            <strong>
+                                {{position.name}}<span ng-if="!$last">,</span>
+                            </strong>
+                        </span>
+                    </div>
+                    Test
                 </div>
+
             </li>
             <li>
                 Once the roster is in the excel file, select it <br/>
-                <data-krossover-uploader data-upload-label="Upload Roster" data-on-upload="options.context.uploadRoster(files)"></data-krossover-uploader>
+                <data-krossover-uploader data-upload-label="Upload Roster" data-on-upload="uploadRoster(files)"></data-krossover-uploader>
             </li>
         </ul>
 
