@@ -3,13 +3,49 @@
 .film-breakdown-modal {
 
 	.modal-header {
-		border-bottom: none;
 
-		i {
-			cursor: pointer;
-			color: @brand-danger;
+		.modal-title {
+
+			text-align: left;
+
+			i {
+				cursor: pointer;
+				color: @brand-danger;
+			}
 		}
+
+	}
+
+	.modal-body {
+		padding: 0;
+		height: 380px;
+
+		.sidebar {
+	      width:290px;
+	      height: 100%;
+	      max-height: 100%;
+	      display: inline-block;
+	      position: relative;
+	      overflow-y: hidden;
+	      overflow-x: hidden;
+	      float:left;
+	      padding: 0px;
+	      -webkit-transform: translateZ(0);
+
+	      .no-results {
+	      	width: 100%;
+	      }
+	    }
+
+	    div {
+	    	display: inline-block;
+	    }
 	}
 
 }
 
+.film-breakdown-size {
+	.modal-dialog {
+		width: 1032px;
+	}
+}
