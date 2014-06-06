@@ -57,21 +57,14 @@ Header.config([
 
 
 Header.service('Base.Data', [
-    '$q', 'SportsFactory',
-    function($q, sports) {
+    'SportsFactory',
+    function(sports) {
 
-        var promisedSports = $q.defer();
-
-        sports.getList({
-        }, function(sports) {
-            promisedSports.resolve(sports);
-        }, null, true);
-
-        var promises = {
-            sports: promisedSports.promise
+        var Data = {
+            sports: sports.load()
         };
 
-        return promises;
+        return Data;
     }
 ]);
 
