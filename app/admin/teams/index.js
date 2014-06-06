@@ -1,5 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+require('team-plan');
+require('team-package');
 
 /**
  * Teams page module.
@@ -9,7 +11,9 @@ var Teams = angular.module('teams', [
     'ui.router',
     'ui.bootstrap',
     'ui.unique',
-    'ui.showhide'
+    'ui.showhide',
+    'team-plan',
+    'team-package'
 ]);
 
 /* Cache the template file */
@@ -20,6 +24,7 @@ Teams.run([
         $templateCache.put('team.html', require('./team.html'));
         $templateCache.put('teams.html', require('./teams.html'));
         $templateCache.put('team-info.html', require('./team-info.html'));
+        $templateCache.put('team-plans.html', require('./team-plans.html'));
         $templateCache.put('team-members.html', require('./team-members.html'));
     }
 ]);
@@ -74,6 +79,17 @@ Teams.config([
                 }
             })
 
+            .state('team-plans', {
+                url: '',
+                parent: 'team',
+                views: {
+                    'content@team': {
+                        templateUrl: 'team-plans.html',
+                        controller: 'TeamPlansController'
+                    }
+                }
+            })
+
             .state('team-members', {
                 url: '',
                 parent: 'team',
@@ -97,19 +113,25 @@ Teams.controller('TeamPlansController', [
     '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
     function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
 
-        var dirtyTeam = false;
         $scope.team = $scope.$storage.team;
         $scope.activePackageId = -1;
 
-        $scope.$watch(function() { return dirtyTeam; }, function(newTeamValue) {
+        var setActivePackage = function() {
             var currentDate = new Date();
             var teamPackage;
 
             $scope.activePackage = {};
             $scope.activePackageId = -1;
+
+            if (typeof $scope.team.teamPackages === 'undefined') {
+                return;
+            }
+
             for (var i = 0; i < $scope.team.teamPackages.length; i++) {
                 teamPackage = $scope.team.teamPackages[i];
-                if (teamPackage.endDate.getYear() >= currentDate.getYear() &&
+
+                if (typeof teamPackage.endDate !== 'undefined' &&
+                    teamPackage.endDate.getYear() >= currentDate.getYear() &&
                     teamPackage.endDate.getMonth() >= currentDate.getMonth() &&
                     teamPackage.endDate.getDate() >= currentDate.getDate()) {
 
@@ -118,7 +140,8 @@ Teams.controller('TeamPlansController', [
                     break;
                 }
             }
-        });
+        };
+        setActivePackage();
 
         var openPackageModal = function(editTeamPackageObjIndex) {
             var modalInstance = $modal.open({
@@ -154,7 +177,7 @@ Teams.controller('TeamPlansController', [
         };
 
         $scope.editLastPackage = function() {
-            openPackageModal($scope.team.teamPackages.length - 1);
+            openPackageModal($scope.activePackageId);
         };
 
         $scope.removeActivePackage = function() {
@@ -164,13 +187,9 @@ Teams.controller('TeamPlansController', [
 
         $scope.save = function(team, navigateAway) {
             teams.save(team).then(function() {
-                dirtyTeam = !dirtyTeam;
-                if (navigateAway) {
-                    delete $scope.$storage.team;
-                    $state.go('teams');
-                } else {
-                    $scope.$storage.team = team;
-                }
+                setActivePackage();
+                $scope.$storage.team = team;
+                //$state.go('teams');
             });
         };
     }
@@ -191,8 +210,8 @@ Teams.filter('UTCDate', function() {
  * @type {Controller}
  */
 Teams.controller('TeamController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, ROLES, users, teams, sports, leagues, schools) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
+    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
@@ -297,6 +316,22 @@ Teams.controller('TeamController', [
             $scope.team.roles = $scope.team.roles || [];
             $scope.team.roles.push(newCoachRole);
             $scope.addNewHeadCoach = false;
+        };
+
+        $scope.addNewPlan = function() {
+            $modal.open({
+
+                templateUrl: 'app/admin/teams/team-plan/team-plan.html',
+                controller: 'TeamPlanController'
+            });
+        };
+
+        $scope.addNewPackage = function() {
+            $modal.open({
+
+                templateUrl: 'app/admin/teams/team-package/team-package.html',
+                controller: 'TeamPackageController'
+            });
         };
 
         $scope.save = function(team) {
