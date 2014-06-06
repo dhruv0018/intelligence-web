@@ -1,0 +1,32 @@
+<section class="league">
+
+    <aside class="sidebar">
+
+        <header>
+
+            <img class="logo" src="http://lorempixel.com/40/40/sports" class="pull-left" alt="Logo">
+
+
+            <h1 class="name" data-ng-if="$storage.league.name">{{ $storage.league.name }}</h1>
+            <h1 class="name" data-ng-if="!$storage.league.name">New League</h1>
+
+            <h2 class="sport">{{ indexedSports[$storage.league.sportId].name }}</h2>
+
+        </header>
+
+        <nav role="navigation">
+
+            <ul class="nav nav-pills nav-stacked">
+
+                <li ui-sref-active="active"><a href data-ui-sref="league-info"><i class="icon-info-sign"></i> League Info</a></li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <main class="content" data-ui-view="content"></main>
+
+</section>
+

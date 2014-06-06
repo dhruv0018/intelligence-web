@@ -1,0 +1,20 @@
+{
+    "name": "football-field",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "paths": [
+        "."
+    ],
+    "local": [
+        "football-field-section",
+        "football-field-line-of-scrimmage",
+        "football-field-formation"
+    ]
+}

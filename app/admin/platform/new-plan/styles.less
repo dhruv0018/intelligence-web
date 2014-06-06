@@ -1,0 +1,121 @@
+@import (reference) "main.less";
+
+.new-plan-modal {
+
+    letter-spacing: normal;
+
+    .modal-title {
+
+        text-align: left;
+
+        i {
+            cursor: pointer;
+            color: @brand-danger;
+        }
+    }
+
+    .modal-body {
+
+        padding: 20px;
+    }
+
+    .plan-modal-firstrow-column {
+        width: 49%;
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+
+    .leaguebox-container {
+        
+        padding: 10px;
+
+        .leagueboxes {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    }
+
+    .plandate-container {
+
+        padding: 10px;
+        display: table-cell;
+
+        label {
+            display: inline;
+            margin-right: 10px;
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+
+        .dateholder {
+            display: inline-block;
+            width: 40%;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+    }
+
+    .gamesrow {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        div {
+            width: 49%;
+            display: inline-block;
+            margin-bottom: 10px;
+
+            label {
+                display: block;
+            }
+
+            input, select {
+                width: 50%;
+                display: inline-block;
+            }
+        }
+    }
+
+    .list-group {
+
+        margin: 0;
+    }
+
+    .list-group-item {
+
+        padding: 0;
+        border: none;
+        border-bottom: 2px solid rgb(230, 229, 228);
+
+        &:last-child {
+
+            border-bottom: none;
+        }
+    }
+
+}
+
+/* iPhone in portrait */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 480px)
+and (orientation: portrait) {
+
+    .new-plan-modal {
+
+        .modal-header {
+
+            width: 320px;
+            padding: 15px;
+            top: -100px;
+            left: 0;
+        }
+
+        .list-group-item {
+
+            &::before {
+
+                content: "";
+            }
+        }
+    }
+}

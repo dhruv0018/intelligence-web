@@ -1,0 +1,72 @@
+<div class="new-plan-modal">
+
+    <header class="modal-header">
+
+        <h3 class="modal-title">Create a new plan<i class="pull-right icon-remove" data-ng-click="cancel()"></i></h3>
+
+    </header>
+
+    <div class="modal-body">
+
+        <div class="form-group">
+            <div>
+                <div class="plan-modal-firstrow-column">
+                    <label>Name of Plan</label>
+                    <input class="form-control" placeholder="Name" data-ng-model="plan.name" type="text" required>
+                </div>
+                <div class="plan-modal-firstrow-column pull-right">
+                    <label>For what sport</label>
+                    <select class="form-control" name="sport" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sports">
+                        <option value="">Sport</option>
+                    </select>
+                </div>
+            </div>
+            <label>For what leagues?</label>
+            <div class="leaguebox-container">
+                <div class="form-group leagueboxes" data-ng-repeat="league in leagues | filter:{'sportId':sportId}" required>
+                    <input type="checkbox" data-ng-checked="{{ defaultPlan.leagueIds.indexOf(league.id) !== -1 }}" data-ng-click="toggleLeagueId(league)"> {{ league.name }}
+                </div>
+            </div>
+
+            <label>Dates of the plan</label>
+            <div class="plandate-container">
+                <label>from</label>
+                <div class="dateholder"><date data-ng-model="plan.startDate"></date></div>
+                <label>to</label>
+                <div class="dateholder"><date data-ng-model="plan.endDate"></date></div>
+            </div>
+            <div class="gamesrow">
+                <div>
+                    <label>Max games per plan</label>
+                    <input class="form-control" type="text" data-ng-model="plan.maxGamesPerPlan" required>
+                </div>
+                <div>
+                    <label>Max games per season</label>
+                    <input class="form-control" type="text" data-ng-model="plan.maxAnyGames" required>
+                </div>
+            </div>
+            <div class="gamesrow">
+                <div>
+                    <label>Default # of regular games</label>
+                    <input class="form-control" type="text" data-ng-model="plan.maxRegularGames" required> per week
+                </div>
+                <div>
+                    <label>Default # of scouting games</label>
+                    <input class="form-control" type="text" data-ng-model="plan.maxScoutingGames" required> per week
+                </div>
+            </div>
+            <div class="gamesrow">
+                <div>
+                    <label>Default turnaround time</label>
+                    <select class="form-control" data-ng-model="plan.turnaroundInterval" data-ng-options="time.time for time in maxTurnaroundTimes">{{ maxTurnaroundTimes }}</select>
+                    <option value="time.value"></option>
+                </div>
+            </div>
+            <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="savePlan(plan)">Save</button>
+
+
+        </div>
+
+    </div>
+
+</div>
