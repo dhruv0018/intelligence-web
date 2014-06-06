@@ -114,8 +114,7 @@ Teams.controller('TeamPlansController', [
     function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
 
         $scope.team = $scope.$storage.team;
-
-        // Get the current or upcoming plan(s)
+        $scope.activePackageId = -1;
 
         var curDate = new Date();
         var editTeamPlanIndex;
@@ -141,7 +140,50 @@ Teams.controller('TeamPlansController', [
             $scope.noVisiblePlans = ($scope.visiblePlans.length < 1);
         };
 
+        var setActivePackage = function() {
+            var currentDate = new Date();
+            var teamPackage;
+
+            $scope.activePackage = {};
+            $scope.activePackageId = -1;
+
+            if (typeof $scope.team.teamPackages === 'undefined') {
+                return;
+            }
+
+            for (var i = 0; i < $scope.team.teamPackages.length; i++) {
+                teamPackage = $scope.team.teamPackages[i];
+
+                if (typeof teamPackage.endDate !== 'undefined' &&
+                    teamPackage.endDate.getYear() >= currentDate.getYear() &&
+                    teamPackage.endDate.getMonth() >= currentDate.getMonth() &&
+                    teamPackage.endDate.getDate() >= currentDate.getDate()) {
+
+                    $scope.activePackage = teamPackage;
+                    $scope.activePackageId = i;
+                    break;
+                }
+            }
+        };
+        setActivePackage();
         updateVisiblePlans();
+
+        var openPackageModal = function(editTeamPackageObjIndex) {
+            var modalInstance = $modal.open({
+                scope: $scope,
+                size: 'sm',
+                templateUrl: 'app/admin/teams/team-package/team-package.html',
+                controller: 'TeamPackageController',
+                resolve: {
+                    Team: function() { return $scope.team; },
+                    PackageIndex: function() { return editTeamPackageObjIndex; }
+                }
+            });
+
+            modalInstance.result.then(function(teamWithPackagesToSave) {
+                $scope.save(teamWithPackagesToSave);
+            });
+        };
 
         var openTeamPlanModal = function(teamPlanIndex) {
             var modalInstance = $modal.open({
@@ -159,31 +201,43 @@ Teams.controller('TeamPlansController', [
         };
 
         $scope.addNewPlan = function() {
-
             openTeamPlanModal();
+        };
+
+        $scope.addNewPackage = function() {
+            openPackageModal();
         };
 
         $scope.editTeamPlan = function() {
             openTeamPlanModal(editTeamPlanIndex);
         };
 
-        $scope.addNewPackage = function() {
-            $modal.open({
-
-                templateUrl: 'app/admin/teams/team-package/team-package.html',
-                controller: 'TeamPackageController'
-            });
+        $scope.editLastPackage = function() {
+            openPackageModal($scope.activePackageId);
         };
 
-        $scope.save = function(team) {
+        $scope.removeActivePackage = function() {
+            $scope.team.teamPackages.splice($scope.activePackageId, 1);
+            $scope.save($scope.team);
+        };
 
+        $scope.save = function(team, navigateAway) {
             teams.save(team).then(function() {
-                delete $scope.$storage.team;
-                $state.go('teams');
+                setActivePackage();
+                $scope.$storage.team = team;
+                //$state.go('teams');
             });
         };
     }
 ]);
+
+Teams.filter('UTCDate', function() {
+    return function(input) {
+        input = input || '';
+
+        return new Date(input);
+    };
+});
 
 /**
  * Team controller. Controls the view for adding and editing a single team.
