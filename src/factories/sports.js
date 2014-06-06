@@ -5,15 +5,21 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
+IntelligenceWebClient.service('SportssStorage', [
+    function() {
+
+        this.list = [];
+        this.collection = {};
+    }
+]);
+
 IntelligenceWebClient.factory('SportsFactory', [
-    'SportsResource',
-    function(SportsResource) {
+    'SportsResource', 'SportsStorage',
+    function(SportsResource, SportsStorage) {
 
         var SportsFactory = {
 
-            list: [],
-
-            collection: {},
+            storage: SportsStorage,
 
             resource: SportsResource,
 
@@ -34,43 +40,45 @@ IntelligenceWebClient.factory('SportsFactory', [
                 return self.resource.get({ id: id }, callback, error);
             },
 
-            getAll: function(filter, success, error, index) {
+            getAll: function(filter, success, error) {
 
                 var self = this;
 
                 filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || 100;
 
-                var callback = function(sports) {
+                success = success || function(sports) {
 
-                    self.list.concat(sports);
-
-                    sports.forEach(function(sport) {
-
-                        self.collection[sport.id] = sport;
-                    });
-
-                    if (sports.length < filter.count) {
-
-                        return success ? success(sports) : sports;
-                    }
-
-                    else {
-
-                        filter.start = filter.count + 1;
-                        filter.count += 100;
-
-                        return getAll(filter);
-                    }
+                    return sports;
                 };
 
                 error = error || function() {
 
-                    throw new Error('Could not load sports list');
+                    throw new Error('Could not load sports collection');
                 };
 
-                return self.resource.query(filter, callback, error).$promise;
+                var query = self.resource.query(filter, success, error);
+
+                return query.$promise.then(function(sports) {
+
+                    self.storage.list = self.storage.list.concat(sports);
+
+                    sports.forEach(function(sport) {
+
+                        self.storage.collection[sport.id] = sport;
+                    });
+
+                    if (sports.length < filter.count) {
+
+                        return self.storage.collection;
+                    }
+
+                    else {
+
+                        filter.start = filter.start + filter.count + 1;
+
+                        return self.getAll(filter);
+                    }
+                });
             },
 
             getList: function(filter, success, error, index) {
@@ -107,6 +115,13 @@ IntelligenceWebClient.factory('SportsFactory', [
                 };
 
                 return self.resource.query(filter, callback, error);
+            },
+
+            load: function(filter) {
+
+                var self = this;
+
+                return self.getAll(filter);
             },
 
             save: function(sport) {
