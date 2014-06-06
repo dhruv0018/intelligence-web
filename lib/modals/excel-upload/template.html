@@ -39,18 +39,22 @@
                             </strong>
                         </span>
                     </div>
-                    Test
+                    Another Test
                 </div>
 
             </li>
             <li>
                 Once the roster is in the excel file, select it <br/>
-                <data-krossover-uploader data-upload-label="Upload Roster" data-on-upload="uploadRoster(files)"></data-krossover-uploader>
+
+                <div data-ng-show="files" class="shaded">
+                    {{files[0].name}} <data-krossover-uploader data-ng-show="files" data-upload-label="Pick Again" data-on-upload="uploadFile(files)"></data-krossover-uploader>
+                </div>
+
+                <data-krossover-uploader data-ng-show="!files" data-upload-label="Upload Roster" data-on-upload="uploadFile(files)"></data-krossover-uploader>
+            </li>
+            <li>
+                <button class="btn btn-primary" data-ng-click="uploadRoster()">Start Roster Upload</button>
             </li>
         </ul>
-
-        <button>
-            Start Roster Upload
-        </button>
     </div>
 </div>
