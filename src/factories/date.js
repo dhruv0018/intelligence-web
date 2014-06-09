@@ -7,7 +7,11 @@ var IntelligenceWebClient = angular.module(package.name);
 
 
 IntelligenceWebClient.factory('NewDate', function() {
-    var dateZeroTime = new Date();
-    dateZeroTime.setUTCHours(0,0,0,0);
-    return dateZeroTime;
+    return {
+        generate: function() {
+            var dateZeroTime = new Date();
+            dateZeroTime.setUTCHours(0,0,0,0);
+            return dateZeroTime;
+        }
+    };
 });
