@@ -236,14 +236,6 @@ Teams.controller('TeamPlansController', [
     }
 ]);
 
-Teams.filter('UTCDate', function() {
-    return function(input) {
-        input = input || '';
-
-        return new Date(input);
-    };
-});
-
 /**
  * Team controller. Controls the view for adding and editing a single team.
  * @module Teams
