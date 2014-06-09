@@ -62,6 +62,7 @@ require('./factories/tagsets');
 require('./factories/filtersets');
 require('./factories/positionsets');
 require('./factories/plans');
+require('./factories/basic-modals');
 
 require('./managers/tags');
 require('./managers/play');
