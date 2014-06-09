@@ -62,6 +62,7 @@ Team.controller('Coach.Game.Team.controller', [
     function controller(config, $rootScope, $scope, $state, $localStorage, $http, tabs, data, games, players) {
         $scope.tabs = tabs;
         $scope.data = {};
+        $scope.config = config;
 
         data.then(function(coachData) {
             $scope.data = coachData;
