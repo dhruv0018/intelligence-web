@@ -26,7 +26,8 @@
 
                 <div class="positions-list shaded">
                     <div class="position" data-ng-class="{'pull-left': !$last}" data-ng-repeat="position in positions">
-                        {{position.description}} {{position.name}}
+                        <span class="description">{{position.description}}</span>
+                        <span class="name">{{position.name}}</span>
                     </div>
                 </div>
 
