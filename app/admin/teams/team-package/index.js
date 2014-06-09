@@ -38,8 +38,11 @@ TeamPackage.controller('TeamPackageController', [
         $scope.TURNAROUND_TIME_RANGES = TURNAROUND_TIME_RANGES;
         $scope.teamPackageObj = {};
 
-        $scope.teamPackageObj.startDate = new Date();
-        $scope.teamPackageObj.endDate = new Date();
+        var dateZeroTime = new Date();
+        dateZeroTime.setUTCHours(0,0,0,0);
+
+        $scope.teamPackageObj.startDate = dateZeroTime;
+        $scope.teamPackageObj.endDate = dateZeroTime;
 
         //Set packageIndex to package index to edit
         //before opening modal

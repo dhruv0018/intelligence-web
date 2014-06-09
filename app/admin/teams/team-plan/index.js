@@ -47,10 +47,13 @@ TeamPlan.controller('TeamPlanController', [
             console.log('undefined');
         }
 
+        var dateZeroTime = new Date();
+        dateZeroTime.setUTCHours(0,0,0,0);
+
         if (!$scope.teamPlan) {
             $scope.teamPlan = {
-                startDate: new Date(),
-                endDate: new Date(),
+                startDate: dateZeroTime,
+                endDate: dateZeroTime,
                 name: '',
                 maxGamesPerPlan: 0,
                 maxRegularGames: 0,
