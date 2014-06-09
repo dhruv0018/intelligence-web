@@ -80,8 +80,8 @@ Team.service('Coach.Team.Data', [
  * @type {controller}
  */
 Team.controller('Coach.Team.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'config', 'ROLES', 'Coach.Team.Data', 'PlayersFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, config, ROLES, data, players, users) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'config', 'ROLES', 'Coach.Team.Data', 'PlayersFactory', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, config, ROLES, data, players, users) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
