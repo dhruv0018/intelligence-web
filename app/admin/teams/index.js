@@ -103,6 +103,37 @@ Teams.config([
     }
 ]);
 
+Teams.filter('visiblePlanOrPackage', [
+    'NewDate',
+    function(newDate) {
+
+        return function(planOrPackageArray) {
+
+            var currentDate = newDate.generate();
+            var teamPackageOrPlan;
+
+            planOrPackageArray = planOrPackageArray || [];
+            var filteredItems = [];
+
+            for (var i = 0; i < planOrPackageArray.length; i++) {
+                planOrPackage = planOrPackageArray[i];
+
+                if (typeof planOrPackage.endDate !== 'undefined' &&
+                    planOrPackage.endDate.getYear() >= currentDate.getYear() &&
+                    planOrPackage.endDate.getMonth() >= currentDate.getMonth() &&
+                    planOrPackage.endDate.getDate() >= currentDate.getDate()) {
+
+                    planOrPackage.unfilteredId = i;
+                    filteredItems.push(planOrPackage);
+                    break;
+                }
+            }
+
+            return filteredItems;
+        };
+    }
+]);
+
 /**
  * Team controller. Controls the view for adding and editing a single team.
  * @module Teams
@@ -114,63 +145,14 @@ Teams.controller('TeamPlansController', [
     function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
 
         $scope.team = $scope.$storage.team;
-        $scope.activePackageId = -1;
-        $scope.noVisiblePlans = true;
 
-        var curDate = new Date();
-        var editTeamPlanIndex;
-
-        var updateVisiblePlans = function() {
-
-            $scope.visiblePlans = [];
-            $scope.team.teamPlans = $scope.team.teamPlans || [];
-
-            for (var i = 0; i < $scope.team.teamPlans.length; i++) {
-
-                var planEndDate = $scope.team.teamPlans[i].endDate;
-
-                if (planEndDate &&
-                    planEndDate.getYear() >= curDate.getYear() &&
-                    planEndDate.getMonth() >= curDate.getMonth() &&
-                    planEndDate.getDate() >= curDate.getDate()) {
-
-                    $scope.visiblePlans.push($scope.team.teamPlans[i]);
-                    editTeamPlanIndex = i;
-
-                    // Support only one active plan for now. May want to show all active later.
-                    break;
-                }
-            }
-
-            $scope.hasPlans = ($scope.team.teamPlans.length > 0);
-            $scope.noVisiblePlans = ($scope.visiblePlans.length < 1);
+        var applyFilter = function() {
+            $scope.filteredPackages = $filter('visiblePlanOrPackage')($scope.team.teamPackages);
+            $scope.filteredPlans = $filter('visiblePlanOrPackage')($scope.team.teamPlans);
         };
 
-        var setActivePackage = function() {
-            var currentDate = new Date();
-            var teamPackage;
-
-            $scope.activePackage = {};
-            $scope.activePackageId = -1;
-
-            $scope.team.teamPackages = $scope.team.teamPackages || [];
-
-            for (var i = 0; i < $scope.team.teamPackages.length; i++) {
-                teamPackage = $scope.team.teamPackages[i];
-
-                if (typeof teamPackage.endDate !== 'undefined' &&
-                    teamPackage.endDate.getYear() >= currentDate.getYear() &&
-                    teamPackage.endDate.getMonth() >= currentDate.getMonth() &&
-                    teamPackage.endDate.getDate() >= currentDate.getDate()) {
-
-                    $scope.activePackage = teamPackage;
-                    $scope.activePackageId = i;
-                    break;
-                }
-            }
-        };
-        setActivePackage();
-        updateVisiblePlans();
+        $scope.$watch(function() { return $scope.team.teamPlans; }, applyFilter, true);
+        $scope.$watch(function() { return $scope.team.teamPackages; }, applyFilter, true);
 
         var openPackageModal = function(editTeamPackageObjIndex) {
             var modalInstance = $modal.open({
@@ -216,8 +198,8 @@ Teams.controller('TeamPlansController', [
             openTeamPlanModal(editTeamPlanIndex);
         };
 
-        $scope.editActivePackage = function() {
-            openPackageModal($scope.activePackageId);
+        $scope.editActivePackage = function(index) {
+            openPackageModal(index);
         };
 
         $scope.removeActivePackage = function() {
@@ -227,10 +209,7 @@ Teams.controller('TeamPlansController', [
 
         $scope.save = function(team, navigateAway) {
             teams.save(team).then(function() {
-                setActivePackage();
-                updateVisiblePlans();
                 $scope.$storage.team = team;
-                //$state.go('teams');
             });
         };
     }
