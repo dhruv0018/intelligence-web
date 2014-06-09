@@ -24,7 +24,12 @@ IntelligenceWebClient.factory('TeamsFactory', [
                         if (typeof value[dateProperty] === 'undefined') return;
 
                         var dateObj;
-                        if (angular.isString(value[dateProperty]) && !isNaN((dateObj = new Date(value[dateProperty])).getTime())) value[dateProperty] = dateObj;
+
+                        if (angular.isString(value[dateProperty]) &&
+                            !isNaN((dateObj = new Date(value[dateProperty])).getTime())) {
+
+                            value[dateProperty] = dateObj;
+                        }
                     });
                 });
             });
