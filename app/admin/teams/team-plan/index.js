@@ -76,7 +76,6 @@ TeamPlan.controller('TeamPlanController', [
                     $scope.teamPlan.endDate = plan.endDate.toDate();
                 }
 
-                console.log($scope.teamPlan);
             }
         });
 

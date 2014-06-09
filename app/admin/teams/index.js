@@ -120,20 +120,13 @@ Teams.controller('TeamPlansController', [
         var curDate = new Date();
         var editTeamPlanIndex;
 
-        console.log($scope.team);
-
         var updateVisiblePlans = function() {
-
-            console.log('in updateVisiblePlans');
 
             $scope.visiblePlans = [];
             $scope.team.teamPlans = $scope.team.teamPlans || [];
 
-            console.log('teamPlans', $scope.team.teamPlans);
-
             for (var i = 0; i < $scope.team.teamPlans.length; i++) {
 
-                console.log('teamPlan', $scope.team.teamPlans[i]);
                 var planEndDate = $scope.team.teamPlans[i].endDate;
 
                 if (planEndDate &&
@@ -165,8 +158,6 @@ Teams.controller('TeamPlansController', [
             for (var i = 0; i < $scope.team.teamPackages.length; i++) {
                 teamPackage = $scope.team.teamPackages[i];
 
-                console.log('teamPackage', i, teamPackage);
-
                 if (typeof teamPackage.endDate !== 'undefined' &&
                     teamPackage.endDate.getYear() >= currentDate.getYear() &&
                     teamPackage.endDate.getMonth() >= currentDate.getMonth() &&
@@ -194,7 +185,6 @@ Teams.controller('TeamPlansController', [
             });
 
             modalInstance.result.then(function(teamWithPackagesToSave) {
-                console.log(teamWithPackagesToSave);
                 $scope.save(teamWithPackagesToSave);
             });
         };
