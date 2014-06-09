@@ -26,7 +26,6 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
 
         $rootScope.$on(VG_EVENTS.ON_PAUSE, function() {
             $scope.currentTimestamp = window.Math.floor($scope.VideoPlayer.videoElement[0].currentTime);
-            $scope.$apply();
         });
 
         $scope.clearKeyListeners = function() {
