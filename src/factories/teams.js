@@ -148,21 +148,16 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not save team');
                 };
 
-                console.log('before string: ', team);
                 stringifyDateObjects(team);
 
                 if (team.id) {
-                    console.log('before save: ', team);
                     var updatedTeam = self.resource.update(parameters, team, success, error);
                     parseDateStringsIntoObjects(updatedTeam);
-                    console.log('after update save: ', updatedTeam);
                     return updatedTeam.$promise;
 
                 } else {
-                    console.log('before save: ', team);
                     var newTeam = self.resource.create(parameters, team, success, error);
                     parseDateStringsIntoObjects(newTeam);
-                    console.log('after new save: ', newTeam);
                     return newTeam.$promise;
                 }
             },
