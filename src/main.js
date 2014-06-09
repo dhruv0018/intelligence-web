@@ -63,6 +63,7 @@ require('./factories/tagsets');
 require('./factories/filtersets');
 require('./factories/positionsets');
 require('./factories/plans');
+require('./factories/date');
 
 require('./managers/tags');
 require('./managers/play');

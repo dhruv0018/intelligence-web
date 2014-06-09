@@ -29,8 +29,8 @@ TeamPlan.run([
  * @type {Controller}
  */
 TeamPlan.controller('TeamPlanController', [
-    '$scope', '$state', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'SessionService', 'PlansFactory', 'TeamsFactory', 'Team', 'TeamPlanIndex',
-    function controller($scope, $state, $modalInstance, TURNAROUND_TIME_RANGES, session, plans, teams, team, teamPlanIndex) {
+    '$scope', '$state', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'SessionService', 'PlansFactory', 'TeamsFactory', 'Team', 'TeamPlanIndex', 'NewDate',
+    function controller($scope, $state, $modalInstance, TURNAROUND_TIME_RANGES, session, plans, teams, team, teamPlanIndex, dateZeroTime) {
 
         $scope.team = team;
         $scope.team.teamPlans = $scope.team.teamPlans || [];
@@ -38,17 +38,10 @@ TeamPlan.controller('TeamPlanController', [
         $scope.turnaroundTimes = {};
         $scope.turnaroundTimes.options = TURNAROUND_TIME_RANGES;
 
-        console.log($scope);
-
         if ($scope.team && $scope.team.teamPlans[teamPlanIndex]) {
             $scope.editing = true;
             $scope.teamPlan = angular.copy($scope.team.teamPlans[teamPlanIndex]);
-        } else {
-            console.log('undefined');
         }
-
-        var dateZeroTime = new Date();
-        dateZeroTime.setUTCHours(0,0,0,0);
 
         if (!$scope.teamPlan) {
             $scope.teamPlan = {

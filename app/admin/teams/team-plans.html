@@ -9,12 +9,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-hide="hasPlans">
+                <tr data-ng-show="noVisiblePlans">
                     <td colspan="3" class="plan-container">
                         No plans have been added to this team.
                     </td>
                 </tr>
-                {{visiblePlans|json}}
                 <tr data-ng-repeat="plan in visiblePlans">
                     <td>
                         <p>{{ plan.name }}</p>
@@ -27,10 +26,10 @@
                     </td>
                     <td>{{ plan.maxTurnaroundTime - 12}}-{{ plan.maxTurnaroundTime }} hour Turnaround Time</td>
                 </tr>
-                <tr data-ng-hide="noVisiblePlans">
+                <tr>
                     <td colspan="3" class="plan-options">
                         <a href><i class="icon-calendar"></i> View Archive</a>
-                        <span class="pull-right">
+                        <span data-ng-hide="noVisiblePlans" class="pull-right">
                             <a href class="edit-plan" data-ng-click="editTeamPlan()"><i class="icon-edit"></i> Edit</a>
                             <a href><i class="icon-remove"></i> Remove</a>
                         </span>
@@ -53,7 +52,6 @@
                         No packages have been added to this team.
                     </td>
                 </tr>
-                {{activePackage|json}}
                 <tr data-ng-show="activePackageId >= 0">
                     <td>
                         <p>Starts: {{activePackage.startDate | date : 'MMM d/yy' }}</p>
@@ -66,10 +64,10 @@
                         <p>{{activePackage.minTurnaroundTime}}-{{activePackage.maxTurnaroundTime}} Hour Turnaround Time</p>
                     </td>
                 </tr>
-                <tr data-ng-show="activePackageId >= 0">
+                <tr>
                     <td colspan="3" class="plan-options">
                         <a href><i class="icon-calendar"></i> View Archive</a>
-                        <span class="pull-right">
+                        <span data-ng-show="activePackageId >= 0" class="pull-right">
                             <a data-ng-click="editActivePackage()" href class="edit-plan"><i class="icon-edit"></i> Edit</a>
                             <a href data-ng-click="removeActivePackage()"><i class="icon-remove"></i> Remove</a>
                         </span>

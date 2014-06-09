@@ -29,17 +29,14 @@ TeamPackage.run([
  * @type {Controller}
  */
 TeamPackage.controller('TeamPackageController', [
-    '$scope', '$state', '$modalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
-    function controller($scope, $state, $modalInstance, session, team, packageIndex, TURNAROUND_TIME_RANGES, TURNAROUND_TIME_MIN_TIME_LOOKUP) {
+    '$scope', '$state', '$modalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'NewDate',
+    function controller($scope, $state, $modalInstance, session, team, packageIndex, TURNAROUND_TIME_RANGES, TURNAROUND_TIME_MIN_TIME_LOOKUP, dateZeroTime) {
 
         $scope.edit = false;
 
         team.teamPackages = team.teamPackages || [];
         $scope.TURNAROUND_TIME_RANGES = TURNAROUND_TIME_RANGES;
         $scope.teamPackageObj = {};
-
-        var dateZeroTime = new Date();
-        dateZeroTime.setUTCHours(0,0,0,0);
 
         $scope.teamPackageObj.startDate = dateZeroTime;
         $scope.teamPackageObj.endDate = dateZeroTime;
