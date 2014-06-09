@@ -113,3 +113,36 @@ var ZONES = {
 
 IntelligenceWebClient.constant('ZONES', ZONES);
 
+var ZONE_AREAS = {
+
+    LOSS_ZONES: [
+        ZONES.LOSS_FAR_LEFT,
+        ZONES.LOSS_LEFT,
+        ZONES.LOSS_MIDDLE,
+        ZONES.LOSS_RIGHT,
+        ZONES.LOSS_FAR_RIGHT
+    ],
+
+    FLAT_ZONES: [
+        ZONES.LEFT_FLAT,
+        ZONES.LEFT_HOOK,
+        ZONES.HOLE_MIDDLE,
+        ZONES.RIGHT_HOOK,
+        ZONES.RIGHT_FLAT
+    ],
+
+    FORWARD_ZONES: [
+        ZONES.LEFT,
+        ZONES.MIDDLE,
+        ZONES.RIGHT
+    ],
+
+    DEEP_ZONES: [
+        ZONES.DEEP_LEFT,
+        ZONES.DEEP_MIDDLE,
+        ZONES.DEEP_RIGHT
+    ]
+};
+
+IntelligenceWebClient.constant('ZONE_AREAS', ZONE_AREAS);
+

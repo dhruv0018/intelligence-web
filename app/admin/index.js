@@ -3,6 +3,7 @@ require('teams');
 require('schools');
 require('queue');
 require('leagues');
+require('platform');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -17,6 +18,7 @@ var Admin = angular.module('Admin', [
     'schools',
     'queue',
     'leagues',
+    'platform'
 ]);
 
 /**

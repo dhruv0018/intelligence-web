@@ -1,0 +1,23 @@
+{
+    "name": "platform",
+    "templates": [
+        "platform.html",
+        "plan-defaults.html"
+    ],
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "leagues",
+        "new-plan"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "dependencies": {
+        "moment/moment": "2.5.1"
+    }
+}

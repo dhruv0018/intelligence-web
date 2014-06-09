@@ -1,0 +1,37 @@
+<div class="box-body plan-defaults-content">
+    <p>Pick a team</p>
+    <div class="plan-options">
+        <select class="form-control" name="sport" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sports">
+            <option value=""></option>
+        </select>
+        <x-button-add-new class="pull-right" data-ng-click="addPlan()">Add plan</x-button-add-new>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Plan Name</th>
+                    <th>Plan Dates</th>
+                    <th>Max Games per Season</th>
+                    <th>Default # of Regular Games</th>
+                    <th>Default # of Scouting Games</th>
+                    <th>Turnaround Time</th>
+                    <th>Applies to Leagues</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="plan in plans">
+                    <td><a data-ng-click="editPlan(plan)">{{ plan.name }}</a> </td>
+                    <td>{{ (plan.startMonth) }} {{ plan.startDay }} - {{ plan.endMonth }} {{plan.endDay }}</td>
+                    <td>{{ plan.maxAnyGames }}</td>
+                    <td>{{ plan.maxRegularGames }}</td>
+                    <td>{{ plan.maxScoutingGames }}</td>
+                    <td>{{ plan.maxTurnaroundTime - 12}}-{{ plan.maxTurnaroundTime }} hrs</td>
+                    <td><ul><li data-ng-repeat="leagueId in plan.leagueIds">{{ leagues[leagueId - 1].name }}</li></ul></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

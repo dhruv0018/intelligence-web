@@ -8,17 +8,23 @@
                 <!--<a data-ng-href="#"><i class="icon-download"></i> Download</a>
                 <a data-ng-href="#"><i class="icon-share"></i> Share</a>-->
 
-                <select ng-model="dataType">
-                    <option ng-if="gameStatus !== 'INDEXED'" value="video"> Raw Film </option>
-                    <option ng-if="gameStatus === 'INDEXED'" value="video"> Breakdown </option>
+                <select data-ng-model="dataType">
+                    <option data-ng-if="gameStatus !== 'INDEXED'" value="video"> Raw Film </option>
+                    <option data-ng-if="gameStatus === 'INDEXED'" value="video"> Breakdown </option>
                     <option value="game-info">
                         Game Information
                     </option>
-                    <option ng-if="hasStatistics" value="statistics">
+                    <option data-ng-if="hasStatistics" value="statistics">
                         Statistics
                     </option>
-                    <option ng-if="hasShotChart" value="shot-chart">
+                    <option data-ng-if="hasShotChart" value="shot-chart">
                         Shot Chart
+                    </option>
+                    <option data-ng-if="hasFormations" value="formation-report">
+                        Formation Report
+                    </option>
+                    <option data-ng-if="hasDownAndDistance" value="down-distance-report">
+                        Down, Distance, &amp; Hash Report
                     </option>
                 </select>
             </div>

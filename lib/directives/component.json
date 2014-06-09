@@ -31,6 +31,8 @@
         "notes-list",
         "positions-dropdown",
         "uploader",
+        "formation-chart",
+        "arena",
         "roster-manager",
         "feedback-modal",
         "open-modal"
