@@ -143,6 +143,12 @@ IntelligenceWebClient.factory('HttpInterceptor', [
 
                 switch (response.status) {
 
+                case 400: /* Bad Request */
+
+                    // Do not report bad requests.
+
+                    break;
+
                 case 401: /* Unauthorized */
                 case 403: /* Forbidden */
 
