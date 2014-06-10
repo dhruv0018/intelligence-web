@@ -1,0 +1,60 @@
+@import (reference) "main.less";
+
+.excel-upload {
+
+    .modal-body{
+      ul{
+        li{
+          list-style-type: none;
+          margin: 10px 0 10px 0;
+        }
+      }
+
+      .positions-list{
+        margin: 10px 0 10px 0;
+
+        .position{
+          width:50%;
+
+          .description{
+            display:inline-block;
+            width: 180px;
+          }
+
+        }
+      }
+
+      .shaded{
+        padding:20px;
+        background: @content-bg;
+        border: 1px solid @gray-border;
+      }
+
+      .krossover-uploader{
+        line-height: 10px;
+      }
+
+      .files-list{
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        .krossover-uploader{
+          .pull-right;
+        }
+
+      }
+
+      .errors-list{
+        .warning{
+          text-align: center;
+          color: @brand-secondary;
+        }
+
+        table{
+          margin: 10px 0 10px 0;
+        }
+      }
+
+    }
+}
+
