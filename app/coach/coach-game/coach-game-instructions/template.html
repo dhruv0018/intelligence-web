@@ -12,9 +12,9 @@
                     <x-button-continue data-ng-disabled="formInstructions.$invalid">Save and Submit</x-button-continue>
 
                 </header>
-                <div data-ng-show="game.status === null" class="box-body col-md-12">
+                <div class="box-body col-md-12">
 
-                    <div class="col-md-8">
+                    <div data-ng-show="game.status === null" class="col-md-8">
 
                         <form class="form-instructions" name="formInstructions" role="form">
 
@@ -73,20 +73,44 @@
 
                     </div>
 
+                    <div data-ng-hide="game.status === null" class="box-body col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="row">
+                                    <div class="confirmation-boxes col-md-12">
+                                        <!--{{statusBuffer}}-->
+                                        <!--{{game.status}}-->
+                                        <!--{{game.status === null}}-->
+                                        <!--This is the confirmation screen-->
+
+                                        <div class="confirmation-text">
+                                            <i class="icon-bar-chart"></i>
+                                            <h1>This game will be broken down</h1>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <p><b>About Sharing:</b> Once the game is finished uploading and processing it is available to everyone on your team.</p>
+                                        <p><b>About changing information:</b> Game information can not be changed after break down has begun.</p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-3 pull-right">
 
                         <x-krossover-plan></x-krossover-plan>
 
                     </div>
 
-                </div>
-
-                <div data-ng-hide="game.status === null" class="box-body col-md-12">
-                    {{statusBuffer}}
-                    {{game.status}}
-                    {{game.status === null}}
-
-                    This is the confirmation screen
                 </div>
 
             </div>
