@@ -64,11 +64,6 @@ Root.controller('RootController', [
     '$scope', '$state', 'SessionService', 'AuthenticationService',
     function controller($scope, $state, session, auth) {
 
-        if (auth.isLoggedIn) {
-
-            session.currentUser = session.retrieveCurrentUser();
-            session.storeCurrentUser();
-        }
     }
 ]);
 
