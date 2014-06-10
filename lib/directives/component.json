@@ -35,7 +35,10 @@
         "arena",
         "roster-manager",
         "feedback-modal",
-        "open-modal"
+        "open-modal",
+        "open-modal-text",
+        "open-modal-confirm",
+        "open-modal-alert"
     ],
     "scripts": [
         "index.js"

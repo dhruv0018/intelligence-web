@@ -251,6 +251,10 @@ Teams.controller('TeamsController', [
             $state.go('team-info');
         };
 
+        $scope.onTextSubmit = function(result2) {
+            console.log('in scopexc!', result2);
+        };
+
         $scope.search = function(filter) {
             teams.getList(filter,
                     function(teams) {
