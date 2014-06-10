@@ -50,6 +50,7 @@ require('./models/plays');
 require('./models/filtersets');
 require('./models/plans');
 
+require('./factories/base');
 require('./factories/users');
 require('./factories/teams');
 require('./factories/games');
