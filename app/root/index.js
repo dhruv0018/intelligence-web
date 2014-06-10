@@ -66,7 +66,8 @@ Root.controller('RootController', [
 
         if (auth.isLoggedIn) {
 
-            $scope.currentUser = session.retrieveCurrentUser();
+            session.currentUser = session.retrieveCurrentUser();
+            session.storeCurrentUser();
         }
     }
 ]);
