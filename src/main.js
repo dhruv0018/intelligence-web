@@ -26,6 +26,7 @@ require('./services/account');
 require('./services/alerts');
 require('./services/scripts');
 require('./services/indexing');
+require('./services/date');
 
 require('./constants/users');
 require('./constants/games');
@@ -63,7 +64,6 @@ require('./factories/tagsets');
 require('./factories/filtersets');
 require('./factories/positionsets');
 require('./factories/plans');
-require('./factories/date');
 
 require('./managers/tags');
 require('./managers/play');

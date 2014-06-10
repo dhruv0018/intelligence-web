@@ -45,8 +45,8 @@ TeamPlan.controller('TeamPlanController', [
 
         if (!$scope.teamPlan) {
             $scope.teamPlan = {
-                startDate: dateZeroTime,
-                endDate: dateZeroTime,
+                startDate: dateZeroTime.generate(),
+                endDate: dateZeroTime.generate(),
                 name: '',
                 maxGamesPerPlan: 0,
                 maxRegularGames: 0,

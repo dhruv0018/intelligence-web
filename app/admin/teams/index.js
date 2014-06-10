@@ -194,8 +194,8 @@ Teams.controller('TeamPlansController', [
             openPackageModal();
         };
 
-        $scope.editTeamPlan = function() {
-            openTeamPlanModal(editTeamPlanIndex);
+        $scope.editTeamPlan = function(index) {
+            openTeamPlanModal(index);
         };
 
         $scope.editActivePackage = function(index) {

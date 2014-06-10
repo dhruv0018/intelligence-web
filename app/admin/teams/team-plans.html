@@ -1,7 +1,7 @@
 <div class="box-body plans-content">
 
     <div class="plan-first">
-        <div data-ng-show="noVisiblePlans" class="plan-button"><x-button-add-new data-ng-click="addNewPlan()">Add new plan</x-button-add-new></div>
+        <div data-ng-hide="filteredPlans.length" class="plan-button"><x-button-add-new data-ng-click="addNewPlan()">Add new plan</x-button-add-new></div>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -30,7 +30,7 @@
                     <td colspan="3" class="plan-options">
                         <a href><i class="icon-calendar"></i> View Archive</a>
                         <span data-ng-show="filteredPlans.length" class="pull-right">
-                            <a href class="edit-plan" data-ng-click="editTeamPlan(plan.unfilteredIndex)"><i class="icon-edit"></i> Edit</a>
+                            <a href class="edit-plan" data-ng-click="editTeamPlan(plan.unfilteredId)"><i class="icon-edit"></i> Edit</a>
                             <a href><i class="icon-remove"></i> Remove</a>
                         </span>
                     </td>
