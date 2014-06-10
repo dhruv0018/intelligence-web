@@ -1,0 +1,14 @@
+{
+    "name": "basic-modals",
+    "templates": [
+        "template-text.html",
+        "template-confirm.html",
+        "template-alert.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

@@ -6,7 +6,8 @@
     "locals": [
         "roles",
         "raw-film",
-        "delete-game"
+        "delete-game",
+        "basic-modals"
     ],
     "scripts": [
         "index.js"
