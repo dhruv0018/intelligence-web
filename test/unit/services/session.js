@@ -110,7 +110,7 @@ describe('SessionService', function() {
                 session.isCurrentUserStored().should.be.true;
                 expect(sessionStorage['CURRENT_USER']).to.be.a('string');
                 session.currentUser = null;
-                session.retrieveCurrentUser().should.eql(session.deserializeUser(user);
+                session.retrieveCurrentUser().should.eql(session.deserializeUser(JSON.stringify(user)));
             }
         ]));
 
@@ -124,7 +124,7 @@ describe('SessionService', function() {
                 expect(localStorage['CURRENT_USER']).to.be.a('string');
                 session.currentUser = null;
                 sessionStorage.removeItem('CURRENT_USER');
-                session.retrieveCurrentUser().should.eql(session.deserializeUser(user);
+                session.retrieveCurrentUser().should.eql(session.deserializeUser(JSON.stringify(user)));
             }
         ]));
     });
