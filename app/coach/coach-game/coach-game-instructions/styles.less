@@ -101,10 +101,41 @@
       border: 1px solid @gray-lighter;
 
       .confirmation-text{
+        .breakdowns{
+          color: @brand-blue;
+          font-weight: bold;
 
-        h1, i {
+          .remaining-breakdowns{
+            border-radius:50%;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            padding:10px;
+            border: 3px solid @gray-lighter;
+          }
+        }
+
+        h3 {
+          color: @brand-success;
+        }
+
+        .icon-bar-chart, .icon-share{
+          position:relative;
           color: @brand-success;
           border: 5px solid @brand-success;
+
+          &::after{
+            .icon(@ok);
+            position:absolute;
+            top: 0;
+            left: 70px;
+            font-size:15px;
+            border-radius:50%;
+            color: white;
+            background:@brand-success;
+            padding:2px;
+          }
         }
 
         width: 100%;
