@@ -53,7 +53,17 @@ IntelligenceWebClient.factory('IndexingService', [
 
                         teamPlayers.forEach(function(player) {
 
-                            player.jerseyNumber = player.jerseyNumbers[self.teamRoster.id];
+                            if (player.isUnknown) {
+
+                                player.lastName = 'Player';
+                                player.jerseyNumber = 'U';
+                            }
+
+                            else {
+
+                                player.jerseyNumber = player.jerseyNumbers[self.teamRoster.id];
+                            }
+
                             player.jerseyColor = game.primaryJerseyColor;
                             indexedTeamPlayers[player.id] = player;
                         });
@@ -67,7 +77,17 @@ IntelligenceWebClient.factory('IndexingService', [
 
                             opposingTeamPlayers.forEach(function(player) {
 
-                                player.jerseyNumber = player.jerseyNumbers[self.opposingTeamRoster.id];
+                                if (player.isUnknown) {
+
+                                    player.lastName = 'Player';
+                                    player.jerseyNumber = 'U';
+                                }
+
+                                else {
+
+                                    player.jerseyNumber = player.jerseyNumbers[self.opposingTeamRoster.id];
+                                }
+
                                 player.jerseyColor = game.opposingPrimaryJerseyColor;
                                 indexedOpposingTeamPlayers[player.id] = player;
                             });
