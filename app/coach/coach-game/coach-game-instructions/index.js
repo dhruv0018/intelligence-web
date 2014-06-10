@@ -64,7 +64,17 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
         $scope.data = data;
 
+        $scope.$watch('game', function(game) {
+            if (typeof game !== 'undefined' && typeof game.status !== 'undefined' && game.status !== null) {
+                $scope.statusBuffer = game.status;
+            } else {
+                $scope.statusBuffer = -1;
+            }
+
+        });
+
         $scope.save = function() {
+            $scope.game.status = $scope.statusBuffer;
             games.save($scope.game);
         };
     }

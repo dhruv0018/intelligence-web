@@ -12,8 +12,7 @@
                     <x-button-continue data-ng-disabled="formInstructions.$invalid">Save and Submit</x-button-continue>
 
                 </header>
-
-                <div class="box-body col-md-12">
+                <div data-ng-show="game.status === null" class="box-body col-md-12">
 
                     <div class="col-md-8">
 
@@ -23,7 +22,7 @@
 
                                 <div class="select-boxes col-md-12">
 
-                                    <button type="button" class="btn-radio" data-ng-model="game.status" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}" required>
+                                    <button type="button" class="btn-radio" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}" required>
 
                                         <i class="icon-bar-chart"></i>
                                         <div>
@@ -43,7 +42,7 @@
 
                                 <div class="select-boxes col-md-12">
 
-                                    <button type="button" class="btn-radio" data-ng-model="game.status" data-btn-radio="{{ GAME_STATUSES.NOT_INDEXED.id }}">
+                                    <button type="button" class="btn-radio" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.NOT_INDEXED.id }}">
 
                                         <i class="icon-share"></i>
                                         <div>
@@ -80,6 +79,14 @@
 
                     </div>
 
+                </div>
+
+                <div data-ng-hide="game.status === null" class="box-body col-md-12">
+                    {{statusBuffer}}
+                    {{game.status}}
+                    {{game.status === null}}
+
+                    This is the confirmation screen
                 </div>
 
             </div>
