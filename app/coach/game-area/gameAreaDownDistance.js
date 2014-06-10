@@ -41,7 +41,7 @@ GameAreaDownDistance.config([
 GameAreaDownDistance.controller('GameAreaDownDistanceController', [
     '$scope', '$state', '$stateParams', 'GamesFactory',
     function controller($scope, $state, $stateParams, games) {
-
+        var teamOnOffense = true;
 
     }
 ]);

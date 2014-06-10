@@ -30,6 +30,14 @@ GameAreaFormations.config([
                     templateUrl: 'coach/game-area/gameAreaFormations.html',
                     controller: 'GameAreaFormationsController'
                 }
+            },
+            resolve: {
+                'Coach.FormationReport.Data': [
+                    '$q', 'Coach.FormationReport.Data',
+                    function($q, data) {
+                        return $q.all(data);
+                    }
+                ]
             }
         };
 
@@ -38,11 +46,35 @@ GameAreaFormations.config([
     }
 ]);
 
+/**
+ * Coach Formation Data service.
+ * @module Game Area Formation
+ * @type {service}
+ */
+GameAreaFormations.service('Coach.FormationReport.Data', [
+    '$q', 'Coach.Data', 'Coach.Game.Data', 'PlaysFactory',
+    function service($q, data, game, plays) {
+        var Data = {
+            data: data,
+            plays: data.then(function(data) {
+                var promisedPlays = $q.defer();
+                plays.getList(data.game.id, function(plays) {
+                    promisedPlays.resolve(plays);
+                }, null, true);
+                return promisedPlays.promise;
+            })
+        };
+
+        return Data;
+    }
+]);
+
 GameAreaFormations.controller('GameAreaFormationsController', [
-    '$scope', '$state', '$stateParams', 'GamesFactory',
-    function controller($scope, $state, $stateParams, games) {
-
-
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'Coach.FormationReport.Data',
+    function controller($scope, $state, $stateParams, games, data) {
+        $scope.plays = data.plays;
+        $scope.league = data.data.league;
+        $scope.team = data.data.team;
     }
 ]);
 
