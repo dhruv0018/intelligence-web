@@ -88,7 +88,7 @@ Header.controller('HeaderController', [
 
         $scope.$state = $state;
 
-        $scope.currentUser = session.currentUser;
+        $scope.currentUser = session.retrieveCurrentUser();
 
         $scope.account = account;
 

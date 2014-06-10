@@ -98,29 +98,23 @@ IntelligenceWebClient.service('SessionService', [
          */
         this.retrieveCurrentUser = function() {
 
-            var self = this;
-
-            var user = null;
-
             /* Retrieve user from memory. */
             if (this.currentUser) {
 
-                user = this.currentUser;
+                return this.currentUser;
             }
 
             /* Retrieve user from session. */
             else if (sessionStorage[CURRENT_USER_KEY]) {
 
-                user = self.deserializeUser(sessionStorage[CURRENT_USER_KEY]);
+                return this.deserializeUser(sessionStorage[CURRENT_USER_KEY]);
             }
 
             /* Retrieve user from browser. */
             else if (localStorage[CURRENT_USER_KEY]) {
 
-                user = self.deserializeUser(localStorage[CURRENT_USER_KEY]);
+                return this.deserializeUser(localStorage[CURRENT_USER_KEY]);
             }
-
-            return user;
         };
     }
 ]);

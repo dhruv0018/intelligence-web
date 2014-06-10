@@ -42,8 +42,8 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'AlertsService',
-    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, alerts) {
+    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService',
+    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, session, alerts) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -70,6 +70,12 @@ IntelligenceWebClient.run([
             if (tokens.areTokensSet()) {
 
                 $http.defaults.headers.common.Authorization = tokens.getTokenType() + ' ' + tokens.getAccessToken();
+            }
+
+            /* Retrieve the current user if logged in. */
+            if (auth.isLoggedIn) {
+
+                session.currentUser = session.retrieveCurrentUser();
             }
         });
 
