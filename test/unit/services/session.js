@@ -22,91 +22,111 @@ describe('SessionService', function() {
 
     beforeEach(module('intelligence-web-client'));
 
-    it('should exist', inject(function(SessionService) {
+    it('should exist', inject([
+        'SessionService',
+        function(session) {
 
-        expect(SessionService).to.exist;
-    }));
+            expect(session).to.exist;
+        }
+    ]));
 
-    it('should not have a current user stored', inject(function(SessionService) {
+    it('should not have a current user stored', inject([
+        'SessionService',
+        function(session) {
 
-        expect(SessionService.currentUser).to.be.null;
-    }));
-
-    describe('retrieving users', function() {
-
-        var userId = 'test@test.com';
-
-        beforeEach(inject(function($httpBackend, config) {
-
-            var url = config.api.uri + 'users/' + userId;
-
-            $httpBackend.whenGET(url).respond(user);
-        }));
-
-        it('given valid credentials should be a valid user', inject(function($httpBackend, SessionService) {
-
-            SessionService.clearCurrentUser();
-            SessionService.retrieveCurrentUser(userId, function(error, user) {
-
-                expect(user).to.not.be.undefined;
-            });
-
-            $httpBackend.flush();
-        }));
-    });
+            expect(session.currentUser).to.be.null;
+        }
+    ]));
 
     describe('storing users', function() {
 
-        var testUser;
+        beforeEach(inject([
+            'SessionService',
+            function(session) {
 
-        beforeEach(inject(function($httpBackend, config, SessionService) {
+                session.clearCurrentUser();
+            }
+        ]));
 
-            var userId = 'test@test.com';
+        it('should save a user in memory', inject([
+            'SessionService',
+            function(session) {
 
-            var url = config.api.uri + 'users/' + userId;
+                session.storeCurrentUser(user);
+                session.isCurrentUserStored().should.be.true;
+                session.currentUser.should.not.be.null;
+                session.currentUser.should.be.an('object');
+                session.clearCurrentUser();
+                session.isCurrentUserStored().should.be.false;
+                expect(session.currentUser).to.be.null;
+            }
+        ]));
 
-            $httpBackend.whenGET(url).respond(user);
+        it('should save a user in the session', inject([
+            'SessionService',
+            function(session) {
 
-            SessionService.clearCurrentUser();
-            SessionService.retrieveCurrentUser(userId, function(retrievedUser) {
+                session.storeCurrentUser(user);
+                session.isCurrentUserStored().should.be.true;
+                expect(sessionStorage['CURRENT_USER']).to.be.a('string');
+                session.clearCurrentUser();
+                session.isCurrentUserStored().should.be.false;
+                expect(sessionStorage['CURRENT_USER']).to.be.undefined;
+            }
+        ]));
 
-                testUser = retrievedUser;
-            });
+        it('should save a user persistently', inject([
+            'SessionService',
+            function(session) {
 
-            $httpBackend.flush();
-        }));
+                var persist = true;
+                session.storeCurrentUser(user, persist);
+                session.isCurrentUserStored().should.be.true;
+                expect(localStorage['CURRENT_USER']).to.be.a('string');
+                session.clearCurrentUser();
+                session.isCurrentUserStored().should.be.false;
+                expect(sessionStorage['CURRENT_USER']).to.be.undefined;
+            }
+        ]));
+    });
 
-        it('should save a user in memory', inject(function(SessionService) {
+    describe('retrieving users', function() {
 
-            SessionService.storeCurrentUser(user);
-            SessionService.isCurrentUserStored().should.be.true;
-            SessionService.currentUser.should.not.be.null;
-            SessionService.currentUser.should.be.an('object');
-            SessionService.clearCurrentUser();
-            SessionService.isCurrentUserStored().should.be.false;
-            expect(SessionService.currentUser).to.be.null;
-        }));
+        it('should retrieve a user from memory', inject([
+            'SessionService',
+            function(session) {
 
-        it('should save a user in the session', inject(function(SessionService) {
+                session.storeCurrentUser(user);
+                session.isCurrentUserStored().should.be.true;
+                session.retrieveCurrentUser().should.eql(user);
+            }
+        ]));
 
-            SessionService.storeCurrentUser(user);
-            SessionService.isCurrentUserStored().should.be.true;
-            expect(sessionStorage['CURRENT_USER']).to.be.a('string');
-            SessionService.clearCurrentUser();
-            SessionService.isCurrentUserStored().should.be.false;
-            expect(sessionStorage['CURRENT_USER']).to.be.undefined;
-        }));
+        it('should retrieve a user from the session', inject([
+            'SessionService',
+            function(session) {
 
-        it('should save a user persistently', inject(function(SessionService) {
+                session.storeCurrentUser(user);
+                session.isCurrentUserStored().should.be.true;
+                expect(sessionStorage['CURRENT_USER']).to.be.a('string');
+                session.currentUser = null;
+                session.retrieveCurrentUser().should.eql(session.deserializeUser(user);
+            }
+        ]));
 
-            var persist = true;
-            SessionService.storeCurrentUser(user, persist);
-            SessionService.isCurrentUserStored().should.be.true;
-            expect(localStorage['CURRENT_USER']).to.be.a('string');
-            SessionService.clearCurrentUser();
-            SessionService.isCurrentUserStored().should.be.false;
-            expect(sessionStorage['CURRENT_USER']).to.be.undefined;
-        }));
+        it('should retrieve a user from persistent storage', inject([
+            'SessionService',
+            function(session) {
+
+                var persist = true;
+                session.storeCurrentUser(user, persist);
+                session.isCurrentUserStored().should.be.true;
+                expect(localStorage['CURRENT_USER']).to.be.a('string');
+                session.currentUser = null;
+                sessionStorage.removeItem('CURRENT_USER');
+                session.retrieveCurrentUser().should.eql(session.deserializeUser(user);
+            }
+        ]));
     });
 });
 
