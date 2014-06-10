@@ -3,16 +3,16 @@
             <accordion-heading>
                 <div data-ng-class="{'field-header-collapsed': !status.open}" class="field-header">
                     <span class="field-info">
-                        <span>Backfield:</span> I-Form
+                        <span>Backfield:</span> {{backfieldFormation}}
                     </span>
                     <span class="field-info">
-                        <span>TEs:</span> Right
+                        <span>TEs:</span> {{teStrength}}
                     </span>
                     <span class="field-info">
-                        <span>WRs:</span> Right
+                        <span>WRs:</span> {{wrStrength}}
                     </span>
                     <span class="field-info">
-                        <span>20</span> snaps
+                        <span>{{snaps}}</span> snaps
                     </span>
                     <i class="pull-right" data-ng-class="{'icon-chevron-up': status.open, 'icon-chevron-down': !status.open}"></i>
                 </div>
