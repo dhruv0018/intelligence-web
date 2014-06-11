@@ -17,6 +17,14 @@
     "links": {
         "signup": {
             "uri": "http://krossover.com/sign-up.php"
+        },
+        "rosterTemplates": {
+            "opposingTeamRoster": {
+                "uri": "https://drive.google.com/file/d/0Bwb8n8gzhXzLbXJMcWFhNGlmZUk/edit?usp=sharing"
+            },
+            "teamRoster": {
+                "uri": "https://drive.google.com/file/d/0Bwb8n8gzhXzLODNfQ000OFVCZkE/edit?usp=sharing"
+            }
         }
     },
     "indexing": {

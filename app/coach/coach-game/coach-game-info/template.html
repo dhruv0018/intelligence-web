@@ -8,8 +8,8 @@
 
                 <header class="box-header col-md-12">
 
-                    <x-button-continue data-ng-if="games.isRegular(game)" data-ng-disabled="tabs['your-team'].disabled">Save and Submit</x-button-continue>
-                    <x-button-continue data-ng-if="!games.isRegular(game)" data-ng-disabled="tabs['scouting-team'].disabled">Save and Submit</x-button-continue>
+                    <x-button-continue data-ng-if="games.isRegular(game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
+                    <x-button-continue data-ng-if="!games.isRegular(game)" data-ng-disabled="tabs['scouting-team'].disabled">Next</x-button-continue>
 
                 </header>
 
@@ -190,8 +190,8 @@
 
             </div>
 
-            <x-button-continue data-ng-if="games.isRegular(game)" data-ng-disabled="tabs['your-team'].disabled">Save and Submit</x-button-continue>
-            <x-button-continue data-ng-if="!games.isRegular(game)" data-ng-disabled="tabs['scouting-team'].disabled">Save and Submit</x-button-continue>
+            <x-button-continue data-ng-if="games.isRegular(game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
+            <x-button-continue data-ng-if="!games.isRegular(game)" data-ng-disabled="tabs['scouting-team'].disabled">Next</x-button-continue>
 
         </div>
 

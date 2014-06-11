@@ -22,7 +22,6 @@ Users.controller('Users.Users.Controller', [
         $scope.ASSISTANT_COACH = ROLES.ASSISTANT_COACH;
         $scope.ATHLETE = ROLES.ATHLETE;
         $scope.Users = users;
-        $scope.currentUser = session.currentUser;
         $scope.statuses = [{value: 0, label: 'Active'}, {value: 1, label: 'Inactive'}];
 
         sports.getList(function(sports) { $scope.sports = sports; }, null, true);

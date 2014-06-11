@@ -1,3 +1,5 @@
+var PAGE_SIZE = 20;
+
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -5,11 +7,21 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
+IntelligenceWebClient.service('GamesStorage', [
+    function() {
+
+        this.list = [];
+        this.collection = {};
+    }
+]);
+
 IntelligenceWebClient.factory('GamesFactory', [
-    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'GamesResource', '$q',
-    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, GamesResource, $q) {
+    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'GamesResource', 'GamesStorage', '$q',
+    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, GamesResource, GamesStorage, $q) {
 
         var GamesFactory = {
+
+            storage: GamesStorage,
 
             resource: GamesResource,
 
@@ -45,6 +57,49 @@ IntelligenceWebClient.factory('GamesFactory', [
                 };
 
                 return self.resource.get({ id: id }, callback, error);
+            },
+
+            getAll: function(filter, success, error) {
+
+                var self = this;
+
+                filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || PAGE_SIZE;
+
+                success = success || function(games) {
+
+                    return games;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not load games collection');
+                };
+
+                var query = self.resource.query(filter, success, error);
+
+                return query.$promise.then(function(games) {
+
+                    self.storage.list = self.storage.list.concat(games);
+
+                    games.forEach(function(game) {
+
+                        self.storage.collection[game.id] = game;
+                    });
+
+                    if (games.length < filter.count) {
+
+                        return self.storage.collection;
+                    }
+
+                    else {
+
+                        filter.start = filter.start + filter.count + 1;
+
+                        return self.getAll(filter);
+                    }
+                });
             },
 
             getList: function(filter, success, error, index) {
@@ -87,6 +142,13 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.resource.query(filter, callback, error);
             },
 
+            load: function(filter) {
+
+                var self = this;
+
+                return self.getAll(filter);
+            },
+
             save: function(game, success, error) {
 
                 var self = this;
@@ -107,13 +169,26 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (game.id) {
 
-                    var updatedGame = self.resource.update(parameters, game, success, error);
-                    return updatedGame.$promise;
+                    var update = self.resource.update(parameters, game, success, error);
+
+                    return update.$promise.then(function() {
+
+                        return self.get(game.id).$promise.then(function(game) {
+
+                            self.storage.list[self.storage.list.indexOf(game)] = game;
+                            self.storage.collection[game.id] = game;
+                        });
+                    });
 
                 } else {
 
-                    var newGame = self.resource.create(parameters, game, success, error);
-                    return newGame.$promise;
+                    var create = self.resource.create(parameters, game, success, error);
+
+                    return create.$promise.then(function(game) {
+
+                        self.storage.list[self.storage.list.indexOf(game)] = game;
+                        self.storage.collection[game.id] = game;
+                    });
                 }
             },
 
