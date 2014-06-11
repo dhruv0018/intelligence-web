@@ -54,7 +54,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     plays.forEach(function(play) {
 
-                        play = self.extendPlay(play);
+                        play = self.extend(play);
 
                         indexedPlays[play.id] = play;
                     });
@@ -161,7 +161,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     return updatePlay.$update().then(function(play) {
 
-                        play = self.extendPlay(play);
+                        play = self.extend(play);
                         return play;
                     });
 
@@ -174,7 +174,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     return newPlay.$create().then(function(play) {
 
-                        play = self.extendPlay(play);
+                        play = self.extend(play);
                         play.events = events;
                         return play.save();
                     });
@@ -191,7 +191,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 success = success || function(play) {
 
-                    return self.extendPlay(play);
+                    return self.extend(play);
                 };
 
                 error = error || function() {
