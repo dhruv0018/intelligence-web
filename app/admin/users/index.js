@@ -26,6 +26,24 @@ Users.run([
     }
 ]);
 
+/**
+ * Admin Users Data service.
+ * @module Users
+ * @type {service}
+ */
+Users.service('Admin.Users.Data', [
+    'Admin.Data',
+    function(data) {
+
+        var Data = {
+        };
+
+        angular.extend(Data, data);
+
+        return Data;
+    }
+]);
+
 /* File dependencies */
 require('./states');
 require('./filters');

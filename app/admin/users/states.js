@@ -26,6 +26,14 @@ Users.config([
                         templateUrl: 'users/users.html',
                         controller: 'Users.Users.Controller'
                     }
+                },
+                resolve: {
+                    'Admin.Users.Data': [
+                        '$q', 'Admin.Users.Data',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             })
 
