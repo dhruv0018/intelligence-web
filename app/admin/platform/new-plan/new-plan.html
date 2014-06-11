@@ -58,8 +58,9 @@
             <div class="gamesrow">
                 <div>
                     <label>Default turnaround time</label>
-                    <select class="form-control" data-ng-model="plan.turnaroundInterval" data-ng-options="time.time for time in maxTurnaroundTimes">{{ maxTurnaroundTimes }}</select>
-                    <option value="time.value"></option>
+                    <select class="form-control" data-ng-model="plan.turnaroundInterval" data-ng-options="time.value as time.name for time in maxTurnaroundTimes">
+                        <option></option>
+                    </select>
                 </div>
             </div>
             <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="savePlan(plan)">Save</button>

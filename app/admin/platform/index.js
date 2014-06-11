@@ -63,8 +63,8 @@ Platform.config([
 ]);
 
 Platform.controller('PlatformController', [
-    '$scope', '$modal',  'LeaguesFactory', 'PlansFactory', 'SportsFactory',
-    function controller($scope, $modal, leagues, plans, sports) {
+    '$scope', '$modal',  'LeaguesFactory', 'PlansFactory', 'SportsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
+    function controller($scope, $modal, leagues, plans, sports, turnaroundTimeMinTimeLookup) {
 
         plans.getList().$promise.then(function(plans) {
 
@@ -81,6 +81,7 @@ Platform.controller('PlatformController', [
             $scope.plans = plans;
         });
 
+        $scope.turnaroundTimeMinTimeLookup = turnaroundTimeMinTimeLookup;
         $scope.sports = sports.getList();
 
 

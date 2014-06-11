@@ -22,12 +22,13 @@
             </thead>
             <tbody>
                 <tr data-ng-repeat="plan in plans">
+
                     <td><a data-ng-click="editPlan(plan)">{{ plan.name }}</a> </td>
                     <td>{{ (plan.startMonth) }} {{ plan.startDay }} - {{ plan.endMonth }} {{plan.endDay }}</td>
                     <td>{{ plan.maxAnyGames }}</td>
                     <td>{{ plan.maxRegularGames }}</td>
                     <td>{{ plan.maxScoutingGames }}</td>
-                    <td>{{ plan.maxTurnaroundTime - 12}}-{{ plan.maxTurnaroundTime }} hrs</td>
+                    <td>{{ turnaroundTimeMinTimeLookup[plan.maxTurnaroundTime] }}-{{ plan.maxTurnaroundTime }} hrs</td>
                     <td><ul><li data-ng-repeat="leagueId in plan.leagueIds">{{ leagues[leagueId - 1].name }}</li></ul></td>
                 </tr>
             </tbody>

@@ -72,7 +72,7 @@ NewPlan.controller('NewPlanController', [
             plan.endDay = moment(endDate).date();
             plan.endMonth = moment(endDate).month() + 1;
 
-            plan.maxTurnaroundTime = plan.turnaroundInterval.value;
+            plan.maxTurnaroundTime = plan.turnaroundInterval;
 
             // clean up extra attributes
             delete plan.startDate;
