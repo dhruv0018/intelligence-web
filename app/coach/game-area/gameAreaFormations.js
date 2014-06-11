@@ -78,6 +78,8 @@ GameAreaFormations.controller('GameAreaFormationsController', [
         $scope.teams = data.data.teams;
         $scope.teamId = $scope.game.teamId;
         $scope.report = {};
+
+        //Temporary Data Until Backend is Complete
         $scope.report[$scope.game.teamId] = [
             {
                 backfieldFormation: 'I-Form',
