@@ -1,5 +1,3 @@
-var PAGE_SIZE = 20;
-
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -7,30 +5,22 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
-IntelligenceWebClient.service('GamesStorage', [
-    function() {
-
-        this.list = [];
-        this.collection = {};
-    }
-]);
-
 IntelligenceWebClient.factory('GamesFactory', [
-    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'GamesResource', 'GamesStorage', '$q',
-    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, GamesResource, GamesStorage, $q) {
+    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',
+    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, $q) {
 
         var GamesFactory = {
+
+            description: 'games',
 
             storage: GamesStorage,
 
             resource: GamesResource,
 
-            extendGame: function(game) {
+            extend: function(game) {
 
                 var self = this;
 
-                /* Copy all of the properties from the retrieved $resource
-                 * "game" object. */
                 angular.extend(game, self);
 
                 game.rosters = game.rosters || {};
@@ -38,158 +28,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.isDeleted = game.isDeleted || false;
 
                 return game;
-            },
-
-            get: function(id, success, error) {
-
-                var self = this;
-
-                var callback = function(game) {
-
-                    game = self.extendGame(game);
-
-                    return success ? success(game) : game;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not get game');
-                };
-
-                return self.resource.get({ id: id }, callback, error);
-            },
-
-            getAll: function(filter, success, error) {
-
-                var self = this;
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || PAGE_SIZE;
-
-                success = success || function(games) {
-
-                    return games;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load games collection');
-                };
-
-                var query = self.resource.query(filter, success, error);
-
-                return query.$promise.then(function(games) {
-
-                    self.storage.list = self.storage.list.concat(games);
-
-                    games.forEach(function(game) {
-
-                        self.storage.collection[game.id] = game;
-                    });
-
-                    if (games.length < filter.count) {
-
-                        return self.storage.collection;
-                    }
-
-                    else {
-
-                        filter.start = filter.start + filter.count + 1;
-
-                        return self.getAll(filter);
-                    }
-                });
-            },
-
-            getList: function(filter, success, error, index) {
-
-                var self = this;
-
-                if (angular.isFunction(filter)) {
-
-                    index = error;
-                    error = success;
-                    success = filter;
-                    filter = null;
-                }
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || 1000;
-
-                var callback = function(games) {
-
-                    var indexedGames = {};
-
-                    games.forEach(function(game) {
-
-                        game = self.extendGame(game);
-
-                        indexedGames[game.id] = game;
-                    });
-
-                    games = index ? indexedGames : games;
-
-                    return success ? success(games) : games;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load games list');
-                };
-
-                return self.resource.query(filter, callback, error);
-            },
-
-            load: function(filter) {
-
-                var self = this;
-
-                return self.getAll(filter);
-            },
-
-            save: function(game, success, error) {
-
-                var self = this;
-
-                game = game || self;
-
-                parameters = {};
-
-                success = success || function(game) {
-
-                    return self.extendGame(game);
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not save game');
-                };
-
-                if (game.id) {
-
-                    var update = self.resource.update(parameters, game, success, error);
-
-                    return update.$promise.then(function() {
-
-                        return self.get(game.id).$promise.then(function(game) {
-
-                            self.storage.list[self.storage.list.indexOf(game)] = game;
-                            self.storage.collection[game.id] = game;
-                        });
-                    });
-
-                } else {
-
-                    var create = self.resource.create(parameters, game, success, error);
-
-                    return create.$promise.then(function(game) {
-
-                        self.storage.list[self.storage.list.indexOf(game)] = game;
-                        self.storage.collection[game.id] = game;
-                    });
-                }
             },
 
             saveNotes: function() {
@@ -699,6 +537,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return GAME_TYPES[GAME_TYPES_IDS[game.gameType]].type === 'regular';
             }
         };
+
+        angular.extend(GamesFactory, BaseFactory);
 
         return GamesFactory;
     }

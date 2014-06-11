@@ -5,21 +5,13 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
-IntelligenceWebClient.service('SportsStorage', [
-    function() {
-
-        this.list = [];
-        this.collection = {};
-    }
-]);
-
 IntelligenceWebClient.factory('SportsFactory', [
     'BaseFactory', 'SportsResource', 'SportsStorage',
     function(BaseFactory, SportsResource, SportsStorage) {
 
         var SportsFactory = {
 
-            name: 'sports',
+            description: 'sports',
 
             storage: SportsStorage,
 
