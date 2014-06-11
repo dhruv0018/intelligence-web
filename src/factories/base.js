@@ -136,6 +136,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 resource = resource || self;
 
+                delete resource.description;
+                delete resource.resource;
+                delete resource.storage;
+
                 parameters = {};
 
                 success = success || function(resource) {
