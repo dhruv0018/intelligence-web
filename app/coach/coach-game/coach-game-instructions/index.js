@@ -73,6 +73,10 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
         });
 
+        $scope.switchChoice = function(game) {
+            game.status = $scope.statusBuffer = (game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
+        };
+
         $scope.save = function() {
             $scope.game.status = $scope.statusBuffer;
             games.save($scope.game);

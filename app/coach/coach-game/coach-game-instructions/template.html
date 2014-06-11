@@ -80,27 +80,34 @@
 
                                 <div class="row">
                                     <div class="confirmation-boxes col-md-12">
-                                        <!--{{statusBuffer}}-->
-                                        <!--{{game.status}}-->
-                                        <!--{{game.status === null}}-->
-                                        <!--This is the confirmation screen-->
 
                                         <div class="col-md-8 col-md-offset-2">
                                             <div class="confirmation-text">
-                                                <i class="icon-bar-chart"></i>
-                                                <div>
-                                                    <h3>This game will be broken down</h3>
+
+                                                <i data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id" class="icon-bar-chart"></i>
+                                                <i data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id" class="icon-share"></i>
+
+                                                <div class="breakdown-information">
+
+                                                    <h3 data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game will be broken down</h3>
+                                                    <h3 data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">This game will NOT be broken down, but it can be shared.</h3>
+
                                                     <p>
-                                                        <i>This game will be submitted for breakdown once it has uploaded and processed.</i>
+                                                        <i data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game will be submitted for breakdown once it has uploaded and processed.</i>
+                                                        <i data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id"> This game will NOT be submitted for breakdown once it has uploaded and processed. </i>
                                                     </p>
+
                                                     <div class="breakdowns">
                                                         <div class="remaining-breakdowns">N</div> Breakdown left this week
                                                     </div>
-                                                    <button>
+
+                                                    <button data-ng-disabled="game.status > GAME_STATUSES['READY_FOR_INDEXING'].id" class="switch-choice" data-ng-click="switchChoice(game)">
                                                         <i class="icon-arrow-left"></i>
-                                                        <span data-ng-show="">Change to sharing only</span>
-                                                        <span data-ng-show="">Break this game down</span>
+                                                        <span data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">Change to sharing only</span>
+                                                        <span data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id">Break this game down</span>
+                                                        <span data-ng-show="game.status > GAME_STATUSES['READY_FOR_INDEXING'].id">Game has already been broken down</span>
                                                     </button>
+
                                                 </div>
                                             </div>
                                         </div>
