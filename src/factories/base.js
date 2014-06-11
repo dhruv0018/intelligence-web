@@ -34,7 +34,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 error = error || function() {
 
-                    throw new Error('Could not get ' + self.name);
+                    throw new Error('Could not get ' + self.description);
                 };
 
                 return self.resource.get({ id: id }, callback, error);
@@ -55,7 +55,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 error = error || function() {
 
-                    throw new Error('Could not load ' + self.name + 's collection');
+                    throw new Error('Could not load ' + self.description + 's collection');
                 };
 
                 var query = self.resource.query(filter, success, error);
@@ -117,7 +117,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 error = error || function() {
 
-                    throw new Error('Could not load ' + self.name + 's list');
+                    throw new Error('Could not load ' + self.description + 's list');
                 };
 
                 return self.resource.query(filter, callback, error);
