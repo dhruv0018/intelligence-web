@@ -48,6 +48,7 @@ require('./models/tagsets');
 require('./models/positionsets');
 require('./models/plays');
 require('./models/filtersets');
+require('./models/plans');
 
 require('./factories/users');
 require('./factories/teams');
@@ -60,6 +61,7 @@ require('./factories/players');
 require('./factories/tagsets');
 require('./factories/filtersets');
 require('./factories/positionsets');
+require('./factories/plans');
 
 require('./managers/tags');
 require('./managers/play');

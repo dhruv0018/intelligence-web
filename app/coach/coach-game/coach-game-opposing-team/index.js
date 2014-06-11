@@ -63,6 +63,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
 
         $scope.tabs = tabs;
         $scope.data = {};
+        $scope.config = config;
 
         data.then(function(coachData) {
             $scope.data = coachData;
