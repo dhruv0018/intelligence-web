@@ -75,60 +75,61 @@ GameAreaFormations.controller('GameAreaFormationsController', [
         $scope.plays = data.plays;
         $scope.league = data.data.league;
         $scope.team = data.data.team;
-        $scope.report = {
-            1: [
-                {
-                    backfieldFormation: 'I-Form',
-                    teStrength: 'Right',
-                    wrStrength: 'Right',
-                    snaps: '20'
-                },
-                {
-                    backfieldFormation: 'Shotgun',
-                    teStrength: 'Right',
-                    wrStrength: 'Right',
-                    snaps: '12'
-                },
-                {
-                    backfieldFormation: 'I-Form',
-                    teStrength: 'Right',
-                    wrStrength: 'Left',
-                    snaps: '2'
-                },
-                {
-                    backfieldFormation: 'Shotgun',
-                    teStrength: 'Left',
-                    wrStrength: 'Left',
-                    snaps: '7'
-                }
-            ],
-            2: [
-                {
-                    backfieldFormation: 'I-Form',
-                    teStrength: 'Right',
-                    wrStrength: 'Right',
-                    snaps: '20'
-                },
-                {
-                    backfieldFormation: 'Shotgun',
-                    teStrength: 'Right',
-                    wrStrength: 'Right',
-                    snaps: '20'
-                },
-                {
-                    backfieldFormation: 'I-Form',
-                    teStrength: 'Right',
-                    wrStrength: 'Right',
-                    snaps: '20'
-                },
-                {
-                    backfieldFormation: 'I-Form',
-                    teStrength: 'Right',
-                    wrStrength: 'Right',
-                    snaps: '20'
-                }
-            ]
-        };
+        $scope.teams = data.data.teams;
+        $scope.teamId = $scope.game.teamId;
+        $scope.report = {};
+        $scope.report[$scope.game.teamId] = [
+            {
+                backfieldFormation: 'I-Form',
+                teStrength: 'Right',
+                wrStrength: 'Right',
+                snaps: '20'
+            },
+            {
+                backfieldFormation: 'Shotgun',
+                teStrength: 'Right',
+                wrStrength: 'Right',
+                snaps: '12'
+            },
+            {
+                backfieldFormation: 'I-Form',
+                teStrength: 'Right',
+                wrStrength: 'Left',
+                snaps: '2'
+            },
+            {
+                backfieldFormation: 'Shotgun',
+                teStrength: 'Left',
+                wrStrength: 'Left',
+                snaps: '7'
+            }
+        ];
+        $scope.report[$scope.game.opposingTeamId] = [
+            {
+                backfieldFormation: 'I-Form',
+                teStrength: 'Right',
+                wrStrength: 'Left',
+                snaps: '10'
+            },
+            {
+                backfieldFormation: 'Shotgun',
+                teStrength: 'Right',
+                wrStrength: 'Right',
+                snaps: '13'
+            },
+            {
+                backfieldFormation: 'Pistol',
+                teStrength: 'Left',
+                wrStrength: 'Left',
+                snaps: '8'
+            },
+            {
+                backfieldFormation: 'I-Form',
+                teStrength: 'Right',
+                wrStrength: 'Right',
+                snaps: '21'
+            }
+        ];
     }
 ]);
 
