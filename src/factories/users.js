@@ -6,16 +6,18 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$rootScope', 'UsersResource', 'ROLE_TYPE', 'ROLES',
-    function($rootScope, UsersResource, ROLE_TYPE, ROLES) {
+    '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'ROLE_TYPE', 'ROLES',
+    function($rootScope, UsersResource, UsersStorage, BaseFactory, ROLE_TYPE, ROLES) {
 
         var UsersFactory = {
 
+            description: 'users',
+
+            storage: UsersStorage,
+
             resource: UsersResource,
 
-            list: [],
-
-            extendUser: function(user) {
+            extend: function(user) {
 
                 var self = this;
 
@@ -50,65 +52,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                 }
 
                 return user;
-            },
-
-            get: function(id, success, error) {
-
-                var self = this;
-
-                var callback = function(user) {
-
-                    user = self.extendUser(user);
-
-                    return success ? success(user) : user;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not get user');
-                };
-
-                return self.resource.get({ id: id }, callback, error);
-            },
-
-            getList: function(filter, success, error, index) {
-
-                var self = this;
-
-                if (angular.isFunction(filter)) {
-
-                    index = error;
-                    error = success;
-                    success = filter;
-                    filter = null;
-                }
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || 1000;
-
-                var callback = function(users) {
-
-                    var indexedUsers = {};
-
-                    users.forEach(function(user) {
-
-                        user = self.extendUser(user);
-
-                        indexedUsers[user.id] = user;
-                    });
-
-                    users = index ? indexedUsers : users;
-
-                    return success ? success(users) : users;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load users list');
-                };
-
-                return self.resource.query(filter, callback, error);
             },
 
             save: function(user) {
@@ -369,6 +312,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return new Date(user.lastAccessed);
             }
         };
+
+        angular.extend(UsersFactory, BaseFactory);
 
         return UsersFactory;
     }

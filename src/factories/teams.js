@@ -11,7 +11,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
         var TeamsFactory = {
 
-            name: 'teams',
+            description: 'teams',
 
             storage: TeamsStorage,
 

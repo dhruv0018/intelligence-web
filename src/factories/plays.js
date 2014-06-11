@@ -6,19 +6,21 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'PlaysResource',
-    function(PlaysResource) {
+    'PlaysResource', 'PlaysStorage', 'BaseFactory',
+    function(PlaysResource, PlaysStorage, BaseFactory) {
 
         var PlaysFactory = {
 
+            description: 'plays',
+
+            storage: PlaysStorage,
+
             resource: PlaysResource,
 
-            extendPlay: function(play) {
+            extend: function(play) {
 
                 var self = this;
 
-                /* Copy all of the properties from the retrieved $resource
-                 * "play" object. */
                 angular.extend(play, self);
 
                 if (play.events) {
@@ -209,6 +211,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 }
             }
         };
+
+        angular.extend(PlansFactory, BaseFactory);
 
         return PlaysFactory;
     }
