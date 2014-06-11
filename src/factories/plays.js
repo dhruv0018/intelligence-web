@@ -212,7 +212,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
             }
         };
 
-        angular.extend(PlansFactory, BaseFactory);
+        angular.extend(PlaysFactory, BaseFactory);
 
         return PlaysFactory;
     }

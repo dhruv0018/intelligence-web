@@ -5,7 +5,7 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
-IntelligenceWebClient.service('PlayssStorage', [
+IntelligenceWebClient.service('PlaysStorage', [
     function() {
 
         this.list = [];
