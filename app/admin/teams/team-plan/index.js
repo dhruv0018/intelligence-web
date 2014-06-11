@@ -59,6 +59,7 @@ TeamPlan.controller('TeamPlanController', [
 
             if (plan) {
                 $scope.teamPlan = angular.copy(plan);
+                delete $scope.teamPlan.id; //prevent overwriting default plan on server
 
                 if (plan.startDay && plan.startMonth) {
 
@@ -79,7 +80,7 @@ TeamPlan.controller('TeamPlanController', [
             }
         });
 
-        $scope.defaultPlans = plans.getList();
+        $scope.defaultPlans = plans.getByLeague(team.leagueId);
 
         $scope.cancel = function() {
             $modalInstance.dismiss('cancel');

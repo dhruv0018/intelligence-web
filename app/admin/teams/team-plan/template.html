@@ -32,18 +32,18 @@
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label>Max Games</label>
-                    <input type="number" class="form-control" data-ng-model="teamPlan.maxGamesPerPlan" required/>
+                    <input type="number" data-min="0" class="form-control" data-ng-model="teamPlan.maxGamesPerPlan" required/>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label>Reg. Breakdowns</label>
-                    <input type="number" class="form-control" data-ng-model="teamPlan.maxRegularGames" required/>
+                    <input type="number" data-min="0" class="form-control" data-ng-model="teamPlan.maxRegularGames" required/>
                 </div>
                 <div class="col-md-6 form-group">
                     <label>Scout Breakdowns</label>
-                    <input type="number" class="form-control" data-ng-model="teamPlan.maxScoutingGames" required/>
+                    <input type="number" data-min="0" class="form-control" data-ng-model="teamPlan.maxScoutingGames" required/>
                 </div>
             </div>
 

@@ -24,7 +24,7 @@
                         <p>{{ plan.maxRegularGames }} Regular Games</p>
                         <p>{{ plan.maxScoutingGames }} Scouting/Practice</p>
                     </td>
-                    <td>{{ plan.maxTurnaroundTime - 12}}-{{ plan.maxTurnaroundTime }} hour Turnaround Time</td>
+                    <td>{{ minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{ plan.maxTurnaroundTime }} hour Turnaround Time</td>
                 </tr>
                 <tr data-ng-repeat-end>
                     <td colspan="3" class="plan-options">
@@ -61,7 +61,7 @@
                         <p>{{activePackage.maxGamesPerPackage}} Games</p>
                     </td>
                     <td>
-                        <p>{{activePackage.minTurnaroundTime}}-{{activePackage.maxTurnaroundTime}} Hour Turnaround Time</p>
+                        <p>{{minTurnaroundTimeLookup[activePackage.maxTurnaroundTime]}}-{{activePackage.maxTurnaroundTime}} Hour Turnaround Time</p>
                     </td>
                 </tr>
                 <tr data-ng-repeat-end>

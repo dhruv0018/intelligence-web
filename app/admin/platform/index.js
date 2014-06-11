@@ -88,10 +88,6 @@ Platform.controller('PlatformController', [
             return leagues;
         }, null, true);
 
-        $scope.test = function() {
-            console.log('wut');
-        };
-
         $scope.editPlan = function(plan) {
             $modal.open({
                 templateUrl: 'app/admin/platform/new-plan/new-plan.html',

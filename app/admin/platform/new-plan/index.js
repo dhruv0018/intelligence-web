@@ -30,8 +30,8 @@ NewPlan.run([
  * @type {Controller}
  */
 NewPlan.controller('NewPlanController', [
-    '$scope', '$state', '$modalInstance', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'PlansFactory',
-    function controller($scope, $state, $modalInstance, session, sports, leagues, plans) {
+    '$scope', '$state', '$modalInstance', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'PlansFactory', 'TURNAROUND_TIME_RANGES',
+    function controller($scope, $state, $modalInstance, session, sports, leagues, plans, turnaroundTimeRanges) {
 
         $scope.defaultPlan = {};
         $scope.defaultPlan.leagueIds = [];
@@ -58,11 +58,7 @@ NewPlan.controller('NewPlanController', [
             }
         };
 
-        $scope.maxTurnaroundTimes = [
-            {time: '12-24', value: 24},
-            {time: '24-36', value: 36},
-            {time: '36-48', value: 48}
-        ];
+        $scope.maxTurnaroundTimes = turnaroundTimeRanges;
 
         $scope.savePlan = function(plan) {
             plan.leagueIds = $scope.defaultPlan.leagueIds;

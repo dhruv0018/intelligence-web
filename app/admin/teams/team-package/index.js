@@ -29,8 +29,8 @@ TeamPackage.run([
  * @type {Controller}
  */
 TeamPackage.controller('TeamPackageController', [
-    '$scope', '$state', '$modalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'NewDate',
-    function controller($scope, $state, $modalInstance, session, team, packageIndex, TURNAROUND_TIME_RANGES, TURNAROUND_TIME_MIN_TIME_LOOKUP, dateZeroTime) {
+    '$scope', '$state', '$modalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'NewDate',
+    function controller($scope, $state, $modalInstance, session, team, packageIndex, TURNAROUND_TIME_RANGES, dateZeroTime) {
 
         $scope.edit = false;
 
@@ -54,8 +54,6 @@ TeamPackage.controller('TeamPackageController', [
         };
 
         $scope.saveTeamPackage = function() {
-
-            $scope.teamPackageObj.minTurnaroundTime = TURNAROUND_TIME_MIN_TIME_LOOKUP[$scope.teamPackageObj.maxTurnaroundTime];
 
             //TODO: validation?
             if (!$scope.edit) {

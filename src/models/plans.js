@@ -11,14 +11,23 @@ IntelligenceWebClient.factory('PlansResource', [
 
         var PlansResource = $resource(
 
-            config.api.uri + 'plans/:id', {
+            config.api.uri + 'plans/:id',
+
+            {
 
                 id: '@id'
 
             },
+
             {
 
                 create: { method: 'POST' },
+                getByLeague: {
+                    method: 'GET',
+                    url: config.api.uri + 'plans/leagues/:leagueId',
+                    params: {leagueId: '@leagueId'},
+                    isArray: true
+                },
                 update: { method: 'PUT' }
             }
         );

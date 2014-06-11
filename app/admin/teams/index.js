@@ -61,11 +61,7 @@ Teams.config([
                         controller: 'TeamController'
                     }
                 },
-                onExit: function($localStorage) {
-
-                    /* Delete the local team when exiting the state. */
-                    delete $localStorage.team;
-                }
+                onExit: function() {}
             })
 
             .state('team-info', {
@@ -141,10 +137,10 @@ Teams.filter('visiblePlanOrPackage', [
  * @type {Controller}
  */
 Teams.controller('TeamPlansController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, users, teams, sports, leagues, schools, minTurnaroundTimeLookup) {
 
-        $scope.team = $scope.$storage.team;
+        $scope.minTurnaroundTimeLookup = minTurnaroundTimeLookup;
 
         var applyFilter = function() {
             $scope.filteredPackages = $filter('visiblePlanOrPackage')($scope.team.teamPackages);
@@ -209,7 +205,6 @@ Teams.controller('TeamPlansController', [
 
         $scope.save = function(team, navigateAway) {
             teams.save(team).then(function() {
-                $scope.$storage.team = team;
             });
         };
     }
@@ -222,15 +217,13 @@ Teams.controller('TeamPlansController', [
  * @type {Controller}
  */
 Teams.controller('TeamController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, users, teams, sports, leagues, schools) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
-        $scope.$storage = $localStorage;
-
-        var team = $scope.$storage.team;
+        var team;
 
         /* If no team is stored locally, then get the team from the server. */
         if (!team) {
@@ -241,14 +234,14 @@ Teams.controller('TeamController', [
 
                 teams.get(teamId, function(team) {
 
-                    $scope.$storage.team = team;
-                    $scope.$storage.team.members = team.getMembers();
-                    $scope.$storage.team.league = leagues.get({ id: team.leagueId });
+                    $scope.team = team;
+                    $scope.team.members = team.getMembers();
+                    $scope.team.league = leagues.get({ id: team.leagueId });
                 });
             }
         }
 
-        $scope.$watch('$storage.team.league.sportId', function(sportId) {
+        $scope.$watch('team.league.sportId', function(sportId) {
 
             $scope.sportId = sportId;
         });
@@ -272,13 +265,13 @@ Teams.controller('TeamController', [
             }
         });
 
-        $scope.$watch('$storage.team.schoolId', function() {
+        $scope.$watch('team.schoolId', function() {
 
-            if ($scope.$storage.team && $scope.$storage.team.schoolId) {
+            if ($scope.team && $scope.team.schoolId) {
 
-                $scope.school = schools.get({ id: $scope.$storage.team.schoolId }, function() {
+                $scope.school = schools.get({ id: $scope.team.schoolId }, function() {
 
-                    $scope.$storage.team.address = angular.copy($scope.school.address);
+                    $scope.team.address = angular.copy($scope.school.address);
                 });
             }
         });
@@ -349,7 +342,6 @@ Teams.controller('TeamController', [
         $scope.save = function(team) {
 
             teams.save(team).then(function() {
-                delete $scope.$storage.team;
                 $state.go('teams');
             });
         };
@@ -363,8 +355,8 @@ Teams.controller('TeamController', [
  * @type {Controller}
  */
 Teams.controller('TeamsController', [
-    '$rootScope', '$scope', '$state', '$localStorage', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory',
-    function controller($rootScope, $scope, $state, $localStorage, teams, sports, leagues, schools) {
+    '$rootScope', '$scope', '$state', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory',
+    function controller($rootScope, $scope, $state, teams, sports, leagues, schools) {
 
         $scope.indexedLeagues = {};
         $scope.indexedSports = {};
@@ -391,7 +383,6 @@ Teams.controller('TeamsController', [
 
         $scope.add = function() {
 
-            delete $localStorage.team;
             $state.go('team-info');
         };
 
