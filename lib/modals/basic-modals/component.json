@@ -1,9 +1,7 @@
 {
     "name": "basic-modals",
     "templates": [
-        "template-text.html",
-        "template-confirm.html",
-        "template-alert.html"
+        "template.html"
     ],
     "styles": [
         "styles.less"
