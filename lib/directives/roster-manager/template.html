@@ -1,5 +1,5 @@
 <div class="krossover-roster-manager">
-    <form class="form-team-active" name="formTeamActive" role="form" novalidate>
+    <form data-ng-if=" type === 'table' " class="table-manager form-team-active" name="formTeamActive" role="form" novalidate>
 
         <div class="table-responsive">
 
@@ -44,7 +44,36 @@
         <button class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon-plus"></i></button>
 
         <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
-
-
     </form>
+
+
+    <div data-ng-if=" type === 'interface' ">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="athlete col-md-1">
+                    <add-player data-add-new-player="addNewPlayer()"></add-player>
+                </div>
+
+                <div class="col-md-11">
+                    <div class="row">
+                        <div class="athlete col-md-2" data-ng-repeat="player in roster | filter:isActive">
+                            <profile-placeholder></profile-placeholder>
+                            <a href>{{player.firstName}} {{player.lastName[0]}} . </a>
+                            <p>
+                                <strong>
+                                    <span data-ng-if="player.positions[rosterId].length > 1"> Multiple Positions</span>
+                                    <span data-ng-if="player.positions[rosterId].length === 1"> {{player.positions[rosterId][0].description}}</span>
+                                    <span data-ng-if="!player.positions[rosterId]"> No Position Set</span>
+                                </strong>
+                            </p>
+                            <p>
+                                <span data-ng-if="player.lastAccessed">{{users.getLastAccessed(player) | date: 'mediumDate'}}</span>
+                                <a data-ng-if="player.userId && !player.lastAccessed" data-ng-click="players.resendEmail(player, data.team)">Resend Invitation</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
