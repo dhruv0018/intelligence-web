@@ -84,17 +84,17 @@
                                         <div class="col-md-8 col-md-offset-2">
                                             <div class="confirmation-text">
 
-                                                <i data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id" class="icon-bar-chart"></i>
-                                                <i data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id" class="icon-share"></i>
+                                                <i data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id" class="icon-share"></i>
+                                                <i data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id" class="icon-bar-chart"></i>
 
                                                 <div class="breakdown-information">
 
-                                                    <h3 data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game will be broken down</h3>
-                                                    <h3 data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">This game will NOT be broken down, but it can be shared.</h3>
+                                                    <h3 data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">This game will be broken down</h3>
+                                                    <h3 data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game will NOT be broken down, but it can be shared.</h3>
 
                                                     <p>
-                                                        <i data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game will be submitted for breakdown once it has uploaded and processed.</i>
-                                                        <i data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id"> This game will NOT be submitted for breakdown once it has uploaded and processed. </i>
+                                                        <i data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">This game will be submitted for breakdown once it has uploaded and processed.</i>
+                                                        <i data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id"> This game will NOT be submitted for breakdown once it has uploaded and processed. </i>
                                                     </p>
 
                                                     <div class="breakdowns">
