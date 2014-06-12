@@ -1,0 +1,8 @@
+<div class="basic-modal">
+	<h3>{{title}} <i class="pull-right icon-remove" data-ng-click="cancel()"></i></h3>
+	<textarea class="text-modal-input" data-ng-show="type === 'text'" data-ng-model="textValue"></textarea>
+	<button data-ng-show="type === 'text'" data-ng-click="ok(textValue)">{{buttonText}}</button>
+	<button data-ng-show="type === 'confirm'" data-ng-click="ok(true)">{{buttonText}}</button>
+	<button data-ng-show="type === 'confirm'" class="pull-right close-text" data-ng-click="cancel()">{{cancelButtonText}}</button>
+	<a href data-ng-show="type === 'text'" class="pull-right close-text" data-ng-click="cancel()">Cancel</a>
+</div>
