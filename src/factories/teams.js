@@ -5,13 +5,25 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
+IntelligenceWebClient.service('TeamsStorage', [
+    function() {
+
+        this.list = [];
+        this.collection = {};
+    }
+]);
+
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope','ROLES', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'UsersFactory',
-    function($rootScope, ROLES, TeamsResource, schools, usersResource, users) {
+    '$rootScope','ROLES', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'UsersFactory', 'TeamsStorage',
+    function($rootScope, ROLES, TeamsResource, schools, usersResource, users, TeamsStorage) {
 
         var TeamsFactory = {
 
             resource: TeamsResource,
+
+            storage: TeamsStorage,
+
+            description: 'teams',
 
             extendTeam: function(team) {
 
@@ -41,6 +53,44 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 };
 
                 return self.resource.get({ id: id }, callback, error);
+            },
+
+            load: function(filter) {
+
+                var self = this;
+
+                return self.storage.promise || (self.storage.promise = self.getAll(filter));
+            },
+
+            getAll: function(filter, success, error) {
+
+                var self = this;
+
+                filter = filter || {};
+
+                success = success || function(teams) {
+
+                    return teams;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not load teams collection');
+                };
+
+                var query = self.resource.query(filter, success, error);
+
+                return query.$promise.then(function(teams) {
+
+                    self.storage.list = teams;
+
+                    teams.forEach(function(team) {
+
+                        self.storage.collection[team.id] = team;
+                    });
+
+                    return self.storage.collection;
+                });
             },
 
             getList: function(filter, success, error, index) {
