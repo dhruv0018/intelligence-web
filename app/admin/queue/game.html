@@ -75,7 +75,7 @@
 
                         <td class="score">
 
-                            <h2 data-ng-class="{ correct: game.finalScore === game.indexedScore, incorrect: game.indexedScore && game.finalScore !== game.indexedScore }">{{ game.indexedScore || '--' }}<span data-ng-if="game.indexedScore"><i class="icon-ok" data-ng-show="game.finalScore === game.indexedScore"></i><i class="icon-remove" data-ng-hide="game.finalScore === game.indexedScore"></i></span></h2>
+                            <h2 data-ng-class="{ correct: game.finalScore === game.indexedScore, incorrect: game.indexedScore && game.finalScore !== game.indexedScore }">{{ game.indexedScore || '--' }}<span data-ng-if="game.indexedScore"><i class="icon icon-ok" data-ng-show="game.finalScore === game.indexedScore"></i><i class="icon icon-remove" data-ng-hide="game.finalScore === game.indexedScore"></i></span></h2>
 
                         </td>
 
@@ -120,7 +120,7 @@
 
                         <td class="score">
 
-                            <h2 data-ng-class="{ correct: game.opposingFinalScore === game.opposingIndexedScore, incorrect: game.opposingIndexedScore && game.opposingFinalScore !== game.opposingIndexedScore }">{{ game.opposingIndexedScore || '--' }}<span data-ng-if="game.opposingIndexedScore"><i class="icon-ok" data-ng-show="game.opposingFinalScore === game.opposingIndexedScore"></i><i class="icon-remove" data-ng-hide="game.opposingFinalScore === game.opposingIndexedScore"></i></span></h2>
+                            <h2 data-ng-class="{ correct: game.opposingFinalScore === game.opposingIndexedScore, incorrect: game.opposingIndexedScore && game.opposingFinalScore !== game.opposingIndexedScore }">{{ game.opposingIndexedScore || '--' }}<span data-ng-if="game.opposingIndexedScore"><i class="icon icon-ok" data-ng-show="game.opposingFinalScore === game.opposingIndexedScore"></i><i class="icon icon-remove" data-ng-hide="game.opposingFinalScore === game.opposingIndexedScore"></i></span></h2>
 
                         </td>
 
@@ -130,7 +130,7 @@
 
                         <td colspan="4">
 
-                            <h3><i class="icon-pushpin"></i> Coaches Notes:</h3>
+                            <h3><i class="icon icon-pushpin"></i> Coaches Notes:</h3>
 
                             <div data-ng-repeat="note in game.notes">
 
@@ -140,7 +140,7 @@
 
                             <hr>
 
-                            <h3><i class="icon-pushpin"></i> Krossover Notes:</h3>
+                            <h3><i class="icon icon-pushpin"></i> Krossover Notes:</h3>
 
                             <div data-ng-repeat="note in game.notes">
 
@@ -150,7 +150,7 @@
 
                             <hr>
 
-                            <h3><i class="icon-pushpin"></i> Set Aside Notes:</h3>
+                            <h3><i class="icon icon-pushpin"></i> Set Aside Notes:</h3>
 
                             <div data-ng-repeat="note in game.notes">
 
@@ -160,7 +160,7 @@
 
                             <hr>
 
-                            <h3><i class="icon-pushpin"></i> Coach's feedback on indexing:</h3>
+                            <h3><i class="icon icon-pushpin"></i> Coach's feedback on indexing:</h3>
                             <div data-ng-repeat="note in game.notes[GAME_NOTE_TYPES.COACH_FEEDBACK_NOTE]">
 
                                 <p>{{ note.content }}</p>
@@ -183,9 +183,9 @@
 
         <ul>
 
-            <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon-play-sign"></i> View raw film</button></li>
-            <li><button class="btn btn-link" data-feedback-modal><i class="icon-pencil"></i> Add coach's feedback</button></li>
-            <li><button class="btn btn-link" data-ng-click="DeleteGameModal.open(game)"><i class="icon-remove-sign"></i> Delete game</button></li>
+            <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon icon-play-sign"></i> View raw film</button></li>
+            <li><button class="btn btn-link" data-feedback-modal><i class="icon icon-pencil"></i> Add coach's feedback</button></li>
+            <li><button class="btn btn-link" data-ng-click="DeleteGameModal.open(game)"><i class="icon icon-remove-sign"></i> Delete game</button></li>
 
         </ul>
 
