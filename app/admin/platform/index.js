@@ -62,23 +62,18 @@ Platform.config([
     }
 ]);
 
+Platform.filter('monthFilter', function() {
+    return function(monthNumber) {
+        return moment(moment().month(moment(monthNumber) - 1)).format('MMM');
+    };
+});
+
 Platform.controller('PlatformController', [
     '$scope', '$modal',  'LeaguesFactory', 'PlansFactory', 'SportsFactory',
     function controller($scope, $modal, leagues, plans, sports) {
 
-        plans.getList().$promise.then(function(plans) {
-
-            angular.forEach(plans, function(plan) {
-                var startMonth = moment(plan.startMonth) - 1;
-                var endMonth = moment(plan.endMonth) - 1;
-
-                startMonth = moment().month(startMonth);
-                endMonth = moment().month(endMonth);
-
-                plan.endMonth = moment(endMonth).format('MMM');
-                plan.startMonth = moment(startMonth).format('MMM');
-            });
-            $scope.plans = plans;
+        plans.getList().$promise.then(function(plansList) {
+            $scope.plans = plansList;
         });
 
         $scope.sports = sports.getList();
@@ -88,22 +83,32 @@ Platform.controller('PlatformController', [
             return leagues;
         }, null, true);
 
-        $scope.test = function() {
-            console.log('wut');
+        var openPlanModal = function(planToEdit) {
+            var modalInstance = $modal.open({
+                scope: $scope,
+                templateUrl: 'app/admin/platform/new-plan/new-plan.html',
+                controller: 'NewPlanController',
+                resolve: {
+                    Plans: function() { return $scope.plans; },
+                    EditPlanObj: function() { return planToEdit; }
+                }
+            });
+
+            modalInstance.result.then(function closed(savedPlan) {
+                plans.save(savedPlan).then(function saved(ret) {
+                    if (!savedPlan.id) {
+                        $scope.plans.push(ret);
+                    }
+                });
+            });
         };
 
         $scope.editPlan = function(plan) {
-            $modal.open({
-                templateUrl: 'app/admin/platform/new-plan/new-plan.html',
-                controller: 'NewPlanController'
-            });
+            openPlanModal(plan);
         };
 
         $scope.addPlan = function() {
-            $modal.open({
-                templateUrl: 'app/admin/platform/new-plan/new-plan.html',
-                controller: 'NewPlanController'
-            });
+            openPlanModal();
         };
     }
 ]);

@@ -1,8 +1,7 @@
 <div class="box-body plan-defaults-content">
-    <p>Pick a team</p>
     <div class="plan-options">
         <select class="form-control" name="sport" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sports">
-            <option value=""></option>
+            <option value="">Choose a sport</option>
         </select>
         <x-button-add-new class="pull-right" data-ng-click="addPlan()">Add plan</x-button-add-new>
     </div>
@@ -23,7 +22,7 @@
             <tbody>
                 <tr data-ng-repeat="plan in plans">
                     <td><a data-ng-click="editPlan(plan)">{{ plan.name }}</a> </td>
-                    <td>{{ (plan.startMonth) }} {{ plan.startDay }} - {{ plan.endMonth }} {{plan.endDay }}</td>
+                    <td>{{ plan.startMonth | monthFilter }} {{ plan.startDay }} - {{ plan.endMonth | monthFilter }} {{plan.endDay }}</td>
                     <td>{{ plan.maxAnyGames }}</td>
                     <td>{{ plan.maxRegularGames }}</td>
                     <td>{{ plan.maxScoutingGames }}</td>
