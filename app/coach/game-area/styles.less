@@ -416,12 +416,26 @@
       margin-left: 20px;
       padding-right: 15px;
       color: @gray-light;
+      text-decoration: none;
+
+      &:hover,
+      &:active,
+      &.active {
+        color: @brand-primary;
+      }
     }
 
     .away-team {
       color: @gray-light;
       margin-right: 15px;
       margin-left: 15px;
+      text-decoration: none;
+
+      &:hover,
+      &:active,
+      &.active {
+        color: @brand-primary;
+      }
     }
   }
 
@@ -485,6 +499,30 @@
   .field-header-collapsed {
     background-color: @gray-lighter;
     color: @brand-blue;
+  }
+
+  .field-options {
+    background-color: @content-bg;
+    color: @gray-light;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    .offense-defense {
+      margin-right: 60px;
+      cursor: pointer;
+    }
+
+    .active-report {
+      color: @brand-primary;
+    }
+
+    .print-formation {
+      .pull-right;
+      color: @brand-primary;
+      cursor: pointer;
+    }
   }
 
   .field {
