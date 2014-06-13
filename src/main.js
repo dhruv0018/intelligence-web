@@ -17,6 +17,7 @@ require('./app');
 require('./flow');
 require('./routes');
 require('./errors');
+require('./transforms');
 
 require('./services/authentication');
 require('./services/authorization');
