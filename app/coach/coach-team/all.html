@@ -41,7 +41,7 @@
                     <td>
                         <a data-ng-if="player.userId && !player.lastAccessed" data-ng-click="players.resendEmail(player, data.team)">Resend Invitation</a>
                         <span data-ng-if="player.lastAccessed">{{users.getLastAccessed(player) | date: 'shortDate'}}</span>
-                        <span data-ng-if="!player.lastAccessed">Has not logged in</span>
+                        <span data-ng-if="!player.userId && !player.lastAccessed">Has not logged in</span>
                     </td>
 
                 </tr>
