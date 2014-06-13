@@ -18,7 +18,7 @@ IntelligenceWebClient.factory('FiltersetsFactory', [
             resource: FiltersetsResource,
         };
 
-        angular.extend(FiltersetsFactory, BaseFactory);
+        angular.augment(FiltersetsFactory, BaseFactory);
 
         return FiltersetsFactory;
     }

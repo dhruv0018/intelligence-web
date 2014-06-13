@@ -18,7 +18,7 @@ IntelligenceWebClient.factory('LeaguesFactory', [
             resource: LeaguesResource,
         };
 
-        angular.extend(LeaguesFactory, BaseFactory);
+        angular.augment(LeaguesFactory, BaseFactory);
 
         return LeaguesFactory;
     }

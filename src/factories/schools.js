@@ -18,7 +18,7 @@ IntelligenceWebClient.factory('SchoolsFactory', [
             resource: SchoolsResource,
         };
 
-        angular.extend(SchoolsFactory, BaseFactory);
+        angular.augment(SchoolsFactory, BaseFactory);
 
         return SchoolsFactory;
     }

@@ -101,7 +101,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
             }
         };
 
-        angular.extend(TeamsFactory, BaseFactory);
+        angular.augment(TeamsFactory, BaseFactory);
 
         return TeamsFactory;
     }

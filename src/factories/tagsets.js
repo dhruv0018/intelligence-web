@@ -66,7 +66,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
             }
         };
 
-        angular.extend(TagsetsFactory, BaseFactory);
+        angular.augment(TagsetsFactory, BaseFactory);
 
         return TagsetsFactory;
     }

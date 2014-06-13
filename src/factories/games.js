@@ -538,7 +538,7 @@ IntelligenceWebClient.factory('GamesFactory', [
             }
         };
 
-        angular.extend(GamesFactory, BaseFactory);
+        angular.augment(GamesFactory, BaseFactory);
 
         return GamesFactory;
     }

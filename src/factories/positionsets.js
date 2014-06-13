@@ -46,7 +46,7 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
             }
         };
 
-        angular.extend(PositionsetsFactory, BaseFactory);
+        angular.augment(PositionsetsFactory, BaseFactory);
 
         return PositionsetsFactory;
     }

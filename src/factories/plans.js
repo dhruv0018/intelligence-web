@@ -18,7 +18,7 @@ IntelligenceWebClient.factory('PlansFactory', [
             resource: PlansResource,
         };
 
-        angular.extend(PlansFactory, BaseFactory);
+        angular.augment(PlansFactory, BaseFactory);
 
         return PlansFactory;
     }
