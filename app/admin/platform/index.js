@@ -68,20 +68,43 @@ Platform.filter('monthFilter', function() {
     };
 });
 
+Platform.filter('filterDefaultPlans', function() {
+    return function(plans, sportId) {
+        if (!plans) return plans;
+
+        var returnArray = [];
+        for (var i = 0; i < plans.length; i++) {
+            if (!sportId || plans[i].sportId === sportId) {
+                returnArray.push(plans[i]);
+            }
+        }
+        return returnArray;
+    };
+});
+
 Platform.controller('PlatformController', [
     '$scope', '$modal',  'LeaguesFactory', 'PlansFactory', 'SportsFactory',
     function controller($scope, $modal, leagues, plans, sports) {
 
-        plans.getList().$promise.then(function(plansList) {
-            $scope.plans = plansList;
-        });
-
-        $scope.sports = sports.getList();
-
-
         $scope.leagues = leagues.getList({}, function(leagues) {
             return leagues;
         }, null, true);
+
+        plans.getList().$promise.then(function(plansList) {
+
+            $scope.plans = plansList;
+
+            $scope.leagues.$promise.then(function loaded(resolved) {
+                //TODO: plan should have sportId
+                angular.forEach($scope.plans, function(plan) {
+                    //TODO: get rid of promise,then with new data service
+                    plan.sportId = $scope.leagues[plan.leagueIds[0] - 1].sportId;
+                });
+            });
+
+        });
+
+        $scope.sports = sports.getList();
 
         var openPlanModal = function(planToEdit) {
             var modalInstance = $modal.open({

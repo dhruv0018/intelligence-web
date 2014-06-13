@@ -20,8 +20,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-repeat="plan in plans">
-                    <td><a data-ng-click="editPlan(plan)">{{ plan.name }}</a> </td>
+                <tr data-ng-repeat="plan in plans | filterDefaultPlans: sportId">
+
+                    <td><a data-ng-click="editPlan(plan)">{{ plan.name }}</a></td>
                     <td>{{ plan.startMonth | monthFilter }} {{ plan.startDay }} - {{ plan.endMonth | monthFilter }} {{plan.endDay }}</td>
                     <td>{{ plan.maxAnyGames }}</td>
                     <td>{{ plan.maxRegularGames }}</td>
