@@ -92,7 +92,6 @@ NewPlan.controller('NewPlanController', [
         ];
 
         $scope.savePlan = function() {
-            //plan.leagueIds = $scope.defaultPlan.leagueIds;
 
             var startDate = moment($scope.defaultPlan.startDate);
             var endDate = moment($scope.defaultPlan.endDate);
