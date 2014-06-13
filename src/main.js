@@ -6,6 +6,9 @@ require('./vendor');
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+/* Extend Angular core */
+require('./extensions');
+
 /* Components */
 require('../build/build');
 
