@@ -9,7 +9,7 @@
         <i>Only leave a note if you feel it will be useful. Otherwise, just
         click submit.</i>
 
-        <textarea class="form-control" rows="5" data-ng-model="game.notes[0].content"></textarea>
+        <textarea class="form-control" rows="5" data-ng-model="game.notes[GAME_NOTE_TYPES.QA_NOTE][0].content" data-clear-key-listeners></textarea>
 
         <button class="btn btn-lg btn-primary" data-ng-click="submit()">Submit</button>
 
