@@ -116,15 +116,18 @@
                 line-height: 100px;
             }
 
-            &.active::after {
-
-                .icon(@ok);
+            .icon-ok {
+                display: none;
                 color: @brand-secondary;
                 font-size: 40px;
                 position: absolute;
                 top: 45px;
                 right: 65px;
                 line-height: 100px;
+            }
+
+            &.active > .icon-ok {
+                display: inline;
             }
         }
     }
