@@ -141,7 +141,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 });
             },
             constructPositionDropdown: function(roster, rosterId, positions) {
+
                 angular.forEach(roster, function(player) {
+
                     //constructs position dropdown
                     player.selectedPositions = {};
 

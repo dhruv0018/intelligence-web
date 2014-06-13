@@ -59,7 +59,7 @@
                         <div class="athlete col-md-2" data-ng-repeat="player in roster | filter:isActive">
                             <profile-placeholder></profile-placeholder>
                             <div class="description">
-                                <a href>{{player.firstName}} {{player.lastName[0]}} . </a>
+                                <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>{{player.firstName}} {{player.lastName[0]}} . </a>
                                 <p>
                                     <strong>
                                         <span data-ng-if="player.positions[rosterId].length > 1"> Multiple Positions</span>

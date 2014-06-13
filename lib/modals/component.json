@@ -8,7 +8,8 @@
         "raw-film",
         "delete-game",
         "excel-upload",
-        "basic-modals"
+        "basic-modals",
+        "athlete-info"
     ],
     "scripts": [
         "index.js"
