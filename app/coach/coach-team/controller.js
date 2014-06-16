@@ -84,11 +84,18 @@ Team.controller('Coach.Team.controller', [
     function controller($rootScope, $scope, $state, $stateParams, $filter, config, ROLES, data, players, users) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
-
         $scope.config = config;
         $scope.players = players;
         $scope.users = users;
         $scope.data = data;
+
+        $scope.filtering = [
+            {type: 'none'},
+            {type: 'active'},
+            {type: 'inactive'}
+        ];
+
+        $scope.displayFilter = {type: 'none'};
 
         if (typeof $scope.data.coachData.roster !== 'undefined') {
             $scope.data.roster = $scope.data.coachData.roster;
@@ -96,14 +103,6 @@ Team.controller('Coach.Team.controller', [
 
         $scope.data.roster = players.constructPositionDropdown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
 
-        console.log($scope.data.roster);
-
-        $scope.state = 'Coach.Team.All';
-
-        $scope.$watch('state', function(state) {
-
-            if (state) $state.go(state);
-        });
 
         $scope.save = function() {
             $scope.data.roster = players.getPositionsFromDowndown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
