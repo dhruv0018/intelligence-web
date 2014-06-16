@@ -64,9 +64,9 @@
                     <tr data-ng-repeat="team in teams">
 
                         <td><a data-ui-sref="team-info({ id: team.id })">{{team.name}}</a></td>
-                        <td>{{indexedSports[indexedLeagues[team.leagueId]['sportId']]['name']}}</td>
-                        <td>{{indexedLeagues[team.leagueId]['name']}}</td>
-                        <td>{{indexedSchools[team.schoolId]['name']}}</td>
+                        <td>{{sports[leagues[team.leagueId]['sportId']]['name']}}</td>
+                        <td>{{leagues[team.leagueId]['name']}}</td>
+                        <td>{{schools[team.schoolId]['name']}}</td>
 
                     </tr>
 

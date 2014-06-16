@@ -83,6 +83,33 @@ Teams.config([
                         templateUrl: 'team-info.html',
                         controller: 'TeamController'
                     }
+                },
+                resolve: {
+                    'Teams.Data': [
+                        '$q', 'Teams.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
+                }
+            })
+
+            .state('team-plans', {
+                url: '',
+                parent: 'team',
+                views: {
+                    'content@team': {
+                        templateUrl: 'team-plans.html',
+                        controller: 'TeamPlansController'
+                    }
+                },
+                resolve: {
+                    'Teams.Data': [
+                        '$q', 'Teams.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             })
 
@@ -100,8 +127,8 @@ Teams.config([
 ]);
 
 Teams.service('Teams.Data.Dependencies', [
-    'TeamsFactory',
-    function(teams) {
+    'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory',
+    function(teams, sports, leagues, schools) {
 
         var Data = {};
 
@@ -239,9 +266,18 @@ Teams.controller('TeamController', [
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
-        console.log('data2', data);
+        $scope.sports = data.sports;
+        $scope.leagues = data.leagues;
+        $scope.schools = data.schools;
 
         var team;
+
+        function updateTeamAddress() {
+            if ($scope.team && $scope.team.schoolId) {
+                $scope.school = $scope.schools[$scope.team.schoolId];
+                $scope.team.address = angular.copy($scope.school.address);
+            }
+        }
 
         /* If no team is stored locally, then get the team from the server. */
         if (!team) {
@@ -250,12 +286,15 @@ Teams.controller('TeamController', [
 
             if (teamId) {
 
-                teams.get(teamId, function(team) {
+                team = data.teams[teamId];
 
-                    $scope.$storage.team = team;
-                    $scope.$storage.team.members = team.getMembers();
-                    $scope.$storage.team.league = leagues.get({ id: team.leagueId });
-                });
+                $scope.team = team;
+                $scope.team.members = team.getMembers();
+
+                $scope.team.league = data.leagues[team.leagueId];
+                $scope.sportId = $scope.team.league.sportId;
+
+                updateTeamAddress();
             }
         }
 
@@ -263,17 +302,6 @@ Teams.controller('TeamController', [
 
             $scope.sportId = sportId;
         });
-
-        $scope.indexedSports = {};
-        $scope.sports = sports.getList({}, function(sports) {
-            sports.forEach(function(sport) {
-                $scope.indexedSports[sport.id] = sport;
-            });
-            return sports;
-        });
-
-        $scope.leagues = leagues.query();
-        $scope.schools = schools.query();
 
         $scope.$watch('addNewHeadCoach', function() {
 
@@ -283,16 +311,7 @@ Teams.controller('TeamController', [
             }
         });
 
-        $scope.$watch('$storage.team.schoolId', function() {
-
-            if ($scope.$storage.team && $scope.$storage.team.schoolId) {
-
-                $scope.school = schools.get({ id: $scope.$storage.team.schoolId }, function() {
-
-                    $scope.$storage.team.address = angular.copy($scope.school.address);
-                });
-            }
-        });
+        $scope.$watch('team.schoolId', updateTeamAddress);
 
         $scope.onlyCurrentRoles = function(role) {
 
@@ -361,35 +380,11 @@ Teams.controller('TeamsController', [
     '$rootScope', '$scope', '$state', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'Teams.Data',
     function controller($rootScope, $scope, $state, teams, sports, leagues, schools, data) {
 
-        console.log('data', data);
-
         $scope.teams = data.teams;
         $scope.sports = data.sports;
         $scope.leagues = data.leagues;
         $scope.schools = data.schools;
 
-        /*$scope.indexedLeagues = {};
-        $scope.indexedSports = {};
-        $scope.indexedSchools = {};
-        $scope.sports = sports.getList({}, function(sports) {
-            sports.forEach(function(sport) {
-                $scope.indexedSports[sport.id] = sport;
-            });
-            return sports;
-        });
-        $scope.leagues = leagues.getList({}, function(leagues) {
-            leagues.forEach(function(league) {
-                $scope.indexedLeagues[league.id] = league;
-            });
-            return leagues;
-        });
-        $scope.schools = schools.getList({}, function(schools) {
-            schools.forEach(function(school) {
-                $scope.indexedSchools[school.id] = school;
-            });
-            return schools;
-        });
-        $scope.teams = teams.getList();*/
 
         $scope.add = function() {
 

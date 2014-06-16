@@ -1,3 +1,5 @@
+var PAGE_SIZE = 100;
+
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -16,6 +18,49 @@ IntelligenceWebClient.service('TeamsStorage', [
 IntelligenceWebClient.factory('TeamsFactory', [
     '$rootScope','ROLES', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'UsersFactory', 'TeamsStorage',
     function($rootScope, ROLES, TeamsResource, schools, usersResource, users, TeamsStorage) {
+
+        var dateModifyArray = 'teamPackages teamPlans'.split(' ');
+        var dateModifyArrayProperties = 'startDate endDate'.split(' ');
+
+        function parseDateStringsIntoObjects(team) {
+            dateModifyArray.map(function(arrayToModify) {
+
+                if (typeof team[arrayToModify] === 'undefined') return;
+
+                angular.forEach(team[arrayToModify], function(value, key) {
+
+                    dateModifyArrayProperties.map(function(dateProperty) {
+
+                        if (typeof value[dateProperty] === 'undefined') return;
+
+                        var dateObj;
+
+                        if (angular.isString(value[dateProperty]) &&
+                            !isNaN((dateObj = new Date(value[dateProperty])).getTime())) {
+
+                            value[dateProperty] = dateObj;
+                        }
+                    });
+                });
+            });
+        }
+
+        function stringifyDateObjects(team) {
+            dateModifyArray.map(function(arrayToModify) {
+
+                if (typeof team[arrayToModify] === 'undefined') return;
+
+                angular.forEach(team[arrayToModify], function(value, key) {
+
+                    dateModifyArrayProperties.map(function(dateProperty) {
+
+                        if (typeof value[dateProperty] === 'undefined') return;
+
+                        if (value[dateProperty] instanceof Date) value[dateProperty] = value[dateProperty].toISOString();
+                    });
+                });
+            });
+        }
 
         var TeamsFactory = {
 
@@ -67,29 +112,41 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 var self = this;
 
                 filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || PAGE_SIZE;
 
-                success = success || function(teams) {
+                success = success || function(resources) {
 
-                    return teams;
+                    return resources;
                 };
 
                 error = error || function() {
 
-                    throw new Error('Could not load teams collection');
+                    throw new Error('Could not load ' + self.description + 's collection');
                 };
 
                 var query = self.resource.query(filter, success, error);
 
-                return query.$promise.then(function(teams) {
+                return query.$promise.then(function(resources) {
 
-                    self.storage.list = teams;
+                    self.storage.list = self.storage.list.concat(resources);
 
-                    teams.forEach(function(team) {
-
-                        self.storage.collection[team.id] = team;
+                    resources.forEach(function(resource) {
+                        resource = self.extendTeam(resource);
+                        self.storage.collection[resource.id] = resource;
                     });
 
-                    return self.storage.collection;
+                    if (resources.length < filter.count) {
+
+                        return self.storage.collection;
+                    }
+
+                    else {
+
+                        filter.start = filter.start + filter.count + 1;
+
+                        return self.getAll(filter);
+                    }
                 });
             },
 
@@ -141,6 +198,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 delete team.league;
                 delete team.members;
+                delete team.storage;
+                delete team.resource;
+                delete team.description;
 
                 if (team.schoolId) delete team.address;
 
