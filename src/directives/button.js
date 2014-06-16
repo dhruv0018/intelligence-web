@@ -31,6 +31,11 @@ IntelligenceWebClient.directive('button', [
 
                 attributes.$set('disabled', !!disabled);
             });
+
+            $rootScope.$on('$stateChangeError', function() {
+
+                attributes.$set('disabled', !!disabled);
+            });
         }
 
         return directive;
