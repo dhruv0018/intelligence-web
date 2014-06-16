@@ -50,6 +50,12 @@ IntelligenceWebClient.run([
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
+            /* Retrieve the current user if logged in. */
+            if (auth.isLoggedIn) {
+
+                session.currentUser = session.retrieveCurrentUser();
+            }
+
             /* If not accessing a public state and not logged in, then
              * redirect the user to login. */
             if (!authz.isPublic(toState) && !auth.isLoggedIn) {
@@ -70,12 +76,6 @@ IntelligenceWebClient.run([
             if (tokens.areTokensSet()) {
 
                 $http.defaults.headers.common.Authorization = tokens.getTokenType() + ' ' + tokens.getAccessToken();
-            }
-
-            /* Retrieve the current user if logged in. */
-            if (auth.isLoggedIn) {
-
-                session.currentUser = session.retrieveCurrentUser();
             }
         });
 

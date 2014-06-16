@@ -143,7 +143,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
             constructPositionDropdown: function(roster, rosterId, positions) {
 
                 angular.forEach(roster, function(player) {
-
+                    console.log(player);
                     //constructs position dropdown
                     player.selectedPositions = {};
 

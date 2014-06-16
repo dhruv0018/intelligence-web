@@ -94,7 +94,10 @@ Team.controller('Coach.Team.controller', [
             $scope.data.roster = $scope.data.coachData.roster;
         }
 
-        $scope.roster = players.constructPositionDropdown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+        $scope.data.roster = players.constructPositionDropdown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+
+        console.log($scope.data.roster);
+
         $scope.state = 'Coach.Team.All';
 
         $scope.$watch('state', function(state) {
@@ -103,7 +106,7 @@ Team.controller('Coach.Team.controller', [
         });
 
         $scope.save = function() {
-            $scope.roster = players.getPositionsFromDowndown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+            $scope.data.roster = players.getPositionsFromDowndown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
 
             players.save($scope.data.rosterId, $scope.data.roster).then(function(roster) {
                 $scope.roster = players.constructPositionDropdown(roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);

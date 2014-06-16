@@ -24,7 +24,6 @@ Users.controller('Users.User.Controller', [
         $scope.user = user;
         $scope.users = users;
         $scope.auth = auth;
-        $scope.currentUser = session.currentUser;
 
         user = user || {};
         user.newRoles = [];
