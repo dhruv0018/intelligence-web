@@ -56,7 +56,7 @@
 
                 <div class="col-md-11">
                     <div class="row">
-                        <div class="athlete col-md-2" data-ng-repeat="player in roster | filter:isActive">
+                        <div class="athlete col-md-2" data-ng-repeat="player in roster | filter: filterType">
                             <profile-placeholder></profile-placeholder>
                             <div class="description">
                                 <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>{{player.firstName}} {{player.lastName[0]}} . </a>
