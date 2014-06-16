@@ -1,7 +1,7 @@
 @import (reference) "main.less";
 
 .athlete-info {
-  min-height: 600px;
+  min-height: 650px;
 
   table{
     td, th {
@@ -21,6 +21,28 @@
     }
 
     .pull-left;
+  }
+
+  .shaded{
+    padding:20px;
+    background: @content-bg;
+    border: 1px solid @gray-border;
+  }
+
+  .position-list{
+    margin: 10px -10px;
+  }
+
+  .invitation-information{
+    margin-top: 10px;
+  }
+
+  input[type=submit] {
+    margin-top: 10px;
+  }
+
+  .remove-athlete{
+    margin-top:10px;
   }
 }
 
