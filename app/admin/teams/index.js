@@ -146,7 +146,7 @@ Teams.filter('visiblePlanOrPackage', [
     'NewDate',
     function(newDate) {
 
-        return function(planOrPackageArray) {
+        return function visiblePlanOrPackageFilter(planOrPackageArray) {
 
             var currentDate = newDate.generate();
             var teamPackageOrPlan;
@@ -156,6 +156,11 @@ Teams.filter('visiblePlanOrPackage', [
 
             for (var i = 0; i < planOrPackageArray.length; i++) {
                 planOrPackage = planOrPackageArray[i];
+
+                if (typeof planOrPackage.endDate === 'string') {
+                    planOrPackage.endDate = new Date(planOrPackage.endDate);
+                    planOrPackage.startDate = new Date(planOrPackage.startDate);
+                }
 
                 if (typeof planOrPackage.endDate !== 'undefined' &&
                     planOrPackage.endDate.getYear() >= currentDate.getYear() &&
@@ -180,15 +185,18 @@ Teams.filter('visiblePlanOrPackage', [
  * @type {Controller}
  */
 Teams.controller('TeamPlansController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, users, teams, sports, leagues, schools, minTurnaroundTimeLookup) {
+    '$scope', '$filter', '$modal', 'TeamsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
+    function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup) {
 
         $scope.minTurnaroundTimeLookup = minTurnaroundTimeLookup;
 
-        var applyFilter = function() {
+        $scope.team.teamPackages = $scope.team.teamPackages || [];
+        $scope.team.teamPlans = $scope.team.teamPlans || [];
+
+        function applyFilter() {
             $scope.filteredPackages = $filter('visiblePlanOrPackage')($scope.team.teamPackages);
             $scope.filteredPlans = $filter('visiblePlanOrPackage')($scope.team.teamPlans);
-        };
+        }
 
         $scope.$watch(function() { return $scope.team.teamPlans; }, applyFilter, true);
         $scope.$watch(function() { return $scope.team.teamPackages; }, applyFilter, true);
@@ -246,7 +254,7 @@ Teams.controller('TeamPlansController', [
             $scope.save($scope.team);
         };
 
-        $scope.save = function(team, navigateAway) {
+        $scope.save = function(team) {
             teams.save(team).then(function() {
             });
         };
