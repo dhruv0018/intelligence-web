@@ -20,9 +20,14 @@
                     </span>
                     <a href> (View Stats) </a>
                 </p>
-                <a class="pull-right" data-ng-click="$close()">
-                    <i class="icon-remove"></i>
-                </a>
+                <div class="pull-right">
+                    <span data-ng-if="athlete.lastAccessed">{{users.getLastAccessed(athlete) | date: 'mediumDate'}}</span>
+
+                    <a data-ng-click="$close()">
+                        <i class="icon-remove"></i>
+                    </a>
+                </div>
+
             </div>
 
         </h3>
