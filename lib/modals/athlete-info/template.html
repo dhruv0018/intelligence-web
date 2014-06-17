@@ -3,10 +3,13 @@
     <header class="modal-header">
 
         <h3 class="modal-title">
-            Add a new player to your roster
-            <a class="pull-right" data-ng-click="$close()">
-                <i class="icon-remove"></i>
-            </a>
+
+            <div data-ng-if="!athlete.id">
+                <p class="pull-left">Add a new player to your roster</p>
+                <a class="pull-right" data-ng-click="$close()">
+                    <i class="icon-remove"></i>
+                </a>
+            </div>
 
         </h3>
 
