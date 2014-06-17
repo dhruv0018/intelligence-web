@@ -33,9 +33,11 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <strong>This player has not activated their account with Krossover.</strong>
-                    Once they activate their account you will no longer be able to edit their name and email address.
+                    <div data-ng-if="athlete.userId && !athlete.lastAccessed">
+                        <strong>This player has not activated their account with Krossover.</strong> Once they activate their account you will no longer be able to edit their name and email address. <a data-ng-if="player.userId && !player.lastAccessed" data-ng-click="players.resendEmail(player, data.team)">Resend Invitation</a>
+                    </div>
                 </div>
+
                 <form>
 
                     <div class="row form-group">

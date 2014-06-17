@@ -101,11 +101,10 @@ Team.controller('Coach.Team.controller', [
 
         $scope.data.roster = players.constructPositionDropdown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
 
+        $scope.singleSave = function(player) {
+            var tempPlayer = players.getPositionsFromDowndown([player], $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
 
-        $scope.save = function() {
-            $scope.data.roster = players.getPositionsFromDowndown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
-
-            players.save($scope.data.rosterId, $scope.data.roster).then(function(roster) {
+            players.save($scope.data.rosterId, tempPlayer).then(function(roster) {
                 $scope.roster = players.constructPositionDropdown(roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
                 data.roster = roster;
             });
