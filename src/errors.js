@@ -232,12 +232,6 @@ IntelligenceWebClient.factory('ErrorInterceptor', [
 
                     ErrorReporter.reportError(new Error('Error response', response.data));
 
-                    alerts.add({
-
-                        type: 'danger',
-                        message: 'Error'
-                    });
-
                     break;
                 }
 
