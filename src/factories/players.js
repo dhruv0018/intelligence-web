@@ -80,7 +80,6 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 return self.resource.query(filter, callback, error);
             },
-
             save: function(rosterId, players) {
 
                 var self = this;
@@ -89,6 +88,17 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 if (!players) throw new Error('No players to save');
 
                 var filter = { roster: rosterId };
+
+                if (players.length === 1) {
+                    players[0].rosterIds = [rosterId];
+                    if (players[0].id) {
+                        console.log('updating');
+                        return self.resource.update(players[0]).$promise;
+                    } else {
+                        console.log('creating');
+                        return self.resource.singleCreate(players[0]).$promise;
+                    }
+                }
 
                 var currentPlayers = players.filter(function(player) {
 
@@ -136,30 +146,29 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 this.rosterStatuses[rosterId] = !this.rosterStatuses[rosterId];
             },
             constructActiveRoster: function(roster, rosterId) {
-                return roster.filter(function(player) {
-                    return player.rosterStatuses[rosterId] === true;
+                return roster.filter(function(athlete) {
+                    return athlete.player.rosterStatuses[rosterId] === true;
                 });
             },
-            constructPositionDropdown: function(roster, rosterId, positions) {
+            constructPositionDropdown: function(player, rosterId, positions) {
+                console.log(player);
 
-                angular.forEach(roster, function(player) {
-                    //constructs position dropdown
-                    player.selectedPositions = {};
+                //constructs position dropdown
+                player.selectedPositions = {};
 
-                    //adds each position checkboxes for each player
-                    angular.forEach(positions, function(position) {
-                        player.selectedPositions[position.id] = false;
-                    });
-
-                    //sets the positions that already exist on the players
-                    if (typeof player.positions[rosterId] !== 'undefined' && player.positions[rosterId].length > 0) {
-                        angular.forEach(player.positions[rosterId], function(position) {
-                            player.selectedPositions[position.id] = true;
-                        });
-                    }
+                //adds each position checkboxes for each player
+                angular.forEach(positions, function(position) {
+                    player.selectedPositions[position.id] = false;
                 });
 
-                return roster;
+                //sets the positions that already exist on the players
+                if (typeof player.positions[rosterId] !== 'undefined' && player.positions[rosterId].length > 0) {
+                    angular.forEach(player.positions[rosterId], function(position) {
+                        player.selectedPositions[position.id] = true;
+                    });
+                }
+
+                return player;
             },
             getPositionsFromDowndown: function(roster, rosterId, positions) {
                 angular.forEach(roster, function(player) {

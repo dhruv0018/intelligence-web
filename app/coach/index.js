@@ -90,16 +90,16 @@ Coach.service('Coach.Data', [
                     var mergedRoster = [];
                     angular.forEach(players, function(player) {
                         if (player.userId) {
-                            //lost in the merger
-                            var playerId = player.id;
-
                             users.get(player.userId, function(user) {
-                                angular.extend(player, user, player);
-                                player.id = playerId;
-                                mergedRoster.push(player);
+                                mergedRoster.push({
+                                    player: player,
+                                    user: user
+                                });
                             });
                         } else {
-                            mergedRoster.push(player);
+                            mergedRoster.push({
+                                player: player
+                            });
                         }
                     });
                     promisedRoster.resolve(mergedRoster);
