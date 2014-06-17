@@ -99,9 +99,45 @@ IntelligenceWebClient.config([
 ]);
 
 /**
- * Intercepts HTTP responses.
+ * Intercepts and broadcasts HTTP requests and responses.
  */
-IntelligenceWebClient.factory('HttpInterceptor', [
+IntelligenceWebClient.factory('BroadcastInterceptor', [
+    '$rootScope', '$q',
+    function factory($rootScope, $q) {
+
+        return {
+
+            request: function(config) {
+
+                $rootScope.$broadcast('httpRequest', config);
+                return config;
+            },
+
+            requestError: function(rejection) {
+
+                $rootScope.$broadcast('httpRequestError', rejection);
+                return $q.reject(rejection);
+            },
+
+            response: function(response) {
+
+                $rootScope.$broadcast('httpResponse', response);
+                return response;
+            },
+
+            responseError: function(rejection) {
+
+                $rootScope.$broadcast('httpResponseError', rejection);
+                return $q.reject(rejection);
+            }
+        };
+    }
+]);
+
+/**
+ * Intercepts error responses.
+ */
+IntelligenceWebClient.factory('ErrorInterceptor', [
     '$q', '$location', 'AlertsService', 'TokensService',
     function factory($q, $location, alerts, tokens) {
 
@@ -215,7 +251,8 @@ IntelligenceWebClient.config([
     '$httpProvider',
     function($httpProvider) {
 
-        $httpProvider.interceptors.push('HttpInterceptor');
+        $httpProvider.interceptors.push('BroadcastInterceptor');
+        $httpProvider.interceptors.push('ErrorInterceptor');
     }
 ]);
 
