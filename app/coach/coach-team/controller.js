@@ -95,8 +95,6 @@ Team.controller('Coach.Team.controller', [
             {type: 'inactive'}
         ];
 
-        $scope.displayFilter = {type: 'none'};
-
         if (typeof $scope.data.coachData.roster !== 'undefined') {
             $scope.data.roster = $scope.data.coachData.roster;
         }
