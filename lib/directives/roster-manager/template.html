@@ -52,6 +52,7 @@
             <div class="row">
                 <div class="athlete col-xs-1">
                     <add-player data-add-new-player="addNewPlayer()"></add-player>
+                    <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
                 </div>
 
                 <div class="col-xs-11">
@@ -74,7 +75,7 @@
                                 <p>
                                     <span data-ng-if="player.lastAccessed">{{users.getLastAccessed(player) | date: 'mediumDate'}}</span>
                                     <span data-ng-if="!player.lastAccessed && !player.userId">No Account</span>
-                                    <a data-ng-if="player.userId && !player.lastAccessed" data-ng-click="players.resendEmail(player, data.team)">Resend Invitation</a>
+                                    <a href data-ng-if="player.userId && !player.lastAccessed" data-ng-click="players.resendEmail(player.userId, team.id)">Resend Invitation</a>
                                 </p>
                             </div>
                         </div>
