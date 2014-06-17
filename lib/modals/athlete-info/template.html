@@ -11,6 +11,20 @@
                 </a>
             </div>
 
+            <div data-ng-if="athlete.id">
+                <p class="pull-left">
+                    <span>
+                        <span class="jerseyNumber">{{athlete.jerseyNumbers[rosterId]}}</span>
+                        {{athlete.firstName}}
+                        {{athlete.lastName[0]}}.
+                    </span>
+                    <a href> (View Stats) </a>
+                </p>
+                <a class="pull-right" data-ng-click="$close()">
+                    <i class="icon-remove"></i>
+                </a>
+            </div>
+
         </h3>
 
     </header>
