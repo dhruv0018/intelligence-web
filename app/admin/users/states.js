@@ -28,8 +28,8 @@ Users.config([
                     }
                 },
                 resolve: {
-                    'Admin.Users.Data': [
-                        '$q', 'Admin.Users.Data',
+                    'Admin.Users.Data.Dependencies': [
+                        '$q', 'Admin.Users.Data.Dependencies',
                         function($q, data) {
                             return $q.all(data);
                         }
@@ -48,14 +48,10 @@ Users.config([
                     }
                 },
                 resolve: {
-                    'Users.User.Service': [
-                        '$stateParams', 'Users.User.Service',
-                        function($stateParams, user) {
-
-                            var userId = $stateParams.id;
-
-                            if (!userId) return user;
-                            else return user.init(userId);
+                    'Admin.Users.Data.Dependencies': [
+                        '$q', 'Admin.Users.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
                         }
                     ]
                 },
