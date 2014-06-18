@@ -66,6 +66,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     resources.forEach(function(resource) {
 
+                        resource = self.extend(resource);
                         self.storage.collection[resource.id] = resource;
                     });
 
