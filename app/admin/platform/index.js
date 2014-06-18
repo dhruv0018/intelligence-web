@@ -46,6 +46,14 @@ Platform.config([
                         templateUrl: 'platform.html',
                         controller: 'PlatformController'
                     }
+                },
+                resolve: {
+                    'Platform.Data': [
+                        '$q', 'Platform.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             })
 
@@ -54,24 +62,76 @@ Platform.config([
                 parent: 'platform',
                 views: {
                     'content@platform': {
-                        templateUrl: 'plan-defaults.html',
-                        controller: 'PlatformController'
+                        templateUrl: 'plan-defaults.html'/*,
+                        controller: 'PlatformController'*/
                     }
+                },
+                resolve: {
+                    'Platform.Data': [
+                        '$q', 'Platform.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             });
     }
 ]);
 
+Platform.service('Platform.Data.Dependencies', [
+    'SportsFactory', 'LeaguesFactory', 'PlansFactory',
+    function dataService(sports, leagues, plans) {
+
+        var Data = {};
+
+        angular.forEach(arguments, function(arg) {
+            Data[arg.description] = arg.load();
+        });
+
+        return Data;
+
+    }
+]);
+
+Platform.filter('monthFilter', function() {
+    return function(monthNumber) {
+        return moment(moment().month(moment(monthNumber) - 1)).format('MMM');
+    };
+});
+
+Platform.filter('filterDefaultPlans', function() {
+    return function(plans, sportId) {
+        if (!plans) return plans;
+
+        var returnArray = [];
+        for (var i = 0; i < plans.length; i++) {
+            if (!sportId || plans[i].sportId === sportId) {
+                returnArray.push(plans[i]);
+            }
+        }
+        return returnArray;
+    };
+});
+
 Platform.controller('PlatformController', [
-    '$scope', '$modal',  'LeaguesFactory', 'PlansFactory', 'SportsFactory',
-    function controller($scope, $modal, leagues, plans, sports) {
+    '$scope', '$modal', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'Platform.Data',
+    function controller($scope, $modal, turnaroundTimeMinTimeLookup, data) {
 
-        plans.getList().$promise.then(function(plans) {
+        $scope.leagues = data.leagues.getList();
+        $scope.indexedLeagues = data.leagues.getCollection();
+        $scope.plans = data.plans.getList();
+        $scope.sports = data.sports.getList();
 
-            angular.forEach(plans, function(plan) {
-                var startMonth = moment(plan.startMonth) - 1;
-                var endMonth = moment(plan.endMonth) - 1;
+        //TODO: plan should have sportId
+        angular.forEach($scope.plans, function(plan) {
+            plan.sportId = data.leagues.get(plan.leagueIds[0]).sportId;
+        });
 
+        /*$scope.leagues = leagues.getList({}, function(leagues) {
+            return leagues;
+        }, null, true);
+
+            plans.getList().$promise.then(function(plansList) {
                 startMonth = moment().month(startMonth);
                 endMonth = moment().month(endMonth);
 
@@ -81,15 +141,30 @@ Platform.controller('PlatformController', [
             $scope.plans = plans;
         });
 
-        $scope.sports = sports.getList();
+        $scope.sports = sports.getList();*/
 
+        $scope.turnaroundTimeMinTimeLookup = turnaroundTimeMinTimeLookup;
 
-        $scope.leagues = leagues.getList({}, function(leagues) {
-            return leagues;
-        }, null, true);
+        var openPlanModal = function(planToEdit) {
+            var modalInstance = $modal.open({
+                scope: $scope,
+                templateUrl: 'app/admin/platform/new-plan/new-plan.html',
+                controller: 'NewPlanController',
+                resolve: {
+                    Plans: function() { return $scope.plans; },
+                    PlatformData: function() { return data; },
+                    EditPlanObj: function() { return planToEdit; }
+                }
+            });
 
-        $scope.test = function() {
-            console.log('wut');
+            modalInstance.result.then(function closed(savedPlan) {
+                data.plans.save(savedPlan).then(function saved(returnedPlan) {
+                    if (!savedPlan.id) {
+                        returnedPlan.sportId = data.leagues.get(returnedPlan.leagueIds[0]).sportId;
+                        $scope.plans.push(returnedPlan);
+                    }
+                });
+            });
         };
 
         $scope.editPlan = function(plan) {

@@ -138,7 +138,7 @@ IntelligenceWebClient.factory('SportsFactory', [
 
                 var self = this;
 
-                return self.getAll(filter);
+                return self.storage.promise || (self.storage.promise = self.getAll(filter));
             },
 
             save: function(sport) {

@@ -1,7 +1,7 @@
 <form class="form-info" name="form" role="form">
 
     <div class="form-group">
-        <select class="form-control" name="sport" data-ng-model="sportId" data-ng-options="sport.id as sport.name for (index, sport) in sports" required>
+        <select class="form-control" name="sport" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
             <option value="">Pick a Sport</option>
         </select>
 
@@ -10,7 +10,7 @@
 
     <div class="form-group">
 
-        <select class="form-control" name="league" data-ng-model="team.leagueId" data-ng-options="league.id as league.name for (index, league) in leagues | filter:{'sportId':sportId}" data-ng-disabled="!sportId" required>
+        <select class="form-control" name="league" data-ng-model="team.leagueId" data-ng-options="league.id as league.name for league in leagues | filter:{'sportId':sportId}" data-ng-disabled="!sportId" required>
             <option value="">League Name</option>
         </select>
 
@@ -18,7 +18,7 @@
 
     <div class="form-group">
 
-        <select class="form-control select-school" name="school" data-ng-model="team.schoolId" data-ng-options="school.id as school.name for (index, school) in schools" required>
+        <select class="form-control select-school" name="school" data-ng-model="team.schoolId" data-ng-options="school.id as school.name for school in schools" required>
             <option value="">School Name</option>
         </select>
 

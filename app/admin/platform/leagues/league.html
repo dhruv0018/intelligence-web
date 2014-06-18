@@ -7,10 +7,10 @@
             <img class="logo" src="http://lorempixel.com/40/40/sports" class="pull-left" alt="Logo">
 
 
-            <h1 class="name" data-ng-if="$storage.league.name">{{ $storage.league.name }}</h1>
+            <h1 class="name" data-ng-if="$storage.league.name">{{ league.name }}</h1>
             <h1 class="name" data-ng-if="!$storage.league.name">New League</h1>
 
-            <h2 class="sport">{{ indexedSports[$storage.league.sportId].name }}</h2>
+            <h2 class="sport">{{ indexedSports[league.sportId].name }}</h2>
 
         </header>
 
