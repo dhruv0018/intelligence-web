@@ -151,17 +151,11 @@ Platform.controller('PlatformController', [
         };
 
         $scope.editPlan = function(plan) {
-            $modal.open({
-                templateUrl: 'app/admin/platform/new-plan/new-plan.html',
-                controller: 'NewPlanController'
-            });
+            openPlanModal(plan);
         };
 
         $scope.addPlan = function() {
-            $modal.open({
-                templateUrl: 'app/admin/platform/new-plan/new-plan.html',
-                controller: 'NewPlanController'
-            });
+            openPlanModal();
         };
     }
 ]);

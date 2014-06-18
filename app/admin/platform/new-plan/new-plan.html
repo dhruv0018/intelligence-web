@@ -8,64 +8,68 @@
 
     <div class="modal-body">
 
-        <div class="form-group">
-            <div>
-                <div class="plan-modal-firstrow-column">
-                    <label>Name of Plan</label>
-                    <input class="form-control" placeholder="Name" data-ng-model="plan.name" type="text" required>
+        <form name="form" role="form" novalidate>
+            <div class="form-group">
+                <div>
+                    <div class="plan-modal-firstrow-column">
+                        <label>Name of Plan</label>
+                        <input class="form-control" placeholder="Name" data-ng-model="defaultPlan.name" type="text" required>
+                    </div>
+                    <div class="plan-modal-firstrow-column pull-right">
+                        <label>For what sport</label>
+                        <select class="form-control" name="sport" data-ng-model="defaultPlan.sportId" data-ng-change="defaultPlan.leagueIds = []" data-ng-options="sport.id as sport.name for sport in sports">
+                            <option value="">Sport</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="plan-modal-firstrow-column pull-right">
-                    <label>For what sport</label>
-                    <select class="form-control" name="sport" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sports">
-                        <option value="">Sport</option>
-                    </select>
+                <label>For what leagues?</label>
+                <div class="leaguebox-container" data-ng-show="defaultPlan.sportId >= 0">
+                    <div class="form-group leagueboxes" data-ng-repeat="league in leagues | filter:{'sportId':defaultPlan.sportId}" required>
+                        <input type="checkbox" data-ng-checked="{{ defaultPlan.leagueIds.indexOf(league.id) !== -1 }}" data-ng-click="toggleLeagueId(league)"> {{ league.name }}
+                    </div>
                 </div>
-            </div>
-            <label>For what leagues?</label>
-            <div class="leaguebox-container">
-                <div class="form-group leagueboxes" data-ng-repeat="league in leagues | filter:{'sportId':sportId}" required>
-                    <input type="checkbox" data-ng-checked="{{ defaultPlan.leagueIds.indexOf(league.id) !== -1 }}" data-ng-click="toggleLeagueId(league)"> {{ league.name }}
-                </div>
-            </div>
+                <h3 data-ng-hide="defaultPlan.sportId">(Choose a sport)</h3>
 
-            <label>Dates of the plan</label>
-            <div class="plandate-container">
-                <label>from</label>
-                <div class="dateholder"><date data-ng-model="plan.startDate"></date></div>
-                <label>to</label>
-                <div class="dateholder"><date data-ng-model="plan.endDate"></date></div>
-            </div>
-            <div class="gamesrow">
-                <div>
-                    <label>Max games per plan</label>
-                    <input class="form-control" type="text" data-ng-model="plan.maxGamesPerPlan" required>
+                <label>Dates of the plan</label>
+                <div class="plandate-container">
+                    <label>from</label>
+                    <div class="dateholder"><date data-ng-model="defaultPlan.startDate"></date></div>
+                    <label>to</label>
+                    <div class="dateholder"><date data-ng-model="defaultPlan.endDate"></date></div>
                 </div>
-                <div>
-                    <label>Max games per season</label>
-                    <input class="form-control" type="text" data-ng-model="plan.maxAnyGames" required>
+                <div class="gamesrow">
+                    <div>
+                        <label>Max games per plan</label>
+                        <input class="form-control" type="number" data-min="0" data-ng-model="defaultPlan.maxGamesPerPlan" required>
+                    </div>
+                    <div>
+                        <label>Max games per season</label>
+                        <input class="form-control" type="number" data-min="0" data-ng-model="defaultPlan.maxAnyGames" required>
+                    </div>
                 </div>
-            </div>
-            <div class="gamesrow">
-                <div>
-                    <label>Default # of regular games</label>
-                    <input class="form-control" type="text" data-ng-model="plan.maxRegularGames" required> per week
+                <div class="gamesrow">
+                    <div>
+                        <label>Default # of regular games</label>
+                        <input class="form-control" type="number" data-min="0" data-ng-model="defaultPlan.maxRegularGames" required> per week
+                    </div>
+                    <div>
+                        <label>Default # of scouting games</label>
+                        <input class="form-control" type="number" data-min="0" data-ng-model="defaultPlan.maxScoutingGames" required> per week
+                    </div>
                 </div>
-                <div>
-                    <label>Default # of scouting games</label>
-                    <input class="form-control" type="text" data-ng-model="plan.maxScoutingGames" required> per week
+                <div class="gamesrow">
+                    <div>
+                        <label>Default turnaround time</label>
+                        <select class="form-control" data-ng-model="defaultPlan.maxTurnaroundTime" data-ng-options="time.value as time.name for time in maxTurnaroundTimes" required>
+                            <option></option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="gamesrow">
-                <div>
-                    <label>Default turnaround time</label>
-                    <select class="form-control" data-ng-model="plan.turnaroundInterval" data-ng-options="time.time for time in maxTurnaroundTimes">{{ maxTurnaroundTimes }}</select>
-                    <option value="time.value"></option>
-                </div>
-            </div>
-            <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="savePlan(plan)">Save</button>
+                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="savePlan()">Save</button>
 
 
-        </div>
+            </div>
+        </form>
 
     </div>
 

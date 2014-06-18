@@ -47,7 +47,7 @@ NewPlan.controller('NewPlanController', [
             if (editPlanObj.leagueIds.length) {
                 //All leagues must have the same sportId, so just grab the first
                 //TODO: default plan should have sportId?
-                $scope.defaultPlan.sportId = data.leagues.collection[editPlanObj.leagueIds[0]].sportId;
+                $scope.defaultPlan.sportId = data.leagues.get(editPlanObj.leagueIds[0]).sportId;
             }
 
             //Format the saved dates for editing
@@ -86,25 +86,20 @@ NewPlan.controller('NewPlanController', [
 
         $scope.savePlan = function savePlan() {
 
-            var startDate = moment(plan.startDate);
-            var endDate = moment(plan.endDate);
+            var startDate = moment($scope.defaultPlan.startDate);
+            var endDate = moment($scope.defaultPlan.endDate);
 
-            plan.startDay = moment(startDate).date();
-            plan.startMonth = moment(startDate).month() + 1;
+            $scope.defaultPlan.startDay = moment(startDate).date();
+            $scope.defaultPlan.startMonth = moment(startDate).month() + 1;
 
-            plan.endDay = moment(endDate).date();
-            plan.endMonth = moment(endDate).month() + 1;
-
-            plan.maxTurnaroundTime = plan.turnaroundInterval.value;
+            $scope.defaultPlan.endDay = moment(endDate).date();
+            $scope.defaultPlan.endMonth = moment(endDate).month() + 1;
 
             // clean up extra attributes
-            delete plan.startDate;
-            delete plan.endDate;
-            delete plan.turnaroundInterval;
+            delete $scope.defaultPlan.startDate;
+            delete $scope.defaultPlan.endDate;
 
-            plans.save(plan);
-
-            $modalInstance.close();
+            $modalInstance.close($scope.defaultPlan);
 
         };
 
