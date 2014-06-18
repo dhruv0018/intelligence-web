@@ -31,14 +31,17 @@ Users.run([
  * @module Users
  * @type {service}
  */
-Users.service('Admin.Users.Data', [
-    'Admin.Data',
-    function(data) {
+Users.service('Admin.Users.Data.Dependencies', [
+    'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
+    function(sports, leagues, teams, users) {
 
         var Data = {
-        };
 
-        angular.extend(Data, data);
+            sports: sports.load(),
+            leagues: leagues.load(),
+            teams: teams.load(),
+            users: users.load()
+        };
 
         return Data;
     }
