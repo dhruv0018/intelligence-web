@@ -104,7 +104,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     Object.keys(self.storage.collection).forEach(function(key) {
 
                         self.storage.list.push(self.storage.collection[key]);
-                    })
+                    });
 
                     if (resources.length < filter.count) {
 
