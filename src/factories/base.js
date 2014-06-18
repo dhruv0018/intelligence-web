@@ -128,7 +128,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                return self.getAll(filter);
+                self.getAll(filter);
+
+                return self;
             },
 
             save: function(resource, success, error) {
