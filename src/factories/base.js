@@ -68,7 +68,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not get ' + self.description);
                 };
 
-                return self.resource.get({ id: id }, callback, error);
+                return self.resource.get({ id: id }, callback, error).$promise;
             },
 
             getAll: function(filter, success, error) {
@@ -162,7 +162,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return update.$promise.then(function() {
 
-                        return self.getOne(resource.id).$promise.then(function(resource) {
+                        return self.getOne(resource.id).then(function(resource) {
 
                             self.storage.list[self.storage.list.indexOf(resource)] = resource;
                             self.storage.collection[resource.id] = resource;
