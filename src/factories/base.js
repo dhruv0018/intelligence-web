@@ -66,8 +66,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 return query.$promise.then(function(resources) {
 
-                    console.log('res', resources.length, filter, self.storage.list, resources);
-
                     self.storage.list = self.storage.list.concat(resources);
 
                     resources.forEach(function(resource) {
@@ -145,8 +143,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                console.log(self.storage.promise);
-
                 return self.storage.promise || (self.storage.promise = self.getAll(filter));
             },
 
@@ -172,7 +168,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not save resource');
                 };
 
-                console.log('savestate', resource);
                 if (resource.id) {
 
                     var update = self.resource.update(parameters, resource, success, error);

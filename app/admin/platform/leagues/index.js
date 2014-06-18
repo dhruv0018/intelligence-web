@@ -110,8 +110,6 @@ Leagues.controller('LeagueController', [
     '$scope', '$state', '$stateParams', 'Leagues.Data',
     function controller($scope, $state, $stateParams, data) {
 
-        console.log('ldata', data);
-
         var leagueId = $stateParams.id;
 
         $scope.league = data.leagues.get(leagueId);
@@ -121,8 +119,6 @@ Leagues.controller('LeagueController', [
         $scope.positionsets = data.positionsets.getList();
 
         $scope.genders = ['male', 'female', 'coed'];
-
-        console.log($scope);
 
         $scope.save = function(league) {
 

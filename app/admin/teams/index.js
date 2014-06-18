@@ -270,9 +270,7 @@ Teams.controller('TeamPlansController', [
         };
 
         $scope.save = function(team) {
-            console.log('cteam', team);
-            teams.save(team).then(function() {
-            });
+            teams.save(team).then(function() {});
         };
     }
 ]);
@@ -286,8 +284,6 @@ Teams.controller('TeamPlansController', [
 Teams.controller('TeamController', [
     '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data',
     function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data) {
-
-        console.log('Team-data', data);
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
@@ -328,11 +324,7 @@ Teams.controller('TeamController', [
             }
         }
 
-        /*$scope.$watch('team.leagueId', function(sportId) {
-
-            $scope.sportId = sportId;
-        });*/
-
+        //TODO: are all of the watches below necessary?
         $scope.$watch('addNewHeadCoach', function() {
 
             if ($scope.addNewHeadCoach) {
@@ -390,22 +382,6 @@ Teams.controller('TeamController', [
             $scope.addNewHeadCoach = false;
         };
 
-        /*$scope.addNewPlan = function() {
-            $modal.open({
-
-                templateUrl: 'app/admin/teams/team-plan/team-plan.html',
-                controller: 'TeamPlanController'
-            });
-        };
-
-        $scope.addNewPackage = function() {
-            $modal.open({
-
-                templateUrl: 'app/admin/teams/team-package/team-package.html',
-                controller: 'TeamPackageController'
-            });
-        };*/
-
         $scope.save = function(team) {
 
             data.teams.save(team).then(function() {
@@ -424,8 +400,6 @@ Teams.controller('TeamController', [
 Teams.controller('TeamsController', [
     '$rootScope', '$scope', '$state', 'Teams.Data',
     function controller($rootScope, $scope, $state, data) {
-
-        console.log('Teams-data', data);
 
         $scope.teams = data.teams.getList();
 

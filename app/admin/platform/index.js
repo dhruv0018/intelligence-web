@@ -75,8 +75,6 @@ Platform.service('Platform.Data.Dependencies', [
 
         var Data = {};
 
-        sports.storage.promise = null;
-
         angular.forEach(arguments, function(arg) {
             Data[arg.description] = arg.load();
         });
@@ -110,8 +108,6 @@ Platform.controller('PlatformController', [
     '$scope', '$modal', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'Platform.Data',
     function controller($scope, $modal, turnaroundTimeMinTimeLookup, data) {
 
-        console.log('pdata', data);
-
         $scope.leagues = data.leagues.getList();
         $scope.indexedLeagues = data.leagues.getCollection();
         $scope.plans = data.plans.getList();
@@ -138,7 +134,6 @@ Platform.controller('PlatformController', [
 
             modalInstance.result.then(function closed(savedPlan) {
                 data.plans.save(savedPlan).then(function saved(returnedPlan) {
-                    console.log('ret', returnedPlan);
                     if (!savedPlan.id && returnedPlan) {
                         returnedPlan.sportId = data.leagues.get(returnedPlan.leagueIds[0]).sportId;
                         $scope.plans.push(returnedPlan);
