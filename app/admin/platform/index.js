@@ -62,8 +62,7 @@ Platform.config([
                 parent: 'platform',
                 views: {
                     'content@platform': {
-                        templateUrl: 'plan-defaults.html'/*,
-                        controller: 'PlatformController'*/
+                        templateUrl: 'plan-defaults.html'
                     }
                 },
                 resolve: {
@@ -126,22 +125,6 @@ Platform.controller('PlatformController', [
         angular.forEach($scope.plans, function(plan) {
             plan.sportId = data.leagues.get(plan.leagueIds[0]).sportId;
         });
-
-        /*$scope.leagues = leagues.getList({}, function(leagues) {
-            return leagues;
-        }, null, true);
-
-            plans.getList().$promise.then(function(plansList) {
-                startMonth = moment().month(startMonth);
-                endMonth = moment().month(endMonth);
-
-                plan.endMonth = moment(endMonth).format('MMM');
-                plan.startMonth = moment(startMonth).format('MMM');
-            });
-            $scope.plans = plans;
-        });
-
-        $scope.sports = sports.getList();*/
 
         $scope.turnaroundTimeMinTimeLookup = turnaroundTimeMinTimeLookup;
 

@@ -384,14 +384,19 @@ Teams.controller('TeamController', [
  * @type {Controller}
  */
 Teams.controller('TeamsController', [
-    '$rootScope', '$scope', '$state', /*'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory',*/ 'Teams.Data',
+    '$rootScope', '$scope', '$state', 'Teams.Data',
     function controller($rootScope, $scope, $state, data) {
 
         $scope.teams = data.teams.getList();
-        $scope.sports = data.sports.getList();
-        $scope.leagues = data.leagues.getList();
-        $scope.schools = data.schools.getList();
 
+        $scope.sports = data.sports.getList();
+        $scope.indexedSports = data.sports.getCollection();
+
+        $scope.leagues = data.leagues.getList();
+        $scope.indexedLeagues = data.leagues.getCollection();
+
+        $scope.schools = data.schools.getList();
+        $scope.indexedSchools = data.schools.getCollection();
 
         $scope.add = function() {
             $state.go('team-info');

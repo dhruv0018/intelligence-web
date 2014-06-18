@@ -108,35 +108,15 @@ Leagues.service('Leagues.Data.Dependencies', [
  * @type {Controller}
  */
 Leagues.controller('LeagueController', [
-    '$scope', '$state', '$stateParams', /*'LeaguesFactory', 'TeamsResource', 'SportsFactory', 'TagsetsFactory', 'PositionsetsFactory',*/ 'Leagues.Data',
+    '$scope', '$state', '$stateParams', 'Leagues.Data',
     function controller($scope, $state, $stateParams, data) {
 
-        //var league = $scope.$storage.league;
         var leagueId = $stateParams.id;
 
         $scope.league = data.leagues.get(leagueId);
-
-        /*if (!league || leagueId !== league.id) {
-
-            leagues.get(leagueId, function(league) {
-
-                $scope.$storage.league = league;
-            });
-        }*/
-
         $scope.sports = data.sports.getList();
         $scope.indexedSports = data.sports.getCollection();
-
-        /*$scope.indexedSports = {};
-        $scope.sports = sports.getList({}, function(sports) {
-            sports.forEach(function(sport) {
-                $scope.indexedSports[sport.id] = sport;
-            });
-            return sports;
-        });*/
-
         $scope.tagsets = data.tagsets.getList();
-
         $scope.positionsets = data.positionsets.getList();
 
         $scope.genders = ['male', 'female', 'coed'];
@@ -161,8 +141,8 @@ Leagues.controller('LeagueController', [
  * @type {Controller}
  */
 Leagues.controller('LeaguesController', [
-    '$scope', '$state', 'LeaguesFactory', 'SportsFactory', 'LeaguesStorage', 'SportsStorage', 'Leagues.Data',
-    function controller($scope, $state, leaguesFactory, sportsFactory, leagues, sports, data) {
+    '$scope', '$state', 'Leagues.Data',
+    function controller($scope, $state, data) {
 
         $scope.leagues = data.leagues.getList();
         $scope.sports = data.sports.getList();
