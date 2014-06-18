@@ -46,7 +46,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not get ' + self.description);
                 };
 
-                return self.resource.get({ id: id }, callback, error).$promise.then(function(resource) {
+                return self.resource.get({ id: id }, success, error).$promise.then(function(resource) {
 
                     resource = self.extend(resource);
                     self.storage.collection[resource.id] = resource;
