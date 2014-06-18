@@ -62,6 +62,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         self.storage.list.push(resource);
                     }
+
+                    return resource;
                 });
             },
 
