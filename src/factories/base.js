@@ -24,6 +24,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
             get: function(id) {
 
+                if (!self.storage) throw new Error(self.description + ' storage not defined');
                 if (!self.storage.collection) throw new Error(self.description + ' not loaded');
 
                 return self.storage.collection[id];
@@ -31,6 +32,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
             getList: function() {
 
+                if (!self.storage) throw new Error(self.description + ' storage not defined');
                 if (!self.storage.collection) throw new Error(self.description + ' not loaded');
 
                 return self.storage.list;
@@ -38,6 +40,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
             getCollection: function() {
 
+                if (!self.storage) throw new Error(self.description + ' storage not defined');
                 if (!self.storage.collection) throw new Error(self.description + ' not loaded');
 
                 return self.storage.collection;
