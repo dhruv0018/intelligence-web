@@ -73,9 +73,9 @@
                                     </strong>
                                 </p>
                                 <p>
-                                    <!--<span data-ng-if="athlete.user.lastAccessed">{{users.getLastAccessed(athlete.user) | date: 'mediumDate'}}</span>-->
-                                    <!--<span data-ng-if="!athlete.user.lastAccessed && !athlete.player.userId">No Account</span>-->
-                                    <!--<a href data-ng-if="athlete.player.userId && !athlete.user.lastAccessed" data-ng-click="players.resendEmail(athlete.player.userId, team.id)">Resend Invitation</a>-->
+                                    <span data-ng-if="users[player.userId].lastAccessed">{{usersFactory.getLastAccessed(users[player.userId]) | date: 'mediumDate'}}</span>
+                                    <span data-ng-if="!player.userId && !users[player.userId].lastAccessed">No Account</span>
+                                    <a href data-ng-if="player.userId && !users[player.userId].lastAccessed" data-ng-click="playersFactory.resendEmail(player.userId, team.id)">Resend Invitation</a>
                                 </p>
                             </div>
                         </div>

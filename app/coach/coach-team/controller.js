@@ -85,9 +85,11 @@ Team.controller('Coach.Team.controller', [
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
-        $scope.players = players;
-        $scope.users = users;
+        $scope.playersFactory = players;
+        $scope.usersFactory = users;
         $scope.data = data;
+
+        console.log($scope.data);
 
         $scope.filtering = [
             {type: 'none'},
@@ -109,6 +111,15 @@ Team.controller('Coach.Team.controller', [
                 player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
                 $scope.data.roster.pop();
                 $scope.data.roster.push(player);
+
+                if (player.userId) {
+                    if (typeof $scope.data.coachData.users[player.userId] === 'undefined') {
+                        users.get(player.userId, function(user) {
+                            console.log(user);
+                            $scope.data.coachData.users[player.userId] = user.id;
+                        });
+                    }
+                }
 
             });
         };
