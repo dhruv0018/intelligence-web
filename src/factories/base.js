@@ -43,6 +43,25 @@ IntelligenceWebClient.factory('BaseFactory', [
                 return self.storage.collection;
             },
 
+            getOne: function(id, success, error) {
+
+                var self = this;
+
+                var callback = function(resource) {
+
+                    resource = self.extend(resource);
+
+                    return success ? success(resource) : resource;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get ' + self.description);
+                };
+
+                return self.resource.get({ id: id }, callback, error);
+            },
+
             getAll: function(filter, success, error) {
 
                 var self = this;
@@ -129,7 +148,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return update.$promise.then(function() {
 
-                        return self.get(resource.id).$promise.then(function(resource) {
+                        return self.getOne(resource.id).$promise.then(function(resource) {
 
                             self.storage.list[self.storage.list.indexOf(resource)] = resource;
                             self.storage.collection[resource.id] = resource;
