@@ -26,6 +26,20 @@ IntelligenceWebClient.factory('PlansFactory', [
             storage: PlansStorage,
 
             resource: PlansResource,
+
+            getByLeague: function(id, success, error) {
+                var self = this;
+
+                var callback = success || function(plans) {
+                    return plans;
+                };
+
+                error = error || function() {
+                    throw new Error('could not get plans');
+                };
+
+                return self.resource.getByLeague({leagueId: id}, callback, error);
+            }
         };
 
         angular.augment(PlansFactory, BaseFactory);

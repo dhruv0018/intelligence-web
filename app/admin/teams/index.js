@@ -1,5 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+require('team-plan');
+require('team-package');
 
 /**
  * Teams page module.
@@ -9,7 +11,9 @@ var Teams = angular.module('teams', [
     'ui.router',
     'ui.bootstrap',
     'ui.unique',
-    'ui.showhide'
+    'ui.showhide',
+    'team-plan',
+    'team-package'
 ]);
 
 /* Cache the template file */
@@ -20,6 +24,7 @@ Teams.run([
         $templateCache.put('team.html', require('./team.html'));
         $templateCache.put('teams.html', require('./teams.html'));
         $templateCache.put('team-info.html', require('./team-info.html'));
+        $templateCache.put('team-plans.html', require('./team-plans.html'));
         $templateCache.put('team-members.html', require('./team-members.html'));
     }
 ]);
@@ -109,6 +114,17 @@ Teams.config([
                             return $q.all(data);
                         }
                     ]
+                }
+            })
+
+            .state('team-plans', {
+                url: '',
+                parent: 'team',
+                views: {
+                    'content@team': {
+                        templateUrl: 'team-plans.html',
+                        controller: 'TeamPlansController'
+                    }
                 }
             })
 
@@ -267,7 +283,7 @@ Teams.controller('TeamPlansController', [
  * @type {Controller}
  */
 Teams.controller('TeamController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', /*'UsersFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesResource', 'SchoolsResource',*/ 'Teams.Data',
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data',
     function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data) {
 
         $scope.ROLES = ROLES;
@@ -306,7 +322,7 @@ Teams.controller('TeamController', [
             }
         }
 
-        $scope.$watch('$storage.team.league.sportId', function(sportId) {
+        $scope.$watch('team.league.sportId', function(sportId) {
 
             $scope.sportId = sportId;
         });
@@ -366,6 +382,22 @@ Teams.controller('TeamController', [
             $scope.team.roles = $scope.team.roles || [];
             $scope.team.roles.push(newCoachRole);
             $scope.addNewHeadCoach = false;
+        };
+
+        $scope.addNewPlan = function() {
+            $modal.open({
+
+                templateUrl: 'app/admin/teams/team-plan/team-plan.html',
+                controller: 'TeamPlanController'
+            });
+        };
+
+        $scope.addNewPackage = function() {
+            $modal.open({
+
+                templateUrl: 'app/admin/teams/team-package/team-package.html',
+                controller: 'TeamPackageController'
+            });
         };
 
         $scope.save = function(team) {

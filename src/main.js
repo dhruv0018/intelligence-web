@@ -30,6 +30,7 @@ require('./services/account');
 require('./services/alerts');
 require('./services/scripts');
 require('./services/indexing');
+require('./services/date');
 
 require('./constants/users');
 require('./constants/games');
@@ -38,6 +39,7 @@ require('./constants/videos');
 require('./constants/tagsets');
 require('./constants/filtersets');
 require('./constants/kvs-whitelist');
+require('./constants/turnaroundtimes');
 require('./constants/football/gaps');
 require('./constants/football/zones');
 

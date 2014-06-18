@@ -1,0 +1,68 @@
+<div class="team-plan-modal">
+
+    <header class="modal-header">
+
+        <h3 class="modal-title">Pick a plan for this team<i class="pull-right icon-remove" data-ng-click="cancel()"></i></h3>
+
+    </header>
+
+    <div class="modal-body">
+        <form class="plans-info" name="form" role="form" novalidate>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Plan Type</label>
+                    <select class="form-control" data-ng-model="defaultPlan.selected" data-ng-options="plan.name for plan in defaultPlans">
+                        <option value="">Choose Plan</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Start Date</label>
+                    <date data-ng-model="teamPlan.startDate" required></date>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>End Date</label>
+                    <date data-ng-model="teamPlan.endDate" required></date>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Max Games</label>
+                    <input type="number" data-min="0" class="form-control" data-ng-model="teamPlan.maxGamesPerPlan" required/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Reg. Breakdowns</label>
+                    <input type="number" data-min="0" class="form-control" data-ng-model="teamPlan.maxRegularGames" required/>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Scout Breakdowns</label>
+                    <input type="number" data-min="0" class="form-control" data-ng-model="teamPlan.maxScoutingGames" required/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Turnaround Time</label>
+                    <select class="form-control" data-ng-model="teamPlan.maxTurnaroundTime" data-ng-options="turnaroundTime.value as turnaroundTime.name for turnaroundTime in turnaroundTimes.options" required>
+                        <option value="">Choose Turnaround</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="saveTeam(team)">Save</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>
