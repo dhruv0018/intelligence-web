@@ -16,217 +16,16 @@ IntelligenceWebClient.service('TeamsStorage', [
 ]);
 
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope','ROLES', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'UsersFactory', 'TeamsStorage',
-    function($rootScope, ROLES, TeamsResource, schools, usersResource, users, TeamsStorage) {
-
-        var dateModifyArray = 'teamPackages teamPlans'.split(' ');
-        var dateModifyArrayProperties = 'startDate endDate'.split(' ');
-
-        function parseDateStringsIntoObjects(team) {
-            dateModifyArray.map(function(arrayToModify) {
-
-                if (typeof team[arrayToModify] === 'undefined') return;
-
-                angular.forEach(team[arrayToModify], function(value, key) {
-
-                    dateModifyArrayProperties.map(function(dateProperty) {
-
-                        if (typeof value[dateProperty] === 'undefined') return;
-
-                        var dateObj;
-
-                        if (angular.isString(value[dateProperty]) &&
-                            !isNaN((dateObj = new Date(value[dateProperty])).getTime())) {
-
-                            value[dateProperty] = dateObj;
-                        }
-                    });
-                });
-            });
-        }
-
-        function stringifyDateObjects(team) {
-            dateModifyArray.map(function(arrayToModify) {
-
-                if (typeof team[arrayToModify] === 'undefined') return;
-
-                angular.forEach(team[arrayToModify], function(value, key) {
-
-                    dateModifyArrayProperties.map(function(dateProperty) {
-
-                        if (typeof value[dateProperty] === 'undefined') return;
-
-                        if (value[dateProperty] instanceof Date) value[dateProperty] = value[dateProperty].toISOString();
-                    });
-                });
-            });
-        }
+    '$rootScope','ROLES', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory',
+    function($rootScope, ROLES, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users) {
 
         var TeamsFactory = {
 
-            resource: TeamsResource,
+            description: 'teams',
 
             storage: TeamsStorage,
 
-            description: 'teams',
-
-            extendTeam: function(team) {
-
-                var self = this;
-
-                /* Copy all of the properties from the retrieved $resource
-                 * "team" object. */
-                angular.extend(team, self);
-
-                return team;
-            },
-
-            get: function(id, success, error) {
-
-                var self = this;
-
-                var callback = function(team) {
-
-                    team = self.extendTeam(team);
-
-                    return success ? success(team) : team;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not get team');
-                };
-
-                return self.resource.get({ id: id }, callback, error);
-            },
-
-            load: function(filter) {
-
-                var self = this;
-
-                return self.storage.promise || (self.storage.promise = self.getAll(filter));
-            },
-
-            getAll: function(filter, success, error) {
-
-                var self = this;
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || PAGE_SIZE;
-
-                success = success || function(resources) {
-
-                    return resources;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load ' + self.description + 's collection');
-                };
-
-                var query = self.resource.query(filter, success, error);
-
-                return query.$promise.then(function(resources) {
-
-                    self.storage.list = self.storage.list.concat(resources);
-
-                    resources.forEach(function(resource) {
-                        resource = self.extendTeam(resource);
-                        self.storage.collection[resource.id] = resource;
-                    });
-
-                    if (resources.length < filter.count) {
-
-                        return self.storage.collection;
-                    }
-
-                    else {
-
-                        filter.start = filter.start + filter.count + 1;
-
-                        return self.getAll(filter);
-                    }
-                });
-            },
-
-            getList: function(filter, success, error, index) {
-
-                var self = this;
-
-                if (angular.isFunction(filter)) {
-
-                    index = error;
-                    error = success;
-                    success = filter;
-                    filter = null;
-                }
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || 1000;
-
-                var callback = function(teams) {
-
-                    var indexedTeams = {};
-
-                    teams.forEach(function(team) {
-
-                        team = self.extendTeam(team);
-
-                        indexedTeams[team.id] = team;
-                    });
-
-                    teams = index ? indexedTeams : teams;
-
-                    return success ? success(teams) : teams;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load teams list');
-                };
-
-                return self.resource.query(filter, callback, error);
-            },
-
-            save: function(team, success, error) {
-
-                var self = this;
-
-                team = team || self;
-
-                delete team.league;
-                delete team.members;
-                delete team.storage;
-                delete team.resource;
-                delete team.description;
-
-                if (team.schoolId) delete team.address;
-
-                parameters = {};
-
-                success = success || function(team) {
-
-                    return self.extendTeam(team);
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not save team');
-                };
-
-                if (team.id) {
-
-                    var updatedTeam = self.resource.update(parameters, team, success, error);
-                    return updatedTeam.$promise;
-
-                } else {
-
-                    var newTeam = self.resource.create(parameters, team, success, error);
-                    return newTeam.$promise;
-                }
-            },
+            resource: TeamsResource,
 
             removeRole: function(role) {
 
@@ -311,6 +110,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 });
             }
         };
+
+        angular.augment(TeamsFactory, BaseFactory);
 
         return TeamsFactory;
     }

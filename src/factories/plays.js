@@ -6,19 +6,21 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'PlaysResource',
-    function(PlaysResource) {
+    'PlaysResource', 'PlaysStorage', 'BaseFactory',
+    function(PlaysResource, PlaysStorage, BaseFactory) {
 
         var PlaysFactory = {
 
+            description: 'plays',
+
+            storage: PlaysStorage,
+
             resource: PlaysResource,
 
-            extendPlay: function(play) {
+            extend: function(play) {
 
                 var self = this;
 
-                /* Copy all of the properties from the retrieved $resource
-                 * "play" object. */
                 angular.extend(play, self);
 
                 if (play.events) {
@@ -52,7 +54,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     plays.forEach(function(play) {
 
-                        play = self.extendPlay(play);
+                        play = self.extend(play);
 
                         indexedPlays[play.id] = play;
                     });
@@ -159,7 +161,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     return updatePlay.$update().then(function(play) {
 
-                        play = self.extendPlay(play);
+                        play = self.extend(play);
                         return play;
                     });
 
@@ -172,7 +174,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     return newPlay.$create().then(function(play) {
 
-                        play = self.extendPlay(play);
+                        play = self.extend(play);
                         play.events = events;
                         return play.save();
                     });
@@ -189,7 +191,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 success = success || function(play) {
 
-                    return self.extendPlay(play);
+                    return self.extend(play);
                 };
 
                 error = error || function() {
@@ -209,6 +211,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 }
             }
         };
+
+        angular.augment(PlaysFactory, BaseFactory);
 
         return PlaysFactory;
     }
