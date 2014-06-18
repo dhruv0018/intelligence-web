@@ -99,36 +99,22 @@ Team.controller('Coach.Team.controller', [
             $scope.data.roster = $scope.data.coachData.roster;
         }
 
-        angular.forEach($scope.data.roster, function(athlete) {
-            athlete = players.constructPositionDropdown(athlete.player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+        angular.forEach($scope.data.roster, function(player) {
+            player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
         });
 
         $scope.singleSave = function(player) {
-            var tempPlayer = players.getPositionsFromDowndown([player], $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
-            console.log(tempPlayer);
-            players.save($scope.data.rosterId, tempPlayer).then(function(player) {
+            var tempPlayer = players.getPositionsFromDowndown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+            players.singleSave($scope.data.rosterId, tempPlayer).then(function(player) {
                 player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
-                var found = false;
-
-                angular.forEach($scope.data.roster, function(athlete) {
-                    if (player.id === athlete.player.id) {
-                        found = true;
-                        athlete = player;
-                    }
-                });
-
-                if (!found) {
-                    $scope.data.roster.push({
-                        player: player,
-                        user: {}
-                    });
-                }
+                $scope.data.roster.pop();
+                $scope.data.roster.push(player);
 
             });
         };
 
-        $scope.sortPlayers = function(athlete) {
-            return Number(athlete.player.jerseyNumbers[data.rosterId]);
+        $scope.sortPlayers = function(player) {
+            return Number(player.jerseyNumbers[data.rosterId]);
         };
     }
 ]);

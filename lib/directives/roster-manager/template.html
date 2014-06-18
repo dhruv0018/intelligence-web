@@ -20,17 +20,17 @@
 
                 <tbody>
 
-                <tr ng-if="!athlete.player.isUnknown" data-ng-repeat="athlete in roster | filter:isActive">
+                <tr ng-if="!player.isUnknown" data-ng-repeat="player in roster | filter:isActive">
 
-                    <td><input size="3" data-ng-model="athlete.player.jerseyNumbers[rosterId]" required></td>
+                    <td><input size="3" data-ng-model="player.jerseyNumbers[rosterId]" required></td>
 
-                    <td><input class="name" placeholder="First Name" data-ng-model="athlete.player.firstName" required></td>
+                    <td><input class="name" placeholder="First Name" data-ng-model="player.firstName" required></td>
 
-                    <td><input class="name" placeholder="Last Name" data-ng-model="athlete.player.lastName" required></td>
+                    <td><input class="name" placeholder="Last Name" data-ng-model="player.lastName" required></td>
 
                     <td>
                         <data-positions-dropdown data-player="player" data-positions="positions"></data-positions-dropdown>
-                        <button class="btn btn-blank pull-right" data-ng-click="deactivate(athlete.player)"><i class="icon-remove"></i></button>
+                        <button class="btn btn-blank pull-right" data-ng-click="deactivate(player)"><i class="icon-remove"></i></button>
                     </td>
 
                 </tr>
@@ -50,32 +50,32 @@
     <div data-ng-if=" type === 'interface' ">
         <div class="col-md-12">
             <div class="row">
-                <div class="athlete col-xs-1">
+                <div class="athlete col-xs-2">
                     <add-player data-add-new-player="addNewPlayer()"></add-player>
                     <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
                 </div>
 
-                <div class="col-xs-11">
+                <div class="col-xs-10">
                     <div class="row">
-                        <div class="athlete col-xs-2" data-ng-repeat="athlete in roster | filter: filterType | orderBy: sortingType ">
+                        <div class="athlete col-xs-2" data-ng-repeat="player in roster | filter: filterType | orderBy: sortingType ">
                             <profile-placeholder></profile-placeholder>
                             <div class="description">
-                                <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = athlete" href>
-                                    <span class="jerseyNumber">{{athlete.player.jerseyNumbers[rosterId]}}</span>
-                                    {{athlete.player.firstName}}
-                                    {{athlete.player.lastName[0]}} .
+                                <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
+                                    <span class="jerseyNumber">{{player.jerseyNumbers[rosterId]}}</span>
+                                    {{player.firstName}}
+                                    {{player.lastName[0]}} .
                                 </a>
                                 <p>
                                     <strong>
-                                        <span data-ng-if="athlete.player.positions[rosterId].length > 1"> Multiple Positions</span>
-                                        <span data-ng-if="athlete.player.positions[rosterId].length === 1"> {{athlete.player.positions[rosterId][0].description}}</span>
-                                        <span data-ng-if="!athlete.player.positions[rosterId]"> No Position Set</span>
+                                        <span data-ng-if="player.positions[rosterId].length > 1"> Multiple Positions</span>
+                                        <span data-ng-if="player.positions[rosterId].length === 1"> {{player.positions[rosterId][0].description}}</span>
+                                        <span data-ng-if="!player.positions[rosterId]"> No Position Set</span>
                                     </strong>
                                 </p>
                                 <p>
-                                    <span data-ng-if="athlete.player.lastAccessed">{{users.getLastAccessed(athlete.player) | date: 'mediumDate'}}</span>
-                                    <span data-ng-if="!athlete.player.lastAccessed && !athlete.player.userId">No Account</span>
-                                    <a href data-ng-if="athlete.player.userId && !athlete.player.lastAccessed" data-ng-click="players.resendEmail(athlete.player.userId, team.id)">Resend Invitation</a>
+                                    <!--<span data-ng-if="athlete.user.lastAccessed">{{users.getLastAccessed(athlete.user) | date: 'mediumDate'}}</span>-->
+                                    <!--<span data-ng-if="!athlete.user.lastAccessed && !athlete.player.userId">No Account</span>-->
+                                    <!--<a href data-ng-if="athlete.player.userId && !athlete.user.lastAccessed" data-ng-click="players.resendEmail(athlete.player.userId, team.id)">Resend Invitation</a>-->
                                 </p>
                             </div>
                         </div>
