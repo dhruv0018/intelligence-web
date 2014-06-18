@@ -117,7 +117,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 self.getAll(filter).then(function() {
 
-                    deferred.resolve();
+                    deferred.resolve(self);
                 });
 
                 return deferred.promise;
