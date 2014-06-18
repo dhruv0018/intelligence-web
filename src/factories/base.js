@@ -98,11 +98,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var callback = function(resource) {
+                success = success || function(resource) {
 
-                    resource = self.extend(resource);
-
-                    return success ? success(resource) : resource;
+                    return resource;
                 };
 
                 error = error || function() {
@@ -110,7 +108,23 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not get ' + self.description);
                 };
 
-                return self.resource.get({ id: id }, callback, error).$promise;
+                return self.resource.get({ id: id }, callback, error).$promise.then(function(resource) {
+
+                    resource = self.extend(resource);
+                    self.storage.collection[resource.id] = resource;
+
+                    var index = self.storage.list.indexOf(resource);
+
+                    if (~index) {
+
+                        self.storage.list[index] = resource;
+                    }
+
+                    else {
+
+                        self.storage.list.push(resource);
+                    }
+                });
             },
 
             getAll: function(filter, success, error) {
@@ -204,12 +218,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return update.$promise.then(function() {
 
-                        return self.getOne(resource.id).then(function(resource) {
-
-                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
-                            self.storage.collection[resource.id] = resource;
-                            return resource;
-                        });
+                        return self.getOne(resource.id);
                     });
 
                 } else {
