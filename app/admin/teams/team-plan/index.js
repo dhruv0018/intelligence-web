@@ -60,27 +60,27 @@ TeamPlan.controller('TeamPlanController', [
                 $scope.teamPlan = angular.copy(plan);
                 delete $scope.teamPlan.id; //prevent overwriting default plan on server
 
+                //Format the saved dates for editing
                 if (plan.startDay && plan.startMonth) {
+                    var startDate = dateZeroTime.generate();
+                    startDate.setMonth(plan.startMonth);
+                    startDate.setDate(plan.startDay);
 
-                    plan.startDate = moment();
-                    plan.startDate.date(plan.startDay);
-                    plan.startDate.month(plan.startMonth - 1);
-                    $scope.teamPlan.startDate = plan.startDate.toDate();
+                    $scope.teamPlan.startDate = startDate;
                 }
 
                 if (plan.endDay && plan.endMonth) {
+                    var endDate = dateZeroTime.generate();
+                    endDate.setMonth(plan.endMonth);
+                    endDate.setDate(plan.endDay);
 
-                    plan.endDate = moment();
-                    plan.endDate.date(plan.endDay);
-                    plan.endDate.month(plan.endMonth - 1);
-                    $scope.teamPlan.endDate = plan.endDate.toDate();
+                    $scope.teamPlan.endDate = endDate;
                 }
 
             }
         });
 
         $scope.defaultPlans = plans.getByLeague(team.leagueId);
-        console.log($scope.defaultPlans);
 
         $scope.cancel = function() {
             $modalInstance.dismiss('cancel');

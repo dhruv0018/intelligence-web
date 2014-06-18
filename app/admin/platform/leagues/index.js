@@ -45,7 +45,7 @@ Leagues.config([
                 },
                 resolve: {
                     'Leagues.Data': [
-                        '$q', 'Platform.Data.Dependencies',
+                        '$q', 'Leagues.Data.Dependencies',
                         function($q, data) {
                             return $q.all(data);
                         }
@@ -65,7 +65,7 @@ Leagues.config([
                 },
                 resolve: {
                     'Leagues.Data': [
-                        '$q', 'Platform.Data.Dependencies',
+                        '$q', 'Leagues.Data.Dependencies',
                         function($q, data) {
                             return $q.all(data);
                         }
@@ -78,8 +78,7 @@ Leagues.config([
                 parent: 'league',
                 views: {
                     'content@league': {
-                        templateUrl: 'league-info.html',
-                        controller: 'LeagueController'
+                        templateUrl: 'league-info.html'
                     }
                 }
             });
@@ -111,6 +110,8 @@ Leagues.controller('LeagueController', [
     '$scope', '$state', '$stateParams', 'Leagues.Data',
     function controller($scope, $state, $stateParams, data) {
 
+        console.log('ldata', data);
+
         var leagueId = $stateParams.id;
 
         $scope.league = data.leagues.get(leagueId);
@@ -121,9 +122,11 @@ Leagues.controller('LeagueController', [
 
         $scope.genders = ['male', 'female', 'coed'];
 
+        console.log($scope);
+
         $scope.save = function(league) {
 
-            leagues.save(league).then(function() {
+            data.leagues.save(league).then(function() {
                 $state.go('leagues');
             });
         };

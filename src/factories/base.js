@@ -66,6 +66,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 return query.$promise.then(function(resources) {
 
+                    console.log('res', resources.length, filter, self.storage.list, resources);
+
                     self.storage.list = self.storage.list.concat(resources);
 
                     resources.forEach(function(resource) {
@@ -143,7 +145,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                return self.getAll(filter);
+                console.log(self.storage.promise);
+
+                return self.storage.promise || (self.storage.promise = self.getAll(filter));
             },
 
             save: function(resource, success, error) {

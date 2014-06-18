@@ -173,8 +173,8 @@ Teams.filter('visiblePlanOrPackage', [
                 planOrPackage = planOrPackageArray[i];
 
                 if (typeof planOrPackage.endDate === 'string') {
-                    planOrPackage.endDate = new Date(planOrPackage.endDate);
-                    planOrPackage.startDate = new Date(planOrPackage.startDate);
+                    planOrPackage.endDate = newDate.generate(planOrPackage.endDate);
+                    planOrPackage.startDate = newDate.generate(planOrPackage.startDate);
                 }
 
                 if (typeof planOrPackage.endDate !== 'undefined' &&

@@ -52,13 +52,13 @@ NewPlan.controller('NewPlanController', [
 
             //Format the saved dates for editing
             var startDate = newDate.generate();
-            startDate.setMonth($scope.defaultPlan.startMonth - 1);
+            startDate.setMonth($scope.defaultPlan.startMonth);
             startDate.setDate($scope.defaultPlan.startDay);
 
             $scope.defaultPlan.startDate = startDate;
 
             var endDate = newDate.generate();
-            endDate.setMonth($scope.defaultPlan.endMonth - 1);
+            endDate.setMonth($scope.defaultPlan.endMonth);
             endDate.setDate($scope.defaultPlan.endDay);
 
             $scope.defaultPlan.endDate = endDate;
@@ -86,18 +86,11 @@ NewPlan.controller('NewPlanController', [
 
         $scope.savePlan = function savePlan() {
 
-            var startDate = moment($scope.defaultPlan.startDate);
-            var endDate = moment($scope.defaultPlan.endDate);
+            $scope.defaultPlan.startDay = $scope.defaultPlan.startDate.getDate();
+            $scope.defaultPlan.startMonth = $scope.defaultPlan.startDate.getMonth();
 
-            $scope.defaultPlan.startDay = moment(startDate).date();
-            $scope.defaultPlan.startMonth = moment(startDate).month() + 1;
-
-            $scope.defaultPlan.endDay = moment(endDate).date();
-            $scope.defaultPlan.endMonth = moment(endDate).month() + 1;
-
-            // clean up extra attributes
-            delete $scope.defaultPlan.startDate;
-            delete $scope.defaultPlan.endDate;
+            $scope.defaultPlan.endDay = $scope.defaultPlan.endDate.getDate();
+            $scope.defaultPlan.endMonth = $scope.defaultPlan.endDate.getMonth();
 
             $modalInstance.close($scope.defaultPlan);
 

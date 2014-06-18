@@ -64,14 +64,6 @@ Platform.config([
                     'content@platform': {
                         templateUrl: 'plan-defaults.html'
                     }
-                },
-                resolve: {
-                    'Platform.Data': [
-                        '$q', 'Platform.Data.Dependencies',
-                        function($q, data) {
-                            return $q.all(data);
-                        }
-                    ]
                 }
             });
     }
@@ -82,6 +74,8 @@ Platform.service('Platform.Data.Dependencies', [
     function dataService(sports, leagues, plans) {
 
         var Data = {};
+
+        sports.storage.promise = null;
 
         angular.forEach(arguments, function(arg) {
             Data[arg.description] = arg.load();
@@ -94,7 +88,7 @@ Platform.service('Platform.Data.Dependencies', [
 
 Platform.filter('monthFilter', function() {
     return function(monthNumber) {
-        return moment(moment().month(moment(monthNumber) - 1)).format('MMM');
+        return moment(moment().month(moment(monthNumber))).format('MMM');
     };
 });
 
@@ -115,6 +109,8 @@ Platform.filter('filterDefaultPlans', function() {
 Platform.controller('PlatformController', [
     '$scope', '$modal', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'Platform.Data',
     function controller($scope, $modal, turnaroundTimeMinTimeLookup, data) {
+
+        console.log('pdata', data);
 
         $scope.leagues = data.leagues.getList();
         $scope.indexedLeagues = data.leagues.getCollection();
@@ -142,7 +138,8 @@ Platform.controller('PlatformController', [
 
             modalInstance.result.then(function closed(savedPlan) {
                 data.plans.save(savedPlan).then(function saved(returnedPlan) {
-                    if (!savedPlan.id) {
+                    console.log('ret', returnedPlan);
+                    if (!savedPlan.id && returnedPlan) {
                         returnedPlan.sportId = data.leagues.get(returnedPlan.leagueIds[0]).sportId;
                         $scope.plans.push(returnedPlan);
                     }

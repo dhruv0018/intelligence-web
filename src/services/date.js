@@ -8,8 +8,8 @@ var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('NewDate', function() {
     return {
-        generate: function() {
-            var dateZeroTime = new Date();
+        generate: function(existingDate) {
+            var dateZeroTime = (existingDate) ? new Date(existingDate) : new Date();
             dateZeroTime.setUTCHours(0,0,0,0);
             return dateZeroTime;
         }
