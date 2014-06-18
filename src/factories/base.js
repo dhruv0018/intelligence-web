@@ -166,6 +166,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                             self.storage.list[self.storage.list.indexOf(resource)] = resource;
                             self.storage.collection[resource.id] = resource;
+                            return resource;
                         });
                     });
 
@@ -180,6 +181,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         self.storage.list[self.storage.list.indexOf(resource)] = resource;
                         self.storage.collection[resource.id] = resource;
+                        return resource;
                     });
                 }
             },
