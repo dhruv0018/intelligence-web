@@ -6,8 +6,8 @@
 
             <img class="logo" src="http://lorempixel.com/40/40/sports" class="pull-left" alt="Logo">
 
-            <h1 class="name" data-ng-if="$storage.team.name">{{ $storage.team.name }}</h1>
-            <h1 class="name" data-ng-if="!$storage.team.name">New Team</h1>
+            <h1 class="name" data-ng-if="team.name">{{ team.name }}</h1>
+            <h1 class="name" data-ng-if="!team.name">New Team</h1>
 
             <h2 class="sport">{{ indexedSports[sportId].name }}</h2>
 

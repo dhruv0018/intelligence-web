@@ -30,13 +30,39 @@ NewPlan.run([
  * @type {Controller}
  */
 NewPlan.controller('NewPlanController', [
-    '$scope', '$state', '$modalInstance', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'PlansFactory',
-    function controller($scope, $state, $modalInstance, session, sports, leagues, plans) {
+    '$scope', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'EditPlanObj', 'NewDate', 'PlatformData',
+    function controller($scope, $modalInstance, turnaroundTimeRanges, editPlanObj, newDate, data) {
 
         $scope.defaultPlan = {};
         $scope.defaultPlan.leagueIds = [];
-        $scope.sports = sports.getList();
-        $scope.leagues = leagues.getList();
+
+        $scope.sports = data.sports.getList();
+        $scope.leagues = data.leagues.getList();
+
+        $scope.maxTurnaroundTimes = turnaroundTimeRanges;
+
+        if (editPlanObj) {
+            $scope.defaultPlan = editPlanObj;
+
+            if (editPlanObj.leagueIds.length) {
+                //All leagues must have the same sportId, so just grab the first
+                //TODO: default plan should have sportId?
+                $scope.defaultPlan.sportId = data.leagues.collection[editPlanObj.leagueIds[0]].sportId;
+            }
+
+            //Format the saved dates for editing
+            var startDate = newDate.generate();
+            startDate.setMonth($scope.defaultPlan.startMonth - 1);
+            startDate.setDate($scope.defaultPlan.startDay);
+
+            $scope.defaultPlan.startDate = startDate;
+
+            var endDate = newDate.generate();
+            endDate.setMonth($scope.defaultPlan.endMonth - 1);
+            endDate.setDate($scope.defaultPlan.endDay);
+
+            $scope.defaultPlan.endDate = endDate;
+        }
 
         /**
          * Toggles the leagues presence in the default plan.
@@ -58,14 +84,7 @@ NewPlan.controller('NewPlanController', [
             }
         };
 
-        $scope.maxTurnaroundTimes = [
-            {time: '12-24', value: 24},
-            {time: '24-36', value: 36},
-            {time: '36-48', value: 48}
-        ];
-
-        $scope.savePlan = function(plan) {
-            plan.leagueIds = $scope.defaultPlan.leagueIds;
+        $scope.savePlan = function savePlan() {
 
             var startDate = moment(plan.startDate);
             var endDate = moment(plan.endDate);

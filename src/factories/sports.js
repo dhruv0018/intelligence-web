@@ -1,3 +1,5 @@
+var PAGE_SIZE = 100;
+
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -23,6 +25,19 @@ IntelligenceWebClient.factory('SportsFactory', [
 
             resource: SportsResource,
 
+            description: 'sports',
+
+            extendSport: function(sport) {
+
+                var self = this;
+
+                /* Copy all of the properties from the retrieved $resource
+                 * "sport" object. */
+                angular.extend(sport, self);
+
+                return sport;
+            },
+
             get: function(id, success, error) {
 
                 var self = this;
@@ -45,29 +60,41 @@ IntelligenceWebClient.factory('SportsFactory', [
                 var self = this;
 
                 filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || PAGE_SIZE;
 
-                success = success || function(sports) {
+                success = success || function(resources) {
 
-                    return sports;
+                    return resources;
                 };
 
                 error = error || function() {
 
-                    throw new Error('Could not load sports collection');
+                    throw new Error('Could not load ' + self.description + 's collection');
                 };
 
                 var query = self.resource.query(filter, success, error);
 
-                return query.$promise.then(function(sports) {
+                return query.$promise.then(function(resources) {
 
-                    self.storage.list = sports;
+                    self.storage.list = self.storage.list.concat(resources);
 
-                    sports.forEach(function(sport) {
-
-                        self.storage.collection[sport.id] = sport;
+                    resources.forEach(function(resource) {
+                        resource = self.extendSport(resource);
+                        self.storage.collection[resource.id] = resource;
                     });
 
-                    return self.storage.collection;
+                    if (resources.length < filter.count) {
+
+                        return self.storage.collection;
+                    }
+
+                    else {
+
+                        filter.start = filter.start + filter.count + 1;
+
+                        return self.getAll(filter);
+                    }
                 });
             },
 
@@ -111,7 +138,7 @@ IntelligenceWebClient.factory('SportsFactory', [
 
                 var self = this;
 
-                return self.getAll(filter);
+                return self.storage.promise || (self.storage.promise = self.getAll(filter));
             },
 
             save: function(sport) {

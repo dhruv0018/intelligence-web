@@ -1,3 +1,5 @@
+var PAGE_SIZE = 100;
+
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -5,13 +7,68 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
+IntelligenceWebClient.service('TeamsStorage', [
+    function() {
+
+        this.list = [];
+        this.collection = {};
+    }
+]);
+
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope','ROLES', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'UsersFactory',
-    function($rootScope, ROLES, TeamsResource, schools, usersResource, users) {
+    '$rootScope','ROLES', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'UsersFactory', 'TeamsStorage',
+    function($rootScope, ROLES, TeamsResource, schools, usersResource, users, TeamsStorage) {
+
+        var dateModifyArray = 'teamPackages teamPlans'.split(' ');
+        var dateModifyArrayProperties = 'startDate endDate'.split(' ');
+
+        function parseDateStringsIntoObjects(team) {
+            dateModifyArray.map(function(arrayToModify) {
+
+                if (typeof team[arrayToModify] === 'undefined') return;
+
+                angular.forEach(team[arrayToModify], function(value, key) {
+
+                    dateModifyArrayProperties.map(function(dateProperty) {
+
+                        if (typeof value[dateProperty] === 'undefined') return;
+
+                        var dateObj;
+
+                        if (angular.isString(value[dateProperty]) &&
+                            !isNaN((dateObj = new Date(value[dateProperty])).getTime())) {
+
+                            value[dateProperty] = dateObj;
+                        }
+                    });
+                });
+            });
+        }
+
+        function stringifyDateObjects(team) {
+            dateModifyArray.map(function(arrayToModify) {
+
+                if (typeof team[arrayToModify] === 'undefined') return;
+
+                angular.forEach(team[arrayToModify], function(value, key) {
+
+                    dateModifyArrayProperties.map(function(dateProperty) {
+
+                        if (typeof value[dateProperty] === 'undefined') return;
+
+                        if (value[dateProperty] instanceof Date) value[dateProperty] = value[dateProperty].toISOString();
+                    });
+                });
+            });
+        }
 
         var TeamsFactory = {
 
             resource: TeamsResource,
+
+            storage: TeamsStorage,
+
+            description: 'teams',
 
             extendTeam: function(team) {
 
@@ -41,6 +98,56 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 };
 
                 return self.resource.get({ id: id }, callback, error);
+            },
+
+            load: function(filter) {
+
+                var self = this;
+
+                return self.storage.promise || (self.storage.promise = self.getAll(filter));
+            },
+
+            getAll: function(filter, success, error) {
+
+                var self = this;
+
+                filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || PAGE_SIZE;
+
+                success = success || function(resources) {
+
+                    return resources;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not load ' + self.description + 's collection');
+                };
+
+                var query = self.resource.query(filter, success, error);
+
+                return query.$promise.then(function(resources) {
+
+                    self.storage.list = self.storage.list.concat(resources);
+
+                    resources.forEach(function(resource) {
+                        resource = self.extendTeam(resource);
+                        self.storage.collection[resource.id] = resource;
+                    });
+
+                    if (resources.length < filter.count) {
+
+                        return self.storage.collection;
+                    }
+
+                    else {
+
+                        filter.start = filter.start + filter.count + 1;
+
+                        return self.getAll(filter);
+                    }
+                });
             },
 
             getList: function(filter, success, error, index) {
@@ -91,6 +198,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 delete team.league;
                 delete team.members;
+                delete team.storage;
+                delete team.resource;
+                delete team.description;
 
                 if (team.schoolId) delete team.address;
 

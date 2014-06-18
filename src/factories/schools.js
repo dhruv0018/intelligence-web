@@ -1,3 +1,5 @@
+var PAGE_SIZE = 100;
+
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -5,13 +7,25 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
+IntelligenceWebClient.service('SchoolsStorage', [
+    function() {
+
+        this.list = [];
+        this.collection = {};
+    }
+]);
+
 IntelligenceWebClient.factory('SchoolsFactory', [
-    'SchoolsResource',
-    function(SchoolsResource) {
+    'SchoolsResource', 'SchoolsStorage',
+    function(SchoolsResource, SchoolsStorage) {
 
         var SchoolsFactory = {
 
             resource: SchoolsResource,
+
+            storage: SchoolsStorage,
+
+            description: 'schools',
 
             extendSchool: function(school) {
 
@@ -41,6 +55,56 @@ IntelligenceWebClient.factory('SchoolsFactory', [
                 };
 
                 return self.resource.get({ id: id }, callback, error);
+            },
+
+            load: function(filter) {
+
+                var self = this;
+
+                return self.storage.promise || (self.storage.promise = self.getAll(filter));
+            },
+
+            getAll: function(filter, success, error) {
+
+                var self = this;
+
+                filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || PAGE_SIZE;
+
+                success = success || function(resources) {
+
+                    return resources;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not load ' + self.description + 's collection');
+                };
+
+                var query = self.resource.query(filter, success, error);
+
+                return query.$promise.then(function(resources) {
+
+                    self.storage.list = self.storage.list.concat(resources);
+
+                    resources.forEach(function(resource) {
+                        resource = self.extendSchool(resource);
+                        self.storage.collection[resource.id] = resource;
+                    });
+
+                    if (resources.length < filter.count) {
+
+                        return self.storage.collection;
+                    }
+
+                    else {
+
+                        filter.start = filter.start + filter.count + 1;
+
+                        return self.getAll(filter);
+                    }
+                });
             },
 
             getList: function(filter, success, error, index) {
