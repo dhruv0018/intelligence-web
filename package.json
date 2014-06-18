@@ -48,7 +48,7 @@
         "browserify-shim": "~3.5.0",
         "builder-html-minifier": "^1.0.0",
         "component": "1.0.x",
-        "component-builder-less": "0.0.2",
+        "component-builder-less": "0.0.1",
         "connect-modrewrite": "~0.7.5",
         "envify": "~1.2.1",
         "grunt": "~0.4.5",
