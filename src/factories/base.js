@@ -8,7 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('BaseFactory', [
-    function() {
+    '$q',
+    function($q) {
 
         var BaseFactory = {
 
@@ -21,19 +22,23 @@ IntelligenceWebClient.factory('BaseFactory', [
                 return resource;
             },
 
-            get: function(id, success, error) {
+            get: function(id) {
 
                 var self = this;
 
-                if (arguments.length === 1) {
-                    return self.storage.collection[id];
-                }
+                if (!self.storage) throw new Error(self.description + ' storage not defined');
+                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
 
-                var callback = function(resource) {
+                return self.storage.collection[id];
+            },
 
-                    resource = self.extend(resource);
+            getOne: function(id, success, error) {
 
-                    return success ? success(resource) : resource;
+                var self = this;
+
+                success = success || function(resource) {
+
+                    return resource;
                 };
 
                 error = error || function() {
@@ -41,7 +46,23 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not get ' + self.description);
                 };
 
-                return self.resource.get({ id: id }, callback, error);
+                return self.resource.get({ id: id }, callback, error).$promise.then(function(resource) {
+
+                    resource = self.extend(resource);
+                    self.storage.collection[resource.id] = resource;
+
+                    var index = self.storage.list.indexOf(resource);
+
+                    if (~index) {
+
+                        self.storage.list[index] = resource;
+                    }
+
+                    else {
+
+                        self.storage.list.push(resource);
+                    }
+                });
             },
 
             getAll: function(filter, success, error) {
@@ -59,19 +80,24 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 error = error || function() {
 
-                    throw new Error('Could not load ' + self.description + 's collection');
+                    throw new Error('Could not load ' + self.description);
                 };
 
                 var query = self.resource.query(filter, success, error);
 
                 return query.$promise.then(function(resources) {
 
-                    self.storage.list = self.storage.list.concat(resources);
-
                     resources.forEach(function(resource) {
 
                         resource = self.extend(resource);
                         self.storage.collection[resource.id] = resource;
+                    });
+
+                    self.storage.list.length = 0;
+
+                    Object.keys(self.storage.collection).forEach(function(key) {
+
+                        self.storage.list.push(self.storage.collection[key]);
                     });
 
                     if (resources.length < filter.count) {
@@ -88,24 +114,20 @@ IntelligenceWebClient.factory('BaseFactory', [
                 });
             },
 
-            getCollection: function() {
-
-                var self = this;
-
-                return self.storage.collection;
-            },
-
-            getList: function(filter, success, error, index) {
+            getList: function(filter, success, error) {
 
                 var self = this;
 
                 if (arguments.length === 0) {
+
+                    if (!self.storage) throw new Error(self.description + ' storage not defined');
+                    if (!self.storage.collection) throw new Error(self.description + ' not loaded');
+
                     return self.storage.list;
                 }
 
                 if (angular.isFunction(filter)) {
 
-                    index = error;
                     error = success;
                     success = filter;
                     filter = null;
@@ -113,37 +135,59 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 filter = filter || {};
                 filter.start = filter.start || 0;
-                filter.count = filter.count || 1000;
+                filter.count = filter.count || PAGE_SIZE;
 
-                var callback = function(resources) {
+                success = success ||  function(resources) {
 
-                    var indexedResources = {};
-
-                    resources.forEach(function(resource) {
-
-                        resource = self.extend(resource);
-
-                        indexedResources[resource.id] = resource;
-                    });
-
-                    resources = index ? indexedResources : resources;
-
-                    return success ? success(resources) : resources;
+                    return resources;
                 };
 
                 error = error || function() {
 
-                    throw new Error('Could not load ' + self.description + 's list');
+                    throw new Error('Could not load ' + self.description + ' list');
                 };
 
-                return self.resource.query(filter, callback, error);
+                return self.resource.query(filter, success, error).$promise.then(function(resources) {
+
+                    resources.forEach(function(resource) {
+
+                        resource = self.extend(resource);
+                        self.storage.collection[resource.id] = resource;
+                    });
+
+                    self.storage.list.length = 0;
+
+                    Object.keys(self.storage.collection).forEach(function(key) {
+
+                        self.storage.list.push(self.storage.collection[key]);
+                    });
+
+                    return resources;
+                });
+            },
+
+            getCollection: function() {
+
+                var self = this;
+
+                if (!self.storage) throw new Error(self.description + ' storage not defined');
+                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
+
+                return self.storage.collection;
             },
 
             load: function(filter) {
 
                 var self = this;
 
-                return self.storage.promise || (self.storage.promise = self.getAll(filter));
+                var deferred = $q.defer();
+
+                self.getAll(filter).then(function() {
+
+                    deferred.resolve(self);
+                });
+
+                return deferred.promise;
             },
 
             save: function(resource, success, error) {
@@ -174,14 +218,13 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return update.$promise.then(function() {
 
-                        return self.get(resource.id).$promise.then(function(resource) {
-
-                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
-                            self.storage.collection[resource.id] = resource;
-                        });
+                        return self.getOne(resource.id);
                     });
 
                 } else {
+
+                    self.storage.list.push(resource);
+                    self.storage.collection[resource.id] = resource;
 
                     var create = self.resource.create(parameters, resource, success, error);
 
@@ -189,6 +232,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         self.storage.list[self.storage.list.indexOf(resource)] = resource;
                         self.storage.collection[resource.id] = resource;
+                        return resource;
                     });
                 }
             },
