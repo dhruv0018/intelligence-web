@@ -8,7 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('BaseFactory', [
-    function() {
+    '$q'
+    function($q) {
 
         var BaseFactory = {
 
@@ -21,23 +22,25 @@ IntelligenceWebClient.factory('BaseFactory', [
                 return resource;
             },
 
-            get: function(id, success, error) {
+            get: function(id) {
 
-                var self = this;
+                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
 
-                var callback = function(resource) {
+                return self.storage.collection[id];
+            },
 
-                    resource = self.extend(resource);
+            getList: function() {
 
-                    return success ? success(resource) : resource;
-                };
+                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
 
-                error = error || function() {
+                return self.storage.list;
+            },
 
-                    throw new Error('Could not get ' + self.description);
-                };
+            getCollection: function() {
 
-                return self.resource.get({ id: id }, callback, error);
+                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
+
+                return self.storage.collection;
             },
 
             getAll: function(filter, success, error) {
@@ -55,7 +58,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 error = error || function() {
 
-                    throw new Error('Could not load ' + self.description + 's collection');
+                    throw new Error('Could not load ' + self.description);
                 };
 
                 var query = self.resource.query(filter, success, error);
@@ -84,53 +87,18 @@ IntelligenceWebClient.factory('BaseFactory', [
                 });
             },
 
-            getList: function(filter, success, error, index) {
-
-                var self = this;
-
-                if (angular.isFunction(filter)) {
-
-                    index = error;
-                    error = success;
-                    success = filter;
-                    filter = null;
-                }
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || 1000;
-
-                var callback = function(resources) {
-
-                    var indexedResources = {};
-
-                    resources.forEach(function(resource) {
-
-                        resource = self.extend(resource);
-
-                        indexedResources[resource.id] = resource;
-                    });
-
-                    resources = index ? indexedResources : resources;
-
-                    return success ? success(resources) : resources;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load ' + self.description + 's list');
-                };
-
-                return self.resource.query(filter, callback, error);
-            },
-
             load: function(filter) {
 
                 var self = this;
 
-                self.getAll(filter);
+                var deferred = $q.defer();
 
-                return self;
+                self.getAll(filter).then(function() {
+
+                    deferred.resolve();
+                });
+
+                return deferred.promise;
             },
 
             save: function(resource, success, error) {
