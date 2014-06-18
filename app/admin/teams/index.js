@@ -117,17 +117,6 @@ Teams.config([
                 }
             })
 
-            .state('team-plans', {
-                url: '',
-                parent: 'team',
-                views: {
-                    'content@team': {
-                        templateUrl: 'team-plans.html',
-                        controller: 'TeamPlansController'
-                    }
-                }
-            })
-
             .state('team-members', {
                 url: '',
                 parent: 'team',
