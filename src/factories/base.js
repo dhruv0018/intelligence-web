@@ -32,14 +32,48 @@ IntelligenceWebClient.factory('BaseFactory', [
                 return self.storage.collection[id];
             },
 
-            getList: function() {
+            getList: function(filter, success, error) {
 
                 var self = this;
 
-                if (!self.storage) throw new Error(self.description + ' storage not defined');
-                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
+                if (arguments.length === 0) {
 
-                return self.storage.list;
+                    if (!self.storage) throw new Error(self.description + ' storage not defined');
+                    if (!self.storage.collection) throw new Error(self.description + ' not loaded');
+
+                    return self.storage.list;
+                }
+
+                if (angular.isFunction(filter)) {
+
+                    error = success;
+                    success = filter;
+                    filter = null;
+                }
+
+                filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || PAGE_SIZE;
+
+                success = success ||  function(resources) {
+
+                    return resources;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not load ' + self.description + ' list');
+                };
+
+                return self.resource.query(filter, success, error).$promise.then(function(resources) {
+
+                    resources.forEach(function(resource) {
+
+                        resource = self.extend(resource);
+                    });
+
+                    return resources;
+                });
             },
 
             getCollection: function() {
