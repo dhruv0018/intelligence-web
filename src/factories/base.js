@@ -25,6 +25,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+                if (arguments.length === 1) {
+                    return self.storage.collection[id];
+                }
+
                 var callback = function(resource) {
 
                     resource = self.extend(resource);
@@ -72,7 +76,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     if (resources.length < filter.count) {
 
-                        return self.storage.collection;
+                        return self;
                     }
 
                     else {
@@ -84,9 +88,20 @@ IntelligenceWebClient.factory('BaseFactory', [
                 });
             },
 
+            getCollection: function() {
+
+                var self = this;
+
+                return self.storage.collection;
+            },
+
             getList: function(filter, success, error, index) {
 
                 var self = this;
+
+                if (arguments.length === 0) {
+                    return self.storage.list;
+                }
 
                 if (angular.isFunction(filter)) {
 
@@ -153,6 +168,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not save resource');
                 };
 
+                console.log('savestate', resource);
                 if (resource.id) {
 
                     var update = self.resource.update(parameters, resource, success, error);

@@ -35,8 +35,7 @@ TeamPlan.controller('TeamPlanController', [
         $scope.team = team;
         $scope.team.teamPlans = $scope.team.teamPlans || [];
         $scope.defaultPlan = {};
-        $scope.turnaroundTimes = {};
-        $scope.turnaroundTimes.options = TURNAROUND_TIME_RANGES;
+        $scope.turnaroundTimes = TURNAROUND_TIME_RANGES;
 
         if ($scope.team && $scope.team.teamPlans[teamPlanIndex]) {
             $scope.editing = true;
@@ -81,6 +80,7 @@ TeamPlan.controller('TeamPlanController', [
         });
 
         $scope.defaultPlans = plans.getByLeague(team.leagueId);
+        console.log($scope.defaultPlans);
 
         $scope.cancel = function() {
             $modalInstance.dismiss('cancel');

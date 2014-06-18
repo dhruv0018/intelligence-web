@@ -270,6 +270,7 @@ Teams.controller('TeamPlansController', [
         };
 
         $scope.save = function(team) {
+            console.log('cteam', team);
             teams.save(team).then(function() {
             });
         };
@@ -286,22 +287,28 @@ Teams.controller('TeamController', [
     '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data',
     function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data) {
 
+        console.log('Team-data', data);
+
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
         $scope.sports = data.sports.getList();
         $scope.indexedSports = data.sports.getCollection();
+
         $scope.leagues = data.leagues.getList();
+        $scope.indexedLeagues = data.leagues.getList();
+
         $scope.schools = data.schools.getList();
+
 
         var team;
 
-        function updateTeamAddress() {
+        var updateTeamAddress = function updateTeamAddress() {
             if ($scope.team && $scope.team.schoolId) {
-                $scope.school = $scope.schools[$scope.team.schoolId];
+                $scope.school = data.schools.get($scope.team.schoolId);
                 $scope.team.address = angular.copy($scope.school.address);
             }
-        }
+        };
 
         /* If no team is stored locally, then get the team from the server. */
         if (!team) {
@@ -315,17 +322,16 @@ Teams.controller('TeamController', [
                 $scope.team = team;
                 $scope.team.members = team.getMembers();
 
-                $scope.team.league = data.leagues.get(team.leagueId);
-                $scope.sportId = $scope.team.league.sportId;
+                $scope.sportId = data.leagues.get(team.leagueId).sportId;
 
                 updateTeamAddress();
             }
         }
 
-        $scope.$watch('team.league.sportId', function(sportId) {
+        /*$scope.$watch('team.leagueId', function(sportId) {
 
             $scope.sportId = sportId;
-        });
+        });*/
 
         $scope.$watch('addNewHeadCoach', function() {
 
@@ -384,7 +390,7 @@ Teams.controller('TeamController', [
             $scope.addNewHeadCoach = false;
         };
 
-        $scope.addNewPlan = function() {
+        /*$scope.addNewPlan = function() {
             $modal.open({
 
                 templateUrl: 'app/admin/teams/team-plan/team-plan.html',
@@ -398,7 +404,7 @@ Teams.controller('TeamController', [
                 templateUrl: 'app/admin/teams/team-package/team-package.html',
                 controller: 'TeamPackageController'
             });
-        };
+        };*/
 
         $scope.save = function(team) {
 
@@ -418,6 +424,8 @@ Teams.controller('TeamController', [
 Teams.controller('TeamsController', [
     '$rootScope', '$scope', '$state', 'Teams.Data',
     function controller($rootScope, $scope, $state, data) {
+
+        console.log('Teams-data', data);
 
         $scope.teams = data.teams.getList();
 
