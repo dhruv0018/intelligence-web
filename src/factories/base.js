@@ -168,6 +168,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 } else {
 
+                    self.storage.list.push(resource);
+                    self.storage.collection[resource.id] = resource;
+
                     var create = self.resource.create(parameters, resource, success, error);
 
                     return create.$promise.then(function(resource) {
