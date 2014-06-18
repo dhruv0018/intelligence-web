@@ -8,7 +8,7 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q'
+    '$q',
     function($q) {
 
         var BaseFactory = {
