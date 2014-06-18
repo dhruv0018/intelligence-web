@@ -70,6 +70,14 @@ IntelligenceWebClient.factory('BaseFactory', [
                     resources.forEach(function(resource) {
 
                         resource = self.extend(resource);
+                        self.storage.collection[resource.id] = resource;
+                    });
+
+                    self.storage.list.length = 0;
+
+                    Object.keys(self.storage.collection).forEach(function(key) {
+
+                        self.storage.list.push(self.storage.collection[key]);
                     });
 
                     return resources;
