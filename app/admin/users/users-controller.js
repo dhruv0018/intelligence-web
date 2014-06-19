@@ -14,8 +14,8 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.Users.Controller', [
-    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'ROLES', 'Users.User.Service', 'UsersFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory',
-    function controller($rootScope, $scope, $state, $modal, $stateParams, session, ROLES, user, users, teams, leagues, sports) {
+    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'ROLES', 'Admin.Users.Data.Dependencies',
+    function controller($rootScope, $scope, $state, $modal, $stateParams, session, ROLES, data) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
@@ -24,9 +24,9 @@ Users.controller('Users.Users.Controller', [
         $scope.Users = users;
         $scope.statuses = [{value: 0, label: 'Active'}, {value: 1, label: 'Inactive'}];
 
-        sports.getList(function(sports) { $scope.sports = sports; }, null, true);
-        leagues.getList(function(leagues) { $scope.leagues = leagues; }, null, true);
-        teams.getList(function(teams) { $scope.teams = teams; }, null, true);
+        $scope.sports = data.sports.getCollection();
+        $scope.leagues = data.leagues.getCollection();
+        $scope.teams = data.teams.getCollection();
 
         $scope.add = function() {
 
