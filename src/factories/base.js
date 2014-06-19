@@ -310,7 +310,12 @@ IntelligenceWebClient.factory('BaseFactory', [
                     return update.$promise.then(function() {
 
                         /* Fetch the updated resource. */
-                        return self.fetch(resource.id);
+                        return self.fetch(resource.id).then(function(updated) {
+
+                            /* Update the resource in storage. */
+                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
+                            self.storage.collection[resource.id] = resource;
+                        })
                     });
 
                 /* If the resource is new. */
