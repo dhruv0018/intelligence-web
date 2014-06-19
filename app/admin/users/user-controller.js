@@ -24,7 +24,10 @@ Users.controller('Users.User.Controller', [
         $scope.auth = auth;
         $scope.users = users;
 
-        $scope.user = data.users.get($stateParams.id) || {};
+        $stateParams.id = $stateParams.id || undefined;
+
+        $scope.user = data.users.get($stateParams.id);
+
         $scope.user.newRoles = [];
 
         /* If the user has roles, use a known role. */
