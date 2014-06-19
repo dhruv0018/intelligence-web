@@ -284,15 +284,17 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 resource = resource || self;
 
-                delete resource.description;
-                delete resource.resource;
-                delete resource.storage;
+                var copy = angular.copy(resource);
+
+                delete copy.description;
+                delete copy.resource;
+                delete copy.storage;
 
                 parameters = {};
 
                 success = success || function(resource) {
 
-                    return self.extend(resource);
+                    return resource;
                 };
 
                 error = error || function() {
@@ -304,7 +306,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 if (resource.id) {
 
                     /* Make a PUT request to the server to update the resource. */
-                    var update = self.resource.update(parameters, resource, success, error);
+                    var update = self.resource.update(parameters, copy, success, error);
 
                     /* Once the update request finishes. */
                     return update.$promise.then(function() {
@@ -329,7 +331,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     self.storage.collection[resource.id] = resource;
 
                     /* Make a POST request to the server to create the resource. */
-                    var create = self.resource.create(parameters, resource, success, error);
+                    var create = self.resource.create(parameters, copy, success, error);
 
                     /* Once the create request finishes. */
                     return create.$promise.then(function(created) {
