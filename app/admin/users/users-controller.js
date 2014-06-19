@@ -43,7 +43,10 @@ Users.controller('Users.Users.Controller', [
 
         $scope.search = function(filter) {
 
-            $scope.users = users.getList(filter);
+            users.query(filter).then(function(users) {
+
+                $scope.users = users;
+            });
         };
     }
 ]);
