@@ -56,10 +56,12 @@ Users.config([
                     ]
                 },
                 onEnter: [
-                    'AlertsService', 'Users.User.Service',
-                    function(alerts, user) {
+                    '$stateParams', 'AlertsService', 'Admin.Users.Data.Dependencies',
+                    function($stateParams, alerts, data) {
 
-                        if (user.isLocked) {
+                        var user = data.users.get($stateParams.id);
+
+                        if (user && user.isLocked) {
 
                             alerts.add({
 
