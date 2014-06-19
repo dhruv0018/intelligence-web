@@ -70,13 +70,6 @@ Users.config([
                             });
                         }
                     }
-                ],
-                onExit: [
-                    'AlertsService',
-                    function(alerts) {
-
-                        alerts.clear();
-                    }
                 ]
             })
 
