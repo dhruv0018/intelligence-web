@@ -42,7 +42,7 @@ NewPlan.controller('NewPlanController', [
         $scope.maxTurnaroundTimes = turnaroundTimeRanges;
 
         if (editPlanObj) {
-            $scope.defaultPlan = editPlanObj;
+            $scope.defaultPlan = angular.copy(editPlanObj);
 
             if (editPlanObj.leagueIds.length) {
                 //All leagues must have the same sportId, so just grab the first
@@ -91,6 +91,10 @@ NewPlan.controller('NewPlanController', [
 
             $scope.defaultPlan.endDay = $scope.defaultPlan.endDate.getDate();
             $scope.defaultPlan.endMonth = $scope.defaultPlan.endDate.getMonth();
+
+            if (editPlanObj) {
+                angular.extend(editPlanObj, $scope.defaultPlan);
+            }
 
             $modalInstance.close($scope.defaultPlan);
 

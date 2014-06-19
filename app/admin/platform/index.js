@@ -134,7 +134,10 @@ Platform.controller('PlatformController', [
 
             modalInstance.result.then(function closed(savedPlan) {
                 data.plans.save(savedPlan).then(function saved(returnedPlan) {
-                    if (!savedPlan.id && returnedPlan) {
+
+                    if (!returnedPlan) return;
+
+                    if (!savedPlan.id) {
                         returnedPlan.sportId = data.leagues.get(returnedPlan.leagueIds[0]).sportId;
                         $scope.plans.push(returnedPlan);
                     }
