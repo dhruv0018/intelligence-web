@@ -14,8 +14,8 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.Users.Controller', [
-    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'ROLES', 'Admin.Users.Data.Dependencies',
-    function controller($rootScope, $scope, $state, $modal, $stateParams, session, ROLES, data) {
+    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'ROLES', 'Admin.Users.Data.Dependencies', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $modal, $stateParams, session, ROLES, data, users) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
