@@ -32,7 +32,27 @@ IntelligenceWebClient.factory('BaseFactory', [
                 return self.storage.collection[id];
             },
 
-            getOne: function(id, success, error) {
+            getList: function() {
+
+                var self = this;
+
+                if (!self.storage) throw new Error(self.description + ' storage not defined');
+                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
+
+                return self.storage.list;
+            },
+
+            getCollection: function() {
+
+                var self = this;
+
+                if (!self.storage) throw new Error(self.description + ' storage not defined');
+                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
+
+                return self.storage.collection;
+            },
+
+            fetch: function(id, success, error) {
 
                 var self = this;
 
@@ -49,6 +69,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 return self.resource.get({ id: id }, success, error).$promise.then(function(resource) {
 
                     resource = self.extend(resource);
+
                     self.storage.collection[resource.id] = resource;
 
                     var index = self.storage.list.indexOf(resource);
@@ -67,56 +88,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 });
             },
 
-            getAll: function(filter, success, error) {
-
-                var self = this;
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || PAGE_SIZE;
-
-                success = success || function(resources) {
-
-                    return resources;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load ' + self.description);
-                };
-
-                var query = self.resource.query(filter, success, error);
-
-                return query.$promise.then(function(resources) {
-
-                    resources.forEach(function(resource) {
-
-                        resource = self.extend(resource);
-                        self.storage.collection[resource.id] = resource;
-                    });
-
-                    self.storage.list.length = 0;
-
-                    Object.keys(self.storage.collection).forEach(function(key) {
-
-                        self.storage.list.push(self.storage.collection[key]);
-                    });
-
-                    if (resources.length < filter.count) {
-
-                        return self.storage.collection;
-                    }
-
-                    else {
-
-                        filter.start = filter.start + filter.count + 1;
-
-                        return self.getAll(filter);
-                    }
-                });
-            },
-
-            getList: function(filter, success, error) {
+            query: function(filter, success, error) {
 
                 var self = this;
 
@@ -154,6 +126,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     resources.forEach(function(resource) {
 
                         resource = self.extend(resource);
+
                         self.storage.collection[resource.id] = resource;
                     });
 
@@ -168,14 +141,54 @@ IntelligenceWebClient.factory('BaseFactory', [
                 });
             },
 
-            getCollection: function() {
+            retrieve: function(filter, success, error) {
 
                 var self = this;
 
-                if (!self.storage) throw new Error(self.description + ' storage not defined');
-                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
+                filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || PAGE_SIZE;
 
-                return self.storage.collection;
+                success = success || function(resources) {
+
+                    return resources;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not load ' + self.description);
+                };
+
+                var query = self.resource.query(filter, success, error);
+
+                return query.$promise.then(function(resources) {
+
+                    resources.forEach(function(resource) {
+
+                        resource = self.extend(resource);
+
+                        self.storage.collection[resource.id] = resource;
+                    });
+
+                    self.storage.list.length = 0;
+
+                    Object.keys(self.storage.collection).forEach(function(key) {
+
+                        self.storage.list.push(self.storage.collection[key]);
+                    });
+
+                    if (resources.length < filter.count) {
+
+                        return self.storage.collection;
+                    }
+
+                    else {
+
+                        filter.start = filter.start + filter.count + 1;
+
+                        return self.retrieve(filter);
+                    }
+                });
             },
 
             load: function(filter) {
@@ -184,7 +197,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var deferred = $q.defer();
 
-                self.getAll(filter).then(function() {
+                self.retrieve(filter).then(function() {
 
                     deferred.resolve(self);
                 });
