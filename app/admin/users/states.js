@@ -28,7 +28,7 @@ Users.config([
                     }
                 },
                 resolve: {
-                    'Admin.Users.Data.Dependencies': [
+                    'Admin.Users.Data': [
                         '$q', 'Admin.Users.Data.Dependencies',
                         function($q, data) {
                             return $q.all(data);
@@ -48,7 +48,7 @@ Users.config([
                     }
                 },
                 resolve: {
-                    'Admin.Users.Data.Dependencies': [
+                    'Admin.Users.Data': [
                         '$q', 'Admin.Users.Data.Dependencies',
                         function($q, data) {
                             return $q.all(data);
@@ -56,7 +56,7 @@ Users.config([
                     ]
                 },
                 onEnter: [
-                    '$stateParams', 'AlertsService', 'Admin.Users.Data.Dependencies',
+                    '$stateParams', 'AlertsService', 'Admin.Users.Data',
                     function($stateParams, alerts, data) {
 
                         var user = data.users.get($stateParams.id);

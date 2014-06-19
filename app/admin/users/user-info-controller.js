@@ -14,7 +14,7 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.User.Info.Controller', [
-    '$scope', '$stateParams', 'ROLES', 'SessionService', 'AlertsService', 'Admin.Users.Data.Dependencies',
+    '$scope', '$stateParams', 'ROLES', 'SessionService', 'AlertsService', 'Admin.Users.Data',
     function controller($scope, $stateParams, ROLES, session, alerts, data) {
 
         $scope.isLockDisabled = function() {
