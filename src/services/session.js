@@ -28,11 +28,13 @@ IntelligenceWebClient.service('SessionService', [
          */
         this.serializeUser = function(user) {
 
-            delete user.description;
-            delete user.resource;
-            delete user.storage;
+            var copy = angular.copy(user);
 
-            return JSON.stringify(angular.toJson(user));
+            delete copy.description;
+            delete copy.resource;
+            delete copy.storage;
+
+            return JSON.stringify(angular.toJson(copy));
         };
 
         /**
