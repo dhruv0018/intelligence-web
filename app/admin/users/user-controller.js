@@ -47,10 +47,9 @@ Users.controller('Users.User.Controller', [
                 session.storeCurrentUser(user);
             }
 
-            users.save(user).then(function() {
+            users.save(user);
 
-                $state.go('users');
-            });
+            $state.go('users');
         };
     }
 ]);
