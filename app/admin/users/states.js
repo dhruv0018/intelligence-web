@@ -26,6 +26,14 @@ Users.config([
                         templateUrl: 'users/users.html',
                         controller: 'Users.Users.Controller'
                     }
+                },
+                resolve: {
+                    'Admin.Users.Data.Dependencies': [
+                        '$q', 'Admin.Users.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             })
 
@@ -40,22 +48,20 @@ Users.config([
                     }
                 },
                 resolve: {
-                    'Users.User.Service': [
-                        '$stateParams', 'Users.User.Service',
-                        function($stateParams, user) {
-
-                            var userId = $stateParams.id;
-
-                            if (!userId) return user;
-                            else return user.init(userId);
+                    'Admin.Users.Data.Dependencies': [
+                        '$q', 'Admin.Users.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
                         }
                     ]
                 },
                 onEnter: [
-                    'AlertsService', 'Users.User.Service',
-                    function(alerts, user) {
+                    '$stateParams', 'AlertsService', 'Admin.Users.Data.Dependencies',
+                    function($stateParams, alerts, data) {
 
-                        if (user.isLocked) {
+                        var user = data.users.get($stateParams.id);
+
+                        if (user && user.isLocked) {
 
                             alerts.add({
 
@@ -63,13 +69,6 @@ Users.config([
                                 message: 'This user is locked'
                             });
                         }
-                    }
-                ],
-                onExit: [
-                    'AlertsService',
-                    function(alerts) {
-
-                        alerts.clear();
                     }
                 ]
             })

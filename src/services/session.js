@@ -28,6 +28,10 @@ IntelligenceWebClient.service('SessionService', [
          */
         this.serializeUser = function(user) {
 
+            delete user.description;
+            delete user.resource;
+            delete user.storage;
+
             return JSON.stringify(angular.toJson(user));
         };
 
@@ -40,6 +44,7 @@ IntelligenceWebClient.service('SessionService', [
 
             var storedObject = angular.fromJson(JSON.parse(string));
             var user = new UsersResource(storedObject);
+
             return users.extend(user);
         };
 

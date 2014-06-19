@@ -62,9 +62,8 @@ IntelligenceWebClient.service('AuthenticationService', [
                     $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
 
                     /* Get the user from the server. */
-                    console.log(email);
-                    return users.getOne(email).then(function(user) {
-                        console.log(user);
+                    return users.fetch(email).then(function(user) {
+
                         /* Store the user in the session. Optionally persisting. */
                         session.storeCurrentUser(user, persist);
 
