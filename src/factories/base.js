@@ -284,11 +284,15 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 resource = resource || self;
 
+                /* Create a copy of the resource to save to the server. */
                 var copy = angular.copy(resource);
 
+                /* Remove known local properties. */
                 delete copy.description;
                 delete copy.resource;
                 delete copy.storage;
+
+                /* TODO: Remove other properties that should not exist. */
 
                 parameters = {};
 
