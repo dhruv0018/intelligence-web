@@ -101,11 +101,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
             }
         };
 
-<<<<<<< HEAD
         angular.augment(TeamsFactory, BaseFactory);
-=======
-        angular.extend(TeamsFactory, BaseFactory);
->>>>>>> users
 
         return TeamsFactory;
     }
