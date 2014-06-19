@@ -22,7 +22,7 @@ Users.service('Users.User.Service', [
             init: function(userId) {
 
                 /* Get the user by ID from the server. */
-                return users.get(userId).$promise;
+                return users.get(userId);
             }
         };
 
