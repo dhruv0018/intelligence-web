@@ -318,7 +318,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                             /* Update the resource in storage. */
                             self.storage.list[self.storage.list.indexOf(resource)] = resource;
                             self.storage.collection[resource.id] = resource;
-                        })
+                        });
                     });
 
                 /* If the resource is new. */
