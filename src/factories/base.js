@@ -108,22 +108,15 @@ IntelligenceWebClient.factory('BaseFactory', [
                     /* Store the resource locally in its storage collection. */
                     self.storage.collection[resource.id] = resource;
 
-                    /* Check if the resource exists in its storage list. */
-                    var index = self.storage.list.indexOf(resource);
+                    /* Clear the storage list. */
+                    self.storage.list.length = 0;
 
-                    /* If the resource is in its storage list. */
-                    if (~index) {
-
-                        /* Update it. */
-                        self.storage.list[index] = resource;
-                    }
-
-                    /* If the resource isn't in its storage list. */
-                    else {
+                    /* Loop through each resource in the storage collection. */
+                    Object.keys(self.storage.collection).forEach(function(key) {
 
                         /* Add the resource to the storage list. */
-                        self.storage.list.push(resource);
-                    }
+                        self.storage.list.push(self.storage.collection[key]);
+                    });
 
                     return resource;
                 });
