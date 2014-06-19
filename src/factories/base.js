@@ -100,7 +100,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var get = self.resource.get({ id: id }, success, error);
 
                 /* Once the get request finishes. */
-                get.$promise.then(function(resource) {
+                return get.$promise.then(function(resource) {
 
                     /* Extend the server resource. */
                     resource = self.extend(resource);
@@ -165,7 +165,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var query = self.resource.query(filter, success, error);
 
                 /* Once the query request finishes. */
-                query.$promise.then(function(resources) {
+                return query.$promise.then(function(resources) {
 
                     resources.forEach(function(resource) {
 
