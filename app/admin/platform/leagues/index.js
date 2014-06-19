@@ -157,7 +157,7 @@ Leagues.controller('LeaguesController', [
         };
 
         $scope.search = function(filter) {
-            data.leagues.getList(filter,
+            data.leagues.query(filter,
                     function(leagues) {
                         $scope.leagues = leagues;
                         $scope.noResults = false;

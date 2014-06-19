@@ -92,11 +92,14 @@ NewPlan.controller('NewPlanController', [
             $scope.defaultPlan.endDay = $scope.defaultPlan.endDate.getDate();
             $scope.defaultPlan.endMonth = $scope.defaultPlan.endDate.getMonth();
 
+            var returnObj = $scope.defaultPlan;
+
             if (editPlanObj) {
                 angular.extend(editPlanObj, $scope.defaultPlan);
+                returnObj = editPlanObj;
             }
 
-            $modalInstance.close($scope.defaultPlan);
+            $modalInstance.close(returnObj);
 
         };
 

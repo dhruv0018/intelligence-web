@@ -406,7 +406,7 @@ Teams.controller('TeamsController', [
         };
 
         $scope.search = function(filter) {
-            data.teams.getList(filter,
+            data.teams.query(filter,
                     function(teams) {
                         $scope.teams = teams;
                         $scope.noResults = false;

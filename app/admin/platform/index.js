@@ -137,10 +137,7 @@ Platform.controller('PlatformController', [
 
                     if (!returnedPlan) return;
 
-                    if (!savedPlan.id) {
-                        returnedPlan.sportId = data.leagues.get(returnedPlan.leagueIds[0]).sportId;
-                        $scope.plans.push(returnedPlan);
-                    }
+                    returnedPlan.sportId = data.leagues.get(returnedPlan.leagueIds[0]).sportId;
                 });
             });
         };

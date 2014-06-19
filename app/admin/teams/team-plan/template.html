@@ -31,19 +31,26 @@
 
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label>Max Games</label>
+                    <label>Max Games Per Season</label>
                     <input type="number" data-min="0" class="form-control" data-ng-model="teamPlan.maxGamesPerPlan" required/>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label>Reg. Breakdowns</label>
+                    <label>Reg. Breakdowns per week</label>
                     <input type="number" data-min="0" class="form-control" data-ng-model="teamPlan.maxRegularGames" required/>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label>Scout Breakdowns</label>
+                    <label>Scout Breakdowns per week</label>
                     <input type="number" data-min="0" class="form-control" data-ng-model="teamPlan.maxScoutingGames" required/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Any Breakdowns per week</label>
+                    <input type="number" data-min="0" class="form-control" data-ng-model="teamPlan.maxAnyGames" required/>
                 </div>
             </div>
 
