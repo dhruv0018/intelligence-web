@@ -111,18 +111,18 @@ IntelligenceWebClient.factory('BaseFactory', [
                     /* Check if the resource exists in its storage list. */
                     var index = self.storage.list.indexOf(resource);
 
-                    /* If the resource isn't in its storage list. */
-                    if (~index) {
-
-                        /* Add the resource to the storage list. */
-                        self.storage.list.push(resource);
-                    }
-
                     /* If the resource is in its storage list. */
-                    else {
+                    if (~index) {
 
                         /* Update it. */
                         self.storage.list[index] = resource;
+                    }
+
+                    /* If the resource isn't in its storage list. */
+                    else {
+
+                        /* Add the resource to the storage list. */
+                        self.storage.list.push(resource);
                     }
 
                     return resource;
