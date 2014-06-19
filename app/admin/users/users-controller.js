@@ -33,11 +33,7 @@ Users.controller('Users.Users.Controller', [
             $modal.open({
 
                 templateUrl: 'users/adduser.html',
-                controller: 'Users.User.Controller'
-
-            }).result.then(function() {
-
-                $state.go('user-info');
+                controller: 'Users.User.New.Controller'
             });
         };
 

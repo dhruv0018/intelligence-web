@@ -53,6 +53,7 @@ require('./filters');
 require('./directives');
 require('./user-service');
 require('./user-controller');
+require('./new-user-controller');
 require('./user-info-controller');
 require('./user-roles-controller');
 require('./users-controller');
