@@ -312,6 +312,9 @@ IntelligenceWebClient.factory('BaseFactory', [
                         /* Fetch the updated resource. */
                         return self.fetch(resource.id).then(function(updated) {
 
+                            /* Update local resource with server resource. */
+                            angular.extend(resource, updated);
+
                             /* Update the resource in storage. */
                             self.storage.list[self.storage.list.indexOf(resource)] = resource;
                             self.storage.collection[resource.id] = resource;
@@ -329,7 +332,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                     var create = self.resource.create(parameters, resource, success, error);
 
                     /* Once the create request finishes. */
-                    return create.$promise.then(function(resource) {
+                    return create.$promise.then(function(created) {
+
+                        /* Update local resource with server resource. */
+                        angular.extend(resource, created);
 
                         /* Update the resource in storage. */
                         self.storage.list[self.storage.list.indexOf(resource)] = resource;
