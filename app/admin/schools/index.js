@@ -42,6 +42,14 @@ Schools.config([
                         templateUrl: 'schools.html',
                         controller: 'SchoolsController'
                     }
+                },
+                resolve: {
+                    'Schools.Data': [
+                        '$q', 'Schools.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             })
 
@@ -54,6 +62,14 @@ Schools.config([
                         templateUrl: 'school.html',
                         controller: 'SchoolController'
                     }
+                },
+                resolve: {
+                    'Schools.Data': [
+                        '$q', 'Schools.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             })
 
@@ -65,8 +81,29 @@ Schools.config([
                         templateUrl: 'school-info.html',
                         controller: 'SchoolController'
                     }
+                },
+                resolve: {
+                    'Schools.Data': [
+                        '$q', 'Schools.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             });
+    }
+]);
+
+Schools.service('Schools.Data.Dependencies', [
+    'SchoolsFactory', 'TeamsFactory',
+    function(schools, teams) {
+        var Data = {};
+
+        angular.forEach(arguments, function(arg) {
+            Data[arg.description] = arg.load();
+        });
+
+        return Data;
     }
 ]);
 
@@ -77,40 +114,19 @@ Schools.config([
  * @type {Controller}
  */
 Schools.controller('SchoolController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', 'SCHOOL_TYPES', 'SchoolsFactory', 'TeamsFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, SCHOOL_TYPES, schools, teams) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'Schools.Data',
+    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, data) {
+
+        console.log('sdata', data);
 
         $scope.SCHOOL_TYPES = SCHOOL_TYPES;
 
-        $scope.$storage = $localStorage;
-
-        /* Get the school from storage. */
-        var school = $scope.$storage.school;
-
-        /* If no school is stored locally, then get the school from the server. */
-        if (!school) {
-
-            /* Get the school ID from the state parameters. */
-            var schoolId = $stateParams.id;
-
-            /* Make sure there is a school ID before contacting the server. */
-            if (schoolId) {
-
-                /* Get the school by ID from the server if given. */
-                schools.get(schoolId, function(school) {
-
-                    /* Store the school locally. */
-                    $scope.$storage.school = school;
-
-                    $scope.teams = teams.getList({ school: school.id});
-                });
-            }
-        }
+        $scope.school = data.schools.get($stateParams.id);
+        $scope.teams = data.teams.query({ school: $scope.school.id});
 
         $scope.save = function(school) {
 
-            schools.save(school).then(function() {
-                delete $scope.$storage.school;
+            data.schools.save(school).then(function() {
                 $state.go('schools');
             });
         };
@@ -124,19 +140,19 @@ Schools.controller('SchoolController', [
  * @type {Controller}
  */
 Schools.controller('SchoolsController', [
-    '$rootScope', '$scope', '$state', '$localStorage', 'SchoolsFactory',
-    function controller($rootScope, $scope, $state, $localStorage, schools) {
+    '$rootScope', '$scope', '$state', 'Schools.Data',
+    function controller($rootScope, $scope, $state, data) {
 
-        $scope.schools = schools.getList();
+        console.log('Ssdata', data);
+
+        $scope.schools = data.schools.getList();
 
         $scope.add = function() {
-
-            delete $localStorage.school;
             $state.go('school-info');
         };
 
         $scope.search = function(filter) {
-            schools.getList(filter,
+            data.schools.query(filter,
                 function(schools) {
                     $scope.schools = schools;
                     $scope.noResults = false;
