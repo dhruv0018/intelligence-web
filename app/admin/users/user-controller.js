@@ -27,6 +27,14 @@ Users.controller('Users.User.Controller', [
         $scope.user = data.users.get($stateParams.id) || {};
         $scope.user.newRoles = [];
 
+        /* If the user has roles, use a known role. */
+        if ($scope.user.roles) {
+
+            /* Set the role to the users default role, or
+             * their first role if no default is set. */
+            $scope.role = $scope.user.getDefaultRole() || $scope.user.roles[0] || undefined;
+        }
+
         $scope.save = function(user) {
 
             /* Check if the modified user is the currently logged in user. */
