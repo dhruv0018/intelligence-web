@@ -95,8 +95,9 @@ Schools.config([
 ]);
 
 Schools.service('Schools.Data.Dependencies', [
-    'SchoolsFactory', 'TeamsFactory',
-    function(schools, teams) {
+    'TeamsFactory', 'SchoolsFactory',
+    function(teams, schools) {
+
         var Data = {};
 
         angular.forEach(arguments, function(arg) {
@@ -104,6 +105,7 @@ Schools.service('Schools.Data.Dependencies', [
         });
 
         return Data;
+
     }
 ]);
 
@@ -117,15 +119,19 @@ Schools.controller('SchoolController', [
     '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'Schools.Data',
     function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, data) {
 
-        console.log('sdata', data);
-
         $scope.SCHOOL_TYPES = SCHOOL_TYPES;
 
-        $scope.school = data.schools.get($stateParams.id);
-        $scope.teams = data.teams.query({ school: $scope.school.id});
+        $scope.school = $scope.school || {};
+        $scope.teams = $scope.teams || [];
+
+        if ($stateParams.id) {
+            $scope.school = data.schools.get($stateParams.id);
+            data.teams.query({ school: $scope.school.id}).then(function(queriedTeams) {
+                $scope.teams = queriedTeams;
+            });
+        }
 
         $scope.save = function(school) {
-
             data.schools.save(school).then(function() {
                 $state.go('schools');
             });
@@ -142,8 +148,6 @@ Schools.controller('SchoolController', [
 Schools.controller('SchoolsController', [
     '$rootScope', '$scope', '$state', 'Schools.Data',
     function controller($rootScope, $scope, $state, data) {
-
-        console.log('Ssdata', data);
 
         $scope.schools = data.schools.getList();
 
