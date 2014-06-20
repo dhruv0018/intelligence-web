@@ -34,100 +34,175 @@
         }
     }
 
-    .select-boxes {
+    .select-boxes{
 
-        padding: 0;
-        border-left: 1px solid @gray-lighter;
-        border-right: 1px solid @gray-lighter;
-        border-bottom: 1px solid @gray-lighter;
+      padding: 0;
+      border-left: 1px solid @gray-lighter;
+      border-right: 1px solid @gray-lighter;
+      border-bottom: 1px solid @gray-lighter;
 
-        &:hover {
+      h1 {
 
-            background-color: rgb(246, 249, 253);
+        color: @brand-blue;
+        font-size: 24px;
+        margin-top: 0;
+      }
 
-            .icon-bar-chart,
-            .icon-share {
+      &:hover {
 
-                color: @brand-primary;
-                border-color: @brand-primary;
-            }
+        background-color: rgb(246, 249, 253);
+
+        .icon-bar-chart,
+        .icon-share {
+
+          color: @brand-primary;
+          border-color: @brand-primary;
+        }
+      }
+
+      button {
+
+        .btn-blank;
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        padding-top: 50px;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-bottom: 50px;
+
+        p,
+        b {
+          color: black;
         }
 
-        h1 {
+        p {
 
-            color: @brand-blue;
-            font-size: 24px;
-            margin-top: 0;
+          margin: 0;
         }
 
-        button {
+        &.active::after {
 
-            .btn-blank;
-            width: 100%;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            padding-top: 50px;
-            padding-left: 25px;
-            padding-right: 25px;
-            padding-bottom: 50px;
-
-            p,
-            b {
-                color: black;
-            }
-
-            p {
-
-                margin: 0;
-            }
-
-            .icon-bar-chart,
-            .icon-share {
-
-                width: 100px;
-                height: 100px;
-                color: @gray-lighter;
-                border: 5px solid @gray-lighter;
-                border-radius: 50%;
-                font-size: 50px;
-                margin-right: 25px;
-
-                &::before {
-
-                    width: 90px;
-                    line-height: 90px;
-                    text-align: center;
-                }
-            }
-
-            .icon-share::before {
-
-                margin-top: 3px;
-                margin-left: 3px;
-            }
-
-            .icon-check-empty {
-
-                color: @gray-dark;
-                font-size: 40px;
-                position: absolute;
-                right: 75px;
-                line-height: 100px;
-            }
-
-            &.active::after {
-
-                .icon(@ok);
-                color: @brand-secondary;
-                font-size: 40px;
-                position: absolute;
-                top: 45px;
-                right: 65px;
-                line-height: 100px;
-            }
+          .icon(@ok);
+          color: @brand-secondary;
+          font-size: 40px;
+          position: absolute;
+          top: 45px;
+          right: 65px;
+          line-height: 100px;
         }
+      }
     }
+
+
+    .confirmation-boxes {
+
+      border: 1px solid @gray-lighter;
+
+      .confirmation-text{
+        .breakdowns{
+          color: @brand-blue;
+          font-weight: bold;
+
+          .remaining-breakdowns{
+            border-radius:50%;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            padding:10px;
+            border: 3px solid @gray-lighter;
+          }
+        }
+
+        .breakdown-information{
+          margin-left: 30px;
+          position:relative;
+
+          .switch-choice{
+            .btn;
+            .btn-default;
+
+            position:relative;
+            left: 25%;
+            top: 20px;
+          }
+        }
+
+        h3 {
+          color: @brand-success;
+        }
+
+        .icon-bar-chart, .icon-share{
+          position:relative;
+          border: none;
+
+          &::before{
+            color: @brand-success;
+            border: 5px solid @brand-success;
+            border-radius: 50%;
+          }
+
+          &::after{
+            .icon(@ok);
+            position:absolute;
+            top: 10px;
+            left: 70px;
+            font-size:15px;
+            color: white;
+            border-radius: 50%;
+            background:@brand-success;
+            padding:2px;
+          }
+        }
+
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        padding-top: 50px;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-bottom: 50px;
+      }
+    }
+
+    .icon-bar-chart,
+    .icon-share {
+
+      width: 100px;
+      height: 100px;
+      color: @gray-lighter;
+      border: 5px solid @gray-lighter;
+      border-radius: 50%;
+      font-size: 50px;
+      margin-right: 25px;
+
+      &::before {
+
+        width: 90px;
+        line-height: 90px;
+        text-align: center;
+      }
+    }
+
+    .icon-share::before {
+
+      margin-top: 3px;
+      margin-left: 3px;
+    }
+
+    .icon-check-empty {
+
+      color: @gray-dark;
+      font-size: 40px;
+      position: absolute;
+      right: 75px;
+      line-height: 100px;
+    }
+
+
 
 }
 
