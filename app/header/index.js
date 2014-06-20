@@ -90,8 +90,6 @@ Header.controller('HeaderController', [
 
         $scope.account = account;
 
-        $scope.currentUser = session.currentUser;
-
         $scope.logout = function() {
 
             auth.logoutUser();
