@@ -121,6 +121,10 @@ GameArea.config([
                                                     exclusion.push(filter.id);
                                                 }
 
+                                                if (filter.name === 'Unknown Players') {
+                                                    exclusion.push(filter.id);
+                                                }
+
                                                 var excluded = exclusion.some(function(excludedFilterId) {
                                                     return filter.id === excludedFilterId;
                                                 });
@@ -145,7 +149,7 @@ GameArea.config([
                                             });
 
                                             angular.forEach(data.gamePlayerLists[data.game.teamId], function(player) {
-
+                                                console.log(player);
                                                 var playerFilter = {
                                                     id: playerFilterTemplate.id,
                                                     teamId: data.game.teamId,
