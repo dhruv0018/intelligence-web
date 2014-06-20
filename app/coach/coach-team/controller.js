@@ -89,8 +89,6 @@ Team.controller('Coach.Team.controller', [
         $scope.usersFactory = users;
         $scope.data = data;
 
-        console.log($scope.data);
-
         $scope.filtering = [
             {type: 'none'},
             {type: 'active'},
@@ -109,13 +107,11 @@ Team.controller('Coach.Team.controller', [
             var tempPlayer = players.getPositionsFromDowndown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
             players.singleSave($scope.data.rosterId, tempPlayer).then(function(player) {
                 player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
-                $scope.data.roster.pop();
-                $scope.data.roster.push(player);
+                $scope.data.roster[$scope.data.roster.length - 1] = player;
 
                 if (player.userId) {
                     if (typeof $scope.data.coachData.users[player.userId] === 'undefined') {
                         users.get(player.userId, function(user) {
-                            console.log(user);
                             $scope.data.coachData.users[player.userId] = user.id;
                         });
                     }
