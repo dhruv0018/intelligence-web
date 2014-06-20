@@ -95,6 +95,7 @@ GameArea.controller('Coach.GameArea.controller', [
             $scope.game = data.indexedGames[$scope.gameId];
             $scope.data = data;
 
+            $scope.game.formationReport = $scope.game.getFormationReport();
 
             $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
 

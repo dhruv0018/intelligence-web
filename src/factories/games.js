@@ -697,6 +697,10 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
             isRegular: function(game) {
                 return GAME_TYPES[GAME_TYPES_IDS[game.gameType]].type === 'regular';
+            },
+            getFormationReport: function() {
+                var self = this;
+                return self.resource.getFormationReport({id: self.id});
             }
         };
 
