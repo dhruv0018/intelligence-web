@@ -51,7 +51,6 @@ Users.service('Admin.Users.Data.Dependencies', [
 require('./states');
 require('./filters');
 require('./directives');
-require('./user-service');
 require('./user-controller');
 require('./new-user-controller');
 require('./user-info-controller');
