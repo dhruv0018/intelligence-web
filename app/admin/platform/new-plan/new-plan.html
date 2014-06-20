@@ -49,16 +49,6 @@
                 </div>
                 <div class="gamesrow">
                     <div>
-                        <label>Default # of regular games</label>
-                        <input class="form-control" type="number" data-min="0" data-ng-model="defaultPlan.maxRegularGames" required> per week
-                    </div>
-                    <div>
-                        <label>Default # of scouting games</label>
-                        <input class="form-control" type="number" data-min="0" data-ng-model="defaultPlan.maxScoutingGames" required> per week
-                    </div>
-                </div>
-                <div class="gamesrow">
-                    <div>
                         <label>Default turnaround time</label>
                         <select class="form-control" data-ng-model="defaultPlan.maxTurnaroundTime" data-ng-options="time.value as time.name for time in maxTurnaroundTimes" required>
                             <option></option>
