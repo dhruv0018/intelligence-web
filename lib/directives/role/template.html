@@ -14,9 +14,11 @@
     <div class="role-name">
 
         <span data-ng-if="users.is(role, COACH)"><a data-ui-sref="team({ id: role.teamId })">{{team.name}}</a></span>
-        <span data-ng-if="!users.is(role, COACH)">{{user.roles[0].type.name || 'Inactive'}}</span>
+        <span data-ng-if="!users.is(role, COACH)">{{role.type.name || 'Inactive'}}</span>
 
     </div>
+
+    <pre>{{role | json}}</pre>
 
 </div>
 
