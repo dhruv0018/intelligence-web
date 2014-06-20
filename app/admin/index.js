@@ -19,8 +19,8 @@ var Admin = angular.module('Admin', [
     'platform'
 ]);
 
-Admin.service('Admin.Data', [
-    'Base.Data',
+Admin.service('Admin.Data.Dependencies', [
+    'Base.Data.Dependencies',
     function(data) {
 
         var Data = {
@@ -48,7 +48,7 @@ Admin.config([
             abstract: true,
             resolve: {
                 'Admin.Data': [
-                    '$q', 'Admin.Data',
+                    '$q', 'Admin.Data.Dependencies',
                     function($q, data) {
                         return $q.all(data);
                     }
