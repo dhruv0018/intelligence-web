@@ -24,13 +24,36 @@ Game.run([
 ]);
 
 /**
+ * Admin Game data dependencies.
+ * @module Game
+ * @type {service}
+ */
+Game.service('Admin.Game.Data.Dependencies', [
+    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(ROLE_TYPE, sports, leagues, teams, games, users) {
+
+        var Data = {
+
+            sports: sports.load(),
+            leagues: leagues.load(),
+            schools: schools.load(),
+            teams: teams.load(),
+            games: games.load(),
+            users: users.load(),
+        };
+
+        return Data;
+    }
+]);
+
+/**
  * Game page state router.
  * @module Game
  * @type {UI-Router}
  */
 Game.config([
-    '$stateProvider', '$urlRouterProvider',
-    function config($stateProvider, $urlRouterProvider) {
+    '$q', '$stateProvider', '$urlRouterProvider',
+    function config($q, $stateProvider, $urlRouterProvider) {
 
         var game = {
             name: 'game',
@@ -41,6 +64,14 @@ Game.config([
                     templateUrl: 'game.html',
                     controller: 'GameController'
                 }
+            },
+            resolve: {
+                'Admin.Game.Data': [
+                    '$q', 'Admin.Game.Data.Dependencies',
+                    function($q, data) {
+                        return $q.all(data);
+                    }
+                ]
             }
         };
 
@@ -77,62 +108,50 @@ Game.controller('ModalController', [
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'AlertsService', 'UsersFactory', 'GamesFactory', 'SchoolsFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'RawFilm.Modal', 'DeleteGame.Modal',
-    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  alerts, users, games, schools, teams, sports, leagues, RawFilmModal, DeleteGameModal) {
+    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'AlertsService', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal',
+    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  alerts, data, RawFilmModal, DeleteGameModal) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
         $scope.GAME_NOTE_TYPES = GAME_NOTE_TYPES;
 
-        var gameId = $stateParams.id;
         $scope.DeleteGameModal = DeleteGameModal;
         $scope.RawFilmModal = RawFilmModal;
 
-        games.get(gameId, function(game) {
+        var gameId = $stateParams.id;
 
-            $scope.game = game;
+        $scope.game = data.games.get(gameId);
 
-            var status = game.getStatus();
+        var status = $scope.game.getStatus();
 
-            alerts.add({
-                type: status.type,
-                message: status.name
-            });
-
-            teams.get(game.teamId, function(team) {
-
-                $scope.teamName = team.name;
-
-                leagues.get(team.leagueId, function(league) {
-
-                    $scope.sport = sports.get(league.sportId);
-                });
-
-                schools.get(team.schoolId, function(school) {
-
-                    $scope.school = school;
-                });
-
-                var headCoachRole = team.getHeadCoachRole();
-
-                if (headCoachRole) {
-
-                    users.get(headCoachRole.userId, function(user) {
-
-                        $scope.headCoach = user;
-                    });
-                }
-
-            });
-
-            teams.get(game.opposingTeamId, function(team) {
-
-                $scope.opposingTeamName = team.name;
-            });
+        alerts.add({
+            type: status.type,
+            message: status.name
         });
 
-        users.getList(function(users) { $scope.users = users; }, null, true);
+        var team = data.teams.get($scope.game.teamId);
+
+        $scope.teamName = team.name;
+
+        var league = data.leagues.get(team.leagueId);
+
+        $scope.sport = data.sports.get(league.sportId);
+
+        $scope.school = data.schools.get(team.schoolId);
+
+        var headCoachRole = team.getHeadCoachRole();
+
+        if (headCoachRole) {
+
+            $scope.headCoach = data.users.get(headCoachRole.userId);
+        }
+
+        var opposingTeam = data.teams.get($scope.game.opposingTeamId);
+
+        $scope.opposingTeamName = opposingTeam.name;
+
+        $scope.users = data.users.getList();
 
         $scope.selectIndexer = function(isQa) {
 
@@ -149,26 +168,14 @@ Game.controller('GameController', [
 
                 $scope.selectedGame.save();
 
-                /* NOTE: There is a bug in UI-router:
-                 * https://github.com/angular-ui/ui-router/wiki/Quick-Reference#wiki-statereload
-                 */
+                /* FIXME: Might not need this anymore: */
+                $scope.game = data.games.get($scope.selectedGame.id);
 
-                /* FIXME: Due to bug in UI-router; the controller is not
-                 * reinstentiated when the state is reloaded, but it should be
-                 * this simple:
-                 * $state.reload();
-                 */
+                alerts.clear();
+                alerts.add({
 
-                games.get($scope.selectedGame.id, function(game) {
-
-                    $scope.game = game;
-
-                    alerts.clear();
-                    alerts.add({
-
-                        type: game.status == GAME_STATUSES.INDEXED.id ? 'success' : 'warning',
-                        message: 'Game Status: ' + GAME_STATUSES[GAME_STATUS_IDS[game.status]].name
-                    });
+                    type: $scope.game.status == GAME_STATUSES.INDEXED.id ? 'success' : 'warning',
+                    message: 'Game Status: ' + GAME_STATUSES[GAME_STATUS_IDS[$scope.game.status]].name
                 });
             });
         };
