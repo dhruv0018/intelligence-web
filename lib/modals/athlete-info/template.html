@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="athlete-status col-md-12">
                     <div class="inactive" data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed">
-                        <strong>This player has not activated their account with Krossover.</strong> Once they activate their account you will no longer be able to edit their name and email address.
+                        <strong>This player has not yet activated their account with Krossover.</strong> Once they activate their account you will no longer be able to edit their name and email address.
                         <a data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-click="playersFactory.resendEmail(athlete.userId, team.id)">Resend Invitation</a>
                     </div>
                     <div class="active" data-ng-if="athlete.userId && users[athlete.userId].lastAccessed">
@@ -100,7 +100,7 @@
                                     <strong>Allow player to edit event details</strong>
                                 </div>
                                 <p class="invitation-information col-md-12">
-                                    <i>Once you save this players information we will send them an invitation to join Krossover.</i>
+                                    <i>Once you save this player's information we will send them an invitation to join Krossover.</i>
                                 </p>
                             </div>
                             <div class="col-md-6">
