@@ -14,5 +14,5 @@
 </div>
 
 <accordion close-others="true">
-    <formation-chart data-game="game" data-plays="plays" data-team="team" data-league="league" data-backfield-formation="{{chart.backfieldFormation}}" data-te-strength="{{chart.teStrength}}" data-wr-strength="{{chart.wrStrength}}" data-snaps="{{chart.snaps}}" data-ng-repeat="chart in report[teamId]"></formation-chart>
+    <formation-chart data-game="game" data-plays="plays" data-team-id="teamId" data-league="league" data-chart="chart" data-ng-repeat="chart in report[teamId]"></formation-chart>
 </accordion>
