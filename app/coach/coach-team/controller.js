@@ -90,7 +90,6 @@ Team.controller('Coach.Team.controller', [
         $scope.data = data;
 
         $scope.filtering = [
-            {type: 'none'},
             {type: 'active'},
             {type: 'inactive'}
         ];
