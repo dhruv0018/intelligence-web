@@ -122,34 +122,21 @@ Game.controller('GameController', [
         var gameId = $stateParams.id;
 
         $scope.game = data.games.get(gameId);
+        $scope.team = data.teams.get($scope.game.teamId);
+        $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
+        $scope.league = data.leagues.get($scope.team.leagueId);
+        $scope.sport = data.sports.get($scope.league.sportId);
+        $scope.school = data.schools.get($scope.team.schoolId);
+        $scope.users = data.users.getList();
 
-        var status = $scope.game.getStatus();
-
-        alerts.add({
-            type: status.type,
-            message: status.name
-        });
-
-        var team = data.teams.get($scope.game.teamId);
-
-        $scope.teamName = team.name;
-
-        var league = data.leagues.get(team.leagueId);
-
-        $scope.sport = data.sports.get(league.sportId);
-
-        $scope.school = data.schools.get(team.schoolId);
-
-        var headCoachRole = team.getHeadCoachRole();
+        var headCoachRole = $scope.team.getHeadCoachRole();
 
         if (headCoachRole) {
 
             $scope.headCoach = data.users.get(headCoachRole.userId);
         }
 
-        var opposingTeam = data.teams.get($scope.game.opposingTeamId);
-
-        $scope.opposingTeamName = opposingTeam.name;
+        var status = $scope.game.getStatus();
 
         $scope.users = data.users.getList();
 
