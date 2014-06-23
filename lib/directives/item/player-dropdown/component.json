@@ -1,7 +1,8 @@
 {
     "name": "player-dropdown",
     "templates": [
-        "template.html"
+        "template.html",
+        "player-dropdown-input.html"
     ],
     "styles": [
         "styles.less"
