@@ -25,6 +25,28 @@ Queue.run([
 ]);
 
 /**
+ * Admin Queue data dependencies.
+ * @module Queue
+ * @type {service}
+ */
+Queue.service('Admin.Queue.Data.Dependencies', [
+    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(ROLE_TYPE, sports, leagues, teams, games, users) {
+
+        var Data = {
+
+            sports: sports.load(),
+            leagues: leagues.load(),
+            teams: teams.load(),
+            games: games.load(),
+            users: users.load()
+        };
+
+        return Data;
+    }
+]);
+
+/**
  * Queue page state router.
  * @module Queue
  * @type {UI-Router}
@@ -43,6 +65,14 @@ Queue.config([
                         templateUrl: 'queue.html',
                         controller: 'QueueController'
                     }
+                },
+                resolve: {
+                    'Admin.Queue.Data': [
+                        '$q', 'Admin.Queue.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             });
     }
@@ -77,21 +107,18 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$rootScope', '$scope', '$state', '$modal', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $modal, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users) {
+    '$rootScope', '$scope', '$state', '$modal', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Admin.Queue.Data',
+    function controller($rootScope, $scope, $state, $modal, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, data) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
 
-        var indexerFilter = { role: ROLE_TYPE.INDEXER };
-
-        sports.getList(function(sports) { $scope.sports = sports; }, null, true);
-        leagues.getList(function(leagues) { $scope.leagues = leagues; }, null, true);
-        teams.getList(function(teams) { $scope.teams = teams; }, null, true);
-        users.getList(function(users) { $scope.users = users; }, null, true);
-        users.getList(indexerFilter, function(indexers) { $scope.indexers = indexers; });
-        $scope.queue = games.getList();
+        $scope.sports = data.sports.getCollection();
+        $scope.leagues = data.leagues.getCollection();
+        $scope.teams = data.teams.getCollection();
+        $scope.users = data.users.getCollection();
+        $scope.queue = data.games.getList();
 
         $scope.selectIndexer = function(game, isQa) {
 
@@ -106,10 +133,7 @@ Queue.controller('QueueController', [
 
             }).result.then(function() {
 
-                $scope.selectedGame.save().then(function() {
-
-                    $scope.queue = games.getList();
-                });
+                $scope.selectedGame.save();
             });
         };
 
@@ -118,7 +142,7 @@ Queue.controller('QueueController', [
             /* If search by ID is used, just pull the single game. */
             if (filter.gameId) {
 
-                games.get(filter.gameId,
+                games.fetch(filter.gameId,
 
                     function success(game) {
 
@@ -137,7 +161,7 @@ Queue.controller('QueueController', [
 
             else {
 
-                games.getList(filter,
+                games.query(filter,
 
                     function success(games) {
 
