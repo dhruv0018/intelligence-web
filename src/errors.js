@@ -220,8 +220,8 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$location', '$state',
-    function run($rootScope, $location, $state) {
+    '$rootScope', '$location', '$state', 'AlertsService',
+    function run($rootScope, $location, $state, alerts) {
 
         $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
 
