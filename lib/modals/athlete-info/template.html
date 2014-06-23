@@ -4,14 +4,14 @@
 
         <h3 class="modal-title">
 
-            <div data-ng-if="!athlete.userId">
+            <div data-ng-if="!athlete.firstName">
                 <p class="pull-left">Add a new player to your roster</p>
                 <a class="pull-right" data-ng-click="$close()">
                     <i class="icon-remove"></i>
                 </a>
             </div>
 
-            <div data-ng-if="athlete.userId">
+            <div data-ng-if="athlete.firstName">
                 <p class="pull-left">
                     <span>
                         <span class="jerseyNumber">{{athlete.jerseyNumbers[rosterId]}}</span>
