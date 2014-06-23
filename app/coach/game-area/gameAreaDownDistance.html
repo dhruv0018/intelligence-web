@@ -8,43 +8,28 @@
 <div class="down-distance-info-container">
     <div>
         <span>Select Down:</span>
-        <select class="first-choices">
-            <option>1st</option>
-            <option>2nd</option>
-            <option>3rd</option>
-            <option>4th</option>
-        </select>
+        <select data-ng-model="dndReport.down" class="second-choices" data-ng-options="option for option in options.down"></select>
 
         <span>Select Distance:</span>
-        <select select class="second-choices">
-            <option>Short</option>
-            <option>Medium</option>
-            <option>Long</option>
-        </select>
+
+        <select data-ng-model="dndReport.distance" class="second-choices" data-ng-options="option for option in options.distance"></select>
     </div>
     <div>
         <span>Select Hash:</span>
-        <select select class="first-choices">
-            <option>Left</option>
-            <option>Middle</option>
-            <option>Right</option>
-        </select>
+        <select data-ng-model="dndReport.hash" class="second-choices" data-ng-options="option for option in options.hash"></select>
 
         <span>Select Weight:</span>
-        <select select class="second-choices">
-            <option>Right</option>
-            <option>Left</option>
-            <option>Balanced</option>
-        </select>
+        <select data-ng-model="dndReport.strength" class="second-choices" data-ng-options="option for option in options.weight"></select>
+
     </div>
     <div class="show-from">
         Show snaps only from:
-        <select>
-            <option>Whole Field</option>
-            <option>Red Zone</option>
+        <select data-ng-model="dndReport.redZone">
+            <option value="false">Whole Field</option>
+            <option value="true">Red Zone</option>
         </select>
 
-        <button class="create-report-btn">Create Report</button>
+        <button data-ng-click="createDownAndDistanceReport()" class="create-report-btn">Create Report</button>
     </div>
 </div>
 <div class="formations-chart-container">
