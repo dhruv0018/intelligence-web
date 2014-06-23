@@ -77,12 +77,14 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$rootScope', '$scope', '$state', '$modal', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $modal, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users) {
+    '$rootScope', '$scope', '$state', '$modal', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory', 'SelectIndexer.Modal',
+    function controller($rootScope, $scope, $state, $modal, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
+
+        $scope.SelectIndexerModal = SelectIndexerModal;
 
         var indexerFilter = { role: ROLE_TYPE.INDEXER };
 
@@ -92,26 +94,6 @@ Queue.controller('QueueController', [
         users.getList(function(users) { $scope.users = users; }, null, true);
         users.getList(indexerFilter, function(indexers) { $scope.indexers = indexers; });
         $scope.queue = games.getList();
-
-        $scope.selectIndexer = function(game, isQa) {
-
-            $scope.selectedGame = game;
-            $scope.isQa = isQa;
-
-            $modal.open({
-
-                scope: $scope,
-                controller: 'ModalController',
-                templateUrl: 'select-indexer.html'
-
-            }).result.then(function() {
-
-                $scope.selectedGame.save().then(function() {
-
-                    $scope.queue = games.getList();
-                });
-            });
-        };
 
         $scope.search = function(filter) {
 

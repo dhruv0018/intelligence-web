@@ -77,8 +77,8 @@ Game.controller('ModalController', [
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'AlertsService', 'UsersFactory', 'GamesFactory', 'SchoolsFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'RawFilm.Modal', 'DeleteGame.Modal',
-    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  alerts, users, games, schools, teams, sports, leagues, RawFilmModal, DeleteGameModal) {
+    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'AlertsService', 'UsersFactory', 'GamesFactory', 'SchoolsFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal',
+    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  alerts, users, games, schools, teams, sports, leagues, RawFilmModal, DeleteGameModal, SelectIndexerModal) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -88,6 +88,7 @@ Game.controller('GameController', [
         var gameId = $stateParams.id;
         $scope.DeleteGameModal = DeleteGameModal;
         $scope.RawFilmModal = RawFilmModal;
+        $scope.SelectIndexerModal = SelectIndexerModal;
 
         games.get(gameId, function(game) {
 
@@ -133,45 +134,5 @@ Game.controller('GameController', [
         });
 
         users.getList(function(users) { $scope.users = users; }, null, true);
-
-        $scope.selectIndexer = function(isQa) {
-
-            $scope.selectedGame = $scope.game;
-            $scope.isQa = isQa;
-
-            $modal.open({
-
-                scope: $scope,
-                controller: 'ModalController',
-                templateUrl: 'select-indexer.html'
-
-            }).result.then(function() {
-
-                $scope.selectedGame.save();
-
-                /* NOTE: There is a bug in UI-router:
-                 * https://github.com/angular-ui/ui-router/wiki/Quick-Reference#wiki-statereload
-                 */
-
-                /* FIXME: Due to bug in UI-router; the controller is not
-                 * reinstentiated when the state is reloaded, but it should be
-                 * this simple:
-                 * $state.reload();
-                 */
-
-                games.get($scope.selectedGame.id, function(game) {
-
-                    $scope.game = game;
-
-                    alerts.clear();
-                    alerts.add({
-
-                        type: game.status == GAME_STATUSES.INDEXED.id ? 'success' : 'warning',
-                        message: 'Game Status: ' + GAME_STATUSES[GAME_STATUS_IDS[game.status]].name
-                    });
-                });
-            });
-        };
-
     }
 ]);
