@@ -80,8 +80,8 @@ Team.service('Coach.Team.Data', [
  * @type {controller}
  */
 Team.controller('Coach.Team.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'config', 'ROLES', 'Coach.Team.Data', 'PlayersFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, config, ROLES, data, players, users) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Team.Data', 'PlayersFactory', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
@@ -97,6 +97,12 @@ Team.controller('Coach.Team.controller', [
         if (typeof $scope.data.coachData.roster !== 'undefined') {
             $scope.data.roster = $scope.data.coachData.roster;
         }
+
+        alerts.add({
+            type: 'warning',
+            message: 'All game film is automatically shared with Athletes on your active roster. Athletes will always have access to game film where they were on the roster'
+        });
+
 
         angular.forEach($scope.data.roster, function(player) {
             player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
