@@ -1,5 +1,5 @@
 <div class="krossover-roster-manager">
-    <form class="form-team-active" name="formTeamActive" role="form" novalidate>
+    <form data-ng-if=" type === 'table' " class="table-manager form-team-active" name="formTeamActive" role="form" novalidate>
 
         <div class="table-responsive">
 
@@ -30,7 +30,7 @@
 
                     <td>
                         <data-positions-dropdown data-player="player" data-positions="positions"></data-positions-dropdown>
-                        <button class="btn btn-blank pull-right" data-ng-click="deactivate(player)"><i class="icon-remove"></i></button>
+                        <button class="btn btn-blank pull-right" data-ng-click="deactivate(player)"><i class="icon icon-remove"></i></button>
                     </td>
 
                 </tr>
@@ -41,10 +41,47 @@
 
         </div>
 
-        <button class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon-plus"></i></button>
+        <button class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>
 
         <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
-
-
     </form>
+
+
+    <div data-ng-if=" type === 'interface' ">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="athlete col-xs-2">
+                    <add-player data-add-new-player="addNewPlayer()"></add-player>
+                    <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
+                </div>
+
+                <div class="col-xs-10">
+                    <div class="row">
+                        <div class="athlete col-xs-2" data-ng-repeat="player in roster | filter: filterType | orderBy: sortingType ">
+                            <profile-placeholder></profile-placeholder>
+                            <div class="description">
+                                <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
+                                    <span class="jerseyNumber">{{player.jerseyNumbers[rosterId]}}</span>
+                                    {{player.firstName}}
+                                    {{player.lastName[0]}} .
+                                </a>
+                                <p>
+                                    <strong>
+                                        <span data-ng-if="player.positions[rosterId].length > 1"> Multiple Positions</span>
+                                        <span data-ng-if="player.positions[rosterId].length === 1"> {{player.positions[rosterId][0].description}}</span>
+                                        <span data-ng-if="!player.positions[rosterId]"> No Position Set</span>
+                                    </strong>
+                                </p>
+                                <p>
+                                    <span data-ng-if="users[player.userId].lastAccessed">{{usersFactory.getLastAccessed(users[player.userId]) | date: 'mediumDate'}}</span>
+                                    <span data-ng-if="!player.userId && !users[player.userId].lastAccessed">No Account</span>
+                                    <a href data-ng-if="player.userId && !users[player.userId].lastAccessed" data-ng-click="playersFactory.resendEmail(player.userId, team.id)">Resend Invitation</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -4,7 +4,7 @@
         <img data-ng-if="data.coachTeam.imageUrl || !data.coachTeam.imageUrl.length === 0" data-ng-src="{{data.coachTeam.imageUrl}}" class="logo" alt="logo">
         <mascot-placeholder data-ng-if="!data.coachTeam.imageUrl || data.coachTeam.imageUrl.length === 0"></mascot-placeholder>
         <form>
-            <button class="btn-upload">Upload Logo <i class="icon-upload-alt"></i><input type="file" onchange="angular.element(this).scope().setLogo(this.files)"></button>
+            <button class="btn-upload">Upload Logo <i class="icon icon-upload-alt"></i><input type="file" onchange="angular.element(this).scope().setLogo(this.files)"></button>
         </form>
     </div>
 

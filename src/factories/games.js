@@ -29,7 +29,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return game;
             },
-
             saveNotes: function() {
 
                 var deferred = $q.defer();

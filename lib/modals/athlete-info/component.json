@@ -1,13 +1,12 @@
 {
-    "name": "coach-team",
+    "name": "athlete-info",
     "templates": [
         "template.html"
     ],
-    "scripts": [
-        "index.js",
-        "controller.js"
-    ],
     "styles": [
         "styles.less"
+    ],
+    "scripts": [
+        "index.js"
     ]
 }

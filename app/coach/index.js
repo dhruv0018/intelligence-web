@@ -179,8 +179,6 @@ Coach.service('Coach.Data', [
         });
 
 
-
-
         return $q.all(promises);
     }
 ]);

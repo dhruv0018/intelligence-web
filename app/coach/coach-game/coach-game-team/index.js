@@ -69,7 +69,11 @@ Team.controller('Coach.Game.Team.controller', [
             $scope.positions = coachData.positionSet.indexedPositions;
             if (coachData.teamGameRoster) {
                 $scope.data.team = coachData.teams[$scope.game.teamId];
-                $scope.data.team.players = players.constructPositionDropdown(coachData.teamGameRoster.players, coachData.game.rosters[coachData.game.teamId].id, $scope.positions);
+                $scope.data.team.players = coachData.teamGameRoster.players;
+
+                angular.forEach($scope.data.team.players, function(player) {
+                    player = players.constructPositionDropdown(player, coachData.game.rosters[coachData.game.teamId].id, $scope.positions);
+                });
             }
         });
 
@@ -107,8 +111,16 @@ Team.controller('Coach.Game.Team.controller', [
         });
 
         $scope.save = function() {
-            $scope.data.team.players = players.getPositionsFromDowndown($scope.data.team.players, $scope.scoutingTeamId, $scope.positions);
-            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.data.team.players);
+            angular.forEach($scope.data.team.players, function(player) {
+                player = players.getPositionsFromDowndown(player, $scope.scoutingTeamId, $scope.positions);
+            });
+
+            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.data.team.players).then(function(roster) {
+                $scope.data.team.players = roster;
+                angular.forEach($scope.data.team.players, function(player) {
+                    player = players.constructPositionDropdown(player, $scope.scoutingTeamId, $scope.positions);
+                });
+            });
             tabs.activateTab('opposing-team');
         };
 

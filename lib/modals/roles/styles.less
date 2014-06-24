@@ -49,23 +49,6 @@
         &:hover {
 
             background-color: rgb(246, 249, 253);
-
-            &::after {
-
-                .icon(@ok);
-                color: @brand-secondary;
-                position: absolute;
-                top: 25px;
-                right: 10px;
-            }
-        }
-
-        &::before {
-
-            .icon(@check-empty);
-            position: absolute;
-            top: 25px;
-            right: (10px + 2px); /* Add an extra couple pixels to account for difference between checked icon */
         }
     }
 
