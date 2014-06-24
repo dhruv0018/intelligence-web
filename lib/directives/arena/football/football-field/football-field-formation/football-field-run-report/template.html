@@ -2,7 +2,7 @@
 
     <div data-ng-repeat="gap in gaps">
 
-        <krossover-arena-football-field-gap-report data-runs="{{ gap.runs }}" data-avg-yards="{{ gap.avgYards }}" data-game="game" data-plays="plays" data-team-id="teamId" data-league="league" data-chart="chart"></krossover-arena-football-field-gap-report>
+        <krossover-arena-football-field-gap-report data-runs="{{chart.runs[gap.value].totalRuns}}" data-avg-yards="{{chart.runs[gap.value].avgYards}}" data-game="game" data-plays="plays" data-team-id="teamId" data-league="league" data-chart="chart"></krossover-arena-football-field-gap-report>
 
     </div>
 
