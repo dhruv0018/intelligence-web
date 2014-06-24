@@ -73,7 +73,10 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                 $scope.data.opposingTeam = {
                     players: coachData.opposingTeamGameRoster.players || []
                 };
-                $scope.data.opposingTeam.players = players.constructPositionDropdown(coachData.opposingTeamGameRoster.players, coachData.game.rosters[coachData.game.opposingTeamId].id, $scope.positions);
+                angular.forEach($scope.data.opposingTeam.players, function(player) {
+                    player = players.constructPositionDropdown(player, coachData.game.rosters[coachData.game.opposingTeamId].id, $scope.positions);
+                });
+
             }
         });
 
@@ -110,8 +113,19 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         });
 
         $scope.save = function() {
-            $scope.data.opposingTeam.players = players.getPositionsFromDowndown($scope.data.opposingTeam.players, $scope.opposingTeamRosterId, $scope.positions);
-            players.save($scope.game.rosters[$scope.game.opposingTeamId].id, $scope.data.opposingTeam.players);
+
+            angular.forEach($scope.data.opposingTeam.players, function(player) {
+                player = players.getPositionsFromDowndown(player, $scope.opposingTeamRosterId, $scope.positions);
+            });
+
+            players.save($scope.game.rosters[$scope.game.opposingTeamId].id, $scope.data.opposingTeam.players).then(function(roster) {
+                $scope.data.opposingTeam.players = roster;
+
+                angular.forEach($scope.data.opposingTeam.players, function(player) {
+                    player = players.constructPositionDropdown(player, $scope.opposingTeamRosterId, $scope.positions);
+                });
+            });
+
             tabs.activateTab('instructions');
         };
 
