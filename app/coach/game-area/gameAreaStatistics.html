@@ -1,15 +1,20 @@
 <div class="statsPage">
 	
 	<div class="stats-btn-group">
-		<button class="stats-btn" ng-click="statsSelector = 'ga-log'" ng-class="{'active-stats-btn':(statsSelector === 'ga-log')}" ui-sref="ga-log"><i class="icon-file-text"></i> Game Log</button>
-		<button class="stats-btn" ng-click="statsSelector = 'ga-homestats'" ng-class="{'active-stats-btn':(statsSelector === 'ga-homestats')}" ui-sref="ga-homestats"><i class="icon-bar-chart"></i> Home Stats</button>
-		<button class="stats-btn" ng-click="statsSelector = 'ga-awaystats'" ng-class="{'active-stats-btn':(statsSelector === 'ga-awaystats')}" ui-sref="ga-awaystats"><i class="icon-bar-chart"></i> Away Stats</button>
+		<button class="stats-btn" ng-click="statsSelector = 'ga-log'" ng-class="{'active-stats-btn':(statsSelector === 'ga-log')}"><i class="icon-file-text"></i> Game Log</button>
+		<button class="stats-btn" ng-click="statsSelector = 'ga-homestats'" ng-class="{'active-stats-btn':(statsSelector === 'ga-homestats')}"><i class="icon-bar-chart"></i> Home Stats</button>
+		<button class="stats-btn" ng-click="statsSelector = 'ga-awaystats'" ng-class="{'active-stats-btn':(statsSelector === 'ga-awaystats')}"><i class="icon-bar-chart"></i> Away Stats</button> 
 	</div>
-	<div data-ui-view="content"></div>
+
+	<dynamic-table data-source="gameLogTable" data-visible="{{statsSelector === 'ga-log'}}"></dynamic-table>
+	<dynamic-table data-source="gameLogTable2" data-visible="{{statsSelector === 'ga-homestats'}}"></dynamic-table>
+	<dynamic-table data-source="gameLogTable3" data-visible="{{statsSelector === 'ga-awaystats'}}"></dynamic-table>
+
+	<!--
 	<div class="bottom-links">
-		<a href="#"><i class="icon-book"></i> Glossary</a>
-		<a href="#" class="middlelink"><i class="icon-download"></i> Download as Excel</a>
-		<a href="#"><i class="icon-download"></i> Download for Max Preps</a>
-	</div>
+		<a href><i class="icon-book"></i> Glossary</a>
+		<a href= class="middlelink"><i class="icon-download"></i> Download as Excel</a>
+		<a href><i class="icon-download"></i> Download for Max Preps</a>
+	</div> -->
 
 </div>
