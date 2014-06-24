@@ -88,7 +88,11 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 if (player.id) {
                     return self.resource.update(player).$promise;
                 } else {
-                    return self.resource.singleCreate(player).$promise;
+                    return self.resource.singleCreate(player).$promise.then(function(player) {
+                        angular.extend(player, self);
+
+                        return player;
+                    });
                 }
 
             },

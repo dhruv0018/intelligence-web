@@ -110,9 +110,10 @@ Team.controller('Coach.Team.controller', [
 
         $scope.singleSave = function(player) {
             var tempPlayer = players.getPositionsFromDowndown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
-            players.singleSave($scope.data.rosterId, tempPlayer).then(function(player) {
+
+            players.singleSave($scope.data.rosterId, tempPlayer).then(function(responsePlayer) {
+                angular.extend(player, player, responsePlayer);
                 player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
-                $scope.data.roster[$scope.data.roster.length - 1] = player;
 
                 if (player.userId) {
                     if (typeof $scope.data.coachData.users[player.userId] === 'undefined') {
