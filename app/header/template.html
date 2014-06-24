@@ -47,17 +47,17 @@
                 <li data-ng-hide="true"><a href="#">Sets</a></li>
             </ul>
         </li>
-        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="tape">Tape Exchange</a></li>
-        <li data-ui-sref-active="active"><a data-ng-href="{{config.links.support.uri}}">Support <i class="icon-external-link"></i></a></li>
+        <li data-ui-sref-active="active"><a data-ng-href="{{config.links.support.uri}}">Support <i class="icon icon-external-link"></i></a></li>
         <li data-ui-sref-active="active"><button class="btn btn-primary navbar-btn" data-ng-click="tabs.reset()" data-ui-sref="add-film" data-ng-disabled="$state.current.parent === 'add-film'">Add Film</button></li>
     </menu>
 
     <div class="nav navbar-nav navbar-right">
 
-        <div class="role-dropdown" data-dropdown>
+        <div class="role-dropdown" data-dropdown data-is-open="status.isopen">
 
             <button class="dropdown-toggle">
 
+                <i class="icon" data-ng-class="{'icon-chevron-up': status.isopen, 'icon-chevron-down': !status.isopen}"></i>
                 <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
 
             </button>
@@ -76,8 +76,8 @@
 
                 <footer>
 
-                    <button class="btn-footer" data-ui-sref="contact-info" data-ng-disabled="$state.current.parent === 'account'"><i class="icon-cog"></i> Your Account</button>
-                    <button class="btn-footer" data-ng-click="logout()"><i class="icon-signout"></i> Log out</button>
+                    <button class="btn-footer" data-ui-sref="contact-info" data-ng-disabled="$state.current.parent === 'account'"><i class="icon icon-cog"></i> Your Account</button>
+                    <button class="btn-footer" data-ng-click="logout()"><i class="icon icon-signout"></i> Log out</button>
 
                 </footer>
 

@@ -38,6 +38,46 @@ IntelligenceWebClient.factory('FiltersetsFactory', [
                 };
 
                 return self.resource.get({ id: id }, callback, error);
+            },
+
+            getList: function(filter, success, error, index) {
+
+                var self = this;
+
+                if (angular.isFunction(filter)) {
+
+                    index = error;
+                    error = success;
+                    success = filter;
+                    filter = null;
+                }
+
+                filter = filter || {};
+                filter.start = filter.start || 0;
+                filter.count = filter.count || 1000;
+
+                var callback = function(filtersets) {
+
+                    var indexedFiltersets = {};
+
+                    filtersets.forEach(function(filterset) {
+
+                        filterset = self.extendGame(filterset);
+
+                        indexedFiltersets[filterset.id] = filterset;
+                    });
+
+                    filtersets = index ? indexedFiltersets : filtersets;
+
+                    return success ? success() : games;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not load games list');
+                };
+
+                return self.resource.query(filter, callback, error);
             }
         };
 
