@@ -67,17 +67,10 @@ Games.service('Indexer.Games.Data.Dependencies', [
             leagues: leagues.load(),
             teams: teams.load(),
             users: users.load(),
-
-            games: games.query({
+            games: games.load({
 
                 indexerFirstName: currentUser.firstName,
                 indexerLastName: currentUser.lastName
-
-            }).then(function(games) {
-
-                return games.filter(function(game) {
-                    return game.isAssignedToUser(currentUser.id);
-                });
             })
         };
 
@@ -103,10 +96,10 @@ Games.controller('indexer-games.Controller', [
         $scope.leagues = data.leagues.getCollection();
         $scope.teams = data.teams.getCollection();
         $scope.users = data.users.getCollection();
-        $scope.games = data.games;
 
-        angular.forEach($scope.games, function(game) {
-            game.timeLeft = new Date(game.currentAssignment().deadline) - new Date();
+        $scope.games = data.games.getList().filter(function(game) {
+
+            return game.isAssignedToUser(session.currentUser.id);
         });
     }
 ]);
