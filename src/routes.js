@@ -42,13 +42,19 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'AlertsService',
-    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, alerts) {
+    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService',
+    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, session, alerts) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
+            /* Retrieve the current user if logged in. */
+            if (auth.isLoggedIn) {
+
+                session.currentUser = session.retrieveCurrentUser();
+            }
 
             /* If not accessing a public state and not logged in, then
              * redirect the user to login. */

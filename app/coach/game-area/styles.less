@@ -37,6 +37,7 @@
       padding-top: 0px;
       padding-bottom: 0px;
       margin: 8px 25px 8px 0px;
+      background-color: white;
     }
 
   }
@@ -394,6 +395,169 @@
       padding-left: 10px;
       border-right: thin solid @gray-lighter;
       border-left: thin solid @gray-lighter;
+    }
+  }
+}
+
+.formations-teams-header {
+  border-bottom: thin solid @gray-border;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 50px;
+  color: @brand-blue;
+  letter-spacing: normal;
+
+  .team-on-offense {
+    line-height: 50px;
+    
+    .home-team {
+      border-right: thin solid @gray-border;
+      margin-left: 20px;
+      padding-right: 15px;
+      color: @gray-light;
+      text-decoration: none;
+
+      &:hover,
+      &:active,
+      &.active {
+        color: @brand-primary;
+      }
+    }
+
+    .away-team {
+      color: @gray-light;
+      margin-right: 15px;
+      margin-left: 15px;
+      text-decoration: none;
+
+      &:hover,
+      &:active,
+      &.active {
+        color: @brand-primary;
+      }
+    }
+  }
+
+  .show-from {
+    border-left: 2px solid @gray-border;
+    padding-left: 15px;
+  }
+}
+
+.show-from {
+
+  select {
+    width: 110px;
+    background-color: white;
+    color: @gray-light;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .create-report-btn {
+    .pull-right;
+    .btn;
+    .btn-primary;
+  }
+
+}
+
+.formations-chart-container {
+  border: thin solid @gray-border;
+  width: 80%;
+  margin: 20px auto;
+  letter-spacing: normal;
+
+  a.accordion-toggle:hover {
+    text-decoration: none;
+  }
+
+  .field-header {
+    color: white;
+    background-color: @brand-blue;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 400;
+
+    .field-info {
+      margin-right: 30px;
+
+      span {
+        font-weight: 500;
+      }
+    }
+
+    i {
+      line-height: 50px;
+      font-size: 30px;
+    }
+  }
+
+  .field-header-collapsed {
+    background-color: @gray-lighter;
+    color: @brand-blue;
+  }
+
+  .field-options {
+    background-color: @content-bg;
+    color: @gray-light;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    .offense-defense {
+      margin-right: 60px;
+      cursor: pointer;
+    }
+
+    .active-report {
+      color: @brand-primary;
+    }
+
+    .print-formation {
+      .pull-right;
+      color: @brand-primary;
+      cursor: pointer;
+    }
+  }
+
+  .field {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+.down-distance-info-container {
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border: thin solid @gray-border;
+  background-color: @content-bg;
+  letter-spacing: normal;
+  font-weight: 500;
+  color: black;
+
+  div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  select {
+    background-color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: @gray-light;
+    font-weight: 400;
+
+    &.first-choices {
+      width: 75px;
+    }
+    &.second-choices {
+      width: 100px;
     }
   }
 }

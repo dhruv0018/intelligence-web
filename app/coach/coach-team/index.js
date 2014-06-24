@@ -16,9 +16,6 @@ Team.run([
     function run($templateCache) {
 
         $templateCache.put('coach/team/template.html', require('./template.html'));
-        $templateCache.put('coach/team/all.html', require('./all.html'));
-        $templateCache.put('coach/team/active.html', require('./active.html'));
-        $templateCache.put('coach/team/inactive.html', require('./inactive.html'));
     }
 ]);
 
@@ -40,42 +37,12 @@ Team.config([
                     templateUrl: 'coach/team/template.html',
                     controller: 'Coach.Team.controller'
                 }
-            }
-        })
-
-        .state('Coach.Team.All', {
-            url: '/all',
-            views: {
-                'content@Coach.Team': {
-                    templateUrl: 'coach/team/all.html',
-                    controller: 'Coach.Team.All.controller'
-                }
-            }
-        })
-
-        .state('Coach.Team.Active', {
-            url: '/active',
-            views: {
-                'content@Coach.Team': {
-                    templateUrl: 'coach/team/active.html',
-                    controller: 'Coach.Team.Active.controller'
-                }
-            }
-        })
-
-        .state('Coach.Team.Inactive', {
-            url: '/inactive',
-            views: {
-                'content@Coach.Team': {
-                    templateUrl: 'coach/team/inactive.html',
-                    controller: 'Coach.Team.Inactive.controller'
-                }
+            },
+            resolve: {
+                'Coach.Team.Data': 'Coach.Team.Data'
             }
         });
     }
 ]);
 
 require('./controller');
-require('./all-controller');
-require('./active-controller');
-require('./inactive-controller');

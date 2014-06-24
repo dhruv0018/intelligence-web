@@ -22,13 +22,23 @@
         "roster",
         "film",
         "date",
+        "add-time",
         "sport-placeholder",
         "role-icon",
         "add-player",
         "mascot-placeholder",
         "profile-placeholder",
+        "notes-list",
         "positions-dropdown",
-        "uploader"
+        "uploader",
+        "formation-chart",
+        "arena",
+        "roster-manager",
+        "feedback-modal",
+        "open-modal",
+        "open-modal-text",
+        "open-modal-confirm",
+        "open-modal-alert"
     ],
     "scripts": [
         "index.js"

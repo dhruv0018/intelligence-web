@@ -2,8 +2,6 @@ var TO = '';
 var ELEMENTS = 'E';
 var ATTRIBUTES = 'A';
 
-var Mousetrap = require('Mousetrap');
-
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */

@@ -17,8 +17,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$window', '$rootScope', '$scope', '$sce', '$state', '$stateParams', '$modal', 'VIDEO_STATUSES', 'GAME_STATUSES', 'VG_EVENTS', 'SessionService', 'AlertsService', 'IndexingService', 'PlaysFactory', 'PlayersFactory', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
-    function controller(config, $window, $rootScope, $scope, $sce, $state, $stateParams, $modal, VIDEO_STATUSES, GAME_STATUSES, VG_EVENTS, session, alerts, indexing, plays, players, tags, play, event, sidebar) {
+    'config', '$rootScope', '$scope', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
+    function controller(config, $rootScope, $scope, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar) {
 
         var self = this;
 
@@ -31,7 +31,7 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.event = event;
         $scope.sidebar = sidebar;
         $scope.indexing = indexing;
-        $scope.buildScript = indexing.buildScript;
+        $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = indexing.game.video.sources;
 
         if (!indexing.game.isAssignmentStarted()) {
@@ -41,10 +41,33 @@ Indexing.controller('Indexing.Main.Controller', [
             indexing.game.save();
         }
 
+
         /* Bind keys. */
 
 
-        Mousetrap.bindGlobal('space', function() {
+        var globalCallbacks = {
+            'space': true,
+            'left': true,
+            'right': true,
+            'enter': true,
+            'esc': true
+        };
+
+        originalStopCallback = Mousetrap.stopCallback;
+
+        Mousetrap.stopCallback = function(event, element, combo, sequence) {
+
+            if (indexing.isIndexing) {
+
+                if (globalCallbacks[combo] || globalCallbacks[sequence]) {
+                    return false;
+                }
+            }
+
+            return originalStopCallback(event, element, combo);
+        };
+
+        Mousetrap.bind('space', function() {
 
             $scope.$apply(function() {
 
@@ -54,7 +77,7 @@ Indexing.controller('Indexing.Main.Controller', [
             return false;
         });
 
-        Mousetrap.bindGlobal('left', function() {
+        Mousetrap.bind('left', function() {
 
             $scope.$apply(function() {
 
@@ -69,7 +92,7 @@ Indexing.controller('Indexing.Main.Controller', [
             return false;
         });
 
-        Mousetrap.bindGlobal('right', function() {
+        Mousetrap.bind('right', function() {
 
             $scope.$apply(function() {
 
@@ -84,7 +107,7 @@ Indexing.controller('Indexing.Main.Controller', [
             return false;
         });
 
-        Mousetrap.bindGlobal('enter', function() {
+        Mousetrap.bind('enter', function() {
 
             $scope.$apply(function() {
 
@@ -100,7 +123,7 @@ Indexing.controller('Indexing.Main.Controller', [
             return false;
         });
 
-        Mousetrap.bindGlobal('esc', function() {
+        Mousetrap.bind('esc', function() {
 
             $scope.$apply(function() {
 
@@ -237,6 +260,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                 /* Remove the event from the play. */
                 event.delete(event.current);
+                event.reset();
 
                 /* Drop back to tagging state. */
                 indexing.showTags = true;
@@ -332,6 +356,30 @@ Indexing.controller('Indexing.Main.Controller', [
 
             $scope.VideoPlayer.seekTime(time);
         };
+    }
+]);
+
+Indexing.directive('clearKeyListeners', [
+    function directive() {
+
+        var Mousetrap = window.Mousetrap;
+        function link(scope, element, attributes) {
+            element.on('focus', function() {
+                Mousetrap.pause();
+            });
+
+            element.on('blur', function() {
+                Mousetrap.unpause();
+            });
+        }
+
+        var ClearKeyListeners = {
+            restrict: 'A',
+            link: link,
+            controller: 'Indexing.Main.Controller'
+        };
+
+        return ClearKeyListeners;
     }
 ]);
 

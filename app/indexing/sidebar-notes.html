@@ -1,10 +1,24 @@
 <header>
 
-    <h6>Notes</h6>
-    <button class="btn-close" data-ng-click="sidebar.playlist = false"><i class="icon-remove"></i></button>
+    <h6>Edit Note</h6>
+    <button class="btn-close" data-ng-click="sidebar.playlist = false"><i class="icon icon-remove"></i></button>
 
 </header>
 
 <div class="notes">
+	<div class="note-choice">
+
+		<div class="timestamp">Time stamp: {{currentTimestamp|secondsToTime}} </div>
+
+		<select data-ng-model="selectedNoteText">
+			<option data-ng-repeat="noteText in noteValues" value="{{noteText}}">{{noteText}}</option>
+		</select>
+	    <textarea data-ng-focus="clearKeyListeners()" data-ng-blur="unclearKeyListeners()" data-ng-show="selectedNoteText === noteValues[noteValues.length-1]" ng-model="otherNoteValue"></textarea>
+	    <button class="save-note" data-ng-click="saveIndexingNote()">Save Note</button>
+    </div>
+
+    <krossover-notes-list></krossover-notes-list>
 
 </div>
+
+

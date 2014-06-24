@@ -96,7 +96,7 @@ UploadFilm.filter('bytes', function() {
 UploadFilm.controller('UploadFilmController', [
     'config', 'ALLOWED_FILE_EXTENSIONS', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'AlertsService', 'SessionService', 'GamesFactory', 'Coach.Data',
     function controller(config, ALLOWED_FILE_EXTENSIONS, $rootScope, $scope, $state, $localStorage, $http, alerts, session, games, coachData) {
-
+        $scope.games = games;
         $scope.$storage = $localStorage;
 
         delete $scope.$storage.opposingTeam;
@@ -146,13 +146,16 @@ UploadFilm.controller('UploadFilmController', [
                     /* TODO: Change to use logging framework */
                     console.log('KVS GUID: ' + guid);
 
-                    /* Create video object on the game. */
-                    $scope.game = {
-                        /* Store the GUID with the game. */
-                        video: {
-                            guid: guid
-                        }
+                    /* Store the GUID with the game. */
+                    $scope.game.datePlayed = new Date();
+
+                    $scope.game.video = {
+                        guid: guid
                     };
+
+                    if (games.isRegular($scope.game)) {
+                        $scope.game.isHomeGame = 'true';
+                    }
 
                     coachData.game = $scope.game;
 

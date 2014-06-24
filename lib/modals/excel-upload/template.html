@@ -1,0 +1,87 @@
+<div class="excel-upload">
+    <header class="modal-header">
+
+        <h3 class="modal-title">
+            Upload Roster via Excel
+
+            <a class="pull-right" data-ng-click="$close()">
+                <i class="icon icon-remove"></i>
+            </a>
+        </h3>
+
+    </header>
+
+    <div class="modal-body">
+
+        <ul data-ng-hide="errors.length > 0">
+            <li>
+                <strong> Step 1:</strong> Download our <a target="_blank" href="{{rosterTemplateUrl}}">excel roster file</a>
+            </li>
+            <li>
+                <strong>Step 2:</strong> Enter your roster into the excel file.
+            </li>
+            <li>
+                <strong>Step 3:</strong> Read these important notes about entering information into the excel file.
+                <p>
+                    <i>Entering an email will create a Krossover account for the Athlete. Use these abbreviations for position:</i>
+                </p>
+
+                <div class="positions-list shaded">
+                    <div class="position" data-ng-class="{'pull-left': !$last}" data-ng-repeat="position in positions">
+                        <span class="description">{{position.description}}</span>
+                        <span class="name">{{position.name}}</span>
+                    </div>
+                </div>
+
+                <div class="positions-list">
+                    Separate multiple positions with a comma, like this:
+                    <div>
+                        <span data-ng-repeat="position in positions">
+                            <strong>
+                                {{position.name}}<span data-ng-if="!$last">,</span>
+                            </strong>
+                        </span>
+                    </div>
+                </div>
+
+            </li>
+            <li>
+                Once the roster is in the excel file, select it <br/>
+
+                <div data-ng-show="files" class="files-list shaded">
+                    {{files[0].name}} <data-krossover-uploader data-ng-show="files" data-upload-label="Pick Again" data-on-upload="uploadFile(files)"></data-krossover-uploader>
+                </div>
+
+                <data-krossover-uploader data-ng-show="!files" data-upload-label="Upload Roster" data-on-upload="uploadFile(files)"></data-krossover-uploader>
+            </li>
+            <li>
+                <button class="btn btn-primary" data-ng-click="uploadRoster()">Start Roster Upload</button>
+            </li>
+        </ul>
+
+        <div class="box-body errors-list" data-ng-show="errors.length > 0">
+
+            <p class="warning">Please fix the following issue and try again</p>
+
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Row</th>
+                        <th>Field</th>
+                        <th>Issue</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="error in errors">
+                    <td>{{error.row}}</td>
+                    <td>{{error.field}}</td>
+                    <td>{{error.issue}}</td>
+                </tr>
+            </table>
+
+            <button data-ng-click="retry()" class="btn btn-primary">
+                Try Again
+            </button>
+        </div>
+
+    </div>
+</div>

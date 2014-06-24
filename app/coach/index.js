@@ -49,8 +49,8 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory','IndexingService',
-    function($q, session, teams, games, players, leagues, tagsets, positions, indexing) {
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory','IndexingService',
+    function($q, session, teams, games, players, users, leagues, tagsets, positions, indexing) {
         var promises = {};
         var deferred = $q.defer();
         var promisedGames = $q.defer();
@@ -61,8 +61,8 @@ Coach.service('Coach.Data', [
         var promisedRosterId = $q.defer();
         var promisedLeague = $q.defer();
         var promisedPositionSet = $q.defer();
+        var promisedUsers = $q.defer();
 
-        //TODO get real teamroster id
         var data = {
             teamId: session.currentUser.currentRole.teamId,
             games: promisedGames,
@@ -70,7 +70,13 @@ Coach.service('Coach.Data', [
             roster: {}
         };
 
-        games.getList({teamId: data.teamId}, function(gamesList) {
+        users.getList(function(users) {
+            promisedUsers.resolve(users);
+        }, null, true);
+
+        games.getList({
+            uploaderTeamId: data.teamId
+        }, function(gamesList) {
             promisedGames.resolve(gamesList);
             promisedIndexedGames.resolve(games.transformIndexed(gamesList));
         });
@@ -80,12 +86,29 @@ Coach.service('Coach.Data', [
             promisedTeam.resolve(teams[data.teamId]);
 
             data.roster = teams[data.teamId].roster;
-            promisedRosterId.resolve({id: data.roster.id});
+
+            if (typeof data.roster !== 'undefined') {
+                promisedRosterId.resolve({id: data.roster.id});
+                players.getList({
+                    roster: data.roster.id
+                }, function(players) {
+                    var roster = [];
+                    angular.forEach(players, function(player) {
+                        roster.push(player);
+                    });
+                    promisedRoster.resolve(roster);
+                }, function(failure) {
+                    promisedRoster.resolve([]);
+                });
+
+            } else {
+                promisedRoster.resolve([]);
+                promisedRosterId.resolve({id: null});
+            }
 
             leagues.get(teams[data.teamId].leagueId, function(league) {
 
                 tagsets.getList().$promise.then(function(tagset) {
-
                     promisedLeague.resolve(league);
                 });
 
@@ -95,18 +118,6 @@ Coach.service('Coach.Data', [
                     }, null, true);
                 }
             });
-
-            if (data.roster) {
-                players.getList({
-                    roster: data.roster.id
-                }, function(players) {
-                    promisedRoster.resolve(players);
-                }, function(failure) {
-                    promisedRoster.resolve([]);
-                });
-            } else {
-                promisedRoster.resolve([]);
-            }
 
         }, function() {
             console.log('failure to get the teams');
@@ -120,7 +131,8 @@ Coach.service('Coach.Data', [
             league: promisedLeague.promise,
             roster: promisedRoster.promise,
             rosterId: promisedRosterId.promise,
-            positionSet: promisedPositionSet.promise
+            positionSet: promisedPositionSet.promise,
+            users: promisedUsers.promise
         };
 
         return $q.all(promises);
@@ -140,7 +152,6 @@ Coach.service('Coach.Game.Data', ['$q', 'Coach.Data',
 
         coachData.then(function(coachData) {
             var gameData = coachData;
-            gameData.team = coachData.coachTeam;
             gameData.opposingTeam = {
                 players: []
             };

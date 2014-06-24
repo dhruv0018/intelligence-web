@@ -19,7 +19,9 @@ IntelligenceWebClient.directive('autofocusWhen', [
 
         function link($scope, element, attributes) {
 
-            $scope.$watch(attributes.autofocusWhen, function(autofocus) {
+            attributes.$observe('autofocusWhen', function(autofocusWhen) {
+
+                var autofocus = $scope.$eval(autofocusWhen);
 
                 if (autofocus) element.attr('autofocus','true');
                 else element.removeAttr('autofocus');

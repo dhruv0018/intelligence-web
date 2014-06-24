@@ -18,10 +18,10 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('AuthenticationService', [
-    '$rootScope', '$injector', '$q', '$http', 'config', 'TokensService', 'SessionService',
-    function($rootScope, $injector, $q, $http, config, tokens, session) {
+    '$rootScope', '$injector', '$q', '$http', 'config', 'TokensService', 'SessionService', 'UsersFactory',
+    function($rootScope, $injector, $q, $http, config, tokens, session, users) {
 
-        return {
+        var AuthenticationService = {
 
             /**
              * Logs a user in using their email address and password. If the
@@ -55,26 +55,20 @@ IntelligenceWebClient.service('AuthenticationService', [
                  * though the API. Optionally persisting the tokens and user. */
                 return tokens.getTokens(email, password).then(function(authTokens) {
 
-                    var promisedUser = $q.defer();
-
                     /* Store the tokens. Optionally persisting. */
                     tokens.setTokens(authTokens, persist);
 
                     /* Set the authorization header for future requests. */
                     $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
 
-                    /* Retrieve the user from the session. */
-                    session.retrieveCurrentUser(email, function(error, user) {
-
-                        if (error) throw error;
+                    /* Get the user from the server. */
+                    return users.get(email).$promise.then(function(user) {
 
                         /* Store the user in the session. Optionally persisting. */
                         session.storeCurrentUser(user, persist);
 
-                        promisedUser.resolve(user);
+                        return user;
                     });
-
-                    return promisedUser.promise;
                 });
             },
 
@@ -163,6 +157,8 @@ IntelligenceWebClient.service('AuthenticationService', [
                 });
             }
         };
+
+        return AuthenticationService;
     }
 ]);
 

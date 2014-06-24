@@ -1,0 +1,19 @@
+<div class="film-breakdown-modal">
+
+    <header class="modal-header">
+    	<h3 class="modal-title">Play Breakdown
+        <i class="icon-remove pull-right" data-ng-click="$close()"></i></h3>
+
+    </header>
+
+    <div class="modal-body">
+	    <aside class="sidebar">
+	    	<krossover-plays data-expand-all="expandAll" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="league" data-videoplayer="VideoPlayer"></krossover-plays>
+	    <!--	<no-results data-ng-hide="plays.length"></no-results>-->
+	    </aside>
+	    <div class="breakdown-video">
+    		<x-krossover-videoplayer></x-krossover-videoplayer>
+    	</div>
+    </div>
+
+</div>

@@ -15,7 +15,6 @@ var Team = angular.module('Coach.Team');
 Team.service('Coach.Team.Data', [
     '$q', 'SessionService', 'TeamsFactory', 'PlayersFactory', 'Coach.Data',
     function($q, session, teams, players, data) {
-
         var teamId = session.currentUser.currentRole.teamId;
 
         if (!teamId) return $q.reject(new Error('Could not get current users team'));
@@ -66,8 +65,8 @@ Team.service('Coach.Team.Data', [
         var teamData = {
             coachData: data,
             team: team,
-            roster: roster,
-            rosterId: rosterId
+            rosterId: rosterId,
+            roster: roster
         };
 
         return $q.all(teamData);
@@ -81,41 +80,54 @@ Team.service('Coach.Team.Data', [
  * @type {controller}
  */
 Team.controller('Coach.Team.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', '$filter', 'ROLES', 'Coach.Team.Data', 'PlayersFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, $filter, ROLES, data, players) {
-        $scope.roster = [];
-
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Team.Data', 'PlayersFactory', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
+        $scope.config = config;
+        $scope.playersFactory = players;
+        $scope.usersFactory = users;
+        $scope.data = data;
 
-        data.then(function(data) {
-            $scope.team = data.team;
-            $scope.rosterId = data.rosterId;
-            $scope.positions = data.coachData.positionSet.indexedPositions;
-            angular.extend($scope.roster, data.roster, $scope.roster);
-            $scope.roster = players.constructPositionDropdown($scope.roster, $scope.rosterId, $scope.positions);
+        $scope.filtering = [
+            {type: 'active'},
+            {type: 'inactive'}
+        ];
+
+        if (typeof $scope.data.coachData.roster !== 'undefined') {
+            $scope.data.roster = $scope.data.coachData.roster;
+        }
+
+        alerts.add({
+            type: 'warning',
+            message: 'All game film is automatically shared with Athletes on your active roster. Athletes will always have access to game film where they were on the roster'
         });
 
-        $scope.state = 'Coach.Team.All';
 
-        $scope.$watch('state', function(state) {
-
-            if (state) $state.go(state);
+        angular.forEach($scope.data.roster, function(player) {
+            player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
         });
 
-        $scope.save = function() {
-            $scope.roster = players.getPositionsFromDowndown($scope.roster, $scope.rosterId, $scope.positions);
-            players.save($scope.rosterId, $scope.roster).then(function(roster) {
-                $scope.roster = players.constructPositionDropdown(roster, $scope.rosterId, $scope.positions);
+        $scope.singleSave = function(player) {
+            var tempPlayer = players.getPositionsFromDowndown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
 
-                data.then(function(data) {
-                    data.roster = roster;
-                });
+            players.singleSave($scope.data.rosterId, tempPlayer).then(function(responsePlayer) {
+                angular.extend(player, player, responsePlayer);
+                player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+
+                if (player.userId) {
+                    if (typeof $scope.data.coachData.users[player.userId] === 'undefined') {
+                        users.get(player.userId, function(user) {
+                            $scope.data.coachData.users[player.userId] = user.id;
+                        });
+                    }
+                }
+
             });
         };
 
         $scope.sortPlayers = function(player) {
-            return Number(player.jerseyNumbers[$scope.rosterId]);
+            return Number(player.jerseyNumbers[data.rosterId]);
         };
     }
 ]);

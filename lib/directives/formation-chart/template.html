@@ -1,0 +1,24 @@
+<div class="formations-chart-container">
+        <accordion-group data-is-open="status.open">
+            <accordion-heading>
+                <div data-ng-class="{'field-header-collapsed': !status.open}" class="field-header">
+                    <span class="field-info">
+                        <span>Backfield:</span> {{backfieldFormation}}
+                    </span>
+                    <span class="field-info">
+                        <span>TEs:</span> {{teStrength}}
+                    </span>
+                    <span class="field-info">
+                        <span>WRs:</span> {{wrStrength}}
+                    </span>
+                    <span class="field-info">
+                        <span>{{snaps}}</span> snaps
+                    </span>
+                    <i class="pull-right" data-ng-class="{'icon-chevron-up': status.open, 'icon-chevron-down': !status.open}"></i>
+                </div>
+            </accordion-heading>
+            <div class="field">
+                <krossover-arena type="FOOTBALL" data-game="game" data-plays="plays" data-team="team" data-league="league"></krossover-arena>
+            </div>
+        </accordion-group>
+    </div>

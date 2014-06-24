@@ -364,6 +364,9 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 /* Assume all other roles do not have access. */
                 return false;
+            },
+            getLastAccessed: function(user) {
+                return new Date(user.lastAccessed);
             }
         };
 

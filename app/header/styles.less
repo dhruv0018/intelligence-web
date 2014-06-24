@@ -10,7 +10,7 @@
         }
     }
 
-    .team-dropdown {
+    .header-dropdown {
 
         .dropdown;
 
@@ -35,7 +35,7 @@
         }
     }
 
-    .team-dropdown:hover .dropdown-menu {
+    .header-dropdown:hover .dropdown-menu {
         display: block;
     }
 
@@ -72,26 +72,20 @@
               outline: 0;
             }
 
+            .icon-chevron-up,
+            .icon-chevron-down {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                margin-top: -10.5px;
+            }
+
         }
 
         .open .dropdown-toggle {
 
             color: @navbar-default-link-active-color;
             background-color: @navbar-default-link-active-bg;
-        }
-
-        .dropdown-toggle:after {
-
-            position: absolute;
-            top: 50%;
-            right: 0;
-            margin-top: -10.5px;
-            .icon(@chevron-down);
-        }
-
-        .open .dropdown-toggle:after {
-
-            .icon(@chevron-up);
         }
 
         .dropdown-menu {

@@ -5,7 +5,12 @@
     ],
     "locals": [
         "roles",
-        "raw-film"
+        "raw-film",
+        "delete-game",
+        "film-breakdown",
+        "excel-upload",
+        "basic-modals",
+        "athlete-info"
     ],
     "scripts": [
         "index.js"

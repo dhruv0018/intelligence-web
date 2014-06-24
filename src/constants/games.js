@@ -90,35 +90,40 @@ var GAME_TYPES = {
 
         id: 1,
         name: 'Conference Game',
-        filterType: 'regular'
+        filterType: 'regular',
+        type: 'regular'
     },
 
     NON_CONFERENCE: {
 
         id: 2,
         name: 'Non-Conference Game',
-        filterType: 'regular'
+        filterType: 'regular',
+        type: 'regular'
     },
 
     PLAYOFF: {
 
         id: 3,
         name: 'Playoff',
-        filterType: 'regular'
+        filterType: 'regular',
+        type: 'regular'
     },
 
     SCOUTING: {
 
         id: 4,
         name: 'Scouting',
-        filterType: 'scouting'
+        filterType: 'scouting',
+        type: 'non-regular'
     },
 
     SCRIMMAGE: {
 
         id: 5,
         name: 'Scrimmage',
-        filterType: 'scrimmage'
+        filterType: 'scrimmage',
+        type: 'non-regular'
     }
 };
 
@@ -130,7 +135,7 @@ var GAME_NOTE_TYPES = {
     INDEXER_NOTE: 2,
     QA_NOTE: 3,
     SET_ASIDE_NOTE: 4,
-    COACH_COMPLAINT_NOTE: 5
+    COACH_FEEDBACK_NOTE: 5
 };
 
 IntelligenceWebClient.constant('GAME_NOTE_TYPES', GAME_NOTE_TYPES);

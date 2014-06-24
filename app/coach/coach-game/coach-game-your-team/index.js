@@ -79,8 +79,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     $scope.gameRosterId = game.rosters[game.teamId].id;
                     //fresh game roster with only a single unknown player
                     if (gameRoster.length === 1) {
-                        $scope.gameRoster.push(gameRoster[0]);
-
                         angular.forEach($scope.data.roster, function(teamRosterPlayer) {
                             if (teamRosterPlayer.rosterStatuses[$scope.data.rosterId.id]) {
                                 teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
@@ -93,14 +91,12 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     } else {
                         $scope.gameRoster = gameRoster;
                     }
-                    $scope.gameRoster = players.constructPositionDropdown($scope.gameRoster, $scope.gameRosterId, $scope.positions);
+                    angular.forEach($scope.gameRoster, function(player) {
+                        player = players.constructPositionDropdown(player, $scope.gameRosterId, $scope.positions);
+                    });
                     $scope.retrievedRoster = true;
                 });
             }
-        });
-
-        $scope.$watch('formYourTeam.$invalid', function(invalid) {
-            tabs['opposing-team'].disabled = invalid;
         });
 
         $scope.$watch('tabs["your-team"].disabled', function(disabled) {
@@ -108,8 +104,19 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         });
 
         $scope.save = function() {
-            $scope.gameRoster = players.getPositionsFromDowndown($scope.gameRoster, $scope.gameRosterId, $scope.positions);
-            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.gameRoster);
+
+            angular.forEach($scope.gameRoster, function(player) {
+                player = players.getPositionsFromDowndown(player, $scope.gameRosterId, $scope.positions);
+            });
+
+            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.gameRoster).then(function(roster) {
+                $scope.gameRoster = roster;
+
+                angular.forEach($scope.gameRoster, function(player) {
+                    player = players.constructPositionDropdown(player, $scope.gameRosterId, $scope.positions);
+                });
+            });
+
             tabs.activateTab('opposing-team');
         };
     }
