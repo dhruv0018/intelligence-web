@@ -56,7 +56,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var self = this;
 
                 if (!self.storage) throw new Error(self.description + ' storage not defined');
-                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
+                if (!self.storage.list) throw new Error(self.description + ' not loaded');
 
                 return self.storage.list;
             },
