@@ -260,15 +260,15 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var deferred = $q.defer();
+                var key = JSON.stringify(filter);
 
-                /* Retrieve all of the resources from the server. */
-                self.retrieve(filter).then(function() {
+                self.storage.loads = self.storage.loads || {};
+                self.storage.loads[key] = self.storage.loads[key] || self.retrieve(filter).then(function() {
 
-                    deferred.resolve(self);
+                    return self;
                 });
 
-                return deferred.promise;
+                return self.storage.loads[key];
             },
 
             /**
