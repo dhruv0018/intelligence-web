@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    'IndexingService', 'TagsManager', 'PlayManager',
-    function service(indexing, tags, play) {
+    'TagsManager', 'PlayManager',
+    function service(tags, play) {
 
         var model = {
 
@@ -20,8 +20,22 @@ IntelligenceWebClient.service('EventManager', [
             activeEventVariableIndex: 1
         };
 
+        this.tags = null;
+
+        this.tagset = null;
+
         this.current = angular.copy(model);
 
+        /**
+         * Checks whether the event is an ending event.
+         * @returns - true if the event is an end event; false otherwise.
+         */
+        this.isEndEvent = function(event) {
+
+            event = event || this.current;
+
+            return event && event.tag && this.tagset.isEndTag(event.tag.id);
+        };
 
         /**
          * Checks whether the event has variables.
@@ -92,7 +106,11 @@ IntelligenceWebClient.service('EventManager', [
         /**
          * Resets the current play to the original model.
          */
-        this.reset = function() {
+        this.reset = function(tagset) {
+
+            this.tagset = tagset || this.tagset;
+
+            this.tags = this.tagset.getIndexedTags();
 
             this.current = angular.copy(model);
         };
@@ -111,7 +129,7 @@ IntelligenceWebClient.service('EventManager', [
             }
 
             /* Lookup and set the tag from the indexing tags. */
-            this.current.tag = indexing.tags[tagId];
+            this.current.tag = this.tags[tagId];
 
             this.current.time = time;
 
