@@ -16,8 +16,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('SessionService', [
-    'UsersResource', 'UsersFactory',
-    function(UsersResource, users) {
+    'UsersResource', 'UsersStorage', 'UsersFactory',
+    function(UsersResource, UsersStorage, users) {
 
         /* Memory storage for current user. */
         this.currentUser = null;
@@ -46,7 +46,12 @@ IntelligenceWebClient.service('SessionService', [
 
             var storedObject = angular.fromJson(JSON.parse(string));
             var user = new UsersResource(storedObject);
-            return users.extendUser(user);
+
+            user.description = 'users';
+            user.storage = UsersStorage;
+            user.resource = UsersResource;
+
+            return users.extend(user);
         };
 
         /**
