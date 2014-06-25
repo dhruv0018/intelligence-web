@@ -25,12 +25,10 @@
                 <li><button data-ng-repeat="(key, value) in filters.others" button class="btn-filter" ng-model="filters.others[key]" btn-checkbox>{{key}}</button></li>
                 <li><button class="btn-filter" ng-model="filters['all']" btn-checkbox>All</button></li>
 
+                <form class="film-search">
+                    <input type="text" class="film-search-input" data-ng-change="search(query)" data-ng-model="query" placeholder="Search for film"/>
+                </form>
 
-            <form data-ng-submit="search(query)" class="film-search">
-                    <input type="text" class="film-search-input" ng-model="query" placeholder="Search for film"/>
-
-                    <button class="btn-film-search" type="submit">Go</button>
-            </form>
             </ul>
         </header>
 

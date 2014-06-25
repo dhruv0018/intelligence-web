@@ -17,16 +17,17 @@ var FilmHome = angular.module('Coach.FilmHome');
  * @type {controller}
  */
 FilmHome.controller('Coach.FilmHome.controller', [
-    '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory', 'SessionService', 'Coach.Data', 'Coach.FilmHome.GameFilters',
-    function controller($rootScope, $scope, $state, games, players, session,  data, filtersData) {
+    '$rootScope', '$scope', '$state', '$filter', 'GamesFactory', 'PlayersFactory', 'SessionService', 'Coach.Data', 'Coach.FilmHome.GameFilters',
+    function controller($rootScope, $scope, $state, $filter, games, players, session,  data, filtersData) {
 
         $scope.playersList = data.playersList;
+        $scope.games = data.games.getCollection();
         $scope.gamesList = data.games.getList();
         $scope.teams = data.teams.getCollection();
         $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
         $scope.roster = $scope.team.roster;
         $scope.activeRoster = players.constructActiveRoster($scope.playersList, $scope.roster.id);
-
+        $scope.query = '';
         $scope.filters = filtersData.filters;
 
         $scope.$watch('filters.all', function(all) {
@@ -45,23 +46,24 @@ FilmHome.controller('Coach.FilmHome.controller', [
         });
 
         $scope.search = function(query) {
-            //searches all games for a team if there is no other search parameter
-            if (!query || query.length === 0) {
-
-                games.query({teamId: data.teamId}, function(gamesList) {
-                    $scope.gamesList = gamesList;
-                });
-
-            } else {
-                games.query({
-                    team: query
-                }, function(gamesList) {
-                    $scope.gamesList = gamesList;
-                }, function() {
-                    //setup for no search results
-                    $scope.gamesList = [];
-                });
+            if (query.length === 0) {
+                $scope.gameList = data.games.getList();
             }
+
+            var filteredGames = [];
+
+            Object.keys($scope.games).forEach(function(key) {
+                var game = this[key];
+
+                if (typeof $scope.teams[game.teamId] !== 'undefined' && $scope.teams[game.teamId].name.indexOf(query) >= 0 ||
+                    typeof $scope.teams[game.opposingTeamId] !== 'undefined' && $scope.teams[game.opposingTeamId].name.indexOf(query) >= 0) {
+                    filteredGames.push(game);
+                }
+
+                $scope.gamesList = filteredGames;
+
+            }, $scope.games);
+
         };
 
     }
