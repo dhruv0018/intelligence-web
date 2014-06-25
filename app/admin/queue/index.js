@@ -114,6 +114,7 @@ Queue.controller('QueueController', [
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
 
+        $scope.data = data;
         $scope.sports = data.sports.getCollection();
         $scope.leagues = data.leagues.getCollection();
         $scope.teams = data.teams.getCollection();
