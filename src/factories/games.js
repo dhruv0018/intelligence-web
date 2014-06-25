@@ -37,8 +37,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
-                game.timeLeft = new Date(game.currentAssignment().deadline) - new Date();
-
                 return game;
             },
 
