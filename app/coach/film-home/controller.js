@@ -49,7 +49,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
             if (!query || query.length === 0) {
 
                 games.query({teamId: data.teamId}, function(gamesList) {
-                    $scope.games = gamesList;
+                    $scope.gamesList = gamesList;
                 });
 
             } else {
