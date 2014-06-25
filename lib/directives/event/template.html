@@ -2,7 +2,7 @@
 
     <button class="btn-select-event" data-ng-class="{ active: event.id == currentEventId }" data-ng-click="selectEvent(play, event)">
 
-        <krossover-item item="item" event="event" data-ng-repeat="item in items track by $index"></krossover-item>
+        <krossover-item data-data="data" data-item="item" data-event="event" data-ng-repeat="item in items track by $index"></krossover-item>
 
     </button>
 
