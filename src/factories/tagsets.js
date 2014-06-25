@@ -95,6 +95,29 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 return indexedTags;
             },
 
+            getNextTags: function(tagId) {
+
+                var tags = this.tags;
+                var tag = tags[tagId];
+
+                if (tag.children) {
+
+                    return tag.children.map(function(childId) {
+
+                        return tags[childId];
+                    });
+
+                } else {
+
+                    return this.getStartTags();
+                }
+            },
+
+            isEndTag: function(tagId) {
+
+                return this.tags[tagId].isEnd;
+            },
+
             getTagsByType: function(type) {
                 results = [];
                 switch (type) {
