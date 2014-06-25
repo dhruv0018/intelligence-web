@@ -220,17 +220,17 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$location', '$state',
-    function run($rootScope, $location, $state) {
+    '$rootScope', '$location', '$state', 'AlertsService',
+    function run($rootScope, $location, $state, alerts) {
 
         $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
-
+            console.log(arguments);
             event.preventDefault();
             $state.go('404');
         });
 
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-
+            console.log(arguments);
             ErrorReporter.reportError(error);
 
             alerts.add({
@@ -241,7 +241,7 @@ IntelligenceWebClient.run([
         });
 
         $rootScope.$on('roleChangeError', function(event, role) {
-
+            console.log(arguments);
             role = role || {};
             role.type = role.type || {};
             role.type.name = role.type.name || 'Unknown Role';

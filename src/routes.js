@@ -49,6 +49,7 @@ IntelligenceWebClient.run([
         $rootScope.$stateParams = $stateParams;
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            console.log(arguments);
 
             /* Retrieve the current user if logged in. */
             if (auth.isLoggedIn) {
@@ -80,7 +81,7 @@ IntelligenceWebClient.run([
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-
+            console.log(arguments);
             /* Clear any alerts. */
             alerts.clear();
         });

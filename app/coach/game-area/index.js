@@ -53,11 +53,11 @@ GameArea.config([
                     controller: 'Coach.GameArea.controller'
                 }
             },
-            resolve: {
-                'indexingData': ['$stateParams', 'IndexingService', function($stateParams, indexing) {
-                    return indexing.init($stateParams.id);
-                }]
-            },
+//            resolve: {
+//                'indexingData': ['$stateParams', 'IndexingService', function($stateParams, indexing) {
+//                    return indexing.init($stateParams.id);
+//                }]
+//            },
             onExit: [
                 'Coach.Game.Data', 'Coach.Game.Tabs',
                 function(gameData, tabs) {
@@ -79,8 +79,8 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'Coach.Game.Data', 'indexingData',
-    function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, data, indexingData) {
+    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'Coach.Game.Data',
+    function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, data) {
 
 
         $scope.gameId = $stateParams.id;

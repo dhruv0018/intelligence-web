@@ -20,17 +20,14 @@ FilmHome.controller('Coach.FilmHome.controller', [
     '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory', 'Coach.Data', 'Coach.FilmHome.GameFilters',
     function controller($rootScope, $scope, $state, games, players, data, filtersData) {
         console.log('in film home');
-        console.log(data);
 
-        data.then(function(data) {
-            console.log(data);
-            $scope.games = data.games;
-            $scope.team = data.coachTeam;
-            $scope.teams = data.teams;
-            $scope.roster = data.roster;
-            $scope.rosterId = data.rosterId.id;
-            $scope.activeRoster = players.constructActiveRoster($scope.roster, $scope.rosterId);
-        });
+        $scope.games = data.games;
+        $scope.team = data.coachTeam;
+        $scope.teams = data.teams;
+        $scope.roster = data.roster;
+        $scope.rosterId = data.rosterId.id;
+        $scope.activeRoster = players.constructActiveRoster($scope.roster, $scope.rosterId);
+        console.log(data);
 
         $scope.filters = filtersData.filters;
 

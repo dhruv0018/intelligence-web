@@ -48,7 +48,7 @@ Coach.config([
  * @module Coach
  * @type {service}
  */
-Coach.service('Coach.Data', [
+Coach.service('Coach.Data.Dependencies', [
     '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory','IndexingService',
     function($q, session, teams, games, players, users, leagues, tagsets, positions, indexing) {
         //var promises = {};
@@ -139,47 +139,23 @@ Coach.service('Coach.Data', [
 //        };
 
         //TODO temporary fix, needs refactoring
-        var rosterId = $q.defer();
-        var coachTeam = $q.defer();
-        var promisedTeams = $q.defer();
-        var promisedPositionSet = $q.defer();
-        var league = $q.defer();
-        promisedTeams = teams.load();
 
         var promises = {
-            games: games.query({uploaderTeamId: session.currentUser.currentRole.teamId.teamId}),
-            indexedGames: games.retrieve({uploaderTeamId: session.currentUser.currentRole.teamId.teamId}),
-            coachTeam: coachTeam.promise,
-            teams: teams.retrieve(),
+            games: games.load({uploaderTeamId: session.currentUser.currentRole.teamId.teamId}),
+            teams: teams.load(),
             leagues: leagues.load(),
-            league: league.promise,
             users: users.retrieve(),
-            rosterId: rosterId.promise,
-            positionSet: promisedPositionSet.promise
+            positionSets: positions.load()
         };
 
-        promises.roster = promisedTeams.then(function(teams) {
-            coachTeam.resolve(teams.get(session.currentUser.currentRole.teamId));
-
-            rosterId.resolve({id: teams.get(session.currentUser.currentRole.teamId).roster.id});
-
-            promises.leagues.then(function(leagues) {
-                var coachLeague = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
-                league.resolve(coachLeague);
-
-                if (coachLeague.positionSetId) {
-                    var positionSet = positions.fetch(coachLeague.positionSetId);
-                    promisedPositionSet.resolve(positionSet);
-                }
-            });
-
+        promises.roster = promises.teams.then(function(teams) {
             return players.query({
                 roster: teams.get(session.currentUser.currentRole.teamId).roster.id
             });
         });
 
 
-        return $q.all(promises);
+        return promises;
     }
 ]);
 
