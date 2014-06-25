@@ -53,13 +53,13 @@ FilmHome.controller('Coach.FilmHome.controller', [
                 });
 
             } else {
-                games.getList({
+                games.query({
                     team: query
                 }, function(gamesList) {
-                    $scope.games = gamesList;
+                    $scope.gamesList = gamesList;
                 }, function() {
                     //setup for no search results
-                    $scope.games = [];
+                    $scope.gamesList = [];
                 });
             }
         };
