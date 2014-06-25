@@ -67,7 +67,8 @@ IntelligenceWebClient.service('AuthenticationService', [
                         /* Store the user in the session. Optionally persisting. */
                         session.storeCurrentUser(user, persist);
 
-                        return user;
+                        /* Retrieve the user from the session. */
+                        return session.retrieveCurrentUser();
                     });
                 });
             },
