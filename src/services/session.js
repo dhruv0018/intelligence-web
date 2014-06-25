@@ -28,7 +28,13 @@ IntelligenceWebClient.service('SessionService', [
          */
         this.serializeUser = function(user) {
 
-            return JSON.stringify(angular.toJson(user));
+            var copy = angular.copy(user);
+
+            delete copy.description;
+            delete copy.resource;
+            delete copy.storage;
+
+            return JSON.stringify(angular.toJson(copy));
         };
 
         /**
