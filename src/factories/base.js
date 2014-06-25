@@ -108,22 +108,15 @@ IntelligenceWebClient.factory('BaseFactory', [
                     /* Store the resource locally in its storage collection. */
                     self.storage.collection[resource.id] = resource;
 
-                    /* Check if the resource exists in its storage list. */
-                    var index = self.storage.list.indexOf(resource);
+                    /* Clear the storage list. */
+                    self.storage.list.length = 0;
 
-                    /* If the resource isn't in its storage list. */
-                    if (~index) {
+                    /* Loop through each resource in the storage collection. */
+                    Object.keys(self.storage.collection).forEach(function(key) {
 
                         /* Add the resource to the storage list. */
-                        self.storage.list.push(resource);
-                    }
-
-                    /* If the resource is in its storage list. */
-                    else {
-
-                        /* Update it. */
-                        self.storage.list[index] = resource;
-                    }
+                        self.storage.list.push(self.storage.collection[key]);
+                    });
 
                     return resource;
                 });
@@ -291,15 +284,21 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 resource = resource || self;
 
-                delete resource.description;
-                delete resource.resource;
-                delete resource.storage;
+                /* Create a copy of the resource to save to the server. */
+                var copy = angular.copy(resource);
+
+                /* Remove known local properties. */
+                delete copy.description;
+                delete copy.resource;
+                delete copy.storage;
+
+                /* TODO: Remove other properties that should not exist. */
 
                 parameters = {};
 
                 success = success || function(resource) {
 
-                    return self.extend(resource);
+                    return resource;
                 };
 
                 error = error || function() {
@@ -311,13 +310,21 @@ IntelligenceWebClient.factory('BaseFactory', [
                 if (resource.id) {
 
                     /* Make a PUT request to the server to update the resource. */
-                    var update = self.resource.update(parameters, resource, success, error);
+                    var update = self.resource.update(parameters, copy, success, error);
 
                     /* Once the update request finishes. */
                     return update.$promise.then(function() {
 
                         /* Fetch the updated resource. */
-                        return self.fetch(resource.id);
+                        return self.fetch(resource.id).then(function(updated) {
+
+                            /* Update local resource with server resource. */
+                            resource = self.extend(updated);
+
+                            /* Update the resource in storage. */
+                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
+                            self.storage.collection[resource.id] = resource;
+                        });
                     });
 
                 /* If the resource is new. */
@@ -328,14 +335,18 @@ IntelligenceWebClient.factory('BaseFactory', [
                     self.storage.collection[resource.id] = resource;
 
                     /* Make a POST request to the server to create the resource. */
-                    var create = self.resource.create(parameters, resource, success, error);
+                    var create = self.resource.create(parameters, copy, success, error);
 
                     /* Once the create request finishes. */
-                    return create.$promise.then(function(resource) {
+                    return create.$promise.then(function(created) {
+
+                        /* Update local resource with server resource. */
+                        resource = self.extend(created);
 
                         /* Update the resource in storage. */
                         self.storage.list[self.storage.list.indexOf(resource)] = resource;
                         self.storage.collection[resource.id] = resource;
+                        self.storage.collection[resource[undefined]] = resource;
 
                         return resource;
                     });

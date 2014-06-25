@@ -44,36 +44,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 return play;
             },
 
-            getList: function(gameId, success, error, index) {
-
-                var self = this;
-
-                var callback = function(plays) {
-
-                    var indexedPlays = {};
-
-                    plays.forEach(function(play) {
-
-                        play = self.extend(play);
-
-                        indexedPlays[play.id] = play;
-                    });
-
-                    plays = index ? indexedPlays : plays;
-
-                    return success ? success(plays) : plays;
-                };
-
-                error = error || function(response) {
-
-                    if (response.status === 404) return [];
-
-                    else throw new Error('Could not load plays list');
-                };
-
-                return self.resource.query({gameId: gameId}, callback, error);
-            },
-
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
                 console.log(resources);
