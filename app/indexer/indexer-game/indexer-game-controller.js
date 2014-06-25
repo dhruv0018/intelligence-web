@@ -28,7 +28,6 @@ Game.controller('indexer-game.Controller', [
         var gameId = $stateParams.id;
 
         $scope.game = data.games.get(gameId);
-        console.log($scope.game);
         $scope.team = data.teams.get($scope.game.teamId);
         $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
         var league = data.leagues.get($scope.team.leagueId);
