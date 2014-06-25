@@ -78,6 +78,8 @@ GameAreaFormations.controller('GameAreaFormationsController', [
         $scope.teams = data.data.teams;
         $scope.teamId = $scope.game.teamId;
         $scope.report = $scope.game.formationReport;
+
+        $scope.redzone = 'whole';
     }
 ]);
 
