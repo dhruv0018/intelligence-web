@@ -17,17 +17,15 @@ var FilmHome = angular.module('Coach.FilmHome');
  * @type {controller}
  */
 FilmHome.controller('Coach.FilmHome.controller', [
-    '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory', 'Coach.Data', 'Coach.FilmHome.GameFilters',
-    function controller($rootScope, $scope, $state, games, players, data, filtersData) {
-        console.log('in film home');
+    '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory', 'SessionService', 'Coach.Data', 'Coach.FilmHome.GameFilters',
+    function controller($rootScope, $scope, $state, games, players, session,  data, filtersData) {
 
-        $scope.games = data.games;
-        $scope.team = data.coachTeam;
-        $scope.teams = data.teams;
-        $scope.roster = data.roster;
-        $scope.rosterId = data.rosterId.id;
-        $scope.activeRoster = players.constructActiveRoster($scope.roster, $scope.rosterId);
-        console.log(data);
+        $scope.playersList = data.playersList;
+        $scope.gamesList = data.games.getList();
+        $scope.teams = data.teams.getCollection();
+        $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
+        $scope.roster = $scope.team.roster;
+        $scope.activeRoster = players.constructActiveRoster($scope.playersList, $scope.roster.id);
 
         $scope.filters = filtersData.filters;
 
@@ -46,13 +44,11 @@ FilmHome.controller('Coach.FilmHome.controller', [
             filtersData.watchOthers();
         });
 
-
-
         $scope.search = function(query) {
             //searches all games for a team if there is no other search parameter
             if (!query || query.length === 0) {
 
-                games.getList({teamId: data.teamId}, function(gamesList) {
+                games.query({teamId: data.teamId}, function(gamesList) {
                     $scope.games = gamesList;
                 });
 

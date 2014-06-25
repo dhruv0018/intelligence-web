@@ -148,7 +148,7 @@ Coach.service('Coach.Data.Dependencies', [
             positionSets: positions.load()
         };
 
-        promises.roster = promises.teams.then(function(teams) {
+        promises.playersList = promises.teams.then(function(teams) {
             return players.query({
                 roster: teams.get(session.currentUser.currentRole.teamId).roster.id
             });
