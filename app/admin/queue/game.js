@@ -52,8 +52,8 @@ Game.service('Admin.Game.Data.Dependencies', [
  * @type {UI-Router}
  */
 Game.config([
-    '$q', '$stateProvider', '$urlRouterProvider',
-    function config($q, $stateProvider, $urlRouterProvider) {
+    '$stateProvider', '$urlRouterProvider',
+    function config($stateProvider, $urlRouterProvider) {
 
         var game = {
             name: 'game',
@@ -166,6 +166,5 @@ Game.controller('GameController', [
                 });
             });
         };
-
     }
 ]);
