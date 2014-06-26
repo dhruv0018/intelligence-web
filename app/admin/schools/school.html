@@ -2,22 +2,22 @@
 
     <aside class="sidebar">
 
-        <header data-ng-if="$storage.school.mascot">
+        <header data-ng-if="school.mascot">
 
             <img class="logo" src="http://lorempixel.com/40/40/sports" class="pull-left" alt="Logo">
 
-            <h1>{{ $storage.school.mascot }}</h1>
+            <h1>{{ school.mascot }}</h1>
 
-            <h2>{{ $storage.school.name }}</h2>
+            <h2>{{ school.name }}</h2>
 
         </header>
 
-        <header data-ng-if="!$storage.school.mascot">
+        <header data-ng-if="!school.mascot">
 
             <img class="logo" src="http://lorempixel.com/40/40/sports" class="pull-left" alt="Logo">
 
-            <h1 class="name" data-ng-if="$storage.school.name">{{ $storage.school.name }}</h1>
-            <h1 class="name" data-ng-if="!$storage.school.name">New School</h1>
+            <h1 class="name" data-ng-if="school.name">{{ school.name }}</h1>
+            <h1 class="name" data-ng-if="!school.name">New School</h1>
 
         </header>
 
