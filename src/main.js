@@ -6,6 +6,9 @@ require('./vendor');
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+/* Extend Angular core */
+require('./extensions');
+
 /* Components */
 require('../build/build');
 
@@ -50,6 +53,20 @@ require('./models/plays');
 require('./models/filtersets');
 require('./models/plans');
 
+require('./storage/users');
+require('./storage/teams');
+require('./storage/games');
+require('./storage/schools');
+require('./storage/sports');
+require('./storage/leagues');
+require('./storage/plays');
+require('./storage/players');
+require('./storage/tagsets');
+require('./storage/filtersets');
+require('./storage/positionsets');
+require('./storage/plans');
+
+require('./factories/base');
 require('./factories/users');
 require('./factories/teams');
 require('./factories/games');

@@ -6,14 +6,18 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('PositionsetsFactory', [
-    'PositionsetsResource', '$filter',
-    function(PositionsetsResource, $filter) {
+    'PositionsetsResource', 'PositionsetsStorage', 'BaseFactory', '$filter',
+    function(PositionsetsResource, PositionsetsStorage, BaseFactory, $filter) {
 
         var PositionsetsFactory = {
 
+            description: 'positionsets',
+
+            storage: PositionsetsStorage,
+
             resource: PositionsetsResource,
 
-            extendPositionset: function(positionset) {
+            extend: function(positionset) {
 
                 var self = this;
 
@@ -29,63 +33,6 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
                 return positionset;
             },
 
-            get: function(id, success, error) {
-
-                var self = this;
-
-                var callback = function(positionset) {
-
-                    positionset = self.extendPositionset(positionset);
-
-                    return success ? success(positionset) : positionset;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not get positionset');
-                };
-
-                return self.resource.get({ id: id }, callback, error);
-            },
-
-            getList: function(filter, success, error, index) {
-
-                var self = this;
-
-                if (angular.isFunction(filter)) {
-
-                    index = error;
-                    error = success;
-                    success = filter;
-                    filter = null;
-                }
-
-                filter = filter || {};
-
-                var callback = function(positionsets) {
-
-                    var indexedPositionsets = {};
-
-                    positionsets.forEach(function(positionset) {
-
-                        positionset = self.extendPositionset(positionset);
-
-                        indexedPositionsets[positionset.id] = positionset;
-                    });
-
-                    positionsets = index ? indexedPositionsets : positionsets;
-
-                    return success ? success(positionsets) : positionsets;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load positionsets');
-                };
-
-                return self.resource.query(filter, callback, error);
-            },
-
             getIndexedPositions: function() {
 
                 var indexedPositions = {};
@@ -98,6 +45,8 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
                 return indexedPositions;
             }
         };
+
+        angular.augment(PositionsetsFactory, BaseFactory);
 
         return PositionsetsFactory;
     }

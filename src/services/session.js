@@ -40,7 +40,7 @@ IntelligenceWebClient.service('SessionService', [
 
             var storedObject = angular.fromJson(JSON.parse(string));
             var user = new UsersResource(storedObject);
-            return users.extendUser(user);
+            return users.extend(user);
         };
 
         /**
