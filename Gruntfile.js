@@ -170,7 +170,7 @@ module.exports = function(grunt) {
 
         concat: {
             unprefixed: {
-                src: ['fonts.css', 'build/build.css', 'build/theme.css'],
+                src: ['fonts.css', 'icons.css', 'build/build.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
             }
         },
