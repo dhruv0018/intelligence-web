@@ -652,8 +652,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!assignment) return false;
 
-                var now = new Date();
-                var deadline = new Date(assignment.deadline);
+                var now = Date.now();
+                var deadline = new Date(assignment.deadline).getTime();
 
                 /* Ensure the current assignments deadline has not expired. */
                 if (deadline < now) return false;
