@@ -29,8 +29,8 @@ Game.run([
  * @type {service}
  */
 Game.service('Admin.Game.Data.Dependencies', [
-    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function(ROLE_TYPE, sports, leagues, teams, games, users) {
+    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(ROLE_TYPE, sports, leagues, schools, teams, games, users) {
 
         var Data = {
 
