@@ -57,14 +57,140 @@ GameArea.config([
 //                'indexingData': ['$stateParams', 'IndexingService', function($stateParams, indexing) {
 //                    return indexing.init($stateParams.id);
 //                }]
-//            },
-            onExit: [
-                'Coach.Game.Data', 'Coach.Game.Tabs',
-                function(gameData, tabs) {
-                    delete gameData.team;
-                    delete gameData.teamGameRoster;
-                    delete gameData.opposingTeamGameRoster;
+//            },'
+            resolve: {
+                'Coach.Data': [
+                    '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
+                    function($q, $stateParams, players, plays, filtersets, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
+                        return $q.all(data).then(function(data) {
+                            var gamesCollection = data.games.getCollection();
+                            var teamsCollection = data.teams.getCollection();
+                            var leaguesCollection = data.leagues.getCollection();
 
+                            //Game related
+                            data.game = gamesCollection[$stateParams.id];
+                            data.gameStatus = data.game.status;
+                            data.gamePlayerLists = {};
+                            data.league = leaguesCollection[teamsCollection[data.game.teamId].leagueId];
+
+                            //Player lists
+                            var teamPlayerList = players.query({
+                                roster: data.game.rosters[data.game.teamId].id
+                            }).then(function(playerList) {
+                                data.gamePlayerLists[data.game.teamId] = playerList;
+                            });
+
+                            var opposingTeamPlayerList = players.query({
+                                roster: data.game.rosters[data.game.opposingTeamId].id
+                            }).then(function(playerList) {
+                                data.gamePlayerLists[data.game.opposingTeamId] = playerList;
+                            });
+
+                            return $q.all([teamPlayerList, opposingTeamPlayerList]).then(function() {
+                                //Filtersets
+                                data.filtersetCategories = angular.copy(FILTERSET_CATEGORIES);
+                                if (GAME_STATUS_IDS[data.game.status] === 'INDEXED') {
+                                    try {
+                                        //TODO remove hardcoded exclusion list
+                                        var exclusion = [1];
+                                        console.log('inside filterset builder');
+
+                                        //TODO do not hardcode
+                                        //filtersets.get(data.league.filterSetId, function(filterset) {
+                                        filtersets.fetch('2', function(filterset) {
+                                            var playerFilter = {};
+
+                                            console.log(data.filtersetCategories);
+                                            angular.forEach(filterset.filters, function(filter) {
+                                                console.log(filter);
+                                                data.filtersetCategories[filter.filterCategoryId].subFilters = data.filtersetCategories[filter.filterCategoryId].subFilters || [];
+//
+//                                                //TODO figure out a better way to deal with players at a later date
+//                                                if (filter.name === 'Player') {
+//                                                    playerFilter = filter;
+//                                                }
+//
+//                                                var excluded = exclusion.some(function (excludedFilterId) {
+//                                                    return filter.id === excludedFilterId;
+//                                                });
+//
+//                                                if (!excluded) {
+//                                                    data.filtersetCategories[filter.filterCategoryId].subFilters.push(filter);
+//                                                }
+
+                                            });
+
+                                            angular.forEach(data.gamePlayerLists[data.game.opposingTeamId], function(player) {
+
+                                                var playerFilter = {
+                                                    id: playerFilter.id,
+                                                    teamId: data.opposingTeamGameRoster.teamId,
+                                                    playerId: player.id,
+                                                    name: player.firstName[0] + '. ' + player.lastName,
+                                                    filterCategoryId: playerFilter.filterCategoryId,
+                                                    customFilter: true
+                                                };
+                                                data.filtersetCategories[playerFilter.filterCategoryId].subFilters.push(playerFilter);
+                                            });
+
+                                            angular.forEach(data.gamePlayerLists[data.game.teamId], function(player) {
+
+                                                var playerFilter = {
+                                                    id: playerFilter.id,
+                                                    teamId: data.teamGameRoster.teamId,
+                                                    playerId: player.id,
+                                                    name: player.firstName[0] + '. ' + player.lastName,
+                                                    filterCategoryId: playerFilter.filterCategoryId,
+                                                    customFilter: true
+                                                };
+                                                data.filtersetCategories[playerFilter.filterCategoryId].subFilters.push(playerFilter);
+                                            });
+
+                                            return $q.all(data);
+                                        });
+//                                        plays.query({
+//                                            gameId: data.game.id
+//                                        }, function(plays) {
+//                                            console.log(plays);
+//                                            data.plays = plays;
+//                                            //$scope.totalPlays = plays;
+//
+//
+//
+//
+//                                                console.log(data);
+//
+//
+//                                            });
+//
+//                                        });
+                                    } catch (e) {
+                                        console.log('corrupted game');
+                                        console.log(e);
+                                    }
+                                }
+
+
+                                return data;
+                            });
+
+                        });
+                    }
+                ]
+            },
+            onEnter: [
+                '$state', 'Coach.Data',
+                function($state, data) {
+                    console.log(data);
+                    if (data.game.isDeleted) {
+                        $state.go('Coach.FilmHome');
+                    }
+                }
+            ],
+            onExit: [
+                'Coach.Data', 'Coach.Game.Tabs',
+                function(data, tabs) {
+                    delete data.game;
                     tabs.reset();
                 }
             ]
@@ -79,74 +205,33 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'Coach.Game.Data',
+    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'Coach.Data',
     function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, data) {
-
-
-        $scope.gameId = $stateParams.id;
-
-        //TODO remove later when we have data for shot charts and statistics
         $scope.hasShotChart = false;
         $scope.hasStatistics = true;
         $scope.hasFormations = true;
         $scope.hasDownAndDistance = true;
+        $scope.expandAll = false;
 
-        data.then(function(data) {
-            $scope.game = data.indexedGames[$scope.gameId];
-            $scope.data = data;
-
-
-            $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
-
-            //TODO change to onEnter event when we get resolves working
-            if ($scope.game.isDeleted) {
-                $state.go('Coach.FilmHome');
-            }
-
-            data.game = $scope.game;
-            $scope.team = data.teams[$scope.game.teamId];
-            $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
-
-//TODO possibly add this here later instead of on gameAreaFilm file
-//            plays.getList($scope.gameId, function (plays) {
-//                data.plays = plays;
-//            }
+        $scope.data = data;
 
 
-            players.getList({
-                roster: $scope.game.rosters[$scope.team.id].id
-            }, function(players) {
-                data.teamGameRoster = {
-                    teamId: $scope.team.id,
-                    rosterId: $scope.game.rosters[$scope.team.id].id,
-                    players: players
-                };
+        //Game Related
+        $scope.game = data.game;
+        $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
+        $scope.sources = $scope.game.getVideoSources();
 
-                $scope.teamGameRoster = data.teamGameRoster;
-            }, function(failure) {
-                data.teamGameRoster = {
-                    teamId: $scope.team.id,
-                    players: []
-                };
-            });
+        //Collections
+        $scope.teams = data.teams.getCollection();
+        $scope.team = data.teams[data.game.teamId];
 
-            players.getList({
-                roster: $scope.game.rosters[$scope.opposingTeam.id].id
-            }, function(players) {
-                data.opposingTeamGameRoster = {
-                    teamId: $scope.opposingTeam.id,
-                    rosterId: $scope.game.rosters[$scope.opposingTeam.id].id,
-                    players: players
-                };
+        //Player List
+        $scope.teamPlayerList = data.gamePlayerLists[data.game.teamId];
+        $scope.opposingPlayerList = data.gamePlayerLists[data.game.opposingTeamId];
 
-                $scope.opposingTeamGameRoster = data.opposingTeamGameRoster;
-            }, function(failure) {
-                data.opposingTeamGameRoster = {
-                    teamId: $scope.opposingTeam.id,
-                    players: []
-                };
-            });
-        });
+        //Teams
+        $scope.team = data.teams[$scope.game.teamId];
+        $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
 
         //view selector
         $scope.dataType = 'video';
@@ -168,16 +253,6 @@ GameArea.controller('Coach.GameArea.controller', [
             }
         });
 
-        $scope.$on('$destroy', function() {
-            data.then(function(coachData) {
-                delete coachData.game;
-                delete coachData.teamGameRoster;
-                delete coachData.opposingTeam;
-                delete coachData.opposingTeamGameRoster;
-            });
-        });
-
-        $scope.expandAll = false;
     }
 ]);
 

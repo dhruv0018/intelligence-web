@@ -49,8 +49,8 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data.Dependencies', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory','IndexingService',
-    function($q, session, teams, games, players, users, leagues, tagsets, positions, indexing) {
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory',
+    function($q, session, teams, games, players, users, leagues, tagsets, positions) {
         //var promises = {};
 //        var deferred = $q.defer();
 //        var promisedGames = $q.defer();
@@ -149,8 +149,11 @@ Coach.service('Coach.Data.Dependencies', [
         };
 
         promises.playersList = promises.teams.then(function(teams) {
+            var userTeamId = session.currentUser.currentRole.teamId;
+            var userTeam = teams.get(userTeamId);
+            console.log(userTeam.retrieveRoster().id);
             return players.query({
-                roster: teams.get(session.currentUser.currentRole.teamId).roster.id
+                roster: userTeam.retrieveRoster().id
             });
         });
 
@@ -159,27 +162,3 @@ Coach.service('Coach.Data.Dependencies', [
     }
 ]);
 
-/**
- * Game data value service.
- * @module Game
- * @name Game.Data
- * @type {value}
- */
-Coach.service('Coach.Game.Data', ['$q', 'Coach.Data',
-    function($q, coachData) {
-
-        var promisedGameData = $q.defer();
-
-        coachData.then(function(coachData) {
-            var gameData = coachData;
-            gameData.opposingTeam = {
-                players: []
-            };
-
-            promisedGameData.resolve(gameData);
-        });
-
-        return promisedGameData.promise;
-    }
-
-]);
