@@ -79,7 +79,10 @@ GameAreaFormations.controller('GameAreaFormationsController', [
         $scope.teamId = $scope.game.teamId;
         $scope.report = $scope.game.formationReport;
 
-        $scope.redzone = 'whole';
+        $scope.redzone = 'false';
+        $scope.$watch('redzone', function(redzone) {
+            $scope.isRedZone = $scope.redzone === 'true';
+        });
     }
 ]);
 
