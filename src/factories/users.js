@@ -54,32 +54,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return user;
             },
 
-            save: function(user) {
-
-                var self = this;
-
-                user = user || self;
-
-                delete user.list;
-
-                /* User ID's are assigned server side, if it is present that means
-                * the user is present on the server, so update them (PUT).
-                * If not present then this a new user so create them (POST). */
-                if (user.id) {
-
-                    var updateUser = new UsersResource(user);
-                    return updateUser.$update();
-
-                } else {
-
-                    var newUser = new UsersResource(user);
-
-                    newUser.password = 'password';
-
-                    return newUser.$create();
-                }
-            },
-
             /**
             * @class User
             * @method

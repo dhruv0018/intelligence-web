@@ -1,3 +1,5 @@
+var PAGE_SIZE = 100;
+
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
