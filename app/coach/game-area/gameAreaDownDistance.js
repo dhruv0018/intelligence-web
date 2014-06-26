@@ -80,11 +80,39 @@ GameAreaDownDistance.controller('GameAreaDownDistanceController', [
         $scope.teamId = $scope.game.teamId;
 
         //TODO move to constants
-        $scope.options = {
+        /*$scope.options = {
             distance: ['short', 'medium', 'long'],
-            weight: ['Left', 'Middle', 'Balanced'],
+            weight: ['Left', 'Right', 'Balanced'],
             down: ['1st', '2nd', '3rd', '4th'],
             hash: ['Left', 'Right', 'Middle']
+        };*/
+
+        $scope.options = {
+            'distance': {
+                'Any': undefined,
+                'Short': 'short',
+                'Medium': 'medium',
+                'Long': 'long'
+            },
+            'weight': {
+                'Any': undefined,
+                'Left': 'Left',
+                'Right': 'Right',
+                'Balanced': 'Balanced'
+            },
+            'down': {
+                'Any': undefined,
+                '1st': '1st',
+                '2nd': '2nd',
+                '3rd': '3rd',
+                '4th': '4th',
+            },
+            'hash': {
+                'Any': undefined,
+                'Left': 'Left',
+                'Right': 'Right',
+                'Middle': 'Middle'
+            }
         };
 
         $scope.dndReport = {
