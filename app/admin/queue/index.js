@@ -107,8 +107,8 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$rootScope', '$scope', '$state', '$modal', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Admin.Queue.Data',
-    function controller($rootScope, $scope, $state, $modal, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, data) {
+    '$rootScope', '$scope', '$state', '$modal', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
+    function controller($rootScope, $scope, $state, $modal, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, data, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
