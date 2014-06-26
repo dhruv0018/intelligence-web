@@ -119,6 +119,10 @@ Queue.controller('QueueController', [
         $scope.leagues = data.leagues.getCollection();
         $scope.teams = data.teams.getCollection();
         $scope.users = data.users.getCollection();
+
+        $scope.sportsList = data.sports.getList();
+        $scope.teamsList = data.teams.getList();
+        $scope.usersList = data.users.getList();
         $scope.queue = data.games.getList();
 
         $scope.selectIndexer = function(game, isQa) {
