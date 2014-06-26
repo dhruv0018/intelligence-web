@@ -39,3 +39,25 @@ Users.filter('EditableRolesByRole', [
     }
 ]);
 
+Users.filter('role', [
+    'ROLES', 'ROLE_ID',
+    function(ROLES, ROLE_ID) {
+
+        return function(users, role) {
+
+            var filtered = [];
+
+            if (!role) return filtered;
+
+            angular.forEach(users, function(user) {
+
+                if (user.has(ROLES[ROLE_ID[role]])) {
+
+                    filtered.push(user);
+                }
+            });
+
+            return filtered;
+        };
+    }
+]);
