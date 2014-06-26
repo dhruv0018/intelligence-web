@@ -9,6 +9,7 @@ var ROLE_ID = {
 
     1: 'SUPER_ADMIN',
     2: 'ADMIN',
+    9: 'COACH',
     3: 'HEAD_COACH',
     4: 'ASSISTANT_COACH',
     5: 'INDEXER',
@@ -22,6 +23,7 @@ var ROLE_TYPE = {
 
     SUPER_ADMIN: 1,
     ADMIN: 2,
+    COACH: 9,
     HEAD_COACH: 3,
     ASSISTANT_COACH: 4,
     INDEXER: 5,
