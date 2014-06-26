@@ -151,7 +151,6 @@ Coach.service('Coach.Data.Dependencies', [
         promises.playersList = promises.teams.then(function(teams) {
             var userTeamId = session.currentUser.currentRole.teamId;
             var userTeam = teams.get(userTeamId);
-            console.log(userTeam.retrieveRoster().id);
             return players.query({
                 roster: userTeam.retrieveRoster().id
             });
