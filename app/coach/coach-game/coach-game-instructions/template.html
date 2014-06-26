@@ -25,13 +25,13 @@
 
                                     <button type="button" class="btn-radio" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}" required>
 
-                                        <i class="icon-bar-chart"></i>
+                                        <i class="icon icon-bar-chart-o"></i>
                                         <div>
                                             <h1>Break this game down.</h1>
                                             <b>2 breakdowns left this week</b>
                                             <p>10 extra game breakdowns.</p>
                                         </div>
-                                        <i class="icon-check-empty"></i>
+                                        <i class="icon icon-check-empty"></i>
 
                                     </button>
 
@@ -45,13 +45,13 @@
 
                                     <button type="button" class="btn-radio" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.NOT_INDEXED.id }}">
 
-                                        <i class="icon-share"></i>
+                                        <i class="icon icon-share-square-o"></i>
                                         <div>
                                             <h1>Keep for sharing</h1>
                                             <p>This game can be submitted</p>
                                             <p>for breakdown later</p>
                                         </div>
-                                        <i class="icon-check-empty"></i>
+                                        <i class="icon icon-check-empty"></i>
 
                                     </button>
 
@@ -84,8 +84,8 @@
                                         <div class="col-md-8 col-md-offset-2">
                                             <div class="confirmation-text">
 
-                                                <i data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id" class="icon-share"></i>
-                                                <i data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id" class="icon-bar-chart"></i>
+                                                <i data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id" class="icon icon-share-square-o"></i>
+                                                <i data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id" class="icon icon-bar-chart-o"></i>
 
                                                 <div class="breakdown-information">
 
@@ -102,7 +102,7 @@
                                                     </div>
 
                                                     <button data-ng-disabled="game.status > GAME_STATUSES['READY_FOR_INDEXING'].id" class="switch-choice" data-ng-click="switchChoice(game)">
-                                                        <i class="icon-arrow-left"></i>
+                                                        <i class="icon icon-arrow-left"></i>
                                                         <span data-ng-show="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">Change to sharing only</span>
                                                         <span data-ng-show="game.status === GAME_STATUSES['NOT_INDEXED'].id">Break this game down</span>
                                                         <span data-ng-show="game.status > GAME_STATUSES['READY_FOR_INDEXING'].id">Game has already been broken down</span>
