@@ -49,19 +49,7 @@ AddFilm.config([
                     templateUrl: 'coach/add-film/start.html',
                     controller: 'StartController'
                 }
-            },
-            resolve: {
-                'Coach.Game.Data': 'Coach.Game.Data'
-            },
-            onExit: [
-                'Coach.Game.Data', 'Coach.Game.Tabs',
-                function(gameData, tabs) {
-                    delete gameData.opposingTeam;
-                    delete gameData.team;
-
-                    tabs.reset();
-                }
-            ]
+            }
         };
 
         $stateProvider.state(addFilm);

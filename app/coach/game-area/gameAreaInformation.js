@@ -43,7 +43,6 @@ GameAreaInformation.config([
 GameAreaInformation.controller('GameAreaInformationController', [
     '$scope', '$state', '$modal',
     function controller($scope, $state, $modal) {
-
         $scope.confirmation = function() {
             $modal.open({
                 scope: $scope,

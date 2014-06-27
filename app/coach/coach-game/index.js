@@ -108,8 +108,7 @@ var data = {
  * @type {Directive}
  */
 Game.directive('krossoverCoachGame', [
-    'Coach.Game.Data',
-    function directive(data) {
+    function directive() {
 
         var krossoverCoachGame = {
 
@@ -119,9 +118,7 @@ Game.directive('krossoverCoachGame', [
             link: link,
 
             scope: {
-                roster: '=?',
-                opposingTeamRoster: '=?',
-                game: '=?'
+                data: '=?'
             }
         };
 
@@ -140,18 +137,14 @@ Game.directive('krossoverCoachGame', [
  * @type {controller}
  */
 Game.controller('Coach.Game.controller', [
-    '$scope', 'Coach.Game.Tabs', 'Coach.Game.Data', 'GamesFactory',
-    function controller($scope, tabs, gameData, games) {
-        $scope.games = games;
+    '$scope', 'Coach.Game.Tabs', 'GamesFactory',
+    function controller($scope, tabs) {
 
-        gameData.then(function(gameData) {
-            gameData.headings = {
-                opposingTeam: 'Opposing Team',
-                yourTeam: gameData.coachTeam.name,
-                scoutingTeam: 'Team'
-            };
-            $scope.gameData = gameData;
-        });
+        $scope.data.headings = {
+            opposingTeam: 'Opposing Tab',
+            team: 'Team tab',
+            scoutingTeam: 'Scouting Tab'
+        };
 
         $scope.validation = {
             opposingTeam: false,
@@ -160,8 +153,8 @@ Game.controller('Coach.Game.controller', [
         };
 
         $scope.tabs = tabs;
-
-        $scope.game = $scope.game || {};
+//
+//        $scope.game = $scope.game || {};
     }
 ]);
 

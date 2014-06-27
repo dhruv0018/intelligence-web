@@ -95,15 +95,10 @@ GameArea.config([
                             return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function() {
                                 //Filtersets
                                 if (GAME_STATUS_IDS[data.game.status] === 'INDEXED') {
-                                    try {
-                                        //TODO remove hardcoded exclusion list
-                                        var exclusion = [];
-
-                                        //TODO do not hardcode
-                                        //filtersets.get(data.league.filterSetId, function(filterset) {
+                                    var exclusion = [];
+                                    if (data.league.filterSetId) {
                                         data.filtersetCategories = {};
-                                        filtersets.fetch('2', function(filterset) {
-
+                                        filtersets.get(data.league.filterSetId, function(filterset) {
                                             angular.forEach(filterset.categories, function(filterCategory) {
                                                 //TODO deal with player stuff later
                                                 data.filtersetCategories[filterCategory.id] = filterCategory;
@@ -156,18 +151,15 @@ GameArea.config([
                                                 data.filtersetCategories[playerFilter.filterCategoryId].subFilters.push(playerFilter);
                                             });
 
-                                            return $q.all(data);
+                                            return data;
                                         });
-
-
-                                    } catch (e) {
-                                        console.log('corrupted game');
-                                        console.log(e);
+                                    } else {
+                                        return data;
                                     }
+                                } else {
+                                    return data;
                                 }
 
-
-                                return data;
                             });
 
                         });
