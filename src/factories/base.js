@@ -14,8 +14,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q',
-    function($q) {
+    '$q', 'ResourceManager',
+    function($q, managedResources) {
 
         var BaseFactory = {
 
@@ -44,7 +44,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                 if (!self.storage) throw new Error(self.description + ' storage not defined');
                 if (!self.storage.collection) throw new Error(self.description + ' not loaded');
 
-                return self.storage.collection[id];
+                var resource = self.storage.collection[id];
+
+                managedResources.backup(resource);
+
+                return resource;
             },
 
             /**
@@ -259,6 +263,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var self = this;
 
                 resource = resource || self;
+
+                managedResources.reset(resource);
 
                 /* Create a copy of the resource to save to the server. */
                 var copy = angular.copy(resource);
