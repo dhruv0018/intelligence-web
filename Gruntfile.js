@@ -129,8 +129,6 @@ module.exports = function(grunt) {
         },
 
         svgmin: {
-            options: {
-            },
             prod: {
                 files: [{
                     expand: true,
@@ -164,9 +162,7 @@ module.exports = function(grunt) {
                     cwd: 'build',
                     src: ['*.svg'],
                     dest: 'build'
-                }],
-                options: {
-                }
+                }]
             }
         },
 
