@@ -77,7 +77,9 @@ Info.controller('Coach.Game.Info.controller', [
         //Game Manipulation
         $scope.data.game.notes = $scope.data.game.notes || {};
         $scope.data.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = $scope.data.game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
-
+        if (!$scope.data.game.dateplayed) {
+            $scope.data.game.dateplayed = Date.now();
+        }
         //Opposing Team Construction
         $scope.data.opposingTeam = {
             name:  $scope.teams[$scope.data.game.opposingTeamId].name || ''
@@ -97,7 +99,7 @@ Info.controller('Coach.Game.Info.controller', [
             if ($scope.data.game.id) {
                 $q.all($scope.saveExisting()).then($scope.goToRoster);
             } else {
-                console.log('new game stuff goes here');
+                console.log('new game stuff');
             }
         };
 
@@ -119,12 +121,20 @@ Info.controller('Coach.Game.Info.controller', [
         };
 
         $scope.constructNewGame = function() {
+            var promises = {};
+
             if (!games.isRegular($scope.data.game)) {
-                var scoutingTeam = $scope.constructNewTeam('scouting');
+                promises.scouting = $scope.constructNewTeam('scouting');
             }
-            var opposingTeam = $scope.constructNewTeam('opposing');
-            $scope.data.game.uploaderUserId = session.currentUser.id;
-            $scope.data.game.uploaderTeamId = session.currentUser.currentRole.teamId;
+
+            promises.opposing = $scope.constructNewTeam('opposing');
+
+            $q.all(promises).then(function(promisedData) {
+                console.log(promisedData);
+                $scope.data.game.uploaderUserId = session.currentUser.id;
+                $scope.data.game.uploaderTeamId = session.currentUser.currentRole.teamId;
+                //$scope.data.game.rosters[]
+            });
         };
 
         $scope.constructNewTeam = function(type) {
@@ -139,6 +149,10 @@ Info.controller('Coach.Game.Info.controller', [
                     secondaryHomeColor: $scope.isHomeGame ? null : $scope.data.game.opposingSecondaryColor
                 };
                 angular.extend($scope.opposingTeam, $scope.opposingTeam, newOpposingTeam);
+                return teams.save($scope.opposingTeam).then(function(opposingTeam) {
+                    $scope.data.game.opposingTeamId = opposingTeam.id;
+                    opposingTeam.roster = opposingTeam.retrieveRoster();
+                });
             } else if (type === 'scouting') {
                 var scoutingTeam = {
                     name: $scope.data.team.name,
@@ -150,6 +164,11 @@ Info.controller('Coach.Game.Info.controller', [
                     secondaryHomeColor: $scope.data.game.secondaryJerseyColor
                 };
                 angular.extend($scope.team, $scope.team, scoutingTeam);
+
+                return teams.save($scope.team).then(function(scoutingTeam) {
+                    $scope.data.game.teamId = scoutingTeam.id;
+                    scoutingTeam.roster = scoutingTeam.retrieveRoster();
+                });
             }
 
         };
