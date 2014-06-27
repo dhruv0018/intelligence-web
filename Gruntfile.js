@@ -128,6 +128,20 @@ module.exports = function(grunt) {
             }
         },
 
+        svgmin: {
+            options: {
+            },
+            prod: {
+                files: [{
+                    expand: true,
+                    cwd: 'svg',
+                    src: ['*.svg'],
+                    dest: 'build/',
+                    ext: '.svg'
+                }]
+            }
+        },
+
         uglify: {
             options: require('./.uglifyrc'),
             prod: {
@@ -147,7 +161,7 @@ module.exports = function(grunt) {
             icons: {
                 files: [{
                     expand: true,
-                    cwd: 'svg',
+                    cwd: 'build',
                     src: ['*.svg'],
                     dest: 'build'
                 }],
@@ -289,6 +303,12 @@ module.exports = function(grunt) {
         /* Distribution/Deployment */
 
         copy: {
+            svg: {
+                expand: true,
+                cwd:    'svg',
+                src:    '*.svg',
+                dest:   'build'
+            },
             'theme-assets': {
                 expand: true,
                 cwd:    'theme',
@@ -494,6 +514,7 @@ module.exports = function(grunt) {
         'browserify:dev',
         'componentbuild:styles',
         'less',
+        'copy:svg',
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
@@ -510,6 +531,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'componentbuild:styles',
         'less',
+        'svgmin',
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
@@ -529,6 +551,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'componentbuild:styles',
         'less',
+        'svgmin',
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
