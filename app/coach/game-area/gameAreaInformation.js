@@ -46,17 +46,13 @@ GameAreaInformation.controller('GameAreaInformationController', [
 
         $scope.confirmation = function() {
             $modal.open({
-
+                scope: $scope,
                 templateUrl: 'coach/game-area/deleteGame.html',
-                controller: ['$scope', '$state', '$modalInstance', 'GamesFactory', 'Coach.Data', function($scope, $state, $modalInstance, games, data) {
-                    data.then(function(data) {
-                        $scope.game = data.game;
-                    });
-
+                controller: ['$scope', '$state', '$modalInstance', function($scope, $state, $modalInstance) {
                     $scope.deleteGame = function() {
                         $scope.game.isDeleted = true;
 
-                        games.save($scope.game, function() {
+                        $scope.game.save().then(function() {
                             $modalInstance.close();
                             $state.go('Coach.FilmHome');
                         }, function() {
