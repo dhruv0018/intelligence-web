@@ -41,8 +41,7 @@ Team.directive('krossoverCoachGameTeam', [
             templateUrl: templateUrl,
             controller: 'Coach.Game.Team.controller',
             scope: {
-                game: '=?',
-                scoutingRoster: '=?',
+                data: '=',
                 validation: '=?'
             }
         };
@@ -58,24 +57,20 @@ Team.directive('krossoverCoachGameTeam', [
  * @type {controller}
  */
 Team.controller('Coach.Game.Team.controller', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'Coach.Game.Tabs', 'GamesFactory', 'PlayersFactory',
-    function controller(config, $rootScope, $scope, $state, $localStorage, $http, tabs, games, players) {
+    'config', '$rootScope', '$scope', '$state', '$localStorage', 'GamesFactory', 'PlayersFactory',
+    function controller(config, $rootScope, $scope, $state, $localStorage, games, players) {
 //        $scope.tabs = tabs;
 //        $scope.data = {};
 //        $scope.config = config;
 //
-//        data.then(function(coachData) {
-//            $scope.data = coachData;
-//            $scope.positions = coachData.positionSet.indexedPositions;
-//            if (coachData.teamGameRoster) {
-//                $scope.data.team = coachData.teams[$scope.game.teamId];
-//                $scope.data.team.players = coachData.teamGameRoster.players;
-//
-//                angular.forEach($scope.data.team.players, function(player) {
-//                    player = players.constructPositionDropdown(player, coachData.game.rosters[coachData.game.teamId].id, $scope.positions);
-//                });
-//            }
-//        });
+
+            //$scope.data.team = coachData.teams[$scope.game.teamId];
+            //$scope.data.team.players = coachData.teamGameRoster.players;
+//            angular.forEach($scope.data.team.players, function(player) {
+//                player = players.constructPositionDropdown(player, coachData.game.rosters[coachData.game.teamId].id, $scope.positions);
+//            });
+
+
 //
 //        $scope.$watch('game', function(game) {
 //            if (game.rosters) {

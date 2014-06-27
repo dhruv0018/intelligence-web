@@ -175,10 +175,9 @@ GameArea.config([
                 }
             ],
             onExit: [
-                'Coach.Data', 'Coach.Game.Tabs',
-                function(data, tabs) {
+                'Coach.Data',
+                function(data) {
                     delete data.game;
-                    tabs.reset();
                 }
             ]
         });

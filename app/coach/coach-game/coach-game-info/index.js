@@ -62,6 +62,10 @@ Info.directive('krossoverCoachGameInfo', [
 Info.controller('Coach.Game.Info.controller', [
     '$q', '$scope', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($q, $scope, $state, GAME_TYPES, GAME_NOTE_TYPES, tabs, session, teams, leagues, games) {
+        $scope.tabs = tabs;
+
+
+
         $scope.todaysDate = Date.now();
 
         //CONSTANTS
@@ -70,6 +74,8 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Factories
         $scope.games = games;
+
+        console.log(games.isRegular($scope.data.game));
 
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
@@ -86,12 +92,18 @@ Info.controller('Coach.Game.Info.controller', [
         };
 
         //Headings
+        //$scope.setHeadings();
 
 
         //watches
         //TODO, we really need to not do this
         $scope.$watch('data.game', function(game) {
             $scope.isHomeGame = $scope.data.game.isHomeGame == 'true' ? true : false;
+        });
+
+        $scope.$watch('formGameInfo.$invalid', function(invalid) {
+            tabs['your-team'].disabled = invalid;
+            tabs['scouting-team'].disabled = invalid;
         });
 
         //Save functionality
@@ -175,7 +187,22 @@ Info.controller('Coach.Game.Info.controller', [
 
 
         $scope.goToRoster = function() {
-            console.log('saved');
+
+            if (games.isRegular($scope.data.game)) {
+                tabs.activateTab('your-team');
+            } else {
+                tabs.activateTab('scouting-team');
+            }
+
+        };
+
+        $scope.setHeadings = function() {
+            $scope.data.headings.opposingTeam = $scope.teams[$scope.data.game.opposingTeamId].name || 'Opposing Team';
+            if (games.isRegular($scope.data.game)) {
+                $scope.data.headings.team = $scope.teams[$scope.data.game.teamId].name || 'Team';
+            } else {
+                $scope.data.headings.scoutingTeam = $scope.teams[$scope.data.game.teamId].name || 'Team';
+            }
         };
 
 //

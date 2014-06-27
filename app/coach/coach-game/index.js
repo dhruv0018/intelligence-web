@@ -138,12 +138,13 @@ Game.directive('krossoverCoachGame', [
  */
 Game.controller('Coach.Game.controller', [
     '$scope', 'Coach.Game.Tabs', 'GamesFactory',
-    function controller($scope, tabs) {
+    function controller($scope, tabs, games) {
+        $scope.games = games;
 
         $scope.data.headings = {
-            opposingTeam: 'Opposing Tab',
-            team: 'Team tab',
-            scoutingTeam: 'Scouting Tab'
+            opposingTeam: 'Opposing Team',
+            yourTeam: 'Team',
+            scoutingTeam: 'Scouting'
         };
 
         $scope.validation = {
@@ -153,7 +154,7 @@ Game.controller('Coach.Game.controller', [
         };
 
         $scope.tabs = tabs;
-//
+
 //        $scope.game = $scope.game || {};
     }
 ]);

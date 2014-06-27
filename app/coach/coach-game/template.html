@@ -1,28 +1,42 @@
 <x-tabset class="coach-game">
 
-    <!--<x-tab heading="Instructions" active="tabs['instructions'].active" disabled="!game.id || tabs['instructions'].disabled" select="tabs.activateTab('instructions')">-->
+    <x-tab heading="Instructions"
+           active="tabs['instructions'].active"
+           disabled="!game.id || tabs['instructions'].disabled"
+           select="tabs.activateTab('instructions')">
 
-        <!--<krossover-coach-game-instructions data-game="data.game"></krossover-coach-game-instructions>-->
+        <krossover-coach-game-instructions data-game="data.game"></krossover-coach-game-instructions>
 
-    <!--</x-tab>-->
+    </x-tab>
 
-    <!--<x-tab heading="{{ (gameData.headings.opposingTeam.length > 0) ? gameData.headings.opposingTeam : 'Opposing Team' }}" active="tabs['opposing-team'].active" disabled="!game.id || tabs['opposing-team'].disabled" select="tabs.activateTab('opposing-team')">-->
+    <x-tab heading="{{ (data.headings.opposingTeam.length > 0) ? data.headings.opposingTeam : 'Opposing Team' }}"
+           active="tabs['opposing-team'].active"
+           disabled="!game.id || tabs['opposing-team'].disabled"
+           select="tabs.activateTab('opposing-team')">
 
-        <!--<krossover-coach-game-opposing-team data-validation="validation" data-game="game" data-opposing-team-roster="opposingTeamRoster"></krossover-coach-game-opposing-team>-->
+        <krossover-coach-game-opposing-team data-validation="validation" data-data="data" data-opposing-team-roster="opposingTeamRoster"></krossover-coach-game-opposing-team>
 
-    <!--</x-tab>-->
+    </x-tab>
 
-    <!--<x-tab data-ng-if="games.isRegular(game)" heading="{{gameData.headings.yourTeam}}" active="tabs['your-team'].active" disabled="!game.id || tabs['your-team'].disabled" select="tabs.activateTab('your-team')">-->
+    <x-tab data-ng-if="games.isRegular(data.game)"
+           heading="{{data.headings.yourTeam}}"
+           active="tabs['your-team'].active"
+           disabled="!game.id || tabs['your-team'].disabled"
+           select="tabs.activateTab('your-team')">
 
-        <!--<krossover-coach-game-your-team data-game="game" data-roster="roster"></krossover-coach-game-your-team>-->
+        <krossover-coach-game-your-team data-data="data"></krossover-coach-game-your-team>
 
-    <!--</x-tab>-->
+    </x-tab>
 
-    <!--<x-tab data-ng-if="!games.isRegular(game)" heading="{{ (gameData.headings.scoutingTeam.length > 0) ? gameData.headings.scoutingTeam: 'Team'}}" active="tabs['scouting-team'].active" disabled="!game.id || tabs['scouting-team'].disabled" select="tabs.activateTab('scouting-team')">-->
+    <x-tab data-ng-if="!games.isRegular(data.game)"
+           heading="{{ (data.headings.scoutingTeam.length > 0) ? data.headings.scoutingTeam: 'Team'}}"
+           active="tabs['scouting-team'].active"
+           disabled="!game.id || tabs['scouting-team'].disabled"
+           select="tabs.activateTab('scouting-team')">
 
-        <!--<krossover-coach-game-team data-validation="validation" data-game="game" data-scouting-roster="scoutingRoster"></krossover-coach-game-team>-->
+        <krossover-coach-game-team data-data="data"></krossover-coach-game-team>
 
-    <!--</x-tab>-->
+    </x-tab>
 
     <x-tab heading="Basic Game Info" active="tabs['game-info'].active" disabled="tabs['game-info'].disabled" select="tabs.activateTab('game-info')">
 

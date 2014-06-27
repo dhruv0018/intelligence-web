@@ -42,8 +42,7 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
             controller: 'Coach.Game.YourTeam.controller',
 
             scope: {
-                roster: '=?',
-                game: '=?'
+                data: '='
             }
         };
 
@@ -59,8 +58,9 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
 YourTeam.controller('Coach.Game.YourTeam.controller', [
     '$scope', '$state', '$localStorage', 'Coach.Game.Tabs', 'PlayersFactory', 'TeamsFactory',
     function controller($scope, $state, $localStorage, tabs, players, teams) {
-//
-//        $scope.tabs = tabs;
+        console.log('working');
+        $scope.tabs = tabs;
+
 //        $scope.gameRoster = [];
 //        $scope.gameRosterId = null;
 //        $scope.retrievedRoster = false;
