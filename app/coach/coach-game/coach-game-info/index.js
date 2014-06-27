@@ -60,8 +60,8 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$scope', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($scope, $state, GAME_TYPES, GAME_NOTE_TYPES, tabs, session, teams, leagues, games) {
+    '$q', '$scope', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    function controller($q, $scope, $state, GAME_TYPES, GAME_NOTE_TYPES, tabs, session, teams, leagues, games) {
         $scope.todaysDate = Date.now();
 
         //CONSTANTS
@@ -73,16 +73,91 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
-        console.log($scope.teams[$scope.data.game.teamId].name);
+
+        //Game Manipulation
+        $scope.data.game.notes = $scope.data.game.notes || {};
+        $scope.data.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = $scope.data.game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
+
         //Opposing Team Construction
-//        $scope.data.opposingTeam = {
-//            name:  $scope.teams[$scope.data.game.opposingTeamId].name || ''
-//        };
+        $scope.data.opposingTeam = {
+            name:  $scope.teams[$scope.data.game.opposingTeamId].name || ''
+        };
 
         //Headings
-//        $scope.saveExistingGame = function() {
-//
-//        };
+
+
+        //watches
+        //TODO, we really need to not do this
+        $scope.$watch('data.game', function(game) {
+            $scope.isHomeGame = $scope.data.game.isHomeGame == 'true' ? true : false;
+        });
+
+        //Save functionality
+        $scope.save = function() {
+            if ($scope.data.game.id) {
+                $q.all($scope.saveExisting()).then($scope.goToRoster);
+            } else {
+                console.log('new game stuff goes here');
+            }
+        };
+
+        $scope.saveExisting = function() {
+            var promises = [];
+
+            //Saves the scouting team
+            if (!games.isRegular($scope.data.game)) {
+                promises.push($scope.teams[$scope.data.game.teamId].save());
+            }
+
+            //Saves the opposing team
+            promises.push($scope.teams[$scope.data.game.opposingTeamId].save());
+
+            //Saves the game
+            promises.push($scope.data.game.save());
+
+            return promises;
+        };
+
+        $scope.constructNewGame = function() {
+            if (!games.isRegular($scope.data.game)) {
+                var scoutingTeam = $scope.constructNewTeam('scouting');
+            }
+            var opposingTeam = $scope.constructNewTeam('opposing');
+            $scope.data.game.uploaderUserId = session.currentUser.id;
+            $scope.data.game.uploaderTeamId = session.currentUser.currentRole.teamId;
+        };
+
+        $scope.constructNewTeam = function(type) {
+
+            if (type === 'opposing') {
+                var newOpposingTeam = {
+                    isCustomerTeam: false,
+                    leagueId: $scope.data.league.id,
+                    primaryAwayColor: $scope.isHomeGame ? $scope.data.game.opposingPrimaryColor : null,
+                    primaryHomeColor: $scope.isHomeGame ? null : $scope.data.game.opposingPrimaryColor,
+                    secondaryAwayColor: $scope.isHomeGame ? $scope.data.game.opposingSecondaryColor : null,
+                    secondaryHomeColor: $scope.isHomeGame ? null : $scope.data.game.opposingSecondaryColor
+                };
+                angular.extend($scope.opposingTeam, $scope.opposingTeam, newOpposingTeam);
+            } else if (type === 'scouting') {
+                var scoutingTeam = {
+                    name: $scope.data.team.name,
+                    isCustomerTeam: false,
+                    leagueId: $scope.data.league.id,
+                    primaryAwayColor: $scope.data.game.primaryJerseyColor,
+                    primaryHomeColor: $scope.data.game.primaryJerseyColor,
+                    secondaryAwayColor: $scope.data.game.secondaryJerseyColor,
+                    secondaryHomeColor: $scope.data.game.secondaryJerseyColor
+                };
+                angular.extend($scope.team, $scope.team, scoutingTeam);
+            }
+
+        };
+
+
+        $scope.goToRoster = function() {
+            console.log('saved');
+        };
 
 //
 //        $scope.tabs = tabs;
@@ -113,8 +188,7 @@ Info.controller('Coach.Game.Info.controller', [
 //            if (!game.datePlayed) {
 //                $scope.game.datePlayed = Date.now();
 //            }
-//            game.notes = game.notes || {};
-//            game.notes[GAME_NOTE_TYPES.COACH_NOTE] = game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE,content: ''}];
+
 //        });
 //
 //        $scope.$watch('game.isHomeGame', function(isHomeGame) {

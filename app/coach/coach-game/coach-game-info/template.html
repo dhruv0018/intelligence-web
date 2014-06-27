@@ -84,7 +84,12 @@
 
                                                 <td>
                                                     <h5 data-ng-if="games.isRegular(data.game)"> {{ teams[data.game.teamId].name }} </h5>
-                                                    <input class="form-control" data-ng-if="!games.isRegular(data.game)" name="team" placeholder="Team" data-ng-model="data.team.name">
+
+                                                    <!--if the scouting team does not exist yet-->
+                                                    <input class="form-control" data-ng-if="!games.isRegular(data.game) && !data.game.id" name="team" placeholder="Team" data-ng-model="data.team.name">
+
+                                                    <!--if the scouting team already exists-->
+                                                    <input class="form-control" data-ng-if="!games.isRegular(data.game) && data.game.id" name="team" placeholder="Team" data-ng-model="teams[data.game.teamId].name">
                                                 </td>
 
                                                 <td class="score">
