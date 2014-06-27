@@ -24,7 +24,7 @@ IntelligenceWebClient.service('ResourceManager', [
          */
         this.backup = function(resource) {
 
-            var backup = angular.copy(resource)
+            var backup = angular.copy(resource);
 
             /* Keep a backup of the resource. */
             this.active.push(backup);
@@ -50,6 +50,8 @@ IntelligenceWebClient.service('ResourceManager', [
          */
         this.replace = function(resource) {
 
+            if (resource === resource.storage.collection[resource.id]) return;
+
             angular.copy(resource, resource.storage.collection[resource.id]);
 
             resource.updateList();
@@ -58,17 +60,18 @@ IntelligenceWebClient.service('ResourceManager', [
         /**
          * Restores all of the managed resources. Will replace all of the
          * managed resources with their backups.
-         * @param {Resource} resource - a resource.
          */
         this.restore = function() {
 
-            this.active.forEach(function(resource) {
+            var self = this;
 
-                this.replace(resource);
+            self.active.forEach(function(resource) {
+
+                self.replace(resource);
             });
 
             /* Clear the active resource list. */
-            this.active = [];
+            self.active = [];
         };
     }
 ]);

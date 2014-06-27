@@ -83,6 +83,7 @@ require('./factories/plans');
 require('./managers/tags');
 require('./managers/play');
 require('./managers/event');
+require('./managers/resource');
 
 require('./directives/alert');
 require('./directives/match');
