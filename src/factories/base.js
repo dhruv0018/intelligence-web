@@ -337,6 +337,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
             updateList: function() {
 
+                var self = this;
+
                 /* Clear the storage list. */
                 self.storage.list.length = 0;
 
