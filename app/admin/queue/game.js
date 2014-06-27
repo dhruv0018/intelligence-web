@@ -72,7 +72,21 @@ Game.config([
                         return $q.all(data);
                     }
                 ]
-            }
+            },
+            onEnter: [
+                '$stateParams', 'GAME_STATUSES', 'AlertsService', 'Admin.Game.Data',
+                function($stateParams, GAME_STATUSES, alerts, data) {
+
+                    var gameId = $stateParams.id;
+
+                    var game = data.games.get(gameId);
+
+                    alerts.add({
+                        type: game.status == GAME_STATUSES.INDEXED.id ? 'success' : 'warning',
+                        message: game.getStatus()
+                    });
+                }
+            ]
         };
 
         $stateProvider.state(game);
@@ -135,10 +149,6 @@ Game.controller('GameController', [
 
             $scope.headCoach = data.users.get(headCoachRole.userId);
         }
-
-        var status = $scope.game.getStatus();
-
-        $scope.users = data.users.getList();
 
         $scope.selectIndexer = function(isQa) {
 
