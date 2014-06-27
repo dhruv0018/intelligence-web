@@ -141,7 +141,9 @@ Coach.service('Coach.Data.Dependencies', [
         //TODO temporary fix, needs refactoring
 
         var promises = {
-            games: games.load({uploaderTeamId: session.currentUser.currentRole.teamId.teamId}),
+            games: games.load({
+                uploaderTeamId: session.currentUser.currentRole.teamId.teamId
+            }),
             teams: teams.load(),
             leagues: leagues.load(),
             users: users.retrieve(),

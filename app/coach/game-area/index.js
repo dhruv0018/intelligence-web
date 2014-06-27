@@ -101,8 +101,8 @@ GameArea.config([
 
                                         //TODO do not hardcode
                                         //filtersets.get(data.league.filterSetId, function(filterset) {
+                                        data.filtersetCategories = {};
                                         filtersets.fetch('2', function(filterset) {
-                                            data.filtersetCategories = {};
 
                                             angular.forEach(filterset.categories, function(filterCategory) {
                                                 //TODO deal with player stuff later
@@ -155,6 +155,7 @@ GameArea.config([
                                                 };
                                                 data.filtersetCategories[playerFilter.filterCategoryId].subFilters.push(playerFilter);
                                             });
+
                                             return $q.all(data);
                                         });
 
@@ -176,7 +177,6 @@ GameArea.config([
             onEnter: [
                 '$state', 'Coach.Data',
                 function($state, data) {
-                    console.log(data);
                     if (data.game.isDeleted) {
                         $state.go('Coach.FilmHome');
                     }
@@ -207,14 +207,13 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.hasFormations = true;
         $scope.hasDownAndDistance = true;
         $scope.expandAll = false;
-
         $scope.data = data;
-
 
         //Game Related
         $scope.game = data.game;
         $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
         $scope.sources = $scope.game.getVideoSources();
+        $scope.returnedDate = ($scope.gameStatus === 'INDEXED') ? new Date($scope.game.currentAssignment().timeFinished) : null;
 
         //Collections
         $scope.teams = data.teams.getCollection();
@@ -227,6 +226,13 @@ GameArea.controller('Coach.GameArea.controller', [
         //Teams
         $scope.team = data.teams[$scope.game.teamId];
         $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
+
+        //Plays
+        $scope.totalPlays = angular.copy(data.plays);
+        $scope.plays = $scope.totalPlays;
+
+        //Filters
+        $scope.filtersetCategories = data.filtersetCategories;
 
         //view selector
         $scope.dataType = 'video';

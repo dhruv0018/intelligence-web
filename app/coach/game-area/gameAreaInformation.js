@@ -41,22 +41,8 @@ GameAreaInformation.config([
 ]);
 
 GameAreaInformation.controller('GameAreaInformationController', [
-    '$scope', '$state', '$modal', 'GAME_STATUSES', 'GamesFactory', 'Coach.Data',
-    function controller($scope, $state, $modal, GAME_STATUSES, games, data) {
-
-        $scope.$watch('game', function(game) {
-
-            if (game) {
-
-                var currentAssignment = game.currentAssignment();
-
-                if (currentAssignment) {
-
-                    $scope.isIndexed = $scope.game.status == GAME_STATUSES.INDEXED.id;
-                    $scope.returnedDate = currentAssignment.timeFinished;
-                }
-            }
-        });
+    '$scope', '$state', '$modal',
+    function controller($scope, $state, $modal) {
 
         $scope.confirmation = function() {
             $modal.open({

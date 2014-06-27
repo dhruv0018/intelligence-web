@@ -48,8 +48,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
         $scope.filterCategory = 1;
         $scope.activeFilters = [];
 
-        console.log($scope.data);
-
         $scope.contains = function(array, id) {
             return array.some(function(filter) {
                 return id === filter.id;
