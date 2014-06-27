@@ -83,9 +83,7 @@
                                             <tr>
 
                                                 <td>
-                                                    <h5 data-ng-if="games.isRegular(data.game)">
-                                                        {{ teams[data.game.teamId].name }}
-                                                    </h5>
+                                                    <h5 data-ng-if="games.isRegular(data.game)"> {{ teams[data.game.teamId].name }} </h5>
                                                     <input class="form-control" data-ng-if="!games.isRegular(data.game)" name="team" placeholder="Team" data-ng-model="data.team.name">
                                                 </td>
 

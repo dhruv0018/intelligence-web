@@ -60,7 +60,7 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$scope', '$state', '$localStorage', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    '$scope', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($scope, $state, GAME_TYPES, GAME_NOTE_TYPES, tabs, session, teams, leagues, games) {
         $scope.todaysDate = Date.now();
 
@@ -73,14 +73,13 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
-
+        console.log($scope.teams[$scope.data.game.teamId].name);
         //Opposing Team Construction
-        $scope.data.opposingTeam = {
-            name:  $scope.teams[$scope.data.game.opposingTeamId].name || ''
-        };
+//        $scope.data.opposingTeam = {
+//            name:  $scope.teams[$scope.data.game.opposingTeamId].name || ''
+//        };
 
         //Headings
-
 //        $scope.saveExistingGame = function() {
 //
 //        };
