@@ -149,32 +149,5 @@ Game.controller('GameController', [
 
             $scope.headCoach = data.users.get(headCoachRole.userId);
         }
-
-        $scope.selectIndexer = function(isQa) {
-
-            $scope.selectedGame = $scope.game;
-            $scope.isQa = isQa;
-
-            $modal.open({
-
-                scope: $scope,
-                controller: 'ModalController',
-                templateUrl: 'select-indexer.html'
-
-            }).result.then(function() {
-
-                $scope.selectedGame.save();
-
-                /* FIXME: Might not need this anymore: */
-                $scope.game = data.games.get($scope.selectedGame.id);
-
-                alerts.clear();
-                alerts.add({
-
-                    type: $scope.game.status == GAME_STATUSES.INDEXED.id ? 'success' : 'warning',
-                    message: 'Game Status: ' + GAME_STATUSES[GAME_STATUS_IDS[$scope.game.status]].name
-                });
-            });
-        };
     }
 ]);
