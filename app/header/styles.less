@@ -2,11 +2,20 @@
 
 .header-default {
 
-    .navbar-brand {
+    .navbar-header {
 
-        .logo-header::after {
+        .navbar-brand {
 
-            content: url("krossover_logo_2013.png");
+            width: 60px;
+            padding: 5px;
+
+            .icon-krossover-symbol {
+
+                width: 100%;
+                height: 100%;
+                background-size: contain;
+                background-position: center center;
+            }
         }
     }
 
@@ -216,13 +225,9 @@ and (max-height: 480px) {
 
         .navbar-brand {
 
-            .logo-header::after {
-				
-                content: url("krossover_logo_2013_small.png");
-				
-            }
+            padding: 0;
         }
-        
+
         .role-title {
 
             line-height: @header-sm-height;
