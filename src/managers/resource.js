@@ -24,6 +24,7 @@ IntelligenceWebClient.service('ResourceManager', [
          */
         this.backup = function(resource) {
 
+            /* Create a backup copy of the resource. */
             var backup = angular.copy(resource);
 
             /* Keep a backup of the resource. */
@@ -53,8 +54,12 @@ IntelligenceWebClient.service('ResourceManager', [
          */
         this.replace = function(resource) {
 
+            /* If the resource is identical to the one stored in its collection,
+             * then there is nothing to replace. */
             if (resource === resource.storage.collection[resource.id]) return;
 
+            /* Clear the resource in the collection and copy the given resource
+             * into the storage collection. */
             angular.copy(resource, resource.storage.collection[resource.id]);
 
             resource.updateList();
