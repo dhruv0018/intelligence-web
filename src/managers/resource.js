@@ -41,6 +41,9 @@ IntelligenceWebClient.service('ResourceManager', [
 
             /* Remove the backup copy of the resource. */
             this.active.splice(resource.storage.backupIndex, 1);
+
+            /* Remove reference to the backup. */
+            delete resource.storage.backupIndex;
         };
 
         /**
