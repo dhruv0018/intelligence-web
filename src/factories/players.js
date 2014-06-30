@@ -76,9 +76,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return self.getList(filter).$promise;
                 });
             },
-
             resendEmail: function(userId, teamId) {
-
                 var self = this;
 
                 return self.resource.resendEmail({
