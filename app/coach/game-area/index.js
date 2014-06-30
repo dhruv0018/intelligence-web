@@ -92,13 +92,14 @@ GameArea.config([
                                 data.plays = plays;
                             });
 
-                            return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function() {
+                            return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function(promisedData) {
+                                console.log(GAME_STATUS_IDS[data.game.status]);
                                 //Filtersets
                                 if (GAME_STATUS_IDS[data.game.status] === 'INDEXED') {
                                     var exclusion = [];
                                     if (data.league.filterSetId) {
                                         data.filtersetCategories = {};
-                                        filtersets.get(data.league.filterSetId, function(filterset) {
+                                        filtersets.fetch(data.league.filterSetId, function(filterset) {
                                             angular.forEach(filterset.categories, function(filterCategory) {
                                                 //TODO deal with player stuff later
                                                 data.filtersetCategories[filterCategory.id] = filterCategory;
@@ -153,13 +154,10 @@ GameArea.config([
 
                                             return data;
                                         });
-                                    } else {
-                                        return data;
                                     }
-                                } else {
-                                    return data;
                                 }
 
+                                return data;
                             });
 
                         });
