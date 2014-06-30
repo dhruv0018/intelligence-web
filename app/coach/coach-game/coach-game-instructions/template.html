@@ -101,13 +101,12 @@
                                                         <div class="remaining-breakdowns">N</div> Breakdown left this week
                                                     </div>
 
-                                                    <button data-ng-disabled="statusBuffer > GAME_STATUSES['READY_FOR_INDEXING'].id" class="switch-choice" data-ng-click="switchChoice(data.game)">
+                                                    <button data-ng-disabled="statusBuffer > GAME_STATUSES['READY_FOR_INDEXING'].id" class="switch-choice" data-ng-click="switchChoice()">
                                                         <i class="icon icon-arrow-left"></i>
                                                         <span data-ng-show="statusBuffer === GAME_STATUSES['READY_FOR_INDEXING'].id">Change to sharing only</span>
                                                         <span data-ng-show="statusBuffer === GAME_STATUSES['NOT_INDEXED'].id">Break this game down</span>
                                                         <span data-ng-show="statusBuffer > GAME_STATUSES['READY_FOR_INDEXING'].id">Game has already been broken down</span>
                                                     </button>
-                                                    {{statusBuffer}}
                                                 </div>
                                             </div>
                                         </div>
