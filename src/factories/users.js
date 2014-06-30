@@ -54,32 +54,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return user;
             },
 
-            save: function(user) {
-
-                var self = this;
-
-                user = user || self;
-
-                delete user.list;
-
-                /* User ID's are assigned server side, if it is present that means
-                * the user is present on the server, so update them (PUT).
-                * If not present then this a new user so create them (POST). */
-                if (user.id) {
-
-                    var updateUser = new UsersResource(user);
-                    return updateUser.$update();
-
-                } else {
-
-                    var newUser = new UsersResource(user);
-
-                    newUser.password = 'password';
-
-                    return newUser.$create();
-                }
-            },
-
             /**
             * @class User
             * @method
@@ -243,22 +217,29 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
              * @class User
              * @method
-             * @param {Object} match - the role object to match.
+             * @param {Object} matches - the role object(s) to match.
              * @returns {Boolean} true if a match is found; false otherwise.
              * Checks if any of the users roles for a match to the role given.
              */
-            has: function(match) {
+            has: function(matches) {
 
                 var self = this;
                 var roles = self.roles;
 
                 if (!roles) return false;
-                if (!match) throw new Error('No role to match specified');
+                if (!matches) throw new Error('No role to match specified');
 
-                /* Check all roles for match. */
-                return roles.some(function(role) {
+                /* Treat matches as arrays. */
+                if (!Array.isArray(matches)) matches = [matches];
 
-                    return self.is(role, match);
+                /* Loop through match arrays looking for a match. */
+                return matches.some(function(match) {
+
+                    /* Check all roles for match. */
+                    return roles.some(function(role) {
+
+                        return self.is(role, match);
+                    });
                 });
             },
 

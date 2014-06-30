@@ -32,6 +32,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 }
 
             },
+
             save: function(rosterId, players) {
 
                 var self = this;
@@ -75,7 +76,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return self.getList(filter).$promise;
                 });
             },
+
             resendEmail: function(userId, teamId) {
+
                 var self = this;
 
                 return self.resource.resendEmail({

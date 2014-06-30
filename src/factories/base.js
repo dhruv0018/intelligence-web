@@ -14,8 +14,7 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q',
-    function($q) {
+    function() {
 
         var BaseFactory = {
 
@@ -144,7 +143,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 filter.start = filter.start || 0;
                 filter.count = filter.count || PAGE_SIZE;
 
-                success = success ||  function(resources) {
+                success = success || function(resources) {
 
                     return resources;
                 };
@@ -298,7 +297,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 success = success || function(resource) {
 
-                    return resource;
+                    return self.extend(resource);
                 };
 
                 error = error || function() {

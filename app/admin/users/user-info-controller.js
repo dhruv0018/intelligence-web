@@ -14,13 +14,18 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.User.Info.Controller', [
-    '$scope', 'ROLES', 'SessionService', 'AlertsService', 'Users.User.Service',
-    function controller($scope, ROLES, session, alerts, user) {
+    '$scope', '$stateParams', 'ROLES', 'SessionService', 'AlertsService', 'Admin.Users.Data',
+    function controller($scope, $stateParams, ROLES, session, alerts, data) {
 
         $scope.isLockDisabled = function() {
 
+            var user = data.users.get($stateParams.id);
+
+            /* Enable the lock button for new users. */
+            if (!user) return false;
+
             /* Super admin can only be locked from the database. */
-            if (user.has(ROLES.SUPER_ADMIN)) return true;
+            else if (user.has(ROLES.SUPER_ADMIN)) return true;
 
             /* Admins can only be locked by super admins. */
             else if (user.has(ROLES.ADMIN)) return !session.currentUser.is(ROLES.SUPER_ADMIN);
