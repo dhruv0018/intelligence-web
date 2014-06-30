@@ -128,6 +128,18 @@ module.exports = function(grunt) {
             }
         },
 
+        svgmin: {
+            prod: {
+                files: [{
+                    expand: true,
+                    cwd: 'svg',
+                    src: ['*.svg'],
+                    dest: 'build/',
+                    ext: '.svg'
+                }]
+            }
+        },
+
         uglify: {
             options: require('./.uglifyrc'),
             prod: {
@@ -140,6 +152,19 @@ module.exports = function(grunt) {
 
         /* Build process */
 
+
+        /* Build process - SVG */
+
+        grunticon: {
+            icons: {
+                files: [{
+                    expand: true,
+                    cwd: 'build',
+                    src: ['*.svg'],
+                    dest: 'build'
+                }]
+            }
+        },
 
         /* Build process - CSS */
 
@@ -170,7 +195,7 @@ module.exports = function(grunt) {
 
         concat: {
             unprefixed: {
-                src: ['fonts.css', 'icons.css', 'build/build.css', 'build/theme.css'],
+                src: ['fonts.css', 'icons.css', 'build/icons.data.svg.css', 'build/build.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
             }
         },
@@ -274,6 +299,12 @@ module.exports = function(grunt) {
         /* Distribution/Deployment */
 
         copy: {
+            svg: {
+                expand: true,
+                cwd:    'svg',
+                src:    '*.svg',
+                dest:   'build'
+            },
             'theme-assets': {
                 expand: true,
                 cwd:    'theme',
@@ -479,6 +510,8 @@ module.exports = function(grunt) {
         'browserify:dev',
         'componentbuild:styles',
         'less',
+        'copy:svg',
+        'grunticon',
         'concat:unprefixed',
         'autoprefixer',
         'componentbuild:files',
@@ -492,8 +525,10 @@ module.exports = function(grunt) {
         'env:qa',
         'componentbuild:prod',
         'browserify:prod',
-        'less',
         'componentbuild:styles',
+        'less',
+        'svgmin',
+        'grunticon',
         'concat:unprefixed',
         'autoprefixer',
         'cssmin',
@@ -512,6 +547,8 @@ module.exports = function(grunt) {
         'browserify:prod',
         'componentbuild:styles',
         'less',
+        'svgmin',
+        'grunticon',
         'concat:unprefixed',
         'autoprefixer',
         'cssmin',
