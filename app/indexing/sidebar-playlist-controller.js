@@ -14,9 +14,10 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
-    '$scope', '$modal', 'IndexingService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
-    function controller($scope, $modal, indexing, tags, play, event, sidebar) {
+    '$scope', '$modal', 'IndexingService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data',
+    function controller($scope, $modal, indexing, tags, play, event, sidebar, data) {
 
+        $scope.data = data;
         $scope.play = play;
         $scope.event = event;
         $scope.sidebar = sidebar;
