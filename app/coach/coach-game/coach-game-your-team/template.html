@@ -32,11 +32,11 @@
 
                                 <tbody>
 
-                                    <tr ng-if="!player.isUnknown" data-ng-repeat="player in gameRoster track by $index">
+                                    <tr data-ng-if="!player.isUnknown" data-ng-repeat="player in gameRoster track by $index">
 
                                         <td><profile-placeholder data-size="small"></profile-placeholder></td>
 
-                                        <td><input size="3" data-ng-model="player.jerseyNumbers[gameRosterId]" required></td>
+                                        <td><input size="3" data-ng-model="player.jerseyNumbers[data.game.rosters[data.game.teamId].id]" required></td>
 
                                         <td class="name">{{player.firstName}} {{player.lastName}}</td>
 
@@ -44,9 +44,9 @@
                                             <data-positions-dropdown data-player="player" data-positions="positions"></data-positions-dropdown>
                                         </td>
 
-                                        <td data-ng-click="player.rosterStatuses[gameRosterId] = !player.rosterStatuses[gameRosterId]">
-                                            <i class="icon icon-check" data-ng-show="!player.rosterStatuses[gameRosterId]"></i>
-                                            <i class="icon icon-check-empty" data-ng-show="player.rosterStatuses[gameRosterId]"></i>
+                                        <td data-ng-click="player.rosterStatuses[data.game.rosters[data.game.teamId].id] = !player.rosterStatuses[data.game.rosters[data.game.teamId].id]">
+                                            <i class="icon icon-check-square-o" data-ng-show="!player.rosterStatuses[data.game.rosters[data.game.teamId].id]"></i>
+                                            <i class="icon icon-check-empty" data-ng-show="player.rosterStatuses[data.game.rosters[data.game.teamId].id]"></i>
                                         </td>
 
                                     </tr>
