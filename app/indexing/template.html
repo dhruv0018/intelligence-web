@@ -2,7 +2,7 @@
 
     <main class="content-full">
 
-        <div class="alert-editing" data-ng-show="indexing.eventSelected"><button class="btn-delete-event" data-ng-click="main.deleteEvent(event.current)"><i class="icon-remove"></i> Delete Event</button><h5>Click the variable you wish to edit.</h5></div>
+        <div class="alert-editing" data-ng-show="indexing.eventSelected"><button class="btn-delete-event" data-ng-click="main.deleteEvent(event.current)"><i class="icon icon-remove"></i> Delete Event</button><h5>Click the variable you wish to edit.</h5></div>
 
         <button class="btn-back" data-ng-if="indexing.isIndexing" data-ng-click="main.back()">Back (Esc)</button>
 
@@ -28,7 +28,7 @@
                 <div class="controls">
 
                     <!-- Start button -->
-                    <button class="btn-indexing-start" data-ng-if="indexing.isReady && !indexing.isIndexing" data-ng-click="main.index()"><i class="icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
+                    <button class="btn-indexing-start" data-ng-if="indexing.isReady && !indexing.isIndexing" data-ng-click="main.index()"><i class="icon icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
 
                     <!-- State movement buttons -->
                     <button class="btn-save" data-ng-if="indexing.isIndexing && indexing.showScript && main.savable()" data-ng-click="main.save()" data-ng-disabled="formIndexing.$invalid">Save Event (Return)</button>
