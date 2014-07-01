@@ -43,6 +43,11 @@ FilmHome.config([
                     templateUrl: 'coach/film-home/template.html',
                     controller: 'Coach.FilmHome.controller'
                 }
+            },
+            resolve: {
+                'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
+                    return $q.all(data);
+                }]
             }
         });
     }

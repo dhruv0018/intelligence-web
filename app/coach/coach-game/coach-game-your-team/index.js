@@ -42,8 +42,7 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
             controller: 'Coach.Game.YourTeam.controller',
 
             scope: {
-                roster: '=?',
-                game: '=?'
+                data: '='
             }
         };
 
@@ -57,47 +56,47 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
  * @type {controller}
  */
 YourTeam.controller('Coach.Game.YourTeam.controller', [
-    '$scope', '$state', '$localStorage', 'Coach.Game.Tabs', 'Coach.Data', 'PlayersFactory', 'TeamsFactory',
-    function controller($scope, $state, $localStorage, tabs, data, players, teams) {
-
+    '$scope', '$state', '$localStorage', 'Coach.Game.Tabs', 'PlayersFactory', 'TeamsFactory',
+    function controller($scope, $state, $localStorage, tabs, players, teams) {
         $scope.tabs = tabs;
+
+        //Collections
+        $scope.teams = $scope.data.teams.getCollection();
+
+        //Game Roster for Coach Team
         $scope.gameRoster = [];
-        $scope.gameRosterId = null;
-        $scope.retrievedRoster = false;
 
-        data.then(function(coachData) {
-            $scope.data = coachData;
-            $scope.positions = coachData.positionSet.indexedPositions;
+        //Positions
+        $scope.positions = $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions;
+
+        $scope.$watchCollection('data.game', function(game) {
+            $scope.buildGameRoster(game);
         });
 
-
-        $scope.$watch('game', function(game) {
-            if (game.rosters && $scope.retrievedRoster === false) {
-                players.getList({
-                    roster: game.rosters[game.teamId].id
-                }, function(gameRoster) {
-                    $scope.gameRosterId = game.rosters[game.teamId].id;
-                    //fresh game roster with only a single unknown player
-                    if (gameRoster.length === 1) {
-                        angular.forEach($scope.data.roster, function(teamRosterPlayer) {
-                            if (teamRosterPlayer.rosterStatuses[$scope.data.rosterId.id]) {
-                                teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
-                                teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.data.rosterId.id];
-                                teamRosterPlayer.positions[game.rosters[game.teamId].id] = teamRosterPlayer.positions[$scope.data.rosterId.id];
-                                teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
-                                $scope.gameRoster.push(teamRosterPlayer);
-                            }
-                        });
-                    } else {
-                        $scope.gameRoster = gameRoster;
+        $scope.buildGameRoster = function(game) {
+            //fresh game roster with only a single unknown player
+            if (!$scope.data.gamePlayerLists || $scope.data.gamePlayerLists[game.teamId].length === 1) {
+                angular.forEach($scope.data.playersList, function(teamRosterPlayer) {
+                    //if the player is active
+                    //TODO, NOTE: We need team rosters to be created automatically on team creation
+                    //otherwise this step is really annoying to check
+                    if (teamRosterPlayer.rosterStatuses[$scope.teams[game.teamId].roster.id]) {
+                        teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
+                        teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.teams[game.teamId].roster.id];
+                        teamRosterPlayer.positions[game.rosters[game.teamId].id] = teamRosterPlayer.positions[$scope.teams[game.teamId].roster.id];
+                        teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
+                        $scope.gameRoster.push(teamRosterPlayer);
                     }
-                    angular.forEach($scope.gameRoster, function(player) {
-                        player = players.constructPositionDropdown(player, $scope.gameRosterId, $scope.positions);
-                    });
-                    $scope.retrievedRoster = true;
                 });
+            } else {
+                $scope.gameRoster = $scope.data.gamePlayerLists[game.teamId];
             }
-        });
+
+            angular.forEach($scope.gameRoster, function(player) {
+                player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
+            });
+        };
+
 
         $scope.$watch('tabs["your-team"].disabled', function(disabled) {
             tabs['opposing-team'].disabled = disabled;
@@ -106,18 +105,19 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.save = function() {
 
             angular.forEach($scope.gameRoster, function(player) {
-                player = players.getPositionsFromDowndown(player, $scope.gameRosterId, $scope.positions);
+                player = players.getPositionsFromDowndown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
             });
 
-            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.gameRoster).then(function(roster) {
+            players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
                 $scope.gameRoster = roster;
 
                 angular.forEach($scope.gameRoster, function(player) {
-                    player = players.constructPositionDropdown(player, $scope.gameRosterId, $scope.positions);
+                    player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
                 });
+
+                tabs.activateTab('opposing-team');
             });
 
-            tabs.activateTab('opposing-team');
         };
     }
 ]);

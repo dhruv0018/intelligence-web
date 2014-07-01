@@ -51,17 +51,16 @@ AddFilm.config([
                 }
             },
             resolve: {
-                'Coach.Game.Data': 'Coach.Game.Data'
-            },
-            onExit: [
-                'Coach.Game.Data', 'Coach.Game.Tabs',
-                function(gameData, tabs) {
-                    delete gameData.opposingTeam;
-                    delete gameData.team;
+                'Coach.Data': ['$q', 'Coach.Data.Dependencies', 'SessionService', function($q, data, session) {
+                    return $q.all(data).then(function(data) {
+                        var leaguesCollection = data.leagues.getCollection();
+                        var teamsCollection = data.teams.getCollection();
 
-                    tabs.reset();
-                }
-            ]
+                        data.league = leaguesCollection[teamsCollection[session.currentUser.currentRole.teamId].leagueId];
+                        return data;
+                    });
+                }]
+            }
         };
 
         $stateProvider.state(addFilm);
@@ -75,10 +74,12 @@ AddFilm.config([
  * @type {Controller}
  */
 AddFilm.controller('AddFilmController', [
-    '$scope', '$state',
-    function controller($scope, $state, games) {
+    '$scope', '$state', 'GamesFactory', 'Coach.Data',
+    function controller($scope, $state, games, data) {
         $scope.games = games;
-        $scope.game = {};
+        $scope.data = data;
+        data.game = {};
+
     }
 ]);
 

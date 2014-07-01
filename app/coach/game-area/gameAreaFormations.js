@@ -52,19 +52,19 @@ GameAreaFormations.config([
  * @type {service}
  */
 GameAreaFormations.service('Coach.FormationReport.Data', [
-    '$q', 'Coach.Data', 'Coach.Game.Data', 'PlaysFactory',
-    function service($q, data, game, plays) {
-        var Data = {
-            data: data,
-            plays: data.then(function(data) {
-                var promisedPlays = $q.defer();
-                plays.getList(data.game.id, function(plays) {
-                    promisedPlays.resolve(plays);
-                }, null, true);
-                return promisedPlays.promise;
-            })
-        };
-
+    '$q', 'Coach.Data', 'PlaysFactory',
+    function service($q, data, plays) {
+        var Data = {};
+//            data: data,
+//            plays: data.then(function(data) {
+//                var promisedPlays = $q.defer();
+//                plays.getList(data.game.id, function(plays) {
+//                    promisedPlays.resolve(plays);
+//                }, null, true);
+//                return promisedPlays.promise;
+//            })
+//        };
+//
         return Data;
     }
 ]);
