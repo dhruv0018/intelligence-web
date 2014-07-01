@@ -21,14 +21,14 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 var self = this;
 
                 player.rosterIds = [rosterId];
+                delete player.resource;
+                delete player.storage;
 
                 if (player.id) {
                     return self.resource.update(player).$promise;
                 } else {
                     return self.resource.singleCreate(player).$promise.then(function(player) {
                         angular.extend(player, self);
-
-
                         return player;
                     });
                 }
