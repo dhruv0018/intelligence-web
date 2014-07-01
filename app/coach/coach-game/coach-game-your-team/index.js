@@ -60,9 +60,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
     function controller($scope, $state, $localStorage, tabs, players, teams) {
         $scope.tabs = tabs;
 
-        //Flags
-        $scope.retrievedRoster = false;
-
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
 
@@ -72,13 +69,13 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         //Positions
         $scope.positions = $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions;
 
-        $scope.$watch('data.game', function(game) {
+        $scope.$watchCollection('data.game', function(game) {
             $scope.buildGameRoster(game);
         });
 
         $scope.buildGameRoster = function(game) {
             //fresh game roster with only a single unknown player
-            if ($scope.data.gamePlayerLists[game.teamId].length === 1 && !$scope.retrievedRoster) {
+            if (!$scope.data.gamePlayerLists || $scope.data.gamePlayerLists[game.teamId].length === 1) {
                 angular.forEach($scope.data.playersList, function(teamRosterPlayer) {
                     //if the player is active
                     //TODO, NOTE: We need team rosters to be created automatically on team creation
@@ -98,8 +95,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
             angular.forEach($scope.gameRoster, function(player) {
                 player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
             });
-
-            $scope.retrievedRoster = true;
         };
 
 

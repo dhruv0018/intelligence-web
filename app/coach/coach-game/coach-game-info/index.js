@@ -159,7 +159,10 @@ Info.controller('Coach.Game.Info.controller', [
                 $scope.data.game.rosters[$scope.data.game.teamId] = {};
                 $scope.data.game.rosters[promisedData.opposing.id] = {};
 
-                return games.extend($scope.data.game).save();
+                return games.extend($scope.data.game).save().then(function(game) {
+                    console.log(game);
+                    $scope.data.game = game;
+                });
             });
         };
 
