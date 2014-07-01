@@ -203,7 +203,6 @@ Login.controller('LoginController', [
                      * user was not found in the system. */
                     else if (error.name === 'NotFoundError') {
 
-                        $scope.login.email = '';
                         $window.form.email.focus();
                         $scope.form.email.$setValidity('notfound', false);
                     }
