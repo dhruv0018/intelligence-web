@@ -142,7 +142,7 @@ Coach.service('Coach.Data.Dependencies', [
 
         var promises = {
             games: games.load({
-                uploaderTeamId: session.currentUser.currentRole.teamId.teamId
+                uploaderTeamId: session.currentUser.currentRole.teamId
             }),
             teams: teams.load(),
             leagues: leagues.load(),

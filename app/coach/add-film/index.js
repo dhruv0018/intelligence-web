@@ -49,6 +49,17 @@ AddFilm.config([
                     templateUrl: 'coach/add-film/start.html',
                     controller: 'StartController'
                 }
+            },
+            resolve: {
+                'Coach.Data': ['$q', 'Coach.Data.Dependencies', 'SessionService', function($q, data, session) {
+                    return $q.all(data).then(function(data) {
+                        var leaguesCollection = data.leagues.getCollection();
+                        var teamsCollection = data.teams.getCollection();
+
+                        data.league = leaguesCollection[teamsCollection[session.currentUser.currentRole.teamId].leagueId];
+                        return data;
+                    });
+                }]
             }
         };
 
@@ -63,10 +74,12 @@ AddFilm.config([
  * @type {Controller}
  */
 AddFilm.controller('AddFilmController', [
-    '$scope', '$state',
-    function controller($scope, $state, games) {
+    '$scope', '$state', 'GamesFactory', 'Coach.Data',
+    function controller($scope, $state, games, data) {
         $scope.games = games;
-        $scope.game = {};
+        $scope.data = data;
+        data.game = {};
+
     }
 ]);
 

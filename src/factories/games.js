@@ -23,7 +23,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 angular.extend(game, self);
 
-                game.rosters = game.rosters || {};
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 

@@ -67,9 +67,12 @@ Team.controller('Coach.Game.Team.controller', [
         $scope.positions = $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions;
 
         $scope.$watch('data.game', function(game) {
-            angular.forEach($scope.data.gamePlayerLists[game.teamId], function(player) {
-                player = players.constructPositionDropdown(player, game.rosters[game.opposingTeamId].id, $scope.positions);
-            });
+            if ($scope.data.gamePlayerLists) {
+                angular.forEach($scope.data.gamePlayerLists[game.teamId], function(player) {
+                    player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
+                });
+            }
+
         });
 
         $scope.$watch('validation.scoutingTeam', function(valid) {

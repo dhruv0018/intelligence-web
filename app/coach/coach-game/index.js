@@ -141,7 +141,7 @@ Game.controller('Coach.Game.controller', [
     function controller($scope, tabs, games) {
         $scope.games = games;
 
-        $scope.data.headings = {
+        $scope.headings = {
             opposingTeam: 'Opposing Team',
             yourTeam: 'Team',
             scoutingTeam: 'Scouting'
