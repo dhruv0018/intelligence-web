@@ -141,10 +141,19 @@ Login.config([
  * @type {Controller}
  */
 Login.controller('LoginController', [
-    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'AuthenticationService',
-    function controller(config, $rootScope, $scope, $state, $stateParams, $window, auth) {
+    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'AuthenticationService', 'SessionService',
+    function controller(config, $rootScope, $scope, $state, $stateParams, $window, auth, session) {
 
         $scope.config = config;
+
+        var currentUser = session.retrieveCurrentUser();
+
+        if (currentUser && currentUser.persist) {
+
+            $scope.login = {};
+            $scope.login.email = currentUser.email;
+            $scope.login.remember = currentUser.persist;
+        }
 
         $scope.submitLogin = function() {
 
@@ -194,7 +203,6 @@ Login.controller('LoginController', [
                      * user was not found in the system. */
                     else if (error.name === 'NotFoundError') {
 
-                        $scope.login.email = '';
                         $window.form.email.focus();
                         $scope.form.email.$setValidity('notfound', false);
                     }
