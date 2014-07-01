@@ -61,8 +61,8 @@ Root.config([
  * @type {Controller}
  */
 Root.controller('RootController', [
-    '$scope', '$state', 'SessionService', 'AuthenticationService',
-    function controller($scope, $state, session, auth) {
+    '$scope',
+    function controller($scope) {
 
         $scope.currentUser = session.currentUser;
     }
