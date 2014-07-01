@@ -113,7 +113,6 @@ Info.controller('Coach.Game.Info.controller', [
             if ($scope.data.game.id) {
                 $q.all($scope.saveExisting()).then($scope.goToRoster);
             } else {
-                console.log('new game stuff');
                 $q.all($scope.constructNewGame()).then($scope.goToRoster);
             }
         };
@@ -145,7 +144,6 @@ Info.controller('Coach.Game.Info.controller', [
             promises.opposing = $scope.constructNewTeam('opposing');
 
             $q.all(promises).then(function(promisedData) {
-                console.log(promisedData);
 
                 $scope.data.game.uploaderUserId = session.currentUser.id;
                 $scope.data.game.uploaderTeamId = session.currentUser.currentRole.teamId;
