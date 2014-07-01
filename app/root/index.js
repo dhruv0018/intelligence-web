@@ -64,7 +64,6 @@ Root.controller('RootController', [
     '$scope', '$state', 'SessionService', 'AuthenticationService',
     function controller($scope, $state, session, auth) {
 
-        $scope.currentUser = session.currentUser;
     }
 ]);
 
