@@ -64,7 +64,6 @@ Root.controller('RootController', [
     '$scope',
     function controller($scope) {
 
-        $scope.currentUser = session.currentUser;
     }
 ]);
 
