@@ -68,9 +68,6 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
 
-        //Game Roster for Coach Team
-        $scope.gameRoster = [];
-
         //Positions
         $scope.positions = $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions;
 
