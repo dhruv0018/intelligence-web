@@ -78,6 +78,7 @@ AddFilm.controller('AddFilmController', [
     function controller($scope, $state, games, data) {
         $scope.games = games;
         $scope.data = data;
+        console.log(data);
         data.game = {};
 
     }

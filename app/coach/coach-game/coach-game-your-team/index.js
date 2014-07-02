@@ -75,12 +75,11 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         $scope.buildGameRoster = function(game) {
             //fresh game roster with only a single unknown player
-            if (!$scope.data.gamePlayerLists || $scope.data.gamePlayerLists[game.teamId].length === 1) {
+            var templatePlayerList = angular.copy($scope.data.playersList);
+            if (!$scope.data.gamePlayerLists[game.teamId] || $scope.data.gamePlayerLists[game.teamId].length === 1) {
                 $scope.gameRoster = [];
-                angular.forEach($scope.data.playersList, function(teamRosterPlayer) {
+                angular.forEach(templatePlayerList, function(teamRosterPlayer) {
                     //if the player is active
-                    //TODO, NOTE: We need team rosters to be created automatically on team creation
-                    //otherwise this step is really annoying to check
                     if (teamRosterPlayer.rosterStatuses[$scope.teams[game.teamId].roster.id]) {
                         teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
                         teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.teams[game.teamId].roster.id];

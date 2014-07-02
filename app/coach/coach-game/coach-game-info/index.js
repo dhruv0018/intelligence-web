@@ -160,8 +160,9 @@ Info.controller('Coach.Game.Info.controller', [
                 $scope.data.game.rosters[promisedData.opposing.id] = {};
 
                 return games.extend($scope.data.game).save().then(function(game) {
-                    console.log(game);
                     $scope.data.game = game;
+                    $scope.data.gamePlayerLists = {};
+                    $scope.data.gamePlayerLists[promisedData.opposing.id] = [];
                 });
             });
         };

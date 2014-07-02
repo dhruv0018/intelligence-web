@@ -72,10 +72,13 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         $scope.positions = $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions;
 
         $scope.$watch('data.game', function(game) {
-            angular.forEach($scope.data.gamePlayerLists[game.opposingTeamId], function(player) {
-                player = players.constructPositionDropdown(player, game.rosters[game.opposingTeamId].id, $scope.positions);
-            });
-            console.log($scope.data.gamePlayerLists[game.opposingTeamId]);
+            if (game.id) {
+                $scope.data.game.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
+                angular.forEach($scope.data.gamePlayerLists[game.opposingTeamId], function(player) {
+                    player = players.constructPositionDropdown(player, game.rosters[game.opposingTeamId].id, $scope.positions);
+                });
+                console.log($scope.data.gamePlayerLists[game.opposingTeamId]);
+            }
         });
 
         $scope.$watch('validation.opposingTeam', function(valid) {
