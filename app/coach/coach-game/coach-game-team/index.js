@@ -60,11 +60,12 @@ Team.controller('Coach.Game.Team.controller', [
     'config', '$rootScope', '$scope', '$state', '$localStorage', 'GamesFactory', 'PlayersFactory', 'Coach.Game.Tabs',
     function controller(config, $rootScope, $scope, $state, $localStorage, games, players, tabs) {
         $scope.tabs = tabs;
-        $scope.data = {};
+
         $scope.config = config;
 
         //Positions
         $scope.positions = $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions;
+
 
         $scope.$watch('data.game', function(game) {
             if ($scope.data.gamePlayerLists[game.teamId]) {
@@ -93,14 +94,14 @@ Team.controller('Coach.Game.Team.controller', [
         $scope.save = function() {
 
             angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
-                player = players.getPositionsFromDowndown(player, $scope.data.game.teamId, $scope.positions);
+                player = players.getPositionsFromDowndown(player, game.rosters[game.teamId].id, $scope.positions);
             });
 
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {
                 $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
 
                 angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
-                    player = players.constructPositionDropdown(player, $scope.data.game.teamId, $scope.positions);
+                    player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
                 });
             });
 
