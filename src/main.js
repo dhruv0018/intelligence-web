@@ -70,6 +70,7 @@ require('./managers/event');
 require('./directives/alert');
 require('./directives/match');
 require('./directives/form');
+require('./directives/anchor');
 require('./directives/button');
 require('./directives/input');
 require('./directives/submit');
