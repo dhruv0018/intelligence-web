@@ -138,7 +138,7 @@ UploadFilm.controller('UploadFilmController', [
 
                 var files = $scope.$flow.files;
                 var partCount = files.length;
-                var url = config.kvs.uri + 'upload';
+                var url = kvsUrl + '/upload';
                 var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
                 var data = 'partCount=' + partCount;
                 var options = { headers: headers };
@@ -170,7 +170,7 @@ UploadFilm.controller('UploadFilmController', [
                         coachData.game = $scope.game;
 
                         /* Set the KVS target to include the GUID. */
-                        $scope.$flow.opts.target = kvsUrl + 'upload/part/' + guid;
+                        $scope.$flow.opts.target = kvsUrl + '/upload/part/' + guid;
 
                         /* Format the unique identifier for each file. */
                         files.forEach(function(file, index, files) {
