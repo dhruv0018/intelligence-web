@@ -78,6 +78,7 @@ GameAreaDownDistance.controller('GameAreaDownDistanceController', [
         $scope.team = data.data.team;
         $scope.teams = data.data.teams;
         $scope.teamId = $scope.game.teamId;
+        $scope.opposingTeamId = $scope.game.opposingTeamId;
 
         $scope.options = {
             'distance': {

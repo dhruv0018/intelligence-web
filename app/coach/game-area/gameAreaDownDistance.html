@@ -1,8 +1,8 @@
 <div class="formations-teams-header">
     <span class="team-on-offense">
         Teams on Offense:
-        <a data-ng-click="teamId = game.teamId" data-ng-class="{active: teamId == game.teamId}" class="home-team" href>{{teams[game.teamId].name}}</a>
-        <a data-ng-click="teamId = game.opposingTeamId" data-ng-class="{active: teamId == game.opposingTeamId}" class="away-team" href>{{teams[game.opposingTeamId].name}}</a>
+        <a data-ng-click="teamId = game.teamId; opposingTeamId = game.opposingTeamId" data-ng-class="{active: teamId == game.teamId}" class="home-team" href>{{teams[game.teamId].name}}</a>
+        <a data-ng-click="teamId = game.opposingTeamId; opposingTeamId = game.teamId" data-ng-class="{active: teamId == game.opposingTeamId}" class="away-team" href>{{teams[game.opposingTeamId].name}}</a>
     </span>
 </div>
 <div class="down-distance-info-container">
@@ -59,6 +59,6 @@
         <span class="print-formation"><i class="icon-print"></i> Print</span>
     </div>-->
     <div class="field">
-        <krossover-arena type="FOOTBALL" data-game="game" data-plays="plays" data-team-id="teamId" data-league="league" data-chart="game.dndReport" data-redzone="dndReport.redZone"></krossover-arena>
+        <krossover-arena type="FOOTBALL" data-game="game" data-plays="plays" data-team-id="teamId" data-opposing-team-id="opposingTeamId" data-league="league" data-chart="game.dndReport" data-redzone="dndReport.redZone"></krossover-arena>
     </div>
 </div>

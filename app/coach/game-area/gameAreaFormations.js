@@ -77,6 +77,7 @@ GameAreaFormations.controller('GameAreaFormationsController', [
         $scope.team = data.data.team;
         $scope.teams = data.data.teams;
         $scope.teamId = $scope.game.teamId;
+        $scope.opposingTeamId = $scope.game.opposingTeamId;
         $scope.report = $scope.game.formationReport;
 
         $scope.redzone = 'false';
