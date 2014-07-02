@@ -76,6 +76,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.buildGameRoster = function(game) {
             //fresh game roster with only a single unknown player
             if (!$scope.data.gamePlayerLists || $scope.data.gamePlayerLists[game.teamId].length === 1) {
+                $scope.gameRoster = [];
                 angular.forEach($scope.data.playersList, function(teamRosterPlayer) {
                     //if the player is active
                     //TODO, NOTE: We need team rosters to be created automatically on team creation
