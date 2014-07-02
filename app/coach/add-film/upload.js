@@ -126,71 +126,90 @@ UploadFilm.controller('UploadFilmController', [
 
             alerts.clear();
 
-            var files = $scope.$flow.files;
-            var partCount = files.length;
-            var url = config.kvs.uri + 'upload';
-            var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-            var data = 'partCount=' + partCount;
-            var options = { headers: headers };
+            var url = config.api.uri + 'uploadServer';
 
-            /* Request a GUID from KVS. */
-            $http.post(url, data, options)
+            /* Request the upload URL for KVS. */
+            $http.get(url)
 
-            .success(function(data) {
+            .success(function(response) {
 
-                if (data && data.guid) {
+                /* Get KVS url from the response. */
+                var kvsUrl = response.url;
 
-                    /* The GUID from KVS. */
-                    var guid = data.guid;
+                var files = $scope.$flow.files;
+                var partCount = files.length;
+                var url = config.kvs.uri + 'upload';
+                var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+                var data = 'partCount=' + partCount;
+                var options = { headers: headers };
 
-                    /* TODO: Change to use logging framework */
-                    console.log('KVS GUID: ' + guid);
+                /* Request a GUID from KVS. */
+                $http.post(url, data, options)
 
-                    /* Store the GUID with the game. */
-                    coachData.game.datePlayed = new Date();
+                .success(function(data) {
 
-                    coachData.game.video = {
-                        guid: guid
-                    };
+                    if (data && data.guid) {
 
-                    if (games.isRegular(coachData.game)) {
-                        coachData.isHomeGame = 'true';
+                        /* The GUID from KVS. */
+                        var guid = data.guid;
+
+                        /* TODO: Change to use logging framework */
+                        console.log('KVS GUID: ' + guid);
+
+                        /* Store the GUID with the game. */
+                        coachData.game.datePlayed = new Date();
+
+                            /* Store the GUID with the game. */
+                        coachData.game.video = {
+                            guid: guid
+                        };
+
+                        if (games.isRegular(coachData.game)) {
+                            coachData.isHomeGame = 'true';
+                        }
+
+                        /* Set the KVS target to include the GUID. */
+                        $scope.$flow.opts.target = kvsUrl + 'upload/part/' + guid;
+
+                        /* Format the unique identifier for each file. */
+                        files.forEach(function(file, index, files) {
+
+                            var part = index + 1;
+
+                            /* Determine file extension. */
+                            var extension = path.extname(file.name);
+
+                            /* The unique identifier includes the GUID from KVS,
+                            * part number, and file extension. */
+                            files[index].uniqueIdentifier = guid + '_' + part + extension;
+                        });
+
+                        $scope.$flow.upload();
+
+                        $state.go('uploading-film');
                     }
 
-                    /* Set the KVS target to include the GUID. */
-                    $scope.$flow.opts.target = config.kvs.uri + 'upload/part/' + guid;
+                    else {
 
-                    /* Format the unique identifier for each file. */
-                    files.forEach(function(file, index, files) {
+                        $scope.uploading = false;
 
-                        var part = index + 1;
+                        throw new Error('No GUID found in response');
+                    }
+                })
 
-                        /* Determine file extension. */
-                        var extension = path.extname(file.name);
-
-                        /* The unique identifier includes the GUID from KVS,
-                         * part number, and file extension. */
-                        files[index].uniqueIdentifier = guid + '_' + part + extension;
-                    });
-
-                    $scope.$flow.upload();
-
-                    $state.go('uploading-film');
-                }
-
-                else {
+                .error(function() {
 
                     $scope.uploading = false;
 
-                    throw new Error('No GUID found in response');
-                }
+                    throw new Error('Request for GUID failed');
+                });
             })
 
             .error(function() {
 
                 $scope.uploading = false;
 
-                throw new Error('Request for GUID failed');
+                throw new Error('Request for KVS URL failed');
             });
         };
     }
