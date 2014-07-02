@@ -110,7 +110,6 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 });
             },
             retrieveRoster: function() {
-                console.log('being called');
                 var self = this;
                 if (self.roster) {
                     return self.roster;
