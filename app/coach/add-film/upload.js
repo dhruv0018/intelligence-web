@@ -126,7 +126,7 @@ UploadFilm.controller('UploadFilmController', [
 
             alerts.clear();
 
-            var url = config.api.uri + 'uploadServer';
+            var url = config.api.uri + 'upload-server';
 
             /* Request the upload URL for KVS. */
             $http.get(url)
