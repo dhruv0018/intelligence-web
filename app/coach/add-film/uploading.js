@@ -81,8 +81,6 @@ UploadingFilm.controller('UploadingFilmController', [
 
         $scope.tabs = tabs;
 
-        console.log($scope.game);
-
         var deleteVideo = function() {
 
             var game = $scope.game;

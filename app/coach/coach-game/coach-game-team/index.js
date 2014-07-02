@@ -67,7 +67,7 @@ Team.controller('Coach.Game.Team.controller', [
         $scope.positions = $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions;
 
         $scope.$watch('data.game', function(game) {
-            if ($scope.data.gamePlayerLists) {
+            if ($scope.data.gamePlayerLists[game.teamId]) {
                 angular.forEach($scope.data.gamePlayerLists[game.teamId], function(player) {
                     player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
                 });
@@ -99,27 +99,13 @@ Team.controller('Coach.Game.Team.controller', [
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {
                 $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
 
-                angular.forEach($scope.data.gamePlayerLists[$scope.data.game.opposingTeamId], function(player) {
+                angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
                     player = players.constructPositionDropdown(player, $scope.data.game.teamId, $scope.positions);
                 });
             });
 
             tabs.activateTab('instructions');
         };
-//
-//        $scope.save = function() {
-//            angular.forEach($scope.data.team.players, function(player) {
-//                player = players.getPositionsFromDowndown(player, $scope.scoutingTeamId, $scope.positions);
-//            });
-//
-//            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.data.team.players).then(function(roster) {
-//                $scope.data.team.players = roster;
-//                angular.forEach($scope.data.team.players, function(player) {
-//                    player = players.constructPositionDropdown(player, $scope.scoutingTeamId, $scope.positions);
-//                });
-//            });
-//            tabs.activateTab('opposing-team');
-//        };
 
     }
 ]);

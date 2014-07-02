@@ -163,6 +163,7 @@ Info.controller('Coach.Game.Info.controller', [
                     $scope.data.game = game;
                     $scope.data.gamePlayerLists = {};
                     $scope.data.gamePlayerLists[promisedData.opposing.id] = [];
+                    $scope.data.gamePlayerLists[$scope.data.game.teamId] = [];
                 });
             });
         };
