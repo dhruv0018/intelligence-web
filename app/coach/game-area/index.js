@@ -93,7 +93,6 @@ GameArea.config([
                             });
 
                             return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function(promisedData) {
-                                console.log(GAME_STATUS_IDS[data.game.status]);
                                 //Filtersets
                                 if (GAME_STATUS_IDS[data.game.status] === 'INDEXED') {
                                     var exclusion = [];

@@ -61,7 +61,6 @@ OpposingTeam.directive('krossoverCoachGameOpposingTeam', [
 OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
     'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'Coach.Game.Tabs',  'GamesFactory', 'PlayersFactory',
     function controller(config, $rootScope, $scope, $state, $localStorage, $http, tabs, games, players) {
-        console.log($scope.data);
         $scope.tabs = tabs;
         $scope.config = config;
 
