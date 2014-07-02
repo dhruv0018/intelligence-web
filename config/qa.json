@@ -9,7 +9,6 @@
         "uri": "/intelligence-api/v1/"
     },
     "kvs": {
-        "uri": "http://v2-kvs-upload-1.qa.krossover.com/"
     },
     "passwordReset": {
         "uri": "/intelligence-api/v1/password-reset/"
