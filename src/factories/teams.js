@@ -108,20 +108,6 @@ IntelligenceWebClient.factory('TeamsFactory', [
                         return match.type.id == role.type.id;
                     }
                 });
-            },
-            retrieveRoster: function() {
-                var self = this;
-                if (self.roster) {
-                    return self.roster;
-                } else {
-                    self.roster = {
-                        teamId: self.teamId
-                    };
-
-                    self.save().then(function(team) {
-                        return team.roster;
-                    });
-                }
             }
         };
 
