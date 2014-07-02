@@ -94,18 +94,18 @@ Team.controller('Coach.Game.Team.controller', [
         $scope.save = function() {
 
             angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
-                player = players.getPositionsFromDowndown(player, game.rosters[game.teamId].id, $scope.positions);
+                player = players.getPositionsFromDowndown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
             });
 
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {
                 $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
 
                 angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
-                    player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
+                    player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
                 });
+                tabs.activateTab('opposing-team');
             });
 
-            tabs.activateTab('instructions');
         };
 
     }

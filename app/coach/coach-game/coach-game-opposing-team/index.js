@@ -77,7 +77,6 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                 angular.forEach($scope.data.gamePlayerLists[game.opposingTeamId], function(player) {
                     player = players.constructPositionDropdown(player, game.rosters[game.opposingTeamId].id, $scope.positions);
                 });
-                console.log($scope.data.gamePlayerLists[game.opposingTeamId]);
             }
         });
 
