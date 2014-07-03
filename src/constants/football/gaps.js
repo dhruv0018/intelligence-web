@@ -7,14 +7,14 @@ var IntelligenceWebClient = angular.module(package.name);
 
 var GAP_IDS = {
 
-    '-4': 'D_LEFT',
-    '-3': 'C_LEFT',
-    '-2': 'B_LEFT',
-    '-1': 'A_LEFT',
-    '1': 'A_RIGHT',
-    '2': 'B_RIGHT',
-    '3': 'C_RIGHT',
-    '4': 'D_RIGHT'
+    '1': 'D_LEFT',
+    '2': 'C_LEFT',
+    '3': 'B_LEFT',
+    '4': 'A_LEFT',
+    '5': 'A_RIGHT',
+    '6': 'B_RIGHT',
+    '7': 'C_RIGHT',
+    '8': 'D_RIGHT'
 };
 
 IntelligenceWebClient.constant('GAP_IDS', GAP_IDS);
@@ -23,42 +23,42 @@ var GAPS = {
 
     D_LEFT: {
         name: 'D Left',
-        value: '-4',
+        value: '1',
         shortcut: 'DL'
     },
     C_LEFT: {
         name: 'C Left',
-        value: '-3',
+        value: '2',
         shortcut: 'CL'
     },
     B_LEFT: {
         name: 'B Left',
-        value: '-2',
+        value: '3',
         shortcut: 'BL'
     },
     A_LEFT: {
         name: 'A Left',
-        value: '-1',
+        value: '4',
         shortcut: 'AL'
     },
     A_RIGHT: {
         name: 'A Right',
-        value: '1',
+        value: '5',
         shortcut: 'AR'
     },
     B_RIGHT: {
         name: 'B Right',
-        value: '2',
+        value: '6',
         shortcut: 'BR'
     },
     C_RIGHT: {
         name: 'C Right',
-        value: '3',
+        value: '7',
         shortcut: 'CR'
     },
     D_RIGHT: {
         name: 'D Right',
-        value: '4',
+        value: '8',
         shortcut: 'DR'
     }
 };
