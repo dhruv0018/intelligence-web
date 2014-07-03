@@ -61,6 +61,7 @@ Coach.service('Coach.Data', [
         var promisedRosterId = $q.defer();
         var promisedLeague = $q.defer();
         var promisedPositionSet = $q.defer();
+        var promisedUsers = $q.defer();
 
         var data = {
             teamId: session.currentUser.currentRole.teamId,
@@ -68,6 +69,10 @@ Coach.service('Coach.Data', [
             team: promisedTeam,
             roster: {}
         };
+
+        users.getList(function(users) {
+            promisedUsers.resolve(users);
+        }, null, true);
 
         games.getList({
             uploaderTeamId: data.teamId
@@ -87,22 +92,11 @@ Coach.service('Coach.Data', [
                 players.getList({
                     roster: data.roster.id
                 }, function(players) {
-                    var mergedRoster = [];
+                    var roster = [];
                     angular.forEach(players, function(player) {
-                        if (player.userId) {
-                            //lost in the merger
-                            var playerId = player.id;
-
-                            users.get(player.userId, function(user) {
-                                angular.extend(player, user, player);
-                                player.id = playerId;
-                                mergedRoster.push(player);
-                            });
-                        } else {
-                            mergedRoster.push(player);
-                        }
+                        roster.push(player);
                     });
-                    promisedRoster.resolve(mergedRoster);
+                    promisedRoster.resolve(roster);
                 }, function(failure) {
                     promisedRoster.resolve([]);
                 });
@@ -137,7 +131,8 @@ Coach.service('Coach.Data', [
             league: promisedLeague.promise,
             roster: promisedRoster.promise,
             rosterId: promisedRosterId.promise,
-            positionSet: promisedPositionSet.promise
+            positionSet: promisedPositionSet.promise,
+            users: promisedUsers.promise
         };
 
         return $q.all(promises);

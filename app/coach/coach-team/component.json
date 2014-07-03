@@ -1,22 +1,13 @@
 {
     "name": "coach-team",
     "templates": [
-        "template.html",
-        "all.html",
-        "active.html",
-        "inactive.html"
+        "template.html"
     ],
     "scripts": [
         "index.js",
-        "controller.js",
-        "all-controller.js",
-        "active-controller.js",
-        "inactive-controller.js"
+        "controller.js"
     ],
     "styles": [
-        "styles.less",
-        "all.less",
-        "active.less",
-        "inactive.less"
+        "styles.less"
     ]
 }

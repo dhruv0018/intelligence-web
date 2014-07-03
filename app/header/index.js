@@ -96,6 +96,7 @@ Header.controller('HeaderController', [
 
             auth.logoutUser();
             $state.go('login');
+            location.reload();
         };
 
         $scope.tabs = tabs;
