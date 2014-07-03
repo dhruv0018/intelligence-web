@@ -34,7 +34,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 var tags = this.tags;
                 var tag = tags[tagId];
 
-                if (tag.children) {
+                if (tag.children.length) {
 
                     return tag.children.map(function(childId) {
 
