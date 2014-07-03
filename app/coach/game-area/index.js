@@ -205,15 +205,14 @@ GameArea.controller('Coach.GameArea.controller', [
 
         //Collections
         $scope.teams = data.teams.getCollection();
-        $scope.team = data.teams[data.game.teamId];
 
         //Player List
         $scope.teamPlayerList = data.gamePlayerLists[data.game.teamId];
         $scope.opposingPlayerList = data.gamePlayerLists[data.game.opposingTeamId];
 
         //Teams
-        $scope.team = data.teams[$scope.game.teamId];
-        $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
+        $scope.team = $scope.teams[$scope.game.teamId];
+        $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
 
         //Plays
         $scope.totalPlays = angular.copy(data.plays);
