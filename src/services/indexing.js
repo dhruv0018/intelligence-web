@@ -233,6 +233,11 @@ IntelligenceWebClient.factory('IndexingService', [
 
                     if (angular.equals(play, calculatedPlay)) { break; } // stop when we hit the passed in play
                 }
+
+                /* Update game indexed score values. */
+                game.indexedScore = scores[game.teamId];
+                game.opposingIndexedScore = scores[game.opposingTeamId];
+
                 return scores;
             },
 
