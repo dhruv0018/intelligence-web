@@ -33,7 +33,7 @@ Users.controller('Users.User.Controller', [
 
             /* Set the role to the users default role, or
             * their first role if no default is set. */
-            $scope.role = user.getDefaultRole() || user.roles[0] || undefined;
+            $scope.userrole = user.getDefaultRole() || user.roles[0] || undefined;
         }
 
         $scope.save = function(user) {
