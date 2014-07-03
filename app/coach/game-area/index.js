@@ -206,6 +206,9 @@ GameArea.controller('Coach.GameArea.controller', [
         //Collections
         $scope.teams = data.teams.getCollection();
         $scope.team = data.teams[data.game.teamId];
+        $scope.game.getFormationReport().$promise.then(function(formationReport) {
+            $scope.game.formationReport = formationReport;
+        });
 
         //Player List
         $scope.teamPlayerList = data.gamePlayerLists[data.game.teamId];

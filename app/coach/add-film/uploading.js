@@ -87,12 +87,30 @@ UploadingFilm.controller('UploadingFilmController', [
 
             if (game && game.video && game.video.guid) {
 
-                /* Send DELETE request to KVS. */
-                $http.delete(config.kvs.uri + 'upload/' + game.video.guid)
+                var url = config.api.uri + 'upload-server';
+
+                /* Request the upload URL for KVS. */
+                $http.get(url)
+
+                .success(function(response) {
+
+                    /* Get KVS url from the response. */
+                    var kvsUrl = response.url;
+
+                    /* Send DELETE request to KVS. */
+                    $http.delete(kvsUrl + '/upload/' + game.video.guid)
+
+                    .error(function() {
+
+                        throw new Error('Problem deleting canceled video from KVS');
+                    });
+                })
 
                 .error(function() {
 
-                    throw new Error('Problem deleting canceled video from KVS');
+                    $scope.uploading = false;
+
+                    throw new Error('Request for KVS URL failed');
                 });
             }
         };
