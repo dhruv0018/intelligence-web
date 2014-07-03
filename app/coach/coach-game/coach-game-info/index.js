@@ -45,7 +45,8 @@ Info.directive('krossoverCoachGameInfo', [
 
             scope: {
                 headings: '=',
-                data: '='
+                data: '=',
+                tabs: '='
             }
         };
 
@@ -60,11 +61,9 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$q', '$scope', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Coach.Game.Tabs', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($q, $scope, $state, GAME_TYPES, GAME_NOTE_TYPES, tabs, session, teams, leagues, games) {
+    '$q', '$scope', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    function controller($q, $scope, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
         $scope.session = session;
-
-        $scope.tabs = tabs;
 
         $scope.todaysDate = Date.now();
 
@@ -93,7 +92,6 @@ Info.controller('Coach.Game.Info.controller', [
         }
 
         $scope.setTabHeadings = function() {
-            console.log($scope.teams);
             $scope.headings.opposingTeam = $scope.teams[$scope.data.game.opposingTeamId].name || 'Opposing Team';
             if (games.isRegular($scope.data.game)) {
                 $scope.headings.yourTeam = $scope.teams[session.currentUser.currentRole.teamId].name || 'Team';
@@ -105,17 +103,13 @@ Info.controller('Coach.Game.Info.controller', [
         //Headings
         if ($scope.data.game.id) {
             $scope.setTabHeadings();
+            $scope.tabs.activateAll();
         }
 
         //watches
         //TODO, we really need to not do this
         $scope.$watch('data.game', function(game) {
             $scope.isHomeGame = $scope.data.game.isHomeGame == 'true' ? true : false;
-        });
-
-        $scope.$watch('formGameInfo.$invalid', function(invalid) {
-            tabs['your-team'].disabled = invalid;
-            tabs['scouting-team'].disabled = invalid;
         });
 
         //Save functionality
@@ -219,20 +213,21 @@ Info.controller('Coach.Game.Info.controller', [
 
 
         $scope.goToRoster = function() {
+            $scope.tabs.deactivateAll();
 
             if (games.isRegular($scope.data.game)) {
-                tabs.activateTab('your-team');
+                $scope.tabs.team.active = true;
             } else {
-                tabs.activateTab('scouting-team');
+                $scope.tabs.scouting.active = true;
             }
             $scope.setTabHeadings();
 
         };
 
-        $scope.$watch('formGameInfo.$invalid', function(invalid) {
-            tabs['your-team'].disabled = invalid;
-            tabs['scouting-team'].disabled = invalid;
-        });
+//        $scope.$watch('formGameInfo.$invalid', function(invalid) {
+//            tabs['your-team'].disabled = invalid;
+//            tabs['scouting-team'].disabled = invalid;
+//        });
 
     }
 ]);

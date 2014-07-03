@@ -44,7 +44,8 @@ OpposingTeam.directive('krossoverCoachGameOpposingTeam', [
             scope: {
                 opposingTeamRoster: '=?',
                 game: '=?',
-                data: '='
+                data: '=',
+                tabs: '='
             }
         };
 
@@ -59,9 +60,8 @@ OpposingTeam.directive('krossoverCoachGameOpposingTeam', [
  * @type {controller}
  */
 OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'Coach.Game.Tabs',  'GamesFactory', 'PlayersFactory',
-    function controller(config, $rootScope, $scope, $state, $localStorage, $http, tabs, games, players) {
-        $scope.tabs = tabs;
+    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'PlayersFactory',
+    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, players) {
         $scope.config = config;
 
         //Collections
@@ -79,20 +79,6 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
             }
         });
 
-        $scope.$watch('validation.opposingTeam', function(valid) {
-            if (valid) {
-                tabs.instructions.disabled = false;
-            } else {
-                tabs.instructions.disabled = true;
-            }
-        });
-
-        $scope.$watch('tabs["opposing-team"].disabled', function(disabled) {
-            if (disabled) {
-                tabs.instructions.disabled = disabled;
-            }
-        });
-
         $scope.save = function() {
 
             angular.forEach($scope.data.gamePlayerLists[$scope.data.game.opposingTeamId], function(player) {
@@ -107,7 +93,8 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
                 });
             });
 
-            tabs.activateTab('instructions');
+            $scope.tabs.deactivateAll();
+            $scope.tabs.confirm.active = true;
         };
 
     }

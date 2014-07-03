@@ -42,7 +42,8 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
             controller: 'Coach.Game.YourTeam.controller',
 
             scope: {
-                data: '='
+                data: '=',
+                tabs: '='
             }
         };
 
@@ -56,10 +57,8 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
  * @type {controller}
  */
 YourTeam.controller('Coach.Game.YourTeam.controller', [
-    '$scope', '$state', '$localStorage', 'Coach.Game.Tabs', 'PlayersFactory', 'TeamsFactory',
-    function controller($scope, $state, $localStorage, tabs, players, teams) {
-        $scope.tabs = tabs;
-
+    '$scope', '$state', '$localStorage', 'PlayersFactory', 'TeamsFactory',
+    function controller($scope, $state, $localStorage, players, teams) {
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
 
@@ -97,11 +96,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
             });
         };
 
-
-        $scope.$watch('tabs["your-team"].disabled', function(disabled) {
-            tabs['opposing-team'].disabled = disabled;
-        });
-
         $scope.save = function() {
 
             angular.forEach($scope.gameRoster, function(player) {
@@ -115,7 +109,8 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
                 });
 
-                tabs.activateTab('opposing-team');
+                $scope.tabs.deactivateAll();
+                $scope.tabs.opposing.active = true;
             });
 
         };
