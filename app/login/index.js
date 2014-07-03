@@ -54,8 +54,8 @@ Login.config([
                 },
 
                 onEnter: [
-                    '$state', 'AuthenticationService', 'SessionService',
-                    function($state, auth, session) {
+                    '$state', 'ROLES', 'AuthenticationService', 'SessionService',
+                    function($state, ROLES, auth, session) {
 
                         if (auth.isLoggedIn) {
 
@@ -72,7 +72,28 @@ Login.config([
 
                             } else {
 
-                                $state.go('contact-info');
+                                /* If the current user is a super admin or an admin. */
+                                if (currentUser.is(ROLES.SUPER_ADMIN) || currentUser.is(ROLES.ADMIN)) {
+
+                                    $state.go('users');
+                                }
+
+                                /* If the current user is an indexer. */
+                                else if (currentUser.is(ROLES.INDEXER)) {
+
+                                    $state.go('indexer-games');
+                                }
+
+                                /* If the current user is a coach or an athlete. */
+                                else if (currentUser.is(ROLES.COACH) || currentUser.is(ROLES.ATHLETE)) {
+
+                                    $state.go('Coach.FilmHome');
+                                }
+
+                                else {
+
+                                    $state.go('contact-info');
+                                }
                             }
                         }
                     }
@@ -141,8 +162,8 @@ Login.config([
  * @type {Controller}
  */
 Login.controller('LoginController', [
-    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'AuthenticationService', 'SessionService',
-    function controller(config, $rootScope, $scope, $state, $stateParams, $window, auth, session) {
+    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService',
+    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session) {
 
         $scope.config = config;
 
@@ -179,7 +200,28 @@ Login.controller('LoginController', [
 
                     } else {
 
-                        $state.go('contact-info');
+                        /* If the user is a super admin or an admin. */
+                        if (user.is(ROLES.SUPER_ADMIN) || user.is(ROLES.ADMIN)) {
+
+                            $state.go('users');
+                        }
+
+                        /* If the user is an indexer. */
+                        else if (user.is(ROLES.INDEXER)) {
+
+                            $state.go('indexer-games');
+                        }
+
+                        /* If the user is a coach or an athlete. */
+                        else if (user.is(ROLES.COACH) || user.is(ROLES.ATHLETE)) {
+
+                            $state.go('Coach.FilmHome');
+                        }
+
+                        else {
+
+                            $state.go('contact-info');
+                        }
                     }
 
                     user.lastAccessed = new Date().toISOString();
