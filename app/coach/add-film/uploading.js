@@ -81,6 +81,11 @@ UploadingFilm.controller('UploadingFilmController', [
 
         $scope.tabs = tabs;
 
+//        tabs['game-info']     = { active: true, disabled: false };
+//        tabs['your-team']     = { active: false, disabled: true };
+//        tabs['opposing-team'] = { active: false, disabled: true };
+//        tabs.instructions     = { active: false, disabled: true };
+
         var deleteVideo = function() {
 
             var game = $scope.game;
@@ -123,6 +128,12 @@ UploadingFilm.controller('UploadingFilmController', [
 
             $scope.$apply();
         });
+
+        $scope.headings = {
+            opposingTeam: 'Opposing Team',
+            yourTeam: 'Team',
+            scoutingTeam: 'Scouting'
+        };
     }
 ]);
 

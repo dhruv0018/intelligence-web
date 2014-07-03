@@ -44,7 +44,7 @@ Info.directive('krossoverCoachGameInfo', [
             controller: 'Coach.Game.Info.controller',
 
             scope: {
-
+                headings: '=',
                 data: '='
             }
         };
@@ -92,10 +92,20 @@ Info.controller('Coach.Game.Info.controller', [
             };
         }
 
+        $scope.setTabHeadings = function() {
+            console.log($scope.teams);
+            $scope.headings.opposingTeam = $scope.teams[$scope.data.game.opposingTeamId].name || 'Opposing Team';
+            if (games.isRegular($scope.data.game)) {
+                $scope.headings.yourTeam = $scope.teams[session.currentUser.currentRole.teamId].name || 'Team';
+            } else {
+                $scope.headings.scoutingTeam = $scope.teams[$scope.data.game.teamId].name || 'Scouting Team';
+            }
+        };
 
         //Headings
-        //$scope.setHeadings();
-
+        if ($scope.data.game.id) {
+            $scope.setTabHeadings();
+        }
 
         //watches
         //TODO, we really need to not do this
@@ -160,6 +170,9 @@ Info.controller('Coach.Game.Info.controller', [
                 $scope.data.game.rosters[promisedData.opposing.id] = {};
 
                 return games.extend($scope.data.game).save().then(function(game) {
+                    console.log($scope.data.games.getCollection());
+                    console.log($scope.data.teams.getCollection());
+                    console.log(game);
                     $scope.data.game = game;
                     $scope.data.gamePlayerLists = {};
                     $scope.data.gamePlayerLists[promisedData.opposing.id] = [];
@@ -212,16 +225,8 @@ Info.controller('Coach.Game.Info.controller', [
             } else {
                 tabs.activateTab('scouting-team');
             }
+            $scope.setTabHeadings();
 
-        };
-
-        $scope.setHeadings = function() {
-            $scope.data.headings.opposingTeam = $scope.teams[$scope.data.game.opposingTeamId].name || 'Opposing Team';
-            if (games.isRegular($scope.data.game)) {
-                $scope.data.headings.team = $scope.teams[$scope.data.game.teamId].name || 'Team';
-            } else {
-                $scope.data.headings.scoutingTeam = $scope.teams[$scope.data.game.teamId].name || 'Team';
-            }
         };
 
         $scope.$watch('formGameInfo.$invalid', function(invalid) {

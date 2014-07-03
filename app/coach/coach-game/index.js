@@ -155,6 +155,14 @@ Game.controller('Coach.Game.controller', [
 
         $scope.tabs = tabs;
 
+        $scope.gameTabs = {
+            info: true,
+            scouting: false,
+            opposing: false,
+            team: false,
+            confirm: false
+        };
+
 //        $scope.game = $scope.game || {};
     }
 ]);
