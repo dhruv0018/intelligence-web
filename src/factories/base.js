@@ -254,6 +254,19 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
+             * Unloads resources.
+             * @param {Object} [filter] - an object hash of filter parameters.
+             */
+            unload: function(filter) {
+
+                var self = this;
+
+                var key = String(JSON.stringify(filter));
+
+                delete self.storage.loads[key];
+            },
+
+            /**
              * Saves a resources to the server.
              * @param {Resource} resource - a resource.
              * @param {Function} success - called upon success.
