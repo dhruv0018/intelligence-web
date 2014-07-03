@@ -21,6 +21,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 var self = this;
 
                 player.rosterIds = [rosterId];
+                delete player.resource;
+                delete player.storage;
 
                 if (player.id) {
                     return self.resource.update(player).$promise;
@@ -43,8 +45,12 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 var filter = { roster: rosterId };
 
                 var currentPlayers = players.filter(function(player) {
-
                     return player.id;
+                }).map(function(player) {
+                    delete player.resource;
+                    delete player.storage;
+
+                    return player;
                 });
 
                 var newPlayers = players.filter(function(player) {
@@ -53,6 +59,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 });
 
                 newPlayers = newPlayers.map(function(player) {
+                    delete player.resource;
+                    delete player.storage;
 
                     player.rosterIds = [rosterId];
 
@@ -73,7 +81,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 return $q.all(allPlayers).then(function() {
 
-                    return self.getList(filter).$promise;
+                    return self.query(filter);
                 });
             },
             resendEmail: function(userId, teamId) {

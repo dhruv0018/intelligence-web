@@ -21,15 +21,13 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                angular.extend(game, self);
+                angular.augment(game, self);
 
-                game.rosters = game.rosters || {};
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
                 return game;
             },
-
             saveNotes: function() {
 
                 var deferred = $q.defer();

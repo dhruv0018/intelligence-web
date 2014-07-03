@@ -41,36 +41,17 @@ GameAreaInformation.config([
 ]);
 
 GameAreaInformation.controller('GameAreaInformationController', [
-    '$scope', '$state', '$modal', 'GAME_STATUSES', 'GamesFactory', 'Coach.Data',
-    function controller($scope, $state, $modal, GAME_STATUSES, games, data) {
-
-        $scope.$watch('game', function(game) {
-
-            if (game) {
-
-                var currentAssignment = game.currentAssignment();
-
-                if (currentAssignment) {
-
-                    $scope.isIndexed = $scope.game.status == GAME_STATUSES.INDEXED.id;
-                    $scope.returnedDate = currentAssignment.timeFinished;
-                }
-            }
-        });
-
+    '$scope', '$state', '$modal',
+    function controller($scope, $state, $modal) {
         $scope.confirmation = function() {
             $modal.open({
-
+                scope: $scope,
                 templateUrl: 'coach/game-area/deleteGame.html',
-                controller: ['$scope', '$state', '$modalInstance', 'GamesFactory', 'Coach.Data', function($scope, $state, $modalInstance, games, data) {
-                    data.then(function(data) {
-                        $scope.game = data.game;
-                    });
-
+                controller: ['$scope', '$state', '$modalInstance', function($scope, $state, $modalInstance) {
                     $scope.deleteGame = function() {
                         $scope.game.isDeleted = true;
 
-                        games.save($scope.game, function() {
+                        $scope.game.save().then(function() {
                             $modalInstance.close();
                             $state.go('Coach.FilmHome');
                         }, function() {

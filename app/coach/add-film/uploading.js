@@ -77,25 +77,9 @@ UploadingFilm.controller('UploadingFilmController', [
     'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'PlayersFactory', 'UploadingFilmTabs', 'Coach.Data',
     function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, players, tabs, data) {
 
-        $scope.$storage = $localStorage;
-
         $scope.games = games;
 
         $scope.tabs = tabs;
-
-        data.then(function(coachData) {
-            $scope.roster = {
-                rosterId: coachData.coachTeam.roster.id,
-                players: players.constructActiveRoster(coachData.roster, coachData.coachTeam.roster.id)
-            };
-
-            $scope.game = data.game;
-        });
-
-        tabs['game-info']     = { active: true, disabled: false };
-        tabs['your-team']     = { active: false, disabled: true };
-        tabs['opposing-team'] = { active: false, disabled: true };
-        tabs.instructions     = { active: false, disabled: true };
 
         var deleteVideo = function() {
 
