@@ -124,9 +124,15 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
             plays.filterPlays({
                 filterId: currentFilter.id
-            }, $scope.resources, function(plays) {
+            }, $scope.resources, function(filteredPlays) {
 
-                $scope.plays = plays[$scope.game.id];
+                filteredPlays[$scope.game.id].forEach(function(play) {
+
+                    /* FIXME: Change to new extend when caching is merged. */
+                    play = plays.extendPlay(play);
+                });
+
+                $scope.plays = filteredPlays[$scope.game.id];
 
                 $scope.resources = {
                     game: $scope.game,
@@ -187,10 +193,9 @@ GameAreaFilm.controller('GameAreaFilmController', [
                         $scope.plays = plays;
 
                         //TODO remove hardcoded exclusion list
-                        $scope.exclusion = [1, 2, 3, 41, 15, 31, 27];
+                        $scope.exclusion = [1];
 
-                        //TODO fix hardcoded filter set id
-                        filtersets.get('1', function(filterset) {
+                        filtersets.get($scope.league.filterSetId, function(filterset) {
                             $scope.playerFilter = {};
                             angular.forEach(filterset.filters, function(filter) {
                                 $scope.filtersetCategories[filter.filterCategoryId].subFilters = $scope.filtersetCategories[filter.filterCategoryId].subFilters || [];

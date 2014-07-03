@@ -80,34 +80,49 @@ Team.service('Coach.Team.Data', [
  * @type {controller}
  */
 Team.controller('Coach.Team.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'config', 'ROLES', 'Coach.Team.Data', 'PlayersFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, config, ROLES, data, players, users) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Team.Data', 'PlayersFactory', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
-
         $scope.config = config;
-        $scope.players = players;
-        $scope.users = users;
+        $scope.playersFactory = players;
+        $scope.usersFactory = users;
         $scope.data = data;
+
+        $scope.filtering = [
+            {type: 'active'},
+            {type: 'inactive'}
+        ];
 
         if (typeof $scope.data.coachData.roster !== 'undefined') {
             $scope.data.roster = $scope.data.coachData.roster;
         }
 
-        $scope.roster = players.constructPositionDropdown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
-        $scope.state = 'Coach.Team.All';
-
-        $scope.$watch('state', function(state) {
-
-            if (state) $state.go(state);
+        alerts.add({
+            type: 'warning',
+            message: 'All game film is automatically shared with Athletes on your active roster. Athletes will always have access to game film where they were on the roster'
         });
 
-        $scope.save = function() {
-            $scope.roster = players.getPositionsFromDowndown($scope.data.roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
 
-            players.save($scope.data.rosterId, $scope.data.roster).then(function(roster) {
-                $scope.roster = players.constructPositionDropdown(roster, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
-                data.roster = roster;
+        angular.forEach($scope.data.roster, function(player) {
+            player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+        });
+
+        $scope.singleSave = function(player) {
+            var tempPlayer = players.getPositionsFromDowndown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+
+            players.singleSave($scope.data.rosterId, tempPlayer).then(function(responsePlayer) {
+                angular.extend(player, player, responsePlayer);
+                player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+
+                if (player.userId) {
+                    if (typeof $scope.data.coachData.users[player.userId] === 'undefined') {
+                        users.get(player.userId, function(user) {
+                            $scope.data.coachData.users[player.userId] = user.id;
+                        });
+                    }
+                }
+
             });
         };
 

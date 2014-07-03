@@ -1,0 +1,71 @@
+@import (reference) "main.less";
+
+.athlete-info {
+  min-height: 650px;
+
+  table{
+    td, th {
+      padding: 5px;
+    }
+  }
+
+  .athlete-status {
+
+    .active{
+      background: @state-success-bg;
+      border: 1px solid @state-success-border;
+      color: @state-success-text;
+      padding: 20px;
+    }
+
+    .inactive{
+      padding: 20px;
+      background: @state-warning-bg;
+      border: 1px solid @state-warning-border;
+      color: @state-warning-text;
+    }
+
+  }
+
+  .profile-image{
+    margin: 15px;
+
+    button {
+      margin-top: 10px;
+    }
+
+    .pull-left;
+  }
+
+  .shaded{
+    padding:20px;
+    background: @content-bg;
+    border: 1px solid @gray-border;
+  }
+
+  .position-list{
+    margin: 10px -10px;
+  }
+
+  .invitation-information{
+    margin-top: 10px;
+  }
+
+  input[type=submit] {
+    margin-top: 10px;
+  }
+
+  .remove-athlete{
+    margin-top:10px;
+  }
+
+  .modal-title{
+    margin-bottom:10px;
+  }
+
+  .jerseyNumber{
+    margin-right: 2px;
+  }
+
+}
+

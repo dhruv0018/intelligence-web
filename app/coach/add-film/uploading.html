@@ -2,7 +2,7 @@
 
     <div class="upload-progress">
 
-        <button class="cancel-upload" data-ng-disabled="!$flow.isUploading()" data-ng-click="cancel()"><i class="icon-remove"></i> Cancel</button>
+        <button class="cancel-upload" data-ng-disabled="!$flow.isUploading()" data-ng-click="cancel()"><i class="icon icon-remove"></i> Cancel</button>
         <x-progressbar class="progressbar progress-striped" data-ng-class="{ active: $flow.isUploading() }" type="{{ complete ? 'success' : 'danger' }}" max="1" value="$flow.progress()"></x-progressbar>
 
     </div>

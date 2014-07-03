@@ -155,6 +155,14 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 game = game || self;
 
+                /* Create a copy of the resource to save to the server. */
+                var copy = angular.copy(game);
+
+                /* Remove known local properties. */
+                delete copy.description;
+                delete copy.resource;
+                delete copy.storage;
+
                 parameters = {};
 
                 success = success || function(game) {
@@ -169,7 +177,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (game.id) {
 
-                    var update = self.resource.update(parameters, game, success, error);
+                    var update = self.resource.update(parameters, copy, success, error);
 
                     return update.$promise.then(function() {
 
@@ -182,7 +190,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 } else {
 
-                    var create = self.resource.create(parameters, game, success, error);
+                    var create = self.resource.create(parameters, copy, success, error);
 
                     return create.$promise.then(function(game) {
 
