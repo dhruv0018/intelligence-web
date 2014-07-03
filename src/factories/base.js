@@ -240,10 +240,12 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var key = JSON.stringify(filter);
+                filter = angular.copy(filter);
+
+                var key = String(JSON.stringify(filter));
 
                 self.storage.loads = self.storage.loads || {};
-                self.storage.loads[key] = self.storage.loads[key] || self.retrieve(filter).then(function() {
+                self.storage.loads[key] = self.storage.loads[key] ||  self.retrieve(filter).then(function() {
 
                     return self;
                 });
