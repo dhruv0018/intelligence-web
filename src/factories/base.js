@@ -80,6 +80,31 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
+             * Creates a new resource.
+             * @return {Resource} - a resource.
+             */
+            create: function(resource) {
+
+                var self = this;
+
+                resource = resource || {};
+
+                delete resource.id;
+
+                /* Create new resource instance. */
+                resource = new self.resource(resource);
+
+                /* Extend the server resource. */
+                resource = self.extend(resource);
+
+                /* Add the resource to storage. */
+                self.storage.list.push(resource);
+                self.storage.collection[resource.id] = resource;
+
+                return self.storage.collection[resource.id];
+            },
+
+            /**
              * Fetches a single resource from the server.
              * @param {Number} id - a resource ID.
              * @param {Function} success - called upon success.
