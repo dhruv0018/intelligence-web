@@ -91,8 +91,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 delete resource.id;
 
+                var Resource = self.resource;
+
                 /* Create new resource instance. */
-                resource = new self.resource(resource);
+                resource = new Resource(resource);
 
                 /* Extend the server resource. */
                 resource = self.extend(resource);
