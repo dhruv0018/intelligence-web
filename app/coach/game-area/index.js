@@ -60,8 +60,8 @@ GameArea.config([
 //            },'
             resolve: {
                 'Coach.Data': [
-                    '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
-                    function($q, $stateParams, players, plays, filtersets, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
+                    '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'TagsetsFactory', 'FiltersetsFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
+                    function($q, $stateParams, players, plays, tagsets, filtersets, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
                         return $q.all(data).then(function(data) {
                             var gamesCollection = data.games.getCollection();
                             var teamsCollection = data.teams.getCollection();
@@ -99,9 +99,12 @@ GameArea.config([
                                 //Filtersets
                                 if (GAME_STATUS_IDS[data.game.status] === 'INDEXED') {
                                     var exclusion = [];
+                                    if (data.league.tagSetId) {
+                                        data.tagsets = tagsets.fetch(data.league.tagSetId);
+                                    }
                                     if (data.league.filterSetId) {
                                         data.filtersetCategories = {};
-                                        filtersets.fetch(data.league.filterSetId, function(filterset) {
+                                        data.filtersets = filtersets.fetch(data.league.filterSetId, function(filterset) {
                                             angular.forEach(filterset.categories, function(filterCategory) {
                                                 //TODO deal with player stuff later
                                                 data.filtersetCategories[filterCategory.id] = filterCategory;
@@ -159,7 +162,7 @@ GameArea.config([
                                     }
                                 }
 
-                                return data;
+                                return $q.all(data);
                             });
 
                         });
