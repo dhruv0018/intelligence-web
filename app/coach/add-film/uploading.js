@@ -28,6 +28,26 @@ UploadingFilm.run([
     }
 ]);
 
+UploadingFilm.config([
+    '$stateProvider', '$urlRouterProvider',
+    function config($stateProvider, $urlRouterProvider) {
+
+        var uploadingFilm = {
+            name: 'uploading-film',
+            parent: 'add-film',
+            url: '',
+            views: {
+                'content@add-film': {
+                    templateUrl: 'coach/add-film/uploading.html',
+                    controller: 'UploadingFilmController'
+                }
+            }
+        };
+
+        $stateProvider.state(uploadingFilm);
+    }
+]);
+
 /**
  * UploadingFilm controller.
  * @module UploadingFilm
