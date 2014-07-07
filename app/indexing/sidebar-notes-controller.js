@@ -65,15 +65,3 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
     }
 ]);
 
-Indexing.filter('secondsToTime', function() {
-    return function(secondsInput) {
-        var floor = window.Math.floor;
-        var minutes = floor(secondsInput / 60);
-        var seconds = floor(secondsInput%60);
-        var output = minutes;
-        output += ':';
-        output += (floor(secondsInput%60) < 10) ? '0' : '';
-        output += seconds;
-        return output;
-    };
-});

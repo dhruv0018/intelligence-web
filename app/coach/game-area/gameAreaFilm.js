@@ -172,7 +172,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
 
         data.then(function(data) {
-            console.log('d', data);
             $scope.game = data.game;
             $scope.team = data.coachTeam;
             $scope.teamId = $scope.team.id;
