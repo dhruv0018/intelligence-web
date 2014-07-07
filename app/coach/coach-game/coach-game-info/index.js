@@ -221,7 +221,7 @@ Info.controller('Coach.Game.Info.controller', [
                 $scope.tabs.scouting.active = true;
             }
             $scope.setTabHeadings();
-
+            $scope.tabs.enableAll();
         };
 
 //        $scope.$watch('formGameInfo.$invalid', function(invalid) {
