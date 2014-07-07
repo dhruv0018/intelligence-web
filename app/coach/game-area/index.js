@@ -60,8 +60,8 @@ GameArea.config([
 //            },'
             resolve: {
                 'Coach.Data': [
-                    '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
-                    function($q, $stateParams, players, plays, filtersets, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
+                    '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'TagsetsFactory', 'FiltersetsFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
+                    function($q, $stateParams, players, plays, tagsets, filtersets, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
                         return $q.all(data).then(function(data) {
                             var gamesCollection = data.games.getCollection();
                             var teamsCollection = data.teams.getCollection();
@@ -71,18 +71,21 @@ GameArea.config([
                             data.game = gamesCollection[$stateParams.id];
                             data.gameStatus = data.game.status;
                             data.gamePlayerLists = {};
+                            data.players = players;
                             data.league = leaguesCollection[teamsCollection[data.game.teamId].leagueId];
 
                             //Player lists
                             var teamPlayerList = players.query({
                                 roster: data.game.rosters[data.game.teamId].id
                             }).then(function(playerList) {
+                                data.teamPlayers = playerList;
                                 data.gamePlayerLists[data.game.teamId] = playerList;
                             });
 
                             var opposingTeamPlayerList = players.query({
                                 roster: data.game.rosters[data.game.opposingTeamId].id
                             }).then(function(playerList) {
+                                data.opposingTeamPlayers = playerList;
                                 data.gamePlayerLists[data.game.opposingTeamId] = playerList;
                             });
 
@@ -96,9 +99,12 @@ GameArea.config([
                                 //Filtersets
                                 if (GAME_STATUS_IDS[data.game.status] === 'INDEXED') {
                                     var exclusion = [];
+                                    if (data.league.tagSetId) {
+                                        data.tagsets = tagsets.fetch(data.league.tagSetId);
+                                    }
                                     if (data.league.filterSetId) {
                                         data.filtersetCategories = {};
-                                        filtersets.fetch(data.league.filterSetId, function(filterset) {
+                                        data.filtersets = filtersets.fetch(data.league.filterSetId, function(filterset) {
                                             angular.forEach(filterset.categories, function(filterCategory) {
                                                 //TODO deal with player stuff later
                                                 data.filtersetCategories[filterCategory.id] = filterCategory;
@@ -156,7 +162,7 @@ GameArea.config([
                                     }
                                 }
 
-                                return data;
+                                return $q.all(data);
                             });
 
                         });
@@ -205,15 +211,14 @@ GameArea.controller('Coach.GameArea.controller', [
 
         //Collections
         $scope.teams = data.teams.getCollection();
-        $scope.team = data.teams[data.game.teamId];
 
         //Player List
         $scope.teamPlayerList = data.gamePlayerLists[data.game.teamId];
         $scope.opposingPlayerList = data.gamePlayerLists[data.game.opposingTeamId];
 
         //Teams
-        $scope.team = data.teams[$scope.game.teamId];
-        $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
+        $scope.team = $scope.teams[$scope.game.teamId];
+        $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
 
         //Plays
         $scope.totalPlays = angular.copy(data.plays);

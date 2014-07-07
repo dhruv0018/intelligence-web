@@ -86,10 +86,12 @@ require('./factories/plans');
 require('./managers/tags');
 require('./managers/play');
 require('./managers/event');
+require('./managers/resource');
 
 require('./directives/alert');
 require('./directives/match');
 require('./directives/form');
+require('./directives/anchor');
 require('./directives/button');
 require('./directives/input');
 require('./directives/submit');

@@ -40,11 +40,14 @@ GameAreaFilm.config([
 ]);
 
 GameAreaFilm.controller('GameAreaFilmController', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory',
-    function controller($scope, $state, $stateParams, games, plays, filtersets) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
+    function controller($scope, $state, $stateParams, games, plays, filtersets, data) {
         $scope.gameId = $state.params.id;
         $scope.filterId = null;
         $scope.teamId = null;
+        $scope.data = data;
+        $scope.leagues = data.leagues.getCollection();
+        $scope.league = $scope.leagues[$scope.team.leagueId];
         $scope.filterCategory = 1;
         $scope.activeFilters = [];
 
@@ -123,9 +126,15 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
             plays.filterPlays({
                 filterId: currentFilter.id
-            }, $scope.resources, function(plays) {
+            }, $scope.resources, function(filteredPlays) {
 
-                $scope.plays = plays[$scope.game.id];
+                filteredPlays[$scope.game.id].forEach(function(play) {
+
+                    /* FIXME: Change to new extend when caching is merged. */
+                    play = plays.extendPlay(play);
+                });
+
+                $scope.plays = filteredPlays[$scope.game.id];
 
                 $scope.resources = {
                     game: $scope.game,

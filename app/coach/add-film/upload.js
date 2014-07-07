@@ -212,4 +212,3 @@ UploadFilm.controller('UploadFilmController', [
         };
     }
 ]);
-

@@ -533,6 +533,19 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
             isRegular: function(game) {
                 return GAME_TYPES[GAME_TYPES_IDS[game.gameType]].type === 'regular';
+            },
+
+            getFormationReport: function() {
+                var self = this;
+                return self.resource.getFormationReport({id: self.id});
+            },
+
+            getDownAndDistanceReport: function(report) {
+                var Resource = this.resource;
+
+                var dndReport = new Resource(report);
+
+                return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
             }
         };
 

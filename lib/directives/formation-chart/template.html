@@ -3,22 +3,22 @@
             <accordion-heading>
                 <div data-ng-class="{'field-header-collapsed': !status.open}" class="field-header">
                     <span class="field-info">
-                        <span>Backfield:</span> {{backfieldFormation}}
+                        <span class="field-info-title">Backfield:</span> {{chart.backfieldFormation}}
                     </span>
                     <span class="field-info">
-                        <span>TEs:</span> {{teStrength}}
+                        <span class="field-info-title">TEs:</span> {{chart.TEStrength}}
                     </span>
                     <span class="field-info">
-                        <span>WRs:</span> {{wrStrength}}
+                        <span class="field-info-title">WRs:</span> {{chart.WRStrength}}
                     </span>
                     <span class="field-info">
-                        <span>{{snaps}}</span> snaps
+                        <span class="field-info-title">{{chart.snaps}}</span> snaps
                     </span>
                     <i class="pull-right icon" data-ng-class="{'icon-chevron-up': status.open, 'icon-chevron-down': !status.open}"></i>
                 </div>
             </accordion-heading>
             <div class="field">
-                <krossover-arena type="FOOTBALL" data-game="game" data-plays="plays" data-team="team" data-league="league"></krossover-arena>
+                <krossover-arena type="FOOTBALL" data-game="game" data-plays="plays" data-team-id="teamId" data-opposing-team-id="opposingTeamId" data-league="league" data-chart="chart" data-redzone="redzone"></krossover-arena>
             </div>
         </accordion-group>
     </div>
