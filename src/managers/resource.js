@@ -24,6 +24,8 @@ IntelligenceWebClient.service('ResourceManager', [
          */
         this.backup = function(resource) {
 
+            if (!resource || !resource.storage) return;
+
             /* Create a backup copy of the resource. */
             var backup = angular.copy(resource);
 
@@ -40,11 +42,16 @@ IntelligenceWebClient.service('ResourceManager', [
          */
         this.reset = function(resource) {
 
-            /* Remove the backup copy of the resource. */
-            this.active.splice(resource.storage.backupIndex, 1);
+            if (!resource || !resource.storage) return;
 
-            /* Remove reference to the backup. */
-            delete resource.storage.backupIndex;
+            if (angular.isNumber(resource.storage.backupIndex)) {
+
+                /* Remove the backup copy of the resource. */
+                this.active.splice(resource.storage.backupIndex, 1);
+
+                /* Remove reference to the backup. */
+                delete resource.storage.backupIndex;
+            }
         };
 
         /**
