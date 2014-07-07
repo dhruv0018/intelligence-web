@@ -27,6 +27,7 @@ Indexing.controller('Indexing.Main.Controller', [
         /* Scope */
 
 
+        $scope.data = data;
         $scope.tags = tags;
         $scope.play = play;
         $scope.event = event;
