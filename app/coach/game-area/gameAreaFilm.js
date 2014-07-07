@@ -45,6 +45,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
         $scope.gameId = $state.params.id;
         $scope.filterId = null;
         $scope.teamId = null;
+        $scope.data = data;
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
         $scope.filterCategory = 1;
