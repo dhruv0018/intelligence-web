@@ -78,6 +78,60 @@ GameAreaDownDistance.controller('GameAreaDownDistanceController', [
         $scope.team = data.data.team;
         $scope.teams = data.data.teams;
         $scope.teamId = $scope.game.teamId;
+        $scope.opposingTeamId = $scope.game.opposingTeamId;
+
+        $scope.options = {
+            'distance': {
+                'Any': undefined,
+                'Short': 'short',
+                'Medium': 'medium',
+                'Long': 'long'
+            },
+            'weight': {
+                'Any': undefined,
+                'Left': 'Left',
+                'Right': 'Right',
+                'Balanced': 'Balanced'
+            },
+            'down': {
+                'Any': undefined,
+                '1st': '1st',
+                '2nd': '2nd',
+                '3rd': '3rd',
+                '4th': '4th',
+            },
+            'hash': {
+                'Any': undefined,
+                'Left': 'Left',
+                'Right': 'Right',
+                'Middle': 'Middle'
+            }
+        };
+
+        $scope.dndReport = {
+            gameId: $scope.game.id,
+            distance: $scope.options.distance[0],
+            strength: $scope.options.weight[0],
+            redZone: false,
+            hash: $scope.options.hash[0],
+            down: $scope.options.down[0]
+        };
+
+
+        $scope.createDownAndDistanceReport = function() {
+            $scope.dndReport.teamId = $scope.teamId;
+
+            if ($scope.dndReport.redZone === 'true') {
+                $scope.dndReport.redZone = true;
+            } else {
+                $scope.dndReport.redZone = false;
+            }
+
+            games.getDownAndDistanceReport($scope.dndReport).then(function(dndReport) {
+                $scope.game.dndReport = dndReport;
+            });
+
+        };
     }
 ]);
 

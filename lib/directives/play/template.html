@@ -1,5 +1,4 @@
 <accordion-group data-is-open="isOpen" data-is-disabled="expandAll" class="play" data-ng-class="{ active: play.id == currentPlayId }" data-ng-click="selectPlay(play)">
-
     <accordion-heading>
         <h4 data-ng-if="currentUser.is(INDEXER)" data-ng-class="{'playCollapsed': !isOpen}">
             <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
