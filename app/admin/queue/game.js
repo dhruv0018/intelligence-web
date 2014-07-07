@@ -136,6 +136,7 @@ Game.controller('GameController', [
 
         var gameId = $stateParams.id;
 
+        $scope.data = data;
         $scope.game = data.games.get(gameId);
         $scope.team = data.teams.get($scope.game.teamId);
         $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
