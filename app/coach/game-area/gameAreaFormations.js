@@ -60,7 +60,7 @@ GameAreaFormations.controller('GameAreaFormationsController', [
         $scope.opposingTeamId = $scope.game.opposingTeamId;
         $scope.report = data.formationReport;
 
-        console.log($scope.team);
+        console.log($scope.plays);
 
         $scope.redzone = 'false';
         $scope.$watch('redzone', function(redzone) {
