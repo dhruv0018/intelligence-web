@@ -14,8 +14,8 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.User.Roles.Controller', [
-    '$scope', 'ROLES', 'Users.User.Service', 'UsersFactory',
-    function controller($scope, ROLES, user, users) {
+    '$scope', 'ROLES', 'UsersFactory',
+    function controller($scope, ROLES, users) {
 
         $scope.addNewRole = function(newRole) {
 

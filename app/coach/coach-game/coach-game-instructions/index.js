@@ -42,8 +42,7 @@ Instructions.directive('krossoverCoachGameInstructions', [
             controller: 'Coach.Game.Instructions.controller',
 
             scope: {
-
-                game: '=?'
+                data: '='
             }
         };
 
@@ -57,15 +56,26 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', '$localStorage', 'GAME_STATUSES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'GamesFactory',
-    function controller($scope, $state, $localStorage, GAME_STATUSES, tabs, data, games) {
-
+    '$scope', '$state', '$localStorage', 'GAME_STATUSES', 'Coach.Game.Tabs', 'GamesFactory',
+    function controller($scope, $state, $localStorage, GAME_STATUSES, tabs, games) {
         $scope.GAME_STATUSES = GAME_STATUSES;
 
-        $scope.data = data;
+        $scope.$watch('data.game', function(game) {
+            if (typeof game !== 'undefined' && typeof game.status !== 'undefined' && game.status !== null) {
+                $scope.statusBuffer = game.status;
+            } else {
+                $scope.statusBuffer = -1;
+            }
+
+        });
+
+        $scope.switchChoice = function() {
+            $scope.statusBuffer = ($scope.data.game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
+        };
 
         $scope.save = function() {
-            games.save($scope.game);
+            $scope.data.game.status = $scope.statusBuffer;
+            $scope.data.game.save();
         };
     }
 ]);

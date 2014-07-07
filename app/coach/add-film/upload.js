@@ -147,17 +147,15 @@ UploadFilm.controller('UploadFilmController', [
                     console.log('KVS GUID: ' + guid);
 
                     /* Store the GUID with the game. */
-                    $scope.game.datePlayed = new Date();
+                    coachData.game.datePlayed = new Date();
 
-                    $scope.game.video = {
+                    coachData.game.video = {
                         guid: guid
                     };
 
-                    if (games.isRegular($scope.game)) {
-                        $scope.game.isHomeGame = 'true';
+                    if (games.isRegular(coachData.game)) {
+                        coachData.isHomeGame = 'true';
                     }
-
-                    coachData.game = $scope.game;
 
                     /* Set the KVS target to include the GUID. */
                     $scope.$flow.opts.target = config.kvs.uri + 'upload/part/' + guid;
@@ -197,4 +195,3 @@ UploadFilm.controller('UploadFilmController', [
         };
     }
 ]);
-

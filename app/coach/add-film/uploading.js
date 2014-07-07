@@ -77,25 +77,9 @@ UploadingFilm.controller('UploadingFilmController', [
     'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'PlayersFactory', 'UploadingFilmTabs', 'Coach.Data',
     function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, players, tabs, data) {
 
-        $scope.$storage = $localStorage;
-
         $scope.games = games;
 
         $scope.tabs = tabs;
-
-        data.then(function(coachData) {
-            $scope.roster = {
-                rosterId: coachData.coachTeam.roster.id,
-                players: players.constructActiveRoster(coachData.roster, coachData.coachTeam.roster.id)
-            };
-
-            $scope.game = data.game;
-        });
-
-        tabs['game-info']     = { active: true, disabled: false };
-        tabs['your-team']     = { active: false, disabled: true };
-        tabs['opposing-team'] = { active: false, disabled: true };
-        tabs.instructions     = { active: false, disabled: true };
 
         var deleteVideo = function() {
 
@@ -103,12 +87,30 @@ UploadingFilm.controller('UploadingFilmController', [
 
             if (game && game.video && game.video.guid) {
 
-                /* Send DELETE request to KVS. */
-                $http.delete(config.kvs.uri + 'upload/' + game.video.guid)
+                var url = config.api.uri + 'upload-server';
+
+                /* Request the upload URL for KVS. */
+                $http.get(url)
+
+                .success(function(response) {
+
+                    /* Get KVS url from the response. */
+                    var kvsUrl = response.url;
+
+                    /* Send DELETE request to KVS. */
+                    $http.delete(kvsUrl + '/upload/' + game.video.guid)
+
+                    .error(function() {
+
+                        throw new Error('Problem deleting canceled video from KVS');
+                    });
+                })
 
                 .error(function() {
 
-                    throw new Error('Problem deleting canceled video from KVS');
+                    $scope.uploading = false;
+
+                    throw new Error('Request for KVS URL failed');
                 });
             }
         };

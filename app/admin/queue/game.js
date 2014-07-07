@@ -24,6 +24,29 @@ Game.run([
 ]);
 
 /**
+ * Admin Game data dependencies.
+ * @module Game
+ * @type {service}
+ */
+Game.service('Admin.Game.Data.Dependencies', [
+    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(ROLE_TYPE, sports, leagues, schools, teams, games, users) {
+
+        var Data = {
+
+            sports: sports.load(),
+            leagues: leagues.load(),
+            schools: schools.load(),
+            teams: teams.load(),
+            games: games.load(),
+            users: users.load(),
+        };
+
+        return Data;
+    }
+]);
+
+/**
  * Game page state router.
  * @module Game
  * @type {UI-Router}
@@ -41,10 +64,54 @@ Game.config([
                     templateUrl: 'game.html',
                     controller: 'GameController'
                 }
-            }
+            },
+            resolve: {
+                'Admin.Game.Data': [
+                    '$q', 'Admin.Game.Data.Dependencies',
+                    function($q, data) {
+                        return $q.all(data);
+                    }
+                ]
+            },
+            onEnter: [
+                '$stateParams', 'GAME_STATUSES', 'AlertsService', 'Admin.Game.Data',
+                function($stateParams, GAME_STATUSES, alerts, data) {
+
+                    var gameId = $stateParams.id;
+
+                    var game = data.games.get(gameId);
+
+                    alerts.add({
+                        type: game.status == GAME_STATUSES.INDEXED.id ? 'success' : 'warning',
+                        message: game.getStatus()
+                    });
+                }
+            ]
         };
 
         $stateProvider.state(game);
+    }
+]);
+
+/**
+ * Modal controller. Controls the modal views.
+ * @module Game
+ * @name ModalController
+ * @type {Controller}
+ */
+Game.controller('ModalController', [
+    '$rootScope', '$scope', '$state', '$modal', '$modalInstance', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $modal, $modalInstance, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users) {
+
+        $scope.ok = function() {
+
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function() {
+
+            $modalInstance.dismiss('cancel');
+        };
     }
 ]);
 
@@ -55,62 +122,33 @@ Game.config([
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'AlertsService', 'UsersFactory', 'GamesFactory', 'SchoolsFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal',
-    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  alerts, users, games, schools, teams, sports, leagues, RawFilmModal, DeleteGameModal, SelectIndexerModal) {
+    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal',
+    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
         $scope.GAME_NOTE_TYPES = GAME_NOTE_TYPES;
 
-        var gameId = $stateParams.id;
         $scope.DeleteGameModal = DeleteGameModal;
         $scope.RawFilmModal = RawFilmModal;
         $scope.SelectIndexerModal = SelectIndexerModal;
 
-        games.get(gameId, function(game) {
+        var gameId = $stateParams.id;
 
-            $scope.game = game;
+        $scope.game = data.games.get(gameId);
+        $scope.team = data.teams.get($scope.game.teamId);
+        $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
+        $scope.league = data.leagues.get($scope.team.leagueId);
+        $scope.sport = data.sports.get($scope.league.sportId);
+        $scope.school = data.schools.get($scope.team.schoolId);
+        $scope.users = data.users.getList();
 
-            var status = game.getStatus();
+        var headCoachRole = $scope.team.getHeadCoachRole();
 
-            alerts.add({
-                type: status.type,
-                message: status.name
-            });
+        if (headCoachRole) {
 
-            teams.get(game.teamId, function(team) {
-
-                $scope.teamName = team.name;
-
-                leagues.get(team.leagueId, function(league) {
-
-                    $scope.sport = sports.get(league.sportId);
-                });
-
-                schools.get(team.schoolId, function(school) {
-
-                    $scope.school = school;
-                });
-
-                var headCoachRole = team.getHeadCoachRole();
-
-                if (headCoachRole) {
-
-                    users.get(headCoachRole.userId, function(user) {
-
-                        $scope.headCoach = user;
-                    });
-                }
-
-            });
-
-            teams.get(game.opposingTeamId, function(team) {
-
-                $scope.opposingTeamName = team.name;
-            });
-        });
-
-        users.getList(function(users) { $scope.users = users; }, null, true);
+            $scope.headCoach = data.users.get(headCoachRole.userId);
+        }
     }
 ]);

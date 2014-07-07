@@ -47,20 +47,20 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
 
             var newIndexingNote = {
                 content: noteValueToSave,
-                gameId: $scope.indexing.game.id,
+                gameId: $scope.game.id,
                 noteTypeId: GAME_NOTE_TYPES.INDEXER_NOTE,
                 gameTime: $scope.currentTimestamp
             };
 
-            $scope.indexing.game.notes = $scope.indexing.game.notes || {};
-            $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] = $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] || [];
-            $scope.indexing.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE].push(newIndexingNote);
+            $scope.game.notes = $scope.game.notes || {};
+            $scope.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] = $scope.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] || [];
+            $scope.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE].push(newIndexingNote);
 
             //there is still a race condition bug here that if the user clicks send to qa
             //or back button the game will be saved to the server again with
             //the notes still not having id's and the notes will be created twice
             //the following code would need to be atomic to prevent that from happening
-            $scope.indexing.game.saveNotes();
+            $scope.game.saveNotes();
         };
     }
 ]);

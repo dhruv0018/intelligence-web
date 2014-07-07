@@ -17,11 +17,12 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$rootScope', '$scope', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
-    function controller(config, $rootScope, $scope, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar) {
+    'config', '$rootScope', '$scope', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data',
+    function controller(config, $rootScope, $scope, $stateParams, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar, data) {
 
         var self = this;
 
+        var gameId = $stateParams.id;
 
         /* Scope */
 
@@ -31,15 +32,15 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.event = event;
         $scope.sidebar = sidebar;
         $scope.indexing = indexing;
+        $scope.game = data.games.get(gameId);
+        $scope.team = data.teams.get($scope.game.teamId);
+        $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
+        $scope.league = data.leagues.get($scope.team.leagueId);
+        $scope.tagset = data.tagsets.get($scope.league.tagSetId);
+
+
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
-        $scope.sources = indexing.game.video.sources;
-
-        if (!indexing.game.isAssignmentStarted()) {
-
-            var userId = session.currentUser.id;
-            indexing.game.startAssignment(userId);
-            indexing.game.save();
-        }
+        $scope.sources = $scope.game.getVideoSources();
 
 
         /* Bind keys. */
@@ -147,6 +148,11 @@ Indexing.controller('Indexing.Main.Controller', [
             indexing.showScript = false;
             indexing.eventSelected = false;
             $scope.VideoPlayer.pause();
+
+            tags.reset($scope.tagset);
+            event.reset($scope.tagset);
+            play.reset(gameId);
+            play.clear();
         };
 
         /**
@@ -171,8 +177,7 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.savable = function() {
 
-            return indexing.eventSelected ||
-                   indexing.isEndEvent(event.current);
+            return indexing.eventSelected || event.isEndEvent();
         };
 
         /**
@@ -218,7 +223,7 @@ Indexing.controller('Indexing.Main.Controller', [
             var tagId = event.current.tag.id;
 
             /* Get the next set of tags based on the tag in the current event. */
-            tags.current = indexing.getNextTags(tagId);
+            tags.current = $scope.tagset.getNextTags(tagId);
 
             /* Snap video back to time of current event. */
             $scope.VideoPlayer.seekTime(event.current.time);

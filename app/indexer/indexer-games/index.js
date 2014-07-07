@@ -39,7 +39,7 @@ Games.config([
                 },
                 resolve: {
                     'Indexer.Games.Data': [
-                        '$q', 'Indexer.Games.Data',
+                        '$q', 'Indexer.Games.Data.Dependencies',
                         function($q, data) {
                             return $q.all(data);
                         }
@@ -55,50 +55,27 @@ Games.config([
  * @name Service
  * @type {Service}
  */
-Games.service('Indexer.Games.Data', [
-    '$q', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory','SessionService', 'Base.Data',
-    function($q, users, games, teams, leagues, session, data) {
-        var promisedGames = $q.defer();
-        var promisedUsers = $q.defer();
-        var promisedTeams = $q.defer();
-        var promisedLeagues = $q.defer();
+Games.service('Indexer.Games.Data.Dependencies', [
+    '$q', 'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory',
+    function($q, session, users, games, teams, leagues, sports) {
 
         var currentUser = session.currentUser;
 
-        games.getList({
-            indexerFirstName: currentUser.firstName,
-            indexerLastName: currentUser.lastName
-        }, function(indexerGames) {
-            var filteredGames = indexerGames.filter(function(game) {
-                return game.isAssignedToUser(currentUser.id);
-            });
-            promisedGames.resolve(filteredGames);
-        });
+        var Data = {
 
-        users.getList({
-        }, function(users) {
-            promisedUsers.resolve(users);
-        }, null, true);
+            sports: sports.load(),
+            leagues: leagues.load(),
+            teams: teams.load(),
+            users: users.load(),
+            games: games.load({
 
-        teams.getList({
-        }, function(teams) {
-            promisedTeams.resolve(teams);
-        }, null, true);
-
-        leagues.getList({
-        }, function(leauges) {
-            promisedLeagues.resolve(leauges);
-        }, null, true);
-
-        var promises = {
-            users: promisedUsers.promise,
-            teams: promisedTeams.promise,
-            leagues: promisedLeagues.promise,
-            games: promisedGames.promise,
-            sports: data.sports
+                indexerFirstName: currentUser.firstName,
+                indexerLastName: currentUser.lastName
+            })
         };
 
-        return promises;
+        return Data;
+
     }
 ]);
 
@@ -114,12 +91,38 @@ Games.controller('indexer-games.Controller', [
     '$scope', '$state', '$localStorage', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'SessionService', 'Indexer.Games.Data',
     function controller($scope, $state, $localStorage, GAME_TYPES, teams, leagues, games, session, data) {
 
-        $scope.currentUser = session.currentUser;
-        $scope.data = data;
-        $scope.moment = moment;
+        $scope.sports = data.sports.getCollection();
+        $scope.leagues = data.leagues.getCollection();
+        $scope.teams = data.teams.getCollection();
+        $scope.users = data.users.getCollection();
 
-        angular.forEach($scope.data.games, function(game) {
-            game.timeLeft = new Date(game.currentAssignment().deadline) - new Date();
+        $scope.games = data.games.getList().filter(function(game) {
+
+            return game.isAssignedToUser(session.currentUser.id);
+
+        }).map(function(game) {
+
+            var currentAssignment = game.currentAssignment();
+
+            if (currentAssignment) {
+
+                var now = new Date();
+                var deadline = new Date(currentAssignment.deadline);
+
+                var timeLeft = deadline - now;
+
+                if (timeLeft < 0) {
+
+                    game.timeLeft = 'None';
+                }
+
+                else {
+
+                    game.timeLeft = moment.duration(timeLeft, 'milliseconds').humanize();
+                }
+            }
+
+            return game;
         });
     }
 ]);

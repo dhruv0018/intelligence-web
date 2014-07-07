@@ -1,8 +1,5 @@
 {
     "name": "login",
-    "images": [
-        "krossover-login-logo-320.png"
-    ],
     "templates": [
         "template.html",
         "signup.html",

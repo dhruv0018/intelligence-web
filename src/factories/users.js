@@ -6,16 +6,18 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$rootScope', 'UsersResource', 'ROLE_TYPE', 'ROLES',
-    function($rootScope, UsersResource, ROLE_TYPE, ROLES) {
+    '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'ROLE_TYPE', 'ROLES',
+    function($rootScope, UsersResource, UsersStorage, BaseFactory, ROLE_TYPE, ROLES) {
 
         var UsersFactory = {
 
+            description: 'users',
+
+            storage: UsersStorage,
+
             resource: UsersResource,
 
-            list: [],
-
-            extendUser: function(user) {
+            extend: function(user) {
 
                 var self = this;
 
@@ -50,91 +52,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                 }
 
                 return user;
-            },
-
-            get: function(id, success, error) {
-
-                var self = this;
-
-                var callback = function(user) {
-
-                    user = self.extendUser(user);
-
-                    return success ? success(user) : user;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not get user');
-                };
-
-                return self.resource.get({ id: id }, callback, error);
-            },
-
-            getList: function(filter, success, error, index) {
-
-                var self = this;
-
-                if (angular.isFunction(filter)) {
-
-                    index = error;
-                    error = success;
-                    success = filter;
-                    filter = null;
-                }
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || 1000;
-
-                var callback = function(users) {
-
-                    var indexedUsers = {};
-
-                    users.forEach(function(user) {
-
-                        user = self.extendUser(user);
-
-                        indexedUsers[user.id] = user;
-                    });
-
-                    users = index ? indexedUsers : users;
-
-                    return success ? success(users) : users;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load users list');
-                };
-
-                return self.resource.query(filter, callback, error);
-            },
-
-            save: function(user) {
-
-                var self = this;
-
-                user = user || self;
-
-                delete user.list;
-
-                /* User ID's are assigned server side, if it is present that means
-                * the user is present on the server, so update them (PUT).
-                * If not present then this a new user so create them (POST). */
-                if (user.id) {
-
-                    var updateUser = new UsersResource(user);
-                    return updateUser.$update();
-
-                } else {
-
-                    var newUser = new UsersResource(user);
-
-                    newUser.password = 'password';
-
-                    return newUser.$create();
-                }
             },
 
             /**
@@ -300,22 +217,29 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
              * @class User
              * @method
-             * @param {Object} match - the role object to match.
+             * @param {Object} matches - the role object(s) to match.
              * @returns {Boolean} true if a match is found; false otherwise.
              * Checks if any of the users roles for a match to the role given.
              */
-            has: function(match) {
+            has: function(matches) {
 
                 var self = this;
                 var roles = self.roles;
 
                 if (!roles) return false;
-                if (!match) throw new Error('No role to match specified');
+                if (!matches) throw new Error('No role to match specified');
 
-                /* Check all roles for match. */
-                return roles.some(function(role) {
+                /* Treat matches as arrays. */
+                if (!Array.isArray(matches)) matches = [matches];
 
-                    return self.is(role, match);
+                /* Loop through match arrays looking for a match. */
+                return matches.some(function(match) {
+
+                    /* Check all roles for match. */
+                    return roles.some(function(role) {
+
+                        return self.is(role, match);
+                    });
                 });
             },
 
@@ -369,6 +293,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return new Date(user.lastAccessed);
             }
         };
+
+        angular.augment(UsersFactory, BaseFactory);
 
         return UsersFactory;
     }

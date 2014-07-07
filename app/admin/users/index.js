@@ -26,12 +26,33 @@ Users.run([
     }
 ]);
 
+/**
+ * Admin Users Data service.
+ * @module Users
+ * @type {service}
+ */
+Users.service('Admin.Users.Data.Dependencies', [
+    'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
+    function(sports, leagues, teams, users) {
+
+        var Data = {
+
+            sports: sports.load(),
+            leagues: leagues.load(),
+            teams: teams.load(),
+            users: users.load()
+        };
+
+        return Data;
+    }
+]);
+
 /* File dependencies */
 require('./states');
 require('./filters');
 require('./directives');
-require('./user-service');
 require('./user-controller');
+require('./new-user-controller');
 require('./user-info-controller');
 require('./user-roles-controller');
 require('./users-controller');

@@ -1,0 +1,126 @@
+<div class="athlete-info">
+
+    <header class="modal-header">
+
+        <h3 class="modal-title">
+
+            <div data-ng-if="!athlete.firstName">
+                <p class="pull-left">Add a new player to your roster</p>
+                <a class="pull-right" data-ng-click="cancel()">
+                    <i class="icon icon-remove"></i>
+                </a>
+            </div>
+
+            <div data-ng-if="athlete.firstName">
+                <p class="pull-left">
+                    <span>
+                        <span class="jerseyNumber">{{athlete.jerseyNumbers[rosterId]}}</span>
+                        {{athlete.firstName}}
+                        {{athlete.lastName[0]}}.
+                    </span>
+                    <a href> (View Stats) </a>
+                </p>
+                <div class="pull-right">
+                    <span data-ng-if="users[athlete.userId].lastAccessed">{{usersFactory.getLastAccessed(users[athlete.userId]) | date: 'mediumDate'}}</span>
+
+                    <a data-ng-click="cancel()">
+                        <i class="icon icon-remove"></i>
+                    </a>
+                </div>
+
+            </div>
+
+        </h3>
+
+    </header>
+
+    <div class="modal-body">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="athlete-status col-md-12">
+                    <div class="inactive" data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed">
+                        <strong>This player has not yet activated their account with Krossover.</strong> Once they activate their account you will no longer be able to edit their name and email address.
+                        <a data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-click="playersFactory.resendEmail(athlete.userId, team.id)">Resend Invitation</a>
+                    </div>
+                    <div class="active" data-ng-if="athlete.userId && users[athlete.userId].lastAccessed">
+                        This player has activated their account with Krossover. You can no longer edit certain items, which the player will now be responsible to edit.
+                    </div>
+                </div>
+
+                <form name="athleteForm">
+
+                    <div class="row form-group">
+                        <div class="profile-image col-md-3">
+                            <profile-placeholder></profile-placeholder>
+                            <button class="btn btn-default">
+                                Change Image
+                            </button>
+                        </div>
+                        <div class="col-md-8">
+                            <table class="col-md-12">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Jersey Number</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td><input class="name" placeholder="First Name" data-ng-model="athlete.firstName" required></td>
+                                    <td><input class="name" placeholder="Last Name" data-ng-model="athlete.lastName" required></td>
+                                    <td><input size="3" data-ng-model="athlete.jerseyNumbers[rosterId]" required></td>
+                                </tr>
+                            </table>
+                            <div class="col-md-12 position-list">
+                                <strong>*Position</strong>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <data-positions-dropdown data-player="athlete" data-positions="positions"></data-positions-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 shaded">
+                                <p class="col-md-12">
+                                    <strong>Player access: </strong> If you want this player to have access to Krossover please complete the following. Player access to Krossover will allow you to easily share game film with them.
+                                </p>
+                                <div class="col-md-6">
+                                    <strong>Player's Email</strong>
+                                    <br/>
+                                    <input type="text" data-ng-if="!athlete.userId" data-ng-model="athlete.email" placeholder="Email Address">
+                                    <input type="text" data-ng-if="athlete.userId" data-ng-model="users[athlete.userId].email" placeholder="Email Address">
+                                </div>
+                                <div ng-hide="true" class="col-md-6">
+                                    <strong>Allow player to edit event details</strong>
+                                </div>
+                                <p class="invitation-information col-md-12">
+                                    <i>Once you save this player's information we will send them an invitation to join Krossover.</i>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-primary" value="Save" data-ng-click="savePlayer()">
+                            </div>
+                            <div class="remove-athlete col-md-6">
+                                <a class="pull-right" href data-ng-click="togglePlayer()">
+                                    <span data-ng-if="athlete.id && athlete.rosterStatuses[rosterId] === true"><i class="icon icon-remove"></i> Remove from current roster</span>
+                                    <span data-ng-if="athlete.id && athlete.rosterStatuses[rosterId] === false"><i class="icon icon-add"></i> Add player to current roster</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>

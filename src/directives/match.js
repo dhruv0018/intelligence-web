@@ -8,7 +8,7 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
-var directiveName = 'match';
+var directiveName = 'matchValues';
 
 IntelligenceWebClient.directive(directiveName, [
     '$parse',

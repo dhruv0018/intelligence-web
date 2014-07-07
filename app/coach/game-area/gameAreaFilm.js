@@ -40,12 +40,14 @@ GameAreaFilm.config([
 ]);
 
 GameAreaFilm.controller('GameAreaFilmController', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'GAME_STATUS_IDS', 'FILTERSET_CATEGORIES', 'Coach.Data',
-    function controller($scope, $state, $stateParams, games, plays, filtersets, GAME_STATUS_IDS, FILTERSET_CATEGORIES, data) {
-        $scope.filtersetCategories = angular.copy(FILTERSET_CATEGORIES);
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
+    function controller($scope, $state, $stateParams, games, plays, filtersets, data) {
         $scope.gameId = $state.params.id;
         $scope.filterId = null;
         $scope.teamId = null;
+        $scope.data = data;
+        $scope.leagues = data.leagues.getCollection();
+        $scope.league = $scope.leagues[$scope.team.leagueId];
         $scope.filterCategory = 1;
         $scope.activeFilters = [];
 
@@ -124,9 +126,15 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
             plays.filterPlays({
                 filterId: currentFilter.id
-            }, $scope.resources, function(plays) {
+            }, $scope.resources, function(filteredPlays) {
 
-                $scope.plays = plays[$scope.game.id];
+                filteredPlays[$scope.game.id].forEach(function(play) {
+
+                    /* FIXME: Change to new extend when caching is merged. */
+                    play = plays.extendPlay(play);
+                });
+
+                $scope.plays = filteredPlays[$scope.game.id];
 
                 $scope.resources = {
                     game: $scope.game,
@@ -169,84 +177,5 @@ GameAreaFilm.controller('GameAreaFilmController', [
             $scope.activeFilters.splice(index, 1);
         };
 
-
-        data.then(function(data) {
-            $scope.game = data.game;
-            $scope.team = data.coachTeam;
-            $scope.teamId = $scope.team.id;
-            $scope.opposingTeam = data.teams[$scope.game.opposingTeamId];
-            $scope.league = data.league;
-            $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
-            $scope.sources = $scope.game.getVideoSources();
-
-            if ($scope.gameStatus === 'INDEXED') {
-                try {
-                    plays.getList($scope.gameId, function(plays) {
-                        data.plays = plays;
-                        $scope.totalPlays = plays;
-                        $scope.plays = plays;
-
-                        //TODO remove hardcoded exclusion list
-                        $scope.exclusion = [1, 2, 3, 41, 15, 31, 27];
-
-                        //TODO fix hardcoded filter set id
-                        filtersets.get('1', function(filterset) {
-                            $scope.playerFilter = {};
-                            angular.forEach(filterset.filters, function(filter) {
-                                $scope.filtersetCategories[filter.filterCategoryId].subFilters = $scope.filtersetCategories[filter.filterCategoryId].subFilters || [];
-
-                                //TODO figure out a better way to deal with players at a later date
-                                if (filter.name === 'Player') {
-                                    $scope.playerFilter = filter;
-                                }
-
-                                var excluded = $scope.exclusion.some(function(excludedFilterId) {
-                                    return filter.id === excludedFilterId;
-                                });
-
-                                if (!excluded) {
-                                    $scope.filtersetCategories[filter.filterCategoryId].subFilters.push(filter);
-                                }
-
-                            });
-
-                            angular.forEach(data.opposingTeamGameRoster.players, function(player) {
-
-                                var playerFilter = {
-                                    id: $scope.playerFilter.id,
-                                    teamId: data.opposingTeamGameRoster.teamId,
-                                    playerId: player.id,
-                                    name: player.firstName[0] + '. ' + player.lastName,
-                                    filterCategoryId: $scope.playerFilter.filterCategoryId,
-                                    customFilter: true
-                                };
-                                $scope.filtersetCategories[$scope.playerFilter.filterCategoryId].subFilters.push(playerFilter);
-                            });
-
-                            angular.forEach(data.teamGameRoster.players, function(player) {
-
-                                var playerFilter = {
-                                    id: $scope.playerFilter.id,
-                                    teamId: data.teamGameRoster.teamId,
-                                    playerId: player.id,
-                                    name: player.firstName[0] + '. ' + player.lastName,
-                                    filterCategoryId: $scope.playerFilter.filterCategoryId,
-                                    customFilter: true
-                                };
-                                $scope.filtersetCategories[$scope.playerFilter.filterCategoryId].subFilters.push(playerFilter);
-                            });
-
-                        });
-
-                    });
-
-
-                } catch (e) {
-                    console.log('corrupted game');
-                    console.log(e);
-                }
-            }
-
-        });
     }
 ]);

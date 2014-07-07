@@ -11,8 +11,8 @@
                     <div class="titlebar col-md-12">
 
                         <h3>
-                            <span data-ng-show="games.isRegular(game)">Uploading a regular game</span>
-                            <span data-ng-show="!games.isRegular(game)">Uploading a scouting/scrimmage game</span>
+                            <span data-ng-show="games.isRegular(data.game)">Uploading a regular game</span>
+                            <span data-ng-show="!games.isRegular(data.game)">Uploading a scouting/scrimmage game</span>
                         </h3>
 
                     </div>
@@ -23,7 +23,7 @@
 
                             <button class="choose-files" data-ng-hide="$flow.files.length" data-flow-btn>
 
-                                <i class="icon-upload-alt"></i>
+                                <i class="icon icon-upload"></i>
                                 <h1>Choose files to upload…</h1>
 
                             </button>
@@ -34,8 +34,8 @@
 
                                     <tr class="file" data-ng-repeat="file in transfers" data-draggable>
 
-                                        <td class="drag"><i class="icon-align-justify"></i> {{ $index+1 }}. {{ file.name }} — {{ file.size | bytes }}</td>
-                                        <td class="remove"><button class="btn-remove" data-ng-click="file.cancel()"><i class="icon-remove"></i></button></td>
+                                        <td class="drag"><i class="icon icon-align-justify"></i> {{ $index+1 }}. {{ file.name }} — {{ file.size | bytes }}</td>
+                                        <td class="remove"><button class="btn-remove" data-ng-click="file.cancel()"><i class="icon icon-remove"></i></button></td>
 
                                     </tr>
 
@@ -45,13 +45,13 @@
 
                             <button class="btn-choose-files" data-ng-show="$flow.files.length" data-flow-btn>
 
-                                <i class="icon-upload-alt"></i> Choose files to upload…
+                                <i class="icon icon-upload"></i> Choose files to upload…
 
                             </button>
 
                             <button class="btn-upload-start" data-ng-click="upload()" data-ng-disabled="!$flow.files.length || uploading">
 
-                                <span data-ng-hide="uploading">Start u</span><span data-ng-show="uploading">U</span>ploading…<i class="icon-chevron-right pull-right"></i>
+                                <span data-ng-hide="uploading">Start u</span><span data-ng-show="uploading">U</span>ploading…<i class="icon icon-chevron-right pull-right"></i>
 
                             </button>
 

@@ -4,9 +4,12 @@
         <header>
             <div>
 
-                <span class="match-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span> <span class="match-up">{{team.name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{opposingTeam.name}}</span>
-                <!--<a data-ng-href="#"><i class="icon-download"></i> Download</a>
-                <a data-ng-href="#"><i class="icon-share"></i> Share</a>-->
+                <span class="match-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span>
+                <span class="match-up">
+                    {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
+                </span>
+                <!--<a data-ng-href="#"><i class="icon icon-download"></i> Download</a>
+                <a data-ng-href="#"><i class="icon icon-share-square-o"></i> Share</a>-->
 
                 <select data-ng-model="dataType">
                     <option data-ng-if="gameStatus !== 'INDEXED'" value="video"> Raw Film </option>

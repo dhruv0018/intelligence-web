@@ -5,7 +5,7 @@
         <header>
 
             <h2>Game Id <em>#{{ game.id }}</em></h2>
-            <h1>{{ teamName }} vs {{ opposingTeamName }}</h1>
+            <h1>{{ team.name }} vs {{ opposingTeam.name }}</h1>
             <h3>{{ school.name }} {{ sport.name }}, <a data-ui-sref="user-info({ id: headCoach.id })">Coach {{ headCoach.lastName }}</a></h3>
 
         </header>
@@ -75,7 +75,7 @@
 
                         <td class="score">
 
-                            <h2 data-ng-class="{ correct: game.finalScore === game.indexedScore, incorrect: game.indexedScore && game.finalScore !== game.indexedScore }">{{ game.indexedScore || '--' }}<span data-ng-if="game.indexedScore"><i class="icon-ok" data-ng-show="game.finalScore === game.indexedScore"></i><i class="icon-remove" data-ng-hide="game.finalScore === game.indexedScore"></i></span></h2>
+                            <h2 data-ng-class="{ correct: game.finalScore === game.indexedScore, incorrect: game.indexedScore && game.finalScore !== game.indexedScore }">{{ game.indexedScore || '--' }}<span data-ng-if="game.indexedScore"><i class="icon icon-ok" data-ng-show="game.finalScore === game.indexedScore"></i><i class="icon icon-remove" data-ng-hide="game.finalScore === game.indexedScore"></i></span></h2>
 
                         </td>
 
@@ -120,7 +120,7 @@
 
                         <td class="score">
 
-                            <h2 data-ng-class="{ correct: game.opposingFinalScore === game.opposingIndexedScore, incorrect: game.opposingIndexedScore && game.opposingFinalScore !== game.opposingIndexedScore }">{{ game.opposingIndexedScore || '--' }}<span data-ng-if="game.opposingIndexedScore"><i class="icon-ok" data-ng-show="game.opposingFinalScore === game.opposingIndexedScore"></i><i class="icon-remove" data-ng-hide="game.opposingFinalScore === game.opposingIndexedScore"></i></span></h2>
+                            <h2 data-ng-class="{ correct: game.opposingFinalScore === game.opposingIndexedScore, incorrect: game.opposingIndexedScore && game.opposingFinalScore !== game.opposingIndexedScore }">{{ game.opposingIndexedScore || '--' }}<span data-ng-if="game.opposingIndexedScore"><i class="icon icon-ok" data-ng-show="game.opposingFinalScore === game.opposingIndexedScore"></i><i class="icon icon-remove" data-ng-hide="game.opposingFinalScore === game.opposingIndexedScore"></i></span></h2>
 
                         </td>
 
@@ -129,7 +129,7 @@
                     <tr>
 
                         <td colspan="4">
-                            <h3><i class="icon-pushpin"></i> Coaches Notes:</h3>
+                            <h3><i class="icon icon-thumb-tack"></i> Coaches Notes:</h3>
                             <div>
                                 <ul>
                                     <li ng-repeat="note in game.notes[GAME_NOTE_TYPES.COACH_NOTE]">{{note.content}}</li>
@@ -157,14 +157,14 @@
             <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
             <span data-ng-show="game.isAssignedToQa()">QA</span>
 
-            <i class="icon-chevron-right pull-right"></i>
+            <i class="icon icon-chevron-right pull-right"></i>
 
         </button>
 
         <ul>
 
-            <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon-play-sign"></i> View raw film</button></li>
-            <li><button class="btn btn-link" data-ui-sref="indexer-read-notes" disabled><i class="icon-save"></i> Read notes</button></li>
+            <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon icon-play-sign"></i> View raw film</button></li>
+            <li><button class="btn btn-link" data-ui-sref="indexer-read-notes" disabled><i class="icon icon-save"></i> Read notes</button></li>
 
         </ul>
 

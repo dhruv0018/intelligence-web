@@ -41,8 +41,7 @@ Team.directive('krossoverCoachGameTeam', [
             templateUrl: templateUrl,
             controller: 'Coach.Game.Team.controller',
             scope: {
-                game: '=?',
-                scoutingRoster: '=?',
+                data: '=',
                 validation: '=?'
             }
         };
@@ -58,37 +57,23 @@ Team.directive('krossoverCoachGameTeam', [
  * @type {controller}
  */
 Team.controller('Coach.Game.Team.controller', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'Coach.Game.Tabs', 'Coach.Game.Data', 'GamesFactory', 'PlayersFactory',
-    function controller(config, $rootScope, $scope, $state, $localStorage, $http, tabs, data, games, players) {
+    'config', '$rootScope', '$scope', '$state', '$localStorage', 'GamesFactory', 'PlayersFactory', 'Coach.Game.Tabs',
+    function controller(config, $rootScope, $scope, $state, $localStorage, games, players, tabs) {
         $scope.tabs = tabs;
-        $scope.data = {};
+
         $scope.config = config;
 
-        data.then(function(coachData) {
-            $scope.data = coachData;
-            $scope.positions = coachData.positionSet.indexedPositions;
-            if (coachData.teamGameRoster) {
-                $scope.data.team = coachData.teams[$scope.game.teamId];
-                $scope.data.team.players = players.constructPositionDropdown(coachData.teamGameRoster.players, coachData.game.rosters[coachData.game.teamId].id, $scope.positions);
-            }
-        });
+        //Positions
+        $scope.positions = $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions;
 
-        $scope.$watch('game', function(game) {
-            if (game.rosters) {
-                $scope.scoutingTeamId = game.rosters[game.teamId].id;
-            }
-        });
 
-        $scope.$watch('data.team.players', function(scoutingTeam) {
-            if (typeof scoutingTeam !== 'undefined') {
-                if (scoutingTeam.length === 0) {
-                    $scope.validation.scoutingTeam = false;
-                }
-            } else {
-                $scope.data.team = {
-                    players: []
-                };
+        $scope.$watch('data.game', function(game) {
+            if ($scope.data.gamePlayerLists[game.teamId]) {
+                angular.forEach($scope.data.gamePlayerLists[game.teamId], function(player) {
+                    player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
+                });
             }
+
         });
 
         $scope.$watch('validation.scoutingTeam', function(valid) {
@@ -107,9 +92,20 @@ Team.controller('Coach.Game.Team.controller', [
         });
 
         $scope.save = function() {
-            $scope.data.team.players = players.getPositionsFromDowndown($scope.data.team.players, $scope.scoutingTeamId, $scope.positions);
-            players.save($scope.game.rosters[$scope.game.teamId].id, $scope.data.team.players);
-            tabs.activateTab('opposing-team');
+
+            angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
+                player = players.getPositionsFromDowndown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
+            });
+
+            players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {
+                $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
+
+                angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
+                    player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
+                });
+                tabs.activateTab('opposing-team');
+            });
+
         };
 
     }

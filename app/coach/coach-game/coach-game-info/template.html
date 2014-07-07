@@ -8,8 +8,8 @@
 
                 <header class="box-header col-md-12">
 
-                    <x-button-continue data-ng-if="games.isRegular(game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
-                    <x-button-continue data-ng-if="!games.isRegular(game)" data-ng-disabled="tabs['scouting-team'].disabled">Next</x-button-continue>
+                    <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
+                    <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="tabs['scouting-team'].disabled">Next</x-button-continue>
 
                 </header>
 
@@ -25,7 +25,7 @@
 
                                     <h4>*Date of game</h4>
 
-                                    <data-date data-ng-model="game.datePlayed" data-max-date="todaysDate"></data-date>
+                                    <data-date data-ng-model="data.game.datePlayed" data-max-date="todaysDate"></data-date>
 
                                 </div>
 
@@ -35,23 +35,23 @@
 
                                     <div class="btn-group-vertical">
 
-                                        <button type="button" data-ng-if="games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.CONFERENCE.id" required>{{ GAME_TYPES.CONFERENCE.name }}</button>
-                                        <button type="button" data-ng-if="games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.NON_CONFERENCE.id" required>{{ GAME_TYPES.NON_CONFERENCE.name }}</button>
-                                        <button type="button" data-ng-if="games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.PLAYOFF.id" required>{{ GAME_TYPES.PLAYOFF.name }}</button>
-                                        <button type="button" data-ng-if="!games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.SCOUTING.id" required>{{ GAME_TYPES.SCOUTING.name }}</button>
-                                        <button type="button" data-ng-if="!games.isRegular(game)" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.SCRIMMAGE.id" required>{{ GAME_TYPES.SCRIMMAGE.name }}</button>
+                                        <button type="button" data-ng-if="games.isRegular(data.game)" class="btn-radio" data-ng-model="data.game.gameType" data-btn-radio="GAME_TYPES.CONFERENCE.id" required>{{ GAME_TYPES.CONFERENCE.name }}</button>
+                                        <button type="button" data-ng-if="games.isRegular(data.game)" class="btn-radio" data-ng-model="data.game.gameType" data-btn-radio="GAME_TYPES.NON_CONFERENCE.id" required>{{ GAME_TYPES.NON_CONFERENCE.name }}</button>
+                                        <button type="button" data-ng-if="games.isRegular(data.game)" class="btn-radio" data-ng-model="data.game.gameType" data-btn-radio="GAME_TYPES.PLAYOFF.id" required>{{ GAME_TYPES.PLAYOFF.name }}</button>
+                                        <button type="button" data-ng-if="!games.isRegular(data.game)" class="btn-radio" data-ng-model="data.game.gameType" data-btn-radio="GAME_TYPES.SCOUTING.id" required>{{ GAME_TYPES.SCOUTING.name }}</button>
+                                        <button type="button" data-ng-if="!games.isRegular(data.game)" class="btn-radio" data-ng-model="data.game.gameType" data-btn-radio="GAME_TYPES.SCRIMMAGE.id" required>{{ GAME_TYPES.SCRIMMAGE.name }}</button>
                                     </div>
 
                                 </div>
 
-                                <div data-ng-if="games.isRegular(game)" class="form-group">
+                                <div data-ng-if="games.isRegular(data.game)" class="form-group">
 
                                     <h4>*Home/Away</h4>
 
                                     <div class="btn-group-vertical">
 
-                                        <button type="button" class="btn-radio" data-ng-model="game.isHomeGame" data-btn-radio="'true'" required>Home</button>
-                                        <button type="button" class="btn-radio" data-ng-model="game.isHomeGame" data-btn-radio="'false'" required>Away</button>
+                                        <button type="button" class="btn-radio" data-ng-model="data.game.isHomeGame" data-btn-radio="'true'" required>Home</button>
+                                        <button type="button" class="btn-radio" data-ng-model="data.game.isHomeGame" data-btn-radio="'false'" required>Away</button>
 
                                     </div>
 
@@ -71,11 +71,9 @@
                                         <thead>
 
                                             <tr>
-
                                                 <th>Teams</th>
                                                 <th class="score">Scores</th>
                                                 <th>Colors</th>
-
                                             </tr>
 
                                         </thead>
@@ -85,8 +83,13 @@
                                             <tr>
 
                                                 <td>
-                                                    <h5 data-ng-if="games.isRegular(game)">{{data.coachTeam.name}}</h5>
-                                                    <input class="form-control" ng-if="!games.isRegular(game)" name="team" placeholder="Team" data-ng-model="data.team.name">
+                                                    <h5 data-ng-if="games.isRegular(data.game)"> {{ teams[session.currentUser.currentRole.teamId].name }} </h5>
+
+                                                    <!--if the scouting team does not exist yet-->
+                                                    <input class="form-control" data-ng-if="!games.isRegular(data.game) && !data.game.id" name="team" placeholder="Team" data-ng-model="data.team.name">
+
+                                                    <!--if the scouting team already exists-->
+                                                    <input class="form-control" data-ng-if="!games.isRegular(data.game) && data.game.id" name="team" placeholder="Team" data-ng-model="teams[data.game.teamId].name">
                                                 </td>
 
                                                 <td class="score">
@@ -96,7 +99,7 @@
                                                         <div class="col-xs-12">
 
                                                             <h6>Final</h6>
-                                                            <input name="yourscore" size="3" data-ng-model="game.finalScore" required>
+                                                            <input name="yourscore" size="3" data-ng-model="data.game.finalScore" required>
 
                                                         </div>
 
@@ -111,14 +114,14 @@
                                                         <div class="col-xs-6">
 
                                                             <h6>Primary</h6>
-                                                            <input class="form-control" name="yourprimarycolor" type="color" data-ng-model="game.primaryJerseyColor">
+                                                            <input class="form-control" name="yourprimarycolor" type="color" data-ng-model="data.game.primaryJerseyColor">
 
                                                         </div>
 
                                                         <div class="col-xs-6">
 
                                                             <h6>Secondary</h6>
-                                                            <input class="form-control" name="yourprimarycolor" type="color" data-ng-model="game.secondaryJerseyColor">
+                                                            <input class="form-control" name="yourprimarycolor" type="color" data-ng-model="data.game.secondaryJerseyColor">
 
                                                         </div>
 
@@ -131,15 +134,18 @@
                                             <tr>
 
                                                 <td>
+                                                    <!--Opposing Team already exists-->
+                                                    <input data-ng-if="data.game.id" class="form-control" name="opponent" placeholder="Opponent" data-ng-model="teams[data.game.opposingTeamId].name" >
 
-                                                    <input class="form-control" name="opponent" placeholder="Opponent" data-ng-model="data.opposingTeam.name" >
+                                                    <!--Opposing Team does not exist yet-->
+                                                    <input data-ng-if="!data.game.id" class="form-control" name="opponent" placeholder="Opponent" data-ng-model="data.opposingTeam.name" >
 
                                                 </td>
 
                                                 <td class="score">
 
                                                     <h6>Final</h6>
-                                                    <input name="opponentscore" size="3" data-ng-model="game.opposingFinalScore" required>
+                                                    <input name="opponentscore" size="3" data-ng-model="data.game.opposingFinalScore" required>
 
                                                 </td>
 
@@ -150,14 +156,14 @@
                                                         <div class="col-xs-6">
 
                                                             <h6>Primary</h6>
-                                                            <input class="form-control" name="theirprimarycolor" type="color" data-ng-model="game.opposingPrimaryJerseyColor">
+                                                            <input class="form-control" name="theirprimarycolor" type="color" data-ng-model="data.game.opposingPrimaryJerseyColor">
 
                                                         </div>
 
                                                         <div class="col-xs-6">
 
                                                             <h6>Secondary</h6>
-                                                            <input class="form-control" name="theirprimarycolor" type="color" data-ng-model="game.opposingSecondaryJerseyColor">
+                                                            <input class="form-control" name="theirprimarycolor" type="color" data-ng-model="data.game.opposingSecondaryJerseyColor">
 
                                                         </div>
 
@@ -176,7 +182,7 @@
                                 <div class="form-group">
 
                                     <h4>Any problems with the game film we should know about:</h4>
-                                    <textarea class="form-control" name="notes" rows="8" cols="40" placeholder="Explain here…" data-ng-model="game.notes[GAME_NOTE_TYPES.COACH_NOTE][0].content"></textarea>
+                                    <textarea class="form-control" name="notes" rows="8" cols="40" placeholder="Explain here…" data-ng-model="data.game.notes[GAME_NOTE_TYPES.COACH_NOTE][0].content"></textarea>
 
                                 </div>
 
@@ -190,8 +196,8 @@
 
             </div>
 
-            <x-button-continue data-ng-if="games.isRegular(game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
-            <x-button-continue data-ng-if="!games.isRegular(game)" data-ng-disabled="tabs['scouting-team'].disabled">Next</x-button-continue>
+            <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
+            <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="tabs['scouting-team'].disabled">Next</x-button-continue>
 
         </div>
 
