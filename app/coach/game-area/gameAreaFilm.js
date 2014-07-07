@@ -123,9 +123,15 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
             plays.filterPlays({
                 filterId: currentFilter.id
-            }, $scope.resources, function(plays) {
+            }, $scope.resources, function(filteredPlays) {
 
-                $scope.plays = plays[$scope.game.id];
+                filteredPlays[$scope.game.id].forEach(function(play) {
+
+                    /* FIXME: Change to new extend when caching is merged. */
+                    play = plays.extendPlay(play);
+                });
+
+                $scope.plays = filteredPlays[$scope.game.id];
 
                 $scope.resources = {
                     game: $scope.game,
