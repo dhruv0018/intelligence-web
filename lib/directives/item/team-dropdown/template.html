@@ -1,13 +1,13 @@
 <span class="team-dropdown">
 
-    <button class="team-dropdown" data-ng-if="event.variableValues[item.index].value" data-ng-click="event.variableValues[item.index].value = null">
+    <button class="team-dropdown" data-ng-if="event.variableValues[item.index].value !== null" data-ng-click="event.variableValues[item.index].value = null">
 
         <span data-ng-if="event.variableValues[item.index].value == team.id">{{ team.name }}</span>
         <span data-ng-if="event.variableValues[item.index].value == opposingTeam.id">{{ opposingTeam.name }}</span>
 
     </button>
 
-    <select class="team-dropdown" data-ng-if="!event.variableValues[item.index].value" data-ng-model="event.variableValues[item.index].value" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
+    <select class="team-dropdown" data-ng-if="event.variableValues[item.index].value === null" data-ng-model="event.variableValues[item.index].value" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
 
         <option value="{{ team.id }}">{{ team.name }}</option>
         <option value="{{ opposingTeam.id }}">{{ opposingTeam.name }}</option>
