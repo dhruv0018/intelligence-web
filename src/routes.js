@@ -42,8 +42,8 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService',
-    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, session, alerts) {
+    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
+    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -89,6 +89,9 @@ IntelligenceWebClient.run([
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
             /* Clear any alerts. */
             alerts.clear();
+
+            /* Restore any active resources to their backups. */
+            managedResources.restore();
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {
