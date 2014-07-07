@@ -94,28 +94,6 @@ Game.config([
 ]);
 
 /**
- * Modal controller. Controls the modal views.
- * @module Game
- * @name ModalController
- * @type {Controller}
- */
-Game.controller('ModalController', [
-    '$rootScope', '$scope', '$state', '$modal', '$modalInstance', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $modal, $modalInstance, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users) {
-
-        $scope.ok = function() {
-
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function() {
-
-            $modalInstance.dismiss('cancel');
-        };
-    }
-]);
-
-/**
  * Game controller.
  * @module Game
  * @name GameController
