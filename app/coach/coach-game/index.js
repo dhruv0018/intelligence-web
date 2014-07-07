@@ -165,7 +165,7 @@ Game.controller('Coach.Game.controller', [
                 active: false,
                 disabled: true
             },
-            activateAll: function() {
+            enableAll: function() {
                 this.scouting.disabled = false;
                 this.opposing.disabled = false;
                 this.team.disabled = false;

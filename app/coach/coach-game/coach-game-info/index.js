@@ -103,7 +103,7 @@ Info.controller('Coach.Game.Info.controller', [
         //Headings
         if ($scope.data.game.id) {
             $scope.setTabHeadings();
-            $scope.tabs.activateAll();
+            $scope.tabs.enableAll();
         }
 
         //watches
