@@ -43,6 +43,10 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
 
+        tags.reset($scope.tagset);
+        event.reset($scope.tagset);
+        play.reset(gameId);
+        play.clear();
 
         /* Bind keys. */
 
@@ -149,11 +153,6 @@ Indexing.controller('Indexing.Main.Controller', [
             indexing.showScript = false;
             indexing.eventSelected = false;
             $scope.VideoPlayer.pause();
-
-            tags.reset($scope.tagset);
-            event.reset($scope.tagset);
-            play.reset(gameId);
-            play.clear();
         };
 
         /**
