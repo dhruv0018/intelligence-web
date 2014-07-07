@@ -77,8 +77,8 @@ Header.service('Base.Data.Dependencies', [
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'Coach.Game.Tabs',
-    function controller(config, $scope, $state, auth, session, account, ROLES, tabs) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES',
+    function controller(config, $scope, $state, auth, session, account, ROLES) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
@@ -97,8 +97,6 @@ Header.controller('HeaderController', [
             $state.go('login');
             location.reload();
         };
-
-        $scope.tabs = tabs;
     }
 ]);
 

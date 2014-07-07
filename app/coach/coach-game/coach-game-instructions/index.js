@@ -56,8 +56,8 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', '$localStorage', 'GAME_STATUSES', 'Coach.Game.Tabs', 'GamesFactory',
-    function controller($scope, $state, $localStorage, GAME_STATUSES, tabs, games) {
+    '$scope', '$state', '$localStorage', 'GAME_STATUSES', 'GamesFactory',
+    function controller($scope, $state, $localStorage, GAME_STATUSES, games) {
         $scope.GAME_STATUSES = GAME_STATUSES;
 
         $scope.$watch('data.game', function(game) {

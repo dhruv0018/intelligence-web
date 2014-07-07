@@ -28,11 +28,6 @@ UploadingFilm.run([
     }
 ]);
 
-/**
- * Uploading film page state router.
- * @module UploadingFilm
- * @type {UI-Router}
- */
 UploadingFilm.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
@@ -54,32 +49,16 @@ UploadingFilm.config([
 ]);
 
 /**
- * Uploading tabs value service.
- * @module UploadingFilm
- * @name UploadingFilmTabs
- * @type {Controller}
- */
-UploadingFilm.value('UploadingFilmTabs', {
-
-    'game-info':     { active: true, disabled: false },
-    'your-team':     { active: false, disabled: true },
-    'opposing-team': { active: false, disabled: true },
-    instructions:    { active: false, disabled: true }
-});
-
-/**
  * UploadingFilm controller.
  * @module UploadingFilm
  * @name UploadingFilmController
  * @type {Controller}
  */
 UploadingFilm.controller('UploadingFilmController', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'PlayersFactory', 'UploadingFilmTabs', 'Coach.Data',
-    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, players, tabs, data) {
+    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
+    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, players, data) {
 
         $scope.games = games;
-
-        $scope.tabs = tabs;
 
         var deleteVideo = function() {
 
@@ -141,6 +120,12 @@ UploadingFilm.controller('UploadingFilmController', [
 
             $scope.$apply();
         });
+
+        $scope.headings = {
+            opposingTeam: 'Opposing Team',
+            yourTeam: 'Team',
+            scoutingTeam: 'Scouting'
+        };
     }
 ]);
 

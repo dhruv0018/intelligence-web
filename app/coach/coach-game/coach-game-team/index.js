@@ -42,7 +42,8 @@ Team.directive('krossoverCoachGameTeam', [
             controller: 'Coach.Game.Team.controller',
             scope: {
                 data: '=',
-                validation: '=?'
+                validation: '=?',
+                tabs: '='
             }
         };
 
@@ -57,10 +58,8 @@ Team.directive('krossoverCoachGameTeam', [
  * @type {controller}
  */
 Team.controller('Coach.Game.Team.controller', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', 'GamesFactory', 'PlayersFactory', 'Coach.Game.Tabs',
-    function controller(config, $rootScope, $scope, $state, $localStorage, games, players, tabs) {
-        $scope.tabs = tabs;
-
+    'config', '$rootScope', '$scope', '$state', '$localStorage', 'GamesFactory', 'PlayersFactory',
+    function controller(config, $rootScope, $scope, $state, $localStorage, games, players) {
         $scope.config = config;
 
         //Positions
@@ -76,21 +75,6 @@ Team.controller('Coach.Game.Team.controller', [
 
         });
 
-        $scope.$watch('validation.scoutingTeam', function(valid) {
-            if (valid) {
-                tabs['opposing-team'].disabled = false;
-            } else {
-                tabs['opposing-team'].disabled = true;
-            }
-
-        });
-
-        $scope.$watch('tabs["scouting-team"].disabled', function(disabled) {
-            if (disabled) {
-                tabs['opposing-team'].disabled = disabled;
-            }
-        });
-
         $scope.save = function() {
 
             angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
@@ -103,7 +87,9 @@ Team.controller('Coach.Game.Team.controller', [
                 angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
                     player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
                 });
-                tabs.activateTab('opposing-team');
+
+                $scope.tabs.deactivateAll();
+                $scope.tabs.opposing.active = true;
             });
 
         };
