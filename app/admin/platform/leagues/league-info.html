@@ -18,6 +18,9 @@
                 <select class="form-control" name="tagset" data-ng-model="league.tagSetId" data-ng-options="tagset.id as tagset.name for tagset in tagsets">
                     <option value="">Tag Set</option>
                 </select>
+                <select class="form-control" name="filterset" data-ng-model="league.filterSetId" data-ng-options="filterset.id as filterset.name for filterset in filtersets">
+                    <option value="">Filter Set</option>
+                </select>
                 <select class="form-control" name="positionset" data-ng-model="league.positionSetId" data-ng-options="positionset.id as positionset.name for positionset in positionsets">
                     <option value="">Position Set</option>
                 </select>
