@@ -55,10 +55,9 @@
 </div>
 
 <div class="game-area-film">
-        <!--
         <aside ng-if="gameStatus === 'INDEXED'"  class="sidebar">
 
-          <krossover-plays data-expand-all="expandAll" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="league" data-videoplayer="VideoPlayer"></krossover-plays>
+          <krossover-plays data-expand-all="expandAll" data-data="data" data-plays="data.plays" data-team="team" data-opposing-team="opposingTeam" data-league="data.league" data-videoplayer="VideoPlayer"></krossover-plays>
 
 
           <div class="expandrow">
@@ -68,7 +67,6 @@
 
           <no-results data-ng-hide="plays.length"></no-results>
         </aside>
-        -->
 
         <div class="player" data-ng-class="{'breakdown-player':(gameStatus === 'INDEXED')}">
             <x-krossover-videoplayer></x-krossover-videoplayer>
