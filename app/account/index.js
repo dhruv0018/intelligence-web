@@ -135,16 +135,20 @@ Account.controller('AccountController', [
             return role.teamId !== null;
         };
         for (i = 1; i <= Object.keys(ROLE_ID).length; i += 1) {
-            var roleName = ROLES[ROLE_ID[i]].type.name;
-            var userRoles = session.currentUser.roles.filter(roleFilter);
-            var roleGroup = {
-                roleName: roleName,
-                userRoles: userRoles
-            };
-            if (userRoles.length > 0) {
-                roleGroup.hasTeam = userRoles[0].teamId !== null;
-                roleGroup.teamRoleIndicatorClass = roleGroup.hasTeam ? 'teamRole' : 'teamlessRole';
-                $scope.roleGroups.push(roleGroup);
+
+            if (ROLES[ROLE_ID[i]]) {
+
+                var roleName = ROLES[ROLE_ID[i]].type.name;
+                var userRoles = session.currentUser.roles.filter(roleFilter);
+                var roleGroup = {
+                    roleName: roleName,
+                    userRoles: userRoles
+                };
+                if (userRoles.length > 0) {
+                    roleGroup.hasTeam = userRoles[0].teamId !== null;
+                    roleGroup.teamRoleIndicatorClass = roleGroup.hasTeam ? 'teamRole' : 'teamlessRole';
+                    $scope.roleGroups.push(roleGroup);
+                }
             }
         }
 

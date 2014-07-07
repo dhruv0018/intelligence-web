@@ -42,6 +42,14 @@ Leagues.config([
                         templateUrl: 'leagues.html',
                         controller: 'LeaguesController'
                     }
+                },
+                resolve: {
+                    'Leagues.Data': [
+                        '$q', 'Leagues.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             })
 
@@ -54,6 +62,14 @@ Leagues.config([
                         templateUrl: 'league.html',
                         controller: 'LeagueController'
                     }
+                },
+                resolve: {
+                    'Leagues.Data': [
+                        '$q', 'Leagues.Data.Dependencies',
+                        function($q, data) {
+                            return $q.all(data);
+                        }
+                    ]
                 }
             })
 
@@ -62,11 +78,25 @@ Leagues.config([
                 parent: 'league',
                 views: {
                     'content@league': {
-                        templateUrl: 'league-info.html',
-                        controller: 'LeagueController'
+                        templateUrl: 'league-info.html'
                     }
                 }
             });
+    }
+]);
+
+Leagues.service('Leagues.Data.Dependencies', [
+    'LeaguesFactory', 'SportsFactory', 'TagsetsFactory', 'PositionsetsFactory',
+    function dataService(leagues, sports, tagsets, positionsets) {
+
+        var Data = {};
+
+        angular.forEach(arguments, function(arg) {
+            Data[arg.description] = arg.load();
+        });
+
+        return Data;
+
     }
 ]);
 
@@ -77,48 +107,27 @@ Leagues.config([
  * @type {Controller}
  */
 Leagues.controller('LeagueController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$localStorage', 'LeaguesFactory', 'TeamsResource', 'SportsFactory', 'TagsetsFactory', 'PositionsetsFactory', 'FiltersetsFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $localStorage, leagues, teams, sports, tagsets, positionsets, filtersets) {
+    '$scope', '$state', '$stateParams', 'Leagues.Data',
+    function controller($scope, $state, $stateParams, data) {
 
-        $scope.$storage = $localStorage;
-
-        var league = $scope.$storage.league;
         var leagueId = $stateParams.id;
 
-        if (!league || leagueId !== league.id) {
-
-            leagues.get(leagueId, function(league) {
-
-                $scope.$storage.league = league;
-            });
-        }
-
-        $scope.indexedSports = {};
-        $scope.sports = sports.getList({}, function(sports) {
-            sports.forEach(function(sport) {
-                $scope.indexedSports[sport.id] = sport;
-            });
-            return sports;
-        });
-
-        $scope.tagsets = tagsets.getList();
-
-        $scope.filtersets = filtersets.getList();
-
-        $scope.positionsets = positionsets.getList();
+        $scope.league = data.leagues.get(leagueId);
+        $scope.sports = data.sports.getList();
+        $scope.indexedSports = data.sports.getCollection();
+        $scope.tagsets = data.tagsets.getList();
+        $scope.positionsets = data.positionsets.getList();
 
         $scope.genders = ['male', 'female', 'coed'];
 
         $scope.save = function(league) {
 
-            leagues.save(league).then(function() {
-                delete $scope.$storage.league;
+            data.leagues.save(league).then(function() {
                 $state.go('leagues');
             });
         };
 
         $scope.cancel = function() {
-
             $state.go('leagues');
         };
     }
@@ -131,11 +140,12 @@ Leagues.controller('LeagueController', [
  * @type {Controller}
  */
 Leagues.controller('LeaguesController', [
-    '$rootScope', '$scope', '$state', '$localStorage', 'LeaguesFactory', 'SportsFactory',
-    function controller($rootScope, $scope, $state, $localStorage, leagues, sports) {
+    '$scope', '$state', 'Leagues.Data',
+    function controller($scope, $state, data) {
 
-        $scope.leagues = leagues.getList();
-        $scope.sports = sports.getList();
+        $scope.leagues = data.leagues.getList();
+        $scope.sports = data.sports.getList();
+
         $scope.genders = [
             {label: 'male', value: 'male'},
             {label: 'female', value: 'female'},
@@ -143,13 +153,11 @@ Leagues.controller('LeaguesController', [
         ];
 
         $scope.add = function() {
-
-            delete $localStorage.league;
             $state.go('league-info');
         };
 
         $scope.search = function(filter) {
-            leagues.getList(filter,
+            data.leagues.query(filter,
                     function(leagues) {
                         $scope.leagues = leagues;
                         $scope.noResults = false;

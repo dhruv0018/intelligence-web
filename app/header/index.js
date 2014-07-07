@@ -45,7 +45,7 @@ Header.config([
                 },
                 resolve: {
                     'Base.Data': [
-                        '$q', 'Base.Data',
+                        '$q', 'Base.Data.Dependencies',
                         function($q, data) {
                             return $q.all(data);
                         }
@@ -56,11 +56,12 @@ Header.config([
 ]);
 
 
-Header.service('Base.Data', [
+Header.service('Base.Data.Dependencies', [
     'SportsFactory',
     function(sports) {
 
         var Data = {
+
             sports: sports.load()
         };
 
@@ -89,8 +90,6 @@ Header.controller('HeaderController', [
         $scope.$state = $state;
 
         $scope.account = account;
-
-        $scope.currentUser = session.currentUser;
 
         $scope.logout = function() {
 

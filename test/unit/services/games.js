@@ -42,7 +42,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_INDEXING.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToIndexer().should.be.true;
         }]));
@@ -56,7 +56,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.SET_ASIDE.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToIndexer().should.be.false;
         }]));
@@ -77,7 +77,7 @@ describe('GamesFactory', function() {
                 ]
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToIndexer().should.be.true;
         }]));
@@ -98,7 +98,7 @@ describe('GamesFactory', function() {
                     status: status
                 };
 
-                game = games.extendGame(game);
+                game = games.extend(game);
 
                 game.canBeAssignedToIndexer().should.be.false;
             });
@@ -116,7 +116,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_QA.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToQa().should.be.true;
         }]));
@@ -130,7 +130,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.SET_ASIDE.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToQa().should.be.false;
         }]));
@@ -151,7 +151,7 @@ describe('GamesFactory', function() {
                 ]
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToQa().should.be.true;
         }]));
@@ -172,7 +172,7 @@ describe('GamesFactory', function() {
                     status: status
                 };
 
-                game = games.extendGame(game);
+                game = games.extend(game);
 
                 game.canBeAssignedToQa().should.be.false;
             });
@@ -194,7 +194,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_INDEXING.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId, deadline);
 
@@ -218,7 +218,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.SET_ASIDE.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             expect(function() {
                 game.assignToIndexer(userId, deadline);
@@ -242,7 +242,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_INDEXING.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId, deadline);
 
@@ -282,7 +282,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_QA.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId, deadline);
 
@@ -307,7 +307,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.SET_ASIDE.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             expect(function() {
                 game.assignToQa(userId, deadline);
@@ -331,7 +331,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_QA.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId, deadline);
 
@@ -371,7 +371,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_INDEXING.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId, deadline);
 
@@ -397,7 +397,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_QA.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId, deadline);
 
@@ -426,7 +426,7 @@ describe('GamesFactory', function() {
                     status: GAME_STATUSES.READY_FOR_INDEXING.id
                 };
 
-                game = games.extendGame(game);
+                game = games.extend(game);
 
                 game.assignToIndexer(userId);
 
@@ -468,7 +468,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_INDEXING.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId);
 
@@ -494,7 +494,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_QA.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId);
 
@@ -519,7 +519,7 @@ describe('GamesFactory', function() {
 
                 game = {};
 
-                game = games.extendGame(game);
+                game = games.extend(game);
             }
         ]));
 

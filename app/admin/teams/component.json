@@ -4,7 +4,15 @@
         "team.html",
         "teams.html",
         "team-info.html",
+        "team-plans.html",
         "team-members.html"
+    ],
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "team-plan",
+        "team-package"
     ],
     "scripts": [
         "index.js"

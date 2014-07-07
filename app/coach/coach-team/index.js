@@ -39,7 +39,11 @@ Team.config([
                 }
             },
             resolve: {
-                'Coach.Team.Data': 'Coach.Team.Data'
+                'Coach.Data': ['$q','Coach.Data.Dependencies', function($q, data) {
+                    return $q.all(data).then(function(data) {
+                        return data;
+                    });
+                }]
             }
         });
     }

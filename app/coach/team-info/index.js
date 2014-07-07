@@ -37,6 +37,11 @@ TeamInfo.config([
                         templateUrl: 'coach/team-info/template.html',
                         controller: 'Coach.Team.Info.controller'
                     }
+                },
+                resolve: {
+                    'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
+                        return $q.all(data);
+                    }]
                 }
             })
             .state('Coach.Team.Info.Information', {

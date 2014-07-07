@@ -6,37 +6,34 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="sport" data-ng-model="$storage.league.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
+                <select class="form-control" name="sport" data-ng-model="league.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
                     <option value="">Sport</option>
                 </select>
 
-                <input class="form-control" name="name" placeholder="Name" data-ng-model="$storage.league.name" type="text" required />
+                <input class="form-control" name="name" placeholder="Name" data-ng-model="league.name" type="text" required />
 
-                <select class="form-control" name="gender" data-ng-model="$storage.league.gender" data-ng-options="gender for gender in genders" required>
+                <select class="form-control" name="gender" data-ng-model="league.gender" data-ng-options="gender for gender in genders" required>
                     <option value="">Gender</option>
                 </select>
-                <select class="form-control" name="tagset" data-ng-model="$storage.league.tagSetId" data-ng-options="tagset.id as tagset.name for tagset in tagsets">
+                <select class="form-control" name="tagset" data-ng-model="league.tagSetId" data-ng-options="tagset.id as tagset.name for tagset in tagsets">
                     <option value="">Tag Set</option>
                 </select>
-                <select class="form-control" name="positionset" data-ng-model="$storage.league.positionSetId" data-ng-options="positionset.id as positionset.name for positionset in positionsets">
+                <select class="form-control" name="positionset" data-ng-model="league.positionSetId" data-ng-options="positionset.id as positionset.name for positionset in positionsets">
                     <option value="">Position Set</option>
                 </select>
-                <select class="form-control" name="filterset" data-ng-model="$storage.league.filterSetId" data-ng-options="filterset.id as filterset.name for filterset in filtersets">
-                    <option value="">Filterset</option>
-                </select>
-                <input class="form-control" name="number-of-periods" placeholder="Number of Periods" data-ng-model="$storage.league.numberOfPeriods" type="number" min="1" />
-                <input class="form-control" name="period-label" placeholder="Period Label" data-ng-model="$storage.league.periodLabel" type="text" />
-                <input class="form-control" name="period-abbreviation" placeholder="Period Abbreviation" data-ng-model="$storage.league.periodAbbreviationLabel" type="text" />
-                <input class="form-control" name="season-start-month" placeholder="Season Start Month" data-ng-model="$storage.league.seasonStartMonth" type="number"  min="1" required />
-                <input class="form-control" name="season-start-day" placeholder="Season Start Day" data-ng-model="$storage.league.seasonStartDay" type="number"  min="1" required />
-                <input class="form-control" name="season-end-month" placeholder="Season End Month" data-ng-model="$storage.league.seasonEndMonth" type="number"  min="1" required />
-                <input class="form-control" name="season-end-day" placeholder="Season End Day" data-ng-model="$storage.league.seasonEndDay" type="number" min="1" required />
+                <input class="form-control" name="number-of-periods" placeholder="Number of Periods" data-ng-model="league.numberOfPeriods" type="number" min="1" />
+                <input class="form-control" name="period-label" placeholder="Period Label" data-ng-model="league.periodLabel" type="text" />
+                <input class="form-control" name="period-abbreviation" placeholder="Period Abbreviation" data-ng-model="league.periodAbbreviationLabel" type="text" />
+                <input class="form-control" name="season-start-month" placeholder="Season Start Month" data-ng-model="league.seasonStartMonth" type="number"  min="1" required />
+                <input class="form-control" name="season-start-day" placeholder="Season Start Day" data-ng-model="league.seasonStartDay" type="number"  min="1" required />
+                <input class="form-control" name="season-end-month" placeholder="Season End Month" data-ng-model="league.seasonEndMonth" type="number"  min="1" required />
+                <input class="form-control" name="season-end-day" placeholder="Season End Day" data-ng-model="league.seasonEndDay" type="number" min="1" required />
 
             </div>
 
             <div class="form-group">
 
-                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save($storage.league)">Save</button>
+                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(league)">Save</button>
                 <a class="pull-right" href data-ui-sref="leagues">cancel</a>
 
             </div>

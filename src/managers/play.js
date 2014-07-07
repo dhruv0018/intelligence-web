@@ -16,10 +16,12 @@ IntelligenceWebClient.service('PlayManager', [
 
         var model = {
 
-            gameId: indexing.game.id,
+            gameId: this.gameId,
             score: {},
             events: []
         };
+
+        this.gameId = null;
 
         this.current = null;
 
@@ -34,7 +36,9 @@ IntelligenceWebClient.service('PlayManager', [
         /**
          * Resets the current play.
          */
-        this.reset = function() {
+        this.reset = function(gameId) {
+
+            this.gameId = gameId || this.gameId;
 
             this.current = angular.copy(model);
         };

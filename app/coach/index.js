@@ -48,118 +48,30 @@ Coach.config([
  * @module Coach
  * @type {service}
  */
-Coach.service('Coach.Data', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory','IndexingService',
-    function($q, session, teams, games, players, users, leagues, tagsets, positions, indexing) {
-        var promises = {};
-        var deferred = $q.defer();
-        var promisedGames = $q.defer();
-        var promisedIndexedGames = $q.defer();
-        var promisedTeam = $q.defer();
-        var promisedTeams = $q.defer();
-        var promisedRoster = $q.defer();
-        var promisedRosterId = $q.defer();
-        var promisedLeague = $q.defer();
-        var promisedPositionSet = $q.defer();
-        var promisedUsers = $q.defer();
+Coach.service('Coach.Data.Dependencies', [
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory',
+    function($q, session, teams, games, players, users, leagues, tagsets, positions) {
 
-        var data = {
-            teamId: session.currentUser.currentRole.teamId,
-            games: promisedGames,
-            team: promisedTeam,
-            roster: {}
+        var promises = {
+            games: games.load({
+                uploaderTeamId: session.currentUser.currentRole.teamId
+            }),
+            teams: teams.load(),
+            leagues: leagues.load(),
+            users: users.retrieve(),
+            positionSets: positions.load()
         };
 
-        users.getList(function(users) {
-            promisedUsers.resolve(users);
-        }, null, true);
-
-        games.getList({
-            uploaderTeamId: data.teamId
-        }, function(gamesList) {
-            promisedGames.resolve(gamesList);
-            promisedIndexedGames.resolve(games.transformIndexed(gamesList));
-        });
-
-        teams.getList(function(teams) {
-            promisedTeams.resolve(teams);
-            promisedTeam.resolve(teams[data.teamId]);
-
-            data.roster = teams[data.teamId].roster;
-
-            if (typeof data.roster !== 'undefined') {
-                promisedRosterId.resolve({id: data.roster.id});
-                players.getList({
-                    roster: data.roster.id
-                }, function(players) {
-                    var roster = [];
-                    angular.forEach(players, function(player) {
-                        roster.push(player);
-                    });
-                    promisedRoster.resolve(roster);
-                }, function(failure) {
-                    promisedRoster.resolve([]);
-                });
-
-            } else {
-                promisedRoster.resolve([]);
-                promisedRosterId.resolve({id: null});
-            }
-
-            leagues.get(teams[data.teamId].leagueId, function(league) {
-
-                tagsets.getList().$promise.then(function(tagset) {
-                    promisedLeague.resolve(league);
-                });
-
-                if (league.positionSetId) {
-                    positions.get(league.positionSetId, function(positionSet) {
-                        promisedPositionSet.resolve(positionSet);
-                    }, null, true);
-                }
+        promises.playersList = promises.teams.then(function(teams) {
+            var userTeamId = session.currentUser.currentRole.teamId;
+            var userTeam = teams.get(userTeamId);
+            return players.query({
+                roster: userTeam.roster.id
             });
-
-        }, function() {
-            console.log('failure to get the teams');
-        }, true);
-
-        promises = {
-            games: promisedGames.promise,
-            indexedGames: promisedIndexedGames.promise,
-            coachTeam: promisedTeam.promise,
-            teams: promisedTeams.promise,
-            league: promisedLeague.promise,
-            roster: promisedRoster.promise,
-            rosterId: promisedRosterId.promise,
-            positionSet: promisedPositionSet.promise,
-            users: promisedUsers.promise
-        };
-
-        return $q.all(promises);
-    }
-]);
-
-/**
- * Game data value service.
- * @module Game
- * @name Game.Data
- * @type {value}
- */
-Coach.service('Coach.Game.Data', ['$q', 'Coach.Data',
-    function($q, coachData) {
-
-        var promisedGameData = $q.defer();
-
-        coachData.then(function(coachData) {
-            var gameData = coachData;
-            gameData.opposingTeam = {
-                players: []
-            };
-
-            promisedGameData.resolve(gameData);
         });
 
-        return promisedGameData.promise;
-    }
 
+        return promises;
+    }
 ]);
+

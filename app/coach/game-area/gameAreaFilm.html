@@ -4,7 +4,6 @@
 
         <!--<span class="playall"><i class="icon icon-play-sign"></i> Play All</span>-->
     </div>
-
     <div class="filter-dropdown pull-left dropdown">
         <a class="dropdown-toggle">
             Filter Plays
@@ -23,13 +22,13 @@
         <ul ng-click="$event.stopPropagation();" class="dropdown-menu">
             <li>
                 <div>
-                    <a class="btn" ng-click="setTeam(team.id)" data-ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
-                        {{team.name}}
+                    <a class="btn" ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
+                        {{teams[game.teamId].name}}
                     </a>
                 </div>
                 <div>
-                    <a class="btn" ng-click="setTeam(opposingTeam.id)" data-ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
-                        {{opposingTeam.name}}
+                    <a class="btn" ng-click="setTeam(game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
+                        {{teams[game.opposingTeamId].name}}
                     </a>
                 </div>
             </li>
@@ -57,8 +56,10 @@
 
 <div class="game-area-film">
         <aside ng-if="gameStatus === 'INDEXED'"  class="sidebar">
-          <!--<div ng-repeat="play in plays">Play Number: {{play.id}}</div>-->
-          <krossover-plays data-expand-all="expandAll" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="league" data-videoplayer="VideoPlayer"></krossover-plays>
+
+          <krossover-plays data-expand-all="expandAll" data-data="data" data-plays="data.plays" data-team="team" data-opposing-team="opposingTeam" data-league="data.league" data-videoplayer="VideoPlayer"></krossover-plays>
+
+
           <div class="expandrow">
             <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
             <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>

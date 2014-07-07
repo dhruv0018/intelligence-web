@@ -8,95 +8,44 @@ var angular = window.angular;
 var Team = angular.module('Coach.Team');
 
 /**
- * Coach team page data service.
- * @module Team
- * @type {service}
- */
-Team.service('Coach.Team.Data', [
-    '$q', 'SessionService', 'TeamsFactory', 'PlayersFactory', 'Coach.Data',
-    function($q, session, teams, players, data) {
-        var teamId = session.currentUser.currentRole.teamId;
-
-        if (!teamId) return $q.reject(new Error('Could not get current users team'));
-
-        var team = teams.get(teamId).$promise;
-
-        var roster = team.then(function(team) {
-
-            if (team.roster) {
-
-                return players.getList({ roster: team.roster.id }).$promise.then(function(playersList) {
-
-                    return playersList;
-
-                }, function() {
-
-                    return [];
-                });
-            }
-
-            else return [];
-        });
-
-        var rosterId = team.then(function(team) {
-
-            if (team.roster) {
-
-                return team.roster.id;
-            }
-
-            else {
-
-                team.roster = {
-
-                    teamId: team.id
-                };
-
-                return team.save().then(function() {
-
-                    return teams.get(teamId).$promise.then(function(team) {
-
-                        return team.roster.id;
-                    });
-                });
-            }
-        });
-
-        var teamData = {
-            coachData: data,
-            team: team,
-            rosterId: rosterId,
-            roster: roster
-        };
-
-        return $q.all(teamData);
-    }
-]);
-
-/**
  * Team controller.
  * @module Team
  * @name Team.controller
  * @type {controller}
  */
 Team.controller('Coach.Team.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Team.Data', 'PlayersFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Data', 'PlayersFactory', 'UsersFactory', 'SessionService',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users, session) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
         $scope.playersFactory = players;
         $scope.usersFactory = users;
+
         $scope.data = data;
 
+        //toggles between player views
         $scope.filtering = [
             {type: 'active'},
             {type: 'inactive'}
         ];
 
-        if (typeof $scope.data.coachData.roster !== 'undefined') {
-            $scope.data.roster = $scope.data.coachData.roster;
-        }
+        //Collections
+        $scope.teams = $scope.data.teams.getCollection();
+        $scope.leagues = $scope.data.leagues.getCollection();
+
+        //Team
+        $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
+
+        //League
+        $scope.league = $scope.leagues[$scope.team.leagueId];
+
+        //Positions
+        $scope.positions = $scope.data.positionSets.getCollection()[$scope.league.positionSetId].indexedPositions;
+
+        //Roster
+        $scope.roster = $scope.data.playersList;
+        $scope.rosterId = $scope.teams[session.currentUser.currentRole.teamId].roster.id;
 
         alerts.add({
             type: 'warning',
@@ -104,21 +53,21 @@ Team.controller('Coach.Team.controller', [
         });
 
 
-        angular.forEach($scope.data.roster, function(player) {
-            player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+        angular.forEach($scope.roster, function(player) {
+            player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
         });
 
         $scope.singleSave = function(player) {
-            var tempPlayer = players.getPositionsFromDowndown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+            var tempPlayer = players.getPositionsFromDowndown(player, $scope.rosterId, $scope.positions);
 
-            players.singleSave($scope.data.rosterId, tempPlayer).then(function(responsePlayer) {
+            players.singleSave($scope.rosterId, tempPlayer).then(function(responsePlayer) {
                 angular.extend(player, player, responsePlayer);
-                player = players.constructPositionDropdown(player, $scope.data.rosterId, $scope.data.coachData.positionSet.indexedPositions);
+                player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
 
                 if (player.userId) {
                     if (typeof $scope.data.coachData.users[player.userId] === 'undefined') {
-                        users.get(player.userId, function(user) {
-                            $scope.data.coachData.users[player.userId] = user.id;
+                        users.fetch(player.userId, function(user) {
+                            $scope.data.users[player.userId] = user.id;
                         });
                     }
                 }
@@ -127,7 +76,7 @@ Team.controller('Coach.Team.controller', [
         };
 
         $scope.sortPlayers = function(player) {
-            return Number(player.jerseyNumbers[data.rosterId]);
+            return Number(player.jerseyNumbers[$scope.rosterId]);
         };
     }
 ]);
