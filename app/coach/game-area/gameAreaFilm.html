@@ -10,12 +10,12 @@
             <i class="icon icon-chevron-down"></i>
         </a>
 
-        <span ng-repeat="filter in activeFilters track by $index" class="btn btn-default active-filter">
+        <span data-ng-repeat="filter in activeFilters track by $index" class="btn btn-default active-filter">
             {{filter.name}}
             <i data-ng-click="removeFilter($index)" class="icon icon-remove"></i>
         </span>
 
-        <a ng-show="activeFilters.length > 0" ng-click="clearFilters()">
+        <a data-ng-show="activeFilters.length > 0" ng-click="clearFilters()">
             Clear
         </a>
 
@@ -27,19 +27,19 @@
                     </a>
                 </div>
                 <div>
-                    <a class="btn" ng-click="setTeam(game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
+                    <a class="btn" data-ng-click="setTeam(game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
                         {{teams[game.opposingTeamId].name}}
                     </a>
                 </div>
             </li>
 
             <li>
-                <div ng-repeat="(key,value) in filtersetCategories">
+                <div data-ng-repeat="(key,value) in filtersetCategories">
                     <a data-ng-click="setFilterCategory(value.id)" class="btn" data-ng-class="{'btn-default':(value.id !== filterCategory), 'btn-primary':(value.id === filterCategory)}">{{value.name}}</a>
                 </div>
             </li>
             <li>
-                <div ng-repeat="(key,value) in filtersetCategories">
+                <div data-ng-repeat="(key,value) in filtersetCategories">
                     <div ng-repeat="(innerkey, innerValue) in value.subFilters">
                         <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="dropdown-toggle btn"  data-ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
@@ -55,9 +55,9 @@
 </div>
 
 <div class="game-area-film">
-        <aside ng-if="gameStatus === 'INDEXED'"  class="sidebar">
+        <aside data-ng-if="gameStatus === 'INDEXED'"  class="sidebar">
 
-          <krossover-plays data-expand-all="expandAll" data-data="data" data-plays="data.plays" data-team="team" data-opposing-team="opposingTeam" data-league="data.league" data-videoplayer="VideoPlayer"></krossover-plays>
+          <krossover-plays data-expand-all="expandAll" data-data="data" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="data.league" data-videoplayer="VideoPlayer"></krossover-plays>
 
 
           <div class="expandrow">
