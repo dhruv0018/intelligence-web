@@ -9,7 +9,8 @@
         "delete-game",
         "film-breakdown",
         "excel-upload",
-        "basic-modals"
+        "basic-modals",
+        "athlete-info"
     ],
     "scripts": [
         "index.js"
