@@ -102,21 +102,18 @@ Games.controller('indexer-games.Controller', [
 
         }).map(function(game) {
 
+            game.timeLeft = 'None';
+
             var currentAssignment = game.currentAssignment();
 
             if (currentAssignment) {
 
-                var now = new Date();
-                var deadline = new Date(currentAssignment.deadline);
+                var now = Date.now();
+                var deadline = new Date(currentAssignment.deadline).getTime();
 
                 var timeLeft = deadline - now;
 
-                if (timeLeft < 0) {
-
-                    game.timeLeft = 'None';
-                }
-
-                else {
+                if (angular.isNumber(timeLeft) && timeLeft > 0) {
 
                     game.timeLeft = moment.duration(timeLeft, 'milliseconds').humanize();
                 }
