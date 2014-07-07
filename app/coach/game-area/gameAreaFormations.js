@@ -33,9 +33,12 @@ GameAreaFormations.config([
             },
             resolve: {
                 'Coach.FormationReport.Data': [
-                    '$q', 'Coach.FormationReport.Data',
+                    '$q', 'Coach.Data',
                     function($q, data) {
-                        return $q.all(data);
+                        return data.game.getFormationReport().$promise.then(function(formationReport) {
+                            data.formationReport = formationReport;
+                            return data;
+                        });
                     }
                 ]
             }
@@ -46,39 +49,16 @@ GameAreaFormations.config([
     }
 ]);
 
-/**
- * Coach Formation Data service.
- * @module Game Area Formation
- * @type {service}
- */
-GameAreaFormations.service('Coach.FormationReport.Data', [
-    '$q', 'Coach.Data', 'PlaysFactory',
-    function service($q, data, plays) {
-        var Data = {};
-//            data: data,
-//            plays: data.then(function(data) {
-//                var promisedPlays = $q.defer();
-//                plays.getList(data.game.id, function(plays) {
-//                    promisedPlays.resolve(plays);
-//                }, null, true);
-//                return promisedPlays.promise;
-//            })
-//        };
-//
-        return Data;
-    }
-]);
-
 GameAreaFormations.controller('GameAreaFormationsController', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'Coach.FormationReport.Data',
     function controller($scope, $state, $stateParams, games, data) {
+
         $scope.plays = data.plays;
-        $scope.league = data.data.league;
-        $scope.team = data.data.team;
-        $scope.teams = data.data.teams;
+        $scope.league = data.league;
+        $scope.teams = data.teams.getCollection();
         $scope.teamId = $scope.game.teamId;
         $scope.opposingTeamId = $scope.game.opposingTeamId;
-        $scope.report = $scope.game.formationReport;
+        $scope.report = data.formationReport;
 
         $scope.redzone = 'false';
         $scope.$watch('redzone', function(redzone) {
