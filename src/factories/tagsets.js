@@ -31,7 +31,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             getNextTags: function(tagId) {
 
-                var tags = this.tags;
+                var tags = this.getIndexedTags();
                 var tag = tags[tagId];
 
                 if (tag.children.length) {
@@ -49,7 +49,10 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             isEndTag: function(tagId) {
 
-                return this.tags[tagId].isEnd;
+                var tags = this.getIndexedTags();
+                var tag = tags[tagId];
+
+                return tag.isEnd;
             },
 
             getTagsByType: function(type) {
