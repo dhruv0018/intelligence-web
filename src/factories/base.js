@@ -33,6 +33,29 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
+             * Removes extended properties of the resource.
+             * @param {Resource} resource - a user resource object.
+             */
+            unextend: function(resource) {
+
+                var self = this;
+
+                resource = resource || self;
+
+                /* Create a copy of the resource to break reference to orginal. */
+                var copy = angular.copy(resource);
+
+                /* Remove known local properties. */
+                delete copy.description;
+                delete copy.resource;
+                delete copy.storage;
+
+                /* TODO: Remove other properties that should not exist. */
+
+                return copy;
+            },
+
+            /**
              * Gets a single resource by ID.
              * @param {Number} id - a resource ID.
              * @returns {Resource} - a resource.
@@ -320,14 +343,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 managedResources.reset(resource);
 
                 /* Create a copy of the resource to save to the server. */
-                var copy = angular.copy(resource);
-
-                /* Remove known local properties. */
-                delete copy.description;
-                delete copy.resource;
-                delete copy.storage;
-
-                /* TODO: Remove other properties that should not exist. */
+                var copy = self.unextend(resource);
 
                 parameters = {};
 
