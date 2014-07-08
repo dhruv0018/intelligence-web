@@ -58,11 +58,14 @@ GameAreaFilm.controller('GameAreaFilmController', [
         };
 
         $scope.clearFilters  = function() {
-            $scope.plays = $scope.totalPlays;
             $scope.activeFilters = [];
         };
 
         $scope.$watch('activeFilters', function(activeFilters) {
+            if (activeFilters.length === 0) {
+                $scope.plays = $scope.totalPlays;
+            }
+
             if (activeFilters.length > 0) {
                 var recombining = false;
 
@@ -71,7 +74,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
                     plays: $scope.totalPlays,
                     teamId: $scope.teamId
                 };
-                console.log($scope.resources);
 
                 var lastFilter = activeFilters[activeFilters.length - 1];
 
@@ -107,11 +109,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
                 }
 
             }
-
-            if (activeFilters.length === 0) {
-                $scope.plays = $scope.totalPlays;
-            }
-
         }, true);
 
         $scope.recursiveFilter = function(activeFilters) {
@@ -131,7 +128,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
             }, $scope.resources, function(filteredPlays) {
 
                 $scope.plays = filteredPlays[$scope.game.id];
-                console.log($scope.plays);
                 $scope.resources = {
                     game: $scope.game,
                     plays: $scope.plays,

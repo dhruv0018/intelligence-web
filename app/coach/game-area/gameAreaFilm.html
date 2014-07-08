@@ -15,14 +15,14 @@
             <i data-ng-click="removeFilter($index)" class="icon icon-remove"></i>
         </span>
 
-        <a data-ng-show="activeFilters.length > 0" ng-click="clearFilters()">
+        <a data-ng-show="activeFilters.length > 0" data-ng-click="clearFilters()">
             Clear
         </a>
 
-        <ul ng-click="$event.stopPropagation();" class="dropdown-menu">
+        <ul data-ng-click="$event.stopPropagation();" class="dropdown-menu">
             <li>
                 <div>
-                    <a class="btn" ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
+                    <a class="btn" data-ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
                         {{teams[game.teamId].name}}
                     </a>
                 </div>
@@ -40,7 +40,7 @@
             </li>
             <li>
                 <div data-ng-repeat="(key,value) in filtersetCategories">
-                    <div ng-repeat="(innerkey, innerValue) in value.subFilters">
+                    <div data-ng-repeat="(innerkey, innerValue) in value.subFilters">
                         <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="dropdown-toggle btn"  data-ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
