@@ -356,10 +356,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* If the resource is new. */
                 } else {
 
-                    /* Immediately add the resource to storage. */
-                    self.storage.list.push(resource);
-                    self.storage.collection[resource.id] = resource;
-
                     /* Make a POST request to the server to create the resource. */
                     var create = self.resource.create(parameters, copy, success, error);
 
@@ -369,10 +365,9 @@ IntelligenceWebClient.factory('BaseFactory', [
                         /* Update local resource with server resource. */
                         angular.extend(resource, self.extend(created));
 
-                        /* Update the resource in storage. */
-                        self.storage.list[self.storage.list.indexOf(resource)] = resource;
+                        /* Add the resource to storage. */
+                        self.storage.list.push(resource);
                         self.storage.collection[resource.id] = resource;
-                        self.storage.collection[resource[undefined]] = resource;
 
                         return resource;
                     });
