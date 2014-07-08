@@ -458,14 +458,11 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!assignment) return timeLeft;
 
-                var now = Date.now();
-                var deadline = new Date(assignment.deadline).getTime();
+                var deadline = moment.utc(assignment.deadline);
 
-                var remaining = deadline - now;
+                if (deadline.isAfter()) {
 
-                if (angular.isNumber(remaining) && remaining > 0) {
-
-                    timeLeft = moment.duration(remaining, 'milliseconds').humanize();
+                    timeLeft = deadline.fromNow(true);
                 }
 
                 return timeLeft;
