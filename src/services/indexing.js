@@ -15,6 +15,11 @@ IntelligenceWebClient.factory('IndexingService', [
 
             plays: [],
 
+            reset: function(game) {
+
+                this.game = game;
+            },
+
             calculateScore: function(calculatedPlay) {
                 var plays = this.plays;
                 var game = this.game;
