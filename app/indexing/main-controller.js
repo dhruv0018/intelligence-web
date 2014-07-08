@@ -22,7 +22,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
         var self = this;
 
-        var gameId = $stateParams.id;
+        var gameId = Number($stateParams.id);
 
         /* Scope */
 
