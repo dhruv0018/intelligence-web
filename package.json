@@ -43,9 +43,9 @@
         "font-awesome": "FortAwesome/Font-Awesome#v3.2.1"
     },
     "dependencies": {
-        "moment": "2.7.0"
     },
     "devDependencies": {
+        "moment": "2.7.0",
         "browserify": "4.1.10",
         "browserify-shim": "3.5.0",
         "builder-html-minifier": "1.0.0",
