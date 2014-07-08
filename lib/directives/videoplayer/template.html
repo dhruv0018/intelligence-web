@@ -14,13 +14,7 @@
 
         <x-krossover-play-pause-button class="video-control"></x-krossover-play-pause-button>
 
-        <data-vg-scrubbar class="video-control">
-
-            <data-vg-scrubbarcurrenttime></data-vg-scrubbarcurrenttime>
-
-        </data-vg-scrubbar>
-
-        <data-vg-timedisplay class="video-control"><span class="time-current">{{ currentClipTime | secondsToTime }}</span> <span class="time-divider">/</span> {{ clipEndTimeReal | secondsToTime }}</data-vg-timedisplay>
+        <data-vg-timedisplay class="video-control"><span class="time-current">{{ currentClipTime - playStartTime | secondsToTime }}</span> <span class="time-divider">/</span> {{ playEndTime - playStartTime | secondsToTime }}</data-vg-timedisplay>
 
         <x-krossover-fast-backward-button class="video-control"></x-krossover-fast-backward-button>
         <x-krossover-fast-forward-button class="video-control"></x-krossover-fast-forward-button>
