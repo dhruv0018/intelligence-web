@@ -24,9 +24,9 @@ Users.controller('Users.User.Controller', [
         $scope.auth = auth;
         $scope.users = users;
 
-        $stateParams.id = $stateParams.id || undefined;
+        var userId = $stateParams.id;
 
-        $scope.user = data.users.get($stateParams.id);
+        $scope.user = data.users.get(userId);
 
         $scope.user.newRoles = [];
 
@@ -46,7 +46,7 @@ Users.controller('Users.User.Controller', [
                 session.storeCurrentUser(user);
             }
 
-            users.save(user);
+            user.save();
 
             $state.go('users');
         };
