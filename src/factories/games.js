@@ -450,22 +450,22 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
 
-            timeLeftOnAssignment: function(assignment) {
+            assignmentTimeRemaining: function(assignment) {
 
-                var timeLeft = 'None';
+                var remaining = 'None';
 
                 assignment = assignment || this.currentAssignment();
 
-                if (!assignment) return timeLeft;
+                if (!assignment) return remaining;
 
                 var deadline = moment.utc(assignment.deadline);
 
                 if (deadline.isAfter()) {
 
-                    timeLeft = deadline.fromNow(true);
+                    remaining = deadline.fromNow(true);
                 }
 
-                return timeLeft;
+                return remaining;
             },
 
             setAsideFromIndexing: function() {
