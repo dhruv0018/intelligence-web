@@ -21,8 +21,7 @@
                         <p>Ends: {{ plan.endDate | date : 'MMM d/yy' }}</p>
                     </td>
                     <td>
-                        <p>{{ plan.maxRegularGames }} Regular Games</p>
-                        <p>{{ plan.maxScoutingGames }} Scouting/Practice</p>
+                        <p>{{ plan.maxAnyGames }} Games</p>
                     </td>
                     <td>{{ minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{ plan.maxTurnaroundTime }} hour Turnaround Time</td>
                 </tr>
