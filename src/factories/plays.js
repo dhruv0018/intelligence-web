@@ -144,9 +144,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     return newPlay.$create().then(function(play) {
 
-                        play = self.extend(play);
                         play.events = events;
-                        return play.save();
+                        return self.save(play);
                     });
                 }
             },
