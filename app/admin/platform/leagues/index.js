@@ -86,7 +86,7 @@ Leagues.config([
 ]);
 
 Leagues.service('Leagues.Data.Dependencies', [
-    'LeaguesFactory', 'SportsFactory', 'TagsetsFactory', 'PositionsetsFactory',
+    'LeaguesFactory', 'SportsFactory', 'TagsetsFactory', 'PositionsetsFactory', 'FiltersetsFactory',
     function dataService(leagues, sports, tagsets, positionsets) {
 
         var Data = {};
@@ -117,6 +117,7 @@ Leagues.controller('LeagueController', [
         $scope.indexedSports = data.sports.getCollection();
         $scope.tagsets = data.tagsets.getList();
         $scope.positionsets = data.positionsets.getList();
+        $scope.filtersets = data.filtersets.getList();
 
         $scope.genders = ['male', 'female', 'coed'];
 
