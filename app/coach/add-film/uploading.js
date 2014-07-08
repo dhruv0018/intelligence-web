@@ -55,9 +55,11 @@ UploadingFilm.config([
  * @type {Controller}
  */
 UploadingFilm.controller('UploadingFilmController', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
-    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, players, data) {
+    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'PlayersFactory', 'GAME_STATUSES', 'Coach.Data',
+    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, players, GAME_STATUSES, data) {
 
+        $scope.isDefined = angular.isDefined;
+        $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.games = games;
 
         var deleteVideo = function() {

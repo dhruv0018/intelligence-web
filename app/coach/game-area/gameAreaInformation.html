@@ -1,5 +1,10 @@
 <div class="game-area-game-information">
-    <div class="broken-down" data-ng-if="">This game was broken down and returned on {{ returnedDate | date:'mediumDate' }}</div>
+    <div class="broken-down">
+        <span data-ng-if="game.status === GAME_STATUSES['INDEXED'].id">This game was broken down and returned on {{ returnedDate | date:'mediumDate' }}</span>
+        <span data-ng-if="game.status > GAME_STATUSES['READY_FOR_INDEXING'].id && game.status < GAME_STATUSES['INDEXED'].id">
+            This game is currently being broken down.
+        </span>
+    </div>
 
     <div class="info-container">
         <krossover-coach-game data-data="data"></krossover-coach-game>
