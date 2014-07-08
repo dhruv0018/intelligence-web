@@ -44,7 +44,19 @@ IntelligenceWebClient.factory('BaseFactory', [
                 if (!self.storage) throw new Error(self.description + ' storage not defined');
                 if (!self.storage.collection) throw new Error(self.description + ' not loaded');
 
-                var resource = self.storage.collection[id];
+                var resource;
+
+                /* If given and ID lookup the resource in storage. */
+                if (id) {
+
+                    resource = self.storage.collection[id];
+                }
+
+                /* If no ID, then assume the unsaved resource. */
+                else {
+
+                    resource = self.storage.unsaved;
+                }
 
                 managedResources.backup(resource);
 
@@ -100,10 +112,9 @@ IntelligenceWebClient.factory('BaseFactory', [
                 resource = self.extend(resource);
 
                 /* Add the resource to storage. */
-                self.storage.list.push(resource);
-                self.storage.collection[resource.id] = resource;
+                self.storage.unsaved = resource;
 
-                return self.storage.collection[resource.id];
+                return resource;
             },
 
             /**
