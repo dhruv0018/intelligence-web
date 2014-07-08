@@ -654,7 +654,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!assignment) return false;
 
-                var deadline = moment.utc(Date.parse(assignment.deadline));
+                var deadline = moment.utc(assignment.deadline);
 
                 /* Ensure the current assignments deadline has not expired. */
                 if (deadline.isBefore()) return false;
