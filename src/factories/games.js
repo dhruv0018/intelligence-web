@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 var PAGE_SIZE = 20;
 
 var package = require('../../package.json');
@@ -652,11 +654,10 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!assignment) return false;
 
-                var now = Date.now();
-                var deadline = new Date(assignment.deadline).getTime();
+                var deadline = moment.utc(Date.parse(assignment.deadline));
 
                 /* Ensure the current assignments deadline has not expired. */
-                if (deadline < now) return false;
+                if (deadline.isBefore()) return false;
 
                 switch (self.status) {
 
