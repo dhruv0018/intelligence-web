@@ -450,6 +450,27 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
 
+            timeLeftOnAssignment: function(assignment) {
+
+                var timeLeft = 'None';
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return timeLeft;
+
+                var now = Date.now();
+                var deadline = new Date(assignment.deadline).getTime();
+
+                var remaining = deadline - now;
+
+                if (angular.isNumber(remaining) && remaining > 0) {
+
+                    timeLeft = moment.duration(remaining, 'milliseconds').humanize();
+                }
+
+                return timeLeft;
+            },
+
             setAsideFromIndexing: function() {
 
                 var self = this;

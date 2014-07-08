@@ -99,27 +99,6 @@ Games.controller('indexer-games.Controller', [
         $scope.games = data.games.getList().filter(function(game) {
 
             return game.isAssignedToUser(session.currentUser.id);
-
-        }).map(function(game) {
-
-            game.timeLeft = 'None';
-
-            var currentAssignment = game.currentAssignment();
-
-            if (currentAssignment) {
-
-                var now = Date.now();
-                var deadline = new Date(currentAssignment.deadline).getTime();
-
-                var timeLeft = deadline - now;
-
-                if (angular.isNumber(timeLeft) && timeLeft > 0) {
-
-                    game.timeLeft = moment.duration(timeLeft, 'milliseconds').humanize();
-                }
-            }
-
-            return game;
         });
     }
 ]);
