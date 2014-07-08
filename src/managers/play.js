@@ -99,23 +99,11 @@ IntelligenceWebClient.service('PlayManager', [
             var play = this.current;
             var playIndex = indexing.plays.indexOf(play);
 
-            plays.save(play).then(
+            plays.save(play).then(function(play) {
 
-                function success(play) {
-
-                    indexing.plays[playIndex] = play;
-                    indexing.plays[playIndex].score = indexing.calculateScore(play.id);
-                },
-
-                function error() {
-
-                    alerts.add({
-
-                        type: 'danger',
-                        message: 'Failed to save play'
-                    });
-                }
-            );
+                indexing.plays[playIndex] = play;
+                indexing.plays[playIndex].score = indexing.calculateScore(play.id);
+            });
         };
     }
 ]);
