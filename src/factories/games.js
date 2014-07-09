@@ -1,3 +1,7 @@
+var PAGE_SIZE = 20;
+
+var moment = require('moment');
+
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -480,11 +484,10 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!assignment) return false;
 
-                var now = new Date();
-                var deadline = new Date(assignment.deadline);
+                var deadline = moment.utc(assignment.deadline);
 
                 /* Ensure the current assignments deadline has not expired. */
-                if (deadline < now) return false;
+                if (deadline.isBefore()) return false;
 
                 switch (self.status) {
 
