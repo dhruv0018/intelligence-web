@@ -22,7 +22,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
         var self = this;
 
-        var gameId = $stateParams.id;
+        var gameId = Number($stateParams.id);
 
         /* Scope */
 
@@ -43,10 +43,10 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
 
+        indexing.reset($scope.game, data.plays);
         tags.reset($scope.tagset);
         event.reset($scope.tagset);
         play.reset(gameId);
-        play.clear();
 
         /* Bind keys. */
 
