@@ -149,17 +149,19 @@
 
     <aside class="sidebar sidebar-right">
 
-        <button class="btn-start-indexing" data-ng-disabled="!game.canBeIndexed()" data-ui-sref="indexing({ id: game.id })">
-
+        <button class="btn btn-start-indexing" data-ng-hide="game.canBeQAed()" data-ng-disabled="!game.canBeIndexed()" data-ui-sref="indexing({ id: game.id })">
+            <span data-ng-hide="game.isAssignmentStarted()">Start </span>
+            <span data-ng-show="game.isAssignmentStarted()">Continue</span>
+            <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
+        </button>
+        
+        <button class="btn btn-start-indexing" data-ng-hide="game.canBeIndexed()" data-ng-disabled="!game.canBeQAed()" data-ui-sref="indexing({ id: game.id })">
             <span data-ng-hide="game.isAssignmentStarted()">Start </span>
             <span data-ng-show="game.isAssignmentStarted()">Continue </span>
-
-            <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
-            <span data-ng-show="game.isAssignedToQa()">QA</span>
-
+            <span>QA</span>
             <i class="icon icon-chevron-right pull-right"></i>
-
         </button>
+
 
         <ul>
 
