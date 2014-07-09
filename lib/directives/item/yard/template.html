@@ -2,6 +2,6 @@
 
     <button class="dropdown" data-ng-if="event.variableValues[item.index].value !== null" data-ng-click="event.variableValues[item.index].value = null">{{ event.variableValues[item.index].value }}</button>
 
-    <input class="dropdown" size="3" data-ng-if="event.variableValues[item.index].value === null" data-ng-model="variable.value" data-ng-required="item.isRequired" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
+    <input class="dropdown" size="3" data-ng-if="event.variableValues[item.index].value === null" data-ng-model="variable.value" data-ng-required="item.isRequired" tabindex="{{ item.index }}" data-ng-blur="event.variableValues[item.index].value = variable.value" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
 
 </span>
