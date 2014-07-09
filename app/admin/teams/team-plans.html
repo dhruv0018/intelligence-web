@@ -21,7 +21,8 @@
                         <p>Ends: {{ plan.endDate | date : 'MMM d/yy' }}</p>
                     </td>
                     <td>
-                        <p>{{ plan.maxAnyGames }} Games</p>
+                        <p>{{ plan.maxAnyGames }} Breakdowns per week</p>
+                        <p>{{ plan.maxGamesPerPlan }} Max Breakdowns per Season</p>
                     </td>
                     <td>{{ minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{ plan.maxTurnaroundTime }} hour Turnaround Time</td>
                 </tr>

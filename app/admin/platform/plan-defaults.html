@@ -12,7 +12,8 @@
                 <tr>
                     <th>Plan Name</th>
                     <th>Plan Dates</th>
-                    <th>Max Games per Season</th>
+                    <th>Max Breakdowns per Season</th>
+                    <th>Breakdowns per week</th>
                     <th>Turnaround Time</th>
                     <th>Applies to Leagues</th>
                 </tr>
@@ -22,6 +23,7 @@
 
                     <td><a data-ng-click="editPlan(plan)">{{ plan.name }}</a></td>
                     <td>{{ plan.startMonth | monthFilter }} {{ plan.startDay }} - {{ plan.endMonth | monthFilter }} {{plan.endDay }}</td>
+                    <td>{{ plan.maxGamesPerPlan }}</td>
                     <td>{{ plan.maxAnyGames }}</td>
                     <td>{{ turnaroundTimeMinTimeLookup[plan.maxTurnaroundTime] }}-{{ plan.maxTurnaroundTime }} hrs</td>
                     <td><ul><li data-ng-repeat="leagueId in plan.leagueIds">{{ indexedLeagues[leagueId].name }}</li></ul></td>
