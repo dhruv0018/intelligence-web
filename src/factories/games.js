@@ -492,7 +492,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 if (self.deadlinePassed()) {
-                    console.log('the deadline passed');
                     return false;
                 }
 
