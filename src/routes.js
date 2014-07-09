@@ -75,7 +75,7 @@ IntelligenceWebClient.run([
             else if (!authz.isAuthorized(toState)) {
 
                 event.preventDefault();
-                $state.go('401');
+                $state.go('login');
             }
 
             /* Check to see if the OAuth tokens have been set, if so then
