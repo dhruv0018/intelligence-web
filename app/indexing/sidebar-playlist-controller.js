@@ -34,9 +34,9 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
             indexing.showScript = true;
 
             /* Set the current time to the time from the selected event. */
-            console.log($scope);
-            if (VideoPlayer) VideoPlayer.pause();
-            //VideoPlayer.seekTime(selectedEvent.time);
+            VideoPlayer.then(function(vp) {
+                VideoPlayer.pause();
+            });
 
             /* Set the current play and event to match the selected event. */
             play.current = selectedPlay;
