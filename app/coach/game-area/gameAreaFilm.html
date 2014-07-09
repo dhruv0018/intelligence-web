@@ -4,44 +4,43 @@
 
         <!--<span class="playall"><i class="icon icon-play-sign"></i> Play All</span>-->
     </div>
-
     <div class="filter-dropdown pull-left dropdown">
         <a class="dropdown-toggle">
             Filter Plays
             <i class="icon icon-chevron-down"></i>
         </a>
 
-        <span ng-repeat="filter in activeFilters track by $index" class="btn btn-default active-filter">
+        <span data-ng-repeat="filter in activeFilters track by $index" class="btn btn-default active-filter">
             {{filter.name}}
             <i data-ng-click="removeFilter($index)" class="icon icon-remove"></i>
         </span>
 
-        <a ng-show="activeFilters.length > 0" ng-click="clearFilters()">
+        <a data-ng-show="activeFilters.length > 0" data-ng-click="clearFilters()">
             Clear
         </a>
 
-        <ul ng-click="$event.stopPropagation();" class="dropdown-menu">
+        <ul data-ng-click="$event.stopPropagation();" class="dropdown-menu">
             <li>
                 <div>
-                    <a class="btn" ng-click="setTeam(team.id)" data-ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
-                        {{team.name}}
+                    <a class="btn" data-ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
+                        {{teams[game.teamId].name}}
                     </a>
                 </div>
                 <div>
-                    <a class="btn" ng-click="setTeam(opposingTeam.id)" data-ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
-                        {{opposingTeam.name}}
+                    <a class="btn" data-ng-click="setTeam(game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
+                        {{teams[game.opposingTeamId].name}}
                     </a>
                 </div>
             </li>
 
             <li>
-                <div ng-repeat="(key,value) in filtersetCategories">
+                <div data-ng-repeat="(key,value) in filtersetCategories">
                     <a data-ng-click="setFilterCategory(value.id)" class="btn" data-ng-class="{'btn-default':(value.id !== filterCategory), 'btn-primary':(value.id === filterCategory)}">{{value.name}}</a>
                 </div>
             </li>
             <li>
-                <div ng-repeat="(key,value) in filtersetCategories">
-                    <div ng-repeat="(innerkey, innerValue) in value.subFilters">
+                <div data-ng-repeat="(key,value) in filtersetCategories">
+                    <div data-ng-repeat="(innerkey, innerValue) in value.subFilters">
                         <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="dropdown-toggle btn"  data-ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
@@ -56,9 +55,11 @@
 </div>
 
 <div class="game-area-film">
-        <aside ng-if="gameStatus === 'INDEXED'"  class="sidebar">
-          <!--<div ng-repeat="play in plays">Play Number: {{play.id}}</div>-->
-          <krossover-plays data-expand-all="expandAll" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="league" data-videoplayer="VideoPlayer"></krossover-plays>
+        <aside data-ng-if="gameStatus === 'INDEXED'"  class="sidebar">
+
+          <krossover-plays data-expand-all="expandAll" data-data="data" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="data.league" data-videoplayer="VideoPlayer"></krossover-plays>
+
+
           <div class="expandrow">
             <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
             <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>

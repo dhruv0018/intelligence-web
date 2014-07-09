@@ -1,9 +1,13 @@
 <div class="game-area-game-information">
-
-    <div class="broken-down" data-ng-if="isIndexed">This game was broken down and returned on {{ returnedDate | date:'mediumDate' }}</div>
+    <div class="broken-down">
+        <span data-ng-if="game.status === GAME_STATUSES['INDEXED'].id">This game was broken down and returned on {{ returnedDate | date:'mediumDate' }}</span>
+        <span data-ng-if="game.status > GAME_STATUSES['READY_FOR_INDEXING'].id && game.status < GAME_STATUSES['INDEXED'].id">
+            This game is currently being broken down.
+        </span>
+    </div>
 
     <div class="info-container">
-	    <krossover-coach-game data-game="game" data-roster="teamGameRoster" data-opposing-team-roster="opposingTeamGameRoster"></krossover-coach-game>
+        <krossover-coach-game data-data="data"></krossover-coach-game>
 
 	    <a class="game-remove" ng-click="confirmation()">
 	        <i class="icon icon-remove"></i> Delete this game and all the data associated with it

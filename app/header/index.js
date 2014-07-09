@@ -45,7 +45,7 @@ Header.config([
                 },
                 resolve: {
                     'Base.Data': [
-                        '$q', 'Base.Data',
+                        '$q', 'Base.Data.Dependencies',
                         function($q, data) {
                             return $q.all(data);
                         }
@@ -56,11 +56,12 @@ Header.config([
 ]);
 
 
-Header.service('Base.Data', [
+Header.service('Base.Data.Dependencies', [
     'SportsFactory',
     function(sports) {
 
         var Data = {
+
             sports: sports.load()
         };
 
@@ -76,8 +77,8 @@ Header.service('Base.Data', [
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'Coach.Game.Tabs',
-    function controller(config, $scope, $state, auth, session, account, ROLES, tabs) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES',
+    function controller(config, $scope, $state, auth, session, account, ROLES) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
@@ -90,16 +91,12 @@ Header.controller('HeaderController', [
 
         $scope.account = account;
 
-        $scope.currentUser = session.currentUser;
-
         $scope.logout = function() {
 
             auth.logoutUser();
             $state.go('login');
             location.reload();
         };
-
-        $scope.tabs = tabs;
     }
 ]);
 

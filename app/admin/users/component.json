@@ -13,8 +13,8 @@
         "states.js",
         "filters.js",
         "directives.js",
-        "user-service.js",
         "user-controller.js",
+        "new-user-controller.js",
         "user-info-controller.js",
         "user-roles-controller.js",
         "users-controller.js"

@@ -14,26 +14,27 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.User.Controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'SessionService', 'AuthenticationService', 'AlertsService', 'ROLES', 'Users.User.Service', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $stateParams, session, auth, alerts, ROLES, user, users) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'SessionService', 'AuthenticationService', 'AlertsService', 'ROLES', 'Admin.Users.Data', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $stateParams, session, auth, alerts, ROLES, data, users) {
 
         $scope.ROLES = ROLES;
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
 
-        $scope.user = user;
-        $scope.users = users;
         $scope.auth = auth;
+        $scope.users = users;
 
-        user = user || {};
-        user.newRoles = [];
+        var userId = $stateParams.id;
+
+        $scope.user = data.users.get(userId);
+
+        $scope.user.newRoles = [];
 
         /* If the user has roles, use a known role. */
-        if (user.roles) {
+        if ($scope.user.roles) {
 
-            /* Set the role to the users default role, or
-            * their first role if no default is set. */
-            $scope.userrole = user.getDefaultRole() || user.roles[0] || undefined;
+            /* Set the role to the users default role, or their first role if no default is set. */
+            $scope.role = $scope.user.getDefaultRole() || $scope.user.roles[0] || undefined;
         }
 
         $scope.save = function(user) {
@@ -45,10 +46,9 @@ Users.controller('Users.User.Controller', [
                 session.storeCurrentUser(user);
             }
 
-            users.save(user).then(function() {
+            user.save();
 
-                $state.go('users');
-            });
+            $state.go('users');
         };
     }
 ]);

@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Modal.AddIndexerNote.Controller', [
-    '$scope', '$modalInstance', 'GAME_NOTE_TYPES', 'IndexingService', 'TeamsFactory', 'UsersFactory',
-    function controller($scope, $modalInstance, GAME_NOTE_TYPES, indexing, teams, users) {
+    '$scope', '$modalInstance', 'GAME_NOTE_TYPES', 'Indexing.Data',
+    function controller($scope, $modalInstance, GAME_NOTE_TYPES, data) {
 
         $scope.GAME_NOTE_TYPES = GAME_NOTE_TYPES;
 
@@ -24,23 +24,15 @@ Indexing.controller('Indexing.Modal.AddIndexerNote.Controller', [
             content: ''
         };
 
-        indexing.game.notes = indexing.game.notes || {};
-        indexing.game.notes[GAME_NOTE_TYPES.QA_NOTE] = indexing.game.notes[GAME_NOTE_TYPES.QA_NOTE] || [qaNote];
+        $scope.game.notes = $scope.game.notes || {};
+        $scope.game.notes[GAME_NOTE_TYPES.QA_NOTE] = $scope.game.notes[GAME_NOTE_TYPES.QA_NOTE] || [qaNote];
 
-        $scope.game = indexing.game;
+        var headCoachRole = $scope.team.getHeadCoachRole();
 
-        teams.get(indexing.team.id, function(team) {
+        if (headCoachRole) {
 
-            var headCoachRole = team.getHeadCoachRole();
-
-            if (headCoachRole) {
-
-                users.get(headCoachRole.userId, function(user) {
-
-                    $scope.headCoach = user;
-                });
-            }
-        });
+            $scope.headCoach = data.users.get(headCoachRole.userId);
+        }
 
         $scope.submit = function() {
             $scope.game.saveNotes().then(function() {

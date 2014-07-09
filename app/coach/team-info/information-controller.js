@@ -14,13 +14,13 @@ var TeamInfo = angular.module('Coach.Team.Info');
  * @type {controller}
  */
 TeamInfo.controller('Coach.Team.Info.Information.controller', [
-    '$rootScope', '$scope', '$state', '$http', 'config', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
-    function controller($rootScope, $scope, $state, $http, config, games, players, data) {
+    '$rootScope', '$scope', '$state', '$http', 'config', 'GamesFactory', 'PlayersFactory', 'Coach.Data', 'SessionService',
+    function controller($rootScope, $scope, $state, $http, config, games, players, data, session) {
         var reader = new FileReader();
+        $scope.data = data;
 
-        data.then(function(data) {
-            $scope.data = data;
-        });
+        //Team
+        $scope.team = $scope.data.teams.getCollection()[session.currentUser.currentRole.teamId];
 
         $scope.setLogo = function(files) {
             $scope.logo = files[0];
@@ -28,7 +28,7 @@ TeamInfo.controller('Coach.Team.Info.Information.controller', [
             reader.readAsDataURL(files[0]);
 
             reader.onload = function() {
-                $scope.data.coachTeam.imageUrl = reader.result;
+                $scope.team.imageUrl = reader.result;
                 $scope.$apply();
             };
         };
@@ -37,14 +37,14 @@ TeamInfo.controller('Coach.Team.Info.Information.controller', [
             var data = new FormData();
             data.append('imageFile', $scope.logo);
 
-            var url = config.api.uri + 'teams/' + $scope.data.coachTeam.id + '/image/file';
+            var url = config.api.uri + 'teams/' + $scope.team.id + '/image/file';
 
             $http.post(url, data, {
                 headers: { 'Content-Type': undefined },
                 transformRequest: angular.identity
             })
             .success(function(team) {
-                data.coachTeam = $scope.data.coachTeam = team;
+                $scope.data.teams.getCollection()[session.currentUser.currentRole.teamId] = team;
             })
             .error(function() {
                 console.log('the image upload failed');

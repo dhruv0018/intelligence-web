@@ -7,7 +7,7 @@
             <div data-ng-if="!athlete.firstName">
                 <p class="pull-left">Add a new player to your roster</p>
                 <a class="pull-right" data-ng-click="cancel()">
-                    <i class="icon-remove"></i>
+                    <i class="icon icon-remove"></i>
                 </a>
             </div>
 
@@ -24,7 +24,7 @@
                     <span data-ng-if="users[athlete.userId].lastAccessed">{{usersFactory.getLastAccessed(users[athlete.userId]) | date: 'mediumDate'}}</span>
 
                     <a data-ng-click="cancel()">
-                        <i class="icon-remove"></i>
+                        <i class="icon icon-remove"></i>
                     </a>
                 </div>
 
@@ -108,8 +108,8 @@
                             </div>
                             <div class="remove-athlete col-md-6">
                                 <a class="pull-right" href data-ng-click="togglePlayer()">
-                                    <span data-ng-if="athlete.id && athlete.rosterStatuses[rosterId] === true"><i class="icon-remove"></i> Remove from current roster</span>
-                                    <span data-ng-if="athlete.id && athlete.rosterStatuses[rosterId] === false"><i class="icon-add"></i> Add player to current roster</span>
+                                    <span data-ng-if="athlete.id && athlete.rosterStatuses[rosterId] === true"><i class="icon icon-remove"></i> Remove from current roster</span>
+                                    <span data-ng-if="athlete.id && athlete.rosterStatuses[rosterId] === false"><i class="icon icon-add"></i> Add player to current roster</span>
                                 </a>
                             </div>
                         </div>
