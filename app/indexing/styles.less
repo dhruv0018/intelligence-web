@@ -69,7 +69,7 @@
 
     .controls {
 
-        text-align: center;
+        text-align: left;
     }
 
     .btn-indexing-main {
@@ -85,6 +85,8 @@
     .btn-indexing-start {
 
         .btn-indexing-main;
+        display: block;
+        margin: auto;
 
         &,
         &:focus,
@@ -115,9 +117,8 @@
     .btn-next,
     .btn-save {
 
-        position: absolute;
-        left: 0;
-        bottom: 10px;
+        position: relative;
+        margin-top: 10px;
     }
 
     .btn-back {
