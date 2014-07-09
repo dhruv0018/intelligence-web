@@ -94,6 +94,8 @@ Games.controller('indexer-games.Controller', [
         $scope.teams = data.teams.getCollection();
         $scope.users = data.users.getCollection();
 
+        $scope.userId = session.currentUser.id;
+
         $scope.games = data.games.getList().filter(function(game) {
 
             return game.isAssignedToUser(session.currentUser.id);
