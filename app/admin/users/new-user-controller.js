@@ -17,13 +17,11 @@ Users.controller('Users.User.New.Controller', [
     '$scope', '$state', '$modalInstance', 'UsersFactory',
     function controller($scope, $state, $modalInstance, users) {
 
-        $scope.user = {};
+        $scope.user = users.create();
 
         $scope.close = function() {
 
-            users.save($scope.user);
-
-            $state.go('user-info', { id: $scope.user.id });
+            $state.go('user-info');
 
             $modalInstance.close();
         };
