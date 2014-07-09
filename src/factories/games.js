@@ -454,6 +454,24 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
 
+            assignmentTimeRemaining: function(assignment) {
+
+                var remaining = 'None';
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return remaining;
+
+                var deadline = moment.utc(assignment.deadline);
+
+                if (deadline.isAfter()) {
+
+                    remaining = deadline.fromNow(true);
+                }
+
+                return remaining;
+            },
+
             setAsideFromIndexing: function() {
 
                 var self = this;

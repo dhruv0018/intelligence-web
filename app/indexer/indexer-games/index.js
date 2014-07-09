@@ -97,30 +97,6 @@ Games.controller('indexer-games.Controller', [
         $scope.games = data.games.getList().filter(function(game) {
 
             return game.isAssignedToUser(session.currentUser.id);
-
-        }).map(function(game) {
-
-            var currentAssignment = game.currentAssignment();
-
-            if (currentAssignment) {
-
-                var now = new Date();
-                var deadline = new Date(currentAssignment.deadline);
-
-                var timeLeft = deadline - now;
-
-                if (timeLeft < 0) {
-
-                    game.timeLeft = 'None';
-                }
-
-                else {
-
-                    game.timeLeft = moment.duration(timeLeft, 'milliseconds').humanize();
-                }
-            }
-
-            return game;
         });
     }
 ]);
