@@ -68,9 +68,7 @@ Games.service('Indexer.Games.Data.Dependencies', [
             teams: teams.load(),
             users: users.load(),
             games: games.load({
-
-                indexerFirstName: currentUser.firstName,
-                indexerLastName: currentUser.lastName
+                assignedUserId: currentUser.id
             })
         };
 
