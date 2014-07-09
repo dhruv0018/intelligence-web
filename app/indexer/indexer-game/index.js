@@ -78,7 +78,6 @@ Game.config([
                         var status = game.getStatus();
                         var indexable = game.isAssignedToIndexer() && game.canBeIndexed();
                         var qaAble = game.isAssignedToQa() && game.canBeQAed();
-                        console.log('gameId: ' + gameId + ' indexable: ' + indexable + 'qaAble: ' + qaAble);
 
                         if (game.isAssignedToUser(userId) && (indexable || qaAble)) {
 
