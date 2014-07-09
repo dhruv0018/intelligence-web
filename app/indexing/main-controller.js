@@ -148,6 +148,7 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.index = function() {
 
+            play.clear();
             indexing.isIndexing = true;
             indexing.showTags = true;
             indexing.showScript = false;
