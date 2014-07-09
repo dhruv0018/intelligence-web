@@ -486,15 +486,17 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Ensure the current assignments deadline has not expired. */
                 if (deadline < now) return false;
 
-                switch (self.status) {
 
-                    case GAME_STATUSES.READY_FOR_INDEXING.id:
-                    case GAME_STATUSES.INDEXING.id:
-                    case GAME_STATUSES.READY_FOR_QA.id:
-                    case GAME_STATUSES.QAING.id:
-                        return true;
+                if (self.status === GAME_STATUSES.INDEXING.id) return true;
+
+                return false;
+            },
+
+            canBeQAed: function() {
+                var self = this;
+                if (!self.canBeIndexed()) {
+                    if (self.status === GAME_STATUSES.QAING.id) return true;
                 }
-
                 return false;
             },
 

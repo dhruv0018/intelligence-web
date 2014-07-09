@@ -55,11 +55,15 @@
 	        			<td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                         <td>{{ game.timeLeft }}</td>
                         <td>
-                            <button class="btn btn-default" data-ng-disabled="!game.canBeIndexed()" data-ui-sref="indexing({ id: game.id })">
+                            <button class="btn btn-default" data-ng-if="!game.canBeIndexed()" data-ui-sref="indexing({ id: game.id })">
                                 <span data-ng-hide="game.isAssignmentStarted()">Start </span>
                                 <span data-ng-show="game.isAssignmentStarted()">Resume </span>
                                 <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
-                                <span data-ng-show="game.isAssignedToQa()">QA</span>
+                            </button>
+                            <button class="btn btn-default" data-ng-if="game.canBeQAed()" data-ui-sref="indexing({ id: game.id })">
+                                <span data-ng-hide="game.isAssignmentStarted()">Start </span>
+                                <span data-ng-show="game.isAssignmentStarted()">Resume </span>
+                                QA
                             </button>
                         </td>
 	        		</tr>
