@@ -138,6 +138,7 @@ IntelligenceWebClient.service('EventManager', [
             }
 
             /* Lookup and set the tag from the indexing tags. */
+            this.current.tagId = tagId;
             this.current.tag = this.tags[tagId];
 
             this.current.time = time;
