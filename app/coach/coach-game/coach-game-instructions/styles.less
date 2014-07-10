@@ -52,7 +52,7 @@
 
         background-color: rgb(246, 249, 253);
 
-        .icon-bar-chart,
+        .icon-bar-chart-o,
         .icon-share-square-o {
 
           color: @brand-primary;
@@ -82,14 +82,13 @@
           margin: 0;
         }
 
-        &.active::after {
-
-          content: '\f00c';
+        &.active > .icon-check-empty::after {
+          content: '\f00f';
           color: @brand-secondary;
           font-size: 40px;
           position: absolute;
-          top: 45px;
-          right: 65px;
+          top: -5px;
+          left: 2px;
           line-height: 100px;
         }
       }
@@ -134,7 +133,7 @@
           color: @brand-success;
         }
 
-        .icon-bar-chart, .icon-share{
+        .icon-bar-chart-o, .icon-share-square-o {
           position:relative;
           border: none;
 
@@ -145,7 +144,7 @@
           }
 
           &::after{
-            content: '\f00c';
+            content: '\f00f';
             position:absolute;
             top: 10px;
             left: 70px;
@@ -168,8 +167,8 @@
       }
     }
 
-    .icon-bar-chart,
-    .icon-share {
+    .icon-bar-chart-o,
+    .icon-share-square-o {
 
       width: 100px;
       height: 100px;
@@ -187,7 +186,7 @@
       }
     }
 
-    .icon-share::before {
+    .icon-share-square-o::before {
 
       margin-top: 3px;
       margin-left: 3px;
