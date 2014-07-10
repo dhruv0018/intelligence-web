@@ -79,7 +79,7 @@ Game.config([
                         var indexable = game.isAssignedToIndexer() && game.canBeIndexed();
                         var qaAble = game.isAssignedToQa() && game.canBeQAed();
 
-                        if (game.isAssignedToUser(userId) && (indexable || qaAble)) {
+                        if (game.isAssignedToUser(userId) && (indexable || qaAble) && !game.isDeleted) {
 
                             alerts.add({
                                 type: status.type,
