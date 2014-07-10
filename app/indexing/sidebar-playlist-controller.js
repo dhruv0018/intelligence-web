@@ -35,14 +35,14 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
 
             /* Set the current time to the time from the selected event. */
             VideoPlayer.then(function(vp) {
-                vp.pause();
                 vp.seekTime(selectedEvent.time);
+                vp.play();
             });
 
             /* Set the current play and event to match the selected event. */
             play.current = selectedPlay;
             event.current = selectedEvent;
-            event.hightlighted = selectedEvent;
+            event.highlighted = selectedEvent;
         };
     }
 ]);
