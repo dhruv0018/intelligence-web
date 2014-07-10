@@ -40,7 +40,7 @@ IntelligenceWebClient.directive('krossoverPlayPauseButton', [
                 function onClickPlayPause() {
 
                     /* Set the play rate to play normal. */
-                    API.videoElement[0].playbackRate = 1;
+                    API.videoElement[0].playbackRate = 1.0;
 
                     API.playPause();
                 }
@@ -66,31 +66,8 @@ IntelligenceWebClient.directive('krossoverFastBackwardButton', [
 
                 function onClickFastBackward(event) {
 
-                    /* NOTE: Negative values for playback rate mean backwards. */
+                    API.videoElement[0].playbackRate = (API.videoElement[0].playbackRate > 1) ? 1 : -3.0;
 
-                    var VIDEO_PLAYRATE_REVERSE_SPEEDLIMIT = -1 * config.indexing.video.speedlimit;
-
-                    var video = API.videoElement[0];
-
-                    /* If video is going forward.*/
-                    if (Math.floor(video.playbackRate) > 0) {
-
-                        /* Decrease the play rate by the step rate. */
-                        video.playbackRate = Math.abs(video.playbackRate) * (1 - VIDEO_PLAYRATE_STEP);
-
-                    } else {
-
-                        /* Reverse the play rate by the step rate. */
-                        video.playbackRate = -1 * Math.abs(video.playbackRate) * (1 + VIDEO_PLAYRATE_STEP);
-                    }
-
-                    /* Ensure the play rate is greater than the minimum rate. */
-                    if (video.playbackRate < VIDEO_PLAYRATE_REVERSE_SPEEDLIMIT) {
-
-                        video.playbackRate = VIDEO_PLAYRATE_REVERSE_SPEEDLIMIT;
-                    }
-
-                    API.play();
                 }
 
                 element.bind('click', onClickFastBackward);
@@ -111,30 +88,7 @@ IntelligenceWebClient.directive('krossoverFastForwardButton', [
             link: function($scope, element, attributes, API) {
 
                 function onClickFastForward(event) {
-
-                    var VIDEO_PLAYRATE_SPEEDLIMIT = config.indexing.video.speedlimit;
-
-                    var video = API.videoElement[0];
-
-                    /* If video is going backwards.*/
-                    if (Math.floor(video.playbackRate) < -1) {
-
-                        /* Increase the play rate by the step rate. */
-                        video.playbackRate = -1 * Math.abs(video.playbackRate) * (1 - VIDEO_PLAYRATE_STEP);
-
-                    } else {
-
-                        /* Reverse the play rate by the step rate. */
-                        video.playbackRate = Math.abs(video.playbackRate) * (1 + VIDEO_PLAYRATE_STEP);
-                    }
-
-                    /* Ensure the play rate is less than the maximum rate. */
-                    if (video.playbackRate > VIDEO_PLAYRATE_SPEEDLIMIT) {
-
-                        video.playbackRate = VIDEO_PLAYRATE_SPEEDLIMIT;
-                    }
-
-                    API.play();
+                    API.videoElement[0].playbackRate = (API.videoElement[0].playbackRate < 1) ? 1 : 3.0;
                 }
 
                 element.bind('click', onClickFastForward);
@@ -155,12 +109,7 @@ IntelligenceWebClient.directive('krossoverJumpBackwardButton', [
             link: function($scope, element, attributes, API) {
 
                 function onClickJumpBackward(event) {
-
-                    var video = API.videoElement[0];
-                    var currentTime = video.currentTime;
-                    var time = currentTime - config.indexing.video.jump;
-
-                    API.seekTime(time);
+                    API.videoElement[0].playbackRate = (API.videoElement[0].playbackRate > 0 && API.videoElement[0].playbackRate !== 1) ? 1 : -0.25;
                 }
 
                 element.bind('click', onClickJumpBackward);
@@ -181,12 +130,7 @@ IntelligenceWebClient.directive('krossoverJumpForwardButton', [
             link: function($scope, element, attributes, API) {
 
                 function onClickJumpForward(event) {
-
-                    var video = API.videoElement[0];
-                    var currentTime = video.currentTime;
-                    var time = currentTime + config.indexing.video.jump;
-
-                    API.seekTime(time);
+                    API.videoElement[0].playbackRate = (API.videoElement[0].playbackRate < 0) ? 1 : 0.25;
                 }
 
                 element.bind('click', onClickJumpForward);
