@@ -42,9 +42,7 @@ IntelligenceWebClient.factory('ScriptsService', [
                 if (!script) return [];
 
                 /* Mark the index of each variable. */
-                tag.tagVariables.forEach(function(variable, index) {
-
-                    variable.index = index + 1;
+                    tagVariable.index = index + 1;
                 });
 
                 /* Split up script into array items and replace variables
