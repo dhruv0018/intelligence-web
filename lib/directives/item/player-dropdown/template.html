@@ -2,6 +2,14 @@
 
     <button class="player-dropdown" data-ng-if="event.variableValues[item.index].value !== null" data-ng-click="event.variableValues[item.index].value = null">{{ players[event.variableValues[item.index].value].firstName }} {{ players[event.variableValues[item.index].value].lastName }}</button>
 
-    <input class="player-dropdown" type="text" data-ng-if="event.variableValues[item.index].value === null" data-ng-model="selectedPlayer" data-ng-required="item.isRequired" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex == item.index" data-autofocus-when="item.index == 1" data-typeahead-editable="false" data-typeahead-on-select="selectPlayer($item)" data-typeahead-template-url="item/player-dropdown-input.html" data-typeahead="player as player.firstName for player in playersList | filter:{ jerseyNumber: $viewValue }">
+    <input class="player-dropdown"
+           type="text" data-ng-if="event.variableValues[item.index].value === null"
+           data-ng-model="selectedPlayer" data-ng-required="item.isRequired"
+           tabindex="{{ item.index }}"
+           data-ng-focus="event.activeEventVariableIndex = item.index"
+           data-focus-when="event.activeEventVariableIndex == item.index"
+           data-autofocus-when="item.index == 1"
+           data-typeahead-editable="false" data-typeahead-on-select="selectPlayer($item)" data-typeahead-template-url="item/player-dropdown-input.html"
+           data-typeahead="player as player.firstName for player in playersList | filter:{ jerseyNumber: $viewValue } | filter: { rosterStatuses[teamRosterId]: true }">
 
 </span>
