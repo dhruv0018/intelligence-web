@@ -11,7 +11,7 @@
             <span data-ng-if="currentUser.is(INDEXER)" class="vs">&nbsp;vs&nbsp;</span>
             <span data-ng-if="currentUser.is(INDEXER)" class="score">{{ play.score[opposingTeam.id] }}</span>
             <span data-ng-if="currentUser.is(INDEXER)" class="team">{{ opposingTeam.name }}</span>
-            <span class="playplay" data-ng-if="!currentUser.is(INDEXER)" data-ng-click="$event.stopPropagation();"><i class="icon icon-play-sign"></i></span>
+            <span class="playplay" data-ng-if="!currentUser.is(INDEXER)" data-ng-click="$event.stopPropagation();"><i class="icon icon-play-circle"></i></span>
             <p class="playSummary">{{ summaryScript }}</p>
         </h4>
     </accordion-heading>
