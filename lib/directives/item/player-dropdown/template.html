@@ -10,6 +10,6 @@
            data-focus-when="event.activeEventVariableIndex == item.index"
            data-autofocus-when="item.index == 1"
            data-typeahead-editable="false" data-typeahead-on-select="selectPlayer($item)" data-typeahead-template-url="item/player-dropdown-input.html"
-           data-typeahead="player as player.firstName for player in playersList | filter:{ jerseyNumber: $viewValue } | filter: playedInGame">
+           data-typeahead="player as player.firstName for player in playersList | filter:{ jerseyNumber: $viewValue }">
 
 </span>
