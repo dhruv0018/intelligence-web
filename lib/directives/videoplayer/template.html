@@ -16,11 +16,11 @@
 
         <data-vg-timedisplay class="video-control"><span class="time-current">{{ currentClipTime - playStartTime | secondsToTime }}</span> <span class="time-divider">/</span> {{ playEndTime - playStartTime | secondsToTime }}</data-vg-timedisplay>
 
-        <x-krossover-fast-backward-button class="video-control"></x-krossover-fast-backward-button>
-        <x-krossover-fast-forward-button class="video-control"></x-krossover-fast-forward-button>
+        <button class="btn-video" data-ng-click="onClickFastBackward()"><i class="icon icon-fast-backward"></i></button>
+        <button class="btn-video" data-ng-click="onClickFastForward()"><i class="icon icon-fast-forward"></i></button>
 
-        <x-krossover-jump-backward-button class="video-control"></x-krossover-jump-backward-button>
-        <x-krossover-jump-forward-button class="video-control"></x-krossover-jump-forward-button>
+        <button class="btn-video" data-ng-click="onClickJumpBackward()"><i class="icon icon-step-backward"></i></button>
+        <button class="btn-video" data-ng-click="onClickJumpForward()"><i class="icon icon-step-forward"></i></button>
 
         <data-vg-volume class="video-control">
 
