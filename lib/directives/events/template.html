@@ -1,5 +1,7 @@
-<ul class="events">
+<div>
+	<span data-ng-click="playAll()">Play All</span>
+	<ul class="events">
+	    <krossover-event data-play="play" data-event="event" data-league="league" data-videoplayer="videoplayer" data-ng-repeat="event in play.events | orderBy:'time'"></krossover-event>
 
-    <krossover-event data-play="play" data-event="event" data-league="league" data-videoplayer="videoplayer" data-ng-repeat="event in play.events | orderBy:'time'"></krossover-event>
-
-</ul>
+	</ul>
+</div>
