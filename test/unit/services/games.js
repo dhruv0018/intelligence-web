@@ -598,10 +598,7 @@ describe('GamesFactory', function() {
             game.assignToIndexer(userId, deadline);
 
            [GAME_STATUSES.READY_FOR_INDEXING.id,
-            GAME_STATUSES.READY_FOR_INDEXING.id,
-            GAME_STATUSES.INDEXING.id,
-            GAME_STATUSES.READY_FOR_QA.id,
-            GAME_STATUSES.QAING.id]
+            GAME_STATUSES.INDEXING.id]
             .forEach(function(status) {
 
                 game.status = status;
