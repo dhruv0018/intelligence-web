@@ -1,3 +1,7 @@
+var PAGE_SIZE = 20;
+
+var moment = require('moment');
+
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -450,6 +454,24 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
 
+            assignmentTimeRemaining: function(assignment) {
+
+                var remaining = 'None';
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return remaining;
+
+                var deadline = moment.utc(assignment.deadline);
+
+                if (deadline.isAfter()) {
+
+                    remaining = deadline.fromNow(true);
+                }
+
+                return remaining;
+            },
+
             setAsideFromIndexing: function() {
 
                 var self = this;
@@ -478,11 +500,11 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!assignment) return true;
 
-                var now = new Date();
-                var deadline = new Date(assignment.deadline);
+                var deadline = moment.utc(assignment.deadline);
 
                 /* Ensure the current assignments deadline has not expired. */
-                if (deadline < now) return true;
+
+                if (deadline.isBefore()) return true;
 
                 return false;
             },

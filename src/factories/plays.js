@@ -129,6 +129,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         return event;
                     });
 
+                    updatePlay = self.unextend(updatePlay);
+
                     return updatePlay.$update().then(function(play) {
 
                         play = self.extend(play);
@@ -142,11 +144,12 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     delete newPlay.events;
 
+                    newPlay = self.unextend(newPlay);
+
                     return newPlay.$create().then(function(play) {
 
-                        play = self.extend(play);
                         play.events = events;
-                        return play.save();
+                        return self.save(play);
                     });
                 }
             },

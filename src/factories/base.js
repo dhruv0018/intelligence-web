@@ -33,6 +33,29 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
+             * Removes extended properties of the resource.
+             * @param {Resource} resource - a user resource object.
+             */
+            unextend: function(resource) {
+
+                var self = this;
+
+                resource = resource || self;
+
+                /* Create a copy of the resource to break reference to orginal. */
+                var copy = angular.copy(resource);
+
+                /* Remove known local properties. */
+                delete copy.description;
+                delete copy.resource;
+                delete copy.storage;
+
+                /* TODO: Remove other properties that should not exist. */
+
+                return copy;
+            },
+
+            /**
              * Gets a single resource by ID.
              * @param {Number} id - a resource ID.
              * @returns {Resource} - a resource.
@@ -44,7 +67,19 @@ IntelligenceWebClient.factory('BaseFactory', [
                 if (!self.storage) throw new Error(self.description + ' storage not defined');
                 if (!self.storage.collection) throw new Error(self.description + ' not loaded');
 
-                var resource = self.storage.collection[id];
+                var resource;
+
+                /* If given and ID lookup the resource in storage. */
+                if (id) {
+
+                    resource = self.storage.collection[id];
+                }
+
+                /* If no ID, then assume the unsaved resource. */
+                else {
+
+                    resource = self.storage.unsaved;
+                }
 
                 managedResources.backup(resource);
 
@@ -100,10 +135,9 @@ IntelligenceWebClient.factory('BaseFactory', [
                 resource = self.extend(resource);
 
                 /* Add the resource to storage. */
-                self.storage.list.push(resource);
-                self.storage.collection[resource.id] = resource;
+                self.storage.unsaved = resource;
 
-                return self.storage.collection[resource.id];
+                return resource;
             },
 
             /**
@@ -309,14 +343,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 managedResources.reset(resource);
 
                 /* Create a copy of the resource to save to the server. */
-                var copy = angular.copy(resource);
-
-                /* Remove known local properties. */
-                delete copy.description;
-                delete copy.resource;
-                delete copy.storage;
-
-                /* TODO: Remove other properties that should not exist. */
+                var copy = self.unextend(resource);
 
                 parameters = {};
 
@@ -343,20 +370,18 @@ IntelligenceWebClient.factory('BaseFactory', [
                         return self.fetch(resource.id).then(function(updated) {
 
                             /* Update local resource with server resource. */
-                            resource = self.extend(updated);
+                            angular.extend(resource, self.extend(updated));
 
                             /* Update the resource in storage. */
                             self.storage.list[self.storage.list.indexOf(resource)] = resource;
                             self.storage.collection[resource.id] = resource;
+
+                            return resource;
                         });
                     });
 
                 /* If the resource is new. */
                 } else {
-
-                    /* Immediately add the resource to storage. */
-                    self.storage.list.push(resource);
-                    self.storage.collection[resource.id] = resource;
 
                     /* Make a POST request to the server to create the resource. */
                     var create = self.resource.create(parameters, copy, success, error);
@@ -365,12 +390,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                     return create.$promise.then(function(created) {
 
                         /* Update local resource with server resource. */
-                        resource = self.extend(created);
+                        angular.extend(resource, self.extend(created));
 
-                        /* Update the resource in storage. */
-                        self.storage.list[self.storage.list.indexOf(resource)] = resource;
+                        /* Add the resource to storage. */
+                        self.storage.list.push(resource);
                         self.storage.collection[resource.id] = resource;
-                        self.storage.collection[resource[undefined]] = resource;
 
                         return resource;
                     });

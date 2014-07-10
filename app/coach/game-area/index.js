@@ -194,14 +194,17 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'Coach.Data',
-    function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, data) {
+    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data',
+    function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, GAME_STATUSES, data) {
         $scope.hasShotChart = false;
         $scope.hasStatistics = true;
         $scope.hasFormations = true;
         $scope.hasDownAndDistance = true;
         $scope.expandAll = false;
         $scope.data = data;
+
+        //constants
+        $scope.GAME_STATUSES = GAME_STATUSES;
 
         //Game Related
         $scope.game = data.game;
