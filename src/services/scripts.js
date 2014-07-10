@@ -41,7 +41,13 @@ IntelligenceWebClient.factory('ScriptsService', [
 
                 if (!script) return [];
 
-                /* Mark the index of each variable. */
+                /* Tag variables are ordered by where they appear in the scripts,
+                 * but variable values are not ordered, so this position needs
+                 * to be recored to place the variable in the script later. */
+                tag.tagVariables.forEach(function(tagVariable, index) {
+
+                    /* Mark the index of each variable by their location in the
+                     * tagVariables array. */
                     tagVariable.index = index + 1;
                 });
 
@@ -49,11 +55,14 @@ IntelligenceWebClient.factory('ScriptsService', [
                  * with the actual tag variable object. */
                 return script.split(VARIABLE_PATTERN)
 
+                /* Filter script items. */
                 .filter(function(item) {
 
+                    /* Filter out empty items. */
                     return item.length;
                 })
 
+                /* Map script items. */
                 .map(function(item) {
 
                     /* If the item is a variable. */
@@ -66,6 +75,7 @@ IntelligenceWebClient.factory('ScriptsService', [
                         return tag.tagVariables[variableIndex];
                     }
 
+                    /* If the item is not a variable return it as is. */
                     else return item;
                 });
             }
