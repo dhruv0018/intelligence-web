@@ -39,9 +39,11 @@ Indexing.controller('Indexing.Header.Controller', [
         $scope.sendToQa = function() {
 
             $scope.game.finishAssignment(userId);
-            $scope.game.save();
+            $scope.game.save().then(function() {
+                $state.go('indexer-games');
+            });
 
-            $state.go('indexer-games');
+
         };
 
         $scope.sendToTeam = function() {
