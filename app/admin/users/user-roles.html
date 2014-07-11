@@ -12,9 +12,9 @@
 
 <ul class="list-group">
 
-    <li class="role-new list-group-item" data-ng-repeat="role in user.newRoles">
+    <li class="role-new list-group-item" data-ng-repeat="role in newRoles">
 
-        <x-krossover-new-role user="user" role="role"></x-krossover-new-role>
+        <x-krossover-new-role user="user" role="role" data-new-roles="newRoles"></x-krossover-new-role>
 
     </li>
 

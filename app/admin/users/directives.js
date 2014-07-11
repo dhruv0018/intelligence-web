@@ -29,7 +29,8 @@ Users.directive('krossoverNewRole', [
             scope: {
 
                 user: '=',
-                role: '='
+                role: '=',
+                newRoles: '='
             },
 
             templateUrl: 'users/newrole.html',
@@ -102,7 +103,7 @@ Users.directive('krossoverNewRole', [
                 $scope.addRole = function(newRole) {
 
                     /* Remove role from the newRoles array. */
-                    $scope.user.newRoles.splice($scope.user.newRoles.indexOf(newRole), 1);
+                    $scope.newRoles.splice($scope.newRoles.indexOf(newRole), 1);
 
                     /* Add role to the user roles array. */
                     $scope.user.roles.unshift(angular.copy(newRole));

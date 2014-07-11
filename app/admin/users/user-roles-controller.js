@@ -31,8 +31,8 @@ Users.controller('Users.User.Roles.Controller', [
             /* For other roles; fill in information before adding. */
             } else {
 
-                $scope.user.newRoles = $scope.user.newRoles || [];
-                $scope.user.newRoles.unshift(angular.copy(newRole));
+                $scope.newRoles = $scope.newRoles || [];
+                $scope.newRoles.unshift(angular.copy(newRole));
             }
         };
     }
