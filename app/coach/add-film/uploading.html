@@ -13,9 +13,11 @@
 <div class="upload-status">
 
     <div class="uploading" data-ng-if="$flow.isUploading()">
-        <h1 ng-if="games.isRegular(data.game)">You’re uploading a regular game…</h1>
-        <h1 ng-if="!games.isRegular(data.game)">You’re uploading a scouting/scrimmage game…</h1>
-        <h2>Fill out the rest of the game information</h2>
+        <h1 data-ng-if="games.isRegular(data.game) && (data.game.status === null || !isDefined(data.game.status))">You’re uploading a regular game…</h1>
+        <h1 data-ng-if="!games.isRegular(data.game) && (data.game.status === null || !isDefined(data.game.status))">You’re uploading a scouting/scrimmage game…</h1>
+        <h2 data-ng-if="data.game.status === null || !isDefined(data.game.status)">Complete the rest of the game information.</h2>
+        <h2 data-ng-if="data.game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">This game will be submitted for breakdown once the upload is complete.</h2>
+        <h2 data-ng-if="data.game.status === GAME_STATUSES['NOT_INDEXED'].id">This game will be available for sharing once the upload is complete.</h2>
     </div>
 
     <div class="error" data-ng-if="error">
@@ -25,11 +27,13 @@
 
     <div class="uploaded" data-ng-if="complete">
         <h1>Your upload is complete!</h1>
-        <h2>Now your’re ready to submit your game to us.</h2>
+        <h2 data-ng-if="data.game.status === null || !isDefined(data.game.status)">Complete the rest of the game information.</h2>
+        <h2 data-ng-if="data.game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">This game has been submitted for breakdown.</h2>
+        <h2 data-ng-if="data.game.status === GAME_STATUSES['NOT_INDEXED'].id">This game is available for sharing.</h2>
     </div>
 
 </div>
 
 <div class="game-info-container">
-<krossover-coach-game data-data="data"></krossover-coach-game>
+<krossover-coach-game data-data="data" data-headings="headings"></krossover-coach-game>
 </div>

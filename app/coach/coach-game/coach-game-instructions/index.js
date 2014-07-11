@@ -56,13 +56,15 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', '$localStorage', 'GAME_STATUSES', 'Coach.Game.Tabs', 'GamesFactory',
-    function controller($scope, $state, $localStorage, GAME_STATUSES, tabs, games) {
+    '$scope', '$state', '$localStorage', 'GAME_STATUSES', 'GamesFactory',
+    function controller($scope, $state, $localStorage, GAME_STATUSES, games) {
         $scope.GAME_STATUSES = GAME_STATUSES;
+        $scope.isSaved = false;
 
         $scope.$watch('data.game', function(game) {
             if (typeof game !== 'undefined' && typeof game.status !== 'undefined' && game.status !== null) {
                 $scope.statusBuffer = game.status;
+                $scope.isSaved = true;
             } else {
                 $scope.statusBuffer = -1;
             }
@@ -75,7 +77,9 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
         $scope.save = function() {
             $scope.data.game.status = $scope.statusBuffer;
-            $scope.data.game.save();
+            $scope.data.game.save().then(function(game) {
+                $scope.isSaved = true;
+            });
         };
     }
 ]);

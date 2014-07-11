@@ -6,6 +6,7 @@
             <time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time>
         </h4>
         <h4 data-ng-class="{'playCollapsed': !isOpen}">
+            {{teams[play.possessionTeamId].name}}
             <span data-ng-if="currentUser.is(INDEXER)" class="team">{{ team.name }}</span>
             <span data-ng-if="currentUser.is(INDEXER)" class="score">{{ play.score[team.id] }}</span>
             <span data-ng-if="currentUser.is(INDEXER)" class="vs">&nbsp;vs&nbsp;</span>

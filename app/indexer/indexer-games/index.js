@@ -68,9 +68,7 @@ Games.service('Indexer.Games.Data.Dependencies', [
             teams: teams.load(),
             users: users.load(),
             games: games.load({
-
-                indexerFirstName: currentUser.firstName,
-                indexerLastName: currentUser.lastName
+                assignedUserId: currentUser.id
             })
         };
 
@@ -96,33 +94,11 @@ Games.controller('indexer-games.Controller', [
         $scope.teams = data.teams.getCollection();
         $scope.users = data.users.getCollection();
 
+        $scope.userId = session.currentUser.id;
+
         $scope.games = data.games.getList().filter(function(game) {
 
             return game.isAssignedToUser(session.currentUser.id);
-
-        }).map(function(game) {
-
-            var currentAssignment = game.currentAssignment();
-
-            if (currentAssignment) {
-
-                var now = new Date();
-                var deadline = new Date(currentAssignment.deadline);
-
-                var timeLeft = deadline - now;
-
-                if (timeLeft < 0) {
-
-                    game.timeLeft = 'None';
-                }
-
-                else {
-
-                    game.timeLeft = moment.duration(timeLeft, 'milliseconds').humanize();
-                }
-            }
-
-            return game;
         });
     }
 ]);

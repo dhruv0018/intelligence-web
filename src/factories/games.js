@@ -1,3 +1,7 @@
+var PAGE_SIZE = 20;
+
+var moment = require('moment');
+
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -450,6 +454,24 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
 
+            assignmentTimeRemaining: function(assignment) {
+
+                var remaining = 'None';
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return remaining;
+
+                var deadline = moment.utc(assignment.deadline);
+
+                if (deadline.isAfter()) {
+
+                    remaining = deadline.fromNow(true);
+                }
+
+                return remaining;
+            },
+
             setAsideFromIndexing: function() {
 
                 var self = this;
@@ -472,26 +494,48 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.isAssignedToQa(self.currentAssignment()) ? true : false;
             },
 
+            deadlinePassed: function() {
+                var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return true;
+
+                var deadline = moment.utc(assignment.deadline);
+
+                /* Ensure the current assignments deadline has not expired. */
+
+                if (deadline.isBefore()) return true;
+
+                return false;
+            },
+
             canBeIndexed: function() {
 
                 var self = this;
 
-                var assignment = self.currentAssignment();
-
-                if (!assignment) return false;
-
-                var now = new Date();
-                var deadline = new Date(assignment.deadline);
-
-                /* Ensure the current assignments deadline has not expired. */
-                if (deadline < now) return false;
+                if (self.deadlinePassed()) {
+                    return false;
+                }
 
                 switch (self.status) {
-
-                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                     case GAME_STATUSES.INDEXING.id:
-                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
+                        return true;
+                }
+
+                return false;
+            },
+
+            canBeQAed: function() {
+                var self = this;
+
+                if (self.deadlinePassed()) {
+                    return false;
+                }
+
+                switch (self.status) {
                     case GAME_STATUSES.QAING.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
                         return true;
                 }
 

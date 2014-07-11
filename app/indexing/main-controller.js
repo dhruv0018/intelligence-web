@@ -22,11 +22,12 @@ Indexing.controller('Indexing.Main.Controller', [
 
         var self = this;
 
-        var gameId = $stateParams.id;
+        var gameId = Number($stateParams.id);
 
         /* Scope */
 
 
+        $scope.data = data;
         $scope.tags = tags;
         $scope.play = play;
         $scope.event = event;
@@ -42,6 +43,10 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
 
+        indexing.reset($scope.game, data.plays);
+        tags.reset($scope.tagset);
+        event.reset($scope.tagset);
+        play.reset(gameId);
 
         /* Bind keys. */
 
@@ -148,11 +153,6 @@ Indexing.controller('Indexing.Main.Controller', [
             indexing.showScript = false;
             indexing.eventSelected = false;
             $scope.VideoPlayer.pause();
-
-            tags.reset($scope.tagset);
-            event.reset($scope.tagset);
-            play.reset(gameId);
-            play.clear();
         };
 
         /**
@@ -176,6 +176,8 @@ Indexing.controller('Indexing.Main.Controller', [
          * @returns {Boolean} true if the session is savable; false otherwise.
          */
         this.savable = function() {
+
+            if (!this.nextable()) return false;
 
             return indexing.eventSelected || event.isEndEvent();
         };

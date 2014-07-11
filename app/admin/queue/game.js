@@ -94,36 +94,14 @@ Game.config([
 ]);
 
 /**
- * Modal controller. Controls the modal views.
- * @module Game
- * @name ModalController
- * @type {Controller}
- */
-Game.controller('ModalController', [
-    '$rootScope', '$scope', '$state', '$modal', '$modalInstance', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $modal, $modalInstance, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users) {
-
-        $scope.ok = function() {
-
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function() {
-
-            $modalInstance.dismiss('cancel');
-        };
-    }
-]);
-
-/**
  * Game controller.
  * @module Game
  * @name GameController
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal',
-    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal) {
+    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal',
+    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -132,9 +110,11 @@ Game.controller('GameController', [
 
         $scope.DeleteGameModal = DeleteGameModal;
         $scope.RawFilmModal = RawFilmModal;
+        $scope.SelectIndexerModal = SelectIndexerModal;
 
         var gameId = $stateParams.id;
 
+        $scope.data = data;
         $scope.game = data.games.get(gameId);
         $scope.team = data.teams.get($scope.game.teamId);
         $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);

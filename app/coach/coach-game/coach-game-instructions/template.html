@@ -9,13 +9,13 @@
                 <header class="box-header col-md-12">
 
                     <h3 class="box-title">Choose one of the following options</h3>
-                    <x-button-continue ng-if="data.game.status === null" data-ng-disabled="statusBuffer < 0 || formInstructions.$invalid">Save and Submit</x-button-continue>
-                    <x-button-continue ng-if="data.game.status !== null">Save and Submit</x-button-continue>
+                    <x-button-continue data-ng-if="!isSaved" data-ng-disabled="statusBuffer < 0 || formInstructions.$invalid">Save and Submit</x-button-continue>
+                    <x-button-continue data-ng-if="isSaved">Save and Submit</x-button-continue>
 
                 </header>
                 <div class="box-body col-md-12">
 
-                    <div data-ng-show="data.game.status === null" class="col-md-8">
+                    <div data-ng-show="!isSaved" class="col-md-8">
 
                         <form class="form-instructions" name="formInstructions" role="form">
 
@@ -74,7 +74,7 @@
 
                     </div>
 
-                    <div data-ng-hide="data.game.status === null" class="box-body col-md-8">
+                    <div data-ng-show="isSaved" class="box-body col-md-8">
                         <div class="row">
                             <div class="col-md-12">
 

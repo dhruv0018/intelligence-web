@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    'TagsManager', 'PlayManager',
-    function service(tags, play) {
+    'IndexingService', 'TagsManager', 'PlayManager',
+    function service(indexing, tags, play) {
 
         var model = {
 
@@ -123,12 +123,22 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.create = function(tagId, time) {
 
+            /* If there is no current play. */
             if (!play.current) {
 
+                /* Create a play. */
                 play.create();
             }
 
+            /* If there are no plays in the playlist. */
+            if (!indexing.plays.length) {
+
+                /* Add the current play to the playlist. */
+                indexing.plays.push(play.current);
+            }
+
             /* Lookup and set the tag from the indexing tags. */
+            this.current.tagId = tagId;
             this.current.tag = this.tags[tagId];
 
             this.current.time = time;

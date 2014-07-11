@@ -114,6 +114,8 @@ Queue.controller('QueueController', [
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
 
+        $scope.SelectIndexerModal = SelectIndexerModal;
+
         $scope.data = data;
         $scope.sports = data.sports.getCollection();
         $scope.leagues = data.leagues.getCollection();
@@ -124,23 +126,6 @@ Queue.controller('QueueController', [
         $scope.teamsList = data.teams.getList();
         $scope.usersList = data.users.getList();
         $scope.queue = data.games.getList();
-
-        $scope.selectIndexer = function(game, isQa) {
-
-            $scope.selectedGame = game;
-            $scope.isQa = isQa;
-
-            $modal.open({
-
-                scope: $scope,
-                controller: 'ModalController',
-                templateUrl: 'select-indexer.html'
-
-            }).result.then(function() {
-
-                $scope.selectedGame.save();
-            });
-        };
 
         $scope.search = function(filter) {
 

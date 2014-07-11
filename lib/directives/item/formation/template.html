@@ -1,8 +1,8 @@
 <span class="formation">
 
-    <button class="dropdown" data-ng-if="event.variableValues[item.index].value" data-ng-click="event.variableValues[item.index].value = null">{{ formations[event.variableValues[item.index].value].name }}</button>
+    <button class="dropdown" data-ng-if="event.variableValues[item.index].value !== null" data-ng-click="event.variableValues[item.index].value = null">{{ formations[event.variableValues[item.index].value].name }}</button>
 
-    <select class="dropdown" data-ng-if="!event.variableValues[item.index].value" data-ng-model="event.variableValues[item.index].value" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
+    <select class="dropdown" data-ng-if="event.variableValues[item.index].value === null" data-ng-model="event.variableValues[item.index].value" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
 
         <option data-ng-repeat="formation in item.formations" value="{{ formation.id }}">{{ formation.name }}</option>
 
