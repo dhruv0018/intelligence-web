@@ -102,9 +102,5 @@ NewPlan.controller('NewPlanController', [
             $modalInstance.close(returnObj);
 
         };
-
-        $scope.cancel = function() {
-            $modalInstance.dismiss('cancel');
-        };
     }
 ]);
