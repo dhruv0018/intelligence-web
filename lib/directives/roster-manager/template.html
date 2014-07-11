@@ -30,7 +30,7 @@
 
                     <td>
                         <data-positions-dropdown data-player="player" data-positions="positions"></data-positions-dropdown>
-                        <button class="btn btn-blank pull-right" data-ng-click="deactivate(player)"><i class="icon icon-remove"></i></button>
+                        <button class="btn btn-blank pull-right" data-ng-click="toggleActivation(player)"><i class="icon icon-remove"></i></button>
                     </td>
 
                 </tr>
@@ -63,12 +63,12 @@
                                 <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
                                     <span class="jerseyNumber">{{player.jerseyNumbers[rosterId]}}</span>
                                     {{player.firstName}}
-                                    {{player.lastName[0]}} .
+                                    {{player.lastName[0]}}.
                                 </a>
                                 <p>
                                     <strong>
                                         <span data-ng-if="player.positions[rosterId].length > 1"> Multiple Positions</span>
-                                        <span data-ng-if="player.positions[rosterId].length === 1"> {{player.positions[rosterId][0].description}}</span>
+                                        <span data-ng-if="player.positions[rosterId].length === 1"> {{player.positions[rosterId][0].name}}</span>
                                         <span data-ng-if="!player.positions[rosterId]"> No Position Set</span>
                                     </strong>
                                 </p>

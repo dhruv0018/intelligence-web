@@ -125,8 +125,10 @@ Indexing.config([
                         var gameId = $stateParams.id;
                         var game = data.games.get(gameId);
                         var status = game.getStatus();
+                        var indexable = game.isAssignedToIndexer() && game.canBeIndexed();
+                        var qaAble = game.isAssignedToQa() && game.canBeQAed();
 
-                        if (game.isAssignedToUser(userId)) {
+                        if (game.isAssignedToUser(userId) && (indexable || qaAble) && !game.isDeleted) {
 
                             if (!game.isAssignmentStarted()) {
 
