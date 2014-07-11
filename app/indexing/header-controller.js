@@ -57,18 +57,6 @@ Indexing.controller('Indexing.Header.Controller', [
 
                 $scope.game.finishAssignment(userId);
                 $scope.game.save();
-
-                $modal.open({
-
-                    controller: 'Indexing.Modal.AddIndexerNote.Controller',
-                    templateUrl: 'indexing/modal-add-indexer-note.html'
-
-                }).result.then(function() {
-
-                    $scope.game.save();
-
-                    $state.go('indexer-games');
-                });
             });
         };
 
