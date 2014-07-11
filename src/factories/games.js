@@ -494,25 +494,48 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.isAssignedToQa(self.currentAssignment()) ? true : false;
             },
 
-            canBeIndexed: function() {
-
+            deadlinePassed: function() {
                 var self = this;
-
                 var assignment = self.currentAssignment();
 
-                if (!assignment) return false;
+                if (!assignment) return true;
 
                 var deadline = moment.utc(assignment.deadline);
 
                 /* Ensure the current assignments deadline has not expired. */
-                if (deadline.isBefore()) return false;
+
+                if (deadline.isBefore()) return true;
+
+                return false;
+            },
+
+            canBeIndexed: function() {
+
+                var self = this;
+
+                if (self.deadlinePassed()) {
+                    return false;
+                }
 
                 switch (self.status) {
-
-                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                     case GAME_STATUSES.INDEXING.id:
-                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
+                        return true;
+                }
+
+                return false;
+            },
+
+            canBeQAed: function() {
+                var self = this;
+
+                if (self.deadlinePassed()) {
+                    return false;
+                }
+
+                switch (self.status) {
                     case GAME_STATUSES.QAING.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
                         return true;
                 }
 

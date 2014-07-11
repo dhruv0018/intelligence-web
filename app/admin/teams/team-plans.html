@@ -21,17 +21,17 @@
                         <p>Ends: {{ plan.endDate | date : 'MMM d/yy' }}</p>
                     </td>
                     <td>
-                        <p>{{ plan.maxRegularGames }} Regular Games</p>
-                        <p>{{ plan.maxScoutingGames }} Scouting/Practice</p>
+                        <p>{{ plan.maxAnyGames }} Breakdowns per week</p>
+                        <p>{{ plan.maxGamesPerPlan }} Max Breakdowns per Season</p>
                     </td>
                     <td>{{ minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{ plan.maxTurnaroundTime }} hour Turnaround Time</td>
                 </tr>
                 <tr data-ng-repeat-end>
                     <td colspan="3" class="plan-options">
-                        <a href><i class="icon-calendar"></i> View Archive</a>
+                        <a href><i class="icon icon-calendar"></i> View Archive</a>
                         <span data-ng-show="filteredPlans.length" class="pull-right">
-                            <a href class="edit-plan" data-ng-click="editTeamPlan(plan.unfilteredId)"><i class="icon-edit"></i> Edit</a>
-                            <a href><i class="icon-remove"></i> Remove</a>
+                            <a href class="edit-plan" data-ng-click="editTeamPlan(plan.unfilteredId)"><i class="icon icon-edit"></i> Edit</a>
+                            <a href><i class="icon icon-remove"></i> Remove</a>
                         </span>
                     </td>
                 </tr>
@@ -66,10 +66,10 @@
                 </tr>
                 <tr data-ng-repeat-end>
                     <td colspan="3" class="plan-options">
-                        <a href><i class="icon-calendar"></i> View Archive</a>
+                        <a href><i class="icon icon-calendar"></i> View Archive</a>
                         <span data-ng-show="filteredPackages.length" class="pull-right">
-                            <a data-ng-click="editActivePackage(activePackage.unfilteredId)" href class="edit-plan"><i class="icon-edit"></i> Edit</a>
-                            <a href data-ng-click="removeActivePackage(activePackage.unfilteredId)"><i class="icon-remove"></i> Remove</a>
+                            <a data-ng-click="editActivePackage(activePackage.unfilteredId)" href class="edit-plan"><i class="icon icon-edit"></i> Edit</a>
+                            <a href data-ng-click="removeActivePackage(activePackage.unfilteredId)"><i class="icon icon-remove"></i> Remove</a>
                         </span>
                     </td>
                 </tr>
