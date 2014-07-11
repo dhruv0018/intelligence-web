@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Notes.Controller', [
-    '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS', 'GamesFactory',
-    function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games) {
+    '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS', 'GamesFactory', 'VideoPlayerInstance',
+    function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games, videoplayer) {
 
         var Mousetrap = window.Mousetrap;
 
@@ -25,7 +25,9 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
         $scope.currentTimestamp = 0;
 
         $rootScope.$on(VG_EVENTS.ON_PAUSE, function() {
-            $scope.currentTimestamp = window.Math.floor($scope.VideoPlayer.videoElement[0].currentTime);
+            videoplayer.then(function(vp) {
+                $scope.currentTimestamp = window.Math.floor($scope.VideoPlayer.videoElement[0].currentTime);
+            });
         });
 
         $scope.clearKeyListeners = function() {
