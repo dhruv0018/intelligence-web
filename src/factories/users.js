@@ -86,6 +86,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 role = angular.copy(role);
                 role.userId = user.id;
+                role.tenureStart = new Date();
 
                 user.roles = user.roles || [];
                 user.roles.unshift(role);
