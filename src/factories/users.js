@@ -84,6 +84,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user = self;
                 }
 
+                role = angular.copy(role);
                 role.userId = user.id;
 
                 user.roles = user.roles || [];
