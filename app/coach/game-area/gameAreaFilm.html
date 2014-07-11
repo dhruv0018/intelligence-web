@@ -40,8 +40,8 @@
             </li>
             <li>
 
-                <div ng-repeat="(key,value) in filtersetCategories">
-                    <div ng-repeat="(innerkey, innerValue) in value.subFilters">
+                <div data-ng-repeat="(key,value) in filtersetCategories">
+                    <div data-ng-repeat="(innerkey, innerValue) in value.subFilters">
                         <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="dropdown-toggle btn"  data-ng-class="{'child': (innerValue.parent !== null), 'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
