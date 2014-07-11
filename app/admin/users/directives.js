@@ -19,7 +19,7 @@ var Users = angular.module('Users');
  * @type {Directive}
  */
 Users.directive('krossoverNewRole', [
-    'ROLES', 'ROLE_TYPE', 'UsersFactory', 'TeamsFactory', 'SportsResource', 'INDEXER_GROUPS_ID',
+    'ROLES', 'ROLE_TYPE', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'INDEXER_GROUPS_ID',
     function directive(ROLES, ROLE_TYPE, users, teams, sports, INDEXER_GROUPS_ID) {
 
         var role = {
@@ -45,7 +45,7 @@ Users.directive('krossoverNewRole', [
                 $scope.user.roles = $scope.user.roles || [];
 
                 $scope.users = users;
-                $scope.sports = sports.query();
+                $scope.sportsList = sports.getList();
 
                 $scope.displayTeamsLoading = false;
                 $scope.displayTeams = true;
@@ -65,7 +65,7 @@ Users.directive('krossoverNewRole', [
                             sport: $scope.sportId
                         };
 
-                        teams.getList(filter, function(list) {
+                        teams.query(filter, function(list) {
 
                             $scope.teams = list.filter(function(team) {
 
