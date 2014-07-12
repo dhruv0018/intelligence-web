@@ -1,0 +1,11 @@
+{
+    "name": "filters",
+    "paths": [
+        "."
+    ],
+    "locals": [
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
