@@ -47,57 +47,36 @@ Users.directive('krossoverNewRole', [
 
                 $scope.users = users;
                 $scope.sportsList = sports.getList();
+                $scope.teamsList = teams.getList();
 
-                $scope.displayTeamsLoading = false;
-                $scope.displayTeams = true;
-                $scope.displayTeamsEmpty = false;
+                $scope.$watch('role', function(role) {
 
-                $scope.$watch('sportId', function() {
+                    $scope.teamsList = $scope.teamsList.filter(function(team) {
 
-                    if ($scope.sportId) {
+                        /* If there are no roles on the team. */
+                        if (!team.roles || !team.roles.length) return true;
 
-                        $scope.displayTeamsLoading = true;
-                        $scope.displayTeams = false;
-                        $scope.displayTeamsEmpty = false;
+                        /* If the role is a head coach and the team already has one. */
+                        if (users.is(role, ROLES.HEAD_COACH)) {
 
-                        var filter = {
+                            return !!team.getHeadCoachRole();
 
-                            noRoleType: $scope.role.type.id,
-                            sport: $scope.sportId
-                        };
+                        }
 
-                        teams.query(filter, function(list) {
-
-                            $scope.teams = list.filter(function(team) {
-
-                                if ($scope.user.roles.every(function(role) {
-
-                                    return team.id !== role.teamId;
-
-                                })) {
-
-                                    return team;
-                                }
-                            });
-
-                            $scope.displayTeamsLoading = false;
-                            $scope.displayTeams = true;
-                            $scope.displayTeamsEmpty = false;
-                        });
-                    }
+                        return true;
+                    });
                 });
 
-                $scope.$watch('teams', function() {
+                $scope.$watchCollection('user.roles', function(roles) {
 
-                    if ($scope.teams) {
+                    $scope.teamsList = $scope.teamsList.filter(function(team) {
 
-                        if ($scope.teams.length === 0) {
+                        /* If the user is already assigned a role on the team. */
+                        return roles.every(function(role) {
 
-                            $scope.displayTeamsLoading = false;
-                            $scope.displayTeams = false;
-                            $scope.displayTeamsEmpty = true;
-                        }
-                    }
+                            return team.id !== role.teamId;
+                        });
+                    });
                 });
 
                 $scope.addRole = function(newRole) {
