@@ -26,6 +26,16 @@ IntelligenceWebClient.factory('UsersFactory', [
                  * is to change the password. */
                 delete user.password;
 
+                /* If the user has roles. */
+                if (user.roles) {
+
+                    /* For each role. */
+                    user.roles.forEach(function(role) {
+
+                        /* Default the tenureEnd to null. */
+                        role.tenureEnd = role.tenureEnd || null;
+                    });
+                }
                 /* Convert the last accessed string to a date object. */
                 user.lastAccessed = new Date(user.lastAccessed);
 
@@ -86,6 +96,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 role = angular.copy(role);
                 role.userId = user.id;
+                role.tenureEnd = null;
                 role.tenureStart = new Date();
 
                 user.roles = user.roles || [];
