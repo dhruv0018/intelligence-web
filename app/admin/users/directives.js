@@ -59,8 +59,7 @@ Users.directive('krossoverNewRole', [
                         /* If the role is a head coach and the team already has one. */
                         if (users.is(role, ROLES.HEAD_COACH)) {
 
-                            return !!team.getHeadCoachRole();
-
+                            return !team.getHeadCoachRole();
                         }
 
                         return true;
