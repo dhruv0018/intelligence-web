@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "sport"
     ],
     "scripts": [
         "index.js"
