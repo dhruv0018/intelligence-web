@@ -8,23 +8,28 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
-IntelligenceWebClient.directive('focusWhen', [
+var focusOff;
+
+IntelligenceWebClient.directive('focusOn', [
     '$timeout',
     function($timeout) {
 
         var directive = {
 
             restrict: TO += ATTRIBUTES,
+            scope: {
+                focusOn: '='
+            },
             link: link
         };
 
         function link($scope, element, attributes) {
 
-            attributes.$observe('focusWhen', function(focusWhen) {
+            $scope.$watch('focusOn', function(focusOn) {
 
-                var focus = $scope.$eval(focusWhen);
+                var focusWhen = !!attributes.focusWhen;
 
-                if (focus === true) {
+                if (focusOn && focusWhen) {
 
                     $timeout(function() {
 
