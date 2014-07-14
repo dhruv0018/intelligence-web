@@ -43,17 +43,23 @@ GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
     function controller($scope, $state, $stateParams, games, plays, filtersets, data) {
         $scope.gameId = $state.params.id;
-        $scope.filterId = null;
         $scope.data = data;
         $scope.teamId = data.game.teamId;
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
-        $scope.filterCategory = 1;
+        $scope.filterCategory = data.filtersets.categories[0].id;
         $scope.activeFilters = [];
+        $scope.filterMenu = {
+            isOpened: true
+        };
 
-        $scope.contains = function(array, id) {
+        $scope.contains = function(array, id, playerId) {
             return array.some(function(filter) {
-                return id === filter.id;
+                if (!filter.customFilter) {
+                    return id === filter.id;
+                } else {
+                    return playerId === filter.playerId;
+                }
             });
         };
 
@@ -147,18 +153,12 @@ GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
 
 
         $scope.setFilter = function(filter) {
-            $scope.filterId = filter.id;
 
-            var isPresent = false;
-
-            if (!filter.customFilter) {
-                isPresent = $scope.activeFilters.some(function(filter) {
-                    return filter.id === $scope.filterId;
-                });
-            }
+            var isPresent = $scope.contains($scope.activeFilters, filter.id, filter.playerId);
 
             if (!isPresent) {
                 $scope.activeFilters.push(filter);
+                $scope.filterMenu.isOpened = false;
             }
 
         };
