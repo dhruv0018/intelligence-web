@@ -27,6 +27,7 @@ require('./services/authorization');
 require('./services/tokens');
 require('./services/session');
 require('./services/account');
+require('./services/queue');
 require('./services/alerts');
 require('./services/scripts');
 require('./services/indexing');
