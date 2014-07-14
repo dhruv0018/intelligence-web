@@ -47,8 +47,12 @@ GameAreaFilm.controller('GameAreaFilmController', [
         $scope.teamId = data.game.teamId;
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
-        $scope.filterCategory = 1;
+        $scope.filterCategory = data.filtersets.categories[0].id;
         $scope.activeFilters = [];
+        $scope.filterMenu = {
+            isOpened: true
+        };
+
 
         $scope.contains = function(array, id, playerId) {
             return array.some(function(filter) {
@@ -154,6 +158,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
             if (!isPresent) {
                 $scope.activeFilters.push(filter);
+                $scope.filterMenu.isOpened = false;
             }
 
         };

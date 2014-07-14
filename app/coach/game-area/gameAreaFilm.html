@@ -4,9 +4,9 @@
 
         <!--<span class="playall"><i class="icon icon-play-sign"></i> Play All</span>-->
     </div>
-    <div class="filter-dropdown pull-left dropdown">
+    <div class="filter-dropdown pull-left dropdown" data-is-open="filterMenu.isOpened">
         <a class="dropdown-toggle">
-            Filter Plays
+            Filter Plays {{filtersOpened}}
             <i class="icon icon-chevron-down"></i>
         </a>
 
@@ -42,10 +42,10 @@
 
                 <div data-ng-repeat="(key,value) in filtersetCategories">
                     <div data-ng-repeat="(innerkey, innerValue) in value.subFilters">
-                        <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="dropdown-toggle btn"  data-ng-class="{'child': (innerValue.parent !== null), 'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
+                        <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  data-ng-class="{'child': (innerValue.parent !== null), 'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
-                        <a data-ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" data-ng-if="innerValue.customFilter" class="dropdown-toggle btn btn-default" data-ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id, innerValue.playerId))}" data-ng-click="setFilter(innerValue)">
+                        <a data-ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" data-ng-if="innerValue.customFilter" class="btn" data-ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id, innerValue.playerId))}" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
                     </div>
