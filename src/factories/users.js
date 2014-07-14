@@ -26,6 +26,16 @@ IntelligenceWebClient.factory('UsersFactory', [
                  * is to change the password. */
                 delete user.password;
 
+                /* If the user has roles. */
+                if (user.roles) {
+
+                    /* For each role. */
+                    user.roles.forEach(function(role) {
+
+                        /* Default the tenureEnd to null. */
+                        role.tenureEnd = role.tenureEnd || null;
+                    });
+                }
                 /* Convert the last accessed string to a date object. */
                 user.lastAccessed = new Date(user.lastAccessed);
 
@@ -84,7 +94,10 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user = self;
                 }
 
+                role = angular.copy(role);
                 role.userId = user.id;
+                role.tenureEnd = null;
+                role.tenureStart = new Date();
 
                 user.roles = user.roles || [];
                 user.roles.unshift(role);
@@ -108,7 +121,20 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user = self;
                 }
 
-                if (user.roles) user.roles.splice(user.roles.indexOf(role), 1);
+                /* If the user has no roles. */
+                if (!user.roles) return;
+
+                /* Find the index of the role in the users roles. */
+                var userRoleIndex = user.roles.indexOf(role);
+
+                /* If the role was not found in the users roles. */
+                if (!~userRoleIndex) return;
+
+                /* If the tenure end of the role has alread been set. */
+                if (user.roles[userRoleIndex].tenureEnd) return;
+
+                /* Record the tenure end date of the role. */
+                user.roles[userRoleIndex].tenureEnd = new Date();
             },
 
             /**
