@@ -43,7 +43,6 @@ GameAreaFilm.controller('GameAreaFilmController', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
     function controller($scope, $state, $stateParams, games, plays, filtersets, data) {
         $scope.gameId = $state.params.id;
-        $scope.filterId = null;
         $scope.data = data;
         $scope.teamId = data.game.teamId;
         $scope.leagues = data.leagues.getCollection();
@@ -151,15 +150,7 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
 
         $scope.setFilter = function(filter) {
-            $scope.filterId = filter.id;
-
-            var isPresent = false;
-
-            if (!filter.customFilter) {
-                isPresent = $scope.activeFilters.some(function(filter) {
-                    return filter.id === $scope.filterId;
-                });
-            }
+            var isPresent = $scope.contains($scope.activeFilters, filter.id, filter.playerId);
 
             if (!isPresent) {
                 $scope.activeFilters.push(filter);
