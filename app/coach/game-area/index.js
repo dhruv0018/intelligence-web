@@ -194,21 +194,20 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data',
-    function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, GAME_STATUSES, data) {
+    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS',
+    function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS) {
         $scope.hasShotChart = false;
         $scope.hasStatistics = true;
         $scope.hasFormations = false;
         $scope.hasDownAndDistance = false;
         $scope.expandAll = false;
         $scope.data = data;
-        console.log(data.league.sportId);
 
-        if (data.league.sportId == 1) {
+        if (data.league.sportId == SPORTS.BASKETBALL.id) {
             $scope.hasShotChart = true;
         }
 
-        if (data.league.sportId == 2) {
+        if (data.league.sportId == SPORTS.FOOTBALL.id) {
             $scope.hasFormations = true;
             $scope.hasDownAndDistance = true;
         }
