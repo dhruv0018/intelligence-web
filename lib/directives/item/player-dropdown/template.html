@@ -1,15 +1,27 @@
 <span class="player-dropdown">
 
-    <button class="player-dropdown" data-ng-if="event.variableValues[item.index].value !== null" data-ng-click="event.variableValues[item.index].value = null">{{ players[event.variableValues[item.index].value].firstName }} {{ players[event.variableValues[item.index].value].lastName }}</button>
+    <button
+        class="player-dropdown"
+        data-ng-show="event.variableValues[item.index].value"
+        data-ng-click="event.variableValues[item.index].value = null"
+    >{{ players[event.variableValues[item.index].value].firstName }} {{ players[event.variableValues[item.index].value].lastName }}</button>
 
-    <input class="player-dropdown"
-           type="text" data-ng-if="event.variableValues[item.index].value === null"
-           data-ng-model="selectedPlayer" data-ng-required="item.isRequired"
-           tabindex="{{ item.index }}"
-           data-ng-focus="event.activeEventVariableIndex = item.index"
-           data-focus-when="event.activeEventVariableIndex == item.index"
-           data-autofocus-when="item.index == 1"
-           data-typeahead-editable="false" data-typeahead-on-select="selectPlayer($item)" data-typeahead-template-url="item/player-dropdown-input.html"
-           data-typeahead="player as player.firstName for player in playersList | filter:{ jerseyNumber: $viewValue }">
+    <input
+        type="text"
+        class="player-dropdown"
+        tabindex="{{ item.index }}"
+        data-ng-required="item.isRequired"
+        data-ng-hide="event.variableValues[item.index].value"
+        data-ng-model="selectedPlayer"
+        data-ng-change="event.activeEventVariableIndex = item.index + 1"
+        data-ng-focus="event.activeEventVariableIndex = item.index"
+        data-focus-on="event.activeEventVariableIndex == item.index"
+        data-focus-when="{{autoAdvance}}"
+        data-autofocus-when="item.index == 1"
+        data-typeahead-editable="false"
+        data-typeahead-on-select="selectPlayer($item)"
+        data-typeahead-template-url="item/player-dropdown-input.html"
+        data-typeahead="player as player.firstName for player in playersList | filter:{ jerseyNumber: $viewValue }"
+    >
 
 </span>
