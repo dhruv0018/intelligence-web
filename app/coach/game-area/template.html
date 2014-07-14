@@ -14,13 +14,13 @@
                 <select data-ng-model="dataType">
                     <option data-ng-if="gameStatus === 'INDEXED'" value="film-breakdown"> Film Breakdown </option>
                     <option value="raw-film"> Raw Film </option>
-                    <option data-ng-if="hasFormations" value="formation-report">
+                    <option data-ng-if="hasFormations && gameStatus ==='INDEXED'" value="formation-report">
                         Formation Report
                     </option>
-                    <option data-ng-if="hasDownAndDistance" value="down-distance-report">
+                    <option data-ng-if="hasDownAndDistance && gameStatus ==='INDEXED'" value="down-distance-report">
                         Down, Distance, &amp; Hash Report
                     </option>
-                    <option data-ng-if="hasShotChart" value="shot-chart">
+                    <option data-ng-if="hasShotChart && gameStatus ==='INDEXED'" value="shot-chart">
                         Shot Chart
                     </option>
                     <option data-ng-if="hasStatistics" value="statistics">

@@ -48,9 +48,5 @@ GameAreaRawFilm.controller('GameAreaRawFilmController', [
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
 
-        $scope.setTeam = function(teamId) {
-            $scope.teamId = teamId;
-        };
-
     }
 ]);
