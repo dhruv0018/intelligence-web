@@ -198,10 +198,20 @@ GameArea.controller('Coach.GameArea.controller', [
     function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, GAME_STATUSES, data) {
         $scope.hasShotChart = false;
         $scope.hasStatistics = true;
-        $scope.hasFormations = true;
-        $scope.hasDownAndDistance = true;
+        $scope.hasFormations = false;
+        $scope.hasDownAndDistance = false;
         $scope.expandAll = false;
         $scope.data = data;
+        console.log(data.league.sportId);
+
+        if (data.league.sportId == 1) {
+            $scope.hasShotChart = true;
+        }
+
+        if (data.league.sportId == 2) {
+            $scope.hasFormations = true;
+            $scope.hasDownAndDistance = true;
+        }
 
         //constants
         $scope.GAME_STATUSES = GAME_STATUSES;
