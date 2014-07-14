@@ -12,8 +12,8 @@
                 <a data-ng-href="#"><i class="icon icon-share-square-o"></i> Share</a>-->
 
                 <select data-ng-model="dataType">
-                    <option data-ng-if="gameStatus !== 'INDEXED'" value="video"> Raw Film </option>
-                    <option data-ng-if="gameStatus === 'INDEXED'" value="video"> Breakdown </option>
+                    <option data-ng-if="gameStatus === 'INDEXED'" value="film-breakdown"> Film Breakdown </option>
+                    <option value="raw-film"> Raw Film </option>
                     <option data-ng-if="hasFormations" value="formation-report">
                         Formation Report
                     </option>

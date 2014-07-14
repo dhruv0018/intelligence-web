@@ -1,5 +1,6 @@
 require('./gameAreaInformation.js');
-require('./gameAreaFilm.js');
+require('./gameAreaRawFilm.js');
+require('./gameAreaFilmBreakdown.js');
 require('./gameAreaStatistics.js');
 require('./gameAreaShotChart.js');
 require('./gameAreaFormations.js');
@@ -18,7 +19,8 @@ var GameArea = angular.module('Coach.GameArea', [
     'ui.bootstrap',
     'Coach.Game',
     'game-area-information',
-    'game-area-film',
+    'game-area-raw-film',
+    'game-area-film-breakdown',
     'game-area-statistics',
     'game-area-shot-chart',
     'game-area-formations',
@@ -240,12 +242,18 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.filtersetCategories = data.filtersetCategories;
 
         //view selector
-        $scope.dataType = 'video';
+        if ($scope.gameStatus === 'INDEXED') {
+            $scope.dataType = 'film-breakdown';
+        } else {
+            $scope.dataType = 'raw-film';
+        }
         $scope.$watch('dataType', function(data) {
             if ($scope.dataType === 'game-info') {
                 $state.go('ga-info');
-            } else if ($scope.dataType === 'video') {
-                $state.go('ga-film');
+            } else if ($scope.dataType === 'raw-film') {
+                $state.go('ga-raw-film');
+            } else if ($scope.dataType === 'film-breakdown') {
+                $state.go('ga-film-breakdown');
             } else if ($scope.dataType === 'statistics') {
                 $state.go('ga-statistics');
             } else if ($scope.dataType === 'shot-chart') {
