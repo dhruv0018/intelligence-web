@@ -17,6 +17,30 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             resource: TagsetsResource,
 
+            extend: function(tagset) {
+
+                var self = this;
+
+                angular.extend(tagset, self);
+
+                tagset.tags.forEach(function(tag) {
+
+                    if (angular.isArray(tag.tagVariables)) {
+
+                        var indexedVariables = {};
+
+                        tag.tagVariables.forEach(function(variable, index) {
+
+                            indexedVariables[++index] = variable;
+                        });
+
+                        tag.tagVariables = indexedVariables;
+                    }
+                });
+
+                return tagset;
+            },
+
             getIndexedTags: function() {
 
                 var indexedTags = {};
