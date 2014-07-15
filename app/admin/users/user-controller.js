@@ -28,7 +28,7 @@ Users.controller('Users.User.Controller', [
 
         $scope.user = data.users.get(userId);
 
-        $scope.user.newRoles = [];
+        $scope.newRoles = [];
 
         /* If the user has roles, use a known role. */
         if ($scope.user.roles) {

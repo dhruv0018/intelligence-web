@@ -107,10 +107,12 @@ Leagues.service('Leagues.Data.Dependencies', [
  * @type {Controller}
  */
 Leagues.controller('LeagueController', [
-    '$scope', '$state', '$stateParams', 'Leagues.Data',
-    function controller($scope, $state, $stateParams, data) {
+    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'Leagues.Data',
+    function controller($scope, $state, $stateParams, leagues, data) {
 
         var leagueId = $stateParams.id;
+
+        if (!leagueId) leagues.create();
 
         $scope.league = data.leagues.get(leagueId);
         $scope.sports = data.sports.getList();
