@@ -41,16 +41,6 @@ IntelligenceWebClient.factory('ScriptsService', [
 
                 if (!script) return [];
 
-                /* Tag variables are ordered by where they appear in the scripts,
-                 * but variable values are not ordered, so this position needs
-                 * to be recored to place the variable in the script later. */
-                tag.tagVariables.forEach(function(tagVariable, index) {
-
-                    /* Mark the index of each variable by their location in the
-                     * tagVariables array. */
-                    tagVariable.index = index + 1;
-                });
-
                 /* Split up script into array items and replace variables
                  * with the actual tag variable object. */
                 return script.split(VARIABLE_PATTERN)
@@ -68,11 +58,16 @@ IntelligenceWebClient.factory('ScriptsService', [
                     /* If the item is a variable. */
                     if (VARIABLE_PATTERN.test(item)) {
 
-                        /* Find the index of the variable. */
-                        var variableIndex = VARIABLE_INDEX_PATTERN.exec(item).pop();
+                        /* Find the index of the variable in the script. */
+                        var index = Number(VARIABLE_INDEX_PATTERN.exec(item).pop());
 
-                        /* Lookup the variable in the tag variables. */
-                        return tag.tagVariables[variableIndex];
+                        /* Find the tag variable by script index. */
+                        var tagVariable = tag.tagVariables[index];
+
+                        /* Store the index position of the tag variable. */
+                        tagVariable.index = index;
+
+                        return tagVariable;
                     }
 
                     /* If the item is not a variable return it as is. */
