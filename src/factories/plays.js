@@ -17,33 +17,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             resource: PlaysResource,
 
-            extend: function(play) {
-
-                var self = this;
-
-                angular.extend(play, self);
-
-                if (play.events) {
-
-                    play.events = play.events.map(function(event) {
-
-                        var indexedVariableValues = {};
-
-                        for (var key in event.variableValues) {
-
-                            var value = event.variableValues[key];
-                            indexedVariableValues[value.index] = value;
-                        }
-
-                        event.variableValues = indexedVariableValues;
-
-                        return event;
-                    });
-                }
-
-                return play;
-            },
-
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
                 console.log(resources);
@@ -115,16 +88,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         event.playId = play.id;
 
                         delete event.activeEventVariableIndex;
-
-                        var indexedVariableValues = {};
-
-                        for (var key in event.variableValues) {
-
-                            var value = event.variableValues[key];
-                            indexedVariableValues[value.id] = value;
-                        }
-
-                        event.variableValues = indexedVariableValues;
 
                         return event;
                     });
