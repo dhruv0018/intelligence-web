@@ -53,6 +53,8 @@ var ErrorReporter = {
     }
 };
 
+IntelligenceWebClient.value('ErrorReporter', ErrorReporter);
+
 /**
  * Browser error handler function. This is the default browser error handler
  * function. In HTML5 the 4th and 5th parameters are available, giving access
