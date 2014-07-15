@@ -87,6 +87,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                         event.playId = play.id;
 
+                        delete event.tag;
                         delete event.activeEventVariableIndex;
 
                         return event;
