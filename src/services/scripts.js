@@ -69,7 +69,7 @@ IntelligenceWebClient.factory('ScriptsService', [
                     if (VARIABLE_PATTERN.test(item)) {
 
                         /* Find the index of the variable. */
-                        var variableIndex = VARIABLE_INDEX_PATTERN.exec(item).pop() - 1;
+                        var variableIndex = VARIABLE_INDEX_PATTERN.exec(item).pop();
 
                         /* Lookup the variable in the tag variables. */
                         return tag.tagVariables[variableIndex];
