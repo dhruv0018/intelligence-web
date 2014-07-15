@@ -20,7 +20,8 @@ require('./app');
 require('./flow');
 require('./routes');
 require('./errors');
-require('./transforms');
+
+require('./http/transforms/date');
 
 require('./services/authentication');
 require('./services/authorization');
