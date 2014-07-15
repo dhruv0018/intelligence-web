@@ -14,6 +14,7 @@
         data-ng-required="item.isRequired"
         data-ng-hide="event.variableValues[item.index].value"
         data-ng-model="variable.value"
+        data-ng-blur="event.variableValues[item.index].value = variable.value"
         data-ng-focus="event.activeEventVariableIndex = item.index"
         data-focus-on="event.activeEventVariableIndex == item.index"
         data-focus-when="{{autoAdvance}}"
