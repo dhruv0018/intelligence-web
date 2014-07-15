@@ -9,8 +9,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * Intercepts error responses.
  */
 IntelligenceWebClient.factory('Auth.Interceptor', [
-    '$q', '$location', 'TokensService',
-    function factory($q, $location, tokens) {
+    '$q', '$location', 'TokensService', 'HTTPQueueService',
+    function factory($q, $location, tokens, queue) {
 
         return {
 
@@ -22,26 +22,34 @@ IntelligenceWebClient.factory('Auth.Interceptor', [
 
                 if (response.data.error && response.data.error === 'invalid_token') {
 
-                    ErrorReporter.reportError(new Error('Invalid access token'));
+                    /* Refresh token. */
+                    return tokens.refreshToken().then(function() {
 
-                    /* TODO: Don't go to login; refresh token. */
-                    tokens.removeTokens();
-                    $location.path('/login');
-
-                    return $q.reject(response);
+                        /* Queue the original request to be requested again. */
+                        return queue.enqueue(response);
+                    });
                 }
 
                 return response;
             },
 
-            /* Intercept responses with status codes that indicate errors. */
+            /* Intercept responses with authentication error status codes. */
             responseError: function(response) {
 
                 switch (response.status) {
 
-                case 401: /* Unauthorized */
+                    case 401: /* Unauthorized */
 
-                    break;
+                        /* Do not attempt a token refresh on any OAuth URLs. */
+                        if (!/oauth/.test(response.config.url)) {
+
+                            /* Refresh token. */
+                            return tokens.refreshToken().then(function() {
+
+                                /* Queue the original request to be re-requested. */
+                                return queue.enqueue(response);
+                            });
+                        }
                 }
 
                 return $q.reject(response);
