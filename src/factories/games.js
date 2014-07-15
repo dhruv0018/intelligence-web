@@ -453,7 +453,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
-
             assignmentTimeRemaining: function(assignment) {
 
                 var remaining = 'None';
