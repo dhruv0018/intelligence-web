@@ -18,6 +18,7 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
     function controller($scope, indexing, play, event, sidebar, data) {
 
         $scope.data = data;
+        $scope.game = data.game;
         $scope.play = play;
         $scope.event = event;
         $scope.sidebar = sidebar;
