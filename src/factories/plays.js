@@ -17,6 +17,25 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             resource: PlaysResource,
 
+            extend: function(play) {
+
+                var self = this;
+
+                angular.extend(play, self);
+
+                if (play.events) {
+
+                    play.events = play.events.map(function(event) {
+
+                        delete event.tag;
+
+                        return event;
+                    });
+                }
+
+                return play;
+            },
+
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
                 console.log(resources);
