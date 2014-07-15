@@ -26,17 +26,9 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
 
         $rootScope.$on(VG_EVENTS.ON_PAUSE, function() {
             videoplayer.then(function(vp) {
-                $scope.currentTimestamp = window.Math.floor($scope.VideoPlayer.videoElement[0].currentTime);
+                $scope.currentTimestamp = window.Math.floor(vp.videoElement[0].currentTime);
             });
         });
-
-        $scope.clearKeyListeners = function() {
-            Mousetrap.pause();
-        };
-
-        $scope.unclearKeyListeners = function(element) {
-            Mousetrap.unpause();
-        };
 
         $scope.saveIndexingNote = function() {
 

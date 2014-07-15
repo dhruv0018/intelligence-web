@@ -71,7 +71,9 @@ Indexing.controller('Indexing.Main.Controller', [
 
             $scope.$apply(function() {
 
-                if (indexing.isReady) $scope.VideoPlayer.playPause();
+                videoplayer.then(function(vp) {
+                    if (indexing.isReady) vp.playPause();
+                });
             });
 
             return false;
