@@ -42,6 +42,7 @@ require('./constants/kvs-whitelist');
 require('./constants/turnaroundtimes');
 require('./constants/football/gaps');
 require('./constants/football/zones');
+require('./constants/sports');
 
 require('./models/users');
 require('./models/sports');

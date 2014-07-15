@@ -1,5 +1,6 @@
 require('./gameAreaInformation.js');
-require('./gameAreaFilm.js');
+require('./gameAreaRawFilm.js');
+require('./gameAreaFilmBreakdown.js');
 require('./gameAreaStatistics.js');
 require('./gameAreaShotChart.js');
 require('./gameAreaFormations.js');
@@ -18,7 +19,8 @@ var GameArea = angular.module('Coach.GameArea', [
     'ui.bootstrap',
     'Coach.Game',
     'game-area-information',
-    'game-area-film',
+    'game-area-raw-film',
+    'game-area-film-breakdown',
     'game-area-statistics',
     'game-area-shot-chart',
     'game-area-formations',
@@ -121,6 +123,10 @@ GameArea.config([
                                                     exclusion.push(filter.id);
                                                 }
 
+                                                if (filter.name === 'Unknown Players') {
+                                                    exclusion.push(filter.id);
+                                                }
+
                                                 var excluded = exclusion.some(function(excludedFilterId) {
                                                     return filter.id === excludedFilterId;
                                                 });
@@ -132,7 +138,6 @@ GameArea.config([
                                             });
 
                                             angular.forEach(data.gamePlayerLists[data.game.opposingTeamId], function(player) {
-
                                                 var playerFilter = {
                                                     id: playerFilterTemplate.id,
                                                     teamId: data.game.opposingTeamId,
@@ -194,14 +199,23 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data',
-    function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, GAME_STATUSES, data) {
+    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS',
+    function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS) {
         $scope.hasShotChart = false;
         $scope.hasStatistics = true;
-        $scope.hasFormations = true;
-        $scope.hasDownAndDistance = true;
+        $scope.hasFormations = false;
+        $scope.hasDownAndDistance = false;
         $scope.expandAll = false;
         $scope.data = data;
+
+        if (data.league.sportId == SPORTS.BASKETBALL.id) {
+            $scope.hasShotChart = true;
+        }
+
+        if (data.league.sportId == SPORTS.FOOTBALL.id) {
+            $scope.hasFormations = true;
+            $scope.hasDownAndDistance = true;
+        }
 
         //constants
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -231,12 +245,18 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.filtersetCategories = data.filtersetCategories;
 
         //view selector
-        $scope.dataType = 'video';
+        if ($scope.gameStatus === 'INDEXED') {
+            $scope.dataType = 'film-breakdown';
+        } else {
+            $scope.dataType = 'raw-film';
+        }
         $scope.$watch('dataType', function(data) {
             if ($scope.dataType === 'game-info') {
                 $state.go('ga-info');
-            } else if ($scope.dataType === 'video') {
-                $state.go('ga-film');
+            } else if ($scope.dataType === 'raw-film') {
+                $state.go('ga-raw-film');
+            } else if ($scope.dataType === 'film-breakdown') {
+                $state.go('ga-film-breakdown');
             } else if ($scope.dataType === 'statistics') {
                 $state.go('ga-statistics');
             } else if ($scope.dataType === 'shot-chart') {
