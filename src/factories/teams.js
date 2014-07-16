@@ -140,9 +140,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     if (activePackages.length === 0) {
                         return undefined;
                     } else if (activePackages.length > 1) {
-                        console.log('more than one active package');
-                        return activePackages[0];
-                        //throw new Error('You have more than one active package for team ' + self.id);
+                        throw new Error('You have more than one active package for team ' + self.id);
                     } else {
                         return activePackages[0];
                     }
