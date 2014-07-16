@@ -11,8 +11,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
         var IndexingService = {
 
-            period: 1,
-
             plays: [],
 
             reset: function(game, plays) {
