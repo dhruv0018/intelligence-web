@@ -590,6 +590,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var dndReport = new Resource(report);
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
+            },
+            setAside: function() {
+                var self = this;
+                self.status = GAME_STATUSES.SET_ASIDE.id;
+                return self.save();
             }
         };
 
