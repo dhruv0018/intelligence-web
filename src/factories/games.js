@@ -598,15 +598,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var timePassed = moment() - moment.utc(self.createdAt);
 
                 var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
-//                console.log('----start-----team---  ' + uploaderTeam.id);
-//                console.log('turnover time');
-//                console.log(turnoverTime);
-//                console.log('current time');
-//                console.log(moment());
-//                console.log('created time');
-//                console.log(self.createdAt);
-//                console.log('time passed');
-//                console.log(timePassed);
                 if (turnoverTime > 0) {
                     var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
                     return turnoverTimeRemaining.get('hours') + 'h ' + turnoverTimeRemaining.get('minutes') + 'm';
