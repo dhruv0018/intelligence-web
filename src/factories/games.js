@@ -589,6 +589,31 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var dndReport = new Resource(report);
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
+            },
+
+            getRemainingTime: function(uploaderTeam) {
+                var self = this;
+
+                //Difference between the current time and the uploading date of the game
+                var timePassed = moment() - moment.utc(self.createdAt);
+
+                var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+//                console.log('----start-----team---  ' + uploaderTeam.id);
+//                console.log('turnover time');
+//                console.log(turnoverTime);
+//                console.log('current time');
+//                console.log(moment());
+//                console.log('created time');
+//                console.log(self.createdAt);
+//                console.log('time passed');
+//                console.log(timePassed);
+                if (turnoverTime > 0) {
+                    var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
+                    return turnoverTimeRemaining.get('hours') + 'h ' + turnoverTimeRemaining.get('minutes') + 'm';
+                }
+
+                //no plans or packages and therefore no breakdowns available
+                return '';
             }
         };
 

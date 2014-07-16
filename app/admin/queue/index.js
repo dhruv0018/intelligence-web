@@ -128,17 +128,6 @@ Queue.controller('QueueController', [
         $scope.usersList = data.users.getList();
         $scope.queue = data.games.getList();
 
-        $scope.turnoverTimeRemaining = function(game) {
-            //Difference between the current time and the uploading date of the game
-            var timePassed = moment() - moment.utc(game.createdAt);
-
-            var uploaderTeam = $scope.teams[game.uploaderTeamId];
-
-            console.log(uploaderTeam);
-
-            return moment.duration(timePassed).humanize();
-        };
-
         $scope.search = function(filter) {
 
             /* If search by ID is used, just pull the single game. */
