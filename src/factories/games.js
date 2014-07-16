@@ -578,7 +578,6 @@ IntelligenceWebClient.factory('GamesFactory', [
             setAside: function() {
                 var self = this;
                 self.status = GAME_STATUSES.SET_ASIDE.id;
-                return self.save();
             }
         };
 
