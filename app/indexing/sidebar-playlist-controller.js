@@ -14,36 +14,14 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
-    '$scope', '$modal', 'IndexingService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'VideoPlayerInstance',
-    function controller($scope, $modal, indexing, tags, play, event, sidebar, VideoPlayer) {
+    '$scope', 'IndexingService', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance',
+    function controller($scope, indexing, play, event, sidebar, data, VideoPlayer) {
 
+        $scope.data = data;
         $scope.play = play;
         $scope.event = event;
         $scope.sidebar = sidebar;
         $scope.indexing = indexing;
-        $scope.buildScript = indexing.buildScript;
-
-        /**
-         * Select an event to use as the current event.
-         */
-        $scope.selectEvent = function(selectedPlay, selectedEvent) {
-
-            indexing.eventSelected = true;
-            indexing.isIndexing = true;
-            indexing.showTags = false;
-            indexing.showScript = true;
-
-            /* Set the current time to the time from the selected event. */
-            VideoPlayer.then(function(vp) {
-                vp.seekTime(selectedEvent.time);
-                vp.play();
-            });
-
-            /* Set the current play and event to match the selected event. */
-            play.current = selectedPlay;
-            event.current = selectedEvent;
-            event.highlighted = selectedEvent;
-        };
     }
 ]);
 

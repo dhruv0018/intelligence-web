@@ -1,70 +1,64 @@
 <div class="formations-teams-header">
     <span class="team-on-offense">
         Teams on Offense:
-        <a data-ng-click="teamId = game.teamId" data-ng-class="{active: teamId == game.teamId}" class="home-team" href>{{teams[game.teamId].name}}</a>
-        <a data-ng-click="teamId = game.opposingTeamId" data-ng-class="{active: teamId == game.opposingTeamId}" class="away-team" href>{{teams[game.opposingTeamId].name}}</a>
+        <a data-ng-click="teamId = game.teamId; opposingTeamId = game.opposingTeamId" data-ng-class="{active: teamId == game.teamId}" class="home-team" href>{{teams[game.teamId].name}}</a>
+        <a data-ng-click="teamId = game.opposingTeamId; opposingTeamId = game.teamId" data-ng-class="{active: teamId == game.opposingTeamId}" class="away-team" href>{{teams[game.opposingTeamId].name}}</a>
     </span>
 </div>
 <div class="down-distance-info-container">
     <div>
         <span>Select Down:</span>
-        <select class="first-choices">
-            <option>1st</option>
-            <option>2nd</option>
-            <option>3rd</option>
-            <option>4th</option>
-        </select>
+        <select data-ng-model="dndReport.down" class="second-choices" data-ng-options="value as key for (key, value) in options.down"></select>
 
         <span>Select Distance:</span>
-        <select select class="second-choices">
-            <option>Short</option>
-            <option>Medium</option>
-            <option>Long</option>
-        </select>
+
+        <select data-ng-model="dndReport.distance" class="second-choices" data-ng-options="value as key for (key, value) in options.distance"></select>
     </div>
     <div>
         <span>Select Hash:</span>
-        <select select class="first-choices">
-            <option>Left</option>
-            <option>Middle</option>
-            <option>Right</option>
-        </select>
+        <select data-ng-model="dndReport.hash" class="second-choices" data-ng-options="value as key for (key, value) in options.hash"></select>
 
         <span>Select Weight:</span>
-        <select select class="second-choices">
-            <option>Right</option>
-            <option>Left</option>
-            <option>Balanced</option>
-        </select>
+        <select data-ng-model="dndReport.strength" class="second-choices" data-ng-options="value as key for (key, value) in options.weight"></select>
+
     </div>
     <div class="show-from">
         Show snaps only from:
-        <select>
-            <option>Whole Field</option>
-            <option>Red Zone</option>
+        <select data-ng-model="dndReport.redZone">
+            <option value="false">Whole Field</option>
+            <option value="true">Red Zone</option>
         </select>
 
-        <button class="create-report-btn">Create Report</button>
+        <button data-ng-click="createDownAndDistanceReport()" class="create-report-btn">Create Report</button>
     </div>
 </div>
 <div class="formations-chart-container">
     <div class="field-header">
         <span class="field-info">
-            <span>Down &amp; Dist:</span> 3rd and short (1 to 4)
+            <span class="field-info-title">Down &amp; Dist:</span>
+            <span data-ng-if="dndReport.down">{{dndReport.down}}</span>
+            <span data-ng-if="!dndReport.down">Any down</span>
+            and 
+            <span data-ng-if="dndReport.distance">{{dndReport.distance}}</span>
+            <span data-ng-if="!dndReport.distance">any distance</span>
         </span>
         <span class="field-info">
-            <span>Hash:</span> Left
+            <span class="field-info-title">Hash:</span> 
+            <span data-ng-if="dndReport.hash">{{dndReport.hash}}</span>
+            <span data-ng-if="!dndReport.hash">Any</span>
         </span>
         <span class="field-info">
-            <span>Weight:</span> Right
+            <span class="field-info-title">Weight:</span> 
+            <span data-ng-if="dndReport.strength">{{dndReport.strength}}</span>
+            <span data-ng-if="!dndReport.strength">Any</span>
         </span>
     </div>
     <!--<div class="field-options">
         <span class="offense-defense" data-ng-click="teamOnOffense = true" data-ng-class="{active-report: teamOnOffense = true}">What Home did on offense</span>
         <span class="offense-defense" data-ng-click="teamOnOffense = false" data-ng-class="{active-report: teamOnOffense = false}">What Away did on defense</span>
-        <span class="print-formation"><i class="icon-print"></i> Print</span>
+        <span class="print-formation"><i class="icon icon-print"></i> Print</span>
     </div>-->
     <div class="field">
-        <krossover-arena type="FOOTBALL" data-game="game" data-plays="plays" data-team="team" data-league="league"></krossover-arena>
+        <krossover-arena type="FOOTBALL" data-game="game" data-plays="plays" data-team-id="teamId" data-opposing-team-id="opposingTeamId" data-league="league" data-chart="game.dndReport" data-redzone="dndReport.redZone"></krossover-arena>
     </div>
 </div>

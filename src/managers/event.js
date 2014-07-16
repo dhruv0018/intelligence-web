@@ -20,8 +20,22 @@ IntelligenceWebClient.service('EventManager', [
             activeEventVariableIndex: 1
         };
 
+        this.tags = null;
+
+        this.tagset = null;
+
         this.current = angular.copy(model);
 
+        /**
+         * Checks whether the event is an ending event.
+         * @returns - true if the event is an end event; false otherwise.
+         */
+        this.isEndEvent = function(event) {
+
+            event = event || this.current;
+
+            return event && event.tag && this.tagset.isEndTag(event.tag.id);
+        };
 
         /**
          * Checks whether the event has variables.
@@ -92,7 +106,11 @@ IntelligenceWebClient.service('EventManager', [
         /**
          * Resets the current play to the original model.
          */
-        this.reset = function() {
+        this.reset = function(tagset) {
+
+            this.tagset = tagset || this.tagset;
+
+            this.tags = this.tagset.getIndexedTags();
 
             this.current = angular.copy(model);
         };
@@ -105,13 +123,23 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.create = function(tagId, time) {
 
+            /* If there is no current play. */
             if (!play.current) {
 
+                /* Create a play. */
                 play.create();
             }
 
+            /* If there are no plays in the playlist. */
+            if (!indexing.plays.length) {
+
+                /* Add the current play to the playlist. */
+                indexing.plays.push(play.current);
+            }
+
             /* Lookup and set the tag from the indexing tags. */
-            this.current.tag = indexing.tags[tagId];
+            this.current.tagId = tagId;
+            this.current.tag = this.tags[tagId];
 
             this.current.time = time;
 

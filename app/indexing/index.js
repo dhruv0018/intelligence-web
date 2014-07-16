@@ -33,6 +33,27 @@ Indexing.run([
 ]);
 
 /**
+ * Indexing data dependencies.
+ * @module Indexing
+ * @type {service}
+ */
+Indexing.service('Indexing.Data.Dependencies', [
+    'Indexer.Games.Data.Dependencies', 'TeamsFactory', 'LeaguesFactory', 'TagsetsFactory',
+    function(data, teams, leagues, tagsets) {
+
+        var Data = {
+
+            games: data.games,
+            teams: teams.load(),
+            leagues: leagues.load(),
+            tagsets: tagsets.load()
+        };
+
+        return Data;
+    }
+]);
+
+/**
  * Indexing page state router.
  * @module Indexing
  * @type {UI-Router}
@@ -66,33 +87,61 @@ Indexing.config([
                     }
                 },
                 resolve: {
-                    IndexingService: [
-                        '$stateParams', 'IndexingService',
-                        function($stateParams, indexing) {
+                    'Indexing.Data': [
+                        '$q', '$stateParams', 'Indexing.Data.Dependencies', 'PlayersFactory', 'PlaysFactory',
+                        function($q, $stateParams, data, players, plays) {
 
-                            var gameId = $stateParams.id;
+                            return $q.all(data).then(function(data) {
 
-                            return indexing.init(gameId);
+                                var gameId = $stateParams.id;
+                                var game = data.games.get(gameId);
+
+                                var team = data.teams.get(game.teamId);
+                                var opposingTeam = data.teams.get(game.opposingTeamId);
+
+                                var teamRoster = game.getRoster(team.id);
+                                var opposingTeamRoster = game.getRoster(opposingTeam.id);
+
+                                var gameData = {
+
+                                    game: game,
+                                    plays: plays.query({ gameId: gameId }),
+                                    players: players,
+                                    teamPlayers: players.query({ roster: teamRoster.id }),
+                                    opposingTeamPlayers: players.query({ roster: opposingTeamRoster.id })
+                                };
+
+                                return $q.all(angular.extend(data, gameData));
+                            });
+
                         }
                     ]
                 },
                 onEnter: [
-                    '$state', '$stateParams', 'SessionService', 'IndexingService',
-                    function($state, $stateParams, session, indexing) {
+                    '$state', '$stateParams', 'SessionService', 'Indexing.Data',
+                    function($state, $stateParams, session, data) {
 
                         var userId = session.currentUser.id;
+                        var gameId = $stateParams.id;
+                        var game = data.games.get(gameId);
+                        var status = game.getStatus();
+                        var indexable = game.isAssignedToIndexer() && game.canBeIndexed();
+                        var qaAble = game.isAssignedToQa() && game.canBeQAed();
 
-                        if (!indexing.game.isAssignedToUser(userId)) {
+                        if (game.isAssignedToUser(userId) && (indexable || qaAble) && !game.isDeleted) {
 
-                            $state.go('401');
+                            if (!game.isAssignmentStarted()) {
+
+                                game.startAssignment(userId);
+                                game.save();
+                            }
                         }
+
+                        else $state.go('401');
                     }
                 ],
                 onExit: [
-                    'AlertsService',
-                    function(alerts) {
-
-                        alerts.clear();
+                    function() {
 
                         Mousetrap.unbind('space');
                         Mousetrap.unbind('left');

@@ -5,7 +5,7 @@
         <header>
 
             <h2>Game Id <em>#{{ game.id }}</em></h2>
-            <h1>{{ teamName }} vs {{ opposingTeamName }}</h1>
+            <h1>{{ team.name }} vs {{ opposingTeam.name }}</h1>
             <h3>{{ school.name }} {{ sport.name }}, <a data-ui-sref="user-info({ id: headCoach.id })">Coach {{ headCoach.lastName }}</a></h3>
 
         </header>
@@ -210,11 +210,11 @@
 
         <h4>Indexer</h4>
 
-        <button class="btn btn-link" data-ng-if="game.canBeAssignedToIndexer()" data-ng-click="selectIndexer(false)">Assign Game</button>
+        <button class="btn btn-link" data-ng-if="game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(data, game, false)">Assign Game</button>
 
         <ul data-ng-if="game.hasIndexerAssignment()" data-ng-repeat="assignment in game.indexerAssignments">
 
-            <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="selectIndexer(game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+            <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(data, game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
 
         </ul>
 
@@ -222,11 +222,11 @@
 
         <div data-ng-if="!game.hasQaAssignment() && !game.canBeAssignedToQa()">--</div>
 
-        <button class="btn btn-link" data-ng-if="game.canBeAssignedToQa()" data-ng-click="selectIndexer(true)">Assign Game</button>
+        <button class="btn btn-link" data-ng-if="game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(data, game, true)">Assign Game</button>
 
         <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments">
 
-            <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="selectIndexer(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+            <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(data, game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
 
         </ul>
 

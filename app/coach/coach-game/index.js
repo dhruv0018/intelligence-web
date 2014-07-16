@@ -41,60 +41,6 @@ Game.run([
     }
 ]);
 
-var tabs = {
-
-    'game-info':     { active: true, disabled: false },
-    'your-team':     { active: false, disabled: true },
-    'scouting-team':    { active: false, disabled: true },
-    'opposing-team': { active: false, disabled: true },
-    'instructions':    { active: false, disabled: true },
-    reset: function() {
-        this['game-info'] = {
-            active: true,
-            disabled: false
-        };
-
-        this['your-team'] = {
-            active: false,
-            disabled: true
-        };
-
-        this['scouting-team'] = {
-            active: false,
-            disabled: true
-        };
-
-        this['opposing-team'] = {
-            active: false,
-            disabled: true
-        };
-
-        this.instructions = {
-            active: false,
-            disabled: true
-        };
-    }
-};
-
-Object.defineProperty(tabs, 'activateTab', {
-
-    value: function(activeTab) {
-
-        Object.keys(this).forEach(function(tab) {
-
-            tabs[tab].active = tab === activeTab;
-        });
-    }
-});
-
-/**
- * Game tabs value service.
- * @module Game
- * @name Game.Tabs
- * @type {value}
- */
-Game.value('Coach.Game.Tabs', tabs);
-
 var data = {
 
     team: {},
@@ -108,8 +54,7 @@ var data = {
  * @type {Directive}
  */
 Game.directive('krossoverCoachGame', [
-    'Coach.Game.Data',
-    function directive(data) {
+    function directive() {
 
         var krossoverCoachGame = {
 
@@ -119,9 +64,7 @@ Game.directive('krossoverCoachGame', [
             link: link,
 
             scope: {
-                roster: '=?',
-                opposingTeamRoster: '=?',
-                game: '=?'
+                data: '=?'
             }
         };
 
@@ -140,18 +83,15 @@ Game.directive('krossoverCoachGame', [
  * @type {controller}
  */
 Game.controller('Coach.Game.controller', [
-    '$scope', 'Coach.Game.Tabs', 'Coach.Game.Data', 'GamesFactory',
-    function controller($scope, tabs, gameData, games) {
+    '$scope', 'GamesFactory',
+    function controller($scope, games) {
         $scope.games = games;
 
-        gameData.then(function(gameData) {
-            gameData.headings = {
-                opposingTeam: 'Opposing Team',
-                yourTeam: gameData.coachTeam.name,
-                scoutingTeam: 'Team'
-            };
-            $scope.gameData = gameData;
-        });
+        $scope.headings = {
+            opposingTeam: 'Opposing Team',
+            yourTeam: 'Team',
+            scoutingTeam: 'Scouting'
+        };
 
         $scope.validation = {
             opposingTeam: false,
@@ -159,9 +99,42 @@ Game.controller('Coach.Game.controller', [
             scoutingTeam: false
         };
 
-        $scope.tabs = tabs;
+        $scope.gameTabs = {
+            info: {
+                active: true
+            },
+            scouting: {
+                active: false,
+                disabled: true
+            },
+            opposing: {
+                active: false,
+                disabled: true
+            },
+            team: {
+                active: false,
+                disabled: true
+            },
+            confirm: {
+                active: false,
+                disabled: true
+            },
+            enableAll: function() {
+                this.scouting.disabled = false;
+                this.opposing.disabled = false;
+                this.team.disabled = false;
+                this.confirm.disabled = false;
+            },
+            deactivateAll: function() {
+                var self = this;
+                var keys = Object.keys(self);
+                angular.forEach(keys, function(key) {
+                    self[key].active = false;
+                });
+            }
+        };
 
-        $scope.game = $scope.game || {};
+//        $scope.game = $scope.game || {};
     }
 ]);
 

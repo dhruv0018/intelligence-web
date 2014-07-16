@@ -14,10 +14,17 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Header.Controller', [
-    '$window', '$scope', '$state', '$modal', 'GAME_STATUSES', 'SessionService', 'IndexingService', 'Indexing.Sidebar',
-    function controller($window, $scope, $state, $modal, GAME_STATUSES, session, indexing, sidebar) {
+    '$window', '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'SessionService', 'IndexingService', 'Indexing.Sidebar', 'Indexing.Data',
+    function controller($window, $scope, $state, $stateParams, $modal, GAME_STATUSES, session, indexing, sidebar, data) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
+
+        var gameId = $stateParams.id;
+        var userId = session.currentUser.id;
+
+        $scope.game = data.games.get(gameId);
+        $scope.team = data.teams.get($scope.game.teamId);
+        $scope.league = data.leagues.get($scope.team.leagueId);
 
         $scope.sidebar = sidebar;
 
@@ -25,25 +32,20 @@ Indexing.controller('Indexing.Header.Controller', [
 
         $scope.goBack = function() {
 
-            $scope.indexing.game.save();
-            $state.go('indexer-game', { id: $scope.indexing.game.id });
+            $scope.game.save();
+            $state.go('indexer-game', { id: $scope.game.id });
         };
 
         $scope.sendToQa = function() {
-
-            var game = $scope.indexing.game;
-            var userId = session.currentUser.id;
-
-            game.finishAssignment(userId);
-
-            game.save().then(function() {
-
+            indexing.isIndexing = false;
+            $scope.game.finishAssignment(userId);
+            $scope.game.save().then(function() {
                 $state.go('indexer-games');
             });
         };
 
         $scope.sendToTeam = function() {
-
+            indexing.isIndexing = false;
             $modal.open({
 
                 controller: 'Indexing.Modal.SendToTeam.Controller',
@@ -51,19 +53,16 @@ Indexing.controller('Indexing.Header.Controller', [
 
             }).result.then(function() {
 
-                var userId = session.currentUser.id;
+                $scope.game.finishAssignment(userId);
 
-                $scope.indexing.game.finishAssignment(userId);
+                $scope.game.save().then(function() {
+                    $modal.open({
 
-                $modal.open({
-
-                    controller: 'Indexing.Modal.AddIndexerNote.Controller',
-                    templateUrl: 'indexing/modal-add-indexer-note.html'
-
-                }).result.then(function() {
-
-                    $scope.indexing.game.save().then(function() {
-
+                        controller: 'Indexing.Modal.AddIndexerNote.Controller',
+                        templateUrl: 'indexing/modal-add-indexer-note.html',
+                        scope: $scope
+                    }).result.then(function() {
+                        $scope.game.save();
                         $state.go('indexer-games');
                     });
                 });

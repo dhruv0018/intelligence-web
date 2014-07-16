@@ -1,8 +1,23 @@
 <span class="gap">
 
-    <button class="gap" data-ng-if="event.variableValues[item.index].value" data-ng-click="event.variableValues[item.index].value = null">{{ GAPS[GAP_IDS[event.variableValues[item.index].value]].name }}</button>
+    <button
+        class="gap"
+        data-ng-show="event.variableValues[item.index].value"
+        data-ng-click="event.variableValues[item.index].value = null"
+    >{{ GAPS[GAP_IDS[event.variableValues[item.index].value]].name }}</button>
 
-    <select class="gap" data-ng-if="!event.variableValues[item.index].value" data-ng-model="event.variableValues[item.index].value" data-ng-required="item.isRequired" onchange="this.blur();" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex === item.index" data-autofocus-when="item.index === 1" data-autotab>
+    <select
+        class="gap"
+        tabindex="{{ item.index }}"
+        data-ng-required="item.isRequired"
+        data-ng-hide="event.variableValues[item.index].value"
+        data-ng-model="event.variableValues[item.index].value"
+        data-ng-change="event.activeEventVariableIndex = item.index + 1"
+        data-ng-focus="event.activeEventVariableIndex = item.index"
+        data-focus-on="event.activeEventVariableIndex == item.index"
+        data-focus-when="{{autoAdvance}}"
+        data-autofocus-when="item.index === 1"
+    >
 
         <option data-ng-keybinding="gap.shortcut" data-ng-repeat="gap in GAPS" value="{{ gap.value }}">{{ gap.name }}</option>
 

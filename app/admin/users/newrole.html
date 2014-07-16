@@ -9,7 +9,7 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="sport" data-ng-model="$parent.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
+                <select class="form-control" name="sport" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sportsList" required>
 
                     <option value="">Pick a Sport</option>
 
@@ -19,35 +19,11 @@
 
             <div class="form-group">
 
-                <span data-ng-if="displayTeamsLoading">
+                <select class="form-control" name="team" data-ng-model="role.teamId" data-ng-options="team.id as team.name for team in teamsList | sport:sportId" data-ng-disabled="!sportId" required>
 
-                    <select class="form-control" name="team" data-ng-model="role.teamId" disabled required>
+                    <option value="">Team name</option>
 
-                        <option value="">Loading...</option>
-
-                    </select>
-
-                </span>
-
-                <span data-ng-if="displayTeams">
-
-                    <select class="form-control" name="team" data-ng-model="role.teamId" data-ng-options="team.id as team.name for team in teams" data-ng-disabled="!sportId" required>
-
-                        <option value="">Team name</option>
-
-                    </select>
-
-                </span>
-
-                <span data-ng-if="displayTeamsEmpty">
-
-                    <select class="form-control" name="team" data-ng-model="role.teamId" disabled required>
-
-                        <option value="">No Teams</option>
-
-                    </select>
-
-                </span>
+                </select>
 
             </div>
 

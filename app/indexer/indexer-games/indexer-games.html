@@ -48,18 +48,22 @@
 		        	</tr>
 	        	</thead>
 	        	<tbody>
-	        		<tr data-ng-repeat="game in data.games">
+	        		<tr data-ng-repeat="game in games | filter: {isDeleted: false}">
 	        			<td>{{game.id}}</td>
-	        			<td><a data-ui-sref="indexer-game({ id: game.id })">{{data.teams[game.teamId].name}} vs {{data.teams[game.opposingTeamId].name}}</a></td>
-                        <td>{{data.users[game.uploaderUserId].firstName}} {{data.users[game.uploaderUserId].lastName}}</td>
-	        			<td>{{data.sports[data.leagues[data.teams[game.teamId].leagueId].sportId].name}}</td>
-	        			<td>{{ moment.duration(game.timeLeft, "milliseconds").humanize() }}</td>
+	        			<td><a data-ui-sref="indexer-game({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
+                        <td>{{users[game.uploaderUserId].firstName}} {{users[game.uploaderUserId].lastName}}</td>
+	        			<td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
+                        <td>{{ game.assignmentTimeRemaining() }}</td>
                         <td>
-                            <button class="btn btn-default" data-ng-disabled="!game.canBeIndexed()" data-ui-sref="indexing({ id: game.id })">
+                            <button class="btn btn-default" data-ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
                                 <span data-ng-hide="game.isAssignmentStarted()">Start </span>
                                 <span data-ng-show="game.isAssignmentStarted()">Resume </span>
                                 <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
-                                <span data-ng-show="game.isAssignedToQa()">QA</span>
+                            </button>
+                            <button class="btn btn-default" data-ng-show="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
+                                <span data-ng-hide="game.isAssignmentStarted()">Start </span>
+                                <span data-ng-show="game.isAssignmentStarted()">Resume </span>
+                                <span>QA</span>
                             </button>
                         </td>
 	        		</tr>

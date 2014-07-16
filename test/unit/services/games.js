@@ -42,7 +42,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_INDEXING.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToIndexer().should.be.true;
         }]));
@@ -56,7 +56,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.SET_ASIDE.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToIndexer().should.be.false;
         }]));
@@ -77,7 +77,7 @@ describe('GamesFactory', function() {
                 ]
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToIndexer().should.be.true;
         }]));
@@ -98,7 +98,7 @@ describe('GamesFactory', function() {
                     status: status
                 };
 
-                game = games.extendGame(game);
+                game = games.extend(game);
 
                 game.canBeAssignedToIndexer().should.be.false;
             });
@@ -116,7 +116,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_QA.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToQa().should.be.true;
         }]));
@@ -130,7 +130,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.SET_ASIDE.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToQa().should.be.false;
         }]));
@@ -151,7 +151,7 @@ describe('GamesFactory', function() {
                 ]
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToQa().should.be.true;
         }]));
@@ -172,7 +172,7 @@ describe('GamesFactory', function() {
                     status: status
                 };
 
-                game = games.extendGame(game);
+                game = games.extend(game);
 
                 game.canBeAssignedToQa().should.be.false;
             });
@@ -194,7 +194,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_INDEXING.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId, deadline);
 
@@ -218,7 +218,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.SET_ASIDE.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             expect(function() {
                 game.assignToIndexer(userId, deadline);
@@ -242,7 +242,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_INDEXING.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId, deadline);
 
@@ -282,7 +282,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_QA.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId, deadline);
 
@@ -307,7 +307,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.SET_ASIDE.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             expect(function() {
                 game.assignToQa(userId, deadline);
@@ -331,7 +331,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_QA.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId, deadline);
 
@@ -371,7 +371,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_INDEXING.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId, deadline);
 
@@ -397,7 +397,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_QA.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId, deadline);
 
@@ -426,7 +426,7 @@ describe('GamesFactory', function() {
                     status: GAME_STATUSES.READY_FOR_INDEXING.id
                 };
 
-                game = games.extendGame(game);
+                game = games.extend(game);
 
                 game.assignToIndexer(userId);
 
@@ -468,7 +468,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_INDEXING.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId);
 
@@ -494,7 +494,7 @@ describe('GamesFactory', function() {
                 status: GAME_STATUSES.READY_FOR_QA.id
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId);
 
@@ -514,100 +514,192 @@ describe('GamesFactory', function() {
         var game;
 
         beforeEach(inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, games) {
 
                 game = {};
 
-                game = games.extendGame(game);
+                game = games.extend(game);
             }
         ]));
 
         it('should return false if no indexer assignments exist', inject([
-           function() {
+            function() {
 
-            expect(game.canBeIndexed()).to.be.false;
-        }]));
+                expect(game.canBeIndexed()).to.be.false;
+            }]));
 
         it('should return false if the deadline has expired', inject([
             'GAME_STATUSES',
-           function(GAME_STATUSES) {
+            function(GAME_STATUSES) {
 
-            var userId = 1;
-            var isQa = false;
-            var now = new Date();
-            var deadline = now.setMinutes(now.getMinutes() - 1);
+                var userId = 1;
+                var isQa = false;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() - 1);
 
-            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
-            game.assignToIndexer(userId, deadline);
+                game.assignToIndexer(userId, deadline);
 
-            expect(game.canBeIndexed()).to.be.false;
-        }]));
+                expect(game.canBeIndexed()).to.be.false;
+            }]));
 
         it('should return true if the deadline has not expired', inject([
             'GAME_STATUSES',
-           function(GAME_STATUSES) {
+            function(GAME_STATUSES) {
 
-            var userId = 1;
-            var isQa = false;
-            var now = new Date();
-            var deadline = now.setMinutes(now.getMinutes() + 1);
+                var userId = 1;
+                var isQa = false;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
 
-            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
-            game.assignToIndexer(userId, deadline);
+                game.assignToIndexer(userId, deadline);
 
-            expect(game.canBeIndexed()).to.be.true;
-        }]));
+                expect(game.canBeIndexed()).to.be.true;
+            }]));
 
         it('should return false when the game is not in the proper status', inject([
             'GAME_STATUSES',
-           function(GAME_STATUSES) {
+            function(GAME_STATUSES) {
 
-            var userId = 1;
-            var isQa = false;
-            var now = new Date();
-            var deadline = now.setMinutes(now.getMinutes() + 1);
+                var userId = 1;
+                var isQa = false;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
 
-            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
-            game.assignToIndexer(userId, deadline);
+                game.assignToIndexer(userId, deadline);
 
-           [GAME_STATUSES.NOT_INDEXED.id,
-            GAME_STATUSES.SET_ASIDE.id,
-            GAME_STATUSES.INDEXED.id]
-            .forEach(function(status) {
+                [GAME_STATUSES.NOT_INDEXED.id,
+                    GAME_STATUSES.SET_ASIDE.id,
+                    GAME_STATUSES.INDEXED.id]
+                    .forEach(function(status) {
 
-                game.status = status;
-                expect(game.canBeIndexed()).to.be.false;
-            });
-        }]));
+                        game.status = status;
+                        expect(game.canBeIndexed()).to.be.false;
+                    });
+            }]));
 
         it('should return true when the game is in the proper status', inject([
             'GAME_STATUSES',
-           function(GAME_STATUSES) {
+            function(GAME_STATUSES) {
 
-            var userId = 1;
-            var isQa = false;
-            var now = new Date();
-            var deadline = now.setMinutes(now.getMinutes() + 1);
+                var userId = 1;
+                var isQa = false;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
 
-            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
-            game.assignToIndexer(userId, deadline);
+                game.assignToIndexer(userId, deadline);
 
-           [GAME_STATUSES.READY_FOR_INDEXING.id,
-            GAME_STATUSES.READY_FOR_INDEXING.id,
-            GAME_STATUSES.INDEXING.id,
-            GAME_STATUSES.READY_FOR_QA.id,
-            GAME_STATUSES.QAING.id]
-            .forEach(function(status) {
+                [GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id]
+                    .forEach(function(status) {
 
-                game.status = status;
-                expect(game.canBeIndexed()).to.be.true;
-            });
-        }]));
+                        game.status = status;
+                        expect(game.canBeIndexed()).to.be.true;
+                    });
+            }]));
+    });
+
+    describe('canBeQAed', function() {
+
+        var game;
+
+        beforeEach(inject([
+            'GAME_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, games) {
+
+                game = {};
+
+                game = games.extend(game);
+            }
+        ]));
+
+        it('should return false if no indexer assignments exist', inject([
+            function() {
+                expect(game.canBeQAed()).to.be.false;
+            }]));
+
+        it('should return false if the deadline has expired', inject([
+            'GAME_STATUSES',
+            function(GAME_STATUSES) {
+
+                var userId = 1;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() - 1);
+
+                game.status = GAME_STATUSES.READY_FOR_QA.id;
+
+                game.assignToQa(userId, deadline);
+
+                expect(game.canBeQAed()).to.be.false;
+            }]));
+
+        it('should return true if the deadline has not expired', inject([
+            'GAME_STATUSES',
+            function(GAME_STATUSES) {
+
+                var userId = 1;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
+
+                game.status = GAME_STATUSES.READY_FOR_QA.id;
+
+                game.assignToQa(userId, deadline);
+
+                expect(game.canBeQAed()).to.be.true;
+            }]));
+
+        it('should return false when the game is not in the proper status', inject([
+            'GAME_STATUSES',
+            function(GAME_STATUSES) {
+
+                var userId = 1;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
+
+                game.status = GAME_STATUSES.READY_FOR_QA.id;
+
+                game.assignToQa(userId, deadline);
+
+                [GAME_STATUSES.NOT_INDEXED.id,
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id,
+                    GAME_STATUSES.SET_ASIDE.id,
+                    GAME_STATUSES.INDEXED.id]
+                    .forEach(function(status) {
+
+                        game.status = status;
+                        expect(game.canBeQAed()).to.be.false;
+                    });
+            }]));
+
+        it('should return true when the game is in the proper status', inject([
+            'GAME_STATUSES',
+            function(GAME_STATUSES) {
+
+                var userId = 1;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
+
+                game.status = GAME_STATUSES.READY_FOR_QA.id;
+
+                game.assignToQa(userId, deadline);
+
+                [GAME_STATUSES.READY_FOR_QA.id,
+                    GAME_STATUSES.QAING.id]
+                    .forEach(function(status) {
+
+                        game.status = status;
+                        expect(game.canBeQAed()).to.be.true;
+                    });
+            }]));
     });
 });
 

@@ -14,8 +14,8 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.User.Roles.Controller', [
-    '$scope', 'ROLES', 'Users.User.Service', 'UsersFactory',
-    function controller($scope, ROLES, user, users) {
+    '$scope', 'ROLES', 'UsersFactory',
+    function controller($scope, ROLES, users) {
 
         $scope.addNewRole = function(newRole) {
 
@@ -25,14 +25,13 @@ Users.controller('Users.User.Roles.Controller', [
              * so add the role directly. */
             if (users.is(newRole, ROLES.ADMIN)) {
 
-                $scope.user.roles = $scope.user.roles || [];
-                $scope.user.roles.unshift(angular.copy(newRole));
+                users.addRole($scope.user, newRole);
 
             /* For other roles; fill in information before adding. */
             } else {
 
-                $scope.user.newRoles = $scope.user.newRoles || [];
-                $scope.user.newRoles.unshift(angular.copy(newRole));
+                $scope.newRoles = $scope.newRoles || [];
+                $scope.newRoles.unshift(angular.copy(newRole));
             }
         };
     }
