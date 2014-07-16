@@ -118,7 +118,11 @@
                         <td>{{ game.id }}</td>
                         <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
                         <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
-                        <td>{{ game.getStatus().name }}</td>
+                        <td>
+                            <span data-ng-if="game.getStatus().id != GAME_STATUSES.SET_ASIDE.id">{{ game.getStatus().name }}</span>
+                            <a data-ng-if="game.getStatus().id === GAME_STATUSES.SET_ASIDE.id && game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(data, game, true)">{{ game.getStatus().name }} in QA</a>
+                            <a data-ng-if="game.getStatus().id === GAME_STATUSES.SET_ASIDE.id && game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(data, game, false)">{{ game.getStatus().name }} in Indexing</a>
+                        </td>
 
                         <td>
 

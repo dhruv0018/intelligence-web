@@ -62,21 +62,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Lookup the game status by ID. */
                 var status = GAME_STATUSES[statusId];
 
-                /* If the game is in set aside status. */
-//                if (status.id === GAME_STATUSES.SET_ASIDE.id && status.name === GAME_STATUSES.SET_ASIDE.name) {
-//
-//                    /* If the game was assigned to an indexer. */
-//                    if (self.setAsideFromIndexing()) {
-//                        status.name = status.name + ', from indexing';
-//                    }
-//
-//                    /* If the game was assigned to QA. */
-//                    else if (self.setAsideFromQa()) {
-//
-//                        status.name = status.name + ', from QA';
-//                    }
-//                }
-
                 return status;
             },
 
