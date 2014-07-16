@@ -149,14 +149,14 @@ IntelligenceWebClient.factory('TeamsFactory', [
             getMaxTurnaroundTime: function() {
                 var self = this;
 
-                var activePackage = self.getActivePackage();
+                var activePlan = self.getActivePlan();
 
-                if (activePackage) {
-                    return activePackage.maxTurnaroundTime;
+                if (activePlan) {
+                    return activePlan.maxTurnaroundTime;
                 } else {
-                    var activePlan = self.getActivePlan();
-                    if (activePlan) {
-                        return activePlan.maxTurnaroundTime;
+                    var activePackage = self.getActivePackage();
+                    if (activePackage) {
+                        return activePackage.maxTurnaroundTime;
                     }
                 }
 
