@@ -62,22 +62,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Lookup the game status by ID. */
                 var status = GAME_STATUSES[statusId];
 
-                /* If the game is in set aside status. */
-                if (status.id === GAME_STATUSES.SET_ASIDE.id && status.name === GAME_STATUSES.SET_ASIDE.name) {
-
-                    /* If the game was assigned to an indexer. */
-                    if (self.setAsideFromIndexing()) {
-
-                        status.name += ', from indexing';
-                    }
-
-                    /* If the game was assigned to QA. */
-                    else if (self.setAsideFromQa()) {
-
-                        status.name += ', from QA';
-                    }
-                }
-
                 return status;
             },
 
@@ -594,8 +578,12 @@ IntelligenceWebClient.factory('GamesFactory', [
             getRemainingTime: function(uploaderTeam) {
                 var self = this;
 
+                if (!self.submittedAt) {
+                    return '';
+                }
+                console.log(self.submittedAt);
                 //Difference between the current time and the uploading date of the game
-                var timePassed = moment() - moment.utc(self.createdAt);
+                var timePassed = moment() - moment(self.submittedAt);
 
                 var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
                 if (turnoverTime > 0) {
