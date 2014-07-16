@@ -24,6 +24,11 @@ IntelligenceWebClient.factory('ScriptsService', [
                 return this.buildScript('indexerScript', tagset, event);
             },
 
+            summaryScript: function(tagset, event) {
+
+                return this.buildScript('summaryScript', tagset, event);
+            },
+
             buildScript: function(scriptType, tagset, event) {
 
                 if (!tagset) throw new Error('No tagset');
