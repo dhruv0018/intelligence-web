@@ -23,7 +23,14 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 angular.extend(tagset, self);
 
+                tagset.indexedTags = {};
+
                 tagset.tags.forEach(function(tag) {
+
+                    tag.userScript = tag.userScript || null;
+                    tag.summaryPriority = tag.summaryPriority || 0;
+
+                    tagset.indexedTags[tag.id] = tag;
 
                     if (angular.isArray(tag.tagVariables)) {
 
@@ -43,14 +50,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             getIndexedTags: function() {
 
-                var indexedTags = {};
-
-                this.tags.forEach(function(tag) {
-
-                    indexedTags[tag.id] = tag;
-                });
-
-                return indexedTags;
+                return this.indexedTags;
             },
 
             getNextTags: function(tagId) {
