@@ -59,12 +59,12 @@ Instructions.controller('Coach.Game.Instructions.controller', [
     '$scope', '$state', '$localStorage', 'GAME_STATUSES', 'GamesFactory',
     function controller($scope, $state, $localStorage, GAME_STATUSES, games) {
         $scope.GAME_STATUSES = GAME_STATUSES;
-        $scope.isSaved = false;
+        $scope.isBreakdownChoiceMade = false;
 
         $scope.$watch('data.game', function(game) {
             if (typeof game !== 'undefined' && typeof game.status !== 'undefined' && game.status !== null) {
                 $scope.statusBuffer = game.status;
-                $scope.isSaved = true;
+                $scope.isBreakdownChoiceMade = true;
             } else {
                 $scope.statusBuffer = -1;
             }
@@ -72,13 +72,13 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         });
 
         $scope.switchChoice = function() {
-            $scope.statusBuffer = ($scope.data.game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
+            $scope.isBreakdownChoiceMade = false;
         };
 
         $scope.save = function() {
             $scope.data.game.status = $scope.statusBuffer;
             $scope.data.game.save().then(function(game) {
-                $scope.isSaved = true;
+                $scope.isBreakdownChoiceMade = true;
             });
         };
     }
