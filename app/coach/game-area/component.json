@@ -9,7 +9,8 @@
     "templates": [
         "template.html",
         "gameAreaInformation.html",
-        "gameAreaFilm.html",
+        "gameAreaRawFilm.html",
+        "gameAreaFilmBreakdown.html",
         "gameAreaStatistics.html",
         "gameAreaLog.html",
         "gameAreaHomeStats.html",
@@ -22,7 +23,8 @@
     "scripts": [
         "index.js",
         "gameAreaInformation.js",
-        "gameAreaFilm.js",
+        "gameAreaRawFilm.js",
+        "gameAreaFilmBreakdown.js",
         "gameAreaStatistics.js",
         "gameAreaLog.js",
         "gameAreaHomeStats.js",
