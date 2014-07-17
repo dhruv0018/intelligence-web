@@ -1,6 +1,6 @@
 {
     "name": "intelligence-web-client",
-    "version": "2.0.0-rc2.1",
+    "version": "2.0.0-rc2.2",
     "description": "Krossover Intelligence Web Client",
     "author": "Jason Morganson <jason@krossover.com>",
     "repository": {
@@ -28,7 +28,9 @@
         "angular-scenario": "angular/bower-angular-scenario",
         "angular-resource": "angular/bower-angular-resource",
         "angular-bootstrap": "angular-ui/bootstrap-bower",
-        "angular-ui-utils": "angular-ui/ui-utils#bower",
+        "angular-ui-unique": "angular-ui/ui-utils#unique-0.1.1",
+        "angular-ui-showhide": "angular-ui/ui-utils#showhide-0.1.1",
+        "angular-ui-validate": "angular-ui/ui-utils#validate-0.1.1",
         "angular-ui-router": "angular-ui/ui-router",
         "ngStorage": "gsklee/ngStorage",
         "flow": "flowjs/ng-flow",
