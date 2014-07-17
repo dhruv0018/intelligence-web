@@ -588,7 +588,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (turnoverTime > 0) {
                     var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
                     var milliseconds = turnoverTimeRemaining.get('milliseconds');
-                    var prefix = (milliseconds < 0) ? 'Deadline passed ' : 'Due in ';
+                    var prefix = (milliseconds < 0) ? 'Deadline passed ' : 'Due ';
                     return prefix + turnoverTimeRemaining.humanize(true);
                 }
 

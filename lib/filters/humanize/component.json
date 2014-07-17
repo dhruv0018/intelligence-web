@@ -1,0 +1,6 @@
+{
+    "name": "humanize",
+    "scripts": [
+        "index.js"
+    ]
+}
