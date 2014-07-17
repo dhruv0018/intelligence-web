@@ -146,7 +146,7 @@
 
                         </td>
                         <td>
-                            {{game.getRemainingTime(teams[game.uploaderTeamId])}}
+                            {{game.getRemainingTime(teams[game.uploaderTeamId]) | humanize: 'milliseconds'}}
                         </td>
 
                     </tr>

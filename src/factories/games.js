@@ -579,7 +579,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 if (!self.submittedAt) {
-                    return '';
+                    return 0;
                 }
 
                 var timePassed = new Date() -  moment.utc(self.submittedAt).toDate();
@@ -587,13 +587,11 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (turnoverTime > 0) {
                     var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
-                    var milliseconds = turnoverTimeRemaining.get('milliseconds');
-                    var prefix = (milliseconds < 0) ? 'Deadline passed ' : 'Due ';
-                    return prefix + turnoverTimeRemaining.humanize(true);
+                    return turnoverTimeRemaining.asMilliseconds();
                 }
 
                 //no plans or packages and therefore no breakdowns available
-                return '';
+                return 0;
             }
         };
 

@@ -4,7 +4,8 @@
         "."
     ],
     "locals": [
-        "sport"
+        "sport",
+        "humanize"
     ],
     "scripts": [
         "index.js"
