@@ -104,76 +104,132 @@
 
     </aside>
 
-    <div class="queue-dashboard">
-        <div class="general-status-row">
+    <div class="queue-container">
 
-        </div>
-        <div class="time-status-row">
-
-        </div>
-        <div class="assigned-status-row">
-
-        </div>
-    </div>
-
-    <div class="list" data-ng-hide="noResults">
-
-        <div class="table-responsive">
-
-            <table class="table table-striped table-hover">
-
+        <div class="queue-dashboard">
+            <div class="general-status-row">
+                <div class="general-status-col">
+                    <h4>Queue Status</h4>
+                    <span data-ng-if="queueStatusGood" class="status-good">Good</span>
+                    <span data-ng-if="!queueStatusGood" class="status-bad">Bad</span>
+                </div>
+                <div class="general-status-col">
+                    <h4>Current</h4>
+                    <span class="general-status-info"><a href>##</a> to be indexed</span>
+                    <span class="general-status-info"><a href>##</a> to be QA'd</span>
+                </div>
+                <div class="general-status-col">
+                    <h4>Last 48 Hours</h4>
+                    <span class="general-status-info"><a href>##</a> uploaded</span>
+                    <span class="general-status-info"><a href>##</a> sent to coach</span>
+                </div>
+                <div class="general-status-col">
+                    <h4>Processing: ##</h4>
+                    <span class="general-status-info"><a href>##</a> trans failed</span>
+                </div>
+                <div class="general-status-col">
+                    <h4>Indexers Online Now</h4>
+                    <span class="general-status-info">
+                        <span><a href>##</a> Indexing</span><a href>##</a> QA'ing
+                    </span>
+                    <span class="general-status-info"><a href>##</a> Waiting</span>
+                </div>
+            </div>
+            <table class="time-status-row table-responsive">
                 <tbody>
-
-                    <tr data-ng-repeat="game in queue | filter: {isDeleted: !true}">
-
-                        <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
-                        <td>{{ game.id }}</td>
-                        <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
-                        <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
-                        <td>{{ game.getStatus().name }}</td>
-
-                        <td>
-
-                            <button class="btn btn-default" data-ng-if="!game.isAssignedToIndexer() && game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(data, game, false)">Select Indexer</button>
-
-                            <ul data-ng-if="game.hasIndexerAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: false } | limitTo:1">
-
-                                <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(data, game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
-
-                            </ul>
-
-                        </td>
-
-                        <td>
-
-                            <div data-ng-if="!game.hasQaAssignment() && !game.canBeAssignedToQa()">--</div>
-
-                            <button class="btn btn-default" data-ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(data, game, true)">Select QA</button>
-
-                            <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1">
-
-                                <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(data, game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
-
-                            </ul>
-
-                        </td>
-
+                    <tr>
+                        <th>48h - 24h</th>
+                        <th>24h - 10h</th>
+                        <th>10h - 5h</th>
+                        <th>5h - 1h</th>
+                        <th>&lt;1</th>
+                        <th>Late</th>
+                        <th>Set Aside</th>
                     </tr>
-
+                    <tr>
+                        <td><a href>##</a></td>
+                        <td><a href>##</a></td>
+                        <td><a href>##</a></td>
+                        <td><a href>##</a></td>
+                        <td><a href>##</a></td>
+                        <td><a href>{{late}}</a></td>
+                        <td><a href>##</a></td>
+                    </tr>
                 </tbody>
-
             </table>
+            <table class="assigned-status-row table-responsive">
+                <tbody>
+                    <tr>
+                        <th>Assigned</th>
+                        <th>Unassigned</th>
+                    </tr>
+                    <tr>
+                        <td><a href>##</a></td>
+                        <td><a href>##</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="list" data-ng-hide="noResults">
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover">
+
+                    <tbody>
+
+                        <tr data-ng-repeat="game in queue | filter: {isDeleted: !true}">
+
+                            <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
+                            <td>{{ game.id }}</td>
+                            <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
+                            <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
+                            <td>{{ game.getStatus().name }}</td>
+
+                            <td>
+
+                                <button class="btn btn-default" data-ng-if="!game.isAssignedToIndexer() && game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(data, game, false)">Select Indexer</button>
+
+                                <ul data-ng-if="game.hasIndexerAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: false } | limitTo:1">
+
+                                    <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(data, game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+
+                                </ul>
+
+                            </td>
+
+                            <td>
+
+                                <div data-ng-if="!game.hasQaAssignment() && !game.canBeAssignedToQa()">--</div>
+
+                                <button class="btn btn-default" data-ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(data, game, true)">Select QA</button>
+
+                                <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1">
+
+                                    <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(data, game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+
+                                </ul>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </div>
 
-    </div>
+        <div class="noresults" data-ng-show="noResults">
 
-    <div class="noresults" data-ng-show="noResults">
+            <i class="icon icon-search"></i>
+            <h1>No Results Found</h1>
+            <h2>Try your search again.</h2>
 
-        <i class="icon icon-search"></i>
-        <h1>No Results Found</h1>
-        <h2>Try your search again.</h2>
-
+        </div>
     </div>
 
 </section>
