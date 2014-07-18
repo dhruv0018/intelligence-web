@@ -224,28 +224,6 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Gets the tokens. Tokens are obtained by handshaking with the server
-            * and providing user credentials to authorize. A users credentials
-            * include an unique identifier and password. If the credentials are
-            * authenticated the server returns an access and refresh OAuth token.
-            * @param {String} username - a unique identifier for a user.
-            * @param {String} password - a password for the users identifier.
-            * @return {object} - the OAuth tokens
-            */
-            getTokens: function(username, password) {
-
-                var self = this;
-
-                return self.requestAuthCode(username, password).then(function(code) {
-
-                    return self.requestTokens(code).then(function(tokens) {
-
-                        return tokens;
-                    });
-                });
-            },
-
-            /**
             * Refreshes the OAuth access token.
             * @return {object} - the OAuth tokens
             */
