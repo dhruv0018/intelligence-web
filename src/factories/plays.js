@@ -23,13 +23,12 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 angular.extend(play, self);
 
+                /* FIXME: Events should not have tag objects in them. */
                 if (play.events) {
 
-                    play.events = play.events.map(function(event) {
+                    play.events.forEach(function(event) {
 
                         delete event.tag;
-
-                        return event;
                     });
                 }
 
@@ -106,7 +105,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                         event.playId = play.id;
 
-                        delete event.tag;
+                        /* FIXME: event should not have a tag object on it. */
+                        //delete event.tag;
                         delete event.activeEventVariableIndex;
 
                         return event;
