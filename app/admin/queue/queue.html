@@ -120,8 +120,11 @@
                         <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
                         <td>
                             <span data-ng-if="game.getStatus().id != GAME_STATUSES.SET_ASIDE.id">{{ game.getStatus().name }}</span>
-                            <a data-ng-if="game.getStatus().id === GAME_STATUSES.SET_ASIDE.id && game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(data, game, true)">{{ game.getStatus().name }} in QA</a>
-                            <a data-ng-if="game.getStatus().id === GAME_STATUSES.SET_ASIDE.id && game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(data, game, false)">{{ game.getStatus().name }} in Indexing</a>
+                            <span data-ng-if="game.status === GAME_STATUSES.SET_ASIDE.id">
+                                <span data-ng-if="!game.canBeAssignedToQa() && !game.canBeAssignedToIndexer()">{{GAME_STATUSES.SET_ASIDE.name}}</span>
+                                <a data-ng-if="game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(data, game, true)">{{GAME_STATUSES.SET_ASIDE.name}} in QA</a>
+                                <a data-ng-if="game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(data, game, false)">{{GAME_STATUSES.SET_ASIDE.name}} in Indexing</a>
+                            </span>
                         </td>
 
                         <td>
