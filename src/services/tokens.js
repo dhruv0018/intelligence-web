@@ -1,9 +1,11 @@
-var TOKEN_TYPE_KEY = 'TOKEN_TYPE';
-var ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
-var REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
+/* Web storage keys. */
+var TOKEN_TYPE = 'TOKEN_TYPE';
+var ACCESS_TOKEN = 'ACCESS_TOKEN';
+var REFRESH_TOKEN = 'REFRESH_TOKEN';
 
-var DEFAULT_TOKEN_TYPE = 'Bearer';
-var DEFAULT_TOKEN_EXPIRATION = 3600 * 1000;
+/* Defaults. */
+var DEFAULT_ACCESS_TOKEN_TYPE = 'Bearer';
+var DEFAULT_ACCESS_TOKEN_EXPIRATION = 3600 * 1000;
 
 var package = require('../../package.json');
 
@@ -35,7 +37,7 @@ IntelligenceWebClient.factory('TokensService', [
             tokens: {
 
                 /** The type of token */
-                tokenType: DEFAULT_TOKEN_TYPE,
+                tokenType: DEFAULT_ACCESS_TOKEN_TYPE,
 
                 /** OAuth access token */
                 accessToken: null,
@@ -44,7 +46,7 @@ IntelligenceWebClient.factory('TokensService', [
                 refreshToken: null,
 
                 /** The time until the access token expires. */
-                expiration: DEFAULT_TOKEN_EXPIRATION
+                expiration: DEFAULT_ACCESS_TOKEN_EXPIRATION
             },
 
             refresh: undefined,
@@ -301,14 +303,14 @@ IntelligenceWebClient.factory('TokensService', [
                 delete this.tokens.refreshToken;
 
                 /* Remove from the session. */
-                sessionStorage.removeItem(TOKEN_TYPE_KEY);
-                sessionStorage.removeItem(ACCESS_TOKEN_KEY);
-                sessionStorage.removeItem(REFRESH_TOKEN_KEY);
+                sessionStorage.removeItem(TOKEN_TYPE);
+                sessionStorage.removeItem(ACCESS_TOKEN);
+                sessionStorage.removeItem(REFRESH_TOKEN);
 
                 /* Remove from persistent storage. */
-                localStorage.removeItem(TOKEN_TYPE_KEY);
-                localStorage.removeItem(ACCESS_TOKEN_KEY);
-                localStorage.removeItem(REFRESH_TOKEN_KEY);
+                localStorage.removeItem(TOKEN_TYPE);
+                localStorage.removeItem(ACCESS_TOKEN);
+                localStorage.removeItem(REFRESH_TOKEN);
             },
 
             /**
@@ -318,8 +320,8 @@ IntelligenceWebClient.factory('TokensService', [
             getTokenType: function() {
 
                 var tokenType = this.tokens.tokenType ||
-                                sessionStorage.getItem(TOKEN_TYPE_KEY) ||
-                                localStorage.getItem(TOKEN_TYPE_KEY);
+                                sessionStorage.getItem(TOKEN_TYPE) ||
+                                localStorage.getItem(TOKEN_TYPE);
 
                 return tokenType;
             },
@@ -331,8 +333,8 @@ IntelligenceWebClient.factory('TokensService', [
             getAccessToken: function() {
 
                 var accessToken = this.tokens.accessToken ||
-                                  sessionStorage.getItem(ACCESS_TOKEN_KEY) ||
-                                  localStorage.getItem(ACCESS_TOKEN_KEY);
+                                  sessionStorage.getItem(ACCESS_TOKEN) ||
+                                  localStorage.getItem(ACCESS_TOKEN);
 
                 return accessToken;
             },
@@ -344,8 +346,8 @@ IntelligenceWebClient.factory('TokensService', [
             getRefreshToken: function() {
 
                 var refreshToken = this.tokens.refreshToken ||
-                                   sessionStorage.getItem(REFRESH_TOKEN_KEY) ||
-                                   localStorage.getItem(REFRESH_TOKEN_KEY);
+                                   sessionStorage.getItem(REFRESH_TOKEN) ||
+                                   localStorage.getItem(REFRESH_TOKEN);
 
                 return refreshToken;
             },
