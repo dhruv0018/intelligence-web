@@ -396,6 +396,48 @@ IntelligenceWebClient.factory('TokensService', [
             }
         };
 
+        (function(tokens) {
+
+            var now = new Date();
+
+            /* Get the stored access token expiration date. */
+            var accessTokenExpirationDate =
+                sessionStorage.getItem(ACCESS_TOKEN_EXPIRATION_DATE) ||
+                localStorage.getItem(ACCESS_TOKEN_EXPIRATION_DATE);
+
+            /* If the access token expiration date is set. */
+            if (accessTokenExpirationDate) {
+
+                accessTokenExpirationDate = new Date(accessTokenExpirationDate);
+
+                /* Check if the access token is out of date. */
+                if (now > accessTokenExpirationDate) {
+
+                    /* Refresh the access token. */
+                    tokens.refreshToken();
+                }
+            }
+
+            /* Get the stored refresh token expiration date. */
+            var refreshTokenExpirationDate =
+                sessionStorage.getItem(REFRESH_TOKEN_EXPIRATION_DATE) ||
+                localStorage.getItem(REFRESH_TOKEN_EXPIRATION_DATE);
+
+            /* If the refresh token expiration date is set. */
+            if (refreshTokenExpirationDate) {
+
+                refreshTokenExpirationDate = new Date(refreshTokenExpirationDate);
+
+                /* Check if the refresh token is out of date. */
+                if (now > refreshTokenExpirationDate) {
+
+                    /* Remove the tokens. */
+                    tokens.removeTokens();
+                }
+            }
+
+        })(TokenService);
+
         return TokenService;
     }
 ]);
