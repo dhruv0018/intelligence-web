@@ -2,10 +2,13 @@
 var TOKEN_TYPE = 'TOKEN_TYPE';
 var ACCESS_TOKEN = 'ACCESS_TOKEN';
 var REFRESH_TOKEN = 'REFRESH_TOKEN';
+var ACCESS_TOKEN_EXPIRATION_DATE = 'ACCESS_TOKEN_EXPIRATION_DATE';
+var REFRESH_TOKEN_EXPIRATION_DATE = 'REFRESH_TOKEN_EXPIRATION_DATE';
 
 /* Defaults. */
 var DEFAULT_ACCESS_TOKEN_TYPE = 'Bearer';
 var DEFAULT_ACCESS_TOKEN_EXPIRATION = 3600 * 1000;
+var DEFAULT_REFRESH_TOKEN_EXPIRATION = 1209600 * 1000;
 
 var package = require('../../package.json');
 
@@ -279,15 +282,35 @@ IntelligenceWebClient.factory('TokensService', [
                     this.refresh = $interval(this.removeTokens.bind(this), this.tokens.expiration);
                 }
 
-                sessionStorage.setItem(TOKEN_TYPE_KEY, tokens.tokenType);
-                sessionStorage.setItem(ACCESS_TOKEN_KEY, tokens.accessToken);
-                sessionStorage.setItem(REFRESH_TOKEN_KEY, tokens.refreshToken);
+                /* Calculate the token expiration dates. */
+                var accessTokenExpirationDate = new Date(Date.now() + this.tokens.expiration);
+                var refreshTokenExpirationDate = new Date(Date.now() + DEFAULT_REFRESH_TOKEN_EXPIRATION);
 
+                /* Store the access token in the session. */
+                sessionStorage.setItem(TOKEN_TYPE, tokens.tokenType);
+                sessionStorage.setItem(ACCESS_TOKEN, tokens.accessToken);
+                sessionStorage.setItem(ACCESS_TOKEN_EXPIRATION_DATE, accessTokenExpirationDate);
+
+                /* If a refresh token is present. */
+                if (this.tokens.refreshToken) {
+
+                    sessionStorage.setItem(REFRESH_TOKEN, tokens.refreshToken);
+                    sessionStorage.setItem(REFRESH_TOKEN_EXPIRATION_DATE, refreshTokenExpirationDate);
+                }
+
+                /* If the session should be persisted. */
                 if (persist) {
 
-                    localStorage.setItem(TOKEN_TYPE_KEY, tokens.tokenType);
-                    localStorage.setItem(ACCESS_TOKEN_KEY, tokens.accessToken);
-                    localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refreshToken);
+                    localStorage.setItem(TOKEN_TYPE, tokens.tokenType);
+                    localStorage.setItem(ACCESS_TOKEN, tokens.accessToken);
+                    localStorage.setItem(ACCESS_TOKEN_EXPIRATION_DATE, accessTokenExpirationDate);
+                }
+
+                /* If the session should be persisted and a refresh token is present. */
+                if (persist && this.tokens.refreshToken) {
+
+                    localStorage.setItem(REFRESH_TOKEN, tokens.refreshToken);
+                    localStorage.setItem(REFRESH_TOKEN_EXPIRATION_DATE, refreshTokenExpirationDate);
                 }
             },
 
@@ -306,11 +329,15 @@ IntelligenceWebClient.factory('TokensService', [
                 sessionStorage.removeItem(TOKEN_TYPE);
                 sessionStorage.removeItem(ACCESS_TOKEN);
                 sessionStorage.removeItem(REFRESH_TOKEN);
+                sessionStorage.removeItem(ACCESS_TOKEN_EXPIRATION_DATE);
+                sessionStorage.removeItem(REFRESH_TOKEN_EXPIRATION_DATE);
 
                 /* Remove from persistent storage. */
                 localStorage.removeItem(TOKEN_TYPE);
                 localStorage.removeItem(ACCESS_TOKEN);
                 localStorage.removeItem(REFRESH_TOKEN);
+                localStorage.removeItem(ACCESS_TOKEN_EXPIRATION_DATE);
+                localStorage.removeItem(REFRESH_TOKEN_EXPIRATION_DATE);
             },
 
             /**
