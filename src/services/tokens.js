@@ -266,7 +266,10 @@ IntelligenceWebClient.factory('TokensService', [
                 this.tokens.accessToken = tokens.accessToken;
                 if (tokens.refreshToken) this.tokens.refreshToken = tokens.refreshToken;
 
-                var expiration = tokens.expiration ? Number(tokens.expiration) * 1000 : DEFAULT_ACCESS_TOKEN_EXPIRATION_TIME;
+                var expiration = tokens.expiration ? Number(tokens.expiration) * 1000 : null;
+                expiration = expiration || sessionStorage.getItem(ACCESS_TOKEN_EXPIRATION_TIME);
+                expiration = expiration || localStorage.getItem(ACCESS_TOKEN_EXPIRATION_TIME);
+                expiration = expiration || DEFAULT_ACCESS_TOKEN_EXPIRATION_TIME;
 
                 /* Cancel any previous refresh intervals. */
                 $interval.cancel(this.refresh);
