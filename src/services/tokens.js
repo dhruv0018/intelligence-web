@@ -21,8 +21,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.factory('TokensService', [
-    'config', '$injector', '$interval', '$sessionStorage', '$localStorage',
-    function(config, $injector, $interval, $sessionStorage, $localStorage) {
+    'config', '$injector', '$interval',
+    function(config, $injector, $interval) {
 
         var $http;
         var session;
@@ -299,15 +299,15 @@ IntelligenceWebClient.factory('TokensService', [
                     this.refresh = $interval(this.removeTokens.bind(this), this.tokens.expiration);
                 }
 
-                $sessionStorage[TOKEN_TYPE_KEY] = tokens.tokenType;
-                $sessionStorage[ACCESS_TOKEN_KEY] = tokens.accessToken;
-                $sessionStorage[REFRESH_TOKEN_KEY] = tokens.refreshToken;
+                sessionStorage.setItem(TOKEN_TYPE_KEY, tokens.tokenType);
+                sessionStorage.setItem(ACCESS_TOKEN_KEY, tokens.accessToken);
+                sessionStorage.setItem(REFRESH_TOKEN_KEY, tokens.refreshToken);
 
                 if (persist) {
 
-                    $localStorage[TOKEN_TYPE_KEY] = tokens.tokenType;
-                    $localStorage[ACCESS_TOKEN_KEY] = tokens.accessToken;
-                    $localStorage[REFRESH_TOKEN_KEY] = tokens.refreshToken;
+                    localStorage.setItem(TOKEN_TYPE_KEY, tokens.tokenType);
+                    localStorage.setItem(ACCESS_TOKEN_KEY, tokens.accessToken);
+                    localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refreshToken);
                 }
             },
 
@@ -323,14 +323,14 @@ IntelligenceWebClient.factory('TokensService', [
                 delete this.tokens.refreshToken;
 
                 /* Remove from the session. */
-                delete $sessionStorage[TOKEN_TYPE_KEY];
-                delete $sessionStorage[ACCESS_TOKEN_KEY];
-                delete $sessionStorage[REFRESH_TOKEN_KEY];
+                sessionStorage.removeItem(TOKEN_TYPE_KEY);
+                sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+                sessionStorage.removeItem(REFRESH_TOKEN_KEY);
 
                 /* Remove from persistent storage. */
-                delete $localStorage[TOKEN_TYPE_KEY];
-                delete $localStorage[ACCESS_TOKEN_KEY];
-                delete $localStorage[REFRESH_TOKEN_KEY];
+                localStorage.removeItem(TOKEN_TYPE_KEY);
+                localStorage.removeItem(ACCESS_TOKEN_KEY);
+                localStorage.removeItem(REFRESH_TOKEN_KEY);
             },
 
             /**
@@ -340,8 +340,8 @@ IntelligenceWebClient.factory('TokensService', [
             getTokenType: function() {
 
                 var tokenType = this.tokens.tokenType ||
-                                $sessionStorage[TOKEN_TYPE_KEY] ||
-                                $localStorage[TOKEN_TYPE_KEY] ||
+                                sessionStorage.getItem(TOKEN_TYPE_KEY) ||
+                                localStorage.getItem(TOKEN_TYPE_KEY) ||
                                 undefined;
 
                 return tokenType;
@@ -354,8 +354,8 @@ IntelligenceWebClient.factory('TokensService', [
             getAccessToken: function() {
 
                 var accessToken = this.tokens.accessToken ||
-                                  $sessionStorage[ACCESS_TOKEN_KEY] ||
-                                  $localStorage[ACCESS_TOKEN_KEY] ||
+                                  sessionStorage.getItem(ACCESS_TOKEN_KEY) ||
+                                  localStorage.getItem(ACCESS_TOKEN_KEY) ||
                                   undefined;
 
                 return accessToken;
@@ -368,8 +368,8 @@ IntelligenceWebClient.factory('TokensService', [
             getRefreshToken: function() {
 
                 var refreshToken = this.tokens.refreshToken ||
-                                   $sessionStorage[REFRESH_TOKEN_KEY] ||
-                                   $localStorage[REFRESH_TOKEN_KEY] ||
+                                   sessionStorage.getItem(REFRESH_TOKEN_KEY) ||
+                                   localStorage.getItem(REFRESH_TOKEN_KEY) ||
                                    undefined;
 
                 return refreshToken;
