@@ -14,25 +14,6 @@ IntelligenceWebClient.factory('Auth.Interceptor', [
 
         return {
 
-            /* Intercept all responses. Includes any server responses that are
-             * considered successful. Which are status codes up to the 400 level. */
-            response: function(response) {
-            /* jshint sub:true */
-            /* jshint camelcase:false */
-
-                if (response.data.error && response.data.error === 'invalid_token') {
-
-                    /* Refresh token. */
-                    return tokens.refreshToken().then(function() {
-
-                        /* Queue the original request to be requested again. */
-                        return queue.enqueue(response);
-                    });
-                }
-
-                return response;
-            },
-
             /* Intercept responses with authentication error status codes. */
             responseError: function(response) {
 
