@@ -26,7 +26,6 @@ Indexing.controller('Indexing.Main.Controller', [
 
         /* Scope */
 
-
         $scope.data = data;
         $scope.tags = tags;
         $scope.play = play;
@@ -39,6 +38,14 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.league = data.leagues.get($scope.team.leagueId);
         $scope.tagset = data.tagsets.get($scope.league.tagSetId);
 
+        console.log($scope.game.deadlinePassed());
+
+        /* Kick Indexer Off When Deadline Passes */
+        /*var deadline = $scope.game.assignmentTimeRemaining();
+
+        if ($scope.game.assignmentTimeRemaining() === 'None') {
+
+        }*/
 
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
