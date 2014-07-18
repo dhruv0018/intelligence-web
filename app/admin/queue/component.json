@@ -13,5 +13,8 @@
         "game.less",
         "queue.less",
         "select-indexer.less"
-    ]
+    ],
+    "dependencies": {
+        "moment/moment": "2.5.1"
+    }
 }
