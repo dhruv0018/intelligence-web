@@ -236,15 +236,10 @@ IntelligenceWebClient.factory('TokensService', [
 
                 var self = this;
 
-                session = session || $injector.get('SessionService');
-
-                var currentUser = session.retrieveCurrentUser();
-                var persist = currentUser ? currentUser.persist : false;
-
                 return self.requestTokenRefresh().then(function(tokens) {
 
                     /* Store the tokens. Optionally persisting. */
-                    self.setTokens(tokens, persist);
+                    self.setTokens(tokens);
 
                     return tokens;
                 });
@@ -257,6 +252,14 @@ IntelligenceWebClient.factory('TokensService', [
             * @param {Boolean} persist - if true the tokens will be persisted.
             */
             setTokens: function(tokens, persist) {
+
+                if (angular.isUndefined(persist)) {
+
+                    session = session || $injector.get('SessionService');
+
+                    var currentUser = session.retrieveCurrentUser();
+                    persist = currentUser ? currentUser.persist : false;
+                }
 
                 if (!tokens.accessToken) throw new Error('No access token');
 
