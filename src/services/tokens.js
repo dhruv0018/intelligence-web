@@ -54,10 +54,10 @@ IntelligenceWebClient.factory('TokensService', [
             refresh: undefined,
 
             /**
-            * Requests an authorization code from the server.
-            * @param {string} username - username to use
-            * @param {string} password - users password
-            */
+             * Requests an authorization code from the server.
+             * @param {string} username - username to use
+             * @param {string} password - users password
+             */
             requestAuthCode: function(username, password) {
 
                 var self = this;
@@ -86,18 +86,15 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Receives and parses the server response from the authorization request.
-            * @param {string} response - the response from requestAuthCode to parse
-            * @return {string} - the code received
-            */
+             * Receives and parses the server response from the authorization request.
+             * @param {string} response - the response from requestAuthCode to parse
+             * @return {string} - the code received
+             */
             receiveAuthCode: function(response) {
 
                 if (!response || !response.data || !response.data.code) throw new Error('No authorization code received');
 
                 this.code = response.data.code;
-
-                /* TODO: Change to use logging framework */
-                console.log('OAuth Auth Code: ' + this.code);
 
                 return this.code;
             },
@@ -137,10 +134,10 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Requests an OAuth tokens from the server.
-            * @param {string} code - authorization code retrieved from requestAuthCode
-            * @return {object} - the OAuth tokens
-            */
+             * Requests an OAuth tokens from the server.
+             * @param {string} code - authorization code retrieved from requestAuthCode
+             * @return {object} - the OAuth tokens
+             */
             requestTokens: function(code) {
 
                 var self = this;
@@ -172,9 +169,9 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Receives and parses the server response from the access token request.
-            * @param {string} response - the response from requestAccessToken to parse
-            */
+             * Receives and parses the server response from the access token request.
+             * @param {string} response - the response from requestAccessToken to parse
+             */
             receiveTokens: function(response) {
                 /*jshint sub:true*/
 
@@ -186,17 +183,13 @@ IntelligenceWebClient.factory('TokensService', [
                     expiration: response.data['expires_in']
                 };
 
-                /* TODO: Change to use logging framework */
-                console.log('OAuth Access Token: ' + tokens.accessToken);
-                console.log('OAuth Refresh Token: ' + tokens.refreshToken);
-
                 return tokens;
             },
 
             /**
-            * Requests a refresh of the OAuth access token.
-            * @return {object} - the OAuth tokens
-            */
+             * Requests a refresh of the OAuth access token.
+             * @return {object} - the OAuth tokens
+             */
             requestTokenRefresh: function() {
 
                 var self = this;
@@ -228,9 +221,9 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Refreshes the OAuth access token.
-            * @return {object} - the OAuth tokens
-            */
+             * Refreshes the OAuth access token.
+             * @return {object} - the OAuth tokens
+             */
             refreshToken: function() {
 
                 var self = this;
@@ -245,12 +238,12 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Refreshes the OAuth access token at given intervals.
-            * @param {Number} interval - the interval time in milliseconds.
-            */
+             * Refreshes the OAuth access token at given intervals.
+             * @param {Number} interval - the interval time in milliseconds.
+             */
             refreshTokenInterval: function(interval) {
 
-                /* Fallbacks for the refresh interval value. */
+                /* Fallbacks for the refresh interval. */
                 interval = interval || sessionStorage.getItem(ACCESS_TOKEN_EXPIRATION_TIME);
                 interval = interval || localStorage.getItem(ACCESS_TOKEN_EXPIRATION_TIME);
                 interval = interval || DEFAULT_ACCESS_TOKEN_EXPIRATION_TIME;
@@ -274,11 +267,11 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Sets the tokens. Will store the tokens in memory, the session,
-            * and optionally persistently.
-            * @param {OAuth} tokens - an OAuth object that contains the tokens.
-            * @param {Boolean} persist - if true the tokens will be persisted.
-            */
+             * Sets the tokens. Will store the tokens in memory, the session,
+             * and optionally persistently.
+             * @param {OAuth} tokens - an OAuth object that contains the tokens.
+             * @param {Boolean} persist - if true the tokens will be persisted.
+             */
             setTokens: function(tokens, persist) {
 
                 if (angular.isUndefined(persist)) {
@@ -338,8 +331,8 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Removes the tokens from all storage.
-            */
+             * Removes the tokens from all storage.
+             */
             removeTokens: function() {
 
                 $interval.cancel(this.refresh);
@@ -364,9 +357,9 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Returns the OAuth token type if stored or undefined if not.
-            * @returns {String} the token type as a string.
-            */
+             * Returns the OAuth token type if stored.
+             * @returns {String} the token type as a string.
+             */
             getTokenType: function() {
 
                 var tokenType = this.tokens.tokenType ||
@@ -377,9 +370,9 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Returns the OAuth access token if stored or undefined if not.
-            * @returns {String} the access token as a string.
-            */
+             * Returns the OAuth access token if stored.
+             * @returns {String} the access token as a string.
+             */
             getAccessToken: function() {
 
                 var accessToken = this.tokens.accessToken ||
@@ -390,9 +383,9 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Returns the OAuth refresh token if stored or undefined if not.
-            * @returns {String} the refresh token as a string.
-            */
+             * Returns the OAuth refresh token if stored.
+             * @returns {String} the refresh token as a string.
+             */
             getRefreshToken: function() {
 
                 var refreshToken = this.tokens.refreshToken ||
@@ -403,9 +396,9 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
-            * Checks if the tokens are currently stored in any way.
-            * @returns {Boolean} true if the tokens are stored; false otherwise.
-            */
+             * Checks if the tokens are currently stored in any way.
+             * @returns {Boolean} true if the tokens are stored; false otherwise.
+             */
             areTokensSet: function() {
 
                 return !!this.getAccessToken() && !!this.getRefreshToken();
