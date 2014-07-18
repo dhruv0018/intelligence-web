@@ -378,7 +378,7 @@ IntelligenceWebClient.factory('TokensService', [
             */
             areTokensSet: function() {
 
-                return this.getAccessToken() && this.getRefreshToken();
+                return !!this.getAccessToken() && !!this.getRefreshToken();
             }
         };
 
