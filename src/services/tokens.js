@@ -228,13 +228,23 @@ IntelligenceWebClient.factory('TokensService', [
 
                 var self = this;
 
-                return self.requestTokenRefresh().then(function(tokens) {
+                return self.requestTokenRefresh().then(
 
-                    /* Store the tokens. Optionally persisting. */
-                    self.setTokens(tokens);
+                    /* If the token was successfully refreshed. */
+                    function(tokens) {
 
-                    return tokens;
-                });
+                        /* Store the tokens. Optionally persisting. */
+                        self.setTokens(tokens);
+
+                        return tokens;
+
+                    /* If the token could not be refreshed. */
+                    }, function() {
+
+                        /* Remove the tokens. */
+                        self.removeTokens();
+                    }
+                );
             },
 
             /**
