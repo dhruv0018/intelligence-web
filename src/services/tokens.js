@@ -287,29 +287,29 @@ IntelligenceWebClient.factory('TokensService', [
                 var refreshTokenExpirationDate = new Date(Date.now() + DEFAULT_REFRESH_TOKEN_EXPIRATION);
 
                 /* Store the access token in the session. */
-                sessionStorage.setItem(TOKEN_TYPE, tokens.tokenType);
-                sessionStorage.setItem(ACCESS_TOKEN, tokens.accessToken);
+                sessionStorage.setItem(TOKEN_TYPE, this.tokens.tokenType);
+                sessionStorage.setItem(ACCESS_TOKEN, this.tokens.accessToken);
                 sessionStorage.setItem(ACCESS_TOKEN_EXPIRATION_DATE, accessTokenExpirationDate);
 
                 /* If a refresh token is present. */
                 if (this.tokens.refreshToken) {
 
-                    sessionStorage.setItem(REFRESH_TOKEN, tokens.refreshToken);
+                    sessionStorage.setItem(REFRESH_TOKEN, this.tokens.refreshToken);
                     sessionStorage.setItem(REFRESH_TOKEN_EXPIRATION_DATE, refreshTokenExpirationDate);
                 }
 
                 /* If the session should be persisted. */
                 if (persist) {
 
-                    localStorage.setItem(TOKEN_TYPE, tokens.tokenType);
-                    localStorage.setItem(ACCESS_TOKEN, tokens.accessToken);
+                    localStorage.setItem(TOKEN_TYPE, this.tokens.tokenType);
+                    localStorage.setItem(ACCESS_TOKEN, this.tokens.accessToken);
                     localStorage.setItem(ACCESS_TOKEN_EXPIRATION_DATE, accessTokenExpirationDate);
                 }
 
                 /* If the session should be persisted and a refresh token is present. */
                 if (persist && this.tokens.refreshToken) {
 
-                    localStorage.setItem(REFRESH_TOKEN, tokens.refreshToken);
+                    localStorage.setItem(REFRESH_TOKEN, this.tokens.refreshToken);
                     localStorage.setItem(REFRESH_TOKEN_EXPIRATION_DATE, refreshTokenExpirationDate);
                 }
             },
