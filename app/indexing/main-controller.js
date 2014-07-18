@@ -39,6 +39,8 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.league = data.leagues.get($scope.team.leagueId);
         $scope.tagset = data.tagsets.get($scope.league.tagSetId);
 
+        $scope.game.teamIndexedScore = 0;
+        $scope.game.opposingIndexedScore = 0;
 
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();

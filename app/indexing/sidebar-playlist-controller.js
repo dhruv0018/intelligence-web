@@ -23,6 +23,32 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
         $scope.event = event;
         $scope.sidebar = sidebar;
         $scope.indexing = indexing;
+
+        $scope.$watch(function() {
+
+            var lastPlay = $scope.indexing.plays.slice().pop();
+
+            if (!lastPlay) return 0;
+
+            return lastPlay.teamIndexedScore;
+
+        }, function(teamIndexedScore) {
+
+            $scope.game.teamIndexedScore = teamIndexedScore;
+        });
+
+        $scope.$watch(function() {
+
+            var lastPlay = $scope.indexing.plays.slice().pop();
+
+            if (!lastPlay) return 0;
+
+            return lastPlay.opposingIndexedScore;
+
+        }, function(opposingIndexedScore) {
+
+            $scope.game.opposingIndexedScore = opposingIndexedScore;
+        });
     }
 ]);
 

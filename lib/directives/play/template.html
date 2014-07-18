@@ -8,9 +8,9 @@
         <h4 data-ng-class="{'playCollapsed': !isOpen}">
             <span data-ng-if="!currentUser.is(INDEXER)" class="team">{{teams[play.possessionTeamId].name}}</span>
             <span data-ng-if="currentUser.is(INDEXER)" class="team">{{ team.name }}</span>
-            <span data-ng-if="currentUser.is(INDEXER)" class="score">{{ play.score[team.id] }}</span>
+            <span data-ng-if="currentUser.is(INDEXER)" class="score">{{ play.teamIndexedScore }}</span>
             <span data-ng-if="currentUser.is(INDEXER)" class="vs">&nbsp;vs&nbsp;</span>
-            <span data-ng-if="currentUser.is(INDEXER)" class="score">{{ play.score[opposingTeam.id] }}</span>
+            <span data-ng-if="currentUser.is(INDEXER)" class="score">{{ play.opposingIndexedScore }}</span>
             <span data-ng-if="currentUser.is(INDEXER)" class="team">{{ opposingTeam.name }}</span>
             <span class="playplay" data-ng-if="!currentUser.is(INDEXER)" data-ng-click="$event.stopPropagation();"><i class="icon icon-play-circle"></i></span>
             <div data-ng-if="!currentUser.is(INDEXER)" class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'priority'">
