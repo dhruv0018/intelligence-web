@@ -22,7 +22,6 @@ describe('TokensService', function() {
         expect(TokensService).to.respondTo('requestTokens');
         expect(TokensService).to.respondTo('receiveTokens');
         expect(TokensService).to.respondTo('requestTokenRefresh');
-        expect(TokensService).to.respondTo('getTokens');
         expect(TokensService).to.respondTo('setTokens');
         expect(TokensService).to.respondTo('getTokenType');
         expect(TokensService).to.respondTo('areTokensSet');
@@ -422,7 +421,7 @@ describe('TokensService', function() {
                     refreshToken: 'REFRESH_TOKEN'
                 };
 
-                tokens.setTokens(tokensFixture);
+                tokens.setTokens(tokensFixture, false);
 
                 sessionStorage.getItem(ACCESS_TOKEN_KEY).should.equal(tokensFixture.accessToken);
                 sessionStorage.getItem(REFRESH_TOKEN_KEY).should.equal(tokensFixture.refreshToken);
