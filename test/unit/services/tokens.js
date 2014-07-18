@@ -413,8 +413,8 @@ describe('TokensService', function() {
         ]));
 
         it('should store the tokens in the session', inject([
-            '$sessionStorage', '$localStorage', 'TokensService',
-            function($sessionStorage, $localStorage, tokens) {
+            'TokensService',
+            function(tokens) {
 
                 var tokensFixture = {
 
@@ -424,16 +424,16 @@ describe('TokensService', function() {
 
                 tokens.setTokens(tokensFixture);
 
-                $sessionStorage[ACCESS_TOKEN_KEY].should.equal(tokensFixture.accessToken);
-                $sessionStorage[REFRESH_TOKEN_KEY].should.equal(tokensFixture.refreshToken);
-                expect($localStorage[ACCESS_TOKEN_KEY]).to.be.undefined;
-                expect($localStorage[REFRESH_TOKEN_KEY]).to.be.undefined;
+                sessionStorage.getItem(ACCESS_TOKEN_KEY).should.equal(tokensFixture.accessToken);
+                sessionStorage.getItem(REFRESH_TOKEN_KEY).should.equal(tokensFixture.refreshToken);
+                expect(localStorage.getItem(ACCESS_TOKEN_KEY)).to.be.null;
+                expect(localStorage.getItem(REFRESH_TOKEN_KEY)).to.be.null;
             }
         ]));
 
         it('should store the tokens in the persistent storage', inject([
-            '$localStorage', 'TokensService',
-            function($localStorage, tokens) {
+            'TokensService',
+            function(tokens) {
 
                 var tokensFixture = {
 
@@ -445,8 +445,8 @@ describe('TokensService', function() {
 
                 tokens.setTokens(tokensFixture, persist);
 
-                $localStorage[ACCESS_TOKEN_KEY].should.equal(tokensFixture.accessToken);
-                $localStorage[REFRESH_TOKEN_KEY].should.equal(tokensFixture.refreshToken);
+                localStorage.getItem(ACCESS_TOKEN_KEY).should.equal(tokensFixture.accessToken);
+                localStorage.getItem(REFRESH_TOKEN_KEY).should.equal(tokensFixture.refreshToken);
             }
         ]));
 
@@ -498,8 +498,8 @@ describe('TokensService', function() {
     describe('remove tokens', function () {
 
         it('from all storage', inject([
-            '$sessionStorage', '$localStorage', 'TokensService',
-            function($sessionStorage, $localStorage, tokens) {
+            'TokensService',
+            function(tokens) {
 
                 var tokensFixture = {
 
@@ -513,12 +513,12 @@ describe('TokensService', function() {
 
                 tokens.removeTokens();
 
-                expect(tokens.getAccessToken()).to.be.undefined;
-                expect(tokens.getRefreshToken()).to.be.undefined;
-                expect($sessionStorage[ACCESS_TOKEN_KEY]).to.be.undefined;
-                expect($sessionStorage[REFRESH_TOKEN_KEY]).to.be.undefined;
-                expect($localStorage[ACCESS_TOKEN_KEY]).to.be.undefined;
-                expect($localStorage[REFRESH_TOKEN_KEY]).to.be.undefined;
+                expect(tokens.getAccessToken()).to.be.null;
+                expect(tokens.getRefreshToken()).to.be.null;
+                expect(sessionStorage.getItem(ACCESS_TOKEN_KEY)).to.be.null;
+                expect(sessionStorage.getItem(REFRESH_TOKEN_KEY)).to.be.null;
+                expect(localStorage.getItem(ACCESS_TOKEN_KEY)).to.be.null;
+                expect(localStorage.getItem(REFRESH_TOKEN_KEY)).to.be.null;
             }
         ]));
     });
