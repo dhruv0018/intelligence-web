@@ -212,6 +212,24 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return deferred.promise;
             },
 
+            getStats: function() {
+                var self = this;
+
+                var callback = function(game) {
+
+                    game = self.extendGame(game);
+
+                    return success ? success(game) : game;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get stats for game');
+                };
+
+                return self.resource.getStats({ id: id }, callback, error);
+            },
+
             getStatus: function() {
 
                 var self = this;
