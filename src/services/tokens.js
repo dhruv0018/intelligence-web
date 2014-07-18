@@ -341,8 +341,7 @@ IntelligenceWebClient.factory('TokensService', [
 
                 var tokenType = this.tokens.tokenType ||
                                 sessionStorage.getItem(TOKEN_TYPE_KEY) ||
-                                localStorage.getItem(TOKEN_TYPE_KEY) ||
-                                undefined;
+                                localStorage.getItem(TOKEN_TYPE_KEY);
 
                 return tokenType;
             },
@@ -355,8 +354,7 @@ IntelligenceWebClient.factory('TokensService', [
 
                 var accessToken = this.tokens.accessToken ||
                                   sessionStorage.getItem(ACCESS_TOKEN_KEY) ||
-                                  localStorage.getItem(ACCESS_TOKEN_KEY) ||
-                                  undefined;
+                                  localStorage.getItem(ACCESS_TOKEN_KEY);
 
                 return accessToken;
             },
@@ -369,8 +367,7 @@ IntelligenceWebClient.factory('TokensService', [
 
                 var refreshToken = this.tokens.refreshToken ||
                                    sessionStorage.getItem(REFRESH_TOKEN_KEY) ||
-                                   localStorage.getItem(REFRESH_TOKEN_KEY) ||
-                                   undefined;
+                                   localStorage.getItem(REFRESH_TOKEN_KEY);
 
                 return refreshToken;
             },
@@ -381,7 +378,7 @@ IntelligenceWebClient.factory('TokensService', [
             */
             areTokensSet: function() {
 
-                return this.getAccessToken() !== undefined && this.getRefreshToken() !== undefined;
+                return this.getAccessToken() && this.getRefreshToken();
             }
         };
 
