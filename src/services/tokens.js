@@ -245,6 +245,34 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
+            * Refreshes the OAuth access token at given intervals.
+            * @param {Number} interval - the interval time in milliseconds.
+            */
+            refreshTokenInterval: function(interval) {
+
+                /* Fallbacks for the refresh interval value. */
+                interval = interval || sessionStorage.getItem(ACCESS_TOKEN_EXPIRATION_TIME);
+                interval = interval || localStorage.getItem(ACCESS_TOKEN_EXPIRATION_TIME);
+                interval = interval || DEFAULT_ACCESS_TOKEN_EXPIRATION_TIME;
+
+                /* Cancel any previous refresh intervals. */
+                $interval.cancel(this.refresh);
+
+                /* If a refresh token is present. */
+                if (this.getRefreshToken()) {
+
+                    /* Automatically refresh the access token after it expires. */
+                    this.refresh = $interval(this.refreshToken.bind(this), interval);
+                }
+
+                /* If the refresh token is not present. */
+                else {
+
+                    /* Remove the access token after expiration. */
+                    this.refresh = $interval(this.removeTokens.bind(this), interval);
+                }
+            },
+            /**
             * Sets the tokens. Will store the tokens in memory, the session,
             * and optionally persistently.
             * @param {OAuth} tokens - an OAuth object that contains the tokens.
@@ -266,27 +294,11 @@ IntelligenceWebClient.factory('TokensService', [
                 this.tokens.accessToken = tokens.accessToken;
                 if (tokens.refreshToken) this.tokens.refreshToken = tokens.refreshToken;
 
+                /* Calculate the access token expiration time. */
                 var expiration = tokens.expiration ? Number(tokens.expiration) * 1000 : null;
-                expiration = expiration || sessionStorage.getItem(ACCESS_TOKEN_EXPIRATION_TIME);
-                expiration = expiration || localStorage.getItem(ACCESS_TOKEN_EXPIRATION_TIME);
-                expiration = expiration || DEFAULT_ACCESS_TOKEN_EXPIRATION_TIME;
 
-                /* Cancel any previous refresh intervals. */
-                $interval.cancel(this.refresh);
-
-                /* If a refresh token is present. */
-                if (this.tokens.refreshToken) {
-
-                    /* Automatically refresh the access token after it expires. */
-                    this.refresh = $interval(this.refreshToken.bind(this), expiration);
-                }
-
-                /* If the refresh token is not present. */
-                else {
-
-                    /* Remove the access token after expiration. */
-                    this.refresh = $interval(this.removeTokens.bind(this), expiration);
-                }
+                /* Start the access token refresh interval. */
+                this.refreshTokenInterval(expiration);
 
                 /* Calculate the token expiration dates. */
                 var accessTokenExpirationDate = new Date(Date.now() + expiration);
