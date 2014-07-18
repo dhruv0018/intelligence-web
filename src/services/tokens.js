@@ -28,8 +28,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.factory('TokensService', [
-    'config', '$injector', '$interval',
-    function(config, $injector, $interval) {
+    'config', '$injector', '$interval', '$timeout',
+    function(config, $injector, $interval, $timeout) {
 
         var $http;
         var session;
@@ -272,6 +272,7 @@ IntelligenceWebClient.factory('TokensService', [
                     this.refresh = $interval(this.removeTokens.bind(this), interval);
                 }
             },
+
             /**
             * Sets the tokens. Will store the tokens in memory, the session,
             * and optionally persistently.
@@ -430,6 +431,16 @@ IntelligenceWebClient.factory('TokensService', [
 
                     /* Refresh the access token. */
                     tokens.refreshToken();
+                }
+
+                /* If the access token has not expired yet. */
+                else {
+
+                    /* Calculate the time remaining before the access token expires. */
+                    var accessTokenTimeRemaining = accessTokenExpirationDate - now;
+
+                    /* Set timeout to refresh the access token before it expires. */
+                    $timeout(tokens.refreshToken.bind(tokens), accessTokenTimeRemaining);
                 }
             }
 
