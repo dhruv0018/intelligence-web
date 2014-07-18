@@ -202,7 +202,7 @@ IntelligenceWebClient.factory('TokensService', [
                 var url = config.oauth.uri + 'token';
 
                 var data = 'grant_type=refresh_token';
-                data += '&refresh_token=' + self.tokens.refreshToken;
+                data += '&refresh_token=' + self.getRefreshToken();
 
                 var auth = config.oauth.clientId + ':' + config.oauth.clientSecret;
 
