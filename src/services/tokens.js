@@ -2,13 +2,15 @@
 var TOKEN_TYPE = 'TOKEN_TYPE';
 var ACCESS_TOKEN = 'ACCESS_TOKEN';
 var REFRESH_TOKEN = 'REFRESH_TOKEN';
+var ACCESS_TOKEN_EXPIRATION_TIME = 'ACCESS_TOKEN_EXPIRATION_TIME';
 var ACCESS_TOKEN_EXPIRATION_DATE = 'ACCESS_TOKEN_EXPIRATION_DATE';
+var REFRESH_TOKEN_EXPIRATION_TIME = 'REFRESH_TOKEN_EXPIRATION_TIME';
 var REFRESH_TOKEN_EXPIRATION_DATE = 'REFRESH_TOKEN_EXPIRATION_DATE';
 
 /* Defaults. */
 var DEFAULT_ACCESS_TOKEN_TYPE = 'Bearer';
-var DEFAULT_ACCESS_TOKEN_EXPIRATION = 3600 * 1000;
-var DEFAULT_REFRESH_TOKEN_EXPIRATION = 1209600 * 1000;
+var DEFAULT_ACCESS_TOKEN_EXPIRATION_TIME = 3600 * 1000;
+var DEFAULT_REFRESH_TOKEN_EXPIRATION_TIME = 1209600 * 1000;
 
 var package = require('../../package.json');
 
@@ -47,9 +49,6 @@ IntelligenceWebClient.factory('TokensService', [
 
                 /** OAuth refresh token */
                 refreshToken: null,
-
-                /** The time until the access token expires. */
-                expiration: DEFAULT_ACCESS_TOKEN_EXPIRATION
             },
 
             refresh: undefined,
@@ -266,7 +265,8 @@ IntelligenceWebClient.factory('TokensService', [
                 if (tokens.tokenType) this.tokens.tokenType = tokens.tokenType;
                 this.tokens.accessToken = tokens.accessToken;
                 if (tokens.refreshToken) this.tokens.refreshToken = tokens.refreshToken;
-                if (tokens.expiration) this.tokens.expiration = Number(tokens.expiration) * 1000;
+
+                var expiration = tokens.expiration ? Number(tokens.expiration) * 1000 : DEFAULT_ACCESS_TOKEN_EXPIRATION_TIME;
 
                 /* Cancel any previous refresh intervals. */
                 $interval.cancel(this.refresh);
@@ -275,29 +275,31 @@ IntelligenceWebClient.factory('TokensService', [
                 if (this.tokens.refreshToken) {
 
                     /* Automatically refresh the access token after it expires. */
-                    this.refresh = $interval(this.refreshToken.bind(this), this.tokens.expiration);
+                    this.refresh = $interval(this.refreshToken.bind(this), expiration);
                 }
 
                 /* If the refresh token is not present. */
                 else {
 
                     /* Remove the access token after expiration. */
-                    this.refresh = $interval(this.removeTokens.bind(this), this.tokens.expiration);
+                    this.refresh = $interval(this.removeTokens.bind(this), expiration);
                 }
 
                 /* Calculate the token expiration dates. */
-                var accessTokenExpirationDate = new Date(Date.now() + this.tokens.expiration);
-                var refreshTokenExpirationDate = new Date(Date.now() + DEFAULT_REFRESH_TOKEN_EXPIRATION);
+                var accessTokenExpirationDate = new Date(Date.now() + expiration);
+                var refreshTokenExpirationDate = new Date(Date.now() + DEFAULT_REFRESH_TOKEN_EXPIRATION_TIME);
 
                 /* Store the access token in the session. */
                 sessionStorage.setItem(TOKEN_TYPE, this.tokens.tokenType);
                 sessionStorage.setItem(ACCESS_TOKEN, this.tokens.accessToken);
+                sessionStorage.setItem(ACCESS_TOKEN_EXPIRATION_TIME, expiration);
                 sessionStorage.setItem(ACCESS_TOKEN_EXPIRATION_DATE, accessTokenExpirationDate);
 
                 /* If a refresh token is present. */
                 if (this.tokens.refreshToken) {
 
                     sessionStorage.setItem(REFRESH_TOKEN, this.tokens.refreshToken);
+                    sessionStorage.setItem(REFRESH_TOKEN_EXPIRATION_TIME, DEFAULT_REFRESH_TOKEN_EXPIRATION_TIME);
                     sessionStorage.setItem(REFRESH_TOKEN_EXPIRATION_DATE, refreshTokenExpirationDate);
                 }
 
@@ -306,6 +308,7 @@ IntelligenceWebClient.factory('TokensService', [
 
                     localStorage.setItem(TOKEN_TYPE, this.tokens.tokenType);
                     localStorage.setItem(ACCESS_TOKEN, this.tokens.accessToken);
+                    localStorage.setItem(ACCESS_TOKEN_EXPIRATION_TIME, expiration);
                     localStorage.setItem(ACCESS_TOKEN_EXPIRATION_DATE, accessTokenExpirationDate);
                 }
 
@@ -313,6 +316,7 @@ IntelligenceWebClient.factory('TokensService', [
                 if (persist && this.tokens.refreshToken) {
 
                     localStorage.setItem(REFRESH_TOKEN, this.tokens.refreshToken);
+                    localStorage.setItem(REFRESH_TOKEN_EXPIRATION_TIME, DEFAULT_REFRESH_TOKEN_EXPIRATION_TIME);
                     localStorage.setItem(REFRESH_TOKEN_EXPIRATION_DATE, refreshTokenExpirationDate);
                 }
             },
