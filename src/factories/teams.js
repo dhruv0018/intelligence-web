@@ -113,10 +113,10 @@ IntelligenceWebClient.factory('TeamsFactory', [
             getActivePlan: function() {
                 var self = this;
 
-                if (self.teamPlans && self.teamPlans.length > 0) {
+                if (self.teamPlans) {
                     //get the plans that have a endDate that has not passed
                     var activePlans = self.teamPlans.filter(function(plan) {
-                        return moment() < moment.utc(plan.endDate);
+                        return moment().isBefore(plan.endDate);
                     });
 
                     if (activePlans.length === 0) {
@@ -131,10 +131,10 @@ IntelligenceWebClient.factory('TeamsFactory', [
             getActivePackage: function() {
                 var self = this;
 
-                if (self.teamPackages && self.teamPlans.length > 0) {
+                if (self.teamPackages) {
                     //get the plans that have a endDate that has not passed
                     var activePackages = self.teamPackages.filter(function(teamPackage) {
-                        return moment() < moment.utc(teamPackage.endDate);
+                        return moment().isBefore(teamPackage.endDate);
                     });
 
                     if (activePackages.length === 0) {
