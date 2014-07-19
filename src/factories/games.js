@@ -587,8 +587,9 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (turnoverTime > 0) {
                     var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
-
-                    return turnoverTimeRemaining.humanize(true);
+                    var milliseconds = turnoverTimeRemaining.get('milliseconds');
+                    var prefix = (milliseconds < 0) ? 'Deadline passed ' : 'Due in ';
+                    return prefix + turnoverTimeRemaining.humanize(true);
                 }
 
                 //no plans or packages and therefore no breakdowns available
