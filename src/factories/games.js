@@ -581,14 +581,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.submittedAt) {
                     return '';
                 }
-                console.log(self.submittedAt);
-                //Difference between the current time and the uploading date of the game
-                var timePassed = moment() - moment(self.submittedAt);
 
+                var timePassed = new Date() -  moment.utc(self.submittedAt).toDate();
                 var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+
                 if (turnoverTime > 0) {
                     var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
-                    return turnoverTimeRemaining.get('hours') + 'h ' + turnoverTimeRemaining.get('minutes') + 'm';
+
+                    return turnoverTimeRemaining.humanize(true);
                 }
 
                 //no plans or packages and therefore no breakdowns available
