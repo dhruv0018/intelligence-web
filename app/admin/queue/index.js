@@ -1,5 +1,6 @@
 /* File dependencies. */
 require('./game.js');
+var moment = require('moment');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;

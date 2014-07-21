@@ -7,6 +7,7 @@
     "locals": [
         "app",
         "modals",
+        "filters",
         "directives"
     ],
     "scripts": [
