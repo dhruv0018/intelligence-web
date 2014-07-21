@@ -133,10 +133,10 @@ Queue.controller('QueueController', [
 
         $scope.queueFilters = {
             remaining: {
-                '48-24': [],
-                '24-10': [],
-                '10-5': [],
-                '5-1': [],
+                '48': [],
+                '24': [],
+                '10': [],
+                '5': [],
                 '1': [],
                 'late': []
             },
@@ -147,13 +147,29 @@ Queue.controller('QueueController', [
 
         //sorting games into filter categories
         angular.forEach($scope.queue, function(game) {
+            if (game.isDeleted) {
+                return;
+            }
+
             if (game.status === GAME_STATUSES.SET_ASIDE.id) {
                 $scope.queueFilters.setAside.push(game);
             }
             var remainingTime = game.getRemainingTime($scope.teams[game.uploaderTeamId]);
-            console.log(remainingTime);
+            var remainingHours = moment.duration(remainingTime).asHours();
+            console.log(remainingHours);
+
             if (remainingTime < 0) {
                 $scope.queueFilters.remaining.late.push(game);
+            } else if (remainingHours >= 24 && remainingHours <= 48) {
+                $scope.queueFilters.remaining['48'].push(game);
+            } else if (remainingHours < 24 && remainingHours >= 10) {
+                $scope.queueFilters.remaining['24'].push(game);
+            } else if (remainingHours < 10 && remainingHours >= 5) {
+                $scope.queueFilters.remaining['10'].push(game);
+            } else if (remainingHours < 5 && remainingHours >= 1) {
+                $scope.queueFilters.remaining['5'].push(game);
+            } else if (remainingHours < 1 && remainingHours !== 0) {
+                $scope.queueFilters.remaining['1'].push(game);
             }
         });
 
