@@ -30,7 +30,6 @@
         "angular-bootstrap": "angular-ui/bootstrap-bower",
         "angular-ui-utils": "angular-ui/ui-utils#bower",
         "angular-ui-router": "angular-ui/ui-router",
-        "ngStorage": "gsklee/ngStorage",
         "flow": "flowjs/ng-flow",
         "flowjs": "flowjs/flow.js",
         "videogular": "2fdevs/bower-videogular",

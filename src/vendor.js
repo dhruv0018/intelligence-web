@@ -4,7 +4,6 @@ require('angular-resource/angular-resource');
 require('angular-bootstrap/ui-bootstrap-tpls');
 require('angular-ui-utils/ui-utils');
 require('angular-ui-router/release/angular-ui-router');
-require('ngStorage/ngStorage');
 require('flow/src/angular-flow');
 require('flow/src/provider');
 require('flow/src/directives/btn');
