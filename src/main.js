@@ -20,7 +20,11 @@ require('./app');
 require('./flow');
 require('./routes');
 require('./errors');
-require('./transforms');
+
+require('./http/interceptors/error');
+require('./http/interceptors/auth');
+require('./http/interceptors/broadcast');
+require('./http/transforms/date');
 
 require('./services/authentication');
 require('./services/authorization');
