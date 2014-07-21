@@ -2,7 +2,7 @@
 
     <button
         class="zone"
-        data-ng-show="event.variableValues[item.index].value"
+        data-ng-if="event.variableValues[item.index].value"
         data-ng-click="event.variableValues[item.index].value = null"
     >{{ ZONES[ZONE_IDS[event.variableValues[item.index].value]].name }}</button>
 
@@ -10,7 +10,7 @@
         class="zone"
         tabindex="{{ item.index }}"
         data-ng-required="item.isRequired"
-        data-ng-hide="event.variableValues[item.index].value"
+        data-ng-if="!event.variableValues[item.index].value"
         data-ng-model="event.variableValues[item.index].value"
         data-ng-change="event.activeEventVariableIndex = item.index + 1"
         data-ng-focus="event.activeEventVariableIndex = item.index"
