@@ -298,6 +298,11 @@ IntelligenceWebClient.factory('TokensService', [
                 this.tokens.accessToken = tokens.accessToken;
                 if (tokens.refreshToken) this.tokens.refreshToken = tokens.refreshToken;
 
+                $http = $http || $injector.get('$http');
+
+                /* Use the access token in the authorization header. */
+                $http.defaults.headers.common.Authorization = this.tokens.tokenType + ' ' + this.tokens.accessToken;
+
                 /* Calculate the access token expiration time. */
                 var expiration = tokens.expiration ? Number(tokens.expiration) * 1000 : null;
 
