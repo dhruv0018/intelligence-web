@@ -446,8 +446,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!assignment) return remaining;
 
                 var deadline = moment.utc(assignment.deadline).toDate();
-                var timeRemaining = new Date() - deadline;
-                console.log(timeRemaining);
+                var timeRemaining = deadline - new Date();
 
                 /*if (deadline.isAfter()) {
 
