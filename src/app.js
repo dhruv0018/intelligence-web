@@ -8,12 +8,12 @@ var IntelligenceWebClient = angular.module(package.name, [
     'ngStorage',
     'ngResource',
     'flow',
-    'ui.utils',
     'ui.router',
     'ui.bootstrap',
     'config',
     'App',
     'Modals',
+    'Filters',
     'Directives'
 ]);
 
