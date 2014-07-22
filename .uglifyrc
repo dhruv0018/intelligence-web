@@ -7,6 +7,20 @@ exports = module.exports = {
 
     preserveComments: false,
     compress: {
+        join_vars: true,
+        sequences: true,
+        conditionals: true,
+        comparisons: true,
+        evaluate: true,
+        booleans: true,
+        loops: true,
+        if_return: true,
+        cascade: true,
+        unused: true,
+        dead_code: true,
+        drop_console: true,
+        drop_debugger: true,
+        screw_ie8: true
     }
 }
 

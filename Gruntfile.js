@@ -338,7 +338,7 @@ module.exports = function(grunt) {
                 files: {
                     'public/intelligence/index.html': 'build/index.html',
                     'public/intelligence/styles.css': 'build/styles.css',
-                    'public/intelligence/scripts.js': 'build/bundle.js'
+                    'public/intelligence/scripts.js': 'build/scripts.js'
                 }
             }
         },
@@ -525,6 +525,7 @@ module.exports = function(grunt) {
         'env:qa',
         'componentbuild:prod',
         'browserify:prod',
+        'uglify',
         'componentbuild:styles',
         'less',
         'svgmin',
@@ -545,6 +546,7 @@ module.exports = function(grunt) {
         'env:prod',
         'componentbuild:prod',
         'browserify:prod',
+        'uglify',
         'componentbuild:styles',
         'less',
         'svgmin',

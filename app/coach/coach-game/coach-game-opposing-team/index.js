@@ -60,8 +60,8 @@ OpposingTeam.directive('krossoverCoachGameOpposingTeam', [
  * @type {controller}
  */
 OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'GamesFactory', 'PlayersFactory',
-    function controller(config, $rootScope, $scope, $state, $localStorage, $http, games, players) {
+    'config', '$rootScope', '$scope', '$state', '$http', 'GamesFactory', 'PlayersFactory',
+    function controller(config, $rootScope, $scope, $state, $http, games, players) {
         $scope.config = config;
 
         //Collections

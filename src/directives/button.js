@@ -22,30 +22,6 @@ IntelligenceWebClient.directive('button', [
 
             var disabled = attributes.disabled;
 
-            /* Disable buttons on HTTP requests */
-            $rootScope.$on('httpRequest', function() {
-
-                attributes.$set('disabled', true);
-            });
-
-            /* Reset disabled button state on HTTP request error */
-            $rootScope.$on('httpRequestError', function() {
-
-                attributes.$set('disabled', !!disabled);
-            });
-
-            /* Reset disabled button state on HTTP response */
-            $rootScope.$on('httpResponse', function() {
-
-                attributes.$set('disabled', !!disabled);
-            });
-
-            /* Reset disabled button state on HTTP response error */
-            $rootScope.$on('httpResponseError', function() {
-
-                attributes.$set('disabled', !!disabled);
-            });
-
             /* Disable buttons on start of state change */
             $rootScope.$on('$stateChangeStart', function() {
 
