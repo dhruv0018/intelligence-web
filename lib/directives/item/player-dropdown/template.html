@@ -2,7 +2,7 @@
 
     <button
         class="player-dropdown"
-        data-ng-show="event.variableValues[item.id].value"
+        data-ng-if="event.variableValues[item.id].value"
         data-ng-click="event.variableValues[item.id].value = null"
     >{{ players[event.variableValues[item.id].value].firstName }} {{ players[event.variableValues[item.id].value].lastName }}</button>
 
@@ -11,7 +11,7 @@
         class="player-dropdown"
         tabindex="{{ item.index }}"
         data-ng-required="item.isRequired"
-        data-ng-hide="event.variableValues[item.id].value"
+        data-ng-if="!event.variableValues[item.id].value"
         data-ng-model="selectedPlayer"
         data-ng-change="event.activeEventVariableIndex = item.index + 1"
         data-ng-focus="event.activeEventVariableIndex = item.index"
