@@ -171,8 +171,7 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
-                    'node_modules/bootstrap/less',
-                    'node_modules/font-awesome/less'
+                    'node_modules/bootstrap/less'
                 ]
             },
             theme: {
@@ -230,8 +229,7 @@ module.exports = function(grunt) {
                         builder.use('styles', less({
                             paths: [
                                 'theme',
-                                'node_modules/bootstrap/less',
-                                'node_modules/font-awesome/less'
+                                'node_modules/bootstrap/less'
                             ]
                         }));
                     }
