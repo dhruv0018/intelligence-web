@@ -134,7 +134,15 @@ Game.controller('GameController', [
         if ($scope.game.getRemainingTime() === 0) {
             $scope.deliverTime = 'None';
         }
+
+        $scope.assignedToIndexer = $scope.game.isAssignedToIndexer();
+        $scope.assignedToQA = $scope.game.isAssignedToQa();
+
         $scope.indexTime = $scope.game.assignmentTimeRemaining();
+
         $scope.gameLength = Math.round($scope.game.video.duration);
+
+        var uploadedDate = new Date($scope.game.createdAt);
+        $scope.uploadDate = (uploadedDate.getMonth() + 1) + '/' + uploadedDate.getDate() + '/' + uploadedDate.getFullYear();
     }
 ]);

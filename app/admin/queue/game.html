@@ -198,13 +198,17 @@
         <time>{{gameLength}}m</time>
 
         <h4>Time to index:</h4>
-        <time>{{indexTime | humanize: 'milliseconds':true}}</time>
+        <time data-ng-if="assignedToIndexer = true && assignedToQa = false && indexTime > 0">{{indexTime | humanize: 'milliseconds':true}}</time>
+        <time data-ng-if="assignedToIndexer = true && assignedToQa = false && indexTime <= 0">None</time>
+        <time data-ng-if="assignedToQa = true">--</time>
 
         <h4>Time to QA:</h4>
-        <time>5m</time>
+        <time data-ng-if="assignedToQa = true && indexTime > 0">{{indexTime | humanize: 'milliseconds':true}}</time>
+        <time data-ng-if="assignedToQa = true && indexTime <= 0">None</time>
+        <time data-ng-if="assignedToQa = false">--</time>
 
         <h4>Date uploaded</h4>
-        <time>Jun 23, 1014</time>
+        <time>{{uploadDate}}</time>
 
         <hr>
 
