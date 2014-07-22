@@ -129,5 +129,12 @@ Game.controller('GameController', [
 
             $scope.headCoach = data.users.get(headCoachRole.userId);
         }
+
+        $scope.deliverTime = $scope.game.getRemainingTime();
+        if ($scope.game.getRemainingTime() === 0) {
+            $scope.deliverTime = 'None';
+        }
+        $scope.indexTime = $scope.game.assignmentTimeRemaining();
+        $scope.gameLength = Math.round($scope.game.video.duration);
     }
 ]);
