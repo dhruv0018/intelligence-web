@@ -7,8 +7,13 @@
     "locals": [
         "app",
         "modals",
+<<<<<<< HEAD
         "directives",
         "filters"
+=======
+        "filters",
+        "directives"
+>>>>>>> master
     ],
     "scripts": [
         "index.js"
