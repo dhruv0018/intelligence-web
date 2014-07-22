@@ -7,10 +7,11 @@ exports = module.exports = {
 
     preserveComments: false,
     compress: {
-        screw_ie8: true,
+        unused: true,
         dead_code: true,
         drop_console: true,
-        drop_debugger: true
+        drop_debugger: true,
+        screw_ie8: true
     }
 }
 
