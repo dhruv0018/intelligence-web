@@ -61,9 +61,6 @@ IntelligenceWebClient.service('AuthenticationService', [
                         /* Store the tokens. Optionally persisting. */
                         tokens.setTokens(authTokens, persist);
 
-                        /* Set the authorization header for future requests. */
-                        $http.defaults.headers.common.Authorization = tokens.getTokenType() + ' ' + tokens.getAccessToken();
-
                         /* Get the user from the server. */
                         return users.fetch(email).then(function(user) {
 
