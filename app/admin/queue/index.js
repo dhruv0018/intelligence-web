@@ -108,8 +108,8 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$rootScope', '$scope', '$state', '$modal', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
-    function controller($rootScope, $scope, $state, $modal, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, data, SelectIndexerModal) {
+    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
+    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, data, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -126,7 +126,9 @@ Queue.controller('QueueController', [
         $scope.sportsList = data.sports.getList();
         $scope.teamsList = data.teams.getList();
         $scope.usersList = data.users.getList();
-        $scope.games = data.games.getList();
+        $scope.games = data.games.getList().filter(function(game) {
+            return !game.isDeleted && game.status !== GAME_STATUSES.NOT_INDEXED.id;
+        });
 
         //initially show everything
         $scope.queue = $scope.games;
@@ -147,16 +149,18 @@ Queue.controller('QueueController', [
 
         //sorting games into filter categories
         angular.forEach($scope.queue, function(game) {
-            if (game.isDeleted) {
-                return;
-            }
 
             if (game.status === GAME_STATUSES.SET_ASIDE.id) {
                 $scope.queueFilters.setAside.push(game);
             }
+
             var remainingTime = game.getRemainingTime($scope.teams[game.uploaderTeamId]);
             var remainingHours = moment.duration(remainingTime).asHours();
-            console.log(remainingHours);
+            var assignment = game.currentAssignment();
+
+            if (!assignment || (assignment && assignment.timeFinished)) {
+                $scope.queueFilters.notAssigned.push(game);
+            }
 
             if (remainingTime < 0) {
                 $scope.queueFilters.remaining.late.push(game);
