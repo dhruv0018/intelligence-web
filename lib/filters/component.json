@@ -1,0 +1,13 @@
+{
+    "name": "filters",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "sport",
+        "humanize"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

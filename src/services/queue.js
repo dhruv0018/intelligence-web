@@ -203,7 +203,7 @@ IntelligenceWebClient.service('HTTPQueueService', [
                     request.deferred.resolve(request);
                 })
 
-                /* On a successful request, consider the network unreachable and
+                /* On an unsuccessful request, consider the network unreachable and
                  * reject the promise of the original request. */
                 .error(function() {
 

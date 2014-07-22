@@ -9,29 +9,35 @@ var IntelligenceWebClient = angular.module(package.name);
  * Intercepts error responses.
  */
 IntelligenceWebClient.factory('Auth.Interceptor', [
-    '$q', '$location', 'TokensService', 'HTTPQueueService',
-    function factory($q, $location, tokens, queue) {
+    '$q', '$injector',
+    function factory($q, $injector) {
 
         return {
 
             /* Intercept responses with authentication error status codes. */
             responseError: function(response) {
 
-                switch (response.status) {
+                $injector.invoke([
+                    'TokensService', 'HTTPQueueService',
+                    function(tokens, queue) {
 
-                    case 401: /* Unauthorized */
+                        switch (response.status) {
 
-                        /* Do not attempt a token refresh on any OAuth URLs. */
-                        if (!/oauth/.test(response.config.url)) {
+                            case 401: /* Unauthorized */
 
-                            /* Refresh token. */
-                            return tokens.refreshToken().then(function() {
+                                /* Do not attempt a token refresh on any OAuth URLs. */
+                                if (!/oauth/.test(response.config.url)) {
 
-                                /* Queue the original request to be re-requested. */
-                                return queue.enqueue(response);
-                            });
+                                    /* Refresh token. */
+                                    return tokens.refreshToken().then(function() {
+
+                                        /* Queue the original request to be re-requested. */
+                                        return queue.enqueue(response);
+                                    });
+                                }
                         }
-                }
+                    }
+                ]);
 
                 return $q.reject(response);
             }

@@ -94,12 +94,9 @@ UploadFilm.filter('bytes', function() {
  * @type {Controller}
  */
 UploadFilm.controller('UploadFilmController', [
-    'config', 'ALLOWED_FILE_EXTENSIONS', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'AlertsService', 'SessionService', 'GamesFactory', 'Coach.Data',
-    function controller(config, ALLOWED_FILE_EXTENSIONS, $rootScope, $scope, $state, $localStorage, $http, alerts, session, games, coachData) {
+    'config', 'ALLOWED_FILE_EXTENSIONS', '$rootScope', '$scope', '$state', '$http', 'AlertsService', 'SessionService', 'GamesFactory', 'Coach.Data',
+    function controller(config, ALLOWED_FILE_EXTENSIONS, $rootScope, $scope, $state, $http, alerts, session, games, coachData) {
         $scope.games = games;
-        $scope.$storage = $localStorage;
-
-        delete $scope.$storage.opposingTeam;
 
         $scope.$on('flow::fileAdded', function(event, $flow, flowFile) {
 

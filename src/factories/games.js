@@ -62,22 +62,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Lookup the game status by ID. */
                 var status = GAME_STATUSES[statusId];
 
-                /* If the game is in set aside status. */
-                if (status.id === GAME_STATUSES.SET_ASIDE.id && status.name === GAME_STATUSES.SET_ASIDE.name) {
-
-                    /* If the game was assigned to an indexer. */
-                    if (self.setAsideFromIndexing()) {
-
-                        status.name += ', from indexing';
-                    }
-
-                    /* If the game was assigned to QA. */
-                    else if (self.setAsideFromQa()) {
-
-                        status.name += ', from QA';
-                    }
-                }
-
                 return status;
             },
 
@@ -453,7 +437,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
-
             assignmentTimeRemaining: function(assignment) {
 
                 var remaining = 'None';
@@ -590,6 +573,25 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var dndReport = new Resource(report);
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
+            },
+
+            getRemainingTime: function(uploaderTeam) {
+                var self = this;
+
+                if (!self.submittedAt) {
+                    return 0;
+                }
+
+                var timePassed = new Date() -  moment.utc(self.submittedAt).toDate();
+                var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+
+                if (turnoverTime > 0) {
+                    var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
+                    return turnoverTimeRemaining.asMilliseconds();
+                }
+
+                //no plans or packages and therefore no breakdowns available
+                return 0;
             }
         };
 
