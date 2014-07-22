@@ -166,8 +166,8 @@
                         <th>Unassigned</th>
                     </tr>
                     <tr>
-                        <td><a href>##</a></td>
-                        <td><a href>##</a></td>
+                        <td><a href data-ng-click="queue = queueFilters.assigned"> {{queueFilters.assigned.length}}</a></td>
+                        <td><a href data-ng-click="queue = queueFilters.unassigned"> {{queueFilters.unassigned.length}}</a></td>
                     </tr>
                 </tbody>
             </table>

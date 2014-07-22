@@ -144,7 +144,7 @@ Queue.controller('QueueController', [
             },
             setAside: [],
             assigned: [],
-            notAssigned: []
+            unassigned: []
         };
 
         //sorting games into filter categories
@@ -158,11 +158,13 @@ Queue.controller('QueueController', [
             var remainingHours = moment.duration(remainingTime).asHours();
             var assignment = game.currentAssignment();
 
-            if (!assignment || (assignment && assignment.timeFinished)) {
-                $scope.queueFilters.notAssigned.push(game);
+            if (typeof assignment === 'undefined' || (assignment && assignment.timeFinished && game.status !== GAME_STATUSES.INDEXED.id)) {
+                $scope.queueFilters.unassigned.push(game);
+            } else if (assignment && !assignment.timeFinished) {
+                $scope.queueFilters.assigned.push(game);
             }
 
-            if (remainingTime < 0) {
+            if (remainingTime < 0 && game.status !== GAME_STATUSES.INDEXED.id) {
                 $scope.queueFilters.remaining.late.push(game);
             } else if (remainingHours >= 24 && remainingHours <= 48) {
                 $scope.queueFilters.remaining['48'].push(game);
