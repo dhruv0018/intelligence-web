@@ -437,6 +437,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
+
             assignmentTimeRemaining: function(assignment) {
 
                 var remaining = 'None';
@@ -447,11 +448,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var deadline = moment.utc(assignment.deadline).toDate();
                 var timeRemaining = deadline - new Date();
-
-                /*if (deadline.isAfter()) {
-
-                    remaining = deadline.fromNow(true);
-                }*/
 
                 return timeRemaining;
             },
