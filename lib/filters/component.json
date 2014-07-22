@@ -4,11 +4,8 @@
         "."
     ],
     "locals": [
-<<<<<<< HEAD
-=======
         "sport",
         "humanize"
->>>>>>> master
     ],
     "scripts": [
         "index.js"

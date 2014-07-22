@@ -6,12 +6,7 @@
     ],
     "locals": [
         "modals",
-<<<<<<< HEAD
-        "directives",
-        "filters"
-=======
         "filters",
         "directives"
->>>>>>> master
     ]
 }
