@@ -40,8 +40,7 @@
         "videogular-overlay-play": "2fdevs/bower-videogular-overlay-play",
         "videogular-poster": "2fdevs/bower-videogular-poster",
         "Mousetrap": "ccampbell/mousetrap",
-        "bootstrap": "twbs/bootstrap",
-        "font-awesome": "FortAwesome/Font-Awesome#v3.2.1"
+        "bootstrap": "twbs/bootstrap"
     },
     "dependencies": {
     },

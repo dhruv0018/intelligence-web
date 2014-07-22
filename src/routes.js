@@ -77,13 +77,6 @@ IntelligenceWebClient.run([
                 event.preventDefault();
                 $state.go('login');
             }
-
-            /* Check to see if the OAuth tokens have been set, if so then
-             * use the access token in the authorization header. */
-            if (tokens.areTokensSet()) {
-
-                $http.defaults.headers.common.Authorization = tokens.getTokenType() + ' ' + tokens.getAccessToken();
-            }
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
