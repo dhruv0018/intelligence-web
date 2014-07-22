@@ -25,7 +25,7 @@ IntelligenceWebClient.factory('GamesResource', [
             update: { method: 'PUT' },
             getStats: {
                 method: 'GET',
-                url: url + 'stats'
+                url: url + '/stats'
             }
         };
 
