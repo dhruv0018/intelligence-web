@@ -138,6 +138,7 @@
             <table class="time-status-row table-responsive">
                 <tbody>
                     <tr>
+                        <th>Total</th>
                         <th>48h - 24h</th>
                         <th>24h - 10h</th>
                         <th>10h - 5h</th>
@@ -147,13 +148,14 @@
                         <th>Set Aside</th>
                     </tr>
                     <tr>
+                        <td><a href data-ng-click="queue = games">{{games.length}}</a></td>
                         <td><a href>##</a></td>
                         <td><a href>##</a></td>
                         <td><a href>##</a></td>
                         <td><a href>##</a></td>
                         <td><a href>##</a></td>
-                        <td><a href>{{late}}</a></td>
-                        <td><a href>##</a></td>
+                        <td><a href data-ng-click="queue = queueFilters.remaining.late">{{queueFilters.remaining.late.length}}</a></td>
+                        <td><a href data-ng-click="queue = queueFilters.setAside">{{queueFilters.setAside.length}}</a></td>
                     </tr>
                 </tbody>
             </table>

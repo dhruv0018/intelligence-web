@@ -126,7 +126,11 @@ Queue.controller('QueueController', [
         $scope.sportsList = data.sports.getList();
         $scope.teamsList = data.teams.getList();
         $scope.usersList = data.users.getList();
-        $scope.queue = data.games.getList();
+        $scope.games = data.games.getList();
+
+        //initially show everything
+        $scope.queue = $scope.games;
+
 
         //TEMPORARY CHECK TO SEE IF QUEUE STATUS IS GOOD OR BAD
         $scope.late = 0;
@@ -137,6 +141,34 @@ Queue.controller('QueueController', [
         } else {
             $scope.queueStatusGood = false;
         }
+
+        $scope.queueFilters = {
+            remaining: {
+                '48-24': [],
+                '24-10': [],
+                '10-5': [],
+                '5-1': [],
+                '1': [],
+                'late': []
+            },
+            setAside: [],
+            assigned: [],
+            notAssigned: []
+        };
+
+        //sorting games into filter categories
+        angular.forEach($scope.queue, function(game) {
+            if (game.status === GAME_STATUSES.SET_ASIDE.id) {
+                $scope.queueFilters.setAside.push(game);
+            }
+            var remainingTime = game.getRemainingTime($scope.teams[game.uploaderTeamId]);
+            console.log(remainingTime);
+            if (remainingTime < 0) {
+                $scope.queueFilters.remaining.late.push(game);
+            }
+        });
+
+
 
         $scope.search = function(filter) {
 
