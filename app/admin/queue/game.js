@@ -137,6 +137,8 @@ Game.controller('GameController', [
 
         $scope.assignedToIndexer = $scope.game.isAssignedToIndexer();
         $scope.assignedToQA = $scope.game.isAssignedToQa();
+        console.log($scope.assignedToIndexer);
+        console.log($scope.assignedToQA);
 
         $scope.indexTime = $scope.game.assignmentTimeRemaining();
 
