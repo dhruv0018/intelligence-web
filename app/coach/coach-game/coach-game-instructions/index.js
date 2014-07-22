@@ -56,8 +56,8 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', '$localStorage', 'GAME_STATUSES', 'GamesFactory',
-    function controller($scope, $state, $localStorage, GAME_STATUSES, games) {
+    '$scope', '$state', 'GAME_STATUSES', 'GamesFactory',
+    function controller($scope, $state, GAME_STATUSES, games) {
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isSaved = false;
 

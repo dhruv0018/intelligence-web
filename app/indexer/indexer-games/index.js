@@ -86,8 +86,8 @@ Games.service('Indexer.Games.Data.Dependencies', [
  * @type {Controller}
  */
 Games.controller('indexer-games.Controller', [
-    '$scope', '$state', '$localStorage', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'SessionService', 'Indexer.Games.Data',
-    function controller($scope, $state, $localStorage, GAME_TYPES, teams, leagues, games, session, data) {
+    '$scope', '$state', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'SessionService', 'Indexer.Games.Data',
+    function controller($scope, $state, GAME_TYPES, teams, leagues, games, session, data) {
 
         $scope.sports = data.sports.getCollection();
         $scope.leagues = data.leagues.getCollection();

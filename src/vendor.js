@@ -6,7 +6,6 @@ require('angular-ui-unique/unique');
 require('angular-ui-showhide/showhide');
 require('angular-ui-validate/validate');
 require('angular-ui-router/release/angular-ui-router');
-require('ngStorage/ngStorage');
 require('flow/src/angular-flow');
 require('flow/src/provider');
 require('flow/src/directives/btn');
