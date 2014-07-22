@@ -128,6 +128,16 @@ Queue.controller('QueueController', [
         $scope.usersList = data.users.getList();
         $scope.queue = data.games.getList();
 
+        //TEMPORARY CHECK TO SEE IF QUEUE STATUS IS GOOD OR BAD
+        $scope.late = 0;
+        $scope.queueStatusGood = true;
+
+        if ($scope.late === 0) {
+            $scope.queueStatusGood = true;
+        } else {
+            $scope.queueStatusGood = false;
+        }
+
         $scope.search = function(filter) {
 
             /* If search by ID is used, just pull the single game. */
