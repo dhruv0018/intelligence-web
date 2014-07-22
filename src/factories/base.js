@@ -83,8 +83,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 if (!resource) throw new Error('Could not get ' + self.description.slice(0, -1));
 
-                managedResources.backup(resource);
-
                 return resource;
             },
 
