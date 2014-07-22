@@ -1,7 +1,9 @@
-var package = require('../package.json');
+var package = require('../../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+
+var moment = require('moment');
 
 var IntelligenceWebClient = angular.module(package.name);
 
@@ -21,9 +23,12 @@ function transformToDate(data) {
 
                 if (match) {
 
-                    var date = new Date(match[0]);
+                    var date = moment.utc(match[0]);
 
-                    if (isFinite(date)) data[key] = date;
+                    if (date.isValid()) {
+
+                        data[key] = date.toDate();
+                    }
                 }
             }
 

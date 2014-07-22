@@ -363,7 +363,6 @@ Teams.controller('TeamController', [
             var newCoachRole = ROLES.HEAD_COACH;
             newCoachRole.userId = coach.id;
             newCoachRole.teamId = $scope.team.id;
-            newCoachRole.tenureStart = $filter('date')(new Date(), 'yyyy-M-d');
             coach.addRole(newCoachRole);
             coach.save();
             $scope.team.roles = $scope.team.roles || [];

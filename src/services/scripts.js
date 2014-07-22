@@ -9,7 +9,8 @@ IntelligenceWebClient.factory('ScriptsService', [
     '$q', '$sce', 'TAG_VARIABLE_TYPE', 'VIDEO_STATUSES', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'TagsetsFactory', 'PlaysFactory', 'PlayersFactory',
     function($q, $sce, TAG_VARIABLE_TYPE, VIDEO_STATUSES, leagues, teams, games, tagsets, plays, players) {
 
-        var VARIABLE_PATTERN = /(__\d?__)/;
+        var VARIABLE_PATTERN = /(__\d__)/;
+        var VARIABLE_INDEX_PATTERN = /\d/;
 
         var ScriptsService = {
 
@@ -25,55 +26,58 @@ IntelligenceWebClient.factory('ScriptsService', [
 
             buildScript: function(scriptType, tagset, event) {
 
-                if (tagset && event && event.tag && event.tag.id) {
+                if (!tagset) throw new Error('No tagset');
+                if (!event) throw new Error('No event');
 
-                    var tagId = event.tag.id;
-                    var tags = tagset.getIndexedTags();
+                var tags = tagset.getIndexedTags();
 
-                    if (tags) {
+                if (!tags) throw new Error('Failed to get tags from tagset');
 
-                        var tag = tags[tagId];
+                var tag = tags[event.tagId];
 
-                        if (tag && tag.tagVariables) {
+                if (!tag) throw new Error('Could not find tag in tagset');
 
-                            var script = tag[scriptType];
+                var script = tag[scriptType];
 
-                            /* Mark the index of each variable. */
-                            tag.tagVariables.forEach(function(variable, index) {
+                if (!script) return [];
 
-                                variable.index = index + 1;
+                /* Tag variables are ordered by where they appear in the scripts,
+                 * but variable values are not ordered, so this position needs
+                 * to be recored to place the variable in the script later. */
+                tag.tagVariables.forEach(function(tagVariable, index) {
 
+                    /* Mark the index of each variable by their location in the
+                     * tagVariables array. */
+                    tagVariable.index = index + 1;
+                });
 
-                                /** TODO: Move this to the DROPDOWN item
-                                 * directive. */
-                                variable.options = angular.isString(variable.options) ? JSON.parse(variable.options) : variable.options;
-                            });
+                /* Split up script into array items and replace variables
+                 * with the actual tag variable object. */
+                return script.split(VARIABLE_PATTERN)
 
-                            /* Split up script into array items and replace variables
-                             * with the actual variable object. */
-                            var variableIndex = 0;
+                /* Filter script items. */
+                .filter(function(item) {
 
-                            return script.split(VARIABLE_PATTERN)
+                    /* Filter out empty items. */
+                    return item.length;
+                })
 
-                            .filter(function(item) {
+                /* Map script items. */
+                .map(function(item) {
 
-                                return item !== '';
-                            })
+                    /* If the item is a variable. */
+                    if (VARIABLE_PATTERN.test(item)) {
 
-                            .map(function(item) {
+                        /* Find the index of the variable. */
+                        var variableIndex = VARIABLE_INDEX_PATTERN.exec(item).pop() - 1;
 
-                                if (item.search(VARIABLE_PATTERN) !== -1) {
-
-                                    return tag.tagVariables[variableIndex++];
-                                }
-
-                                else return item;
-                            });
-                        }
+                        /* Lookup the variable in the tag variables. */
+                        return tag.tagVariables[variableIndex];
                     }
-                }
 
-                return [];
+                    /* If the item is not a variable return it as is. */
+                    else return item;
+                });
             }
         };
 

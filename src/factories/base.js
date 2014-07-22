@@ -81,7 +81,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     resource = self.storage.unsaved;
                 }
 
-                managedResources.backup(resource);
+                if (!resource) throw new Error('Could not get ' + self.description.slice(0, -1));
 
                 return resource;
             },

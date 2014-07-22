@@ -37,15 +37,15 @@ Indexing.controller('Indexing.Header.Controller', [
         };
 
         $scope.sendToQa = function() {
-
+            indexing.isIndexing = false;
             $scope.game.finishAssignment(userId);
-            $scope.game.save();
-
-            $state.go('indexer-games');
+            $scope.game.save().then(function() {
+                $state.go('indexer-games');
+            });
         };
 
         $scope.sendToTeam = function() {
-
+            indexing.isIndexing = false;
             $modal.open({
 
                 controller: 'Indexing.Modal.SendToTeam.Controller',
@@ -54,18 +54,17 @@ Indexing.controller('Indexing.Header.Controller', [
             }).result.then(function() {
 
                 $scope.game.finishAssignment(userId);
-                $scope.game.save();
 
-                $modal.open({
+                $scope.game.save().then(function() {
+                    $modal.open({
 
-                    controller: 'Indexing.Modal.AddIndexerNote.Controller',
-                    templateUrl: 'indexing/modal-add-indexer-note.html'
-
-                }).result.then(function() {
-
-                    $scope.game.save();
-
-                    $state.go('indexer-games');
+                        controller: 'Indexing.Modal.AddIndexerNote.Controller',
+                        templateUrl: 'indexing/modal-add-indexer-note.html',
+                        scope: $scope
+                    }).result.then(function() {
+                        $scope.game.save();
+                        $state.go('indexer-games');
+                    });
                 });
             });
         };

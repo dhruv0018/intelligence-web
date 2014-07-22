@@ -58,8 +58,8 @@ Team.directive('krossoverCoachGameTeam', [
  * @type {controller}
  */
 Team.controller('Coach.Game.Team.controller', [
-    'config', '$rootScope', '$scope', '$state', '$localStorage', 'GamesFactory', 'PlayersFactory',
-    function controller(config, $rootScope, $scope, $state, $localStorage, games, players) {
+    'config', '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory',
+    function controller(config, $rootScope, $scope, $state, games, players) {
         $scope.config = config;
 
         //Positions

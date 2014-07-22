@@ -62,22 +62,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Lookup the game status by ID. */
                 var status = GAME_STATUSES[statusId];
 
-                /* If the game is in set aside status. */
-                if (status.id === GAME_STATUSES.SET_ASIDE.id && status.name === GAME_STATUSES.SET_ASIDE.name) {
-
-                    /* If the game was assigned to an indexer. */
-                    if (self.setAsideFromIndexing()) {
-
-                        status.name += ', from indexing';
-                    }
-
-                    /* If the game was assigned to QA. */
-                    else if (self.setAsideFromQa()) {
-
-                        status.name += ', from QA';
-                    }
-                }
-
                 return status;
             },
 
@@ -453,7 +437,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
-
             assignmentTimeRemaining: function(assignment) {
 
                 var remaining = 'None';
@@ -475,44 +458,73 @@ IntelligenceWebClient.factory('GamesFactory', [
             setAsideFromIndexing: function() {
 
                 var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return false;
 
                 /* If the game was not set aside, return false. */
                 if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
 
                 /* Return true if the game was assigned to an indexer. */
-                return self.isAssignedToIndexer(self.currentAssignment()) ? true : false;
+                return (self.isAssignedToIndexer(assignment) && !assignment.timeFinished) ? true : false;
             },
 
             setAsideFromQa: function() {
 
                 var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return false;
 
                 /* If the game was not set aside, return false. */
                 if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
 
                 /* Return true if the game was assigned to QA. */
-                return self.isAssignedToQa(self.currentAssignment()) ? true : false;
+                return (self.isAssignedToQa(assignment) || (!self.setAsideFromIndexing())) ? true : false;
+            },
+
+            deadlinePassed: function() {
+                var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return true;
+
+                var deadline = moment.utc(assignment.deadline);
+
+                /* Ensure the current assignments deadline has not expired. */
+
+                if (deadline.isBefore()) return true;
+
+                return false;
             },
 
             canBeIndexed: function() {
 
                 var self = this;
 
-                var assignment = self.currentAssignment();
-
-                if (!assignment) return false;
-
-                var deadline = moment.utc(assignment.deadline);
-
-                /* Ensure the current assignments deadline has not expired. */
-                if (deadline.isBefore()) return false;
+                if (self.deadlinePassed()) {
+                    return false;
+                }
 
                 switch (self.status) {
-
-                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                     case GAME_STATUSES.INDEXING.id:
-                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
+                        return true;
+                }
+
+                return false;
+            },
+
+            canBeQAed: function() {
+                var self = this;
+
+                if (self.deadlinePassed()) {
+                    return false;
+                }
+
+                switch (self.status) {
                     case GAME_STATUSES.QAING.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
                         return true;
                 }
 
@@ -567,6 +579,28 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var dndReport = new Resource(report);
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
+            },
+            getRemainingTime: function(uploaderTeam) {
+                var self = this;
+
+                if (!self.submittedAt) {
+                    return 0;
+                }
+
+                var timePassed = new Date() - moment.utc(self.submittedAt).toDate();
+                var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+
+                if (turnoverTime > 0) {
+                    var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
+                    return turnoverTimeRemaining.asMilliseconds();
+                }
+
+                //no plans or packages and therefore no breakdowns available
+                return 0;
+            },
+            setAside: function() {
+                var self = this;
+                self.status = GAME_STATUSES.SET_ASIDE.id;
             }
         };
 
