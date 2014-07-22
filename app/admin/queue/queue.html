@@ -120,19 +120,12 @@
                 </div>
                 <div class="general-status-col">
                     <h4>Last 48 Hours</h4>
-                    <span class="general-status-info"><a href>##</a> uploaded</span>
-                    <span class="general-status-info"><a href>##</a> sent to coach</span>
+                    <span class="general-status-info"><a href data-ng-click="setQueue(queueFilters.last48.uploaded)">{{queueFilters.last48.uploaded.length}}</a> uploaded</span>
+                    <span class="general-status-info"><a href data-ng-click="setQueue(queueFilters.last48.delivered)">{{queueFilters.last48.delivered.length}}</a> sent to coach</span>
                 </div>
                 <div class="general-status-col">
-                    <h4>Processing: ##</h4>
-                    <span class="general-status-info"><a href>##</a> trans failed</span>
-                </div>
-                <div class="general-status-col">
-                    <h4>Indexers Online Now</h4>
-                    <span class="general-status-info">
-                        <span><a href>##</a> Indexing</span><a href>##</a> QA'ing
-                    </span>
-                    <span class="general-status-info"><a href>##</a> Waiting</span>
+                    <h4>Processing: <a href data-ng-click="setQueue(queueFilters.processing.inProcessing)">{{queueFilters.processing.inProcessing.length}}</a></h4>
+                    <span class="general-status-info"><a href data-ng-click="setQueue(queueFilters.processing.failed)">{{queueFilters.processing.failed.length}}</a> trans failed</span>
                 </div>
             </div>
             <table class="time-status-row table-responsive">

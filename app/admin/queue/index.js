@@ -108,8 +108,8 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
-    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, data, SelectIndexerModal) {
+    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
+    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, games, data, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -148,7 +148,15 @@ Queue.controller('QueueController', [
             },
             setAside: [],
             assigned: [],
-            unassigned: []
+            unassigned: [],
+            processing: {
+                inProcessing: [],
+                failed: []
+            },
+            'last48': {
+                uploaded: [],
+                delivered: []
+            }
         };
 
         //sorting games into filter categories
@@ -174,6 +182,15 @@ Queue.controller('QueueController', [
                 $scope.queueFilters.assigned.push(game);
             }
 
+            if (game.video && game.video.status) {
+
+                if (game.video.status === VIDEO_STATUSES.FAILED.id) {
+                    $scope.queueFilters.processing.failed(game);
+                } else if (game.video.status !== VIDEO_STATUSES.COMPLETE.id) {
+                    $scope.queueFilters.processing.inProcessing.push(game);
+                }
+            }
+
             if (remainingTime < 0 && game.status !== GAME_STATUSES.INDEXED.id) {
                 $scope.queueFilters.remaining.late.push(game);
             } else if (remainingHours >= 24 && remainingHours <= 48) {
@@ -187,6 +204,14 @@ Queue.controller('QueueController', [
             } else if (remainingHours < 1 && remainingHours !== 0) {
                 $scope.queueFilters.remaining['1'].push(game);
             }
+
+            if (remainingTime > 0 && remainingHours > 0 && remainingHours <= 48) {
+                $scope.queueFilters.last48.uploaded.push(game);
+                if (game.status === GAME_STATUSES.INDEXED.id) {
+                    $scope.queueFilters.last48.delivered.push(game);
+                }
+            }
+
         });
 
         $scope.setQueue = function(games) {
