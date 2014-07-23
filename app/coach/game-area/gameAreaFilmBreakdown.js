@@ -47,6 +47,7 @@ GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
         $scope.teamId = data.game.teamId;
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
+        $scope.expandAll = false;
         $scope.filterCategory = data.filtersets.categories[0].id;
         $scope.activeFilters = [];
         $scope.filterMenu = {

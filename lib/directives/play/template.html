@@ -1,5 +1,5 @@
-<accordion-group data-ng-show="currentUser.is(INDEXER) || (!currentUser.is(INDEXER) && play.hasVisibleEvents)" data-is-open="isOpen" data-is-disabled="expandAll" class="play" data-ng-class="{ active: play.id == currentPlayId }" data-ng-click="selectPlay(play)">
-    <accordion-heading>
+<div class="play" data-ng-show="currentUser.is(INDEXER) || (!currentUser.is(INDEXER) && play.hasVisibleEvents)" data-ng-class="{ active: play.id == currentPlayId }" data-ng-click="selectPlay(play)">
+    <div class="playHeading" data-ng-click="openPlay()">
         <h4 data-ng-if="currentUser.is(INDEXER)" data-ng-class="{'playCollapsed': !isOpen}">
             <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
             <span class="dash"> — </span>
@@ -17,8 +17,8 @@
                 <krossover-item data-data="data" data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
             </div>
         </h4>
-    </accordion-heading>
-    <div>
+    </div>
+    <div class="playBody" data-ng-class="{'playHide': !isOpen}">
         <krossover-events data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-videoplayer="videoplayer"></krossover-events>
 
         <hr>
@@ -27,4 +27,4 @@
         <button class="play-link disabled" data-ng-if="!currentUser.is(INDEXER)"><i class="icon icon-plus"></i> Add to reel</button>
         <button class="play-link pull-right disabled" data-ng-if="!currentUser.is(INDEXER)"><i class="icon icon-tag"></i> Label Play</button>
     </div>
-</accordion-group>
+</div>
