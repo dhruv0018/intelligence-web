@@ -444,6 +444,11 @@ IntelligenceWebClient.factory('TokensService', [
                 /* If the access token has not expired yet. */
                 else {
 
+                    var $http = $injector.get('$http');
+
+                    /* Set the access token in the authorization header. */
+                    $http.defaults.headers.common.Authorization = tokens.getTokenType() + ' ' + tokens.getAccessToken();
+
                     /* Calculate the time remaining before the access token expires. */
                     var accessTokenTimeRemaining = accessTokenExpirationDate - now;
 
