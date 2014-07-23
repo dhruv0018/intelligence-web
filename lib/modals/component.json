@@ -11,7 +11,8 @@
         "film-breakdown",
         "excel-upload",
         "basic-modals",
-        "athlete-info"
+        "athlete-info",
+        "admin-management"
     ],
     "scripts": [
         "index.js"
