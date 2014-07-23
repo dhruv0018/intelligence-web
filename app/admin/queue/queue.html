@@ -115,8 +115,8 @@
                 </div>
                 <div class="general-status-col">
                     <h4>Current</h4>
-                    <span class="general-status-info"><a href>##</a> to be indexed</span>
-                    <span class="general-status-info"><a href>##</a> to be QA'd</span>
+                    <span class="general-status-info"><a href data-ng-click="queue = queueFilters.ready.indexing">{{queueFilters.ready.indexing.length}}</a> to be indexed</span>
+                    <span class="general-status-info"><a href data-ng-click="queue = queueFilters.ready.qa">{{queueFilters.ready.qa.length}}</a> to be QA'd</span>
                 </div>
                 <div class="general-status-col">
                     <h4>Last 48 Hours</h4>

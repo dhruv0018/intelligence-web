@@ -142,6 +142,10 @@ Queue.controller('QueueController', [
                 '1': [],
                 'late': []
             },
+            ready: {
+                qa: [],
+                indexing: []
+            },
             setAside: [],
             assigned: [],
             unassigned: []
@@ -157,6 +161,12 @@ Queue.controller('QueueController', [
             var remainingTime = game.getRemainingTime($scope.teams[game.uploaderTeamId]);
             var remainingHours = moment.duration(remainingTime).asHours();
             var assignment = game.currentAssignment();
+
+            if (game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
+                $scope.queueFilters.ready.indexing.push(game);
+            } else if (game.status === GAME_STATUSES.READY_FOR_QA.id) {
+                $scope.queueFilters.ready.qa.push(game);
+            }
 
             if (typeof assignment === 'undefined' || (assignment && assignment.timeFinished && game.status !== GAME_STATUSES.INDEXED.id)) {
                 $scope.queueFilters.unassigned.push(game);
