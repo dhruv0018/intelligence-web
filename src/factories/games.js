@@ -229,7 +229,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                     throw new Error('Could not get stats for game');
                 };
 
-                console.log('i', id, self);
                 return self.resource.getStats({ id: id }, callback, error).$promise;
             },
 
