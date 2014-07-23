@@ -1,11 +1,11 @@
 <div class="play" data-ng-show="currentUser.is(INDEXER) || (!currentUser.is(INDEXER) && play.hasVisibleEvents)" data-ng-class="{ active: play.id == playManager.current.id }" data-ng-click="selectPlay(play)">
     <div class="playHeading" data-ng-click="openPlay()">
-        <h4 data-ng-if="currentUser.is(INDEXER)" data-ng-class="{'playCollapsed': !isOpen}">
+        <h4 data-ng-if="currentUser.is(INDEXER)" data-ng-class="{'playCollapsed': !expandAll && !isOpen}">
             <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
             <span class="dash"> — </span>
             <time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time>
         </h4>
-        <h4 data-ng-class="{'playCollapsed': !isOpen}">
+        <h4 data-ng-class="{'playCollapsed': !expandAll && !isOpen}">
             <span data-ng-if="!currentUser.is(INDEXER)" class="team">{{teams[play.possessionTeamId].name}}</span>
             <span data-ng-if="currentUser.is(INDEXER)" class="team">{{ team.name }}</span>
             <span data-ng-if="currentUser.is(INDEXER)" class="score">{{ play.teamIndexedScore }}</span>
@@ -18,7 +18,7 @@
             </div>
         </h4>
     </div>
-    <div class="playBody" data-ng-class="{'playHide': !isOpen}">
+    <div class="playBody" data-ng-class="{'playHide': !expandAll && !isOpen}">
         <krossover-events data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-videoplayer="videoplayer"></krossover-events>
 
         <hr>
