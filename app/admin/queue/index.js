@@ -189,7 +189,9 @@ Queue.controller('QueueController', [
             }
         });
 
-
+        $scope.setQueue = function(games) {
+            $scope.queue = games;
+        };
 
         $scope.search = function(filter) {
 
