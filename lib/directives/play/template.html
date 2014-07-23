@@ -1,4 +1,4 @@
-<div class="play" data-ng-show="currentUser.is(INDEXER) || (!currentUser.is(INDEXER) && play.hasVisibleEvents)" data-ng-class="{ active: play.id == currentPlayId }" data-ng-click="selectPlay(play)">
+<div class="play" data-ng-show="currentUser.is(INDEXER) || (!currentUser.is(INDEXER) && play.hasVisibleEvents)" data-ng-class="{ active: play.id == playManager.current.id }" data-ng-click="selectPlay(play)">
     <div class="playHeading" data-ng-click="openPlay()">
         <h4 data-ng-if="currentUser.is(INDEXER)" data-ng-class="{'playCollapsed': !isOpen}">
             <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
