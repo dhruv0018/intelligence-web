@@ -1,4 +1,4 @@
-<div class="play" data-ng-show="currentUser.is(INDEXER) || (!currentUser.is(INDEXER) && play.hasVisibleEvents)" data-ng-class="{ active: play.id == playManager.current.id }" data-ng-click="selectPlay(play)">
+<div class="play" data-ng-show="currentUser.is(INDEXER) || (!currentUser.is(INDEXER) && play.hasVisibleEvents)" data-ng-class="{ active: play.id == playManager.current.id }" data-ng-click="selectPlay()">
     <div class="playHeading" data-ng-click="openPlay()">
         <h4 data-ng-if="currentUser.is(INDEXER)" data-ng-class="{'playCollapsed': !expandAll && !isOpen}">
             <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
@@ -23,7 +23,7 @@
 
         <hr>
 
-        <button class="btn-delete-play" data-ng-if="currentUser.is(INDEXER)" data-ng-click="deletePlay(play)"><i class="icon icon-remove"></i> Delete Play</button>
+        <button class="btn-delete-play" data-ng-if="currentUser.is(INDEXER)" data-ng-click="deletePlay()"><i class="icon icon-remove"></i> Delete Play</button>
         <button class="play-link disabled" data-ng-if="!currentUser.is(INDEXER)"><i class="icon icon-plus"></i> Add to reel</button>
         <button class="play-link pull-right disabled" data-ng-if="!currentUser.is(INDEXER)"><i class="icon icon-tag"></i> Label Play</button>
     </div>
