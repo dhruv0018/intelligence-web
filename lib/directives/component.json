@@ -40,7 +40,8 @@
         "open-modal-text",
         "open-modal-confirm",
         "open-modal-alert",
-        "dynamic-table"
+        "dynamic-table",
+        "breakdown-text"
     ],
     "scripts": [
         "index.js"
