@@ -19,6 +19,7 @@
                             </div>
 
                         </div>
+                        <breakdown-text data-remaining-breakdowns="remainingBreakdowns" data-plan-name="activePlan.name"></breakdown-text>
                         <div class="row">
 
                             <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" class="select-boxes col-md-6">
@@ -28,7 +29,6 @@
                                     <div>
                                         <h1>Regular Game</h1>
                                         <h2>Includes: regular season, conference and non conference, and playoff games.</h2>
-                                        <b>3 breakdowns left this week</b>
                                         <p>Unlimited games for sharing</p>
                                     </div>
                                     <i class="icon icon-upload"></i>
@@ -45,7 +45,6 @@
                                     <div>
                                         <h1>Scouting/Scrimmage</h1>
                                         <h2>Includes: scouting, scrimmage, and practice games.</h2>
-                                        <b>1 breakdown left this week</b>
                                         <p>Unlimited games for sharing</p>
                                     </div>
 
@@ -125,7 +124,7 @@
 
                 <div class="bar-plan">
 
-                    <x-krossover-plan></x-krossover-plan>
+                    <x-krossover-plan data-active-plan="activePlan" data-active-package="activePackage"></x-krossover-plan>
 
                 </div>
 
