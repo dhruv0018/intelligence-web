@@ -2,10 +2,13 @@
 
 .login {
 
+    display: flex;
     display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
 
     .newLogin {
 
@@ -115,6 +118,8 @@ and (max-width: 479px) {
     .login {
 
         width: 100%;
+        flex-direction: column;
+        padding: 0;
 
         .newLogin {
 
