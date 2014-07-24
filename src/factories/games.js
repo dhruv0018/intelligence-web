@@ -212,16 +212,16 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return deferred.promise;
             },
 
-            getStats: function(id, success, error) {
+            generateStats: function(id, success, error) {
                 var self = this;
 
                 id = id || self.id;
 
-                var callback = function(game) {
+                var callback = function(stats) {
 
-                    game = self.extendGame(game);
+                    stats = self.extendGame(stats);
 
-                    return success ? success(game) : game;
+                    return success ? success(stats) : stats;
                 };
 
                 error = error || function() {
@@ -229,7 +229,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     throw new Error('Could not get stats for game');
                 };
 
-                return self.resource.getStats({ id: id }, callback, error).$promise;
+                return self.resource.generateStats({ id: id }, callback, error).$promise;
             },
 
             getStatus: function() {

@@ -51,7 +51,7 @@ GameAreaStatistics.service('GameAreaStatistics.Data.Dependencies', [
     function($stateParams, games) {
         var Data = {};
 
-        Data.stats = games.getStats($stateParams.id);
+        Data.stats = games.generateStats($stateParams.id);
 
         return Data;
     }
@@ -61,6 +61,7 @@ GameAreaStatistics.controller('GameAreaStatisticsController', [
     '$scope', '$state', '$stateParams', 'GameAreaStatistics.Data',
     function controller($scope, $state, $stateParams, data) {
 
+        console.log(data);
         $scope.gameLogTable = data.stats.gameLog;
         $scope.homeTeamStats = data.stats.homeTeamStats;
         $scope.awayTeamStats = data.stats.awayTeamStats;
