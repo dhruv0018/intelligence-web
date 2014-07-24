@@ -118,7 +118,14 @@
                         <td>{{ game.id }}</td>
                         <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
                         <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
-                        <td>{{ game.getStatus().name }}</td>
+                        <td>
+                            <span data-ng-if="game.getStatus().id != GAME_STATUSES.SET_ASIDE.id">{{ game.getStatus().name }}</span>
+                            <span data-ng-if="game.status === GAME_STATUSES.SET_ASIDE.id">
+                                <span data-ng-if="!game.canBeAssignedToQa() && !game.canBeAssignedToIndexer()">{{GAME_STATUSES.SET_ASIDE.name}}</span>
+                                <a data-ng-if="game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(data, game, true)">{{GAME_STATUSES.SET_ASIDE.name}} in QA</a>
+                                <a data-ng-if="game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(data, game, false)">{{GAME_STATUSES.SET_ASIDE.name}} in Indexing</a>
+                            </span>
+                        </td>
 
                         <td>
 
@@ -147,6 +154,10 @@
                         </td>
                         <td>
                             {{game.getRemainingTime(teams[game.uploaderTeamId]) | humanize: 'milliseconds':true}}
+                        </td>
+
+                        <td>
+                          <button data-open-modal="AdminManagement.Modal" data-modal-options="game" class="btn btn-default">Manage</button>
                         </td>
 
                     </tr>

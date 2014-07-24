@@ -17,15 +17,14 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$rootScope', '$scope', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data',
-    function controller(config, $rootScope, $scope, $stateParams, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar, data) {
+    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data',
+    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar, data) {
 
         var self = this;
 
         var gameId = Number($stateParams.id);
 
         /* Scope */
-
 
         $scope.data = data;
         $scope.tags = tags;
@@ -41,6 +40,27 @@ Indexing.controller('Indexing.Main.Controller', [
 
         $scope.game.teamIndexedScore = 0;
         $scope.game.opposingIndexedScore = 0;
+
+        /*IF DEADLINE HAS EXPIRED, OPEN MODAL THAT SENDS THEM BACK TO GAMES LIST*/
+        var remainingTimeInterval = setInterval(function() {timeLeft();}, 1000);
+        function timeLeft() {
+            var timeRemaining = $scope.game.assignmentTimeRemaining();
+            if (timeRemaining <= 0) {
+                clearInterval(remainingTimeInterval);
+                var modalInstance = basicModal.openForAlert({
+                    title: 'Alert',
+                    bodyText: 'The deadline to index this game has passed.'
+                });
+                modalInstance.result.finally(function() {window.location = 'indexer/games';});
+            }
+        }
+
+        /* Kick Indexer Off When Deadline Passes */
+        /*var deadline = $scope.game.assignmentTimeRemaining();
+
+        if ($scope.game.assignmentTimeRemaining() === 'None') {
+
+        }*/
 
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();

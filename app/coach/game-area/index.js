@@ -150,7 +150,6 @@ GameArea.config([
                                             });
 
                                             angular.forEach(data.gamePlayerLists[data.game.teamId], function(player) {
-
                                                 var playerFilter = {
                                                     id: playerFilterTemplate.id,
                                                     teamId: data.game.teamId,
