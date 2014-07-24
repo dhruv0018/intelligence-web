@@ -327,14 +327,11 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         $scope.$on(VG_EVENTS.ON_PLAYER_READY, function() {
 
-            if ($scope.VideoPlayer) {
-
-                videoplayer.then(function(vp) {
-                    vp.videoElement.one('canplay', function() {
-                        indexing.isReady = true;
-                    });
+            videoplayer.then(function(vp) {
+                vp.videoElement.one('canplay', function() {
+                    indexing.isReady = true;
                 });
-            }
+            });
         });
 
         /**
