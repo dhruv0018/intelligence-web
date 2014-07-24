@@ -60,13 +60,11 @@ GameArea.config([
                     '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
                     function($q, $stateParams, players, plays, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
                         return $q.all(data).then(function(data) {
-                            var gamesCollection = data.games.getCollection();
                             var teamsCollection = data.teams.getCollection();
                             var leaguesCollection = data.leagues.getCollection();
-                            var filtersetsCollection = data.filtersets.getCollection();
 
                             //Game related
-                            data.game = gamesCollection[$stateParams.id];
+                            data.game = data.games.get($stateParams.id);
                             data.gameStatus = data.game.status;
                             data.gamePlayerLists = {};
                             data.players = players;
@@ -99,7 +97,7 @@ GameArea.config([
                                 //Filtersets
                                 if (GAME_STATUS_IDS[data.game.status] === 'INDEXED') {
                                     var exclusion = [];
-                                    data.filterset = filtersetsCollection[data.league.filterSetId];
+                                    data.filterset = data.filtersets.get(data.league.filterSetId);
                                     if (data.filterset) {
                                         data.filtersetCategories = {};
                                         angular.forEach(data.filterset.categories, function(filterCategory) {
