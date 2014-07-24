@@ -27,9 +27,6 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 tagset.tags.forEach(function(tag) {
 
-                    tag.userScript = tag.userScript || null;
-                    tag.summaryPriority = tag.summaryPriority || 0;
-
                     tagset.indexedTags[tag.id] = tag;
 
                     if (angular.isArray(tag.tagVariables)) {
