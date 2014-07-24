@@ -47,10 +47,11 @@ GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
         $scope.teamId = data.game.teamId;
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
+        $scope.expandAll = false;
         $scope.filterCategory = data.filtersets.categories[0].id;
         $scope.activeFilters = [];
         $scope.filterMenu = {
-            isOpened: true
+            isOpened: false
         };
 
         $scope.contains = function(array, id, playerId) {
@@ -153,7 +154,6 @@ GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
 
 
         $scope.setFilter = function(filter) {
-
             var isPresent = $scope.contains($scope.activeFilters, filter.id, filter.playerId);
 
             if (!isPresent) {

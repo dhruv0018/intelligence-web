@@ -150,7 +150,6 @@ GameArea.config([
                                             });
 
                                             angular.forEach(data.gamePlayerLists[data.game.teamId], function(player) {
-
                                                 var playerFilter = {
                                                     id: playerFilterTemplate.id,
                                                     teamId: data.game.teamId,
@@ -199,8 +198,8 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', '$localStorage', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS',
-    function controller($scope, $state, $stateParams, $localStorage, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS) {
+    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS',
+    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS) {
         $scope.hasShotChart = false;
         $scope.hasStatistics = true;
         $scope.hasFormations = false;

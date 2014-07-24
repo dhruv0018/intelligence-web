@@ -455,23 +455,29 @@ IntelligenceWebClient.factory('GamesFactory', [
             setAsideFromIndexing: function() {
 
                 var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return false;
 
                 /* If the game was not set aside, return false. */
                 if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
 
                 /* Return true if the game was assigned to an indexer. */
-                return self.isAssignedToIndexer(self.currentAssignment()) ? true : false;
+                return (self.isAssignedToIndexer(assignment) && !assignment.timeFinished) ? true : false;
             },
 
             setAsideFromQa: function() {
 
                 var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return false;
 
                 /* If the game was not set aside, return false. */
                 if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
 
                 /* Return true if the game was assigned to QA. */
-                return self.isAssignedToQa(self.currentAssignment()) ? true : false;
+                return (self.isAssignedToQa(assignment) || (!self.setAsideFromIndexing())) ? true : false;
             },
 
             deadlinePassed: function() {
@@ -571,7 +577,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
             },
-
             getRemainingTime: function(uploaderTeam) {
                 var self = this;
 
@@ -579,7 +584,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     return 0;
                 }
 
-                var timePassed = new Date() -  moment.utc(self.submittedAt).toDate();
+                var timePassed = new Date() - moment.utc(self.submittedAt).toDate();
                 var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
 
                 if (turnoverTime > 0) {
@@ -589,6 +594,10 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 //no plans or packages and therefore no breakdowns available
                 return 0;
+            },
+            setAside: function() {
+                var self = this;
+                self.status = GAME_STATUSES.SET_ASIDE.id;
             }
         };
 

@@ -20,13 +20,19 @@ require('./app');
 require('./flow');
 require('./routes');
 require('./errors');
-require('./transforms');
 
+require('./http/interceptors/error');
+require('./http/interceptors/auth');
+require('./http/interceptors/broadcast');
+require('./http/transforms/date');
+
+require('./http/interceptors/queue');
 require('./services/authentication');
 require('./services/authorization');
 require('./services/tokens');
 require('./services/session');
 require('./services/account');
+require('./services/queue');
 require('./services/alerts');
 require('./services/scripts');
 require('./services/indexing');
