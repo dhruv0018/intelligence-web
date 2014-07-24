@@ -36,6 +36,15 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                         tag.tagVariables.forEach(function(variable, index) {
 
                             indexedVariables[++index] = variable;
+
+                            var indexedFormations = {};
+
+                            variable.formations.forEach(function(formation) {
+
+                                indexedFormations[formation.id] = formation;
+                            });
+
+                            variable.formations = indexedFormations;
                         });
 
                         tag.tagVariables = indexedVariables;
