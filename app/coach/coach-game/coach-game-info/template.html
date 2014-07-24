@@ -9,7 +9,7 @@
                 <header class="box-header col-md-12">
 
                     <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
-                    <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="tabs['scouting-team'].disabled">Next</x-button-continue>
+                    <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid||tabs['scouting-team'].disabled">Next</x-button-continue>
 
                 </header>
 
@@ -138,7 +138,7 @@
                                                     <input data-ng-if="data.game.id" class="form-control" name="opponent" placeholder="Opponent" data-ng-model="teams[data.game.opposingTeamId].name" >
 
                                                     <!--Opposing Team does not exist yet-->
-                                                    <input data-ng-if="!data.game.id" class="form-control" name="opponent" placeholder="Opponent" data-ng-model="data.opposingTeam.name" >
+                                                    <input data-ng-if="!data.game.id" class="form-control" name="opponent" placeholder="Opponent" data-ng-model="data.opposingTeam.name" required>
 
                                                 </td>
 
@@ -197,7 +197,7 @@
             </div>
 
             <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
-            <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="tabs['scouting-team'].disabled">Next</x-button-continue>
+            <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid||tabs['scouting-team'].disabled">Next</x-button-continue>
 
         </div>
 
