@@ -25,7 +25,7 @@
 
                                 <div class="select-boxes col-md-12">
 
-                                    <button type="button" class="btn-radio" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}" required>
+                                    <button type="button" class="btn-radio" data-ng-disabled="data.remainingBreakdowns.planGamesRemaining == 0 && data.remainingBreakdowns.packageGamesRemaining == 0" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}" required>
 
                                         <i class="icon icon-bar-chart-o"></i>
                                         <div>
@@ -98,10 +98,10 @@
                                                     </p>
 
                                                     <div class="breakdowns">
-                                                        <div class="remaining-breakdowns">N</div> Breakdown left this week
+                                                        <div class="remaining-breakdowns">{{data.remainingBreakdowns.planGamesRemaining||0}}</div> Breakdowns left this week. {{data.remainingBreakdowns.packageGamesRemaining||0}} extra breakdowns. 
                                                     </div>
 
-                                                    <button data-ng-disabled="statusBuffer > GAME_STATUSES['READY_FOR_INDEXING'].id" class="switch-choice" data-ng-click="switchChoice()">
+                                                    <button data-ng-disabled="statusBuffer > GAME_STATUSES['READY_FOR_INDEXING'].id || (data.remainingBreakdowns.planGamesRemaining == 0 && data.remainingBreakdowns.packageGamesRemaining == 0)" class="switch-choice" data-ng-click="switchChoice()">
                                                         <i class="icon icon-arrow-left"></i>
                                                         <span data-ng-show="statusBuffer === GAME_STATUSES['READY_FOR_INDEXING'].id">Change to sharing only</span>
                                                         <span data-ng-show="statusBuffer === GAME_STATUSES['NOT_INDEXED'].id">Break this game down</span>
@@ -141,7 +141,7 @@
         </div>
 
         <x-button-continue ng-if="data.game.status === null" data-ng-disabled="statusBuffer < 0 || formInstructions.$invalid">Save and Submit</x-button-continue>
-        <x-button-continue ng-if="data.game.status !== null">Save and Submit</x-button-continue>
+        <x-button-continue ng-if="data.game.status !== null" data-ng-disabled="statusBuffer < 0 || formInstructions.$invalid">Save and Submit</x-button-continue>
 
     </div>
 

@@ -55,7 +55,9 @@ AddFilm.config([
                     return $q.all(data).then(function(data) {
                         var leaguesCollection = data.leagues.getCollection();
                         var teamsCollection = data.teams.getCollection();
-                        data.league = leaguesCollection[teamsCollection[session.currentUser.currentRole.teamId].leagueId];
+                        var team = teamsCollection[session.currentUser.currentRole.teamId];
+                        data.league = leaguesCollection[team.leagueId];
+                        data.team = team;
                         return data;
                     });
                 }]
