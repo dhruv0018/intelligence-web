@@ -219,8 +219,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var callback = function(stats) {
 
-                    stats = self.extendGame(stats);
-
                     return success ? success(stats) : stats;
                 };
 
