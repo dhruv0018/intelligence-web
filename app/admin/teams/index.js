@@ -251,8 +251,13 @@ Teams.controller('TeamPlansController', [
             openPackageModal(index);
         };
 
-        $scope.removeActivePackage = function() {
-            $scope.team.teamPackages.splice($scope.activePackageId, 1);
+        $scope.removeActivePlan = function(activePlanId) {
+            $scope.team.teamPlans.splice(activePlanId, 1);
+            $scope.save($scope.team);
+        };
+
+        $scope.removeActivePackage = function(activePackageId) {
+            $scope.team.teamPackages.splice(activePackageId, 1);
             $scope.save($scope.team);
         };
 
