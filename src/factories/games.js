@@ -601,7 +601,7 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
             isDelivered: function() {
                 var self = this;
-                return (self.status === GAME_STATUSES.INDEXED.id || self.status === GAME_STATUSES.FINALIZED.id) ? true : false;
+                return self.status === GAME_STATUSES.INDEXED.id || self.status === GAME_STATUSES.FINALIZED.id;
             }
         };
 
