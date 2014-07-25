@@ -737,8 +737,8 @@ describe('GamesFactory', function() {
                     GAME_STATUSES.INDEXED.id,
                     GAME_STATUSES.FINALIZED.id
                 ].forEach(function(status) {
-                        game.status = status;
-                        expect(game.isDelivered()).to.be.true;
+                    game.status = status;
+                    expect(game.isDelivered()).to.be.true;
                 });
             }]));
     });
