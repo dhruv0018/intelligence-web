@@ -13,6 +13,14 @@
     </header>
 
     <div class="modal-body">
+
+        <div data-ng-if="assignment && assignment.id">
+            <h3>Current Indexer: {{currentIndexer.firstName}} {{currentIndexer.lastName}}</h3>
+            <add-time data-ng-model="assignment.deadline" min="2" max="999"></add-time>
+            <button class="btn btn-primary" data-ng-click="game.save()">Extend</button>
+            {{game.indexerAssignments}}
+        </div>
+
         <a data-open-modal="DeleteGame.Modal" data-modal-options="game">Delete Game</a>
         <button data-ng-hide="game.status == GAME_STATUS.NOT_INDEXED.id || (!game.isAssignedToIndexer() && !game.isAssignedToQa()) || game.status == GAME_STATUSES.SET_ASIDE.id || game.status == GAME_STATUSES.INDEXED.id"
                 data-ng-click="save()" class="btn btn-primary">Set Aside</button>
