@@ -62,12 +62,10 @@ var GAME_STATUSES = {
         name: 'Game Status: Delivered'
     },
 
-    /* TODO: This needs to be worked out still,
-     * added as a placeholder for no, to not forget. */
-    DELETED: {
+    FINALIZED: {
         id: 7,
-        type: 'danger',
-        name: 'Deleted'
+        type: 'success',
+        name: 'Game Status: Delivered'
     }
 };
 
