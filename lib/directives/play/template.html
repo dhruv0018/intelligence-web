@@ -15,7 +15,7 @@
         <h4 data-ng-if="!isIndexer" data-ng-class="{'playCollapsed': !isOpen}">
             <span class="team">{{teams[play.possessionTeamId].name}}</span>
             <span class="playplay" data-ng-click="$event.stopPropagation();"><i class="icon icon-play-circle"></i></span>
-            <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'priority'">
+            <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'priority' track by $index">
                 <krossover-item data-data="data" data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
             </div>
         </h4>
