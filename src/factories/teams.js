@@ -163,7 +163,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not get remaining breakdowns for team');
                 };
 
-                return self.resource.getRemainingBreakdowns({ id: id }, callback, error).$promise;
+                return {planGamesRemaining: 0, packageGamesRemaining: 0};//self.resource.getRemainingBreakdowns({ id: id }, callback, error).$promise;
             },
             getMaxTurnaroundTime: function() {
                 var self = this;
