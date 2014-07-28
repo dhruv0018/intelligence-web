@@ -14,11 +14,10 @@
 
     <div class="modal-body">
 
-        <div data-ng-if="assignment && assignment.id">
+        <div class="indexer-info" data-ng-if="assignment && assignment.id">
             <h3>Current Indexer: {{currentIndexer.firstName}} {{currentIndexer.lastName}}</h3>
-            <add-time data-original-date="assignment.deadline" min="2" max="999" data-modified-date="management.extendedDeadline"></add-time>
-            <button class="btn btn-primary" data-ng-click="extendIndexerDeadline()">Extend</button>
-            {{game.indexerAssignments}}
+            <add-time data-original-date="assignment.deadline" min="1" max="999" data-modified-date="management.extendedDeadline"></add-time>
+            <button class="btn btn-primary extend-deadline" data-ng-click="extendIndexerDeadline()">Extend</button>
         </div>
 
         <a data-open-modal="DeleteGame.Modal" data-modal-options="game">Delete Game</a>
