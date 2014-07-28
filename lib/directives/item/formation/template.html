@@ -4,7 +4,7 @@
         class="dropdown"
         data-ng-if="event.variableValues[item.id].value !== null"
         data-ng-click="event.variableValues[item.id].value = null"
-    >{{ formations[event.variableValues[item.id].value].name }}</button>
+    >{{ item.formations[event.variableValues[item.id].value].name }}</button>
 
     <select
         class="dropdown"
