@@ -191,19 +191,23 @@ Queue.controller('QueueController', [
                 }
             }
 
-            if (remainingTime < 0 && game.status !== GAME_STATUSES.INDEXED.id) {
-                $scope.queueFilters.remaining.late.push(game);
-            } else if (remainingHours >= 24 && remainingHours <= 48) {
-                $scope.queueFilters.remaining['48'].push(game);
-            } else if (remainingHours < 24 && remainingHours >= 10) {
-                $scope.queueFilters.remaining['24'].push(game);
-            } else if (remainingHours < 10 && remainingHours >= 5) {
-                $scope.queueFilters.remaining['10'].push(game);
-            } else if (remainingHours < 5 && remainingHours >= 1) {
-                $scope.queueFilters.remaining['5'].push(game);
-            } else if (remainingHours < 1 && remainingHours !== 0) {
-                $scope.queueFilters.remaining['1'].push(game);
+            //TODO to change to isDelivered function when it is through QA
+            if (game.status !== GAME_STATUSES.INDEXED.id) {
+                if (remainingTime < 0) {
+                    $scope.queueFilters.remaining.late.push(game);
+                } else if (remainingHours >= 24 && remainingHours <= 48) {
+                    $scope.queueFilters.remaining['48'].push(game);
+                } else if (remainingHours < 24 && remainingHours >= 10) {
+                    $scope.queueFilters.remaining['24'].push(game);
+                } else if (remainingHours < 10 && remainingHours >= 5) {
+                    $scope.queueFilters.remaining['10'].push(game);
+                } else if (remainingHours < 5 && remainingHours >= 1) {
+                    $scope.queueFilters.remaining['5'].push(game);
+                } else if (remainingHours < 1 && remainingHours !== 0) {
+                    $scope.queueFilters.remaining['1'].push(game);
+                }
             }
+
 
             if (remainingTime > 0 && remainingHours > 0 && remainingHours <= 48) {
                 $scope.queueFilters.last48.uploaded.push(game);
