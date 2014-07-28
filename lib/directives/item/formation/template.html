@@ -2,7 +2,7 @@
 
     <button
         class="dropdown"
-        data-ng-if="event.variableValues[item.id].value"
+        data-ng-if="event.variableValues[item.id].value !== null"
         data-ng-click="event.variableValues[item.id].value = null"
     >{{ formations[event.variableValues[item.id].value].name }}</button>
 
@@ -10,7 +10,7 @@
         class="dropdown"
         tabindex="{{ item.index }}"
         data-ng-required="item.isRequired"
-        data-ng-if="!event.variableValues[item.id].value"
+        data-ng-if="event.variableValues[item.id].value === null"
         data-ng-model="event.variableValues[item.id].value"
         data-ng-change="event.activeEventVariableIndex = item.index + 1"
         data-ng-focus="event.activeEventVariableIndex = item.index"
