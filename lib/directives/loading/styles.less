@@ -44,19 +44,14 @@
     /* Spinning gradients */
      .outer, .inner {
         animation-duration: 2.5s;    /* speed */
-        -webkit-animation-duration: 2.5s;    /* speed */
         animation-iteration-count: infinite;
-        -webkit-animation-iteration-count: infinite;
         animation-timing-function: linear;
-        -webkit-animation-timing-function: linear;
     }
     .outer {
         animation-name: rotate-outer;
-        -webkit-animation-name: rotate-outer;
     }
     .inner {
         animation-name: rotate-inner;
-        -webkit-animation-name: rotate-inner;
     }
     /* Halfs */
      .outer:before, .inner:before, .outer:after, .inner:after {
@@ -94,41 +89,17 @@
      @keyframes rotate-outer {
         0% {
             transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -webkit-transform: rotate(0deg);
         }
         100% {
             transform: rotate(1080deg);
-            -moz-transform: rotate(1080deg);
-            -webkit-transform: rotate(1080deg);
-        }
-    }
-    @-webkit-keyframes rotate-outer {
-        0% {
-            -webkit-transform: rotate(0deg);
-        }
-        100% {
-            -webkit-transform: rotate(1080deg);
         }
     }
     @keyframes rotate-inner {
         0% {
             transform: rotate(720deg);
-            -moz-transform: rotate(720deg);
-            -webkit-transform: rotate(720deg);
         }
         100% {
             transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -webkit-transform: rotate(0deg);
-        }
-    }
-    @-webkit-keyframes rotate-inner {
-        0% {
-            -webkit-transform: rotate(720deg);
-        }
-        100% {
-            -webkit-transform: rotate(0deg);
         }
     }
 }
