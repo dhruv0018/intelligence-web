@@ -25,7 +25,7 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
 
         $scope.$watch(function() {
 
-            var lastPlay = $scope.indexing.plays.slice().pop();
+            var lastPlay = $scope.indexing.plays[$scope.indexing.plays.length - 1];
 
             if (!lastPlay) return 0;
 
@@ -38,7 +38,7 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
 
         $scope.$watch(function() {
 
-            var lastPlay = $scope.indexing.plays.slice().pop();
+            var lastPlay = $scope.indexing.plays[$scope.indexing.plays.length - 1];
 
             if (!lastPlay) return 0;
 
