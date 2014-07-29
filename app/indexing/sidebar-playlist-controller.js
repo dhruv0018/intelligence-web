@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
-    '$scope', 'IndexingService', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance',
-    function controller($scope, indexing, play, event, sidebar, data, VideoPlayer) {
+    '$scope', 'IndexingService', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data',
+    function controller($scope, indexing, play, event, sidebar, data) {
 
         $scope.game = data.game;
         $scope.play = play;

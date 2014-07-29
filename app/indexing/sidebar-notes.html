@@ -13,7 +13,7 @@
 		<select data-ng-model="selectedNoteText">
 			<option data-ng-repeat="noteText in noteValues" value="{{noteText}}">{{noteText}}</option>
 		</select>
-	    <textarea data-ng-show="selectedNoteText === noteValues[noteValues.length-1]" ng-model="otherNoteValue"></textarea>
+	    <textarea data-ng-show="selectedNoteText === noteValues[noteValues.length-1]" data-ng-model="otherNoteValue"></textarea>
 	    <button class="save-note" data-ng-click="saveIndexingNote()">Save Note</button>
     </div>
 
