@@ -82,7 +82,7 @@ Game.config([
                     var game = data.games.get(gameId);
 
                     alerts.add({
-                        type: game.status == GAME_STATUSES.INDEXED.id ? 'success' : 'warning',
+                        type: game.isDelivered() ? 'success' : 'warning',
                         message: game.getStatus()
                     });
                 }

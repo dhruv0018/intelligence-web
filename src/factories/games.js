@@ -598,6 +598,10 @@ IntelligenceWebClient.factory('GamesFactory', [
             setAside: function() {
                 var self = this;
                 self.status = GAME_STATUSES.SET_ASIDE.id;
+            },
+            isDelivered: function() {
+                var self = this;
+                return self.status === GAME_STATUSES.INDEXED.id || self.status === GAME_STATUSES.FINALIZED.id;
             }
         };
 
