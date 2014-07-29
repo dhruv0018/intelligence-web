@@ -46,7 +46,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
-                console.log(resources);
                 var playIds = [];
 
                 angular.forEach(resources.plays, function(play) {
