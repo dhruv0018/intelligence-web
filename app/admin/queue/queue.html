@@ -122,8 +122,8 @@
                             <span data-ng-if="game.getStatus().id != GAME_STATUSES.SET_ASIDE.id">{{ game.getStatus().name }}</span>
                             <span data-ng-if="game.status === GAME_STATUSES.SET_ASIDE.id">
                                 <span data-ng-if="!game.canBeAssignedToQa() && !game.canBeAssignedToIndexer()">{{GAME_STATUSES.SET_ASIDE.name}}</span>
-                                <a data-ng-if="game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(data, game, true)">{{GAME_STATUSES.SET_ASIDE.name}} in QA</a>
-                                <a data-ng-if="game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(data, game, false)">{{GAME_STATUSES.SET_ASIDE.name}} in Indexing</a>
+                                <a data-ng-if="game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(game, true)">{{GAME_STATUSES.SET_ASIDE.name}} in QA</a>
+                                <a data-ng-if="game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(game, false)">{{GAME_STATUSES.SET_ASIDE.name}} in Indexing</a>
                             </span>
                         </td>
 
@@ -143,11 +143,11 @@
 
                             <div data-ng-if="!game.hasQaAssignment() && !game.canBeAssignedToQa()">--</div>
 
-                            <button class="btn btn-default" data-ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(data, game, true)">Select QA</button>
+                            <button class="btn btn-default" data-ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(game, true)">Select QA</button>
 
                             <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1">
 
-                                <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(data, game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+                                <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
 
                             </ul>
 
