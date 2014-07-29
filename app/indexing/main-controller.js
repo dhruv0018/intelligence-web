@@ -38,6 +38,9 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.league = data.leagues.get($scope.team.leagueId);
         $scope.tagset = data.tagsets.get($scope.league.tagSetId);
 
+        $scope.game.teamIndexedScore = 0;
+        $scope.game.opposingIndexedScore = 0;
+
         /*IF DEADLINE HAS EXPIRED, OPEN MODAL THAT SENDS THEM BACK TO GAMES LIST*/
         var remainingTimeInterval = setInterval(function() {timeLeft();}, 1000);
         function timeLeft() {
