@@ -120,7 +120,9 @@ Game.controller('GameController', [
         $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
         $scope.league = data.leagues.get($scope.team.leagueId);
         $scope.sport = data.sports.get($scope.league.sportId);
-        $scope.school = data.schools.get($scope.team.schoolId);
+        if ($scope.team.schoolId) {
+            $scope.school = data.schools.get($scope.team.schoolId);
+        }
         $scope.users = data.users.getList();
 
         var headCoachRole = $scope.team.getHeadCoachRole();
