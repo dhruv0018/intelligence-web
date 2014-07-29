@@ -49,7 +49,7 @@ Team.controller('Coach.Team.controller', [
 
         alerts.add({
             type: 'warning',
-            message: 'All game film is automatically shared with Athletes on your active roster. Athletes will always have access to game film where they were on the roster'
+            message: 'All game film is automatically shared with Athletes on your active roster.'
         });
 
 

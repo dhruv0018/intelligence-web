@@ -8,13 +8,13 @@
 
     <div class="info">
 
-        <h2>{{ league.periodLabel }} {{ indexing.period }}</h2>
+        <h2>{{ league.periodLabel }} {{ game.currentPeriod }}</h2>
 
         <h1>
 
             <div class="color" style="background-color: {{ game.primaryJerseyColor }};"></div>
 
-            {{ team.name }} <b>{{ game.finalScore }}</b> vs <b>{{ game.opposingFinalScore }}</b> {{ opposingTeam.name }}
+            {{ team.name }} <b>{{ game.teamIndexedScore }}</b> vs <b>{{ game.opposingIndexedScore }}</b> {{ opposingTeam.name }}
 
             <div class="color" style="background-color: {{ game.opposingPrimaryJerseyColor }};"></div>
 

@@ -1,28 +1,33 @@
-<div class="play" data-ng-class="{ active: play.id == currentPlayId }" data-ng-click="selectPlay(play)">
+<div class="play" data-ng-hide="!isIndexer && !play.hasVisibleEvents" data-ng-class="{ active: play.id == playManager.current.id}" data-ng-click="selectPlay()">
     <div class="playHeading" data-ng-click="openPlay()">
-        <h4 data-ng-if="currentUser.is(INDEXER)" data-ng-class="{'playCollapsed': !isOpen}">
+        <h4 data-ng-if="isIndexer" data-ng-class="{'playCollapsed': !expandAll && !isOpen}">
             <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
             <span class="dash"> — </span>
             <time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time>
         </h4>
-        <h4 data-ng-class="{'playCollapsed': !isOpen}">
-            {{teams[play.possessionTeamId].name}}
-            <span data-ng-if="currentUser.is(INDEXER)" class="team">{{ team.name }}</span>
-            <span data-ng-if="currentUser.is(INDEXER)" class="score">{{ play.score[team.id] }}</span>
-            <span data-ng-if="currentUser.is(INDEXER)" class="vs">&nbsp;vs&nbsp;</span>
-            <span data-ng-if="currentUser.is(INDEXER)" class="score">{{ play.score[opposingTeam.id] }}</span>
-            <span data-ng-if="currentUser.is(INDEXER)" class="team">{{ opposingTeam.name }}</span>
-            <span class="playplay" data-ng-if="!currentUser.is(INDEXER)" data-ng-click="playPlay()"><i class="icon icon-play-circle"></i></span>
-            <p class="playSummary">{{ summaryScript }}</p>
+
+        <h4 data-ng-if="isIndexer" data-ng-class="{'playCollapsed': !expandAll && !isOpen}">
+            <span class="team">{{ team.name }}</span>
+            <span class="score">{{ play.teamIndexedScore }}</span>
+            <span class="vs">&nbsp;vs&nbsp;</span>
+            <span class="score">{{ play.opposingIndexedScore }}</span>
+            <span class="team">{{ opposingTeam.name }}</span>
+        </h4>
+        <h4 data-ng-if="!isIndexer" data-ng-class="{'playCollapsed': !isOpen}">
+            <span class="team">{{teams[play.possessionTeamId].name}}</span>
+            <span class="playplay" data-ng-click="playPlay()"><i class="icon icon-play-circle"></i></span>
+            <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'priority'">
+                <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
+            </div>
         </h4>
     </div>
-    <div class="playBody" data-ng-class="{'playHide': !isOpen}">
-        <krossover-events data-data="data" data-play="play" data-events="play.events" data-league="league"></krossover-events>
+    <div class="playBody" data-ng-class="{'playHide': !expandAll && !isOpen}">
+        <krossover-events data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers"></krossover-events>
 
         <hr>
 
-        <button class="btn-delete-play" data-ng-if="currentUser.is(INDEXER)" data-ng-click="deletePlay(play)"><i class="icon icon-remove"></i> Delete Play</button>
-        <button class="play-link disabled" data-ng-if="!currentUser.is(INDEXER)"><i class="icon icon-plus"></i> Add to reel</button>
-        <button class="play-link pull-right disabled" data-ng-if="!currentUser.is(INDEXER)"><i class="icon icon-tag"></i> Label Play</button>
+        <button class="btn-delete-play" data-ng-if="isIndexer" data-ng-click="deletePlay()"><i class="icon icon-remove"></i> Delete Play</button>
+        <button class="play-link disabled" data-ng-if="!isIndexer"><i class="icon icon-plus"></i> Add to reel</button>
+        <button class="play-link pull-right disabled" data-ng-if="!isIndexer"><i class="icon icon-tag"></i> Label Play</button>
     </div>
 </div>
