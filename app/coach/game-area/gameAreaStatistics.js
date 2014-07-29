@@ -61,10 +61,12 @@ GameAreaStatistics.controller('GameAreaStatisticsController', [
     '$scope', '$state', '$stateParams', 'GameAreaStatistics.Data',
     function controller($scope, $state, $stateParams, data) {
 
-        console.log(data);
         $scope.gameLogTable = data.stats.gameLog;
         $scope.homeTeamStats = data.stats.homeTeamStats;
         $scope.awayTeamStats = data.stats.awayTeamStats;
+
+        $scope.homeTeamName = data.stats.homeTeamStats.meta.teamName;
+        $scope.awayTeamName = data.stats.awayTeamStats.meta.teamName;
 
         $scope.statsSelector = 'ga-log';
     }
