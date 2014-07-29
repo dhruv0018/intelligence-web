@@ -501,7 +501,6 @@ IntelligenceWebClient.factory('GamesFactory', [
             canBeIndexed: function() {
 
                 var self = this;
-
                 if (self.deadlinePassed()) {
                     return false;
                 }
