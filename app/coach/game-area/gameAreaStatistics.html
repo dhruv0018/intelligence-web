@@ -1,9 +1,9 @@
 <div class="statsPage">
 	
 	<div class="stats-btn-group">
-		<button class="stats-btn" ng-click="statsSelector = 'ga-log'" ng-class="{'active-stats-btn':(statsSelector === 'ga-log')}"><i class="icon-file-text"></i> Game Log</button>
-		<button class="stats-btn" ng-click="statsSelector = 'ga-homestats'" ng-class="{'active-stats-btn':(statsSelector === 'ga-homestats')}"><i class="icon-bar-chart"></i> Home Stats</button>
-		<button class="stats-btn" ng-click="statsSelector = 'ga-awaystats'" ng-class="{'active-stats-btn':(statsSelector === 'ga-awaystats')}"><i class="icon-bar-chart"></i> Away Stats</button> 
+		<button class="stats-btn" ng-click="statsSelector = 'ga-log'" ng-class="{'active-stats-btn':(statsSelector === 'ga-log')}"><i class="icon icon-file-text"></i> Game Log</button>
+		<button class="stats-btn" ng-click="statsSelector = 'ga-homestats'" ng-class="{'active-stats-btn':(statsSelector === 'ga-homestats')}"><i class="icon icon-bar-chart"></i> Home Stats</button>
+		<button class="stats-btn" ng-click="statsSelector = 'ga-awaystats'" ng-class="{'active-stats-btn':(statsSelector === 'ga-awaystats')}"><i class="icon icon-bar-chart"></i> Away Stats</button> 
 	</div>
 
 	<dynamic-table data-source="gameLogTable" data-ng-show="statsSelector === 'ga-log'"></dynamic-table>
