@@ -600,6 +600,20 @@ IntelligenceWebClient.factory('GamesFactory', [
             setAside: function() {
                 var self = this;
                 self.status = GAME_STATUSES.SET_ASIDE.id;
+            },
+            unassign: function(revertToIndexingFromQA) {
+                var self = this;
+
+                if (revertToIndexingFromQA) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                    return;
+                }
+
+                if (self.status === GAME_STATUSES.INDEXING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                } else if (self.status === GAME_STATUSES.QAING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                }
             }
         };
 
