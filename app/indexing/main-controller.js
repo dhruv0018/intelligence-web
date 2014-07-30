@@ -210,8 +210,7 @@ Indexing.controller('Indexing.Main.Controller', [
             play.save();
             play.clear();
 
-            if (indexing.eventSelected) this.back();
-            else this.next();
+            this.next();
         };
 
         /**
