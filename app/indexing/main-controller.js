@@ -199,9 +199,7 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.savable = function() {
 
-            if (!this.nextable()) return false;
-
-            return indexing.eventSelected || event.isEndEvent();
+            return this.nextable() && event.isEndEvent();
         };
 
         /**
