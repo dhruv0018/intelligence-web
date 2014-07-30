@@ -69,6 +69,7 @@ Indexing.controller('Indexing.Main.Controller', [
         tags.reset($scope.tagset);
         event.reset($scope.tagset);
         play.reset(gameId);
+        play.clear();
 
         /* Bind keys. */
 
