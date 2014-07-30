@@ -189,7 +189,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments.push(assignment);
 
                     /* Update game status. */
-                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                    self.status = GAME_STATUSES.INDEXING.id;
                 }
 
                 else {
@@ -233,7 +233,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments.push(assignment);
 
                     /* Update game status. */
-                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                    self.status = GAME_STATUSES.QAING.id;
                 }
 
                 else {
