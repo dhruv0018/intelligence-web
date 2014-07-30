@@ -16,8 +16,8 @@ var Game = angular.module('indexer-game');
  * @type {Controller}
  */
 Game.controller('indexer-game.Controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'RawFilm.Modal', 'Indexer.Game.Data',
-    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, session, alerts, RawFilmModal, data) {
+    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'RawFilm.Modal', 'Indexer.Game.Data', 'BasicModals',
+    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, session, alerts, RawFilmModal, data, basicModal) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -58,5 +58,20 @@ Game.controller('indexer-game.Controller', [
             $scope.game.save();
             $state.go('indexer-games');
         };
+
+        $scope.setAside = function() {
+            var modalInstance = basicModal.openForConfirm({
+                title: 'Set aside this Game?',
+                bodyText: 'Are you sure you want to set aside this game?'
+            });
+
+            modalInstance.result.then(function() {
+                $scope.game.setAside();
+                $scope.game.save().then(function() {
+                    $state.go('indexer-games');
+                });
+            });
+        };
+
     }
 ]);

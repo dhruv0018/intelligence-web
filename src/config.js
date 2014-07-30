@@ -3,27 +3,30 @@ var package = require('../package.json');
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var pkg = require('../package.json');
-var dev = require('../config/dev.json');
-var qa = require('../config/qa.json');
-var prod = require('../config/prod.json');
-
 var Config = angular.module('config', []);
 
 Config.constant('package', package);
 
-if (process.env.NODE_ENV === 'development') {
+var config;
 
-    Config.constant('config', dev);
+var environment = process.env.NODE_ENV;
+
+if (environment === 'development') {
+
+    config = require('../config/dev.json');
 }
 
-if (process.env.NODE_ENV === 'qa') {
+else if (environment === 'qa') {
 
-    Config.constant('config', qa);
+    config = require('../config/qa.json');
 }
 
-if (process.env.NODE_ENV === 'production') {
+else if (environment === 'production') {
 
-    Config.constant('config', prod);
+    config = require('../config/prod.json');
 }
+
+config.environment = environment;
+
+Config.constant('config', config);
 
