@@ -72,6 +72,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play = play || self;
 
+                if (!play.events.length) throw new Error('No events in play');
+
                 play.startTime = play.events
 
                 .map(function(event) {
