@@ -16,7 +16,6 @@ IntelligenceWebClient.service('PlayManager', [
 
         var model = {
 
-            score: {},
             events: []
         };
 
