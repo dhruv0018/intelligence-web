@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    'AlertsService', 'PlaysFactory', 'IndexingService',
-    function service(alerts, plays, indexing) {
+    'AlertsService', 'TagsManager', 'PlaysFactory', 'IndexingService',
+    function service(alerts, tags, plays, indexing) {
 
         var model = {
 
@@ -71,6 +71,7 @@ IntelligenceWebClient.service('PlayManager', [
                 if (angular.equals(play, self.current)) {
 
                     self.clear();
+                    tags.reset();
                 }
             };
 
