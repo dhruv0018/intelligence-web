@@ -1,5 +1,13 @@
 @import (reference) "main.less";
 
+breakdown-text {
+    font-size: 25px;
+    display: block;
+    margin: 20px;
+    background: #f9f9f9;
+    padding: 10px;
+}
+
 .upload-start {
 
     .container;
@@ -43,12 +51,13 @@
         .select-boxes {
 
             padding: 0;
-            border-left: 1px solid @gray-lighter;
+            border: 1px solid @gray-lighter;
             border-bottom: 1px solid @gray-lighter;
+            height: 245px;
 
             &:last-child {
 
-                border-right: 1px solid @gray-lighter;
+                border-left: 0;
             }
 
             &:hover {
