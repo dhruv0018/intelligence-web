@@ -630,19 +630,16 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 var index = self.indexerAssignments.length - 1;
-                var found = false;
 
                 //iterate backwards through the assignments looking for the first indexer assignment
                 for (index; index >= 0; index--) {
                     if (!self.indexerAssignments[index].isQa) {
-                        found = true;
                         return self.indexerAssignments[index];
                     }
                 }
 
-                if (!found) {
-                    throw new Error('An indexer assignment could not be located');
-                }
+                throw new Error('An indexer assignment could not be located');
+
             },
             isDelivered: function() {
                 var self = this;
