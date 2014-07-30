@@ -1,6 +1,6 @@
 @import (reference) "main.less";
 
-@video-controls-bg: rgb(225, 225, 225);
+@video-controls-bg: rgb(240,240,240);
 @video-controls-border: rgb(200, 200, 200);
 
 x-krossover-videoplayer {
@@ -230,6 +230,16 @@ data-vg-volumebar {
     vertical-align: middle;
     text-align: center;
     cursor: pointer;
+
+    &:active, &.active {
+        border: solid #737474;
+        border-width: 2px 0 0 2px;
+        border-right: solid 1px #fff;
+        border-bottom: solid 2px #fff;
+        color: rgb(89,159,253);
+        background-color: #f9f9f9;
+    }
+
 }
 
 x-krossover-fast-backward-button {
