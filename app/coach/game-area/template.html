@@ -12,18 +12,18 @@
                 <a data-ng-href="#"><i class="icon icon-share-square-o"></i> Share</a>-->
 
                 <select data-ng-model="dataType">
-                    <option data-ng-if="gameStatus === 'INDEXED'" value="film-breakdown"> Film Breakdown </option>
+                    <option data-ng-if="game.isDelivered()" value="film-breakdown"> Film Breakdown </option>
                     <option value="raw-film"> Raw Film </option>
-                    <option data-ng-if="hasFormations && gameStatus ==='INDEXED'" value="formation-report">
+                    <option data-ng-if="hasFormations && game.isDelivered()" value="formation-report">
                         Formation Report
                     </option>
-                    <option data-ng-if="hasDownAndDistance && gameStatus ==='INDEXED'" value="down-distance-report">
+                    <option data-ng-if="hasDownAndDistance && game.isDelivered()" value="down-distance-report">
                         Down, Distance, &amp; Hash Report
                     </option>
-                    <option data-ng-if="hasShotChart && gameStatus ==='INDEXED'" value="shot-chart">
+                    <option data-ng-if="hasShotChart && game.isDelivered()" value="shot-chart">
                         Shot Chart
                     </option>
-                    <option data-ng-if="hasStatistics && gameStatus ==='INDEXED'" value="statistics">
+                    <option data-ng-if="hasStatistics && game.isDelivered()" value="statistics">
                         Game Statistics
                     </option>
                     <option value="game-info">
