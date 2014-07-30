@@ -598,18 +598,18 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
                 self.status = GAME_STATUSES.SET_ASIDE.id;
             },
-            unassign: function(revertToIndexingFromQA) {
+            unassign: function() {
                 var self = this;
 
-                if (revertToIndexingFromQA) {
-                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                if (self.status === GAME_STATUSES.READY_FOR_INDEXING.id || self.status === GAME_STATUSES.READY_FOR_QA.id)
                     return;
-                }
 
                 if (self.status === GAME_STATUSES.INDEXING.id) {
                     self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
                 } else if (self.status === GAME_STATUSES.QAING.id) {
                     self.status = GAME_STATUSES.READY_FOR_QA.id;
+                } else {
+                    throw new Error('This game cannot be reassigned from the current status');
                 }
             },
             isDelivered: function() {
