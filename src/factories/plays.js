@@ -121,17 +121,14 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 } else {
 
-                    var events = play.events;
                     var newPlay = new PlaysResource(play);
-
-                    delete newPlay.events;
 
                     newPlay = self.unextend(newPlay);
 
                     return newPlay.$create().then(function(play) {
 
-                        play.events = events;
-                        return self.save(play);
+                        play = self.extend(play);
+                        return play;
                     });
                 }
             },
