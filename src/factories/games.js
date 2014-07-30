@@ -437,6 +437,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
+
             assignmentTimeRemaining: function(assignment) {
 
                 var remaining = 'None';
@@ -445,14 +446,10 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!assignment) return remaining;
 
-                var deadline = moment.utc(assignment.deadline);
+                var deadline = moment.utc(assignment.deadline).toDate();
+                var timeRemaining = deadline - new Date();
 
-                if (deadline.isAfter()) {
-
-                    remaining = deadline.fromNow(true);
-                }
-
-                return remaining;
+                return timeRemaining;
             },
 
             setAsideFromIndexing: function() {
@@ -614,6 +611,10 @@ IntelligenceWebClient.factory('GamesFactory', [
                 } else if (self.status === GAME_STATUSES.QAING.id) {
                     self.status = GAME_STATUSES.READY_FOR_QA.id;
                 }
+            },
+            isDelivered: function() {
+                var self = this;
+                return self.status === GAME_STATUSES.INDEXED.id || self.status === GAME_STATUSES.FINALIZED.id;
             }
         };
 

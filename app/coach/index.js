@@ -49,17 +49,20 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data.Dependencies', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory',
-    function($q, session, teams, games, players, users, leagues, tagsets, positions) {
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'PositionsetsFactory', 'Base.Data.Dependencies',
+    function($q, session, teams, games, players, users, positions, baseData) {
 
         var promises = {
             games: games.load({
                 uploaderTeamId: session.currentUser.currentRole.teamId
             }),
             teams: teams.load(),
-            leagues: leagues.load(),
             users: users.retrieve(),
-            positionSets: positions.load()
+            positionSets: positions.load(),
+            leagues: baseData.leagues,
+            sports: baseData.sports,
+            filtersets: baseData.filtersets,
+            tagsets: baseData.tagsets
         };
 
         promises.playersList = promises.teams.then(function(teams) {
