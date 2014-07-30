@@ -18,8 +18,8 @@
             <h3>Current Indexer: {{currentIndexer.firstName}} {{currentIndexer.lastName}}</h3>
             <add-time data-original-date="assignment.deadline" min="1" max="999" data-modified-date="management.extendedDeadline"></add-time>
             <button class="btn btn-primary extend-deadline" data-ng-click="extendIndexerDeadline()">Extend</button>
-            <a data-ng-if="game.canBeQAed()" data-ng-click="SelectIndexerModal.open(game, true)">Reassign to another QAer</a>
-            <a data-ng-if="game.canBeIndexed()" data-ng-click="SelectIndexerModal.open(game, false)">Reassign to another Indexer</a>
+            <a data-ng-if="game.canBeQAed()" data-ng-click="reassignQAer()">Reassign to another QAer</a>
+            <a data-ng-if="game.canBeIndexed()" data-ng-click="reassignIndexer()">Reassign to another Indexer</a>
 
         </div>
 
