@@ -39,7 +39,8 @@
         "open-modal",
         "open-modal-text",
         "open-modal-confirm",
-        "open-modal-alert"
+        "open-modal-alert",
+        "dynamic-table"
     ],
     "scripts": [
         "index.js"
