@@ -23,21 +23,12 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 angular.extend(play, self);
 
+                /* FIXME: Events should not have tag objects in them. */
                 if (play.events) {
 
-                    play.events = play.events.map(function(event) {
+                    play.events.forEach(function(event) {
 
-                        var indexedVariableValues = {};
-
-                        for (var key in event.variableValues) {
-
-                            var value = event.variableValues[key];
-                            indexedVariableValues[value.index] = value;
-                        }
-
-                        event.variableValues = indexedVariableValues;
-
-                        return event;
+                        delete event.tag;
                     });
                 }
 
@@ -46,7 +37,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
-                console.log(resources);
                 var playIds = [];
 
                 angular.forEach(resources.plays, function(play) {
@@ -114,17 +104,9 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                         event.playId = play.id;
 
+                        /* FIXME: event should not have a tag object on it. */
+                        //delete event.tag;
                         delete event.activeEventVariableIndex;
-
-                        var indexedVariableValues = {};
-
-                        for (var key in event.variableValues) {
-
-                            var value = event.variableValues[key];
-                            indexedVariableValues[value.id] = value;
-                        }
-
-                        event.variableValues = indexedVariableValues;
 
                         return event;
                     });

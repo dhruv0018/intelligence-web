@@ -17,16 +17,46 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             resource: TagsetsResource,
 
-            getIndexedTags: function() {
+            extend: function(tagset) {
 
-                var indexedTags = {};
+                var self = this;
 
-                this.tags.forEach(function(tag) {
+                angular.extend(tagset, self);
 
-                    indexedTags[tag.id] = tag;
+                tagset.indexedTags = {};
+
+                tagset.tags.forEach(function(tag) {
+
+                    tagset.indexedTags[tag.id] = tag;
+
+                    if (angular.isArray(tag.tagVariables)) {
+
+                        var indexedVariables = {};
+
+                        tag.tagVariables.forEach(function(variable, index) {
+
+                            indexedVariables[++index] = variable;
+
+                            var indexedFormations = {};
+
+                            variable.formations.forEach(function(formation) {
+
+                                indexedFormations[formation.id] = formation;
+                            });
+
+                            variable.formations = indexedFormations;
+                        });
+
+                        tag.tagVariables = indexedVariables;
+                    }
                 });
 
-                return indexedTags;
+                return tagset;
+            },
+
+            getIndexedTags: function() {
+
+                return this.indexedTags;
             },
 
             getNextTags: function(tagId) {

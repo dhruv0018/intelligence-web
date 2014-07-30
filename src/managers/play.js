@@ -102,7 +102,6 @@ IntelligenceWebClient.service('PlayManager', [
             plays.save(play).then(function(play) {
 
                 indexing.plays[playIndex] = play;
-                indexing.plays[playIndex].score = indexing.calculateScore(play.id);
             });
         };
     }

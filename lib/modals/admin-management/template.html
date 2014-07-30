@@ -1,0 +1,21 @@
+<div class="delete-film">
+
+    <header class="modal-header">
+
+        <h3 class="modal-title">
+            Admin Management Tool
+
+            <a class="pull-right" ng-click="$close()">
+                <i class="icon icon-remove"></i>
+            </a>
+        </h3>
+
+    </header>
+
+    <div class="modal-body">
+        <a data-open-modal="DeleteGame.Modal" data-modal-options="game">Delete Game</a>
+        <button data-ng-hide="game.status == GAME_STATUS.NOT_INDEXED.id || (!game.isAssignedToIndexer() && !game.isAssignedToQa()) || game.status == GAME_STATUSES.SET_ASIDE.id || game.isDelivered()"
+                data-ng-click="save()" class="btn btn-primary">Set Aside</button>
+    </div>
+
+</div>

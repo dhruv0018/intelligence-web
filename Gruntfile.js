@@ -108,6 +108,21 @@ module.exports = function(grunt) {
         },
 
 
+        /* Pre-minification */
+
+
+        ngAnnotate: {
+            options: {
+                singleQuotes: true,
+            },
+            prod: {
+                files: {
+                    'build/annotated.js': ['build/bundle.js']
+                }
+            }
+        },
+
+
         /* Minifiers */
 
 
@@ -144,7 +159,7 @@ module.exports = function(grunt) {
             options: require('./.uglifyrc'),
             prod: {
                 files: {
-                    'build/scripts.js': ['build/bundle.js']
+                    'build/scripts.js': ['build/annotated.js']
                 }
             }
         },
@@ -523,6 +538,7 @@ module.exports = function(grunt) {
         'env:qa',
         'componentbuild:prod',
         'browserify:prod',
+        'ngAnnotate',
         'uglify',
         'componentbuild:styles',
         'less',
@@ -544,6 +560,7 @@ module.exports = function(grunt) {
         'env:prod',
         'componentbuild:prod',
         'browserify:prod',
+        'ngAnnotate',
         'uglify',
         'componentbuild:styles',
         'less',
