@@ -321,8 +321,6 @@ Indexing.controller('Indexing.Main.Controller', [
             /* Remove the event from the play. */
             event.delete(selectedEvent);
 
-            play.clear();
-
             this.back();
         };
 
