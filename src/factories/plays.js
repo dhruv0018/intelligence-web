@@ -17,24 +17,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             resource: PlaysResource,
 
-            extend: function(play) {
-
-                var self = this;
-
-                angular.extend(play, self);
-
-                /* FIXME: Events should not have tag objects in them. */
-                if (play.events) {
-
-                    play.events.forEach(function(event) {
-
-                        delete event.tag;
-                    });
-                }
-
-                return play;
-            },
-
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
                 var playIds = [];
