@@ -609,7 +609,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 } else if (self.status === GAME_STATUSES.QAING.id) {
                     self.status = GAME_STATUSES.READY_FOR_QA.id;
                 } else {
-                    throw new Error('This game cannot be reassigned from the current status');
+                    throw new Error('This game cannot be unassigned from the current status');
                 }
             },
             isDelivered: function() {
