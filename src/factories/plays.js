@@ -100,17 +100,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     var updatePlay = new PlaysResource(play);
 
-                    updatePlay.events = play.events.map(function(event) {
-
-                        event.playId = play.id;
-
-                        /* FIXME: event should not have a tag object on it. */
-                        //delete event.tag;
-                        delete event.activeEventVariableIndex;
-
-                        return event;
-                    });
-
                     updatePlay = self.unextend(updatePlay);
 
                     return updatePlay.$update().then(function(play) {
