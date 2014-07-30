@@ -1,6 +1,7 @@
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+var moment = require('moment');
 
 /**
  * Indexer Game page module.
@@ -28,6 +29,9 @@ Game.controller('indexer-game.Controller', [
         var gameId = $stateParams.id;
 
         $scope.game = data.games.get(gameId);
+
+        $scope.currentAssignment = $scope.game.currentAssignment();
+
         $scope.team = data.teams.get($scope.game.teamId);
         $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
         var league = data.leagues.get($scope.team.leagueId);
@@ -40,5 +44,19 @@ Game.controller('indexer-game.Controller', [
 
             $scope.headCoach = data.users.get(headCoachRole.userId);
         }
+
+        $scope.revertAssignment = function() {
+            var previousAssignment = $scope.game.findLastIndexerAssignment();
+            $scope.game.unassign(true);
+
+            var remainingTime = $scope.game.getRemainingTime(data.teams.get($scope.game.uploaderTeamId));
+
+            //half of the remaining time
+            var newDeadline = moment.utc().add(remainingTime / 2, 'milliseconds');
+
+            $scope.game.assignToIndexer(previousAssignment.userId, newDeadline);
+            $scope.game.save();
+            $state.go('indexer-games');
+        };
     }
 ]);

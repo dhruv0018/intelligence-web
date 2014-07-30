@@ -614,6 +614,23 @@ IntelligenceWebClient.factory('GamesFactory', [
                 } else if (self.status === GAME_STATUSES.QAING.id) {
                     self.status = GAME_STATUSES.READY_FOR_QA.id;
                 }
+            },
+            findLastIndexerAssignment: function() {
+                var self = this;
+
+                if (!self.indexerAssignments) {
+                    throw new Error('no indexer assignments');
+                }
+
+                var index = self.indexerAssignments.length - 1;
+
+                //iterate backwards through the assignments looking for the first indexer assignment
+                for (index; index >= 0; index--) {
+                    if (!self.indexerAssignments[index].isQa) {
+                        return self.indexerAssignments[index];
+                    }
+                }
+
             }
         };
 
