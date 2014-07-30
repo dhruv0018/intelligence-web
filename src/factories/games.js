@@ -612,6 +612,16 @@ IntelligenceWebClient.factory('GamesFactory', [
                     throw new Error('This game cannot be unassigned from the current status');
                 }
             },
+            revert: function() {
+                var self = this;
+
+                if (GAME_STATUSES.QAING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                } else {
+                    throw new Error('You may not revert from the current game status');
+                }
+
+            },
             findLastIndexerAssignment: function() {
                 var self = this;
 
@@ -620,12 +630,18 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 var index = self.indexerAssignments.length - 1;
+                var found = false;
 
                 //iterate backwards through the assignments looking for the first indexer assignment
                 for (index; index >= 0; index--) {
                     if (!self.indexerAssignments[index].isQa) {
+                        found = true;
                         return self.indexerAssignments[index];
                     }
+                }
+
+                if (!found) {
+                    throw new Error('An indexer assignment could not be located');
                 }
             },
             isDelivered: function() {

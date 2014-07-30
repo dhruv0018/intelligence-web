@@ -47,7 +47,7 @@ Game.controller('indexer-game.Controller', [
 
         $scope.revertAssignment = function() {
             var previousAssignment = $scope.game.findLastIndexerAssignment();
-            $scope.game.unassign(true);
+            $scope.game.revert();
 
             var remainingTime = $scope.game.getRemainingTime(data.teams.get($scope.game.uploaderTeamId));
 
