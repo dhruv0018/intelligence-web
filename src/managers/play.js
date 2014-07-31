@@ -60,35 +60,28 @@ IntelligenceWebClient.service('PlayManager', [
 
             var self = this;
 
-            var removePlay = function(play) {
+            /* If the deleted play is the current play. */
+            if (angular.equals(play, self.current)) {
 
-                var playIndex = indexing.plays.indexOf(play);
+                self.clear();
+                tags.reset();
+            }
 
-                /* Remove play from plays list. */
+            var playIndex = indexing.plays.indexOf(play);
+
+            /* If the play exists in the play list. */
+            if (~playIndex) {
+
+                /* Remove play from play list. */
                 indexing.plays.splice(playIndex, 1);
+            }
 
-                /* If the deleted play is the current play. */
-                if (angular.equals(play, self.current)) {
+            /* If the play has been saved before. */
+            if (play.id) {
 
-                    self.clear();
-                    tags.reset();
-                }
-            };
-
-            var removePlayError = function() {
-
-                alerts.add({
-
-                    type: 'danger',
-                    message: 'Failed to delete play'
-                });
-            };
-
-            /* If the play has been saved before, also remove it remotely. */
-            if (play.id) plays.remove(play).then(removePlay(play), removePlayError);
-
-            /* If not, then just remove it locally. */
-            else removePlay(play);
+                /* Also remove it remotely. */
+                plays.remove(play);
+            }
         };
 
         /**
@@ -99,9 +92,15 @@ IntelligenceWebClient.service('PlayManager', [
             var play = this.current;
             var playIndex = indexing.plays.indexOf(play);
 
+            /* Save the play remotely. */
             plays.save(play).then(function(play) {
 
-                indexing.plays[playIndex] = play;
+                /* If the play exists in the play list. */
+                if (~playIndex) {
+
+                    /* Update the play in the play list. */
+                    indexing.plays[playIndex] = play;
+                }
             });
         };
     }
