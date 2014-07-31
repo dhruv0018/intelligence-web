@@ -1,0 +1,43 @@
+<div class="share-film">
+
+    <header class="modal-header">
+    	<h3 class="modal-title">Share Film
+        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i></h3>
+
+    </header>
+
+    <div class="modal-body">
+    	* fields are required.
+    	<form action="https://docs.google.com/a/krossover.com/forms/d/1Kk1zNUuWFFj-T8IjRfCcY2jHvVXEkGkjKJtEaEa21s4/formResponse" method="POST" id="ss-form" target="formSubmitted" data-ng-submit="shareSubmit()">
+    		<ol role="list" class="ss-question-list" style="padding-left: 0">
+				<div class="formOption">
+					<label for="entry_537095488">Your Email Address: *</label>
+					<input type="text" name="entry.537095488" id="entry_537095488" dir="auto" required="true">
+				</div>
+				<div class="formOption">
+					<label for="entry_936321851">Opponent&#39;s Name in the Game you're Sharing: *</label>
+					<input type="text" name="entry.936321851" id="entry_936321851" dir="auto" required="true">
+				</div>
+				<div class="formOption">
+					<label for="entry_2007224489">Date of Game: *</label>
+					<input type="date" name="entry.2007224489" dir="auto" id="entry_2007224489" required="true">
+				</div>
+				<div class="formOption">
+					<label for="entry_272861294">Email addresses to the people you want to share with: *</label>
+					<textarea name="entry.272861294" rows="8" cols="50" id="entry_272861294" dir="auto" aria-label="Email addresses to the people you want to share with:  " required="true"></textarea>
+				</div>
+				<div class="formOption">
+					<label for="entry_2043967952">Comments (optional):</label>
+					<textarea name="entry.2043967952" rows="8" cols="50" id="entry_2043967952" dir="auto"></textarea>
+				</div>
+				<input type="hidden" name="draftResponse" value="[,,&quot;4566472767183868374&quot;]">
+				<input type="hidden" name="pageHistory" value="0">
+				<input type="hidden" name="fbzx" value="4566472767183868374">
+
+				<input type="submit" class="btn btn-primary" name="submit" value="Submit" id="ss-submit">
+			</ol>
+		</form>
+		<iframe name="formSubmitted" class="formSubmitted" data-ng-load=""></iframe>
+    </div>
+
+</div>
