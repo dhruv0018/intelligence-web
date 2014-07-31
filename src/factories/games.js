@@ -626,9 +626,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (self.status === GAME_STATUSES.READY_FOR_INDEXING.id || self.status === GAME_STATUSES.READY_FOR_QA.id)
                     return;
 
-                if (self.status === GAME_STATUSES.INDEXING.id) {
+                if (self.setAsideFromIndexing() || self.status === GAME_STATUSES.INDEXING.id) {
                     self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
-                } else if (self.status === GAME_STATUSES.QAING.id) {
+                } else if (self.setAsideFromQa() || self.status === GAME_STATUSES.QAING.id) {
                     self.status = GAME_STATUSES.READY_FOR_QA.id;
                 } else {
                     throw new Error('This game cannot be unassigned from the current status');
