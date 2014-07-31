@@ -140,8 +140,8 @@
 
         </div>
 
-        <x-button-continue ng-if="data.game.status === null" data-ng-disabled="statusBuffer < 0 || formInstructions.$invalid">Save and Submit</x-button-continue>
-        <x-button-continue ng-if="data.game.status !== null">Save and Submit</x-button-continue>
+        <x-button-continue data-ng-if="!isSaved"  data-ng-disabled="statusBuffer < 0 || formInstructions.$invalid">Save and Submit</x-button-continue>
+        <x-button-continue data-ng-if="isSaved">Save and Submit</x-button-continue>
 
     </div>
 
