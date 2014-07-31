@@ -203,7 +203,7 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
-            game.status.should.equal(GAME_STATUSES.READY_FOR_INDEXING.id);
+            game.status.should.equal(GAME_STATUSES.INDEXING.id);
         }]));
 
         it('should NOT update assignments when the game status is "Set Aside", but not from indexing', inject([
@@ -251,7 +251,7 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
-            game.status.should.equal(GAME_STATUSES.READY_FOR_INDEXING.id);
+            game.status.should.equal(GAME_STATUSES.INDEXING.id);
 
             /* Change game status to "Set Aside". */
             game.status = GAME_STATUSES.SET_ASIDE.id;
@@ -292,7 +292,7 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
 
-            game.status.should.equal(GAME_STATUSES.READY_FOR_QA.id);
+            game.status.should.equal(GAME_STATUSES.QAING.id);
         }]));
 
         it('should NOT update assignments when the game status is "Set Aside", but not from QA', inject([
@@ -340,7 +340,7 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
-            game.status.should.equal(GAME_STATUSES.READY_FOR_QA.id);
+            game.status.should.equal(GAME_STATUSES.QAING.id);
 
             /* Change game status to "Set Aside". */
             game.status = GAME_STATUSES.SET_ASIDE.id;
