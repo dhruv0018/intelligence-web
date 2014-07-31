@@ -95,7 +95,7 @@ GameArea.config([
 
                             return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function(promisedData) {
                                 //Filtersets
-                                if (GAME_STATUS_IDS[data.game.status] === 'INDEXED') {
+                                if (data.game.isDelivered()) {
                                     var exclusion = [];
                                     data.filterset = data.filtersets.get(data.league.filterSetId);
                                     if (data.filterset) {
@@ -207,6 +207,7 @@ GameArea.controller('Coach.GameArea.controller', [
         if (data.league.sportId == SPORTS.FOOTBALL.id) {
             $scope.hasFormations = true;
             $scope.hasDownAndDistance = true;
+            $scope.hasStatistics = false;
         }
 
         //constants
@@ -216,7 +217,7 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.game = data.game;
         $scope.gameStatus = GAME_STATUS_IDS[$scope.game.status];
         $scope.sources = $scope.game.getVideoSources();
-        $scope.returnedDate = ($scope.gameStatus === 'INDEXED') ? new Date($scope.game.currentAssignment().timeFinished) : null;
+        $scope.returnedDate = ($scope.game.isDelivered()) ? new Date($scope.game.currentAssignment().timeFinished) : null;
 
         //Collections
         $scope.teams = data.teams.getCollection();
@@ -237,7 +238,7 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.filtersetCategories = data.filtersetCategories;
 
         //view selector
-        if ($scope.gameStatus === 'INDEXED') {
+        if ($scope.game.isDelivered()) {
             $scope.dataType = 'film-breakdown';
         } else {
             $scope.dataType = 'raw-film';

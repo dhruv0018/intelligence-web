@@ -13,7 +13,8 @@ var GAME_STATUS_IDS = {
     3: 'READY_FOR_QA',
     4: 'QAING',
     5: 'SET_ASIDE',
-    6: 'INDEXED'
+    6: 'INDEXED',
+    7: 'FINALIZED'
 };
 
 IntelligenceWebClient.constant('GAME_STATUS_IDS', GAME_STATUS_IDS);
@@ -62,12 +63,10 @@ var GAME_STATUSES = {
         name: 'Game Status: Delivered'
     },
 
-    /* TODO: This needs to be worked out still,
-     * added as a placeholder for no, to not forget. */
-    DELETED: {
+    FINALIZED: {
         id: 7,
-        type: 'danger',
-        name: 'Deleted'
+        type: 'success',
+        name: 'Game Status: Delivered'
     }
 };
 

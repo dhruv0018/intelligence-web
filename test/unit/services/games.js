@@ -203,7 +203,7 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
-            game.status.should.equal(GAME_STATUSES.READY_FOR_INDEXING.id);
+            game.status.should.equal(GAME_STATUSES.INDEXING.id);
         }]));
 
         it('should NOT update assignments when the game status is "Set Aside", but not from indexing', inject([
@@ -251,7 +251,7 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
-            game.status.should.equal(GAME_STATUSES.READY_FOR_INDEXING.id);
+            game.status.should.equal(GAME_STATUSES.INDEXING.id);
 
             /* Change game status to "Set Aside". */
             game.status = GAME_STATUSES.SET_ASIDE.id;
@@ -292,7 +292,7 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
 
-            game.status.should.equal(GAME_STATUSES.READY_FOR_QA.id);
+            game.status.should.equal(GAME_STATUSES.QAING.id);
         }]));
 
         it('should NOT update assignments when the game status is "Set Aside", but not from QA', inject([
@@ -340,7 +340,7 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
-            game.status.should.equal(GAME_STATUSES.READY_FOR_QA.id);
+            game.status.should.equal(GAME_STATUSES.QAING.id);
 
             /* Change game status to "Set Aside". */
             game.status = GAME_STATUSES.SET_ASIDE.id;
@@ -701,5 +701,47 @@ describe('GamesFactory', function() {
                     });
             }]));
     });
+
+    describe('isDelivered', function(){
+        var game;
+
+        beforeEach(inject([
+            'GAME_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, games) {
+
+                game = {};
+
+                game = games.extend(game);
+            }
+        ]));
+
+        it('should return false when the game is in the incorrect status', inject([
+            'GAME_STATUSES',
+            function(GAME_STATUSES) {
+                [
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id,
+                    GAME_STATUSES.READY_FOR_QA.id,
+                    GAME_STATUSES.QAING.id,
+                    GAME_STATUSES.SET_ASIDE.id
+                ].forEach(function(status) {
+                    game.status = status;
+                    expect(game.isDelivered()).to.be.false;
+                });
+            }]));
+
+        it('should return true when the game is in the correct status', inject([
+            'GAME_STATUSES',
+            function(GAME_STATUSES) {
+                [
+                    GAME_STATUSES.INDEXED.id,
+                    GAME_STATUSES.FINALIZED.id
+                ].forEach(function(status) {
+                    game.status = status;
+                    expect(game.isDelivered()).to.be.true;
+                });
+            }]));
+    });
+
 });
 

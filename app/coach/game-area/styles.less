@@ -172,16 +172,7 @@
       display: inline-block;
     }
 
-    .sidebar{
-      width:290px;
-      height: 100%;
-      max-height: 100%;
-      position: relative;
-      overflow-y: hidden;
-      overflow-x: hidden;
-      float:left;
-      padding: 0px;
-      -webkit-transform: translateZ(0);
+    .playlist {
 
       .expandrow {
         position: absolute;
@@ -305,6 +296,13 @@
 
     th, td {
       text-align: center;
+    }
+
+    th {
+      font-weight: 400;
+      border:thin solid black;
+      background-color: @brand-blue;
+      color: white;
     }
 
     .fixed-table {

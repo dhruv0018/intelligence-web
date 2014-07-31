@@ -1,4 +1,4 @@
-<div class="delete-film">
+<div class="admin-management">
 
     <header class="modal-header">
 
@@ -13,8 +13,21 @@
     </header>
 
     <div class="modal-body">
+
+        <div class="indexer-info" data-ng-if="assignment && assignment.id && !game.isDelivered()">
+            <h3>Current Indexer: {{currentIndexer.firstName}} {{currentIndexer.lastName}}</h3>
+            <a data-ng-if="game.canBeQAed()" data-ng-click="reassignQAer()">Reassign to another QAer</a>
+            <a data-ng-if="game.canBeIndexed()" data-ng-click="reassignIndexer()">Reassign to another Indexer</a>
+            
+            <div data-ng-if="assignment.timeStarted && game.status !== GAME_STATUSES.READY_FOR_INDEXING.id && game.status !== GAME_STATUSES.READY_FOR_QA.id">
+                <add-time data-original-date="assignment.deadline" min="1" max="999" data-modified-date="management.extendedDeadline"></add-time>
+                <button class="btn btn-primary extend-deadline" data-ng-click="extendIndexerDeadline()">Extend</button>
+            </div>
+
+        </div>
+
         <a data-open-modal="DeleteGame.Modal" data-modal-options="game">Delete Game</a>
-        <button data-ng-hide="game.status == GAME_STATUS.NOT_INDEXED.id || (!game.isAssignedToIndexer() && !game.isAssignedToQa()) || game.status == GAME_STATUSES.SET_ASIDE.id || game.status == GAME_STATUSES.INDEXED.id"
+        <button data-ng-hide="game.status == GAME_STATUSES.NOT_INDEXED.id || (!game.isAssignedToIndexer() && !game.isAssignedToQa()) || game.status == GAME_STATUSES.SET_ASIDE.id || game.isDelivered()"
                 data-ng-click="save()" class="btn btn-primary">Set Aside</button>
     </div>
 
