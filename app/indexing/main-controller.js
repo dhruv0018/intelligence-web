@@ -267,7 +267,6 @@ Indexing.controller('Indexing.Main.Controller', [
                 indexing.isIndexing = false;
                 indexing.eventSelected = false;
 
-                tags.reset();
                 event.reset();
             }
 
