@@ -131,17 +131,6 @@ Queue.controller('QueueController', [
         //initially show everything
         $scope.queue = $scope.games;
 
-
-        //TEMPORARY CHECK TO SEE IF QUEUE STATUS IS GOOD OR BAD
-        $scope.late = 0;
-        $scope.queueStatusGood = true;
-
-        if ($scope.late === 0) {
-            $scope.queueStatusGood = true;
-        } else {
-            $scope.queueStatusGood = false;
-        }
-
         $scope.queueFilters = {
             remaining: {
                 '48-24': [],

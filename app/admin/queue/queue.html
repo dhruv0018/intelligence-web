@@ -110,8 +110,8 @@
             <div class="general-status-row">
                 <div class="general-status-col">
                     <h4>Queue Status</h4>
-                    <span data-ng-if="queueStatusGood" class="status-good">Good</span>
-                    <span data-ng-if="!queueStatusGood" class="status-bad">Bad</span>
+                    <span data-ng-show="queueFilters.remaining.late.length === 0" class="status-good">Good</span>
+                    <span data-ng-show="queueFilters.remaining.late.length > 0" class="status-bad">Bad</span>
                 </div>
                 <div class="general-status-col">
                     <h4>Current</h4>
