@@ -17,33 +17,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             resource: PlaysResource,
 
-            extend: function(play) {
-
-                var self = this;
-
-                angular.extend(play, self);
-
-                if (play.events) {
-
-                    play.events = play.events.map(function(event) {
-
-                        var indexedVariableValues = {};
-
-                        for (var key in event.variableValues) {
-
-                            var value = event.variableValues[key];
-                            indexedVariableValues[value.index] = value;
-                        }
-
-                        event.variableValues = indexedVariableValues;
-
-                        return event;
-                    });
-                }
-
-                return play;
-            },
-
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
                 var playIds = [];
@@ -81,6 +54,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play = play || self;
 
+                if (!play.events.length) throw new Error('No events in play');
+
                 play.startTime = play.events
 
                 .map(function(event) {
@@ -109,25 +84,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     var updatePlay = new PlaysResource(play);
 
-                    updatePlay.events = play.events.map(function(event) {
-
-                        event.playId = play.id;
-
-                        delete event.activeEventVariableIndex;
-
-                        var indexedVariableValues = {};
-
-                        for (var key in event.variableValues) {
-
-                            var value = event.variableValues[key];
-                            indexedVariableValues[value.id] = value;
-                        }
-
-                        event.variableValues = indexedVariableValues;
-
-                        return event;
-                    });
-
                     updatePlay = self.unextend(updatePlay);
 
                     return updatePlay.$update().then(function(play) {
@@ -138,17 +94,14 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 } else {
 
-                    var events = play.events;
                     var newPlay = new PlaysResource(play);
-
-                    delete newPlay.events;
 
                     newPlay = self.unextend(newPlay);
 
                     return newPlay.$create().then(function(play) {
 
-                        play.events = events;
-                        return self.save(play);
+                        play = self.extend(play);
+                        return play;
                     });
                 }
             },

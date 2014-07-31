@@ -34,11 +34,13 @@
         "formation-chart",
         "arena",
         "roster-manager",
+        "loading",
         "feedback-modal",
         "open-modal",
         "open-modal-text",
         "open-modal-confirm",
         "open-modal-alert",
+        "dynamic-table",
         "breakdown-text"
     ],
     "scripts": [

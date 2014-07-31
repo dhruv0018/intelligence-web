@@ -151,11 +151,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 id = id || self.id;
 
-                var callback = function(team) {
+                var callback = function(remainingBreakdowns) {
 
-                    team = self.extendGame(team);
-
-                    return success ? success(team) : team;
+                    return success ? success(remainingBreakdowns) : remainingBreakdowns;
                 };
 
                 error = error || function() {

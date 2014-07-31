@@ -49,8 +49,8 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data.Dependencies', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory',
-    function($q, session, teams, games, players, users, leagues, tagsets, positions) {
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies',
+    function($q, session, teams, games, players, users, leagues, tagsets, positions, baseData) {
 
         var promises = {
             games: games.load({
@@ -58,9 +58,12 @@ Coach.service('Coach.Data.Dependencies', [
             }),
             teams: teams.load(),
             remainingBreakdowns: teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId),
-            leagues: leagues.load(),
             users: users.retrieve(),
-            positionSets: positions.load()
+            positionSets: positions.load(),
+            leagues: baseData.leagues,
+            sports: baseData.sports,
+            filtersets: baseData.filtersets,
+            tagsets: baseData.tagsets
         };
 
         promises.playersList = promises.teams.then(function(teams) {
