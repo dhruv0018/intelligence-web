@@ -34,7 +34,7 @@ IntelligenceWebClient.service('EventManager', [
 
             event = event || this.current;
 
-            return event && event.tag && this.tagset.isEndTag(event.tag.id);
+            return this.tagset.isEndTag(event.tagId);
         };
 
         /**
@@ -43,10 +43,10 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.hasVariables = function() {
 
-            return this.current &&
-                   this.current.tag &&
-                   this.current.tag.tagVariables &&
-                 !!this.current.tag.tagVariables.length;
+            var tagId = this.current.tagId;
+            var tag = this.tags[tagId];
+
+            return !!tag.tagVariables.length;
         };
 
         /**
@@ -56,11 +56,12 @@ IntelligenceWebClient.service('EventManager', [
         this.activeEventVariableValue = function() {
 
             var index = this.current.activeEventVariableIndex;
-            var tag = this.current.tag;
+            var tagId = this.current.tagId;
+            var tag = this.tags[tagId];
             var tagVariables = tag.tagVariables;
-            var tagId = tagVariables[index].id;
+            var tagVariable = tagVariables[index];
 
-            return this.current.variableValues[tagId].value;
+            return this.current.variableValues[tagVariable.id].value;
         };
 
         /**
@@ -69,11 +70,12 @@ IntelligenceWebClient.service('EventManager', [
         this.clearActiveEventVariableValue = function() {
 
             var index = this.current.activeEventVariableIndex;
-            var tag = this.current.tag;
+            var tagId = this.current.tagId;
+            var tag = this.tags[tagId];
             var tagVariables = tag.tagVariables;
-            var tagId = tagVariables[index].id;
+            var tagVariable = tagVariables[index];
 
-            this.current.variableValues[tagId].value = null;
+            this.current.variableValues[tagVariable.id].value = null;
         };
 
         /**
@@ -85,7 +87,8 @@ IntelligenceWebClient.service('EventManager', [
 
             var self = this;
 
-            var tag = this.current.tag;
+            var tagId = this.current.tagId;
+            var tag = this.tags[tagId];
             var tagVariables = tag.tagVariables;
             var variableValues = self.current.variableValues;
 
@@ -140,9 +143,8 @@ IntelligenceWebClient.service('EventManager', [
                 indexing.plays.push(play.current);
             }
 
-            /* Lookup and set the tag from the indexing tags. */
+            /* Set the tag from the indexing tags. */
             this.current.tagId = tagId;
-            this.current.tag = this.tags[tagId];
 
             this.current.time = time;
 
