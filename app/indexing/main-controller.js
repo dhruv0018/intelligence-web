@@ -242,7 +242,7 @@ Indexing.controller('Indexing.Main.Controller', [
             indexing.eventSelected = false;
 
             /* Get the tagId of the current event. */
-            var tagId = event.current.tag.id;
+            var tagId = event.current.tagId;
 
             /* Get the next set of tags based on the tag in the current event. */
             tags.current = $scope.tagset.getNextTags(tagId);
