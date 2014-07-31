@@ -89,13 +89,17 @@ IntelligenceWebClient.service('EventManager', [
             var tagVariables = tag.tagVariables;
             var variableValues = self.current.variableValues;
 
-            return Object.keys(variableValues).every(function(tagId) {
+            /* Ensure that every required variable has a value. */
+            return Object.keys(tagVariables).every(function(index) {
 
-                var variable = variableValues[tagId];
-                var tagVariable = tagVariables[tagId];
+                /* Lookup the tag variable by its script index. */
+                var tagVariable = tagVariables[index];
 
                 /* If the variable is not required, it doesn't need a value. */
                 if (!tagVariable.isRequired) return true;
+
+                /* Lookup the variable by tag variable ID. */
+                var variable = variableValues[tagVariable.id];
 
                 /* Check if the variable has a value. */
                 return !!variable.value;
