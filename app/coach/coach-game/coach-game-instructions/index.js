@@ -80,6 +80,8 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
             if ($scope.data.game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
                 $scope.data.game.submittedAt = new Date().toISOString();
+            } else {
+                $scope.data.game.submittedAt = null;
             }
 
             $scope.data.game.save().then(function(game) {
