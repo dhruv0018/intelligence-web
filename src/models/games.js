@@ -29,6 +29,11 @@ IntelligenceWebClient.factory('GamesResource', [
             generateDownAndDistanceReport: {
                 method: 'POST',
                 url: config.api.uri + base + '/:id/dnd-report'
+            },
+
+            generateStats: {
+                method: 'GET',
+                url: url + '/stats'
             }
         };
 
