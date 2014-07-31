@@ -208,11 +208,11 @@ IntelligenceWebClient.directive('krossoverMuteButton', [
             controller: function($scope) {
 
                 /* NOTE: Uses FontAwesome icon classes. */
-                $scope.muteIcon = 'icon-volume-off';
-                $scope.volumeLevel0Icon = 'icon-volume-down';
-                $scope.volumeLevel1Icon = 'icon-volume-down';
-                $scope.volumeLevel2Icon = 'icon-volume-down';
-                $scope.volumeLevel3Icon = 'icon-volume-up';
+                $scope.muteIcon = 'icon icon-volume-off';
+                $scope.volumeLevel0Icon = 'icon icon-volume-down';
+                $scope.volumeLevel1Icon = 'icon icon-volume-down';
+                $scope.volumeLevel2Icon = 'icon icon-volume-down';
+                $scope.volumeLevel3Icon = 'icon icon-volume-up';
                 $scope.currentIcon = $scope.volumeLevel3Icon;
             },
 
@@ -297,17 +297,20 @@ IntelligenceWebClient.directive('krossoverFullscreenButton', [
             restrict: TO += ELEMENTS + ATTRIBUTES,
             require: '^videogular',
             templateUrl: 'krossover-full-screen-button.html',
+            scope: true,
 
             link: function($scope, element, attribute, API) {
 
                 function onEnterFullScreen() {
 
                     $scope.fullscreen = true;
+                    $scope.$apply();
                 }
 
                 function onExitFullScreen() {
 
                     $scope.fullscreen = false;
+                    $scope.$apply();
                 }
 
                 function onClickFullScreen(event) {
