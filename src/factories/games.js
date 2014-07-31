@@ -52,6 +52,24 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return deferred.promise;
             },
 
+            generateStats: function(id, success, error) {
+                var self = this;
+
+                id = id || self.id;
+
+                var callback = function(stats) {
+
+                    return success ? success(stats) : stats;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get stats for game');
+                };
+
+                return self.resource.generateStats({ id: id }, callback, error).$promise;
+            },
+
             getStatus: function() {
 
                 var self = this;
@@ -189,7 +207,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments.push(assignment);
 
                     /* Update game status. */
-                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                    self.status = GAME_STATUSES.INDEXING.id;
                 }
 
                 else {
@@ -233,7 +251,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments.push(assignment);
 
                     /* Update game status. */
-                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                    self.status = GAME_STATUSES.QAING.id;
                 }
 
                 else {
