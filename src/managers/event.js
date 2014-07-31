@@ -162,8 +162,7 @@ IntelligenceWebClient.service('EventManager', [
             if (play.current.events.length > 0) {
 
                 /* Set the current event to the previous event. */
-                var previousEventIndex = eventIndex - 1;
-                var previousEvent = play.current.events[previousEventIndex];
+                var previousEvent = play.current.events[eventIndex - 1];
                 event.current = previousEvent;
                 play.save();
 
