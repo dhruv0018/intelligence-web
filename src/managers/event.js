@@ -92,15 +92,21 @@ IntelligenceWebClient.service('EventManager', [
 
             var self = this;
 
-            if (self.current && self.current.variableValues) {
+            var tag = this.current.tag;
+            var tagVariables = tag.tagVariables;
+            var variableValues = self.current.variableValues;
 
-                return Object.keys(self.current.variableValues).every(function(eventVariableIndex) {
+            return Object.keys(variableValues).every(function(tagId) {
 
-                    return self.eventVariableValue(eventVariableIndex) === 0 ? true : !!self.eventVariableValue(eventVariableIndex);
-                });
-            }
+                var variable = variableValues[tagId];
+                var tagVariable = tagVariables[tagId];
 
-            return false;
+                /* If the variable is not required, it doesn't need a value. */
+                if (!tagVariable.isRequired) return true;
+
+                /* Check if the variable has a value. */
+                return !!variable.value;
+            });
         };
 
         /**
