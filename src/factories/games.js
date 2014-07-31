@@ -134,6 +134,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
+                if (!self.isVideoTranscodeComplete()) return false;
+
                 /* If the game is in the "Indexing, not started" status, it can
                  * be assigned to an indexer. */
                 if (self.status == GAME_STATUSES.READY_FOR_INDEXING.id) return true;
@@ -159,6 +161,8 @@ IntelligenceWebClient.factory('GamesFactory', [
             canBeAssignedToQa: function() {
 
                 var self = this;
+
+                if (!self.isVideoTranscodeComplete()) return false;
 
                 /* If the game is in the "QA, not started" status, it can
                  * be assigned to QA. */
@@ -662,6 +666,10 @@ IntelligenceWebClient.factory('GamesFactory', [
             isDelivered: function() {
                 var self = this;
                 return self.status === GAME_STATUSES.INDEXED.id || self.status === GAME_STATUSES.FINALIZED.id;
+            },
+            isVideoTranscodeComplete: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.COMPLETE.id;
             }
         };
 
