@@ -64,10 +64,9 @@ UploadingFilm.controller('UploadingFilmController', [
 
         var deleteVideo = function() {
 
-            var game = $scope.game;
+            var game = data.game;
 
             if (game && game.video && game.video.guid) {
-
                 var url = config.api.uri + 'upload-server';
 
                 /* Request the upload URL for KVS. */
@@ -80,7 +79,6 @@ UploadingFilm.controller('UploadingFilmController', [
 
                     /* Send DELETE request to KVS. */
                     $http.delete(kvsUrl + '/upload/' + game.video.guid)
-
                     .error(function() {
 
                         throw new Error('Problem deleting canceled video from KVS');
