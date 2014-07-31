@@ -164,7 +164,7 @@ IntelligenceWebClient.service('EventManager', [
                 /* Set the current event to the previous event. */
                 var previousEventIndex = eventIndex - 1;
                 var previousEvent = play.current.events[previousEventIndex];
-                angular.copy(previousEvent, event.current);
+                event.current = previousEvent;
                 play.save();
 
             /* If there are no events left in the play. */
