@@ -146,6 +146,7 @@ IntelligenceWebClient.service('EventManager', [
             /* Set the tag from the indexing tags. */
             this.current.tagId = tagId;
 
+            /* Set the time from the indexing video time. */
             this.current.time = time;
 
             /* Add event to the current play. */
