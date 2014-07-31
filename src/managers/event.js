@@ -50,29 +50,17 @@ IntelligenceWebClient.service('EventManager', [
         };
 
         /**
-         * Gets the value of the event variable at the given index.
-         * @param {Number} index - index of the variable.
-         * @returns - the variable's value if available, or undefined if not.
-         */
-        this.eventVariableValue = function(index) {
-
-            if (this.current &&
-                this.current.variableValues &&
-              !!this.current.variableValues[index]) {
-
-                return this.current.variableValues[index].value;
-            }
-
-            else return undefined;
-        };
-
-        /**
          * Gets the value of the active variable.
          * @returns - the value of the active variable.
          */
         this.activeEventVariableValue = function() {
 
-            return this.eventVariableValue(this.current.activeEventVariableIndex);
+            var index = this.current.activeEventVariableIndex;
+            var tag = this.current.tag;
+            var tagVariables = tag.tagVariables;
+            var tagId = tagVariables[index].id;
+
+            return this.current.variableValues[tagId].value;
         };
 
         /**
@@ -80,7 +68,12 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.clearActiveEventVariableValue = function() {
 
-            this.current.variableValues[this.current.activeEventVariableIndex].value = null;
+            var index = this.current.activeEventVariableIndex;
+            var tag = this.current.tag;
+            var tagVariables = tag.tagVariables;
+            var tagId = tagVariables[index].id;
+
+            this.current.variableValues[tagId].value = null;
         };
 
         /**
