@@ -516,7 +516,6 @@ IntelligenceWebClient.factory('GamesFactory', [
             canBeIndexed: function() {
 
                 var self = this;
-
                 if (self.deadlinePassed()) {
                     return false;
                 }
@@ -616,6 +615,49 @@ IntelligenceWebClient.factory('GamesFactory', [
             setAside: function() {
                 var self = this;
                 self.status = GAME_STATUSES.SET_ASIDE.id;
+            },
+            unassign: function() {
+                var self = this;
+
+                if (self.status === GAME_STATUSES.READY_FOR_INDEXING.id || self.status === GAME_STATUSES.READY_FOR_QA.id)
+                    return;
+
+                if (self.status === GAME_STATUSES.INDEXING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                } else if (self.status === GAME_STATUSES.QAING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                } else {
+                    throw new Error('This game cannot be unassigned from the current status');
+                }
+            },
+            revert: function() {
+                var self = this;
+
+                if (GAME_STATUSES.QAING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                } else {
+                    throw new Error('You may not revert from the current game status');
+                }
+
+            },
+            findLastIndexerAssignment: function() {
+                var self = this;
+
+                if (!self.indexerAssignments) {
+                    throw new Error('no indexer assignments');
+                }
+
+                var index = self.indexerAssignments.length - 1;
+
+                //iterate backwards through the assignments looking for the first indexer assignment
+                for (index; index >= 0; index--) {
+                    if (!self.indexerAssignments[index].isQa) {
+                        return self.indexerAssignments[index];
+                    }
+                }
+
+                throw new Error('An indexer assignment could not be located');
+
             },
             isDelivered: function() {
                 var self = this;
