@@ -131,8 +131,8 @@ Teams.config([
 ]);
 
 Teams.service('Teams.Data.Dependencies', [
-    'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'UsersFactory',
-    function(teams, sports, leagues, schools, users) {
+    'TeamsFactory', 'LeaguesFactory', 'UsersFactory',
+    function(teams, leagues, users) {
 
         var Data = {};
 
@@ -269,32 +269,30 @@ Teams.controller('TeamPlansController', [
  * @type {Controller}
  */
 Teams.controller('TeamController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SchoolsFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, schoolsFactory) {
+        console.log(data);
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
-        $scope.sports = data.sports.getList();
-        $scope.indexedSports = data.sports.getCollection();
-
-        $scope.leagues = data.leagues.getList();
-        $scope.indexedLeagues = data.leagues.getList();
-
-        $scope.schools = data.schools.getList();
-
+//        $scope.sports = data.sports.getList();
+//        $scope.indexedSports = data.sports.getCollection();
+//
+//        $scope.leagues = data.leagues.getList();
+//        $scope.indexedLeagues = data.leagues.getList();
 
         var team;
         $scope.team = {};
+        $scope.schoolName = '';
 
         $scope.updateTeamAddress = function($item) {
-
             $scope.team = {
                 schoolId: $item.id
             };
 
             if ($scope.team && $scope.team.schoolId) {
-                $scope.school = data.schools.get($scope.team.schoolId);
+                $scope.school = schoolsFactory.get($scope.team.schoolId);
                 $scope.team.address = angular.copy($scope.school.address);
             }
         };
@@ -331,6 +329,15 @@ Teams.controller('TeamController', [
                 $scope.team = {};
             }
         });
+
+
+        $scope.findSchoolsByName = function() {
+            if ($scope.schoolName.length >= 3) {
+                return schoolsFactory.query({name: $scope.schoolName}).then(function(schools) {
+                    return schools;
+                });
+            }
+        };
 
         $scope.onlyCurrentRoles = function(role) {
 
@@ -399,14 +406,11 @@ Teams.controller('TeamsController', [
 
         $scope.teams = data.teams.getList();
 
-        $scope.sports = data.sports.getList();
-        $scope.indexedSports = data.sports.getCollection();
+        //$scope.sports = data.sports.getList();
+//        $scope.indexedSports = data.sports.getCollection();
 
         $scope.leagues = data.leagues.getList();
         $scope.indexedLeagues = data.leagues.getCollection();
-
-        $scope.schools = data.schools.getList();
-        $scope.indexedSchools = data.schools.getCollection();
 
         $scope.add = function() {
             $state.go('team-info');
