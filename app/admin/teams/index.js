@@ -131,8 +131,8 @@ Teams.config([
 ]);
 
 Teams.service('Teams.Data.Dependencies', [
-    'TeamsFactory', 'LeaguesFactory', 'UsersFactory',
-    function(teams, leagues, users) {
+    'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SportsFactory',
+    function(teams, leagues, users, sports) {
 
         var Data = {};
 
@@ -271,29 +271,34 @@ Teams.controller('TeamPlansController', [
 Teams.controller('TeamController', [
     '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SchoolsFactory',
     function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, schoolsFactory) {
-        console.log(data);
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
-//        $scope.sports = data.sports.getList();
-//        $scope.indexedSports = data.sports.getCollection();
-//
-//        $scope.leagues = data.leagues.getList();
-//        $scope.indexedLeagues = data.leagues.getList();
+        $scope.sports = data.sports.getList();
+        $scope.indexedSports = data.sports.getCollection();
+
+        $scope.leagues = data.leagues.getList();
+        $scope.indexedLeagues = data.leagues.getCollection();
 
         var team;
-        $scope.team = {};
         $scope.schoolName = '';
+        $scope.loading = {};
 
         $scope.updateTeamAddress = function($item) {
-            $scope.team = {
-                schoolId: $item.id
-            };
+            if ($item) {
+                $scope.team = {
+                    schoolId: $item.id
+                };
+            }
 
             if ($scope.team && $scope.team.schoolId) {
-                $scope.school = schoolsFactory.get($scope.team.schoolId);
-                $scope.team.address = angular.copy($scope.school.address);
+
+                schoolsFactory.fetch($scope.team.schoolId).then(function(school) {
+                    $scope.school = school;
+                    $scope.schoolName = school.name;
+                    $scope.team.address = angular.copy($scope.school.address);
+                });
             }
         };
 
@@ -305,7 +310,6 @@ Teams.controller('TeamController', [
             if (teamId) {
 
                 team = data.teams.get(teamId);
-
                 $scope.team = team;
                 $scope.team.members = team.getMembers();
 
@@ -323,13 +327,6 @@ Teams.controller('TeamController', [
                 $scope.users = data.users.getList();
             }
         });
-
-        $scope.$watch('schoolName', function(schoolName) {
-            if (schoolName.length === 0) {
-                $scope.team = {};
-            }
-        });
-
 
         $scope.findSchoolsByName = function() {
             if ($scope.schoolName.length >= 3) {
