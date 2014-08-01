@@ -140,8 +140,8 @@
 
         </div>
 
-        <x-button-continue data-ng-if="data.game.status === null" data-ng-disabled="statusBuffer < 0 || formInstructions.$invalid">Save and Submit</x-button-continue>
-        <x-button-continue class="disabled" data-ng-if="data.game.status !== null">Save and Submit</x-button-continue>
+        <x-button-continue data-ng-if="!isBreakdownChoiceMade" data-ng-disabled="statusBuffer < 0 || formInstructions.$invalid">Save and Submit</x-button-continue>
+        <x-button-continue class="disabled" data-ng-if="isBreakdownChoiceMade">Save and Submit</x-button-continue>
 
     </div>
 
