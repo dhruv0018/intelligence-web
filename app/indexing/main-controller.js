@@ -260,16 +260,11 @@ Indexing.controller('Indexing.Main.Controller', [
             /* If editing an event. */
             if (indexing.eventSelected) {
 
-                indexing.showTags = false;
-                indexing.showScript = false;
-                indexing.isIndexing = false;
                 indexing.eventSelected = false;
-
-                event.reset();
             }
 
             /* If the tags are showing. */
-            else if (indexing.showTags) {
+            if (indexing.showTags) {
 
                 /* Drop back into not indexing state. */
                 indexing.showTags = false;
@@ -279,8 +274,8 @@ Indexing.controller('Indexing.Main.Controller', [
             }
 
             /* If the first variable is empty. */
-            else if (event.current.activeEventVariableIndex === 1 &&
-                    !event.activeEventVariableValue()) {
+            if (event.current.activeEventVariableIndex === 1 &&
+               !event.activeEventVariableValue()) {
 
                 /* Remove the event from the play. */
                 play.removeEvent(event.current);
