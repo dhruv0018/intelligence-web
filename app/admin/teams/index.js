@@ -285,8 +285,14 @@ Teams.controller('TeamController', [
 
 
         var team;
+        $scope.team = {};
 
-        var updateTeamAddress = function updateTeamAddress() {
+        $scope.updateTeamAddress = function($item) {
+
+            $scope.team = {
+                schoolId: $item.id
+            };
+
             if ($scope.team && $scope.team.schoolId) {
                 $scope.school = data.schools.get($scope.team.schoolId);
                 $scope.team.address = angular.copy($scope.school.address);
@@ -307,7 +313,7 @@ Teams.controller('TeamController', [
 
                 $scope.sportId = data.leagues.get(team.leagueId).sportId;
 
-                updateTeamAddress();
+                $scope.updateTeamAddress();
             }
         }
 
@@ -320,7 +326,11 @@ Teams.controller('TeamController', [
             }
         });
 
-        $scope.$watch('team.schoolId', updateTeamAddress);
+        $scope.$watch('schoolName', function(schoolName) {
+            if (schoolName.length === 0) {
+                $scope.team = {};
+            }
+        });
 
         $scope.onlyCurrentRoles = function(role) {
 

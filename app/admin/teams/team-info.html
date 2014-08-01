@@ -18,9 +18,14 @@
 
     <div class="form-group">
 
-        <select class="form-control select-school" name="school" data-ng-model="team.schoolId" data-ng-options="school.id as school.name for school in schools">
-            <option value="">School Name</option>
-        </select>
+        <!--<select class="form-control select-school" name="school" data-ng-model="team.schoolId" data-ng-options="school.id as school.name for school in schools">-->
+            <!--<option value="">School Name</option>-->
+        <!--</select>-->
+        <input class="form-control"
+               placeholder="School Name" data-ng-model="schoolName"
+               data-typeahead-on-select="updateTeamAddress($item)"
+               data-typeahead="school.name for school in schools| filter: {name: $viewValue}"> {{team.schoolId}}
+        {{team}}
 
         <a class="btn btn-link" data-ui-sref="school">add a new school</a>
 
