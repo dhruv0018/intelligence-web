@@ -34,6 +34,11 @@ IntelligenceWebClient.service('EventManager', [
 
             event = event || this.current;
 
+            /* If there is no current event or the event hasn't been created
+             * then its can not be a end event. */
+            if (!event || !event.tagId) return false;
+
+            /* Check if the given event is an end tag. */
             return this.tagset.isEndTag(event.tagId);
         };
 
@@ -43,9 +48,14 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.hasVariables = function() {
 
+            /* If there is no current event or the event hasn't been created
+             * there are no variables in the event yet. */
+            if (!this.current || !this.current.tagId) return false;
+
             var tagId = this.current.tagId;
             var tag = this.tags[tagId];
 
+            /* Check if the tag has tag variables. */
             return !!tag.tagVariables.length;
         };
 
@@ -55,11 +65,17 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.activeEventVariableValue = function() {
 
+            /* If there is no current event or the event hasn't been created
+             * variable value is undefined. */
+            if (!this.current || !this.current.tagId) return undefined;
+
             var index = this.current.activeEventVariableIndex;
             var tagId = this.current.tagId;
             var tag = this.tags[tagId];
             var tagVariables = tag.tagVariables;
             var tagVariable = tagVariables[index];
+
+            if (!tagVariable) return undefined;
 
             return this.current.variableValues[tagVariable.id].value;
         };

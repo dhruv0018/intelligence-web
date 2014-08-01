@@ -220,7 +220,7 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.nextable = function() {
 
-            /* If there are variables. */
+            /* If there are variables in the current event. */
             if (event.hasVariables()) {
 
                 /* Make sure all of the variables have values. */
