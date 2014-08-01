@@ -250,8 +250,6 @@ Indexing.controller('Indexing.Main.Controller', [
             /* Snap video back to time of current event. */
             $scope.VideoPlayer.seekTime(event.current.time);
             $scope.VideoPlayer.play();
-
-            event.reset();
         };
 
         /**
