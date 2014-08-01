@@ -145,6 +145,8 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.create = function(tagId, time) {
 
+            this.reset();
+
             /* If there is no current play. */
             if (!play.current) {
 
