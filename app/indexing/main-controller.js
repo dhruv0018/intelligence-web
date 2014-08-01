@@ -314,10 +314,16 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.deleteEvent = function(selectedEvent) {
 
-            /* Remove the event from the play. */
+            indexing.showTags = true;
+            indexing.showScript = false;
+            indexing.eventSelected = false;
+            indexing.isIndexing = false;
+
+            /* Delete the selected event. */
             event.delete(selectedEvent);
 
-            this.back();
+            /* Clear the current play. */
+            play.clear();
         };
 
 
