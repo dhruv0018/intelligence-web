@@ -293,13 +293,18 @@ Indexing.controller('Indexing.Main.Controller', [
                 indexing.showScript = false;
             }
 
-            /* If the another variable after the first is empty. */
+            /* If the active variable is empty. */
             else if (!event.activeEventVariableValue()) {
 
-                /* Move back one variable. */
-                --event.current.activeEventVariableIndex;
+                /* While the active variable is empty. */
+                while (event.current.activeEventVariableIndex > 1 &&
+                      !event.activeEventVariableValue()) {
 
-                /* Clear the variable before. */
+                    /* Move back one variable. */
+                    event.current.activeEventVariableIndex--;
+                }
+
+                /* Clear the value of the first variable is not empty. */
                 event.clearActiveEventVariableValue();
             }
 
