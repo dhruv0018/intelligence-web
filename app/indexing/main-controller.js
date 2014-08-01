@@ -283,7 +283,7 @@ Indexing.controller('Indexing.Main.Controller', [
                     !event.activeEventVariableValue()) {
 
                 /* Remove the event from the play. */
-                event.delete(event.current);
+                play.removeEvent(event.current);
 
                 /* Drop back to tagging state. */
                 indexing.showTags = true;

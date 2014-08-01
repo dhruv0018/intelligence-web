@@ -163,26 +163,13 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.delete = function(event) {
 
-            /* Find the index of the event. */
-            var eventIndex = play.current.events.indexOf(this.current);
+            event = event || this.current;
 
-            /* Remove current event from the current play. */
-            play.current.events.splice(eventIndex, 1);
+            /* Remove the event from the current play. */
+            play.removeEvent(event);
 
-            /* If there are other events left in the play. */
-            if (play.current.events.length > 0) {
-
-                /* Set the current event to the previous event. */
-                var previousEvent = play.current.events[eventIndex - 1];
-                event.current = previousEvent;
-                play.save();
-
-            /* If there are no events left in the play. */
-            } else {
-
-                this.reset();
-                play.remove(play.current);
-            }
+            /* Reset the current event. */
+            this.reset();
         };
     }
 ]);

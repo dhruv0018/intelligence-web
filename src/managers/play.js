@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    'AlertsService', 'TagsManager', 'PlaysFactory', 'IndexingService',
-    function service(alerts, tags, plays, indexing) {
+    '$injector', 'AlertsService', 'TagsManager', 'PlaysFactory', 'IndexingService',
+    function service($injector, alerts, tags, plays, indexing) {
 
         var model = {
 
@@ -74,6 +74,39 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* Add event to the current plays events. */
             this.current.events.push(event);
+        };
+
+        /**
+         * Remove an event from the play.
+         * @param {Object} event - event to be removed.
+         */
+        this.removeEvent = function(event) {
+
+            var eventManager = $injector.get('EventManager');
+
+            /* Find the index of the event. */
+            var eventIndex = this.current.events.indexOf(event);
+
+            /* Remove current event from the current play. */
+            this.current.events.splice(eventIndex, 1);
+
+            /* If there are other events left in the play. */
+            if (this.current.events.length) {
+
+                /* Set the current event to the previous event. */
+                var previousEvent = this.current.events[eventIndex - 1];
+                eventManager.current = previousEvent;
+            }
+
+            /* If there are no events left in the play. */
+            else {
+
+                /* Reset the current event. */
+                eventManager.reset();
+
+                /* Remove the current play. */
+                this.remove();
+            }
         };
 
         /**
