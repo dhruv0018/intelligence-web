@@ -117,11 +117,16 @@ IntelligenceWebClient.service('PlayManager', [
 
             var self = this;
 
+            play = play || this.current;
+
             /* If the deleted play is the current play. */
             if (angular.equals(play, self.current)) {
 
+                var event = $injector.get('EventManager');
+
                 self.clear();
                 tags.reset();
+                event.reset();
             }
 
             var playIndex = indexing.plays.indexOf(play);
