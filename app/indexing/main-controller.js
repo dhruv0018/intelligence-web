@@ -274,7 +274,7 @@ Indexing.controller('Indexing.Main.Controller', [
             }
 
             /* If the first variable is empty. */
-            if (event.current.activeEventVariableIndex === 1 &&
+            else if (event.current.activeEventVariableIndex === 1 &&
                !event.activeEventVariableValue()) {
 
                 /* Remove the event from the play. */
