@@ -15,13 +15,13 @@
         </h4>
         <h4 data-ng-if="!isIndexer" data-ng-class="{'playCollapsed': !isOpen}">
             <span class="team">{{teams[play.possessionTeamId].name}}</span>
-            <span class="playplay" data-ng-click="playPlay()"><i class="icon icon-play-circle"></i></span>
+            <span class="playplay" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY}"><i class="icon icon-play-circle"></i></span>
             <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'priority'">
                 <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
             </div>
         </h4>
     </div>
-    <div class="playBody" data-ng-class="{'playHide': !expandAll && !isOpen}">
+    <div class="playBody" data-ng-class="{'playHide': !expandAll && play != playManager.current }">
         <krossover-events data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers"></krossover-events>
 
         <hr>
