@@ -91,7 +91,6 @@ AddFilm.controller('StartController', [
         $scope.activePlan = data.team.getActivePlan();
         $scope.activePackage = data.team.getActivePackage();
         $scope.remainingBreakdowns = data.remainingBreakdowns;
-        console.log($scope.remainingBreakdowns);
     }
 ]);
 
