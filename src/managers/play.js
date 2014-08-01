@@ -53,6 +53,30 @@ IntelligenceWebClient.service('PlayManager', [
         };
 
         /**
+         * Add an event to the play.
+         * @param {Object} event - event to be added.
+         */
+        this.addEvent = function(event) {
+
+            /* If there is no current play. */
+            if (!this.current) {
+
+                /* Create a play. */
+                this.create();
+            }
+
+            /* If there are no plays in the playlist. */
+            if (!indexing.plays.length) {
+
+                /* Add the current play to the playlist. */
+                indexing.plays.push(this.current);
+            }
+
+            /* Add event to the current plays events. */
+            this.current.events.push(event);
+        };
+
+        /**
          * Removes a play.
          * @param {Object} play - play to be removed.
          */

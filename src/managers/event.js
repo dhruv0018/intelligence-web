@@ -145,21 +145,8 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.create = function(tagId, time) {
 
+            /* Reset the current event. */
             this.reset();
-
-            /* If there is no current play. */
-            if (!play.current) {
-
-                /* Create a play. */
-                play.create();
-            }
-
-            /* If there are no plays in the playlist. */
-            if (!indexing.plays.length) {
-
-                /* Add the current play to the playlist. */
-                indexing.plays.push(play.current);
-            }
 
             /* Set the tag from the indexing tags. */
             this.current.tagId = tagId;
@@ -168,7 +155,7 @@ IntelligenceWebClient.service('EventManager', [
             this.current.time = time;
 
             /* Add event to the current play. */
-            play.current.events.push(this.current);
+            play.addEvent(this.current);
         };
 
         /**
