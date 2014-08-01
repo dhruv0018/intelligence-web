@@ -1,6 +1,3 @@
-require('./gameAreaLog.js');
-require('./gameAreaHomeStats.js');
-require('./gameAreaAwayStats.js');
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -10,10 +7,7 @@ var angular = window.angular;
  */
 var GameAreaStatistics = angular.module('game-area-statistics', [
     'ui.router',
-    'ui.bootstrap',
-    'game-area-log',
-    'game-area-homestats',
-    'game-area-awaystats'
+    'ui.bootstrap'
 ]);
 
 GameAreaStatistics.run([
@@ -36,6 +30,14 @@ GameAreaStatistics.config([
                     templateUrl: 'coach/game-area/gameAreaStatistics.html',
                     controller: 'GameAreaStatisticsController'
                 }
+            },
+            resolve: {
+                'GameAreaStatistics.Data': [
+                    '$q', 'GameAreaStatistics.Data.Dependencies',
+                    function($q, data) {
+                        return $q.all(data);
+                    }
+                ]
             }
         };
 
@@ -44,11 +46,27 @@ GameAreaStatistics.config([
     }
 ]);
 
-GameAreaStatistics.controller('GameAreaStatisticsController', [
-    '$scope', '$state', '$stateParams', 'GamesFactory',
-    function controller($scope, $state, $stateParams, games) {
+GameAreaStatistics.service('GameAreaStatistics.Data.Dependencies', [
+    '$stateParams', 'GamesFactory',
+    function($stateParams, games) {
+        var Data = {};
 
-        $state.go('ga-log');
+        Data.stats = games.generateStats($stateParams.id);
+
+        return Data;
+    }
+]);
+
+GameAreaStatistics.controller('GameAreaStatisticsController', [
+    '$scope', '$state', '$stateParams', 'GameAreaStatistics.Data',
+    function controller($scope, $state, $stateParams, data) {
+
+        $scope.gameLogTable = data.stats.gameLog;
+        $scope.homeTeamStats = data.stats.homeTeamStats;
+        $scope.awayTeamStats = data.stats.awayTeamStats;
+
+        $scope.homeTeamName = data.stats.homeTeamStats.meta.teamName;
+        $scope.awayTeamName = data.stats.awayTeamStats.meta.teamName;
 
         $scope.statsSelector = 'ga-log';
     }

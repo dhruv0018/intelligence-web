@@ -9,9 +9,11 @@
         "delete-game",
         "select-indexer",
         "film-breakdown",
+        "share-film",
         "excel-upload",
         "basic-modals",
-        "athlete-info"
+        "athlete-info",
+        "admin-management"
     ],
     "scripts": [
         "index.js"

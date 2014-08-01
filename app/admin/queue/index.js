@@ -1,5 +1,6 @@
 /* File dependencies. */
 require('./game.js');
+var moment = require('moment');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -85,8 +86,8 @@ Queue.config([
  * @type {Controller}
  */
 Queue.controller('ModalController', [
-    '$rootScope', '$scope', '$state', '$modal', '$modalInstance', '$localStorage', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $modal, $modalInstance, $localStorage, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users) {
+    '$rootScope', '$scope', '$state', '$modal', '$modalInstance', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $modal, $modalInstance, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users) {
 
         $scope.ok = function() {
 
@@ -107,8 +108,8 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$rootScope', '$scope', '$state', '$modal', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
-    function controller($rootScope, $scope, $state, $modal, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, data, SelectIndexerModal) {
+    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
+    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, games, data, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -125,7 +126,101 @@ Queue.controller('QueueController', [
         $scope.sportsList = data.sports.getList();
         $scope.teamsList = data.teams.getList();
         $scope.usersList = data.users.getList();
-        $scope.queue = data.games.getList();
+        $scope.games = data.games.getList().filter(function(game) {
+            return !game.isDeleted && game.status !== GAME_STATUSES.NOT_INDEXED.id;
+        });
+
+        //initially show everything
+        $scope.queue = $scope.games;
+
+        $scope.queueFilters = {
+            remaining: {
+                '48': [],
+                '24': [],
+                '10': [],
+                '5': [],
+                '1': [],
+                'late': []
+            },
+            ready: {
+                qa: [],
+                indexing: []
+            },
+            setAside: [],
+            assigned: [],
+            unassigned: [],
+            processing: {
+                inProcessing: [],
+                failed: []
+            },
+            'last48': {
+                uploaded: [],
+                delivered: []
+            }
+        };
+
+        //sorting games into filter categories
+        angular.forEach($scope.queue, function(game) {
+
+            if (game.status === GAME_STATUSES.SET_ASIDE.id) {
+                $scope.queueFilters.setAside.push(game);
+            }
+
+            var remainingTime = game.getRemainingTime($scope.teams[game.uploaderTeamId]);
+            var remainingHours = moment.duration(remainingTime).asHours();
+            var assignment = game.currentAssignment();
+
+            if (game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
+                $scope.queueFilters.ready.indexing.push(game);
+            } else if (game.status === GAME_STATUSES.READY_FOR_QA.id) {
+                $scope.queueFilters.ready.qa.push(game);
+            }
+
+            if (typeof assignment === 'undefined' || (assignment && assignment.timeFinished && game.status !== GAME_STATUSES.INDEXED.id)) {
+                $scope.queueFilters.unassigned.push(game);
+            } else if (assignment && !assignment.timeFinished) {
+                $scope.queueFilters.assigned.push(game);
+            }
+
+            if (game.video && game.video.status) {
+
+                if (game.video.status === VIDEO_STATUSES.FAILED.id) {
+                    $scope.queueFilters.processing.failed.push(game);
+                } else if (game.video.status !== VIDEO_STATUSES.COMPLETE.id) {
+                    $scope.queueFilters.processing.inProcessing.push(game);
+                }
+            }
+
+            //TODO to change to isDelivered function when it is through QA
+            if (game.status !== GAME_STATUSES.INDEXED.id) {
+                if (remainingTime < 0) {
+                    $scope.queueFilters.remaining.late.push(game);
+                } else if (remainingHours >= 24 && remainingHours <= 48) {
+                    $scope.queueFilters.remaining['48'].push(game);
+                } else if (remainingHours < 24 && remainingHours >= 10) {
+                    $scope.queueFilters.remaining['24'].push(game);
+                } else if (remainingHours < 10 && remainingHours >= 5) {
+                    $scope.queueFilters.remaining['10'].push(game);
+                } else if (remainingHours < 5 && remainingHours >= 1) {
+                    $scope.queueFilters.remaining['5'].push(game);
+                } else if (remainingHours < 1 && remainingHours !== 0) {
+                    $scope.queueFilters.remaining['1'].push(game);
+                }
+            }
+
+
+            if (remainingTime > 0 && remainingHours > 0 && remainingHours <= 48) {
+                $scope.queueFilters.last48.uploaded.push(game);
+                if (game.status === GAME_STATUSES.INDEXED.id) {
+                    $scope.queueFilters.last48.delivered.push(game);
+                }
+            }
+
+        });
+
+        $scope.setQueue = function(games) {
+            $scope.queue = games;
+        };
 
         $scope.search = function(filter) {
 

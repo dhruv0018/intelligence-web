@@ -1,26 +1,37 @@
 @import (reference) "main.less";
 
 .basic-modal {
-    padding: 0 20px 20px 20px;
 
-    .text-modal-input {
-        display: block;
-        margin-bottom: 20px;
-        width: 250px;
-        height: 150px;
+    letter-spacing: normal;
+
+    .modal-header {
+
+        h3 {
+            margin: 0;
+        }
+        
+        .icon-remove {
+            cursor: pointer;
+            color: @brand-danger;
+        }
     }
 
-    button {
-        .btn;
-        .btn-primary;
-    }
+    .modal-body {
+        .text-modal-input {
+            display: block;
+            margin-bottom: 20px;
+            width: 250px;
+            height: 150px;
+        }
 
-    .icon-remove {
-        cursor: pointer;
-    }
+        button {
+            .btn;
+            .btn-primary;
+        }
 
-    a.close-text {
-        padding: 10px;
+        a.close-text {
+            padding: 10px;
+        }
     }
 }
 

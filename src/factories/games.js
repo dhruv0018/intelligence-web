@@ -52,6 +52,24 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return deferred.promise;
             },
 
+            generateStats: function(id, success, error) {
+                var self = this;
+
+                id = id || self.id;
+
+                var callback = function(stats) {
+
+                    return success ? success(stats) : stats;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get stats for game');
+                };
+
+                return self.resource.generateStats({ id: id }, callback, error).$promise;
+            },
+
             getStatus: function() {
 
                 var self = this;
@@ -61,22 +79,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 /* Lookup the game status by ID. */
                 var status = GAME_STATUSES[statusId];
-
-                /* If the game is in set aside status. */
-                if (status.id === GAME_STATUSES.SET_ASIDE.id && status.name === GAME_STATUSES.SET_ASIDE.name) {
-
-                    /* If the game was assigned to an indexer. */
-                    if (self.setAsideFromIndexing()) {
-
-                        status.name += ', from indexing';
-                    }
-
-                    /* If the game was assigned to QA. */
-                    else if (self.setAsideFromQa()) {
-
-                        status.name += ', from QA';
-                    }
-                }
 
                 return status;
             },
@@ -132,6 +134,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
+                if (!self.isVideoTranscodeComplete()) return false;
+
                 /* If the game is in the "Indexing, not started" status, it can
                  * be assigned to an indexer. */
                 if (self.status == GAME_STATUSES.READY_FOR_INDEXING.id) return true;
@@ -157,6 +161,8 @@ IntelligenceWebClient.factory('GamesFactory', [
             canBeAssignedToQa: function() {
 
                 var self = this;
+
+                if (!self.isVideoTranscodeComplete()) return false;
 
                 /* If the game is in the "QA, not started" status, it can
                  * be assigned to QA. */
@@ -205,7 +211,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments.push(assignment);
 
                     /* Update game status. */
-                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                    self.status = GAME_STATUSES.INDEXING.id;
                 }
 
                 else {
@@ -249,7 +255,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments.push(assignment);
 
                     /* Update game status. */
-                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                    self.status = GAME_STATUSES.QAING.id;
                 }
 
                 else {
@@ -462,36 +468,38 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!assignment) return remaining;
 
-                var deadline = moment.utc(assignment.deadline);
+                var deadline = moment.utc(assignment.deadline).toDate();
+                var timeRemaining = deadline - new Date();
 
-                if (deadline.isAfter()) {
-
-                    remaining = deadline.fromNow(true);
-                }
-
-                return remaining;
+                return timeRemaining;
             },
 
             setAsideFromIndexing: function() {
 
                 var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return false;
 
                 /* If the game was not set aside, return false. */
                 if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
 
                 /* Return true if the game was assigned to an indexer. */
-                return self.isAssignedToIndexer(self.currentAssignment()) ? true : false;
+                return (self.isAssignedToIndexer(assignment) && !assignment.timeFinished) ? true : false;
             },
 
             setAsideFromQa: function() {
 
                 var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return false;
 
                 /* If the game was not set aside, return false. */
                 if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
 
                 /* Return true if the game was assigned to QA. */
-                return self.isAssignedToQa(self.currentAssignment()) ? true : false;
+                return (self.isAssignedToQa(assignment) || (!self.setAsideFromIndexing())) ? true : false;
             },
 
             deadlinePassed: function() {
@@ -512,7 +520,6 @@ IntelligenceWebClient.factory('GamesFactory', [
             canBeIndexed: function() {
 
                 var self = this;
-
                 if (self.deadlinePassed()) {
                     return false;
                 }
@@ -590,6 +597,79 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var dndReport = new Resource(report);
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
+            },
+            getRemainingTime: function(uploaderTeam) {
+                var self = this;
+
+                if (!self.submittedAt) {
+                    return 0;
+                }
+
+                var timePassed = new Date() - moment.utc(self.submittedAt).toDate();
+                var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+
+                if (turnoverTime > 0) {
+                    var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
+                    return turnoverTimeRemaining.asMilliseconds();
+                }
+
+                //no plans or packages and therefore no breakdowns available
+                return 0;
+            },
+            setAside: function() {
+                var self = this;
+                self.status = GAME_STATUSES.SET_ASIDE.id;
+            },
+            unassign: function() {
+                var self = this;
+
+                if (self.status === GAME_STATUSES.READY_FOR_INDEXING.id || self.status === GAME_STATUSES.READY_FOR_QA.id)
+                    return;
+
+                if (self.setAsideFromIndexing() || self.status === GAME_STATUSES.INDEXING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                } else if (self.setAsideFromQa() || self.status === GAME_STATUSES.QAING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                } else {
+                    throw new Error('This game cannot be unassigned from the current status');
+                }
+            },
+            revert: function() {
+                var self = this;
+
+                if (GAME_STATUSES.QAING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                } else {
+                    throw new Error('You may not revert from the current game status');
+                }
+
+            },
+            findLastIndexerAssignment: function() {
+                var self = this;
+
+                if (!self.indexerAssignments) {
+                    throw new Error('no indexer assignments');
+                }
+
+                var index = self.indexerAssignments.length - 1;
+
+                //iterate backwards through the assignments looking for the first indexer assignment
+                for (index; index >= 0; index--) {
+                    if (!self.indexerAssignments[index].isQa) {
+                        return self.indexerAssignments[index];
+                    }
+                }
+
+                throw new Error('An indexer assignment could not be located');
+
+            },
+            isDelivered: function() {
+                var self = this;
+                return self.status === GAME_STATUSES.INDEXED.id || self.status === GAME_STATUSES.FINALIZED.id;
+            },
+            isVideoTranscodeComplete: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.COMPLETE.id;
             }
         };
 

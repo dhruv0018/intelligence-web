@@ -1,6 +1,7 @@
 var PAGE_SIZE = 100;
 
 var package = require('../../package.json');
+var moment = require('moment');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -108,6 +109,59 @@ IntelligenceWebClient.factory('TeamsFactory', [
                         return match.type.id == role.type.id;
                     }
                 });
+            },
+            getActivePlan: function() {
+                var self = this;
+
+                if (self.teamPlans) {
+                    //get the plans that have a endDate that has not passed
+                    var activePlans = self.teamPlans.filter(function(plan) {
+                        return moment().isBefore(plan.endDate);
+                    });
+
+                    if (activePlans.length === 0) {
+                        return undefined;
+                    } else if (activePlans.length > 1) {
+                        throw new Error('You have more than one active plan for team ' + self.id);
+                    } else {
+                        return activePlans[0];
+                    }
+                }
+            },
+            getActivePackage: function() {
+                var self = this;
+
+                if (self.teamPackages) {
+                    //get the plans that have a endDate that has not passed
+                    var activePackages = self.teamPackages.filter(function(teamPackage) {
+                        return moment().isBefore(teamPackage.endDate);
+                    });
+
+                    if (activePackages.length === 0) {
+                        return undefined;
+                    } else if (activePackages.length > 1) {
+                        throw new Error('You have more than one active package for team ' + self.id);
+                    } else {
+                        return activePackages[0];
+                    }
+                }
+            },
+            getMaxTurnaroundTime: function() {
+                var self = this;
+
+                var activePlan = self.getActivePlan();
+
+                if (activePlan) {
+                    return activePlan.maxTurnaroundTime;
+                } else {
+                    var activePackage = self.getActivePackage();
+                    if (activePackage) {
+                        return activePackage.maxTurnaroundTime;
+                    }
+                }
+
+                //no plans or packages means no breakdowns
+                return -1;
             }
         };
 

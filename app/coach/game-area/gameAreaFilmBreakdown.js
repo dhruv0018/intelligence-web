@@ -2,34 +2,34 @@
 var angular = window.angular;
 
 /**
- * Game Area Film page module.
+ * Game Area Film Breakdown page module.
  * @module GameArea
  */
-var GameAreaFilm = angular.module('game-area-film', [
+var GameAreaFilmBreakdown = angular.module('game-area-film-breakdown', [
     'ui.router',
     'ui.bootstrap',
     'Indexing'
 ]);
 
-GameAreaFilm.run([
+GameAreaFilmBreakdown.run([
     '$templateCache',
     function run($templateCache) {
-        $templateCache.put('coach/game-area/gameAreaFilm.html', require('./gameAreaFilm.html'));
+        $templateCache.put('coach/game-area/gameAreaFilmBreakdown.html', require('./gameAreaFilmBreakdown.html'));
     }
 ]);
 
-GameAreaFilm.config([
+GameAreaFilmBreakdown.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
         var gameArea = {
-            name: 'ga-film',
-            url: '/film',
+            name: 'ga-film-breakdown',
+            url: '/film-breakdown',
             parent: 'Coach.GameArea',
             views: {
                 'content@Coach.GameArea': {
-                    templateUrl: 'coach/game-area/gameAreaFilm.html',
-                    controller: 'GameAreaFilmController'
+                    templateUrl: 'coach/game-area/gameAreaFilmBreakdown.html',
+                    controller: 'GameAreaFilmBreakdownController'
                 }
             }
         };
@@ -39,21 +39,28 @@ GameAreaFilm.config([
     }
 ]);
 
-GameAreaFilm.controller('GameAreaFilmController', [
+GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
     function controller($scope, $state, $stateParams, games, plays, filtersets, data) {
         $scope.gameId = $state.params.id;
-        $scope.filterId = null;
         $scope.data = data;
         $scope.teamId = data.game.teamId;
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
-        $scope.filterCategory = 1;
+        $scope.expandAll = false;
+        $scope.filterCategory = data.filterset.categories[0].id;
         $scope.activeFilters = [];
+        $scope.filterMenu = {
+            isOpened: false
+        };
 
-        $scope.contains = function(array, id) {
+        $scope.contains = function(array, id, playerId) {
             return array.some(function(filter) {
-                return id === filter.id;
+                if (!filter.customFilter) {
+                    return id === filter.id;
+                } else {
+                    return playerId === filter.playerId;
+                }
             });
         };
 
@@ -147,18 +154,11 @@ GameAreaFilm.controller('GameAreaFilmController', [
 
 
         $scope.setFilter = function(filter) {
-            $scope.filterId = filter.id;
-
-            var isPresent = false;
-
-            if (!filter.customFilter) {
-                isPresent = $scope.activeFilters.some(function(filter) {
-                    return filter.id === $scope.filterId;
-                });
-            }
+            var isPresent = $scope.contains($scope.activeFilters, filter.id, filter.playerId);
 
             if (!isPresent) {
                 $scope.activeFilters.push(filter);
+                $scope.filterMenu.isOpened = false;
             }
 
         };

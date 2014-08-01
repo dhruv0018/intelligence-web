@@ -57,8 +57,8 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
  * @type {controller}
  */
 YourTeam.controller('Coach.Game.YourTeam.controller', [
-    '$scope', '$state', '$localStorage', 'PlayersFactory', 'TeamsFactory',
-    function controller($scope, $state, $localStorage, players, teams) {
+    '$scope', '$state', 'PlayersFactory', 'TeamsFactory',
+    function controller($scope, $state, players, teams) {
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
 

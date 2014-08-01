@@ -2,12 +2,12 @@
 
     <button
         class="team-dropdown"
-        data-ng-show="event.variableValues[item.index].value"
-        data-ng-click="event.variableValues[item.index].value = null"
+        data-ng-if="event.variableValues[item.id].value !== null"
+        data-ng-click="event.variableValues[item.id].value = null"
     >
 
-        <span data-ng-if="event.variableValues[item.index].value == team.id">{{ team.name }}</span>
-        <span data-ng-if="event.variableValues[item.index].value == opposingTeam.id">{{ opposingTeam.name }}</span>
+        <span data-ng-if="event.variableValues[item.id].value == team.id">{{ team.name }}</span>
+        <span data-ng-if="event.variableValues[item.id].value == opposingTeam.id">{{ opposingTeam.name }}</span>
 
     </button>
 
@@ -15,8 +15,8 @@
         class="team-dropdown"
         tabindex="{{ item.index }}"
         data-ng-required="item.isRequired"
-        data-ng-hide="event.variableValues[item.index].value"
-        data-ng-model="event.variableValues[item.index].value"
+        data-ng-if="event.variableValues[item.id].value === null"
+        data-ng-model="event.variableValues[item.id].value"
         data-ng-change="event.activeEventVariableIndex = item.index + 1"
         data-ng-focus="event.activeEventVariableIndex = item.index"
         data-focus-on="event.activeEventVariableIndex == item.index"

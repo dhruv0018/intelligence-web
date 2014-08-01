@@ -12,22 +12,22 @@
                 <a data-ng-href="#"><i class="icon icon-share-square-o"></i> Share</a>-->
 
                 <select data-ng-model="dataType">
-                    <option data-ng-if="gameStatus !== 'INDEXED'" value="video"> Raw Film </option>
-                    <option data-ng-if="gameStatus === 'INDEXED'" value="video"> Breakdown </option>
-                    <option value="game-info">
-                        Game Information
-                    </option>
-                    <option data-ng-if="hasStatistics" value="statistics">
-                        Statistics
-                    </option>
-                    <option data-ng-if="hasShotChart" value="shot-chart">
-                        Shot Chart
-                    </option>
-                    <option data-ng-if="hasFormations" value="formation-report">
+                    <option data-ng-if="game.isDelivered()" value="film-breakdown"> Film Breakdown </option>
+                    <option value="raw-film"> Raw Film </option>
+                    <option data-ng-if="hasFormations && game.isDelivered()" value="formation-report">
                         Formation Report
                     </option>
-                    <option data-ng-if="hasDownAndDistance" value="down-distance-report">
+                    <option data-ng-if="hasDownAndDistance && game.isDelivered()" value="down-distance-report">
                         Down, Distance, &amp; Hash Report
+                    </option>
+                    <option data-ng-if="hasShotChart && game.isDelivered()" value="shot-chart">
+                        Shot Chart
+                    </option>
+                    <option data-ng-if="hasStatistics && game.isDelivered()" value="statistics">
+                        Game Statistics
+                    </option>
+                    <option value="game-info">
+                        Game Information
                     </option>
                 </select>
             </div>

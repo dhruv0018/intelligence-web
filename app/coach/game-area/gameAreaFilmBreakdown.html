@@ -1,10 +1,10 @@
-<div ng-if="gameStatus === 'INDEXED'" class="game-area-film-filters">
+<div class="game-area-film-filters">
     <div class="play-count pull-left">
         Viewing: All Plays ({{plays.length}})
-
-        <!--<span class="playall"><i class="icon icon-play-sign"></i> Play All</span>-->
     </div>
-    <div class="filter-dropdown pull-left dropdown">
+
+    <div class="filter-dropdown pull-left dropdown"  data-is-open="filterMenu.isOpened">
+
         <a class="dropdown-toggle">
             Filter Plays
             <i class="icon icon-chevron-down"></i>
@@ -19,7 +19,7 @@
             Clear
         </a>
 
-        <ul data-ng-click="$event.stopPropagation();" class="dropdown-menu">
+        <ul class="dropdown-menu">
             <li>
                 <div>
                     <a class="btn" data-ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
@@ -41,10 +41,10 @@
             <li>
                 <div data-ng-repeat="(key,value) in filtersetCategories">
                     <div data-ng-repeat="(innerkey, innerValue) in value.subFilters">
-                        <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="dropdown-toggle btn"  data-ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
+                        <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  data-ng-class="{'child': (innerValue.parent !== null), 'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
-                        <a data-ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" data-ng-if="innerValue.customFilter" class="dropdown-toggle btn btn-default" data-ng-click="setFilter(innerValue)">
+                        <a data-ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" data-ng-if="innerValue.customFilter" class="btn" data-ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id, innerValue.playerId))}" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
                     </div>
@@ -55,9 +55,9 @@
 </div>
 
 <div class="game-area-film">
-        <aside data-ng-if="gameStatus === 'INDEXED'"  class="sidebar">
+        <aside class="playlist">
 
-          <krossover-plays data-expand-all="expandAll" data-data="data" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-league="data.league" data-videoplayer="VideoPlayer"></krossover-plays>
+          <krossover-plays data-expand-all="expandAll" data-game="game" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="data.teamPlayers" data-opposing-team-players="data.opposingTeamPlayers" data-league="data.league" data-videoplayer="VideoPlayer"></krossover-plays>
 
 
           <div class="expandrow">
@@ -68,7 +68,7 @@
           <no-results data-ng-hide="plays.length"></no-results>
         </aside>
 
-        <div class="player" data-ng-class="{'breakdown-player':(gameStatus === 'INDEXED')}">
+        <div class="player breakdown-player">
             <x-krossover-videoplayer></x-krossover-videoplayer>
         </div>
 </div>

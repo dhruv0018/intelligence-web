@@ -2,16 +2,17 @@
 
     <a
         class="text"
-        data-ng-show="event.variableValues[item.index].value"
-        data-ng-click="event.variableValues[item.index].value = null"
-    >{{ event.variableValues[item.index].value }}</a>
+        data-ng-if="event.variableValues[item.id].value !== null"
+        data-ng-click="event.variableValues[item.id].value = null"
+    >{{ event.variableValues[item.id].value }}</a>
 
     <input
         class="text"
         tabindex="{{ item.index }}"
         data-ng-required="item.isRequired"
-        data-ng-hide="event.variableValues[item.index].value"
+        data-ng-if="event.variableValues[item.id].value === null"
         data-ng-model="variable.value"
+        data-ng-blur="event.variableValues[item.id].value = variable.value"
         data-ng-focus="event.activeEventVariableIndex = item.index"
         data-focus-on="event.activeEventVariableIndex === item.index"
         data-focus-when="{{autoAdvance}}"

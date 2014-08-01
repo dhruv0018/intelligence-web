@@ -167,9 +167,7 @@ Teams.filter('visiblePlanOrPackage', [
                 }
 
                 if (typeof planOrPackage.endDate !== 'undefined' &&
-                    planOrPackage.endDate.getYear() >= currentDate.getYear() &&
-                    planOrPackage.endDate.getMonth() >= currentDate.getMonth() &&
-                    planOrPackage.endDate.getDate() >= currentDate.getDate()) {
+                    planOrPackage.endDate >= currentDate) {
 
                     planOrPackage.unfilteredId = i;
                     filteredItems.push(planOrPackage);

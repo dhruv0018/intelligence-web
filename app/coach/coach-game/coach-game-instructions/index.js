@@ -56,8 +56,8 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', '$localStorage', 'GAME_STATUSES', 'GamesFactory',
-    function controller($scope, $state, $localStorage, GAME_STATUSES, games) {
+    '$scope', '$state', 'GAME_STATUSES', 'GamesFactory',
+    function controller($scope, $state, GAME_STATUSES, games) {
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;
 
@@ -77,6 +77,13 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
         $scope.save = function() {
             $scope.data.game.status = $scope.statusBuffer;
+
+            if ($scope.data.game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
+                $scope.data.game.submittedAt = new Date().toISOString();
+            } else {
+                $scope.data.game.submittedAt = null;
+            }
+
             $scope.data.game.save().then(function(game) {
                 $scope.isBreakdownChoiceMade = true;
             });
