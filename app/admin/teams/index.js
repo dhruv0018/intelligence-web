@@ -334,7 +334,7 @@ Teams.controller('TeamController', [
         $scope.findSchoolsByName = function() {
             if ($scope.schoolName.length >= 3) {
                 return schoolsFactory.query({name: $scope.schoolName}).then(function(schools) {
-                    return schools;
+                    return $filter('limitTo')($filter('orderBy')(schools, 'name'), 10);
                 });
             }
         };
