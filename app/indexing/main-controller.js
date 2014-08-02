@@ -231,8 +231,11 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.nextable = function() {
 
+            /* If not indexing or the tags are showing. */
+            if (!indexing.isIndexing || indexing.showTags) return false;
+
             /* If there are variables in the current event. */
-            if (indexing.isIndexing && event.hasVariables()) {
+            else if (event.hasVariables()) {
 
                 /* Make sure all of the variables have values. */
                 return event.allEventVariablesHaveValues();
