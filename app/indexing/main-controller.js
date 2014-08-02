@@ -144,8 +144,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                     if (self.savable()) self.save();
                     else if (self.nextable()) self.next();
-
-                    self.step();
+                    else self.step();
                 }
 
                 else if (indexing.isReady) self.index();
