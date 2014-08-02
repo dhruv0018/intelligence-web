@@ -221,14 +221,13 @@ Indexing.controller('Indexing.Main.Controller', [
         this.nextable = function() {
 
             /* If there are variables in the current event. */
-            if (event.hasVariables()) {
+            if (indexing.isIndexing && event.hasVariables()) {
 
                 /* Make sure all of the variables have values. */
                 return event.allEventVariablesHaveValues();
             }
 
-            /* Otherwise; assume the session can be advanced. */
-            else return true;
+            else return false;
         };
 
         /**
