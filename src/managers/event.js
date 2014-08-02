@@ -56,7 +56,7 @@ IntelligenceWebClient.service('EventManager', [
             var tag = this.tags[tagId];
 
             /* Check if the tag has tag variables. */
-            return !!tag.tagVariables.length;
+            return !!Object.keys(tag.tagVariables).length;
         };
 
         /**
