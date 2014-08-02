@@ -4,7 +4,26 @@
         class="player-dropdown"
         data-ng-if="event.variableValues[item.id].value !== null"
         data-ng-click="event.variableValues[item.id].value = null"
-    >{{ players[event.variableValues[item.id].value].firstName }} {{ players[event.variableValues[item.id].value].lastName }}</button>
+    >
+
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+
+            <rect data-ng-if="indexedTeamPlayers[event.variableValues[item.id].value]" data-ng-attr-fill="{{ game.primaryJerseyColor }}" x="0" y="0" width="16px" height="16px" />
+            <rect data-ng-if="indexedOpposingTeamPlayers[event.variableValues[item.id].value]" data-ng-attr-fill="{{ game.opposingPrimaryJerseyColor }}" x="0" y="0" width="16px" height="16px" />
+
+        </svg>
+
+        <span class="jersey-number" data-ng-if="indexedTeamPlayers[event.variableValues[item.id].value]">
+            {{ indexedTeamPlayers[event.variableValues[item.id].value].jerseyNumbers[teamRoster.id] }}
+        </span>
+
+        <span class="jersey-number" data-ng-if="indexedOpposingTeamPlayers[event.variableValues[item.id].value]">
+            {{ indexdedOpposingTeamPlayers[event.variableValues[item.id].value].jerseyNumbers[opposingTeamRoster.id] }}
+        </span>
+
+        {{ players[event.variableValues[item.id].value].firstName }} {{ players[event.variableValues[item.id].value].lastName }}
+
+    </button>
 
     <input
         type="text"
