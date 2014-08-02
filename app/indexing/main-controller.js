@@ -144,6 +144,8 @@ Indexing.controller('Indexing.Main.Controller', [
 
                     if (self.savable()) self.save();
                     else if (self.nextable()) self.next();
+
+                    self.step();
                 }
 
                 else if (indexing.isReady) self.index();
@@ -192,6 +194,15 @@ Indexing.controller('Indexing.Main.Controller', [
 
             indexing.showTags = false;
             indexing.showScript = true;
+        };
+
+        /**
+         * Steps the current variable.
+         */
+        this.step = function() {
+
+            /* Move to the next event variable. */
+            event.current.activeEventVariableIndex++;
         };
 
         /**
