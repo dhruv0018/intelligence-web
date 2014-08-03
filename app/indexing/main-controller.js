@@ -285,9 +285,10 @@ Indexing.controller('Indexing.Main.Controller', [
                 $scope.VideoPlayer.play();
             }
 
-            /* If the first variable is empty. */
-            else if (event.current.activeEventVariableIndex === 1 &&
-               !event.activeEventVariableValue()) {
+            /* If the event doesn't have variables of If the first variable is empty. */
+            else if (!event.hasVariables() ||
+                     (event.current.activeEventVariableIndex === 1 &&
+                     !event.activeEventVariableValue())) {
 
                 /* Remove the event from the play. */
                 play.removeEvent(event.current);
