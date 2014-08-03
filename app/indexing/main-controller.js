@@ -240,7 +240,7 @@ Indexing.controller('Indexing.Main.Controller', [
                 return event.allEventVariablesHaveValues();
             }
 
-            else return false;
+            else return true;
         };
 
         /**
