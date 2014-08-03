@@ -3,7 +3,7 @@
     <a
         class="text"
         data-ng-if="event.variableValues[item.id].value !== null"
-        data-ng-click="event.variableValues[item.id].value = null"
+        data-ng-click="reset()"
     >{{ event.variableValues[item.id].value }}</a>
 
     <input
@@ -12,7 +12,7 @@
         data-ng-required="item.isRequired"
         data-ng-if="event.variableValues[item.id].value === null"
         data-ng-model="variable.value"
-        data-ng-blur="event.variableValues[item.id].value = variable.value"
+        data-ng-blur="event.variableValues[item.id].value = variable.value ? variable.value : previousValue"
         data-ng-focus="event.activeEventVariableIndex = item.index"
         data-focus-on="event.activeEventVariableIndex === item.index"
         data-focus-when="{{autoAdvance}}"

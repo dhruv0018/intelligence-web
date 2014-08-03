@@ -3,7 +3,7 @@
     <button
         class="player-dropdown"
         data-ng-if="event.variableValues[item.id].value !== null"
-        data-ng-click="event.variableValues[item.id].value = null"
+        data-ng-click="reset()"
     >
 
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
@@ -33,6 +33,7 @@
         data-ng-if="event.variableValues[item.id].value === null"
         data-ng-model="selectedPlayer"
         data-ng-change="event.activeEventVariableIndex = item.index + 1"
+        data-ng-blur="event.variableValues[item.id].value = event.variableValues[item.id].value ? event.variableValues[item.id].value : previousValue"
         data-ng-focus="event.activeEventVariableIndex = item.index"
         data-focus-on="event.activeEventVariableIndex == item.index"
         data-focus-when="{{autoAdvance}}"

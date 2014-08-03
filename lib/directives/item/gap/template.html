@@ -4,7 +4,7 @@
         class="gap"
         data-ng-id="event.variableValues[item.id].value"
         data-ng-if="event.variableValues[item.id].value !== null"
-        data-ng-click="event.variableValues[item.id].value = null"
+        data-ng-click="reset()"
     >{{ GAPS[GAP_IDS[event.variableValues[item.id].value]].name }}</button>
 
     <select
@@ -14,6 +14,7 @@
         data-ng-if="event.variableValues[item.id].value === null"
         data-ng-model="event.variableValues[item.id].value"
         data-ng-change="event.activeEventVariableIndex = item.index + 1"
+        data-ng-blur="event.variableValues[item.id].value = event.variableValues[item.id].value ? event.variableValues[item.id].value : previousValue"
         data-ng-focus="event.activeEventVariableIndex = item.index"
         data-focus-on="event.activeEventVariableIndex == item.index"
         data-focus-when="{{autoAdvance}}"
