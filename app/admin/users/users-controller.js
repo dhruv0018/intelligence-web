@@ -44,6 +44,12 @@ Users.controller('Users.Users.Controller', [
                 $scope.users = users;
             });
         };
+
+        $scope.goToAs = function(user) {
+            session.previousUser = angular.copy(session.currentUser);
+            session.currentUser = user;
+            $state.go('contact-info');
+        };
     }
 ]);
 
