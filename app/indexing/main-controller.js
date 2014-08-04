@@ -273,10 +273,14 @@ Indexing.controller('Indexing.Main.Controller', [
             if (indexing.eventSelected) {
 
                 indexing.eventSelected = false;
+                indexing.showTags = true;
+                indexing.showScript = false;
+                indexing.isIndexing = true;
+                $scope.VideoPlayer.play();
             }
 
             /* If the tags are showing. */
-            if (indexing.showTags) {
+            else if (indexing.showTags) {
 
                 /* Drop back into not indexing state. */
                 indexing.showTags = false;
