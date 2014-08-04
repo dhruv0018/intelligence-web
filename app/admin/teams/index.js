@@ -26,6 +26,7 @@ Teams.run([
         $templateCache.put('team-info.html', require('./team-info.html'));
         $templateCache.put('team-plans.html', require('./team-plans.html'));
         $templateCache.put('team-members.html', require('./team-members.html'));
+        $templateCache.put('school-dropdown-input.html', require('./school-dropdown-input.html'));
     }
 ]);
 

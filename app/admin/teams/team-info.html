@@ -23,7 +23,8 @@
                data-typeahead-on-select="updateTeamAddress($item)"
                data-typeahead-wait-ms="2000"
                data-typeahead-loading="loading"
-               data-typeahead="school.name for school in findSchoolsByName() | filter: {name: $viewValue}">
+               data-typeahead-template-url="school-dropdown-input.html"
+               data-typeahead="school for school in findSchoolsByName() | filter: {name: $viewValue}">
 
         <a class="btn btn-link" data-ui-sref="school">add a new school</a>
 
