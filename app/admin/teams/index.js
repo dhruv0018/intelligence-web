@@ -152,7 +152,7 @@ Teams.filter('visiblePlanOrPackage', [
 
         return function visiblePlanOrPackageFilter(planOrPackageArray) {
 
-            var currentDate = newDate.generate();
+            var currentDate = newDate.generateNow();
             var teamPackageOrPlan;
 
             planOrPackageArray = planOrPackageArray || [];
@@ -162,8 +162,8 @@ Teams.filter('visiblePlanOrPackage', [
                 planOrPackage = planOrPackageArray[i];
 
                 if (typeof planOrPackage.endDate === 'string') {
-                    planOrPackage.endDate = newDate.generate(planOrPackage.endDate);
-                    planOrPackage.startDate = newDate.generate(planOrPackage.startDate);
+                    planOrPackage.endDate = newDate.generatePlanEndDate(planOrPackage.endDate);
+                    planOrPackage.startDate = newDate.generatePlanStartDate(planOrPackage.startDate);
                 }
 
                 if (typeof planOrPackage.endDate !== 'undefined' &&
