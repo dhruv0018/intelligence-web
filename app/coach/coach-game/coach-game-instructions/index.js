@@ -72,6 +72,7 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         });
 
         $scope.switchChoice = function() {
+            $scope.statusBuffer = ($scope.data.game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
             $scope.isBreakdownChoiceMade = false;
         };
 
