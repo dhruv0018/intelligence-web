@@ -23,8 +23,8 @@ Game.run([
  * @type {service}
  */
 Game.service('Indexer.Game.Data.Dependencies', [
-    'Indexer.Games.Data.Dependencies', 'SchoolsFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'UsersFactory',
-    function(data, schools, teams, leagues, sports, users) {
+    'Indexer.Games.Data.Dependencies', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'UsersFactory',
+    function(data, teams, leagues, sports, users) {
 
         var Data = {
 
@@ -32,7 +32,6 @@ Game.service('Indexer.Game.Data.Dependencies', [
             teams: teams.load(),
             leagues: leagues.load(),
             sports: sports.load(),
-            schools: schools.load(),
             users: users.load()
         };
 

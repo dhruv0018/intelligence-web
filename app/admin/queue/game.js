@@ -29,14 +29,13 @@ Game.run([
  * @type {service}
  */
 Game.service('Admin.Game.Data.Dependencies', [
-    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function(ROLE_TYPE, sports, leagues, schools, teams, games, users) {
+    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory','TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(ROLE_TYPE, sports, leagues, teams, games, users) {
 
         var Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
-            schools: schools.load(),
             teams: teams.load(),
             games: games.load(),
             users: users.load(),
@@ -100,8 +99,8 @@ Game.config([
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal',
-    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal) {
+    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal', 'SchoolsFactory',
+    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal, schools) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -121,7 +120,7 @@ Game.controller('GameController', [
         $scope.league = data.leagues.get($scope.team.leagueId);
         $scope.sport = data.sports.get($scope.league.sportId);
         if ($scope.team.schoolId) {
-            $scope.school = data.schools.get($scope.team.schoolId);
+            $scope.school = schools.fetch($scope.team.schoolId);
         }
         $scope.users = data.users.getList();
 

@@ -402,8 +402,8 @@ Teams.controller('TeamsController', [
 
         $scope.teams = data.teams.getList();
 
-        //$scope.sports = data.sports.getList();
-//        $scope.indexedSports = data.sports.getCollection();
+        $scope.sports = data.sports.getList();
+        $scope.indexedSports = data.sports.getCollection();
 
         $scope.leagues = data.leagues.getList();
         $scope.indexedLeagues = data.leagues.getCollection();
