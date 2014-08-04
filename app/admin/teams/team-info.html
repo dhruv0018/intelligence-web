@@ -21,7 +21,8 @@
         <input class="form-control"
                placeholder="School Name" data-ng-model="schoolName"
                data-typeahead-on-select="updateTeamAddress($item)"
-               data-typeahead-wait-ms="2000"
+               data-typeahead-wait-ms="200"
+               data-typeahead-min-length="3"
                data-typeahead-loading="loading"
                data-typeahead-template-url="school-dropdown-input.html"
                data-typeahead="school for school in findSchoolsByName() | filter: {name: $viewValue}">

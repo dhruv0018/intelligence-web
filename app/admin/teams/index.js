@@ -330,11 +330,9 @@ Teams.controller('TeamController', [
         });
 
         $scope.findSchoolsByName = function() {
-            if ($scope.schoolName.length >= 3) {
-                return schoolsFactory.query({name: $scope.schoolName}).then(function(schools) {
-                    return $filter('limitTo')($filter('orderBy')(schools, 'name'), 10);
-                });
-            }
+            return schoolsFactory.query({name: $scope.schoolName, count: 10}).then(function(schools) {
+                return $filter('orderBy')(schools, 'name');
+            });
         };
 
         $scope.onlyCurrentRoles = function(role) {

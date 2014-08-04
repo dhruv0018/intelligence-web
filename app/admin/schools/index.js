@@ -95,8 +95,8 @@ Schools.config([
 ]);
 
 Schools.service('Schools.Data.Dependencies', [
-    'TeamsFactory', 'SchoolsFactory',
-    function(teams, schools) {
+    'TeamsFactory',
+    function(teams) {
 
         var Data = {};
 
@@ -116,8 +116,8 @@ Schools.service('Schools.Data.Dependencies', [
  * @type {Controller}
  */
 Schools.controller('SchoolController', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'Schools.Data',
-    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, data) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'Schools.Data', 'SchoolsFactory',
+    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, data, schools) {
 
         $scope.SCHOOL_TYPES = SCHOOL_TYPES;
 
@@ -125,14 +125,17 @@ Schools.controller('SchoolController', [
         $scope.teams = $scope.teams || [];
 
         if ($stateParams.id) {
-            $scope.school = data.schools.get($stateParams.id);
+            schools.fetch($stateParams.id).then(function(school) {
+                $scope.school = school;
+            });
+
             data.teams.query({ school: $scope.school.id}).then(function(queriedTeams) {
                 $scope.teams = queriedTeams;
             });
         }
 
         $scope.save = function(school) {
-            data.schools.save(school).then(function() {
+            schools.save(school).then(function() {
                 $state.go('schools');
             });
         };
@@ -146,17 +149,17 @@ Schools.controller('SchoolController', [
  * @type {Controller}
  */
 Schools.controller('SchoolsController', [
-    '$rootScope', '$scope', '$state', 'Schools.Data',
-    function controller($rootScope, $scope, $state, data) {
+    '$rootScope', '$scope', '$state', 'Schools.Data', 'SchoolsFactory',
+    function controller($rootScope, $scope, $state, data, schools) {
 
-        $scope.schools = data.schools.getList();
+        $scope.schools = [];
 
         $scope.add = function() {
             $state.go('school-info');
         };
 
         $scope.search = function(filter) {
-            data.schools.query(filter,
+            schools.query(filter,
                 function(schools) {
                     $scope.schools = schools;
                     $scope.noResults = false;
