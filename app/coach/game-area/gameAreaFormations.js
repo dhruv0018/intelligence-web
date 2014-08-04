@@ -62,6 +62,17 @@ GameAreaFormations.controller('GameAreaFormationsController', [
         $scope.opposingTeamPlayers = data.opposingTeamPlayers;
         $scope.report = data.formationReport;
 
+        $scope.myTeam = 'true';
+        $scope.$watch('myTeam', function(myTeam) {
+            if ($scope.myTeam == 'true') {
+                $scope.teamId = $scope.game.teamId;
+                $scope.opposingTeamId = $scope.game.opposingTeamId;
+            } else if ($scope.myTeam == 'false') {
+                $scope.teamId = $scope.game.opposingTeamId;
+                $scope.opposingTeamId = $scope.game.teamId;
+            }
+        });
+
         $scope.redzone = 'false';
         $scope.$watch('redzone', function(redzone) {
             $scope.isRedZone = $scope.redzone === 'true';
