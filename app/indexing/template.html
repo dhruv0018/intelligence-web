@@ -2,7 +2,7 @@
 
     <main class="content-full">
 
-        <div class="alert-editing" data-ng-show="indexing.eventSelected"><button class="btn-delete-event" data-ng-click="main.deleteEvent(event.current)"><i class="icon icon-remove"></i> Delete Event</button></div>
+        <button class="btn-delete-event" data-ng-if="indexing.eventSelected" data-ng-click="main.deleteEvent(event.current)"><i class="icon icon-remove"></i> Delete Event</button>
 
         <button class="btn-back" data-ng-if="indexing.isIndexing" data-ng-click="main.back()">Back (Esc)</button>
 
