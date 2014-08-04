@@ -9,7 +9,7 @@
                 <header class="box-header col-md-12">
 
                     <h3 class="box-title">Choose one of the following options</h3>
-                    <x-button-continue data-ng-disabled="isBreakdownChoiceMade" data-ng-class="disabled : isBreakdownChoiceMade">Save and Submit</x-button-continue>
+                    <x-button-continue data-ng-disabled="isBreakdownChoiceMade">Save and Submit</x-button-continue>
 
                 </header>
                 <div class="box-body col-md-12">
@@ -139,8 +139,7 @@
 
         </div>
 
-        <x-button-continue data-ng-if="!isBreakdownChoiceMade" data-ng-disabled="statusBuffer < 0 || formInstructions.$invalid">Save and Submit</x-button-continue>
-        <x-button-continue class="disabled" data-ng-if="isBreakdownChoiceMade">Save and Submit</x-button-continue>
+        <x-button-continue data-ng-disabled="isBreakdownChoiceMade">Save and Submit</x-button-continue>
 
     </div>
 
