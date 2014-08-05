@@ -66,9 +66,19 @@ Game.config([
             },
             resolve: {
                 'Admin.Game.Data': [
-                    '$q', 'Admin.Game.Data.Dependencies',
-                    function($q, data) {
-                        return $q.all(data);
+                    '$q', '$stateParams', 'Admin.Game.Data.Dependencies', 'SchoolsFactory',
+                    function($q, $stateParams, data, schools) {
+
+                        return $q.all(data).then(function(data) {
+                            var game = data.games.get($stateParams.id);
+                            var team = data.teams.get(game.teamId);
+
+                            if (team.schoolId) {
+                                data.school = schools.fetch(team.schoolId);
+                            }
+
+                            return $q.all(data);
+                        });
                     }
                 ]
             },
@@ -99,8 +109,8 @@ Game.config([
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal', 'SchoolsFactory',
-    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal, schools) {
+    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal',
+    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -119,9 +129,11 @@ Game.controller('GameController', [
         $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
         $scope.league = data.leagues.get($scope.team.leagueId);
         $scope.sport = data.sports.get($scope.league.sportId);
-        if ($scope.team.schoolId) {
-            $scope.school = schools.fetch($scope.team.schoolId);
+
+        if (data.school) {
+            $scope.school = data.school;
         }
+
         $scope.users = data.users.getList();
 
         var headCoachRole = $scope.team.getHeadCoachRole();
