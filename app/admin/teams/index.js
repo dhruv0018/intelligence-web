@@ -284,7 +284,6 @@ Teams.controller('TeamController', [
 
         var team;
         $scope.schoolName = '';
-        $scope.loading = {};
 
         $scope.updateTeamAddress = function($item) {
             if ($item) {
