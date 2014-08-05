@@ -91,7 +91,7 @@ IntelligenceWebClient.service('EventManager', [
             var tagVariables = tag.tagVariables;
             var tagVariable = tagVariables[index];
 
-            this.current.variableValues[tagVariable.id].value = null;
+            this.current.variableValues[tagVariable.id].value = undefined;
         };
 
         /**

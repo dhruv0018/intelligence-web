@@ -2,9 +2,10 @@
 
     <button
         class="dropdown"
-        data-ng-if="event.variableValues[item.id].value !== null"
+        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
         data-ng-click="reset()"
-    >{{ event.variableValues[item.id].value }}</button>
+        onclick="console.log(this.nextSibling)"
+    >{{ event.variableValues[item.id].value || 'Optional' }}</button>
 
     <input
         size="3"
@@ -13,7 +14,7 @@
         placeholder="Select"
         tabindex="{{ item.index }}"
         data-ng-required="item.isRequired"
-        data-ng-if="event.variableValues[item.id].value === null"
+        data-ng-if="isUndefined(event.variableValues[item.id].value)"
         data-ng-model="variable.value"
         data-ng-blur="event.variableValues[item.id].value = variable.value ? variable.value : previousValue"
         data-ng-focus="event.activeEventVariableIndex = item.index"

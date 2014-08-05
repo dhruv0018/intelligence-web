@@ -2,15 +2,15 @@
 
     <button
         class="zone"
-        data-ng-if="event.variableValues[item.id].value !== null"
+        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
         data-ng-click="reset()"
-    >{{ ZONES[ZONE_IDS[event.variableValues[item.id].value]].name }}</button>
+    >{{ ZONES[ZONE_IDS[event.variableValues[item.id].value]].name || 'Optional' }}</button>
 
     <select
         class="zone"
         tabindex="{{ item.index }}"
         data-ng-required="item.isRequired"
-        data-ng-if="event.variableValues[item.id].value === null"
+        data-ng-if="isUndefined(event.variableValues[item.id].value)"
         data-ng-model="event.variableValues[item.id].value"
         data-ng-change="event.activeEventVariableIndex = item.index + 1"
         data-ng-blur="event.variableValues[item.id].value = event.variableValues[item.id].value ? event.variableValues[item.id].value : previousValue"
