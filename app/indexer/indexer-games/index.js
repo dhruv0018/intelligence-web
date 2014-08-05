@@ -86,8 +86,8 @@ Games.service('Indexer.Games.Data.Dependencies', [
  * @type {Controller}
  */
 Games.controller('indexer-games.Controller', [
-    '$scope', '$state', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'GAME_STATUSES',
-    function controller($scope, $state, GAME_TYPES, teams, leagues, games, users, session, data, GAME_STATUSES) {
+    '$scope', '$state', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
+    function controller($scope, $state, GAME_TYPES, teams, leagues, games, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.sports = data.sports.getCollection();
@@ -98,15 +98,13 @@ Games.controller('indexer-games.Controller', [
         $scope.userId = session.currentUser.id;
 
         var role = session.currentUser.currentRole;
-        console.log(role);
         $scope.userLocation = role.indexerGroupId;
-        console.log($scope.userLocation);
 
-        if ($scope.userLocation === 1) {
+        if ($scope.userLocation === INDEXER_GROUPS.US_MARKETPLACE) {
             $scope.signUpLocation = 'https://docs.google.com/a/krossover.com/spreadsheet/viewform?formkey=dFFlTUxoZk1SdEFHZmxBVkVCTkhpV3c6MQ#gid=0';
-        } else if ($scope.userLocation === 2 || $scope.userLocation === 3) {
+        } else if ($scope.userLocation === INDEXER_GROUPS.INDIA_MARKETPLACE || $scope.userLocation === INDEXER_GROUPS.INDIA_OFFICE) {
             $scope.signUpLocation = 'https://docs.google.com/a/krossover.com/forms/d/11sO_s9rf9a1gZvtQ5spykOzLfzRC6pFop99z4KBZ8pg/viewform';
-        } else if ($scope.userLocation === 4) {
+        } else if ($scope.userLocation === INDEXER_GROUPS.PHILIPPINES_OFFICE) {
             $scope.userLocation = 'https://docs.google.com/a/krossover.com/spreadsheet/viewform?formkey=dEN0MXFObTNDSXN3b013SHF3cFdpOEE6MA#gid=0';
         }
 
