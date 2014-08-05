@@ -1,4 +1,4 @@
-var PAGE_SIZE = 10000;
+var PAGE_SIZE = 100;
 
 var package = require('../../package.json');
 
