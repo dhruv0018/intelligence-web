@@ -1,3 +1,4 @@
-<div class="rolebar {{roleClassName}}" data-ng-class="{'goToAs': (session.previousUser)}">
-    <p data-ng-if="session.previousUser">You are logged in as: Blah</p>
+<div class="rolebar {{roleClassName}}" data-ng-class="{'go-to-as': (session.previousUser)}">
+    <span class="current-state" data-ng-if="session.previousUser">You are logged in as: {{session.currentUser.firstName}}{{session.currentUser.lastName}} ({{session.currentUser.currentRole.type.name}})</span>
+    <button data-ng-click="returnToPreviousUser()" data-ng-if="session.previousUser" class="btn btn-default return-to-previous-user">Return to {{session.previousUser.currentRole.type.name}}</button>
 </div>
