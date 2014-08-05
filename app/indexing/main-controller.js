@@ -64,6 +64,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
+        $scope.videoTitle = 'indexing';
 
         indexing.reset($scope.game, data.plays);
         tags.reset($scope.tagset);

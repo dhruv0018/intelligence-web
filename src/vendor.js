@@ -15,10 +15,5 @@ require('flow/src/directives/init');
 require('flow/src/directives/events');
 require('flow/src/directives/transfers');
 require('flow/src/directives/img');
-require('videogular/videogular');
-require('videogular-controls/controls');
-require('videogular-buffering/buffering');
-require('videogular-overlay-play/overlay-play');
-require('videogular-poster/poster');
 require('Mousetrap');
 
