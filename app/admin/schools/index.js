@@ -65,9 +65,15 @@ Schools.config([
                 },
                 resolve: {
                     'Schools.Data': [
-                        '$q', 'Schools.Data.Dependencies',
-                        function($q, data) {
-                            return $q.all(data);
+                        '$stateParams', '$q', 'Schools.Data.Dependencies', 'SchoolsFactory',
+                        function($stateParams, $q, data, schools) {
+                            return $q.all(data).then(function(data) {
+                                if ($stateParams.id) {
+                                    data.school = schools.fetch($stateParams.id);
+                                    data.queryTeams = data.teams.query({ school: $stateParams.id});
+                                }
+                                return $q.all(data);
+                            });
                         }
                     ]
                 }
@@ -81,14 +87,6 @@ Schools.config([
                         templateUrl: 'school-info.html',
                         controller: 'SchoolController'
                     }
-                },
-                resolve: {
-                    'Schools.Data': [
-                        '$q', 'Schools.Data.Dependencies',
-                        function($q, data) {
-                            return $q.all(data);
-                        }
-                    ]
                 }
             });
     }
@@ -116,8 +114,8 @@ Schools.service('Schools.Data.Dependencies', [
  * @type {Controller}
  */
 Schools.controller('SchoolController', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'Schools.Data', 'SchoolsFactory',
-    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, data, schools) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'Schools.Data',
+    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, data) {
 
         $scope.SCHOOL_TYPES = SCHOOL_TYPES;
 
@@ -125,19 +123,13 @@ Schools.controller('SchoolController', [
         $scope.teams = $scope.teams || [];
 
         if ($stateParams.id) {
-            schools.fetch($stateParams.id).then(function(school) {
-                $scope.school = school;
-            });
-
-            data.teams.query({ school: $scope.school.id}).then(function(queriedTeams) {
-                $scope.teams = queriedTeams;
-            });
+            $scope.school = data.school;
+            $scope.teams = data.queryTeams;
         }
 
         $scope.save = function(school) {
-            schools.save(school).then(function() {
-                $state.go('schools');
-            });
+            school.save();
+            $state.go('schools');
         };
     }
 ]);
