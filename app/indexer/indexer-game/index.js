@@ -61,10 +61,18 @@ Game.config([
                 },
                 resolve: {
                     'Indexer.Game.Data': [
-                        '$q', '$stateParams', 'Indexer.Game.Data.Dependencies',
-                        function($q, $stateParams, data) {
+                        '$q', '$stateParams', 'Indexer.Game.Data.Dependencies', 'SchoolsFactory',
+                        function($q, $stateParams, data, schools) {
+                            return $q.all(data).then(function(data) {
+                                var game = data.games.get($stateParams.id);
+                                var team = data.teams.get(game.teamId);
 
-                            return $q.all(data);
+                                if (team.schoolId) {
+                                    data.school = schools.fetch(team.schoolId);
+                                }
+
+                                return $q.all(data);
+                            });
                         }
                     ]
                 },
