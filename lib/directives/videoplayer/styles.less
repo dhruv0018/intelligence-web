@@ -185,10 +185,13 @@ data-vg-timedisplay {
 }
 
 data-vg-scrubbar {
-    width: auto;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
     display: table-cell;
     cursor: pointer;
-    background-color: @brand-blue;
+    background-color: rgb(24,121,181);
 }
 
 data-vg-scrubBarCurrentTime {
@@ -196,7 +199,7 @@ data-vg-scrubBarCurrentTime {
     height: 50px;
     display: block;
     cursor: pointer;
-    border-right: 3px solid red;
+    border-right: 7px solid red;
 }
 
 data-vg-volume {
