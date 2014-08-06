@@ -114,8 +114,8 @@ Schools.service('Schools.Data.Dependencies', [
  * @type {Controller}
  */
 Schools.controller('SchoolController', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'Schools.Data',
-    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, data) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'Schools.Data', 'SchoolsFactory',
+    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, data, schools) {
 
         $scope.SCHOOL_TYPES = SCHOOL_TYPES;
 
@@ -128,8 +128,9 @@ Schools.controller('SchoolController', [
         }
 
         $scope.save = function(school) {
-            school.save();
-            $state.go('schools');
+            schools.save(school).then(function() {
+                $state.go('schools');
+            });
         };
     }
 ]);
