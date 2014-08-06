@@ -3,11 +3,14 @@
 .login {
 
     display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
 
-    .icon-krossover-logo-tagline {
+    .icon-krossover-logo {
 
         width: 447px;
         height: 109px;
@@ -15,32 +18,104 @@
         margin-bottom: 20px;
         background-size: contain;
         background-position: center center;
+        margin: auto;
+        display: table-caption;
     }
 
-    .form-field-login {
-
-        .form-control;
-        .input-lg;
-        box-sizing: content-box;
-        border-width: 3px;
-        padding: 15px 20px;
-        height: 36px;
-        font-size: 26px;
+    h1 {
+        margin-top: 5px;
+        margin-bottom: 5px;
         font-weight: 400;
-        letter-spacing: -0.01em;
+        color: black;
+    }
 
-        &.ng-dirty {
+    .newLogin {
 
-            &.ng-invalid-notfound:focus
-            &.ng-invalid-password:focus {
+        width: 49%;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        padding-right: 50px;
 
-                border-color: red;
+        .tempLoginBox {
+            border: thin solid @gray-border;
+            padding: 30px;
+            letter-spacing: normal;
+            margin-top: 40px;
+        }
+
+        .form-field-login {
+
+            .form-control;
+            .input-lg;
+            width: 90%;
+            box-sizing: content-box;
+            border-width: 3px;
+            padding: 15px 20px;
+            height: 36px;
+            font-size: 26px;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+
+            &.ng-dirty {
+
+                &.ng-invalid-notfound:focus
+                &.ng-invalid-password:focus {
+
+                    border-color: red;
+                }
+
+                &.ng-invalid-notfound:focus + .error,
+                &.ng-invalid-password:focus + .error {
+
+                    .show;
+                }
+            }
+        }
+    }
+
+    .oldLogin {
+
+        width: 49%;
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: 50px;
+
+        .oldBox {
+            padding: 30px;
+            padding-top: 55px;
+            height: 476px;
+            border: thin solid @gray-border;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 400;
+            letter-spacing: normal;
+            margin-top: 40px;
+
+            div {
+                margin-top: 20px;
             }
 
-            &.ng-invalid-notfound:focus + .error,
-            &.ng-invalid-password:focus + .error {
+            .icon-basketball {
+                margin-top: 30px;
+                font-size: 60px;
+            }
 
-                .show;
+            .icon-lax-sticks {
+
+                width: 140px;
+                height: 70px;
+                background-size: cover;
+                background-position: center center;
+                margin: 0;
+                display: inline-block;
+            }
+
+            button {
+                margin: auto;
+                width: 320px;
+                height: 42px;
+                font-size: 20px;
             }
         }
     }
@@ -59,15 +134,28 @@ and (max-width: 479px) {
     .login {
 
         width: 100%;
+        flex-direction: column;
+        padding: 0;
 
-        .icon-krossover-logo-tagline {
+        .newLogin {
 
-            width: 270px;
+            padding: 0;
+            border: none;
+
+            .icon-krossover-logo {
+
+                width: 270px;
+            }
+
+            .form-field-login {
+
+                width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
+            }
         }
 
-        .form-field-login {
+        .oldLogin {
 
-            width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
+            display: none;
         }
     }
 }

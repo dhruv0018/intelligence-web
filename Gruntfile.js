@@ -108,6 +108,21 @@ module.exports = function(grunt) {
         },
 
 
+        /* Pre-minification */
+
+
+        ngAnnotate: {
+            options: {
+                singleQuotes: true,
+            },
+            prod: {
+                files: {
+                    'build/annotated.js': ['build/bundle.js']
+                }
+            }
+        },
+
+
         /* Minifiers */
 
 
@@ -144,7 +159,7 @@ module.exports = function(grunt) {
             options: require('./.uglifyrc'),
             prod: {
                 files: {
-                    'build/scripts.js': ['build/bundle.js']
+                    'build/scripts.js': ['build/annotated.js']
                 }
             }
         },
@@ -171,8 +186,7 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
-                    'node_modules/bootstrap/less',
-                    'node_modules/font-awesome/less'
+                    'node_modules/bootstrap/less'
                 ]
             },
             theme: {
@@ -230,8 +244,7 @@ module.exports = function(grunt) {
                         builder.use('styles', less({
                             paths: [
                                 'theme',
-                                'node_modules/bootstrap/less',
-                                'node_modules/font-awesome/less'
+                                'node_modules/bootstrap/less'
                             ]
                         }));
                     }
@@ -338,7 +351,7 @@ module.exports = function(grunt) {
                 files: {
                     'public/intelligence/index.html': 'build/index.html',
                     'public/intelligence/styles.css': 'build/styles.css',
-                    'public/intelligence/scripts.js': 'build/bundle.js'
+                    'public/intelligence/scripts.js': 'build/scripts.js'
                 }
             }
         },
@@ -525,6 +538,8 @@ module.exports = function(grunt) {
         'env:qa',
         'componentbuild:prod',
         'browserify:prod',
+        'ngAnnotate',
+        'uglify',
         'componentbuild:styles',
         'less',
         'svgmin',
@@ -545,6 +560,8 @@ module.exports = function(grunt) {
         'env:prod',
         'componentbuild:prod',
         'browserify:prod',
+        'ngAnnotate',
+        'uglify',
         'componentbuild:styles',
         'less',
         'svgmin',

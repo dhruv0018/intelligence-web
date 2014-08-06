@@ -5,7 +5,6 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name, [
     'ngSanitize',
-    'ngStorage',
     'ngResource',
     'flow',
     'ui.router',

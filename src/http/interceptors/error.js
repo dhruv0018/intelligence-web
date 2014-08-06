@@ -9,8 +9,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * Intercepts error responses.
  */
 IntelligenceWebClient.factory('Error.Interceptor', [
-    '$q', '$location', 'ErrorReporter', 'AlertsService', 'TokensService',
-    function factory($q, $location, ErrorReporter, alerts, tokens) {
+    '$q', '$location', 'ErrorReporter', 'AlertsService',
+    function factory($q, $location, ErrorReporter, alerts) {
 
         return {
 

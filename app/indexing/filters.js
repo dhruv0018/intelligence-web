@@ -21,10 +21,14 @@ Indexing.filter('time', [
         return function(time) {
 
             var duration = moment.duration(time, 'seconds');
-            var seconds = duration.seconds();
+            var hours = duration.hours();
             var minutes = duration.minutes();
+            var seconds = duration.seconds();
 
-            return minutes + ':' + seconds;
+            time = minutes + ':' + seconds;
+            time = hours ? hours + ':' + time : time;
+
+            return time;
         };
     }
 ]);
