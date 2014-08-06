@@ -117,6 +117,7 @@ IntelligenceWebClient.service('PlayManager', [
 
             play = play || this.current;
 
+            if (play.isSaving) return;
 
             var playIndex = indexing.plays.indexOf(play);
 
@@ -157,6 +158,8 @@ IntelligenceWebClient.service('PlayManager', [
 
             var play = this.current;
             var playIndex = indexing.plays.indexOf(play);
+
+            play.isSaving = true;
 
             /* Save the play remotely. */
             plays.save(play).then(function(play) {
