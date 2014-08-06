@@ -195,7 +195,7 @@
         <time>{{deliverTime | humanize: 'milliseconds':true}}</time>
 
         <h4>Game length</h4>
-        <time>{{gameLength}}m</time>
+        <time>{{gameLength | humanize: 'seconds'}}</time>
 
         <h4>Time to index:</h4>
         <time data-ng-if="assignedToIndexer && !assignedToQa && indexTime > 0">{{indexTime | humanize: 'milliseconds':true}}</time>
