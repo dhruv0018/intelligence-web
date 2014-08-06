@@ -192,7 +192,7 @@
         <hr>
 
         <h4>Time remaining to deliver</h4>
-        <time>{{deliverTime}}</time>
+        <time>{{deliverTime | humanize: 'milliseconds':true}}</time>
 
         <h4>Game length</h4>
         <time>{{gameLength}}m</time>
