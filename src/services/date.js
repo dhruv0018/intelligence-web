@@ -31,7 +31,7 @@ IntelligenceWebClient.factory('NewDate', function() {
             return new Date(start);
         },
         generatePlanEndDate: function(existingDate) {
-            var dateStringEndTime = dateString(existingDate) + ' ' + '11:59:59';
+            var dateStringEndTime = dateString(existingDate) + ' ' + '23:59:59';
 
             var end = moment.utc(momentTimezone.tz(dateStringEndTime, 'America/New_York').format()).format();
             return new Date(end);
