@@ -102,7 +102,7 @@ Info.controller('Coach.Game.Info.controller', [
                     $scope.headings.scoutingTeam = $scope.teams[$scope.data.game.teamId].name || 'Scouting Team';
                 }
             } catch (e) {
-                console.log('Error:', e);
+                console.error(e);
             }
         };
 
