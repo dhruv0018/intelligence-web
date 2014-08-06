@@ -417,7 +417,7 @@ Teams.controller('TeamsController', [
         };
 
         $scope.findSchoolsByName = function() {
-            return schools.query({name: $scope.filter.school, count: 10}).then(function(schools) {
+            return schools.query({name: $scope.filter.schoolName, count: 10}).then(function(schools) {
                 return $filter('orderBy')(schools, 'name');
             });
         };
