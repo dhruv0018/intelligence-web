@@ -401,8 +401,8 @@ Teams.controller('TeamController', [
  * @type {Controller}
  */
 Teams.controller('TeamsController', [
-    '$rootScope', '$scope', '$state', 'Teams.Data',
-    function controller($rootScope, $scope, $state, data) {
+    '$rootScope', '$scope', '$state', '$filter', 'Teams.Data', 'SchoolsFactory',
+    function controller($rootScope, $scope, $state, $filter, data, schools) {
 
         $scope.teams = data.teams.getList();
 
@@ -414,6 +414,12 @@ Teams.controller('TeamsController', [
 
         $scope.add = function() {
             $state.go('team-info');
+        };
+
+        $scope.findSchoolsByName = function() {
+            return schools.query({name: $scope.filter.school, count: 10}).then(function(schools) {
+                return $filter('orderBy')(schools, 'name');
+            });
         };
 
         $scope.search = function(filter) {
