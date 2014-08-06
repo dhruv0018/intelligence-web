@@ -115,19 +115,8 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.remove = function(play) {
 
-            var self = this;
-
             play = play || this.current;
 
-            /* If the deleted play is the current play. */
-            if (angular.equals(play, self.current)) {
-
-                var event = $injector.get('EventManager');
-
-                self.clear();
-                tags.reset();
-                event.reset();
-            }
 
             var playIndex = indexing.plays.indexOf(play);
 
@@ -143,6 +132,21 @@ IntelligenceWebClient.service('PlayManager', [
 
                 /* Also remove it remotely. */
                 plays.remove(play);
+            }
+
+            /* If the deleted play is the current play. */
+            if (angular.equals(play, this.current)) {
+
+                var event = $injector.get('EventManager');
+
+                indexing.showTags = false;
+                indexing.showScript = false;
+                indexing.isIndexing = false;
+                indexing.eventSelected = false;
+
+                this.clear();
+                tags.reset();
+                event.reset();
             }
         };
 
