@@ -287,9 +287,14 @@ Teams.controller('TeamController', [
 
         $scope.updateTeamAddress = function($item) {
             if ($item) {
-                $scope.team = {
-                    schoolId: $item.id
-                };
+                if (!$scope.team) {
+                    $scope.team = {
+                        schoolId: $item.id
+                    };
+                } else {
+                    $scope.team.schoolId = $item.id;
+                }
+
             }
 
             if ($scope.team && $scope.team.schoolId) {
