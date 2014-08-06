@@ -99,7 +99,7 @@
 
                         </td>
                         <td>
-                            <button data-ng-click="goToAs(user)" class="btn btn-primary">Go To As</button>
+                            <button data-ng-if="user.hasNoRoles() || !user.has([ROLES.SUPER_ADMIN, ROLES.ADMIN])" data-ng-click="goToAs(user)" class="btn btn-primary">Go To As</button>
                         </td>
                     </tr>
 
