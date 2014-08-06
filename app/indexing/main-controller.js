@@ -218,10 +218,19 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.save = function() {
 
-            play.save();
-            play.clear();
+            indexing.showTags = false;
+            indexing.showScript = false;
+            indexing.isIndexing = false;
+            indexing.eventSelected = false;
 
-            this.next();
+            /* Snap video back to time of current event. */
+            $scope.VideoPlayer.seekTime(event.current.time);
+            $scope.VideoPlayer.play();
+
+            play.save(play.current);
+            play.clear();
+            tags.reset();
+            event.reset();
         };
 
         /**

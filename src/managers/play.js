@@ -154,9 +154,10 @@ IntelligenceWebClient.service('PlayManager', [
         /**
          * Saves a play.
          */
-        this.save = function() {
+        this.save = function(play) {
 
-            var play = this.current;
+            play = play || this.current;
+
             var playIndex = indexing.plays.indexOf(play);
 
             play.isSaving = true;
