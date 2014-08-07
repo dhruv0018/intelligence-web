@@ -25,7 +25,7 @@ Indexing.controller('Indexing.Main.Controller', [
         var gameId = Number($stateParams.id);
 
         /* Scope */
-
+        $scope.videoTitle = 'indexing';
         $scope.data = data;
         $scope.tags = tags;
         $scope.play = play;
