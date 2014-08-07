@@ -18,13 +18,7 @@
             </div>
 
             <div class="form-group">
-
-                <select class="form-control" name="team" data-ng-model="role.teamId" data-ng-options="team.id as team.name for team in teamsList | sport:sportId" data-ng-disabled="!sportId" required>
-
-                    <option value="">Team name</option>
-
-                </select>
-
+                <team-typeahead data-team="role.teamId"></team-typeahead>
             </div>
 
             <div class="form-group">

@@ -1,0 +1,11 @@
+<div class="team-typeahead">
+
+    <input class="form-control"
+           type="text"
+           placeholder="Team" data-ng-model="team"
+           data-typeahead-wait-ms="200"
+           data-typeahead-loading="loading"
+           data-typeahead-min-length="3"
+           data-typeahead="team as team.result for team in findTeams() | filter: {result: $viewValue}">
+</div>
+
