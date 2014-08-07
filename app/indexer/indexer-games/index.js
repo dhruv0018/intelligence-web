@@ -101,7 +101,7 @@ Games.controller('indexer-games.Controller', [
 
         if (userLocation === INDEXER_GROUPS.US_MARKETPLACE) {
             $scope.signUpLocation = config.links.indexerSignUp.unitedStates.uri;
-        } else if (userLocation === INDEXER_GROUPS.INDIA_MARKETPLACE || $scope.userLocation === INDEXER_GROUPS.INDIA_OFFICE) {
+        } else if (userLocation === INDEXER_GROUPS.INDIA_MARKETPLACE || userLocation === INDEXER_GROUPS.INDIA_OFFICE) {
             $scope.signUpLocation = config.links.indexerSignUp.india.uri;
         } else if (userLocation === INDEXER_GROUPS.PHILIPPINES_OFFICE) {
             $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
