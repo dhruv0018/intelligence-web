@@ -34,6 +34,11 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                         /* Default the tenureEnd to null. */
                         role.tenureEnd = role.tenureEnd || null;
+
+                        //TODO hotfixed, to be properly fixed later
+                        role.type = {
+                            id: role.type
+                        };
                     });
                 }
                 /* Convert the last accessed string to a date object. */

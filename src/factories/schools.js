@@ -26,6 +26,20 @@ IntelligenceWebClient.factory('SchoolsFactory', [
             storage: SchoolsStorage,
 
             resource: SchoolsResource,
+
+            extend: function(school) {
+                var self = this;
+
+                //todo hotfixed but we should convert it to a real fix later
+                self.type = {
+                    id: self.type
+                };
+
+
+                angular.extend(school, self);
+
+                return school;
+            }
         };
 
         angular.augment(SchoolsFactory, BaseFactory);
