@@ -4,9 +4,9 @@
            placeholder="Name" data-ng-model="user"
            data-typeahead-wait-ms="200"
            data-typeahead-loading="loading"
-           data-roster-template-url="type"
-           data-typeahead="user as user.lastName for user in findUsers() | filter: {name: $viewValue}">
-    <!--data-typeahead-min-length="3"-->
+           data-typeahead-template-url="user-typeahead-dropdown.html"
+           data-typeahead-min-length="3"
+           data-typeahead="user as user.firstName + ' ' + user.lastName for user in findUsers() | filter: {name: $viewValue}">
 </div>
 
 

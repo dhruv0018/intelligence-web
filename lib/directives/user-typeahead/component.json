@@ -1,7 +1,8 @@
 {
     "name": "user-typeahead",
     "templates": [
-        "template.html"
+        "template.html",
+        "user-typeahead-dropdown.html"
     ],
     "scripts": [
         "index.js"
