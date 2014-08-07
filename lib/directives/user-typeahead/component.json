@@ -1,0 +1,12 @@
+{
+    "name": "user-typeahead",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

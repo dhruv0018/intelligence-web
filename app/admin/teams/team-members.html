@@ -6,15 +6,7 @@
 
         <form name="form" role="form">
 
-            <div class="form-group">
-
-                <select class="form-control" name="coach" data-ng-model="coach" data-ng-options="user.firstName + ' ' + user.lastName + ' - ' + user.email for user in users" required>
-
-                    <option>Select Coach</option>
-
-                </select>
-
-            </div>
+            <user-typeahead data-user="coach"></user-typeahead>
 
             <button class="btn-role-new" href data-ng-disabled="form.$invalid" data-ng-click="addHeadCoach(coach)"><i class="icon icon-plus-sign"></i> Add New Head Coach</button>
 
