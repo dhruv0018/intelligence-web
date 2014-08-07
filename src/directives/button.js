@@ -22,12 +22,20 @@ IntelligenceWebClient.directive('button', [
 
             var disabled = attributes.disabled;
 
+            /* Disable buttons on start of state change */
             $rootScope.$on('$stateChangeStart', function() {
 
                 attributes.$set('disabled', true);
             });
 
+            /* Reset disabled button state on state change success */
             $rootScope.$on('$stateChangeSuccess', function() {
+
+                attributes.$set('disabled', !!disabled);
+            });
+
+            /* Reset disabled button state on state change error */
+            $rootScope.$on('$stateChangeError', function() {
 
                 attributes.$set('disabled', !!disabled);
             });

@@ -14,33 +14,38 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
-    '$scope', '$modal', 'IndexingService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar',
-    function controller($scope, $modal, indexing, tags, play, event, sidebar) {
+    '$scope', 'IndexingService', 'Indexing.Sidebar', 'Indexing.Data',
+    function controller($scope, indexing, sidebar, data) {
 
-        $scope.play = play;
-        $scope.event = event;
+        $scope.game = data.game;
         $scope.sidebar = sidebar;
         $scope.indexing = indexing;
-        $scope.buildScript = indexing.buildScript;
 
-        /**
-         * Select an event to use as the current event.
-         */
-        $scope.selectEvent = function(selectedPlay, selectedEvent) {
+        $scope.$watch(function() {
 
-            indexing.eventSelected = true;
-            indexing.isIndexing = true;
-            indexing.showTags = false;
-            indexing.showScript = true;
+            var lastPlay = $scope.indexing.plays[$scope.indexing.plays.length - 1];
 
-            /* Set the current time to the time from the selected event. */
-            $scope.VideoPlayer.pause();
-            $scope.VideoPlayer.seekTime(selectedEvent.time);
+            if (!lastPlay) return 0;
 
-            /* Set the current play and event to match the selected event. */
-            play.current = selectedPlay;
-            event.current = selectedEvent;
-        };
+            return lastPlay.teamIndexedScore;
+
+        }, function(teamIndexedScore) {
+
+            $scope.game.teamIndexedScore = teamIndexedScore;
+        });
+
+        $scope.$watch(function() {
+
+            var lastPlay = $scope.indexing.plays[$scope.indexing.plays.length - 1];
+
+            if (!lastPlay) return 0;
+
+            return lastPlay.opposingIndexedScore;
+
+        }, function(opposingIndexedScore) {
+
+            $scope.game.opposingIndexedScore = opposingIndexedScore;
+        });
     }
 ]);
 

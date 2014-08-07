@@ -22,7 +22,19 @@ IntelligenceWebClient.factory('GamesResource', [
         var actions = {
 
             create: { method: 'POST' },
-            update: { method: 'PUT' }
+            update: { method: 'PUT' },
+
+            getFormationReport: {method: 'GET', url: config.api.uri + base + '/:id/formation-report'},
+
+            generateDownAndDistanceReport: {
+                method: 'POST',
+                url: config.api.uri + base + '/:id/dnd-report'
+            },
+
+            generateStats: {
+                method: 'GET',
+                url: url + '/stats'
+            }
         };
 
         return $resource(url, paramDefaults, actions);

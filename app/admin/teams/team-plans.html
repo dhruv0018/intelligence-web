@@ -1,0 +1,79 @@
+<div class="box-body plans-content">
+
+    <div class="plan-first">
+        <div data-ng-hide="filteredPlans.length" class="plan-button"><x-button-add-new data-ng-click="addNewPlan()">Add new plan</x-button-add-new></div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="3">Plan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-hide="filteredPlans.length">
+                    <td colspan="3" class="plan-container">
+                        No plans have been added to this team.
+                    </td>
+                </tr>
+                <tr data-ng-repeat-start="plan in filteredPlans">
+                    <td>
+                        <p>{{ plan.name }}</p>
+                        <p>Starts: {{ plan.startDate | date : 'MMM d/yy' }}</p>
+                        <p>Ends: {{ plan.endDate | date : 'MMM d/yy' }}</p>
+                    </td>
+                    <td>
+                        <p>{{ plan.maxAnyGames }} Breakdowns per week</p>
+                        <p>{{ plan.maxGamesPerPlan }} Max Breakdowns per Season</p>
+                    </td>
+                    <td>{{ minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{ plan.maxTurnaroundTime }} hour Turnaround Time</td>
+                </tr>
+                <tr data-ng-repeat-end>
+                    <td colspan="3" class="plan-options">
+                        <a href><i class="icon icon-calendar"></i> View Archive</a>
+                        <span data-ng-show="filteredPlans.length" class="pull-right">
+                            <a href class="edit-plan" data-ng-click="editTeamPlan(plan.unfilteredId)"><i class="icon icon-edit"></i> Edit</a>
+                            <a href><i class="icon icon-remove"></i> Remove</a>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <div data-ng-hide="filteredPackages.length" class="plan-button"><x-button-add-new data-ng-click="addNewPackage()">Add new package</x-button-add-new></div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="3">Package</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-hide="filteredPackages.length">
+                    <td colspan="3" class="package-container">
+                        No packages have been added to this team.
+                    </td>
+                </tr>
+                <tr data-ng-repeat-start="activePackage in filteredPackages">
+                    <td>
+                        <p>Starts: {{activePackage.startDate | date : 'MMM d/yy' }}</p>
+                        <p>Ends: {{activePackage.endDate | date : 'MMM d/yy' }}</p>
+                    </td>
+                    <td>
+                        <p>{{activePackage.maxGamesPerPackage}} Games</p>
+                    </td>
+                    <td>
+                        <p>{{minTurnaroundTimeLookup[activePackage.maxTurnaroundTime]}}-{{activePackage.maxTurnaroundTime}} Hour Turnaround Time</p>
+                    </td>
+                </tr>
+                <tr data-ng-repeat-end>
+                    <td colspan="3" class="plan-options">
+                        <a href><i class="icon icon-calendar"></i> View Archive</a>
+                        <span data-ng-show="filteredPackages.length" class="pull-right">
+                            <a data-ng-click="editActivePackage(activePackage.unfilteredId)" href class="edit-plan"><i class="icon icon-edit"></i> Edit</a>
+                            <a href data-ng-click="removeActivePackage(activePackage.unfilteredId)"><i class="icon icon-remove"></i> Remove</a>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

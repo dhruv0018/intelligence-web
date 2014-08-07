@@ -6,93 +6,83 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('TagsetsFactory', [
-    'TagsetsResource', '$filter',
-    function(TagsetsResource, $filter) {
+    'TagsetsResource', 'TagsetsStorage', 'BaseFactory', '$filter',
+    function(TagsetsResource, TagsetsStorage, BaseFactory, $filter) {
 
         var TagsetsFactory = {
 
-            list: [],
-            collection: {},
+            description: 'tagsets',
+
+            storage: TagsetsStorage,
 
             resource: TagsetsResource,
 
-            extendTagset: function(tagset) {
+            extend: function(tagset) {
 
                 var self = this;
 
-                /* Copy all of the properties from the retrieved $resource
-                 * "tagset" object. */
                 angular.extend(tagset, self);
+
+                tagset.indexedTags = {};
+
+                tagset.tags.forEach(function(tag) {
+
+                    tagset.indexedTags[tag.id] = tag;
+
+                    if (angular.isArray(tag.tagVariables)) {
+
+                        var indexedVariables = {};
+
+                        tag.tagVariables.forEach(function(variable, index) {
+
+                            indexedVariables[++index] = variable;
+
+                            var indexedFormations = {};
+
+                            variable.formations.forEach(function(formation) {
+
+                                indexedFormations[formation.id] = formation;
+                            });
+
+                            variable.formations = indexedFormations;
+                        });
+
+                        tag.tagVariables = indexedVariables;
+                    }
+                });
 
                 return tagset;
             },
 
-            get: function(id, success, error) {
-
-                var self = this;
-
-                var callback = function(tagset) {
-
-                    tagset = self.extendTagset(tagset);
-
-                    return success ? success(tagset) : tagset;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not get tagset');
-                };
-
-                return self.resource.get({ id: id }, callback, error);
-            },
-
-            getList: function(filter, success, error, index) {
-
-                var self = this;
-
-                if (angular.isFunction(filter)) {
-
-                    index = error;
-                    error = success;
-                    success = filter;
-                    filter = null;
-                }
-
-                filter = filter || {};
-
-                var callback = function(tagsets) {
-
-                    tagsets.forEach(function(tagset) {
-
-                        tagset = self.extendTagset(tagset);
-
-                        self.list.push(tagset);
-                        self.collection[tagset.id] = tagset;
-                    });
-
-                    tagsets = index ? self.collection : tagsets;
-
-                    return success ? success(tagsets) : tagsets;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load tagsets');
-                };
-
-                return self.resource.query(filter, callback, error);
-            },
-
             getIndexedTags: function() {
 
-                var indexedTags = {};
+                return this.indexedTags;
+            },
 
-                this.tags.forEach(function(tag) {
+            getNextTags: function(tagId) {
 
-                    indexedTags[tag.id] = tag;
-                });
+                var tags = this.getIndexedTags();
+                var tag = tags[tagId];
 
-                return indexedTags;
+                if (tag.children.length) {
+
+                    return tag.children.map(function(childId) {
+
+                        return tags[childId];
+                    });
+
+                } else {
+
+                    return this.getStartTags();
+                }
+            },
+
+            isEndTag: function(tagId) {
+
+                var tags = this.getIndexedTags();
+                var tag = tags[tagId];
+
+                return tag.isEnd;
             },
 
             getTagsByType: function(type) {
@@ -131,6 +121,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 });
             }
         };
+
+        angular.augment(TagsetsFactory, BaseFactory);
 
         return TagsetsFactory;
     }

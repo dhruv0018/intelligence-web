@@ -42,18 +42,25 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService',
-    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, session, alerts) {
+    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
+    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
-            /* Retrieve the current user if logged in. */
+            /* Retrieve the current user. */
+            var currentUser = session.retrieveCurrentUser();
+
+            /* Expose the current user on the root scope. */
+            $rootScope.currentUser = currentUser;
+
+            /* Store the current user if logged in. */
             if (auth.isLoggedIn) {
 
-                session.currentUser = session.retrieveCurrentUser();
+                /* Store the current user. */
+                session.storeCurrentUser(currentUser);
             }
 
             /* If not accessing a public state and not logged in, then
@@ -68,21 +75,16 @@ IntelligenceWebClient.run([
             else if (!authz.isAuthorized(toState)) {
 
                 event.preventDefault();
-                $state.go('401');
-            }
-
-            /* Check to see if the OAuth tokens have been set, if so then
-             * use the access token in the authorization header. */
-            if (tokens.areTokensSet()) {
-
-                $http.defaults.headers.common.Authorization = tokens.getTokenType() + ' ' + tokens.getAccessToken();
+                $state.go('login');
             }
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-
             /* Clear any alerts. */
             alerts.clear();
+
+            /* Restore any active resources to their backups. */
+            managedResources.restore();
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {

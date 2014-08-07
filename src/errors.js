@@ -53,6 +53,8 @@ var ErrorReporter = {
     }
 };
 
+IntelligenceWebClient.value('ErrorReporter', ErrorReporter);
+
 /**
  * Browser error handler function. This is the default browser error handler
  * function. In HTML5 the 4th and 5th parameters are available, giving access
@@ -98,139 +100,16 @@ IntelligenceWebClient.config([
     }
 ]);
 
-/**
- * Intercepts HTTP responses.
- */
-IntelligenceWebClient.factory('HttpInterceptor', [
-    '$q', '$location', 'AlertsService', 'TokensService',
-    function factory($q, $location, alerts, tokens) {
-
-        return {
-
-            /* Intercept all responses. Includes any server responses that are
-            * considered successful. Which are status codes up to the 400 level. */
-            response: function(response) {
-            /* jshint sub:true */
-            /* jshint camelcase:false */
-
-                /* Catch errors in 200 responses. */
-                if (response.data.error) {
-
-                    if (response.data.error === 'invalid_token') {
-
-                        ErrorReporter.reportError(new Error('Invalid access token'));
-
-                        /* TODO: Don't go to login; refresh token. */
-                        tokens.removeTokens();
-                        $location.path('/login');
-                    }
-
-                    else {
-
-                        ErrorReporter.reportError(new Error('Error response\n' +
-                            response.data.error + ': ' +
-                            response.data['error_description']));
-                    }
-
-                    return $q.reject(response);
-                }
-
-                return response;
-            },
-
-            /* Intercept responses with status codes that indicate errors. */
-            responseError: function(response) {
-
-                switch (response.status) {
-
-                case 400: /* Bad Request */
-
-                    // Do not report bad requests.
-
-                    break;
-
-                case 401: /* Unauthorized */
-                case 403: /* Forbidden */
-
-                    // Do not report 401's or 403's as errors.
-
-                    break;
-
-                case 404: /* Not Found */
-
-                    /* Resolve GET requests instead of rejecting them. */
-                    if (response.config.method === 'GET') {
-
-                        /* If an ID is present, the request is for a singular
-                         * object, otherwise it is for an array of objects. */
-                        return response.config.params.id ? {} : [];
-                    }
-
-                    break;
-
-                case 405: /* Method Not Allowed */
-
-                    ErrorReporter.reportError(new Error('Method not allowed', response.data));
-
-                    alerts.add({
-
-                        type: 'warning',
-                        message: 'Method Not Allowed'
-                    });
-
-                    break;
-
-                case 500: /* Server Error */
-
-                    ErrorReporter.reportError(new Error('Server error', response.data));
-
-                    alerts.add({
-
-                        type: 'danger',
-                        message: 'Server Error'
-                    });
-
-                    break;
-
-                default:
-
-                    ErrorReporter.reportError(new Error('Error response', response.data));
-
-                    alerts.add({
-
-                        type: 'danger',
-                        message: 'Error'
-                    });
-
-                    break;
-                }
-
-                return $q.reject(response);
-            }
-        };
-    }
-]);
-
-IntelligenceWebClient.config([
-    '$httpProvider',
-    function($httpProvider) {
-
-        $httpProvider.interceptors.push('HttpInterceptor');
-    }
-]);
-
 IntelligenceWebClient.run([
     '$rootScope', '$location', '$state', 'AlertsService',
     function run($rootScope, $location, $state, alerts) {
 
         $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
-
             event.preventDefault();
             $state.go('404');
         });
 
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-
             ErrorReporter.reportError(error);
 
             alerts.add({
@@ -241,7 +120,6 @@ IntelligenceWebClient.run([
         });
 
         $rootScope.$on('roleChangeError', function(event, role) {
-
             role = role || {};
             role.type = role.type || {};
             role.type.name = role.type.name || 'Unknown Role';

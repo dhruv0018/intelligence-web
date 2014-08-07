@@ -1,122 +1,32 @@
+var PAGE_SIZE = 100;
+
 var package = require('../../package.json');
+var moment = require('moment');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
+IntelligenceWebClient.service('TeamsStorage', [
+    function() {
+
+        this.list = [];
+        this.collection = {};
+    }
+]);
+
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope','ROLES', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'UsersFactory',
-    function($rootScope, ROLES, TeamsResource, schools, usersResource, users) {
+    '$rootScope','ROLES', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory',
+    function($rootScope, ROLES, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users) {
 
         var TeamsFactory = {
 
+            description: 'teams',
+
+            storage: TeamsStorage,
+
             resource: TeamsResource,
-
-            extendTeam: function(team) {
-
-                var self = this;
-
-                /* Copy all of the properties from the retrieved $resource
-                 * "team" object. */
-                angular.extend(team, self);
-
-                return team;
-            },
-
-            get: function(id, success, error) {
-
-                var self = this;
-
-                var callback = function(team) {
-
-                    team = self.extendTeam(team);
-
-                    return success ? success(team) : team;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not get team');
-                };
-
-                return self.resource.get({ id: id }, callback, error);
-            },
-
-            getList: function(filter, success, error, index) {
-
-                var self = this;
-
-                if (angular.isFunction(filter)) {
-
-                    index = error;
-                    error = success;
-                    success = filter;
-                    filter = null;
-                }
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || 1000;
-
-                var callback = function(teams) {
-
-                    var indexedTeams = {};
-
-                    teams.forEach(function(team) {
-
-                        team = self.extendTeam(team);
-
-                        indexedTeams[team.id] = team;
-                    });
-
-                    teams = index ? indexedTeams : teams;
-
-                    return success ? success(teams) : teams;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load teams list');
-                };
-
-                return self.resource.query(filter, callback, error);
-            },
-
-            save: function(team, success, error) {
-
-                var self = this;
-
-                team = team || self;
-
-                delete team.league;
-                delete team.members;
-
-                if (team.schoolId) delete team.address;
-
-                parameters = {};
-
-                success = success || function(team) {
-
-                    return self.extendTeam(team);
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not save team');
-                };
-
-                if (team.id) {
-
-                    var updatedTeam = self.resource.update(parameters, team, success, error);
-                    return updatedTeam.$promise;
-
-                } else {
-
-                    var newTeam = self.resource.create(parameters, team, success, error);
-                    return newTeam.$promise;
-                }
-            },
 
             removeRole: function(role) {
 
@@ -199,8 +109,63 @@ IntelligenceWebClient.factory('TeamsFactory', [
                         return match.type.id == role.type.id;
                     }
                 });
+            },
+            getActivePlan: function() {
+                var self = this;
+
+                if (self.teamPlans) {
+                    //get the plans that have a endDate that has not passed
+                    var activePlans = self.teamPlans.filter(function(plan) {
+                        return moment().isBefore(plan.endDate);
+                    });
+
+                    if (activePlans.length === 0) {
+                        return undefined;
+                    } else if (activePlans.length > 1) {
+                        throw new Error('You have more than one active plan for team ' + self.id);
+                    } else {
+                        return activePlans[0];
+                    }
+                }
+            },
+            getActivePackage: function() {
+                var self = this;
+
+                if (self.teamPackages) {
+                    //get the plans that have a endDate that has not passed
+                    var activePackages = self.teamPackages.filter(function(teamPackage) {
+                        return moment().isBefore(teamPackage.endDate);
+                    });
+
+                    if (activePackages.length === 0) {
+                        return undefined;
+                    } else if (activePackages.length > 1) {
+                        throw new Error('You have more than one active package for team ' + self.id);
+                    } else {
+                        return activePackages[0];
+                    }
+                }
+            },
+            getMaxTurnaroundTime: function() {
+                var self = this;
+
+                var activePlan = self.getActivePlan();
+
+                if (activePlan) {
+                    return activePlan.maxTurnaroundTime;
+                } else {
+                    var activePackage = self.getActivePackage();
+                    if (activePackage) {
+                        return activePackage.maxTurnaroundTime;
+                    }
+                }
+
+                //no plans or packages means no breakdowns
+                return -1;
             }
         };
+
+        angular.augment(TeamsFactory, BaseFactory);
 
         return TeamsFactory;
     }

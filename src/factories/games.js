@@ -1,5 +1,7 @@
 var PAGE_SIZE = 20;
 
+var moment = require('moment');
+
 var package = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -7,199 +9,29 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
-IntelligenceWebClient.service('GamesStorage', [
-    function() {
-
-        this.list = [];
-        this.collection = {};
-    }
-]);
-
 IntelligenceWebClient.factory('GamesFactory', [
-    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'GamesResource', 'GamesStorage', '$q',
-    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, GamesResource, GamesStorage, $q) {
+    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',
+    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, $q) {
 
         var GamesFactory = {
+
+            description: 'games',
 
             storage: GamesStorage,
 
             resource: GamesResource,
 
-            extendGame: function(game) {
+            extend: function(game) {
 
                 var self = this;
 
-                /* Copy all of the properties from the retrieved $resource
-                 * "game" object. */
-                angular.extend(game, self);
+                angular.augment(game, self);
 
-                game.rosters = game.rosters || {};
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
                 return game;
             },
-
-            get: function(id, success, error) {
-
-                var self = this;
-
-                var callback = function(game) {
-
-                    game = self.extendGame(game);
-
-                    return success ? success(game) : game;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not get game');
-                };
-
-                return self.resource.get({ id: id }, callback, error);
-            },
-
-            getAll: function(filter, success, error) {
-
-                var self = this;
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || PAGE_SIZE;
-
-                success = success || function(games) {
-
-                    return games;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load games collection');
-                };
-
-                var query = self.resource.query(filter, success, error);
-
-                return query.$promise.then(function(games) {
-
-                    self.storage.list = self.storage.list.concat(games);
-
-                    games.forEach(function(game) {
-
-                        self.storage.collection[game.id] = game;
-                    });
-
-                    if (games.length < filter.count) {
-
-                        return self.storage.collection;
-                    }
-
-                    else {
-
-                        filter.start = filter.start + filter.count + 1;
-
-                        return self.getAll(filter);
-                    }
-                });
-            },
-
-            getList: function(filter, success, error, index) {
-
-                var self = this;
-
-                if (angular.isFunction(filter)) {
-
-                    index = error;
-                    error = success;
-                    success = filter;
-                    filter = null;
-                }
-
-                filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || 1000;
-
-                var callback = function(games) {
-
-                    var indexedGames = {};
-
-                    games.forEach(function(game) {
-
-                        game = self.extendGame(game);
-
-                        indexedGames[game.id] = game;
-                    });
-
-                    games = index ? indexedGames : games;
-
-                    return success ? success(games) : games;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load games list');
-                };
-
-                return self.resource.query(filter, callback, error);
-            },
-
-            load: function(filter) {
-
-                var self = this;
-
-                return self.getAll(filter);
-            },
-
-            save: function(game, success, error) {
-
-                var self = this;
-
-                game = game || self;
-
-                /* Create a copy of the resource to save to the server. */
-                var copy = angular.copy(game);
-
-                /* Remove known local properties. */
-                delete copy.description;
-                delete copy.resource;
-                delete copy.storage;
-
-                parameters = {};
-
-                success = success || function(game) {
-
-                    return self.extendGame(game);
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not save game');
-                };
-
-                if (game.id) {
-
-                    var update = self.resource.update(parameters, copy, success, error);
-
-                    return update.$promise.then(function() {
-
-                        return self.get(game.id).$promise.then(function(game) {
-
-                            self.storage.list[self.storage.list.indexOf(game)] = game;
-                            self.storage.collection[game.id] = game;
-                        });
-                    });
-
-                } else {
-
-                    var create = self.resource.create(parameters, copy, success, error);
-
-                    return create.$promise.then(function(game) {
-
-                        self.storage.list[self.storage.list.indexOf(game)] = game;
-                        self.storage.collection[game.id] = game;
-                    });
-                }
-            },
-
             saveNotes: function() {
 
                 var deferred = $q.defer();
@@ -220,6 +52,24 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return deferred.promise;
             },
 
+            generateStats: function(id, success, error) {
+                var self = this;
+
+                id = id || self.id;
+
+                var callback = function(stats) {
+
+                    return success ? success(stats) : stats;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get stats for game');
+                };
+
+                return self.resource.generateStats({ id: id }, callback, error).$promise;
+            },
+
             getStatus: function() {
 
                 var self = this;
@@ -229,22 +79,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 /* Lookup the game status by ID. */
                 var status = GAME_STATUSES[statusId];
-
-                /* If the game is in set aside status. */
-                if (status.id === GAME_STATUSES.SET_ASIDE.id && status.name === GAME_STATUSES.SET_ASIDE.name) {
-
-                    /* If the game was assigned to an indexer. */
-                    if (self.setAsideFromIndexing()) {
-
-                        status.name += ', from indexing';
-                    }
-
-                    /* If the game was assigned to QA. */
-                    else if (self.setAsideFromQa()) {
-
-                        status.name += ', from QA';
-                    }
-                }
 
                 return status;
             },
@@ -300,6 +134,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
+                if (!self.isVideoTranscodeComplete()) return false;
+
                 /* If the game is in the "Indexing, not started" status, it can
                  * be assigned to an indexer. */
                 if (self.status == GAME_STATUSES.READY_FOR_INDEXING.id) return true;
@@ -325,6 +161,8 @@ IntelligenceWebClient.factory('GamesFactory', [
             canBeAssignedToQa: function() {
 
                 var self = this;
+
+                if (!self.isVideoTranscodeComplete()) return false;
 
                 /* If the game is in the "QA, not started" status, it can
                  * be assigned to QA. */
@@ -373,7 +211,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments.push(assignment);
 
                     /* Update game status. */
-                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                    self.status = GAME_STATUSES.INDEXING.id;
                 }
 
                 else {
@@ -417,7 +255,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments.push(assignment);
 
                     /* Update game status. */
-                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                    self.status = GAME_STATUSES.QAING.id;
                 }
 
                 else {
@@ -622,48 +460,89 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.hasIndexerAssignment() || this.hasQaAssignment();
             },
 
+            assignmentTimeRemaining: function(assignment) {
+
+                var remaining = 'None';
+
+                assignment = assignment || this.currentAssignment();
+
+                if (!assignment) return remaining;
+
+                var deadline = moment.utc(assignment.deadline).toDate();
+                var timeRemaining = deadline - new Date();
+
+                return timeRemaining;
+            },
+
             setAsideFromIndexing: function() {
 
                 var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return false;
 
                 /* If the game was not set aside, return false. */
                 if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
 
                 /* Return true if the game was assigned to an indexer. */
-                return self.isAssignedToIndexer(self.currentAssignment()) ? true : false;
+                return (self.isAssignedToIndexer(assignment) && !assignment.timeFinished) ? true : false;
             },
 
             setAsideFromQa: function() {
 
                 var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return false;
 
                 /* If the game was not set aside, return false. */
                 if (self.status != GAME_STATUSES.SET_ASIDE.id) return false;
 
                 /* Return true if the game was assigned to QA. */
-                return self.isAssignedToQa(self.currentAssignment()) ? true : false;
+                return (self.isAssignedToQa(assignment) || (!self.setAsideFromIndexing())) ? true : false;
+            },
+
+            deadlinePassed: function() {
+                var self = this;
+                var assignment = self.currentAssignment();
+
+                if (!assignment) return true;
+
+                var deadline = moment.utc(assignment.deadline);
+
+                /* Ensure the current assignments deadline has not expired. */
+
+                if (deadline.isBefore()) return true;
+
+                return false;
             },
 
             canBeIndexed: function() {
 
                 var self = this;
-
-                var assignment = self.currentAssignment();
-
-                if (!assignment) return false;
-
-                var now = new Date();
-                var deadline = new Date(assignment.deadline);
-
-                /* Ensure the current assignments deadline has not expired. */
-                if (deadline < now) return false;
+                if (self.deadlinePassed()) {
+                    return false;
+                }
 
                 switch (self.status) {
-
-                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                     case GAME_STATUSES.INDEXING.id:
-                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
+                        return true;
+                }
+
+                return false;
+            },
+
+            canBeQAed: function() {
+                var self = this;
+
+                if (self.deadlinePassed()) {
+                    return false;
+                }
+
+                switch (self.status) {
                     case GAME_STATUSES.QAING.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
                         return true;
                 }
 
@@ -705,8 +584,96 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
             isRegular: function(game) {
                 return GAME_TYPES[GAME_TYPES_IDS[game.gameType]].type === 'regular';
+            },
+
+            getFormationReport: function() {
+                var self = this;
+                return self.resource.getFormationReport({id: self.id});
+            },
+
+            getDownAndDistanceReport: function(report) {
+                var Resource = this.resource;
+
+                var dndReport = new Resource(report);
+
+                return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
+            },
+            getRemainingTime: function(uploaderTeam) {
+                var self = this;
+
+                if (!self.submittedAt) {
+                    return 0;
+                }
+
+                var timePassed = new Date() - moment.utc(self.submittedAt).toDate();
+                var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+
+                if (turnoverTime > 0) {
+                    var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
+                    return turnoverTimeRemaining.asMilliseconds();
+                }
+
+                //no plans or packages and therefore no breakdowns available
+                return 0;
+            },
+            setAside: function() {
+                var self = this;
+                self.status = GAME_STATUSES.SET_ASIDE.id;
+            },
+            unassign: function() {
+                var self = this;
+
+                if (self.status === GAME_STATUSES.READY_FOR_INDEXING.id || self.status === GAME_STATUSES.READY_FOR_QA.id)
+                    return;
+
+                if (self.setAsideFromIndexing() || self.status === GAME_STATUSES.INDEXING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                } else if (self.setAsideFromQa() || self.status === GAME_STATUSES.QAING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                } else {
+                    throw new Error('This game cannot be unassigned from the current status');
+                }
+            },
+            revert: function() {
+                var self = this;
+
+                if (GAME_STATUSES.QAING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                } else {
+                    throw new Error('You may not revert from the current game status');
+                }
+
+            },
+            findLastIndexerAssignment: function() {
+                var self = this;
+
+                if (!self.indexerAssignments) {
+                    throw new Error('no indexer assignments');
+                }
+
+                var index = self.indexerAssignments.length - 1;
+
+                //iterate backwards through the assignments looking for the first indexer assignment
+                for (index; index >= 0; index--) {
+                    if (!self.indexerAssignments[index].isQa) {
+                        return self.indexerAssignments[index];
+                    }
+                }
+
+                throw new Error('An indexer assignment could not be located');
+
+            },
+            isDelivered: function() {
+                var self = this;
+                return self.status === GAME_STATUSES.INDEXED.id || self.status === GAME_STATUSES.FINALIZED.id;
+            },
+            isVideoTranscodeComplete: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.COMPLETE.id;
             }
         };
+
+        angular.augment(GamesFactory, BaseFactory);
 
         return GamesFactory;
     }

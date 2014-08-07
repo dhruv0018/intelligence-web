@@ -11,14 +11,17 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('TagsManager', [
-    'IndexingService',
-    function service(indexing) {
+    function service() {
 
-        this.current = indexing.getStartTags();
+        this.tagset = null;
 
-        this.reset = function() {
+        this.current = [];
 
-            this.current = indexing.getStartTags();
+        this.reset = function(tagset) {
+
+            this.tagset = tagset || this.tagset;
+
+            this.current = this.tagset.getStartTags();
         };
 
         this.clear = function() {

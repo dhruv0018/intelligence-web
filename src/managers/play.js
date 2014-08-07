@@ -16,10 +16,10 @@ IntelligenceWebClient.service('PlayManager', [
 
         var model = {
 
-            gameId: indexing.game.id,
-            score: {},
             events: []
         };
+
+        this.gameId = null;
 
         this.current = null;
 
@@ -34,9 +34,13 @@ IntelligenceWebClient.service('PlayManager', [
         /**
          * Resets the current play.
          */
-        this.reset = function() {
+        this.reset = function(gameId) {
+
+            this.gameId = gameId || this.gameId;
 
             this.current = angular.copy(model);
+
+            this.current.gameId = this.gameId;
         };
 
         /**
@@ -94,23 +98,10 @@ IntelligenceWebClient.service('PlayManager', [
             var play = this.current;
             var playIndex = indexing.plays.indexOf(play);
 
-            plays.save(play).then(
+            plays.save(play).then(function(play) {
 
-                function success(play) {
-
-                    indexing.plays[playIndex] = play;
-                    indexing.plays[playIndex].score = indexing.calculateScore(play.id);
-                },
-
-                function error() {
-
-                    alerts.add({
-
-                        type: 'danger',
-                        message: 'Failed to save play'
-                    });
-                }
-            );
+                indexing.plays[playIndex] = play;
+            });
         };
     }
 ]);

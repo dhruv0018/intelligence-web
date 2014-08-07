@@ -42,8 +42,7 @@ Instructions.directive('krossoverCoachGameInstructions', [
             controller: 'Coach.Game.Instructions.controller',
 
             scope: {
-
-                game: '=?'
+                data: '='
             }
         };
 
@@ -57,29 +56,38 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', '$localStorage', 'GAME_STATUSES', 'Coach.Game.Tabs', 'Coach.Game.Data', 'GamesFactory',
-    function controller($scope, $state, $localStorage, GAME_STATUSES, tabs, data, games) {
-
+    '$scope', '$state', 'GAME_STATUSES', 'GamesFactory',
+    function controller($scope, $state, GAME_STATUSES, games) {
         $scope.GAME_STATUSES = GAME_STATUSES;
+        $scope.isBreakdownChoiceMade = false;
 
-        $scope.data = data;
-
-        $scope.$watch('game', function(game) {
+        $scope.$watch('data.game', function(game) {
             if (typeof game !== 'undefined' && typeof game.status !== 'undefined' && game.status !== null) {
                 $scope.statusBuffer = game.status;
+                $scope.isBreakdownChoiceMade = true;
             } else {
                 $scope.statusBuffer = -1;
             }
 
         });
 
-        $scope.switchChoice = function(game) {
-            game.status = $scope.statusBuffer = (game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
+        $scope.switchChoice = function() {
+            $scope.statusBuffer = ($scope.data.game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
+            $scope.isBreakdownChoiceMade = false;
         };
 
         $scope.save = function() {
-            $scope.game.status = $scope.statusBuffer;
-            games.save($scope.game);
+            $scope.data.game.status = $scope.statusBuffer;
+
+            if ($scope.data.game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
+                $scope.data.game.submittedAt = new Date().toISOString();
+            } else {
+                $scope.data.game.submittedAt = null;
+            }
+
+            $scope.data.game.save().then(function(game) {
+                $scope.isBreakdownChoiceMade = true;
+            });
         };
     }
 ]);

@@ -8,15 +8,15 @@
 
     <div class="info">
 
-        <h2>{{ indexing.league.periodLabel }} {{ indexing.period }}</h2>
+        <h2>{{ league.periodLabel }} {{ game.currentPeriod }}</h2>
 
         <h1>
 
-            <div class="color" style="background-color: {{ indexing.game.primaryJerseyColor }};"></div>
+            <div class="color" style="background-color: {{ game.primaryJerseyColor }};"></div>
 
-            {{ indexing.team.name }} <b>{{ indexing.game.finalScore }}</b> vs <b>{{ indexing.game.opposingFinalScore }}</b> {{ indexing.opposingTeam.name }}
+            {{ team.name }} <b>{{ game.teamIndexedScore }}</b> vs <b>{{ game.opposingIndexedScore }}</b> {{ opposingTeam.name }}
 
-            <div class="color" style="background-color: {{ indexing.game.opposingPrimaryJerseyColor }};"></div>
+            <div class="color" style="background-color: {{ game.opposingPrimaryJerseyColor }};"></div>
 
         </h1>
 
@@ -31,14 +31,14 @@
     </menu>
 
     <!-- Send to QA menu -->
-    <menu class="send-to-qa" data-ng-if="indexing.game.status === GAME_STATUSES.INDEXING.id">
+    <menu class="send-to-qa" data-ng-if="game.status === GAME_STATUSES.INDEXING.id">
 
         <li><button class="navbar-btn btn btn-blank" data-ng-click="sendToQa()">Send to QA</button></li>
 
     </menu>
 
     <!-- Send to team menu -->
-    <menu class="send-to-team" data-ng-if="indexing.game.status === GAME_STATUSES.QAING.id">
+    <menu class="send-to-team" data-ng-if="game.status === GAME_STATUSES.QAING.id">
 
         <li><button class="navbar-btn btn btn-blank" data-ng-click="sendToTeam()">Send to Team</button></li>
 

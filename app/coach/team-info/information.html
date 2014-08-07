@@ -1,8 +1,8 @@
 <div class="information">
 
     <div class="uploadLogo">
-        <img data-ng-if="data.coachTeam.imageUrl || !data.coachTeam.imageUrl.length === 0" data-ng-src="{{data.coachTeam.imageUrl}}" class="logo" alt="logo">
-        <mascot-placeholder data-ng-if="!data.coachTeam.imageUrl || data.coachTeam.imageUrl.length === 0"></mascot-placeholder>
+        <img data-ng-if="team.imageUrl || !team.imageUrl.length === 0" data-ng-src="{{team.imageUrl}}" class="logo" alt="logo">
+        <mascot-placeholder data-ng-if="!team.imageUrl || team.imageUrl.length === 0"></mascot-placeholder>
         <form>
             <button class="btn-upload">Upload Logo <i class="icon icon-upload-alt"></i><input type="file" onchange="angular.element(this).scope().setLogo(this.files)"></button>
         </form>

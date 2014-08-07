@@ -67,11 +67,6 @@
         min-height: 50px;
     }
 
-    .controls {
-
-        text-align: center;
-    }
-
     .btn-indexing-main {
 
         .btn;
@@ -85,6 +80,8 @@
     .btn-indexing-start {
 
         .btn-indexing-main;
+        display: block;
+        margin: auto;
 
         &,
         &:focus,
@@ -115,9 +112,8 @@
     .btn-next,
     .btn-save {
 
-        position: absolute;
-        left: 0;
-        bottom: 10px;
+        position: relative;
+        margin-top: 10px;
     }
 
     .btn-back {
@@ -160,9 +156,7 @@
     .sidebar-notes,
     .sidebar-playlist {
 
-        width: 350px;
-
-        flex: 0 0 350px;
+        flex: 0 0 420px;
         border-left: 1px solid rgb(216, 216, 216);
         overflow-y: auto;
 

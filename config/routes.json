@@ -105,6 +105,12 @@
         "Admin": true
     },
 
+    "team-plans": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "team-members": {
 
         "Super Admin": true,
@@ -281,7 +287,12 @@
         "Assistant Coach": true
     },
 
-    "ga-film": {
+    "ga-raw-film": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "ga-film-breakdown": {
         "Head Coach": true,
         "Assistant Coach": true
     },

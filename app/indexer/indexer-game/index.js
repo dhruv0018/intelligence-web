@@ -18,6 +18,28 @@ Game.run([
 ]);
 
 /**
+ * Indexer game data dependencies.
+ * @module Game
+ * @type {service}
+ */
+Game.service('Indexer.Game.Data.Dependencies', [
+    'Indexer.Games.Data.Dependencies', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'UsersFactory',
+    function(data, teams, leagues, sports, users) {
+
+        var Data = {
+
+            games: data.games,
+            teams: teams.load(),
+            leagues: leagues.load(),
+            sports: sports.load(),
+            users: users.load()
+        };
+
+        return Data;
+    }
+]);
+
+/**
  * Indexer game page state router.
  * @module Game
  * @type {UI-Router}
@@ -37,28 +59,42 @@ Game.config([
                         controller: 'indexer-game.Controller'
                     }
                 },
+                resolve: {
+                    'Indexer.Game.Data': [
+                        '$q', '$stateParams', 'Indexer.Game.Data.Dependencies', 'SchoolsFactory',
+                        function($q, $stateParams, data, schools) {
+                            return $q.all(data).then(function(data) {
+                                var game = data.games.get($stateParams.id);
+                                var team = data.teams.get(game.teamId);
+
+                                if (team.schoolId) {
+                                    data.school = schools.fetch(team.schoolId);
+                                }
+
+                                return $q.all(data);
+                            });
+                        }
+                    ]
+                },
                 onEnter: [
-                    '$state', '$stateParams', 'SessionService', 'GamesFactory',
-                    function($state, $stateParams, session, games) {
-
+                    '$state', '$stateParams', 'SessionService', 'AlertsService', 'Indexer.Game.Data',
+                    function($state, $stateParams, session, alerts, data) {
                         var userId = session.currentUser.id;
-
                         var gameId = $stateParams.id;
+                        var game = data.games.get(gameId);
+                        var status = game.getStatus();
+                        var indexable = game.isAssignedToIndexer() && game.canBeIndexed();
+                        var qaAble = game.isAssignedToQa() && game.canBeQAed();
 
-                        games.get(gameId, function(game) {
+                        if (game.isAssignedToUser(userId) && (indexable || qaAble) && !game.isDeleted) {
 
-                            if (!game.isAssignedToUser(userId)) {
+                            alerts.add({
+                                type: status.type,
+                                message: status.name
+                            });
+                        }
 
-                                $state.go('401');
-                            }
-                        });
-                    }
-                ],
-                onExit: [
-                    'AlertsService',
-                    function(alerts) {
-
-                        alerts.clear();
+                        else $state.go('401');
                     }
                 ]
             });

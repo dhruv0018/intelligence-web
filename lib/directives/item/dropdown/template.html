@@ -1,10 +1,25 @@
 <span class="dropdown">
 
-    <button class="dropdown" data-ng-if="event.variableValues[item.index].value" data-ng-click="event.variableValues[item.index].value = null">{{ event.variableValues[item.index].value }}</button>
+    <button
+        class="dropdown"
+        data-ng-if="event.variableValues[item.id].value !== null"
+        data-ng-click="event.variableValues[item.id].value = null"
+    >{{ event.variableValues[item.id].value }}</button>
 
-    <select class="dropdown" data-ng-if="!event.variableValues[item.index].value" data-ng-model="event.variableValues[item.index].value" data-ng-required="item.isRequired" onchange="this.blur()" data-ng-change="event.activeEventVariableIndex = item.index + 1" tabindex="{{ item.index }}" data-ng-focus="event.activeEventVariableIndex = item.index" data-focus-when="event.activeEventVariableIndex == item.index" data-autofocus-when="item.index == 1">
+    <select
+        class="dropdown"
+        tabindex="{{ item.index }}"
+        data-ng-required="item.isRequired"
+        data-ng-if="event.variableValues[item.id].value === null"
+        data-ng-model="event.variableValues[item.id].value"
+        data-ng-change="event.activeEventVariableIndex = item.index + 1"
+        data-ng-focus="event.activeEventVariableIndex = item.index"
+        data-focus-on="event.activeEventVariableIndex == item.index"
+        data-focus-when="{{autoAdvance}}"
+        data-autofocus-when="item.index == 1"
+    >
 
-        <option data-ng-keybinding="option.charAt(0)" data-ng-repeat="option in item.options" value="{{ option }}">{{ option }}</option>
+        <option data-ng-keybinding="option.charAt(0)" data-ng-repeat="option in options" value="{{ option }}">{{ option }}</option>
 
     </select>
 

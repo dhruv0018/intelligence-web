@@ -5,7 +5,7 @@
         <header>
 
             <h2>Game Id <em>#{{ game.id }}</em></h2>
-            <h1>{{ teamName }} vs {{ opposingTeamName }}</h1>
+            <h1>{{ team.name }} vs {{ opposingTeam.name }}</h1>
             <h3>{{ school.name }} {{ sport.name }}, <a data-ui-sref="user-info({ id: headCoach.id })">Coach {{ headCoach.lastName }}</a></h3>
 
         </header>
@@ -149,22 +149,27 @@
 
     <aside class="sidebar sidebar-right">
 
-        <button class="btn-start-indexing" data-ng-disabled="!game.canBeIndexed()" data-ui-sref="indexing({ id: game.id })">
+        <button class="btn btn-start-indexing" data-ng-show="game.canBeIndexed()" data-ui-sref="indexing({ id: game.id })">
+            <span data-ng-hide="game.isAssignmentStarted()">Start </span>
+            <span data-ng-show="game.isAssignmentStarted()">Continue</span>
+            <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
+            <i class="icon icon-chevron-right pull-right"></i>
+        </button>
 
+        <button class="btn btn-start-indexing" data-ng-show="game.canBeQAed()" data-ui-sref="indexing({ id: game.id })">
             <span data-ng-hide="game.isAssignmentStarted()">Start </span>
             <span data-ng-show="game.isAssignmentStarted()">Continue </span>
-
-            <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
-            <span data-ng-show="game.isAssignedToQa()">QA</span>
-
+            <span>QA</span>
             <i class="icon icon-chevron-right pull-right"></i>
-
         </button>
+
 
         <ul>
 
             <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon icon-play-sign"></i> View raw film</button></li>
             <li><button class="btn btn-link" data-ui-sref="indexer-read-notes" disabled><i class="icon icon-save"></i> Read notes</button></li>
+            <li><button class="btn btn-link" data-ng-click="setAside()">Set Aside</button></li>
+            <li data-ng-if="currentAssignment.isQa" data-ng-click="revertAssignment()"><button class="btn btn-link">Revert to Indexer</button></li>
 
         </ul>
 

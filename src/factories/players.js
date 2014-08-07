@@ -6,96 +6,35 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('PlayersFactory', [
-    '$q', 'PlayersResource',
-    function($q, PlayersResource) {
+    '$q', 'PlayersResource', 'PlayersStorage', 'BaseFactory',
+    function($q, PlayersResource, PlansStorage, BaseFactory) {
 
         var PlayersFactory = {
 
+            description: 'players',
+
+            storage: PlansStorage,
+
             resource: PlayersResource,
 
-            extendPlayer: function(player) {
-
-                var self = this;
-
-                /* Copy all of the properties from the retrieved $resource
-                 * "player" object. */
-                angular.extend(player, self);
-
-                return player;
-            },
-
-            get: function(id, success, error) {
-
-                var self = this;
-
-                var callback = function(player) {
-
-                    player = self.extendPlayer(player);
-
-                    return success ? success(player) : player;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not get player');
-                };
-
-                return self.resource.get({ id: id }, callback, error);
-            },
-
-            getList: function(filter, success, error, index) {
-
-                var self = this;
-
-                if (angular.isFunction(filter)) {
-
-                    index = error;
-                    error = success;
-                    success = filter;
-                    filter = null;
-                }
-
-                filter = filter || {};
-
-                var callback = function(players) {
-
-                    var indexedPlayers = {};
-
-                    players.forEach(function(player) {
-
-                        player = self.extendPlayer(player);
-
-                        indexedPlayers[player.id] = player;
-                    });
-
-                    players = index ? indexedPlayers : players;
-
-                    return success ? success(players) : players;
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not load players list');
-                };
-
-                return self.resource.query(filter, callback, error);
-            },
             singleSave: function(rosterId, player) {
                 var self = this;
 
                 player.rosterIds = [rosterId];
+                delete player.resource;
+                delete player.storage;
 
                 if (player.id) {
                     return self.resource.update(player).$promise;
                 } else {
                     return self.resource.singleCreate(player).$promise.then(function(player) {
                         angular.extend(player, self);
-
                         return player;
                     });
                 }
 
             },
+
             save: function(rosterId, players) {
 
                 var self = this;
@@ -106,8 +45,12 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 var filter = { roster: rosterId };
 
                 var currentPlayers = players.filter(function(player) {
-
                     return player.id;
+                }).map(function(player) {
+                    delete player.resource;
+                    delete player.storage;
+
+                    return player;
                 });
 
                 var newPlayers = players.filter(function(player) {
@@ -116,6 +59,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 });
 
                 newPlayers = newPlayers.map(function(player) {
+                    delete player.resource;
+                    delete player.storage;
 
                     player.rosterIds = [rosterId];
 
@@ -136,7 +81,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 return $q.all(allPlayers).then(function() {
 
-                    return self.getList(filter).$promise;
+                    return self.query(filter);
                 });
             },
             resendEmail: function(userId, teamId) {
@@ -195,6 +140,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 return player;
             }
         };
+
+        angular.augment(PlayersFactory, BaseFactory);
 
         return PlayersFactory;
     }

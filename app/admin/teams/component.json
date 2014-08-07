@@ -4,7 +4,16 @@
         "team.html",
         "teams.html",
         "team-info.html",
-        "team-members.html"
+        "team-plans.html",
+        "team-members.html",
+        "school-dropdown-input.html"
+    ],
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "team-plan",
+        "team-package"
     ],
     "scripts": [
         "index.js"

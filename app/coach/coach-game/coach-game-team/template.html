@@ -13,7 +13,12 @@
 
                 </header>
                 <div class="box-body col-md-12">
-                    <data-krossover-roster-manager data-type="table" data-roster-template-url="config.links.rosterTemplates.opposingTeamRoster.uri" data-roster-id="scoutingTeamId" data-roster="data.team.players" data-positions="positions" data-validator="validation.scoutingTeam"></data-krossover-roster-manager>
+                    <data-krossover-roster-manager data-type="table"
+                                                   data-roster-template-url="config.links.rosterTemplates.opposingTeamRoster.uri"
+                                                   data-roster-id="data.game.rosters[data.game.teamId].id"
+                                                   data-roster="data.gamePlayerLists[data.game.teamId]"
+                                                   data-positions="positions"
+                                                   data-validator="validation.scoutingTeam"></data-krossover-roster-manager>
                 </div>
             </div>
 

@@ -20,7 +20,7 @@
                 <!-- Script -->
                 <div class="script" data-ng-if="indexing.isIndexing && indexing.showScript">
 
-                    <krossover-item data-item="item" data-event="event.current" data-ng-repeat="item in indexerScript(indexing.tagset, event.current) track by $index"></krossover-item>
+                    <krossover-item data-auto-advance="true" data-league="league" data-game="game" data-item="item" data-plays="indexing.plays" data-play="play.current" data-event="event.current" data-team-players="data.teamPlayers" data-opposing-team-players="data.opposingTeamPlayers" data-ng-repeat="item in indexerScript(tagset, event.current) track by $index"></krossover-item>
 
                 </div>
 

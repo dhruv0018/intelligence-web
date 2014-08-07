@@ -1,6 +1,7 @@
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+var moment = require('moment');
 
 /**
  * Indexer Game page module.
@@ -15,58 +16,65 @@ var Game = angular.module('indexer-game');
  * @type {Controller}
  */
 Game.controller('indexer-game.Controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'UsersFactory', 'GamesFactory', 'SchoolsFactory', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'RawFilm.Modal',
-    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, session, alerts, users, games, schools, teams, sports, leagues, RawFilmModal) {
+    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'RawFilm.Modal', 'Indexer.Game.Data', 'BasicModals', 'SchoolsFactory',
+    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, session, alerts, RawFilmModal, data, basicModal, schools) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
         $scope.GAME_NOTE_TYPES = GAME_NOTE_TYPES;
 
+        $scope.RawFilmModal = RawFilmModal;
+
         var gameId = $stateParams.id;
 
-        games.get(gameId, function(game) {
+        $scope.game = data.games.get(gameId);
 
-            $scope.game = game;
+        $scope.currentAssignment = $scope.game.currentAssignment();
 
-            var status = game.getStatus();
+        $scope.team = data.teams.get($scope.game.teamId);
+        $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
+        var league = data.leagues.get($scope.team.leagueId);
+        $scope.sport = data.sports.get(league.sportId);
 
-            alerts.add({
-                type: status.type,
-                message: status.name
+        if (data.school) {
+            $scope.school = data.school;
+        }
+
+        var headCoachRole = $scope.team.getHeadCoachRole();
+
+        if (headCoachRole) {
+
+            $scope.headCoach = data.users.get(headCoachRole.userId);
+        }
+
+        $scope.revertAssignment = function() {
+            var previousAssignment = $scope.game.findLastIndexerAssignment();
+            $scope.game.revert();
+
+            var remainingTime = $scope.game.getRemainingTime(data.teams.get($scope.game.uploaderTeamId));
+
+            //half of the remaining time
+            var newDeadline = moment.utc().add(remainingTime / 2, 'milliseconds');
+
+            $scope.game.assignToIndexer(previousAssignment.userId, newDeadline);
+            $scope.game.save();
+            $state.go('indexer-games');
+        };
+
+        $scope.setAside = function() {
+            var modalInstance = basicModal.openForConfirm({
+                title: 'Set aside this Game?',
+                bodyText: 'Are you sure you want to set aside this game?'
             });
 
-            teams.get(game.teamId, function(team) {
-
-                $scope.teamName = team.name;
-
-                leagues.get(team.leagueId, function(league) {
-
-                    $scope.sport = sports.get(league.sportId);
+            modalInstance.result.then(function() {
+                $scope.game.setAside();
+                $scope.game.save().then(function() {
+                    $state.go('indexer-games');
                 });
-
-                schools.get(team.schoolId, function(school) {
-
-                    $scope.school = school;
-                });
-
-                var headCoachRole = team.getHeadCoachRole();
-
-                if (headCoachRole) {
-
-                    users.get(headCoachRole.userId, function(user) {
-
-                        $scope.headCoach = user;
-                    });
-                }
             });
+        };
 
-            teams.get(game.opposingTeamId, function(team) {
-
-                $scope.opposingTeamName = team.name;
-            });
-        });
-
-        $scope.RawFilmModal = RawFilmModal;
     }
 ]);

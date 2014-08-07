@@ -1,6 +1,6 @@
 <div class="krossover-film">
    <div class="film-info-header">
-       {{game.datePlayed}}
+       {{game.datePlayed | date: 'MMM dd, yyyy' }}
 
        <br/>
 
@@ -17,11 +17,11 @@
 
     <div>
 
-        <a data-ng-disabled="true" data-ng-href="#" class="sharegame">
+        <a data-ng-disabled="true" data-open-modal="ShareFilm.Modal" class="share-game">
             <i class="icon icon-share-square-o"></i>Share
         </a>
 
-        <a data-ng-disabled="true" data-ng-href="#">
+        <a data-ng-disabled="true" data-ng-href="#" class="embed-game">
             <i class="icon icon-link"></i>Embed
         </a>
 

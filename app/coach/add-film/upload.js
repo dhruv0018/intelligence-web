@@ -94,12 +94,9 @@ UploadFilm.filter('bytes', function() {
  * @type {Controller}
  */
 UploadFilm.controller('UploadFilmController', [
-    'config', 'ALLOWED_FILE_EXTENSIONS', '$rootScope', '$scope', '$state', '$localStorage', '$http', 'AlertsService', 'SessionService', 'GamesFactory', 'Coach.Data',
-    function controller(config, ALLOWED_FILE_EXTENSIONS, $rootScope, $scope, $state, $localStorage, $http, alerts, session, games, coachData) {
+    'config', 'ALLOWED_FILE_EXTENSIONS', '$rootScope', '$scope', '$state', '$http', 'AlertsService', 'SessionService', 'GamesFactory', 'Coach.Data',
+    function controller(config, ALLOWED_FILE_EXTENSIONS, $rootScope, $scope, $state, $http, alerts, session, games, coachData) {
         $scope.games = games;
-        $scope.$storage = $localStorage;
-
-        delete $scope.$storage.opposingTeam;
 
         $scope.$on('flow::fileAdded', function(event, $flow, flowFile) {
 
@@ -157,17 +154,16 @@ UploadFilm.controller('UploadFilmController', [
                         console.log('KVS GUID: ' + guid);
 
                         /* Store the GUID with the game. */
-                        $scope.game.datePlayed = new Date();
+                        coachData.game.datePlayed = new Date();
 
-                        $scope.game.video = {
+                            /* Store the GUID with the game. */
+                        coachData.game.video = {
                             guid: guid
                         };
 
-                        if (games.isRegular($scope.game)) {
-                            $scope.game.isHomeGame = 'true';
+                        if (games.isRegular(coachData.game)) {
+                            coachData.isHomeGame = 'true';
                         }
-
-                        coachData.game = $scope.game;
 
                         /* Set the KVS target to include the GUID. */
                         $scope.$flow.opts.target = kvsUrl + '/upload/part/' + guid;
@@ -215,4 +211,3 @@ UploadFilm.controller('UploadFilmController', [
         };
     }
 ]);
-

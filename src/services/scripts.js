@@ -9,7 +9,8 @@ IntelligenceWebClient.factory('ScriptsService', [
     '$q', '$sce', 'TAG_VARIABLE_TYPE', 'VIDEO_STATUSES', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'TagsetsFactory', 'PlaysFactory', 'PlayersFactory',
     function($q, $sce, TAG_VARIABLE_TYPE, VIDEO_STATUSES, leagues, teams, games, tagsets, plays, players) {
 
-        var VARIABLE_PATTERN = /(__\d?__)/;
+        var VARIABLE_PATTERN = /(__\d__)/;
+        var VARIABLE_INDEX_PATTERN = /\d/;
 
         var ScriptsService = {
 
@@ -23,57 +24,60 @@ IntelligenceWebClient.factory('ScriptsService', [
                 return this.buildScript('indexerScript', tagset, event);
             },
 
+            summaryScript: function(tagset, event) {
+
+                return this.buildScript('summaryScript', tagset, event);
+            },
+
             buildScript: function(scriptType, tagset, event) {
 
-                if (tagset && event && event.tag && event.tag.id) {
+                if (!tagset) throw new Error('No tagset');
+                if (!event) throw new Error('No event');
 
-                    var tagId = event.tag.id;
-                    var tags = tagset.getIndexedTags();
+                var tags = tagset.getIndexedTags();
 
-                    if (tags) {
+                if (!tags) throw new Error('Failed to get tags from tagset');
 
-                        var tag = tags[tagId];
+                var tag = tags[event.tagId];
 
-                        if (tag && tag.tagVariables) {
+                if (!tag) throw new Error('Could not find tag in tagset');
 
-                            var script = tag[scriptType];
+                var script = tag[scriptType];
 
-                            /* Mark the index of each variable. */
-                            tag.tagVariables.forEach(function(variable, index) {
+                if (!script) return [];
 
-                                variable.index = index + 1;
+                /* Split up script into array items and replace variables
+                 * with the actual tag variable object. */
+                return script.split(VARIABLE_PATTERN)
 
+                /* Filter script items. */
+                .filter(function(item) {
 
-                                /** TODO: Move this to the DROPDOWN item
-                                 * directive. */
-                                variable.options = angular.isString(variable.options) ? JSON.parse(variable.options) : variable.options;
-                            });
+                    /* Filter out empty items. */
+                    return item.length;
+                })
 
-                            /* Split up script into array items and replace variables
-                             * with the actual variable object. */
-                            var variableIndex = 0;
+                /* Map script items. */
+                .map(function(item) {
 
-                            return script.split(VARIABLE_PATTERN)
+                    /* If the item is a variable. */
+                    if (VARIABLE_PATTERN.test(item)) {
 
-                            .filter(function(item) {
+                        /* Find the index of the variable in the script. */
+                        var index = Number(VARIABLE_INDEX_PATTERN.exec(item).pop());
 
-                                return item !== '';
-                            })
+                        /* Find the tag variable by script index. */
+                        var tagVariable = tag.tagVariables[index];
 
-                            .map(function(item) {
+                        /* Store the index position of the tag variable. */
+                        tagVariable.index = index;
 
-                                if (item.search(VARIABLE_PATTERN) !== -1) {
-
-                                    return tag.tagVariables[variableIndex++];
-                                }
-
-                                else return item;
-                            });
-                        }
+                        return tagVariable;
                     }
-                }
 
-                return [];
+                    /* If the item is not a variable return it as is. */
+                    else return item;
+                });
             }
         };
 

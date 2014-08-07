@@ -9,11 +9,9 @@
     "templates": [
         "template.html",
         "gameAreaInformation.html",
-        "gameAreaFilm.html",
+        "gameAreaRawFilm.html",
+        "gameAreaFilmBreakdown.html",
         "gameAreaStatistics.html",
-        "gameAreaLog.html",
-        "gameAreaHomeStats.html",
-        "gameAreaAwayStats.html",
         "gameAreaShotChart.html",
         "gameAreaFormations.html",
         "gameAreaDownDistance.html",
@@ -22,11 +20,9 @@
     "scripts": [
         "index.js",
         "gameAreaInformation.js",
-        "gameAreaFilm.js",
+        "gameAreaRawFilm.js",
+        "gameAreaFilmBreakdown.js",
         "gameAreaStatistics.js",
-        "gameAreaLog.js",
-        "gameAreaHomeStats.js",
-        "gameAreaAwayStats.js",
         "gameAreaShotChart.js",
         "gameAreaFormations.js",
         "gameAreaDownDistance.js"

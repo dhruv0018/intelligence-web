@@ -51,23 +51,25 @@ IntelligenceWebClient.service('AuthenticationService', [
                     throw new Error('Unable to persist login');
                 }
 
-                /* Get the OAuth tokens by verifying the users email and password
-                 * though the API. Optionally persisting the tokens and user. */
-                return tokens.getTokens(email, password).then(function(authTokens) {
+                /* Get the OAuth authorization code by verifying the users email
+                 * and password. */
+                return tokens.requestAuthCode(email, password).then(function(code) {
 
-                    /* Store the tokens. Optionally persisting. */
-                    tokens.setTokens(authTokens, persist);
+                    /* Request OAuth tokens. */
+                    return tokens.requestTokens(code).then(function(authTokens) {
 
-                    /* Set the authorization header for future requests. */
-                    $http.defaults.headers.common.Authorization = 'Bearer ' + tokens.getAccessToken();
+                        /* Store the tokens. Optionally persisting. */
+                        tokens.setTokens(authTokens, persist);
 
-                    /* Get the user from the server. */
-                    return users.get(email).$promise.then(function(user) {
+                        /* Get the user from the server. */
+                        return users.fetch(email).then(function(user) {
 
-                        /* Store the user in the session. Optionally persisting. */
-                        session.storeCurrentUser(user, persist);
+                            /* Store the user in the session. Optionally persisting. */
+                            session.storeCurrentUser(user, persist);
 
-                        return user;
+                            /* Retrieve the user from the session. */
+                            return session.retrieveCurrentUser();
+                        });
                     });
                 });
             },

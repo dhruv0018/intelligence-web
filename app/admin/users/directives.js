@@ -19,7 +19,7 @@ var Users = angular.module('Users');
  * @type {Directive}
  */
 Users.directive('krossoverNewRole', [
-    'ROLES', 'ROLE_TYPE', 'UsersFactory', 'TeamsFactory', 'SportsResource', 'INDEXER_GROUPS_ID',
+    'ROLES', 'ROLE_TYPE', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'INDEXER_GROUPS_ID',
     function directive(ROLES, ROLE_TYPE, users, teams, sports, INDEXER_GROUPS_ID) {
 
         var role = {
@@ -29,7 +29,8 @@ Users.directive('krossoverNewRole', [
             scope: {
 
                 user: '=',
-                role: '='
+                role: '=',
+                newRoles: '='
             },
 
             templateUrl: 'users/newrole.html',
@@ -45,67 +46,45 @@ Users.directive('krossoverNewRole', [
                 $scope.user.roles = $scope.user.roles || [];
 
                 $scope.users = users;
-                $scope.sports = sports.query();
+                $scope.sportsList = sports.getList();
+                $scope.teamsList = teams.getList();
 
-                $scope.displayTeamsLoading = false;
-                $scope.displayTeams = true;
-                $scope.displayTeamsEmpty = false;
+                $scope.$watch('role', function(role) {
 
-                $scope.$watch('sportId', function() {
+                    $scope.teamsList = $scope.teamsList.filter(function(team) {
 
-                    if ($scope.sportId) {
+                        /* If there are no roles on the team. */
+                        if (!team.roles || !team.roles.length) return true;
 
-                        $scope.displayTeamsLoading = true;
-                        $scope.displayTeams = false;
-                        $scope.displayTeamsEmpty = false;
+                        /* If the role is a head coach and the team already has one. */
+                        if (users.is(role, ROLES.HEAD_COACH)) {
 
-                        var filter = {
+                            return !team.getHeadCoachRole();
+                        }
 
-                            noRoleType: $scope.role.type.id,
-                            sport: $scope.sportId
-                        };
-
-                        teams.getList(filter, function(list) {
-
-                            $scope.teams = list.filter(function(team) {
-
-                                if ($scope.user.roles.every(function(role) {
-
-                                    return team.id !== role.teamId;
-
-                                })) {
-
-                                    return team;
-                                }
-                            });
-
-                            $scope.displayTeamsLoading = false;
-                            $scope.displayTeams = true;
-                            $scope.displayTeamsEmpty = false;
-                        });
-                    }
+                        return true;
+                    });
                 });
 
-                $scope.$watch('teams', function() {
+                $scope.$watchCollection('user.roles', function(roles) {
 
-                    if ($scope.teams) {
+                    $scope.teamsList = $scope.teamsList.filter(function(team) {
 
-                        if ($scope.teams.length === 0) {
+                        /* If the user is already assigned a role on the team. */
+                        return roles.every(function(role) {
 
-                            $scope.displayTeamsLoading = false;
-                            $scope.displayTeams = false;
-                            $scope.displayTeamsEmpty = true;
-                        }
-                    }
+                            return team.id !== role.teamId;
+                        });
+                    });
                 });
 
                 $scope.addRole = function(newRole) {
 
                     /* Remove role from the newRoles array. */
-                    $scope.user.newRoles.splice($scope.user.newRoles.indexOf(newRole), 1);
+                    $scope.newRoles.splice($scope.newRoles.indexOf(newRole), 1);
 
                     /* Add role to the user roles array. */
-                    $scope.user.roles.unshift(angular.copy(newRole));
+                    users.addRole($scope.user, newRole);
 
                     element.remove();
                 };

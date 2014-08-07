@@ -1,3 +1,5 @@
+<x-krossover-rolebar></x-krossover-rolebar>
+
 <nav class="header header-default" role="navigation">
 
     <header class="navbar-header">
@@ -48,7 +50,7 @@
             </ul>
         </li>
         <li data-ui-sref-active="active"><a data-ng-href="{{config.links.support.uri}}">Support <i class="icon icon-external-link"></i></a></li>
-        <li data-ui-sref-active="active"><button class="btn btn-primary navbar-btn" data-ng-click="tabs.reset()" data-ui-sref="add-film" data-ng-disabled="$state.current.parent === 'add-film'">Add Film</button></li>
+        <li data-ui-sref-active="active"><button class="btn btn-primary navbar-btn" data-ng-click="tabs.reset()" data-ui-sref="add-film" data-ui-sref-opts="{reload: true}">Add Film</button></li>
     </menu>
 
     <div class="nav navbar-nav navbar-right">
@@ -88,3 +90,5 @@
     </div>
 
 </nav>
+
+<x-alertbar></x-alertbar>

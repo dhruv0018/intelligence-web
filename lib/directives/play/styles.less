@@ -19,68 +19,77 @@
         margin-bottom: 10px;
     }
 
-    h4 {
-        position: relative;
-        color: black;
-        font-size: 16px;
-        font-weight: 200;
-        letter-spacing: -0.01em;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        text-decoration: none;
-
-        .dash,
-        .period,
-        .time,
-        .team,
-        .vs,
-        .score {
-
-            display: inline-block;
-        }
-
-        .team {
-
+    .playHeading {
+        h4 {
             position: relative;
-            top: 3px;
-            max-width: 12ex;
-            .text-overflow();
-        }
-
-        &.vs {
-            font-weight:500;
-            padding-bottom: 10px;
-        }
-
-        &.playCollapsed {
-            color: @gray-light;
-        }
-
-        .playSummary {
+            color: black;
+            font-size: 16px;
+            font-weight: 200;
+            letter-spacing: -0.01em;
             margin-top: 5px;
-            margin-bottom: 0;
+            margin-bottom: 5px;
+            text-decoration: none;
+
+            .dash,
+            .period,
+            .time,
+            .team,
+            .vs,
+            .score {
+
+                display: inline-block;
+            }
+
+            .team {
+
+                position: relative;
+                top: 3px;
+                max-width: 12ex;
+                .text-overflow();
+            }
+
+            &.vs {
+                font-weight:500;
+                padding-bottom: 10px;
+            }
+
+            &.playCollapsed {
+                color: @gray-light;
+            }
+
+            .playSummary {
+                margin-top: 5px;
+                margin-bottom: 0;
+            }
         }
-    }
 
-    .playplay {
-        .pull-right;
-        position: absolute;
-        top: -6px;
-        right: 0px;
-        font-size: 24px;
-        color: @gray-light;
-        cursor: pointer;
+        .playplay {
+            .pull-right;
+            position: absolute;
+            top: -6px;
+            right: 0px;
+            font-size: 24px;
+            color: @gray-light;
+            cursor: pointer;
 
-        &:active,
-        &:focus,
-        &:hover {
-            color: @brand-primary;
+            &:active,
+            &:focus,
+            &:hover {
+                color: @brand-primary;
+            }
         }
     }
 
     hr {
 
         margin-bottom: 0;
+    }
+
+    .playBody {
+
+        &.playHide {
+            display: none;
+        }
     }
 
     .btn-delete-play {
@@ -115,6 +124,7 @@
         padding-right: 0;
         padding-bottom: 10px;
         border-left-width: 0;
+        display: none;
 
         &:focus,
         &:hover {

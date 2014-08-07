@@ -33,41 +33,89 @@ describe('GamesFactory', function() {
 
     describe('canBeAssignedToIndexer', function() {
 
+        it('should return false when the video status is not complete', inject([
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
+                var game = {
+                    status: GAME_STATUSES.READY_FOR_INDEXING.id
+                };
+
+                game = games.extend(game);
+
+                [VIDEO_STATUSES.INCOMPLETE.id, VIDEO_STATUSES.UPLOADED.id, VIDEO_STATUSES.FAILED.id].forEach(function(videoStatus) {
+                    game.video = {
+                        status: videoStatus
+                    };
+
+                    game.canBeAssignedToIndexer().should.be.false;
+                });
+
+            }
+        ]));
+
+        it('should return true when the video status is complete', inject([
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
+                var game = {
+                    status: GAME_STATUSES.READY_FOR_INDEXING.id
+                };
+
+                game = games.extend(game);
+
+                game.video = {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                };
+
+                game.canBeAssignedToIndexer().should.be.true;
+
+            }
+        ]));
+
+
         it('should return true when the game status is "Indexing, not started"', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+           'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var game = {
 
-                status: GAME_STATUSES.READY_FOR_INDEXING.id
+                status: GAME_STATUSES.READY_FOR_INDEXING.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToIndexer().should.be.true;
         }]));
 
         it('should return false when the game status is "Set Aside", but not from indexing', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var game = {
 
-                status: GAME_STATUSES.SET_ASIDE.id
+                status: GAME_STATUSES.SET_ASIDE.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToIndexer().should.be.false;
         }]));
 
         it('should return true when the game status is "Set Aside", from indexing', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var game = {
 
                 status: GAME_STATUSES.SET_ASIDE.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                },
                 indexerAssignments: [
                     {
                         gameId: 1,
@@ -77,14 +125,14 @@ describe('GamesFactory', function() {
                 ]
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToIndexer().should.be.true;
         }]));
 
         it('should return false for all other game statuses', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             Object.keys(GAME_STATUSES).filter(function(status) {
 
@@ -95,10 +143,13 @@ describe('GamesFactory', function() {
 
                 var game = {
 
-                    status: status
+                    status: status,
+                    video: {
+                        status: VIDEO_STATUSES.COMPLETE.id
+                    }
                 };
 
-                game = games.extendGame(game);
+                game = games.extend(game);
 
                 game.canBeAssignedToIndexer().should.be.false;
             });
@@ -107,41 +158,88 @@ describe('GamesFactory', function() {
 
     describe('canBeAssignedToQa', function() {
 
+        it('should return false when the video status is not complete', inject([
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
+                var game = {
+                    status: GAME_STATUSES.READY_FOR_QA.id
+                };
+
+                game = games.extend(game);
+
+                [VIDEO_STATUSES.INCOMPLETE.id, VIDEO_STATUSES.UPLOADED.id, VIDEO_STATUSES.FAILED.id].forEach(function(videoStatus) {
+                    game.video = {
+                        status: videoStatus
+                    };
+
+                    game.canBeAssignedToQa().should.be.false;
+                });
+
+            }
+        ]));
+
+        it('should return true when the video status is complete', inject([
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
+                var game = {
+                    status: GAME_STATUSES.READY_FOR_QA.id
+                };
+
+                game = games.extend(game);
+
+                game.video = {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                };
+
+                game.canBeAssignedToQa().should.be.true;
+
+            }
+        ]));
+
         it('should return true when the game status is "QA, not started"', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var game = {
 
-                status: GAME_STATUSES.READY_FOR_QA.id
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToQa().should.be.true;
         }]));
 
         it('should return false when the game status is "Set Aside", but not from QA', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var game = {
 
-                status: GAME_STATUSES.SET_ASIDE.id
+                status: GAME_STATUSES.SET_ASIDE.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToQa().should.be.false;
         }]));
 
         it('should return true when the game status is "Set Aside", from QA', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var game = {
 
                 status: GAME_STATUSES.SET_ASIDE.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                },
                 indexerAssignments: [
                     {
                         gameId: 1,
@@ -151,14 +249,14 @@ describe('GamesFactory', function() {
                 ]
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.canBeAssignedToQa().should.be.true;
         }]));
 
         it('should return false for all other game statuses', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             Object.keys(GAME_STATUSES).filter(function(status) {
 
@@ -169,10 +267,13 @@ describe('GamesFactory', function() {
 
                 var game = {
 
-                    status: status
+                    status: status,
+                    video: {
+                        status: VIDEO_STATUSES.COMPLETE.id
+                    }
                 };
 
-                game = games.extendGame(game);
+                game = games.extend(game);
 
                 game.canBeAssignedToQa().should.be.false;
             });
@@ -182,8 +283,8 @@ describe('GamesFactory', function() {
     describe('assignToIndexer', function() {
 
         it('should assign indexer when the game status is "Indexing, not started"', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 1;
             var isQa = false;
@@ -191,10 +292,13 @@ describe('GamesFactory', function() {
 
             var game = {
 
-                status: GAME_STATUSES.READY_FOR_INDEXING.id
+                status: GAME_STATUSES.READY_FOR_INDEXING.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId, deadline);
 
@@ -203,22 +307,25 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
-            game.status.should.equal(GAME_STATUSES.READY_FOR_INDEXING.id);
+            game.status.should.equal(GAME_STATUSES.INDEXING.id);
         }]));
 
         it('should NOT update assignments when the game status is "Set Aside", but not from indexing', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 2;
             var deadline = new Date().toISOString();
 
             var game = {
 
-                status: GAME_STATUSES.SET_ASIDE.id
+                status: GAME_STATUSES.SET_ASIDE.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             expect(function() {
                 game.assignToIndexer(userId, deadline);
@@ -230,8 +337,8 @@ describe('GamesFactory', function() {
         }]));
 
         it('should update assignments when the game status is "Set Aside", from indexing', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 2;
             var isQa = false;
@@ -239,10 +346,13 @@ describe('GamesFactory', function() {
 
             var game = {
 
-                status: GAME_STATUSES.READY_FOR_INDEXING.id
+                status: GAME_STATUSES.READY_FOR_INDEXING.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId, deadline);
 
@@ -251,7 +361,7 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
-            game.status.should.equal(GAME_STATUSES.READY_FOR_INDEXING.id);
+            game.status.should.equal(GAME_STATUSES.INDEXING.id);
 
             /* Change game status to "Set Aside". */
             game.status = GAME_STATUSES.SET_ASIDE.id;
@@ -270,8 +380,8 @@ describe('GamesFactory', function() {
     describe('assignToQa', function() {
 
         it('should update assignments when the game status is "Qa, not started"', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 3;
             var isQa = true;
@@ -279,10 +389,13 @@ describe('GamesFactory', function() {
 
             var game = {
 
-                status: GAME_STATUSES.READY_FOR_QA.id
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId, deadline);
 
@@ -292,22 +405,25 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
 
-            game.status.should.equal(GAME_STATUSES.READY_FOR_QA.id);
+            game.status.should.equal(GAME_STATUSES.QAING.id);
         }]));
 
         it('should NOT update assignments when the game status is "Set Aside", but not from QA', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 2;
             var deadline = new Date().toISOString();
 
             var game = {
 
-                status: GAME_STATUSES.SET_ASIDE.id
+                status: GAME_STATUSES.SET_ASIDE.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             expect(function() {
                 game.assignToQa(userId, deadline);
@@ -319,8 +435,8 @@ describe('GamesFactory', function() {
         }]));
 
         it('should update assignments when the game status is "Set Aside", from QA', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 2;
             var isQa = true;
@@ -328,10 +444,13 @@ describe('GamesFactory', function() {
 
             var game = {
 
-                status: GAME_STATUSES.READY_FOR_QA.id
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId, deadline);
 
@@ -340,7 +459,7 @@ describe('GamesFactory', function() {
             expect(game.currentAssignment()).to.have.property('isQa', isQa);
             expect(game.currentAssignment()).to.have.property('userId', userId);
             expect(game.currentAssignment()).to.have.property('deadline', deadline);
-            game.status.should.equal(GAME_STATUSES.READY_FOR_QA.id);
+            game.status.should.equal(GAME_STATUSES.QAING.id);
 
             /* Change game status to "Set Aside". */
             game.status = GAME_STATUSES.SET_ASIDE.id;
@@ -359,8 +478,8 @@ describe('GamesFactory', function() {
     describe('startAssignment', function() {
 
         it('should start indexer assignment', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+           'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 1;
             var isQa = false;
@@ -368,10 +487,13 @@ describe('GamesFactory', function() {
 
             var game = {
 
-                status: GAME_STATUSES.READY_FOR_INDEXING.id
+                status: GAME_STATUSES.READY_FOR_INDEXING.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId, deadline);
 
@@ -385,8 +507,8 @@ describe('GamesFactory', function() {
         }]));
 
         it('should start QA assignment', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 1;
             var isQa = true;
@@ -394,10 +516,13 @@ describe('GamesFactory', function() {
 
             var game = {
 
-                status: GAME_STATUSES.READY_FOR_QA.id
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId, deadline);
 
@@ -418,15 +543,18 @@ describe('GamesFactory', function() {
         var userId = 1;
 
         beforeEach(inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+           'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 game = {
 
-                    status: GAME_STATUSES.READY_FOR_INDEXING.id
+                    status: GAME_STATUSES.READY_FOR_INDEXING.id,
+                    video: {
+                        status: VIDEO_STATUSES.COMPLETE.id
+                    }
                 };
 
-                game = games.extendGame(game);
+                game = games.extend(game);
 
                 game.assignToIndexer(userId);
 
@@ -457,18 +585,21 @@ describe('GamesFactory', function() {
     describe('finishAssignment', function() {
 
         it('should finish indexer assignment', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+           'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 1;
             var isQa = false;
 
             var game = {
 
-                status: GAME_STATUSES.READY_FOR_INDEXING.id
+                status: GAME_STATUSES.READY_FOR_INDEXING.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToIndexer(userId);
 
@@ -483,18 +614,21 @@ describe('GamesFactory', function() {
         }]));
 
         it('should finish QA assignment', inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+           function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 1;
             var isQa = true;
 
             var game = {
 
-                status: GAME_STATUSES.READY_FOR_QA.id
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                video: {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                }
             };
 
-            game = games.extendGame(game);
+            game = games.extend(game);
 
             game.assignToQa(userId);
 
@@ -514,100 +648,266 @@ describe('GamesFactory', function() {
         var game;
 
         beforeEach(inject([
-           'GAME_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, games) {
+            'GAME_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, games) {
 
                 game = {};
 
-                game = games.extendGame(game);
+                game = games.extend(game);
             }
         ]));
 
         it('should return false if no indexer assignments exist', inject([
-           function() {
+            function() {
 
-            expect(game.canBeIndexed()).to.be.false;
-        }]));
+                expect(game.canBeIndexed()).to.be.false;
+            }]));
 
         it('should return false if the deadline has expired', inject([
-            'GAME_STATUSES',
-           function(GAME_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES',
+            function(GAME_STATUSES, VIDEO_STATUSES) {
 
-            var userId = 1;
-            var isQa = false;
-            var now = new Date();
-            var deadline = now.setMinutes(now.getMinutes() - 1);
+                var userId = 1;
+                var isQa = false;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() - 1);
 
-            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                game.video = {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                };
 
-            game.assignToIndexer(userId, deadline);
+                game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
-            expect(game.canBeIndexed()).to.be.false;
-        }]));
+                game.assignToIndexer(userId, deadline);
+
+                expect(game.canBeIndexed()).to.be.false;
+            }]));
 
         it('should return true if the deadline has not expired', inject([
-            'GAME_STATUSES',
-           function(GAME_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES',
+            function(GAME_STATUSES, VIDEO_STATUSES) {
 
-            var userId = 1;
-            var isQa = false;
-            var now = new Date();
-            var deadline = now.setMinutes(now.getMinutes() + 1);
+                var userId = 1;
+                var isQa = false;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
 
-            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                game.video = {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                };
 
-            game.assignToIndexer(userId, deadline);
+                game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
-            expect(game.canBeIndexed()).to.be.true;
-        }]));
+                game.assignToIndexer(userId, deadline);
+
+                expect(game.canBeIndexed()).to.be.true;
+            }]));
 
         it('should return false when the game is not in the proper status', inject([
-            'GAME_STATUSES',
-           function(GAME_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES',
+            function(GAME_STATUSES, VIDEO_STATUSES) {
 
-            var userId = 1;
-            var isQa = false;
-            var now = new Date();
-            var deadline = now.setMinutes(now.getMinutes() + 1);
+                var userId = 1;
+                var isQa = false;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
 
-            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                game.video = {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                };
 
-            game.assignToIndexer(userId, deadline);
+                game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
-           [GAME_STATUSES.NOT_INDEXED.id,
-            GAME_STATUSES.SET_ASIDE.id,
-            GAME_STATUSES.INDEXED.id]
-            .forEach(function(status) {
+                game.assignToIndexer(userId, deadline);
 
-                game.status = status;
-                expect(game.canBeIndexed()).to.be.false;
-            });
-        }]));
+                [GAME_STATUSES.NOT_INDEXED.id,
+                    GAME_STATUSES.SET_ASIDE.id,
+                    GAME_STATUSES.INDEXED.id]
+                    .forEach(function(status) {
+
+                        game.status = status;
+                        expect(game.canBeIndexed()).to.be.false;
+                    });
+            }]));
 
         it('should return true when the game is in the proper status', inject([
-            'GAME_STATUSES',
-           function(GAME_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES',
+            function(GAME_STATUSES, VIDEO_STATUSES) {
 
-            var userId = 1;
-            var isQa = false;
-            var now = new Date();
-            var deadline = now.setMinutes(now.getMinutes() + 1);
+                var userId = 1;
+                var isQa = false;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
 
-            game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                game.video = {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                };
 
-            game.assignToIndexer(userId, deadline);
+                game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
-           [GAME_STATUSES.READY_FOR_INDEXING.id,
-            GAME_STATUSES.READY_FOR_INDEXING.id,
-            GAME_STATUSES.INDEXING.id,
-            GAME_STATUSES.READY_FOR_QA.id,
-            GAME_STATUSES.QAING.id]
-            .forEach(function(status) {
+                game.assignToIndexer(userId, deadline);
 
-                game.status = status;
-                expect(game.canBeIndexed()).to.be.true;
-            });
-        }]));
+                [GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id]
+                    .forEach(function(status) {
+
+                        game.status = status;
+                        expect(game.canBeIndexed()).to.be.true;
+                    });
+            }]));
     });
+
+    describe('canBeQAed', function() {
+
+        var game;
+
+        beforeEach(inject([
+            'GAME_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, games) {
+
+                game = {};
+
+                game = games.extend(game);
+            }
+        ]));
+
+        it('should return false if no indexer assignments exist', inject([
+            function() {
+                expect(game.canBeQAed()).to.be.false;
+            }]));
+
+        it('should return false if the deadline has expired', inject([
+            'GAME_STATUSES', 'VIDEO_STATUSES',
+            function(GAME_STATUSES, VIDEO_STATUSES) {
+
+                game.video = {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                };
+
+                var userId = 1;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() - 1);
+
+                game.status = GAME_STATUSES.READY_FOR_QA.id;
+
+                game.assignToQa(userId, deadline);
+
+                expect(game.canBeQAed()).to.be.false;
+            }]));
+
+        it('should return true if the deadline has not expired', inject([
+            'GAME_STATUSES', 'VIDEO_STATUSES',
+            function(GAME_STATUSES, VIDEO_STATUSES) {
+
+                game.video = {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                };
+
+                var userId = 1;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
+
+                game.status = GAME_STATUSES.READY_FOR_QA.id;
+
+                game.assignToQa(userId, deadline);
+
+                expect(game.canBeQAed()).to.be.true;
+            }]));
+
+        it('should return false when the game is not in the proper status', inject([
+            'GAME_STATUSES', 'VIDEO_STATUSES',
+            function(GAME_STATUSES, VIDEO_STATUSES) {
+
+                game.video = {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                };
+
+                var userId = 1;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
+
+                game.status = GAME_STATUSES.READY_FOR_QA.id;
+
+                game.assignToQa(userId, deadline);
+
+                [GAME_STATUSES.NOT_INDEXED.id,
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id,
+                    GAME_STATUSES.SET_ASIDE.id,
+                    GAME_STATUSES.INDEXED.id]
+                    .forEach(function(status) {
+
+                        game.status = status;
+                        expect(game.canBeQAed()).to.be.false;
+                    });
+            }]));
+
+        it('should return true when the game is in the proper status', inject([
+            'GAME_STATUSES', 'VIDEO_STATUSES',
+            function(GAME_STATUSES, VIDEO_STATUSES) {
+
+                game.video = {
+                    status: VIDEO_STATUSES.COMPLETE.id
+                };
+
+                var userId = 1;
+                var now = new Date();
+                var deadline = now.setMinutes(now.getMinutes() + 1);
+
+                game.status = GAME_STATUSES.READY_FOR_QA.id;
+
+                game.assignToQa(userId, deadline);
+
+                [GAME_STATUSES.READY_FOR_QA.id,
+                    GAME_STATUSES.QAING.id]
+                    .forEach(function(status) {
+
+                        game.status = status;
+                        expect(game.canBeQAed()).to.be.true;
+                    });
+            }]));
+    });
+
+    describe('isDelivered', function(){
+        var game;
+
+        beforeEach(inject([
+            'GAME_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, games) {
+
+                game = {};
+
+                game = games.extend(game);
+            }
+        ]));
+
+        it('should return false when the game is in the incorrect status', inject([
+            'GAME_STATUSES',
+            function(GAME_STATUSES) {
+                [
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id,
+                    GAME_STATUSES.READY_FOR_QA.id,
+                    GAME_STATUSES.QAING.id,
+                    GAME_STATUSES.SET_ASIDE.id
+                ].forEach(function(status) {
+                    game.status = status;
+                    expect(game.isDelivered()).to.be.false;
+                });
+            }]));
+
+        it('should return true when the game is in the correct status', inject([
+            'GAME_STATUSES',
+            function(GAME_STATUSES) {
+                [
+                    GAME_STATUSES.INDEXED.id,
+                    GAME_STATUSES.FINALIZED.id
+                ].forEach(function(status) {
+                    game.status = status;
+                    expect(game.isDelivered()).to.be.true;
+                });
+            }]));
+    });
+
 });
 

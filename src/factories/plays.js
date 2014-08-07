@@ -6,75 +6,19 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'PlaysResource',
-    function(PlaysResource) {
+    'PlaysResource', 'PlaysStorage', 'BaseFactory',
+    function(PlaysResource, PlaysStorage, BaseFactory) {
 
         var PlaysFactory = {
 
+            description: 'plays',
+
+            storage: PlaysStorage,
+
             resource: PlaysResource,
-
-            extendPlay: function(play) {
-
-                var self = this;
-
-                /* Copy all of the properties from the retrieved $resource
-                 * "play" object. */
-                angular.extend(play, self);
-
-                if (play.events) {
-
-                    play.events = play.events.map(function(event) {
-
-                        var indexedVariableValues = {};
-
-                        for (var key in event.variableValues) {
-
-                            var value = event.variableValues[key];
-                            indexedVariableValues[value.index] = value;
-                        }
-
-                        event.variableValues = indexedVariableValues;
-
-                        return event;
-                    });
-                }
-
-                return play;
-            },
-
-            getList: function(gameId, success, error, index) {
-
-                var self = this;
-
-                var callback = function(plays) {
-
-                    var indexedPlays = {};
-
-                    plays.forEach(function(play) {
-
-                        play = self.extendPlay(play);
-
-                        indexedPlays[play.id] = play;
-                    });
-
-                    plays = index ? indexedPlays : plays;
-
-                    return success ? success(plays) : plays;
-                };
-
-                error = error || function(response) {
-
-                    if (response.status === 404) return [];
-
-                    else throw new Error('Could not load plays list');
-                };
-
-                return self.resource.query({gameId: gameId}, callback, error);
-            },
 
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
-                console.log(resources);
                 var playIds = [];
 
                 angular.forEach(resources.plays, function(play) {
@@ -110,6 +54,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play = play || self;
 
+                if (!play.events.length) throw new Error('No events in play');
+
                 play.startTime = play.events
 
                 .map(function(event) {
@@ -138,43 +84,24 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     var updatePlay = new PlaysResource(play);
 
-                    updatePlay.events = play.events.map(function(event) {
-
-                        event.playId = play.id;
-
-                        delete event.activeEventVariableIndex;
-
-                        var indexedVariableValues = {};
-
-                        for (var key in event.variableValues) {
-
-                            var value = event.variableValues[key];
-                            indexedVariableValues[value.id] = value;
-                        }
-
-                        event.variableValues = indexedVariableValues;
-
-                        return event;
-                    });
+                    updatePlay = self.unextend(updatePlay);
 
                     return updatePlay.$update().then(function(play) {
 
-                        play = self.extendPlay(play);
+                        play = self.extend(play);
                         return play;
                     });
 
                 } else {
 
-                    var events = play.events;
                     var newPlay = new PlaysResource(play);
 
-                    delete newPlay.events;
+                    newPlay = self.unextend(newPlay);
 
                     return newPlay.$create().then(function(play) {
 
-                        play = self.extendPlay(play);
-                        play.events = events;
-                        return play.save();
+                        play = self.extend(play);
+                        return play;
                     });
                 }
             },
@@ -189,7 +116,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 success = success || function(play) {
 
-                    return self.extendPlay(play);
+                    return self.extend(play);
                 };
 
                 error = error || function() {
@@ -209,6 +136,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 }
             }
         };
+
+        angular.augment(PlaysFactory, BaseFactory);
 
         return PlaysFactory;
     }
