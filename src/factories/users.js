@@ -18,7 +18,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             resource: UsersResource,
 
             extend: function(user) {
-                console.log('called extend');
                 var self = this;
 
                 /* Remove the user password from the model. If set it will
@@ -70,7 +69,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return user;
             },
             save: function(resource, success, error) {
-                console.log('called save');
                 var self = this;
 
                 resource = resource || self;
@@ -285,11 +283,6 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var roleIds = role.type.id;
                 var matchIds = match.type.id;
-
-//                console.log(role);
-//                console.log(match);
-//                console.log(roleIds);
-//                console.log(matchIds);
 
                 /* Treat IDs as arrays. */
                 if (!Array.isArray(roleIds)) roleIds = [roleIds];
