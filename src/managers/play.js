@@ -117,8 +117,6 @@ IntelligenceWebClient.service('PlayManager', [
 
             play = play || this.current;
 
-            if (play.isSaving) return;
-
             var playIndex = indexing.plays.indexOf(play);
 
             /* If the play exists in the play list. */
