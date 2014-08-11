@@ -41,7 +41,8 @@
         "open-modal-confirm",
         "open-modal-alert",
         "dynamic-table",
-        "user-typeahead"
+        "user-typeahead",
+        "videogular"
     ],
     "scripts": [
         "index.js"
