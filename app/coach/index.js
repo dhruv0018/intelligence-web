@@ -57,7 +57,6 @@ Coach.service('Coach.Data.Dependencies', [
                 uploaderTeamId: session.currentUser.currentRole.teamId
             }),
             teams: teams.load(),
-            remainingBreakdowns: teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId),
             users: users.retrieve(),
             positionSets: positions.load(),
             leagues: baseData.leagues,

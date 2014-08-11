@@ -51,13 +51,17 @@ AddFilm.config([
                 }
             },
             resolve: {
-                'Coach.Data': ['$q', 'Coach.Data.Dependencies', 'SessionService', function($q, data, session) {
+                'Coach.Data': ['$q', 'Coach.Data.Dependencies', 'SessionService', 'TeamsFactory', function($q, data, session, teams) {
+
+                    data.remainingBreakdowns = teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId);
+
                     return $q.all(data).then(function(data) {
                         var leaguesCollection = data.leagues.getCollection();
                         var teamsCollection = data.teams.getCollection();
                         var team = teamsCollection[session.currentUser.currentRole.teamId];
                         data.league = leaguesCollection[team.leagueId];
                         data.team = team;
+
                         return data;
                     });
                 }]
@@ -93,10 +97,5 @@ AddFilm.controller('StartController', [
 
         $scope.remainingBreakdowns = data.remainingBreakdowns;
 
-        //recalculate and overwrite the remaining breakdowns
-        data.teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId).then(function(remainingBreakdowns) {
-            data.remainingBreakdowns = remainingBreakdowns;
-            $scope.remainingBreakdowns = remainingBreakdowns;
-        });
     }
 ]);
