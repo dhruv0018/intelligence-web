@@ -9,16 +9,9 @@
     <div class="modal-body">
 
         <form name="assign">
-            <div class="assign-box first-box">
-                <select data-ng-model="indexerId" required>
-
-                    <option value="">Select indexer</option>
-                    <option data-ng-repeat="indexer in users | role:ROLE_TYPE.INDEXER" value="{{ indexer.id }}">{{ indexer.firstName + ' ' + indexer.lastName }}</option>
-
-                </select>
-            </div>
+            <user-typeahead data-user="indexer" data-role="ROLES.INDEXER"></user-typeahead>
             <div class="assign-box">
-                <add-time data-modified-date="selectionData.modifiedDeadline" min="2" max="48"></add-time>
+                <add-time data-modified-date="selectionData.modifiedDeadline" min="2" max="400"></add-time>
             </div>
         </form>
 
@@ -26,8 +19,8 @@
 
     <footer class="modal-footer">
 
-        <button class="btn-assign" data-ng-if="!isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToIndexer(indexerId, selectionData.modifiedDeadline)">Assign Indexer</button>
-        <button class="btn-assign" data-ng-if="isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToQa(indexerId, selectionData.modifiedDeadline)">Assign QA</button>
+        <button class="btn-assign" data-ng-if="!isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToIndexer(indexer.id, selectionData.modifiedDeadline)">Assign Indexer</button>
+        <button class="btn-assign" data-ng-if="isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToQa(indexer.id, selectionData.modifiedDeadline)">Assign QA</button>
 
     </footer>
 
