@@ -61,9 +61,17 @@ UploadingFilm.controller('UploadingFilmController', [
         $scope.isDefined = angular.isDefined;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.games = games;
+        $window.krossover = $window.krossover || {};
+        $window.krossover.videoUploadStatus = 'STARTED';
 
         $window.onbeforeunload = function() {
-            if ($scope.$flow.isUploading()) return 'Video still uploading! Are you sure you want to close the page and cancel the upload?';
+
+            if ($scope.$flow.isUploading() ||
+                $window.krossover &&
+                ($window.krossover.videoUploadStatus === 'STARTED' && $window.krossover.videoUploadStatus !== 'COMPLETE')) {
+
+                return 'Video still uploading! Are you sure you want to close the page and cancel the upload?';
+            }
         };
 
         var deleteVideo = function() {
@@ -123,7 +131,8 @@ UploadingFilm.controller('UploadingFilmController', [
         $scope.$on('flow::complete', function() {
 
             if (!$scope.error) $scope.complete = true;
-
+            $window.krossover = $window.krossover || {};
+            $window.krossover.videoUploadStatus = 'COMPLETE';
             $scope.$apply();
         });
 
