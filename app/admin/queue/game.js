@@ -126,6 +126,7 @@ Game.controller('GameController', [
         $scope.data = data;
         $scope.game = data.games.get(gameId);
         $scope.team = data.teams.get($scope.game.teamId);
+        $scope.teams = data.teams.getCollection();
         $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
         $scope.league = data.leagues.get($scope.team.leagueId);
         $scope.sport = data.sports.get($scope.league.sportId);
@@ -142,5 +143,20 @@ Game.controller('GameController', [
 
             $scope.headCoach = data.users.get(headCoachRole.userId);
         }
+
+        $scope.deliverTime = $scope.game.getRemainingTime($scope.teams[$scope.game.uploaderTeamId]);
+        if ($scope.deliverTime === 0) {
+            $scope.deliverTime = 'None';
+        }
+
+        $scope.assignedToIndexer = $scope.game.isAssignedToIndexer();
+        $scope.assignedToQa = $scope.game.isAssignedToQa();
+
+        $scope.indexTime = $scope.game.assignmentTimeRemaining();
+
+        $scope.gameLength = Math.round($scope.game.video.duration);
+
+        var uploadedDate = new Date($scope.game.createdAt);
+        $scope.uploadDate = (uploadedDate.getMonth() + 1) + '/' + uploadedDate.getDate() + '/' + uploadedDate.getFullYear();
     }
 ]);
