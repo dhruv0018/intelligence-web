@@ -41,7 +41,7 @@ Team.controller('Coach.Team.controller', [
         $scope.league = $scope.leagues[$scope.team.leagueId];
 
         //Positions
-        $scope.positions = $scope.data.positionSets.getCollection()[$scope.league.positionSetId].indexedPositions;
+        $scope.positions = ($scope.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.league.positionSetId].indexedPositions : {};
 
         //Roster
         $scope.roster = $scope.data.playersList;
@@ -52,17 +52,21 @@ Team.controller('Coach.Team.controller', [
             message: 'All game film is automatically shared with Athletes on your active roster.'
         });
 
-
-        angular.forEach($scope.roster, function(player) {
-            player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
-        });
+        if ($scope.positions.length > 0) {
+            angular.forEach($scope.roster, function(player) {
+                player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
+            });
+        }
 
         $scope.singleSave = function(player) {
-            var tempPlayer = players.getPositionsFromDowndown(player, $scope.rosterId, $scope.positions);
+            var tempPlayer = ($scope.positions.length > 0) ? players.getPositionsFromDowndown(player, $scope.rosterId, $scope.positions) : player;
 
             players.singleSave($scope.rosterId, tempPlayer).then(function(responsePlayer) {
                 angular.extend(player, player, responsePlayer);
-                player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
+
+                if ($scope.positions.length > 0) {
+                    player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
+                }
 
                 if (player.userId) {
                     if (typeof $scope.data.coachData.users[player.userId] === 'undefined') {

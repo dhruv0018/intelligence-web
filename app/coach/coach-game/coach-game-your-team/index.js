@@ -66,7 +66,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.gameRoster = [];
 
         //Positions
-        $scope.positions = $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions;
+        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
 
         $scope.$watchCollection('data.game', function(game) {
             $scope.buildGameRoster(game);
@@ -82,7 +82,9 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     if (teamRosterPlayer.rosterStatuses[$scope.teams[game.teamId].roster.id]) {
                         teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
                         teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.teams[game.teamId].roster.id];
-                        teamRosterPlayer.positions[game.rosters[game.teamId].id] = teamRosterPlayer.positions[$scope.teams[game.teamId].roster.id];
+                        if ($scope.positions.length > 0) {
+                            teamRosterPlayer.positions[game.rosters[game.teamId].id] = teamRosterPlayer.positions[$scope.teams[game.teamId].roster.id];
+                        }
                         teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
                         $scope.gameRoster.push(teamRosterPlayer);
                     }
@@ -98,9 +100,11 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         $scope.save = function() {
 
-            angular.forEach($scope.gameRoster, function(player) {
-                player = players.getPositionsFromDowndown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
-            });
+            if ($scope.positions.length > 0) {
+                angular.forEach($scope.gameRoster, function(player) {
+                    player = players.getPositionsFromDowndown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
+                });
+            }
 
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
                 $scope.gameRoster = roster;
