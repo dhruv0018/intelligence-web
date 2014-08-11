@@ -67,13 +67,11 @@
                                 </a>
                                 <p>
                                     <strong>
-                                        <span data-ng-if="player.positions[rosterId].length > 1">
-                                            <span data-ng-repeat="position in player.positions[rosterId]">
-                                                {{position.name}}
-                                            </span>
+
+                                        <span data-ng-repeat="position in player.positions[rosterId]">
+                                            {{position.name}}
                                         </span>
-                                        <span data-ng-if="player.positions[rosterId].length === 1"> {{player.positions[rosterId][0].name}}</span>
-                                        <span data-ng-if="!player.positions[rosterId]"> No Position Set</span>
+                                        <span data-ng-if="!player.positions[rosterId]"> No Positions</span>
                                     </strong>
                                 </p>
                                 <p>
