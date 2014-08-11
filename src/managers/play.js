@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    'AlertsService', 'PlaysFactory', 'IndexingService',
-    function service(alerts, plays, indexing) {
+    '$injector', 'AlertsService', 'TagsManager', 'PlaysFactory', 'IndexingService',
+    function service($injector, alerts, tags, plays, indexing) {
 
         var model = {
 
@@ -53,54 +53,122 @@ IntelligenceWebClient.service('PlayManager', [
         };
 
         /**
+         * Add an event to the play.
+         * @param {Object} event - event to be added.
+         */
+        this.addEvent = function(event) {
+
+            /* If there is no current play. */
+            if (!this.current) {
+
+                /* Create a play. */
+                this.create();
+            }
+
+            /* If there are no plays in the playlist. */
+            if (!indexing.plays.length) {
+
+                /* Add the current play to the playlist. */
+                indexing.plays.push(this.current);
+            }
+
+            /* Add event to the current plays events. */
+            this.current.events.push(event);
+        };
+
+        /**
+         * Remove an event from the play.
+         * @param {Object} event - event to be removed.
+         */
+        this.removeEvent = function(event) {
+
+            var eventManager = $injector.get('EventManager');
+
+            /* Find the index of the event. */
+            var eventIndex = this.current.events.indexOf(event);
+
+            /* Remove current event from the current play. */
+            this.current.events.splice(eventIndex, 1);
+
+            /* If there are other events left in the play. */
+            if (this.current.events.length) {
+
+                /* Set the current event to the previous event. */
+                var previousEvent = this.current.events[eventIndex - 1];
+                eventManager.current = previousEvent;
+            }
+
+            /* If there are no events left in the play. */
+            else {
+
+                /* Reset the current event. */
+                eventManager.reset();
+
+                /* Remove the current play. */
+                this.remove();
+            }
+        };
+
+        /**
          * Removes a play.
          * @param {Object} play - play to be removed.
          */
         this.remove = function(play) {
 
-            var self = this;
+            play = play || this.current;
 
-            var removePlay = function(play) {
+            var playIndex = indexing.plays.indexOf(play);
 
-                var playIndex = indexing.plays.indexOf(play);
+            /* If the play exists in the play list. */
+            if (~playIndex) {
 
-                /* Remove play from plays list. */
+                /* Remove play from play list. */
                 indexing.plays.splice(playIndex, 1);
+            }
 
-                /* If the deleted play is the current play. */
-                if (angular.equals(play, self.current)) {
+            /* If the play has been saved before. */
+            if (play.id) {
 
-                    self.clear();
-                }
-            };
+                /* Also remove it remotely. */
+                plays.remove(play);
+            }
 
-            var removePlayError = function() {
+            /* If the deleted play is the current play. */
+            if (angular.equals(play, this.current)) {
 
-                alerts.add({
+                var event = $injector.get('EventManager');
 
-                    type: 'danger',
-                    message: 'Failed to delete play'
-                });
-            };
+                indexing.showTags = false;
+                indexing.showScript = false;
+                indexing.isIndexing = false;
+                indexing.eventSelected = false;
 
-            /* If the play has been saved before, also remove it remotely. */
-            if (play.id) plays.remove(play).then(removePlay(play), removePlayError);
-
-            /* If not, then just remove it locally. */
-            else removePlay(play);
+                this.clear();
+                tags.reset();
+                event.reset();
+            }
         };
 
         /**
          * Saves a play.
          */
-        this.save = function() {
+        this.save = function(play) {
 
-            var play = this.current;
+            play = play || this.current;
+
             var playIndex = indexing.plays.indexOf(play);
 
+            play.isSaving = true;
+
+            /* Save the play remotely. */
             plays.save(play).then(function(play) {
 
-                indexing.plays[playIndex] = play;
+                /* If the play exists in the play list. */
+                if (~playIndex) {
+
+                    /* Update the play in the play list. */
+                    indexing.plays[playIndex] = play;
+                }
             });
         };
     }

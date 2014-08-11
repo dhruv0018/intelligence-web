@@ -27,8 +27,6 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 tagset.tags.forEach(function(tag) {
 
-                    tagset.indexedTags[tag.id] = tag;
-
                     if (angular.isArray(tag.tagVariables)) {
 
                         var indexedVariables = {};
@@ -49,6 +47,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                         tag.tagVariables = indexedVariables;
                     }
+
+                    tagset.indexedTags[tag.id] = tag;
                 });
 
                 return tagset;
