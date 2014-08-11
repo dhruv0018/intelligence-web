@@ -64,7 +64,8 @@ UploadingFilm.controller('UploadingFilmController', [
         $window.krossover = $window.krossover || {};
         $window.krossover.videoUploadStatus = 'STARTED';
 
-        $window.onbeforeunload = function() {
+        //TODO: switch to addEventListener
+        $window.onbeforeunload = function beforeunloadHandler() {
 
             if ($scope.$flow.isUploading() ||
                 $window.krossover &&
