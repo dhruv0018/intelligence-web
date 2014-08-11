@@ -18,7 +18,7 @@ var Indexing = angular.module('Indexing');
  */
 Indexing.controller('Indexing.Main.Controller', [
     'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance',
-    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar, data, videoplayer) {
+    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar, data, videoplayerInstance) {
 
         var self = this;
 
@@ -40,6 +40,14 @@ Indexing.controller('Indexing.Main.Controller', [
 
         $scope.game.teamIndexedScore = 0;
         $scope.game.opposingIndexedScore = 0;
+
+        var videoplayer;
+        videoplayerInstance.then(function(vp) {
+            vp.videoElement.one('canplay', function() {
+                videoplayer = vp;
+                indexing.isReady = true;
+            });
+        });
 
         /*IF DEADLINE HAS EXPIRED, OPEN MODAL THAT SENDS THEM BACK TO GAMES LIST*/
         var remainingTimeInterval = setInterval(function() {timeLeft();}, 1000);
@@ -100,9 +108,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
             $scope.$apply(function() {
 
-                videoplayer.then(function(vp) {
-                    if (indexing.isReady) vp.playPause();
-                });
+                if (indexing.isReady) videoplayer.playPause();
             });
 
             return false;
@@ -116,9 +122,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                     var currentTime = getCurrentTime();
                     var time = currentTime - config.indexing.video.jump;
-                    videoplayer.then(function(vp) {
-                        vp.seekTime(time);
-                    });
+                    videoplayer.seekTime(time);
                 }
             });
 
@@ -133,9 +137,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                     var currentTime = getCurrentTime();
                     var time = currentTime + config.indexing.video.jump;
-                    videoplayer.then(function(vp) {
-                        vp.seekTime(time);
-                    });
+                    videoplayer.seekTime(time);
                 }
             });
 
@@ -181,9 +183,7 @@ Indexing.controller('Indexing.Main.Controller', [
             indexing.showTags = true;
             indexing.showScript = false;
             indexing.eventSelected = false;
-            videoplayer.then(function(vp) {
-                vp.pause();
-            });
+            videoplayer.pause();
         };
 
         /**
@@ -220,6 +220,10 @@ Indexing.controller('Indexing.Main.Controller', [
 
             play.save();
             play.clear();
+
+            /* Snap video back to time of current event. */
+            videoplayer.seekTime(event.current.time);
+            videoplayer.play();
 
             if (indexing.eventSelected) this.back();
             else this.next();
@@ -259,10 +263,8 @@ Indexing.controller('Indexing.Main.Controller', [
             tags.current = $scope.tagset.getNextTags(tagId);
 
             /* Snap video back to time of current event. */
-            videoplayer.then(function(vp) {
-                vp.seekTime(event.current.time);
-                vp.play();
-            });
+            videoplayer.seekTime(event.current.time);
+            videoplayer.play();
 
             event.reset();
         };
@@ -282,6 +284,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                 tags.reset();
                 event.reset();
+                videoplayer.play();
             }
 
             /* If the tags are showing. */
@@ -346,18 +349,6 @@ Indexing.controller('Indexing.Main.Controller', [
 
 
         /**
-         * Listen for video player ready event.
-         */
-        $scope.$on(VG_EVENTS.ON_PLAYER_READY, function() {
-
-            videoplayer.then(function(vp) {
-                vp.videoElement.one('canplay', function() {
-                    indexing.isReady = true;
-                });
-            });
-        });
-
-        /**
          * Listen for video player enter full screen event.
          */
         $rootScope.$on(VG_EVENTS.ON_ENTER_FULLSCREEN, function() {
@@ -385,9 +376,7 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         var getCurrentTime = function() {
 
-            videoplayer.then(function(vp) {
-                return vp.videoElement[0].currentTime;
-            });
+            return videoplayer.videoElement[0].currentTime;
         };
 
         /**
@@ -396,9 +385,7 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         var setCurrentTime = function(time) {
 
-            videoplayer.then(function(vp) {
-                vp.seekTime(time);
-            });
+            videoplayer.seekTime(time);
         };
     }
 ]);
