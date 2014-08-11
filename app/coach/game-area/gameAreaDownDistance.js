@@ -75,7 +75,7 @@ GameAreaDownDistance.controller('GameAreaDownDistanceController', [
                 '1st': '1st',
                 '2nd': '2nd',
                 '3rd': '3rd',
-                '4th': '4th',
+                '4th': '4th'
             },
             'hash': {
                 'Any': undefined,
@@ -87,6 +87,7 @@ GameAreaDownDistance.controller('GameAreaDownDistanceController', [
 
         $scope.dndReport = {
             gameId: $scope.game.id,
+            teamId: $scope.teamId,
             distance: $scope.options.distance[0],
             strength: $scope.options.weight[0],
             redZone: false,
@@ -95,12 +96,17 @@ GameAreaDownDistance.controller('GameAreaDownDistanceController', [
         };
 
         $scope.createDownAndDistanceReport = function() {
-            $scope.dndReport.teamId = $scope.teamId;
 
             if ($scope.dndReport.redZone === 'true') {
                 $scope.dndReport.redZone = true;
             } else {
                 $scope.dndReport.redZone = false;
+            }
+
+            if ($scope.dndReport.teamId == $scope.teamId) {
+                $scope.dndReport.teamId = $scope.teamId;
+            } else if ($scope.dndReport.teamId == $scope.opposingTeamId) {
+                $scope.dndReport.teamId = $scope.opposingTeamId;
             }
 
             games.getDownAndDistanceReport($scope.dndReport).then(function(dndReport) {
