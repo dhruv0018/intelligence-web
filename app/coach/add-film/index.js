@@ -84,13 +84,19 @@ AddFilm.controller('AddFilmController', [
 ]);
 
 AddFilm.controller('StartController', [
-    '$scope', 'GAME_TYPES', 'Coach.Data',
-    function($scope, GAME_TYPES, data) {
+    '$scope', 'GAME_TYPES', 'Coach.Data', 'SessionService',
+    function($scope, GAME_TYPES, data, session) {
         $scope.GAME_TYPES = GAME_TYPES;
 
         $scope.activePlan = data.team.getActivePlan();
         $scope.activePackage = data.team.getActivePackage();
+
         $scope.remainingBreakdowns = data.remainingBreakdowns;
+
+        //recalculate and overwrite the remaining breakdowns
+        data.teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId).then(function(remainingBreakdowns) {
+            data.remainingBreakdowns = remainingBreakdowns;
+            $scope.remainingBreakdowns = remainingBreakdowns;
+        });
     }
 ]);
-
