@@ -55,12 +55,16 @@ UploadingFilm.config([
  * @type {Controller}
  */
 UploadingFilm.controller('UploadingFilmController', [
-    'config', '$rootScope', '$scope', '$state', '$http', 'GamesFactory', 'PlayersFactory', 'GAME_STATUSES', 'Coach.Data',
-    function controller(config, $rootScope, $scope, $state, $http, games, players, GAME_STATUSES, data) {
+    'config', '$rootScope', '$scope', '$state', '$http', 'GamesFactory', 'PlayersFactory', 'GAME_STATUSES', 'Coach.Data', '$window',
+    function controller(config, $rootScope, $scope, $state, $http, games, players, GAME_STATUSES, data, $window) {
 
         $scope.isDefined = angular.isDefined;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.games = games;
+
+        $window.onbeforeunload = function() {
+            if ($scope.$flow.isUploading()) return 'Video still uploading! Are you sure you want to close the page and cancel the upload?';
+        };
 
         var deleteVideo = function() {
 
