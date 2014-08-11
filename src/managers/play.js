@@ -169,6 +169,8 @@ IntelligenceWebClient.service('PlayManager', [
                     /* Update the play in the play list. */
                     indexing.plays[playIndex] = play;
                 }
+
+                play.isSaving = false;
             });
         };
     }
