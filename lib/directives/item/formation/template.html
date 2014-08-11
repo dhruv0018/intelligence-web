@@ -2,23 +2,25 @@
 
     <button
         class="dropdown"
-        data-ng-if="event.variableValues[item.id].value !== null"
-        data-ng-click="event.variableValues[item.id].value = null"
-    >{{ item.formations[event.variableValues[item.id].value].name }}</button>
+        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
+        data-ng-click="reset()"
+    >{{ item.formations[event.variableValues[item.id].value].name || 'Optional' }}</button>
 
     <select
         class="dropdown"
         tabindex="{{ item.index }}"
         data-ng-required="item.isRequired"
-        data-ng-if="event.variableValues[item.id].value === null"
+        data-ng-if="isUndefined(event.variableValues[item.id].value)"
         data-ng-model="event.variableValues[item.id].value"
         data-ng-change="event.activeEventVariableIndex = item.index + 1"
+        data-ng-blur="event.variableValues[item.id].value = event.variableValues[item.id].value ? event.variableValues[item.id].value : previousValue"
         data-ng-focus="event.activeEventVariableIndex = item.index"
         data-focus-on="event.activeEventVariableIndex == item.index"
         data-focus-when="{{autoAdvance}}"
         data-autofocus-when="item.index === 1"
     >
 
+        <option value="">Select</option>
         <option data-ng-repeat="formation in item.formations" value="{{ formation.id }}">{{ formation.name }}</option>
 
     </select>

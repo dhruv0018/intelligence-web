@@ -25,7 +25,6 @@ Indexing.controller('Indexing.Main.Controller', [
         var gameId = Number($stateParams.id);
 
         /* Scope */
-        $scope.videoTitle = 'indexing';
         $scope.data = data;
         $scope.tags = tags;
         $scope.play = play;
@@ -78,6 +77,7 @@ Indexing.controller('Indexing.Main.Controller', [
         tags.reset($scope.tagset);
         event.reset($scope.tagset);
         play.reset(gameId);
+        play.clear();
 
         /* Bind keys. */
 
@@ -152,6 +152,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                     if (self.savable()) self.save();
                     else if (self.nextable()) self.next();
+                    else self.step();
                 }
 
                 else if (indexing.isReady) self.index();
@@ -203,14 +204,21 @@ Indexing.controller('Indexing.Main.Controller', [
         };
 
         /**
+         * Steps the current variable.
+         */
+        this.step = function() {
+
+            /* Move to the next event variable. */
+            event.current.activeEventVariableIndex++;
+        };
+
+        /**
          * Determines if the current indexing session is savable.
          * @returns {Boolean} true if the session is savable; false otherwise.
          */
         this.savable = function() {
 
-            if (!this.nextable()) return false;
-
-            return indexing.eventSelected || event.isEndEvent();
+            return this.nextable() && event.isEndEvent();
         };
 
         /**
@@ -218,15 +226,19 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.save = function() {
 
-            play.save();
-            play.clear();
+            indexing.showTags = false;
+            indexing.showScript = false;
+            indexing.isIndexing = false;
+            indexing.eventSelected = false;
 
             /* Snap video back to time of current event. */
             videoplayer.seekTime(event.current.time);
             videoplayer.play();
 
-            if (indexing.eventSelected) this.back();
-            else this.next();
+            play.save(play.current);
+            play.clear();
+            tags.reset();
+            event.reset();
         };
 
         /**
@@ -235,14 +247,16 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.nextable = function() {
 
-            /* If there are variables. */
-            if (event.hasVariables()) {
+            /* If not indexing or the tags are showing. */
+            if (!indexing.isIndexing || indexing.showTags) return false;
+
+            /* If there are variables in the current event. */
+            else if (event.hasVariables()) {
 
                 /* Make sure all of the variables have values. */
                 return event.allEventVariablesHaveValues();
             }
 
-            /* Otherwise; assume the session can be advanced. */
             else return true;
         };
 
@@ -257,7 +271,7 @@ Indexing.controller('Indexing.Main.Controller', [
             indexing.eventSelected = false;
 
             /* Get the tagId of the current event. */
-            var tagId = event.current.tag.id;
+            var tagId = event.current.tagId;
 
             /* Get the next set of tags based on the tag in the current event. */
             tags.current = $scope.tagset.getNextTags(tagId);
@@ -277,9 +291,6 @@ Indexing.controller('Indexing.Main.Controller', [
             /* If editing an event. */
             if (indexing.eventSelected) {
 
-                indexing.showTags = false;
-                indexing.showScript = false;
-                indexing.isIndexing = false;
                 indexing.eventSelected = false;
 
                 tags.reset();
@@ -294,31 +305,34 @@ Indexing.controller('Indexing.Main.Controller', [
                 indexing.showTags = false;
                 indexing.showScript = false;
                 indexing.isIndexing = false;
-                videoplayer.then(function(vp) {
-                    vp.play();
-                });
+                videoplayer.play();
             }
 
-            /* If the first variable is empty. */
-            else if (event.current.activeEventVariableIndex === 1 &&
-                    !event.activeEventVariableValue()) {
+            /* If the event doesn't have variables of If the first variable is empty. */
+            else if (!event.hasVariables() ||
+                     (event.current.activeEventVariableIndex === 1 &&
+                     !event.activeEventVariableValue())) {
 
                 /* Remove the event from the play. */
-                event.delete(event.current);
-                event.reset();
+                play.removeEvent(event.current);
 
                 /* Drop back to tagging state. */
                 indexing.showTags = true;
                 indexing.showScript = false;
             }
 
-            /* If the another variable after the first is empty. */
+            /* If the active variable is empty. */
             else if (!event.activeEventVariableValue()) {
 
-                /* Move back one variable. */
-                --event.current.activeEventVariableIndex;
+                /* While the active variable is empty. */
+                while (event.current.activeEventVariableIndex > 1 &&
+                      !event.activeEventVariableValue()) {
 
-                /* Clear the variable before. */
+                    /* Move back one variable. */
+                    event.current.activeEventVariableIndex--;
+                }
+
+                /* Clear the value of the first variable is not empty. */
                 event.clearActiveEventVariableValue();
             }
 
@@ -336,12 +350,16 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.deleteEvent = function(selectedEvent) {
 
-            /* Remove the event from the play. */
+            indexing.showTags = true;
+            indexing.showScript = false;
+            indexing.eventSelected = false;
+            indexing.isIndexing = false;
+
+            /* Delete the selected event. */
             event.delete(selectedEvent);
 
+            /* Clear the current play. */
             play.clear();
-
-            this.back();
         };
 
 
