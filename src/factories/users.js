@@ -77,17 +77,15 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 /* Create a copy of the resource to save to the server. */
                 var copy = self.unextend(resource);
-                //console.log(copy);
+
                 angular.forEach(copy.roles, function(role) {
                     role.type = (role.type.id) ? role.type.id : role.type;
-                    console.log(role);
                 });
 
 
                 parameters = {};
 
                 success = success || function(resource) {
-                    console.log(self.extend(resource));
                     return self.extend(resource);
                 };
 
