@@ -26,6 +26,7 @@ Teams.run([
         $templateCache.put('team-info.html', require('./team-info.html'));
         $templateCache.put('team-plans.html', require('./team-plans.html'));
         $templateCache.put('team-members.html', require('./team-members.html'));
+        $templateCache.put('school-dropdown-input.html', require('./school-dropdown-input.html'));
     }
 ]);
 
@@ -131,8 +132,8 @@ Teams.config([
 ]);
 
 Teams.service('Teams.Data.Dependencies', [
-    'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'UsersFactory',
-    function(teams, sports, leagues, schools, users) {
+    'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SportsFactory',
+    function(teams, leagues, users, sports) {
 
         var Data = {};
 
@@ -269,8 +270,8 @@ Teams.controller('TeamPlansController', [
  * @type {Controller}
  */
 Teams.controller('TeamController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SchoolsFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, schoolsFactory) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
@@ -279,17 +280,30 @@ Teams.controller('TeamController', [
         $scope.indexedSports = data.sports.getCollection();
 
         $scope.leagues = data.leagues.getList();
-        $scope.indexedLeagues = data.leagues.getList();
-
-        $scope.schools = data.schools.getList();
-
+        $scope.indexedLeagues = data.leagues.getCollection();
 
         var team;
+        $scope.schoolName = '';
 
-        var updateTeamAddress = function updateTeamAddress() {
+        $scope.updateTeamAddress = function($item) {
+            if ($item) {
+                if (!$scope.team) {
+                    $scope.team = {
+                        schoolId: $item.id
+                    };
+                } else {
+                    $scope.team.schoolId = $item.id;
+                }
+
+            }
+
             if ($scope.team && $scope.team.schoolId) {
-                $scope.school = data.schools.get($scope.team.schoolId);
-                $scope.team.address = angular.copy($scope.school.address);
+
+                schoolsFactory.fetch($scope.team.schoolId).then(function(school) {
+                    $scope.school = school;
+                    $scope.schoolName = school.name;
+                    $scope.team.address = angular.copy($scope.school.address);
+                });
             }
         };
 
@@ -301,13 +315,12 @@ Teams.controller('TeamController', [
             if (teamId) {
 
                 team = data.teams.get(teamId);
-
                 $scope.team = team;
                 $scope.team.members = team.getMembers();
 
                 $scope.sportId = data.leagues.get(team.leagueId).sportId;
 
-                updateTeamAddress();
+                $scope.updateTeamAddress();
             }
         }
 
@@ -320,7 +333,11 @@ Teams.controller('TeamController', [
             }
         });
 
-        $scope.$watch('team.schoolId', updateTeamAddress);
+        $scope.findSchoolsByName = function() {
+            return schoolsFactory.query({name: $scope.schoolName, count: 10}).then(function(schools) {
+                return $filter('orderBy')(schools, 'name');
+            });
+        };
 
         $scope.onlyCurrentRoles = function(role) {
 
@@ -384,8 +401,8 @@ Teams.controller('TeamController', [
  * @type {Controller}
  */
 Teams.controller('TeamsController', [
-    '$rootScope', '$scope', '$state', 'Teams.Data',
-    function controller($rootScope, $scope, $state, data) {
+    '$rootScope', '$scope', '$state', '$filter', 'Teams.Data', 'SchoolsFactory',
+    function controller($rootScope, $scope, $state, $filter, data, schools) {
 
         $scope.teams = data.teams.getList();
 
@@ -395,11 +412,14 @@ Teams.controller('TeamsController', [
         $scope.leagues = data.leagues.getList();
         $scope.indexedLeagues = data.leagues.getCollection();
 
-        $scope.schools = data.schools.getList();
-        $scope.indexedSchools = data.schools.getCollection();
-
         $scope.add = function() {
             $state.go('team-info');
+        };
+
+        $scope.findSchoolsByName = function() {
+            return schools.query({name: $scope.filter.schoolName, count: 10}).then(function(schools) {
+                return $filter('orderBy')(schools, 'name');
+            });
         };
 
         $scope.search = function(filter) {

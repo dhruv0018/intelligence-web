@@ -27,6 +27,17 @@
             "teamRoster": {
                 "uri": "https://drive.google.com/file/d/0Bwb8n8gzhXzLODNfQ000OFVCZkE/edit?usp=sharing"
             }
+        },
+        "indexerSignUp": {
+            "unitedStates": {
+                "uri": "https://docs.google.com/a/krossover.com/spreadsheet/viewform?formkey=dFFlTUxoZk1SdEFHZmxBVkVCTkhpV3c6MQ#gid=0"
+            },
+            "india": {
+                "uri": "https://docs.google.com/a/krossover.com/forms/d/11sO_s9rf9a1gZvtQ5spykOzLfzRC6pFop99z4KBZ8pg/viewform"
+            },
+            "philippines": {
+                "uri": "https://docs.google.com/a/krossover.com/spreadsheet/viewform?formkey=dEN0MXFObTNDSXN3b013SHF3cFdpOEE6MA#gid=0"
+            }
         }
     },
     "indexing": {

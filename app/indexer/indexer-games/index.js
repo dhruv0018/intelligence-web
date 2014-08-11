@@ -86,8 +86,8 @@ Games.service('Indexer.Games.Data.Dependencies', [
  * @type {Controller}
  */
 Games.controller('indexer-games.Controller', [
-    '$scope', '$state', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'SessionService', 'Indexer.Games.Data', 'GAME_STATUSES',
-    function controller($scope, $state, GAME_TYPES, teams, leagues, games, session, data, GAME_STATUSES) {
+    '$scope', '$state', 'config', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
+    function controller($scope, $state, config, GAME_TYPES, teams, leagues, games, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.sports = data.sports.getCollection();
@@ -96,6 +96,16 @@ Games.controller('indexer-games.Controller', [
         $scope.users = data.users.getCollection();
 
         $scope.userId = session.currentUser.id;
+
+        var userLocation = session.currentUser.currentRole.indexerGroupId;
+
+        if (userLocation === INDEXER_GROUPS.US_MARKETPLACE) {
+            $scope.signUpLocation = config.links.indexerSignUp.unitedStates.uri;
+        } else if (userLocation === INDEXER_GROUPS.INDIA_MARKETPLACE || userLocation === INDEXER_GROUPS.INDIA_OFFICE) {
+            $scope.signUpLocation = config.links.indexerSignUp.india.uri;
+        } else if (userLocation === INDEXER_GROUPS.PHILIPPINES_OFFICE) {
+            $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
+        }
 
         $scope.games = data.games.getList().filter(function(game) {
 
