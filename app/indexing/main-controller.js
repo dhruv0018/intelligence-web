@@ -279,8 +279,6 @@ Indexing.controller('Indexing.Main.Controller', [
             /* Snap video back to time of current event. */
             videoplayer.seekTime(event.current.time);
             videoplayer.play();
-
-            event.reset();
         };
 
         /**
@@ -292,9 +290,9 @@ Indexing.controller('Indexing.Main.Controller', [
             if (indexing.eventSelected) {
 
                 indexing.eventSelected = false;
-
-                tags.reset();
-                event.reset();
+                indexing.showTags = true;
+                indexing.showScript = false;
+                indexing.isIndexing = true;
                 videoplayer.play();
             }
 
