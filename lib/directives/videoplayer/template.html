@@ -14,7 +14,7 @@
 
         <x-krossover-play-pause-button class="video-control"></x-krossover-play-pause-button>
 
-        <data-vg-timedisplay class="video-control"><span class="time-current">{{ currentClipTime - playStartTime | secondsToTime }}</span> <span class="time-divider">/</span> {{ clipEndTime - playStartTime | secondsToTime }}</data-vg-timedisplay>
+        <data-vg-timedisplay class="video-control"><span class="time-current">{{ ((currentClipTime - playStartTime) > (clipEndTime - playStartTime)) ? 0 : (currentClipTime - playStartTime) | secondsToTime }}</span> <span class="time-divider">/</span> {{ clipEndTime - playStartTime | secondsToTime }}</data-vg-timedisplay>
 
         <button class="btn-video jump-button" data-ng-click="onClickFastBackward()"><i class="icon icon-fast-backward"></i></button>
         <button class="btn-video jump-button" data-ng-class="{active: videoElement.playbackRate === 3.0}" data-ng-click="onClickFastForward()"><i class="icon icon-fast-forward"></i></button>
