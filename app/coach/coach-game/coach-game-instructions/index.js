@@ -56,13 +56,13 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', 'GAME_STATUSES', 'GamesFactory',
-    function controller($scope, $state, GAME_STATUSES, games) {
+    '$scope', '$state', 'GAME_STATUSES', 'GamesFactory', 'TeamsFactory',
+    function controller($scope, $state, GAME_STATUSES, games, teams) {
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;
 
-        $scope.activePlan = $scope.data.team.getActivePlan() || {};
-        $scope.activePackage = $scope.data.team.getActivePackage() || {};
+        $scope.activePlan = teams.get($scope.data.game.uploaderTeamId).getActivePlan() || {};
+        $scope.activePackage = teams.get($scope.data.game.uploaderTeamId).getActivePackage() || {};
         $scope.remainingBreakdowns = $scope.data.remainingBreakdowns;
 
         $scope.$watch('data.game', function(game) {
