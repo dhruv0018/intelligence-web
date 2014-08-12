@@ -187,8 +187,8 @@ Teams.filter('visiblePlanOrPackage', [
  * @type {Controller}
  */
 Teams.controller('TeamPlansController', [
-    '$scope', '$filter', '$modal', 'TeamsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
-    function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup) {
+    '$scope', '$filter', '$modal', 'TeamsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'BasicModals',
+    function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup, basicModals) {
 
         $scope.minTurnaroundTimeLookup = minTurnaroundTimeLookup;
 
@@ -252,13 +252,35 @@ Teams.controller('TeamPlansController', [
         };
 
         $scope.removeActivePackage = function(packageIdToRemove) {
-            $scope.team.teamPackages.splice(packageIdToRemove, 1);
-            $scope.save($scope.team);
+            var modalOptions = {
+                title: 'Are you sure you want to delete this package?',
+                buttonText: 'Yes, delete',
+                cancelButtonText: 'No, cancel'
+            };
+
+            var modalInstance = basicModals.openForConfirm(modalOptions);
+
+            modalInstance.result.then(function confirm() {
+                //delete the package
+                $scope.team.teamPackages.splice(packageIdToRemove, 1);
+                $scope.save($scope.team);
+            });
         };
 
         $scope.removeActivePlan = function(planIdToRemove) {
-            $scope.team.teamPlans.splice(planIdToRemove, 1);
-            $scope.save($scope.team);
+            var modalOptions = {
+                title: 'Are you sure you want to delete this plan?',
+                buttonText: 'Yes, delete',
+                cancelButtonText: 'No, cancel'
+            };
+
+            var modalInstance = basicModals.openForConfirm(modalOptions);
+
+            modalInstance.result.then(function confirm() {
+                //delete the plan
+                $scope.team.teamPlans.splice(planIdToRemove, 1);
+                $scope.save($scope.team);
+            });
         };
 
         $scope.save = function(team) {
