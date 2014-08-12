@@ -185,7 +185,7 @@ Queue.controller('QueueController', [
             if (game.video && game.video.status) {
 
                 if (game.video.status === VIDEO_STATUSES.FAILED.id) {
-                    $scope.queueFilters.processing.failed(game);
+                    $scope.queueFilters.processing.failed.push(game);
                 } else if (game.video.status !== VIDEO_STATUSES.COMPLETE.id) {
                     $scope.queueFilters.processing.inProcessing.push(game);
                 }

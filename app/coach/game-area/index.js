@@ -206,6 +206,7 @@ GameArea.controller('Coach.GameArea.controller', [
         if (data.league.sportId == SPORTS.FOOTBALL.id) {
             $scope.hasFormations = true;
             $scope.hasDownAndDistance = true;
+            $scope.hasStatistics = false;
         }
 
         //constants

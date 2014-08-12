@@ -18,7 +18,7 @@
                 </select>
             </div>
             <div class="assign-box">
-                <add-time data-ng-model="deadline" min="2" max="48"></add-time>
+                <add-time data-modified-date="selectionData.modifiedDeadline" min="2" max="400"></add-time>
             </div>
         </form>
 
@@ -26,8 +26,8 @@
 
     <footer class="modal-footer">
 
-        <button class="btn-assign" data-ng-if="!isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToIndexer(indexerId, deadline)">Assign Indexer</button>
-        <button class="btn-assign" data-ng-if="isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToQa(indexerId, deadline)">Assign QA</button>
+        <button class="btn-assign" data-ng-if="!isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToIndexer(indexerId, selectionData.modifiedDeadline)">Assign Indexer</button>
+        <button class="btn-assign" data-ng-if="isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToQa(indexerId, selectionData.modifiedDeadline)">Assign QA</button>
 
     </footer>
 
