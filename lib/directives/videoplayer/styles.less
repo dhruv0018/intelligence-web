@@ -1,6 +1,6 @@
 @import (reference) "main.less";
 
-@video-controls-bg: rgb(225, 225, 225);
+@video-controls-bg: rgb(240,240,240);
 @video-controls-border: rgb(200, 200, 200);
 
 x-krossover-videoplayer {
@@ -185,18 +185,21 @@ data-vg-timedisplay {
 }
 
 data-vg-scrubbar {
-    width: auto;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
     display: table-cell;
     cursor: pointer;
-    background-color: @brand-blue;
+    background-color: rgb(24,121,181);
 }
 
 data-vg-scrubBarCurrentTime {
-    width: 100%;
+    width: 0%;
     height: 50px;
     display: block;
     cursor: pointer;
-    border-right: 3px solid red;
+    border-right: 7px solid red;
 }
 
 data-vg-volume {
@@ -221,6 +224,30 @@ data-vg-volumebar {
 .verticalVolumeBar {
 
     border: 1px solid @video-controls-border;
+}
+
+.btn-video {
+    display: table-cell;
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+
+    &.jump-button {
+        margin-top: 10px;
+        height: 35px;
+    }
+
+    &:active, &.active, &.active:hover, &.active:focus {
+        border: solid #737474;
+        border-width: 2px 0 0 2px;
+        border-right: solid 1px #fff;
+        border-bottom: solid 2px #fff;
+        color: rgb(89,159,253);
+        background-color: #f9f9f9;
+    }
+
 }
 
 x-krossover-fast-backward-button {
@@ -288,6 +315,8 @@ data-vg-volumebar .volumeValue {
     position: absolute;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 data-vg-volumebar .volumeClickArea {

@@ -1,16 +1,18 @@
 <div class="formations-teams-header">
-    <span class="team-on-offense">
-        Teams on Offense:
-        <a data-ng-click="teamId = game.teamId; opposingTeamId = game.opposingTeamId" data-ng-class="{active: teamId == game.teamId}" class="home-team" href>{{teams[game.teamId].name}}</a>
-        <a data-ng-click="teamId = game.opposingTeamId; opposingTeamId = game.teamId" data-ng-class="{active: teamId == game.opposingTeamId}" class="away-team" href>{{teams[game.opposingTeamId].name}}</a>
-    </span>
-    <span class="show-from">
-        Show formations from:
+    <div class="formationOption">
+        <span>Team on Offense</span>
+        <select data-ng-model="myTeam">
+            <option value="true">{{teams[game.teamId].name}}</option>
+            <option value="false">{{teams[game.opposingTeamId].name}}</option>
+        </select>
+    </div>
+    <div class="formationOption">
+        <span>Show formations from</span>
         <select data-ng-model="redzone">
             <option value="false">Whole Field</option>
             <option value="true">Red Zone</option>
         </select>
-    </span>
+    </div>
 </div>
 
 <accordion close-others="true">

@@ -41,7 +41,10 @@
         "open-modal-confirm",
         "open-modal-alert",
         "dynamic-table",
-        "team-typeahead"
+        "team-typeahead",
+        "user-typeahead",
+        "videogular",
+        "breakdown-text"
     ],
     "scripts": [
         "index.js"

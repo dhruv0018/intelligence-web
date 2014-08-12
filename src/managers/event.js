@@ -34,7 +34,12 @@ IntelligenceWebClient.service('EventManager', [
 
             event = event || this.current;
 
-            return event && event.tag && this.tagset.isEndTag(event.tag.id);
+            /* If there is no current event or the event hasn't been created
+             * then its can not be a end event. */
+            if (!event || !event.tagId) return false;
+
+            /* Check if the given event is an end tag. */
+            return this.tagset.isEndTag(event.tagId);
         };
 
         /**
@@ -43,27 +48,15 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.hasVariables = function() {
 
-            return this.current &&
-                   this.current.tag &&
-                   this.current.tag.tagVariables &&
-                 !!this.current.tag.tagVariables.length;
-        };
+            /* If there is no current event or the event hasn't been created
+             * there are no variables in the event yet. */
+            if (!this.current || !this.current.tagId) return false;
 
-        /**
-         * Gets the value of the event variable at the given index.
-         * @param {Number} index - index of the variable.
-         * @returns - the variable's value if available, or undefined if not.
-         */
-        this.eventVariableValue = function(index) {
+            var tagId = this.current.tagId;
+            var tag = this.tags[tagId];
 
-            if (this.current &&
-                this.current.variableValues &&
-              !!this.current.variableValues[index]) {
-
-                return this.current.variableValues[index].value;
-            }
-
-            else return undefined;
+            /* Check if the tag has tag variables. */
+            return !!Object.keys(tag.tagVariables).length;
         };
 
         /**
@@ -72,7 +65,19 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.activeEventVariableValue = function() {
 
-            return this.eventVariableValue(this.current.activeEventVariableIndex);
+            /* If there is no current event or the event hasn't been created
+             * variable value is undefined. */
+            if (!this.current || !this.current.tagId) return undefined;
+
+            var index = this.current.activeEventVariableIndex;
+            var tagId = this.current.tagId;
+            var tag = this.tags[tagId];
+            var tagVariables = tag.tagVariables;
+            var tagVariable = tagVariables[index];
+
+            if (!tagVariable) return undefined;
+
+            return this.current.variableValues[tagVariable.id].value;
         };
 
         /**
@@ -80,7 +85,13 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.clearActiveEventVariableValue = function() {
 
-            this.current.variableValues[this.current.activeEventVariableIndex].value = null;
+            var index = this.current.activeEventVariableIndex;
+            var tagId = this.current.tagId;
+            var tag = this.tags[tagId];
+            var tagVariables = tag.tagVariables;
+            var tagVariable = tagVariables[index];
+
+            this.current.variableValues[tagVariable.id].value = undefined;
         };
 
         /**
@@ -92,15 +103,26 @@ IntelligenceWebClient.service('EventManager', [
 
             var self = this;
 
-            if (self.current && self.current.variableValues) {
+            var tagId = this.current.tagId;
+            var tag = this.tags[tagId];
+            var tagVariables = tag.tagVariables;
+            var variableValues = self.current.variableValues;
 
-                return Object.keys(self.current.variableValues).every(function(eventVariableIndex) {
+            /* Ensure that every required variable has a value. */
+            return Object.keys(tagVariables).every(function(index) {
 
-                    return self.eventVariableValue(eventVariableIndex) === 0 ? true : !!self.eventVariableValue(eventVariableIndex);
-                });
-            }
+                /* Lookup the tag variable by its script index. */
+                var tagVariable = tagVariables[index];
 
-            return false;
+                /* If the variable is not required, it doesn't need a value. */
+                if (!tagVariable.isRequired) return true;
+
+                /* Lookup the variable by tag variable ID. */
+                var variable = variableValues[tagVariable.id];
+
+                /* Check if the variable has a value. */
+                return !!variable.value;
+            });
         };
 
         /**
@@ -110,9 +132,10 @@ IntelligenceWebClient.service('EventManager', [
 
             this.tagset = tagset || this.tagset;
 
-            this.tags = this.tagset.getIndexedTags();
+            if (this.tagset && this.tagset.getIndexedTags) this.tags = this.tagset.getIndexedTags();
 
             this.current = angular.copy(model);
+            this.highlighted = null;
         };
 
         /**
@@ -123,28 +146,17 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.create = function(tagId, time) {
 
-            /* If there is no current play. */
-            if (!play.current) {
+            /* Reset the current event. */
+            this.reset();
 
-                /* Create a play. */
-                play.create();
-            }
-
-            /* If there are no plays in the playlist. */
-            if (!indexing.plays.length) {
-
-                /* Add the current play to the playlist. */
-                indexing.plays.push(play.current);
-            }
-
-            /* Lookup and set the tag from the indexing tags. */
+            /* Set the tag from the indexing tags. */
             this.current.tagId = tagId;
-            this.current.tag = this.tags[tagId];
 
+            /* Set the time from the indexing video time. */
             this.current.time = time;
 
             /* Add event to the current play. */
-            play.current.events.push(this.current);
+            play.addEvent(this.current);
         };
 
         /**
@@ -152,27 +164,13 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.delete = function(event) {
 
-            /* Find the index of the event. */
-            var eventIndex = play.current.events.indexOf(this.current);
+            event = event || this.current;
 
-            /* Remove current event from the current play. */
-            play.current.events.splice(eventIndex, 1);
+            /* Remove the event from the current play. */
+            play.removeEvent(event);
 
-            /* If there are other events left in the play. */
-            if (play.current.events.length > 0) {
-
-                /* Set the current event to the previous event. */
-                var previousEventIndex = eventIndex - 1;
-                var previousEvent = play.current.events[previousEventIndex];
-                angular.copy(previousEvent, event.current);
-                play.save();
-
-            /* If there are no events left in the play. */
-            } else {
-
-                this.reset();
-                play.remove(play.current);
-            }
+            /* Reset the current event. */
+            this.reset();
         };
     }
 ]);

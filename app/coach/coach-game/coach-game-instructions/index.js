@@ -61,6 +61,10 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;
 
+        $scope.activePlan = $scope.data.team.getActivePlan() || {};
+        $scope.activePackage = $scope.data.team.getActivePackage() || {};
+        $scope.remainingBreakdowns = $scope.data.remainingBreakdowns;
+
         $scope.$watch('data.game', function(game) {
             if (typeof game !== 'undefined' && typeof game.status !== 'undefined' && game.status !== null) {
                 $scope.statusBuffer = game.status;
