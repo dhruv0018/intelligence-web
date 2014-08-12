@@ -86,14 +86,17 @@ Indexing.controller('Indexing.Main.Controller', [
 
         Mousetrap.stopCallback = function(event, element, combo, sequence) {
 
-            if (indexing.isIndexing) {
+            $scope.$apply(function() {
 
-                if (globalCallbacks[combo] || globalCallbacks[sequence]) {
-                    return false;
+                if (indexing.isIndexing) {
+
+                    if (globalCallbacks[combo] || globalCallbacks[sequence]) {
+                        return false;
+                    }
                 }
-            }
 
-            return originalStopCallback(event, element, combo);
+                return originalStopCallback(event, element, combo);
+            });
         };
 
         Mousetrap.bind('space', function() {
