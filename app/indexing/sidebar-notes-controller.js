@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Notes.Controller', [
-    '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS', 'GamesFactory',
-    function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games) {
+    '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS', 'GamesFactory', 'VideoPlayerInstance',
+    function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games, videoplayer) {
 
         var Mousetrap = window.Mousetrap;
 
@@ -25,16 +25,10 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
         $scope.currentTimestamp = 0;
 
         $rootScope.$on(VG_EVENTS.ON_PAUSE, function() {
-            $scope.currentTimestamp = window.Math.floor($scope.VideoPlayer.videoElement[0].currentTime);
+            videoplayer.then(function(vp) {
+                $scope.currentTimestamp = window.Math.floor(vp.videoElement[0].currentTime);
+            });
         });
-
-        $scope.clearKeyListeners = function() {
-            Mousetrap.pause();
-        };
-
-        $scope.unclearKeyListeners = function(element) {
-            Mousetrap.unpause();
-        };
 
         $scope.saveIndexingNote = function() {
 
@@ -65,15 +59,3 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
     }
 ]);
 
-Indexing.filter('secondsToTime', function() {
-    return function(secondsInput) {
-        var floor = window.Math.floor;
-        var minutes = floor(secondsInput / 60);
-        var seconds = floor(secondsInput%60);
-        var output = minutes;
-        output += ':';
-        output += (floor(secondsInput%60) < 10) ? '0' : '';
-        output += seconds;
-        return output;
-    };
-});

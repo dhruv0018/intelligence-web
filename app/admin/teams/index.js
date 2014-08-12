@@ -153,7 +153,7 @@ Teams.filter('visiblePlanOrPackage', [
 
         return function visiblePlanOrPackageFilter(planOrPackageArray) {
 
-            var currentDate = newDate.generate();
+            var currentDate = newDate.generateNow();
             var teamPackageOrPlan;
 
             planOrPackageArray = planOrPackageArray || [];
@@ -163,8 +163,8 @@ Teams.filter('visiblePlanOrPackage', [
                 planOrPackage = planOrPackageArray[i];
 
                 if (typeof planOrPackage.endDate === 'string') {
-                    planOrPackage.endDate = newDate.generate(planOrPackage.endDate);
-                    planOrPackage.startDate = newDate.generate(planOrPackage.startDate);
+                    planOrPackage.endDate = newDate.generatePlanEndDate(planOrPackage.endDate);
+                    planOrPackage.startDate = newDate.generatePlanStartDate(planOrPackage.startDate);
                 }
 
                 if (typeof planOrPackage.endDate !== 'undefined' &&
@@ -188,8 +188,8 @@ Teams.filter('visiblePlanOrPackage', [
  * @type {Controller}
  */
 Teams.controller('TeamPlansController', [
-    '$scope', '$filter', '$modal', 'TeamsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP',
-    function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup) {
+    '$scope', '$filter', '$modal', 'TeamsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'BasicModals',
+    function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup, basicModals) {
 
         $scope.minTurnaroundTimeLookup = minTurnaroundTimeLookup;
 
@@ -252,9 +252,36 @@ Teams.controller('TeamPlansController', [
             openPackageModal(index);
         };
 
-        $scope.removeActivePackage = function() {
-            $scope.team.teamPackages.splice($scope.activePackageId, 1);
-            $scope.save($scope.team);
+        $scope.removeActivePackage = function(packageIdToRemove) {
+            var modalOptions = {
+                title: 'Are you sure you want to delete this package?',
+                buttonText: 'Yes, delete',
+                cancelButtonText: 'No, cancel'
+            };
+
+            var modalInstance = basicModals.openForConfirm(modalOptions);
+
+            modalInstance.result.then(function confirm() {
+                //delete the package
+                $scope.team.teamPackages.splice(packageIdToRemove, 1);
+                $scope.save($scope.team);
+            });
+        };
+
+        $scope.removeActivePlan = function(planIdToRemove) {
+            var modalOptions = {
+                title: 'Are you sure you want to delete this plan?',
+                buttonText: 'Yes, delete',
+                cancelButtonText: 'No, cancel'
+            };
+
+            var modalInstance = basicModals.openForConfirm(modalOptions);
+
+            modalInstance.result.then(function confirm() {
+                //delete the plan
+                $scope.team.teamPlans.splice(planIdToRemove, 1);
+                $scope.save($scope.team);
+            });
         };
 
         $scope.save = function(team) {

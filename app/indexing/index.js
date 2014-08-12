@@ -118,9 +118,10 @@ Indexing.config([
                     ]
                 },
                 onEnter: [
-                    '$state', '$stateParams', 'SessionService', 'Indexing.Data',
-                    function($state, $stateParams, session, data) {
+                    '$state', '$stateParams', 'SessionService', 'Indexing.Data', 'IndexingService',
+                    function($state, $stateParams, session, data, indexingService) {
 
+                        indexingService.IS_INDEXING_STATE = true;
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
                         var game = data.games.get(gameId);

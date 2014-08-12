@@ -403,67 +403,33 @@
 }
 
 .formations-teams-header {
-  border-bottom: thin solid @gray-border;
-  width: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-  height: 50px;
-  color: @brand-blue;
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  border: thin solid @gray-border;
+  background-color: @content-bg;
   letter-spacing: normal;
+  font-weight: 500;
+  color: black;
+  position: relative;
 
-  .team-on-offense {
-    line-height: 50px;
-    
-    .home-team {
-      border-right: thin solid @gray-border;
-      margin-left: 20px;
-      padding-right: 15px;
-      color: @gray-light;
-      text-decoration: none;
+  .formationOption {
+      display: inline-block;
+      padding-right: 20px;
+      white-space: nowrap;
 
-      &:hover,
-      &:active,
-      &.active {
-        color: @brand-primary;
+      span {
+        display: block;
+      }
+
+      select {
+        background-color: white;
+        color: @gray-light;
+        font-weight: 400;
+        padding-right: 30px;
+        text-overflow: ellipsis;
       }
     }
-
-    .away-team {
-      color: @gray-light;
-      margin-right: 15px;
-      margin-left: 15px;
-      text-decoration: none;
-
-      &:hover,
-      &:active,
-      &.active {
-        color: @brand-primary;
-      }
-    }
-  }
-
-  .show-from {
-    border-left: 2px solid @gray-border;
-    padding-left: 15px;
-  }
-}
-
-.show-from {
-
-  select {
-    width: 110px;
-    background-color: white;
-    color: @gray-light;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
-  .create-report-btn {
-    .pull-right;
-    .btn;
-    .btn-primary;
-  }
-
 }
 
 .formations-chart-container {
@@ -490,6 +456,7 @@
 
       .field-info-title {
         font-weight: 500;
+        color: yellow;
       }
     }
 
@@ -502,6 +469,12 @@
   .field-header-collapsed {
     background-color: @gray-lighter;
     color: @brand-blue;
+
+    .field-info {
+      .field-info-title {
+        color: @brand-blue;
+      }
+    }
   }
 
   .field-options {
@@ -537,30 +510,51 @@
 .down-distance-info-container {
   width: 80%;
   margin: 20px auto;
-  padding: 10px 20px;
   border: thin solid @gray-border;
   background-color: @content-bg;
   letter-spacing: normal;
   font-weight: 500;
   color: black;
+  position: relative;
 
-  div {
-    margin-top: 10px;
-    margin-bottom: 10px;
+  .dndInfoHeader {
+    height: 40px;
+    padding: 10px 20px;
+    background-color: @gray-lighter;
+    color: @brand-blue;
   }
 
-  select {
-    background-color: white;
-    margin-left: 20px;
-    margin-right: 20px;
-    color: @gray-light;
-    font-weight: 400;
+  .dndInfoBody {
+    padding: 20px;
+  }
 
-    &.first-choices {
-      width: 75px;
+  .dndOption {
+    display: inline-block;
+    padding-right: 20px;
+    white-space: nowrap;
+
+    &.lastOption {
+      padding: 0;
+      position: absolute;
+      bottom: 21px;
+      right: 20px;
     }
-    &.second-choices {
-      width: 100px;
+
+    span {
+      display: block;
+    }
+
+    select {
+      background-color: white;
+      color: @gray-light;
+      font-weight: 400;
+      padding-right: 30px;
+    }
+
+    .create-report-btn {
+      .pull-right;
+      .btn;
+      .btn-primary;
     }
   }
 }

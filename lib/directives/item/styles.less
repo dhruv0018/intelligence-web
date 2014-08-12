@@ -17,28 +17,18 @@
         vertical-align: middle;
     }
 
-    .static {
-
-        color: black;
-    }
-
-    .static,
-    button {
-
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        letter-spacing: 0.01em;
-    }
-
     button {
 
         .btn;
         .btn-link;
-        padding: 0;
-        font-size: 20px;
+        font-size: 16px;
         font-style: normal;
-        font-weight: 500;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+        height: 28px;
+        line-height: 28px;
+        border: none;
+        padding: 0;
 
         &:focus,
         &:hover {
@@ -62,11 +52,54 @@
     select {
 
         .form-control;
-        height: 25px;
-        line-height: 21px;
-        width: auto;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        width: 48px;
+        height: 28px;
+        padding: 5px;
+
+        border-color: @brand-primary;
+
+        &:hover {
+
+            border-color: @brand-secondary;
+        }
+
+        &:focus {
+
+            border-color: #66afe9;
+        }
+    }
+
+    input {
+
+        .placeholder(@brand-primary);
+
+        &:hover {
+
+            cursor: pointer;
+            .placeholder(@brand-secondary);
+        }
+
+        &:focus {
+
+            .placeholder(#66afe9);
+        }
+    }
+
+    select {
+
+        line-height: 16px;
+
+        color: @brand-primary;
+
+        &:hover {
+
+            color: @brand-secondary;
+        }
+
+        &:focus {
+
+            color: #66afe9;
+        }
     }
 }
 

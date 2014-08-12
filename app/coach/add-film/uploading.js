@@ -55,45 +55,39 @@ UploadingFilm.config([
  * @type {Controller}
  */
 UploadingFilm.controller('UploadingFilmController', [
-    'config', '$rootScope', '$scope', '$state', '$http', 'GamesFactory', 'PlayersFactory', 'GAME_STATUSES', 'Coach.Data',
-    function controller(config, $rootScope, $scope, $state, $http, games, players, GAME_STATUSES, data) {
+    'config', '$rootScope', '$scope', '$state', '$http', 'GamesFactory', 'PlayersFactory', 'GAME_STATUSES', 'Coach.Data', '$window',
+    function controller(config, $rootScope, $scope, $state, $http, games, players, GAME_STATUSES, data, $window) {
 
         $scope.isDefined = angular.isDefined;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.games = games;
+        $window.krossover = $window.krossover || {};
+        $window.krossover.videoUploadStatus = 'STARTED';
+
+        //TODO: switch to addEventListener
+        $window.onbeforeunload = function beforeunloadHandler() {
+
+            if ($scope.$flow.isUploading() ||
+                $window.krossover &&
+                ($window.krossover.videoUploadStatus === 'STARTED' && $window.krossover.videoUploadStatus !== 'COMPLETE')) {
+
+                return 'Video still uploading! Are you sure you want to close the page and cancel the upload?';
+            }
+        };
 
         var deleteVideo = function() {
 
-            var game = $scope.game;
+            var game = data.game;
 
-            if (game && game.video && game.video.guid) {
-
-                var url = config.api.uri + 'upload-server';
-
-                /* Request the upload URL for KVS. */
-                $http.get(url)
-
-                .success(function(response) {
-
-                    /* Get KVS url from the response. */
-                    var kvsUrl = response.url;
-
-                    /* Send DELETE request to KVS. */
-                    $http.delete(kvsUrl + '/upload/' + game.video.guid)
-
-                    .error(function() {
-
-                        throw new Error('Problem deleting canceled video from KVS');
-                    });
-                })
-
-                .error(function() {
-
-                    $scope.uploading = false;
-
-                    throw new Error('Request for KVS URL failed');
-                });
+            if (game.id) {
+                delete game.video;
+                game.status = GAME_STATUSES.NOT_INDEXED.id;
+                game.isDeleted = true;
+                game.save();
+            } else {
+                delete data.game;
             }
+
         };
 
         $scope.cancel = function() {
@@ -119,7 +113,8 @@ UploadingFilm.controller('UploadingFilmController', [
         $scope.$on('flow::complete', function() {
 
             if (!$scope.error) $scope.complete = true;
-
+            $window.krossover = $window.krossover || {};
+            $window.krossover.videoUploadStatus = 'COMPLETE';
             $scope.$apply();
         });
 

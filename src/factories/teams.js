@@ -146,6 +146,23 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     }
                 }
             },
+            getRemainingBreakdowns: function(id, success, error) {
+                var self = this;
+
+                id = id || self.id;
+
+                var callback = function(remainingBreakdowns) {
+
+                    return success ? success(remainingBreakdowns) : remainingBreakdowns;
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not get remaining breakdowns for team');
+                };
+
+                return self.resource.getRemainingBreakdowns({ id: id }, callback, error).$promise;
+            },
             getMaxTurnaroundTime: function() {
                 var self = this;
 

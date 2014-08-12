@@ -21,7 +21,15 @@ TeamInfo.controller('Coach.Team.Info.controller', [
     '$rootScope', '$scope', '$state', '$http', 'config', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
     function controller($rootScope, $scope, $state, $http, config, games, players, data) {
         $state.go('Coach.Team.Info.Information');
+
     }
 ]);
 
+TeamInfo.controller('Coach.Team.Plans.controller', [
+    '$rootScope', '$scope', '$state', '$http', 'config', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
+    function controller($rootScope, $scope, $state, $http, config, games, players, data) {
 
+        if (data.team) $scope.activePlan = data.team.getActivePlan();
+        if (data.team) $scope.activePackage = data.team.getActivePackage();
+    }
+]);
