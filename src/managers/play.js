@@ -16,9 +16,7 @@ IntelligenceWebClient.service('PlayManager', [
 
         var model = {
 
-            events: [],
-            startTime: 0,
-            endTime: 0
+            events: []
         };
 
         this.tags = null;
@@ -84,6 +82,10 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* Make sure events have a time that is a number, or default to zero. */
             event.time = angular.isNumber(event.time) ? event.time : 0;
+
+            /* If there are no play times set, use the event time. */
+            if (!this.current.startTime) this.current.startTime = event.time;
+            if (!this.current.endTime) this.current.endTime = event.time;
 
             /* Adjust the play start and end time if the event is out of the
              * current range. */
