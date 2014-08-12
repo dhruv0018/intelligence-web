@@ -348,6 +348,9 @@ Indexing.controller('Indexing.Main.Controller', [
             /* Delete the selected event. */
             event.delete(selectedEvent);
 
+            /* Save play. */
+            play.save();
+
             /* Clear the current play. */
             play.clear();
         };
