@@ -16,7 +16,9 @@ IntelligenceWebClient.service('PlayManager', [
 
         var model = {
 
-            events: []
+            events: [],
+            startTime: 0,
+            endTime: 0
         };
 
         this.gameId = null;
@@ -72,8 +74,24 @@ IntelligenceWebClient.service('PlayManager', [
                 indexing.plays.push(this.current);
             }
 
-            /* Add event to the current plays events. */
-            this.current.events.push(event);
+            /* Make sure events have a time that is a number, or default to zero. */
+            event.time = angular.isNumber(event.time) ? event.time : 0;
+
+            /* Adjust the play start and end time if the event is out of the
+             * current range. */
+            if (event.time < this.current.startTime) this.current.startTime = event.time;
+            if (event.time > this.current.endTime) this.current.endTime = event.time;
+
+            /* Index of the event, based on acceding time order. */
+            var index = 0;
+
+            /* Advance index as long as it is still inside the events and
+             * the time of the event is after the event at the index. */
+            while (index < this.current.events.length &&
+                   event.time > this.current.events[index].time) { index++; }
+
+            /* Insert the event into the appropriate index. */
+            this.current.events.splice(index, 0, event);
         };
 
         /**
@@ -87,14 +105,35 @@ IntelligenceWebClient.service('PlayManager', [
             /* Find the index of the event. */
             var eventIndex = this.current.events.indexOf(event);
 
+            /* Record if event was first or last before removal. */
+            var wasFirstEvent = eventIndex === 0;
+            var wasLastEvent = eventIndex === this.current.events.length - 1;
+
             /* Remove current event from the current play. */
             this.current.events.splice(eventIndex, 1);
 
             /* If there are other events left in the play. */
             if (this.current.events.length) {
 
-                /* Set the current event to the previous event. */
+                var firstEvent = this.current.events[0];
+                var lastEvent = this.current.events[this.current.events.length - 1];
                 var previousEvent = this.current.events[eventIndex - 1];
+
+                /* If the event was the first event in the play. */
+                if (wasFirstEvent) {
+
+                    /* Set the play start time to the new first event. */
+                    this.current.startTime = firstEvent.time;
+                }
+
+                /* If the event was the last event in the play. */
+                if (wasLastEvent) {
+
+                    /* Set the play end time to the new last event. */
+                    this.current.endTime = lastEvent.time;
+                }
+
+                /* Set the current event to the previous event. */
                 eventManager.current = previousEvent;
             }
 
