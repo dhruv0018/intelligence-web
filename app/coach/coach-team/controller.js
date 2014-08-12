@@ -52,19 +52,19 @@ Team.controller('Coach.Team.controller', [
             message: 'All game film is automatically shared with Athletes on your active roster.'
         });
 
-        if ($scope.positions.length > 0) {
+        if (Object.keys($scope.positions).length > 0) {
             angular.forEach($scope.roster, function(player) {
                 player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
             });
         }
 
         $scope.singleSave = function(player) {
-            var tempPlayer = ($scope.positions.length > 0) ? players.getPositionsFromDowndown(player, $scope.rosterId, $scope.positions) : player;
+            var tempPlayer = (Object.keys($scope.positions).length > 0) ? players.getPositionsFromDowndown(player, $scope.rosterId, $scope.positions) : player;
 
             players.singleSave($scope.rosterId, tempPlayer).then(function(responsePlayer) {
                 angular.extend(player, player, responsePlayer);
 
-                if ($scope.positions.length > 0) {
+                if (Object.keys($scope.positions).length > 0) {
                     player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
                 }
 

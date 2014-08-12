@@ -25,7 +25,7 @@
                                     <th>Picture</th>
                                     <th>Jersey Number</th>
                                     <th>Player</th>
-                                    <th>Positions</th>
+                                    <th data-ng-if="keys(positions).length > 0">Positions</th>
                                     <th>Did Not Play</th>
 
                                 </thead>
@@ -40,7 +40,7 @@
 
                                         <td class="name">{{player.firstName}} {{player.lastName}}</td>
 
-                                        <td>
+                                        <td data-ng-if="keys(positions).length > 0">
                                             <data-positions-dropdown data-player="player" data-positions="positions"></data-positions-dropdown>
                                         </td>
 

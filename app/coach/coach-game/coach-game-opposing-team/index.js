@@ -82,7 +82,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
 
         $scope.save = function() {
 
-            if ($scope.positions.length > 0) {
+            if (Object.keys($scope.positions).length > 0) {
                 angular.forEach($scope.data.gamePlayerLists[$scope.data.game.opposingTeamId], function(player) {
                     player = players.getPositionsFromDowndown(player, $scope.data.game.opposingTeamRosterId, $scope.positions);
                 });
