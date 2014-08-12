@@ -68,7 +68,7 @@ Indexing.controller('Indexing.Main.Controller', [
         indexing.reset($scope.game, data.plays);
         tags.reset($scope.tagset);
         event.reset($scope.tagset);
-        play.reset(gameId);
+        play.reset($scope.tagset, gameId);
         play.clear();
 
         /* Bind keys. */

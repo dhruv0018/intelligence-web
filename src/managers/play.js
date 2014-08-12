@@ -21,6 +21,10 @@ IntelligenceWebClient.service('PlayManager', [
             endTime: 0
         };
 
+        this.tags = null;
+
+        this.tagset = null;
+
         this.gameId = null;
 
         this.current = null;
@@ -36,7 +40,11 @@ IntelligenceWebClient.service('PlayManager', [
         /**
          * Resets the current play.
          */
-        this.reset = function(gameId) {
+        this.reset = function(tagset, gameId) {
+
+            this.tagset = tagset || this.tagset;
+
+            this.tags = this.tagset.getIndexedTags();
 
             this.gameId = gameId || this.gameId;
 
