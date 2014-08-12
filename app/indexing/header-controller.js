@@ -24,6 +24,7 @@ Indexing.controller('Indexing.Header.Controller', [
 
         $scope.game = data.games.get(gameId);
         $scope.team = data.teams.get($scope.game.teamId);
+        $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
         $scope.league = data.leagues.get($scope.team.leagueId);
 
         $scope.sidebar = sidebar;
