@@ -217,6 +217,8 @@ IntelligenceWebClient.service('PlayManager', [
                     indexing.plays[playIndex] = play;
                 }
 
+            }).finally(function() {
+
                 play.isSaving = false;
             });
         };
