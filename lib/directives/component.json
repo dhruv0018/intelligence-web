@@ -42,7 +42,8 @@
         "open-modal-alert",
         "dynamic-table",
         "user-typeahead",
-        "videogular"
+        "videogular",
+        "breakdown-text"
     ],
     "scripts": [
         "index.js"

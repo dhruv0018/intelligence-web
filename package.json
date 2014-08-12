@@ -41,6 +41,7 @@
     },
     "devDependencies": {
         "moment": "2.7.0",
+        "moment-timezone": "0.2.1",
         "browserify": "4.1.10",
         "browserify-shim": "3.5.0",
         "builder-html-minifier": "1.0.0",
