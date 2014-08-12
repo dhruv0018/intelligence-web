@@ -57,7 +57,7 @@
 <div class="game-area-film">
         <aside class="playlist">
 
-          <krossover-plays data-expand-all="expandAll" data-game="game" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="data.teamPlayers" data-opposing-team-players="data.opposingTeamPlayers" data-league="data.league" data-videoplayer="VideoPlayer"></krossover-plays>
+          <krossover-plays data-expand-all="expandAll" data-game="game" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="data.teamPlayers" data-opposing-team-players="data.opposingTeamPlayers" data-league="data.league"></krossover-plays>
 
 
           <div class="expandrow">
@@ -69,6 +69,6 @@
         </aside>
 
         <div class="player breakdown-player">
-            <x-krossover-videoplayer></x-krossover-videoplayer>
+            <x-krossover-videoplayer data-sources="sources" data-play-start-time="play.current.startTime" data-play-end-time="play.current.endTime"></x-krossover-videoplayer>
         </div>
 </div>

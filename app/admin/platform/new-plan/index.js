@@ -51,13 +51,13 @@ NewPlan.controller('NewPlanController', [
             }
 
             //Format the saved dates for editing
-            var startDate = newDate.generate();
+            var startDate = newDate.generatePlanStartDate();
             startDate.setMonth($scope.defaultPlan.startMonth);
             startDate.setDate($scope.defaultPlan.startDay);
 
             $scope.defaultPlan.startDate = startDate;
 
-            var endDate = newDate.generate();
+            var endDate = newDate.generatePlanEndDate();
             endDate.setMonth($scope.defaultPlan.endMonth);
             endDate.setDate($scope.defaultPlan.endDay);
 

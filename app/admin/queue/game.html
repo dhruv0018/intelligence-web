@@ -183,28 +183,32 @@
 
         <ul>
 
-            <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon icon-play-sign"></i> View raw film</button></li>
+            <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon icon-play-circle"></i> View raw film</button></li>
             <li><button class="btn btn-link" data-feedback-modal><i class="icon icon-pencil"></i> Add coach's feedback</button></li>
-            <li><button class="btn btn-link" data-ng-click="DeleteGameModal.open(game)"><i class="icon icon-remove-sign"></i> Delete game</button></li>
+            <li><button class="btn btn-link" data-ng-click="DeleteGameModal.open(game)"><i class="icon icon-remove"></i> Delete game</button></li>
 
         </ul>
 
         <hr>
 
         <h4>Time remaining to deliver</h4>
-        <time>6h 15m</time>
+        <time>{{deliverTime | humanize: 'milliseconds':true}}</time>
 
         <h4>Game length</h4>
-        <time>59m</time>
+        <time>{{gameLength | humanize: 'seconds'}}</time>
 
         <h4>Time to index:</h4>
-        <time>1h 30m</time>
+        <time data-ng-if="assignedToIndexer && !assignedToQa && indexTime > 0">{{indexTime | humanize: 'milliseconds':true}}</time>
+        <time data-ng-if="assignedToIndexer && !assignedToQa && indexTime <= 0">None</time>
+        <time data-ng-if="!assignedToIndexer || assignedToQa">--</time>
 
         <h4>Time to QA:</h4>
-        <time>5m</time>
+        <time data-ng-if="assignedToQa && indexTime > 0">{{indexTime | humanize: 'milliseconds':true}}</time>
+        <time data-ng-if="assignedToQa && indexTime <= 0">None</time>
+        <time data-ng-if="!assignedToQa">--</time>
 
         <h4>Date uploaded</h4>
-        <time>Jun 23, 1014</time>
+        <time>{{uploadDate}}</time>
 
         <hr>
 

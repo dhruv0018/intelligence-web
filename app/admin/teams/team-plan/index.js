@@ -44,8 +44,8 @@ TeamPlan.controller('TeamPlanController', [
 
         if (!$scope.teamPlan) {
             $scope.teamPlan = {
-                startDate: dateZeroTime.generate(),
-                endDate: dateZeroTime.generate(),
+                startDate: dateZeroTime.generatePlanStartDate(),
+                endDate: dateZeroTime.generatePlanEndDate(),
                 name: '',
                 maxGamesPerPlan: 0,
                 maxRegularGames: 0,
@@ -62,7 +62,7 @@ TeamPlan.controller('TeamPlanController', [
 
                 //Format the saved dates for editing
                 if (plan.startDay && plan.startMonth) {
-                    var startDate = dateZeroTime.generate();
+                    var startDate = dateZeroTime.generatePlanStartDate();
                     startDate.setMonth(plan.startMonth);
                     startDate.setDate(plan.startDay);
 
@@ -70,7 +70,7 @@ TeamPlan.controller('TeamPlanController', [
                 }
 
                 if (plan.endDay && plan.endMonth) {
-                    var endDate = dateZeroTime.generate();
+                    var endDate = dateZeroTime.generatePlanEndDate();
                     endDate.setMonth(plan.endMonth);
                     endDate.setDate(plan.endDay);
 

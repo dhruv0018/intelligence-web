@@ -22,7 +22,11 @@ IntelligenceWebClient.factory('TeamsResource', [
         var actions = {
 
             create: { method: 'POST' },
-            update: { method: 'PUT' }
+            update: { method: 'PUT' },
+            getRemainingBreakdowns: {
+                method: 'GET',
+                url: url + '/remainingBreakdowns'
+            }
         };
 
         return $resource(url, paramDefaults, actions);

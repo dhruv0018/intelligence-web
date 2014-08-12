@@ -1,0 +1,16 @@
+{
+    "name": "videogular",
+    "templates": [
+    ],
+    "scripts": [
+        "buffering.js",
+        "component.json",
+        "controls.js",
+        "overlay-play.js",
+        "poster.js",
+        "videogular.js",
+        "index.js"
+    ],
+    "styles": [
+    ]
+}
