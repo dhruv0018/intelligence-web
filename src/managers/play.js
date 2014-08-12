@@ -92,6 +92,15 @@ IntelligenceWebClient.service('PlayManager', [
             if (event.time < this.current.startTime) this.current.startTime = event.time;
             if (event.time > this.current.endTime) this.current.endTime = event.time;
 
+            /* Lookup tag buffer. */
+            var tagId = event.tagId;
+            var tag = this.tags[tagId];
+            var buffer = tag.buffer;
+
+            /* Adjust the play times by the tag buffer. */
+            if (buffer < 0) this.current.startTime += buffer;
+            if (buffer > 0) this.current.endTime += buffer;
+
             /* Index of the event, based on acceding time order. */
             var index = 0;
 
@@ -129,6 +138,11 @@ IntelligenceWebClient.service('PlayManager', [
                 var lastEvent = this.current.events[this.current.events.length - 1];
                 var previousEvent = this.current.events[eventIndex - 1];
 
+                /* Lookup tag buffer. */
+                var tagId = event.tagId;
+                var tag = this.tags[tagId];
+                var buffer = tag.buffer;
+
                 /* If the event was the first event in the play. */
                 if (wasFirstEvent) {
 
@@ -142,6 +156,10 @@ IntelligenceWebClient.service('PlayManager', [
                     /* Set the play end time to the new last event. */
                     this.current.endTime = lastEvent.time;
                 }
+
+                /* Adjust the play times by the tag buffer. */
+                if (buffer < 0) this.current.startTime -= buffer;
+                if (buffer > 0) this.current.endTime -= buffer;
 
                 /* Set the current event to the previous event. */
                 eventManager.current = previousEvent;
