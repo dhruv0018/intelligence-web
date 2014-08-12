@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
-    function($rootScope, UsersResource, UsersStorage, BaseFactory, ROLE_TYPE, ROLES, managedResources) {
+    '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
+    function($rootScope, UsersResource, UsersStorage, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
 
         var UsersFactory = {
 
@@ -39,6 +39,9 @@ IntelligenceWebClient.factory('UsersFactory', [
                             };
                         }
 
+                        if (!role.type.name) {
+                            role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
+                        }
                     });
                 }
                 /* Convert the last accessed string to a date object. */
