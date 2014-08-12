@@ -61,8 +61,8 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isSaved = false;
 
-        $scope.activePlan = $scope.data.team.getActivePlan();
-        $scope.activePackage = $scope.data.team.getActivePackage();
+        $scope.activePlan = $scope.data.team.getActivePlan() || {};
+        $scope.activePackage = $scope.data.team.getActivePackage() || {};
         $scope.remainingBreakdowns = $scope.data.remainingBreakdowns;
 
         $scope.$watch('data.game', function(game) {

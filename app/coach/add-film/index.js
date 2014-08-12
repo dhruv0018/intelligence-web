@@ -92,8 +92,8 @@ AddFilm.controller('StartController', [
     function($scope, GAME_TYPES, data, session) {
         $scope.GAME_TYPES = GAME_TYPES;
 
-        $scope.activePlan = data.team.getActivePlan();
-        $scope.activePackage = data.team.getActivePackage();
+        $scope.activePlan = data.team.getActivePlan() || {};
+        $scope.activePackage = data.team.getActivePackage() || {};
 
         $scope.remainingBreakdowns = data.remainingBreakdowns;
 
