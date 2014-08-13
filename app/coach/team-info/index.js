@@ -16,6 +16,7 @@ TeamInfo.run([
     function run($templateCache) {
         $templateCache.put('coach/team-info/template.html', require('./template.html'));
         $templateCache.put('coach/team-info/information.html', require('./information.html'));
+        $templateCache.put('coach/team-info/plans.html', require('./plans-and-packages.html'));
     }
 ]);
 
@@ -39,8 +40,13 @@ TeamInfo.config([
                     }
                 },
                 resolve: {
-                    'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
-                        return $q.all(data);
+                    'Coach.Data': ['$q', 'Coach.Data.Dependencies', 'SessionService', function($q, data, session) {
+                        return $q.all(data).then(function(data) {
+                            var teamsCollection = data.teams.getCollection();
+                            var team = teamsCollection[session.currentUser.currentRole.teamId];
+                            data.team = team;
+                            return data;
+                        });
                     }]
                 }
             })
@@ -50,6 +56,16 @@ TeamInfo.config([
                     'content@Coach.Team.Info': {
                         templateUrl: 'coach/team-info/information.html',
                         controller: 'Coach.Team.Info.Information.controller'
+                    }
+                }
+            })
+            .state('Coach.Team.Info.Plans', {
+                url: '/information',
+                parent: 'Coach.Team.Info',
+                views: {
+                    'content@Coach.Team.Info': {
+                        templateUrl: 'coach/team-info/plans.html',
+                        controller: 'Coach.Team.Plans.controller'
                     }
                 }
             });

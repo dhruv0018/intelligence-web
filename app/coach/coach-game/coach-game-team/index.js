@@ -67,7 +67,12 @@ Team.controller('Coach.Game.Team.controller', [
 
 
         $scope.$watch('data.game', function(game) {
-            if ($scope.data.gamePlayerLists[game.teamId]) {
+            if (game &&
+                game.teamId &&
+                $scope.data &&
+                $scope.data.gamePlayerLists &&
+                $scope.data.gamePlayerLists[game.teamId]) {
+
                 angular.forEach($scope.data.gamePlayerLists[game.teamId], function(player) {
                     player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
                 });

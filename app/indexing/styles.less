@@ -7,41 +7,19 @@
         position: relative;
     }
 
-    .alert-editing {
+    .btn-delete-event {
 
+        .btn;
+        .btn-link;
         position: absolute;
-        left: 0;
-        width: 100%;
+        right: 100px;
         height: 50px;
-        line-height: 50px;
-        padding-left: 30px;
-        padding-right: 30px;
-        background-color: @alert-warning-bg;
+        padding: 0;
 
-        h5 {
+        &:focus,
+        &:hover {
 
-            display: inline;
-            color: black;
-            font-size: 18px;
-            font-weight: 500;
-            font-style: italic;
-            letter-spacing: -0.01em;
-        }
-
-        .btn-delete-event {
-
-            .btn;
-            .btn-link;
-            .pull-right;
-            height: 50px;
-            margin-right: 50px;
-            text-transform: uppercase;
-
-            &:focus,
-            &:hover {
-
-                text-decoration: none;
-            }
+            text-decoration: none;
         }
     }
 
