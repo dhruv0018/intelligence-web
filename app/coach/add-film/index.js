@@ -60,7 +60,7 @@ AddFilm.config([
                         var teamsCollection = data.teams.getCollection();
                         var team = teamsCollection[session.currentUser.currentRole.teamId];
                         data.league = leaguesCollection[team.leagueId];
-                        data.team = team;
+                        data.coachsTeam = team;
 
                         return data;
                     });
@@ -92,8 +92,8 @@ AddFilm.controller('StartController', [
     function($scope, GAME_TYPES, data, session) {
         $scope.GAME_TYPES = GAME_TYPES;
 
-        $scope.activePlan = data.team.getActivePlan() || {};
-        $scope.activePackage = data.team.getActivePackage() || {};
+        $scope.activePlan = data.coachsTeam.getActivePlan() || {};
+        $scope.activePackage = data.coachsTeam.getActivePackage() || {};
 
         $scope.remainingBreakdowns = data.remainingBreakdowns;
 
