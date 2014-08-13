@@ -105,7 +105,7 @@ Indexing.config([
                                 var gameData = {
 
                                     game: game,
-                                    plays: plays.retrieve({ gameId: gameId }),
+                                    plays: plays.query({ gameId: gameId }),
                                     players: players,
                                     teamPlayers: players.query({ roster: teamRoster.id }),
                                     opposingTeamPlayers: players.query({ roster: opposingTeamRoster.id })
