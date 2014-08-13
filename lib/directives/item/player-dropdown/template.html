@@ -40,7 +40,7 @@
         data-ng-if="isUndefined(event.variableValues[item.id].value)"
         data-ng-model="selectedPlayer"
         data-ng-change="event.activeEventVariableIndex = item.index + 1"
-        data-ng-blur="event.variableValues[item.id].value = event.variableValues[item.id].value ? event.variableValues[item.id].value : previousValue"
+        data-ng-blur="event.variableValues[item.id].value = event.variableValues[item.id].value ? event.variableValues[item.id].value : item.isRequired ? previousValue : null"
         data-ng-focus="event.activeEventVariableIndex = item.index"
         data-focus-on="event.activeEventVariableIndex == item.index"
         data-focus-when="{{autoAdvance}}"

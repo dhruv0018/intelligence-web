@@ -13,7 +13,7 @@
         data-ng-required="item.isRequired"
         data-ng-if="isUndefined(event.variableValues[item.id].value)"
         data-ng-model="variable.value"
-        data-ng-blur="event.variableValues[item.id].value = variable.value ? variable.value : previousValue"
+        data-ng-blur="event.variableValues[item.id].value = variable.value ? variable.value : item.isRequired ? previousValue : null"
         data-ng-focus="event.activeEventVariableIndex = item.index"
         data-focus-on="event.activeEventVariableIndex === item.index"
         data-focus-when="{{autoAdvance}}"
