@@ -11,6 +11,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
         var PlaysFactory = {
 
+            PAGE_SIZE: 1000,
+
             description: 'plays',
 
             storage: PlaysStorage,
