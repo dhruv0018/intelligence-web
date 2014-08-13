@@ -18,13 +18,12 @@
             </div>
 
             <div class="form-group">
-                <team-typeahead data-team="role.teamId"></team-typeahead>
+                <team-typeahead data-sport-id="sportId" data-team="selectedTeam" data-team-id="role.teamId"></team-typeahead>
             </div>
 
             <div class="form-group">
 
                 <button class="btn-role-new" href data-ng-disabled="form.$invalid" data-ng-click="addRole(role)"><i class="icon icon-plus-sign"></i> Add New Role</button>
-
             </div>
 
         </form>

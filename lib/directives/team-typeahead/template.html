@@ -7,6 +7,8 @@
            data-typeahead-loading="loading"
            data-typeahead-min-length="3"
            data-typeahead-template-url="team-typeahead-dropdown.html"
+           data-typeahead-input-formatter="$model.name"
+           data-typeahead-on-select="getId($item)"
            data-typeahead="team as team.name for team in findTeams() | filter: {result: $viewValue}">
 </div>
 

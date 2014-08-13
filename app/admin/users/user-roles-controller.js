@@ -18,7 +18,6 @@ Users.controller('Users.User.Roles.Controller', [
     function controller($scope, ROLES, users) {
 
         $scope.addNewRole = function(newRole) {
-
             if (!newRole) return;
 
             /* In the case of an Admin role, there is no information to fill in,
