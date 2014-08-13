@@ -6,6 +6,7 @@
            data-typeahead-wait-ms="200"
            data-typeahead-loading="loading"
            data-typeahead-min-length="3"
-           data-typeahead="team as team.result for team in findTeams() | filter: {result: $viewValue}">
+           data-typeahead-template-url="team-typeahead-dropdown.html"
+           data-typeahead="team as team.name for team in findTeams() | filter: {result: $viewValue}">
 </div>
 

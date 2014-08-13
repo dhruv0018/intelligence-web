@@ -1,7 +1,8 @@
 {
     "name": "team-typeahead",
     "templates": [
-        "template.html"
+        "template.html",
+        "team-typeahead-dropdown.html"
     ],
     "styles": [
         "styles.less"
