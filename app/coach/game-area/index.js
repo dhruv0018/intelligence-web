@@ -190,14 +190,15 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS',
-    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS) {
+    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager',
+    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager) {
         $scope.hasShotChart = false;
         $scope.hasStatistics = true;
         $scope.hasFormations = false;
         $scope.hasDownAndDistance = false;
         $scope.expandAll = false;
         $scope.data = data;
+        $scope.play = playManager;
 
         if (data.league.sportId == SPORTS.BASKETBALL.id) {
             $scope.hasShotChart = true;
@@ -206,6 +207,7 @@ GameArea.controller('Coach.GameArea.controller', [
         if (data.league.sportId == SPORTS.FOOTBALL.id) {
             $scope.hasFormations = true;
             $scope.hasDownAndDistance = true;
+            $scope.hasStatistics = false;
         }
 
         //constants

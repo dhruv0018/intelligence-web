@@ -134,6 +134,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
+                if (!self.isVideoTranscodeComplete()) return false;
+
                 /* If the game is in the "Indexing, not started" status, it can
                  * be assigned to an indexer. */
                 if (self.status == GAME_STATUSES.READY_FOR_INDEXING.id) return true;
@@ -159,6 +161,8 @@ IntelligenceWebClient.factory('GamesFactory', [
             canBeAssignedToQa: function() {
 
                 var self = this;
+
+                if (!self.isVideoTranscodeComplete()) return false;
 
                 /* If the game is in the "QA, not started" status, it can
                  * be assigned to QA. */
@@ -207,7 +211,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments.push(assignment);
 
                     /* Update game status. */
-                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                    self.status = GAME_STATUSES.INDEXING.id;
                 }
 
                 else {
@@ -251,7 +255,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments.push(assignment);
 
                     /* Update game status. */
-                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                    self.status = GAME_STATUSES.QAING.id;
                 }
 
                 else {
@@ -516,7 +520,6 @@ IntelligenceWebClient.factory('GamesFactory', [
             canBeIndexed: function() {
 
                 var self = this;
-
                 if (self.deadlinePassed()) {
                     return false;
                 }
@@ -617,9 +620,56 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
                 self.status = GAME_STATUSES.SET_ASIDE.id;
             },
+            unassign: function() {
+                var self = this;
+
+                if (self.status === GAME_STATUSES.READY_FOR_INDEXING.id || self.status === GAME_STATUSES.READY_FOR_QA.id)
+                    return;
+
+                if (self.setAsideFromIndexing() || self.status === GAME_STATUSES.INDEXING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                } else if (self.setAsideFromQa() || self.status === GAME_STATUSES.QAING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_QA.id;
+                } else {
+                    throw new Error('This game cannot be unassigned from the current status');
+                }
+            },
+            revert: function() {
+                var self = this;
+
+                if (GAME_STATUSES.QAING.id) {
+                    self.status = GAME_STATUSES.READY_FOR_INDEXING.id;
+                } else {
+                    throw new Error('You may not revert from the current game status');
+                }
+
+            },
+            findLastIndexerAssignment: function() {
+                var self = this;
+
+                if (!self.indexerAssignments) {
+                    throw new Error('no indexer assignments');
+                }
+
+                var index = self.indexerAssignments.length - 1;
+
+                //iterate backwards through the assignments looking for the first indexer assignment
+                for (index; index >= 0; index--) {
+                    if (!self.indexerAssignments[index].isQa) {
+                        return self.indexerAssignments[index];
+                    }
+                }
+
+                throw new Error('An indexer assignment could not be located');
+
+            },
             isDelivered: function() {
                 var self = this;
                 return self.status === GAME_STATUSES.INDEXED.id || self.status === GAME_STATUSES.FINALIZED.id;
+            },
+            isVideoTranscodeComplete: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.COMPLETE.id;
             }
         };
 

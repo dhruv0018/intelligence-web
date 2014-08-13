@@ -21,6 +21,7 @@ Users.controller('Users.Users.Controller', [
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.ASSISTANT_COACH = ROLES.ASSISTANT_COACH;
         $scope.ATHLETE = ROLES.ATHLETE;
+
         $scope.Users = users;
         $scope.statuses = [{value: 0, label: 'Active'}, {value: 1, label: 'Inactive'}];
 
@@ -43,6 +44,14 @@ Users.controller('Users.Users.Controller', [
 
                 $scope.users = users;
             });
+        };
+
+        $scope.goToAs = function(user) {
+            session.previousUser = angular.copy(session.currentUser);
+            session.currentUser = user;
+            $rootScope.currentUser = user;
+            $state.go('contact-info');
+            location.reload();
         };
     }
 ]);

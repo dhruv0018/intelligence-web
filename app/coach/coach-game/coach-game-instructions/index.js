@@ -59,7 +59,7 @@ Instructions.controller('Coach.Game.Instructions.controller', [
     '$scope', '$state', 'GAME_STATUSES', 'GamesFactory', 'TeamsFactory', 'SessionService',
     function controller($scope, $state, GAME_STATUSES, games, teams, session) {
         $scope.GAME_STATUSES = GAME_STATUSES;
-        $scope.isSaved = false;
+        $scope.isBreakdownChoiceMade = false;
 
         var teamIdForThisGame = session.currentUser.currentRole.teamId;
         if ($scope.data.game.uploaderTeamId) {
@@ -73,7 +73,7 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         $scope.$watch('data.game', function(game) {
             if (typeof game !== 'undefined' && typeof game.status !== 'undefined' && game.status !== null) {
                 $scope.statusBuffer = game.status;
-                $scope.isSaved = true;
+                $scope.isBreakdownChoiceMade = true;
             } else {
                 $scope.statusBuffer = -1;
             }
@@ -81,7 +81,8 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         });
 
         $scope.switchChoice = function() {
-            $scope.statusBuffer = ($scope.statusBuffer === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
+            $scope.statusBuffer = ($scope.data.game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
+            $scope.isBreakdownChoiceMade = false;
         };
 
         $scope.save = function() {
@@ -89,11 +90,12 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
             if ($scope.data.game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
                 $scope.data.game.submittedAt = new Date().toISOString();
+            } else {
+                $scope.data.game.submittedAt = null;
             }
 
             $scope.data.game.save().then(function(game) {
-                $scope.isSaved = true;
-
+                $scope.isBreakdownChoiceMade = true;
             });
         };
     }

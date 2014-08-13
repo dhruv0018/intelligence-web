@@ -10,24 +10,38 @@
     justify-content: center;
     flex-direction: row;
 
+    .icon-krossover-logo {
+
+        width: 447px;
+        height: 109px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        background-size: contain;
+        background-position: center center;
+        margin: auto;
+        display: table-caption;
+    }
+
+    h1 {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-weight: 400;
+        color: black;
+    }
+
     .newLogin {
 
         width: 49%;
-        border-right: thin solid @gray-border;
         display: table-cell;
         vertical-align: middle;
         text-align: center;
         padding-right: 50px;
 
-        .icon-krossover-logo {
-
-            width: 447px;
-            height: 109px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            background-size: contain;
-            background-position: center center;
-            margin: auto;
+        .tempLoginBox {
+            border: thin solid @gray-border;
+            padding: 30px;
+            letter-spacing: normal;
+            margin-top: 40px;
         }
 
         .form-field-login {
@@ -68,38 +82,40 @@
         padding-left: 50px;
 
         .oldBox {
-            height: 157px;
-            background-color: @brand-primary;
-            padding: 20px 20px;
-            border-radius: 4px;
-            color: white;
+            padding: 30px;
+            padding-top: 55px;
+            height: 476px;
+            border: thin solid @gray-border;
+            text-align: center;
             font-size: 20px;
             font-weight: 400;
             letter-spacing: normal;
+            margin-top: 40px;
 
             div {
                 margin-top: 20px;
             }
 
             .icon-basketball {
-                .pull-right;
-                margin-right: 30px;
-                font-size: 40px;
+                margin-top: 30px;
+                font-size: 60px;
             }
 
             .icon-lax-sticks {
 
-                width: 100px;
-                height: 50px;
+                width: 140px;
+                height: 70px;
                 background-size: cover;
                 background-position: center center;
                 margin: 0;
+                display: inline-block;
             }
 
             button {
-                color: @gray-dark;
-                background-color: @gray-lighter;
-                margin-top: 10px;
+                margin: auto;
+                width: 320px;
+                height: 42px;
+                font-size: 20px;
             }
         }
     }

@@ -60,13 +60,13 @@ var GAME_STATUSES = {
     INDEXED: {
         id: 6,
         type: 'success',
-        name: 'Game Status: Delivered'
+        name: 'Prepping Game for Delivery'
     },
 
     FINALIZED: {
         id: 7,
         type: 'success',
-        name: 'Game Status: Delivered'
+        name: 'Game Delivered'
     }
 };
 

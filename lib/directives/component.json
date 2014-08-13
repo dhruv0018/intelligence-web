@@ -41,6 +41,8 @@
         "open-modal-confirm",
         "open-modal-alert",
         "dynamic-table",
+        "user-typeahead",
+        "videogular",
         "breakdown-text"
     ],
     "scripts": [

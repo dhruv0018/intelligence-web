@@ -1,41 +1,47 @@
-<div class="formations-teams-header">
-    <span class="team-on-offense">
-        Teams on Offense:
-        <a data-ng-click="teamId = game.teamId; opposingTeamId = game.opposingTeamId" data-ng-class="{active: teamId == game.teamId}" class="home-team" href>{{teams[game.teamId].name}}</a>
-        <a data-ng-click="teamId = game.opposingTeamId; opposingTeamId = game.teamId" data-ng-class="{active: teamId == game.opposingTeamId}" class="away-team" href>{{teams[game.opposingTeamId].name}}</a>
-    </span>
-</div>
 <div class="down-distance-info-container">
-    <div>
-        <span>Select Down:</span>
-        <select data-ng-model="dndReport.down" class="second-choices" data-ng-options="value as key for (key, value) in options.down"></select>
-
-        <span>Select Distance:</span>
-
-        <select data-ng-model="dndReport.distance" class="second-choices" data-ng-options="value as key for (key, value) in options.distance"></select>
+    <div class="dndInfoHeader">
+        Create a Down and Distance Report
     </div>
-    <div>
-        <span>Select Hash:</span>
-        <select data-ng-model="dndReport.hash" class="second-choices" data-ng-options="value as key for (key, value) in options.hash"></select>
-
-        <span>Select Weight:</span>
-        <select data-ng-model="dndReport.strength" class="second-choices" data-ng-options="value as key for (key, value) in options.weight"></select>
-
-    </div>
-    <div class="show-from">
-        Show snaps only from:
-        <select data-ng-model="dndReport.redZone">
-            <option value="false">Whole Field</option>
-            <option value="true">Red Zone</option>
-        </select>
-
-        <button data-ng-click="createDownAndDistanceReport()" class="create-report-btn">Create Report</button>
+    <div class="dndInfoBody">
+        <div class="dndOption">
+            <span>Team on Offense</span>
+            <select data-ng-model="dndReport.teamId">
+                <option value="{{teamId}}">{{teams[game.teamId].name}}</option>
+                <option value="{{opposingTeamId}}">{{teams[game.opposingTeamId].name}}</option>
+            </select>
+        </div>
+        <div class="dndOption">
+            <span>Select Down</span>
+            <select data-ng-model="dndReport.down" class="second-choices" data-ng-options="value as key for (key, value) in options.down"></select>
+        </div>
+        <div class="dndOption">
+            <span>Select Distance</span>
+            <select data-ng-model="dndReport.distance" class="second-choices" data-ng-options="value as key for (key, value) in options.distance"></select>
+        </div>
+        <div class="dndOption">
+            <span>Select Hash</span>
+            <select data-ng-model="dndReport.hash" class="second-choices" data-ng-options="value as key for (key, value) in options.hash"></select>
+        </div>
+        <div class="dndOption">
+            <span>Select Weight</span>
+            <select data-ng-model="dndReport.strength" class="second-choices" data-ng-options="value as key for (key, value) in options.weight"></select>
+        </div>
+        <div class="dndOption">
+            <span>Show snaps only from</span>
+            <select data-ng-model="dndReport.redZone">
+                <option value="false">Whole Field</option>
+                <option value="true">Red Zone</option>
+            </select>
+        </div>
+        <div class="dndOption lastOption">
+            <button data-ng-click="createDownAndDistanceReport()" class="create-report-btn">Create Report</button>
+        </div>
     </div>
 </div>
 <div class="formations-chart-container">
     <div class="field-header">
         <span class="field-info">
-            <span class="field-info-title">Down &amp; Dist:</span>
+            <span class="field-info-title">Down and Distance:</span>
             <span data-ng-if="dndReport.down">{{dndReport.down}}</span>
             <span data-ng-if="!dndReport.down">Any down</span>
             and 

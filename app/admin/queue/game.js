@@ -29,14 +29,13 @@ Game.run([
  * @type {service}
  */
 Game.service('Admin.Game.Data.Dependencies', [
-    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function(ROLE_TYPE, sports, leagues, schools, teams, games, users) {
+    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory','TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(ROLE_TYPE, sports, leagues, teams, games, users) {
 
         var Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
-            schools: schools.load(),
             teams: teams.load(),
             games: games.load(),
             users: users.load(),
@@ -67,9 +66,19 @@ Game.config([
             },
             resolve: {
                 'Admin.Game.Data': [
-                    '$q', 'Admin.Game.Data.Dependencies',
-                    function($q, data) {
-                        return $q.all(data);
+                    '$q', '$stateParams', 'Admin.Game.Data.Dependencies', 'SchoolsFactory',
+                    function($q, $stateParams, data, schools) {
+
+                        return $q.all(data).then(function(data) {
+                            var game = data.games.get($stateParams.id);
+                            var team = data.teams.get(game.teamId);
+
+                            if (team.schoolId) {
+                                data.school = schools.fetch(team.schoolId);
+                            }
+
+                            return $q.all(data);
+                        });
                     }
                 ]
             },
@@ -117,12 +126,15 @@ Game.controller('GameController', [
         $scope.data = data;
         $scope.game = data.games.get(gameId);
         $scope.team = data.teams.get($scope.game.teamId);
+        $scope.teams = data.teams.getCollection();
         $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
         $scope.league = data.leagues.get($scope.team.leagueId);
         $scope.sport = data.sports.get($scope.league.sportId);
-        if ($scope.team.schoolId) {
-            $scope.school = data.schools.get($scope.team.schoolId);
+
+        if (data.school) {
+            $scope.school = data.school;
         }
+
         $scope.users = data.users.getList();
 
         var headCoachRole = $scope.team.getHeadCoachRole();
@@ -131,5 +143,20 @@ Game.controller('GameController', [
 
             $scope.headCoach = data.users.get(headCoachRole.userId);
         }
+
+        $scope.deliverTime = $scope.game.getRemainingTime($scope.teams[$scope.game.uploaderTeamId]);
+        if ($scope.deliverTime === 0) {
+            $scope.deliverTime = 'None';
+        }
+
+        $scope.assignedToIndexer = $scope.game.isAssignedToIndexer();
+        $scope.assignedToQa = $scope.game.isAssignedToQa();
+
+        $scope.indexTime = $scope.game.assignmentTimeRemaining();
+
+        $scope.gameLength = Math.round($scope.game.video.duration);
+
+        var uploadedDate = new Date($scope.game.createdAt);
+        $scope.uploadDate = (uploadedDate.getMonth() + 1) + '/' + uploadedDate.getDate() + '/' + uploadedDate.getFullYear();
     }
 ]);
