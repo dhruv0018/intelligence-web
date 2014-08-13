@@ -29,8 +29,8 @@ TeamPackage.run([
  * @type {Controller}
  */
 TeamPackage.controller('TeamPackageController', [
-    '$scope', '$state', '$modalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'NewDate',
-    function controller($scope, $state, $modalInstance, session, team, packageIndex, TURNAROUND_TIME_RANGES, dateZeroTime) {
+    '$scope', '$state', '$modalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'NewDate', 'BasicModals',
+    function controller($scope, $state, $modalInstance, session, team, packageIndex, TURNAROUND_TIME_RANGES, dateZeroTime, basicModals) {
 
         $scope.edit = false;
 
@@ -55,14 +55,22 @@ TeamPackage.controller('TeamPackageController', [
 
         $scope.saveTeamPackage = function() {
 
-            //TODO: validation?
-            if (!$scope.edit) {
-                team.teamPackages.push($scope.teamPackageObj);
+            var basicModalOptions = {};
+            var basicModalInstance;
+            if ($scope.teamPackageObj.startDate >= $scope.teamPackageObj.endDate) {
+                basicModalOptions.title = 'Package end date must be after the start date!';
+                basicModalInstance = basicModals.openForAlert(basicModalOptions);
             } else {
-                team.teamPackages[packageIndex] = $scope.teamPackageObj;
-            }
 
-            $modalInstance.close(team);
+                //TODO: validation?
+                if (!$scope.edit) {
+                    team.teamPackages.push($scope.teamPackageObj);
+                } else {
+                    team.teamPackages[packageIndex] = $scope.teamPackageObj;
+                }
+
+                $modalInstance.close(team);
+            }
         };
     }
 ]);
