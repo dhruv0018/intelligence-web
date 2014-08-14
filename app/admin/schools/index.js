@@ -70,7 +70,7 @@ Schools.config([
                             return $q.all(data).then(function(data) {
                                 if ($stateParams.id) {
                                     data.school = schools.fetch($stateParams.id);
-                                    data.queryTeams = data.teams.query({ school: $stateParams.id});
+                                    data.queryTeams = data.teams.query({ schoolId: $stateParams.id});
                                 }
                                 return $q.all(data);
                             });
