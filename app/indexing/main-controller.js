@@ -164,6 +164,16 @@ Indexing.controller('Indexing.Main.Controller', [
             return false;
         });
 
+        Mousetrap.bind('tab', function() {
+
+            $scope.$apply(function() {
+
+                if (indexing.isIndexing) self.step();
+            });
+
+            return false;
+        });
+
         Mousetrap.bind('esc', function() {
 
             $scope.$apply(function() {
