@@ -31,7 +31,7 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
 
         }, function(teamIndexedScore) {
 
-            $scope.game.teamIndexedScore = teamIndexedScore;
+            $scope.game.indexedScore = teamIndexedScore;
         });
 
         $scope.$watch(function() {
