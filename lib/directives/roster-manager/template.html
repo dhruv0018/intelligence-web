@@ -51,28 +51,29 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="athlete col-xs-2">
-                    <add-player data-add-new-player="addNewPlayer()"></add-player>
-                    <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
+                    <div class="athlete-picture">
+                        <add-player data-add-new-player="addNewPlayer()"></add-player>
+                    </div>
+                    <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options"><i class="icon icon-cloud-upload"></i> Upload Roster via Excel</a>
                 </div>
 
                 <div class="col-xs-10">
                     <div class="row">
                         <div class="athlete col-xs-2" data-ng-repeat="player in roster | filter: filterType | orderBy: sortingType ">
-                            <profile-placeholder></profile-placeholder>
+                            <div class="athlete-picture">
+                                <profile-placeholder></profile-placeholder>
+                            </div>
                             <div class="description">
                                 <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
                                     <span class="jerseyNumber">{{player.jerseyNumbers[rosterId]}}</span>
                                     {{player.firstName}}
                                     {{player.lastName[0]}}.
                                 </a>
-                                <p>
-                                    <strong>
-
-                                        <span data-ng-repeat="position in player.positions[rosterId]">
-                                            {{position.name}}
-                                        </span>
-                                        <span data-ng-if="!player.positions[rosterId]"> No Positions</span>
-                                    </strong>
+                                <p class="positions">
+                                    <span data-ng-repeat="position in player.positions[rosterId]">
+                                        {{position.name}}
+                                    </span>
+                                    <span data-ng-if="!player.positions[rosterId]"> No Positions</span>
                                 </p>
                                 <p>
                                     <span data-ng-if="users[player.userId].lastAccessed">{{usersFactory.getLastAccessed(users[player.userId]) | date: 'mediumDate'}}</span>
