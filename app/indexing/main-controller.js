@@ -213,6 +213,13 @@ Indexing.controller('Indexing.Main.Controller', [
 
             /* Move to the next event variable. */
             event.current.activeEventVariableIndex++;
+
+            /* If the variable is filled in with an optional value. */
+            if (event.activeEventVariableValue() === null) {
+
+                /* Clear the variable value. */
+                event.clearActiveEventVariableValue();
+            }
         };
 
         /**
