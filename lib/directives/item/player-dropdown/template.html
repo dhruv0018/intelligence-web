@@ -2,18 +2,45 @@
 
     <button
         class="player-dropdown"
-        data-ng-if="event.variableValues[item.id].value !== null"
-        data-ng-click="event.variableValues[item.id].value = null"
-    >{{ players[event.variableValues[item.id].value].firstName }} {{ players[event.variableValues[item.id].value].lastName }}</button>
+        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
+        data-ng-click="reset()"
+    >
+
+        <span data-ng-if="event.variableValues[item.id].value">
+
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+
+                <rect data-ng-if="indexedTeamPlayers[event.variableValues[item.id].value]" data-ng-attr-fill="{{ game.primaryJerseyColor }}" x="0" y="0" width="16px" height="16px" />
+                <rect data-ng-if="indexedOpposingTeamPlayers[event.variableValues[item.id].value]" data-ng-attr-fill="{{ game.opposingPrimaryJerseyColor }}" x="0" y="0" width="16px" height="16px" />
+
+            </svg>
+
+            <span class="jersey-number" data-ng-if="indexedTeamPlayers[event.variableValues[item.id].value]">
+                {{ indexedTeamPlayers[event.variableValues[item.id].value].jerseyNumbers[teamRoster.id] }}
+            </span>
+
+            <span class="jersey-number" data-ng-if="indexedOpposingTeamPlayers[event.variableValues[item.id].value]">
+                {{ indexdedOpposingTeamPlayers[event.variableValues[item.id].value].jerseyNumbers[opposingTeamRoster.id] }}
+            </span>
+
+            {{ players[event.variableValues[item.id].value].firstName }} {{ players[event.variableValues[item.id].value].lastName }}
+
+        </span>
+
+        <span data-ng-if="event.variableValues[item.id].value === null">Optional</span>
+
+    </button>
 
     <input
         type="text"
         class="player-dropdown"
+        placeholder="Select"
         tabindex="{{ item.index }}"
         data-ng-required="item.isRequired"
-        data-ng-if="event.variableValues[item.id].value === null"
+        data-ng-if="isUndefined(event.variableValues[item.id].value)"
         data-ng-model="selectedPlayer"
         data-ng-change="event.activeEventVariableIndex = item.index + 1"
+        data-ng-blur="event.variableValues[item.id].value = event.variableValues[item.id].value ? event.variableValues[item.id].value : previousValue"
         data-ng-focus="event.activeEventVariableIndex = item.index"
         data-focus-on="event.activeEventVariableIndex == item.index"
         data-focus-when="{{autoAdvance}}"

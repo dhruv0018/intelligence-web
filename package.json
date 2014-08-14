@@ -1,6 +1,6 @@
 {
     "name": "intelligence-web-client",
-    "version": "2.0.0-rc3.1",
+    "version": "2.0.0-rc4.1",
     "description": "Krossover Intelligence Web Client",
     "author": "Jason Morganson <jason@krossover.com>",
     "repository": {
@@ -34,11 +34,6 @@
         "angular-ui-router": "angular-ui/ui-router",
         "flow": "flowjs/ng-flow",
         "flowjs": "flowjs/flow.js",
-        "videogular": "2fdevs/bower-videogular",
-        "videogular-controls": "2fdevs/bower-videogular-controls",
-        "videogular-buffering": "2fdevs/bower-videogular-buffering",
-        "videogular-overlay-play": "2fdevs/bower-videogular-overlay-play",
-        "videogular-poster": "2fdevs/bower-videogular-poster",
         "Mousetrap": "ccampbell/mousetrap",
         "bootstrap": "twbs/bootstrap"
     },
@@ -46,6 +41,7 @@
     },
     "devDependencies": {
         "moment": "2.7.0",
+        "moment-timezone": "0.2.1",
         "browserify": "4.1.10",
         "browserify-shim": "3.5.0",
         "builder-html-minifier": "1.0.0",

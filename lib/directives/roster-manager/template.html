@@ -67,8 +67,9 @@
                                 </a>
                                 <p data-ng-if="keys(positions).length > 0">
                                     <strong>
-                                        <span data-ng-if="player.positions[rosterId].length > 1"> Multiple Positions</span>
-                                        <span data-ng-if="player.positions[rosterId].length === 1"> {{player.positions[rosterId][0].name}}</span>
+                                        <span data-ng-repeat="position in player.positions[rosterId]">
+                                            {{position.name}}
+                                        </span>
                                     </strong>
                                 </p>
                                 <p>

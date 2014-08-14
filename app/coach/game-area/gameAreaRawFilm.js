@@ -47,6 +47,8 @@ GameAreaRawFilm.controller('GameAreaRawFilmController', [
         $scope.teamId = data.game.teamId;
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
+        $scope.sources = data.game.getVideoSources();
+        $scope.videoTitle = 'rawFilm';
 
     }
 ]);
