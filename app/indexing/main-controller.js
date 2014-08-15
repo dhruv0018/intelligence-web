@@ -49,27 +49,6 @@ Indexing.controller('Indexing.Main.Controller', [
             });
         });
 
-        /*IF DEADLINE HAS EXPIRED, OPEN MODAL THAT SENDS THEM BACK TO GAMES LIST*/
-        var remainingTimeInterval = setInterval(function() {timeLeft();}, 1000);
-        function timeLeft() {
-            var timeRemaining = $scope.game.assignmentTimeRemaining();
-            if (timeRemaining <= 0) {
-                clearInterval(remainingTimeInterval);
-                var modalInstance = basicModal.openForAlert({
-                    title: 'Alert',
-                    bodyText: 'The deadline to index this game has passed.'
-                });
-                modalInstance.result.finally(function() {window.location = 'indexer/games';});
-            }
-        }
-
-        /* Kick Indexer Off When Deadline Passes */
-        /*var deadline = $scope.game.assignmentTimeRemaining();
-
-        if ($scope.game.assignmentTimeRemaining() === 'None') {
-
-        }*/
-
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoTitle = 'indexing';

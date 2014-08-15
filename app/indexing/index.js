@@ -118,8 +118,8 @@ Indexing.config([
                     ]
                 },
                 onEnter: [
-                    '$state', '$stateParams', 'SessionService', 'Indexing.Data', 'IndexingService',
-                    function($state, $stateParams, session, data, indexingService) {
+                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService',
+                    function($state, $timeout, $stateParams, session, modals, data, indexingService) {
 
                         indexingService.IS_INDEXING_STATE = true;
                         var userId = session.currentUser.id;
@@ -136,6 +136,23 @@ Indexing.config([
                                 game.startAssignment(userId);
                                 game.save();
                             }
+
+                            var timeRemaining = game.assignmentTimeRemaining();
+
+                            var timeExpired = function() {
+
+                                var timeExpiredModal = modals.openForAlert({
+                                    title: 'Alert',
+                                    bodyText: 'The deadline to index this game has passed.'
+                                });
+
+                                timeExpiredModal.result.finally(function() {
+
+                                    $state.go('indexer-game', { id: game.id });
+                                });
+                            };
+
+                            $timeout(timeExpired, timeRemaining);
                         }
 
                         else $state.go('401');
