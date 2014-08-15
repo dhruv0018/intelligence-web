@@ -43,6 +43,7 @@ GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
     function controller($scope, $state, $stateParams, games, plays, filtersets, data) {
         $scope.gameId = $state.params.id;
+        $scope.videoTitle = 'filmBreakdown';
         $scope.data = data;
         $scope.teamId = data.game.teamId;
         $scope.leagues = data.leagues.getCollection();

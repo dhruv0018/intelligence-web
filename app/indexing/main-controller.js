@@ -17,15 +17,14 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data',
-    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar, data) {
+    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance',
+    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar, data, videoplayerInstance) {
 
         var self = this;
 
         var gameId = Number($stateParams.id);
 
         /* Scope */
-
         $scope.data = data;
         $scope.tags = tags;
         $scope.play = play;
@@ -40,6 +39,14 @@ Indexing.controller('Indexing.Main.Controller', [
 
         $scope.game.teamIndexedScore = 0;
         $scope.game.opposingIndexedScore = 0;
+
+        var videoplayer;
+        videoplayerInstance.then(function(vp) {
+            vp.videoElement.one('canplay', function() {
+                videoplayer = vp;
+                indexing.isReady = true;
+            });
+        });
 
         /*IF DEADLINE HAS EXPIRED, OPEN MODAL THAT SENDS THEM BACK TO GAMES LIST*/
         var remainingTimeInterval = setInterval(function() {timeLeft();}, 1000);
@@ -64,11 +71,13 @@ Indexing.controller('Indexing.Main.Controller', [
 
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
+        $scope.videoTitle = 'indexing';
 
         indexing.reset($scope.game, data.plays);
         tags.reset($scope.tagset);
         event.reset($scope.tagset);
         play.reset(gameId);
+        play.clear();
 
         /* Bind keys. */
 
@@ -99,7 +108,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
             $scope.$apply(function() {
 
-                if (indexing.isReady) $scope.VideoPlayer.playPause();
+                if (indexing.isReady) videoplayer.playPause();
             });
 
             return false;
@@ -113,7 +122,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                     var currentTime = getCurrentTime();
                     var time = currentTime - config.indexing.video.jump;
-                    $scope.VideoPlayer.seekTime(time);
+                    videoplayer.seekTime(time);
                 }
             });
 
@@ -128,7 +137,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                     var currentTime = getCurrentTime();
                     var time = currentTime + config.indexing.video.jump;
-                    $scope.VideoPlayer.seekTime(time);
+                    videoplayer.seekTime(time);
                 }
             });
 
@@ -143,6 +152,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                     if (self.savable()) self.save();
                     else if (self.nextable()) self.next();
+                    else self.step();
                 }
 
                 else if (indexing.isReady) self.index();
@@ -174,7 +184,7 @@ Indexing.controller('Indexing.Main.Controller', [
             indexing.showTags = true;
             indexing.showScript = false;
             indexing.eventSelected = false;
-            $scope.VideoPlayer.pause();
+            videoplayer.pause();
         };
 
         /**
@@ -194,14 +204,21 @@ Indexing.controller('Indexing.Main.Controller', [
         };
 
         /**
+         * Steps the current variable.
+         */
+        this.step = function() {
+
+            /* Move to the next event variable. */
+            event.current.activeEventVariableIndex++;
+        };
+
+        /**
          * Determines if the current indexing session is savable.
          * @returns {Boolean} true if the session is savable; false otherwise.
          */
         this.savable = function() {
 
-            if (!this.nextable()) return false;
-
-            return indexing.eventSelected || event.isEndEvent();
+            return this.nextable() && event.isEndEvent();
         };
 
         /**
@@ -209,11 +226,19 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.save = function() {
 
-            play.save();
-            play.clear();
+            indexing.showTags = false;
+            indexing.showScript = false;
+            indexing.isIndexing = false;
+            indexing.eventSelected = false;
 
-            if (indexing.eventSelected) this.back();
-            else this.next();
+            /* Snap video back to time of current event. */
+            videoplayer.seekTime(event.current.time);
+            videoplayer.play();
+
+            play.save(play.current);
+            play.clear();
+            tags.reset();
+            event.reset();
         };
 
         /**
@@ -222,14 +247,16 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.nextable = function() {
 
-            /* If there are variables. */
-            if (event.hasVariables()) {
+            /* If not indexing or the tags are showing. */
+            if (!indexing.isIndexing || indexing.showTags) return false;
+
+            /* If there are variables in the current event. */
+            else if (event.hasVariables()) {
 
                 /* Make sure all of the variables have values. */
                 return event.allEventVariablesHaveValues();
             }
 
-            /* Otherwise; assume the session can be advanced. */
             else return true;
         };
 
@@ -244,16 +271,14 @@ Indexing.controller('Indexing.Main.Controller', [
             indexing.eventSelected = false;
 
             /* Get the tagId of the current event. */
-            var tagId = event.current.tag.id;
+            var tagId = event.current.tagId;
 
             /* Get the next set of tags based on the tag in the current event. */
             tags.current = $scope.tagset.getNextTags(tagId);
 
             /* Snap video back to time of current event. */
-            $scope.VideoPlayer.seekTime(event.current.time);
-            $scope.VideoPlayer.play();
-
-            event.reset();
+            videoplayer.seekTime(event.current.time);
+            videoplayer.play();
         };
 
         /**
@@ -264,13 +289,11 @@ Indexing.controller('Indexing.Main.Controller', [
             /* If editing an event. */
             if (indexing.eventSelected) {
 
-                indexing.showTags = false;
-                indexing.showScript = false;
-                indexing.isIndexing = false;
                 indexing.eventSelected = false;
-
-                tags.reset();
-                event.reset();
+                indexing.showTags = true;
+                indexing.showScript = false;
+                indexing.isIndexing = true;
+                videoplayer.play();
             }
 
             /* If the tags are showing. */
@@ -280,29 +303,34 @@ Indexing.controller('Indexing.Main.Controller', [
                 indexing.showTags = false;
                 indexing.showScript = false;
                 indexing.isIndexing = false;
-                $scope.VideoPlayer.play();
+                videoplayer.play();
             }
 
-            /* If the first variable is empty. */
-            else if (event.current.activeEventVariableIndex === 1 &&
-                    !event.activeEventVariableValue()) {
+            /* If the event doesn't have variables of If the first variable is empty. */
+            else if (!event.hasVariables() ||
+                     (event.current.activeEventVariableIndex === 1 &&
+                     !event.activeEventVariableValue())) {
 
                 /* Remove the event from the play. */
-                event.delete(event.current);
-                event.reset();
+                play.removeEvent(event.current);
 
                 /* Drop back to tagging state. */
                 indexing.showTags = true;
                 indexing.showScript = false;
             }
 
-            /* If the another variable after the first is empty. */
+            /* If the active variable is empty. */
             else if (!event.activeEventVariableValue()) {
 
-                /* Move back one variable. */
-                --event.current.activeEventVariableIndex;
+                /* While the active variable is empty. */
+                while (event.current.activeEventVariableIndex > 1 &&
+                      !event.activeEventVariableValue()) {
 
-                /* Clear the variable before. */
+                    /* Move back one variable. */
+                    event.current.activeEventVariableIndex--;
+                }
+
+                /* Clear the value of the first variable is not empty. */
                 event.clearActiveEventVariableValue();
             }
 
@@ -320,31 +348,21 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         this.deleteEvent = function(selectedEvent) {
 
-            /* Remove the event from the play. */
+            indexing.showTags = true;
+            indexing.showScript = false;
+            indexing.eventSelected = false;
+            indexing.isIndexing = false;
+
+            /* Delete the selected event. */
             event.delete(selectedEvent);
 
+            /* Clear the current play. */
             play.clear();
-
-            this.back();
         };
 
 
         /* Listeners for video player events */
 
-
-        /**
-         * Listen for video player ready event.
-         */
-        $scope.$on(VG_EVENTS.ON_PLAYER_READY, function() {
-
-            if ($scope.VideoPlayer) {
-
-                $scope.VideoPlayer.videoElement.one('canplay', function() {
-
-                    indexing.isReady = true;
-                });
-            }
-        });
 
         /**
          * Listen for video player enter full screen event.
@@ -374,7 +392,7 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         var getCurrentTime = function() {
 
-            return $scope.VideoPlayer.videoElement[0].currentTime;
+            return videoplayer.videoElement[0].currentTime;
         };
 
         /**
@@ -383,7 +401,7 @@ Indexing.controller('Indexing.Main.Controller', [
          */
         var setCurrentTime = function(time) {
 
-            $scope.VideoPlayer.seekTime(time);
+            videoplayer.seekTime(time);
         };
     }
 ]);
