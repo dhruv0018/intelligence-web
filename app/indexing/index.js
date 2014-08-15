@@ -117,6 +117,7 @@ Indexing.config([
                         }
                     ]
                 },
+
                 onEnter: [
                     '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService',
                     function($state, $timeout, $stateParams, session, modals, data, indexingService) {
@@ -125,11 +126,13 @@ Indexing.config([
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
                         var game = data.games.get(gameId);
-                        var status = game.getStatus();
-                        var indexable = game.isAssignedToIndexer() && game.canBeIndexed();
-                        var qaAble = game.isAssignedToQa() && game.canBeQAed();
 
-                        if (game.isAssignedToUser(userId) && (indexable || qaAble) && !game.isDeleted) {
+                        if (!game.isAssignedToUser(userId)) {
+
+                            $state.go('indexer-games');
+                        }
+
+                        else if (game.canBeIndexed() || game.canBeQAed()) {
 
                             if (!game.isAssignmentStarted()) {
 
@@ -154,10 +157,9 @@ Indexing.config([
 
                             $timeout(timeExpired, timeRemaining);
                         }
-
-                        else $state.go('401');
                     }
                 ],
+
                 onExit: [
                     '$stateParams', 'GamesFactory', 'PlaysManager',
                     function($stateParams, games, playsManager) {
