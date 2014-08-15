@@ -68,8 +68,10 @@ Coach.service('Coach.Data.Dependencies', [
 
             var team = teams.get(teamId);
 
-            return players.query({
+            return players.load({
                 rosterId: team.roster.id
+            }).then(function() {
+                return players.getList();
             });
         });
 
