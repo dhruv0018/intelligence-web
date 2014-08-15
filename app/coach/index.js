@@ -50,23 +50,20 @@ Coach.config([
  */
 Coach.service('Coach.Data.Dependencies', [
     '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies',
-    function($q, session, teams, games, players, users, leagues, tagsets, positions, baseData) {
+    function($q, session, teams, games, players, users, leagues, tagsets, positions, data) {
 
-        var promises = {
+        var Data = {
+
             games: games.load({
                 uploaderTeamId: session.currentUser.currentRole.teamId
             }),
             teams: teams.load(),
             users: users.retrieve(),
             remainingBreakdowns: teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId),
-            positionSets: positions.load(),
-            leagues: baseData.leagues,
-            sports: baseData.sports,
-            filtersets: baseData.filtersets,
-            tagsets: baseData.tagsets
+            positionSets: positions.load()
         };
 
-        promises.playersList = promises.teams.then(function(teams) {
+        Data.playersList = promises.teams.then(function(teams) {
             var userTeamId = session.currentUser.currentRole.teamId;
             var userTeam = teams.get(userTeamId);
             return players.query({
@@ -74,8 +71,9 @@ Coach.service('Coach.Data.Dependencies', [
             });
         });
 
+        angular.extend(Data, data);
 
-        return promises;
+        return Data;
     }
 ]);
 
