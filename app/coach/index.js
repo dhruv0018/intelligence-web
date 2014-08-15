@@ -60,7 +60,6 @@ Coach.service('Coach.Data.Dependencies', [
             teams: teams.load(),
             users: users.retrieve(),
             remainingBreakdowns: teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId),
-            positionSets: positions.load()
         };
 
         Data.playersList = promises.teams.then(function(teams) {

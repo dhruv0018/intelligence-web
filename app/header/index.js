@@ -57,14 +57,15 @@ Header.config([
 
 
 Header.service('Base.Data.Dependencies', [
-    'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory',
-    function(sports, leagues, tagsets, filtersets) {
+    'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory',
+    function(sports, leagues, tagsets, filtersets, positionsets) {
 
         var Data = {
             sports: sports.load(),
             leagues: leagues.load(),
             tagsets: tagsets.load(),
-            filtersets: filtersets.load()
+            filtersets: filtersets.load(),
+            positionsets: positionsets.load()
         };
 
         return Data;
