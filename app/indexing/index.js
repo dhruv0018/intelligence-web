@@ -142,13 +142,19 @@ Indexing.config([
                     }
                 ],
                 onExit: [
-                    function() {
+                    '$stateParams', 'GamesFactory',
+                    function($stateParams, games) {
+
+                        var gameId = $stateParams.id;
+                        var game = games.get(gameId);
 
                         Mousetrap.unbind('space');
                         Mousetrap.unbind('left');
                         Mousetrap.unbind('right');
                         Mousetrap.unbind('enter');
                         Mousetrap.unbind('esc');
+
+                        game.save();
                     }
                 ]
             });

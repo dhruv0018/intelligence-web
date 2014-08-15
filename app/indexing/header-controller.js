@@ -31,18 +31,11 @@ Indexing.controller('Indexing.Header.Controller', [
 
         $scope.indexing = indexing;
 
-        $scope.goBack = function() {
-
-            $scope.game.save();
-            $state.go('indexer-game', { id: $scope.game.id });
-        };
-
         $scope.sendToQa = function() {
+
             indexing.isIndexing = false;
             $scope.game.finishAssignment(userId);
-            $scope.game.save().then(function() {
-                $state.go('indexer-games');
-            });
+            $state.go('indexer-games');
         };
 
         $scope.sendToTeam = function() {
