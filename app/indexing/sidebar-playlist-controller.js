@@ -14,18 +14,18 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
-    '$scope', 'IndexingService', 'Indexing.Sidebar', 'GamesFactory',
-    function controller($scope, indexing, sidebar, games) {
+    '$scope', '$stateParams', 'Indexing.Sidebar', 'GamesFactory', 'PlaysManager',
+    function controller($scope, $stateParams, sidebar, games, playsManager) {
 
         var gameId = Number($stateParams.id);
 
-        $scope.game = games.get(gameId);
         $scope.sidebar = sidebar;
-        $scope.indexing = indexing;
+        $scope.game = games.get(gameId);
+        $scope.plays = playsManager.plays;
 
         $scope.$watch(function() {
 
-            var lastPlay = $scope.indexing.plays[$scope.indexing.plays.length - 1];
+            var lastPlay = playsManager.getLastPlay();
 
             if (!lastPlay) return 0;
 
@@ -38,7 +38,7 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
 
         $scope.$watch(function() {
 
-            var lastPlay = $scope.indexing.plays[$scope.indexing.plays.length - 1];
+            var lastPlay = playsManager.getLastPlay();
 
             if (!lastPlay) return 0;
 

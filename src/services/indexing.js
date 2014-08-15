@@ -10,12 +10,9 @@ IntelligenceWebClient.factory('IndexingService', [
 
         var IndexingService = {
 
-            plays: [],
-
-            reset: function(game, plays) {
+            reset: function(game) {
 
                 this.game = game;
-                this.plays = plays;
             }
         };
 

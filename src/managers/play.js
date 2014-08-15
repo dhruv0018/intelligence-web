@@ -11,8 +11,11 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    '$injector', 'AlertsService', 'TagsManager', 'PlaysFactory', 'IndexingService',
-    function service($injector, alerts, tags, plays, indexing) {
+    '$injector', 'PlaysFactory',
+    function service($injector, plays) {
+
+        var playsManager;
+        var eventManager;
 
         var model = {
 
@@ -58,8 +61,10 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.create = function() {
 
+            var playsManager = playsManager || $injector.get('PlaysManager');
+
             this.reset();
-            indexing.plays.push(this.current);
+            playsManager.addPlay(this.current);
         };
 
         /**
@@ -76,10 +81,10 @@ IntelligenceWebClient.service('PlayManager', [
             }
 
             /* If there are no plays in the playlist. */
-            if (!indexing.plays.length) {
+            if (!playsManager.plays.length) {
 
                 /* Add the current play to the playlist. */
-                indexing.plays.push(this.current);
+                playsManager.addPlay(this.current);
             }
 
             /* Make sure events have a time that is a number, or default to zero. */
@@ -121,7 +126,7 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.removeEvent = function(event) {
 
-            var eventManager = $injector.get('EventManager');
+            var eventManager = eventManager || $injector.get('EventManager');
 
             /* Find the index of the event. */
             var eventIndex = this.current.events.indexOf(event);
@@ -184,37 +189,18 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.remove = function(play) {
 
+            var playsManager = playsManager || $injector.get('PlaysManager');
+
             play = play || this.current;
 
-            var playIndex = indexing.plays.indexOf(play);
-
-            /* If the play exists in the play list. */
-            if (~playIndex) {
-
-                /* Remove play from play list. */
-                indexing.plays.splice(playIndex, 1);
-            }
+            /* Remove the play from the play list. */
+            playsManager.removePlay(play);
 
             /* If the play has been saved before. */
             if (play.id) {
 
                 /* Also remove it remotely. */
                 plays.remove(play);
-            }
-
-            /* If the deleted play is the current play. */
-            if (angular.equals(play, this.current)) {
-
-                var event = $injector.get('EventManager');
-
-                indexing.showTags = false;
-                indexing.showScript = false;
-                indexing.isIndexing = false;
-                indexing.eventSelected = false;
-
-                this.clear();
-                tags.reset();
-                event.reset();
             }
         };
 
@@ -223,9 +209,11 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.save = function(play) {
 
+            var playsManager = playsManager || $injector.get('PlaysManager');
+
             play = play || this.current;
 
-            var playIndex = indexing.plays.indexOf(play);
+            var playIndex = playsManager.plays.indexOf(play);
 
             play.isSaving = true;
 
@@ -236,7 +224,7 @@ IntelligenceWebClient.service('PlayManager', [
                 if (~playIndex) {
 
                     /* Update the play in the play list. */
-                    indexing.plays[playIndex] = play;
+                    playsManager.plays[playIndex] = play;
                 }
 
             }).finally(function() {

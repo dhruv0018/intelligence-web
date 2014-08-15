@@ -17,8 +17,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance',
-    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, play, event, sidebar, data, videoplayerInstance) {
+    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance',
+    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, videoplayerInstance) {
 
         var self = this;
 
@@ -28,6 +28,7 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.data = data;
         $scope.tags = tags;
         $scope.play = play;
+        $scope.plays = playsManager.plays;
         $scope.event = event;
         $scope.sidebar = sidebar;
         $scope.indexing = indexing;
@@ -73,7 +74,8 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoTitle = 'indexing';
 
-        indexing.reset($scope.game, data.plays);
+        indexing.reset($scope.game);
+        playsManager.reset(data.plays);
         tags.reset($scope.tagset);
         event.reset($scope.tagset);
         play.reset($scope.tagset, gameId);
