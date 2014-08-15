@@ -437,7 +437,7 @@ Teams.controller('TeamsController', [
 
         $scope.sports = data.sports.getList();
         $scope.indexedSports = data.sports.getCollection();
-
+        $scope.schools = schools.getCollection();
         $scope.leagues = data.leagues.getList();
         $scope.indexedLeagues = data.leagues.getCollection();
 
@@ -452,6 +452,7 @@ Teams.controller('TeamsController', [
         };
 
         $scope.search = function(filter) {
+
             data.teams.query(filter,
                     function(teams) {
                         var schoolIds = [];
@@ -463,10 +464,6 @@ Teams.controller('TeamsController', [
                         $scope.teams = teams;
                         schools.load({
                             'id[]': schoolIds
-                        }).then(function(schools) {
-                            angular.forEach($scope.teams, function(team) {
-                                team.displaySchool = (team.schoolId) ? schools.get(team.schoolId) : null;
-                            });
                         });
                     },
                     function() {
