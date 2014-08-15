@@ -520,7 +520,16 @@ IntelligenceWebClient.factory('GamesFactory', [
             canBeIndexed: function() {
 
                 var self = this;
+
+                if (self.isDeleted) {
+                    return false;
+                }
+
                 if (self.deadlinePassed()) {
+                    return false;
+                }
+
+                if (!self.isAssignedToIndexer()) {
                     return false;
                 }
 
@@ -534,9 +543,18 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             canBeQAed: function() {
+
                 var self = this;
 
+                if (self.isDeleted) {
+                    return false;
+                }
+
                 if (self.deadlinePassed()) {
+                    return false;
+                }
+
+                if (!self.isAssignedToQa()) {
                     return false;
                 }
 
