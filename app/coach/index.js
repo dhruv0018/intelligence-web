@@ -52,21 +52,24 @@ Coach.service('Coach.Data.Dependencies', [
     '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies',
     function($q, session, teams, games, players, users, leagues, tagsets, positions, data) {
 
+        var teamId = session.currentUser.currentRole.teamId;
+
         var Data = {
 
             games: games.load({
-                uploaderTeamId: session.currentUser.currentRole.teamId
+                uploaderTeamId: teamId
             }),
             teams: teams.load(),
             users: users.load(),
-            remainingBreakdowns: teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId),
+            remainingBreakdowns: teams.getRemainingBreakdowns(teamId),
         };
 
-        Data.playersList = promises.teams.then(function(teams) {
-            var userTeamId = session.currentUser.currentRole.teamId;
-            var userTeam = teams.get(userTeamId);
+        Data.playersList = Data.teams.then(function(teams) {
+
+            var team = teams.get(teamId);
+
             return players.query({
-                rosterId: userTeam.roster.id
+                rosterId: team.roster.id
             });
         });
 
