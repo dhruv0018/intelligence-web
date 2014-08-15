@@ -37,6 +37,7 @@ Users.directive('krossoverNewRole', [
 
             link: function($scope, element, attributes) {
 
+                $scope.ROLES = ROLES;
                 $scope.INDEXER = ROLES.INDEXER;
                 $scope.HEAD_COACH = ROLES.HEAD_COACH;
                 $scope.ASSISTANT_COACH = ROLES.ASSISTANT_COACH;
