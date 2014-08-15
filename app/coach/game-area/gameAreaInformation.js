@@ -31,8 +31,23 @@ GameAreaInformation.config([
                     templateUrl: 'coach/game-area/gameAreaInformation.html',
                     controller: 'GameAreaInformationController'
                 }
-            }
+            },
+            resolve: {
+                'GameAreaInformation.Data': [
+                    '$q', 'SessionService', 'TeamsFactory',
+                    function($q, session, teams) {
 
+                        var teamId = session.currentUser.currentRole.teamId;
+
+                        var Data = {
+
+                            remainingBreakdowns: teams.getRemainingBreakdowns(teamId)
+                        };
+
+                        return $q.all(Data);
+                    }
+                ]
+            }
         };
 
         $stateProvider.state(gameArea);

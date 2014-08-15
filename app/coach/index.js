@@ -60,8 +60,7 @@ Coach.service('Coach.Data.Dependencies', [
                 uploaderTeamId: teamId
             }),
             teams: teams.load(),
-            users: users.load(),
-            remainingBreakdowns: teams.getRemainingBreakdowns(teamId),
+            users: users.load()
         };
 
         Data.playersList = Data.teams.then(function(teams) {
