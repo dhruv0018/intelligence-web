@@ -142,8 +142,8 @@ Indexing.config([
                     }
                 ],
                 onExit: [
-                    '$stateParams', 'GamesFactory',
-                    function($stateParams, games) {
+                    '$stateParams', 'GamesFactory', 'PlaysManager',
+                    function($stateParams, games, playsManager) {
 
                         var gameId = $stateParams.id;
                         var game = games.get(gameId);
@@ -155,6 +155,7 @@ Indexing.config([
                         Mousetrap.unbind('esc');
 
                         game.save();
+                        playsManager.save();
                     }
                 ]
             });
