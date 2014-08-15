@@ -18,7 +18,8 @@
             </div>
 
             <div class="form-group">
-                <team-typeahead data-sport-id="sportId" data-team="selectedTeam" data-ng-model="role.teamId" data-without-role="ROLES.HEAD_COACH"></team-typeahead>
+                <team-typeahead data-ng-if="users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-ng-model="role.teamId" data-without-role="ROLES.HEAD_COACH"></team-typeahead>
+                <team-typeahead data-ng-if="!users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-ng-model="role.teamId"></team-typeahead>
             </div>
 
             <div class="form-group">
