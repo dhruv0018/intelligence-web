@@ -214,7 +214,7 @@ IntelligenceWebClient.service('PlayManager', [
 
             var playIndex = playsManager.plays.indexOf(play);
 
-            play.isSaving = true;
+            playsManager.plays[playIndex].isSaving = true;
 
             /* Save the play remotely. */
             plays.save(play).then(function(play) {
@@ -228,7 +228,7 @@ IntelligenceWebClient.service('PlayManager', [
 
             }).finally(function() {
 
-                play.isSaving = false;
+                playsManager.plays[playIndex].isSaving = false;
             });
         };
     }
