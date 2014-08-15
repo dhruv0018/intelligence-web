@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    'IndexingService', 'TagsManager', 'PlayManager',
-    function service(indexing, tags, play) {
+    '$injector',
+    function service($injector) {
 
         var model = {
 
@@ -146,6 +146,8 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.create = function(tagId, time) {
 
+            var playManager = playManager || $injector.get('PlayManager');
+
             /* Reset the current event. */
             this.reset();
 
@@ -156,7 +158,7 @@ IntelligenceWebClient.service('EventManager', [
             this.current.time = time;
 
             /* Add event to the current play. */
-            play.addEvent(this.current);
+            playManager.addEvent(this.current);
         };
 
         /**
@@ -164,10 +166,12 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.delete = function(event) {
 
+            var playManager = playManager || $injector.get('PlayManager');
+
             event = event || this.current;
 
             /* Remove the event from the current play. */
-            play.removeEvent(event);
+            playManager.removeEvent(event);
 
             /* Reset the current event. */
             this.reset();

@@ -11,11 +11,10 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    '$injector', 'PlaysFactory',
-    function service($injector, plays) {
+    '$injector', 'PlaysFactory', 'EventManager',
+    function service($injector, plays, eventManager) {
 
         var playsManager;
-        var eventManager;
 
         var model = {
 
@@ -73,6 +72,8 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.addEvent = function(event) {
 
+            var playsManager = playsManager || $injector.get('PlaysManager');
+
             /* If there is no current play. */
             if (!this.current) {
 
@@ -125,8 +126,6 @@ IntelligenceWebClient.service('PlayManager', [
          * @param {Object} event - event to be removed.
          */
         this.removeEvent = function(event) {
-
-            var eventManager = eventManager || $injector.get('EventManager');
 
             /* Find the index of the event. */
             var eventIndex = this.current.events.indexOf(event);
