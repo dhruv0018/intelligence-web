@@ -14,10 +14,12 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
-    '$scope', 'IndexingService', 'Indexing.Sidebar', 'Indexing.Data',
-    function controller($scope, indexing, sidebar, data) {
+    '$scope', 'IndexingService', 'Indexing.Sidebar', 'GamesFactory',
+    function controller($scope, indexing, sidebar, games) {
 
-        $scope.game = data.game;
+        var gameId = Number($stateParams.id);
+
+        $scope.game = games.get(gameId);
         $scope.sidebar = sidebar;
         $scope.indexing = indexing;
 
