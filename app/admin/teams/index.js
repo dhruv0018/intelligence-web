@@ -431,7 +431,9 @@ Teams.controller('TeamsController', [
     '$rootScope', '$scope', '$state', '$filter', 'Teams.Data', 'SchoolsFactory',
     function controller($rootScope, $scope, $state, $filter, data, schools) {
 
-        $scope.teams = data.teams.getList();
+        $scope.filter = {
+            isCustomerTeam: true
+        };
 
         $scope.sports = data.sports.getList();
         $scope.indexedSports = data.sports.getCollection();
@@ -452,8 +454,20 @@ Teams.controller('TeamsController', [
         $scope.search = function(filter) {
             data.teams.query(filter,
                     function(teams) {
+                        var schoolIds = [];
+                        angular.forEach(teams, function(team) {
+                            if (team.schoolId) {
+                                schoolIds.push(team.schoolId);
+                            }
+                        });
                         $scope.teams = teams;
-                        $scope.noResults = false;
+                        schools.load({
+                            'id[]': schoolIds
+                        }).then(function(schools) {
+                            angular.forEach($scope.teams, function(team) {
+                                team.displaySchool = (team.schoolId) ? schools.get(team.schoolId) : null;
+                            });
+                        });
                     },
                     function() {
                         $scope.teams = [];
