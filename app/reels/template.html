@@ -3,10 +3,28 @@
     <main class="content-full">
         <header>
             <div>
-            	Highlight reel
+                Highlight reel
             </div>
         </header>
-        <div class="main-highlight" data-ui-view="content"></div>
+        <div class="reels-area-film">
+            <aside class="reels-playlist">
+
+            <krossover-reel-play 
+                data-play-id="playId"
+                data-home-team="getHomeTeam(playId)"
+                data-opposing-team="getOpposingTeam(playId)"
+                data-date-played="getDatePlayed(playId)"
+                data-ng-repeat="playId in reels.plays">
+            </krossover-reel-play>
+
+              <no-results data-ng-hide="reels && reels.plays && reels.plays.length"></no-results>
+
+            </aside>
+
+            <div class="player reels-player">
+                <x-krossover-videoplayer data-sources="[]"></x-krossover-videoplayer>
+            </div>
+        </div>
     </main>
 
 </section>

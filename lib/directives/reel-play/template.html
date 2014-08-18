@@ -1,0 +1,9 @@
+<div class="reel-play">
+	<div>
+		<p>{{homeTeam.name}} vs {{awayTeam.name}} - {{playDate | date:'MMM. d, yyyy'}}</p>
+		<p>[[Play Summary]] - [[Period]]</p>
+	</div>
+	<div>
+		<span class="play-reel-play" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY}"><i class="icon icon-play-circle"></i></span>
+	</div>
+</div>

@@ -1,5 +1,10 @@
-<div class="game-area-film">
-        <div class="player">
-            <x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
+<div class="reels-area-film">
+        <aside class="reels-playlist">
+
+          <no-results data-ng-hide="false"></no-results>
+        </aside>
+
+        <div class="player reels-player">
+            <x-krossover-videoplayer data-sources="sources" data-play-start-time="play.current.startTime" data-play-end-time="play.current.endTime"></x-krossover-videoplayer>
         </div>
 </div>

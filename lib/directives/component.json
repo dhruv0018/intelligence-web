@@ -43,7 +43,9 @@
         "dynamic-table",
         "user-typeahead",
         "videogular",
-        "breakdown-text"
+        "breakdown-text",
+        "videogular",
+        "reel-play"
     ],
     "scripts": [
         "index.js"
