@@ -104,7 +104,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                 if (indexing.isReady) {
 
-                    var currentTime = getCurrentTime();
+                    var currentTime = videoplayer.getCurrentTime();
                     var time = currentTime - config.indexing.video.jump;
                     videoplayer.seekTime(time);
                 }
@@ -119,7 +119,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
                 if (indexing.isReady) {
 
-                    var currentTime = getCurrentTime();
+                    var currentTime = videoplayer.getCurrentTime();
                     var time = currentTime + config.indexing.video.jump;
                     videoplayer.seekTime(time);
                 }
@@ -385,28 +385,6 @@ Indexing.controller('Indexing.Main.Controller', [
             var element = document.getElementsByClassName('indexing-block')[0];
             element.classList.remove('fullscreen');
         });
-
-
-        /* Private methods */
-
-
-        /**
-         * Gets the current time from the video.
-         * @returns {Integer} - current time.
-         */
-        var getCurrentTime = function() {
-
-            return videoplayer.videoElement[0].currentTime;
-        };
-
-        /**
-         * Sets the current time in the video. Seeks video to that time.
-         * @param {Integer} time - time to seek video to.
-         */
-        var setCurrentTime = function(time) {
-
-            videoplayer.seekTime(time);
-        };
     }
 ]);
 
