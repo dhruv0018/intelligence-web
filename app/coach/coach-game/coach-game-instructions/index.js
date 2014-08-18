@@ -79,7 +79,7 @@ Instructions.controller('Coach.Game.Instructions.controller', [
                 $scope.statusBuffer = game.status;
                 $scope.isBreakdownChoiceMade = true;
             } else {
-                $scope.statusBuffer = -1;
+                $scope.statusBuffer = 0;
             }
 
         });
