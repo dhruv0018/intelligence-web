@@ -431,8 +431,9 @@ Teams.controller('TeamsController', [
     '$rootScope', '$scope', '$state', '$filter', 'Teams.Data', 'SchoolsFactory',
     function controller($rootScope, $scope, $state, $filter, data, schools) {
 
+        //TODO potential candiate for changing filter to true instead of 1 if the backend begins to support it
         $scope.filter = {
-            isCustomerTeam: true
+            isCustomerTeam: 1
         };
 
         $scope.sports = data.sports.getList();
@@ -462,9 +463,11 @@ Teams.controller('TeamsController', [
                             }
                         });
                         $scope.teams = teams;
-                        schools.load({
-                            'id[]': schoolIds
-                        });
+                        if (schoolIds.length > 0) {
+                            schools.load({
+                                'id[]': schoolIds
+                            });
+                        }
                     },
                     function() {
                         $scope.teams = [];
