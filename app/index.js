@@ -6,6 +6,7 @@ require('admin');
 require('coach');
 require('indexer');
 require('indexing');
+require('reels');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -22,6 +23,7 @@ var App = angular.module('App', [
     'Admin',
     'indexer',
     'Indexing',
-    'Coach'
+    'Coach',
+    'ReelsArea'
 ]);
 

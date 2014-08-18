@@ -1,0 +1,19 @@
+{
+    "name": "reels",
+    "dependencies": {
+        "component/path": "1.0.0"
+    },
+    "paths": [
+        "."
+    ],
+    "templates": [
+        "template.html",
+        "reelsPlayer.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

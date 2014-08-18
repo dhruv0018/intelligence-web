@@ -335,6 +335,11 @@
     "ga-down-distance": {
         "Head Coach": true,
         "Assistant Coach": true
+    },
+
+    "ReelsArea": {
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }
 
