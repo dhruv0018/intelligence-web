@@ -12,7 +12,7 @@
                     <th>Jersey Number</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Position</th>
+                    <th data-ng-if="keys(positions).length > 0">Position</th>
 
                 </tr>
 
@@ -28,7 +28,7 @@
 
                     <td><input class="name" placeholder="Last Name" data-ng-model="player.lastName" required></td>
 
-                    <td>
+                    <td data-ng-if="keys(positions).length > 0">
                         <data-positions-dropdown data-player="player" data-positions="positions"></data-positions-dropdown>
                         <button class="btn btn-blank pull-right" data-ng-click="toggleActivation(player)"><i class="icon icon-remove"></i></button>
                     </td>
@@ -69,7 +69,7 @@
                                     {{player.firstName}}
                                     {{player.lastName[0]}}.
                                 </a>
-                                <p class="positions">
+                                <p data-ng-if="keys(positions).length > 0" class="positions">
                                     <span data-ng-repeat="position in player.positions[rosterId]">
                                         {{position.name}}
                                     </span>

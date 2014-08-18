@@ -71,7 +71,7 @@
                                     <td><input size="3" data-ng-model="athlete.jerseyNumbers[rosterId]" required></td>
                                 </tr>
                             </table>
-                            <div class="col-md-12 position-list">
+                            <div data-ng-if="keys(positions).length > 0" class="col-md-12 position-list">
                                 <strong>*Position</strong>
                                 <div class="row">
                                     <div class="col-md-12">

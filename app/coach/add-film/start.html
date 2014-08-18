@@ -58,7 +58,7 @@
 
                 </div>
 
-                <breakdown-text data-remaining-breakdowns="remainingBreakdowns" data-plan-name="activePlan.name"></breakdown-text>
+                <breakdown-text data-ng-if="league.positionSetId" data-remaining-breakdowns="remainingBreakdowns" data-plan-name="activePlan.name"></breakdown-text>
 
                 <h3>Need Help?</h3>
 
@@ -122,7 +122,7 @@
 
             </div>
 
-            <div class="select-sidebar">
+            <div data-ng-if="league.positionSetId" class="select-sidebar">
 
                 <div class="bar-plan">
 
