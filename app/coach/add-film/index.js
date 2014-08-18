@@ -88,10 +88,11 @@ AddFilm.controller('AddFilmController', [
 ]);
 
 AddFilm.controller('StartController', [
-    '$scope', 'GAME_TYPES', 'Coach.Data', 'SessionService',
-    function($scope, GAME_TYPES, data, session) {
+    '$scope', 'GAME_TYPES', 'Coach.Data', 'SessionService', 'LeaguesFactory',
+    function($scope, GAME_TYPES, data, session, leagues) {
         $scope.GAME_TYPES = GAME_TYPES;
 
+        $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];
         $scope.activePlan = data.coachsTeam.getActivePlan() || {};
         $scope.activePackage = data.coachsTeam.getActivePackage() || {};
 
