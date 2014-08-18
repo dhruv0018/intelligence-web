@@ -14,6 +14,8 @@ IntelligenceWebClient.service('EventManager', [
     '$injector',
     function service($injector) {
 
+        var playManager;
+
         var model = {
 
             variableValues: {},
@@ -146,7 +148,7 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.create = function(tagId, time) {
 
-            var playManager = playManager || $injector.get('PlayManager');
+            playManager = playManager || $injector.get('PlayManager');
 
             /* Reset the current event. */
             this.reset();
@@ -166,7 +168,7 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.delete = function(event) {
 
-            var playManager = playManager || $injector.get('PlayManager');
+            playManager = playManager || $injector.get('PlayManager');
 
             event = event || this.current;
 

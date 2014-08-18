@@ -60,7 +60,7 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.create = function() {
 
-            var playsManager = playsManager || $injector.get('PlaysManager');
+            playsManager = playsManager || $injector.get('PlaysManager');
 
             this.reset();
             playsManager.addPlay(this.current);
@@ -72,7 +72,7 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.addEvent = function(event) {
 
-            var playsManager = playsManager || $injector.get('PlaysManager');
+            playsManager = playsManager || $injector.get('PlaysManager');
 
             /* If there is no current play. */
             if (!this.current) {
@@ -188,7 +188,7 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.remove = function(play) {
 
-            var playsManager = playsManager || $injector.get('PlaysManager');
+            playsManager = playsManager || $injector.get('PlaysManager');
 
             play = play || this.current;
 
@@ -208,7 +208,7 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.save = function(play) {
 
-            var playsManager = playsManager || $injector.get('PlaysManager');
+            playsManager = playsManager || $injector.get('PlaysManager');
 
             play = play || this.current;
 

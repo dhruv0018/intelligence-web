@@ -20,8 +20,6 @@ Indexing.controller('Indexing.Main.Controller', [
     'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance',
     function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, videoplayerInstance) {
 
-        var self = this;
-
         var gameId = Number($stateParams.id);
 
         /* Scope */
@@ -41,24 +39,11 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.game.teamIndexedScore = 0;
         $scope.game.opposingIndexedScore = 0;
 
-        var videoplayer;
-        videoplayerInstance.then(function(vp) {
-            vp.videoElement.one('canplay', function() {
-                videoplayer = vp;
-                indexing.isReady = true;
-            });
-        });
-
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoTitle = 'indexing';
 
-        indexing.reset($scope.game);
-        playsManager.reset(data.plays);
-        tags.reset($scope.tagset);
-        event.reset($scope.tagset);
-        play.reset($scope.tagset, gameId);
-        play.clear();
+        indexing.reset($scope.tagset, $scope.game, data.plays);
 
         /* Bind keys. */
 
@@ -134,12 +119,12 @@ Indexing.controller('Indexing.Main.Controller', [
 
                 if (indexing.isIndexing) {
 
-                    if (self.savable()) self.save();
-                    else if (self.nextable()) self.next();
-                    else self.step();
+                    if (indexing.savable()) indexing.save();
+                    else if (indexing.nextable()) indexing.next();
+                    else indexing.step();
                 }
 
-                else if (indexing.isReady) self.index();
+                else if (indexing.isReady) indexing.index();
             });
 
             return false;
@@ -149,7 +134,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
             $scope.$apply(function() {
 
-                if (indexing.isIndexing) self.step();
+                if (indexing.isIndexing) indexing.step();
             });
 
             return false;
@@ -159,7 +144,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
             $scope.$apply(function() {
 
-                if (indexing.isIndexing) self.back();
+                if (indexing.isIndexing) indexing.back();
             });
 
             return false;
@@ -168,201 +153,6 @@ Indexing.controller('Indexing.Main.Controller', [
 
         /* Controller methods */
 
-
-        /**
-         * Indexes an event.
-         */
-        this.index = function() {
-
-            indexing.isIndexing = true;
-            indexing.showTags = true;
-            indexing.showScript = false;
-            indexing.eventSelected = false;
-            videoplayer.pause();
-        };
-
-        /**
-         * Selects a tag.
-         * @param {Number} tagId - the ID of the tag selected.
-         */
-        this.selectTag = function(tagId) {
-
-            /* Get current time from the video. */
-            var time = getCurrentTime();
-
-            /* Create new event. */
-            event.create(tagId, time);
-
-            indexing.showTags = false;
-            indexing.showScript = true;
-        };
-
-        /**
-         * Steps the current variable.
-         */
-        this.step = function() {
-
-            /* Move to the next event variable. */
-            event.current.activeEventVariableIndex++;
-
-            /* If the variable is filled in with an optional value. */
-            if (event.activeEventVariableValue() === null) {
-
-                /* Clear the variable value. */
-                event.clearActiveEventVariableValue();
-            }
-        };
-
-        /**
-         * Determines if the current indexing session is savable.
-         * @returns {Boolean} true if the session is savable; false otherwise.
-         */
-        this.savable = function() {
-
-            return this.nextable() && event.isEndEvent();
-        };
-
-        /**
-         * Saves the current play.
-         */
-        this.save = function() {
-
-            indexing.showTags = false;
-            indexing.showScript = false;
-            indexing.isIndexing = false;
-            indexing.eventSelected = false;
-
-            /* Snap video back to time of current event. */
-            videoplayer.seekTime(event.current.time);
-            videoplayer.play();
-
-            play.save(play.current);
-            play.clear();
-            tags.reset();
-            event.reset();
-        };
-
-        /**
-         * Determines if the current indexing session can be advanced.
-         * @returns {Boolean} true if the session can be advanced; false otherwise.
-         */
-        this.nextable = function() {
-
-            /* If not indexing or the tags are showing. */
-            if (!indexing.isIndexing || indexing.showTags) return false;
-
-            /* If there are variables in the current event. */
-            else if (event.hasVariables()) {
-
-                /* Make sure all of the variables have values. */
-                return event.allEventVariablesHaveValues();
-            }
-
-            else return true;
-        };
-
-        /**
-         * Advances to next set of tags.
-         */
-        this.next = function() {
-
-            indexing.showTags = false;
-            indexing.showScript = false;
-            indexing.isIndexing = false;
-            indexing.eventSelected = false;
-
-            /* Get the tagId of the current event. */
-            var tagId = event.current.tagId;
-
-            /* Get the next set of tags based on the tag in the current event. */
-            tags.current = $scope.tagset.getNextTags(tagId);
-
-            /* Snap video back to time of current event. */
-            videoplayer.seekTime(event.current.time);
-            videoplayer.play();
-        };
-
-        /**
-         * Moves backwards through previously indexed events and plays.
-         */
-        this.back = function() {
-
-            /* If editing an event. */
-            if (indexing.eventSelected) {
-
-                indexing.eventSelected = false;
-                indexing.showTags = true;
-                indexing.showScript = false;
-                indexing.isIndexing = true;
-                videoplayer.play();
-            }
-
-            /* If the tags are showing. */
-            else if (indexing.showTags) {
-
-                /* Drop back into not indexing state. */
-                indexing.showTags = false;
-                indexing.showScript = false;
-                indexing.isIndexing = false;
-                videoplayer.play();
-            }
-
-            /* If the event doesn't have variables of If the first variable is empty. */
-            else if (!event.hasVariables() ||
-                     (event.current.activeEventVariableIndex === 1 &&
-                     !event.activeEventVariableValue())) {
-
-                /* Remove the event from the play. */
-                play.removeEvent(event.current);
-
-                /* Drop back to tagging state. */
-                indexing.showTags = true;
-                indexing.showScript = false;
-            }
-
-            /* If the active variable is empty. */
-            else if (!event.activeEventVariableValue()) {
-
-                /* While the active variable is empty. */
-                while (event.current.activeEventVariableIndex > 1 &&
-                      !event.activeEventVariableValue()) {
-
-                    /* Move back one variable. */
-                    event.current.activeEventVariableIndex--;
-                }
-
-                /* Clear the value of the first variable is not empty. */
-                event.clearActiveEventVariableValue();
-            }
-
-            /* If the active variable has a value. */
-            else if (event.activeEventVariableValue()) {
-
-                /* Clear the active variables value. */
-                event.clearActiveEventVariableValue();
-            }
-        };
-
-        /**
-         * Deletes an event.
-         * @param {Object} selectedEvent - the event to delete.
-         */
-        this.deleteEvent = function(selectedEvent) {
-
-            indexing.showTags = true;
-            indexing.showScript = false;
-            indexing.eventSelected = false;
-            indexing.isIndexing = false;
-
-            /* Delete the selected event. */
-            event.delete(selectedEvent);
-
-            /* Save play. */
-            play.save();
-
-            /* Clear the current play. */
-            play.clear();
-        };
 
 
         /* Listeners for video player events */
