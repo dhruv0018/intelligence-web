@@ -17,8 +17,8 @@ IntelligenceWebClient.service('TeamsStorage', [
 ]);
 
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope','ROLES', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory',
-    function($rootScope, ROLES, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users) {
+    '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory',
+    function($rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users) {
 
         var TeamsFactory = {
 
@@ -27,7 +27,34 @@ IntelligenceWebClient.factory('TeamsFactory', [
             storage: TeamsStorage,
 
             resource: TeamsResource,
+            extend: function(team) {
+                var self = this;
 
+                /* If the user has roles. */
+                if (team.roles) {
+
+                    /* For each role. */
+                    team.roles.forEach(function(role) {
+                        /* Default the tenureEnd to null. */
+                        role.tenureEnd = role.tenureEnd || null;
+
+                        //TODO hotfixed, to be properly fixed later
+                        if (!role.type.id) {
+                            role.type = {
+                                id: role.type
+                            };
+                        }
+
+                        if (!role.type.name) {
+                            role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
+                        }
+                    });
+                }
+
+                angular.extend(team, self);
+
+                return team;
+            },
             removeRole: function(role) {
 
                 /* Remove role from team. */

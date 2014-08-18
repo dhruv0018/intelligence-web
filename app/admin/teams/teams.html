@@ -19,7 +19,7 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="sport" data-ng-model="filter.sport" data-ng-options="sport.id as sport.name for sport in sports">
+                <select class="form-control" name="sport" data-ng-model="filter.sportId" data-ng-options="sport.id as sport.name for sport in sports">
                     <option value="">Pick a Sport</option>
                 </select>
 
@@ -69,7 +69,7 @@
                         <td><a data-ui-sref="team-info({ id: team.id })">{{team.name}}</a></td>
                         <td>{{indexedSports[indexedLeagues[team.leagueId]['sportId']]['name']}}</td>
                         <td>{{indexedLeagues[team.leagueId]['name']}}</td>
-                        <td>{{indexedSchools[team.schoolId]['name']}}</td>
+                        <td>{{schools[team.schoolId].name}}</td>
 
                     </tr>
 

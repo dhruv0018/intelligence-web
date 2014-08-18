@@ -70,7 +70,7 @@ Coach.service('Coach.Data.Dependencies', [
             var userTeamId = session.currentUser.currentRole.teamId;
             var userTeam = teams.get(userTeamId);
             return players.query({
-                roster: userTeam.roster.id
+                rosterId: userTeam.roster.id
             });
         });
 

@@ -107,8 +107,8 @@ Indexing.config([
                                     game: game,
                                     plays: plays.query({ gameId: gameId }),
                                     players: players,
-                                    teamPlayers: players.query({ roster: teamRoster.id }),
-                                    opposingTeamPlayers: players.query({ roster: opposingTeamRoster.id })
+                                    teamPlayers: players.query({ rosterId: teamRoster.id }),
+                                    opposingTeamPlayers: players.query({ rosterId: opposingTeamRoster.id })
                                 };
 
                                 return $q.all(angular.extend(data, gameData));

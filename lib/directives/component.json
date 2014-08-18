@@ -41,6 +41,7 @@
         "open-modal-confirm",
         "open-modal-alert",
         "dynamic-table",
+        "team-typeahead",
         "user-typeahead",
         "videogular",
         "breakdown-text"

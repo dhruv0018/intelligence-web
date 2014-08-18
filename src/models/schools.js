@@ -16,7 +16,6 @@ IntelligenceWebClient.factory('SchoolsResource', [
                 id: '@id'
 
             }, {
-
                 create: { method: 'POST' },
                 update: { method: 'PUT' }
             }
