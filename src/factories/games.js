@@ -468,10 +468,11 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!assignment) return remaining;
 
-                var deadline = moment.utc(assignment.deadline).toDate();
-                var timeRemaining = deadline - new Date();
+                var now = moment.utc();
+                var deadline = moment.utc(assignment.deadline);
+                var timeRemaining = moment.duration(deadline.subtract(now));
 
-                return timeRemaining;
+                return timeRemaining.asMilliseconds();
             },
 
             setAsideFromIndexing: function() {
