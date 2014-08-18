@@ -1,0 +1,13 @@
+{
+    "name": "team-typeahead",
+    "templates": [
+        "template.html",
+        "team-typeahead-dropdown.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
