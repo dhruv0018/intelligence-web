@@ -72,14 +72,14 @@ GameArea.config([
 
                             //Player lists
                             var teamPlayerList = players.query({
-                                roster: data.game.rosters[data.game.teamId].id
+                                rosterId: data.game.rosters[data.game.teamId].id
                             }).then(function(playerList) {
                                 data.teamPlayers = playerList;
                                 data.gamePlayerLists[data.game.teamId] = playerList;
                             });
 
                             var opposingTeamPlayerList = players.query({
-                                roster: data.game.rosters[data.game.opposingTeamId].id
+                                rosterId: data.game.rosters[data.game.opposingTeamId].id
                             }).then(function(playerList) {
                                 data.opposingTeamPlayers = playerList;
                                 data.gamePlayerLists[data.game.opposingTeamId] = playerList;
