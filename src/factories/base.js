@@ -199,7 +199,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 filter = filter || {};
                 filter.start = filter.start || 0;
-                filter.count = filter.count || PAGE_SIZE;
+                filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
                 success = success || function(resources) {
 
@@ -245,7 +245,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 filter = filter || {};
                 filter.start = filter.start || 0;
-                filter.count = filter.count || PAGE_SIZE;
+                filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
                 success = success || function(resources) {
 
