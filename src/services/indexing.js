@@ -153,7 +153,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 var tagId = eventManager.current.tagId;
 
                 /* Get the next set of tags based on the tag in the current event. */
-                tags.current = $scope.tagset.getNextTags(tagId);
+                tagsManager.nextTags(tagId);
 
                 /* Snap video back to time of current event. */
                 videoplayer.seekTime(eventManager.current.time);
