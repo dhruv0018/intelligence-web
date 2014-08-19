@@ -1,6 +1,8 @@
 /* Fetch angular from the browser scope */
-
 var angular = window.angular;
+
+/* Fetch Mousetrap from the browser scope */
+var Mousetrap = window.Mousetrap;
 
 /**
  * Indexing page module.
@@ -159,52 +161,95 @@ Indexing.config([
                             indexing.IS_INDEXING_STATE = true;
                         }
 
+                        var globalCallbacks = {
+                            'space': true,
+                            'left': true,
+                            'right': true,
+                            'enter': true,
+                            'tab': true,
+                            'esc': true
+                        };
+
+                        var originalStopCallback = Mousetrap.stopCallback;
+
+                        Mousetrap.stopCallback = function(event, element, combo, sequence) {
+
+                            $timeout(function() {
+
+                                if (indexing.isIndexing) {
+
+                                    if (globalCallbacks[combo] || globalCallbacks[sequence]) {
+                                        return false;
+                                    }
+                                }
+
+                                return originalStopCallback(event, element, combo);
+
+                            }, 0);
+                        };
 
                         Mousetrap.bind('space', function() {
 
-                            indexing.playPause();
+                            $timeout(function() {
+
+                                indexing.playPause();
+
+                            }, 0);
 
                             return false;
                         });
 
                         Mousetrap.bind('left', function() {
 
-                            indexing.jumpBack();
+                            $timeout(function() {
+
+                                indexing.jumpBack();
+
+                            }, 0);
 
                             return false;
                         });
 
                         Mousetrap.bind('right', function() {
 
-                            indexing.jumpForward();
+                            $timeout(function() {
+
+                                indexing.jumpForward();
+
+                            }, 0);
 
                             return false;
                         });
 
                         Mousetrap.bind('enter', function() {
 
-                            if (indexing.isIndexing) {
+                            $timeout(function() {
 
-                                if (indexing.savable()) indexing.save();
-                                else if (indexing.nextable()) indexing.next();
-                                else indexing.step();
-                            }
+                                indexing.index();
 
-                            else if (indexing.isReady) indexing.index();
+                            }, 0);
 
                             return false;
                         });
 
                         Mousetrap.bind('tab', function() {
 
-                            indexing.step();
+                            $timeout(function() {
+
+                                indexing.step();
+
+                            }, 0);
 
                             return false;
                         });
 
                         Mousetrap.bind('esc', function() {
 
-                            indexing.back();
+                            $timeout(function() {
+
+                                indexing.back();
+
+                            }, 0);
 
                             return false;
                         });

@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayerInstance',
-    function(tagsManager, playsManager, playManager, eventManager, Videoplayer) {
+    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayerInstance',
+    function(config, tagsManager, playsManager, playManager, eventManager, Videoplayer) {
 
         var videoplayer;
 
@@ -40,11 +40,21 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             index: function() {
 
-                this.isIndexing = true;
-                this.showTags = true;
-                this.showScript = false;
-                this.eventSelected = false;
-                videoplayer.pause();
+                if (this.isIndexing) {
+
+                    if (this.savable()) this.save();
+                    else if (this.nextable()) this.next();
+                    else this.step();
+                }
+
+                else if (this.isReady) {
+
+                    this.isIndexing = true;
+                    this.showTags = true;
+                    this.showScript = false;
+                    this.eventSelected = false;
+                    videoplayer.pause();
+                }
             },
 
             /**
@@ -236,7 +246,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
             playPause: function() {
 
-                if (indexing.isReady) {
+                if (this.isReady) {
 
                     videoplayer.playPause();
                 }
@@ -244,7 +254,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
             jumpBack: function() {
 
-                if (indexing.isReady) {
+                if (this.isReady) {
 
                     var currentTime = videoplayer.getCurrentTime();
                     var time = currentTime - config.indexing.video.jump;
@@ -254,7 +264,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
             jumpForward: function() {
 
-                if (indexing.isReady) {
+                if (this.isReady) {
 
                     var currentTime = videoplayer.getCurrentTime();
                     var time = currentTime + config.indexing.video.jump;
