@@ -26,7 +26,7 @@
                 <li><button class="btn-filter" ng-model="filters['all']" btn-checkbox>All</button></li>
 
                 <form class="film-search">
-                    <input type="text" class="film-search-input" data-ng-change="search(query)" data-ng-model="query" placeholder="Search for film"/>
+                    <input type="text" class="film-search-input" data-ng-model="query" placeholder="Search for film"/>
                 </form>
 
             </ul>
@@ -35,7 +35,7 @@
         <no-results ng-if="gamesList.length === 0"></no-results>
         <!-- NG-REPEAT FILM DIRECTIVES -->
         <div ng-if="gamesList.length > 0" class="films-area">
-            <krossover-film data-ng-repeat="game in gamesList | filter: {isDeleted: false}| gameFilter: filters | orderBy: '-datePlayed'" data-game="game" data-teams="teams"></krossover-film>
+            <krossover-film data-ng-repeat="game in gamesList | nameOfTheGame: query | filter: {isDeleted: false}| gameFilter: filters | orderBy: '-datePlayed'" data-game="game" data-teams="teams"></krossover-film>
         </div>
     </main>
 

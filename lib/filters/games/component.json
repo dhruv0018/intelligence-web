@@ -1,0 +1,6 @@
+{
+    "name": "games",
+    "scripts": [
+        "index.js"
+    ]
+}
