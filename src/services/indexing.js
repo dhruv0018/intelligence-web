@@ -68,6 +68,8 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             step: function() {
 
+                if (!this.isIndexing) return;
+
                 /* Move to the next event variable. */
                 eventManager.current.activeEventVariableIndex++;
 
@@ -153,6 +155,8 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             back: function() {
 
+                if (!this.isIndexing) return;
+
                 /* If editing an event. */
                 if (this.eventSelected) {
 
@@ -228,6 +232,34 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* Clear the current play. */
                 playManager.clear();
+            },
+
+            playPause: function() {
+
+                if (indexing.isReady) {
+
+                    videoplayer.playPause();
+                }
+            },
+
+            jumpBack: function() {
+
+                if (indexing.isReady) {
+
+                    var currentTime = videoplayer.getCurrentTime();
+                    var time = currentTime - config.indexing.video.jump;
+                    videoplayer.seekTime(time);
+                }
+            },
+
+            jumpForward: function() {
+
+                if (indexing.isReady) {
+
+                    var currentTime = videoplayer.getCurrentTime();
+                    var time = currentTime + config.indexing.video.jump;
+                    videoplayer.seekTime(time);
+                }
             }
         };
 

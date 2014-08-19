@@ -119,10 +119,9 @@ Indexing.config([
                 },
 
                 onEnter: [
-                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService',
-                    function($state, $timeout, $stateParams, session, modals, data, indexingService) {
+                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'VideoPlayerInstance',
+                    function($state, $timeout, $stateParams, session, modals, data, indexing, Videoplayer) {
 
-                        indexingService.IS_INDEXING_STATE = true;
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
                         var game = data.games.get(gameId);
@@ -156,7 +155,59 @@ Indexing.config([
                             };
 
                             $timeout(timeExpired, timeRemaining);
+
+                            indexing.IS_INDEXING_STATE = true;
                         }
+
+
+                        Mousetrap.bind('space', function() {
+
+                            indexing.playPause();
+
+                            return false;
+                        });
+
+                        Mousetrap.bind('left', function() {
+
+                            indexing.jumpBack();
+
+                            return false;
+                        });
+
+                        Mousetrap.bind('right', function() {
+
+                            indexing.jumpForward();
+
+                            return false;
+                        });
+
+                        Mousetrap.bind('enter', function() {
+
+                            if (indexing.isIndexing) {
+
+                                if (indexing.savable()) indexing.save();
+                                else if (indexing.nextable()) indexing.next();
+                                else indexing.step();
+                            }
+
+                            else if (indexing.isReady) indexing.index();
+
+                            return false;
+                        });
+
+                        Mousetrap.bind('tab', function() {
+
+                            indexing.step();
+
+                            return false;
+                        });
+
+                        Mousetrap.bind('esc', function() {
+
+                            indexing.back();
+
+                            return false;
+                        });
                     }
                 ],
 
