@@ -17,6 +17,9 @@
         "signup": {
             "uri": "http://krossover.com/sign-up.php"
         },
+        "support": {
+            "uri": "http://support.krossover.com"
+        },
         "rosterTemplates": {
             "opposingTeamRoster": {
                 "uri": "https://drive.google.com/file/d/0Bwb8n8gzhXzLbXJMcWFhNGlmZUk/edit?usp=sharing"
