@@ -19,8 +19,6 @@ Indexing.controller('Indexing.Main.Controller', [
 
         var gameId = Number($stateParams.id);
 
-        /* Scope */
-        $scope.data = data;
         $scope.tags = tags;
         $scope.play = play;
         $scope.plays = playsManager.plays;
@@ -30,6 +28,8 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.game = data.games.get(gameId);
         $scope.team = data.teams.get($scope.game.teamId);
         $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
+        $scope.teamPlayers = data.teamPlayers;
+        $scope.opposingTeamPlayers = data.opposingTeamPlayers;
         $scope.league = data.leagues.get($scope.team.leagueId);
         $scope.tagset = data.tagsets.get($scope.league.tagSetId);
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
