@@ -44,7 +44,8 @@
         "team-typeahead",
         "user-typeahead",
         "videogular",
-        "breakdown-text"
+        "breakdown-text",
+        "player-information"
     ],
     "scripts": [
         "index.js"
