@@ -1,6 +1,8 @@
 /* Fetch angular from the browser scope */
-
 var angular = window.angular;
+
+/* Fetch Mousetrap from the browser scope */
+var Mousetrap = window.Mousetrap;
 
 /**
  * Indexing page module.
@@ -117,38 +119,158 @@ Indexing.config([
                         }
                     ]
                 },
-                onEnter: [
-                    '$state', '$stateParams', 'SessionService', 'Indexing.Data', 'IndexingService',
-                    function($state, $stateParams, session, data, indexingService) {
 
-                        indexingService.IS_INDEXING_STATE = true;
+                onEnter: [
+                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'VideoPlayerInstance',
+                    function($state, $timeout, $stateParams, session, modals, data, indexing, Videoplayer) {
+
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
                         var game = data.games.get(gameId);
-                        var status = game.getStatus();
-                        var indexable = game.isAssignedToIndexer() && game.canBeIndexed();
-                        var qaAble = game.isAssignedToQa() && game.canBeQAed();
 
-                        if (game.isAssignedToUser(userId) && (indexable || qaAble) && !game.isDeleted) {
+                        if (!game.isAssignedToUser(userId)) {
+
+                            $state.go('indexer-games');
+                        }
+
+                        else if (game.canBeIndexed() || game.canBeQAed()) {
 
                             if (!game.isAssignmentStarted()) {
 
                                 game.startAssignment(userId);
                                 game.save();
                             }
+
+                            var timeRemaining = game.assignmentTimeRemaining();
+
+                            var timeExpired = function() {
+
+                                var timeExpiredModal = modals.openForAlert({
+                                    title: 'Alert',
+                                    bodyText: 'The deadline to index this game has passed.'
+                                });
+
+                                timeExpiredModal.result.finally(function() {
+
+                                    $state.go('indexer-game', { id: game.id });
+                                });
+                            };
+
+                            $timeout(timeExpired, timeRemaining);
+
+                            indexing.IS_INDEXING_STATE = true;
                         }
 
-                        else $state.go('401');
+                        var globalCallbacks = {
+                            'space': true,
+                            'left': true,
+                            'right': true,
+                            'enter': true,
+                            'tab': true,
+                            'esc': true
+                        };
+
+                        var originalStopCallback = Mousetrap.stopCallback;
+
+                        Mousetrap.stopCallback = function(event, element, combo, sequence) {
+
+                            $timeout(function() {
+
+                                if (indexing.isIndexing) {
+
+                                    if (globalCallbacks[combo] || globalCallbacks[sequence]) {
+                                        return false;
+                                    }
+                                }
+
+                                return originalStopCallback(event, element, combo);
+
+                            }, 0);
+                        };
+
+                        Mousetrap.bind('space', function() {
+
+                            $timeout(function() {
+
+                                indexing.playPause();
+
+                            }, 0);
+
+                            return false;
+                        });
+
+                        Mousetrap.bind('left', function() {
+
+                            $timeout(function() {
+
+                                indexing.jumpBack();
+
+                            }, 0);
+
+                            return false;
+                        });
+
+                        Mousetrap.bind('right', function() {
+
+                            $timeout(function() {
+
+                                indexing.jumpForward();
+
+                            }, 0);
+
+                            return false;
+                        });
+
+                        Mousetrap.bind('enter', function() {
+
+                            $timeout(function() {
+
+                                indexing.index();
+
+                            }, 0);
+
+                            return false;
+                        });
+
+                        Mousetrap.bind('tab', function() {
+
+                            $timeout(function() {
+
+                                indexing.step();
+
+                            }, 0);
+
+                            return false;
+                        });
+
+                        Mousetrap.bind('esc', function() {
+
+                            $timeout(function() {
+
+                                indexing.back();
+
+                            }, 0);
+
+                            return false;
+                        });
                     }
                 ],
+
                 onExit: [
-                    function() {
+                    '$stateParams', 'GamesFactory', 'PlaysManager',
+                    function($stateParams, games, playsManager) {
+
+                        var gameId = $stateParams.id;
+                        var game = games.get(gameId);
 
                         Mousetrap.unbind('space');
                         Mousetrap.unbind('left');
                         Mousetrap.unbind('right');
                         Mousetrap.unbind('enter');
                         Mousetrap.unbind('esc');
+
+                        game.save();
+                        playsManager.save();
                     }
                 ]
             });

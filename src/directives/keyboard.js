@@ -4,6 +4,8 @@ var ATTRIBUTES = 'A';
 
 var package = require('../../package.json');
 
+var Mousetrap = window.Mousetrap;
+
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
