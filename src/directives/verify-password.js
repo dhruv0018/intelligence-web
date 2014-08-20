@@ -30,9 +30,16 @@ IntelligenceWebClient.directive('krossoverVerifyPassword', [
                 if (password && password.length >= 4) {
 
                     /* Request authentication from the server. */
-                    auth.validatePassword(null, password, function(error) {
+                    auth.validatePassword(null, password)
 
-                        controller.$setValidity('password', !error);
+                    .then(function() {
+
+                        controller.$setValidity('password', true);
+                    })
+
+                    .catch(function() {
+
+                        controller.$setValidity('password', false);
                     });
                 }
             });
