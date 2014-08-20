@@ -1,0 +1,11 @@
+{
+    "name": "athlete",
+    "paths": [
+        "."
+    ],
+    "local": [
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

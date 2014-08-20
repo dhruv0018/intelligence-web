@@ -350,6 +350,16 @@
     "ga-down-distance": {
         "Head Coach": true,
         "Assistant Coach": true
+    },
+
+    "Athlete": {
+
+        "Athlete": true
+    },
+
+    "Athlete.FilmHome": {
+
+        "Athlete": true
     }
 }
 
