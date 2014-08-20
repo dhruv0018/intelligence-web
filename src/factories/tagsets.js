@@ -57,7 +57,21 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 return tagset;
             },
 
+            getStartTags: function() {
 
+                var tags = this.tags;
+
+                return Object.keys(tags)
+
+                .map(function(key) {
+
+                    return tags[key];
+                })
+
+                .filter(function(tag) {
+
+                    return tag.isStart;
+                });
             },
 
             getNextTags: function(tagId) {
@@ -82,14 +96,6 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 var tag = this.tags[tagId];
 
                 return tag.isEnd;
-            },
-
-            getStartTags: function() {
-
-                return this.tags.filter(function(tag) {
-
-                    return tag.isStart;
-                });
             }
         };
 
