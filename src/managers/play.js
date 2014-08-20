@@ -21,12 +21,8 @@ IntelligenceWebClient.service('PlayManager', [
             events: []
         };
 
-        this.tags = null;
-
         this.tagset = null;
-
         this.gameId = null;
-
         this.current = null;
         this.playState = null; //current play playing/paused in video?. probably a better place for this, but this is convenient
 
@@ -46,12 +42,8 @@ IntelligenceWebClient.service('PlayManager', [
 
             this.tagset = tagset || this.tagset;
 
-            this.tags = this.tagset.getIndexedTags();
-
             this.gameId = gameId || this.gameId;
-
             this.current = angular.copy(model);
-
             this.current.gameId = this.gameId;
         };
 
@@ -102,7 +94,7 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* Lookup tag buffer. */
             var tagId = event.tagId;
-            var tag = this.tags[tagId];
+            var tag = this.tagset.tags[tagId];
             var buffer = tag.buffer;
 
             /* Adjust the play times by the tag buffer. */
@@ -146,7 +138,7 @@ IntelligenceWebClient.service('PlayManager', [
 
                 /* Lookup tag buffer. */
                 var tagId = event.tagId;
-                var tag = this.tags[tagId];
+                var tag = this.tagset.tags[tagId];
                 var buffer = tag.buffer;
 
                 /* If the event was the first event in the play. */

@@ -23,7 +23,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 angular.extend(tagset, self);
 
-                tagset.indexedTags = {};
+
+                var indexedTags = {};
 
                 tagset.tags.forEach(function(tag) {
 
@@ -48,8 +49,10 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                         tag.tagVariables = indexedVariables;
                     }
 
-                    tagset.indexedTags[tag.id] = tag;
+                    indexedTags[tag.id] = tag;
                 });
+
+                tagset.tags = indexedTags;
 
                 return tagset;
             },

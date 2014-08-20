@@ -22,8 +22,6 @@ IntelligenceWebClient.service('EventManager', [
             activeEventVariableIndex: 1
         };
 
-        this.tags = null;
-
         this.tagset = null;
 
         this.current = angular.copy(model);
@@ -55,7 +53,7 @@ IntelligenceWebClient.service('EventManager', [
             if (!this.current || !this.current.tagId) return false;
 
             var tagId = this.current.tagId;
-            var tag = this.tags[tagId];
+            var tag = this.tagset.tags[tagId];
 
             /* Check if the tag has tag variables. */
             return !!Object.keys(tag.tagVariables).length;
@@ -73,7 +71,7 @@ IntelligenceWebClient.service('EventManager', [
 
             var index = this.current.activeEventVariableIndex;
             var tagId = this.current.tagId;
-            var tag = this.tags[tagId];
+            var tag = this.tagset.tags[tagId];
             var tagVariables = tag.tagVariables;
             var tagVariable = tagVariables[index];
 
@@ -89,7 +87,7 @@ IntelligenceWebClient.service('EventManager', [
 
             var index = this.current.activeEventVariableIndex;
             var tagId = this.current.tagId;
-            var tag = this.tags[tagId];
+            var tag = this.tagset.tags[tagId];
             var tagVariables = tag.tagVariables;
             var tagVariable = tagVariables[index];
 
@@ -106,7 +104,7 @@ IntelligenceWebClient.service('EventManager', [
             var self = this;
 
             var tagId = this.current.tagId;
-            var tag = this.tags[tagId];
+            var tag = this.tagset.tags[tagId];
             var tagVariables = tag.tagVariables;
             var variableValues = self.current.variableValues;
 
@@ -133,8 +131,6 @@ IntelligenceWebClient.service('EventManager', [
         this.reset = function(tagset) {
 
             this.tagset = tagset || this.tagset;
-
-            if (this.tagset && this.tagset.getIndexedTags) this.tags = this.tagset.getIndexedTags();
 
             this.current = angular.copy(model);
             this.highlighted = null;
