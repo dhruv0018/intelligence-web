@@ -8,8 +8,7 @@
 
         <div class="modal-body">
 
-
-            <form class="form-change-password" name="changePasswordForm" role="form" data-ng-submit="submitPasswordChange(changePassword)" novalidate>
+            <form class="form-change-password" name="changePasswordForm" role="form" novalidate>
 
                 <div class="errors">
                     <span class="error" data-ng-show="changePasswordForm.newPassword.$error.minlength || changePasswordForm.newPasswordVerify.$error.minlength">Passwords must be at least four characters.</span>
@@ -43,8 +42,8 @@
 
                 <div class="buttons">
 
-                    <button class="btn btn-lg btn-primary pull-right" type="submit">Submit</button>
                     <button class="btn btn-lg btn-default pull-left" data-ng-click="$dismiss()">Cancel</button>
+                    <button class="btn btn-lg btn-primary pull-right" type="submit" data-ng-click="submitPasswordChange(changePassword)">Submit</button>
 
                 </div>
 
