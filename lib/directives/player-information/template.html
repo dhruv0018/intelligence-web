@@ -7,4 +7,18 @@
         </div>
         <p>{{user.firstName}} {{user.lastName}}</p>
     </div>
+    <table class="player-information" data-ng-repeat="playerInformation in playerInformationSet">
+        <tr>
+            <td class="sport"> Sport </td>
+            <td class="positions">
+                <div>{{playerInformation.team.name}}</div>
+                <div>
+                    <span data-ng-repeat="position in playerInformation.positions">{{position.name}}</span>
+                </div>
+            </td>
+            <td class="jersey-number">
+                {{playerInformation.jerseyNumber}}
+            </td>
+        </tr>
+    </table>
 </div>
