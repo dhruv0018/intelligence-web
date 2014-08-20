@@ -3,8 +3,7 @@
     "templates": [
         "template.html",
         "contact-info.html",
-        "roles-list.html",
-        "change-password.html"
+        "roles-list.html"
     ],
     "scripts": [
         "index.js"

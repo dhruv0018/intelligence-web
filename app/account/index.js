@@ -19,7 +19,6 @@ Account.run([
         $templateCache.put('account.html', require('./template.html'));
         $templateCache.put('contact-info.html', require('./contact-info.html'));
         $templateCache.put('roles-list.html', require('./roles-list.html'));
-        $templateCache.put('change-password.html', require('./change-password.html'));
     }
 ]);
 
@@ -67,47 +66,6 @@ Account.config([
                     }
                 }
             });
-    }
-]);
-
-/**
- * Change password controller.
- * @module Account
- * @name ChangePasswordController
- * @type {Controller}
- */
-Account.controller('ChangePasswordController', [
-    '$scope', '$state', '$modalInstance', 'AuthenticationService', 'SessionService',
-    function controller($scope, $state, $modalInstance, auth, session) {
-
-        $scope.submitPasswordChange = function(changePassword) {
-
-            var user = angular.copy(session.currentUser);
-
-            user.password = changePassword.newPassword;
-
-            user.save();
-
-            $modalInstance.close();
-
-            $state.go('contact-info');
-        };
-
-        $scope.cancel = function() {
-
-            $modalInstance.dismiss();
-
-            $state.go('contact-info');
-        };
-
-        $scope.forgot = function() {
-
-            $modalInstance.dismiss();
-
-            auth.logoutUser();
-
-            $state.go('forgot');
-        };
     }
 ]);
 
@@ -163,15 +121,6 @@ Account.controller('AccountController', [
 
             $scope.currentUser.addRole(ROLES.ATHLETE);
             session.storeCurrentUser($scope.currentUser);
-        };
-
-        $scope.callChangePasswordModal = function() {
-
-            $modal.open({
-
-                templateUrl: 'change-password.html',
-                controller: 'ChangePasswordController'
-            });
         };
     }
 ]);
