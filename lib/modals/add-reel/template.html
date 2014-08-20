@@ -1,0 +1,43 @@
+<div class="add-reel">
+
+    <header class="modal-header" data-ng-class="{'success-header': addSuccess}">
+
+        <h3 class="modal-title">
+            <span>Add to the following reel</span>
+
+            <a class="pull-right" ng-click="$dismiss()">
+                <i class="icon icon-remove"></i>
+            </a>
+        </h3>
+
+    </header>
+
+    <div class="modal-body">
+        <button data-ng-show="!hasReels && !isNaming && !addSuccess" data-ng-click="isNaming = true" class="btn btn-create-reel">
+            <i class="icon icon-plus"></i>
+            Create a reel to add this clip to
+        </button>
+
+        <div class="select-reel-container" data-ng-show="hasReels && !isNaming && !addSuccess">
+            <form>
+                <select data-ng-model="reel" data-ng-options="reel as reel.name for reel in reels"></select>
+                <button class="btn btn-primary" data-ng-click="addToReel(reel, play)">Add</button>
+            </form>
+        </div>
+        <button data-ng-show="hasReels && !isNaming && !addSuccess" data-ng-click="isNaming = true" class="btn btn-create-reel">
+            <i class="icon icon-plus"></i>
+            Create a new reel
+        </button>
+        <form data-ng-show="isNaming && !addSuccess">
+            <input type="text" name="newReelName" data-ng-model="newReelName" placeholder="Name for your reel" class="form-control">
+            <button data-ng-click="createReel(newReelName)" class="btn btn-primary">Create reel and add clip</button>
+        </form>
+
+        <div data-ng-show="addSuccess" class="successfully-added">
+            <i class="icon icon-ok"></i>
+            <br/>
+            Clip added to reel successfully.
+        </div>
+    </div>
+
+</div>
