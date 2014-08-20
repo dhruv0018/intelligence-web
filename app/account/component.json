@@ -7,7 +7,9 @@
         "change-password.html"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "contact-info.js",
+        "roles-list.js"
     ],
     "styles": [
         "styles.less"
