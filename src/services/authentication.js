@@ -147,16 +147,8 @@ IntelligenceWebClient.service('AuthenticationService', [
                 if (!email) throw new Error('Missing email');
                 if (!password) throw new Error('Missing password');
 
-                var oauth = $injector.instantiate(['config', OAuth]);
-
                 /* Request authentication from the server. */
-                oauth.requestAuthCode(email, password, function(error) {
-
-                    $rootScope.$apply(function() {
-
-                        callback(error);
-                    });
-                });
+                return tokens.requestAuthCode(email, password);
             }
         };
 
