@@ -3,7 +3,7 @@
         <button open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = user" class="btn btn-default">Edit</button>
         <div class="profile-image">
             <profile-placeholder data-ng-if="!user.imageUrl"></profile-placeholder>
-            <!--<img class="profile-picture" data-ng-if="user.imageUrl" src="user.imageUrl">-->
+            <img alt="profile image" class="profile-picture" data-ng-if="user.imageUrl" data-ng-src="{{user.imageUrl}}">
         </div>
         <p>{{user.firstName}} {{user.lastName}}</p>
     </div>

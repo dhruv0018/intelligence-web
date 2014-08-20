@@ -51,10 +51,9 @@
 
                     <div class="row form-group">
                         <div class="profile-image col-md-3">
-                            <profile-placeholder></profile-placeholder>
-                            <button class="btn btn-default">
-                                Change Image
-                            </button>
+                            <profile-placeholder data-ng-if="!athlete.imageUrl"></profile-placeholder>
+                            <img data-ng-if="athlete.imageUrl" data-ng-src="{{athlete.imageUrl}}" alt="profile image">
+                            <krossover-uploader data-upload-label="Change Image" data-on-upload="setProfileImage(files)"></krossover-uploader>
                         </div>
                         <div class="col-md-8">
                             <table class="col-md-12">
