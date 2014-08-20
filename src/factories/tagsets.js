@@ -57,15 +57,12 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 return tagset;
             },
 
-            getIndexedTags: function() {
 
-                return this.indexedTags;
             },
 
             getNextTags: function(tagId) {
 
-                var tags = this.getIndexedTags();
-                var tag = tags[tagId];
+                var tag = this.tags[tagId];
 
                 if (tag.children.length) {
 
