@@ -1,0 +1,85 @@
+@import (reference) "main.less";
+
+.film-home {
+	
+	.filter-bar {
+
+		width: 100%;
+		border-bottom: 1px solid @gray-border;
+		background-color: #f7f8f8;
+		padding: 20px;
+		line-height: normal;
+
+		ul {
+			border: none;
+		}
+
+		h3 {
+			color: @brand-blue;
+			font-size: 16px;
+			margin-top: 8px;
+			margin-bottom: 8px;
+		}
+
+		.btn-filter {
+			.btn;
+			background-color: @gray-lighter;
+			font-weight: 400;
+			margin-left: 5px;
+			margin-right: 5px;
+			border-radius: 4px;
+			padding-top: 4px;
+			padding-bottom: 4px;
+			font-size: 16px;
+			text-transform: capitalize;
+			&.active,
+            &:active,
+			&:hover {
+				background-color: @brand-primary;
+				color: white;
+			}
+		}
+
+		.film-search {
+			
+
+			.pull-right;
+
+			.film-search-input {
+				.form-control;
+				.pull-left;
+				display: inline;
+				width: 250px;
+				margin-left: 5px;
+				margin-right: 5px;
+			}
+
+			.btn-film-search {
+				.btn-filter;
+				.pull-right;
+				display: inline;
+				padding-top: 6px;
+				padding-bottom: 6px;
+				padding-left: 20px;
+				padding-right: 20px;
+				border: 1px solid rgb(221,221,221);
+			}
+		}
+	}
+
+	.films-area {
+		margin: auto;
+		padding: 30px;
+	}
+
+	.sidebar {
+		text-transform: capitalize;
+		overflow-y: auto;
+
+		.krossover-athlete {
+			padding-left: 10px;
+		}
+	}
+
+}
+
