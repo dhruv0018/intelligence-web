@@ -56,11 +56,11 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', 'GAME_STATUSES', 'GamesFactory', 'TeamsFactory', 'SessionService',
-    function controller($scope, $state, GAME_STATUSES, games, teams, session) {
+    '$scope', '$state', 'GAME_STATUSES', 'PositionsetsFactory', 'GamesFactory', 'TeamsFactory', 'SessionService',
+    function controller($scope, $state, GAME_STATUSES, positionsets, games, teams, session) {
 
         $scope.keys = window.Object.keys;
-        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
+        $scope.positions = ($scope.data.league.positionSetId) ? positionsets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;

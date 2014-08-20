@@ -57,8 +57,8 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
  * @type {controller}
  */
 YourTeam.controller('Coach.Game.YourTeam.controller', [
-    '$scope', '$state', 'PlayersFactory', 'TeamsFactory',
-    function controller($scope, $state, players, teams) {
+    '$scope', '$state', 'PositionsetsFactory', 'PlayersFactory', 'TeamsFactory',
+    function controller($scope, $state, positionsets, players, teams) {
 
         $scope.keys = window.Object.keys;
 
@@ -69,7 +69,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.gameRoster = [];
 
         //Positions
-        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
+        $scope.positions = ($scope.data.league.positionSetId) ? positionsets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
 
         $scope.$watchCollection('data.game', function(game) {
             $scope.buildGameRoster(game);
