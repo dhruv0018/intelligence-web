@@ -1,6 +1,6 @@
 <div class="add-reel">
 
-    <header class="modal-header" data-ng-class="{'successHeader': addSuccess}">
+    <header class="modal-header" data-ng-class="{'success-header': addSuccess}">
 
         <h3 class="modal-title">
             <span>Add to the following reel</span>
@@ -18,7 +18,7 @@
             Create a reel to add this clip to
         </button>
 
-        <div class="selectReelContainer" data-ng-show="hasReels && !isNaming && !addSuccess">
+        <div class="select-reel-container" data-ng-show="hasReels && !isNaming && !addSuccess">
             <form>
                 <select data-ng-model="reel" data-ng-options="reel as reel.name for reel in reels"></select>
                 <button class="btn btn-primary" data-ng-click="addToReel(reel, play)">Add</button>
@@ -33,7 +33,7 @@
             <button data-ng-click="createReel(newReelName)" class="btn btn-primary">Create reel and add clip</button>
         </form>
 
-        <div data-ng-show="addSuccess" class="successfullyAdded">
+        <div data-ng-show="addSuccess" class="successfully-added">
             <i class="icon icon-ok"></i>
             <br/>
             Clip added to reel successfully.
