@@ -79,38 +79,9 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             isEndTag: function(tagId) {
 
-                var tags = this.getIndexedTags();
-                var tag = tags[tagId];
+                var tag = this.tags[tagId];
 
                 return tag.isEnd;
-            },
-
-            getTagsByType: function(type) {
-                results = [];
-                switch (type) {
-                    case 'START':
-                        results = $filter('filter')(this.tags, {isStart: true, isEnd: false});
-                        break;
-                    case 'FLOAT':
-                        tags =  $filter('filter')(this.tags, {isStart: false, isEnd: false});
-                        tags.forEach(function(tag) {
-                            if (!tag.children) {
-                                results.push(tag);
-                            }
-                        });
-                        break;
-                    case 'STANDALONE':
-                        tags =  $filter('filter')(this.tags, {isStart: true, isEnd: true});
-                        tags.forEach(function(tag) {
-                            if (!tag.children) {
-                                results.push(tag);
-                            }
-                        });
-                        break;
-                }
-
-
-                return results;
             },
 
             getStartTags: function() {
