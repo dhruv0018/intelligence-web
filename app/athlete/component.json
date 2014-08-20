@@ -4,6 +4,7 @@
         "."
     ],
     "local": [
+        "film-home"
     ],
     "scripts": [
         "index.js"
