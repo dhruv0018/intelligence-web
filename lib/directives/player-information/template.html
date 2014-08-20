@@ -1,6 +1,6 @@
 <div class="player-information">
     <div class="profile">
-        <button class="btn btn-default">Edit</button>
+        <button open-modal="AthleteInfo.Modal" class="btn btn-default">Edit</button>
         <div class="profile-image">
             <profile-placeholder data-ng-if="!user.imageUrl"></profile-placeholder>
             <!--<img class="profile-picture" data-ng-if="user.imageUrl" src="user.imageUrl">-->
@@ -9,9 +9,11 @@
     </div>
     <table class="player-information" data-ng-repeat="playerInformation in playerInformationSet">
         <tr>
-            <td class="sport"> Sport </td>
+            <td class="sport">
+                <sport-placeholder data-sport="playerInformation.sport"></sport-placeholder>
+            </td>
             <td class="positions">
-                <div>{{playerInformation.team.name}}</div>
+                <div class="team">{{playerInformation.team.name}}</div>
                 <div>
                     <span data-ng-repeat="position in playerInformation.positions">{{position.name}}</span>
                 </div>

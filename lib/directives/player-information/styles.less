@@ -34,12 +34,24 @@
 
     .player-information{
       text-align: center;
+      width: 100%;
+      margin-top: 10px;
+      tr{
+        td{
+          width: 33%;
+          padding: 20px;
+          font-size: 20px;
 
-      table{
-        tr{
-          td{
-            padding: 20px;
-            font-size: 20px;
+          &.positions{
+            border-right: 1px solid @gray-border;
+            .team{
+              position: relative;
+              top: 10px;
+            }
+          }
+
+          &.sport{
+            border-right: 1px solid @gray-border;
           }
         }
       }
