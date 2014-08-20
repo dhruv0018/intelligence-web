@@ -7,11 +7,8 @@ var angular = window.angular;
  */
 var FilmHome = angular.module('Coach.FilmHome');
 
-
-
-
 /**
- * User controller. Controls the view for adding and editing a single user.
+ * FilmHome controller.
  * @module FilmHome
  * @name FilmHome.controller
  * @type {controller}
@@ -19,6 +16,7 @@ var FilmHome = angular.module('Coach.FilmHome');
 FilmHome.controller('Coach.FilmHome.controller', [
     '$rootScope', '$scope', '$state', '$filter', 'GamesFactory', 'PlayersFactory', 'SessionService', 'Coach.Data', 'Coach.FilmHome.GameFilters',
     function controller($rootScope, $scope, $state, $filter, games, players, session,  data, filtersData) {
+
         $scope.playersList = data.playersList;
         $scope.games = data.games.getCollection();
         $scope.gamesList = data.games.getList();
