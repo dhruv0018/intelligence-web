@@ -21,6 +21,8 @@ IntelligenceWebClient.directive('krossoverVerifyPassword', [
 
         function link($scope, element, attributes, controller) {
 
+            var validPassword;
+
             controller.$setValidity('password', false);
 
             /* TODO: Debounce model changes to rate limit this.
@@ -31,18 +33,36 @@ IntelligenceWebClient.directive('krossoverVerifyPassword', [
 
                 if (password && password.length >= 4) {
 
-                    /* Request authentication from the server. */
-                    auth.validatePassword(null, password)
+                    if (validPassword) {
 
-                    .then(function() {
+                        if (password === validPassword) {
 
-                        controller.$setValidity('password', true);
-                    })
+                            controller.$setValidity('password', true);
+                        }
 
-                    .catch(function() {
+                        else {
 
-                        controller.$setValidity('password', false);
-                    });
+                            controller.$setValidity('password', false);
+                        }
+                    }
+
+                    else {
+
+                        /* Request authentication from the server. */
+                        auth.validatePassword(null, password)
+
+                        .then(function() {
+
+                            validPassword = password;
+
+                            controller.$setValidity('password', true);
+                        })
+
+                        .catch(function() {
+
+                            controller.$setValidity('password', false);
+                        });
+                    }
                 }
             });
         }
