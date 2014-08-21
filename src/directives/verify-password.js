@@ -21,6 +21,8 @@ IntelligenceWebClient.directive('krossoverVerifyPassword', [
 
         function link($scope, element, attributes, controller) {
 
+            controller.$setValidity('password', false);
+
             /* TODO: Debounce model changes to rate limit this.
              *       This is coming soon in core Angular. */
             $scope.$watch(attributes.ngModel, function() {
