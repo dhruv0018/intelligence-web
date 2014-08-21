@@ -1,4 +1,3 @@
 <div class="film-home-tabs">
-    <button class="btn" data-ng-class="{'btn-primary': filters.all.selected}" data-ng-click="selectFilter(filters.all)">All</button>
-    <button class="btn" data-ng-class="{'btn-primary': filters.reels.selected}" data-ng-click="selectFilter(filters.reels)">Reels</button>
+    <button class="btn" data-ng-class="{'btn-primary': filter.selected}" data-ng-click="selectFilter(filter)" data-ng-repeat="filter in filters">{{filter.description}}</button>
 </div>
