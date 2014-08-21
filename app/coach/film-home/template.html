@@ -32,10 +32,11 @@
             </ul>
         </header>
 
-        <no-results ng-if="gamesList.length === 0"></no-results>
+        <no-results ng-if="filmsList.length === 0"></no-results>
         <!-- NG-REPEAT FILM DIRECTIVES -->
-        <div ng-if="gamesList.length > 0" class="films-area">
-            <krossover-film data-ng-repeat="game in gamesList | filter: {isDeleted: false}| gameFilter: filters | orderBy: '-datePlayed'" data-game="game" data-teams="teams"></krossover-film>
+        <div ng-if="filmsList.length > 0" class="films-area">
+            <!--<krossover-film data-ng-repeat="film in filmsList | filter: {isDeleted: false}| gameFilter: filters | orderBy: '-datePlayed'" data-film="film" data-teams="teams"></krossover-film>-->
+            <krossover-film data-ng-repeat="film in filmsList" data-film="film" data-teams="teams"></krossover-film>
         </div>
     </main>
 

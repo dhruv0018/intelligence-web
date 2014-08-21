@@ -24,6 +24,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
         $scope.gamesList = data.games.getList();
         $scope.reels = reels.getCollection();
         $scope.reelsList = reels.getList();
+        $scope.filmsList = $scope.gamesList.concat($scope.reelsList);
         $scope.teams = data.teams.getCollection();
         $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
         $scope.roster = $scope.team.roster;

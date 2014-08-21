@@ -56,7 +56,7 @@ GameAreaFilmBreakdown.config([
                     function($q, data) {
                         return $q.all(data);
                     }
-                ],
+                ]
             }
         };
 
