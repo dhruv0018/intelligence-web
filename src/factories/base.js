@@ -284,7 +284,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else {
 
                         /* Move the start filter to the next resource set. */
-                        filter.start = filter.start + filter.count + 1;
+                        filter.start += filter.count;
 
                         /* Keep retrieving resources until all are retrieved. */
                         return self.retrieve(filter);
