@@ -15,7 +15,8 @@
         "coach",
         "athlete",
         "games",
-        "clips"
+        "clips",
+        "stylesheet"
     ],
     "scripts": [
         "index.js"
