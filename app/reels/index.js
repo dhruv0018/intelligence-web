@@ -52,15 +52,21 @@ ReelsArea.config([
 ]);
 
 ReelsArea.service('Reels.Data.Dependencies', [
-    'GamesFactory', 'PlaysFactory', 'TeamsFactory',
-    function dataService(games, plays, teams) {
+    '$state', 'GamesFactory', 'PlaysFactory', 'TeamsFactory',
+    function dataService($state, games, plays, teams) {
 
         var Data = {};
+        var reelId;
 
-        angular.forEach(arguments, function(arg) {
+        if ($state.params.id) {
+            reelId = $state.params.id;
 
-            Data[arg.description] = arg.load();
-        });
+            //TODO: get reel
+            // Data.reel = reels.get({id: reelId});
+            // Data.games = games.load({reelId: reelId});
+            // Data.teams = teams.load({reelId: reelId});
+            // Data.plays = plays.load({reelId: reelId});
+        }
 
         return Data;
 
@@ -77,7 +83,12 @@ ReelsArea.controller('ReelsArea.controller', [
     '$scope', '$state', '$stateParams', 'Reels.Data',
     function controller($scope, $state, $stateParams, data) {
 
+        //data.reel = {"id":1,"name":"Highschool","uploaderUserId":1,"uploaderTeamId":1,"createdAt":"-0001-11-30T00:00:00+00:00","updatedAt":"-0001-11-30T00:00:00+00:00","plays":[4,3,11,12]};
+        data.reel = {'plays': [1,2,3,4,5,6,7,8,9,10]};
+
         $scope.getHomeTeam = function(playId) {
+
+            //return {id: 1, name: 'HOME TEAM'};
 
             var gameId = data.plays.get(playId).gameId;
             var teamId = data.games.get(gameId).teamId;
@@ -87,6 +98,8 @@ ReelsArea.controller('ReelsArea.controller', [
 
         $scope.getOpposingTeam = function(playId) {
 
+            //return {id: 2, name: 'OPPOSING TEAM'};
+
             var gameId = data.plays.get(playId).gameId;
             var teamId = data.games.get(gameId).opposingTeamId;
 
@@ -94,13 +107,17 @@ ReelsArea.controller('ReelsArea.controller', [
         };
 
         $scope.getDatePlayed = function(playId) {
+
+            //$scope.getDatePlayed.datePlayed = $scope.getDatePlayed.datePlayed || new Date('Wed Aug 20 2014 15:40:30 GMT-0400 (EDT)');
+
+            //return $scope.getDatePlayed.datePlayed;
+
             var gameId = data.plays.get(playId).gameId;
 
             return data.games.get(gameId).datePlayed;
         };
 
         $scope.data = data;
-        //$scope.reels = {"id":1,"name":"Highschool","uploaderUserId":1,"uploaderTeamId":1,"createdAt":"-0001-11-30T00:00:00+00:00","updatedAt":"-0001-11-30T00:00:00+00:00","plays":[4,3,11,12]};
     }
 ]);
 

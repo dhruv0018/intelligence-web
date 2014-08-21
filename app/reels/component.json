@@ -7,8 +7,7 @@
         "."
     ],
     "templates": [
-        "template.html",
-        "reelsPlayer.html"
+        "template.html"
     ],
     "scripts": [
         "index.js"

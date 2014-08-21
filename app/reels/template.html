@@ -9,15 +9,18 @@
         <div class="reels-area-film">
             <aside class="reels-playlist">
 
-            <krossover-reel-play 
-                data-play-id="playId"
-                data-home-team="getHomeTeam(playId)"
-                data-opposing-team="getOpposingTeam(playId)"
+            <!-- data-play="data.plays.get(playId)" -->
+            <div
+                krossover-reel-play 
+                data-draggable
+                data-play="playId"
+                data-home-team="{id:2,name:'HOME TEAM'}"
+                data-opposing-team="{id:2,name:'OPPOSING TEAM'}"
                 data-date-played="getDatePlayed(playId)"
-                data-ng-repeat="playId in reels.plays">
-            </krossover-reel-play>
+                data-ng-repeat="playId in data.reel.plays">
+            </div>
 
-              <no-results data-ng-hide="reels && reels.plays && reels.plays.length"></no-results>
+              <no-results data-ng-hide="data.reel && data.reel.plays && data.reel.plays.length"></no-results>
 
             </aside>
 

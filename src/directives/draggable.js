@@ -23,13 +23,13 @@ IntelligenceWebClient.directive('draggable',
         var dragClass = 'active';
 
         var directive = {
-
             restrict: TO += ATTRIBUTES,
             link: link
         };
 
         function link($scope, element, attributes) {
 
+            $scope.isDragging = false;
             var expression = attributes.ngRepeat;
 
             /* Find the collection in the expression. */
@@ -45,62 +45,56 @@ IntelligenceWebClient.directive('draggable',
 
             element.attr('draggable', true);
 
-            element.bind('dragstart', dragstart);
+            element.bind('mousedown', dragstart);
+            element.bind('mouseup', dragend);
+
             element.bind('dragover', dragover);
             element.bind('dragenter', dragenter);
             element.bind('dragleave', dragleave);
-            element.bind('dragend', dragend);
-        }
 
-        function dragstart(event) {
+            function dragstart(event) {
 
-            this.classList.add(dragClass);
+                this.classList.add(dragClass);
 
-            var element = angular.element(event.target);
+                dragIndex = $scope.$index;
 
-            var $scope = element.scope();
+            }
 
-            dragIndex = $scope.$index;
+            function ondrag(event) {
+            }
 
-            event.dataTransfer.effectAllowed = 'move';
-            event.dataTransfer.setDragImage(dragImage, dragImage.width / 2, dragImage.height / 2);
-        }
+            function dragover(event) {
 
-        function dragover(event) {
+                event.dataTransfer.dropEffect = 'move';
+            }
 
-            event.dataTransfer.dropEffect = 'move';
-        }
+            function dragenter(event) {
 
-        function dragenter(event) {
+                this.classList.add(dragClass);
 
-            this.classList.add(dragClass);
+                var to = $scope.$index;
+                var from = dragIndex;
 
-            var element = angular.element(event.srcElement);
+                /* Remove the item from its current index in the collection and store it. */
+                var move = $scope.collection.splice(from, 1).pop();
 
-            var $scope = element.scope();
+                /* Insert the moved item into the new location in the collection. */
+                $scope.collection.splice(to, 0, move);
 
-            var to = $scope.$index;
-            var from = dragIndex;
+                dragIndex = to;
 
-            /* Remove the item from its current index in the collection and store it. */
-            var move = $scope.collection.splice(from, 1).pop();
+                $scope.$apply();
+            }
 
-            /* Insert the moved item into the new location in the collection. */
-            $scope.collection.splice(to, 0, move);
+            function dragleave() {
 
-            dragIndex = to;
+                this.classList.remove(dragClass);
+            }
 
-            $scope.$apply();
-        }
+            function dragend() {
+                this.classList.remove(dragClass);
+            }
 
-        function dragleave() {
-
-            this.classList.remove(dragClass);
-        }
-
-        function dragend() {
-
-            this.classList.remove(dragClass);
         }
 
         return directive;
