@@ -22,8 +22,9 @@
         <header class="filter-bar">
             <ul class="nav nav-tabs">
                 <li><h3>Filter Film:</h3></li>
-                <li><button data-ng-repeat="(key, value) in filters.others" button class="btn-filter" ng-model="filters.others[key]" btn-checkbox>{{key}}</button></li>
-                <li><button class="btn-filter" ng-model="filters['all']" btn-checkbox>All</button></li>
+                <!--<li><button data-ng-repeat="(key, value) in filters.others" button class="btn-filter" ng-model="filters.others[key]" btn-checkbox>{{key}}</button></li>-->
+                <!--<li><button class="btn-filter" ng-model="filters['all']" btn-checkbox>All</button></li>-->
+                <film-home-tabs data-films="filmsList"></film-home-tabs>
 
                 <form class="film-search">
                     <input type="text" class="film-search-input" data-ng-model="query" placeholder="Search for film"/>
