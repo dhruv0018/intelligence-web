@@ -70,47 +70,6 @@ Account.config([
 ]);
 
 /**
- * Change password controller.
- * @module Account
- * @name ChangePasswordController
- * @type {Controller}
- */
-Account.controller('ChangePasswordController', [
-    '$scope', '$state', '$modalInstance', 'AuthenticationService', 'SessionService',
-    function controller($scope, $state, $modalInstance, auth, session) {
-
-        $scope.submitPasswordChange = function(changePassword) {
-
-            var user = angular.copy(session.currentUser);
-
-            user.password = changePassword.newPassword;
-
-            user.save();
-
-            $modalInstance.close();
-
-            $state.go('contact-info');
-        };
-
-        $scope.cancel = function() {
-
-            $modalInstance.dismiss();
-
-            $state.go('contact-info');
-        };
-
-        $scope.forgot = function() {
-
-            $modalInstance.dismiss();
-
-            auth.logoutUser();
-
-            $state.go('forgot');
-        };
-    }
-]);
-
-/**
  * Account controller.
  * @module Account
  * @name Account.controller
