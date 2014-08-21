@@ -91,7 +91,12 @@ IntelligenceWebClient.config([
 
             return function(exception, cause) {
 
-                exception.message = exception.message + ' error' + ' caused by ' + cause;
+                exception.message = exception.message + ' error';
+
+                if (cause) {
+
+                    exception.message += ' caused by ' + cause;
+                }
 
                 /* Handle the error. */
                 ErrorReporter.reportError(exception);
