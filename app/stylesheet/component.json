@@ -1,0 +1,12 @@
+{
+    "name": "stylesheet",
+    "templates": [
+        "stylesheet.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
