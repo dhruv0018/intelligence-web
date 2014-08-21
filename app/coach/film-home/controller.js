@@ -17,8 +17,8 @@ var FilmHome = angular.module('Coach.FilmHome');
  * @type {controller}
  */
 FilmHome.controller('Coach.FilmHome.controller', [
-    '$rootScope', '$scope', '$state', '$filter', 'GamesFactory', 'PlayersFactory', 'SessionService', 'Coach.Data', 'Coach.FilmHome.GameFilters',
-    function controller($rootScope, $scope, $state, $filter, games, players, session,  data, filtersData) {
+    '$rootScope', '$scope', '$state', '$filter', 'GamesFactory', 'UsersFactory', 'PlayersFactory', 'SessionService', 'Coach.Data', 'Coach.FilmHome.GameFilters',
+    function controller($rootScope, $scope, $state, $filter, games, users, players, session,  data, filtersData) {
         $scope.playersList = data.playersList;
         $scope.games = data.games.getCollection();
         $scope.gamesList = data.games.getList();
@@ -63,6 +63,12 @@ FilmHome.controller('Coach.FilmHome.controller', [
 
             }, $scope.games);
 
+        };
+
+        //TODO-- temp athlete -- remove this
+        $scope.tempAthlete = {
+            user: users.get(59),
+            players: [players.get(633)]
         };
 
     }
