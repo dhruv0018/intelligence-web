@@ -107,7 +107,6 @@ require('./directives/draggable');
 require('./directives/focus');
 require('./directives/autofocus');
 require('./directives/autotab');
-require('./directives/verify-password.js');
 
 angular.bootstrap(document, [package.name]);
 
