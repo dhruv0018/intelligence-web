@@ -17,8 +17,22 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
             resource: ReelsResource,
 
+            extend: function(reel) {
+
+                var self = this;
+
+                angular.extend(reel, self);
+                reel.plays = reel.plays || [];
+
+                return reel;
+            },
+
             addPlay: function(play) {
                 this.plays.push(play.id);
+            },
+
+            updateDate: function() {
+                this.updatedAt = moment.utc();
             }
         };
 
