@@ -38,6 +38,14 @@
             "philippines": {
                 "uri": "https://docs.google.com/a/krossover.com/spreadsheet/viewform?formkey=dEN0MXFObTNDSXN3b013SHF3cFdpOEE6MA#gid=0"
             }
+        },
+        "indexerFAQ": {
+            "football": {
+                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/krossover-football-formations.pdf"
+            },
+            "volleyball": {
+                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/Krossover-volleyball-rotation-position.pdf"
+            }
         }
     },
     "indexing": {
