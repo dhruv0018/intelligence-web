@@ -92,7 +92,7 @@ Login.config([
 
                                 else {
 
-                                    $state.go('contact-info');
+                                    $state.go('Account.ContactInfo');
                                 }
                             }
                         }
@@ -220,7 +220,7 @@ Login.controller('LoginController', [
 
                         else {
 
-                            $state.go('contact-info');
+                            $state.go('Account.ContactInfo');
                         }
                     }
 

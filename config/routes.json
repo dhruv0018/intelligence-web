@@ -54,19 +54,34 @@
         "*": true
     },
 
-    "account": {
+    "Account": {
 
-        "*": true
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
     },
 
-    "contact-info": {
+    "Account.ContactInfo": {
 
-        "*": true
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
     },
 
-    "roles-list": {
+    "Account.RolesList": {
 
-        "*": true
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
     },
 
     "user": {
