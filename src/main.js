@@ -24,7 +24,6 @@ require('./errors');
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
 require('./http/interceptors/broadcast');
-require('./http/transforms/date');
 
 require('./http/interceptors/queue');
 require('./services/authentication');
