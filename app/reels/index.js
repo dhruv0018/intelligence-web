@@ -41,9 +41,23 @@ ReelsArea.config([
             },
             resolve: {
                 'Reels.Data': [
-                    '$q', 'Reels.Data.Dependencies',
-                    function($q, data) {
-                        return $q.all(data);
+                    '$q', '$state', '$stateParams', 'Reels.Data.Dependencies', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory',
+                    function dataService($q, $state, $stateParams, data, games, plays, teams, reels) {
+
+                        var reelId;
+
+                        return $q.all(data).then(function(data) {
+                            if ($stateParams.id) {
+                                reelId = parseInt($stateParams.id);
+
+                                data.reel = reels.fetch(reelId);
+                                data.games = games.load({reelId: reelId});
+                                data.teams = teams.load({reelId: reelId});
+                                data.plays = plays.load({reelId: reelId});
+
+                                return $q.all(data);
+                            }
+                        });
                     }
                 ]
             }
@@ -83,38 +97,36 @@ ReelsArea.controller('ReelsArea.controller', [
     '$scope', '$state', '$stateParams', 'Reels.Data',
     function controller($scope, $state, $stateParams, data) {
 
-        //data.reel = {"id":1,"name":"Highschool","uploaderUserId":1,"uploaderTeamId":1,"createdAt":"-0001-11-30T00:00:00+00:00","updatedAt":"-0001-11-30T00:00:00+00:00","plays":[4,3,11,12]};
-        data.reel = {'plays': [1,2,3,4,5,6,7,8,9,10]};
+        $scope.data = data;
+        $scope.videoTitle = 'reelsPlayer';
 
         $scope.getHomeTeam = function(playId) {
 
-            //return {id: 1, name: 'HOME TEAM'};
+            if (playId) {
+                var gameId = data.plays.get(playId).gameId;
+                var teamId = data.games.get(gameId).teamId;
 
-            var gameId = data.plays.get(playId).gameId;
-            var teamId = data.games.get(gameId).teamId;
-
-            return data.teams.get(teamId);
+                return data.teams.get(teamId);
+            }
         };
 
         $scope.getOpposingTeam = function(playId) {
 
-            //return {id: 2, name: 'OPPOSING TEAM'};
+            if (playId) {
+                var gameId = data.plays.get(playId).gameId;
+                var teamId = data.games.get(gameId).opposingTeamId;
 
-            var gameId = data.plays.get(playId).gameId;
-            var teamId = data.games.get(gameId).opposingTeamId;
-
-            return data.teams.get(teamId);
+                return data.teams.get(teamId);
+            }
         };
 
         $scope.getDatePlayed = function(playId) {
 
-            //$scope.getDatePlayed.datePlayed = $scope.getDatePlayed.datePlayed || new Date('Wed Aug 20 2014 15:40:30 GMT-0400 (EDT)');
+            if (playId) {
+                var gameId = data.plays.get(playId).gameId;
 
-            //return $scope.getDatePlayed.datePlayed;
-
-            var gameId = data.plays.get(playId).gameId;
-
-            return data.games.get(gameId).datePlayed;
+                return data.games.get(gameId).datePlayed;
+            }
         };
 
         $scope.data = data;

@@ -13,9 +13,9 @@
             <div
                 krossover-reel-play 
                 data-draggable
-                data-play="playId"
-                data-home-team="{id:2,name:'HOME TEAM'}"
-                data-opposing-team="{id:2,name:'OPPOSING TEAM'}"
+                data-play="data.plays.get(playId)"
+                data-home-team="getOpposingTeam(playId)"
+                data-opposing-team="getHomeTeam(playId)"
                 data-date-played="getDatePlayed(playId)"
                 data-ng-repeat="playId in data.reel.plays">
             </div>
@@ -25,7 +25,7 @@
             </aside>
 
             <div class="player reels-player">
-                <x-krossover-videoplayer data-sources="[]"></x-krossover-videoplayer>
+                <x-krossover-videoplayer data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
             </div>
         </div>
     </main>
