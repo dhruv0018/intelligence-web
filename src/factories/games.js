@@ -87,9 +87,13 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                if (!self.rosters) return undefined;
+                if (!self.rosters) throw new Error('No game rosters');
 
-                return self.rosters[teamId];
+                var roster = self.rosters[teamId];
+
+                if (!roster) throw new Error('No team roster for game');
+
+                return roster;
             },
 
             getVideoSources: function() {
