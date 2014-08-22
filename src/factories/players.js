@@ -42,7 +42,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 if (!rosterId) throw new Error('No roster ID');
                 if (!players) throw new Error('No players to save');
 
-                var filter = { roster: rosterId };
+                var filter = { rosterId: rosterId };
 
                 var currentPlayers = players.filter(function(player) {
                     return player.id;
