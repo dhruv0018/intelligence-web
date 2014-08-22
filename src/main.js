@@ -95,6 +95,7 @@ require('./factories/plans');
 
 require('./managers/tags');
 require('./managers/play');
+require('./managers/plays');
 require('./managers/event');
 require('./managers/resource');
 

@@ -468,10 +468,11 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!assignment) return remaining;
 
-                var deadline = moment.utc(assignment.deadline).toDate();
-                var timeRemaining = deadline - new Date();
+                var now = moment.utc();
+                var deadline = moment.utc(assignment.deadline);
+                var timeRemaining = moment.duration(deadline.subtract(now));
 
-                return timeRemaining;
+                return timeRemaining.asMilliseconds();
             },
 
             setAsideFromIndexing: function() {
@@ -520,7 +521,16 @@ IntelligenceWebClient.factory('GamesFactory', [
             canBeIndexed: function() {
 
                 var self = this;
+
+                if (self.isDeleted) {
+                    return false;
+                }
+
                 if (self.deadlinePassed()) {
+                    return false;
+                }
+
+                if (!self.isAssignedToIndexer()) {
                     return false;
                 }
 
@@ -534,9 +544,18 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             canBeQAed: function() {
+
                 var self = this;
 
+                if (self.isDeleted) {
+                    return false;
+                }
+
                 if (self.deadlinePassed()) {
+                    return false;
+                }
+
+                if (!self.isAssignedToQa()) {
                     return false;
                 }
 

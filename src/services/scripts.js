@@ -34,7 +34,7 @@ IntelligenceWebClient.factory('ScriptsService', [
                 if (!tagset) throw new Error('No tagset');
                 if (!event) throw new Error('No event');
 
-                var tags = tagset.getIndexedTags();
+                var tags = tagset.tags;
 
                 if (!tags) throw new Error('Failed to get tags from tagset');
 

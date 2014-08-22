@@ -11,16 +11,16 @@ var IntelligenceWebClient = angular.module(package.name);
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    'IndexingService', 'TagsManager', 'PlayManager',
-    function service(indexing, tags, play) {
+    '$injector',
+    function service($injector) {
+
+        var playManager;
 
         var model = {
 
             variableValues: {},
             activeEventVariableIndex: 1
         };
-
-        this.tags = null;
 
         this.tagset = null;
 
@@ -53,7 +53,7 @@ IntelligenceWebClient.service('EventManager', [
             if (!this.current || !this.current.tagId) return false;
 
             var tagId = this.current.tagId;
-            var tag = this.tags[tagId];
+            var tag = this.tagset.tags[tagId];
 
             /* Check if the tag has tag variables. */
             return !!Object.keys(tag.tagVariables).length;
@@ -71,7 +71,7 @@ IntelligenceWebClient.service('EventManager', [
 
             var index = this.current.activeEventVariableIndex;
             var tagId = this.current.tagId;
-            var tag = this.tags[tagId];
+            var tag = this.tagset.tags[tagId];
             var tagVariables = tag.tagVariables;
             var tagVariable = tagVariables[index];
 
@@ -87,7 +87,7 @@ IntelligenceWebClient.service('EventManager', [
 
             var index = this.current.activeEventVariableIndex;
             var tagId = this.current.tagId;
-            var tag = this.tags[tagId];
+            var tag = this.tagset.tags[tagId];
             var tagVariables = tag.tagVariables;
             var tagVariable = tagVariables[index];
 
@@ -104,7 +104,7 @@ IntelligenceWebClient.service('EventManager', [
             var self = this;
 
             var tagId = this.current.tagId;
-            var tag = this.tags[tagId];
+            var tag = this.tagset.tags[tagId];
             var tagVariables = tag.tagVariables;
             var variableValues = self.current.variableValues;
 
@@ -132,8 +132,6 @@ IntelligenceWebClient.service('EventManager', [
 
             this.tagset = tagset || this.tagset;
 
-            if (this.tagset && this.tagset.getIndexedTags) this.tags = this.tagset.getIndexedTags();
-
             this.current = angular.copy(model);
             this.highlighted = null;
         };
@@ -146,6 +144,8 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.create = function(tagId, time) {
 
+            playManager = playManager || $injector.get('PlayManager');
+
             /* Reset the current event. */
             this.reset();
 
@@ -156,7 +156,7 @@ IntelligenceWebClient.service('EventManager', [
             this.current.time = time;
 
             /* Add event to the current play. */
-            play.addEvent(this.current);
+            playManager.addEvent(this.current);
         };
 
         /**
@@ -164,10 +164,12 @@ IntelligenceWebClient.service('EventManager', [
          */
         this.delete = function(event) {
 
+            playManager = playManager || $injector.get('PlayManager');
+
             event = event || this.current;
 
             /* Remove the event from the current play. */
-            play.removeEvent(event);
+            playManager.removeEvent(event);
 
             /* Reset the current event. */
             this.reset();

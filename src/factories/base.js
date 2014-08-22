@@ -284,7 +284,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else {
 
                         /* Move the start filter to the next resource set. */
-                        filter.start = filter.start + filter.count + 1;
+                        filter.start += filter.count;
 
                         /* Keep retrieving resources until all are retrieved. */
                         return self.retrieve(filter);
@@ -398,6 +398,40 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         return resource;
                     });
+                }
+            },
+
+            /**
+             * Removes a resources from the server.
+             * @param {Resource} resource - a resource.
+             * @param {Function} success - called upon success.
+             * @param {Function} error - called on error.
+             * @return {Promise} - a promise.
+             */
+            remove: function(resource, success, error) {
+
+                var self = this;
+
+                var parameters = {};
+
+                resource = resource || self;
+
+                success = success || angular.noop;
+
+                error = error || function() {
+
+                    throw new Error('Could not remove ' + self.description);
+
+                };
+
+                /* Remove the resource from storage. */
+                self.storage.list.splice(self.storage.list.indexOf(resource), 1);
+                delete self.storage.collection[resource.id];
+
+                if (resource.id) {
+
+                    /* Make a DELETE request to the server to delete the resource. */
+                    return self.resource.remove(parameters, resource, success, error).$promise;
                 }
             },
 

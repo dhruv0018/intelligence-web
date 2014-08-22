@@ -5,7 +5,8 @@
     ],
     "locals": [
         "sport",
-        "humanize"
+        "humanize",
+        "films"
     ],
     "scripts": [
         "index.js"

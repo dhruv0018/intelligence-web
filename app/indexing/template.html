@@ -2,9 +2,9 @@
 
     <main class="content-full">
 
-        <button class="btn-delete-event" data-ng-if="indexing.eventSelected" data-ng-click="main.deleteEvent(event.current)"><i class="icon icon-remove"></i> Delete Event</button>
+        <button class="btn-delete-event" data-ng-if="indexing.eventSelected" data-ng-click="indexing.deleteEvent(event.current)"><i class="icon icon-remove"></i> Delete Event</button>
 
-        <button class="btn-back" data-ng-if="indexing.isIndexing" data-ng-click="main.back()">Back (Esc)</button>
+        <button class="btn-back" data-ng-if="indexing.isIndexing" data-ng-click="indexing.back()">Back (Esc)</button>
 
         <div class="indexing-block">
 
@@ -13,14 +13,14 @@
                 <!-- Tags -->
                 <div class="tags" data-ng-if="indexing.isIndexing && indexing.showTags">
 
-                    <button class="tag" data-ng-repeat="tag in tags.current" data-keybinding="{{ tag.shortcutKey.toLowerCase() }}" data-ng-click="main.selectTag(tag.id)" tabindex="{{ $index+1 }}">{{ tag.name }} ({{ tag.shortcutKey.toLowerCase() }})</button>
+                    <button class="tag" data-ng-repeat="tag in tags.current" data-keybinding="{{ tag.shortcutKey.toLowerCase() }}" data-ng-click="indexing.selectTag(tag.id)" tabindex="{{ $index+1 }}">{{ tag.name }} ({{ tag.shortcutKey.toLowerCase() }})</button>
 
                 </div>
 
                 <!-- Script -->
                 <div class="script" data-ng-if="indexing.isIndexing && indexing.showScript">
 
-                    <krossover-item data-auto-advance="true" data-league="league" data-game="game" data-item="item" data-plays="indexing.plays" data-play="play.current" data-event="event.current" data-team-players="data.teamPlayers" data-opposing-team-players="data.opposingTeamPlayers" data-ng-repeat="item in indexerScript(tagset, event.current) track by $index"></krossover-item>
+                    <krossover-item data-auto-advance="true" data-league="league" data-game="game" data-item="item" data-plays="indexing.plays" data-play="play.current" data-event="event.current" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-ng-repeat="item in indexerScript(tagset, event.current) track by $index"></krossover-item>
 
                 </div>
 
@@ -28,11 +28,11 @@
                 <div class="controls">
 
                     <!-- Start button -->
-                    <button class="btn-indexing-start" data-ng-if="indexing.isReady && !indexing.isIndexing" data-ng-click="main.index()"><i class="icon icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
+                    <button class="btn-indexing-start" data-ng-if="indexing.isReady && !indexing.isIndexing" data-ng-click="indexing.index()"><i class="icon icon-warning-sign"></i> Press <b>return</b> to start indexing</button>
 
                     <!-- State movement buttons -->
-                    <button class="btn-save" data-ng-if="indexing.isIndexing && indexing.showScript && event.isEndEvent(event.current)" data-ng-click="main.save()" data-ng-disabled="!main.savable() || formIndexing.$invalid">Save Event (Return)</button>
-                    <button class="btn-next" data-ng-if="indexing.isIndexing && indexing.showScript && !event.isEndEvent(event.current)" data-ng-click="main.next()" data-ng-disabled="!main.nextable() || formIndexing.$invalid">Next (Return)</button>
+                    <button class="btn-save" data-ng-if="indexing.isIndexing && indexing.showScript && event.isEndEvent(event.current)" data-ng-click="indexing.save()" data-ng-disabled="!indexing.savable() || formIndexing.$invalid">Save Event (Return)</button>
+                    <button class="btn-next" data-ng-if="indexing.isIndexing && indexing.showScript && !event.isEndEvent(event.current)" data-ng-click="indexing.next()" data-ng-disabled="!indexing.nextable() || formIndexing.$invalid">Next (Return)</button>
 
                 </div>
 

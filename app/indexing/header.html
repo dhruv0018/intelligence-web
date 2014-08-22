@@ -2,7 +2,7 @@
 
     <header class="navbar-header">
 
-        <a class="navbar-brand" href data-ng-click="goBack()"><i class="icon icon-chevron-left"></i></a>
+        <a class="navbar-brand" href data-ui-sref="indexer-game({ id: game.id })"><i class="icon icon-chevron-left"></i></a>
 
     </header>
 
@@ -14,7 +14,7 @@
 
             <div class="color" style="background-color: {{ game.primaryJerseyColor }};"></div>
 
-            {{ team.name }} <b>{{ game.teamIndexedScore }}</b> vs <b>{{ game.opposingIndexedScore }}</b> {{ opposingTeam.name }}
+            {{ team.name }} <b>{{ game.indexedScore }}</b> vs <b>{{ game.opposingIndexedScore }}</b> {{ opposingTeam.name }}
 
             <div class="color" style="background-color: {{ game.opposingPrimaryJerseyColor }};"></div>
 

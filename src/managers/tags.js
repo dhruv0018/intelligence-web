@@ -28,6 +28,11 @@ IntelligenceWebClient.service('TagsManager', [
 
             this.current = [];
         };
+
+        this.nextTags = function(tagId) {
+
+            this.current = this.tagset.getNextTags(tagId);
+        };
     }
 ]);
 
