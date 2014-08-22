@@ -41,20 +41,21 @@ ReelsArea.config([
             },
             resolve: {
                 'Reels.Data': [
-                    '$q', '$state', '$stateParams', 'Reels.Data.Dependencies', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory',
-                    function dataService($q, $state, $stateParams, data, games, plays, teams, reels) {
+                    '$q', '$state', '$stateParams', 'Reels.Data.Dependencies', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory',
+                    function dataService($q, $state, $stateParams, data, games, plays, teams, reels, leagues) {
 
                         var reelId;
 
+                        reelId = parseInt($stateParams.id);
+
+                        data.reel = reels.fetch(reelId);
+                        data.games = games.load({reelId: reelId});
+                        data.teams = teams.load({reelId: reelId});
+                        data.plays = plays.load({reelId: reelId});
+                        data.leagues = leagues.load();
+
                         return $q.all(data).then(function(data) {
                             if ($stateParams.id) {
-                                reelId = parseInt($stateParams.id);
-
-                                data.reel = reels.fetch(reelId);
-                                data.games = games.load({reelId: reelId});
-                                data.teams = teams.load({reelId: reelId});
-                                data.plays = plays.load({reelId: reelId});
-
                                 return $q.all(data);
                             }
                         });
@@ -94,11 +95,13 @@ ReelsArea.service('Reels.Data.Dependencies', [
  * @type {Controller}
  */
 ReelsArea.controller('ReelsArea.controller', [
-    '$scope', '$state', '$stateParams', 'Reels.Data',
-    function controller($scope, $state, $stateParams, data) {
+    '$scope', '$state', '$stateParams', 'Reels.Data', 'PlayManager',
+    function controller($scope, $state, $stateParams, data, playManager) {
 
+        console.log(data);
         $scope.data = data;
         $scope.videoTitle = 'reelsPlayer';
+        playManager.isReelsPlayer = true; //to make the play template show up properly
 
         $scope.getHomeTeam = function(playId) {
 
@@ -117,15 +120,6 @@ ReelsArea.controller('ReelsArea.controller', [
                 var teamId = data.games.get(gameId).opposingTeamId;
 
                 return data.teams.get(teamId);
-            }
-        };
-
-        $scope.getDatePlayed = function(playId) {
-
-            if (playId) {
-                var gameId = data.plays.get(playId).gameId;
-
-                return data.games.get(gameId).datePlayed;
             }
         };
 
