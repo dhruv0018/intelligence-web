@@ -70,13 +70,17 @@
             h1 {
               color: @text-muted;
               text-decoration: line-through;
-              margin-top: 0;
             }
 
             .icon-check-empty {
-              color: @input-bg;
               display: none;
             }
+        }
+
+        &:no-roster {
+          h1 {
+            margin-top: 0;
+          }
         }
       }
 
