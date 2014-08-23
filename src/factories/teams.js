@@ -17,8 +17,8 @@ IntelligenceWebClient.service('TeamsStorage', [
 ]);
 
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory',
-    function($rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users) {
+    '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'ResourceManager',
+    function($rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users, managedResources) {
 
         var TeamsFactory = {
 
@@ -54,6 +54,76 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 angular.extend(team, self);
 
                 return team;
+            },
+            save: function(resource, success, error) {
+
+                var self = this;
+
+                resource = resource || self;
+
+                managedResources.reset(resource);
+
+                /* Create a copy of the resource to save to the server. */
+                var copy = self.unextend(resource);
+
+                angular.forEach(copy.roles, function(role) {
+                    role.type = role.type.id;
+                });
+
+                parameters = {};
+
+                success = success || function(resource) {
+
+                    return self.extend(resource);
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not save resource');
+                };
+
+                /* If the resource has been saved to the server before. */
+                if (resource.id) {
+
+                    /* Make a PUT request to the server to update the resource. */
+                    var update = self.resource.update(parameters, copy, success, error);
+
+                    /* Once the update request finishes. */
+                    return update.$promise.then(function() {
+
+                        /* Fetch the updated resource. */
+                        return self.fetch(resource.id).then(function(updated) {
+
+                            /* Update local resource with server resource. */
+                            angular.extend(resource, self.extend(updated));
+
+                            /* Update the resource in storage. */
+                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
+                            self.storage.collection[resource.id] = resource;
+
+                            return resource;
+                        });
+                    });
+
+                    /* If the resource is new. */
+                } else {
+
+                    /* Make a POST request to the server to create the resource. */
+                    var create = self.resource.create(parameters, copy, success, error);
+
+                    /* Once the create request finishes. */
+                    return create.$promise.then(function(created) {
+
+                        /* Update local resource with server resource. */
+                        angular.extend(resource, self.extend(created));
+
+                        /* Add the resource to storage. */
+                        self.storage.list.push(resource);
+                        self.storage.collection[resource.id] = resource;
+
+                        return resource;
+                    });
+                }
             },
             removeRole: function(role) {
 
