@@ -61,7 +61,8 @@
                     <div class="row">
                         <div class="athlete col-xs-2" data-ng-repeat="player in roster | filter: filterType | orderBy: sortingType ">
                             <div class="athlete-picture">
-                                <profile-placeholder></profile-placeholder>
+                                <profile-placeholder data-ng-if="!users[player.userId].imageUrl"></profile-placeholder>
+                                <img data-ng-if="users[player.userId].imageUrl" data-ng-src="{{users[player.userId].imageUrl}}" alt="profile picture">
                             </div>
                             <div class="description">
                                 <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>

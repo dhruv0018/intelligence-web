@@ -51,10 +51,10 @@
 
                     <div class="row form-group">
                         <div class="profile-image col-md-3">
-                            <profile-placeholder></profile-placeholder>
-                            <button class="btn btn-default">
-                                Change Image
-                            </button>
+                            <profile-placeholder data-ng-hide="athlete.userId || athlete.userId === null || athlete.jerseyNumbers" data-ng-if="!athlete.imageUrl"></profile-placeholder>
+                            <img data-ng-if="athlete.imageUrl" data-ng-src="{{athlete.imageUrl}}" alt="profile image">
+                            <img data-ng-if="users[athlete.userId].imageUrl" data-ng-src="{{users[athlete.userId].imageUrl}}" alt="profile image">
+                            <krossover-uploader data-ng-hide="athlete.userId || athlete.userId === null || athlete.jerseyNumbers" data-upload-label="Change Image" data-on-upload="setProfileImage(files)"></krossover-uploader>
                         </div>
                         <div class="col-md-8">
                             <table class="col-md-12">
@@ -62,16 +62,16 @@
                                     <tr>
                                         <th>First Name</th>
                                         <th>Last Name</th>
-                                        <th>Jersey Number</th>
+                                        <th data-ng-if="athlete.jerseyNumbers[rosterId]">Jersey Number</th>
                                     </tr>
                                 </thead>
                                 <tr>
                                     <td><input class="name" placeholder="First Name" data-ng-model="athlete.firstName" required></td>
                                     <td><input class="name" placeholder="Last Name" data-ng-model="athlete.lastName" required></td>
-                                    <td><input size="3" data-ng-model="athlete.jerseyNumbers[rosterId]" required></td>
+                                    <td data-ng-if="athlete.jerseyNumbers[rosterId]"><input size="3" data-ng-model="athlete.jerseyNumbers[rosterId]" required></td>
                                 </tr>
                             </table>
-                            <div data-ng-if="keys(positions).length > 0" class="col-md-12 position-list">
+                            <div data-ng-if="positions && keys(positions).length > 0" class="col-md-12 position-list">
                                 <strong>*Position</strong>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -86,7 +86,7 @@
 
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-12 shaded">
+                            <div data-ng-if="!(athlete.lastAccessed || users[athlete.userId].lastAccessed)" class="col-md-12 shaded">
                                 <p class="col-md-12">
                                     <strong>Player access: </strong> If you want this player to have access to Krossover please complete the following. Player access to Krossover will allow you to easily share game film with them.
                                 </p>

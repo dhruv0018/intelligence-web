@@ -1,0 +1,60 @@
+@import (reference) "main.less";
+.player-information {
+
+    .profile {
+
+      button{
+        margin: 10px;
+      }
+      border-bottom: 1px solid @gray-border;
+      height: 300px;
+
+      p{
+        margin-top: 50px;
+        text-align: center;
+        font-size: 24px;
+      }
+
+      .placeholder-picture{
+        border-radius: 50%;
+        display:block;
+        margin: 0px auto;
+      }
+
+      .profile-picture{
+        border-radius: 50%;
+        width: 110px;
+        height: 110px;
+        border:1px solid @gray-border;
+        display:block;
+        margin: 0px auto;
+      }
+
+    }
+
+    .player-information{
+      text-align: center;
+      width: 100%;
+      margin-top: 10px;
+      tr{
+        td{
+          width: 33%;
+          padding: 20px;
+          font-size: 20px;
+
+          &.positions{
+            border-right: 1px solid @gray-border;
+            .team{
+              position: relative;
+              top: 10px;
+            }
+          }
+
+          &.sport{
+            border-right: 1px solid @gray-border;
+          }
+        }
+      }
+    }
+
+}

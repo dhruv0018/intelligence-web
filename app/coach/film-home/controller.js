@@ -17,8 +17,8 @@ var FilmHome = angular.module('Coach.FilmHome');
  * @type {controller}
  */
 FilmHome.controller('Coach.FilmHome.controller', [
-    '$rootScope', '$scope', '$state', '$filter', 'GamesFactory', 'PlayersFactory', 'SessionService', 'Coach.Data', 'Coach.FilmHome.GameFilters',
-    function controller($rootScope, $scope, $state, $filter, games, players, session,  data, filtersData) {
+    '$rootScope', '$scope', '$state', '$filter', 'GamesFactory', 'UsersFactory', 'PlayersFactory', 'SessionService', 'Coach.Data', 'Coach.FilmHome.GameFilters',
+    function controller($rootScope, $scope, $state, $filter, games, users, players, session,  data, filtersData) {
         $scope.playersList = data.playersList;
         $scope.games = data.games.getCollection();
         $scope.gamesList = data.games.getList();
@@ -44,6 +44,26 @@ FilmHome.controller('Coach.FilmHome.controller', [
             filtersData.watchOthers();
         });
 
+        $scope.search = function(query) {
+            if (query.length === 0) {
+                $scope.gameList = data.games.getList();
+            }
+
+            var filteredGames = [];
+
+            Object.keys($scope.games).forEach(function(key) {
+                var game = this[key];
+
+                if (typeof $scope.teams[game.teamId] !== 'undefined' && $scope.teams[game.teamId].name.indexOf(query) >= 0 ||
+                    typeof $scope.teams[game.opposingTeamId] !== 'undefined' && $scope.teams[game.opposingTeamId].name.indexOf(query) >= 0) {
+                    filteredGames.push(game);
+                }
+
+                $scope.gamesList = filteredGames;
+
+            }, $scope.games);
+
+        };
     }
 ]);
 
