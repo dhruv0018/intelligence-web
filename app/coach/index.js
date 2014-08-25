@@ -56,7 +56,6 @@ Coach.service('Coach.Data.Dependencies', [
 
         var Data = {
 
-            users: users.load(),
             teams: teams.load(),
             games: games.load({
                 uploaderTeamId: teamId
