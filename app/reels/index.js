@@ -54,11 +54,7 @@ ReelsArea.config([
                         data.plays = plays.load({reelId: reelId});
                         data.leagues = leagues.load();
 
-                        return $q.all(data).then(function(data) {
-                            if ($stateParams.id) {
-                                return $q.all(data);
-                            }
-                        });
+                        return $q.all(data);
                     }
                 ]
             }
@@ -71,17 +67,6 @@ ReelsArea.service('Reels.Data.Dependencies', [
     function dataService($state, games, plays, teams) {
 
         var Data = {};
-        var reelId;
-
-        if ($state.params.id) {
-            reelId = $state.params.id;
-
-            //TODO: get reel
-            // Data.reel = reels.get({id: reelId});
-            // Data.games = games.load({reelId: reelId});
-            // Data.teams = teams.load({reelId: reelId});
-            // Data.plays = plays.load({reelId: reelId});
-        }
 
         return Data;
 
