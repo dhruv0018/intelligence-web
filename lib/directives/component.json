@@ -46,7 +46,8 @@
         "verify-password",
         "videogular",
         "breakdown-text",
-        "player-information"
+        "player-information",
+        "film-home-tabs"
     ],
     "scripts": [
         "index.js"
