@@ -61,6 +61,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
     function controller($scope, $state, players, teams) {
 
         $scope.keys = window.Object.keys;
+        $scope.hasRoster = false;
 
         //Collections
         $scope.teams = $scope.data.teams.getCollection();

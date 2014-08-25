@@ -14,7 +14,7 @@
 
                 <div class="box-body col-md-12">
 
-                    <form class="form-your-team" name="formYourTeam" role="form">
+                    <form data-ng-if="hasRoster" class="form-your-team" name="formYourTeam" role="form">
 
                         <div class="table-responsive">
 
@@ -58,6 +58,10 @@
                         </div>
 
                     </form>
+
+                    <div data-ng-if="!hasRoster">
+                    Your team currently does not have a roster. To add players to your roster, <a data-ui-sref="Coach.Team">click here</a>.
+                    </div>
 
                 </div>
 
