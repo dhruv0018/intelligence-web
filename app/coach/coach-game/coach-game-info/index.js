@@ -93,16 +93,15 @@ Info.controller('Coach.Game.Info.controller', [
 
         $scope.setTabHeadings = function() {
 
-            try {
-                $scope.headings.opposingTeam = $scope.teams[$scope.data.game.opposingTeamId].name || 'Opposing Team';
+            var team = teams.get($scope.data.game.teamId);
+            var opposingTeam = teams.get($scope.data.game.opposingTeamId);
 
-                if (games.isRegular($scope.data.game)) {
-                    $scope.headings.yourTeam = $scope.teams[session.currentUser.currentRole.teamId].name || 'Team';
-                } else {
-                    $scope.headings.scoutingTeam = $scope.teams[$scope.data.game.teamId].name || 'Scouting Team';
-                }
-            } catch (e) {
-                console.error(e);
+            $scope.headings.opposingTeam = opposingTeam.name || 'Opposing Team';
+
+            if (games.isRegular($scope.data.game)) {
+                $scope.headings.yourTeam = team.name || 'Team';
+            } else {
+                $scope.headings.scoutingTeam = team.name || 'Scouting Team';
             }
         };
 
