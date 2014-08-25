@@ -1,5 +1,6 @@
 <div class="reel-play">
-	<p>{{$id}}.{{homeTeam.name}} vs {{opposingTeam.name}} - {{datePlayed | date:'MMM. d, yyyy'}}</p>
-	<p>[[Play Summary]] - [[Period]]</p>
+	<p>{{$index + 1}}. {{team.name}} vs {{opposingTeam.name}} - {{datePlayed | date:'MMM. d, yyyy'}}</p>
+
 	<span class="play-reel-play" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY}"><i class="icon icon-play-circle"></i></span>
+	<span data-ng-show="editFlag" data-ng-click="removeReelPlay({index: $index})">[Delete]</span>
 </div>

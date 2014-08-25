@@ -98,10 +98,36 @@ ReelsArea.controller('ReelsArea.controller', [
     '$scope', '$state', '$stateParams', 'Reels.Data', 'PlayManager',
     function controller($scope, $state, $stateParams, data, playManager) {
 
-        console.log(data);
         $scope.data = data;
         $scope.videoTitle = 'reelsPlayer';
-        playManager.isReelsPlayer = true; //to make the play template show up properly
+        $scope.editMode = false;
+        var editAllowed = true;
+
+        $scope.toggleEditMode = function() {
+            //This method is for entering edit mode, or cancelling,
+            //NOT for exiting from commiting changes
+
+            if (!editAllowed) return;
+
+            $scope.editMode = !$scope.editMode;
+
+            if ($scope.editMode) {
+                //entering edit mode, cache plays array
+                if (data.reel && data.reel.plays && angular.isArray(data.reel.plays)) {
+                    $scope.toggleEditMode.playsCache = angular.copy(data.reel.plays);
+                }
+            } else {
+                //cancelling edit mode
+
+                if ($scope.toggleEditMode.playsCache) {
+                    //get rid of dirty plays array
+                    delete data.reel.plays;
+
+                    //in with clean
+                    data.reel.plays = $scope.toggleEditMode.playsCache;
+                }
+            }
+        };
 
         $scope.getHomeTeam = function(playId) {
 
@@ -123,7 +149,32 @@ ReelsArea.controller('ReelsArea.controller', [
             }
         };
 
-        $scope.data = data;
+        $scope.getDatePlayed = function(playId) {
+
+            if (playId) {
+                var gameId = data.plays.get(playId).gameId;
+
+                return data.games.get(gameId).datePlayed;
+            }
+        };
+
+        $scope.removeReelPlay = function(index) {
+            if (data.reel && data.reel.plays && angular.isArray(data.reel.plays)) {
+                data.reel.plays.splice(index, 1);
+            }
+        };
+
+        $scope.saveReels = function() {
+            //delete cached plays
+            delete $scope.toggleEditMode.playsCache;
+
+            $scope.editMode = false;
+            editAllowed = false;
+
+            data.reel.save().then(function() {
+                editAllowed = true;
+            });
+        };
     }
 ]);
 

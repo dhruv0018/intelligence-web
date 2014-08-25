@@ -1,6 +1,6 @@
 <data-videogular data-vg-player-ready="onPlayerReady" data-vg-complete="onCompleteVideo" data-vg-update-time="onUpdateTime" data-vg-update-size="onUpdateSize" data-vg-update-volume="onUpdateVolume" data-vg-update-state="onUpdateState" data-vg-width="config.width" data-vg-height="config.height" data-vg-theme="config.theme.url" data-vg-autoplay="config.autoPlay" data-vg-stretch="config.stretch.value" data-vg-responsive="false" data-vg-sources="sources">
 
-    <div class="error-video" data-ng-hide="sources.length"><h1>Could not load video</h1></div>
+    <div class="error-video" data-ng-hide="videoTitle === 'reelsPlayer' || sources.length"><h1>Could not load video</h1></div>
 
     <video-spot></video-spot>
 
