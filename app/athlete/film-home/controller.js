@@ -25,11 +25,13 @@ FilmHome.controller('Athlete.FilmHome.controller', [
         $scope.teams = teams.getCollection();
         $scope.team = teams.get(teamId);
         $scope.query = '';
-
+        console.log($scope.gamesList);
         $scope.athlete = {
             user: session.currentUser,
             players: players.getList()
         };
+
+
         console.log($scope.athlete);
     }
 ]);
