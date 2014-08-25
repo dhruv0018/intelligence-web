@@ -56,8 +56,8 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', 'GAME_STATUSES', 'GamesFactory', 'TeamsFactory', 'SessionService',
-    function controller($scope, $state, GAME_STATUSES, games, teams, session) {
+    '$scope', '$state', 'GAME_STATUSES', 'GamesFactory', 'TeamsFactory', 'SessionService', 'AlertsService',
+    function controller($scope, $state, GAME_STATUSES, games, teams, session, alerts) {
 
         $scope.keys = window.Object.keys;
         $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
