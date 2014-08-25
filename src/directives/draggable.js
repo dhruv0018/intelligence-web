@@ -41,9 +41,15 @@ IntelligenceWebClient.directive('draggable',
             });
 
             //flag that can turn the ability to drag off/on
-            attributes.$observe('draggableFlag', function(newValue) {
-                element.attr('draggable', newValue === 'true');
-            });
+            //allow dragging if flag not used
+            if (!('draggableFlag' in attributes)) {
+                element.attr('draggable', true);
+            } else {
+                attributes.$observe('draggableFlag', function(newValue) {
+                    element.attr('draggable', newValue === 'true');
+                });
+            }
+
 
             dragImage = document.createElement('img');
             dragImage.src = 'assets/move.png';
