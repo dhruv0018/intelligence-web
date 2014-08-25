@@ -52,11 +52,6 @@ Team.controller('Coach.Team.controller', [
             message: 'All game film is automatically shared with Athletes on your active roster.'
         });
 
-        alerts.add({
-            type: 'super-danger',
-            message: 'Once you upload your roster, click here to return to your uploaded game and submit for breakdown.'
-        });
-
         if (Object.keys($scope.positions).length > 0) {
             angular.forEach($scope.roster, function(player) {
                 player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);

@@ -64,7 +64,21 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;
+
+        //Make sure team has roster
         $scope.hasRoster = false;
+
+        if ($scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
+
+            $scope.hasRoster = true;
+        }
+
+        $scope.returnToGameAlert = function() {
+            alerts.add({
+                type: 'super-danger',
+                message: 'Once you upload your roster, click here to return to your uploaded game and submit for breakdown.'
+            });
+        };
 
         var teamIdForThisGame = session.currentUser.currentRole.teamId;
         if ($scope.data.game.uploaderTeamId) {
