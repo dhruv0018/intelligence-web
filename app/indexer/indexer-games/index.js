@@ -97,6 +97,9 @@ Games.controller('indexer-games.Controller', [
 
         $scope.userId = session.currentUser.id;
 
+        $scope.footballFAQ = config.links.indexerFAQ.football.uri;
+        $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
+
         var userLocation = session.currentUser.currentRole.indexerGroupId;
 
         if (userLocation === INDEXER_GROUPS.US_MARKETPLACE) {

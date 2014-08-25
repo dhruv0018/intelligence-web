@@ -5,7 +5,7 @@ var angular = window.angular;
  * Account page module.
  * @module Account
  */
-var Account = angular.module('account', [
+var Account = angular.module('Account', [
     'ui.router',
     'ui.bootstrap',
     'ui.validate'
@@ -16,10 +16,9 @@ Account.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('account.html', require('./template.html'));
-        $templateCache.put('contact-info.html', require('./contact-info.html'));
-        $templateCache.put('roles-list.html', require('./roles-list.html'));
-        $templateCache.put('change-password.html', require('./change-password.html'));
+        $templateCache.put('account/template.html', require('./template.html'));
+        $templateCache.put('account/contact-info.html', require('./contact-info.html'));
+        $templateCache.put('account/roles-list.html', require('./roles-list.html'));
     }
 ]);
 
@@ -34,145 +33,55 @@ Account.config([
 
         $stateProvider
 
-            .state('account', {
+            .state('Account', {
                 url: '/account',
                 parent: 'base',
                 abstract: true,
                 views: {
                     'main@root': {
-                        templateUrl: 'account.html',
-                        controller: 'AccountController'
+                        templateUrl: 'account/template.html',
+                        controller: 'Account.controller'
                     }
                 }
             })
 
-            .state('contact-info', {
+            .state('Account.ContactInfo', {
                 url: '',
-                parent: 'account',
+                parent: 'Account',
                 views: {
-                    'content@account': {
-                        templateUrl: 'contact-info.html',
-                        controller: 'AccountController'
+                    'content@Account': {
+                        templateUrl: 'account/contact-info.html',
+                        controller: 'Account.ContactInfo.controller'
                     }
                 }
             })
 
-            .state('roles-list', {
+            .state('Account.RolesList', {
                 url: '',
-                parent: 'account',
+                parent: 'Account',
                 views: {
-                    'content@account': {
-                        templateUrl: 'roles-list.html',
-                        controller: 'AccountController'
+                    'content@Account': {
+                        templateUrl: 'account/roles-list.html',
+                        controller: 'Account.RolesList.controller'
                     }
                 }
             });
-    }
-]);
-
-/**
- * Change password controller.
- * @module Account
- * @name ChangePasswordController
- * @type {Controller}
- */
-Account.controller('ChangePasswordController', [
-    '$scope', '$state', '$modalInstance', 'AuthenticationService', 'SessionService',
-    function controller($scope, $state, $modalInstance, auth, session) {
-
-        $scope.submitPasswordChange = function(changePassword) {
-
-            var user = angular.copy(session.currentUser);
-
-            user.password = changePassword.newPassword;
-
-            user.save();
-
-            $modalInstance.close();
-
-            $state.go('contact-info');
-        };
-
-        $scope.cancel = function() {
-
-            $modalInstance.dismiss();
-
-            $state.go('contact-info');
-        };
-
-        $scope.forgot = function() {
-
-            $modalInstance.dismiss();
-
-            auth.logoutUser();
-
-            $state.go('forgot');
-        };
     }
 ]);
 
 /**
  * Account controller.
  * @module Account
- * @name AccountController
- * @type {Controller}
+ * @name Account.controller
+ * @type {controller}
  */
-Account.controller('AccountController', [
-    '$scope', '$state', '$modal', 'SessionService', 'AuthenticationService', 'LeaguesFactory', 'SportsFactory', 'ROLES', 'ROLE_ID',
-    function controller($scope, $state, $modal, session, auth, leagues, sports, ROLES, ROLE_ID) {
+Account.controller('Account.controller', [
+    function controller() {
 
-        $scope.roleGroups = [];
-
-        /**
-         * loop through the ROLE_ID hash, and organize it so the role names
-         * are paired with the user's roles that matches
-         */
-        var i = 1;
-        var roleFilter = function(role, j, roles) {
-            return parseInt(role.type.id, 10) === i;
-        };
-        var hasTeam = function(role) {
-            return role.teamId !== null;
-        };
-        for (i = 1; i <= Object.keys(ROLE_ID).length; i += 1) {
-
-            if (ROLES[ROLE_ID[i]]) {
-
-                var roleName = ROLES[ROLE_ID[i]].type.name;
-                var userRoles = session.currentUser.roles.filter(roleFilter);
-                var roleGroup = {
-                    roleName: roleName,
-                    userRoles: userRoles
-                };
-                if (userRoles.length > 0) {
-                    roleGroup.hasTeam = userRoles[0].teamId !== null;
-                    roleGroup.teamRoleIndicatorClass = roleGroup.hasTeam ? 'teamRole' : 'teamlessRole';
-                    $scope.roleGroups.push(roleGroup);
-                }
-            }
-        }
-
-        $scope.COACH = ROLES.COACH;
-        $scope.PARENT = ROLES.PARENT;
-        $scope.ATHLETE = ROLES.ATHLETE;
-        $scope.INDEXER = ROLES.INDEXER;
-
-        $scope.currentUser = session.currentUser;
-
-        $scope.addAthleteRole = function() {
-
-            $scope.currentUser.addRole(ROLES.ATHLETE);
-            session.storeCurrentUser($scope.currentUser);
-        };
-
-        $scope.callChangePasswordModal = function() {
-
-            $modal.open({
-
-                templateUrl: 'change-password.html',
-                controller: 'ChangePasswordController'
-            });
-        };
     }
 ]);
+
+/* File dependencies. */
+require('./contact-info');
+require('./roles-list');
 

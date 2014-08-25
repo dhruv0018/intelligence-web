@@ -18,7 +18,7 @@ var App = angular.module('App', [
     'root',
     'login',
     'header',
-    'account',
+    'Account',
     'Admin',
     'indexer',
     'Indexing',
