@@ -6,7 +6,7 @@
 
        <strong>Game Film: </strong>
 
-       <a ui-sref="Coach.GameArea({id:film.id})">
+       <a data-ui-sref="Coach.GameArea({id:film.id})">
            {{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}
        </a>
        <br/>
@@ -19,7 +19,7 @@
 
        <strong>Reel: </strong>
 
-       <a ui-sref="Coach.ReelsArea({id:film.id})">
+       <a data-ui-sref="Coach.ReelsArea({id:film.id})">
            {{film.name}}
        </a>
        <br/>
