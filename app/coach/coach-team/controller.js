@@ -14,8 +14,8 @@ var Team = angular.module('Coach.Team');
  * @type {controller}
  */
 Team.controller('Coach.Team.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Data', 'PlayersFactory', 'UsersFactory', 'SessionService',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users, session) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Team.Data', 'PositionsetsFactory', 'PlayersFactory', 'UsersFactory', 'SessionService',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, positionsets, players, users, session) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
@@ -41,7 +41,7 @@ Team.controller('Coach.Team.controller', [
         $scope.league = $scope.leagues[$scope.team.leagueId];
 
         //Positions
-        $scope.positions = ($scope.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.league.positionSetId].indexedPositions : {};
+        $scope.positions = ($scope.league.positionSetId) ? positionsets.getCollection()[$scope.league.positionSetId].indexedPositions : {};
 
         //Roster
         $scope.roster = $scope.data.playersList;
