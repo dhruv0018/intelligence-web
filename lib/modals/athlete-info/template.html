@@ -66,8 +66,8 @@
                                     </tr>
                                 </thead>
                                 <tr>
-                                    <td><input class="name" placeholder="First Name" data-ng-model="athlete.firstName" required></td>
-                                    <td><input class="name" placeholder="Last Name" data-ng-model="athlete.lastName" required></td>
+                                    <td><input class="name" placeholder="First Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.firstName" required></td>
+                                    <td><input class="name" placeholder="Last Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.lastName" required></td>
                                     <td><input size="3" data-ng-model="athlete.jerseyNumbers[rosterId]" required></td>
                                 </tr>
                             </table>
@@ -94,7 +94,7 @@
                                     <strong>Player's Email</strong>
                                     <br/>
                                     <input type="text" data-ng-if="!athlete.userId" data-ng-model="athlete.email" placeholder="Email Address">
-                                    <input type="text" data-ng-if="athlete.userId" data-ng-model="users[athlete.userId].email" placeholder="Email Address">
+                                    <input type="text" data-ng-if="athlete.userId" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="users[athlete.userId].email" placeholder="Email Address">
                                 </div>
                                 <div ng-hide="true" class="col-md-6">
                                     <strong>Allow player to edit event details</strong>
