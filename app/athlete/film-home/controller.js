@@ -29,9 +29,6 @@ FilmHome.controller('Athlete.FilmHome.controller', [
             user: users.get(session.currentUser.id),
             players: players.getList()
         };
-
-
-        console.log($scope.athlete);
     }
 ]);
 

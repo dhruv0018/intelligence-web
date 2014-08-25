@@ -74,10 +74,6 @@ Coach.service('Coach.Data.Dependencies', [
             });
         });
 
-        //TODO remove this
-        promises.tempPlayers = players.load();
-
-
         return promises;
     }
 ]);
