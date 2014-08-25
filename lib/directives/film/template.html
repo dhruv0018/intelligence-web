@@ -1,18 +1,31 @@
 <div class="krossover-film">
-   <div class="film-info-header">
-       {{game.datePlayed | date: 'MMM dd, yyyy' }}
+   <div class="film-info-header" data-ng-if="isGame">
+       {{film.datePlayed | date: 'MMM dd, yyyy' }}
 
        <br/>
 
        <strong>Game Film: </strong>
 
-       <a ui-sref="Coach.GameArea({id:game.id})">
-           {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
+       <a ui-sref="Coach.GameArea({id:film.id})">
+           {{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}
        </a>
        <br/>
        Uploaded by {{uploaderName}}
    </div>
-   <krossover-thumbnail width="400" data-game="game"></krossover-thumbnail>
+   <div class="film-info-header" data-ng-if="!isGame">
+       {{film.updatedAt | date: 'MMM dd, yyyy' }}
+
+       <br/>
+
+       <strong>Reel: </strong>
+
+       <a ui-sref="Coach.ReelsArea({id:film.id})">
+           {{film.name}}
+       </a>
+       <br/>
+       Uploaded by {{uploaderName}}
+   </div>
+   <krossover-thumbnail width="400" data-film="film" data-is-game="isGame"></krossover-thumbnail>
 
     <div>
 

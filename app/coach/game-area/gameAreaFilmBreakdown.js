@@ -18,6 +18,24 @@ GameAreaFilmBreakdown.run([
     }
 ]);
 
+GameAreaFilmBreakdown.service('GameAreaFilmBreakdown.Data.Dependencies', [
+    '$q', 'SessionService', 'ReelsFactory',
+    function($q, session, reels) {
+
+        var teamId = session.currentUser.currentRole.teamId;
+        var userId = session.currentUser.id;
+
+        var Data = {
+            reels: reels.load({
+                teamId: teamId,
+                userId: userId
+            }),
+        };
+
+        return Data;
+    }
+]);
+
 GameAreaFilmBreakdown.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
@@ -31,6 +49,14 @@ GameAreaFilmBreakdown.config([
                     templateUrl: 'coach/game-area/gameAreaFilmBreakdown.html',
                     controller: 'GameAreaFilmBreakdownController'
                 }
+            },
+            resolve: {
+                'GameAreaFilmBreakdown.Data': [
+                    '$q', 'GameAreaFilmBreakdown.Data.Dependencies',
+                    function($q, data) {
+                        return $q.all(data);
+                    }
+                ]
             }
         };
 
@@ -40,14 +66,15 @@ GameAreaFilmBreakdown.config([
 ]);
 
 GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
-    function controller($scope, $state, $stateParams, games, plays, filtersets, data) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'Coach.Data',
+    function controller($scope, $state, $stateParams, games, plays, filtersets, reels, data) {
         $scope.gameId = $state.params.id;
         $scope.videoTitle = 'filmBreakdown';
         $scope.data = data;
         $scope.teamId = data.game.teamId;
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
+        $scope.reels = reels.getList();
         $scope.expandAll = false;
         $scope.filterCategory = data.filterset.categories[0].id;
         $scope.activeFilters = [];
