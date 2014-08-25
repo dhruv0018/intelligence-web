@@ -26,11 +26,11 @@ FilmHome.controller('Athlete.FilmHome.controller', [
         $scope.team = teams.get(teamId);
         $scope.query = '';
 
-        //TODO-- temp athlete -- remove this
-//        $scope.tempAthlete = {
-//            user: users.get(59),
-//            players: [players.get(633)]
-//        };
+        $scope.athlete = {
+            user: session.currentUser,
+            players: players.getList()
+        };
+        console.log($scope.athlete);
     }
 ]);
 
