@@ -141,12 +141,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         $scope.save = function() {
 
-            if (Object.keys($scope.positions).length > 0) {
-                angular.forEach($scope.gameRoster, function(player) {
-                    player = players.getPositionsFromDowndown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
-                });
-            }
-
             $scope.saving = true;
 
             $scope.tabs.scouting.disabled = false;
@@ -155,16 +149,24 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
             $scope.tabs.confirm.disabled = false;
             $scope.tabs.opposing.active = true;
 
+            if (Object.keys($scope.positions).length > 0) {
+                angular.forEach($scope.gameRoster, function(player) {
+                    player = players.getPositionsFromDowndown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
+                });
+            }
+
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
                 $scope.gameRoster = $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
+
+                $scope.saving = false;
 
                 angular.forEach($scope.gameRoster, function(player) {
                     player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
                 });
-
-                $scope.saving = false;
             });
 
+            $scope.tabs.deactivateAll();
+            $scope.tabs.opposing.active = true;
         };
     }
 ]);
