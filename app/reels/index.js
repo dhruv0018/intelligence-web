@@ -46,9 +46,9 @@ ReelsArea.config([
 
                         var reelId;
 
-                        reelId = parseInt($stateParams.id);
+                        reelId = Number($stateParams.id);
 
-                        data.reel = reels.fetch(reelId);
+                        data.reel = reels.load({reelId: reelId});
                         data.games = games.load({reelId: reelId});
                         data.teams = teams.load({reelId: reelId});
                         data.plays = plays.load({reelId: reelId});
