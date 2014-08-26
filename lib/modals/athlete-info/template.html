@@ -62,13 +62,13 @@
                                     <tr>
                                         <th>First Name</th>
                                         <th>Last Name</th>
-                                        <th data-ng-if="athlete.jerseyNumbers[rosterId]">Jersey Number</th>
+                                        <th data-ng-if="athlete.jerseyNumbers">Jersey Number</th>
                                     </tr>
                                 </thead>
                                 <tr>
                                     <td><input class="name" placeholder="First Name" data-ng-model="athlete.firstName" required></td>
                                     <td><input class="name" placeholder="Last Name" data-ng-model="athlete.lastName" required></td>
-                                    <td data-ng-if="athlete.jerseyNumbers[rosterId]"><input size="3" data-ng-model="athlete.jerseyNumbers[rosterId]" required></td>
+                                    <td data-ng-if="athlete.jerseyNumbers"><input size="3" data-ng-model="athlete.jerseyNumbers[rosterId]" required></td>
                                 </tr>
                             </table>
                             <div data-ng-if="positions && keys(positions).length > 0" class="col-md-12 position-list">
