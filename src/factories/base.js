@@ -88,6 +88,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
             /**
              * Gets a list of resources.
+             * @param {Object} [filter] - an object hash of filter parameters.
              * @returns {Array.<Resource>} - an array of resources.
              */
             getList: function(filter) {
