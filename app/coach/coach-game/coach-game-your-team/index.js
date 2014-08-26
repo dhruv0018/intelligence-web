@@ -92,13 +92,25 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                         $scope.gameRoster.push(teamRosterPlayer);
                     }
                 });
+                if (Object.keys($scope.positions).length > 0) {
+                    angular.forEach($scope.gameRoster, function(player) {
+                        player = players.getPositionsFromDowndown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
+                    });
+                }
+
+                players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
+                    $scope.gameRoster = roster;
+
+                    angular.forEach($scope.gameRoster, function(player) {
+                        player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
+                    });
+                });
             } else {
                 $scope.gameRoster = $scope.data.gamePlayerLists[game.teamId];
+                angular.forEach($scope.gameRoster, function(player) {
+                    player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
+                });
             }
-
-            angular.forEach($scope.gameRoster, function(player) {
-                player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
-            });
         };
 
         $scope.save = function() {
