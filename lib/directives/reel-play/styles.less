@@ -2,7 +2,7 @@
 
 .reel-play {
 	.clearfix;
-
+	letter-spacing: normal;
 	position: relative;
 	background: #fff;
 	color: #000;
@@ -11,6 +11,11 @@
 
 	&.edit-mode {
     	cursor: move;
+
+
+    	&:active {
+    		background-color: @play-selected-bg;
+    	}
     }
 }
 
@@ -20,7 +25,6 @@
 
 .reel-play-text {
 	display: inline-block;
-	width: 350px;
 	margin: 0;
 	padding: 0;
 }
@@ -53,12 +57,10 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	cursor: pointer;
+	padding: 5px;
 
 	.icon {
-		font-size: 28px;
-		line-height: 40px;
-		padding: 8px;
-		color: @brand-primary;
+		color: @brand-danger;
+		cursor: pointer;
 	}
 }

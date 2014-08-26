@@ -2,17 +2,7 @@
     <main class="content-full">   
         <header>
             <div>
-                <h3 class="highlight-title">{{data.reel.name}}</h3>
-
-                <div>
-                    <span class="highlight-title">Highlight reel for {{data.teams.get(data.reel.uploaderTeamId).name}}</span>
-                    <span class="highlight-created">(created on {{reelCreatedDate | date}})</span>
-                </div>
-
-                <div>
-                    <span>Last Updated: </span><span>{{reelUpdatedDate | date}}</span>
-                </div>
-
+                <h3 class="highlight-title">{{data.reel.name}} <span>(last updated on {{reelUpdatedDate | date}})</span></h3>
             </div>
         </header>
 
@@ -20,9 +10,9 @@
             <aside class="reels-playlist">
 
                 <div class="reel-edit-controls">
-                    <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit clips</a>
-                    <a href data-ng-show="editMode" data-ng-click="saveReels()"><i class="icon icon-download"></i> Save Changes</a>
-                    <a href data-ng-show="editMode" data-ng-click="toggleEditMode()">Cancel</a>
+                    <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
+                    <a href data-ng-show="editMode" data-ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
+                    <a href data-ng-show="editMode" data-ng-click="toggleEditMode()" class="pull-right">Cancel</a>
                 </div>
 
                 <div class="reel-plays-container">

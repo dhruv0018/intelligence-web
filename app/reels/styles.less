@@ -2,8 +2,8 @@
 
 aside.reels-playlist {
     .pull-left;
-
-    width: 425px;
+    letter-spacing: normal;
+    width: 320px;
     height: 100%;
     border-right: solid 1px #EEE;
     overflow: scroll;
@@ -13,8 +13,8 @@ aside.reels-playlist {
     
     padding: 10px;
 
-    a {
-        padding: 8px;
+    .save-edit {
+        color: @brand-success;
     }
 }
 
@@ -29,15 +29,20 @@ aside.reels-playlist {
     border-bottom: 1px solid @gray-border;
     background-color: #f7f8f8;
     padding: 15px;
+    height: 50px;
 
     h3 {
         color: @brand-blue;
         padding: 0;
-        margin: 0 0 10px 0;  
+        margin: 0 0 10px 0;
+
+        span {
+            font-weight: 400;
+        }
     }
 }
  
 .reels-player-area .main-highlight {
-    height: calc(~"100% - 107px");
+    height: calc(~"100% - 50px");
 }
 
