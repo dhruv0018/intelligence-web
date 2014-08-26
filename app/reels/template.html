@@ -9,24 +9,27 @@
         <div class="reels-area-film">
             <aside class="reels-playlist">
 
-            <div>
-                <span data-ng-hide="editMode" data-ng-click="toggleEditMode()">Edit</span>
-                <span data-ng-show="editMode" data-ng-click="saveReels()">Save</span>
-                <span data-ng-show="editMode" data-ng-click="toggleEditMode()">Cancel</span>
+            <div class="reel-edit-controls">
+                <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit clips</a>
+                <a href data-ng-show="editMode" data-ng-click="saveReels()"><i class="icon icon-download"></i> Save Changes</a>
+                <a href data-ng-show="editMode" data-ng-click="toggleEditMode()">Cancel</a>
             </div>
 
-            <div
-                krossover-reel-play
-                data-edit-flag="editMode"
-                data-index="$index"
-                data-remove-reel-play="removeReelPlay(index)"
-                data-draggable
-                data-draggable-flag="{{editMode}}"
-                data-play="data.plays.get(playId)"
-                data-team="getOpposingTeam(playId)"
-                data-opposing-team="getHomeTeam(playId)"
-                data-date-played="getDatePlayed(playId)"
-                data-ng-repeat="playId in data.reel.plays">
+            <div class="reel-plays-container">
+                <div
+                    krossover-reel-play
+                    data-edit-flag="editMode"
+                    data-index="$index"
+                    data-remove-reel-play="removeReelPlay(index)"
+                    data-draggable
+                    data-draggable-flag="{{editMode}}"
+                    data-play="data.plays.get(playId)"
+                    data-team="getOpposingTeam(playId)"
+                    data-opposing-team="getHomeTeam(playId)"
+                    data-date-played="getDatePlayed(playId)"
+                    data-ng-class="{'last': $last}"
+                    data-ng-repeat="playId in data.reel.plays">
+                </div>
             </div>
 
               <no-results data-ng-hide="data.reel && data.reel.plays && data.reel.plays.length"></no-results>
@@ -34,7 +37,7 @@
             </aside>
 
             <div class="player reels-player">
-                <x-krossover-videoplayer data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
+                <x-krossover-videoplayer class="reels-video-container" data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
             </div>
         </div>
     </main>
