@@ -48,7 +48,7 @@ ReelsArea.config([
 
                         reelId = Number($stateParams.id);
 
-                        data.reel = reels.load({reelId: reelId});
+                        data.reel = reels.fetch(reelId);
                         data.games = games.load({reelId: reelId});
                         data.teams = teams.load({reelId: reelId});
                         data.plays = plays.load({reelId: reelId});
@@ -86,6 +86,8 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.videoTitle = 'reelsPlayer';
         $scope.editMode = false;
         var editAllowed = true;
+        $scope.reelCreatedDate = (typeof $scope.reelCreatedDate === 'string') ? new Date(data.reel.createdAt) : data.reel.createdAt;
+        $scope.reelUpdatedDate = (typeof $scope.reelUpdatedDate === 'string') ? new Date(data.reel.updatedAt) : data.reel.updatedAt;
 
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,

@@ -1,13 +1,23 @@
 <section class="reels-player-area">
 
-    <main class="content-full">
-        <header>
+    <header>
+        <div>
+            <h3 class="highlight-title">{{data.reel.name}}</h3>
+
             <div>
-                Highlight reel
+                <span class="highlight-title">Highlight reel for {{data.teams.get(data.reel.uploaderTeamId).name}}</span>
+                <span class="highlight-created">(created on {{reelCreatedDate | date}})</span>
             </div>
-        </header>
-        <div class="reels-area-film">
-            <aside class="reels-playlist">
+
+            <div>
+                <span>Last Updated: </span><span>{{reelUpdatedDate | date}}</span>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="main-highlight ng-scope" data-ui-view="content">
+        <aside class="reels-playlist">
 
             <div class="reel-edit-controls">
                 <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit clips</a>
@@ -32,14 +42,13 @@
                 </div>
             </div>
 
-              <no-results data-ng-hide="data.reel && data.reel.plays && data.reel.plays.length"></no-results>
+            <no-results data-ng-hide="data.reel && data.reel.plays && data.reel.plays.length"></no-results>
 
-            </aside>
+        </aside>
 
-            <div class="player reels-player">
-                <x-krossover-videoplayer class="reels-video-container" data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
-            </div>
+        <div class="player reels-player">
+            <x-krossover-videoplayer class="reels-video-container" data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
         </div>
-    </main>
+    </div>
 
 </section>
