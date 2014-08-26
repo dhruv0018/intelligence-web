@@ -1,11 +1,11 @@
 var PAGE_SIZE = 100;
 
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 /**
  * Base factory
@@ -204,6 +204,13 @@ IntelligenceWebClient.factory('BaseFactory', [
                 filter.start = filter.start || 0;
                 filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
+                var aFilterIsUndefined = Object.keys(filter).some(function(key) {
+
+                    return angular.isUndefined(filter[key]);
+                });
+
+                if (aFilterIsUndefined) throw new Error('Undefined filter');
+
                 success = success || function(resources) {
 
                     return resources;
@@ -249,6 +256,13 @@ IntelligenceWebClient.factory('BaseFactory', [
                 filter = filter || {};
                 filter.start = filter.start || 0;
                 filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
+
+                var aFilterIsUndefined = Object.keys(filter).some(function(key) {
+
+                    return angular.isUndefined(filter[key]);
+                });
+
+                if (aFilterIsUndefined) throw new Error('Undefined filter');
 
                 success = success || function(resources) {
 

@@ -12,12 +12,12 @@ var DEFAULT_ACCESS_TOKEN_TYPE = 'Bearer';
 var DEFAULT_ACCESS_TOKEN_EXPIRATION_TIME = 3600 * 1000;
 var DEFAULT_REFRESH_TOKEN_EXPIRATION_TIME = 1209600 * 1000;
 
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 /**
  * A service to manage OAuth tokens. It handles retrieving them from the server
