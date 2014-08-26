@@ -2,12 +2,12 @@ var PAGE_SIZE = 20;
 
 var moment = require('moment');
 
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
     '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',

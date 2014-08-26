@@ -1,12 +1,12 @@
 var PAGE_SIZE = 100;
 
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 var moment = require('moment');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.service('TeamsStorage', [
     function() {

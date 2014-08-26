@@ -1,11 +1,11 @@
 var RETRY_INTERVAL = 10000;
 
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 /**
  * A service to manage HTTP activity. Provides queues for each request type and
