@@ -31,15 +31,23 @@ Queue.run([
  * @type {service}
  */
 Queue.service('Admin.Queue.Data.Dependencies', [
-    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function(ROLE_TYPE, sports, leagues, teams, games, users) {
+    'GAME_STATUSES', 'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(GAME_STATUSES, ROLE_TYPE, sports, leagues, teams, games, users) {
+
+        var statuses = [
+            GAME_STATUSES.READY_FOR_INDEXING.id,
+            GAME_STATUSES.INDEXING.id,
+            GAME_STATUSES.READY_FOR_QA.id,
+            GAME_STATUSES.QAING.id,
+            GAME_STATUSES.SET_ASIDE.id
+        ];
 
         var Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
             teams: teams.load(),
-            games: games.load(),
+            games: games.load({ 'status[]': statuses }),
             users: users.load()
         };
 
