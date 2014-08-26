@@ -11,6 +11,8 @@ IntelligenceWebClient.factory('UsersFactory', [
 
         var UsersFactory = {
 
+            PAGE_SIZE: 2500,
+
             description: 'users',
 
             storage: UsersStorage,

@@ -22,6 +22,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
         var TeamsFactory = {
 
+            PAGE_SIZE: 1500,
+
             description: 'teams',
 
             storage: TeamsStorage,
