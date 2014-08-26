@@ -30,7 +30,7 @@ Team.service('Coach.Team.Data.Dependencies', [
 
         var Data = {
 
-            users: users.load(),
+            users: users.load()
         };
 
         angular.extend(Data, data);
