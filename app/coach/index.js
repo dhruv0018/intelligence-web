@@ -66,10 +66,10 @@ Coach.service('Coach.Data.Dependencies', [
 
             var team = teams.get(teamId);
 
-            return players.load({
-                rosterId: team.roster.id
-            }).then(function() {
-                return players.getList();
+            var playersFilter = { rosterId: team.roster.id };
+
+            return players.load(playersFilter).then(function() {
+                return players.getList(playersFilter);
             });
         });
 
