@@ -1,54 +1,54 @@
 <section class="reels-player-area">
-
-    <header>
-        <div>
-            <h3 class="highlight-title">{{data.reel.name}}</h3>
-
+    <main class="content-full">   
+        <header>
             <div>
-                <span class="highlight-title">Highlight reel for {{data.teams.get(data.reel.uploaderTeamId).name}}</span>
-                <span class="highlight-created">(created on {{reelCreatedDate | date}})</span>
-            </div>
+                <h3 class="highlight-title">{{data.reel.name}}</h3>
 
-            <div>
-                <span>Last Updated: </span><span>{{reelUpdatedDate | date}}</span>
-            </div>
-
-        </div>
-    </header>
-
-    <div class="main-highlight ng-scope" data-ui-view="content">
-        <aside class="reels-playlist">
-
-            <div class="reel-edit-controls">
-                <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit clips</a>
-                <a href data-ng-show="editMode" data-ng-click="saveReels()"><i class="icon icon-download"></i> Save Changes</a>
-                <a href data-ng-show="editMode" data-ng-click="toggleEditMode()">Cancel</a>
-            </div>
-
-            <div class="reel-plays-container">
-                <div
-                    krossover-reel-play
-                    data-edit-flag="editMode"
-                    data-index="$index"
-                    data-remove-reel-play="removeReelPlay(index)"
-                    data-draggable
-                    data-draggable-flag="{{editMode}}"
-                    data-play="data.plays.get(playId)"
-                    data-team="getOpposingTeam(playId)"
-                    data-opposing-team="getHomeTeam(playId)"
-                    data-date-played="getDatePlayed(playId)"
-                    data-ng-class="{'last': $last}"
-                    data-ng-repeat="playId in data.reel.plays">
+                <div>
+                    <span class="highlight-title">Highlight reel for {{data.teams.get(data.reel.uploaderTeamId).name}}</span>
+                    <span class="highlight-created">(created on {{reelCreatedDate | date}})</span>
                 </div>
+
+                <div>
+                    <span>Last Updated: </span><span>{{reelUpdatedDate | date}}</span>
+                </div>
+
             </div>
+        </header>
 
-            <no-results data-ng-hide="data.reel && data.reel.plays && data.reel.plays.length"></no-results>
+        <div class="main-highlight ng-scope" data-ui-view="content">
+            <aside class="reels-playlist">
 
-        </aside>
+                <div class="reel-edit-controls">
+                    <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit clips</a>
+                    <a href data-ng-show="editMode" data-ng-click="saveReels()"><i class="icon icon-download"></i> Save Changes</a>
+                    <a href data-ng-show="editMode" data-ng-click="toggleEditMode()">Cancel</a>
+                </div>
 
-        <div class="player reels-player">
-            <x-krossover-videoplayer class="reels-video-container" data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
+                <div class="reel-plays-container">
+                    <div
+                        krossover-reel-play
+                        data-edit-flag="editMode"
+                        data-index="$index"
+                        data-remove-reel-play="removeReelPlay(index)"
+                        data-draggable
+                        data-draggable-flag="{{editMode}}"
+                        data-play="data.plays.get(playId)"
+                        data-team="getOpposingTeam(playId)"
+                        data-opposing-team="getHomeTeam(playId)"
+                        data-date-played="getDatePlayed(playId)"
+                        data-ng-class="{'last': $last}"
+                        data-ng-repeat="playId in data.reel.plays">
+                    </div>
+                </div>
+
+                <no-results data-ng-hide="data.reel && data.reel.plays && data.reel.plays.length"></no-results>
+
+            </aside>
+
+            <div class="player reels-player">
+                <x-krossover-videoplayer class="reels-video-container" data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
+            </div>
         </div>
-    </div>
-
+    </main>
 </section>
