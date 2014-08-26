@@ -31,6 +31,7 @@
         "angular-ui-unique": "angular-ui/ui-utils#unique-0.1.1",
         "angular-ui-showhide": "angular-ui/ui-utils#showhide-0.1.1",
         "angular-ui-validate": "angular-ui/ui-utils#validate-0.1.1",
+        "angular-multi-select": "isteven/angular-multi-select",
         "angular-ui-router": "angular-ui/ui-router",
         "flow": "flowjs/ng-flow",
         "flowjs": "flowjs/flow.js",
