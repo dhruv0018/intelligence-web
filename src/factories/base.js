@@ -326,7 +326,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                         });
                     }
 
-                    else if (angular.isObject(filter)) {
+                    else {
 
                         self.storage.loads[key] = self.retrieve(filter).then(function() {
 
