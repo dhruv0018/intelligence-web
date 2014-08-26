@@ -315,10 +315,25 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 self.storage.lastList = [];
                 self.storage.loads = self.storage.loads || Object.create(null);
-                self.storage.loads[key] = self.storage.loads[key] || self.retrieve(filter).then(function() {
 
-                    return self;
-                });
+                if (!self.storage.loads[key]) {
+
+                    if (angular.isNumber(filter)) {
+
+                        self.storage.loads[key] = self.fetch(filter).then(function() {
+
+                            return self;
+                        });
+                    }
+
+                    else if (angular.isObject(filter)) {
+
+                        self.storage.loads[key] = self.retrieve(filter).then(function() {
+
+                            return self;
+                        });
+                    }
+                }
 
                 self.storage.loads[key].list = angular.copy(self.storage.lastList);
                 self.storage.lastList = [];
