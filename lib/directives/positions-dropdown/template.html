@@ -1,6 +1,6 @@
 <div class="positions-dropdown dropdown">
 
-    <a class="dropdown-toggle">
+    <!--<a class="dropdown-toggle">
         <i class="icon icon-plus"></i> Add Position
     </a>
 
@@ -14,5 +14,13 @@
                 {{position.name}}
             </button>
         </li>
-    </ul>
+    </ul>-->
+    <div
+        multi-select
+        input-model="dropdownOptions"
+        button-label="name"
+        item-label="description name"
+        tick-property="ticked"
+    >
+    </div>
 </div>
