@@ -75,6 +75,7 @@ require('./models/filtersets');
 require('./models/reels');
 require('./models/plans');
 
+require('./storage/base');
 require('./storage/users');
 require('./storage/teams');
 require('./storage/games');
