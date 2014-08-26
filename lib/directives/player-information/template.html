@@ -7,19 +7,19 @@
         </div>
         <p>{{user.firstName}} {{user.lastName}}</p>
     </div>
-    <table class="player-information" data-ng-repeat="playerInformation in playerInformationSet">
+    <table class="player-information">
         <tr>
             <td class="sport">
-                <sport-placeholder data-sport="playerInformation.sport"></sport-placeholder>
+                <sport-placeholder data-sport="roleInfo.sport"></sport-placeholder>
             </td>
             <td class="positions">
-                <div class="team">{{playerInformation.team.name}}</div>
+                <div class="team">{{roleInfo.team.name}}</div>
                 <div>
-                    <span data-ng-repeat="position in playerInformation.positions">{{position.name}}</span>
+                    <span data-ng-repeat="position in roleInfo.positions">{{position.name}}</span>
                 </div>
             </td>
             <td class="jersey-number">
-                {{playerInformation.jerseyNumber}}
+                {{roleInfo.jerseyNumber}}
             </td>
         </tr>
     </table>
