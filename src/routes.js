@@ -92,7 +92,7 @@ IntelligenceWebClient.run([
             /* Ensure the current user still has access to the current state. */
             if (!authz.isAuthorized($state.current)) {
 
-                $state.go('contact-info');
+                $state.go('Account.ContactInfo');
             }
         });
     }

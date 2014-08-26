@@ -3,11 +3,12 @@
     "templates": [
         "template.html",
         "contact-info.html",
-        "roles-list.html",
-        "change-password.html"
+        "roles-list.html"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "contact-info.js",
+        "roles-list.js"
     ],
     "styles": [
         "styles.less"

@@ -50,7 +50,7 @@ Users.controller('Users.Users.Controller', [
             session.previousUser = angular.copy(session.currentUser);
             session.currentUser = user;
             $rootScope.currentUser = user;
-            $state.go('contact-info');
+            $state.go('Account.ContactInfo');
             location.reload();
         };
     }

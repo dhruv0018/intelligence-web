@@ -27,9 +27,7 @@ IntelligenceWebClient.directive('focusOn', [
 
             $scope.$watch('focusOn', function(focusOn) {
 
-                var focusWhen = !!attributes.focusWhen;
-
-                if (focusOn && focusWhen) {
+                if (focusOn) {
 
                     $timeout(function() {
 

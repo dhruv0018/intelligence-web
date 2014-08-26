@@ -88,16 +88,19 @@ IntelligenceWebClient.factory('BaseFactory', [
 
             /**
              * Gets a list of resources.
+             * @param {Object} [filter] - an object hash of filter parameters.
              * @returns {Array.<Resource>} - an array of resources.
              */
-            getList: function() {
+            getList: function(filter) {
 
                 var self = this;
 
                 if (!self.storage) throw new Error(self.description + ' storage not defined');
                 if (!self.storage.list) throw new Error(self.description + ' not loaded');
 
-                return this.storage.list;
+                var key = String(JSON.stringify(filter));
+
+                return this.storage.loads[key] ? this.storage.loads[key].list : self.storage.list;
             },
 
             /**
@@ -263,6 +266,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* Once the query request finishes. */
                 return query.$promise.then(function(resources) {
 
+                    if (self.storage.lastList) {
+
+                        self.storage.lastList.concat(resources);
+                    }
+
                     resources.forEach(function(resource) {
 
                         /* Extend the server resource. */
@@ -272,10 +280,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                         self.storage.collection[resource.id] = resource;
                     });
 
-                    self.updateList();
-
                     /* If all of the server resources have been retrieved. */
                     if (resources.length < filter.count) {
+
+                        self.updateList();
 
                         return self.storage.collection;
                     }
@@ -284,7 +292,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else {
 
                         /* Move the start filter to the next resource set. */
-                        filter.start = filter.start + filter.count + 1;
+                        filter.start += filter.count;
 
                         /* Keep retrieving resources until all are retrieved. */
                         return self.retrieve(filter);
@@ -305,11 +313,30 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var key = String(JSON.stringify(filter));
 
-                self.storage.loads = self.storage.loads || {};
-                self.storage.loads[key] = self.storage.loads[key] ||  self.retrieve(filter).then(function() {
+                self.storage.lastList = [];
+                self.storage.loads = self.storage.loads || Object.create(null);
 
-                    return self;
-                });
+                if (!self.storage.loads[key]) {
+
+                    if (angular.isNumber(filter)) {
+
+                        self.storage.loads[key] = self.fetch(filter).then(function() {
+
+                            return self;
+                        });
+                    }
+
+                    else {
+
+                        self.storage.loads[key] = self.retrieve(filter).then(function() {
+
+                            return self;
+                        });
+                    }
+                }
+
+                self.storage.loads[key].list = angular.copy(self.storage.lastList);
+                self.storage.lastList = [];
 
                 return self.storage.loads[key];
             },
@@ -398,6 +425,40 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         return resource;
                     });
+                }
+            },
+
+            /**
+             * Removes a resources from the server.
+             * @param {Resource} resource - a resource.
+             * @param {Function} success - called upon success.
+             * @param {Function} error - called on error.
+             * @return {Promise} - a promise.
+             */
+            remove: function(resource, success, error) {
+
+                var self = this;
+
+                var parameters = {};
+
+                resource = resource || self;
+
+                success = success || angular.noop;
+
+                error = error || function() {
+
+                    throw new Error('Could not remove ' + self.description);
+                };
+
+                /* Remove the resource from storage. */
+                self.storage.list.splice(self.storage.list.indexOf(resource), 1);
+                delete self.storage.collection[resource.id];
+
+                /* If the resource has been saved to the server before. */
+                if (resource.id) {
+
+                    /* Make a DELETE request to the server to delete the resource. */
+                    return self.resource.remove(parameters, resource, success, error).$promise;
                 }
             },
 

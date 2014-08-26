@@ -23,7 +23,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 angular.extend(tagset, self);
 
-                tagset.indexedTags = {};
+                var indexedTags = {};
 
                 tagset.tags.forEach(function(tag) {
 
@@ -48,20 +48,34 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                         tag.tagVariables = indexedVariables;
                     }
 
-                    tagset.indexedTags[tag.id] = tag;
+                    indexedTags[tag.id] = tag;
                 });
+
+                tagset.tags = indexedTags;
 
                 return tagset;
             },
 
-            getIndexedTags: function() {
+            getStartTags: function() {
 
-                return this.indexedTags;
+                var tags = this.tags;
+
+                return Object.keys(tags)
+
+                .map(function(key) {
+
+                    return tags[key];
+                })
+
+                .filter(function(tag) {
+
+                    return tag.isStart;
+                });
             },
 
             getNextTags: function(tagId) {
 
-                var tags = this.getIndexedTags();
+                var tags = this.tags;
                 var tag = tags[tagId];
 
                 if (tag.children.length) {
@@ -79,46 +93,10 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             isEndTag: function(tagId) {
 
-                var tags = this.getIndexedTags();
+                var tags = this.tags;
                 var tag = tags[tagId];
 
                 return tag.isEnd;
-            },
-
-            getTagsByType: function(type) {
-                results = [];
-                switch (type) {
-                    case 'START':
-                        results = $filter('filter')(this.tags, {isStart: true, isEnd: false});
-                        break;
-                    case 'FLOAT':
-                        tags =  $filter('filter')(this.tags, {isStart: false, isEnd: false});
-                        tags.forEach(function(tag) {
-                            if (!tag.children) {
-                                results.push(tag);
-                            }
-                        });
-                        break;
-                    case 'STANDALONE':
-                        tags =  $filter('filter')(this.tags, {isStart: true, isEnd: true});
-                        tags.forEach(function(tag) {
-                            if (!tag.children) {
-                                results.push(tag);
-                            }
-                        });
-                        break;
-                }
-
-
-                return results;
-            },
-
-            getStartTags: function() {
-
-                return this.tags.filter(function(tag) {
-
-                    return tag.isStart;
-                });
             }
         };
 

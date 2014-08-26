@@ -13,6 +13,7 @@
         "excel-upload",
         "basic-modals",
         "athlete-info",
+        "change-password",
         "admin-management"
     ],
     "scripts": [
