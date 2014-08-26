@@ -1,0 +1,7 @@
+<div class="reel-play" data-ng-class="{'edit-mode': editFlag}">
+	<p class="reel-play-text">{{$index + 1}}. {{team.name}} vs {{opposingTeam.name}} - {{datePlayed | date:'MMM. d, yyyy'}}</p>
+
+	<span class="play-reel-play" data-ng-class="{invisible: editFlag}" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY}"><i class="icon icon-play-circle"></i></span>
+
+	<span data-ng-show="editFlag" class="delete-reel-play" data-ng-click="removeReelPlay({index: $index})"><i class="icon icon-times-circle-o"></i></span>
+</div>

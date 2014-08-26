@@ -11,7 +11,8 @@
         "admin",
         "indexer",
         "indexing",
-        "coach"
+        "coach",
+        "reels"
     ],
     "scripts": [
         "index.js"
