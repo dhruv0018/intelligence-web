@@ -320,8 +320,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                     return self;
                 });
 
-                self.storage.loads[key].list = self.storage.lastList;
-                self.storage.lastList.length = 0;
+                self.storage.loads[key].list = angular.copy(self.storage.lastList);
+                self.storage.lastList = [];
 
                 return self.storage.loads[key];
             },
