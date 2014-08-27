@@ -34,17 +34,50 @@ GameAreaInformation.config([
             },
             resolve: {
                 'GameAreaInformation.Data': [
-                    '$q', 'SessionService', 'TeamsFactory',
-                    function($q, session, teams) {
+                    '$q', '$stateParams', 'SessionService', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'Coach.Data.Dependencies',
+                    function($q, $stateParams, session, leagues, teams, games, players, data) {
 
-                        var teamId = session.currentUser.currentRole.teamId;
+                        return $q.all(data).then(function(data) {
 
-                        var Data = {
+                            var gameId = $stateParams.id;
 
-                            remainingBreakdowns: teams.getRemainingBreakdowns(teamId)
-                        };
+                            var teamId = session.currentUser.currentRole.teamId;
 
-                        return $q.all(Data);
+                            /* TODO: Maybe not do this. */
+                            var game = games.get(gameId);
+                            data.game = game;
+
+                            /* TODO: Or this. */
+                            var team = teams.get(game.teamId);
+                            var league = leagues.get(team.leagueId);
+                            data.league = league;
+
+                            data.remainingBreakdowns = teams.getRemainingBreakdowns(teamId);
+
+                            /* TODO: Refactor this. */
+                            data.gamePlayerLists = {};
+
+                            var teamPlayersFilter = { rosterId: game.rosters[game.teamId].id };
+                            var teamPlayerList = players.load(teamPlayersFilter).then(function() {
+
+                                var teamPlayers = players.getList(teamPlayersFilter);
+                                data.teamPlayers = teamPlayers;
+                                data.gamePlayerLists[game.teamId] = teamPlayers;
+                            });
+
+                            var opposingTeamPlayersFilter = { rosterId: game.rosters[game.opposingTeamId].id };
+                            var opposingTeamPlayerList = players.load(opposingTeamPlayersFilter).then(function() {
+
+                                var opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
+                                data.opposingTeamPlayers = opposingTeamPlayers;
+                                data.gamePlayerLists[game.opposingTeamId] = opposingTeamPlayers;
+                            });
+
+                            return $q.all([teamPlayerList, opposingTeamPlayerList, data]).then(function() {
+
+                                return data;
+                            });
+                        });
                     }
                 ]
             }
@@ -56,8 +89,19 @@ GameAreaInformation.config([
 ]);
 
 GameAreaInformation.controller('GameAreaInformationController', [
-    '$scope', '$state', '$modal',
-    function controller($scope, $state, $modal) {
+    '$scope', '$state', '$stateParams', '$modal', 'GamesFactory', 'GameAreaInformation.Data',
+    function controller($scope, $state, $stateParams, $modal, games, data) {
+
+        var gameId = $stateParams.id;
+
+        var game = games.get(gameId);
+
+        $scope.data = data;
+
+        //Player List
+        $scope.teamPlayerList = data.gamePlayerLists[game.teamId];
+        $scope.opposingPlayerList = data.gamePlayerLists[game.opposingTeamId];
+
         $scope.confirmation = function() {
             $modal.open({
                 scope: $scope,

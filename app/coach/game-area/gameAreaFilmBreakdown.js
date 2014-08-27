@@ -31,6 +31,119 @@ GameAreaFilmBreakdown.config([
                     templateUrl: 'coach/game-area/gameAreaFilmBreakdown.html',
                     controller: 'GameAreaFilmBreakdownController'
                 }
+            },
+            resolve: {
+                'Coach.Data': [
+                    '$q', '$stateParams', 'FiltersetsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'Coach.Data.Dependencies',
+                    function($q, $stateParams, filtersets, leagues, teams, games, players, plays, data) {
+
+                        return $q.all(data).then(function(data) {
+
+                            var gameId = $stateParams.id;
+
+                            /* TODO: Maybe not do this. */
+                            var game = games.get(gameId);
+                            data.game = game;
+
+                            /* TODO: Or this. */
+                            var team = teams.get(game.teamId);
+                            var league = leagues.get(team.leagueId);
+                            data.league = league;
+
+                            /* TODO: Refactor this. */
+                            data.gamePlayerLists = {};
+
+                            var teamPlayersFilter = { rosterId: game.rosters[game.teamId].id };
+                            var teamPlayerList = players.load(teamPlayersFilter).then(function() {
+
+                                var teamPlayers = players.getList(teamPlayersFilter);
+                                data.teamPlayers = teamPlayers;
+                                data.gamePlayerLists[game.teamId] = teamPlayers;
+                            });
+
+                            var opposingTeamPlayersFilter = { rosterId: game.rosters[game.opposingTeamId].id };
+                            var opposingTeamPlayerList = players.load(opposingTeamPlayersFilter).then(function() {
+
+                                var opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
+                                data.opposingTeamPlayers = opposingTeamPlayers;
+                                data.gamePlayerLists[game.opposingTeamId] = opposingTeamPlayers;
+                            });
+
+                            var playsFilter = { gameId: game.id };
+
+                            var playsList = plays.load(playsFilter).then(function() {
+
+                                data.plays = plays.getList(playsList);
+                            });
+
+                            return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function(promisedData) {
+                                //Filtersets
+                                if (data.game.isDelivered()) {
+                                    var exclusion = [];
+                                    data.filterset = filtersets.get(data.league.filterSetId);
+                                    if (data.filterset) {
+                                        data.filtersetCategories = {};
+                                        angular.forEach(data.filterset.categories, function(filterCategory) {
+                                            //TODO deal with player stuff later
+                                            data.filtersetCategories[filterCategory.id] = filterCategory;
+                                        });
+
+                                        var playerFilterTemplate = {};
+
+                                        angular.forEach(data.filterset.filters, function(filter) {
+                                            data.filtersetCategories[filter.filterCategoryId].subFilters = data.filtersetCategories[filter.filterCategoryId].subFilters || [];
+
+                                            //TODO figure out a better way to deal with players at a later date
+                                            if (filter.name === 'Player') {
+                                                playerFilterTemplate = filter;
+                                                exclusion.push(filter.id);
+                                            }
+
+                                            if (filter.name === 'Unknown Players') {
+                                                exclusion.push(filter.id);
+                                            }
+
+                                            var excluded = exclusion.some(function(excludedFilterId) {
+                                                return filter.id === excludedFilterId;
+                                            });
+
+                                            if (!excluded) {
+                                                data.filtersetCategories[filter.filterCategoryId].subFilters.push(filter);
+                                            }
+
+                                        });
+
+                                        angular.forEach(data.gamePlayerLists[data.game.opposingTeamId], function(player) {
+                                            var playerFilter = {
+                                                id: playerFilterTemplate.id,
+                                                teamId: data.game.opposingTeamId,
+                                                playerId: player.id,
+                                                name: player.firstName[0] + '. ' + player.lastName,
+                                                filterCategoryId: playerFilterTemplate.filterCategoryId,
+                                                customFilter: true
+                                            };
+                                            data.filtersetCategories[playerFilter.filterCategoryId].subFilters.push(playerFilter);
+                                        });
+
+                                        angular.forEach(data.gamePlayerLists[data.game.teamId], function(player) {
+                                            var playerFilter = {
+                                                id: playerFilterTemplate.id,
+                                                teamId: data.game.teamId,
+                                                playerId: player.id,
+                                                name: player.firstName[0] + '. ' + player.lastName,
+                                                filterCategoryId: playerFilterTemplate.filterCategoryId,
+                                                customFilter: true
+                                            };
+                                            data.filtersetCategories[playerFilter.filterCategoryId].subFilters.push(playerFilter);
+                                        });
+
+                                        return data;
+                                    }
+                                }
+                            });
+                        });
+                    }
+                ]
             }
         };
 
@@ -40,13 +153,13 @@ GameAreaFilmBreakdown.config([
 ]);
 
 GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
-    function controller($scope, $state, $stateParams, games, plays, filtersets, data) {
+    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
+    function controller($scope, $state, $stateParams, leagues, games, plays, filtersets, data) {
         $scope.gameId = $state.params.id;
         $scope.videoTitle = 'filmBreakdown';
         $scope.data = data;
         $scope.teamId = data.game.teamId;
-        $scope.leagues = data.leagues.getCollection();
+        $scope.leagues = leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
         $scope.expandAll = false;
         $scope.filterCategory = data.filterset.categories[0].id;
@@ -54,6 +167,14 @@ GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
         $scope.filterMenu = {
             isOpened: false
         };
+
+        //Player List
+        $scope.teamPlayerList = data.gamePlayerLists[data.game.teamId];
+        $scope.opposingPlayerList = data.gamePlayerLists[data.game.opposingTeamId];
+
+        //Plays
+        $scope.totalPlays = angular.copy(data.plays);
+        $scope.plays = $scope.totalPlays;
 
         $scope.contains = function(array, id, playerId) {
             return array.some(function(filter) {
