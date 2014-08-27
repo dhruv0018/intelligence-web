@@ -65,7 +65,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         //Make sure team has roster
         $scope.hasRoster = false;
 
-        if ($scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
+        if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
 
             $scope.hasRoster = true;
         }
@@ -93,6 +93,9 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.buildGameRoster = function(game) {
             //fresh game roster with only a single unknown player
             var templatePlayerList = angular.copy($scope.data.playersList);
+
+            if (!$scope.data.gamePlayerLists) return;
+
             if (!$scope.data.gamePlayerLists[game.teamId] || $scope.data.gamePlayerLists[game.teamId].length <= 1) {
                 $scope.gameRoster = [];
                 angular.forEach(templatePlayerList, function(teamRosterPlayer) {
