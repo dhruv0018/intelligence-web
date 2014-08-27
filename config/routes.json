@@ -360,6 +360,21 @@
     "Athlete.FilmHome": {
 
         "Athlete": true
+    },
+
+    "Athlete.GameArea": {
+
+        "Athlete": true
+    },
+
+    "Athlete.GameArea.RawFilm": {
+
+        "Athlete": true
+    },
+
+    "Athlete.GameArea.Breakdown": {
+
+        "Athlete": true
     }
 }
 
