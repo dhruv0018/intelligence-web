@@ -1,9 +1,9 @@
-var package = require('../../../package.json');
+var pkg = require('../../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 /**
  * Intercepts error responses.
@@ -16,18 +16,7 @@ IntelligenceWebClient.factory('QueueInterceptor', [
 
             responseError: function(response) {
 
-                switch (response.status) {
-
-                case 400: /* Bad Request */
-                case 401: /* Unauthorized */
-                case 403: /* Forbidden */
-                case 404: /* Not Found */
-                case 405: /* Method Not Allowed */
-                case 500: /* Server Error */
-
-                    break;
-
-                default:
+                if (response.status < 300) {
 
                     return queue.enqueue(response);
                 }

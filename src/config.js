@@ -1,11 +1,11 @@
-var package = require('../package.json');
+var pkg = require('../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
 var Config = angular.module('config', []);
 
-Config.constant('package', package);
+Config.constant('pkg', pkg);
 
 var config;
 

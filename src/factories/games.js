@@ -2,18 +2,20 @@ var PAGE_SIZE = 20;
 
 var moment = require('moment');
 
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
     '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',
     function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, $q) {
 
         var GamesFactory = {
+
+            PAGE_SIZE: 1500,
 
             description: 'games',
 
@@ -87,9 +89,13 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                if (!self.rosters) return undefined;
+                if (!self.rosters) throw new Error('No game rosters');
 
-                return self.rosters[teamId];
+                var roster = self.rosters[teamId];
+
+                if (!roster) throw new Error('No team roster for game');
+
+                return roster;
             },
 
             getVideoSources: function() {
