@@ -46,6 +46,7 @@
         "verify-password",
         "videogular",
         "breakdown-text",
+        "player-information",
         "film-home-tabs"
     ],
     "scripts": [

@@ -41,8 +41,8 @@ Athlete.config([
  * @type {service}
  */
 Athlete.service('Athlete.Data.Dependencies', [
-    '$q', 'SessionService', 'UsersFactory', 'TeamsFactory', 'GamesFactory',
-    function($q, session, users, teams, games) {
+    '$q', 'SessionService', 'UsersFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory',
+    function($q, session, users, teams, games, players) {
 
         var teamId = session.currentUser.currentRole.teamId;
 
@@ -54,6 +54,14 @@ Athlete.service('Athlete.Data.Dependencies', [
                 uploaderTeamId: teamId
             })
         };
+
+        Data.athlete = {
+            players: players.load({
+                userId: session.currentUser.id
+            })
+        };
+
+
 
         return Data;
     }
