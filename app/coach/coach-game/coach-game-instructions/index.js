@@ -68,10 +68,12 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         //Make sure team has roster
         $scope.hasRoster = false;
 
-        if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
+        $scope.$watch('data.gamePlayerLists[data.game.teamId]', function(x) {
+            if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
 
-            $scope.hasRoster = true;
-        }
+                $scope.hasRoster = true;
+            }
+        });
 
         $scope.returnToGameAlert = function() {
             alerts.add({

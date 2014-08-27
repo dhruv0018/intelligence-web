@@ -63,21 +63,21 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.keys = window.Object.keys;
 
         //Make sure team has roster
+        // $scope.hasRoster = false;
+
+        // if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
+
         $scope.hasRoster = false;
-
-        if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
-
-            $scope.hasRoster = true;
-        }
-
-        console.log($scope);
+        $scope.loading = true;
+        $scope.saving = false;
+        // }
 
         $scope.returnToGameAlert = function() {
-            alerts.add({
-                type: ALERT_TYPES.SUPER_DANGER,
-                message: 'Once you upload your roster, click here to return to your uploaded game and submit for breakdown.',
-                mode: ALERT_MODES.PERSISTENT
-            });
+            // alerts.add({
+            //     type: ALERT_TYPES.SUPER_DANGER,
+            //     message: 'Once you upload your roster, click here to return to your uploaded game and submit for breakdown.',
+            //     mode: ALERT_MODES.PERSISTENT
+            // });
         };
 
         //Collections
@@ -132,6 +132,11 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
                 });
             }
+
+            if ($scope.gameRoster && $scope.gameRoster.some(function(player) { return !player.isUnknown; })) {
+                $scope.hasRoster = true;
+                $scope.loading = false;
+            }
         };
 
         $scope.save = function() {
@@ -142,15 +147,22 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                 });
             }
 
+            $scope.saving = true;
+
+            $scope.tabs.scouting.disabled = false;
+            $scope.tabs.opposing.disabled = false;
+            $scope.tabs.team.disabled = false;
+            $scope.tabs.confirm.disabled = false;
+            $scope.tabs.opposing.active = true;
+
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
-                $scope.gameRoster = roster;
+                $scope.gameRoster = $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
 
                 angular.forEach($scope.gameRoster, function(player) {
                     player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
                 });
 
-                $scope.tabs.deactivateAll();
-                $scope.tabs.opposing.active = true;
+                $scope.saving = false;
             });
 
         };

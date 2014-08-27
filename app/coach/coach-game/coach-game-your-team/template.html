@@ -8,7 +8,7 @@
                 <header class="box-header col-md-12">
 
                     <h3 class="box-title">{{team.name}} Roster</h3>
-                    <x-button-continue data-ng-disabled="tabs['opposing-team'].disabled">Next</x-button-continue>
+                    <x-button-continue data-ng-disabled="loading || saving">Next</x-button-continue>
 
                 </header>
 
@@ -59,7 +59,9 @@
 
                     </form>
 
-                    <div data-ng-if="!hasRoster">
+                    <div data-ng-if="loading">Importing your team roster...</div>
+
+                    <div data-ng-if="!hasRoster && !loading">
                     Your team currently does not have a roster. To add players to your roster, <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team">click here</a>.
                     </div>
 
@@ -69,7 +71,7 @@
 
         </div>
 
-        <x-button-continue data-ng-disabled="tabs['opposing-team'].disabled">Next</x-button-continue>
+        <x-button-continue data-ng-disabled="loading || saving">Next</x-button-continue>
 
     </div>
 
