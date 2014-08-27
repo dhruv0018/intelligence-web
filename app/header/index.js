@@ -86,6 +86,7 @@ Header.controller('HeaderController', [
         $scope.ADMIN = ROLES.ADMIN;
         $scope.INDEXER = ROLES.INDEXER;
         $scope.COACH = ROLES.COACH;
+        $scope.ATHLETE = ROLES.ATHLETE;
 
         $scope.config = config;
 
