@@ -1,0 +1,19 @@
+{
+    "name": "game-area",
+    "paths": [
+        "."
+    ],
+    "local": [
+        "raw-film",
+        "breakdown"
+    ],
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}
