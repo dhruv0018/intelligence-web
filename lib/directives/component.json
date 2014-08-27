@@ -45,7 +45,9 @@
         "user-typeahead",
         "verify-password",
         "videogular",
-        "breakdown-text"
+        "breakdown-text",
+        "player-information",
+        "film-home-tabs"
     ],
     "scripts": [
         "index.js"
