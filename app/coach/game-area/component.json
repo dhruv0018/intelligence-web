@@ -7,12 +7,12 @@
         "."
     ],
     "local": [
-        "raw-film"
+        "raw-film",
+        "breakdown"
     ],
     "templates": [
         "template.html",
         "gameAreaInformation.html",
-        "gameAreaFilmBreakdown.html",
         "gameAreaStatistics.html",
         "gameAreaShotChart.html",
         "gameAreaFormations.html",
@@ -22,7 +22,6 @@
     "scripts": [
         "index.js",
         "gameAreaInformation.js",
-        "gameAreaFilmBreakdown.js",
         "gameAreaStatistics.js",
         "gameAreaShotChart.js",
         "gameAreaFormations.js",

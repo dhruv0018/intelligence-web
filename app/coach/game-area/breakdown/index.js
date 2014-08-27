@@ -2,34 +2,34 @@
 var angular = window.angular;
 
 /**
- * Game Area Film Breakdown page module.
- * @module GameArea
+ * Coach game area film breakdown page module.
+ * @module Breakdown
  */
-var GameAreaFilmBreakdown = angular.module('game-area-film-breakdown', [
+var Breakdown = angular.module('Coach.GameArea.Breakdown', [
     'ui.router',
-    'ui.bootstrap',
-    'Indexing'
+    'ui.bootstrap'
 ]);
 
-GameAreaFilmBreakdown.run([
+Breakdown.run([
     '$templateCache',
     function run($templateCache) {
-        $templateCache.put('coach/game-area/gameAreaFilmBreakdown.html', require('./gameAreaFilmBreakdown.html'));
+
+        $templateCache.put('coach/game-area/breakdown/template.html', require('./template.html'));
     }
 ]);
 
-GameAreaFilmBreakdown.config([
+Breakdown.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
         var gameArea = {
-            name: 'ga-film-breakdown',
+            name: 'Coach.GameArea.Breakdown',
             url: '/film-breakdown',
             parent: 'Coach.GameArea',
             views: {
                 'content@Coach.GameArea': {
-                    templateUrl: 'coach/game-area/gameAreaFilmBreakdown.html',
-                    controller: 'GameAreaFilmBreakdownController'
+                    templateUrl: 'coach/game-area/breakdown/template.html',
+                    controller: 'Coach.GameArea.Breakdown.controller'
                 }
             },
             resolve: {
@@ -152,9 +152,10 @@ GameAreaFilmBreakdown.config([
     }
 ]);
 
-GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
+Breakdown.controller('Coach.GameArea.Breakdown.controller', [
     '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
     function controller($scope, $state, $stateParams, leagues, games, plays, filtersets, data) {
+
         $scope.gameId = $state.params.id;
         $scope.videoTitle = 'filmBreakdown';
         $scope.data = data;
