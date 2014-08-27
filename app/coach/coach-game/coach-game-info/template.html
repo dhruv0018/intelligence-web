@@ -9,7 +9,7 @@
                 <header class="box-header col-md-12">
 
                     <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
-                    <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid||tabs['scouting-team'].disabled">Next</x-button-continue>
+                    <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid || tabs['scouting-team'].disabled">Next</x-button-continue>
 
                 </header>
 
@@ -50,8 +50,8 @@
 
                                     <div class="btn-group-vertical">
 
-                                        <button type="button" class="btn-radio" data-ng-model="data.game.isHomeGame" data-btn-radio="'true'" required>Home</button>
-                                        <button type="button" class="btn-radio" data-ng-model="data.game.isHomeGame" data-btn-radio="'false'" required>Away</button>
+                                        <button type="button" class="btn-radio" data-ng-model="data.game.isHomeGame" data-btn-radio="true" required>Home</button>
+                                        <button type="button" class="btn-radio" data-ng-model="data.game.isHomeGame" data-btn-radio="false" required>Away</button>
 
                                     </div>
 
@@ -199,7 +199,7 @@
             </div>
 
             <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
-            <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid||tabs['scouting-team'].disabled">Next</x-button-continue>
+            <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid || tabs['scouting-team'].disabled">Next</x-button-continue>
 
         </div>
 

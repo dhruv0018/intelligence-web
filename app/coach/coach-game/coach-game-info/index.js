@@ -112,11 +112,9 @@ Info.controller('Coach.Game.Info.controller', [
             $scope.tabs.enableAll();
         }
 
-        //watches
-        //TODO, we really need to not do this
-        $scope.$watch('data.game', function(game) {
-            $scope.isHomeGame = $scope.data.game.isHomeGame == 'true' ? true : false;
-        });
+        if (typeof $scope.data.game.isHomeGame === 'undefined') {
+            $scope.data.game.isHomeGame = true;
+        }
 
         //Save functionality
         $scope.save = function() {
