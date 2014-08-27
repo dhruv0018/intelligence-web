@@ -57,8 +57,8 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
  * @type {controller}
  */
 YourTeam.controller('Coach.Game.YourTeam.controller', [
-    '$scope', '$state', 'PlayersFactory', 'TeamsFactory',
-    function controller($scope, $state, players, teams) {
+    '$scope', '$state', 'PlayersFactory', 'TeamsFactory', 'AlertsService', 'ALERT_MODES', 'ALERT_TYPES',
+    function controller($scope, $state, players, teams, alerts, ALERT_MODES, ALERT_TYPES) {
 
         $scope.keys = window.Object.keys;
 
@@ -70,10 +70,13 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
             $scope.hasRoster = true;
         }
 
+        console.log($scope);
+
         $scope.returnToGameAlert = function() {
             alerts.add({
-                type: 'super-danger',
-                message: 'Once you upload your roster, click here to return to your uploaded game and submit for breakdown.'
+                type: ALERT_TYPES.SUPER_DANGER,
+                message: 'Once you upload your roster, click here to return to your uploaded game and submit for breakdown.',
+                mode: ALERT_MODES.PERSISTENT
             });
         };
 
