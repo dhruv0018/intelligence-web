@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'PlaysResource', 'PlaysStorage', 'BaseFactory',
-    function(PlaysResource, PlaysStorage, BaseFactory) {
+    '$sce', 'PlaysResource', 'PlaysStorage', 'BaseFactory',
+    function($sce, PlaysResource, PlaysStorage, BaseFactory) {
 
         var PlaysFactory = {
 
@@ -48,6 +48,27 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 };
 
                 return newPlayList.$filter({filterId: filterId.filterId}, callback, error);
+            },
+            getVideoSources: function getVideoSources() {
+
+                var self = this;
+                var profiles = self.clip.videoTranscodeProfiles;
+                var profile;
+                var sources = [];
+
+                for (profile in profiles) {
+                    if (profiles[profile].videoUrl) {
+
+                        var source = {
+                            type: 'video/mp4',
+                            src: $sce.trustAsResourceUrl(profiles[profile].videoUrl)
+                        };
+
+                        sources.push(source);
+                    }
+                }
+
+                return sources;
             }
         };
 

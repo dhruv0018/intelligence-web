@@ -50,14 +50,10 @@ IntelligenceWebClient.directive('draggable',
                 });
             }
 
-
-            dragImage = document.createElement('img');
-            dragImage.src = 'assets/move.png';
-
             element.attr('draggable', true);
 
-            element.bind('mousedown', dragstart);
-            element.bind('mouseup', dragend);
+            element.bind('dragstart', dragstart);
+            element.bind('dragend', dragend);
 
             element.bind('dragover', dragover);
             element.bind('dragenter', dragenter);
