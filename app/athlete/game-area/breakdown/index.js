@@ -164,6 +164,7 @@ Breakdown.controller('Athlete.GameArea.Breakdown.controller', [
         $scope.league = $scope.leagues[$scope.team.leagueId];
         $scope.expandAll = false;
         $scope.filterCategory = data.filterset.categories[0].id;
+        $scope.filtersetCategories = data.filtersetCategories;
         $scope.activeFilters = [];
         $scope.filterMenu = {
             isOpened: false
