@@ -280,11 +280,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* Once the query request finishes. */
                 return query.$promise.then(function(resources) {
 
-                    if (self.storage.lastList) {
-
-                        self.storage.lastList.concat(resources);
-                    }
-
                     resources.forEach(function(resource) {
 
                         /* Extend the server resource. */
@@ -294,12 +289,17 @@ IntelligenceWebClient.factory('BaseFactory', [
                         self.storage.collection[resource.id] = resource;
                     });
 
+                    self.storage.query = self.storage.query || [];
+                    self.storage.query = self.storage.query.concat(resources);
+
                     /* If all of the server resources have been retrieved. */
                     if (resources.length < filter.count) {
 
                         self.updateList();
 
-                        return self.storage.collection;
+                        var query = self.storage.query.slice();
+                        delete self.storage.query;
+                        return query;
                     }
 
                     /* If there are more resources on the server to retrieve. */
@@ -327,7 +327,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var key = String(JSON.stringify(filter));
 
-                self.storage.lastList = [];
                 self.storage.loads = self.storage.loads || Object.create(null);
 
                 if (!self.storage.loads[key]) {
@@ -342,15 +341,14 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else {
 
-                        self.storage.loads[key] = self.retrieve(filter).then(function() {
+                        self.storage.loads[key] = self.retrieve(filter).then(function(list) {
+
+                            self.storage.loads[key].list = list;
 
                             return self;
                         });
                     }
                 }
-
-                self.storage.loads[key].list = angular.copy(self.storage.lastList);
-                self.storage.lastList = [];
 
                 return self.storage.loads[key];
             },
