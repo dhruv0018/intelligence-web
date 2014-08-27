@@ -14,21 +14,6 @@
                 <select data-ng-model="dataType">
                     <option data-ng-if="game.isDelivered()" value="film-breakdown"> Film Breakdown </option>
                     <option value="raw-film"> Raw Film </option>
-                    <option data-ng-if="hasFormations && game.isDelivered()" value="formation-report">
-                        Formation Report
-                    </option>
-                    <option data-ng-if="hasDownAndDistance && game.isDelivered()" value="down-distance-report">
-                        Down, Distance, &amp; Hash Report
-                    </option>
-                    <option data-ng-if="hasShotChart && game.isDelivered()" value="shot-chart">
-                        Shot Chart
-                    </option>
-                    <option data-ng-if="hasStatistics && game.isDelivered()" value="statistics">
-                        Game Statistics
-                    </option>
-                    <option value="game-info">
-                        Game Information
-                    </option>
                 </select>
             </div>
         </header>
