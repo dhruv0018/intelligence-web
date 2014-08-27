@@ -1,5 +1,7 @@
+/* Component dependencies */
+require('raw-film');
+
 require('./gameAreaInformation.js');
-require('./gameAreaRawFilm.js');
 require('./gameAreaFilmBreakdown.js');
 require('./gameAreaStatistics.js');
 require('./gameAreaShotChart.js');
@@ -18,8 +20,8 @@ var GameArea = angular.module('Coach.GameArea', [
     'ui.router',
     'ui.bootstrap',
     'Coach.Game',
+    'Coach.GameArea.RawFilm',
     'game-area-information',
-    'game-area-raw-film',
     'game-area-film-breakdown',
     'game-area-statistics',
     'game-area-shot-chart',
@@ -151,7 +153,7 @@ GameArea.controller('Coach.GameArea.controller', [
             if ($scope.dataType === 'game-info') {
                 $state.go('ga-info');
             } else if ($scope.dataType === 'raw-film') {
-                $state.go('ga-raw-film');
+                $state.go('Coach.GameArea.RawFilm');
             } else if ($scope.dataType === 'film-breakdown') {
                 $state.go('ga-film-breakdown');
             } else if ($scope.dataType === 'statistics') {
