@@ -52,7 +52,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
             getVideoSources: function getVideoSources() {
 
                 var self = this;
-                var profiles = self.clip.videoTranscodeProfiles;
+                var profiles = (self.clip) ? self.clip.videoTranscodeProfiles : [];
                 var profile;
                 var sources = [];
 
