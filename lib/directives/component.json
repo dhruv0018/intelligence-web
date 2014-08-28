@@ -47,7 +47,8 @@
         "videogular",
         "breakdown-text",
         "videogular",
-        "reel-play"
+        "reel-play",
+        "film-home-tabs"
     ],
     "scripts": [
         "index.js"

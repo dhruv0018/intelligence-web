@@ -30,23 +30,6 @@ FilmHome.controller('Coach.FilmHome.controller', [
         $scope.roster = $scope.team.roster;
         $scope.activeRoster = players.constructActiveRoster($scope.playersList, $scope.roster.id);
         $scope.query = '';
-        $scope.filters = filtersData.filters;
-
-        $scope.$watch('filters.all', function(all) {
-
-            if (all === true) {
-                filtersData.disableOthers();
-            }
-
-            else if (filtersData.othersDisabled === true) {
-                $scope.filters.all = true;
-            }
-        });
-
-        $scope.$watchCollection('filters.others', function(others) {
-            filtersData.watchOthers();
-        });
-
     }
 ]);
 
