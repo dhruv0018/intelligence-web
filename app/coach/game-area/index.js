@@ -236,6 +236,7 @@ GameArea.controller('Coach.GameArea.controller', [
 
         //Filters
         $scope.filtersetCategories = data.filtersetCategories;
+        console.log($scope.filtersetCategories);
 
         //view selector
         if ($scope.game.isDelivered()) {
