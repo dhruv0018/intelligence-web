@@ -57,8 +57,8 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
  * @type {controller}
  */
 YourTeam.controller('Coach.Game.YourTeam.controller', [
-    '$scope', '$state', 'PlayersFactory', 'TeamsFactory', 'AlertsService', 'ALERT_MODES', 'ALERT_TYPES',
-    function controller($scope, $state, players, teams, alerts, ALERT_MODES, ALERT_TYPES) {
+    '$scope', '$state', 'PlayersFactory', 'TeamsFactory', 'AlertsService',
+    function controller($scope, $state, players, teams, alerts) {
 
         $scope.keys = window.Object.keys;
 
