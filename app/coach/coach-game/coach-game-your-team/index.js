@@ -127,22 +127,22 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                     player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
                 });
             }
+        };
+
+        $scope.$watch('gameRoster', function(gameRoster) {
 
             if ($scope.gameRoster && $scope.gameRoster.some(function(player) { return !player.isUnknown; })) {
                 $scope.hasRoster = true;
                 $scope.loading = false;
+                $scope.tabs.scouting.disabled = false;
+                $scope.tabs.opposing.disabled = false;
+                $scope.tabs.team.disabled = false;
+                $scope.tabs.confirm.disabled = false;
+                $scope.data.gamePlayerLists[$scope.data.game.teamId] = $scope.gameRoster;
             }
-        };
+        }, true);
 
         $scope.save = function() {
-
-            $scope.saving = true;
-
-            $scope.tabs.scouting.disabled = false;
-            $scope.tabs.opposing.disabled = false;
-            $scope.tabs.team.disabled = false;
-            $scope.tabs.confirm.disabled = false;
-            $scope.tabs.opposing.active = true;
 
             if (Object.keys($scope.positions).length > 0) {
                 angular.forEach($scope.gameRoster, function(player) {
@@ -153,8 +153,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
             $scope.data.gamePlayerLists[$scope.data.game.teamId] = $scope.gameRoster;
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
                 $scope.gameRoster = $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
-
-                $scope.saving = false;
 
                 angular.forEach($scope.gameRoster, function(player) {
                     player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
