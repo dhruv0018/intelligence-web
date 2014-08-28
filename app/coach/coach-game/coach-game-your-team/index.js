@@ -63,14 +63,9 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.keys = window.Object.keys;
 
         //Make sure team has roster
-        // $scope.hasRoster = false;
-
-        // if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
-
         $scope.hasRoster = false;
         $scope.loading = true;
         $scope.saving = false;
-        // }
 
         $scope.returnToGameAlert = function() {
             // alerts.add({
