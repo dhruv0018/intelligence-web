@@ -150,6 +150,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                 });
             }
 
+            $scope.data.gamePlayerLists[$scope.data.game.teamId] = $scope.gameRoster;
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
                 $scope.gameRoster = $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
 
