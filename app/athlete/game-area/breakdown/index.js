@@ -33,7 +33,7 @@ Breakdown.config([
                 }
             },
             resolve: {
-                'Athlete.Data': [
+                'Athlete.GameArea.Breakdown.Data': [
                     '$q', '$stateParams', 'FiltersetsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'Athlete.Data.Dependencies',
                     function($q, $stateParams, filtersets, leagues, teams, games, players, plays, data) {
 
@@ -153,7 +153,7 @@ Breakdown.config([
 ]);
 
 Breakdown.controller('Athlete.GameArea.Breakdown.controller', [
-    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Athlete.Data',
+    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Athlete.GameArea.Breakdown.Data',
     function controller($scope, $state, $stateParams, leagues, games, plays, filtersets, data) {
 
         $scope.gameId = $state.params.id;
