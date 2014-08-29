@@ -74,7 +74,6 @@ Coach.service('Coach.Data.Dependencies', [
             });
         });
 
-
         return promises;
     }
 ]);

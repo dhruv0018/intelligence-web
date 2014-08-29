@@ -40,10 +40,10 @@
     <menu class="nav navbar-nav" data-ng-if="currentUser.is(COACH)">
 
         <li data-ui-sref-active="active"><a data-ui-sref="Coach.FilmHome">Film Home</a></li>
-        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="analytics">Analytics</a></li>
-        <li class="header-dropdown" data-ui-sref-active="active"><a class="dropdown-toggle">Team</a>
-            <ul class="dropdown-menu">
-                <li><a  data-ui-sref="Coach.Team">Roster</a></li>
+        <!-- <li class="disabled hide-option" data-ui-sref-active="active"><a data-ui-sref="analytics">Analytics</a></li> -->
+        <li class="header-dropdown" data-ui-sref-active="active"><a data-ui-sref="Coach.Team">Team</a>
+            <ul class="hide-option">
+                <li><a data-ui-sref="Coach.Team">Roster</a></li>
                 <li class="disabled"><a data-ui-sref="Coach.Team.Info">Team Info</a></li>
                 <li class="disabled"><a href="#">Coaches</a></li>
                 <li data-ng-hide="true"><a href="#">Sets</a></li>
@@ -51,6 +51,13 @@
         </li>
         <li data-ui-sref-active="active"><a data-ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
         <li data-ui-sref-active="active"><button class="btn btn-primary navbar-btn" data-ng-click="tabs.reset()" data-ui-sref="add-film" data-ui-sref-opts="{reload: true}">Add Film</button></li>
+    </menu>
+
+    <!-- Athlete menu -->
+    <menu class="nav navbar-nav" data-ng-if="currentUser.is(ATHLETE)">
+
+        <li data-ui-sref-active="active"><a data-ui-sref="Athlete.FilmHome">Film Home</a></li>
+
     </menu>
 
     <div class="nav navbar-nav navbar-right">

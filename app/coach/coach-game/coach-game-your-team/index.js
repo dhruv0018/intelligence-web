@@ -91,13 +91,17 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                         $scope.gameRoster.push(teamRosterPlayer);
                     }
                 });
+
+                players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
+                    $scope.gameRoster = roster;
+                });
             } else {
                 $scope.gameRoster = $scope.data.gamePlayerLists[game.teamId];
             }
         };
 
         $scope.save = function() {
-
+            $scope.data.gamePlayerLists[$scope.data.game.teamId] = $scope.gameRoster;
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
                 $scope.gameRoster = roster;
 

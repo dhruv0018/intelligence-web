@@ -1,43 +1,15 @@
-var package = require('../package.json');
+var pkg = require('../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.config([
     '$locationProvider',
     function config($locationProvider) {
 
         $locationProvider.html5Mode(true);
-    }
-]);
-
-IntelligenceWebClient.config([
-    '$stateProvider',
-    function config($stateProvider) {
-
-        $stateProvider
-
-            .state('401', {
-                url: '/401',
-                parent: 'root',
-                views: {
-                    'main@root': {
-                        template: '<div class="jumbotron"><h1 class="alert alert-danger">Not Authorized</h1></div>',
-                    }
-                }
-            })
-
-            .state('404', {
-                url: '/404',
-                parent: 'root',
-                views: {
-                    'main@root': {
-                        template: '<div class="jumbotron"><h1 class="alert alert-info">Not Found</h1></div>',
-                    }
-                }
-            });
     }
 ]);
 
@@ -67,19 +39,28 @@ IntelligenceWebClient.run([
              * redirect the user to login. */
             if (!authz.isPublic(toState) && !auth.isLoggedIn) {
 
+                /* Prevent the state from loading. */
                 event.preventDefault();
+
+                /* Redirect the user to the login page. */
                 $state.go('login');
             }
 
             /* Ensure the current user has access to the route. */
             else if (!authz.isAuthorized(toState)) {
 
+                /* Prevent the state from loading. */
                 event.preventDefault();
-                $state.go('login');
+
+                alerts.add({
+                    type: 'info',
+                    message: 'You do not have permission to go to ' + toState.name
+                });
             }
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+
             /* Clear any alerts. */
             alerts.clear();
 

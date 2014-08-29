@@ -84,10 +84,16 @@ Login.config([
                                     $state.go('indexer-games');
                                 }
 
-                                /* If the current user is a coach or an athlete. */
-                                else if (currentUser.is(ROLES.COACH) || currentUser.is(ROLES.ATHLETE)) {
+                                /* If the current user is a coach. */
+                                else if (currentUser.is(ROLES.COACH)) {
 
                                     $state.go('Coach.FilmHome');
+                                }
+
+                                /* If the current user an athlete. */
+                                else if (currentUser.is(ROLES.ATHLETE)) {
+
+                                    $state.go('Athlete.FilmHome');
                                 }
 
                                 else {
@@ -212,10 +218,16 @@ Login.controller('LoginController', [
                             $state.go('indexer-games');
                         }
 
-                        /* If the user is a coach or an athlete. */
-                        else if (user.is(ROLES.COACH) || user.is(ROLES.ATHLETE)) {
+                        /* If the user is a coach. */
+                        else if (user.is(ROLES.COACH)) {
 
                             $state.go('Coach.FilmHome');
+                        }
+
+                        /* If the user is an athlete. */
+                        else if (user.is(ROLES.ATHLETE)) {
+
+                            $state.go('Athlete.FilmHome');
                         }
 
                         else {

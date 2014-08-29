@@ -1,4 +1,4 @@
-var package = require('../package.json');
+var pkg = require('../package.json');
 
 /* Vendor dependencies */
 require('./vendor');
@@ -109,5 +109,5 @@ require('./directives/focus');
 require('./directives/autofocus');
 require('./directives/autotab');
 
-angular.bootstrap(document, [package.name]);
+angular.bootstrap(document, [pkg.name]);
 

@@ -1,0 +1,9 @@
+{
+    "name": "breakdown",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

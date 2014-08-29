@@ -6,7 +6,10 @@
 
        <strong>Game Film: </strong>
 
-       <a ui-sref="Coach.GameArea({id:game.id})">
+       <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:game.id})">
+           {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
+       </a>
+       <a data-ng-if="currentUser.is(ATHLETE)" data-ui-sref="Athlete.GameArea({id:game.id})">
            {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
        </a>
        <br/>

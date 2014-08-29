@@ -1,9 +1,9 @@
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesResource', [
     'config', '$resource',
@@ -15,14 +15,21 @@ IntelligenceWebClient.factory('GamesResource', [
 
         var paramDefaults = {
 
-            id: '@id'
-
+            id: '@id',
         };
 
         var actions = {
 
             create: { method: 'POST' },
             update: { method: 'PUT' },
+
+            query: {
+                method: 'GET',
+                isArray: true,
+                params: {
+                    isDeleted: false
+                }
+            },
 
             getFormationReport: {method: 'GET', url: config.api.uri + base + '/:id/formation-report'},
 
