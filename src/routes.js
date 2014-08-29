@@ -20,20 +20,20 @@ IntelligenceWebClient.run([
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
+        /* Retrieve the current user. */
+        var currentUser = session.retrieveCurrentUser();
+
+        /* Expose the current user on the root scope. */
+        $rootScope.currentUser = currentUser;
+
+        /* Store the current user if logged in. */
+        if (auth.isLoggedIn) {
+
+            /* Store the current user. */
+            session.storeCurrentUser(currentUser);
+        }
+
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-
-            /* Retrieve the current user. */
-            var currentUser = session.retrieveCurrentUser();
-
-            /* Expose the current user on the root scope. */
-            $rootScope.currentUser = currentUser;
-
-            /* Store the current user if logged in. */
-            if (auth.isLoggedIn) {
-
-                /* Store the current user. */
-                session.storeCurrentUser(currentUser);
-            }
 
             /* If not accessing a public state and not logged in, then
              * redirect the user to login. */
