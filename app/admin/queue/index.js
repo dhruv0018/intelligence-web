@@ -31,8 +31,8 @@ Queue.run([
  * @type {service}
  */
 Queue.service('Admin.Queue.Data.Dependencies', [
-    'GAME_STATUSES', 'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function(GAME_STATUSES, ROLE_TYPE, sports, leagues, teams, games, users) {
+    'GAME_STATUSES', 'VIDEO_STATUSES', 'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(GAME_STATUSES, VIDEO_STATUSES, ROLE_TYPE, sports, leagues, teams, games, users) {
 
         var statuses = [
             GAME_STATUSES.READY_FOR_INDEXING.id,
@@ -46,9 +46,9 @@ Queue.service('Admin.Queue.Data.Dependencies', [
 
             sports: sports.load(),
             leagues: leagues.load(),
+            users: users.load(),
             teams: teams.load(),
-            games: games.load({ 'status[]': statuses }),
-            users: users.load()
+            games: games.load({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
         };
 
         return Data;
