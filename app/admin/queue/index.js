@@ -46,8 +46,8 @@ Queue.service('Admin.Queue.Data.Dependencies', [
 
             sports: sports.load(),
             leagues: leagues.load(),
-            users: users.load(),
-            teams: teams.load(),
+            users: users.load({ 'relatedGameStatus[]': statuses }),
+            teams: teams.load({ 'relatedGameStatus[]': statuses }),
             games: games.load({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
         };
 
