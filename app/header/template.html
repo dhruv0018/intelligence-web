@@ -15,14 +15,14 @@
         <li data-ui-sref-active="active"><a data-ui-sref="teams">Teams</a></li>
         <li data-ui-sref-active="active"><a data-ui-sref="schools">Schools</a></li>
         <li data-ui-sref-active="active"><a data-ui-sref="queue">Queue</a></li>
-        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="reports">Reports</a></li>
+        <!--<li class="disabled" data-ui-sref-active="active"><a data-ui-sref="reports">Reports</a></li>-->
         <li class="header-dropdown" data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)"><a class="dropdown-toggle">Platform</a>
             <ul class="dropdown-menu">
                 <li><a data-ui-sref="plan-defaults">Plan Defaults</a></li>
                 <li><a data-ui-sref="leagues">Leagues</a></li>
-                <li data-ng-hide="true"><a href="#">Indexing Pricing</a></li>
-                <li data-ng-hide="true"><a href="#">Action Rules</a></li>
-                <li data-ng-hide="true"><a href="#">Set Aside Times</a></li>
+                <!--<li data-ng-hide="true"><a href="#">Indexing Pricing</a></li>-->
+                <!--<li data-ng-hide="true"><a href="#">Action Rules</a></li>-->
+                <!--<li data-ng-hide="true"><a href="#">Set Aside Times</a></li>-->
             </ul>
         </li>
 
@@ -32,7 +32,7 @@
     <menu class="nav navbar-nav" data-ng-if="currentUser.is(INDEXER)">
 
         <li data-ui-sref-active="active"><a data-ui-sref="indexer-games">Games</a></li>
-        <li class="disabled" data-ui-sref-active="active"><a data-ui-sref="indexer-history">History</a></li>
+        <!--<li class="disabled" data-ui-sref-active="active"><a data-ui-sref="indexer-history">History</a></li>-->
 
     </menu>
 
@@ -40,14 +40,16 @@
     <menu class="nav navbar-nav" data-ng-if="currentUser.is(COACH)">
 
         <li data-ui-sref-active="active"><a data-ui-sref="Coach.FilmHome">Film Home</a></li>
-        <li class="disabled hide-option" data-ui-sref-active="active"><a data-ui-sref="analytics">Analytics</a></li>
+        <!--<li class="disabled hide-option" data-ui-sref-active="active"><a data-ui-sref="analytics">Analytics</a></li>-->
         <li class="header-dropdown" data-ui-sref-active="active"><a data-ui-sref="Coach.Team">Team</a>
+        <!--
             <ul class="hide-option">
                 <li><a data-ui-sref="Coach.Team">Roster</a></li>
                 <li class="disabled"><a data-ui-sref="Coach.Team.Info">Team Info</a></li>
                 <li class="disabled"><a href="#">Coaches</a></li>
                 <li data-ng-hide="true"><a href="#">Sets</a></li>
             </ul>
+        -->
         </li>
         <li data-ui-sref-active="active"><a data-ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
         <li data-ui-sref-active="active"><button class="btn btn-primary navbar-btn" data-ng-click="tabs.reset()" data-ui-sref="add-film" data-ui-sref-opts="{reload: true}">Add Film</button></li>
