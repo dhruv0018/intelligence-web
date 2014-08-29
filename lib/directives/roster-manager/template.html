@@ -29,7 +29,7 @@
                     <td><input class="name" placeholder="Last Name" data-ng-model="player.lastName" required></td>
 
                     <td data-ng-if="keys(positions).length > 0">
-                        <data-positions-dropdown data-player="player" data-positions="positions"></data-positions-dropdown>
+                        <data-positions-dropdown data-ng-model="player.positionIds[rosterId]" data-player="player" data-positions="positions"></data-positions-dropdown>
                         <button class="btn btn-blank pull-right" data-ng-click="toggleActivation(player)"><i class="icon icon-remove"></i></button>
                     </td>
 
@@ -70,10 +70,10 @@
                                     {{player.lastName[0]}}.
                                 </a>
                                 <p data-ng-if="keys(positions).length > 0" class="positions">
-                                    <span data-ng-repeat="position in player.positions[rosterId]">
+                                    <span data-ng-repeat="position in getPositions(player)">
                                         {{position.name}}
                                     </span>
-                                    <span data-ng-if="!player.positions[rosterId]"> No Positions</span>
+                                    <span data-ng-if="!player.positionIds[rosterId]"> No Positions</span>
                                 </p>
                                 <p>
                                     <span data-ng-if="users[player.userId].lastAccessed">{{usersFactory.getLastAccessed(users[player.userId]) | date: 'mediumDate'}}</span>

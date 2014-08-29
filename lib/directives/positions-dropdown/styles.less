@@ -1,22 +1,55 @@
 @import (reference) "main.less";
 
 .positions-dropdown{
+	line-height: normal;
+	text-align: left;
+	display: inline-block;
 
-	a.dropdown-toggle {
-		cursor: pointer;
+	.multiSelectButton {
+		background-color: @gray-lighter;
+		background-image: none;
+		color: @gray-dark;
+		border: thin solid @gray-border;
+
+		&:hover,
+		&.buttonClicked {
+			background-color: #d2d2d2;
+			background-image: none;
+		}
 	}
-  
-  	ul {
 
-  		width: 390px;
-  		padding: 5px;
+	.checkboxLayer {
+		.helperContainer {
+			.helperButton {
+				background-color: @gray-lighter;
+				color: @gray-darker;
+				border: thin solid @gray-border;
+			}
+		}
 
-		li {
-			display: inline-block;
+		.checkBoxContainer {
+			padding: 8px 0;
+			height: 250px;
+			overflow-y: scroll;
 
-		    .btn{
-		    	margin: 5px;
-		    }
+			.multiSelectItem {
+
+				color: @gray-dark;
+
+				&:hover {
+					background-image: none !important;
+					background-color: @gray-dark;
+					color: white;
+				}
+
+				&.selected {
+					background-color: @gray-lighter;
+
+					&:hover {
+						background-color: @gray-dark !important;
+					}
+				}
+			}
 		}
 	}
 }
