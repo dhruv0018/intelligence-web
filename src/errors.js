@@ -134,7 +134,6 @@ IntelligenceWebClient.run([
             role.type.name = role.type.name || 'Unknown Role';
 
             alerts.add({
-
                 type: 'warning',
                 message: 'Could not change role to "' + role.type.name + '"'
             });
