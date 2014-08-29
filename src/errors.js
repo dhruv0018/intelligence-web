@@ -110,33 +110,32 @@ IntelligenceWebClient.run([
     function run($rootScope, $location, $state, alerts) {
 
         $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
+
             event.preventDefault();
-            $state.go('404');
+
+            alerts.add({
+                type: 'info',
+                message: unfoundState.name + ' page not found'
+            });
         });
 
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-            ErrorReporter.reportError(error);
 
             alerts.add({
-
-                type: 'danger',
-                message: 'Error: ' + error
+                type: 'warning',
+                message: 'Could not go to ' + toState.name
             });
         });
 
         $rootScope.$on('roleChangeError', function(event, role) {
+
             role = role || {};
             role.type = role.type || {};
             role.type.name = role.type.name || 'Unknown Role';
 
-            var error = new Error('Could not change role to "' + role.type.name + '"');
-
-            ErrorReporter.reportError(error);
-
             alerts.add({
-
                 type: 'warning',
-                message: error
+                message: 'Could not change role to "' + role.type.name + '"'
             });
         });
     }

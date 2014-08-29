@@ -46,7 +46,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var copy = angular.copy(resource);
 
                 /* Remove known local properties. */
-                delete copy.description;
                 delete copy.resource;
                 delete copy.storage;
 

@@ -13,34 +13,6 @@ IntelligenceWebClient.config([
     }
 ]);
 
-IntelligenceWebClient.config([
-    '$stateProvider',
-    function config($stateProvider) {
-
-        $stateProvider
-
-            .state('401', {
-                url: '/401',
-                parent: 'root',
-                views: {
-                    'main@root': {
-                        template: '<div class="jumbotron"><h1 class="alert alert-danger">Not Authorized</h1></div>',
-                    }
-                }
-            })
-
-            .state('404', {
-                url: '/404',
-                parent: 'root',
-                views: {
-                    'main@root': {
-                        template: '<div class="jumbotron"><h1 class="alert alert-info">Not Found</h1></div>',
-                    }
-                }
-            });
-    }
-]);
-
 IntelligenceWebClient.run([
     '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
     function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
@@ -67,19 +39,28 @@ IntelligenceWebClient.run([
              * redirect the user to login. */
             if (!authz.isPublic(toState) && !auth.isLoggedIn) {
 
+                /* Prevent the state from loading. */
                 event.preventDefault();
+
+                /* Redirect the user to the login page. */
                 $state.go('login');
             }
 
             /* Ensure the current user has access to the route. */
             else if (!authz.isAuthorized(toState)) {
 
+                /* Prevent the state from loading. */
                 event.preventDefault();
-                $state.go('login');
+
+                alerts.add({
+                    type: 'info',
+                    message: 'You do not have permission to go to ' + toState.name
+                });
             }
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+
             /* Clear any alerts. */
             alerts.clear();
 
