@@ -139,7 +139,7 @@
                             <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                             <td>{{ game.id }}</td>
                             <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
-                            <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
+                            <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].firstName}} {{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
                             <td>
                                 <span data-ng-if="game.getStatus().id != GAME_STATUSES.SET_ASIDE.id">{{ game.getStatus().name }}</span>
                                 <span data-ng-if="game.status === GAME_STATUSES.SET_ASIDE.id">
