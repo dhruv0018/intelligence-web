@@ -69,6 +69,7 @@ GameArea.config([
                             data.gamePlayerLists = {};
                             data.players = players;
                             data.league = leaguesCollection[teamsCollection[data.game.teamId].leagueId];
+                            data.filterset = data.filtersets.get(data.league.filterSetId);
 
                             //Player lists
                             var teamPlayerList = players.query({
@@ -92,12 +93,10 @@ GameArea.config([
                             });
 
 
-
                             return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function(promisedData) {
                                 //Filtersets
                                 if (data.game.isDelivered()) {
                                     var exclusion = [];
-                                    data.filterset = data.filtersets.get(data.league.filterSetId);
                                     if (data.filterset) {
                                         data.filtersetCategories = {};
                                         angular.forEach(data.filterset.categories, function(filterCategory) {
