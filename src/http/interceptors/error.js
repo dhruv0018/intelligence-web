@@ -17,31 +17,63 @@ IntelligenceWebClient.factory('Error.Interceptor', [
             /* Intercept responses with status codes that indicate errors. */
             responseError: function(response) {
 
+                var data = response.config.data;
+                var method = response.config.method;
+
+                switch (method) {
+
+                    case 'POST':
+                        method = 'create';
+                        break;
+
+                    case 'PUT':
+                        method = 'update';
+                        break;
+
+                    case 'DELETE':
+                        method = 'delete';
+                        break;
+                }
+
+                var description = data.description ? data.description.slice(0, -1) : '';
+
                 switch (response.status) {
 
-                case 405: /* Method Not Allowed */
+                    case 405: /* Method Not Allowed */
 
-                    ErrorReporter.reportError(new Error('Method not allowed', response.data));
+                        ErrorReporter.reportError(new Error('Method not allowed', response.data));
 
-                    alerts.add({
+                        alerts.add({
 
-                        type: 'warning',
-                        message: 'Method Not Allowed'
-                    });
+                            type: 'warning',
+                            message: 'Method Not Allowed'
+                        });
 
-                    break;
+                        break;
 
-                case 500: /* Server Error */
+                    case 500: /* Server Error */
 
-                    ErrorReporter.reportError(new Error('Server error', response.data));
+                        ErrorReporter.reportError(new Error('Server error', response.data));
 
-                    alerts.add({
+                        alerts.add({
 
-                        type: 'danger',
-                        message: 'Server Error'
-                    });
+                            type: 'danger',
+                            message: 'Server Error'
+                        });
 
-                    break;
+                        break;
+
+                    default:
+
+                        ErrorReporter.reportError(new Error('Request error', response.data));
+
+                        alerts.add({
+
+                            type: 'danger',
+                            message: 'Could not ' + method + ' ' + description
+                        });
+
+                        break;
                 }
 
                 return $q.reject(response);
