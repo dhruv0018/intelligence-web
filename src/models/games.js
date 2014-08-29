@@ -16,13 +16,20 @@ IntelligenceWebClient.factory('GamesResource', [
         var paramDefaults = {
 
             id: '@id',
-            isDeleted: false
         };
 
         var actions = {
 
             create: { method: 'POST' },
             update: { method: 'PUT' },
+
+            query: {
+                method: 'GET',
+                isArray: true,
+                params: {
+                    isDeleted: false
+                }
+            },
 
             getFormationReport: {method: 'GET', url: config.api.uri + base + '/:id/formation-report'},
 
