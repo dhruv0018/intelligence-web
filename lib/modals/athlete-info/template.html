@@ -50,7 +50,7 @@
 
                 <div class="row form-group">
                     <div class="profile-image col-md-3">
-                        <profile-placeholder data-ng-hide="athlete.userId || athlete.userId === null || athlete.jerseyNumbers" data-ng-if="!athlete.imageUrl"></profile-placeholder>
+                        <profile-placeholder data-ng-if="!athlete.imageUrl || users[athlete.userId].imageUrl"></profile-placeholder>
                         <img data-ng-if="athlete.imageUrl" data-ng-src="{{athlete.imageUrl}}" alt="profile image">
                         <img data-ng-if="users[athlete.userId].imageUrl" data-ng-src="{{users[athlete.userId].imageUrl}}" alt="profile image">
                         <krossover-uploader data-ng-hide="athlete.userId || athlete.userId === null || athlete.jerseyNumbers" data-upload-label="Change Image" data-on-upload="setProfileImage(files)"></krossover-uploader>
