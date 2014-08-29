@@ -690,7 +690,7 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
             isDelivered: function() {
                 var self = this;
-                return self.status === GAME_STATUSES.INDEXED.id || self.status === GAME_STATUSES.FINALIZED.id;
+                return self.status === GAME_STATUSES.FINALIZED.id;
             },
             isVideoTranscodeComplete: function() {
                 var self = this;
