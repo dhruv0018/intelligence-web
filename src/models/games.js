@@ -15,8 +15,8 @@ IntelligenceWebClient.factory('GamesResource', [
 
         var paramDefaults = {
 
-            id: '@id'
-
+            id: '@id',
+            isDeleted: false
         };
 
         var actions = {
