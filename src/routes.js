@@ -67,19 +67,28 @@ IntelligenceWebClient.run([
              * redirect the user to login. */
             if (!authz.isPublic(toState) && !auth.isLoggedIn) {
 
+                /* Prevent the state from loading. */
                 event.preventDefault();
+
+                /* Redirect the user to the login page. */
                 $state.go('login');
             }
 
             /* Ensure the current user has access to the route. */
             else if (!authz.isAuthorized(toState)) {
 
+                /* Prevent the state from loading. */
                 event.preventDefault();
-                $state.go('login');
+
+                alerts.add({
+                    type: 'info',
+                    message: 'You do not have permission to go to ' + toState.name
+                });
             }
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+
             /* Clear any alerts. */
             alerts.clear();
 
