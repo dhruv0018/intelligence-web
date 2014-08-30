@@ -31,16 +31,24 @@ Queue.run([
  * @type {service}
  */
 Queue.service('Admin.Queue.Data.Dependencies', [
-    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function(ROLE_TYPE, sports, leagues, teams, games, users) {
+    'GAME_STATUSES', 'VIDEO_STATUSES', 'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(GAME_STATUSES, VIDEO_STATUSES, ROLE_TYPE, sports, leagues, teams, games, users) {
+
+        var statuses = [
+            GAME_STATUSES.READY_FOR_INDEXING.id,
+            GAME_STATUSES.INDEXING.id,
+            GAME_STATUSES.READY_FOR_QA.id,
+            GAME_STATUSES.QAING.id,
+            GAME_STATUSES.SET_ASIDE.id
+        ];
 
         var Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
+            users: users.load(),
             teams: teams.load(),
-            games: games.load(),
-            users: users.load()
+            games: games.load({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
         };
 
         return Data;
@@ -108,13 +116,13 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
-    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, games, data, SelectIndexerModal) {
+    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
+    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, games, data, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
-
+        $scope.GAME_TYPES = GAME_TYPES;
         $scope.SelectIndexerModal = SelectIndexerModal;
 
         $scope.data = data;
