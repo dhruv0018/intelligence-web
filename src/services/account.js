@@ -24,7 +24,7 @@ IntelligenceWebClient.service('AccountService', [
                 if (!role) throw new Error('Can not change role; no role to change to');
 
                 /* Broadcast the role change. */
-                $rootScope.$broadcast('roleChangeStart', user.currentRole);
+                $rootScope.$broadcast('roleChangeStart', role);
 
                 /* Change the users role. */
                 user.setDefaultRole(role);
