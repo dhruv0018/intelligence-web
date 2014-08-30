@@ -51,7 +51,6 @@ Users.controller('Users.Users.Controller', [
             session.currentUser = user;
             $rootScope.currentUser = user;
             $state.go('Account.ContactInfo');
-            location.reload();
         };
     }
 ]);
