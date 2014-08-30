@@ -32,6 +32,9 @@ IntelligenceWebClient.service('AccountService', [
                 /* Update the user in the session. */
                 session.storeCurrentUser(user);
 
+                /* Permanently save the user. */
+                user.save();
+
                 /* Assert that the users role has been changed to the desired role. */
                 if (angular.equals(session.currentUser.currentRole, role)) {
 
