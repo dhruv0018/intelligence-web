@@ -290,7 +290,6 @@ Indexing.value('Indexing.Sidebar', {
 });
 
 /* File dependencies. */
-require('./filters');
 require('./header-controller');
 require('./main-controller');
 require('./sidebar-notes-controller');

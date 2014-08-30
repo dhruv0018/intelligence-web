@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "time",
         "sport",
         "humanize",
         "films"
