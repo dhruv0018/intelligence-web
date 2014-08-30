@@ -134,7 +134,7 @@
                 <table class="table table-striped table-hover">
 
                     <tbody>
-                        <tr data-ng-repeat="game in queue">
+                        <tr data-ng-repeat="game in queue | sortByRemainingTime">
 
                             <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                             <td>{{ game.id }}</td>
@@ -181,7 +181,7 @@
                                  </ul>
                             </td>
                             <td>
-                                {{game.getRemainingTime(teams[game.uploaderTeamId]) | humanize: 'milliseconds':true}}
+                                {{game.getRemainingTime(teams[game.uploaderTeamId])}}
                             </td>
                             <td>
                                 <button data-open-modal="AdminManagement.Modal" data-modal-options="game" class="btn btn-default">Manage</button>

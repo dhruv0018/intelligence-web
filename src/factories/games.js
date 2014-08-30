@@ -630,7 +630,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     return 0;
                 }
 
-                var timePassed = new Date() - moment.utc(self.submittedAt).toDate();
+                var timePassed = moment.utc() - moment.utc(self.submittedAt);
                 var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
 
                 if (turnoverTime > 0) {
