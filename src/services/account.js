@@ -48,7 +48,6 @@ IntelligenceWebClient.service('AccountService', [
             changeCurrentUserRole: function(role) {
 
                 this.changeUserRole(session.currentUser, role);
-                location.reload();
             }
         };
     }
