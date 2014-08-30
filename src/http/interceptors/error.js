@@ -19,6 +19,7 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                 var data = response.config.data;
                 var method = response.config.method;
+                var description = '';
 
                 switch (method) {
 
@@ -35,7 +36,10 @@ IntelligenceWebClient.factory('Error.Interceptor', [
                         break;
                 }
 
-                var description = data && data.description ? data.description.slice(0, -1) : '';
+                if (data && data.description) {
+
+                    description = data.description.slice(0, -1);
+                }
 
                 switch (response.status) {
 
