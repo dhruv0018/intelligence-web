@@ -13,8 +13,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('AccountService', [
-    '$rootScope', 'SessionService',
-    function($rootScope, session) {
+    'ROLES', '$rootScope', '$state', 'SessionService',
+    function(ROLES, $rootScope, $state, session) {
 
         return {
 
@@ -38,6 +38,8 @@ IntelligenceWebClient.service('AccountService', [
                     /* Broadcast successful role change. */
                     $rootScope.$broadcast('roleChangeSuccess', role);
 
+                    this.gotoUsersHomeState(user);
+
                 } else {
 
                     /* Broadcast role change error. */
@@ -49,6 +51,40 @@ IntelligenceWebClient.service('AccountService', [
 
                 this.changeUserRole(session.currentUser, role);
                 location.reload();
+            },
+
+            gotoUsersHomeState: function(user) {
+
+                user = user || session.currentUser;
+
+                /* If the user is a super admin or an admin. */
+                if (user.is(ROLES.SUPER_ADMIN) || user.is(ROLES.ADMIN)) {
+
+                    $state.go('users');
+                }
+
+                /* If the user is an indexer. */
+                else if (user.is(ROLES.INDEXER)) {
+
+                    $state.go('indexer-games');
+                }
+
+                /* If the user is a coach. */
+                else if (user.is(ROLES.COACH)) {
+
+                    $state.go('Coach.FilmHome');
+                }
+
+                /* If the user is an athlete. */
+                else if (user.is(ROLES.ATHLETE)) {
+
+                    $state.go('Athlete.FilmHome');
+                }
+
+                else {
+
+                    $state.go('Account.ContactInfo');
+                }
             }
         };
     }
