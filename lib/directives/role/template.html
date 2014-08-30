@@ -13,7 +13,7 @@
 
     <div class="role-name">
 
-        <span data-ng-if="users.is(role, COACH)"><a data-ui-sref="team({ id: role.teamId })">{{team.name}}</a></span>
+        <span data-ng-if="users.is(role, COACH)">{{team.name}}</span>
         <span data-ng-if="!users.is(role, COACH)">{{role.type.name || 'Inactive'}}</span>
 
     </div>
