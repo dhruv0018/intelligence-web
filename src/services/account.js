@@ -24,7 +24,7 @@ IntelligenceWebClient.service('AccountService', [
                 if (!role) throw new Error('Can not change role; no role to change to');
 
                 /* Broadcast the role change. */
-                $rootScope.$broadcast('roleChangeStart', user.currentRole);
+                $rootScope.$broadcast('roleChangeStart', role);
 
                 /* Change the users role. */
                 user.setDefaultRole(role);
@@ -36,7 +36,7 @@ IntelligenceWebClient.service('AccountService', [
                 user.save();
 
                 /* Assert that the users role has been changed to the desired role. */
-                if (angular.equals(session.currentUser.currentRole, role)) {
+                if (angular.equals(user.currentRole, role)) {
 
                     /* Broadcast successful role change. */
                     $rootScope.$broadcast('roleChangeSuccess', role);
