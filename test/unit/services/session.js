@@ -34,7 +34,11 @@ describe('SessionService', function() {
         'SessionService',
         function(session) {
 
+            session.clearCurrentUser();
+            session.isCurrentUserStored().should.be.false;
             expect(session.currentUser).to.be.null;
+            expect(localStorage['CURRENT_USER']).to.be.undefined;
+            expect(sessionStorage['CURRENT_USER']).to.be.undefined;
         }
     ]));
 
