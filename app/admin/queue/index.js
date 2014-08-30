@@ -116,13 +116,13 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
-    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, games, data, SelectIndexerModal) {
+    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
+    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, games, data, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
-
+        $scope.GAME_TYPES = GAME_TYPES;
         $scope.SelectIndexerModal = SelectIndexerModal;
 
         $scope.data = data;
