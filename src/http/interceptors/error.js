@@ -35,7 +35,7 @@ IntelligenceWebClient.factory('Error.Interceptor', [
                         break;
                 }
 
-                var description = data.description ? data.description.slice(0, -1) : '';
+                var description = data && data.description ? data.description.slice(0, -1) : '';
 
                 switch (response.status) {
 
