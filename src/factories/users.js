@@ -6,8 +6,10 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'TeamsFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
-    function($rootScope, UsersResource, UsersStorage, BaseFactory, teams, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
+    '$injector', '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
+    function($injector, $rootScope, UsersResource, UsersStorage, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
+
+        var TeamsFactory;
 
         var UsersFactory = {
 
@@ -78,6 +80,8 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var self = this;
 
+                TeamsFactory = TeamsFactory || $injector.get('TeamsFactory');
+
                 return self.query(query).then(function(users) {
 
                     var teamIds = [];
@@ -90,7 +94,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                         }
                     });
 
-                    return teams.load(teamIds).then(function() {
+                    return TeamsFactory.load(teamIds).then(function() {
 
                         return users;
                     });

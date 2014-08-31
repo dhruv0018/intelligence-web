@@ -17,8 +17,10 @@ IntelligenceWebClient.service('TeamsStorage', [
 ]);
 
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'SchoolsFactory', 'ResourceManager',
-    function($rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, usersResource, BaseFactory, users, schools, managedResources) {
+    '$injector', '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'ResourceManager',
+    function($injector, $rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, usersResource, BaseFactory, users, managedResources) {
+
+        var SchoolsFactory;
 
         var TeamsFactory = {
 
@@ -62,6 +64,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 var self = this;
 
+                SchoolsFactory = SchoolsFactory || $injector.get('SchoolsFactory');
+
                 return self.query(query).then(function(teams) {
 
                     var schoolIds = [];
@@ -74,7 +78,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                         }
                     });
 
-                    return schools.load(schoolIds).then(function() {
+                    return SchoolsFactory.load(schoolIds).then(function() {
 
                         return teams;
                     });
