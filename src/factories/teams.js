@@ -17,8 +17,8 @@ IntelligenceWebClient.service('TeamsStorage', [
 ]);
 
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'ResourceManager',
-    function($rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users, managedResources) {
+    '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'SchoolsFactory', 'ResourceManager',
+    function($rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, usersResource, BaseFactory, users, schools, managedResources) {
 
         var TeamsFactory = {
 
@@ -57,6 +57,30 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 return team;
             },
+
+            search: function(query) {
+
+                var self = this;
+
+                return self.query(query).then(function(teams) {
+
+                    var schoolIds = [];
+
+                    angular.forEach(teams, function(team) {
+
+                        if (team.schoolId) {
+
+                            schoolIds.push(team.schoolId);
+                        }
+                    });
+
+                    return schools.load(schoolIds).then(function() {
+
+                        return teams;
+                    });
+                });
+            },
+
             save: function(resource, success, error) {
 
                 var self = this;
