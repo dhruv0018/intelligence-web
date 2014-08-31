@@ -116,8 +116,8 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
-    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, games, data, SelectIndexerModal) {
+    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'TeamsFactory', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
+    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, teams, games, data, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -167,8 +167,13 @@ Queue.controller('QueueController', [
             }
         };
 
+        var now = moment.utc();
+
         //sorting games into filter categories
         angular.forEach($scope.queue, function(game) {
+
+            var team = teams.get(game.uploaderTeamId);
+            game.remainingTime = game.getRemainingTime(team, now);
 
             if (game.status === GAME_STATUSES.SET_ASIDE.id) {
                 $scope.queueFilters.setAside.push(game);
