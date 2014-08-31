@@ -180,8 +180,10 @@
                                     <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
                                  </ul>
                             </td>
-                            <td>
-                                {{game.getRemainingTime(teams[game.uploaderTeamId])}}
+                            <td class="time-left">
+                                <span class="late" data-ng-if="game.remainingTime < 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
+                                <span class="none" data-ng-if="game.remainingTime === 0">None</span>
+                                <span class="togo" data-ng-if="game.remainingTime > 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
                             </td>
                             <td>
                                 <button data-open-modal="AdminManagement.Modal" data-modal-options="game" class="btn btn-default">Manage</button>
