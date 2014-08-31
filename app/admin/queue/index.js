@@ -195,15 +195,6 @@ Queue.controller('QueueController', [
                 $scope.queueFilters.assigned.push(game);
             }
 
-            if (game.video && game.video.status) {
-
-                if (game.video.status === VIDEO_STATUSES.FAILED.id) {
-                    $scope.queueFilters.processing.failed.push(game);
-                } else if (game.video.status !== VIDEO_STATUSES.COMPLETE.id) {
-                    $scope.queueFilters.processing.inProcessing.push(game);
-                }
-            }
-
             //TODO to change to isDelivered function when it is through QA
             if (game.status !== GAME_STATUSES.INDEXED.id) {
                 if (remainingTime < 0) {
@@ -221,14 +212,9 @@ Queue.controller('QueueController', [
                 }
             }
 
-
             if (remainingTime > 0 && remainingHours > 0 && remainingHours <= 48) {
                 $scope.queueFilters.last48.uploaded.push(game);
-                if (game.status === GAME_STATUSES.INDEXED.id) {
-                    $scope.queueFilters.last48.delivered.push(game);
-                }
             }
-
         });
 
         $scope.setQueue = function(games) {
