@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
-    function($rootScope, UsersResource, UsersStorage, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
+    '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'TeamsFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
+    function($rootScope, UsersResource, UsersStorage, BaseFactory, teams, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
 
         var UsersFactory = {
 
@@ -73,6 +73,30 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return user;
             },
+
+            search: function(query) {
+
+                var self = this;
+
+                return self.query(query).then(function(users) {
+
+                    var teamIds = [];
+
+                    angular.forEach(users, function(user) {
+
+                        if (user.teamId) {
+
+                            teamIds.push(user.teamId);
+                        }
+                    });
+
+                    return teams.load(teamIds).then(function() {
+
+                        return users;
+                    });
+                });
+            },
+
             save: function(resource, success, error) {
                 var self = this;
 

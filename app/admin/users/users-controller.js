@@ -44,7 +44,7 @@ Users.controller('Users.Users.Controller', [
 
             $scope.users.length = 0;
 
-            $scope.query = users.query(filter).then(function(users) {
+            $scope.query = users.search(filter).then(function(users) {
 
                 $scope.users = users;
             });
