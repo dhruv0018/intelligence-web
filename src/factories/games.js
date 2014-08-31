@@ -623,23 +623,23 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
             },
-            getRemainingTime: function(uploaderTeam) {
+            getRemainingTime: function(uploaderTeam, now) {
+
                 var self = this;
 
-                if (!self.submittedAt) {
-                    return 0;
-                }
+                now = now || moment.utc();
 
-                var timePassed = moment.utc() - moment.utc(self.submittedAt);
-                var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+                var submittedAt = moment.utc(self.submittedAt);
 
-                if (turnoverTime > 0) {
-                    var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
-                    return turnoverTimeRemaining.asMilliseconds();
-                }
+                if (!submittedAt.isValid()) return 0;
 
-                //no plans or packages and therefore no breakdowns available
-                return 0;
+                var timePassed = moment.duration(now.subtract(submittedAt));
+
+                var turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
+
+                var timeRemaining = turnaroundTime.subtract(timePassed);
+
+                return timeRemaining.asMilliseconds();
             },
             setAside: function() {
                 var self = this;
