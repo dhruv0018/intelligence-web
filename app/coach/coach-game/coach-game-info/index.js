@@ -260,15 +260,15 @@ Info.controller('Coach.Game.Info.controller', [
             /* If the game has not been saved and the game information has not been completed .*/
             if (!$scope.data.game.id && $scope.formGameInfo.$invalid) {
 
-                if (confirm(prompt + ' Continue uploading?')) {
+                if (confirm(prompt + '\n\nDo you still want to leave?')) {
 
-                    event.preventDefault();
-                    $rootScope.$broadcast('$stateChangeError');
+                    $scope.$flow.cancel();
                 }
 
                 else {
 
-                    $scope.$flow.cancel();
+                    event.preventDefault();
+                    $rootScope.$broadcast('$stateChangeError');
                 }
             }
         });
@@ -279,14 +279,15 @@ Info.controller('Coach.Game.Info.controller', [
             /* If the game has not been saved and the game information has not been completed .*/
             if (!$scope.data.game.id && $scope.formGameInfo.$invalid) {
 
-                if (confirm(prompt + ' Continue uploading?')) {
+                if (confirm(prompt + '\n\nDo you still want to leave?')) {
 
-                    event.preventDefault();
+                    $scope.$flow.cancel();
                 }
 
                 else {
 
-                    $scope.$flow.cancel();
+                    event.preventDefault();
+                    $rootScope.$broadcast('$stateChangeError');
                 }
             }
         });
