@@ -38,8 +38,7 @@ Users.service('Admin.Users.Data.Dependencies', [
         var Data = {
 
             sports: sports.load(),
-            leagues: leagues.load(),
-            teams: teams.load()
+            leagues: leagues.load()
         };
 
         return Data;
