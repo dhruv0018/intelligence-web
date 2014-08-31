@@ -350,14 +350,17 @@ IntelligenceWebClient.factory('BaseFactory', [
                             }
                         });
 
-                        filter = { 'id[]': ids };
+                        if (ids.length) {
 
-                        self.storage.loads[key] = self.retrieve(filter).then(function(list) {
+                            filter = { 'id[]': ids };
 
-                            self.storage.loads[key].list = list;
+                            self.storage.loads[key] = self.retrieve(filter).then(function(list) {
 
-                            return self;
-                        });
+                                self.storage.loads[key].list = list;
+
+                                return self;
+                            });
+                        }
                     }
 
                     else {
