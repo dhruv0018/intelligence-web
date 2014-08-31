@@ -277,7 +277,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 }
 
                 //no plans or packages means no breakdowns
-                return -1;
+                return 0;
             }
         };
 
