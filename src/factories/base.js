@@ -338,6 +338,28 @@ IntelligenceWebClient.factory('BaseFactory', [
                         });
                     }
 
+                    else if (angular.isArray(filter) && filter.length) {
+
+                        var ids = [];
+
+                        filter.forEach(function(id) {
+
+                            if (!self.storage.collection[id]) {
+
+                                ids.push(id);
+                            }
+                        });
+
+                        filter = { 'id[]': ids };
+
+                        self.storage.loads[key] = self.retrieve(filter).then(function(list) {
+
+                            self.storage.loads[key].list = list;
+
+                            return self;
+                        });
+                    }
+
                     else {
 
                         self.storage.loads[key] = self.retrieve(filter).then(function(list) {
