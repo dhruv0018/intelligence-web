@@ -61,8 +61,8 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$q', '$scope', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($q, $scope, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+    '$q', '$rootScope', '$scope', '$window', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    function controller($q, $rootScope, $scope, $window, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
         $scope.session = session;
 
         $scope.todaysDate = Date.now();
@@ -251,6 +251,30 @@ Info.controller('Coach.Game.Info.controller', [
 //            tabs['scouting-team'].disabled = invalid;
 //        });
 
+        var prompt = 'Your game will not get uploaded without entering in the game information. Continue uploading?';
+
+        /* When changing location. */
+        $rootScope.$on('$locationChangeStart', function(event) {
+
+            /* If the game information has not been completed .*/
+            if ($scope.formGameInfo.$invalid) {
+
+                if (!confirm(prompt)) {
+
+                    event.preventDefault();
+                }
+            }
+        });
+
+        /* Before unloading the page. */
+        $window.onbeforeunload = function beforeunloadHandler() {
+
+            /* If the game information has not been completed .*/
+            if ($scope.formGameInfo.$invalid) {
+
+                return prompt;
+            }
+        };
     }
 ]);
 
