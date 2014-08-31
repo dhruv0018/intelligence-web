@@ -373,10 +373,9 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* Dictate what Admins can access. */
                 else if (this.is(role, ROLES.ADMIN)) {
 
-                    /* Admins can not access Super Admins or other Admins,
+                    /* Admins can not access Super Admins,
                      * but can access all other roles. */
-                    return this.is(verify, ROLES.SUPER_ADMIN) ||
-                           this.is(verify, ROLES.ADMIN) ? false : true;
+                    return this.is(verify, ROLES.SUPER_ADMIN) ? false : true;
                 }
 
                 /* Dictate what a Head Coach can access. */
