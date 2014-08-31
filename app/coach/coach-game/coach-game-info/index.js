@@ -252,17 +252,41 @@ Info.controller('Coach.Game.Info.controller', [
 //            tabs['scouting-team'].disabled = invalid;
 //        });
 
-        var prompt = 'Your game will not get uploaded without entering in the game information. Continue uploading?';
+        var prompt = 'Your game will not get uploaded without entering in the game information.';
+
+        /* When changing state. */
+        $rootScope.$on('$stateChangeStart', function(event) {
+
+            /* If the game has not been saved and the game information has not been completed .*/
+            if (!$scope.data.game.id && $scope.formGameInfo.$invalid) {
+
+                if (confirm(prompt + ' Continue uploading?')) {
+
+                    event.preventDefault();
+                    $rootScope.$broadcast('$stateChangeError');
+                }
+
+                else {
+
+                    $scope.$flow.cancel();
+                }
+            }
+        });
 
         /* When changing location. */
         $rootScope.$on('$locationChangeStart', function(event) {
 
-            /* If the game information has not been completed .*/
-            if ($scope.formGameInfo.$invalid) {
+            /* If the game has not been saved and the game information has not been completed .*/
+            if (!$scope.data.game.id && $scope.formGameInfo.$invalid) {
 
-                if (!confirm(prompt)) {
+                if (confirm(prompt + ' Continue uploading?')) {
 
                     event.preventDefault();
+                }
+
+                else {
+
+                    $scope.$flow.cancel();
                 }
             }
         });
