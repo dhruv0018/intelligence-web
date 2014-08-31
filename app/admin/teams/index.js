@@ -132,14 +132,14 @@ Teams.config([
 ]);
 
 Teams.service('Teams.Data.Dependencies', [
-    'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SportsFactory',
-    function(teams, leagues, users, sports) {
+    'SportsFactory', 'LeaguesFactory',
+    function(sports, leagues) {
 
-        var Data = {};
+        var Data = {
 
-        angular.forEach(arguments, function(arg) {
-            Data[arg.description] = arg.load();
-        });
+            sports: sports.load(),
+            leagues: leagues.load()
+        };
 
         return Data;
 
@@ -297,8 +297,8 @@ Teams.controller('TeamPlansController', [
  * @type {Controller}
  */
 Teams.controller('TeamController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SchoolsFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, schoolsFactory) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SchoolsFactory', 'TeamsFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, schoolsFactory, teams) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
@@ -341,7 +341,7 @@ Teams.controller('TeamController', [
 
             if (teamId) {
 
-                team = data.teams.get(teamId);
+                team = teams.get(teamId);
                 $scope.team = team;
                 $scope.team.members = team.getMembers();
 
@@ -414,7 +414,7 @@ Teams.controller('TeamController', [
 
         $scope.save = function(team) {
 
-            data.teams.save(team).then(function() {
+            teams.save(team).then(function() {
                 $state.go('teams');
             });
         };

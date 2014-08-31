@@ -93,17 +93,11 @@ Schools.config([
 ]);
 
 Schools.service('Schools.Data.Dependencies', [
-    'TeamsFactory',
-    function(teams) {
+    function() {
 
         var Data = {};
 
-        angular.forEach(arguments, function(arg) {
-            Data[arg.description] = arg.load();
-        });
-
         return Data;
-
     }
 ]);
 
