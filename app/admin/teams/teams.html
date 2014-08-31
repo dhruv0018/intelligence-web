@@ -22,8 +22,7 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="league"
-                    data-ng-model="filter.league" data-ng-options="league.id as league.name for league in leagues | unique:'name' | orderBy:'name'">
+                <select class="form-control" name="league" data-ng-model="filter.leagueId" data-ng-options="league.id as league.name for league in leagues | unique:'name' | orderBy:'name'">
                     <option value="">League Name</option>
                 </select>
 
