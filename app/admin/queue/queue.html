@@ -134,7 +134,7 @@
                 <table class="table table-striped table-hover">
 
                     <tbody>
-                        <tr data-ng-repeat="game in queue | sortByRemainingTime">
+                        <tr data-ng-repeat="game in queue | orderBy:'remainingTime'">
 
                             <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                             <td>{{ game.id }}</td>
