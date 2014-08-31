@@ -45,6 +45,7 @@ Info.directive('krossoverCoachGameInfo', [
 
             scope: {
                 headings: '=',
+                $flow: '=?flow',
                 data: '=',
                 tabs: '='
             }

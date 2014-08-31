@@ -64,7 +64,8 @@ Game.directive('krossoverCoachGame', [
             link: link,
 
             scope: {
-                data: '=?'
+                data: '=?',
+                $flow: '=?flow'
             }
         };
 
