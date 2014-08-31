@@ -428,8 +428,10 @@ Teams.controller('TeamController', [
  * @type {Controller}
  */
 Teams.controller('TeamsController', [
-    '$rootScope', '$scope', '$state', '$filter', 'Teams.Data', 'SchoolsFactory',
-    function controller($rootScope, $scope, $state, $filter, data, schools) {
+    '$rootScope', '$scope', '$state', '$q', '$filter', 'SchoolsFactory', 'TeamsFactory', 'Teams.Data',
+    function controller($rootScope, $scope, $state, $q, $filter, schools, teams, data) {
+
+        $scope.teams = [];
 
         //TODO potential candiate for changing filter to true instead of 1 if the backend begins to support it
         $scope.filter = {
@@ -452,28 +454,14 @@ Teams.controller('TeamsController', [
             });
         };
 
-        $scope.search = function(filter) {
+        $scope.search = function(query) {
 
-            data.teams.query(filter,
-                    function(teams) {
-                        var schoolIds = [];
-                        angular.forEach(teams, function(team) {
-                            if (team.schoolId) {
-                                schoolIds.push(team.schoolId);
-                            }
-                        });
-                        $scope.teams = teams;
-                        if (schoolIds.length > 0) {
-                            schools.load({
-                                'id[]': schoolIds
-                            });
-                        }
-                    },
-                    function() {
-                        $scope.teams = [];
-                        $scope.noResults = true;
-                    }
-            );
+            $scope.teams.length = 0;
+
+            $scope.query = teams.search(query).then(function(teams) {
+
+                $scope.teams = teams;
+            });
         };
     }
 ]);

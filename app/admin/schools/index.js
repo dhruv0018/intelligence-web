@@ -152,16 +152,13 @@ Schools.controller('SchoolsController', [
         };
 
         $scope.search = function(filter) {
-            schools.query(filter,
-                function(schools) {
-                    $scope.schools = schools;
-                    $scope.noResults = false;
-                },
-                function() {
-                    $scope.schools = [];
-                    $scope.noResults = true;
-                }
-            );
+
+            $scope.schools.length = 0;
+
+            $scope.query = schools.query(filter).then(function(schools) {
+
+                $scope.schools = schools;
+            });
         };
     }
 ]);

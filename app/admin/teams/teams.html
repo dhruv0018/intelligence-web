@@ -49,7 +49,7 @@
 
     </aside>
 
-    <div class="list" data-ng-hide="noResults">
+    <div class="list" data-ng-show="teams.length">
 
         <div class="table-responsive">
 
@@ -74,13 +74,7 @@
 
     </div>
 
-    <div class="noresults" data-ng-show="noResults">
-
-        <i class="icon icon-search"></i>
-        <h1>No Results Found</h1>
-        <h2>Try your search again.</h2>
-
-    </div>
+    <data-results data-ng-hide="teams.length" data-query="query"></data-results>
 
 </section>
 

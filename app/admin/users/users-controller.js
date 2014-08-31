@@ -22,6 +22,8 @@ Users.controller('Users.Users.Controller', [
         $scope.ASSISTANT_COACH = ROLES.ASSISTANT_COACH;
         $scope.ATHLETE = ROLES.ATHLETE;
 
+        $scope.users = [];
+
         $scope.Users = users;
         $scope.statuses = [{value: 0, label: 'Active'}, {value: 1, label: 'Inactive'}];
 
@@ -40,7 +42,9 @@ Users.controller('Users.Users.Controller', [
 
         $scope.search = function(filter) {
 
-            users.query(filter).then(function(users) {
+            $scope.users.length = 0;
+
+            $scope.query = users.query(filter).then(function(users) {
 
                 $scope.users = users;
             });
