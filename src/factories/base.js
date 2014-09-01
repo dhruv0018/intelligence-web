@@ -362,6 +362,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                             var deferred = $q.defer();
 
                             self.storage.loads[key] = deferred.promise;
+                            self.storage.loads[key].list = [];
 
                             deferred.resolve(self);
                         }
