@@ -14,8 +14,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    'ResourceManager',
-    function(managedResources) {
+    '$q', 'ResourceManager',
+    function($q, managedResources) {
 
         var BaseFactory = {
 
@@ -355,6 +355,15 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                                 return self;
                             });
+                        }
+
+                        else {
+
+                            var deferred = $q.defer();
+
+                            self.storage.loads[key] = deferred.promise;
+
+                            deferred.resolve(self);
                         }
                     }
 
