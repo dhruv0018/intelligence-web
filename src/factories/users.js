@@ -84,10 +84,13 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     angular.forEach(users, function(user) {
 
-                        if (user.teamId) {
+                        angular.forEach(user.roles, function(role) {
 
-                            teamIds.push(user.teamId);
-                        }
+                            if (role.teamId) {
+
+                                teamIds.push(role.teamId);
+                            }
+                        });
                     });
 
                     var teams = $injector.get('TeamsFactory');
