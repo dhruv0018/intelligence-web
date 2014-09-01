@@ -62,7 +62,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 var self = this;
 
-                return self.query(query).then(function(teams) {
+                return self.retrieve(query).then(function(teams) {
 
                     var schoolIds = [];
 
@@ -76,7 +76,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                     var schools = $injector.get('SchoolsFactory');
 
-                    return schools.load(schoolIds).then(function() {
+                    return schools.retrieve({ 'id[]': schoolIds }).then(function() {
 
                         return teams;
                     });
