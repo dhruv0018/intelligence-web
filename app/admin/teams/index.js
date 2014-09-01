@@ -456,11 +456,16 @@ Teams.controller('TeamsController', [
 
         $scope.search = function(query) {
 
+            $scope.searching = true;
             $scope.teams.length = 0;
 
             $scope.query = teams.search(query).then(function(teams) {
 
                 $scope.teams = teams;
+
+            }).finally(function() {
+
+                $scope.searching = false;
             });
         };
     }

@@ -170,11 +170,16 @@ Schools.controller('SchoolsController', [
 
         $scope.search = function(filter) {
 
+            $scope.searching = true;
             $scope.schools.length = 0;
 
             $scope.query = schools.query(filter).then(function(schools) {
 
                 $scope.schools = schools;
+
+            }).finally(function() {
+
+                $scope.searching = false;
             });
         };
     }

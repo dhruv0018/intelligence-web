@@ -42,11 +42,16 @@ Users.controller('Users.Users.Controller', [
 
         $scope.search = function(filter) {
 
+            $scope.searching = true;
             $scope.users.length = 0;
 
             $scope.query = users.search(filter).then(function(users) {
 
                 $scope.users = users;
+
+            }).finally(function() {
+
+                $scope.searching = false;
             });
         };
 
