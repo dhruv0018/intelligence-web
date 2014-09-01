@@ -338,21 +338,16 @@ IntelligenceWebClient.factory('BaseFactory', [
                         });
                     }
 
-                    else if (angular.isArray(filter) && filter.length) {
+                    else if (angular.isArray(filter)) {
 
-                        var ids = [];
+                        filter.filter(function(id) {
 
-                        filter.forEach(function(id) {
-
-                            if (!self.storage.collection[id]) {
-
-                                ids.push(id);
-                            }
+                            return !angular.isDefined(self.storage.collection[id]);
                         });
 
-                        if (ids.length) {
+                        if (filter.length) {
 
-                            filter = { 'id[]': ids };
+                            filter = { 'id[]': filter };
 
                             self.storage.loads[key] = self.retrieve(filter).then(function(list) {
 
