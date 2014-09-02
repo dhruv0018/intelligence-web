@@ -23,9 +23,9 @@ IntelligenceWebClient.factory('SchoolsFactory', [
 
             description: 'schools',
 
-            storage: 'SchoolsStorage',
+            model: 'SchoolsResource',
 
-            resource: 'SchoolsResource',
+            storage: 'SchoolsStorage',
 
             extend: function(school) {
                 var self = this;

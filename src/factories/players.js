@@ -13,9 +13,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
             description: 'players',
 
-            storage: 'PlansStorage',
+            model: 'PlayersResource',
 
-            resource: 'PlayersResource',
+            storage: 'PlansStorage',
 
             singleSave: function(rosterId, player) {
                 var self = this;

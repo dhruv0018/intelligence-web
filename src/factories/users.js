@@ -15,9 +15,9 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             description: 'users',
 
-            storage: 'UsersStorage',
+            model: 'UsersResource',
 
-            resource: 'UsersResource',
+            storage: 'UsersStorage',
 
             extend: function(user) {
                 var self = this;

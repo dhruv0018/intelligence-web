@@ -26,9 +26,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
             description: 'teams',
 
-            storage: 'TeamsStorage',
+            model: 'TeamsResource',
 
-            resource: 'TeamsResource',
+            storage: 'TeamsStorage',
 
             extend: function(team) {
                 var self = this;

@@ -23,9 +23,9 @@ IntelligenceWebClient.factory('PlansFactory', [
 
             description: 'plans',
 
-            storage: 'PlansStorage',
+            model: 'PlansResource',
 
-            resource: 'PlansResource',
+            storage: 'PlansStorage',
 
             getByLeague: function(id, success, error) {
                 var self = this;
