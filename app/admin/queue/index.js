@@ -175,13 +175,13 @@ Queue.controller('QueueController', [
             var team = teams.get(game.uploaderTeamId);
             game.remainingTime = game.getRemainingTime(team, now);
 
+            var remainingHours = moment.duration(game.remainingTime).asHours();
+
+            var assignment = game.currentAssignment();
+
             if (game.status === GAME_STATUSES.SET_ASIDE.id) {
                 $scope.queueFilters.setAside.push(game);
             }
-
-            var remainingTime = game.getRemainingTime($scope.teams[game.uploaderTeamId]);
-            var remainingHours = moment.duration(remainingTime).asHours();
-            var assignment = game.currentAssignment();
 
             if (game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
                 $scope.queueFilters.ready.indexing.push(game);
@@ -197,7 +197,7 @@ Queue.controller('QueueController', [
 
             //TODO to change to isDelivered function when it is through QA
             if (game.status !== GAME_STATUSES.INDEXED.id) {
-                if (remainingTime < 0) {
+                if (game.remainingTime < 0) {
                     $scope.queueFilters.remaining.late.push(game);
                 } else if (remainingHours >= 24 && remainingHours <= 48) {
                     $scope.queueFilters.remaining['48'].push(game);
@@ -212,7 +212,7 @@ Queue.controller('QueueController', [
                 }
             }
 
-            if (remainingTime > 0 && remainingHours > 0 && remainingHours <= 48) {
+            if (game.remainingTime > 0 && remainingHours > 0 && remainingHours <= 48) {
                 $scope.queueFilters.last48.uploaded.push(game);
             }
         });
