@@ -168,8 +168,8 @@ Login.config([
  * @type {Controller}
  */
 Login.controller('LoginController', [
-    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService',
-    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session) {
+    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AlertsService',
+    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, alerts) {
 
         $scope.config = config;
 
@@ -294,8 +294,7 @@ Login.controller('LoginController', [
 
                     }).then(function() {
 
-                        $rootScope.$broadcast('alert', {
-
+                        alerts.add({
                             type: 'info',
                             message: 'An email has been sent to ' + email + ' with further instructions'
                         });
@@ -317,8 +316,7 @@ Login.controller('LoginController', [
 
                     else {
 
-                        $rootScope.$broadcast('alert', {
-
+                        alerts.add({
                             type: 'danger',
                             message: 'Error requesting password reset for ' + email
                         });
@@ -346,8 +344,7 @@ Login.controller('LoginController', [
 
                     function error(data, status) {
 
-                        $rootScope.$broadcast('alert', {
-
+                        alerts.add({
                             type: 'danger',
                             message: 'There was a problem resetting your password'
                         });
