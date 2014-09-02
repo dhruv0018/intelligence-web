@@ -16,17 +16,6 @@ IntelligenceWebClient.factory('PlayersFactory', [
             storage: PlansStorage,
 
             resource: PlayersResource,
-            extend: function(resource) {
-
-                var self = this;
-                //TODO fix me
-                if (window.Array.isArray(self.positionIds) && self.positionIds.length === 0) {
-                    self.positionIds = {};
-                }
-                angular.extend(resource, self);
-
-                return resource;
-            },
             singleSave: function(rosterId, player) {
                 var self = this;
 
