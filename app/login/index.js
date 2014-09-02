@@ -168,8 +168,8 @@ Login.config([
  * @type {Controller}
  */
 Login.controller('LoginController', [
-    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AlertsService',
-    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, alerts) {
+    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService', 'AlertsService',
+    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, account, alerts) {
 
         $scope.config = config;
 
