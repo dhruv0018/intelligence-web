@@ -91,7 +91,6 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.$watchCollection('data.game', function(game) {
             //gets rid of inactive players
             templatePlayerList = templatePlayerList.filter(function(teamRosterPlayer) {
-                console.log(teamRosterPlayer.rosterStatuses[$scope.teams[game.teamId].roster.id]);
                 return teamRosterPlayer.rosterStatuses[$scope.teams[game.teamId].roster.id];
             });
             $scope.loading = (templatePlayerList.length > 0);
