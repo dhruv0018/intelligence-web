@@ -24,7 +24,7 @@ IntelligenceWebClient.factory('LeaguesFactory', [
 
             description: 'leagues',
 
-            storage: LeaguesStorage,
+            storage: 'LeaguesStorage',
 
             resource: LeaguesResource,
         };

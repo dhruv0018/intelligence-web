@@ -23,7 +23,7 @@ IntelligenceWebClient.factory('SchoolsFactory', [
 
             description: 'schools',
 
-            storage: SchoolsStorage,
+            storage: 'SchoolsStorage',
 
             resource: SchoolsResource,
 

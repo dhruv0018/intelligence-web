@@ -13,7 +13,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
             description: 'players',
 
-            storage: PlansStorage,
+            storage: 'PlansStorage',
 
             resource: PlayersResource,
 

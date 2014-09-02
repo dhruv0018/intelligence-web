@@ -13,7 +13,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             description: 'tagsets',
 
-            storage: TagsetsStorage,
+            storage: 'TagsetsStorage',
 
             resource: TagsetsResource,
 

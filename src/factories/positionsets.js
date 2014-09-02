@@ -13,7 +13,7 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
 
             description: 'positionsets',
 
-            storage: PositionsetsStorage,
+            storage: 'PositionsetsStorage',
 
             resource: PositionsetsResource,
 

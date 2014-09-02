@@ -23,7 +23,7 @@ IntelligenceWebClient.factory('PlansFactory', [
 
             description: 'plans',
 
-            storage: PlansStorage,
+            storage: 'PlansStorage',
 
             resource: PlansResource,
 

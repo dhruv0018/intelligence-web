@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             description: 'plays',
 
-            storage: PlaysStorage,
+            storage: 'PlaysStorage',
 
             resource: PlaysResource,
 

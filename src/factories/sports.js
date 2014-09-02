@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('SportsFactory', [
 
             description: 'sports',
 
-            storage: SportsStorage,
+            storage: 'SportsStorage',
 
             resource: SportsResource,
         };

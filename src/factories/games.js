@@ -19,7 +19,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             description: 'games',
 
-            storage: GamesStorage,
+            storage: 'GamesStorage',
 
             resource: GamesResource,
 

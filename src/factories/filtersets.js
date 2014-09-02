@@ -13,7 +13,7 @@ IntelligenceWebClient.factory('FiltersetsFactory', [
 
             description: 'filtersets',
 
-            storage: FiltersetsStorage,
+            storage: 'FiltersetsStorage',
 
             resource: FiltersetsResource
         };

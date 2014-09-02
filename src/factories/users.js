@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             description: 'users',
 
-            storage: UsersStorage,
+            storage: 'UsersStorage',
 
             resource: UsersResource,
 
