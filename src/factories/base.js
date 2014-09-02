@@ -45,10 +45,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* Create a copy of the resource to break reference to orginal. */
                 var copy = angular.copy(resource);
 
-                /* Remove known local properties. */
-                delete copy.resource;
-
-                /* TODO: Remove other properties that should not exist. */
+                /* TODO: Remove any properties that should not exist. */
 
                 return copy;
             },
@@ -128,10 +125,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 delete resource.id;
 
-                var Resource = self.resource;
+                var Model = $injector.get(self.model);
 
                 /* Create new resource instance. */
-                resource = new Resource(resource);
+                resource = new Model(resource);
 
                 /* Extend the server resource. */
                 resource = self.extend(resource);
@@ -165,10 +162,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not get ' + self.description);
                 };
 
+                var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
 
                 /* Make a GET request to the server the resource. */
-                var get = self.resource.get({ id: id }, success, error);
+                var get = model.get({ id: id }, success, error);
 
                 /* Once the get request finishes. */
                 return get.$promise.then(function(resource) {
@@ -224,10 +222,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not load ' + self.description + ' list');
                 };
 
+                var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
 
                 /* Make a GET request to the server for an array of resources. */
-                var query = self.resource.query(filter, success, error);
+                var query = model.query(filter, success, error);
 
                 /* Once the query request finishes. */
                 return query.$promise.then(function(resources) {
@@ -279,10 +278,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not load ' + self.description);
                 };
 
+                var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
 
                 /* Make a GET request to the server for an array of resources. */
-                var query = self.resource.query(filter, success, error);
+                var query = model.query(filter, success, error);
 
                 /* Once the query request finishes. */
                 return query.$promise.then(function(resources) {
@@ -316,7 +316,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                         filter.start += filter.count;
 
                         /* Keep retrieving resources until all are retrieved. */
-                        return self.retrieve(filter);
+                        return model.retrieve(filter);
                     }
                 });
             },
@@ -334,6 +334,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var key = String(JSON.stringify(filter));
 
+                var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
 
                 storage.loads = storage.loads || Object.create(null);
@@ -342,7 +343,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     if (angular.isNumber(filter)) {
 
-                        storage.loads[key] = self.fetch(filter).then(function() {
+                        storage.loads[key] = model.fetch(filter).then(function() {
 
                             return self;
                         });
@@ -350,7 +351,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else {
 
-                        storage.loads[key] = self.retrieve(filter).then(function(list) {
+                        storage.loads[key] = model.retrieve(filter).then(function(list) {
 
                             storage.loads[key].list = list;
 
@@ -407,19 +408,20 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not save resource');
                 };
 
+                var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
 
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
 
                     /* Make a PUT request to the server to update the resource. */
-                    var update = self.resource.update(parameters, copy, success, error);
+                    var update = model.update(parameters, copy, success, error);
 
                     /* Once the update request finishes. */
                     return update.$promise.then(function() {
 
                         /* Fetch the updated resource. */
-                        return self.fetch(resource.id).then(function(updated) {
+                        return model.fetch(resource.id).then(function(updated) {
 
                             /* Update local resource with server resource. */
                             angular.extend(resource, self.extend(updated));
@@ -436,7 +438,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 } else {
 
                     /* Make a POST request to the server to create the resource. */
-                    var create = self.resource.create(parameters, copy, success, error);
+                    var create = model.create(parameters, copy, success, error);
 
                     /* Once the create request finishes. */
                     return create.$promise.then(function(created) {
@@ -475,6 +477,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not remove ' + self.description);
                 };
 
+                var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
 
                 /* Remove the resource from storage. */
@@ -485,7 +488,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 if (resource.id) {
 
                     /* Make a DELETE request to the server to delete the resource. */
-                    return self.resource.remove(parameters, resource, success, error).$promise;
+                    return model.remove(parameters, resource, success, error).$promise;
                 }
             },
 
