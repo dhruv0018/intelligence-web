@@ -692,9 +692,25 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
                 return self.status === GAME_STATUSES.FINALIZED.id;
             },
+            isShared: function() {
+                var self = this;
+                return self.status === GAME_STATUSES.NOT_INDEXED.id;
+            },
             isVideoTranscodeComplete: function() {
                 var self = this;
                 return self.video.status === VIDEO_STATUSES.COMPLETE.id;
+            },
+            isUploading: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
+            },
+            isProcessing: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.UPLOADED.id;
+            },
+            isVideoTranscodeFailed: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.FAILED.id;
             }
         };
 

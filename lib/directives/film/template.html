@@ -1,15 +1,19 @@
-<div class="krossover-film">
+<div class="krossover-film" data-ng-hide="currentUser.is(ATHLETE) && !isVideoTranscodeComplete()">
    <div class="film-info-header">
        {{game.datePlayed | date: 'MMM dd, yyyy' }}
 
        <br/>
 
-       <strong>Game Film: </strong>
+       <strong data-ng-if="game.isVideoTranscodeComplete() && isReady">Game Film: </strong>
+       <strong data-ng-if="game.isVideoTranscodeComplete() && !isReady">Breakdown In Progress: </strong>
+       <strong data-ng-if="game.isProcessing()">Film Is Processing: </strong>
+       <strong data-ng-if="game.isUploading()">Film Uploading: </strong>
+       <strong data-ng-if="game.isVideoTranscodeFailed()">Film Failed Processing</strong>
 
-       <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:game.id})">
+       <a data-ng-if="currentUser.is(COACH) && !game.isVideoTranscodeFailed()" data-ui-sref="Coach.GameArea({id:game.id})">
            {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
        </a>
-       <a data-ng-if="currentUser.is(ATHLETE)" data-ui-sref="Athlete.GameArea({id:game.id})">
+       <a data-ng-if="currentUser.is(ATHLETE) && !game.isVideoTranscodeFailed()" data-ui-sref="Athlete.GameArea({id:game.id})">
            {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
        </a>
        <br/>

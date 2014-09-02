@@ -1,6 +1,6 @@
 <div class="krossover-thumbnail">
 
-    <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:game.id})">
+    <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:game.id})" data-ng-class="{ 'film-failed': game.isVideoTranscodeFailed() }">
         <div data-ng-if="thumbnail.length > 0" class="has-thumbnail">
             <img class="img-responsive" data-ng-src="{{thumbnail}}" alt="thumbnail">
             <i class="icon icon-play"></i>
@@ -8,6 +8,9 @@
         </div>
         <div data-ng-if="thumbnail.length === 0" class="no-thumbnail">
             <i class="icon icon-logo"></i>
+            <span data-ng-if="game.isProcessing()">Your video is still processing.</span>
+            <span data-ng-if="game.isUploading()">This film is currently being uploaded.</span>
+            <span data-ng-if="game.isVideoTranscodeFailed()">There is an issue with this film. Please contact support@krossover.com</span>
         </div>
     </a>
 

@@ -9,6 +9,11 @@
   	text-decoration: none;
   }
 
+  .film-failed {
+    pointer-events: none;
+    cursor: default;
+  }
+
   .has-thumbnail {
     background-color: @brand-blue;
     text-align: center;
@@ -48,11 +53,17 @@
 
   .no-thumbnail {
     color: white;
-    background-color: @brand-blue;
-    font-size: 100px;
+    background-color: @gray-light;
+    font-size: 14px;
     text-align: center;
-    padding-top: 40px;
+    padding-top: 30px;
     width: 100%;
     height: 199px;
+
+    .icon {
+      display: block;
+      font-size: 100px;
+      margin-bottom: 20px;
+    }
   }
 }
