@@ -121,22 +121,28 @@ IntelligenceWebClient.run([
 
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
 
-            alerts.add({
-                type: 'warning',
-                message: 'Could not go to ' + toState.name
-            });
+            if (!event.defaultPrevented) {
+
+                alerts.add({
+                    type: 'warning',
+                    message: 'Could not go to ' + toState.name
+                });
+            }
         });
 
         $rootScope.$on('roleChangeError', function(event, role) {
 
-            role = role || {};
-            role.type = role.type || {};
-            role.type.name = role.type.name || 'Unknown Role';
+            if (!event.defaultPrevented) {
 
-            alerts.add({
-                type: 'warning',
-                message: 'Could not change role to "' + role.type.name + '"'
-            });
+                role = role || {};
+                role.type = role.type || {};
+                role.type.name = role.type.name || 'Unknown Role';
+
+                alerts.add({
+                    type: 'warning',
+                    message: 'Could not change role to "' + role.type.name + '"'
+                });
+            }
         });
     }
 ]);

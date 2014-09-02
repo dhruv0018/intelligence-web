@@ -161,6 +161,13 @@ IntelligenceWebClient.service('PlayManager', [
 
                 /* Set the current event to the previous event. */
                 eventManager.current = previousEvent;
+
+                /* If the play has been saved before. */
+                if (this.current.id) {
+
+                    /* Update it remotely. */
+                    this.save();
+                }
             }
 
             /* If there are no events left in the play. */

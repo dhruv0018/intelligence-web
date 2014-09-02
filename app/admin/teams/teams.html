@@ -9,12 +9,7 @@
         <form role="form" data-ng-submit="search(filter)">
 
             <div class="form-group">
-
                 <input class="form-control" name="name" placeholder="Team Name" data-ng-model="filter.name" type="search" autocomplete="on" list="team-name" autosave="team-name">
-                <datalist id="team-name">
-                    <option data-ng-repeat="team in teams | unique:'name' | orderBy:'name'" value="{{team.name}}"></option>
-                </datalist>
-
             </div>
 
             <div class="form-group">
@@ -45,12 +40,10 @@
             </div>
 
             <button class="btn-search" data-ng-show="sidebar" data-ng-click="search(filter)" type="submit"><i class="icon icon-search"></i></button>
-            <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon icon-search"></i></button>
-
-            
 
         </form>
 
+        <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon icon-search"></i></button>
         <button class="btn-toggle-sidebar" data-ng-show="sidebar" data-ng-click="sidebar = false"><i class="icon icon-chevron-left"></i></button>
         <button class="btn-toggle-sidebar" data-ng-hide="sidebar" data-ng-click="sidebar = true"><i class="icon icon-chevron-right"></i></button>
 
