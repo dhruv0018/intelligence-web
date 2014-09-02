@@ -14,8 +14,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    'ResourceManager',
-    function(managedResources) {
+    '$injector', 'ResourceManager',
+    function($injector, managedResources) {
 
         var BaseFactory = {
 
@@ -47,7 +47,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 /* Remove known local properties. */
                 delete copy.resource;
-                delete copy.storage;
 
                 /* TODO: Remove other properties that should not exist. */
 
@@ -64,20 +63,21 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var self = this;
 
                 if (!self.storage) throw new Error(self.description + ' storage not defined');
-                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
+
+                var storage = $injector.get(self.storage);
 
                 var resource;
 
                 /* If given and ID lookup the resource in storage. */
                 if (id) {
 
-                    resource = self.storage.collection[id];
+                    resource = storage.collection[id];
                 }
 
                 /* If no ID, then assume the unsaved resource. */
                 else {
 
-                    resource = self.storage.unsaved;
+                    resource = storage.unsaved;
                 }
 
                 if (!resource) throw new Error('Could not get ' + self.description.slice(0, -1));
@@ -95,11 +95,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var self = this;
 
                 if (!self.storage) throw new Error(self.description + ' storage not defined');
-                if (!self.storage.list) throw new Error(self.description + ' not loaded');
 
                 var key = String(JSON.stringify(filter));
 
-                return this.storage.loads[key] ? this.storage.loads[key].list : self.storage.list;
+                return storage.loads[key] ? storage.loads[key].list : storage.list;
             },
 
             /**
@@ -111,9 +110,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var self = this;
 
                 if (!self.storage) throw new Error(self.description + ' storage not defined');
-                if (!self.storage.collection) throw new Error(self.description + ' not loaded');
 
-                return self.storage.collection;
+                var storage = $injector.get(self.storage);
+
+                return storage.collection;
             },
 
             /**
@@ -136,8 +136,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* Extend the server resource. */
                 resource = self.extend(resource);
 
+                var storage = $injector.get(self.storage);
+
                 /* Add the resource to storage. */
-                self.storage.unsaved = resource;
+                storage.unsaved = resource;
 
                 return resource;
             },
@@ -163,6 +165,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not get ' + self.description);
                 };
 
+                var storage = $injector.get(self.storage);
+
                 /* Make a GET request to the server the resource. */
                 var get = self.resource.get({ id: id }, success, error);
 
@@ -173,7 +177,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     resource = self.extend(resource);
 
                     /* Store the resource locally in its storage collection. */
-                    self.storage.collection[resource.id] = resource;
+                    storage.collection[resource.id] = resource;
 
                     self.updateList();
 
@@ -220,6 +224,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not load ' + self.description + ' list');
                 };
 
+                var storage = $injector.get(self.storage);
+
                 /* Make a GET request to the server for an array of resources. */
                 var query = self.resource.query(filter, success, error);
 
@@ -232,7 +238,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                         resource = self.extend(resource);
 
                         /* Store the resource locally in its storage collection. */
-                        self.storage.collection[resource.id] = resource;
+                        storage.collection[resource.id] = resource;
                     });
 
                     self.updateList();
@@ -273,6 +279,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not load ' + self.description);
                 };
 
+                var storage = $injector.get(self.storage);
+
                 /* Make a GET request to the server for an array of resources. */
                 var query = self.resource.query(filter, success, error);
 
@@ -285,19 +293,19 @@ IntelligenceWebClient.factory('BaseFactory', [
                         resource = self.extend(resource);
 
                         /* Store the resource locally in its storage collection. */
-                        self.storage.collection[resource.id] = resource;
+                        storage.collection[resource.id] = resource;
                     });
 
-                    self.storage.query = self.storage.query || [];
-                    self.storage.query = self.storage.query.concat(resources);
+                    storage.query = storage.query || [];
+                    storage.query = storage.query.concat(resources);
 
                     /* If all of the server resources have been retrieved. */
                     if (resources.length < filter.count) {
 
                         self.updateList();
 
-                        var query = self.storage.query.slice();
-                        delete self.storage.query;
+                        var query = storage.query.slice();
+                        delete storage.query;
                         return query;
                     }
 
@@ -326,13 +334,13 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var key = String(JSON.stringify(filter));
 
-                self.storage.loads = self.storage.loads || Object.create(null);
+                storage.loads = storage.loads || Object.create(null);
 
-                if (!self.storage.loads[key]) {
+                if (!storage.loads[key]) {
 
                     if (angular.isNumber(filter)) {
 
-                        self.storage.loads[key] = self.fetch(filter).then(function() {
+                        storage.loads[key] = self.fetch(filter).then(function() {
 
                             return self;
                         });
@@ -340,16 +348,16 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else {
 
-                        self.storage.loads[key] = self.retrieve(filter).then(function(list) {
+                        storage.loads[key] = self.retrieve(filter).then(function(list) {
 
-                            self.storage.loads[key].list = list;
+                            storage.loads[key].list = list;
 
                             return self;
                         });
                     }
                 }
 
-                return self.storage.loads[key];
+                return storage.loads[key];
             },
 
             /**
@@ -362,7 +370,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var key = String(JSON.stringify(filter));
 
-                delete self.storage.loads[key];
+                var storage = $injector.get(self.storage);
+
+                delete storage.loads[key];
             },
 
             /**
@@ -379,6 +389,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                 resource = resource || self;
 
                 managedResources.reset(resource);
+
+                var storage = $injector.get(self.storage);
 
                 /* Create a copy of the resource to save to the server. */
                 var copy = self.unextend(resource);
@@ -411,8 +423,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                             angular.extend(resource, self.extend(updated));
 
                             /* Update the resource in storage. */
-                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
-                            self.storage.collection[resource.id] = resource;
+                            storage.list[storage.list.indexOf(resource)] = resource;
+                            storage.collection[resource.id] = resource;
 
                             return resource;
                         });
@@ -431,8 +443,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                         angular.extend(resource, self.extend(created));
 
                         /* Add the resource to storage. */
-                        self.storage.list.push(resource);
-                        self.storage.collection[resource.id] = resource;
+                        storage.list.push(resource);
+                        storage.collection[resource.id] = resource;
 
                         return resource;
                     });
@@ -461,9 +473,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not remove ' + self.description);
                 };
 
+                var storage = $injector.get(self.storage);
+
                 /* Remove the resource from storage. */
-                self.storage.list.splice(self.storage.list.indexOf(resource), 1);
-                delete self.storage.collection[resource.id];
+                storage.list.splice(storage.list.indexOf(resource), 1);
+                delete storage.collection[resource.id];
 
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
@@ -477,14 +491,16 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+                var storage = $injector.get(self.storage);
+
                 /* Clear the storage list. */
-                self.storage.list.length = 0;
+                storage.list.length = 0;
 
                 /* Loop through each resource in the storage collection. */
-                Object.keys(self.storage.collection).forEach(function(key) {
+                Object.keys(storage.collection).forEach(function(key) {
 
                     /* Add the resource to the storage list. */
-                    self.storage.list.push(self.storage.collection[key]);
+                    storage.list.push(storage.collection[key]);
                 });
             }
         };
