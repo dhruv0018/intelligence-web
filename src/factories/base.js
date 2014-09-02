@@ -334,6 +334,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var key = String(JSON.stringify(filter));
 
+                var storage = $injector.get(self.storage);
+
                 storage.loads = storage.loads || Object.create(null);
 
                 if (!storage.loads[key]) {
@@ -390,8 +392,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 managedResources.reset(resource);
 
-                var storage = $injector.get(self.storage);
-
                 /* Create a copy of the resource to save to the server. */
                 var copy = self.unextend(resource);
 
@@ -406,6 +406,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     throw new Error('Could not save resource');
                 };
+
+                var storage = $injector.get(self.storage);
 
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {

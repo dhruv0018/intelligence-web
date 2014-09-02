@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
 
             storage: 'PositionsetsStorage',
 
-            resource: PositionsetsResource,
+            resource: 'PositionsetsResource',
 
             extend: function(positionset) {
 

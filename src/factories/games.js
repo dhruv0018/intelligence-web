@@ -21,7 +21,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             storage: 'GamesStorage',
 
-            resource: GamesResource,
+            resource: 'GamesResource',
 
             extend: function(game) {
 
