@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
-    function($rootScope, UsersResource, UsersStorage, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
+    '$injector', '$rootScope', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
+    function($injector, $rootScope, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
 
         var UsersFactory = {
 
@@ -99,11 +99,14 @@ IntelligenceWebClient.factory('UsersFactory', [
                     throw new Error('Could not save resource');
                 };
 
+                var model = $injector.get(self.model);
+                var storage = $injector.get(self.storage);
+
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
 
                     /* Make a PUT request to the server to update the resource. */
-                    var update = self.resource.update(parameters, copy, success, error);
+                    var update = model.update(parameters, copy, success, error);
 
                     /* Once the update request finishes. */
                     return update.$promise.then(function() {
@@ -115,8 +118,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                             angular.extend(resource, self.extend(updated));
 
                             /* Update the resource in storage. */
-                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
-                            self.storage.collection[resource.id] = resource;
+                            storage.list[storage.list.indexOf(resource)] = resource;
+                            storage.collection[resource.id] = resource;
 
                             return resource;
                         });
@@ -126,7 +129,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 } else {
 
                     /* Make a POST request to the server to create the resource. */
-                    var create = self.resource.create(parameters, copy, success, error);
+                    var create = model.create(parameters, copy, success, error);
 
                     /* Once the create request finishes. */
                     return create.$promise.then(function(created) {
@@ -135,8 +138,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                         angular.extend(resource, self.extend(created));
 
                         /* Add the resource to storage. */
-                        self.storage.list.push(resource);
-                        self.storage.collection[resource.id] = resource;
+                        storage.list.push(resource);
+                        storage.collection[resource.id] = resource;
 
                         return resource;
                     });
