@@ -629,6 +629,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 now = now || moment.utc();
 
+                if (!self.submittedAt) return 0;
+
                 var submittedAt = moment.utc(self.submittedAt);
 
                 if (!submittedAt.isValid()) return 0;
