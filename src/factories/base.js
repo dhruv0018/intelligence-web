@@ -93,6 +93,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 if (!self.storage) throw new Error(self.description + ' storage not defined');
 
+                var storage = $injector.get(self.storage);
+
                 var key = String(JSON.stringify(filter));
 
                 return storage.loads[key] ? storage.loads[key].list : storage.list;
