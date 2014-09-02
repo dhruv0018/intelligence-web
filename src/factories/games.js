@@ -633,10 +633,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!submittedAt.isValid()) return 0;
 
-                var timePassed = moment.duration(now.subtract(submittedAt));
-
+                var timePassed = moment.duration(submittedAt.diff(now));
                 var turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
-
                 var timeRemaining = turnaroundTime.subtract(timePassed);
 
                 return timeRemaining.asMilliseconds();
