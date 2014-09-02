@@ -116,8 +116,8 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'TeamsFactory', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
-    function controller($rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, teams, games, data, SelectIndexerModal) {
+    '$interval', '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'TeamsFactory', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
+    function controller($interval, $rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, teams, games, data, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -215,6 +215,26 @@ Queue.controller('QueueController', [
             if (game.remainingTime > 0 && remainingHours > 0 && remainingHours <= 48) {
                 $scope.queueFilters.last48.uploaded.push(game);
             }
+        });
+
+        var refreshGames = function() {
+
+            angular.forEach($scope.queue, function(game) {
+
+                if (game.remainingTime) {
+
+                    game.remainingTime = moment.duration(game.remainingTime).subtract(1, 'minute');
+                }
+            });
+        };
+
+        var ONE_MINUTE = 60000;
+
+        var refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
+
+        $scope.$on('$destroy', function() {
+
+            $interval.cancel(refreshGamesInterval);
         });
 
         $scope.setQueue = function(games) {
