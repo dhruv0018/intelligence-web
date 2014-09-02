@@ -316,7 +316,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                         filter.start += filter.count;
 
                         /* Keep retrieving resources until all are retrieved. */
-                        return model.retrieve(filter);
+                        return self.retrieve(filter);
                     }
                 });
             },
@@ -343,7 +343,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     if (angular.isNumber(filter)) {
 
-                        storage.loads[key] = model.fetch(filter).then(function() {
+                        storage.loads[key] = self.fetch(filter).then(function() {
 
                             return self;
                         });
@@ -351,7 +351,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else {
 
-                        storage.loads[key] = model.retrieve(filter).then(function(list) {
+                        storage.loads[key] = self.retrieve(filter).then(function(list) {
 
                             storage.loads[key].list = list;
 
@@ -421,7 +421,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     return update.$promise.then(function() {
 
                         /* Fetch the updated resource. */
-                        return model.fetch(resource.id).then(function(updated) {
+                        return self.fetch(resource.id).then(function(updated) {
 
                             /* Update local resource with server resource. */
                             angular.extend(resource, self.extend(updated));
