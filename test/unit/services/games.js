@@ -908,5 +908,46 @@ describe('GamesFactory', function() {
             }]));
     });
 
+    describe('isBeingBrokenDown', function() {
+        var game;
+
+        beforeEach(inject([
+            'GAME_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, games) {
+
+                game = {};
+
+                game = games.extend(game);
+            }
+        ]));
+
+        it('should return false when the game is in the incorrect status', inject([
+            'GAME_STATUSES',
+            function(GAME_STATUSES) {
+                [
+                    GAME_STATUSES.NOT_INDEXED.id,
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.FINALIZED.id
+                ].forEach(function(status) {
+                        game.status = status;
+                        expect(game.isBeingBrokenDown()).to.be.false;
+                    });
+            }]));
+
+        it('should return true when the game is in the correct status', inject([
+            'GAME_STATUSES',
+            function(GAME_STATUSES) {
+                [
+                    GAME_STATUSES.INDEXING.id,
+                    GAME_STATUSES.READY_FOR_QA.id,
+                    GAME_STATUSES.QAING.id,
+                    GAME_STATUSES.SET_ASIDE.id,
+                    GAME_STATUSES.INDEXED.id
+                ].forEach(function(status) {
+                        game.status = status;
+                        expect(game.isBeingBrokenDown()).to.be.true;
+                    });
+            }]));
+    });
 });
 
