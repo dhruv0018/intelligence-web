@@ -190,8 +190,8 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'AlertsService', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager',
-    function controller($scope, $state, $stateParams, players, alerts, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager) {
+    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager',
+    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager) {
         $scope.hasShotChart = false;
         $scope.hasStatistics = true;
         $scope.hasFormations = false;
@@ -244,18 +244,8 @@ GameArea.controller('Coach.GameArea.controller', [
             $scope.dataType = 'raw-film';
         } else {
             $scope.dataType = 'game-info';
-            if ($scope.game.isProcessing()) {
-                alerts.add({
-                    type: 'warning',
-                    message: 'Your video is still processing. You may still edit the Game Information for this film.'
-                });
-            } else if ($scope.game.isUploading()) {
-                alerts.add({
-                    type: 'warning',
-                    message: 'This film is currently uploading. You may still edit the Game Information for this film.'
-                });
-            }
         }
+
         $scope.$watch('dataType', function(data) {
             if ($scope.dataType === 'game-info') {
                 $state.go('ga-info');
