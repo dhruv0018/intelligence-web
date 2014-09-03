@@ -612,7 +612,15 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             isNonRegular: function isNonRegular(game) {
-                return GAME_TYPES[GAME_TYPES_IDS[game.gameType]].type === 'non-regular';
+
+                switch (game.gameType) {
+
+                    case GAME_TYPES.SCOUTING.id:
+                    case GAME_TYPES.SCRIMMAGE.id:
+                        return true;
+                    default:
+                        return false;
+                }
             },
 
             getFormationReport: function() {
