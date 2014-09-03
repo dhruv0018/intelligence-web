@@ -41,9 +41,9 @@
 
         </div>
 
-        <button class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>
+        <button data-ng-hide="game.isDelivered() || game.isBeingBrokenDown()" class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>
 
-        <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
+        <a data-ng-hide="game.isDelivered() || game.isBeingBrokenDown()" href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
     </form>
 
 
