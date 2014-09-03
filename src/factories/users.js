@@ -46,11 +46,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                         }
                     });
                 }
-                /* Convert the last accessed string to a date object. */
-                user.lastAccessed = new Date(user.lastAccessed);
-
-                /* If the date conversion failed clear the value. */
-                if (isNaN(user.lastAccessed.valueOf())) user.lastAccessed = '';
 
                 /* Copy all of the properties from the retrieved $resource
                  * "user" object. */
