@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    '$sce', 'PlaysResource', 'PlaysStorage', 'BaseFactory', 'VIDEO_STATUSES',
-    function($sce, PlaysResource, PlaysStorage, BaseFactory, VIDEO_STATUSES) {
+    'config', '$sce', 'PlaysResource', 'PlaysStorage', 'BaseFactory', 'VIDEO_STATUSES',
+    function(config, $sce, PlaysResource, PlaysStorage, BaseFactory, VIDEO_STATUSES) {
 
         var PlaysFactory = {
 
@@ -57,7 +57,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 var sources = [];
 
                 var defaultVideo;
-                var DEFAULT_VIDEO_ID = 2;
+                var DEFAULT_VIDEO_ID = config.defaultVideoId;
 
                 if (self.clip && self.clip.status === VIDEO_STATUSES.COMPLETE.id) {
                     profiles.forEach(function(profile) {
