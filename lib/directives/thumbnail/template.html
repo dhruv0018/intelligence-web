@@ -1,6 +1,6 @@
-<div class="krossover-thumbnail">
+<div class="krossover-thumbnail" data-ng-class="{ 'film-failed': game.isUploading() }">
 
-    <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:game.id})" data-ng-class="{ 'film-failed': game.isVideoTranscodeFailed() }">
+    <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:game.id})">
         <div data-ng-if="thumbnail.length > 0" class="has-thumbnail">
             <img class="img-responsive" data-ng-src="{{thumbnail}}" alt="thumbnail">
             <i class="icon icon-play"></i>
