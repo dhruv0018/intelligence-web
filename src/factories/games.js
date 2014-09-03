@@ -121,6 +121,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                             }
                         });
 
+                        //Swap default to medium quality video (second source)
                         if (sources.length > 1) {
                             var temp = sources[1];
                             sources[1] = sources[0];
