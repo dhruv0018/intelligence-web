@@ -6,7 +6,7 @@
 
        <strong>{{film.isDelivered() ? 'Breakdown' : 'Raw Film'}}</strong>
 
-       <a ui-sref="Coach.GameArea({id:film.id})">
+       <a data-ui-sref="Coach.GameArea({id:film.id})">
            {{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}
        </a>
        <br/>
@@ -18,6 +18,7 @@
        <br/>
 
        <strong>Reel: </strong>
+
 
        <a ui-sref="ReelsArea({id:film.id})">
            {{film.name}}
