@@ -120,6 +120,12 @@ IntelligenceWebClient.factory('GamesFactory', [
                                 sources.push(source);
                             }
                         });
+
+                        if (sources.length > 1) {
+                            var temp = sources[1];
+                            sources[1] = sources[0];
+                            sources[0] = temp;
+                        }
                     }
                 }
 
