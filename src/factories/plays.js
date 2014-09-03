@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    '$sce', 'PlaysResource', 'PlaysStorage', 'BaseFactory',
-    function($sce, PlaysResource, PlaysStorage, BaseFactory) {
+    '$sce', 'PlaysResource', 'PlaysStorage', 'BaseFactory', 'VIDEO_STATUSES',
+    function($sce, PlaysResource, PlaysStorage, BaseFactory, VIDEO_STATUSES) {
 
         var PlaysFactory = {
 
@@ -56,23 +56,31 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 var profile;
                 var sources = [];
 
-                for (profile in profiles) {
-                    if (profiles[profile].videoUrl) {
+                var defaultVideo;
+                var DEFAULT_VIDEO_ID = 2;
 
-                        var source = {
-                            type: 'video/mp4',
-                            src: $sce.trustAsResourceUrl(profiles[profile].videoUrl)
-                        };
+                if (self.clip && self.clip.status === VIDEO_STATUSES.COMPLETE.id) {
+                    for (profile in profiles) {
+                        if (profiles[profile].videoUrl) {
 
-                        sources.push(source);
+                            if (profiles[profile].status === VIDEO_STATUSES.COMPLETE.id) {
+
+                                var source = {
+                                    type: 'video/mp4',
+                                    src: $sce.trustAsResourceUrl(profiles[profile].videoUrl)
+                                };
+
+                                if (profiles[profile].transcodeProfile.id === DEFAULT_VIDEO_ID) {
+                                    defaultVideo = source;
+                                } else {
+                                    sources.push(source);
+                                }
+                            }
+
+                        }
                     }
-                }
 
-                //Swap default to medium quality video (second source)
-                if (sources.length > 1) {
-                    var temp = sources[1];
-                    sources[1] = sources[0];
-                    sources[0] = temp;
+                    if (defaultVideo) sources.unshift(defaultVideo);
                 }
 
                 return sources;

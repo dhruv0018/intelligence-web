@@ -103,6 +103,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 var sources = [];
+                var defaultVideo;
+                var DEFAULT_VIDEO_ID = 2;
 
                 if (self.video && self.video.status) {
 
@@ -117,18 +119,18 @@ IntelligenceWebClient.factory('GamesFactory', [
                                     src: $sce.trustAsResourceUrl(profile.videoUrl)
                                 };
 
-                                sources.push(source);
+                                if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
+                                    defaultVideo = source;
+                                } else {
+                                    sources.push(source);
+                                }
                             }
                         });
 
-                        //Swap default to medium quality video (second source)
-                        if (sources.length > 1) {
-                            var temp = sources[1];
-                            sources[1] = sources[0];
-                            sources[0] = temp;
-                        }
                     }
                 }
+
+                if (defaultVideo) sources.unshift(defaultVideo);
 
                 return sources;
             },
