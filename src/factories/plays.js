@@ -60,17 +60,17 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 var DEFAULT_VIDEO_ID = 2;
 
                 if (self.clip && self.clip.status === VIDEO_STATUSES.COMPLETE.id) {
-                    for (profile in profiles) {
-                        if (profiles[profile].videoUrl) {
+                    profiles.forEach(function(profile) {
+                        if (profile.videoUrl) {
 
-                            if (profiles[profile].status === VIDEO_STATUSES.COMPLETE.id) {
+                            if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
 
                                 var source = {
                                     type: 'video/mp4',
-                                    src: $sce.trustAsResourceUrl(profiles[profile].videoUrl)
+                                    src: $sce.trustAsResourceUrl(profile.videoUrl)
                                 };
 
-                                if (profiles[profile].transcodeProfile.id === DEFAULT_VIDEO_ID) {
+                                if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
                                     defaultVideo = source;
                                 } else {
                                     sources.push(source);
@@ -78,7 +78,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
                             }
 
                         }
-                    }
+                    });
 
                     if (defaultVideo) sources.unshift(defaultVideo);
                 }
