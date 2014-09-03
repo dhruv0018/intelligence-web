@@ -57,15 +57,22 @@ Header.config([
 
 
 Header.service('Base.Data.Dependencies', [
-    'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory',
-    function(sports, leagues, tagsets, filtersets) {
+    'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory',
+    function(session, sports, leagues, tagsets, filtersets) {
+
+        var teamIds = session.currentUser.getTeamIds();
 
         var Data = {
             sports: sports.load(),
             leagues: leagues.load(),
             tagsets: tagsets.load(),
-            filtersets: filtersets.load()
+            filtersets: filtersets.load(),
         };
+
+        if (teamIds.length) {
+
+            Data.teams = teams.load({ 'id[]': teamIds });
+        }
 
         return Data;
     }
