@@ -711,6 +711,22 @@ IntelligenceWebClient.factory('GamesFactory', [
             isVideoTranscodeFailed: function() {
                 var self = this;
                 return self.video.status === VIDEO_STATUSES.FAILED.id;
+            },
+            isBeingBrokenDown: function() {
+                var self = this;
+                var isBeingBrokenDown = false;
+
+                switch (self.status) {
+                    case GAME_STATUSES.INDEXING.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.QAING.id:
+                    case GAME_STATUSES.SET_ASIDE.id:
+                    case GAME_STATUSES.INDEXED.id:
+                        isBeingBrokenDown = true;
+                        break;
+                }
+
+                return isBeingBrokenDown;
             }
         };
 

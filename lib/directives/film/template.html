@@ -5,7 +5,8 @@
        <br/>
 
        <strong data-ng-if="game.isVideoTranscodeComplete() && isReady">Game Film: </strong>
-       <strong data-ng-if="game.isVideoTranscodeComplete() && !isReady">Breakdown In Progress: </strong>
+       <strong data-ng-if="game.isVideoTranscodeComplete() && game.isBeingBrokenDown()">Breakdown In Progress: </strong>
+       <strong data-ng-if="game.isVideoTranscodeComplete() && !game.isBeingBrokenDown() && !isReady">Submitted For Breakdown: </strong>
        <strong data-ng-if="game.isProcessing()">Film Is Processing: </strong>
        <strong data-ng-if="game.isUploading()">Film Uploading: </strong>
        <strong data-ng-if="game.isVideoTranscodeFailed()">Film Failed Processing</strong>
