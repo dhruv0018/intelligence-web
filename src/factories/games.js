@@ -637,7 +637,18 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var timePassed = moment.duration(submittedAt.diff(now));
                 var turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
-                var timeRemaining = turnaroundTime.subtract(timePassed);
+
+                var timeRemaining = moment.duration();
+
+                if (timePassed < 0) {
+
+                    timeRemaining = turnaroundTime.add(timePassed);
+                }
+
+                else {
+
+                    timeRemaining = turnaroundTime.subtract(timePassed);
+                }
 
                 return timeRemaining.asMilliseconds();
             },
