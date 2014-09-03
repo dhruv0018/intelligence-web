@@ -27,8 +27,9 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                angular.augment(game, self);
+                angular.extend(game, self);
 
+                game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
