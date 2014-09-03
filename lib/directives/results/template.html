@@ -1,0 +1,12 @@
+<div class="results">
+
+    <i class="icon icon-search" data-ng-class="{ active: querying }"></i>
+
+    <h1 data-ng-show="!queried && !error">Search<span data-ng-show="querying">ing…</span></h1>
+    <h1 data-ng-show="!querying && queried && !error && !results.length">No Results Found</h1>
+    <h1 data-ng-show="!querying && queried && error">Could not search</h1>
+
+    <h2 data-ng-hide="querying || queried">Enter your search.</h2>
+    <h2 data-ng-show="queried">Try your search again.</h2>
+
+</div>
