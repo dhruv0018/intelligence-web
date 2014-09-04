@@ -949,5 +949,81 @@ describe('GamesFactory', function() {
                     });
             }]));
     });
+
+    describe('isRegular', function() {
+
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {};
+                game = games.extend(game);
+            }
+        ]));
+
+        it('should return true for a game with a regular game type', inject([
+            'GAME_TYPES_IDS',
+            function(GAME_TYPES_IDS) {
+            Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
+
+                switch(gameTypeId) {
+                    case 1:
+                    case 2:
+                    case 3:
+                        expect(game.isRegular(gameTypeId)).to.be.true;
+                        break;
+                    case 4:
+                    case 5:
+                    default:
+                        expect(game.isRegular(gameTypeId)).to.be.false;
+                        break;
+                }
+            });
+        });
+
+        it('should return false for undefined input', function() {
+            expect(game.isRegular(undefined).to.be.false);
+        });
+
+    });
+
+    describe('isNonRegular', function() {
+
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {};
+                game = games.extend(game);
+            }
+        ]));
+
+        it('should return true for a game with a non-regular game type', inject([
+            'GAME_TYPES_IDS',
+            function(GAME_TYPES_IDS) {
+            Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
+
+                switch(gameTypeId) {
+                    case 1:
+                    case 2:
+                    case 3:
+                    default:
+                        expect(game.isNonRegular(gameTypeId)).to.be.false;
+                        break;
+                    case 4:
+                    case 5:
+                        expect(game.isNonRegular(gameTypeId)).to.be.true;
+                        break;
+                }
+            });
+        });
+
+        it('should return false for undefined input', function() {
+            expect(game.isNonRegular(undefined).to.be.false);
+        });
+
+    });
 });
 
