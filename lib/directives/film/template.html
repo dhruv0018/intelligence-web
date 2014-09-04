@@ -6,7 +6,10 @@
 
        <strong>{{film.isDelivered() ? 'Breakdown' : 'Raw Film'}}</strong>
 
-       <a data-ui-sref="Coach.GameArea({id:film.id})">
+       <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:game.id})">
+           {{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}
+       </a>
+       <a data-ng-if="currentUser.is(ATHLETE)" data-ui-sref="Athlete.GameArea({id:game.id})">
            {{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}
        </a>
        <br/>
@@ -30,7 +33,7 @@
 
     <div>
 
-        <a data-ng-disabled="true" data-open-modal="ShareFilm.Modal" class="share-game">
+        <a data-ng-if="currentUser.is(COACH)" data-ng-disabled="true" data-open-modal="ShareFilm.Modal" class="share-game">
             <i class="icon icon-share-square-o"></i>Share
         </a>
 

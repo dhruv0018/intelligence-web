@@ -1,6 +1,6 @@
 <section class="queue">
 
-    <aside class="sidebar" data-ng-init="sidebar = true" data-ui-toggle="sidebar">
+    <aside class="sidebar" data-ng-init="sidebar = false" data-ui-toggle="sidebar">
 
         <h3>Search</h3>
 
@@ -23,84 +23,46 @@
             </div>
 
             <div class="form-group">
-
-                <input class="form-control" name="id" placeholder="Game ID" data-ng-model="filter.gameId" type="search" autocomplete="on" list="queue-gameIds" autosave="queue-gameIds">
-                <datalist id="queue-gameIds">
-                    <option data-ng-repeat="games in queue | orderBy:'id'" value="{{game.id}}"></option>
-                </datalist>
-
+                <input class="form-control" name="id" placeholder="Game ID" data-ng-model="filter.gameId" type="text">
             </div>
 
             <div class="form-group">
 
-                <input class="form-control" name="team" placeholder="Team Name" data-ng-model="filter.team" type="search" autocomplete="on" list="queue-teams" autosave="queue-teams">
-                <datalist id="queue-teams">
-                    <option data-ng-repeat="team in teamsList | unique:'name' | orderBy:'name'" value="{{team.name}}"></option>
-                </datalist>
-
+                <input class="form-control" name="team" placeholder="Team Name" data-ng-model="filter.team" type="text">
             </div>
 
             <div class="form-group">
-
-                <input class="form-control" name="coach-firstname" placeholder="Coach First Name" data-ng-model="filter.coachFirstName" type="search" autocomplete="on" list="queue-coach-firstnames" autosave="queue-coach-firstnames">
-                <datalist id="queue-coach-firstnames">
-                    <option data-ng-repeat="coach in usersList | role:ROLE_TYPE.COACH" value="{{coach.firstName}}"></option>
-                </datalist>
-
+                <input class="form-control" name="coach-firstname" placeholder="Coach First Name" data-ng-model="filter.coachFirstName" type="text">
             </div>
 
             <div class="form-group">
-
-                <input class="form-control" name="coach-lastname" placeholder="Coach Last Name" data-ng-model="filter.coachLastName" type="search" autocomplete="on" list="queue-coach-lastnames" autosave="queue-coach-lastnames">
-                <datalist id="queue-coach-lastnames">
-                    <option data-ng-repeat="coach in usersList | role:ROLE_TYPE.COACH | unique:'lastName' | orderBy:'lastName'" value="{{coach.lastName}}"></option>
-                </datalist>
-
+                <input class="form-control" name="coach-lastname" placeholder="Coach Last Name" data-ng-model="filter.coachLastName" type="text">
             </div>
 
             <div class="form-group">
-
-                <input class="form-control" name="indexer-firstname" placeholder="Indexer First Name" data-ng-model="filter.indexerFirstName" type="search" autocomplete="on" list="queue-indexer-firstnames" autosave="queue-indexer-firstnames">
-                <datalist id="queue-indexer-firstnames">
-                    <option data-ng-repeat="indexer in usersList | role:ROLE_TYPE.INDEXER | unique:'firstName' | orderBy:'firstName'" value="{{indexer.firstName}}"></option>
-                </datalist>
-
+                <input class="form-control" name="indexer-firstname" placeholder="Indexer First Name" data-ng-model="filter.indexerFirstName" type="text">
             </div>
 
             <div class="form-group">
-
-                <input class="form-control" name="indexer-lastname" placeholder="Indexer Last Name" data-ng-model="filter.indexerLastName" type="search" autocomplete="on" list="queue-indexer-lastnames" autosave="queue-indexer-lastnames">
-                <datalist id="queue-indexer-lastnames">
-                    <option data-ng-repeat="indexer in usersList | role:ROLE_TYPE.INDEXER | unique:'lastName' | orderBy:'lastName'" value="{{indexer.lastName}}"></option>
-                </datalist>
-
+                <input class="form-control" name="indexer-lastname" placeholder="Indexer Last Name" data-ng-model="filter.indexerLastName" type="text">
             </div>
 
             <div class="form-group">
-
-                <input class="form-control" name="assurer-firstname" placeholder="QA First Name" data-ng-model="filter.qaFirstName" type="search" autocomplete="on" list="queue-assurer-firstnames" autosave="queue-assurer-firstnames">
-                <datalist id="queue-assurer-firstnames">
-                    <option data-ng-repeat="assurer in usersList | role:ROLE_TYPE.INDEXER | unique:'firstName' | orderBy:'firstName'" value="{{assurer.firstName}}"></option>
-                </datalist>
-
+                <input class="form-control" name="assurer-firstname" placeholder="QA First Name" data-ng-model="filter.qaFirstName" type="text">
             </div>
 
             <div class="form-group">
-
-                <input class="form-control" name="assurer-lastname" placeholder="QA Last Name" data-ng-model="filter.qaLastName" type="search" autocomplete="on" list="queue-assurer-lastnames" autosave="queue-assurer-lastnames">
-                <datalist id="queue-assurer-lastnames">
-                    <option data-ng-repeat="assurer in usersList | role:ROLE_TYPE.INDEXER | unique:'lastName' | orderBy:'lastName'" value="{{assurer.lastName}}"></option>
-                </datalist>
-
+                <input class="form-control" name="assurer-lastname" placeholder="QA Last Name" data-ng-model="filter.qaLastName" type="text">
             </div>
 
-            <button class="btn-search" data-ng-show="sidebar" data-ng-click="search(filter)" type="submit"><i class="icon icon-search"></i></button>
-            <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon icon-search"></i></button>
-
-            <button class="btn-toggle-sidebar" data-ng-show="sidebar" data-ng-click="sidebar = false"><i class="icon icon-chevron-left"></i></button>
-            <button class="btn-toggle-sidebar" data-ng-hide="sidebar" data-ng-click="sidebar = true"><i class="icon icon-chevron-right"></i></button>
+            <button class="btn-search" data-ng-show="sidebar" data-ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
 
         </form>
+
+        <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon icon-search"></i></button>
+
+        <button class="btn-toggle-sidebar" data-ng-show="sidebar" data-ng-click="sidebar = false"><i class="icon icon-chevron-left"></i></button>
+        <button class="btn-toggle-sidebar" data-ng-hide="sidebar" data-ng-click="sidebar = true"><i class="icon icon-chevron-right"></i></button>
 
     </aside>
 
@@ -178,7 +140,14 @@
                             <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                             <td>{{ game.id }}</td>
                             <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
-                            <td>{{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}</td>
+                            <td>
+                                <span data-ng-if="game.gameType !== GAME_TYPES.SCRIMMAGE.id && game.gameType !== GAME_TYPES.SCOUTING.id">
+                                    {{ users[teams[game.teamId].getHeadCoachRole().userId].firstName}} {{ users[teams[game.teamId].getHeadCoachRole().userId].lastName }}
+                                </span>
+                                <span data-ng-if="game.gameType == GAME_TYPES.SCRIMMAGE.id || game.gameType == GAME_TYPES.SCOUTING.id">
+                                    {{users[game.uploaderUserId].firstName}} {{users[game.uploaderUserId].lastName}}
+                                </span>
+                            </td>
                             <td>
                                 <span data-ng-if="game.getStatus().id != GAME_STATUSES.SET_ASIDE.id">{{ game.getStatus().name }}</span>
                                 <span data-ng-if="game.status === GAME_STATUSES.SET_ASIDE.id">

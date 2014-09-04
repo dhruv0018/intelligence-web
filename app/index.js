@@ -4,6 +4,7 @@ require('header');
 require('account');
 require('admin');
 require('coach');
+require('athlete');
 require('indexer');
 require('indexing');
 require('reels');
@@ -24,6 +25,7 @@ var App = angular.module('App', [
     'indexer',
     'Indexing',
     'Coach',
+    'Athlete',
     'ReelsArea'
 ]);
 

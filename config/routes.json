@@ -352,9 +352,36 @@
         "Assistant Coach": true
     },
 
+    "Athlete": {
+
+        "Athlete": true
+    },
+
+    "Athlete.FilmHome": {
+
+        "Athlete": true
+    },
+
+    "Athlete.GameArea": {
+
+        "Athlete": true
+    },
+
+    "Athlete.GameArea.RawFilm": {
+
+        "Athlete": true
+    },
+
+    "Athlete.GameArea.Breakdown": {
+
+        "Athlete": true
+    },
+
     "ReelsArea": {
+
         "Head Coach": true,
-        "Assistant Coach": true
+        "Assistant Coach": true,
+        "Athlete": true
     }
 }
 

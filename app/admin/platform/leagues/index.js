@@ -160,16 +160,13 @@ Leagues.controller('LeaguesController', [
         };
 
         $scope.search = function(filter) {
-            data.leagues.query(filter,
-                    function(leagues) {
-                        $scope.leagues = leagues;
-                        $scope.noResults = false;
-                    },
-                    function() {
-                        $scope.leagues = [];
-                        $scope.noResults = true;
-                    }
-            );
+
+            $scope.leagues.length = 0;
+
+            $scope.query = data.leagues.query(filter).then(function(leagues) {
+
+                $scope.leagues = leagues;
+            });
         };
     }
 ]);
