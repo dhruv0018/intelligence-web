@@ -5,11 +5,10 @@
        <br/>
 
        <strong data-ng-if="game.isVideoTranscodeComplete() && isReady">Game Film: </strong>
-       <strong data-ng-if="game.isVideoTranscodeComplete() && game.isBeingBrokenDown()">Breakdown In Progress: </strong>
-       <strong data-ng-if="game.isVideoTranscodeComplete() && !game.isBeingBrokenDown() && !isReady">Submitted For Breakdown: </strong>
+       <strong data-ng-if="game.isVideoTranscodeComplete() && !isReady">Breakdown In Progress: </strong>
        <strong data-ng-if="game.isProcessing()">Film Is Processing: </strong>
        <strong data-ng-if="game.isUploading()">Film Uploading: </strong>
-       <strong data-ng-if="game.isVideoTranscodeFailed()">Film Failed Processing</strong>
+       <strong data-ng-if="game.isVideoTranscodeFailed()" class="film-fail-text">Film Failed Processing</strong>
 
        <a data-ng-if="currentUser.is(COACH) && !game.isVideoTranscodeFailed()" data-ui-sref="Coach.GameArea({id:game.id})">
            {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
@@ -22,7 +21,7 @@
    </div>
    <krossover-thumbnail width="400" data-game="game"></krossover-thumbnail>
 
-    <div>
+    <div class="film-info-footer">
 
         <a data-ng-if="currentUser.is(COACH)" data-ng-disabled="true" data-open-modal="ShareFilm.Modal" class="share-game">
             <i class="icon icon-share-square-o"></i>Share
