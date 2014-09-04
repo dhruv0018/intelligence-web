@@ -223,7 +223,7 @@ Queue.controller('QueueController', [
 
                 if (game.remainingTime) {
 
-                    game.remainingTime = moment.duration(game.remainingTime).subtract(1, 'minute');
+                    game.remainingTime = moment.duration(game.remainingTime).subtract(1, 'minute').asMilliseconds();
                 }
             });
         };
