@@ -60,6 +60,15 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
     '$scope', '$state', 'PlayersFactory', 'TeamsFactory', 'AlertsService',
     function controller($scope, $state, players, teams, alerts) {
 
+        //TODO: temporary fix of tabs flow
+        function enableAllTabs() {
+            $scope.loading = false;
+            $scope.tabs.scouting.disabled = false;
+            $scope.tabs.opposing.disabled = false;
+            $scope.tabs.team.disabled = false;
+            $scope.tabs.confirm.disabled = false;
+        }
+
         $scope.keys = window.Object.keys;
 
 
@@ -139,11 +148,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
             if ($scope.gameRoster && $scope.gameRoster.some(function(player) { return !player.isUnknown; })) {
                 $scope.hasRoster = true;
-                $scope.loading = false;
-                $scope.tabs.scouting.disabled = false;
-                $scope.tabs.opposing.disabled = false;
-                $scope.tabs.team.disabled = false;
-                $scope.tabs.confirm.disabled = false;
+                enableAllTabs();
                 $scope.data.gamePlayerLists[$scope.data.game.teamId] = $scope.gameRoster;
             }
         }, true);
