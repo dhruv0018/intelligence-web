@@ -64,6 +64,7 @@ Info.directive('krossoverCoachGameInfo', [
 Info.controller('Coach.Game.Info.controller', [
     '$q', '$rootScope', '$scope', '$window', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
     function controller($q, $rootScope, $scope, $window, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+
         $scope.session = session;
 
         $scope.todaysDate = Date.now();
@@ -98,6 +99,16 @@ Info.controller('Coach.Game.Info.controller', [
             $scope.headings.scoutingTeam = 'Scouting Team';
         }
 
+        $scope.$watch('formGameInfo.$dirty', function(dirtyBit) {
+
+            if (!$scope.data.game.id) return;
+
+            $scope.tabs.scouting.disabled = dirtyBit;
+            $scope.tabs.opposing.disabled = dirtyBit;
+            $scope.tabs.team.disabled = dirtyBit;
+            $scope.tabs.confirm.disabled = dirtyBit;
+        });
+
         $scope.$watch('data.game.teamId', function(teamId) {
 
             if (teamId) {
@@ -131,7 +142,6 @@ Info.controller('Coach.Game.Info.controller', [
         //Headings
         if ($scope.data.game.id) {
             $scope.setTabHeadings();
-            $scope.tabs.enableAll();
         }
 
         if (typeof $scope.data.game.isHomeGame === 'undefined') {
