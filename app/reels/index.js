@@ -56,7 +56,15 @@ ReelsArea.config([
                         return $q.all(data);
                     }
                 ]
-            }
+            },
+            onEnter: [
+                '$state', 'Reels.Data',
+                function($state, data) {
+                    if (data.reel.isDeleted) {
+                        $state.go('Coach.FilmHome');
+                    }
+                }
+            ]
         });
     }
 ]);
@@ -160,6 +168,11 @@ ReelsArea.controller('ReelsArea.controller', [
             data.reel.save().then(function() {
                 editAllowed = true;
             });
+        };
+
+        $scope.deleteReel = function() {
+            data.reel.isDeleted = true;
+            data.reel.save();
         };
     }
 ]);
