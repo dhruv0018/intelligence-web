@@ -232,6 +232,8 @@ Queue.controller('QueueController', [
 
         $scope.search = function(filter) {
 
+            $scope.searching = true;
+
             /* If search by ID is used, just pull the single game. */
             if (filter.gameId) {
 
@@ -242,12 +244,14 @@ Queue.controller('QueueController', [
                         $scope.queue = [];
                         $scope.queue[0] = game;
                         $scope.noResults = false;
+                        $scope.searching = false;
                     },
 
                     function error() {
 
                         $scope.queue = [];
                         $scope.noResults = true;
+                        $scope.searching = false;
                     }
                 );
             }
@@ -260,12 +264,14 @@ Queue.controller('QueueController', [
 
                         $scope.queue = games;
                         $scope.noResults = false;
+                        $scope.searching = false;
                     },
 
                     function error() {
 
                         $scope.queue = [];
                         $scope.noResults = true;
+                        $scope.searching = false;
                     }
                 );
             }

@@ -14,20 +14,22 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.Users.Controller', [
-    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'ROLES', 'Admin.Users.Data', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $modal, $stateParams, session, ROLES, data, users) {
+    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'ROLES', 'Admin.Users.Data', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $modal, $stateParams, session, ROLES, data, sports, leagues, teams, users) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.ASSISTANT_COACH = ROLES.ASSISTANT_COACH;
         $scope.ATHLETE = ROLES.ATHLETE;
 
+        $scope.users = [];
+
         $scope.Users = users;
         $scope.statuses = [{value: 0, label: 'Active'}, {value: 1, label: 'Inactive'}];
 
-        $scope.sports = data.sports.getCollection();
-        $scope.leagues = data.leagues.getCollection();
-        $scope.teams = data.teams.getCollection();
+        $scope.sports = sports.getCollection();
+        $scope.leagues = leagues.getCollection();
+        $scope.teams = teams.getCollection();
 
         $scope.add = function() {
 
@@ -40,9 +42,16 @@ Users.controller('Users.Users.Controller', [
 
         $scope.search = function(filter) {
 
-            users.query(filter).then(function(users) {
+            $scope.searching = true;
+            $scope.users.length = 0;
+
+            $scope.query = users.search(filter).then(function(users) {
 
                 $scope.users = users;
+
+            }).finally(function() {
+
+                $scope.searching = false;
             });
         };
 
