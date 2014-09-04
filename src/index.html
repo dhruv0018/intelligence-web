@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en" manifest="manifest.appcache">
+<html lang="en" manifest="/intelligence/manifest.appcache">
 
     <head>
 
@@ -15,6 +15,14 @@
     </head>
 
     <body data-ui-view="root" data-flow-prevent-drop>
+
+        <div class="loading-overlay">
+            <div class="loading">
+                <div class="outer"></div>
+                <div class="inner"></div>
+                <div class="icon icon-krossover-symbol"></div>
+            </div>
+        </div>
 
         <script src="scripts.js"></script>
 

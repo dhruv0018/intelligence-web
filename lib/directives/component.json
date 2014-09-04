@@ -13,6 +13,7 @@
         "events",
         "play",
         "plays",
+        "results",
         "no-results",
         "videoplayer",
         "athlete",
@@ -48,6 +49,7 @@
         "breakdown-text",
         "videogular",
         "reel-play",
+        "player-information",
         "film-home-tabs"
     ],
     "scripts": [

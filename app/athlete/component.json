@@ -1,0 +1,13 @@
+{
+    "name": "athlete",
+    "paths": [
+        "."
+    ],
+    "local": [
+        "film-home",
+        "game-area"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

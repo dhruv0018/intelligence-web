@@ -64,7 +64,8 @@ Game.directive('krossoverCoachGame', [
             link: link,
 
             scope: {
-                data: '=?'
+                data: '=?',
+                $flow: '=?flow'
             }
         };
 
@@ -120,10 +121,10 @@ Game.controller('Coach.Game.controller', [
                 disabled: true
             },
             enableAll: function() {
-                this.scouting.disabled = false;
-                this.opposing.disabled = false;
-                this.team.disabled = false;
-                this.confirm.disabled = false;
+                // this.scouting.disabled = false;
+                // this.opposing.disabled = false;
+                // this.team.disabled = false;
+                // this.confirm.disabled = false;
             },
             deactivateAll: function() {
                 var self = this;

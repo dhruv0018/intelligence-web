@@ -900,7 +900,6 @@ describe('GamesFactory', function() {
             'GAME_STATUSES',
             function(GAME_STATUSES) {
                 [
-                    GAME_STATUSES.INDEXED.id,
                     GAME_STATUSES.FINALIZED.id
                 ].forEach(function(status) {
                     game.status = status;

@@ -54,8 +54,8 @@ Login.config([
                 },
 
                 onEnter: [
-                    '$state', 'ROLES', 'AuthenticationService', 'SessionService',
-                    function($state, ROLES, auth, session) {
+                    '$state', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService',
+                    function($state, ROLES, auth, session, account) {
 
                         if (auth.isLoggedIn) {
 
@@ -72,28 +72,7 @@ Login.config([
 
                             } else {
 
-                                /* If the current user is a super admin or an admin. */
-                                if (currentUser.is(ROLES.SUPER_ADMIN) || currentUser.is(ROLES.ADMIN)) {
-
-                                    $state.go('users');
-                                }
-
-                                /* If the current user is an indexer. */
-                                else if (currentUser.is(ROLES.INDEXER)) {
-
-                                    $state.go('indexer-games');
-                                }
-
-                                /* If the current user is a coach or an athlete. */
-                                else if (currentUser.is(ROLES.COACH) || currentUser.is(ROLES.ATHLETE)) {
-
-                                    $state.go('Coach.FilmHome');
-                                }
-
-                                else {
-
-                                    $state.go('Account.ContactInfo');
-                                }
+                                account.gotoUsersHomeState(currentUser);
                             }
                         }
                     }
@@ -162,8 +141,8 @@ Login.config([
  * @type {Controller}
  */
 Login.controller('LoginController', [
-    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService',
-    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session) {
+    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService', 'AlertsService',
+    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, account, alerts) {
 
         $scope.config = config;
 
@@ -200,28 +179,7 @@ Login.controller('LoginController', [
 
                     } else {
 
-                        /* If the user is a super admin or an admin. */
-                        if (user.is(ROLES.SUPER_ADMIN) || user.is(ROLES.ADMIN)) {
-
-                            $state.go('users');
-                        }
-
-                        /* If the user is an indexer. */
-                        else if (user.is(ROLES.INDEXER)) {
-
-                            $state.go('indexer-games');
-                        }
-
-                        /* If the user is a coach or an athlete. */
-                        else if (user.is(ROLES.COACH) || user.is(ROLES.ATHLETE)) {
-
-                            $state.go('Coach.FilmHome');
-                        }
-
-                        else {
-
-                            $state.go('Account.ContactInfo');
-                        }
+                        account.gotoUsersHomeState(user);
                     }
 
                     user.lastAccessed = new Date().toISOString();
@@ -282,8 +240,7 @@ Login.controller('LoginController', [
 
                     }).then(function() {
 
-                        $rootScope.$broadcast('alert', {
-
+                        alerts.add({
                             type: 'info',
                             message: 'An email has been sent to ' + email + ' with further instructions'
                         });
@@ -305,8 +262,7 @@ Login.controller('LoginController', [
 
                     else {
 
-                        $rootScope.$broadcast('alert', {
-
+                        alerts.add({
                             type: 'danger',
                             message: 'Error requesting password reset for ' + email
                         });
@@ -334,8 +290,7 @@ Login.controller('LoginController', [
 
                     function error(data, status) {
 
-                        $rootScope.$broadcast('alert', {
-
+                        alerts.add({
                             type: 'danger',
                             message: 'There was a problem resetting your password'
                         });

@@ -65,13 +65,33 @@ Schools.config([
                 },
                 resolve: {
                     'Schools.Data': [
-                        '$stateParams', '$q', 'Schools.Data.Dependencies', 'SchoolsFactory',
-                        function($stateParams, $q, data, schools) {
+                        '$stateParams', '$q', 'Schools.Data.Dependencies', 'SchoolsFactory', 'TeamsFactory',
+                        function($stateParams, $q, data, schools, teams) {
+
                             return $q.all(data).then(function(data) {
-                                if ($stateParams.id) {
-                                    data.school = schools.fetch($stateParams.id);
-                                    data.queryTeams = data.teams.query({ schoolId: $stateParams.id});
+
+                                var schoolId = Number($stateParams.id);
+
+                                if (schoolId) {
+
+                                    try {
+
+                                        data.school = schools.get(schoolId);
+                                    }
+
+                                    catch (error) {
+
+                                        data.school = schools.load(schoolId);
+                                    }
+
+                                    var schoolsTeamsFilter = { schoolId: schoolId };
+
+                                    data.schoolsTeams = teams.load(schoolsTeamsFilter).then(function() {
+
+                                        return teams.getList(schoolsTeamsFilter);
+                                    });
                                 }
+
                                 return $q.all(data);
                             });
                         }
@@ -93,17 +113,11 @@ Schools.config([
 ]);
 
 Schools.service('Schools.Data.Dependencies', [
-    'TeamsFactory',
-    function(teams) {
+    function() {
 
         var Data = {};
 
-        angular.forEach(arguments, function(arg) {
-            Data[arg.description] = arg.load();
-        });
-
         return Data;
-
     }
 ]);
 
@@ -119,13 +133,16 @@ Schools.controller('SchoolController', [
 
         $scope.SCHOOL_TYPES = SCHOOL_TYPES;
 
+        var schoolId = $stateParams.id;
+
+        if (schoolId) {
+
+            $scope.school = schools.get(schoolId);
+            $scope.teams = data.schoolsTeams;
+        }
+
         $scope.school = $scope.school || {};
         $scope.teams = $scope.teams || [];
-
-        if ($stateParams.id) {
-            $scope.school = data.school;
-            $scope.teams = data.queryTeams;
-        }
 
         $scope.save = function(school) {
             schools.save(school).then(function() {
@@ -152,16 +169,18 @@ Schools.controller('SchoolsController', [
         };
 
         $scope.search = function(filter) {
-            schools.query(filter,
-                function(schools) {
-                    $scope.schools = schools;
-                    $scope.noResults = false;
-                },
-                function() {
-                    $scope.schools = [];
-                    $scope.noResults = true;
-                }
-            );
+
+            $scope.searching = true;
+            $scope.schools.length = 0;
+
+            $scope.query = schools.query(filter).then(function(schools) {
+
+                $scope.schools = schools;
+
+            }).finally(function() {
+
+                $scope.searching = false;
+            });
         };
     }
 ]);

@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',
-    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, $q) {
+    'config', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',
+    function(config, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, $q) {
 
         var GamesFactory = {
 
@@ -103,6 +103,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 var sources = [];
+                var defaultVideo;
+                var DEFAULT_VIDEO_ID = config.defaultVideoId;
 
                 if (self.video && self.video.status) {
 
@@ -117,11 +119,18 @@ IntelligenceWebClient.factory('GamesFactory', [
                                     src: $sce.trustAsResourceUrl(profile.videoUrl)
                                 };
 
-                                sources.push(source);
+                                if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
+                                    defaultVideo = source;
+                                } else {
+                                    sources.push(source);
+                                }
                             }
                         });
+
                     }
                 }
+
+                if (defaultVideo) sources.unshift(defaultVideo);
 
                 return sources;
             },
@@ -690,7 +699,7 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
             isDelivered: function() {
                 var self = this;
-                return self.status === GAME_STATUSES.INDEXED.id || self.status === GAME_STATUSES.FINALIZED.id;
+                return self.status === GAME_STATUSES.FINALIZED.id;
             },
             isVideoTranscodeComplete: function() {
                 var self = this;

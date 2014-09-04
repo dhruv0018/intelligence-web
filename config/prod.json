@@ -53,5 +53,6 @@
             "jump": 3,
             "speedlimit": 2
         }
-    }
+    },
+    "defaultVideoId": 2
 }

@@ -1,0 +1,33 @@
+<section class="film-home">
+
+    <aside class="sidebar">
+
+        <!-- ROSTER DIRECTIVE -->
+        <player-information data-user="athlete.user" data-players="athlete.players"></player-information>
+
+    </aside>
+
+    <main class="content-full">
+
+        <!-- Search and filter bar -->
+        <header class="filter-bar">
+            <ul class="nav nav-tabs">
+                <li><h3>Filter Film:</h3></li>
+                <film-home-tabs data-films="gamesList"></film-home-tabs>
+
+                <form class="film-search">
+                    <input type="text" class="film-search-input" data-ng-model="query" placeholder="Search for film"/>
+                </form>
+
+            </ul>
+        </header>
+
+        <no-results ng-if="gamesList.length === 0"></no-results>
+        <!-- NG-REPEAT FILM DIRECTIVES -->
+        <div ng-if="gamesList.length > 0" class="films-area">
+            <krossover-film data-ng-repeat="game in gamesList | filter: {isDeleted: false}| orderBy: '-datePlayed'| nameOfTheFilm: query" data-game="game" data-teams="teams"></krossover-film>
+        </div>
+    </main>
+
+</section>
+

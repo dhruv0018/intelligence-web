@@ -4,6 +4,7 @@
         "browser": true
     },
     "rules": {
+
         "quotes": "single",
         "strict": false,
         "curly": false,
@@ -30,6 +31,8 @@
 
         "consistent-this": [2, "self"],
         "no-nested-ternary": true,
-        "no-lonely-if": true
+        "no-lonely-if": true,
+
+        "no-alert": false
     }
 }
