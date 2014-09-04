@@ -67,6 +67,7 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
         //Make sure team has roster
         $scope.hasRoster = false;
+        $scope.isNonRegularGame = games.isNonRegular($scope.data.game);
 
         $scope.$watch('data.gamePlayerLists[data.game.teamId]', function(x) {
             if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
