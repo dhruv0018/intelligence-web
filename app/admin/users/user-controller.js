@@ -26,7 +26,7 @@ Users.controller('Users.User.Controller', [
 
         var userId = $stateParams.id;
 
-        $scope.user = data.users.get(userId);
+        $scope.user = users.get(userId);
 
         $scope.newRoles = [];
 

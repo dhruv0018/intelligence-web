@@ -62,6 +62,10 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
 
         $scope.keys = window.Object.keys;
 
+
+        //fresh roster
+        var templatePlayerList = angular.copy($scope.data.playersList);
+
         //Make sure team has roster
         $scope.hasRoster = false;
         $scope.loading = true;
@@ -85,13 +89,15 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
 
         $scope.$watchCollection('data.game', function(game) {
+            //gets rid of inactive players
+            templatePlayerList = templatePlayerList.filter(function(teamRosterPlayer) {
+                return teamRosterPlayer.rosterStatuses[$scope.teams[game.teamId].roster.id];
+            });
+            $scope.loading = (templatePlayerList.length > 0);
             $scope.buildGameRoster(game);
         });
 
         $scope.buildGameRoster = function(game) {
-            //fresh game roster with only a single unknown player
-            var templatePlayerList = angular.copy($scope.data.playersList);
-
             if (!$scope.data.gamePlayerLists) return;
 
             if (!$scope.data.gamePlayerLists[game.teamId] || $scope.data.gamePlayerLists[game.teamId].length <= 1) {

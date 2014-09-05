@@ -49,25 +49,47 @@ Users.config([
                 },
                 resolve: {
                     'Admin.Users.Data': [
-                        '$q', 'Admin.Users.Data.Dependencies',
-                        function($q, data) {
-                            return $q.all(data);
+                        '$q', '$stateParams', 'UsersFactory', 'Admin.Users.Data.Dependencies',
+                        function($q, $stateParams, users, data) {
+
+                            var user;
+                            var userId = Number($stateParams.id);
+
+                            if (userId) {
+
+                                try {
+
+                                    user = users.get(userId);
+                                }
+
+                                catch (error) {
+
+                                    user = users.load(userId);
+                                }
+                            }
+
+                            return $q.all([user, data]);
                         }
                     ]
                 },
                 onEnter: [
-                    '$stateParams', 'AlertsService', 'Admin.Users.Data',
-                    function($stateParams, alerts, data) {
+                    '$q', '$stateParams', 'AlertsService', 'UsersFactory', 'Admin.Users.Data',
+                    function($q, $stateParams, alerts, users, data) {
 
-                        var user = data.users.get($stateParams.id);
+                        var userId = Number($stateParams.id);
 
-                        if (user && user.isLocked) {
+                        if (userId) {
 
-                            alerts.add({
+                            var user = users.get(userId);
 
-                                type: 'danger',
-                                message: 'This user is locked'
-                            });
+                            if (user && user.isLocked) {
+
+                                alerts.add({
+
+                                    type: 'danger',
+                                    message: 'This user is locked'
+                                });
+                            }
                         }
                     }
                 ]
