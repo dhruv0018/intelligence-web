@@ -57,8 +57,8 @@ Header.config([
 
 
 Header.service('Base.Data.Dependencies', [
-    'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory',
-    function(session, sports, leagues, tagsets, filtersets) {
+    'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'TeamsFactory',
+    function(session, sports, leagues, tagsets, filtersets, teams) {
 
         var teamIds = session.currentUser.getTeamIds();
 
