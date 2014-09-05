@@ -949,5 +949,81 @@ describe('GamesFactory', function() {
                     });
             }]));
     });
+
+    describe('isRegular', function() {
+
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {};
+                game = games.extend(game);
+            }
+        ]));
+
+        it('should return true for a game with a regular game type', inject([
+            'GAME_TYPES_IDS', 'GAME_TYPES',
+            function(GAME_TYPES_IDS, GAME_TYPES) {
+            Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
+
+                switch(gameTypeId) {
+                    case GAME_TYPES.CONFERENCE.id:
+                    case GAME_TYPES.NON_CONFERENCE.id:
+                    case GAME_TYPES.PLAYOFF.id:
+                        expect(game.isRegular(gameTypeId)).to.be.true;
+                        break;
+                    case GAME_TYPES.SCOUTING.id:
+                    case GAME_TYPES.SCRIMMAGE.id:
+                    default:
+                        expect(game.isRegular(gameTypeId)).to.be.false;
+                        break;
+                }
+            });
+        });
+
+        it('should return false for undefined input', function() {
+            expect(game.isRegular(undefined).to.be.false);
+        });
+
+    });
+
+    describe('isNonRegular', function() {
+
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {};
+                game = games.extend(game);
+            }
+        ]));
+
+        it('should return true for a game with a non-regular game type', inject([
+            'GAME_TYPES_IDS', 'GAME_TYPES',
+            function(GAME_TYPES_IDS, GAME_TYPES) {
+            Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
+
+                switch(gameTypeId) {
+                    case GAME_TYPES.CONFERENCE.id:
+                    case GAME_TYPES.NON_CONFERENCE.id:
+                    case GAME_TYPES.PLAYOFF.id:
+                    default:
+                        expect(game.isNonRegular(gameTypeId)).to.be.false;
+                        break;
+                    case GAME_TYPES.SCOUTING.id:
+                    case GAME_TYPES.SCRIMMAGE.id:
+                        expect(game.isNonRegular(gameTypeId)).to.be.true;
+                        break;
+                }
+            });
+        });
+
+        it('should return false for undefined input', function() {
+            expect(game.isNonRegular(undefined).to.be.false);
+        });
+
+    });
 });
 
