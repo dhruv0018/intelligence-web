@@ -8,17 +8,17 @@
                 <header class="box-header col-md-12">
 
                     <h3 class="box-title">{{team.name}} Roster</h3>
-                    <x-button-continue data-ng-disabled="tabs['opposing-team'].disabled">Next</x-button-continue>
+                    <x-button-continue data-ng-disabled="tabs.opposing.disabled">Next</x-button-continue>
 
                 </header>
 
                 <div class="box-body col-md-12">
 
-                    <form class="form-your-team" name="formYourTeam" role="form">
+                    <form data-ng-if="hasRoster" class="form-your-team" name="formYourTeam" role="form">
 
                         <div class="table-responsive">
 
-                            <table class="table table-striped">
+                            <table data-ng-class="{'disabled-input': (data.game.isDelivered() || data.game.isBeingBrokenDown())}" class="table table-striped">
 
                                 <thead>
 
@@ -59,13 +59,19 @@
 
                     </form>
 
+                    <div data-ng-if="loading">Importing your team roster...</div>
+
+                    <div data-ng-if="!hasRoster && !loading">
+                    Your team currently does not have a roster. To add players to your roster, <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team">click here</a>.
+                    </div>
+
                 </div>
 
             </div>
 
         </div>
 
-        <x-button-continue data-ng-disabled="tabs['opposing-team'].disabled">Next</x-button-continue>
+        <x-button-continue data-ng-disabled="tabs.opposing.disabled">Next</x-button-continue>
 
     </div>
 

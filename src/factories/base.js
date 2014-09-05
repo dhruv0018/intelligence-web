@@ -14,8 +14,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    'ResourceManager',
-    function(managedResources) {
+    '$q', 'ResourceManager',
+    function($q, managedResources) {
 
         var BaseFactory = {
 
@@ -46,7 +46,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var copy = angular.copy(resource);
 
                 /* Remove known local properties. */
-                delete copy.description;
                 delete copy.resource;
                 delete copy.storage;
 
@@ -337,6 +336,36 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                             return self;
                         });
+                    }
+
+                    else if (angular.isArray(filter)) {
+
+                        filter.filter(function(id) {
+
+                            return !angular.isDefined(self.storage.collection[id]);
+                        });
+
+                        if (filter.length) {
+
+                            filter = { 'id[]': filter };
+
+                            self.storage.loads[key] = self.retrieve(filter).then(function(list) {
+
+                                self.storage.loads[key].list = list;
+
+                                return self;
+                            });
+                        }
+
+                        else {
+
+                            var deferred = $q.defer();
+
+                            self.storage.loads[key] = deferred.promise;
+                            self.storage.loads[key].list = [];
+
+                            deferred.resolve(self);
+                        }
                     }
 
                     else {

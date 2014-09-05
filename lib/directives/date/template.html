@@ -1,6 +1,16 @@
 <div class="pickdate">
     <p class="input-group">
-        <input type="text" class="form-control" data-datepicker-popup="shortDate" data-ng-model="date" data-max-date="maxDate" data-min-date="minDate" data-is-open="opened"/>
+        <input 
+            type="text"
+            class="form-control"
+            data-datepicker-popup="shortDate"
+            data-ng-model="date"
+            data-max-date="maxDate"
+            data-min-date="minDate"
+            data-is-open="opened"
+            data-ng-required="isRequired"
+        />
+
         <span class="input-group-btn">
             <button class="btn btn-default" ng-click="open($event)"><i class="icon icon-calendar"></i></button>
         </span>
