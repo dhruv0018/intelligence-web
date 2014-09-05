@@ -12,7 +12,7 @@
     </div>
 
     <div class="role-name">
-    <pre>{{team.name}}</pre>
+
         <span data-ng-if="users.is(role, COACH)">{{team.name}}</span>
         <span data-ng-if="!users.is(role, COACH)">{{role.type.name || 'Inactive'}}</span>
 
