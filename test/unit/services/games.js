@@ -963,18 +963,18 @@ describe('GamesFactory', function() {
         ]));
 
         it('should return true for a game with a regular game type', inject([
-            'GAME_TYPES_IDS',
-            function(GAME_TYPES_IDS) {
+            'GAME_TYPES_IDS', 'GAME_TYPES',
+            function(GAME_TYPES_IDS, GAME_TYPES) {
             Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
 
                 switch(gameTypeId) {
-                    case 1:
-                    case 2:
-                    case 3:
+                    case GAME_TYPES.CONFERENCE.id:
+                    case GAME_TYPES.NON_CONFERENCE.id:
+                    case GAME_TYPES.PLAYOFF.id:
                         expect(game.isRegular(gameTypeId)).to.be.true;
                         break;
-                    case 4:
-                    case 5:
+                    case GAME_TYPES.SCOUTING.id:
+                    case GAME_TYPES.SCRIMMAGE.id:
                     default:
                         expect(game.isRegular(gameTypeId)).to.be.false;
                         break;
@@ -1001,19 +1001,19 @@ describe('GamesFactory', function() {
         ]));
 
         it('should return true for a game with a non-regular game type', inject([
-            'GAME_TYPES_IDS',
-            function(GAME_TYPES_IDS) {
+            'GAME_TYPES_IDS', 'GAME_TYPES',
+            function(GAME_TYPES_IDS, GAME_TYPES) {
             Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
 
                 switch(gameTypeId) {
-                    case 1:
-                    case 2:
-                    case 3:
+                    case GAME_TYPES.CONFERENCE.id:
+                    case GAME_TYPES.NON_CONFERENCE.id:
+                    case GAME_TYPES.PLAYOFF.id:
                     default:
                         expect(game.isNonRegular(gameTypeId)).to.be.false;
                         break;
-                    case 4:
-                    case 5:
+                    case GAME_TYPES.SCOUTING.id:
+                    case GAME_TYPES.SCRIMMAGE.id:
                         expect(game.isNonRegular(gameTypeId)).to.be.true;
                         break;
                 }
