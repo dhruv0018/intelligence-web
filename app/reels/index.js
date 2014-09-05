@@ -174,7 +174,7 @@ ReelsArea.controller('ReelsArea.controller', [
             data.reel.isDeleted = true;
             data.reel.save();
             account.gotoUsersHomeState();
-            //TO DO: Create alert that confirms to the user that their reel has been deleted
+            //TODO: Create alert that confirms to the user that their reel has been deleted
         };
     }
 ]);
