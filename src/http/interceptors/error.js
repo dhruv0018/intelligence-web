@@ -43,6 +43,23 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                 switch (response.status) {
 
+                    case 400: /* Bad Request */
+
+                        ErrorReporter.reportError(new Error('Bad Request', response.data));
+
+                        alerts.add({
+
+                            type: 'warning',
+                            message: 'Bad Request'
+                        });
+
+                        break;
+
+                    case 401: /* Not Authorized */
+                    case 403: /* Forbidden */
+
+                        break;
+
                     case 405: /* Method Not Allowed */
 
                         ErrorReporter.reportError(new Error('Method not allowed', response.data));
