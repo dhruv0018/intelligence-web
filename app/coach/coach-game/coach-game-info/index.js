@@ -101,7 +101,7 @@ Info.controller('Coach.Game.Info.controller', [
 
         $scope.$watch('formGameInfo.$dirty', function(dirtyBit) {
 
-            if (!$scope.data.game.id) return;
+            if (!dirtyBit && !$scope.data.game.id) return;
 
             $scope.tabs.scouting.disabled = dirtyBit;
             $scope.tabs.opposing.disabled = dirtyBit;
@@ -247,14 +247,18 @@ Info.controller('Coach.Game.Info.controller', [
 
         $scope.goToRoster = function() {
             $scope.tabs.deactivateAll();
+            $scope.formGameInfo.$dirty = false;
 
             if (games.isRegular($scope.data.game)) {
                 $scope.tabs.team.active = true;
+                $scope.tabs.team.disabled = false;
             } else {
                 $scope.tabs.scouting.active = true;
+                $scope.tabs.scouting.disabled = false;
+                $scope.tabs.opposing.disabled = false;
+                $scope.tabs.confirm.disabled = false;
             }
             $scope.setTabHeadings();
-            $scope.tabs.enableAll();
         };
 
 //        $scope.$watch('formGameInfo.$invalid', function(invalid) {

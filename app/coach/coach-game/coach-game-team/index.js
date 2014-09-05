@@ -92,6 +92,7 @@ Team.controller('Coach.Game.Team.controller', [
         $scope.save = function() {
 
             enableAllTabs();
+
             $scope.tabs.opposing.active = true;
 
             if (Object.keys($scope.positions).length > 0) {
