@@ -27,7 +27,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                angular.extend(game, self);
+                angular.augment(game, self);
 
                 game.video = game.video || {};
                 game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
