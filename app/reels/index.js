@@ -58,10 +58,10 @@ ReelsArea.config([
                 ]
             },
             onEnter: [
-                '$state', 'Reels.Data',
-                function($state, data) {
+                '$state', 'AccountService', 'Reels.Data',
+                function($state, account, data) {
                     if (data.reel.isDeleted) {
-                        $state.go('Coach.FilmHome');
+                        account.gotoUsersHomeState();
                     }
                 }
             ]
@@ -87,8 +87,8 @@ ReelsArea.service('Reels.Data.Dependencies', [
  * @type {Controller}
  */
 ReelsArea.controller('ReelsArea.controller', [
-    '$scope', '$state', '$stateParams', 'Reels.Data', 'PlayManager',
-    function controller($scope, $state, $stateParams, data, playManager) {
+    '$scope', '$state', '$stateParams', 'AccountService', 'AlertsService', 'Reels.Data', 'PlayManager',
+    function controller($scope, $state, $stateParams, account, alerts, data, playManager) {
 
         $scope.data = data;
         $scope.videoTitle = 'reelsPlayer';
@@ -173,6 +173,8 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.deleteReel = function() {
             data.reel.isDeleted = true;
             data.reel.save();
+            account.gotoUsersHomeState();
+            //TO DO: Create alert that confirms to the user that their reel has been deleted
         };
     }
 ]);

@@ -22,7 +22,15 @@ IntelligenceWebClient.factory('ReelsResource', [
         var actions = {
 
             create: { method: 'POST' },
-            update: { method: 'PUT' }
+            update: { method: 'PUT' },
+
+            query: {
+                method: 'GET',
+                isArray: true,
+                params: {
+                    isDeleted: false
+                }
+            }
         };
 
         return $resource(url, paramDefaults, actions);
