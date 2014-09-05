@@ -57,6 +57,7 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                     case 401: /* Not Authorized */
                     case 403: /* Forbidden */
+                    case 404: /* Not Found */
 
                         break;
 
