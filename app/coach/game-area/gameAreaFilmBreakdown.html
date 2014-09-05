@@ -3,7 +3,12 @@
         Viewing: All Plays ({{plays.length}})
     </div>
 
-    <plays-filter data-filterset="data.filterset"></plays-filter>
+    <plays-filter data-total-plays="totalPlays"
+                  data-plays="plays"
+                  data-game="data.game"
+                  data-team-player-list="data.gamePlayerLists[data.game.teamId]"
+                  data-opposing-player-list="data.gamePlayerLists[data.game.opposingTeamId]"
+                  data-filterset="data.filterset"></plays-filter>
 </div>
 
 <div class="game-area-film">

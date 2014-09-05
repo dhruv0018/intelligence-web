@@ -18,12 +18,12 @@
         <ul class="dropdown-menu">
             <li>
                 <div>
-                    <a class="btn" data-ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
+                    <a class="btn" data-ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== game.teamId), 'btn-primary': (teamId === game.teamId)}">
                         {{teams[game.teamId].name}}
                     </a>
                 </div>
                 <div>
-                    <a class="btn" data-ng-click="setTeam(game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
+                    <a class="btn" data-ng-click="setTeam(game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== game.opposingTeamId), 'btn-primary': (teamId === game.opposingTeamId)}">
                         {{teams[game.opposingTeamId].name}}
                     </a>
                 </div>
