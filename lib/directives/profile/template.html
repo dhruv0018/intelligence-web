@@ -1,0 +1,28 @@
+<div class="profile">
+    <div class="athlete col-xs-2" data-ng-repeat="player in roster | filter: filterType | orderBy: sortingType ">
+        <div class="athlete-picture">
+            <profile-placeholder data-ng-if="!users[player.userId].imageUrl"></profile-placeholder>
+            <img data-ng-if="users[player.userId].imageUrl" data-ng-src="{{users[player.userId].imageUrl}}" alt="profile picture">
+        </div>
+        <div class="description">
+            <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
+                <span class="jerseyNumber">{{player.jerseyNumbers[rosterId]}}</span>
+                {{player.firstName}}
+                {{player.lastName[0]}}.
+            </a>
+            <p data-ng-if="keys(positions).length > 0" class="positions">
+                <span data-ng-repeat="position in player.positions[rosterId]">
+                    {{position.name}}
+                </span>
+                <span data-ng-if="!player.positions[rosterId]"> No Positions</span>
+            </p>
+            <p>
+                <span data-ng-if="users[player.userId].lastAccessed">{{usersFactory.getLastAccessed(users[player.userId]) | date: 'mediumDate'}}</span>
+                <span data-ng-if="!player.userId && !users[player.userId].lastAccessed">No Account</span>
+                <a href data-ng-if="player.userId && !users[player.userId].lastAccessed" data-ng-click="playersFactory.resendEmail(player.userId, team.id)">Resend Invitation</a>
+            </p>
+        </div>
+    </div>
+
+</div>
+
