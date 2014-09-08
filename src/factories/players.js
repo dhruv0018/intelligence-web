@@ -98,6 +98,19 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 return roster.filter(function(player) {
                     return player.rosterStatuses[rosterId] === true;
                 });
+            },
+            transferPlayerInformation: function(fromRosterId, toRosterId) {
+
+                var self = this;
+
+                //if the player is active
+                if (self.rosterStatuses[fromRosterId]) {
+                    self.rosterIds.push(toRosterId);
+                    self.jerseyNumbers[toRosterId] = self.jerseyNumbers[fromRosterId];
+                    self.positionIds[toRosterId] = (self.positionIds[fromRosterId].length > 0) ? self.positionIds[fromRosterId].slice() : [];
+                    self.rosterStatuses[toRosterId] = true;
+                }
+
             }
         };
 

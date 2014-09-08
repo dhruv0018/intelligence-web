@@ -72,6 +72,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.keys = window.Object.keys;
 
         //fresh roster
+        //copied because you need to filter out the players who are inactive from the team roster
         var templatePlayerList = angular.copy($scope.data.playersList);
 
         //Make sure team has roster
@@ -111,20 +112,13 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
             if (!$scope.data.gamePlayerLists[game.teamId] || $scope.data.gamePlayerLists[game.teamId].length <= 1) {
                 $scope.gameRoster = [];
                 angular.forEach(templatePlayerList, function(teamRosterPlayer) {
-                    //if the player is active
-                    if (teamRosterPlayer.rosterStatuses[$scope.teams[game.teamId].roster.id]) {
-                        teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
-                        teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.teams[game.teamId].roster.id];
-                        if (Object.keys($scope.positions).length > 0) {
-                            teamRosterPlayer.positionIds[game.rosters[game.teamId].id] = teamRosterPlayer.positionIds[$scope.teams[game.teamId].roster.id].slice();
-                        }
-                        teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
-                        $scope.gameRoster.push(teamRosterPlayer);
-                    }
+                    teamRosterPlayer.transferPlayerInformation($scope.teams[game.teamId].roster.id, game.rosters[game.teamId].id);
+                    $scope.gameRoster.push(teamRosterPlayer);
                 });
 
                 players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
                     $scope.gameRoster = roster;
+                    angular.extend($scope.data.playersList, $scope.gameRoster);
                 });
             } else {
                 $scope.gameRoster = $scope.data.gamePlayerLists[game.teamId];
@@ -144,7 +138,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
             $scope.data.gamePlayerLists[$scope.data.game.teamId] = $scope.gameRoster;
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
                 $scope.gameRoster = roster;
-
+                angular.extend($scope.data.playersList, $scope.gameRoster);
                 $scope.tabs.deactivateAll();
                 $scope.tabs.opposing.active = true;
             });
