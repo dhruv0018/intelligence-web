@@ -8,7 +8,7 @@
        <strong data-ng-if="game.isVideoTranscodeComplete() && !isReady">Breakdown In Progress: </strong>
        <strong data-ng-if="game.isProcessing()">Film Is Processing: </strong>
        <strong data-ng-if="game.isUploading()">Film Uploading: </strong>
-       <strong data-ng-if="game.isVideoTranscodeFailed()" class="film-fail-text">Film Failed Processing</strong>
+       <strong data-ng-if="game.isVideoTranscodeFailed()" class="film-fail-text">Film Failed Processing:</strong>
 
        <a data-ng-if="currentUser.is(COACH) && !game.isVideoTranscodeFailed()" data-ui-sref="Coach.GameArea({id:game.id})">
            {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
@@ -16,6 +16,7 @@
        <a data-ng-if="currentUser.is(ATHLETE) && !game.isVideoTranscodeFailed()" data-ui-sref="Athlete.GameArea({id:game.id})">
            {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
        </a>
+       <span data-ng-if="game.isVideoTranscodeFailed()"> {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}} </span>
        <br/>
        Uploaded by {{uploaderName}}
    </div>
@@ -23,7 +24,7 @@
 
     <div class="film-info-footer">
 
-        <a data-ng-if="currentUser.is(COACH)" data-ng-disabled="true" data-open-modal="ShareFilm.Modal" class="share-game">
+        <a data-ng-if="currentUser.is(COACH) && !game.isVideoTranscodeFailed()" data-ng-disabled="true" data-open-modal="ShareFilm.Modal" class="share-game">
             <i class="icon icon-share-square-o"></i>Share
         </a>
 
