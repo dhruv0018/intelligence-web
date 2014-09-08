@@ -48,6 +48,26 @@ breakdown-text {
             }
         }
 
+        .no-roster-warning {
+            .alert-warning;
+
+            border: solid 1px #F9E8BF;
+            display: inline-block;
+            width: 439px;
+            padding: 0 0 10px 10px;
+            color: #000;
+            margin: 10px 0 10px 0;
+
+            h2 {
+                font-size: 24px;
+                margin: 15px 0 8px 0;
+            }
+
+            a {
+                display: block;
+            }
+        }
+
         .select-boxes {
 
             padding: 0;
@@ -88,6 +108,10 @@ breakdown-text {
                     color: black;
                 }
 
+                &:disabled {
+                    cursor: not-allowed;
+                }
+
                 i {
 
                     position: absolute;
@@ -98,6 +122,11 @@ breakdown-text {
                     border: 5px solid @gray-lighter;
                     border-radius: 50%;
                     font-size: 50px;
+
+                    &.icon-warning {
+                        color: @brand-warning;
+                        border-color: @brand-warning;
+                    }
 
                     &::before {
 
@@ -112,15 +141,6 @@ breakdown-text {
                     color: @brand-blue;
                     font-size: 24px;
                     margin-top: 0;
-
-                    &.warning {
-                        color: @brand-primary;
-
-                        i {
-                            color: @brand-primary;
-                            border-color: @brand-primary;
-                        }
-                    }
                 }
 
                 h2 {
