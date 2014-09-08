@@ -22,12 +22,12 @@
                         
                         <div class="row">
 
-                            <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" class="select-boxes col-md-6">
+                            <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" data-ng-class="{active: hasRoster === 1}" class="select-boxes col-md-6">
 
                                 <button type="button" data-ui-sref="upload-film" data-ng-disabled="hasRoster < 1">
 
                                     <div data-ng-if="hasRoster === 0">
-                                        <h1 class="warning">Cannot upload a regular game</h1>
+                                        <h1 class="warning"><i class="icon icon-warning"></i>Cannot upload a regular game</h1>
                                         Your team currently does not have a roster. To add players to your roster, 
                                         <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team">click here</a>
                                     </div>
@@ -43,7 +43,7 @@
 
                             </div>
 
-                            <div class="select-boxes col-md-6">
+                            <div class="select-boxes active col-md-6">
 
                                 <button type="button" data-ng-click="data.game.gameType = GAME_TYPES['SCOUTING'].id" data-ui-sref="upload-film">
 
