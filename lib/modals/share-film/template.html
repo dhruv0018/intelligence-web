@@ -1,14 +1,30 @@
 <div class="share-film">
 
     <header class="modal-header">
-    	<h3 class="modal-title">Share Film
-        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i></h3>
+    	<h3 class="modal-title">
+	    	<span data-ng-if="!withYourTeam && !withOtherCoaches && !withPublic">Pick how you would like to share</span>
+	        <span data-ng-if="withYourTeam">Share this film with your team</span>
+	        <span data-ng-if="withOtherCoaches">Share this film with other Krossover coaches</span>
+	        <span data-ng-if="withPublic">Share this film via public URL</span>
+	        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i>
+	    </h3>
 
     </header>
 
     <div class="modal-body">
 
-        <iframe height="636" allowtransparency="true" frameborder="0" scrolling="no" style="width:100%;border:none" src="https://krossover.wufoo.com/embed/rz0hmlj13906x9/"><a href="https://krossover.wufoo.com/forms/rz0hmlj13906x9/">Fill out the share request form</a></iframe>
+        <div class="share-options-container" data-ng-if="!withYourTeam && !withOtherCoaches && !withPublic">
+        	<div class="share-options">
+        		<h3>Your Team</h3>
+
+        	</div>
+        	<div class="share-options middle-option">
+        		<h3>Other Krossover Coaches</h3>
+        	</div>
+        	<div class="share-options">
+        		<h3>Recruiters or others via public URL</h3>
+        	</div>
+        </div>
 
     </div>
 

@@ -9,6 +9,7 @@
 		.modal-title {
 
 			text-align: left;
+			text-transform: none;
 
 			i {
 				cursor: pointer;
@@ -19,13 +20,28 @@
 
 	.modal-body {
 
-		.formOption {
+		.share-options-container {
 
-			margin-top: 5px;
-			margin-bottom: 5px;
+			margin: auto;
 
-			textarea {
-				display: block;
+			.share-options {
+
+				display: inline-block;
+				width: 32%;
+				height: 200px;
+				text-align: center;
+				padding: 10px;
+
+				&.middle-option {
+					border-left: thin solid @gray-border;
+					border-right: thin solid @gray-border;
+				}
+
+				h3 {
+					color: @brand-blue;
+					font-size: 16px;
+					margin-top: 0;
+				}
 			}
 		}
 	}
