@@ -45,6 +45,7 @@ Info.directive('krossoverCoachGameInfo', [
 
             scope: {
                 headings: '=',
+                $flow: '=?flow',
                 data: '=',
                 tabs: '='
             }
@@ -61,8 +62,9 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$q', '$scope', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($q, $scope, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+    '$q', '$rootScope', '$scope', '$window', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    function controller($q, $rootScope, $scope, $window, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+
         $scope.session = session;
 
         $scope.todaysDate = Date.now();
@@ -97,6 +99,16 @@ Info.controller('Coach.Game.Info.controller', [
             $scope.headings.scoutingTeam = 'Scouting Team';
         }
 
+        $scope.$watch('formGameInfo.$dirty', function(dirtyBit) {
+
+            if (!dirtyBit && !$scope.data.game.id) return;
+
+            $scope.tabs.scouting.disabled = dirtyBit;
+            $scope.tabs.opposing.disabled = dirtyBit;
+            $scope.tabs.team.disabled = dirtyBit;
+            $scope.tabs.confirm.disabled = dirtyBit;
+        });
+
         $scope.$watch('data.game.teamId', function(teamId) {
 
             if (teamId) {
@@ -130,7 +142,6 @@ Info.controller('Coach.Game.Info.controller', [
         //Headings
         if ($scope.data.game.id) {
             $scope.setTabHeadings();
-            $scope.tabs.enableAll();
         }
 
         if (typeof $scope.data.game.isHomeGame === 'undefined') {
@@ -236,14 +247,18 @@ Info.controller('Coach.Game.Info.controller', [
 
         $scope.goToRoster = function() {
             $scope.tabs.deactivateAll();
+            $scope.formGameInfo.$dirty = false;
 
             if (games.isRegular($scope.data.game)) {
                 $scope.tabs.team.active = true;
+                $scope.tabs.team.disabled = false;
             } else {
                 $scope.tabs.scouting.active = true;
+                $scope.tabs.scouting.disabled = false;
+                $scope.tabs.opposing.disabled = false;
+                $scope.tabs.confirm.disabled = false;
             }
             $scope.setTabHeadings();
-            $scope.tabs.enableAll();
         };
 
 //        $scope.$watch('formGameInfo.$invalid', function(invalid) {
@@ -251,6 +266,55 @@ Info.controller('Coach.Game.Info.controller', [
 //            tabs['scouting-team'].disabled = invalid;
 //        });
 
+        var prompt = 'Your game will not get uploaded without entering in the game information.';
+
+        /* When changing state. */
+        $rootScope.$on('$stateChangeStart', function(event) {
+
+            /* If the game has not been saved and the game information has not been completed .*/
+            if (!$scope.data.game.id && $scope.formGameInfo.$invalid) {
+
+                if (confirm(prompt + '\n\nDo you still want to leave?')) {
+
+                    $scope.$flow.cancel();
+                }
+
+                else {
+
+                    event.preventDefault();
+                    $rootScope.$broadcast('$stateChangeError');
+                }
+            }
+        });
+
+        /* When changing location. */
+        $rootScope.$on('$locationChangeStart', function(event) {
+
+            /* If the game has not been saved and the game information has not been completed .*/
+            if (!$scope.data.game.id && $scope.formGameInfo.$invalid) {
+
+                if (confirm(prompt + '\n\nDo you still want to leave?')) {
+
+                    $scope.$flow.cancel();
+                }
+
+                else {
+
+                    event.preventDefault();
+                    $rootScope.$broadcast('$stateChangeError');
+                }
+            }
+        });
+
+        /* Before unloading the page. */
+        $window.onbeforeunload = function beforeunloadHandler() {
+
+            /* If the game information has not been completed .*/
+            if ($scope.formGameInfo.$invalid) {
+
+                return prompt;
+            }
+        };
     }
 ]);
 

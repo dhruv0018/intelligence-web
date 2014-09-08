@@ -68,7 +68,12 @@ IntelligenceWebClient.service('AuthenticationService', [
                             session.storeCurrentUser(user, persist);
 
                             /* Retrieve the user from the session. */
-                            return session.retrieveCurrentUser();
+                            var currentUser = session.retrieveCurrentUser();
+
+                            /* Expose the current user on the root scope. */
+                            $rootScope.currentUser = currentUser;
+
+                            return currentUser;
                         });
                     });
                 });

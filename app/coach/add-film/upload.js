@@ -109,8 +109,7 @@ UploadFilm.controller('UploadFilmController', [
 
                 event.preventDefault();
 
-                $rootScope.$broadcast('alert', {
-
+                alerts.add({
                     type: 'danger',
                     message: 'The file "' + filename + '" has an unsupported extension.'
                 });

@@ -60,7 +60,32 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
     '$scope', '$state', 'PlayersFactory', 'TeamsFactory',
     function controller($scope, $state, players, teams) {
 
+        //TODO: temporary fix of tabs flow
+        function enableAllTabs() {
+            $scope.loading = false;
+            $scope.tabs.scouting.disabled = false;
+            $scope.tabs.opposing.disabled = false;
+            $scope.tabs.team.disabled = false;
+            $scope.tabs.confirm.disabled = false;
+        }
+
         $scope.keys = window.Object.keys;
+
+        //fresh roster
+        var templatePlayerList = angular.copy($scope.data.playersList);
+
+        //Make sure team has roster
+        $scope.hasRoster = false;
+        $scope.loading = true;
+        $scope.saving = false;
+
+        $scope.returnToGameAlert = function() {
+            // alerts.add({
+            //     type: ALERT_TYPES.SUPER_DANGER,
+            //     message: 'Once you upload your roster, click here to return to your uploaded game and submit for breakdown.',
+            //     mode: ALERT_MODES.PERSISTENT
+            // });
+        };
 
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
@@ -71,12 +96,18 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         //Positions
         $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
         $scope.$watchCollection('data.game', function(game) {
+            //gets rid of inactive players
+            templatePlayerList = templatePlayerList.filter(function(teamRosterPlayer) {
+                return teamRosterPlayer.rosterStatuses[$scope.teams[game.teamId].roster.id];
+            });
+            $scope.loading = (templatePlayerList.length > 0);
             $scope.buildGameRoster(game);
         });
 
         $scope.buildGameRoster = function(game) {
-            //fresh game roster with only a single unknown player
-            var templatePlayerList = angular.copy($scope.data.playersList);
+
+            if (!$scope.data.gamePlayerLists) return;
+
             if (!$scope.data.gamePlayerLists[game.teamId] || $scope.data.gamePlayerLists[game.teamId].length <= 1) {
                 $scope.gameRoster = [];
                 angular.forEach(templatePlayerList, function(teamRosterPlayer) {
@@ -99,6 +130,15 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                 $scope.gameRoster = $scope.data.gamePlayerLists[game.teamId];
             }
         };
+
+        $scope.$watch('gameRoster', function(gameRoster) {
+
+            if ($scope.gameRoster && $scope.gameRoster.some(function(player) { return !player.isUnknown; })) {
+                $scope.hasRoster = true;
+                enableAllTabs();
+                $scope.data.gamePlayerLists[$scope.data.game.teamId] = $scope.gameRoster;
+            }
+        }, true);
 
         $scope.save = function() {
             $scope.data.gamePlayerLists[$scope.data.game.teamId] = $scope.gameRoster;

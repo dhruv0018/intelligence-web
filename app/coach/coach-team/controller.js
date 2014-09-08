@@ -33,6 +33,7 @@ Team.controller('Coach.Team.controller', [
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
         $scope.leagues = $scope.data.leagues.getCollection();
+        $scope.users = users.getCollection();
 
         //Team
         $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
@@ -58,10 +59,13 @@ Team.controller('Coach.Team.controller', [
                 angular.extend(player, player, responsePlayer);
 
                 if (player.userId) {
-                    if (typeof $scope.data.coachData.users[player.userId] === 'undefined') {
+                    if (typeof $scope.users[player.userId] === 'undefined') {
                         users.fetch(player.userId, function(user) {
                             $scope.data.users[player.userId] = user.id;
                         });
+                    } else {
+                        var associatedUser = users.get(player.userId);
+                        associatedUser.save();
                     }
                 }
 

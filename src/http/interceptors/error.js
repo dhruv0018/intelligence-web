@@ -19,6 +19,7 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                 var data = response.config.data;
                 var method = response.config.method;
+                var description = '';
 
                 switch (method) {
 
@@ -35,9 +36,30 @@ IntelligenceWebClient.factory('Error.Interceptor', [
                         break;
                 }
 
-                var description = data.description ? data.description.slice(0, -1) : '';
+                if (data && data.description) {
+
+                    description = data.description.slice(0, -1);
+                }
 
                 switch (response.status) {
+
+                    case 400: /* Bad Request */
+
+                        ErrorReporter.reportError(new Error('Bad Request', response.data));
+
+                        alerts.add({
+
+                            type: 'warning',
+                            message: 'Bad Request'
+                        });
+
+                        break;
+
+                    case 401: /* Not Authorized */
+                    case 403: /* Forbidden */
+                    case 404: /* Not Found */
+
+                        break;
 
                     case 405: /* Method Not Allowed */
 

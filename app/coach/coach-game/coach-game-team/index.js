@@ -65,13 +65,22 @@ Team.controller('Coach.Game.Team.controller', [
         //Positions
         $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
 
+        //TODO: temporary fix of tabs flow
+        function enableAllTabs() {
+            $scope.tabs.scouting.disabled = false;
+            $scope.tabs.opposing.disabled = false;
+            $scope.tabs.team.disabled = false;
+            $scope.tabs.confirm.disabled = false;
+        }
+
         $scope.save = function() {
+
+            enableAllTabs();
+
+            $scope.tabs.opposing.active = true;
 
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {
                 $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
-
-                $scope.tabs.deactivateAll();
-                $scope.tabs.opposing.active = true;
             });
 
         };
