@@ -71,18 +71,6 @@ breakdown-text {
                 }
             }
 
-            h1 {
-
-                color: @brand-blue;
-                font-size: 24px;
-                margin-top: 0;
-            }
-
-            h2 {
-
-                font-size: 16px;
-            }
-
             button {
 
                 .btn-blank;
@@ -117,6 +105,22 @@ breakdown-text {
                         line-height: 90px;
                         text-align: center;
                     }
+                }
+
+                h1 {
+
+                    color: @brand-blue;
+                    font-size: 24px;
+                    margin-top: 0;
+
+                    &.warning {
+                        color: @brand-warning;
+                    }
+                }
+
+                h2 {
+
+                    font-size: 16px;
                 }
             }
         }

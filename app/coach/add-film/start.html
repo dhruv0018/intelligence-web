@@ -24,14 +24,20 @@
 
                             <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" class="select-boxes col-md-6">
 
-                                <button type="button" data-ui-sref="upload-film">
+                                <button type="button" data-ui-sref="upload-film" data-ng-disabled="hasRoster < 1">
 
-                                    <div>
+                                    <div data-ng-if="hasRoster === 0">
+                                        <h1 class="warning">Cannot upload a regular game</h1>
+                                        Your team currently does not have a roster. To add players to your roster, 
+                                        <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team">click here</a>
+                                    </div>
+
+                                    <div data-ng-if="hasRoster === 1">
                                         <h1>Regular Game</h1>
                                         <h2>Includes: regular season, conference and non conference, and playoff games.</h2>
                                         <p>Unlimited games for sharing</p>
                                     </div>
-                                    <i class="icon icon-upload"></i>
+                                    <i data-ng-if="hasRoster === 1" class="icon icon-upload"></i>
 
                                 </button>
 
