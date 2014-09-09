@@ -1,8 +1,8 @@
 <div class="share-film">
 
-    <header class="modal-header">
+    <header class="modal-header" data-ng-class="{ 'success-title': shareSuccess }">
     	<h3 class="modal-title">
-	    	<span data-ng-show="!withYourTeam && !withOtherUsers && !withPublic">Pick how you would like to share</span>
+	    	<span data-ng-show="!withYourTeam && !withOtherUsers && !withPublic && !shareSuccess">Pick how you would like to share</span>
 	        <span data-ng-show="withYourTeam">Share this film with your team</span>
 	        <span data-ng-show="withOtherUsers">Share this film with other Krossover users</span>
 	        <span data-ng-show="withPublic">Share this film via public URL</span>
@@ -13,7 +13,7 @@
 
     <div class="modal-body">
 
-        <div class="share-options-container" data-ng-show="!withYourTeam && !withOtherUsers && !withPublic">
+        <div class="share-options-container" data-ng-show="!withYourTeam && !withOtherUsers && !withPublic && !shareSuccess">
         	<div class="share-options" data-ng-click="withYourTeam = true">
         		<h3>Your Team</h3>
         		<i class="icon icon-group"></i>
@@ -36,13 +36,13 @@
         		<button type="submit" class="btn btn-primary" data-ng-click="addUserToSharingList(user)">Add</button>
         	</form>
 
-        	<div data-ng-show="others.length > 0+" class="shared-with-table">
+        	<div data-ng-show="others.length > 0" class="shared-with-table">
         		<div class="shared-with-header">Name</div>
         		<div class="shared-with" data-ng-repeat="other in others">
         			<strong>{{other.firstName}} {{other.lastName}}</strong>
         			<span class="pull-right">
         				Sharing raw film
-        				<i class="icon icon-remove" data-ng-click="removeUserFromList()"></i>
+        				<i class="icon icon-remove" data-ng-click="removeUserFromList(other)"></i>
         			</span>
         		</div>
         	</div>
@@ -50,6 +50,11 @@
         		<button class="btn btn-default" data-ng-click="withOtherUsers = false">Back</button>
         		<button class="btn btn-primary pull-right" data-ng-click="shareSubmit()">Save and share</button>
         	</div>
+        </div>
+
+        <div class="share-successful" data-ng-show="shareSuccess">
+        	<i class="icon icon-ok"></i>
+        	Game shared
         </div>
 
     </div>
