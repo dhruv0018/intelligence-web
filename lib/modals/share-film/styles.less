@@ -4,44 +4,103 @@
 
 	letter-spacing: normal;
 
+	.icon-remove {
+		color: @brand-danger;
+		cursor: pointer;
+	}
+
 	.modal-header {
 
 		.modal-title {
 
 			text-align: left;
 			text-transform: none;
-
-			i {
-				cursor: pointer;
-				color: @brand-danger;
-			}
 		}
 	}
 
 	.modal-body {
 
+		h3 {
+			color: @brand-blue;
+			font-size: 16px;
+		}
+
 		.share-options-container {
 
 			margin: auto;
+			text-align: center;
 
 			.share-options {
 
-				display: inline-block;
+				display: table-cell;
 				width: 32%;
 				height: 200px;
-				text-align: center;
 				padding: 10px;
+				cursor: pointer;
 
 				&.middle-option {
 					border-left: thin solid @gray-border;
 					border-right: thin solid @gray-border;
+					width: 33%;
 				}
 
 				h3 {
-					color: @brand-blue;
-					font-size: 16px;
 					margin-top: 0;
+					display: inline-flex;
+					height: 20px;
 				}
+
+				.icon {
+					display: block;
+					padding: 10px;
+					color: @gray-lighter;
+					margin-top: 30px;
+					font-size: 70px;
+				}
+
+				&:hover {
+					.icon {
+						color: @brand-primary;
+					}
+				}
+			}
+		}
+
+		.sharing-with-others-container {
+
+			form {
+				.user-typeahead {
+					display: inline-block;
+				}
+
+				button {
+					display: inline-block;
+					margin-left: 10px;
+				}
+			}
+
+			.shared-with-table {
+
+				.shared-with-header {
+					background-color: @brand-blue;
+					color: white;
+					padding: 10px;
+				}
+
+				.shared-with {
+					border: thin solid @gray-border;
+					border-top: none;
+					padding: 10px;
+
+					.icon {
+						margin-left: 20px;
+						margin-right: 20px;
+					}
+				}
+			}
+
+			.button-row {
+				margin-top: 10px;
 			}
 		}
 	}

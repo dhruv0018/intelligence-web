@@ -2,10 +2,10 @@
 
     <header class="modal-header">
     	<h3 class="modal-title">
-	    	<span data-ng-if="!withYourTeam && !withOtherCoaches && !withPublic">Pick how you would like to share</span>
-	        <span data-ng-if="withYourTeam">Share this film with your team</span>
-	        <span data-ng-if="withOtherCoaches">Share this film with other Krossover coaches</span>
-	        <span data-ng-if="withPublic">Share this film via public URL</span>
+	    	<span data-ng-show="!withYourTeam && !withOtherUsers && !withPublic">Pick how you would like to share</span>
+	        <span data-ng-show="withYourTeam">Share this film with your team</span>
+	        <span data-ng-show="withOtherUsers">Share this film with other Krossover users</span>
+	        <span data-ng-show="withPublic">Share this film via public URL</span>
 	        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i>
 	    </h3>
 
@@ -13,16 +13,42 @@
 
     <div class="modal-body">
 
-        <div class="share-options-container" data-ng-if="!withYourTeam && !withOtherCoaches && !withPublic">
-        	<div class="share-options">
+        <div class="share-options-container" data-ng-show="!withYourTeam && !withOtherUsers && !withPublic">
+        	<div class="share-options" data-ng-click="withYourTeam = true">
         		<h3>Your Team</h3>
-
+        		<i class="icon icon-group"></i>
         	</div>
-        	<div class="share-options middle-option">
-        		<h3>Other Krossover Coaches</h3>
+        	<div class="share-options middle-option" data-ng-click="withOtherUsers = true">
+        		<h3>Other Krossover Users</h3>
+        		<i class="icon icon-logo"></i>
         	</div>
-        	<div class="share-options">
+        	<div class="share-options" data-ng-click="withPublic = true">
         		<h3>Recruiters or others via public URL</h3>
+        		<i class="icon icon-globe"></i>
+        	</div>
+        	Films are automatically shared amongst team coaches.
+        </div>
+
+        <div class="sharing-with-others-container" data-ng-show="withOtherUsers">
+        	<h3>Sharing with:</h3>
+        	<form>
+        		<user-typeahead data-user="user"></user-typeahead>
+        		<button type="submit" class="btn btn-primary" data-ng-click="addUserToSharingList(user)">Add</button>
+        	</form>
+
+        	<div data-ng-show="others.length > 0+" class="shared-with-table">
+        		<div class="shared-with-header">Name</div>
+        		<div class="shared-with" data-ng-repeat="other in others">
+        			<strong>{{other.firstName}} {{other.lastName}}</strong>
+        			<span class="pull-right">
+        				Sharing raw film
+        				<i class="icon icon-remove" data-ng-click="removeUserFromList()"></i>
+        			</span>
+        		</div>
+        	</div>
+        	<div class="button-row">
+        		<button class="btn btn-default" data-ng-click="withOtherUsers = false">Back</button>
+        		<button class="btn btn-primary pull-right" data-ng-click="shareSubmit()">Save and share</button>
         	</div>
         </div>
 
