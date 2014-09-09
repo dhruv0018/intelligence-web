@@ -73,42 +73,14 @@ Team.controller('Coach.Game.Team.controller', [
             $scope.tabs.confirm.disabled = false;
         }
 
-        $scope.$watch('data.game', function(game) {
-
-            if (game &&
-                game.teamId &&
-                $scope.data &&
-                $scope.data.gamePlayerLists &&
-                $scope.data.gamePlayerLists[game.teamId]) {
-                if (Object.keys($scope.positions).length > 0) {
-                    angular.forEach($scope.data.gamePlayerLists[game.teamId], function(player) {
-                        player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
-                    });
-                }
-            }
-
-        });
-
         $scope.save = function() {
 
             enableAllTabs();
 
             $scope.tabs.opposing.active = true;
 
-            if (Object.keys($scope.positions).length > 0) {
-                angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
-                    player = players.getPositionsFromDowndown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
-                });
-            }
-
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {
                 $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
-
-                if (Object.keys($scope.positions).length > 0) {
-                    angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
-                        player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
-                    });
-                }
             });
 
         };

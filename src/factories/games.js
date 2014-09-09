@@ -29,6 +29,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 angular.augment(game, self);
 
+                game.video = game.video || {};
+                game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
@@ -652,23 +654,34 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
             },
-            getRemainingTime: function(uploaderTeam) {
+            getRemainingTime: function(uploaderTeam, now) {
+
                 var self = this;
 
-                if (!self.submittedAt) {
-                    return 0;
+                now = now || moment.utc();
+
+                if (!self.submittedAt) return 0;
+
+                var submittedAt = moment.utc(self.submittedAt);
+
+                if (!submittedAt.isValid()) return 0;
+
+                var timePassed = moment.duration(submittedAt.diff(now));
+                var turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
+
+                var timeRemaining = moment.duration();
+
+                if (timePassed < 0) {
+
+                    timeRemaining = turnaroundTime.add(timePassed);
                 }
 
-                var timePassed = new Date() - moment.utc(self.submittedAt).toDate();
-                var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+                else {
 
-                if (turnoverTime > 0) {
-                    var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
-                    return turnoverTimeRemaining.asMilliseconds();
+                    timeRemaining = turnaroundTime.subtract(timePassed);
                 }
 
-                //no plans or packages and therefore no breakdowns available
-                return 0;
+                return timeRemaining.asMilliseconds();
             },
             setAside: function() {
                 var self = this;
@@ -721,9 +734,25 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
                 return self.status === GAME_STATUSES.FINALIZED.id;
             },
+            isShared: function() {
+                var self = this;
+                return self.status === GAME_STATUSES.NOT_INDEXED.id;
+            },
             isVideoTranscodeComplete: function() {
                 var self = this;
                 return self.video.status === VIDEO_STATUSES.COMPLETE.id;
+            },
+            isUploading: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
+            },
+            isProcessing: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.UPLOADED.id;
+            },
+            isVideoTranscodeFailed: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.FAILED.id;
             },
             isBeingBrokenDown: function() {
                 var self = this;

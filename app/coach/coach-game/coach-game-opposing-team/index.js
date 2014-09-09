@@ -73,27 +73,13 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         $scope.$watch('data.game', function(game) {
             if (game.id) {
                 $scope.data.game.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
-
-                angular.forEach($scope.data.gamePlayerLists[game.opposingTeamId], function(player) {
-                    player = players.constructPositionDropdown(player, game.rosters[game.opposingTeamId].id, $scope.positions);
-                });
             }
         });
 
         $scope.save = function() {
 
-            if (Object.keys($scope.positions).length > 0) {
-                angular.forEach($scope.data.gamePlayerLists[$scope.data.game.opposingTeamId], function(player) {
-                    player = players.getPositionsFromDowndown(player, $scope.data.game.opposingTeamRosterId, $scope.positions);
-                });
-            }
-
             players.save($scope.data.game.rosters[$scope.data.game.opposingTeamId].id, $scope.data.gamePlayerLists[$scope.data.game.opposingTeamId]).then(function(roster) {
                 $scope.data.gamePlayerLists[$scope.data.game.opposingTeamId] = roster;
-
-                angular.forEach($scope.data.gamePlayerLists[$scope.data.game.opposingTeamId], function(player) {
-                    player = players.constructPositionDropdown(player, $scope.data.game.opposingTeamRosterId, $scope.positions);
-                });
             });
 
             $scope.tabs.deactivateAll();
