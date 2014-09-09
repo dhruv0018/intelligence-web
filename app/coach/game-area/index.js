@@ -171,11 +171,14 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.plays = $scope.totalPlays;
 
         //view selector
-        if ($scope.game.isDelivered()) {
+        if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered()) {
             $scope.dataType = 'film-breakdown';
-        } else {
+        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered()) {
             $scope.dataType = 'raw-film';
+        } else {
+            $scope.dataType = 'game-info';
         }
+
         $scope.$watch('dataType', function(data) {
             if ($scope.dataType === 'game-info') {
                 $state.go('ga-info');
@@ -195,7 +198,6 @@ GameArea.controller('Coach.GameArea.controller', [
                 $state.go('Coach.GameArea');
             }
         });
-
     }
 ]);
 
