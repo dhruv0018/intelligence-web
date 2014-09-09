@@ -16,6 +16,21 @@ IntelligenceWebClient.factory('PlayersFactory', [
             storage: PlansStorage,
 
             resource: PlayersResource,
+
+            extend: function(player) {
+
+                var self = this;
+
+                angular.extend(player, self);
+
+                // FIXME
+                if (angular.isArray(player.positionIds)) {
+                    player.positionIds = {};
+                }
+
+                return player;
+            },
+
             singleSave: function(rosterId, player) {
                 var self = this;
 
