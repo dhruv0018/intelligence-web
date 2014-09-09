@@ -22,13 +22,12 @@
                         
                         <div class="row">
 
-                            <div class="no-roster-warning" data-ng-if="hasRoster === 0">
-                                <h2>Cannot upload a regular game</h2>
-                                You must have a roster to upload a regular game.
-                                <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team">Add players to your roster.</a>
-                            </div>
-
                             <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" data-ng-class="{active: hasRoster === 1}" class="select-boxes col-md-6">
+
+                                <div class="no-roster-warning" data-ng-if="hasRoster === 0">
+                                    You must have a roster to upload a regular game.
+                                    <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team">Add players to your roster.</a>
+                                </div>
 
                                 <button type="button" data-ui-sref="upload-film" data-ng-disabled="hasRoster < 1">
 
