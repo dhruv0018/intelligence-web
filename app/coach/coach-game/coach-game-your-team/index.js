@@ -116,7 +116,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
                         teamRosterPlayer.rosterIds.push(game.rosters[game.teamId].id);
                         teamRosterPlayer.jerseyNumbers[game.rosters[game.teamId].id] = teamRosterPlayer.jerseyNumbers[$scope.teams[game.teamId].roster.id];
                         if (Object.keys($scope.positions).length > 0) {
-                            teamRosterPlayer.positionIds[game.rosters[game.teamId].id] = teamRosterPlayer.positionIds[$scope.teams[game.teamId].roster.id];
+                            teamRosterPlayer.positionIds[game.rosters[game.teamId].id] = teamRosterPlayer.positionIds[$scope.teams[game.teamId].roster.id].slice();
                         }
                         teamRosterPlayer.rosterStatuses[game.rosters[game.teamId].id] = true;
                         $scope.gameRoster.push(teamRosterPlayer);
