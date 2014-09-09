@@ -107,7 +107,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 if (self.rosterStatuses[fromRosterId]) {
                     self.rosterIds.push(toRosterId);
                     self.jerseyNumbers[toRosterId] = self.jerseyNumbers[fromRosterId];
-                    self.positionIds[toRosterId] = (self.positionIds[fromRosterId].length > 0) ? self.positionIds[fromRosterId].slice() : [];
+                    self.positionIds[toRosterId] = (self.positionIds[fromRosterId] && window.isArray(self.positionIds[fromRosterId])) ? self.positionIds[fromRosterId].slice() : [];
                     self.rosterStatuses[toRosterId] = true;
                 }
 
