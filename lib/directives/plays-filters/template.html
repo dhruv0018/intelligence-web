@@ -1,0 +1,51 @@
+<div class="plays-filter">
+    <div class="filter-dropdown pull-left dropdown"  data-is-open="filterMenu.isOpened">
+
+        <a class="dropdown-toggle">
+            Filter Plays
+            <i class="icon icon-chevron-down"></i>
+        </a>
+
+        <span data-ng-repeat="filter in activeFilters track by $index" class="btn btn-default active-filter">
+            {{filter.name}}
+            <i data-ng-click="removeFilter($index)" class="icon icon-remove"></i>
+        </span>
+
+        <a data-ng-show="activeFilters.length > 0" data-ng-click="clearFilters()">
+            Clear
+        </a>
+
+        <ul class="dropdown-menu">
+            <li>
+                <div>
+                    <a class="btn" data-ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== game.teamId), 'btn-primary': (teamId === game.teamId)}">
+                        {{teams[game.teamId].name}}
+                    </a>
+                </div>
+                <div>
+                    <a class="btn" data-ng-click="setTeam(game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== game.opposingTeamId), 'btn-primary': (teamId === game.opposingTeamId)}">
+                        {{teams[game.opposingTeamId].name}}
+                    </a>
+                </div>
+            </li>
+
+            <li>
+                <div data-ng-repeat="(key,value) in filtersetCategories">
+                    <a data-ng-click="setFilterCategory(value.id)" class="btn" data-ng-class="{'btn-default':(value.id !== filterCategory), 'btn-primary':(value.id === filterCategory)}">{{value.name}}</a>
+                </div>
+            </li>
+            <li>
+                <div data-ng-repeat="(key,value) in filtersetCategories">
+                    <div data-ng-repeat="(innerkey, innerValue) in value.subFilters track by $index">
+                        <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  data-ng-class="{'child': (innerValue.parent !== null), 'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
+                            {{innerValue.name}}
+                        </a>
+                        <a data-ng-hide="innerValue.filterCategoryId !== filterCategory|| innerValue.teamId !== teamId" data-ng-if="innerValue.customFilter" class="btn" data-ng-class="{'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id, innerValue.playerId))}" data-ng-click="setFilter(innerValue)">
+                            {{innerValue.name}}
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
