@@ -751,6 +751,23 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 return isBeingBrokenDown;
+            },
+            sharedBy: function sharedBy(sharedWithUserId) {
+                var self = this;
+                var sharedWith = false;
+
+                userId = Number(userId);
+
+                if (!isNaN(userId)) {
+
+                    //game has shares
+                    if (self.sharedWithLookupTable) {
+                        return self.sharedWithLookupTable[userId].userId;
+                    }
+                }
+            },
+            isSharedWith: function isSharedWith(userId) {
+                return Number(sharedBy(userId)) >= 0;
             }
         };
 
