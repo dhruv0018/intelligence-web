@@ -1025,5 +1025,114 @@ describe('GamesFactory', function() {
         });
 
     });
+
+    describe('share', function() {
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {
+                    id: 1
+                };
+                game = games.extend(game);
+            }
+        ]));
+
+        function shareCommonTest(sharedWithUserIds, beforeSharingLength, gameId) {
+            expect(game.shares.length).toEqual(beforeSharingLength + sharedWithUserIds.length);
+
+            var shareObj;
+            sharedWithUserIds.forEach(function() {
+                shareObj = game.shares.pop();
+                expect(sharedWithUserIds.pop()).toEqual(shareObj.sharedWithUserId);
+                expect(shareObj.createdAt).to.be.an.instanceof(Date);
+                expect(shareObj.gameId).toEqual(gameId);
+            });
+        }
+
+        it('should add shares to game', function() {
+
+            var sharedWithUserIds = [1,2,3,4,5];
+            var beforeSharingLength = game.shares.length;
+            var gameId = game.id;
+            game.share(sharedWithUserIds);
+
+            shareCommonTest(sharedWithUserIds, beforeSharingLength, gameId);
+        });
+
+        it('should take gameId as second parameter', function() {
+            var sharedWithUserIds = [1,2,3,4,5];
+            var beforeSharingLength = game.shares.length;
+            var gameId = 5;
+            game.share(sharedWithUserIds, gameId);
+
+            shareCommonTest(sharedWithUserIds, beforeSharingLength, gameId);
+        });
+
+        it('should do nothing with an empty input', function() {
+            var sharedWithUserIds = undefined;
+            var beforeSharingLength = game.shares.length;
+            var gameId = game.id;
+            game.share(sharedWithUserIds);
+
+            shareCommonTest(sharedWithUserIds, beforeSharingLength, gameId);
+        });
+
+        it('should handle bad data', function() {
+            var sharedWithUserIds = [1,2,'A',4,-5];
+            var beforeSharingLength = game.shares.length;
+            var gameId = game.id;
+            game.share(sharedWithUserIds);
+
+            shareCommonTest(sharedWithUserIds, beforeSharingLength, gameId);
+        });
+    });
+
+    describe('sharedBy and isSharedWith', function() {
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {
+                    sharedWithLookupTable: {
+                        1: {
+                            userId: 2,
+                            sharedWithUserId: 1
+                        }
+                    }
+                };
+                game = games.extend(game);
+            }
+        ]));
+
+        it('should return the userId who shared the game to the user, or undefined', function() {
+            expect(game.sharedBy(1)).toEqual(2);
+            expect(game.isSharedWith(1)).to.be.true;
+
+            expect(game.sharedBy(45)).to.be.undefined;
+            expect(game.isSharedWith(45)).to.be.false;
+        });
+
+        it('should handle undefined or bad input'. function() {
+            expect(game.sharedBy(undefined)).to.be.undefined;
+            expect(game.isSharedWith(undefined)).to.be.false;
+
+            expect(game.sharedBy("BAD")).to.be.undefined;
+            expect(game.isSharedWith("BAD")).to.be.false;
+        });
+
+        it('should return undefined if no sharedWithLookupTable', function() {
+            var backupSharedWithLookupTable = game.sharedWithLookupTable;
+
+            delete game.sharedWithLookupTable;
+
+            expect(game.sharedBy(1)).to.be.undefined;
+            expect(game.isSharedWith(1)).to.be.false;
+
+            game.sharedWithLookupTable = backupSharedWithLookupTable;
+        });
+    });
 });
 
