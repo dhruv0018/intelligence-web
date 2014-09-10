@@ -19,8 +19,11 @@ IntelligenceWebClient.factory('PlayersFactory', [
             singleSave: function(rosterId, player) {
                 var self = this;
 
-                player.rosterIds = (angular.isArray(player.rosterIds)) ? player.rosterIds : [];
-                player.rosterIds = (player.rosterIds.indexOf(rosterId) < 0) ? player.rosterIds.push(rosterId) : player.rosterIds;
+                player.rosterIds = (typeof player.rosterIds !== 'undefined' && angular.isArray(player.rosterIds)) ? player.rosterIds : [];
+
+                if (player.rosterIds.indexOf(rosterId) < 0) {
+                    player.rosterIds.push(rosterId);
+                }
 
                 delete player.resource;
                 delete player.storage;
