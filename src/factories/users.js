@@ -46,11 +46,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                         }
                     });
                 }
-                /* Convert the last accessed string to a date object. */
-                user.lastAccessed = new Date(user.lastAccessed);
-
-                /* If the date conversion failed clear the value. */
-                if (isNaN(user.lastAccessed.valueOf())) user.lastAccessed = '';
 
                 /* Copy all of the properties from the retrieved $resource
                  * "user" object. */
@@ -73,6 +68,35 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return user;
             },
+
+            search: function(query) {
+
+                var self = this;
+
+                return self.retrieve(query).then(function(users) {
+
+                    var teamIds = [];
+
+                    angular.forEach(users, function(user) {
+
+                        angular.forEach(user.roles, function(role) {
+
+                            if (role.teamId) {
+
+                                teamIds.push(role.teamId);
+                            }
+                        });
+                    });
+
+                    var teams = $injector.get('TeamsFactory');
+
+                    return teams.retrieve({ 'id[]': teamIds }).then(function() {
+
+                        return users;
+                    });
+                });
+            },
+
             save: function(resource, success, error) {
                 var self = this;
 
@@ -262,6 +286,29 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
+            * @class User
+            * @method
+            * @returns {Array} an array on team ISs associated with the
+            * user.
+            */
+            getTeamIds: function() {
+
+                var roles = this.roles;
+
+                var teamIds = [];
+
+                roles.forEach(function(role) {
+
+                    if (role.teamId) {
+
+                        teamIds.push(role.teamId);
+                    }
+                });
+
+                return teamIds;
+            },
+
+            /**
              * @class User
              * @method
              * @param {Object} role - the role object to check for the match.
@@ -374,10 +421,9 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* Dictate what Admins can access. */
                 else if (this.is(role, ROLES.ADMIN)) {
 
-                    /* Admins can not access Super Admins or other Admins,
+                    /* Admins can not access Super Admins,
                      * but can access all other roles. */
-                    return this.is(verify, ROLES.SUPER_ADMIN) ||
-                           this.is(verify, ROLES.ADMIN) ? false : true;
+                    return this.is(verify, ROLES.SUPER_ADMIN) ? false : true;
                 }
 
                 /* Dictate what a Head Coach can access. */

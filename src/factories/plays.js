@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'PlaysResource', 'PlaysStorage', 'BaseFactory',
-    function(PlaysResource, PlaysStorage, BaseFactory) {
+    'config', '$sce', 'PlaysResource', 'PlaysStorage', 'BaseFactory', 'VIDEO_STATUSES',
+    function(config, $sce, PlaysResource, PlaysStorage, BaseFactory, VIDEO_STATUSES) {
 
         var PlaysFactory = {
 
@@ -48,6 +48,42 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 };
 
                 return newPlayList.$filter({filterId: filterId.filterId}, callback, error);
+            },
+            getVideoSources: function getVideoSources() {
+
+                var self = this;
+                var profiles = (self.clip) ? self.clip.videoTranscodeProfiles : [];
+                var profile;
+                var sources = [];
+
+                var defaultVideo;
+                var DEFAULT_VIDEO_ID = config.defaultVideoId;
+
+                if (self.clip && self.clip.status === VIDEO_STATUSES.COMPLETE.id) {
+                    profiles.forEach(function(profile) {
+                        if (profile.videoUrl) {
+
+                            if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                                var source = {
+                                    type: 'video/mp4',
+                                    src: $sce.trustAsResourceUrl(profile.videoUrl)
+                                };
+
+                                if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
+                                    defaultVideo = source;
+                                } else {
+                                    sources.push(source);
+                                }
+                            }
+
+                        }
+                    });
+
+                    if (defaultVideo) sources.unshift(defaultVideo);
+                }
+
+                return sources;
             }
         };
 

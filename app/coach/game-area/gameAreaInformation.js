@@ -32,7 +32,6 @@ GameAreaInformation.config([
                     controller: 'GameAreaInformationController'
                 }
             }
-
         };
 
         $stateProvider.state(gameArea);
@@ -41,8 +40,21 @@ GameAreaInformation.config([
 ]);
 
 GameAreaInformation.controller('GameAreaInformationController', [
-    '$scope', '$state', '$modal',
-    function controller($scope, $state, $modal) {
+    '$scope', '$state', '$modal', 'AlertsService',
+    function controller($scope, $state, $modal, alerts) {
+        if ($scope.game.isProcessing()) {
+            alerts.add({
+                type: 'warning',
+                message: 'Your video is still processing. You may still edit the Game Information for this film.'
+            });
+        } else if ($scope.game.isUploading()) {
+            alerts.add({
+                type: 'warning',
+                message: 'This film is currently uploading. You may still edit the Game Information for this film.'
+            });
+        }
+
+
         $scope.confirmation = function() {
             $modal.open({
                 scope: $scope,

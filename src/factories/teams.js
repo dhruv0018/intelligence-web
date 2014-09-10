@@ -58,6 +58,32 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 return team;
             },
+
+            search: function(query) {
+
+                var self = this;
+
+                return self.retrieve(query).then(function(teams) {
+
+                    var schoolIds = [];
+
+                    angular.forEach(teams, function(team) {
+
+                        if (team.schoolId) {
+
+                            schoolIds.push(team.schoolId);
+                        }
+                    });
+
+                    var schools = $injector.get('SchoolsFactory');
+
+                    return schools.retrieve({ 'id[]': schoolIds }).then(function() {
+
+                        return teams;
+                    });
+                });
+            },
+
             save: function(resource, success, error) {
 
                 var self = this;
@@ -283,7 +309,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 }
 
                 //no plans or packages means no breakdowns
-                return -1;
+                return 0;
             }
         };
 
