@@ -21,7 +21,7 @@ TeamRoster.controller('Coach.Team.controller', [
         $scope.config = config;
         $scope.playersFactory = players;
         $scope.usersFactory = users;
-
+        console.log('working');
         $scope.data = data;
 
         //toggles between player views

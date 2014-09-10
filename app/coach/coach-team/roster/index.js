@@ -15,7 +15,7 @@ TeamRoster.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('coach/team/template.html', require('./template.html'));
+        $templateCache.put('coach/team/roster/template.html', require('./template.html'));
     }
 ]);
 
@@ -33,7 +33,7 @@ TeamRoster.config([
             url: '/roster',
             views: {
                 'main@root': {
-                    templateUrl: 'coach/team/template.html',
+                    templateUrl: 'coach/team/roster/template.html',
                     controller: 'Coach.Team.controller'
                 }
             }

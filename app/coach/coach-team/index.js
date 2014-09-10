@@ -8,7 +8,8 @@ require('roster');
  */
 var Team = angular.module('Coach.Team', [
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'coach-team-roster'
 ]);
 
 /* Cache the template file */
