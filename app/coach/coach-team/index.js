@@ -1,5 +1,6 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+require('roster');
 
 /**
  * Team page module.
@@ -32,12 +33,6 @@ Team.config([
 
         .state('Coach.Team', {
             url: '/team',
-            views: {
-                'main@root': {
-                    templateUrl: 'coach/team/template.html',
-                    controller: 'Coach.Team.controller'
-                }
-            },
             resolve: {
                 'Coach.Data': ['$q','Coach.Data.Dependencies', function($q, data) {
                     return $q.all(data).then(function(data) {
@@ -45,8 +40,9 @@ Team.config([
                     });
                 }]
             }
+        })
+        .state('Coach.Team.Assistants', {
+            url: '/assistants'
         });
     }
 ]);
-
-require('./controller');

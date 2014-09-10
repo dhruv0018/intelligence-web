@@ -1,18 +1,13 @@
 {
-    "name": "coach-team",
+    "name": "roster",
     "templates": [
         "template.html"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "controller.js"
     ],
     "styles": [
         "styles.less"
-    ],
-    "paths": [
-        "."
-    ],
-    "locals": [
-        "roster"
     ]
 }

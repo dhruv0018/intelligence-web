@@ -243,7 +243,14 @@
         "Head Coach": true,
         "Assistant Coach": true
     },
-
+    "Coach.Team.Roster": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+    "Coach.Team.Assistants": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
     "Coach.Team.Info": {
         "Head Coach": true,
         "Assistant Coach": true

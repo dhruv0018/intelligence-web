@@ -5,15 +5,15 @@ var angular = window.angular;
  * Team page module.
  * @module Team
  */
-var Team = angular.module('Coach.Team');
+var TeamRoster = angular.module('coach-team-roster');
 
 /**
- * Team controller.
+ * TeamRoster controller.
  * @module Team
  * @name Team.controller
  * @type {controller}
  */
-Team.controller('Coach.Team.controller', [
+TeamRoster.controller('Coach.Team.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Data', 'PlayersFactory', 'UsersFactory', 'SessionService',
     function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users, session) {
         $scope.ROLES = ROLES;
