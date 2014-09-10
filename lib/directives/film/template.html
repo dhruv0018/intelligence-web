@@ -19,7 +19,7 @@
 
     <div>
 
-        <a data-ng-if="currentUser.is(COACH)" data-ng-disabled="true" data-open-modal="ShareFilm.Modal" class="share-game">
+        <a data-ng-if="currentUser.is(COACH)" data-ng-click="ShareFilmModal.open(game)" class="share-game">
             <i class="icon icon-share-square-o"></i>Share
         </a>
 

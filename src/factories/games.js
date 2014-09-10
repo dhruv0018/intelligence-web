@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',
-    function(config, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, $q) {
+    'config', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', 'SessionService', '$q',
+    function(config, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, session, $q) {
 
         var GamesFactory = {
 
@@ -616,7 +616,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return game;
             },
-            isRegular: function isRegular(game) {
+            isRegular: function(game) {
 
                 switch (game.gameType) {
                     case GAME_TYPES.CONFERENCE.id:
@@ -628,7 +628,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
             },
 
-            isNonRegular: function isNonRegular(game) {
+            isNonRegular: function(game) {
 
                 switch (game.gameType) {
 
@@ -752,33 +752,39 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return isBeingBrokenDown;
             },
-            share: function share(toUserIds, gameId) {
+            shareWith: function(user) {
 
                 var self = this;
-                var shareTime = new Date();
+
+                if (!user) throw new Error('No user id to share with');
 
                 self.shares = self.shares || [];
 
-                gameId = (Number(gameId) >= 0) ? gameId : self.id;
+                if (self.isSharedWith(user.id)) return;
 
-                toUserIds = toUserIds || [];
-
-                toUserIds.forEach(function(toUserId) {
-
-                    if (!Number(toUserId) || toUserId < 0) return;
-
-                    self.shares.push({
-                        userId: session.currentUser.id,
-                        gameId: gameId,
-                        sharedWithUserId: toUserId,
-                        /*sharedWithTeamId: undefined,*/
-                        createdAt: shareTime
-                    });
+                self.shares.push({
+                    userId: session.currentUser.id,
+                    gameId: self.id,
+                    sharedWithUserId: user.id,
+                    createdAt: moment.utc()
                 });
-
-                return self;
             },
-            sharedBy: function sharedBy(sharedWithUserId) {
+            stopSharingWith: function(user) {
+
+                var self = this;
+
+                if (!user) throw new Error('No user id to remove');
+
+                if (!self.shares || !self.shares.length) return;
+
+                for (var index = 0; index < self.shares.length; index++) {
+                    if (self.shares[index].sharedWithUserId === user.id) {
+                        self.shares.splice(index, 1);
+                        return;
+                    }
+                }
+            },
+            sharedBy: function(sharedWithUserId) {
                 var self = this;
 
                 userId = Number(sharedWithUserId);
@@ -791,8 +797,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                     }
                 }
             },
-            isSharedWith: function isSharedWith(userId) {
-                return Number(sharedBy(userId)) >= 0;
+            isSharedWith: function(userId) {
+                return Number(this.sharedBy(userId)) >= 0;
             }
         };
 
