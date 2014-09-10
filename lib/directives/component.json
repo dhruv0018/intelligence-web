@@ -48,7 +48,8 @@
         "videogular",
         "breakdown-text",
         "player-information",
-        "film-home-tabs"
+        "film-home-tabs",
+        "plays-filters"
     ],
     "scripts": [
         "index.js"
