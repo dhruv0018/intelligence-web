@@ -284,6 +284,16 @@ IntelligenceWebClient.factory('BaseFactory', [
                         /* Extend the server resource. */
                         resource = self.extend(resource);
 
+                        /* build lookup table of shares by userId shared with */
+                        if (resource.shares && resource.shares.length) {
+                            resource.sharedWithLookupTable = resource.sharedWithLookupTable || {};
+
+                            //faster than angular.forEach
+                            for (var i = 0; i < resource.shares.length; i++) {
+                                resource.sharedWithLookupTable[resource.shares[i].sharedWithUserId] = resource.shares[i];
+                            }
+                        }
+
                         /* Store the resource locally in its storage collection. */
                         self.storage.collection[resource.id] = resource;
                     });

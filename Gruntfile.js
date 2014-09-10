@@ -209,7 +209,7 @@ module.exports = function(grunt) {
 
         concat: {
             unprefixed: {
-                src: ['fonts.css', 'icons.css', 'build/icons.data.svg.css', 'build/build.css', 'build/theme.css'],
+                src: ['fonts.css', 'icons.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'build/build.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
             }
         },

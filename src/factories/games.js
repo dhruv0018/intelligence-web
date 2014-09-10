@@ -652,23 +652,34 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
             },
-            getRemainingTime: function(uploaderTeam) {
+            getRemainingTime: function(uploaderTeam, now) {
+
                 var self = this;
 
-                if (!self.submittedAt) {
-                    return 0;
+                now = now || moment.utc();
+
+                if (!self.submittedAt) return 0;
+
+                var submittedAt = moment.utc(self.submittedAt);
+
+                if (!submittedAt.isValid()) return 0;
+
+                var timePassed = moment.duration(submittedAt.diff(now));
+                var turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
+
+                var timeRemaining = moment.duration();
+
+                if (timePassed < 0) {
+
+                    timeRemaining = turnaroundTime.add(timePassed);
                 }
 
-                var timePassed = new Date() - moment.utc(self.submittedAt).toDate();
-                var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+                else {
 
-                if (turnoverTime > 0) {
-                    var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
-                    return turnoverTimeRemaining.asMilliseconds();
+                    timeRemaining = turnaroundTime.subtract(timePassed);
                 }
 
-                //no plans or packages and therefore no breakdowns available
-                return 0;
+                return timeRemaining.asMilliseconds();
             },
             setAside: function() {
                 var self = this;
@@ -740,6 +751,48 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 return isBeingBrokenDown;
+            },
+            share: function share(toUserIds, gameId) {
+
+                var self = this;
+                var shareTime = new Date();
+
+                self.shares = self.shares || [];
+
+                gameId = (Number(gameId) >= 0) ? gameId : self.id;
+
+                toUserIds = toUserIds || [];
+
+                toUserIds.forEach(function(toUserId) {
+
+                    if (!Number(toUserId) || toUserId < 0) return;
+
+                    self.shares.push({
+                        userId: session.currentUser.id,
+                        gameId: gameId,
+                        sharedWithUserId: toUserId,
+                        /*sharedWithTeamId: undefined,*/
+                        createdAt: shareTime
+                    });
+                });
+
+                return self;
+            },
+            sharedBy: function sharedBy(sharedWithUserId) {
+                var self = this;
+
+                userId = Number(sharedWithUserId);
+
+                if (!isNaN(userId)) {
+
+                    //game has shares
+                    if (self.sharedWithLookupTable) {
+                        return (self.sharedWithLookupTable[userId]) ? self.sharedWithLookupTable[userId].userId : undefined;
+                    }
+                }
+            },
+            isSharedWith: function isSharedWith(userId) {
+                return Number(sharedBy(userId)) >= 0;
             }
         };
 

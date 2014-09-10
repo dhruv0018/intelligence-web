@@ -283,6 +283,29 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
+            * @class User
+            * @method
+            * @returns {Array} an array on team ISs associated with the
+            * user.
+            */
+            getTeamIds: function() {
+
+                var roles = this.roles;
+
+                var teamIds = [];
+
+                roles.forEach(function(role) {
+
+                    if (role.teamId) {
+
+                        teamIds.push(role.teamId);
+                    }
+                });
+
+                return teamIds;
+            },
+
+            /**
              * @class User
              * @method
              * @param {Object} role - the role object to check for the match.
