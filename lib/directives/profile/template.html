@@ -1,5 +1,5 @@
 <div class="profile">
-    <div class="athlete col-xs-2" data-ng-repeat="player in roster | filter: filterType | orderBy: sortingType ">
+    <div class="athlete col-xs-2">
         <div class="athlete-picture">
             <profile-placeholder data-ng-if="!users[player.userId].imageUrl"></profile-placeholder>
             <img data-ng-if="users[player.userId].imageUrl" data-ng-src="{{users[player.userId].imageUrl}}" alt="profile picture">
