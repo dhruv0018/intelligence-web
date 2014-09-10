@@ -34,7 +34,12 @@ IntelligenceWebClient.factory('PlayersFactory', [
             singleSave: function(rosterId, player) {
                 var self = this;
 
-                player.rosterIds = [rosterId];
+                player.rosterIds = (typeof player.rosterIds !== 'undefined' && angular.isArray(player.rosterIds)) ? player.rosterIds : [];
+
+                if (player.rosterIds.indexOf(rosterId) < 0) {
+                    player.rosterIds.push(rosterId);
+                }
+
                 delete player.resource;
                 delete player.storage;
 
@@ -113,6 +118,19 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 return roster.filter(function(player) {
                     return player.rosterStatuses[rosterId] === true;
                 });
+            },
+            transferPlayerInformation: function(fromRosterId, toRosterId) {
+
+                var self = this;
+
+                //if the player is active
+                if (self.rosterStatuses[fromRosterId]) {
+                    self.rosterIds.push(toRosterId);
+                    self.jerseyNumbers[toRosterId] = self.jerseyNumbers[fromRosterId];
+                    self.positionIds[toRosterId] = (self.positionIds[fromRosterId] && angular.isArray(self.positionIds[fromRosterId])) ? self.positionIds[fromRosterId].slice() : [];
+                    self.rosterStatuses[toRosterId] = true;
+                }
+
             }
         };
 
