@@ -19,7 +19,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
             singleSave: function(rosterId, player) {
                 var self = this;
 
-                player.rosterIds = [rosterId];
+                player.rosterIds = (angular.isArray(player.rosterIds)) ? player.rosterIds : [];
+                player.rosterIds = (player.rosterIds.indexOf(rosterId) < 0) ? player.rosterIds.push(rosterId) : player.rosterIds;
+
                 delete player.resource;
                 delete player.storage;
 
@@ -107,7 +109,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 if (self.rosterStatuses[fromRosterId]) {
                     self.rosterIds.push(toRosterId);
                     self.jerseyNumbers[toRosterId] = self.jerseyNumbers[fromRosterId];
-                    self.positionIds[toRosterId] = (self.positionIds[fromRosterId] && window.isArray(self.positionIds[fromRosterId])) ? self.positionIds[fromRosterId].slice() : [];
+                    self.positionIds[toRosterId] = (self.positionIds[fromRosterId] && angular.isArray(self.positionIds[fromRosterId])) ? self.positionIds[fromRosterId].slice() : [];
                     self.rosterStatuses[toRosterId] = true;
                 }
 
