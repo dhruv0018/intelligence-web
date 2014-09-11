@@ -1,5 +1,5 @@
 <div class="profile">
-    <div class="managable-resource col-xs-2">
+    <div data-ng-if="role.type.id === ROLE_TYPE.ATHLETE" class="managable-resource col-xs-2">
         <div class="manageable-picture">
             <profile-placeholder data-ng-if="!users[player.userId].imageUrl"></profile-placeholder>
             <img data-ng-if="users[player.userId].imageUrl" data-ng-src="{{users[player.userId].imageUrl}}" alt="profile picture">
@@ -23,6 +23,8 @@
             </p>
         </div>
     </div>
-
+    <div data-ng-if="role.type.id === ROLE_TYPE.ASSISTANT_COACH">
+        this is an assistant coach
+    </div>
 </div>
 

@@ -1,4 +1,4 @@
-<div class="krossover-roster-manager manager">
+<div class="roster-manager manager">
     <form data-ng-if=" type === 'table' " class="table-manager form-team-active" name="formTeamActive" role="form" novalidate>
 
         <div class="table-responsive">
@@ -58,6 +58,7 @@
                 <div class="col-xs-10">
                     <div class="row">
                         <profile data-ng-repeat="player in roster | filter: filterType | orderBy: sortingType"
+                                 data-role="ROLES.ATHLETE"
                                  data-player="player"
                                  data-positions="positions"
                                  data-options="options"
