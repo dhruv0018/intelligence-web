@@ -126,8 +126,8 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager',
-    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager) {
+    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'SessionService',
+    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, session) {
         $scope.hasShotChart = false;
         $scope.hasStatistics = true;
         $scope.hasFormations = false;
@@ -135,6 +135,7 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.expandAll = false;
         $scope.data = data;
         $scope.play = playManager;
+        $scope.currentUser = session.currentUser;
 
         if (data.league.sportId == SPORTS.BASKETBALL.id) {
             $scope.hasShotChart = true;
@@ -174,6 +175,8 @@ GameArea.controller('Coach.GameArea.controller', [
         if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered()) {
             $scope.dataType = 'film-breakdown';
         } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered()) {
+            $scope.dataType = 'raw-film';
+        } else if ($scope.game.isSharedWithUser(session.currentUser)) {
             $scope.dataType = 'raw-film';
         } else {
             $scope.dataType = 'game-info';

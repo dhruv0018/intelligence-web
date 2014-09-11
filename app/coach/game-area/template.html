@@ -11,7 +11,7 @@
                 <!--<a data-ng-href="#"><i class="icon icon-download"></i> Download</a>
                 <a data-ng-href="#"><i class="icon icon-share-square-o"></i> Share</a>-->
 
-                <select data-ng-model="dataType">
+                <select data-ng-if="!game.isSharedWithUser(currentUser)" data-ng-model="dataType">
                     <option data-ng-if="game.isDelivered()" value="film-breakdown"> Film Breakdown </option>
                     <option data-ng-if="game.isVideoTranscodeComplete()" value="raw-film"> Raw Film </option>
                     <option data-ng-if="hasFormations && game.isDelivered()" value="formation-report">
