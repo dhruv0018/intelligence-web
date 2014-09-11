@@ -80,7 +80,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     resource = self.storage.unsaved;
                 }
 
-                if (!resource) throw new Error('Could not get ' + self.description.slice(0, -1));
+                if (!resource) throw new Error('Could not get ' + self.description.slice(0, -1) + ' ' + id);
 
                 return resource;
             },
