@@ -785,16 +785,22 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!user) throw new Error('No user to share with');
 
-                if (self.isSharedWith(user)) return;
-
                 self.shares = self.shares || [];
 
-                self.shares.push({
+                self.sharedWithUsers = self.sharedWithUsers || {};
+
+                if (self.isSharedWithUser(user)) return;
+
+                var share = {
                     userId: session.currentUser.id,
                     gameId: self.id,
                     sharedWithUserId: user.id,
-                    createdAt: moment.utc()
-                });
+                    createdAt: moment.utc().toDate()
+                };
+
+                self.sharedWithUsers[user.id] = share;
+
+                self.shares.push(share);
             },
             stopSharingWithUser: function(user) {
 
@@ -822,8 +828,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return self.sharedWithUsers[userId];
             },
-            isSharedWith: function(user) {
+            isSharedWithUser: function(user) {
                 var self = this;
+
+                if (!user) return false;
+
+                if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
             }

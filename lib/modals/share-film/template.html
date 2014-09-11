@@ -33,10 +33,12 @@
         		Films are automatically shared amongst your team's coaches. <br/>
         		If the person you want to share with does not have a Krossover account, <a data-ng-click="withOtherUsers = false; withPublic = true">share a URL</a> with them.
         	</div>
+        	<span data-ng-show="game.isSharedWithUser(user)" class="share-error-message"><i class="icon icon-warning"></i> That user is already being shared with.</span>
+        	<span data-ng-show="user.id === currentUser.id" class="share-error-message"><i class="icon icon-warning"></i> You cannot share a game with yourself.</span>
         	<h3>Sharing with:</h3>
         	<form>
         		<user-typeahead data-user="user"></user-typeahead>
-        		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id" data-ng-click="game.shareWithUser(user)">Add</button>
+        		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || game.isSharedWithUser(user) || user.id === currentUser.id" data-ng-click="game.shareWithUser(user); user = null">Add</button>
         	</form>
         	<div data-ng-show="game.shares.length" class="shared-with-table">
         		<div class="shared-with-header">Name</div>

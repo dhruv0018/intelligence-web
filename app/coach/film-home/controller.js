@@ -20,8 +20,8 @@ FilmHome.controller('Coach.FilmHome.controller', [
     '$rootScope', '$scope', '$state', '$filter', 'GamesFactory', 'PlayersFactory', 'SessionService', 'Coach.Data',
     function controller($rootScope, $scope, $state, $filter, games, players, session, data) {
         $scope.playersList = data.playersList;
-        $scope.games = data.games.getCollection();
-        $scope.gamesList = data.games.getList();
+        $scope.games = games.getCollection();
+        $scope.gamesList = games.getList();
         $scope.teams = data.teams.getCollection();
         $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
         $scope.roster = $scope.team.roster;

@@ -51,11 +51,16 @@ Coach.config([
 Coach.service('Coach.Data.Dependencies', [
     '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies',
     function($q, session, teams, games, players, users, leagues, tagsets, positions, baseData) {
+        var gamesForUser = games.load({
+            uploaderTeamId: session.currentUser.currentRole.teamId
+        });
+
+        var gamesSharedWithUser = games.load({
+            sharedWithUserId: session.currentUser.id
+        });
 
         var promises = {
-            games: games.load({
-                uploaderTeamId: session.currentUser.currentRole.teamId
-            }),
+            games: $q.all([gamesForUser, gamesSharedWithUser]),
             teams: teams.load(),
             users: users.retrieve(),
             remainingBreakdowns: teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId),

@@ -57,14 +57,14 @@ GameArea.config([
             },
             resolve: {
                 'Coach.Data': [
-                    '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
-                    function($q, $stateParams, players, plays, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
+                    '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'GamesFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
+                    function($q, $stateParams, players, plays, games, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
                         return $q.all(data).then(function(data) {
                             var teamsCollection = data.teams.getCollection();
                             var leaguesCollection = data.leagues.getCollection();
 
                             //Game related
-                            data.game = data.games.get($stateParams.id);
+                            data.game = games.get($stateParams.id);
                             data.gameStatus = data.game.status;
                             data.gamePlayerLists = {};
                             data.players = players;
