@@ -13,7 +13,7 @@ var TeamRoster = angular.module('coach-team-roster');
  * @name Team.controller
  * @type {controller}
  */
-TeamRoster.controller('Coach.Team.controller', [
+TeamRoster.controller('Coach.Team.Roster.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Data', 'PlayersFactory', 'UsersFactory', 'SessionService',
     function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users, session) {
         $scope.ROLES = ROLES;
@@ -21,7 +21,6 @@ TeamRoster.controller('Coach.Team.controller', [
         $scope.config = config;
         $scope.playersFactory = players;
         $scope.usersFactory = users;
-        console.log('working');
         $scope.data = data;
 
         //toggles between player views

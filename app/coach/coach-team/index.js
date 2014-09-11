@@ -1,6 +1,8 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+
 require('roster');
+require('assistants');
 
 /**
  * Team page module.
@@ -9,7 +11,8 @@ require('roster');
 var Team = angular.module('Coach.Team', [
     'ui.router',
     'ui.bootstrap',
-    'coach-team-roster'
+    'coach-team-roster',
+    'coach-team-assistants'
 ]);
 
 /* Cache the template file */
@@ -41,9 +44,6 @@ Team.config([
                     });
                 }]
             }
-        })
-        .state('Coach.Team.Assistants', {
-            url: '/assistants'
         });
     }
 ]);

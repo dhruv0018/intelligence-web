@@ -34,7 +34,7 @@ TeamRoster.config([
             views: {
                 'main@root': {
                     templateUrl: 'coach/team/roster/template.html',
-                    controller: 'Coach.Team.controller'
+                    controller: 'Coach.Team.Roster.controller'
                 }
             }
         });
