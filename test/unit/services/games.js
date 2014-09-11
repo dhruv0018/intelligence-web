@@ -958,32 +958,46 @@ describe('GamesFactory', function() {
             'GamesFactory',
             function(gamesFactory) {
                 game = {};
-                game = games.extend(game);
+                game = gamesFactory.extend(game);
             }
         ]));
 
-        it('should return true for a game with a regular game type', inject([
+        it('should return true only for a game with a regular game type', inject([
             'GAME_TYPES_IDS', 'GAME_TYPES',
             function(GAME_TYPES_IDS, GAME_TYPES) {
-            Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
+                Object.keys(GAME_TYPES_IDS).forEach(function(gameTypeId) {
 
-                switch(gameTypeId) {
-                    case GAME_TYPES.CONFERENCE.id:
-                    case GAME_TYPES.NON_CONFERENCE.id:
-                    case GAME_TYPES.PLAYOFF.id:
-                        expect(game.isRegular(gameTypeId)).to.be.true;
-                        break;
-                    case GAME_TYPES.SCOUTING.id:
-                    case GAME_TYPES.SCRIMMAGE.id:
-                    default:
-                        expect(game.isRegular(gameTypeId)).to.be.false;
-                        break;
-                }
-            });
-        });
+                    switch(gameTypeId) {
+                        case GAME_TYPES.CONFERENCE.id:
+                        case GAME_TYPES.NON_CONFERENCE.id:
+                        case GAME_TYPES.PLAYOFF.id:
+                            expect(game.isRegular(gameTypeId)).to.be.true;
+                            break;
+                        default:
+                            expect(game.isRegular(gameTypeId)).to.be.false;
+                            break;
+                    }
+                });
+            }
+        ]));
+
+        it('should return false for a game without a regular game type', inject([
+            'GAME_TYPES_IDS', 'GAME_TYPES',
+            function(GAME_TYPES_IDS, GAME_TYPES) {
+                Object.keys(GAME_TYPES_IDS).forEach(function(gameTypeId) {
+
+                    switch(gameTypeId) {
+                        case GAME_TYPES.SCOUTING.id:
+                        case GAME_TYPES.SCRIMMAGE.id:
+                            expect(game.isRegular(gameTypeId)).to.be.false;
+                            break;
+                    }
+                });
+            }
+        ]));
 
         it('should return false for undefined input', function() {
-            expect(game.isRegular(undefined).to.be.false);
+            expect(game.isRegular()).to.be.false;
         });
 
     });
@@ -996,32 +1010,46 @@ describe('GamesFactory', function() {
             'GamesFactory',
             function(gamesFactory) {
                 game = {};
-                game = games.extend(game);
+                game = gamesFactory.extend(game);
             }
         ]));
 
-        it('should return true for a game with a non-regular game type', inject([
+        it('should return true only for a game with a non-regular game type', inject([
             'GAME_TYPES_IDS', 'GAME_TYPES',
             function(GAME_TYPES_IDS, GAME_TYPES) {
-            Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
+                Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
 
-                switch(gameTypeId) {
-                    case GAME_TYPES.CONFERENCE.id:
-                    case GAME_TYPES.NON_CONFERENCE.id:
-                    case GAME_TYPES.PLAYOFF.id:
-                    default:
-                        expect(game.isNonRegular(gameTypeId)).to.be.false;
-                        break;
-                    case GAME_TYPES.SCOUTING.id:
-                    case GAME_TYPES.SCRIMMAGE.id:
-                        expect(game.isNonRegular(gameTypeId)).to.be.true;
-                        break;
-                }
-            });
-        });
+                    switch(gameTypeId) {
+                        case GAME_TYPES.SCOUTING.id:
+                        case GAME_TYPES.SCRIMMAGE.id:
+                            expect(game.isNonRegular(gameTypeId)).to.be.true;
+                            break;
+                        default:
+                            expect(game.isNonRegular(gameTypeId)).to.be.false;
+                            break;
+                    }
+                });
+            }
+        ]));
+
+        it('should return false for a game with a regular game type', inject([
+            'GAME_TYPES_IDS', 'GAME_TYPES',
+            function(GAME_TYPES_IDS, GAME_TYPES) {
+                Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
+
+                    switch(gameTypeId) {
+                        case GAME_TYPES.CONFERENCE.id:
+                        case GAME_TYPES.NON_CONFERENCE.id:
+                        case GAME_TYPES.PLAYOFF.id:
+                            expect(game.isNonRegular(gameTypeId)).to.be.false;
+                            break;
+                    }
+                });
+            }
+        ]));
 
         it('should return false for undefined input', function() {
-            expect(game.isNonRegular(undefined).to.be.false);
+            expect(game.isNonRegular()).to.be.false;
         });
 
     });
