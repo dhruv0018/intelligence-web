@@ -17,10 +17,29 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
             resource: PlayersResource,
 
+            extend: function(player) {
+
+                var self = this;
+
+                angular.extend(player, self);
+
+                // FIXME
+                if (angular.isArray(player.positionIds)) {
+                    player.positionIds = {};
+                }
+
+                return player;
+            },
+
             singleSave: function(rosterId, player) {
                 var self = this;
 
-                player.rosterIds = [rosterId];
+                player.rosterIds = (typeof player.rosterIds !== 'undefined' && angular.isArray(player.rosterIds)) ? player.rosterIds : [];
+
+                if (player.rosterIds.indexOf(rosterId) < 0) {
+                    player.rosterIds.push(rosterId);
+                }
+
                 delete player.resource;
                 delete player.storage;
 
@@ -100,44 +119,18 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return player.rosterStatuses[rosterId] === true;
                 });
             },
-            constructPositionDropdown: function(player, rosterId, positions) {
+            transferPlayerInformation: function(fromRosterId, toRosterId) {
 
-                //constructs position dropdown
-                player.selectedPositions = {};
+                var self = this;
 
-                //adds each position checkboxes for each player
-                angular.forEach(positions, function(position) {
-                    player.selectedPositions[position.id] = false;
-                });
-
-                //sets the positions that already exist on the players
-                if (typeof player.positions[rosterId] !== 'undefined' && player.positions[rosterId].length > 0) {
-                    angular.forEach(player.positions[rosterId], function(position) {
-                        player.selectedPositions[position.id] = true;
-                    });
+                //if the player is active
+                if (self.rosterStatuses[fromRosterId]) {
+                    self.rosterIds.push(toRosterId);
+                    self.jerseyNumbers[toRosterId] = self.jerseyNumbers[fromRosterId];
+                    self.positionIds[toRosterId] = (self.positionIds[fromRosterId] && angular.isArray(self.positionIds[fromRosterId])) ? self.positionIds[fromRosterId].slice() : [];
+                    self.rosterStatuses[toRosterId] = true;
                 }
 
-                return player;
-            },
-            getPositionsFromDowndown: function(player, rosterId, positions) {
-
-                //todo have backend convert this to object always, no reason to be an array
-                if (window.Array.isArray(player.positions)) {
-                    player.positions = {};
-                }
-                //ensures that positions are strictly based on those selected via the ui
-                player.positions[rosterId] = [];
-
-                angular.forEach(player.selectedPositions, function(position, key) {
-                    player.positions[rosterId] = player.positions[rosterId] || [];
-
-                    //the position is selected
-                    if (position === true) {
-                        player.positions[rosterId].push(positions[key]);
-                    }
-                });
-
-                return player;
             }
         };
 

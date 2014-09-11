@@ -618,8 +618,28 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return game;
             },
-            isRegular: function(game) {
-                return GAME_TYPES[GAME_TYPES_IDS[game.gameType]].type === 'regular';
+            isRegular: function isRegular(game) {
+
+                switch (game.gameType) {
+                    case GAME_TYPES.CONFERENCE.id:
+                    case GAME_TYPES.NON_CONFERENCE.id:
+                    case GAME_TYPES.PLAYOFF.id:
+                        return true;
+                    default:
+                        return false;
+                }
+            },
+
+            isNonRegular: function isNonRegular(game) {
+
+                switch (game.gameType) {
+
+                    case GAME_TYPES.SCOUTING.id:
+                    case GAME_TYPES.SCRIMMAGE.id:
+                        return true;
+                    default:
+                        return false;
+                }
             },
 
             getFormationReport: function() {
@@ -634,23 +654,34 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
             },
-            getRemainingTime: function(uploaderTeam) {
+            getRemainingTime: function(uploaderTeam, now) {
+
                 var self = this;
 
-                if (!self.submittedAt) {
-                    return 0;
+                now = now || moment.utc();
+
+                if (!self.submittedAt) return 0;
+
+                var submittedAt = moment.utc(self.submittedAt);
+
+                if (!submittedAt.isValid()) return 0;
+
+                var timePassed = moment.duration(submittedAt.diff(now));
+                var turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
+
+                var timeRemaining = moment.duration();
+
+                if (timePassed < 0) {
+
+                    timeRemaining = turnaroundTime.add(timePassed);
                 }
 
-                var timePassed = new Date() - moment.utc(self.submittedAt).toDate();
-                var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+                else {
 
-                if (turnoverTime > 0) {
-                    var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
-                    return turnoverTimeRemaining.asMilliseconds();
+                    timeRemaining = turnaroundTime.subtract(timePassed);
                 }
 
-                //no plans or packages and therefore no breakdowns available
-                return 0;
+                return timeRemaining.asMilliseconds();
             },
             setAside: function() {
                 var self = this;
