@@ -618,7 +618,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return game;
             },
+
             isRegular: function isRegular(game) {
+
+                var self = this;
+
+                game = game || self;
 
                 switch (game.gameType) {
                     case GAME_TYPES.CONFERENCE.id:
@@ -631,6 +636,10 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             isNonRegular: function isNonRegular(game) {
+
+                var self = this;
+
+                game = game || self;
 
                 switch (game.gameType) {
 
