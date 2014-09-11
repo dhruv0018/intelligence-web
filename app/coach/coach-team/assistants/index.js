@@ -32,7 +32,7 @@ TeamAssistants.config([
         .state('Coach.Team.Assistants', {
             url: '/assistants',
             views: {
-                'main@root': {
+                'manager@Coach.Team': {
                     templateUrl: 'coach/team/assistants/template.html',
                     controller: 'Coach.Team.Assistants.controller'
                 }

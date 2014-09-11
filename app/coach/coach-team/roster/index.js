@@ -32,7 +32,7 @@ TeamRoster.config([
         .state('Coach.Team.Roster', {
             url: '/roster',
             views: {
-                'main@root': {
+                'manager@Coach.Team': {
                     templateUrl: 'coach/team/roster/template.html',
                     controller: 'Coach.Team.Roster.controller'
                 }

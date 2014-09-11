@@ -43,6 +43,11 @@ Team.config([
                         return data;
                     });
                 }]
+            },
+            views: {
+                'main@root': {
+                    templateUrl: 'coach/team/template.html'
+                }
             }
         });
     }

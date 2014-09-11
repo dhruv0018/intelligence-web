@@ -23,8 +23,6 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
         $scope.usersFactory = users;
         $scope.data = data;
 
-        console.log('working assistants controller');
-
         //toggles between player views
         $scope.filtering = [
             {type: 'active'},
