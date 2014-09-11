@@ -36,7 +36,7 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
 
         //Team
         $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
-
+        console.log($scope.team);
 
         alerts.add({
             type: 'warning',

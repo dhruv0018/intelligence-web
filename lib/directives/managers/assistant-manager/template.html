@@ -4,12 +4,14 @@
             <div class="row">
                 <div class="col-xs-2">
                     <add-resource data-add-new-resource="addNewAssistantCoach()" data-display-text="Add an Assistant Coach"></add-resource>
-                    <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options"><i class="icon icon-cloud-upload"></i> Upload Roster via Excel</a>
                 </div>
 
                 <div class="col-xs-10">
                     <div class="row">
-                        <profile data-role="ROLES.ASSISTANT_COACH" data-ng-repeat="coach in assistantCoaches"></profile>
+                        <profile data-role="ROLES.ASSISTANT_COACH"
+                                 data-team="team"
+                                 data-assistant="assistant"
+                                 data-ng-repeat="assistant in assistantCoaches"></profile>
                     </div>
                 </div>
             </div>

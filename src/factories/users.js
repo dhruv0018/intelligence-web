@@ -183,10 +183,11 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @method
              * @param {Object} user - the user to add the role to
              * @param {Object} role - a role object to add
+             * @param {Object} team - a team object to draw the teamId from
              * Adds the given role to the given user. If no user is specified,
              * this user will be used.
              */
-            addRole: function(user, role) {
+            addRole: function(user, role, team) {
 
                 var self = this;
 
@@ -200,6 +201,10 @@ IntelligenceWebClient.factory('UsersFactory', [
                 role.userId = user.id;
                 role.tenureEnd = null;
                 role.tenureStart = new Date();
+
+                if (typeof team !== 'undefined') {
+                    role.teamId = team.id;
+                }
 
                 user.roles = user.roles || [];
                 user.roles.unshift(role);

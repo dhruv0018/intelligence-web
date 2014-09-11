@@ -23,8 +23,20 @@
             </p>
         </div>
     </div>
-    <div data-ng-if="role.type.id === ROLE_TYPE.ASSISTANT_COACH">
-        this is an assistant coach
+    <div data-ng-if="role.type.id === ROLE_TYPE.ASSISTANT_COACH" class="manageable-resource col-xs-2">
+
+        <div class="manageable-picture">
+            <profile-placeholder data-ng-if="!assistant.imageUrl"></profile-placeholder>
+            <img data-ng-if="assistant.imageUrl" data-ng-src="{{assistant.imageUrl}}" alt="profile picture">
+        </div>
+
+        <div class="description">
+            <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAssistant = assistant" href>
+                {{assistant.firstName}}
+                {{assistant.lastName[0]}}.
+            </a>
+        </div>
+
     </div>
 </div>
 
