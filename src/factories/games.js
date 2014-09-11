@@ -34,6 +34,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
+                /* build lookup table of shares by userId shared with */
+                if (game.shares && game.shares.length) {
+                    game.sharedWithUsers = game.sharedWithUsers || {};
+
+                    angular.forEach(game.shares, function(share) {
+                        game.sharedWithUsers[share.sharedWithUserId] = share;
+                    });
+                }
+
                 return game;
             },
             saveNotes: function() {
@@ -770,15 +779,15 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return isBeingBrokenDown;
             },
-            shareWith: function(user) {
+            shareWithUser: function(user) {
 
                 var self = this;
 
-                if (!user) throw new Error('No user id to share with');
+                if (!user) throw new Error('No user to share with');
+
+                if (self.isSharedWith(user)) return;
 
                 self.shares = self.shares || [];
-
-                if (self.isSharedWith(user.id)) return;
 
                 self.shares.push({
                     userId: session.currentUser.id,
@@ -787,11 +796,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                     createdAt: moment.utc()
                 });
             },
-            stopSharingWith: function(user) {
+            stopSharingWithUser: function(user) {
 
                 var self = this;
 
-                if (!user) throw new Error('No user id to remove');
+                if (!user) throw new Error('No user to remove');
 
                 if (!self.shares || !self.shares.length) return;
 
@@ -802,21 +811,21 @@ IntelligenceWebClient.factory('GamesFactory', [
                     }
                 }
             },
-            sharedBy: function(sharedWithUserId) {
+            getShareByUser: function(user) {
                 var self = this;
 
-                userId = Number(sharedWithUserId);
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
 
-                if (!isNaN(userId)) {
+                if (!user) throw new Error('No user to get share from');
 
-                    //game has shares
-                    if (self.sharedWithLookupTable) {
-                        return (self.sharedWithLookupTable[userId]) ? self.sharedWithLookupTable[userId].userId : undefined;
-                    }
-                }
+                var userId = user.id;
+
+                return self.sharedWithUsers[userId];
             },
-            isSharedWith: function(userId) {
-                return Number(this.sharedBy(userId)) >= 0;
+            isSharedWith: function(user) {
+                var self = this;
+
+                return angular.isDefined(self.getShareByUser(user));
             }
         };
 

@@ -36,15 +36,15 @@
         	<h3>Sharing with:</h3>
         	<form>
         		<user-typeahead data-user="user"></user-typeahead>
-        		<button type="submit" class="btn btn-primary" data-ng-click="game.shareWith(user)">Add</button>
+        		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id" data-ng-click="game.shareWithUser(user)">Add</button>
         	</form>
-        	<div data-ng-show="game.shares.length > 0" class="shared-with-table">
+        	<div data-ng-show="game.shares.length" class="shared-with-table">
         		<div class="shared-with-header">Name</div>
         		<div class="shared-with" data-ng-repeat="share in game.shares">
         			<strong>{{users[share.sharedWithUserId].firstName}} {{users[share.sharedWithUserId].lastName}}</strong>
         			<span class="pull-right">
         				Sharing raw film
-        				<i class="icon icon-remove" data-ng-click="game.stopSharingWith(users[share.sharedWithUserId])"></i>
+        				<i class="icon icon-remove" data-ng-click="game.stopSharingWithUser(users[share.sharedWithUserId])"></i>
         			</span>
         		</div>
         	</div>
