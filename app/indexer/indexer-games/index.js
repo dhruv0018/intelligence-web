@@ -110,9 +110,6 @@ Games.controller('indexer-games.Controller', [
             $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
         }
 
-        $scope.games = data.games.getList().filter(function(game) {
-
-            return game.isAssignedToUser(session.currentUser.id);
-        });
+        $scope.games = data.games.getList();
     }
 ]);
