@@ -65,8 +65,8 @@ Games.service('Indexer.Games.Data.Dependencies', [
 
             sports: sports.load(),
             leagues: leagues.load(),
-            teams: teams.load({ relatedUserId: currentUser.id }),
-            users: users.load({ relatedUserId: currentUser.id }),
+            teams: teams.load(),
+            users: users.load(),
             games: games.load({
                 assignedUserId: currentUser.id
             })
