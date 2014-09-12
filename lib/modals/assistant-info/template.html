@@ -1,0 +1,81 @@
+<div class="athlete-info">
+
+    <header class="modal-header">
+
+        <h3 class="modal-title">
+
+            <div data-ng-if="!assistant.firstName">
+                <p class="pull-left">Add a new assistant coach</p>
+                <a class="pull-right" data-ng-click="cancel()">
+                    <i class="icon icon-remove"></i>
+                </a>
+            </div>
+
+            <div data-ng-if="assistant.firstName">
+                <p class="pull-left">
+                    <span>
+                        {{assistant.firstName}}
+                        {{assistant.lastName[0]}}.
+                    </span>
+                </p>
+                <div class="pull-right">
+                    <span data-ng-if="assistant.lastAccessed">{{assistant.getLastAccessed() | date: 'mediumDate'}}</span>
+
+                    <a data-ng-click="cancel()">
+                        <i class="icon icon-remove"></i>
+                    </a>
+                </div>
+
+            </div>
+
+        </h3>
+
+    </header>
+
+    <div class="modal-body">
+            <div class="row">
+            <div class="athlete-status col-md-12">
+                <div class="inactive" data-ng-if="assistant.id && !assistant.lastAccessed">
+                    <strong>This player has not yet activated their account with Krossover.</strong> Once they activate their account you will no longer be able to edit their name and email address.
+                    <a data-ng-if="assistant.lastAccessed" data-ng-click="playersFactory.resendEmail(assistant.id, team.id)">Resend Invitation</a>
+                </div>
+                <div class="active" data-ng-if="assistant.id && assistant.lastAccessed">
+                    This player has activated their account with Krossover. You can no longer edit certain items, which the player will now be responsible to edit.
+                </div>
+            </div>
+
+            <form name="assistantForm">
+
+                <div class="row form-group">
+                    <div class="profile-image col-md-3">
+                        <profile-placeholder data-ng-if="!assistant.imageUrl"></profile-placeholder>
+                        <img data-ng-if="assistant.imageUrl" data-ng-src="{{assistant.imageUrl}}" alt="profile image">
+                    </div>
+                    <div class="col-md-8">
+                        <table class="col-md-12">
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td><input class="name" placeholder="First Name" data-ng-disabled="assistant.lastAccessed" data-ng-model="assistant.firstName" required></td>
+                                <td><input class="name" placeholder="Last Name" data-ng-disabled="assistant.lastAccessed" data-ng-model="assistant.lastName" required></td>
+                            </tr>
+                        </table>
+                        <div class="col-md-6">
+                            <strong>Email</strong>
+                            <br/>
+                            <input type="text" data-ng-disabled="assistant.lastAccessed" data-ng-model="assistant.email" placeholder="Email Address">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-primary" value="Save" data-ng-click="saveAssistant()">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
