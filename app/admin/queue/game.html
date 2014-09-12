@@ -134,17 +134,27 @@
 
                             <div data-ng-repeat="note in game.notes">
 
-                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.COACH_NOTE">{{ note.content }}</p>
+                                <p>{{ note.content }}</p>
 
                             </div>
 
                             <hr>
 
-                            <h3><i class="icon icon-pushpin"></i> Krossover Notes:</h3>
+                            <h3><i class="icon icon-pushpin"></i> Indexing Notes:</h3>
 
-                            <div data-ng-repeat="note in game.notes">
+                            <div data-ng-repeat="note in game.notes[GAME_NOTE_TYPES.INDEXER_NOTE]">
 
-                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.INDEXER_NOTE || note.noteTypeId == GAME_NOTE_TYPES.QA_NOTE">{{ note.content }}</p>
+                                <p>{{ note.content }}</p>
+
+                            </div>
+
+                            <hr>
+
+                            <h3><i class="icon icon-pushpin"></i> Indexing QA Notes:</h3>
+
+                            <div data-ng-repeat="note in game.notes[GAME_NOTE_TYPES.QA_NOTE]">
+
+                                <p>{{ note.content }}</p>
 
                             </div>
 
@@ -152,9 +162,9 @@
 
                             <h3><i class="icon icon-pushpin"></i> Set Aside Notes:</h3>
 
-                            <div data-ng-repeat="note in game.notes">
+                            <div data-ng-repeat="note in game.notes[GAME_NOTE_TYPES.SET_ASIDE_NOTE]">
 
-                                <p data-ng-if="note.noteTypeId == GAME_NOTE_TYPES.SET_ASIDE_NOTE">{{ note.content }}</p>
+                                <p>{{ note.content }}</p>
 
                             </div>
 
