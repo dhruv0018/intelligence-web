@@ -132,7 +132,7 @@
 
                             <h3><i class="icon icon-pushpin"></i> Coaches Notes:</h3>
 
-                            <div data-ng-repeat="note in game.notes">
+                            <div data-ng-repeat="note in game.notes[GAME_NOTE_TYPES.COACH_NOTE]">
 
                                 <p>{{ note.content }}</p>
 
