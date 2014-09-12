@@ -19,7 +19,7 @@
                     </span>
                 </p>
                 <div class="pull-right">
-                    <span data-ng-if="assistant.lastAccessed">{{assistant.getLastAccessed() | date: 'mediumDate'}}</span>
+                    <span data-ng-if="assistant.lastAccessed">{{assistant.getLastAccessed(assistant) | date: 'mediumDate'}}</span>
 
                     <a data-ng-click="cancel()">
                         <i class="icon icon-remove"></i>
@@ -71,6 +71,12 @@
                         </div>
                         <div class="col-md-6">
                             <input type="submit" class="btn btn-primary" value="Save" data-ng-click="saveAssistant()">
+                        </div>
+                        <div class="col-md-6">
+                            <a class="pull-right" href data-ng-click="toggleAssistant()">
+                                <span data-ng-if="!assistantCoachRole.tenureEnd"><i class="icon icon-remove"></i> Remove from team</span>
+                                <span data-ng-if="assistantCoachRole.tenureEnd"><i class="icon icon-add"></i> Add to team</span>
+                            </a>
                         </div>
                     </div>
                 </div>
