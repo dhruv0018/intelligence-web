@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',
-    function(config, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, $q) {
+    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',
+    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, $q) {
 
         var GamesFactory = {
 
@@ -19,9 +19,9 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             description: 'games',
 
-            storage: GamesStorage,
+            model: 'GamesResource',
 
-            resource: GamesResource,
+            storage: 'GamesStorage',
 
             extend: function(game) {
 
@@ -71,7 +71,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                     throw new Error('Could not get stats for game');
                 };
 
-                return self.resource.generateStats({ id: id }, callback, error).$promise;
+                var model = $injector.get(self.model);
+
+                return model.generateStats({ id: id }, callback, error).$promise;
             },
 
             getStatus: function() {
@@ -644,11 +646,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             getFormationReport: function() {
                 var self = this;
-                return self.resource.getFormationReport({id: self.id});
+                var model = $injector.get(self.model);
+                return model.getFormationReport({id: self.id});
             },
 
             getDownAndDistanceReport: function(report) {
-                var Resource = this.resource;
+                var Resource = $injector.get(self.model);
 
                 var dndReport = new Resource(report);
 
