@@ -15,7 +15,7 @@
             <td class="positions">
                 <div class="team">{{roleInfo.team.name}}</div>
                 <div>
-                    <span data-ng-repeat="position in roleInfo.positions">{{position.name}}</span>
+                    <span data-ng-repeat="positionId in roleInfo.positionIds">{{positions[positionId].name}}</span>
                 </div>
             </td>
             <td class="jersey-number">
