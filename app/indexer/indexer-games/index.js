@@ -114,5 +114,7 @@ Games.controller('indexer-games.Controller', [
 
             return game.isAssignedToUser(session.currentUser.id);
         });
+
+        $scope.games = $scope.games.reverse();
     }
 ]);
