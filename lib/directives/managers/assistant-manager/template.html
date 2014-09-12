@@ -11,7 +11,7 @@
                         <profile data-role="ROLES.ASSISTANT_COACH"
                                  data-team="team"
                                  data-assistant="assistant"
-                                 data-ng-repeat="assistant in assistantCoaches"></profile>
+                                 data-ng-repeat="assistant in assistantCoaches | filter: filterType"></profile>
                     </div>
                 </div>
             </div>

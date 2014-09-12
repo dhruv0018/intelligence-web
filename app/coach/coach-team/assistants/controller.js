@@ -23,7 +23,7 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
         $scope.usersFactory = users;
         $scope.data = data;
 
-        //toggles between player views
+        //toggles between assistant views
         $scope.filtering = [
             {type: 'active'},
             {type: 'inactive'}
