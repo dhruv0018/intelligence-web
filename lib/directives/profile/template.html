@@ -35,6 +35,13 @@
                 {{assistant.firstName}}
                 {{assistant.lastName[0]}}.
             </a>
+            <p data-ng-repeat="role in assistant.roles" data-ng-if="role.type.id === ROLE_TYPE.ASSISTANT_COACH && role.teamId === team.id">
+                Tenure: {{role.tenureStart | date: 'mediumDate'}} to
+                <span data-ng-if="!role.tenureEnd">current</span>
+                <span data-ng-if="role.tenureEnd">
+                    {{role.tenureEnd | date: 'mediumDate'}}
+                </span>
+            </p>
         </div>
 
     </div>
