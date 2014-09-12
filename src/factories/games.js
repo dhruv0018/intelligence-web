@@ -628,7 +628,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return game;
             },
 
-            isRegular: function isRegular(game) {
+            isRegular: function(game) {
 
                 var self = this;
 
