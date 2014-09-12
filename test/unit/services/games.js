@@ -1017,7 +1017,7 @@ describe('GamesFactory', function() {
         it('should return true only for a game with a non-regular game type', inject([
             'GAME_TYPES_IDS', 'GAME_TYPES',
             function(GAME_TYPES_IDS, GAME_TYPES) {
-                Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
+                Object.keys(GAME_TYPES_IDS).forEach(function(gameTypeId) {
 
                     switch(gameTypeId) {
                         case GAME_TYPES.SCOUTING.id:
@@ -1035,13 +1035,13 @@ describe('GamesFactory', function() {
         it('should return false for a game with a regular game type', inject([
             'GAME_TYPES_IDS', 'GAME_TYPES',
             function(GAME_TYPES_IDS, GAME_TYPES) {
-                Object.keys(GAME_TYPES_IDS).forEach(function (gameTypeId) {
+                Object.keys(GAME_TYPES_IDS).forEach(function(gameTypeId) {
 
                     switch(gameTypeId) {
                         case GAME_TYPES.CONFERENCE.id:
                         case GAME_TYPES.NON_CONFERENCE.id:
                         case GAME_TYPES.PLAYOFF.id:
-                            expect(game.isNonRegular(gameTypeId)).to.be.false;
+                            expect(game.isRegular(gameTypeId)).to.be.false;
                             break;
                     }
                 });
@@ -1058,60 +1058,55 @@ describe('GamesFactory', function() {
         var game;
 
         beforeEach(inject([
-            'GamesFactory',
-            function(gamesFactory) {
+            'GamesFactory', 'SessionService',
+            function(gamesFactory, session) {
+
+                session.currentUser = { id: 2 };
+
                 game = {
-                    id: 1
+                    id: 1,
+                    shares: []
                 };
-                game = games.extend(game);
+                game = gamesFactory.extend(game);
             }
         ]));
 
         function shareCommonTest(sharedWithUserIds, beforeSharingLength, gameId) {
-            expect(game.shares.length).toEqual(beforeSharingLength + sharedWithUserIds.length);
+
+            var newLength = beforeSharingLength + sharedWithUserIds.length;
+            expect(game.shares.length).to.equal(newLength);
 
             var shareObj;
-            sharedWithUserIds.forEach(function() {
-                shareObj = game.shares.pop();
-                expect(sharedWithUserIds.pop()).toEqual(shareObj.sharedWithUserId);
+            sharedWithUserIds.forEach(function(user) {
+                shareObj = game.shares.shift();
+
+                expect(user.id).to.equal(shareObj.sharedWithUserId);
                 expect(shareObj.createdAt).to.be.an.instanceof(Date);
-                expect(shareObj.gameId).toEqual(gameId);
+                expect(shareObj.gameId).to.equal(gameId);
             });
         }
 
         it('should add shares to game', function() {
 
-            var sharedWithUserIds = [1,2,3,4,5];
-            var beforeSharingLength = game.shares.length;
+            var sharedWithUserIds = [{id: 1},{id: 2},{id: 3},{id: 4},{id: 5}];
+            var beforeSharingLength = (game.shares) ? game.shares.length : 0;
             var gameId = game.id;
-            game.share(sharedWithUserIds);
-
-            shareCommonTest(sharedWithUserIds, beforeSharingLength, gameId);
-        });
-
-        it('should take gameId as second parameter', function() {
-            var sharedWithUserIds = [1,2,3,4,5];
-            var beforeSharingLength = game.shares.length;
-            var gameId = 5;
-            game.share(sharedWithUserIds, gameId);
+            
+            sharedWithUserIds.forEach(function(userId){
+                game.shareWithUser(userId);
+            });
 
             shareCommonTest(sharedWithUserIds, beforeSharingLength, gameId);
         });
 
         it('should do nothing with an empty input', function() {
-            var sharedWithUserIds = undefined;
-            var beforeSharingLength = game.shares.length;
+            var sharedWithUserIds = [];
+            var beforeSharingLength = (game.shares) ? game.shares.length : 0;
             var gameId = game.id;
-            game.share(sharedWithUserIds);
-
-            shareCommonTest(sharedWithUserIds, beforeSharingLength, gameId);
-        });
-
-        it('should handle bad data', function() {
-            var sharedWithUserIds = [1,2,'A',4,-5];
-            var beforeSharingLength = game.shares.length;
-            var gameId = game.id;
-            game.share(sharedWithUserIds);
+            
+            sharedWithUserIds.forEach(function(userId){
+                game.shareWithUser(userId);
+            });
 
             shareCommonTest(sharedWithUserIds, beforeSharingLength, gameId);
         });
@@ -1124,42 +1119,51 @@ describe('GamesFactory', function() {
             'GamesFactory',
             function(gamesFactory) {
                 game = {
-                    sharedWithLookupTable: {
+                    sharedWithUsers: {
                         1: {
                             userId: 2,
                             sharedWithUserId: 1
                         }
                     }
                 };
-                game = games.extend(game);
+                game = gamesFactory.extend(game);
             }
         ]));
 
         it('should return the userId who shared the game to the user, or undefined', function() {
-            expect(game.sharedBy(1)).toEqual(2);
-            expect(game.isSharedWith(1)).to.be.true;
+            var user = {id: 1};
+            var notaUser = {id: 45};
+            expect(game.getShareByUser(user).sharedWithUserId).to.equal(1);
+            expect(game.isSharedWithUser(user)).to.be.true;
 
-            expect(game.sharedBy(45)).to.be.undefined;
-            expect(game.isSharedWith(45)).to.be.false;
+            expect(game.getShareByUser(notaUser)).to.be.undefined;
+            expect(game.isSharedWithUser(notaUser)).to.be.false;
         });
 
-        it('should handle undefined or bad input'. function() {
-            expect(game.sharedBy(undefined)).to.be.undefined;
-            expect(game.isSharedWith(undefined)).to.be.false;
+        it('should handle undefined or bad input', function() {
+            expect(function() {
+                game.getShareByUser()
+            }).to.throw(Error);
 
-            expect(game.sharedBy("BAD")).to.be.undefined;
-            expect(game.isSharedWith("BAD")).to.be.false;
+            expect(game.isSharedWithUser()).to.be.false;
+
+            expect(game.getShareByUser(2)).to.be.undefined;
+            expect(game.isSharedWithUser(2)).to.be.false;
         });
 
-        it('should return undefined if no sharedWithLookupTable', function() {
-            var backupSharedWithLookupTable = game.sharedWithLookupTable;
+        it('should throw error if no sharedWithLookupTable', function() {
+            var backupSharedWithLookupTable = game.sharedWithUsers;
+            var user = {id: 1};
 
-            delete game.sharedWithLookupTable;
+            delete game.sharedWithUsers;
 
-            expect(game.sharedBy(1)).to.be.undefined;
-            expect(game.isSharedWith(1)).to.be.false;
+            expect(function() {
+                game.getShareByUser(user)
+            }).to.throw(Error);
 
-            game.sharedWithLookupTable = backupSharedWithLookupTable;
+            expect(game.isSharedWithUser(user)).to.be.false;
+
+            game.sharedWithUsers = backupSharedWithLookupTable;
         });
     });
 });
