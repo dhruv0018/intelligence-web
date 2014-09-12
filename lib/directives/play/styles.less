@@ -144,6 +144,36 @@
             }
         }
 
+        .save-indicator {
+
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            margin: 10px;
+            height: 25px;
+            line-height: 25px;
+
+            .icon {
+
+                color: @gray-light;
+                font-size: 14px;
+            }
+
+            .active {
+
+                animation: spin 1s linear infinite;
+            }
+
+            .success {
+
+                color: @brand-success;
+            }
+
+            .error {
+
+                color: @brand-danger;
+            }
+        }
     }
 }
 
