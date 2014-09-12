@@ -23,10 +23,12 @@
     </div>
     <div class="playBody" data-ng-class="{'playHide': !expandAll && play != playManager.current }">
         <krossover-events data-auto-advance="autoAdvance" data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers"></krossover-events>
+    </div>
 
-        <hr>
+    <hr>
 
-        <button class="btn-delete-play" data-ng-if="isIndexer" data-ng-disabled="play.isSaving" data-ng-click="deletePlay()"><i class="icon icon-remove"></i> Delete Play</button>
+    <div class="playFooter">
+        <button class="btn-delete-play" data-ng-if="isIndexer" data-ng-disabled="play.isSaving" data-ng-click="deletePlay()">Delete Play</button>
         <button class="play-link disabled" data-ng-if="!isIndexer"><i class="icon icon-plus"></i> Add to reel</button>
         <button class="play-link pull-right disabled" data-ng-if="!isIndexer"><i class="icon icon-tag"></i> Label Play</button>
     </div>
