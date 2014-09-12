@@ -762,11 +762,13 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
             isUploading: function() {
                 var self = this;
-                return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
+                //return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
+                return false;
             },
             isProcessing: function() {
                 var self = this;
-                return self.video.status === VIDEO_STATUSES.UPLOADED.id;
+                //return self.video.status === VIDEO_STATUSES.UPLOADED.id;
+                return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
             },
             isVideoTranscodeFailed: function() {
                 var self = this;
