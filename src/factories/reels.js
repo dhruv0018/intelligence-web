@@ -24,6 +24,15 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 angular.extend(reel, self);
                 reel.plays = reel.plays || [];
 
+                /* build lookup table of shares by userId shared with */
+                if (reel.shares && reel.shares.length) {
+                    reel.sharedWithUsers = reel.sharedWithUsers || {};
+
+                    angular.forEach(reel.shares, function(share) {
+                        reel.sharedWithUsers[share.sharedWithUserId] = share;
+                    });
+                }
+
                 return reel;
             },
 
@@ -34,47 +43,63 @@ IntelligenceWebClient.factory('ReelsFactory', [
             updateDate: function() {
                 this.updatedAt = moment.utc();
             },
-            share: function share(toUserIds, reelId) {
+            shareWithUser: function(user) {
 
                 var self = this;
-                var shareTime = new Date();
+
+                if (!user) throw new Error('No user to share with');
 
                 self.shares = self.shares || [];
 
-                reelId = (Number(reelId) >= 0) ? reelId : self.id;
+                self.sharedWithUsers = self.sharedWithUsers || {};
 
-                toUserIds = toUserIds || [];
+                if (self.isSharedWithUser(user)) return;
 
-                toUserIds.forEach(function(toUserId) {
+                var share = {
+                    userId: session.currentUser.id,
+                    gameId: self.id,
+                    sharedWithUserId: user.id,
+                    createdAt: moment.utc().toDate()
+                };
 
-                    if (!Number(toUserId) || toUserId < 0) return;
+                self.sharedWithUsers[user.id] = share;
 
-                    self.shares.push({
-                        userId: session.currentUser.id,
-                        reelId: reelId,
-                        sharedWithUserId: toUserId,
-                        /*sharedWithTeamId: undefined,*/
-                        createdAt: shareTime
-                    });
-                });
-
-                return self;
+                self.shares.push(share);
             },
-            sharedBy: function sharedBy(sharedWithUserId) {
+            stopSharingWithUser: function(user) {
+
                 var self = this;
 
-                userId = Number(sharedWithUserId);
+                if (!user) throw new Error('No user to remove');
 
-                if (!isNaN(userId)) {
+                if (!self.shares || !self.shares.length) return;
 
-                    //game has shares
-                    if (self.sharedWithLookupTable) {
-                        return (self.sharedWithLookupTable[userId]) ? self.sharedWithLookupTable[userId].userId : undefined;
+                for (var index = 0; index < self.shares.length; index++) {
+                    if (self.shares[index].sharedWithUserId === user.id) {
+                        self.shares.splice(index, 1);
+                        return;
                     }
                 }
             },
-            isSharedWith: function isSharedWith(userId) {
-                return Number(sharedBy(userId)) >= 0;
+            getShareByUser: function(user) {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
+                if (!user) throw new Error('No user to get share from');
+
+                var userId = user.id;
+
+                return self.sharedWithUsers[userId];
+            },
+            isSharedWithUser: function(user) {
+                var self = this;
+
+                if (!user) return false;
+
+                if (!self.sharedWithUsers) return false;
+
+                return angular.isDefined(self.getShareByUser(user));
             }
         };
 
