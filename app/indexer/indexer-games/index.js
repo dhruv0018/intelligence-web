@@ -113,16 +113,16 @@ Games.controller('indexer-games.Controller', [
         $scope.games = data.games.getList();
 
         angular.forEach($scope.games, function(game) {
-            game.assignmentTimeRemaining = game.assignmentTimeRemaining();
+            game.timeRemaining = game.assignmentTimeRemaining();
         });
 
         var refreshGames = function() {
 
             angular.forEach($scope.games, function(game) {
 
-                if (game.assignmentTimeRemaining) {
+                if (game.timeRemaining) {
 
-                    game.assignmentTimeRemaining = moment.duration(game.assignmentTimeRemaining).subtract(1, 'minute').asMilliseconds();
+                    game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
                 }
             });
         };
