@@ -12,7 +12,7 @@
 
                 <header class="box-header col-md-12">
 
-                    <x-button-continue data-ng-disabled="formGameInfo.$invalid">Next</x-button-continue>
+                    <x-button-continue data-ng-disabled="formGameInfo.$invalid || isGameSaving"><span data-ng-hide="isGameSaving">Next</span><span data-ng-show="isGameSaving">Saving game…</span></x-button-continue>
 
                 </header>
 
@@ -201,7 +201,7 @@
 
             </div>
 
-            <x-button-continue data-ng-disabled="formGameInfo.$invalid">Next</x-button-continue>
+            <x-button-continue data-ng-disabled="formGameInfo.$invalid || isGameSaving"><span data-ng-hide="isGameSaving">Next</span><span data-ng-show="isGameSaving">Saving game…</span></x-button-continue>
 
         </div>
 

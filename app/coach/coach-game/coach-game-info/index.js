@@ -92,6 +92,9 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Save functionality
         $scope.save = function() {
+
+            $scope.isGameSaving = true;
+
             if ($scope.data.game.id) {
                 $q.all($scope.saveExisting()).then($scope.goToRoster);
             } else {
@@ -138,7 +141,7 @@ Info.controller('Coach.Game.Info.controller', [
                 $scope.data.game.rosters[$scope.data.game.teamId] = {};
                 $scope.data.game.rosters[promisedData.opposing.id] = {};
 
-                return games.extend($scope.data.game).save().then(function(game) {
+                return $scope.data.game.save().then(function(game) {
                     $scope.data.game = game;
                     $scope.data.gamePlayerLists = {};
                     $scope.data.gamePlayerLists[promisedData.opposing.id] = [];
@@ -185,6 +188,8 @@ Info.controller('Coach.Game.Info.controller', [
 
 
         $scope.goToRoster = function() {
+
+            $scope.isGameSaving = false;
             $scope.tabs.deactivateAll();
             $scope.formGameInfo.$dirty = false;
 
