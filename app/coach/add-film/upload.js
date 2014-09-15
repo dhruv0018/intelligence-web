@@ -153,9 +153,6 @@ UploadFilm.controller('UploadFilmController', [
                         console.log('KVS GUID: ' + guid);
 
                         /* Store the GUID with the game. */
-                        coachData.game.datePlayed = new Date();
-
-                            /* Store the GUID with the game. */
                         coachData.game.video = {
                             guid: guid
                         };

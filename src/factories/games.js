@@ -34,6 +34,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.notes = game.notes || [];
                 game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
+                game.datePlayed = game.datePlayed || moment.utc().toDate();
 
                 return game;
             },

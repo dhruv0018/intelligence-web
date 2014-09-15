@@ -82,9 +82,6 @@ Info.controller('Coach.Game.Info.controller', [
         //Game Manipulation
         $scope.data.game.notes = $scope.data.game.notes || {};
         $scope.data.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = $scope.data.game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
-        if (!$scope.data.game.dateplayed) {
-            $scope.data.game.dateplayed = Date.now();
-        }
 
         //Opposing Team Construction
         if ($scope.data.game.id) {
