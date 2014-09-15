@@ -624,26 +624,30 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
             isRegular: function isRegular(game) {
 
+                game = game || this;
+
                 switch (game.gameType) {
                     case GAME_TYPES.CONFERENCE.id:
                     case GAME_TYPES.NON_CONFERENCE.id:
                     case GAME_TYPES.PLAYOFF.id:
                         return true;
-                    default:
-                        return false;
                 }
+
+                return false;
             },
 
             isNonRegular: function isNonRegular(game) {
+
+                game = game || this;
 
                 switch (game.gameType) {
 
                     case GAME_TYPES.SCOUTING.id:
                     case GAME_TYPES.SCRIMMAGE.id:
                         return true;
-                    default:
-                        return false;
                 }
+
+                return false;
             },
 
             getFormationReport: function() {
