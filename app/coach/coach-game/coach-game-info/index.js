@@ -90,17 +90,6 @@ Info.controller('Coach.Game.Info.controller', [
             };
         }
 
-
-        $scope.$watch('formGameInfo.$dirty', function(dirtyBit) {
-
-            if (!dirtyBit && !$scope.data.game.id) return;
-
-            $scope.tabs.scouting.disabled = dirtyBit;
-            $scope.tabs.opposing.disabled = dirtyBit;
-            $scope.tabs.team.disabled = dirtyBit;
-            $scope.tabs.confirm.disabled = dirtyBit;
-        });
-
         //Save functionality
         $scope.save = function() {
             if ($scope.data.game.id) {
