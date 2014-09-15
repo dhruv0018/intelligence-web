@@ -127,9 +127,6 @@ Info.controller('Coach.Game.Info.controller', [
 
             $q.all(promises).then(function(promisedData) {
 
-                $scope.data.game.uploaderUserId = session.currentUser.id;
-                $scope.data.game.uploaderTeamId = session.currentUser.currentRole.teamId;
-
                 if (games.isRegular($scope.data.game)) {
                     $scope.data.game.teamId = session.currentUser.currentRole.teamId;
                 } else {
