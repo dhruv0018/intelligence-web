@@ -32,6 +32,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.video = game.video || {};
                 game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
                 game.notes = game.notes || [];
+                game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
 
                 return game;

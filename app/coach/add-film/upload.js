@@ -160,10 +160,6 @@ UploadFilm.controller('UploadFilmController', [
                             guid: guid
                         };
 
-                        if (games.isRegular(coachData.game)) {
-                            coachData.isHomeGame = true;
-                        }
-
                         /* Set the KVS target to include the GUID. */
                         $scope.$flow.opts.target = kvsUrl + '/upload/part/' + guid;
 

@@ -144,10 +144,6 @@ Info.controller('Coach.Game.Info.controller', [
             $scope.setTabHeadings();
         }
 
-        if (typeof $scope.data.game.isHomeGame === 'undefined') {
-            $scope.data.game.isHomeGame = true;
-        }
-
         //Save functionality
         $scope.save = function() {
             if ($scope.data.game.id) {
