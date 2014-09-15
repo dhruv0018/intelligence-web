@@ -13,6 +13,7 @@
         "events",
         "play",
         "plays",
+        "results",
         "no-results",
         "videoplayer",
         "athlete",
@@ -45,7 +46,10 @@
         "user-typeahead",
         "verify-password",
         "videogular",
-        "breakdown-text"
+        "breakdown-text",
+        "player-information",
+        "film-home-tabs",
+        "plays-filters"
     ],
     "scripts": [
         "index.js"

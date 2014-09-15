@@ -45,6 +45,7 @@ Info.directive('krossoverCoachGameInfo', [
 
             scope: {
                 headings: '=',
+                $flow: '=?flow',
                 data: '=',
                 tabs: '='
             }
@@ -61,8 +62,9 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$q', '$scope', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($q, $scope, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+    '$q', '$rootScope', '$scope', '$window', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    function controller($q, $rootScope, $scope, $window, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+
         $scope.session = session;
 
         $scope.todaysDate = Date.now();
@@ -91,32 +93,60 @@ Info.controller('Coach.Game.Info.controller', [
             };
         }
 
-        $scope.setTabHeadings = function() {
+        if (games.isRegular($scope.data.game)) {
+            $scope.headings.yourTeam = 'Team';
+        } else {
+            $scope.headings.scoutingTeam = 'Scouting Team';
+        }
 
-            try {
-                $scope.headings.opposingTeam = $scope.teams[$scope.data.game.opposingTeamId].name || 'Opposing Team';
+        $scope.$watch('formGameInfo.$dirty', function(dirtyBit) {
+
+            if (!dirtyBit && !$scope.data.game.id) return;
+
+            $scope.tabs.scouting.disabled = dirtyBit;
+            $scope.tabs.opposing.disabled = dirtyBit;
+            $scope.tabs.team.disabled = dirtyBit;
+            $scope.tabs.confirm.disabled = dirtyBit;
+        });
+
+        $scope.$watch('data.game.teamId', function(teamId) {
+
+            if (teamId) {
+
+                $scope.team = teams.get(teamId);
 
                 if (games.isRegular($scope.data.game)) {
-                    $scope.headings.yourTeam = $scope.teams[session.currentUser.currentRole.teamId].name || 'Team';
+                    $scope.headings.yourTeam = $scope.team.name || 'Team';
                 } else {
-                    $scope.headings.scoutingTeam = $scope.teams[$scope.data.game.teamId].name || 'Scouting Team';
+                    $scope.headings.scoutingTeam = $scope.team.name || 'Scouting Team';
                 }
-            } catch (e) {
-                console.error(e);
             }
+        });
+
+        $scope.headings.opposingTeam = 'Opposing Team';
+
+        $scope.$watch('data.game.opposingTeamId', function(opposingTeamId) {
+
+            if (opposingTeamId) {
+
+                $scope.opposingTeam = teams.get(opposingTeamId);
+
+                $scope.headings.opposingTeam = $scope.opposingTeam.name || 'Opposing Team';
+            }
+        });
+
+        $scope.setTabHeadings = function() {
+
         };
 
         //Headings
         if ($scope.data.game.id) {
             $scope.setTabHeadings();
-            $scope.tabs.enableAll();
         }
 
-        //watches
-        //TODO, we really need to not do this
-        $scope.$watch('data.game', function(game) {
-            $scope.isHomeGame = $scope.data.game.isHomeGame == 'true' ? true : false;
-        });
+        if (typeof $scope.data.game.isHomeGame === 'undefined') {
+            $scope.data.game.isHomeGame = true;
+        }
 
         //Save functionality
         $scope.save = function() {
@@ -217,14 +247,18 @@ Info.controller('Coach.Game.Info.controller', [
 
         $scope.goToRoster = function() {
             $scope.tabs.deactivateAll();
+            $scope.formGameInfo.$dirty = false;
 
             if (games.isRegular($scope.data.game)) {
                 $scope.tabs.team.active = true;
+                $scope.tabs.team.disabled = false;
             } else {
                 $scope.tabs.scouting.active = true;
+                $scope.tabs.scouting.disabled = false;
+                $scope.tabs.opposing.disabled = false;
+                $scope.tabs.confirm.disabled = false;
             }
             $scope.setTabHeadings();
-            $scope.tabs.enableAll();
         };
 
 //        $scope.$watch('formGameInfo.$invalid', function(invalid) {
@@ -232,6 +266,55 @@ Info.controller('Coach.Game.Info.controller', [
 //            tabs['scouting-team'].disabled = invalid;
 //        });
 
+        var prompt = 'Your game will not get uploaded without entering in the game information.';
+
+        /* When changing state. */
+        $rootScope.$on('$stateChangeStart', function(event) {
+
+            /* If the game has not been saved and the game information has not been completed .*/
+            if (!$scope.data.game.id && $scope.formGameInfo.$invalid) {
+
+                if (confirm(prompt + '\n\nDo you still want to leave?')) {
+
+                    $scope.$flow.cancel();
+                }
+
+                else {
+
+                    event.preventDefault();
+                    $rootScope.$broadcast('$stateChangeError');
+                }
+            }
+        });
+
+        /* When changing location. */
+        $rootScope.$on('$locationChangeStart', function(event) {
+
+            /* If the game has not been saved and the game information has not been completed .*/
+            if (!$scope.data.game.id && $scope.formGameInfo.$invalid) {
+
+                if (confirm(prompt + '\n\nDo you still want to leave?')) {
+
+                    $scope.$flow.cancel();
+                }
+
+                else {
+
+                    event.preventDefault();
+                    $rootScope.$broadcast('$stateChangeError');
+                }
+            }
+        });
+
+        /* Before unloading the page. */
+        $window.onbeforeunload = function beforeunloadHandler() {
+
+            /* If the game information has not been completed .*/
+            if ($scope.formGameInfo.$invalid) {
+
+                return prompt;
+            }
+        };
     }
 ]);
 

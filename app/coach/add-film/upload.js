@@ -109,8 +109,7 @@ UploadFilm.controller('UploadFilmController', [
 
                 event.preventDefault();
 
-                $rootScope.$broadcast('alert', {
-
+                alerts.add({
                     type: 'danger',
                     message: 'The file "' + filename + '" has an unsupported extension.'
                 });
@@ -162,7 +161,7 @@ UploadFilm.controller('UploadFilmController', [
                         };
 
                         if (games.isRegular(coachData.game)) {
-                            coachData.isHomeGame = 'true';
+                            coachData.isHomeGame = true;
                         }
 
                         /* Set the KVS target to include the GUID. */

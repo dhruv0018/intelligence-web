@@ -17,8 +17,8 @@ IntelligenceWebClient.service('TeamsStorage', [
 ]);
 
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'ResourceManager',
-    function($rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users, managedResources) {
+    '$injector', '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'ResourceManager',
+    function($injector, $rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, usersResource, BaseFactory, users, managedResources) {
 
         var TeamsFactory = {
 
@@ -57,6 +57,32 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 return team;
             },
+
+            search: function(query) {
+
+                var self = this;
+
+                return self.retrieve(query).then(function(teams) {
+
+                    var schoolIds = [];
+
+                    angular.forEach(teams, function(team) {
+
+                        if (team.schoolId) {
+
+                            schoolIds.push(team.schoolId);
+                        }
+                    });
+
+                    var schools = $injector.get('SchoolsFactory');
+
+                    return schools.retrieve({ 'id[]': schoolIds }).then(function() {
+
+                        return teams;
+                    });
+                });
+            },
+
             save: function(resource, success, error) {
 
                 var self = this;
@@ -277,7 +303,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 }
 
                 //no plans or packages means no breakdowns
-                return -1;
+                return 0;
             }
         };
 

@@ -74,7 +74,42 @@ GameArea.config([
                             var league = leagues.get(team.leagueId);
                             data.league = league;
 
-                            return data;
+                            var teamsCollection = data.teams.getCollection();
+                            var leaguesCollection = data.leagues.getCollection();
+
+                            //Game related
+                            data.game = data.games.get($stateParams.id);
+                            data.gameStatus = data.game.status;
+                            data.gamePlayerLists = {};
+                            data.players = players;
+                            data.league = leaguesCollection[teamsCollection[data.game.teamId].leagueId];
+                            data.filterset = data.filtersets.get(data.league.filterSetId);
+
+                            //Player lists
+                            var teamPlayerList = players.query({
+                                rosterId: data.game.rosters[data.game.teamId].id
+                            }).then(function(playerList) {
+                                data.teamPlayers = playerList;
+                                data.gamePlayerLists[data.game.teamId] = playerList;
+                            });
+
+                            var opposingTeamPlayerList = players.query({
+                                rosterId: data.game.rosters[data.game.opposingTeamId].id
+                            }).then(function(playerList) {
+                                data.opposingTeamPlayers = playerList;
+                                data.gamePlayerLists[data.game.opposingTeamId] = playerList;
+                            });
+
+                            var playsList = plays.query({
+                                gameId: data.game.id
+                            }, function(plays) {
+                                data.plays = plays;
+                            });
+
+
+                            return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function() {
+                                return $q.all(data);
+                            });
                         });
                     }
                 ]
@@ -143,12 +178,19 @@ GameArea.controller('Coach.GameArea.controller', [
         //Filters
         $scope.filtersetCategories = data.filtersetCategories;
 
+        //Plays
+        $scope.totalPlays = angular.copy(data.plays);
+        $scope.plays = $scope.totalPlays;
+
         //view selector
-        if ($scope.game.isDelivered()) {
+        if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered()) {
             $scope.dataType = 'film-breakdown';
-        } else {
+        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered()) {
             $scope.dataType = 'raw-film';
+        } else {
+            $scope.dataType = 'game-info';
         }
+
         $scope.$watch('dataType', function(data) {
             if ($scope.dataType === 'game-info') {
                 $state.go('ga-info');
@@ -168,7 +210,6 @@ GameArea.controller('Coach.GameArea.controller', [
                 $state.go('Coach.GameArea');
             }
         });
-
     }
 ]);
 

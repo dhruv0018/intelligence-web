@@ -56,14 +56,32 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', 'GAME_STATUSES', 'PositionsetsFactory', 'GamesFactory', 'TeamsFactory', 'SessionService',
-    function controller($scope, $state, GAME_STATUSES, positionsets, games, teams, session) {
+    '$scope', '$state', 'GAME_STATUSES', 'PositionsetsFactory', 'GamesFactory', 'TeamsFactory', 'SessionService', 'AlertsService',
+    function controller($scope, $state, GAME_STATUSES, positionsets, games, teams, session, alerts) {
 
         $scope.keys = window.Object.keys;
         $scope.positions = ($scope.data.league.positionSetId) ? positionsets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;
+
+        //Make sure team has roster
+        $scope.hasRoster = false;
+        $scope.isNonRegularGame = games.isNonRegular($scope.data.game);
+
+        $scope.$watch('data.gamePlayerLists[data.game.teamId]', function(x) {
+            if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
+
+                $scope.hasRoster = true;
+            }
+        });
+
+        $scope.returnToGameAlert = function() {
+            alerts.add({
+                type: 'super-danger',
+                message: 'Once you upload your roster, click here to return to your uploaded game and submit for breakdown.'
+            });
+        };
 
         var teamIdForThisGame = session.currentUser.currentRole.teamId;
         if ($scope.data.game.uploaderTeamId) {
@@ -98,7 +116,9 @@ Instructions.controller('Coach.Game.Instructions.controller', [
                 $scope.data.game.submittedAt = null;
             }
 
+            $scope.savingBreakdown = true;
             $scope.data.game.save().then(function(game) {
+                $scope.savingBreakdown = false;
                 $scope.isBreakdownChoiceMade = true;
             });
         };

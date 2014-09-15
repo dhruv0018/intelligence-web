@@ -89,8 +89,8 @@ GameAreaInformation.config([
 ]);
 
 GameAreaInformation.controller('GameAreaInformationController', [
-    '$scope', '$state', '$stateParams', '$modal', 'GamesFactory', 'GameAreaInformation.Data',
-    function controller($scope, $state, $stateParams, $modal, games, data) {
+    '$scope', '$state', '$stateParams', '$modal', 'AlertsService', 'GamesFactory', 'GameAreaInformation.Data',
+    function controller($scope, $state, $stateParams, $modal, alerts, games, data) {
 
         var gameId = $stateParams.id;
 
@@ -101,6 +101,18 @@ GameAreaInformation.controller('GameAreaInformationController', [
         //Player List
         $scope.teamPlayerList = data.gamePlayerLists[game.teamId];
         $scope.opposingPlayerList = data.gamePlayerLists[game.opposingTeamId];
+
+        if ($scope.game.isProcessing()) {
+            alerts.add({
+                type: 'warning',
+                message: 'Your video is still processing. You may still edit the Game Information for this film.'
+            });
+        } else if ($scope.game.isUploading()) {
+            alerts.add({
+                type: 'warning',
+                message: 'This film is currently uploading. You may still edit the Game Information for this film.'
+            });
+        }
 
         $scope.confirmation = function() {
             $modal.open({

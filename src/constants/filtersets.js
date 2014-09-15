@@ -47,3 +47,27 @@ var FILTERSET_CATEGORIES = {
 
 IntelligenceWebClient.constant('FILTERSET_CATEGORIES', FILTERSET_CATEGORIES);
 
+var FILTER_CATEGORY_TYPES_IDS = {
+    1: 'STANDARD',
+    2: 'PLAYER',
+    3: 'QA'
+};
+
+IntelligenceWebClient.constant('FILTERSET_CATEGORY_TYPES_IDS', FILTER_CATEGORY_TYPES_IDS);
+
+var FILTER_CATEGORY_TYPES = {
+    STANDARD: {
+        id: 1
+    },
+    PLAYER: {
+        id: 2
+    },
+    QA: {
+        id: 3
+    }
+};
+
+IntelligenceWebClient.constant('FILTERSET_CATEGORY_TYPES', FILTER_CATEGORY_TYPES);
+
+
+

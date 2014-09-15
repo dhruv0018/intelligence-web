@@ -14,55 +14,88 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
         return {
 
-            /* Intercept all responses. Includes any server responses that are
-             * considered successful. Which are status codes up to the 400 level. */
-            response: function(response) {
-            /* jshint sub:true */
-            /* jshint camelcase:false */
-
-                /* Catch errors in 200 responses. */
-                if (response.data.error) {
-
-                    var error = new Error('Error response\n' +
-                        response.data.error + ': ' +
-                        response.data['error_description']);
-
-                    ErrorReporter.reportError(error);
-
-                    return $q.reject(response);
-                }
-
-                return response;
-            },
-
             /* Intercept responses with status codes that indicate errors. */
             responseError: function(response) {
 
+                var data = response.config.data;
+                var method = response.config.method;
+                var description = '';
+
+                switch (method) {
+
+                    case 'POST':
+                        method = 'create';
+                        break;
+
+                    case 'PUT':
+                        method = 'update';
+                        break;
+
+                    case 'DELETE':
+                        method = 'delete';
+                        break;
+                }
+
+                if (data && data.description) {
+
+                    description = data.description.slice(0, -1);
+                }
+
                 switch (response.status) {
 
-                case 405: /* Method Not Allowed */
+                    case 400: /* Bad Request */
 
-                    ErrorReporter.reportError(new Error('Method not allowed', response.data));
+                        ErrorReporter.reportError(new Error('Bad Request', response.data));
 
-                    alerts.add({
+                        alerts.add({
 
-                        type: 'warning',
-                        message: 'Method Not Allowed'
-                    });
+                            type: 'warning',
+                            message: 'Bad Request'
+                        });
 
-                    break;
+                        break;
 
-                case 500: /* Server Error */
+                    case 401: /* Not Authorized */
+                    case 403: /* Forbidden */
+                    case 404: /* Not Found */
 
-                    ErrorReporter.reportError(new Error('Server error', response.data));
+                        break;
 
-                    alerts.add({
+                    case 405: /* Method Not Allowed */
 
-                        type: 'danger',
-                        message: 'Server Error'
-                    });
+                        ErrorReporter.reportError(new Error('Method not allowed', response.data));
 
-                    break;
+                        alerts.add({
+
+                            type: 'warning',
+                            message: 'Method Not Allowed'
+                        });
+
+                        break;
+
+                    case 500: /* Server Error */
+
+                        ErrorReporter.reportError(new Error('Server error', response.data));
+
+                        alerts.add({
+
+                            type: 'danger',
+                            message: 'Server Error'
+                        });
+
+                        break;
+
+                    default:
+
+                        ErrorReporter.reportError(new Error('Request error', response.data));
+
+                        alerts.add({
+
+                            type: 'danger',
+                            message: 'Could not ' + method + ' ' + description
+                        });
+
+                        break;
                 }
 
                 return $q.reject(response);

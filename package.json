@@ -1,6 +1,6 @@
 {
     "name": "intelligence-web-client",
-    "version": "2.0.0-rc5.2",
+    "version": "2.0.0",
     "description": "Krossover Intelligence Web Client",
     "author": "Jason Morganson <jason@krossover.com>",
     "repository": {
@@ -31,7 +31,8 @@
         "angular-ui-unique": "angular-ui/ui-utils#unique-0.1.1",
         "angular-ui-showhide": "angular-ui/ui-utils#showhide-0.1.1",
         "angular-ui-validate": "angular-ui/ui-utils#validate-0.1.1",
-        "angular-ui-router": "angular-ui/ui-router",
+        "angular-multi-select": "isteven/angular-multi-select",
+        "angular-ui-router": "angular-ui/ui-router#0.2.10",
         "flow": "flowjs/ng-flow",
         "flowjs": "flowjs/flow.js",
         "Mousetrap": "ccampbell/mousetrap",
@@ -42,6 +43,7 @@
     "devDependencies": {
         "moment": "2.7.0",
         "moment-timezone": "0.2.1",
+        "angulartics": "0.16.5",
         "browserify": "4.1.10",
         "browserify-shim": "3.5.0",
         "builder-html-minifier": "1.0.0",

@@ -1,10 +1,10 @@
 <div class="plan-container">
 	<h3>Your Plan:</h3>
 
-	<div data-ng-if="!activePlan">
+	<div data-ng-if="!activePlan || !activePlan.maxAnyGames">
 		<p>No active plan.</p>
 	</div>
-	<div data-ng-if="activePlan">
+	<div data-ng-if="activePlan && activePlan.maxAnyGames">
 		<h4>{{activePlan.name}}</h4>
 		<p>{{activePlan.maxAnyGames}} total breakdowns per week</p>
 		<p>{{TURNAROUND_TIME_MIN_TIME_LOOKUP[activePlan.maxTurnaroundTime]}}-{{activePlan.maxTurnaroundTime}} hour turnaround</p>
@@ -14,11 +14,13 @@
 
 	<hr>
 
-	<div data-ng-if="!activePackage">
+
+	<h3>Extra game package</h3>
+
+	<div data-ng-if="!activePackage || !activePackage.maxGamesPerPackage">
 		<p>No active package.</p>
 	</div>
-	<div data-ng-if="activePackage">
-		<h3>Extra game package</h3>
+	<div data-ng-if="activePackage && activePackage.maxGamesPerPackage">
 		<p>{{activePackage.maxGamesPerPackage}} extra breakdowns</p>
 		<p>{{TURNAROUND_TIME_MIN_TIME_LOOKUP[activePackage.maxTurnaroundTime]}}-{{activePackage.maxTurnaroundTime}} hour turnaround</p>
 		<p>{{ activePackage.startDate | date:'MMM d, yyyy' }} to {{ activePackage.endDate | date:'MMM d, yyyy' }}</p>
