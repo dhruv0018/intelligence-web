@@ -13,9 +13,9 @@ IntelligenceWebClient.factory('FiltersetsFactory', [
 
             description: 'filtersets',
 
-            storage: FiltersetsStorage,
+            model: 'FiltersetsResource',
 
-            resource: FiltersetsResource
+            storage: 'FiltersetsStorage'
         };
 
         angular.augment(FiltersetsFactory, BaseFactory);

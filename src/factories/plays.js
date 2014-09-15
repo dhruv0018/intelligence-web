@@ -15,9 +15,9 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             description: 'plays',
 
-            storage: PlaysStorage,
+            model: 'PlaysResource',
 
-            resource: PlaysResource,
+            storage: 'PlaysStorage',
 
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
