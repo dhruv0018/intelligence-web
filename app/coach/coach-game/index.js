@@ -84,15 +84,12 @@ Game.directive('krossoverCoachGame', [
  * @type {controller}
  */
 Game.controller('Coach.Game.controller', [
-    '$scope', 'GamesFactory',
-    function controller($scope, games) {
+    '$scope', 'TeamsFactory', 'GamesFactory',
+    function controller($scope, teams, games) {
+
         $scope.games = games;
 
-        $scope.headings = {
-            opposingTeam: 'Opposing Team',
-            yourTeam: 'Team',
-            scoutingTeam: 'Scouting'
-        };
+        $scope.teams = teams.getCollection();
 
         $scope.validation = {
             opposingTeam: false,

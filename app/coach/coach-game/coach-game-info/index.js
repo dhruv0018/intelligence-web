@@ -90,11 +90,6 @@ Info.controller('Coach.Game.Info.controller', [
             };
         }
 
-        if (games.isRegular($scope.data.game)) {
-            $scope.headings.yourTeam = 'Team';
-        } else {
-            $scope.headings.scoutingTeam = 'Scouting Team';
-        }
 
         $scope.$watch('formGameInfo.$dirty', function(dirtyBit) {
 
@@ -105,41 +100,6 @@ Info.controller('Coach.Game.Info.controller', [
             $scope.tabs.team.disabled = dirtyBit;
             $scope.tabs.confirm.disabled = dirtyBit;
         });
-
-        $scope.$watch('data.game.teamId', function(teamId) {
-
-            if (teamId) {
-
-                $scope.team = teams.get(teamId);
-
-                if (games.isRegular($scope.data.game)) {
-                    $scope.headings.yourTeam = $scope.team.name || 'Team';
-                } else {
-                    $scope.headings.scoutingTeam = $scope.team.name || 'Scouting Team';
-                }
-            }
-        });
-
-        $scope.headings.opposingTeam = 'Opposing Team';
-
-        $scope.$watch('data.game.opposingTeamId', function(opposingTeamId) {
-
-            if (opposingTeamId) {
-
-                $scope.opposingTeam = teams.get(opposingTeamId);
-
-                $scope.headings.opposingTeam = $scope.opposingTeam.name || 'Opposing Team';
-            }
-        });
-
-        $scope.setTabHeadings = function() {
-
-        };
-
-        //Headings
-        if ($scope.data.game.id) {
-            $scope.setTabHeadings();
-        }
 
         //Save functionality
         $scope.save = function() {
