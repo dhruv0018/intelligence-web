@@ -6,6 +6,13 @@
         <krossover-team-info data-team="team"></krossover-team-info>
         <hr>
 
+        <krossover-role
+                data-ng-if="role.type.id === ROLES.HEAD_COACH.type.id && role.teamId == team.id"
+                data-ng-repeat="role in currentUser.roles"
+                data-user="currentUser"
+                data-role="role">
+        </krossover-role>
+
         <div data-ng-repeat="assistantCoach in data.assistantCoaches">
 
             <krossover-role data-ng-repeat="role in assistantCoach.roles"
