@@ -6,8 +6,15 @@
 
     <div class="role-title">
 
-        <span data-ng-if="users.is(role, COACH)">Coach {{user.lastName}}</span>
-        <span data-ng-if="!users.is(role, COACH)">{{user.firstName}} {{user.lastName}}</span>
+        <span data-ng-if="users.is(role, HEAD_COACH)">Coach {{user.lastName}}</span>
+
+        <span data-ng-if="users.is(role, ASSISTANT_COACH)">
+              {{role.type.name}} {{user.lastName}}
+        </span>
+
+        <span data-ng-if="!users.is(role, HEAD_COACH) && !users.is(role, ASSISTANT_COACH)">
+            {{user.firstName}} {{user.lastName}}
+        </span>
 
     </div>
 
