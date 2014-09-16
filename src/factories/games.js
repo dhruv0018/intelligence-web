@@ -827,6 +827,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 for (var index = 0; index < self.shares.length; index++) {
                     if (self.shares[index].sharedWithUserId === user.id) {
                         self.shares.splice(index, 1);
+                        delete self.sharedWithUsers[user.id];
                         return;
                     }
                 }
