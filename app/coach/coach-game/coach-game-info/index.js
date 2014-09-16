@@ -147,41 +147,29 @@ Info.controller('Coach.Game.Info.controller', [
                     $scope.data.gamePlayerLists[promisedData.opposing.id] = [];
                     $scope.data.gamePlayerLists[$scope.data.game.teamId] = [];
 
-                    $scope.buildGameRoster(game);
+                    buildGameRoster(game);
                 });
             });
         };
 
-        $scope.buildGameRoster = function(game) {
+        var buildGameRoster = function(game) {
 
-            //fresh roster
-            //copied because you need to filter out the players who are inactive from the team roster
-            var templatePlayerList = angular.copy($scope.data.playersList);
-
-            //Game Roster for Coach Team
-            $scope.gameRoster = [];
-
-            templatePlayerList = templatePlayerList.filter(function(teamRosterPlayer) {
-                return teamRosterPlayer.rosterStatuses[$scope.teams[game.teamId].roster.id];
-            });
+            var team = teams.get(game.teamId);
+            var teamPlayers = $scope.data.playersList;
+            var activeTeamPlayers = players.constructActiveRoster(teamPlayers, team.roster.id);
 
             if (!$scope.data.gamePlayerLists[game.teamId] || $scope.data.gamePlayerLists[game.teamId].length <= 1) {
-                $scope.gameRoster = [];
-                angular.forEach(templatePlayerList, function(teamRosterPlayer) {
-                    teamRosterPlayer.transferPlayerInformation($scope.teams[game.teamId].roster.id, game.rosters[game.teamId].id);
-                    $scope.gameRoster.push(teamRosterPlayer);
+
+                angular.forEach(activeTeamPlayers, function(teamPlayer) {
+
+                    teamPlayer.transferPlayerInformation(team.roster.id, game.rosters[game.teamId].id);
+                    $scope.data.gamePlayerLists[game.teamId].push(teamPlayer);
                 });
 
-                players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
-                    $scope.gameRoster = roster;
-                    angular.extend($scope.data.playersList, $scope.gameRoster);
-                });
-            } else {
-                $scope.gameRoster = $scope.data.gamePlayerLists[game.teamId];
+                players.save(game.rosters[game.teamId].id, $scope.data.gamePlayerLists[game.teamId]);
             }
-
-            $scope.data.gamePlayerLists[game.teamId] = $scope.gameRoster;
         };
+
         $scope.constructNewTeam = function(type) {
 
             if (type === 'opposing') {
