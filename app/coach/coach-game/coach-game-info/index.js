@@ -62,8 +62,8 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$q', '$rootScope', '$scope', '$window', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($q, $rootScope, $scope, $window, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+    '$q', '$rootScope', '$scope', '$window', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'PlayersFactory',
+    function controller($q, $rootScope, $scope, $window, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games, players) {
 
         $scope.session = session;
 
@@ -146,10 +146,42 @@ Info.controller('Coach.Game.Info.controller', [
                     $scope.data.gamePlayerLists = {};
                     $scope.data.gamePlayerLists[promisedData.opposing.id] = [];
                     $scope.data.gamePlayerLists[$scope.data.game.teamId] = [];
+
+                    $scope.buildGameRoster(game);
                 });
             });
         };
 
+        $scope.buildGameRoster = function(game) {
+
+            //fresh roster
+            //copied because you need to filter out the players who are inactive from the team roster
+            var templatePlayerList = angular.copy($scope.data.playersList);
+
+            //Game Roster for Coach Team
+            $scope.gameRoster = [];
+
+            templatePlayerList = templatePlayerList.filter(function(teamRosterPlayer) {
+                return teamRosterPlayer.rosterStatuses[$scope.teams[game.teamId].roster.id];
+            });
+
+            if (!$scope.data.gamePlayerLists[game.teamId] || $scope.data.gamePlayerLists[game.teamId].length <= 1) {
+                $scope.gameRoster = [];
+                angular.forEach(templatePlayerList, function(teamRosterPlayer) {
+                    teamRosterPlayer.transferPlayerInformation($scope.teams[game.teamId].roster.id, game.rosters[game.teamId].id);
+                    $scope.gameRoster.push(teamRosterPlayer);
+                });
+
+                players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.gameRoster).then(function(roster) {
+                    $scope.gameRoster = roster;
+                    angular.extend($scope.data.playersList, $scope.gameRoster);
+                });
+            } else {
+                $scope.gameRoster = $scope.data.gamePlayerLists[game.teamId];
+            }
+
+            $scope.data.gamePlayerLists[game.teamId] = $scope.gameRoster;
+        };
         $scope.constructNewTeam = function(type) {
 
             if (type === 'opposing') {
@@ -190,6 +222,7 @@ Info.controller('Coach.Game.Info.controller', [
         $scope.goToRoster = function() {
 
             $scope.isGameSaving = false;
+            $scope.tabs.enableAll();
             $scope.tabs.deactivateAll();
             $scope.formGameInfo.$dirty = false;
 

@@ -118,10 +118,11 @@ Game.controller('Coach.Game.controller', [
                 disabled: true
             },
             enableAll: function() {
-                // this.scouting.disabled = false;
-                // this.opposing.disabled = false;
-                // this.team.disabled = false;
-                // this.confirm.disabled = false;
+                var self = this;
+                var keys = Object.keys(self);
+                angular.forEach(keys, function(key) {
+                    self[key].disabled = false;
+                });
             },
             deactivateAll: function() {
                 var self = this;

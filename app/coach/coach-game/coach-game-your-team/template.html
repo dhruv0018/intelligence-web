@@ -14,7 +14,7 @@
 
                 <div class="box-body col-md-12">
 
-                    <form data-ng-if="hasRoster" class="form-your-team" name="formYourTeam" role="form">
+                    <form class="form-your-team" name="formYourTeam" role="form">
 
                         <div class="table-responsive">
 
@@ -32,7 +32,7 @@
 
                                 <tbody>
 
-                                    <tr data-ng-if="!player.isUnknown" data-ng-repeat="player in gameRoster track by $index">
+                                    <tr data-ng-if="!player.isUnknown" data-ng-repeat="player in data.gamePlayerLists[data.game.teamId] track by $index">
 
                                         <td><profile-placeholder data-size="small"></profile-placeholder></td>
 
@@ -58,12 +58,6 @@
                         </div>
 
                     </form>
-
-                    <div data-ng-if="loading">Importing your team roster...</div>
-
-                    <div data-ng-if="!hasRoster && !loading">
-                    Your team currently does not have a roster. To add players to your roster, <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team">click here</a>.
-                    </div>
 
                 </div>
 
