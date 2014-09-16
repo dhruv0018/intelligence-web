@@ -16,7 +16,7 @@
         <div data-ng-repeat="assistantCoach in data.assistantCoaches">
 
             <krossover-role data-ng-repeat="role in assistantCoach.roles"
-                  data-ng-if="role.type.id === ROLES.ASSISTANT_COACH.type.id && role.teamId === team.id"
+                  data-ng-if="role.type.id === ROLES.ASSISTANT_COACH.type.id && role.teamId === team.id && !role.tenureEnd"
                   data-user="assistantCoach"
                   data-role="role">
             </krossover-role>
