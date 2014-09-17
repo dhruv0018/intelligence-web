@@ -29,7 +29,8 @@
                     <td><input class="name" placeholder="Last Name" data-ng-model="player.lastName" required></td>
 
                     <td data-ng-if="keys(positions).length > 0">
-                        <data-positions-dropdown data-ng-model="player.positionIds[rosterId]" data-player="player" data-positions="positions"></data-positions-dropdown>
+                        <data-positions-dropdown
+                        data-ng-model="player.positionIds[rosterId]" data-player="player" data-positionset="positionset"></data-positions-dropdown>
                         <button class="btn btn-blank pull-right" data-ng-click="toggleActivation(player)"><i class="icon icon-remove"></i></button>
                     </td>
 
