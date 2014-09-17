@@ -87,6 +87,7 @@ Game.controller('Coach.Game.controller', [
     '$scope', 'TeamsFactory', 'GamesFactory',
     function controller($scope, teams, games) {
 
+        /* TODO: Remove this: */
         $scope.games = games;
 
         $scope.teams = teams.getCollection();
@@ -132,8 +133,6 @@ Game.controller('Coach.Game.controller', [
                 });
             }
         };
-
-//        $scope.game = $scope.game || {};
     }
 ]);
 

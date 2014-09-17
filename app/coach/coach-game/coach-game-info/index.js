@@ -85,6 +85,10 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Opposing Team Construction
         if ($scope.data.game.id) {
+
+            /* TODO: Enable all tabs if the game has already been saved. */
+
+            /* FIXME: Can this be removed? */
             $scope.data.opposingTeam = {
                 name:  $scope.teams[$scope.data.game.opposingTeamId].name || ''
             };
@@ -103,6 +107,12 @@ Info.controller('Coach.Game.Info.controller', [
         $scope.saveExisting = function() {
             var promises = [];
 
+            /* TODO: Should check if the game info form is dirty to see if save
+             * is needed. */
+
+            /* TODO: Might also check if team names have changed before saving
+             * teams. */
+
             //Saves the scouting team
             if (!games.isRegular($scope.data.game)) {
                 promises.push($scope.teams[$scope.data.game.teamId].save());
@@ -118,17 +128,22 @@ Info.controller('Coach.Game.Info.controller', [
         };
 
         $scope.constructNewGame = function() {
+
             var promises = {};
 
-            if (!games.isRegular($scope.data.game)) {
+            var game = $scope.data.game;
+
+            if (game.isNonRegular()) {
                 promises.scouting = $scope.constructNewTeam('scouting');
             }
 
             promises.opposing = $scope.constructNewTeam('opposing');
 
+            /* FIXME: Should be this: */
+            //return $q.all(promises).then(function(promisedData) {
             $q.all(promises).then(function(promisedData) {
 
-                if (games.isRegular($scope.data.game)) {
+                if (game.isRegular()) {
                     $scope.data.game.teamId = session.currentUser.currentRole.teamId;
                 } else {
                     $scope.data.game.teamId = promisedData.scouting.id;
@@ -145,7 +160,7 @@ Info.controller('Coach.Game.Info.controller', [
                     $scope.data.gamePlayerLists[promisedData.opposing.id] = [];
                     $scope.data.gamePlayerLists[$scope.data.game.teamId] = [];
 
-                    buildGameRoster(game);
+                    return buildGameRoster(game);
                 });
             });
         };
@@ -164,7 +179,7 @@ Info.controller('Coach.Game.Info.controller', [
                     $scope.data.gamePlayerLists[game.teamId].push(teamPlayer);
                 });
 
-                players.save(game.rosters[game.teamId].id, $scope.data.gamePlayerLists[game.teamId]);
+                return players.save(game.rosters[game.teamId].id, $scope.data.gamePlayerLists[game.teamId]);
             }
         };
 
@@ -211,22 +226,12 @@ Info.controller('Coach.Game.Info.controller', [
             $scope.tabs.deactivateAll();
             $scope.formGameInfo.$dirty = false;
 
-            if (games.isRegular($scope.data.game)) {
+            if ($scope.data.game.isRegular()) {
                 $scope.tabs.team.active = true;
-                $scope.tabs.team.disabled = false;
             } else {
                 $scope.tabs.scouting.active = true;
-                $scope.tabs.scouting.disabled = false;
-                $scope.tabs.opposing.disabled = false;
-                $scope.tabs.confirm.disabled = false;
             }
-            $scope.setTabHeadings();
         };
-
-//        $scope.$watch('formGameInfo.$invalid', function(invalid) {
-//            tabs['your-team'].disabled = invalid;
-//            tabs['scouting-team'].disabled = invalid;
-//        });
 
         var prompt = 'Your game will not get uploaded without entering in the game information.';
 
