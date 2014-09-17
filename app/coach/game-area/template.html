@@ -10,27 +10,7 @@
                 </span>
                 <!--<a data-ng-href="#"><i class="icon icon-download"></i> Download</a>
                 <a data-ng-href="#"><i class="icon icon-share-square-o"></i> Share</a>-->
-                <game-area-dropdown data-game="game" data-ng-model="dataType"></game-area-dropdown>
-
-                <select data-ng-model="dataType">
-                    <option data-ng-if="game.isDelivered()" value="film-breakdown"> Film Breakdown </option>
-                    <option data-ng-if="game.isVideoTranscodeComplete()" value="raw-film"> Raw Film </option>
-                    <option data-ng-if="hasFormations && game.isDelivered()" value="formation-report">
-                        Formation Report
-                    </option>
-                    <option data-ng-if="hasDownAndDistance && game.isDelivered()" value="down-distance-report">
-                        Down, Distance, &amp; Hash Report
-                    </option>
-                    <option data-ng-if="hasShotChart && game.isDelivered()" value="shot-chart">
-                        Shot Chart
-                    </option>
-                    <option data-ng-if="hasStatistics && game.isDelivered()" value="statistics">
-                        Game Statistics
-                    </option>
-                    <option value="game-info">
-                        Game Information
-                    </option>
-                </select>
+                <state-selector data-state-options="gameStates"></state-selector>
             </div>
         </header>
         <div class="main-highlight" data-ui-view="content"></div>

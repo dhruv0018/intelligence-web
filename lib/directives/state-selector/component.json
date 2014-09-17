@@ -1,5 +1,5 @@
 {
-    "name": "game-area-dropdown",
+    "name": "state-selector",
     "templates": [
         "template.html"
     ],
