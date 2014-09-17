@@ -8,7 +8,7 @@
 
                 <header class="box-header col-md-12">
 
-                    <h3 class="box-title">Choose one of the following options</h3>
+                    <h3 class="box-title">Roster</h3>
                     <x-button-continue data-ng-disabled="tabs.instructions.disabled">Next</x-button-continue>
 
                 </header>
@@ -16,6 +16,7 @@
                 <div class="box-body col-md-12">
                     <data-krossover-roster-manager data-type="table" data-roster-template-url="config.links.rosterTemplates.opposingTeamRoster.uri"
                                                    data-roster-id="data.game.rosters[data.game.opposingTeamId].id"
+                                                   data-team="data.opposingTeam"
                                                    data-game="data.game"
                                                    data-roster="data.gamePlayerLists[data.game.opposingTeamId]"
                                                    data-validator="validation.opposingTeam" data-positions="positions"></data-krossover-roster-manager>

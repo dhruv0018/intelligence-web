@@ -94,6 +94,10 @@ Info.controller('Coach.Game.Info.controller', [
             };
         }
 
+        if ($scope.data.game.isRegular()) {
+            $scope.data.team = teams.get(session.currentUser.currentRole.teamId);
+        }
+
         //Save functionality
         $scope.save = function() {
 
@@ -141,7 +145,7 @@ Info.controller('Coach.Game.Info.controller', [
 
             /* FIXME: Should be this: */
             //return $q.all(promises).then(function(promisedData) {
-            $q.all(promises).then(function(promisedData) {
+            return $q.all(promises).then(function(promisedData) {
 
                 if (game.isRegular()) {
                     $scope.data.game.teamId = session.currentUser.currentRole.teamId;
@@ -159,26 +163,24 @@ Info.controller('Coach.Game.Info.controller', [
                     $scope.data.gamePlayerLists = {};
                     $scope.data.gamePlayerLists[promisedData.opposing.id] = [];
                     $scope.data.gamePlayerLists[$scope.data.game.teamId] = [];
-
-                    return buildGameRoster(game);
+                    return $scope.buildGameRoster(game);
                 });
             });
         };
 
-        var buildGameRoster = function(game) {
+        $scope.buildGameRoster = function(game) {
 
             var team = teams.get(game.teamId);
             var teamPlayers = $scope.data.playersList;
             var activeTeamPlayers = players.constructActiveRoster(teamPlayers, team.roster.id);
 
-            if (!$scope.data.gamePlayerLists[game.teamId] || $scope.data.gamePlayerLists[game.teamId].length <= 1) {
+            if ((!$scope.data.gamePlayerLists[game.teamId] || $scope.data.gamePlayerLists[game.teamId].length <= 1) && $scope.data.game.isRegular()) {
 
                 angular.forEach(activeTeamPlayers, function(teamPlayer) {
 
                     teamPlayer.transferPlayerInformation(team.roster.id, game.rosters[game.teamId].id);
                     $scope.data.gamePlayerLists[game.teamId].push(teamPlayer);
                 });
-
                 return players.save(game.rosters[game.teamId].id, $scope.data.gamePlayerLists[game.teamId]);
             }
         };

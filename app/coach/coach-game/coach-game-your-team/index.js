@@ -69,7 +69,9 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
 
         $scope.save = function() {
-
+            players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {
+                $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
+            });
             $scope.tabs.opposing.active = true;
         };
     }

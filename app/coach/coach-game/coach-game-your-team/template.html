@@ -17,44 +17,12 @@
                     <form class="form-your-team" name="formYourTeam" role="form">
 
                         <div class="table-responsive">
-
-                            <table data-ng-class="{'disabled-input': (data.game.isDelivered() || data.game.isBeingBrokenDown())}" class="table table-striped">
-
-                                <thead>
-
-                                    <th>Picture</th>
-                                    <th>Jersey Number</th>
-                                    <th>Player</th>
-                                    <th data-ng-if="keys(positions).length > 0">Positions</th>
-                                    <th>Did Not Play</th>
-
-                                </thead>
-
-                                <tbody>
-
-                                    <tr data-ng-if="!player.isUnknown" data-ng-repeat="player in data.gamePlayerLists[data.game.teamId] track by $index">
-
-                                        <td><profile-placeholder data-size="small"></profile-placeholder></td>
-
-                                        <td><input size="3" data-ng-model="player.jerseyNumbers[data.game.rosters[data.game.teamId].id]" required></td>
-
-                                        <td class="name">{{player.firstName}} {{player.lastName}}</td>
-
-                                        <td data-ng-show="keys(positions).length > 0">
-                                            <data-positions-dropdown data-ng-model="player.positionIds[data.game.rosters[data.game.teamId].id]" data-player="player" data-positions="positions"></data-positions-dropdown>
-                                        </td>
-
-                                        <td data-ng-click="player.rosterStatuses[data.game.rosters[data.game.teamId].id] = !player.rosterStatuses[data.game.rosters[data.game.teamId].id]">
-                                            <i class="icon icon-check-square-o" data-ng-show="!player.rosterStatuses[data.game.rosters[data.game.teamId].id]"></i>
-                                            <i class="icon icon-check-empty" data-ng-show="player.rosterStatuses[data.game.rosters[data.game.teamId].id]"></i>
-                                        </td>
-
-                                    </tr>
-
-                                </tbody>
-
-                            </table>
-
+                            <data-krossover-roster-manager data-type="table" data-roster-template-url="config.links.rosterTemplates.opposingTeamRoster.uri"
+                                                           data-roster-id="data.game.rosters[data.game.teamId].id"
+                                                           data-team="data.team"
+                                                           data-game="data.game"
+                                                           data-roster="data.gamePlayerLists[data.game.teamId]"
+                                                           data-validator="validation.opposingTeam" data-positions="positions"></data-krossover-roster-manager>
                         </div>
 
                     </form>

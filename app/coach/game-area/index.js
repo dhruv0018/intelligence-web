@@ -57,8 +57,8 @@ GameArea.config([
             },
             resolve: {
                 'Coach.Data': [
-                    '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
-                    function($q, $stateParams, players, plays, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
+                    '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'TeamsFactory',  'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
+                    function($q, $stateParams, players, plays, teams, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
                         return $q.all(data).then(function(data) {
                             var teamsCollection = data.teams.getCollection();
                             var leaguesCollection = data.leagues.getCollection();
@@ -70,6 +70,8 @@ GameArea.config([
                             data.players = players;
                             data.league = leaguesCollection[teamsCollection[data.game.teamId].leagueId];
                             data.filterset = data.filtersets.get(data.league.filterSetId);
+                            data.team = teams.get(data.game.teamId);
+                            data.opposingTeam = teams.get(data.game.opposingTeamId);
 
                             //Player lists
                             var teamPlayerList = players.query({
@@ -163,8 +165,8 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.opposingPlayerList = data.gamePlayerLists[data.game.opposingTeamId];
 
         //Teams
-        $scope.team = $scope.teams[$scope.game.teamId];
-        $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
+        $scope.team = data.team;
+        $scope.opposingTeam = data.opposingTeam;
 
         //Plays
         $scope.totalPlays = angular.copy(data.plays);
