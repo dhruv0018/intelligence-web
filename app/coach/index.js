@@ -76,7 +76,7 @@ Coach.service('Coach.Data.Dependencies', [
 
         promises.assistantCoaches = promises.users.then(function(users) {
             var assistantCoaches = [];
-            angular.forEach(users, function(user) {
+            angular.forEach(users.getList(), function(user) {
                 angular.forEach(user.roles, function(role) {
                     if (role.type.id === ROLE_TYPE.ASSISTANT_COACH && role.teamId === session.currentUser.currentRole.teamId) {
                         assistantCoaches.push(user);
