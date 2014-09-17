@@ -428,6 +428,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* Create a copy of the resource to save to the server. */
                 var copy = self.unextend(resource);
 
+                resource.isSaving = true;
+
                 parameters = {};
 
                 success = success || function(resource) {
@@ -462,6 +464,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                             storage.list[storage.list.indexOf(resource)] = resource;
                             storage.collection[resource.id] = resource;
 
+                            delete resource.isSaving;
+
                             return resource;
                         });
                     });
@@ -481,6 +485,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                         /* Add the resource to storage. */
                         storage.list.push(resource);
                         storage.collection[resource.id] = resource;
+
+                        delete resource.isSaving;
 
                         return resource;
                     });

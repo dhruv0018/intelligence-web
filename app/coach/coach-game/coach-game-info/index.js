@@ -93,8 +93,6 @@ Info.controller('Coach.Game.Info.controller', [
         //Save functionality
         $scope.save = function() {
 
-            $scope.isGameSaving = true;
-
             if ($scope.data.game.id) {
                 $q.all($scope.saveExisting()).then($scope.goToRoster);
             } else {
@@ -209,7 +207,6 @@ Info.controller('Coach.Game.Info.controller', [
 
         $scope.goToRoster = function() {
 
-            $scope.isGameSaving = false;
             $scope.tabs.enableAll();
             $scope.tabs.deactivateAll();
             $scope.formGameInfo.$dirty = false;
