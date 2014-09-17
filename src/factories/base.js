@@ -428,6 +428,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* Create a copy of the resource to save to the server. */
                 var copy = self.unextend(resource);
 
+                resource.isSaving = true;
+
                 parameters = {};
 
                 success = success || function(resource) {
@@ -450,9 +452,16 @@ IntelligenceWebClient.factory('BaseFactory', [
                     var update = model.update(parameters, copy, success, error);
 
                     /* Once the update request finishes. */
-                    return update.$promise.then(function() {
+                    return update.$promise
+
+                    .then(function() {
 
                         return resource;
+                    })
+
+                    .finally(function() {
+
+                        delete resource.isSaving;
                     });
 
                 /* If the resource is new. */
@@ -472,6 +481,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                         storage.collection[resource.id] = resource;
 
                         return resource;
+                    })
+
+                    .finally(function() {
+
+                        delete resource.isSaving;
                     });
                 }
             },
