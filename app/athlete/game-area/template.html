@@ -10,11 +10,7 @@
                 </span>
                 <!--<a data-ng-href="#"><i class="icon icon-download"></i> Download</a>
                 <a data-ng-href="#"><i class="icon icon-share-square-o"></i> Share</a>-->
-
-                <select data-ng-model="dataType">
-                    <option data-ng-if="game.isDelivered()" value="film-breakdown"> Film Breakdown </option>
-                    <option value="raw-film"> Raw Film </option>
-                </select>
+                <state-selector data-state-options="gameStates"></state-selector>
             </div>
         </header>
         <div class="main-highlight" data-ui-view="content"></div>
