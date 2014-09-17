@@ -1,13 +1,13 @@
-var package = require('../../../package.json');
+var pkg = require('../../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
 var moment = require('moment');
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
-var ISO8601_REGEX = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})\.(\d{1,})(Z|([\-+])(\d{2}):(\d{2}))?)?)?)?$/;
+var ISO8601_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/;
 
 function transformToDate(data) {
 

@@ -1,4 +1,6 @@
-var package = require('../package.json');
+var pkg = require('../package.json');
+
+require('./analytics');
 
 /* Vendor dependencies */
 require('./vendor');
@@ -92,6 +94,7 @@ require('./factories/plans');
 
 require('./managers/tags');
 require('./managers/play');
+require('./managers/plays');
 require('./managers/event');
 require('./managers/resource');
 
@@ -107,7 +110,6 @@ require('./directives/draggable');
 require('./directives/focus');
 require('./directives/autofocus');
 require('./directives/autotab');
-require('./directives/verify-password.js');
 
-angular.bootstrap(document, [package.name]);
+angular.bootstrap(document, [pkg.name]);
 

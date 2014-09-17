@@ -1,9 +1,9 @@
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlayersResource', [
     'config', '$resource',
@@ -23,7 +23,7 @@ IntelligenceWebClient.factory('PlayersResource', [
             singleCreate: {method: 'POST', url: config.api.uri + base},
             create: { method: 'POST', isArray: true, url: config.api.uri + 'batch/players' },
             update: { method: 'PUT' },
-            resendEmail: { method: 'POST', url: config.api.uri + 'player/reminderEmail'}
+            resendEmail: { method: 'POST', url: config.api.uri + base + '/reminder-email'}
         };
 
         return $resource(url, paramDefaults, actions);

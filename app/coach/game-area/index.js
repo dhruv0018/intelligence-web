@@ -69,17 +69,18 @@ GameArea.config([
                             data.gamePlayerLists = {};
                             data.players = players;
                             data.league = leaguesCollection[teamsCollection[data.game.teamId].leagueId];
+                            data.filterset = data.filtersets.get(data.league.filterSetId);
 
                             //Player lists
                             var teamPlayerList = players.query({
-                                roster: data.game.rosters[data.game.teamId].id
+                                rosterId: data.game.rosters[data.game.teamId].id
                             }).then(function(playerList) {
                                 data.teamPlayers = playerList;
                                 data.gamePlayerLists[data.game.teamId] = playerList;
                             });
 
                             var opposingTeamPlayerList = players.query({
-                                roster: data.game.rosters[data.game.opposingTeamId].id
+                                rosterId: data.game.rosters[data.game.opposingTeamId].id
                             }).then(function(playerList) {
                                 data.opposingTeamPlayers = playerList;
                                 data.gamePlayerLists[data.game.opposingTeamId] = playerList;
@@ -92,72 +93,7 @@ GameArea.config([
                             });
 
 
-
-                            return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function(promisedData) {
-                                //Filtersets
-                                if (data.game.isDelivered()) {
-                                    var exclusion = [];
-                                    data.filterset = data.filtersets.get(data.league.filterSetId);
-                                    if (data.filterset) {
-                                        data.filtersetCategories = {};
-                                        angular.forEach(data.filterset.categories, function(filterCategory) {
-                                            //TODO deal with player stuff later
-                                            data.filtersetCategories[filterCategory.id] = filterCategory;
-                                        });
-
-                                        var playerFilterTemplate = {};
-
-                                        angular.forEach(data.filterset.filters, function(filter) {
-                                            data.filtersetCategories[filter.filterCategoryId].subFilters = data.filtersetCategories[filter.filterCategoryId].subFilters || [];
-
-                                            //TODO figure out a better way to deal with players at a later date
-                                            if (filter.name === 'Player') {
-                                                playerFilterTemplate = filter;
-                                                exclusion.push(filter.id);
-                                            }
-
-                                            if (filter.name === 'Unknown Players') {
-                                                exclusion.push(filter.id);
-                                            }
-
-                                            var excluded = exclusion.some(function(excludedFilterId) {
-                                                return filter.id === excludedFilterId;
-                                            });
-
-                                            if (!excluded) {
-                                                data.filtersetCategories[filter.filterCategoryId].subFilters.push(filter);
-                                            }
-
-                                        });
-
-                                        angular.forEach(data.gamePlayerLists[data.game.opposingTeamId], function(player) {
-                                            var playerFilter = {
-                                                id: playerFilterTemplate.id,
-                                                teamId: data.game.opposingTeamId,
-                                                playerId: player.id,
-                                                name: player.firstName[0] + '. ' + player.lastName,
-                                                filterCategoryId: playerFilterTemplate.filterCategoryId,
-                                                customFilter: true
-                                            };
-                                            data.filtersetCategories[playerFilter.filterCategoryId].subFilters.push(playerFilter);
-                                        });
-
-                                        angular.forEach(data.gamePlayerLists[data.game.teamId], function(player) {
-                                            var playerFilter = {
-                                                id: playerFilterTemplate.id,
-                                                teamId: data.game.teamId,
-                                                playerId: player.id,
-                                                name: player.firstName[0] + '. ' + player.lastName,
-                                                filterCategoryId: playerFilterTemplate.filterCategoryId,
-                                                customFilter: true
-                                            };
-                                            data.filtersetCategories[playerFilter.filterCategoryId].subFilters.push(playerFilter);
-                                        });
-
-                                        return data;
-                                    }
-                                }
-
+                            return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function() {
                                 return $q.all(data);
                             });
 
@@ -234,15 +170,15 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.totalPlays = angular.copy(data.plays);
         $scope.plays = $scope.totalPlays;
 
-        //Filters
-        $scope.filtersetCategories = data.filtersetCategories;
-
         //view selector
-        if ($scope.game.isDelivered()) {
+        if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered()) {
             $scope.dataType = 'film-breakdown';
-        } else {
+        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered()) {
             $scope.dataType = 'raw-film';
+        } else {
+            $scope.dataType = 'game-info';
         }
+
         $scope.$watch('dataType', function(data) {
             if ($scope.dataType === 'game-info') {
                 $state.go('ga-info');
@@ -262,7 +198,6 @@ GameArea.controller('Coach.GameArea.controller', [
                 $state.go('Coach.GameArea');
             }
         });
-
     }
 ]);
 

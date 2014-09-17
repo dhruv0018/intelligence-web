@@ -88,10 +88,23 @@ AddFilm.controller('AddFilmController', [
 ]);
 
 AddFilm.controller('StartController', [
-    '$scope', 'GAME_TYPES', 'Coach.Data', 'SessionService',
-    function($scope, GAME_TYPES, data, session) {
+    '$scope', 'GAME_TYPES', 'Coach.Data', 'SessionService', 'LeaguesFactory',
+    function($scope, GAME_TYPES, data, session, leagues) {
+
+        //intialize as -1 to remove flase negative. 0 means no team roster, 1 means valid team roster
+        $scope.hasRoster = -1;
+
+        //check if team has a valid roster
+        var team = data.teams.get(session.currentUser.currentRole.teamId);
+        if (data.playersList && data.playersList.some(function(player) { return !player.isUnknown && player.rosterStatuses[team.roster.id]; })) {
+            $scope.hasRoster = 1;
+        } else {
+            $scope.hasRoster = 0;
+        }
+
         $scope.GAME_TYPES = GAME_TYPES;
 
+        $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];
         $scope.activePlan = data.coachsTeam.getActivePlan() || {};
         $scope.activePackage = data.coachsTeam.getActivePackage() || {};
 

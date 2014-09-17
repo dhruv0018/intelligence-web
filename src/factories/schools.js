@@ -1,11 +1,11 @@
 var PAGE_SIZE = 100;
 
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.service('SchoolsStorage', [
     function() {
@@ -16,16 +16,16 @@ IntelligenceWebClient.service('SchoolsStorage', [
 ]);
 
 IntelligenceWebClient.factory('SchoolsFactory', [
-    'SchoolsResource', 'SchoolsStorage', 'BaseFactory', 'ResourceManager', 'SCHOOL_TYPES',
-    function(SchoolsResource, SchoolsStorage, BaseFactory, managedResources, SCHOOL_TYPES) {
+    '$injector', 'SchoolsResource', 'SchoolsStorage', 'BaseFactory', 'ResourceManager', 'SCHOOL_TYPES',
+    function($injector, SchoolsResource, SchoolsStorage, BaseFactory, managedResources, SCHOOL_TYPES) {
 
         var SchoolsFactory = {
 
             description: 'schools',
 
-            storage: SchoolsStorage,
+            model: 'SchoolsResource',
 
-            resource: SchoolsResource,
+            storage: 'SchoolsStorage',
 
             extend: function(school) {
                 var self = this;
@@ -72,11 +72,14 @@ IntelligenceWebClient.factory('SchoolsFactory', [
                     throw new Error('Could not save resource');
                 };
 
+                var model = $injector.get(self.model);
+                var storage = $injector.get(self.storage);
+
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
 
                     /* Make a PUT request to the server to update the resource. */
-                    var update = self.resource.update(parameters, copy, success, error);
+                    var update = model.update(parameters, copy, success, error);
 
                     /* Once the update request finishes. */
                     return update.$promise.then(function() {
@@ -88,8 +91,8 @@ IntelligenceWebClient.factory('SchoolsFactory', [
                             angular.extend(resource, self.extend(updated));
 
                             /* Update the resource in storage. */
-                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
-                            self.storage.collection[resource.id] = resource;
+                            storage.list[storage.list.indexOf(resource)] = resource;
+                            storage.collection[resource.id] = resource;
 
                             return resource;
                         });
@@ -99,7 +102,7 @@ IntelligenceWebClient.factory('SchoolsFactory', [
                 } else {
 
                     /* Make a POST request to the server to create the resource. */
-                    var create = self.resource.create(parameters, copy, success, error);
+                    var create = model.create(parameters, copy, success, error);
 
                     /* Once the create request finishes. */
                     return create.$promise.then(function(created) {
@@ -108,8 +111,8 @@ IntelligenceWebClient.factory('SchoolsFactory', [
                         angular.extend(resource, self.extend(created));
 
                         /* Add the resource to storage. */
-                        self.storage.list.push(resource);
-                        self.storage.collection[resource.id] = resource;
+                        storage.list.push(resource);
+                        storage.collection[resource.id] = resource;
 
                         return resource;
                     });

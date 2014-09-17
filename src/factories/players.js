@@ -1,33 +1,51 @@
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlayersFactory', [
-    '$q', 'PlayersResource', 'PlayersStorage', 'BaseFactory',
-    function($q, PlayersResource, PlansStorage, BaseFactory) {
+    '$injector', '$q', 'PlayersResource', 'PlayersStorage', 'BaseFactory',
+    function($injector, $q, PlayersResource, PlayersStorage, BaseFactory) {
 
         var PlayersFactory = {
 
             description: 'players',
 
-            storage: PlansStorage,
+            model: 'PlayersResource',
 
-            resource: PlayersResource,
+            storage: 'PlayersStorage',
+
+            extend: function(player) {
+
+                var self = this;
+
+                angular.extend(player, self);
+
+                // FIXME
+                if (angular.isArray(player.positionIds)) {
+                    player.positionIds = {};
+                }
+
+                return player;
+            },
 
             singleSave: function(rosterId, player) {
                 var self = this;
 
-                player.rosterIds = [rosterId];
-                delete player.resource;
-                delete player.storage;
+                player.rosterIds = (typeof player.rosterIds !== 'undefined' && angular.isArray(player.rosterIds)) ? player.rosterIds : [];
+
+                if (player.rosterIds.indexOf(rosterId) < 0) {
+                    player.rosterIds.push(rosterId);
+                }
+
+                var model = $injector.get(self.model);
 
                 if (player.id) {
-                    return self.resource.update(player).$promise;
+                    return model.update(player).$promise;
                 } else {
-                    return self.resource.singleCreate(player).$promise.then(function(player) {
+                    return model.singleCreate(player).$promise.then(function(player) {
                         angular.extend(player, self);
                         return player;
                     });
@@ -42,7 +60,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 if (!rosterId) throw new Error('No roster ID');
                 if (!players) throw new Error('No players to save');
 
-                var filter = { roster: rosterId };
+                var filter = { rosterId: rosterId };
 
                 var currentPlayers = players.filter(function(player) {
                     return player.id;
@@ -67,14 +85,16 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return player;
                 });
 
+                var model = $injector.get(self.model);
+
                 if (newPlayers.length) {
 
-                    newPlayers = self.resource.create(newPlayers).$promise;
+                    newPlayers = model.create(newPlayers).$promise;
                 }
 
                 currentPlayers = currentPlayers.map(function(player) {
 
-                    return self.resource.update(player).$promise;
+                    return model.update(player).$promise;
                 });
 
                 var allPlayers = currentPlayers.concat(newPlayers);
@@ -87,7 +107,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
             resendEmail: function(userId, teamId) {
                 var self = this;
 
-                return self.resource.resendEmail({
+                var model = $injector.get(self.model);
+
+                return model.resendEmail({
                     userId: userId,
                     teamId: teamId
                 });
@@ -100,44 +122,18 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return player.rosterStatuses[rosterId] === true;
                 });
             },
-            constructPositionDropdown: function(player, rosterId, positions) {
+            transferPlayerInformation: function(fromRosterId, toRosterId) {
 
-                //constructs position dropdown
-                player.selectedPositions = {};
+                var self = this;
 
-                //adds each position checkboxes for each player
-                angular.forEach(positions, function(position) {
-                    player.selectedPositions[position.id] = false;
-                });
-
-                //sets the positions that already exist on the players
-                if (typeof player.positions[rosterId] !== 'undefined' && player.positions[rosterId].length > 0) {
-                    angular.forEach(player.positions[rosterId], function(position) {
-                        player.selectedPositions[position.id] = true;
-                    });
+                //if the player is active
+                if (self.rosterStatuses[fromRosterId]) {
+                    self.rosterIds.push(toRosterId);
+                    self.jerseyNumbers[toRosterId] = self.jerseyNumbers[fromRosterId];
+                    self.positionIds[toRosterId] = (self.positionIds[fromRosterId] && angular.isArray(self.positionIds[fromRosterId])) ? self.positionIds[fromRosterId].slice() : [];
+                    self.rosterStatuses[toRosterId] = true;
                 }
 
-                return player;
-            },
-            getPositionsFromDowndown: function(player, rosterId, positions) {
-
-                //todo have backend convert this to object always, no reason to be an array
-                if (window.Array.isArray(player.positions)) {
-                    player.positions = {};
-                }
-                //ensures that positions are strictly based on those selected via the ui
-                player.positions[rosterId] = [];
-
-                angular.forEach(player.selectedPositions, function(position, key) {
-                    player.positions[rosterId] = player.positions[rosterId] || [];
-
-                    //the position is selected
-                    if (position === true) {
-                        player.positions[rosterId].push(positions[key]);
-                    }
-                });
-
-                return player;
             }
         };
 

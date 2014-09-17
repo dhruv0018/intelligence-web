@@ -14,12 +14,13 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.User.Info.Controller', [
-    '$scope', '$stateParams', 'ROLES', 'SessionService', 'AlertsService', 'Admin.Users.Data',
-    function controller($scope, $stateParams, ROLES, session, alerts, data) {
+    '$scope', '$stateParams', 'ROLES', 'SessionService', 'AlertsService', 'UsersFactory', 'Admin.Users.Data',
+    function controller($scope, $stateParams, ROLES, session, alerts, users, data) {
 
         $scope.isLockDisabled = function() {
 
-            var user = data.users.get($stateParams.id);
+            var userId = $stateParams.id;
+            var user = users.get($stateParams.id);
 
             /* Enable the lock button for new users. */
             if (!user) return false;

@@ -29,8 +29,8 @@ TeamPlan.run([
  * @type {Controller}
  */
 TeamPlan.controller('TeamPlanController', [
-    '$scope', '$state', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'SessionService', 'PlansFactory', 'TeamsFactory', 'Team', 'TeamPlanIndex', 'NewDate',
-    function controller($scope, $state, $modalInstance, TURNAROUND_TIME_RANGES, session, plans, teams, team, teamPlanIndex, dateZeroTime) {
+    '$scope', '$state', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'SessionService', 'PlansFactory', 'TeamsFactory', 'Team', 'TeamPlanIndex', 'NewDate', 'BasicModals',
+    function controller($scope, $state, $modalInstance, TURNAROUND_TIME_RANGES, session, plans, teams, team, teamPlanIndex, dateZeroTime, basicModals) {
 
         $scope.team = team;
         $scope.team.teamPlans = $scope.team.teamPlans || [];
@@ -88,17 +88,25 @@ TeamPlan.controller('TeamPlanController', [
 
         $scope.saveTeam = function(team) {
 
-            if (!team.teamPlans) {
-                team.teamPlans = [];
-            }
-
-            if ($scope.editing) {
-                team.teamPlans[teamPlanIndex] = $scope.teamPlan;
+            var basicModalOptions = {};
+            var basicModalInstance;
+            if ($scope.teamPlan.startDate >= $scope.teamPlan.endDate) {
+                basicModalOptions.title = 'Plan end date must be after the start date!';
+                basicModalInstance = basicModals.openForAlert(basicModalOptions);
             } else {
-                team.teamPlans.push($scope.teamPlan);
+                if (!team.teamPlans) {
+                    team.teamPlans = [];
+                }
+
+                if ($scope.editing) {
+                    team.teamPlans[teamPlanIndex] = $scope.teamPlan;
+                } else {
+                    team.teamPlans.push($scope.teamPlan);
+                }
+
+                $modalInstance.close(team);
             }
 
-            $modalInstance.close(team);
         };
 
     }

@@ -1,21 +1,23 @@
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
-    function($rootScope, UsersResource, UsersStorage, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
+    '$injector', '$rootScope', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
+    function($injector, $rootScope, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
 
         var UsersFactory = {
 
+            PAGE_SIZE: 2500,
+
             description: 'users',
 
-            storage: UsersStorage,
+            model: 'UsersResource',
 
-            resource: UsersResource,
+            storage: 'UsersStorage',
 
             extend: function(user) {
                 var self = this;
@@ -44,11 +46,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                         }
                     });
                 }
-                /* Convert the last accessed string to a date object. */
-                user.lastAccessed = new Date(user.lastAccessed);
-
-                /* If the date conversion failed clear the value. */
-                if (isNaN(user.lastAccessed.valueOf())) user.lastAccessed = '';
 
                 /* Copy all of the properties from the retrieved $resource
                  * "user" object. */
@@ -71,6 +68,35 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return user;
             },
+
+            search: function(query) {
+
+                var self = this;
+
+                return self.retrieve(query).then(function(users) {
+
+                    var teamIds = [];
+
+                    angular.forEach(users, function(user) {
+
+                        angular.forEach(user.roles, function(role) {
+
+                            if (role.teamId) {
+
+                                teamIds.push(role.teamId);
+                            }
+                        });
+                    });
+
+                    var teams = $injector.get('TeamsFactory');
+
+                    return teams.retrieve({ 'id[]': teamIds }).then(function() {
+
+                        return users;
+                    });
+                });
+            },
+
             save: function(resource, success, error) {
                 var self = this;
 
@@ -97,11 +123,14 @@ IntelligenceWebClient.factory('UsersFactory', [
                     throw new Error('Could not save resource');
                 };
 
+                var model = $injector.get(self.model);
+                var storage = $injector.get(self.storage);
+
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
 
                     /* Make a PUT request to the server to update the resource. */
-                    var update = self.resource.update(parameters, copy, success, error);
+                    var update = model.update(parameters, copy, success, error);
 
                     /* Once the update request finishes. */
                     return update.$promise.then(function() {
@@ -113,8 +142,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                             angular.extend(resource, self.extend(updated));
 
                             /* Update the resource in storage. */
-                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
-                            self.storage.collection[resource.id] = resource;
+                            storage.list[storage.list.indexOf(resource)] = resource;
+                            storage.collection[resource.id] = resource;
 
                             return resource;
                         });
@@ -124,7 +153,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 } else {
 
                     /* Make a POST request to the server to create the resource. */
-                    var create = self.resource.create(parameters, copy, success, error);
+                    var create = model.create(parameters, copy, success, error);
 
                     /* Once the create request finishes. */
                     return create.$promise.then(function(created) {
@@ -133,8 +162,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                         angular.extend(resource, self.extend(created));
 
                         /* Add the resource to storage. */
-                        self.storage.list.push(resource);
-                        self.storage.collection[resource.id] = resource;
+                        storage.list.push(resource);
+                        storage.collection[resource.id] = resource;
 
                         return resource;
                     });
@@ -254,8 +283,29 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     roles[i].isDefault = angular.equals(roles[i], newDefaultRole);
                 }
+            },
 
-                this.save();
+            /**
+            * @class User
+            * @method
+            * @returns {Array} an array on team ISs associated with the
+            * user.
+            */
+            getTeamIds: function() {
+
+                var roles = this.roles;
+
+                var teamIds = [];
+
+                roles.forEach(function(role) {
+
+                    if (role.teamId) {
+
+                        teamIds.push(role.teamId);
+                    }
+                });
+
+                return teamIds;
             },
 
             /**
@@ -371,10 +421,9 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* Dictate what Admins can access. */
                 else if (this.is(role, ROLES.ADMIN)) {
 
-                    /* Admins can not access Super Admins or other Admins,
+                    /* Admins can not access Super Admins,
                      * but can access all other roles. */
-                    return this.is(verify, ROLES.SUPER_ADMIN) ||
-                           this.is(verify, ROLES.ADMIN) ? false : true;
+                    return this.is(verify, ROLES.SUPER_ADMIN) ? false : true;
                 }
 
                 /* Dictate what a Head Coach can access. */

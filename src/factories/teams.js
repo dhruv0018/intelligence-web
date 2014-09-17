@@ -1,12 +1,12 @@
 var PAGE_SIZE = 100;
 
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 var moment = require('moment');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.service('TeamsStorage', [
     function() {
@@ -17,17 +17,146 @@ IntelligenceWebClient.service('TeamsStorage', [
 ]);
 
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$rootScope','ROLES', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory',
-    function($rootScope, ROLES, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users) {
+    '$injector', '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'ResourceManager',
+    function($injector, $rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users, managedResources) {
 
         var TeamsFactory = {
 
+            PAGE_SIZE: 1500,
+
             description: 'teams',
 
-            storage: TeamsStorage,
+            model: 'TeamsResource',
 
-            resource: TeamsResource,
+            storage: 'TeamsStorage',
 
+            extend: function(team) {
+                var self = this;
+
+                /* If the user has roles. */
+                if (team.roles) {
+
+                    /* For each role. */
+                    team.roles.forEach(function(role) {
+                        /* Default the tenureEnd to null. */
+                        role.tenureEnd = role.tenureEnd || null;
+
+                        //TODO hotfixed, to be properly fixed later
+                        if (!role.type.id) {
+                            role.type = {
+                                id: role.type
+                            };
+                        }
+
+                        if (!role.type.name) {
+                            role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
+                        }
+                    });
+                }
+
+                angular.extend(team, self);
+
+                return team;
+            },
+
+            search: function(query) {
+
+                var self = this;
+
+                return self.retrieve(query).then(function(teams) {
+
+                    var schoolIds = [];
+
+                    angular.forEach(teams, function(team) {
+
+                        if (team.schoolId) {
+
+                            schoolIds.push(team.schoolId);
+                        }
+                    });
+
+                    var schools = $injector.get('SchoolsFactory');
+
+                    return schools.retrieve({ 'id[]': schoolIds }).then(function() {
+
+                        return teams;
+                    });
+                });
+            },
+
+            save: function(resource, success, error) {
+
+                var self = this;
+
+                resource = resource || self;
+
+                managedResources.reset(resource);
+
+                /* Create a copy of the resource to save to the server. */
+                var copy = self.unextend(resource);
+
+                angular.forEach(copy.roles, function(role) {
+                    role.type = role.type.id;
+                });
+
+                parameters = {};
+
+                success = success || function(resource) {
+
+                    return self.extend(resource);
+                };
+
+                error = error || function() {
+
+                    throw new Error('Could not save resource');
+                };
+
+                var model = $injector.get(self.model);
+                var storage = $injector.get(self.storage);
+
+                /* If the resource has been saved to the server before. */
+                if (resource.id) {
+
+                    /* Make a PUT request to the server to update the resource. */
+                    var update = model.update(parameters, copy, success, error);
+
+                    /* Once the update request finishes. */
+                    return update.$promise.then(function() {
+
+                        /* Fetch the updated resource. */
+                        return self.fetch(resource.id).then(function(updated) {
+
+                            /* Update local resource with server resource. */
+                            angular.extend(resource, self.extend(updated));
+
+                            /* Update the resource in storage. */
+                            storage.list[storage.list.indexOf(resource)] = resource;
+                            storage.collection[resource.id] = resource;
+
+                            return resource;
+                        });
+                    });
+
+                    /* If the resource is new. */
+                } else {
+
+                    /* Make a POST request to the server to create the resource. */
+                    var create = model.create(parameters, copy, success, error);
+
+                    /* Once the create request finishes. */
+                    return create.$promise.then(function(created) {
+
+                        /* Update local resource with server resource. */
+                        angular.extend(resource, self.extend(created));
+
+                        /* Add the resource to storage. */
+                        storage.list.push(resource);
+                        storage.collection[resource.id] = resource;
+
+                        return resource;
+                    });
+                }
+            },
             removeRole: function(role) {
 
                 /* Remove role from team. */
@@ -161,7 +290,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not get remaining breakdowns for team');
                 };
 
-                return self.resource.getRemainingBreakdowns({ id: id }, callback, error).$promise;
+                var model = $injector.get(self.model);
+
+                return model.getRemainingBreakdowns({ id: id }, callback, error).$promise;
             },
             getMaxTurnaroundTime: function() {
                 var self = this;
@@ -178,7 +309,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 }
 
                 //no plans or packages means no breakdowns
-                return -1;
+                return 0;
             }
         };
 

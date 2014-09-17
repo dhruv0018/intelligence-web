@@ -14,16 +14,20 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
-    '$scope', 'IndexingService', 'Indexing.Sidebar', 'Indexing.Data',
-    function controller($scope, indexing, sidebar, data) {
+    '$scope', '$stateParams', 'Indexing.Sidebar', 'GamesFactory', 'PlaysManager', 'Indexing.Data',
+    function controller($scope, $stateParams, sidebar, games, playsManager, data) {
 
-        $scope.game = data.game;
+        var gameId = Number($stateParams.id);
+
         $scope.sidebar = sidebar;
-        $scope.indexing = indexing;
+        $scope.game = games.get(gameId);
+        $scope.plays = playsManager.plays;
+        $scope.teamPlayers = data.teamPlayers;
+        $scope.opposingTeamPlayers = data.opposingTeamPlayers;
 
         $scope.$watch(function() {
 
-            var lastPlay = $scope.indexing.plays[$scope.indexing.plays.length - 1];
+            var lastPlay = playsManager.getLastPlay();
 
             if (!lastPlay) return 0;
 
@@ -31,12 +35,12 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
 
         }, function(teamIndexedScore) {
 
-            $scope.game.teamIndexedScore = teamIndexedScore;
+            $scope.game.indexedScore = teamIndexedScore;
         });
 
         $scope.$watch(function() {
 
-            var lastPlay = $scope.indexing.plays[$scope.indexing.plays.length - 1];
+            var lastPlay = playsManager.getLastPlay();
 
             if (!lastPlay) return 0;
 

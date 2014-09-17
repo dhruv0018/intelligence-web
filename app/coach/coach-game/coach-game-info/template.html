@@ -1,5 +1,9 @@
 <div class="game-info">
 
+    <alert-message data-ng-if="data.game.isDelivered() || data.game.isBeingBrokenDown()" data-type="warning">
+        You may not edit your game rosters since the game is being indexed or has been delivered
+    </alert-message>
+
     <div class="row">
 
         <div class="box col-md-12">
@@ -8,8 +12,8 @@
 
                 <header class="box-header col-md-12">
 
-                    <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
-                    <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid||tabs['scouting-team'].disabled">Next</x-button-continue>
+                    <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid || tabs['your-team'].disabled">Next</x-button-continue>
+                    <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid || tabs['scouting-team'].disabled">Next</x-button-continue>
 
                 </header>
 
@@ -25,7 +29,7 @@
 
                                     <h4>*Date of game</h4>
 
-                                    <data-date data-ng-model="data.game.datePlayed" data-max-date="todaysDate"></data-date>
+                                    <data-date data-ng-model="data.game.datePlayed" data-max-date="todaysDate" required></data-date>
 
                                 </div>
 
@@ -50,8 +54,8 @@
 
                                     <div class="btn-group-vertical">
 
-                                        <button type="button" class="btn-radio" data-ng-model="data.game.isHomeGame" data-btn-radio="'true'" required>Home</button>
-                                        <button type="button" class="btn-radio" data-ng-model="data.game.isHomeGame" data-btn-radio="'false'" required>Away</button>
+                                        <button type="button" class="btn-radio" data-ng-model="data.game.isHomeGame" data-btn-radio="true" required>Home</button>
+                                        <button type="button" class="btn-radio" data-ng-model="data.game.isHomeGame" data-btn-radio="false" required>Away</button>
 
                                     </div>
 
@@ -198,8 +202,8 @@
 
             </div>
 
-            <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="tabs['your-team'].disabled">Next</x-button-continue>
-            <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid||tabs['scouting-team'].disabled">Next</x-button-continue>
+            <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid || tabs['your-team'].disabled">Next</x-button-continue>
+            <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid || tabs['scouting-team'].disabled">Next</x-button-continue>
 
         </div>
 

@@ -33,6 +33,7 @@ Team.controller('Coach.Team.controller', [
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
         $scope.leagues = $scope.data.leagues.getCollection();
+        $scope.users = users.getCollection();
 
         //Team
         $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
@@ -41,7 +42,7 @@ Team.controller('Coach.Team.controller', [
         $scope.league = $scope.leagues[$scope.team.leagueId];
 
         //Positions
-        $scope.positions = $scope.data.positionSets.getCollection()[$scope.league.positionSetId].indexedPositions;
+        $scope.positions = ($scope.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.league.positionSetId].indexedPositions : {};
 
         //Roster
         $scope.roster = $scope.data.playersList;
@@ -52,23 +53,19 @@ Team.controller('Coach.Team.controller', [
             message: 'All game film is automatically shared with Athletes on your active roster.'
         });
 
-
-        angular.forEach($scope.roster, function(player) {
-            player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
-        });
-
         $scope.singleSave = function(player) {
-            var tempPlayer = players.getPositionsFromDowndown(player, $scope.rosterId, $scope.positions);
 
-            players.singleSave($scope.rosterId, tempPlayer).then(function(responsePlayer) {
+            players.singleSave($scope.rosterId, player).then(function(responsePlayer) {
                 angular.extend(player, player, responsePlayer);
-                player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
 
                 if (player.userId) {
-                    if (typeof $scope.data.coachData.users[player.userId] === 'undefined') {
+                    if (typeof $scope.users[player.userId] === 'undefined') {
                         users.fetch(player.userId, function(user) {
                             $scope.data.users[player.userId] = user.id;
                         });
+                    } else {
+                        var associatedUser = users.get(player.userId);
+                        associatedUser.save();
                     }
                 }
 

@@ -13,7 +13,7 @@
 
                 <select data-ng-model="dataType">
                     <option data-ng-if="game.isDelivered()" value="film-breakdown"> Film Breakdown </option>
-                    <option value="raw-film"> Raw Film </option>
+                    <option data-ng-if="game.isVideoTranscodeComplete()" value="raw-film"> Raw Film </option>
                     <option data-ng-if="hasFormations && game.isDelivered()" value="formation-report">
                         Formation Report
                     </option>

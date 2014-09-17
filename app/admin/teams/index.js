@@ -132,14 +132,14 @@ Teams.config([
 ]);
 
 Teams.service('Teams.Data.Dependencies', [
-    'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SportsFactory',
-    function(teams, leagues, users, sports) {
+    'SportsFactory', 'LeaguesFactory',
+    function(sports, leagues) {
 
-        var Data = {};
+        var Data = {
 
-        angular.forEach(arguments, function(arg) {
-            Data[arg.description] = arg.load();
-        });
+            sports: sports.load(),
+            leagues: leagues.load()
+        };
 
         return Data;
 
@@ -297,8 +297,8 @@ Teams.controller('TeamPlansController', [
  * @type {Controller}
  */
 Teams.controller('TeamController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SchoolsFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, schoolsFactory) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SchoolsFactory', 'TeamsFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, schoolsFactory, teams) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
@@ -341,7 +341,7 @@ Teams.controller('TeamController', [
 
             if (teamId) {
 
-                team = data.teams.get(teamId);
+                team = teams.get(teamId);
                 $scope.team = team;
                 $scope.team.members = team.getMembers();
 
@@ -414,7 +414,7 @@ Teams.controller('TeamController', [
 
         $scope.save = function(team) {
 
-            data.teams.save(team).then(function() {
+            teams.save(team).then(function() {
                 $state.go('teams');
             });
         };
@@ -428,14 +428,19 @@ Teams.controller('TeamController', [
  * @type {Controller}
  */
 Teams.controller('TeamsController', [
-    '$rootScope', '$scope', '$state', '$filter', 'Teams.Data', 'SchoolsFactory',
-    function controller($rootScope, $scope, $state, $filter, data, schools) {
+    '$rootScope', '$scope', '$state', '$q', '$filter', 'SchoolsFactory', 'TeamsFactory', 'Teams.Data',
+    function controller($rootScope, $scope, $state, $q, $filter, schools, teams, data) {
 
-        $scope.teams = data.teams.getList();
+        $scope.teams = [];
+
+        //TODO potential candiate for changing filter to true instead of 1 if the backend begins to support it
+        $scope.filter = {
+            isCustomerTeam: 1
+        };
 
         $scope.sports = data.sports.getList();
         $scope.indexedSports = data.sports.getCollection();
-
+        $scope.schools = schools.getCollection();
         $scope.leagues = data.leagues.getList();
         $scope.indexedLeagues = data.leagues.getCollection();
 
@@ -449,17 +454,19 @@ Teams.controller('TeamsController', [
             });
         };
 
-        $scope.search = function(filter) {
-            data.teams.query(filter,
-                    function(teams) {
-                        $scope.teams = teams;
-                        $scope.noResults = false;
-                    },
-                    function() {
-                        $scope.teams = [];
-                        $scope.noResults = true;
-                    }
-            );
+        $scope.search = function(query) {
+
+            $scope.searching = true;
+            $scope.teams.length = 0;
+
+            $scope.query = teams.search(query).then(function(teams) {
+
+                $scope.teams = teams;
+
+            }).finally(function() {
+
+                $scope.searching = false;
+            });
         };
     }
 ]);

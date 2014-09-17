@@ -1,9 +1,9 @@
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysResource', [
     'config', '$resource',
@@ -21,12 +21,6 @@ IntelligenceWebClient.factory('PlaysResource', [
 
         var actions = {
 
-            query: {
-                method: 'GET',
-                url: config.api.uri + 'games/:gameId/plays',
-                params: { gameId: '@gameId' },
-                isArray: true
-            },
             filter: {
                 method: 'POST',
                 url: config.api.uri + 'plays/filter/:filterId',

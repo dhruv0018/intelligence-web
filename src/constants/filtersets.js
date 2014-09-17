@@ -1,9 +1,9 @@
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 var FILTERSET_CATEGORIES = {
     1: {
@@ -46,4 +46,28 @@ var FILTERSET_CATEGORIES = {
 };
 
 IntelligenceWebClient.constant('FILTERSET_CATEGORIES', FILTERSET_CATEGORIES);
+
+var FILTER_CATEGORY_TYPES_IDS = {
+    1: 'STANDARD',
+    2: 'PLAYER',
+    3: 'QA'
+};
+
+IntelligenceWebClient.constant('FILTERSET_CATEGORY_TYPES_IDS', FILTER_CATEGORY_TYPES_IDS);
+
+var FILTER_CATEGORY_TYPES = {
+    STANDARD: {
+        id: 1
+    },
+    PLAYER: {
+        id: 2
+    },
+    QA: {
+        id: 3
+    }
+};
+
+IntelligenceWebClient.constant('FILTERSET_CATEGORY_TYPES', FILTER_CATEGORY_TYPES);
+
+
 

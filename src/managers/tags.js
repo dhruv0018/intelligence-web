@@ -1,9 +1,9 @@
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 /**
  * @module IntelligenceWebClient
@@ -27,6 +27,11 @@ IntelligenceWebClient.service('TagsManager', [
         this.clear = function() {
 
             this.current = [];
+        };
+
+        this.nextTags = function(tagId) {
+
+            this.current = this.tagset.getNextTags(tagId);
         };
     }
 ]);

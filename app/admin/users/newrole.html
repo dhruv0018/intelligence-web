@@ -18,19 +18,13 @@
             </div>
 
             <div class="form-group">
-
-                <select class="form-control" name="team" data-ng-model="role.teamId" data-ng-options="team.id as team.name for team in teamsList | sport:sportId" data-ng-disabled="!sportId" required>
-
-                    <option value="">Team name</option>
-
-                </select>
-
+                <team-typeahead data-ng-if="users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-ng-model="role.teamId" data-without-role="ROLES.HEAD_COACH"></team-typeahead>
+                <team-typeahead data-ng-if="!users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-ng-model="role.teamId"></team-typeahead>
             </div>
 
             <div class="form-group">
 
                 <button class="btn-role-new" href data-ng-disabled="form.$invalid" data-ng-click="addRole(role)"><i class="icon icon-plus-sign"></i> Add New Role</button>
-
             </div>
 
         </form>

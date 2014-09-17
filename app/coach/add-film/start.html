@@ -22,22 +22,28 @@
                         
                         <div class="row">
 
-                            <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" class="select-boxes col-md-6">
+                            <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" data-ng-class="{active: hasRoster === 1}" class="select-boxes col-md-6">
 
-                                <button type="button" data-ui-sref="upload-film">
+                                <div class="no-roster-warning" data-ng-if="hasRoster === 0">
+                                    You must have a roster to upload a regular game.
+                                    <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team">Add players to your roster.</a>
+                                </div>
+
+                                <button type="button" data-ui-sref="upload-film" data-ng-disabled="hasRoster < 1">
 
                                     <div>
                                         <h1>Regular Game</h1>
                                         <h2>Includes: regular season, conference and non conference, and playoff games.</h2>
                                         <p>Unlimited games for sharing</p>
                                     </div>
-                                    <i class="icon icon-upload"></i>
+                                    <i data-ng-if="hasRoster === 1" class="icon icon-upload"></i>
+                                    <i data-ng-if="hasRoster === 0" class="icon icon-warning"></i>
 
                                 </button>
 
                             </div>
 
-                            <div class="select-boxes col-md-6">
+                            <div class="select-boxes active col-md-6">
 
                                 <button type="button" data-ng-click="data.game.gameType = GAME_TYPES['SCOUTING'].id" data-ui-sref="upload-film">
 
@@ -58,7 +64,7 @@
 
                 </div>
 
-                <breakdown-text data-remaining-breakdowns="remainingBreakdowns" data-plan-name="activePlan.name"></breakdown-text>
+                <breakdown-text data-ng-if="league.positionSetId" data-remaining-breakdowns="remainingBreakdowns" data-plan-name="activePlan.name"></breakdown-text>
 
                 <h3>Need Help?</h3>
 
@@ -122,7 +128,7 @@
 
             </div>
 
-            <div class="select-sidebar">
+            <div data-ng-if="league.positionSetId" class="select-sidebar">
 
                 <div class="bar-plan">
 

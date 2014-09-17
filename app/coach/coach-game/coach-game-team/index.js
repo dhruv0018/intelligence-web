@@ -63,38 +63,24 @@ Team.controller('Coach.Game.Team.controller', [
         $scope.config = config;
 
         //Positions
-        $scope.positions = $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions;
+        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
 
-
-        $scope.$watch('data.game', function(game) {
-            if (game &&
-                game.teamId &&
-                $scope.data &&
-                $scope.data.gamePlayerLists &&
-                $scope.data.gamePlayerLists[game.teamId]) {
-
-                angular.forEach($scope.data.gamePlayerLists[game.teamId], function(player) {
-                    player = players.constructPositionDropdown(player, game.rosters[game.teamId].id, $scope.positions);
-                });
-            }
-
-        });
+        //TODO: temporary fix of tabs flow
+        function enableAllTabs() {
+            $scope.tabs.scouting.disabled = false;
+            $scope.tabs.opposing.disabled = false;
+            $scope.tabs.team.disabled = false;
+            $scope.tabs.confirm.disabled = false;
+        }
 
         $scope.save = function() {
 
-            angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
-                player = players.getPositionsFromDowndown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
-            });
+            enableAllTabs();
+
+            $scope.tabs.opposing.active = true;
 
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {
                 $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
-
-                angular.forEach($scope.data.gamePlayerLists[$scope.data.game.teamId], function(player) {
-                    player = players.constructPositionDropdown(player, $scope.data.game.rosters[$scope.data.game.teamId].id, $scope.positions);
-                });
-
-                $scope.tabs.deactivateAll();
-                $scope.tabs.opposing.active = true;
             });
 
         };

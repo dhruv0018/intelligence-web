@@ -2,12 +2,12 @@
 
 //var OAuth = component('oauth');
 
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 /**
  * A service to manage logging users in and out. It handles getting the OAuth
@@ -68,7 +68,12 @@ IntelligenceWebClient.service('AuthenticationService', [
                             session.storeCurrentUser(user, persist);
 
                             /* Retrieve the user from the session. */
-                            return session.retrieveCurrentUser();
+                            var currentUser = session.retrieveCurrentUser();
+
+                            /* Expose the current user on the root scope. */
+                            $rootScope.currentUser = currentUser;
+
+                            return currentUser;
                         });
                     });
                 });
@@ -147,16 +152,8 @@ IntelligenceWebClient.service('AuthenticationService', [
                 if (!email) throw new Error('Missing email');
                 if (!password) throw new Error('Missing password');
 
-                var oauth = $injector.instantiate(['config', OAuth]);
-
                 /* Request authentication from the server. */
-                oauth.requestAuthCode(email, password, function(error) {
-
-                    $rootScope.$apply(function() {
-
-                        callback(error);
-                    });
-                });
+                return tokens.requestAuthCode(email, password);
             }
         };
 

@@ -1,0 +1,6 @@
+{
+    "name": "films",
+    "scripts": [
+        "index.js"
+    ]
+}
