@@ -13,9 +13,9 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             description: 'tagsets',
 
-            storage: TagsetsStorage,
+            model: 'TagsetsResource',
 
-            resource: TagsetsResource,
+            storage: 'TagsetsStorage',
 
             extend: function(tagset) {
 

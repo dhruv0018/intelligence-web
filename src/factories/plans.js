@@ -16,16 +16,16 @@ IntelligenceWebClient.service('PlansStorage', [
 ]);
 
 IntelligenceWebClient.factory('PlansFactory', [
-    'BaseFactory', 'PlansResource', 'PlansStorage',
-    function(BaseFactory, PlansResource, PlansStorage) {
+    '$injector', 'BaseFactory', 'PlansResource', 'PlansStorage',
+    function($injector, BaseFactory, PlansResource, PlansStorage) {
 
         var PlansFactory = {
 
             description: 'plans',
 
-            storage: PlansStorage,
+            model: 'PlansResource',
 
-            resource: PlansResource,
+            storage: 'PlansStorage',
 
             getByLeague: function(id, success, error) {
                 var self = this;
@@ -38,7 +38,9 @@ IntelligenceWebClient.factory('PlansFactory', [
                     throw new Error('could not get plans');
                 };
 
-                return self.resource.getByLeague({leagueId: id}, callback, error);
+                var model = $injector.get(self.model);
+
+                return model.getByLeague({leagueId: id}, callback, error);
             }
         };
 

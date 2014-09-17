@@ -6,27 +6,46 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlayersFactory', [
-    '$q', 'PlayersResource', 'PlayersStorage', 'BaseFactory',
-    function($q, PlayersResource, PlansStorage, BaseFactory) {
+    '$injector', '$q', 'PlayersResource', 'PlayersStorage', 'BaseFactory',
+    function($injector, $q, PlayersResource, PlayersStorage, BaseFactory) {
 
         var PlayersFactory = {
 
             description: 'players',
 
-            storage: PlansStorage,
+            model: 'PlayersResource',
 
-            resource: PlayersResource,
+            storage: 'PlayersStorage',
+
+            extend: function(player) {
+
+                var self = this;
+
+                angular.extend(player, self);
+
+                // FIXME
+                if (angular.isArray(player.positionIds)) {
+                    player.positionIds = {};
+                }
+
+                return player;
+            },
+
             singleSave: function(rosterId, player) {
                 var self = this;
 
-                player.rosterIds = [rosterId];
-                delete player.resource;
-                delete player.storage;
+                player.rosterIds = (typeof player.rosterIds !== 'undefined' && angular.isArray(player.rosterIds)) ? player.rosterIds : [];
+
+                if (player.rosterIds.indexOf(rosterId) < 0) {
+                    player.rosterIds.push(rosterId);
+                }
+
+                var model = $injector.get(self.model);
 
                 if (player.id) {
-                    return self.resource.update(player).$promise;
+                    return model.update(player).$promise;
                 } else {
-                    return self.resource.singleCreate(player).$promise.then(function(player) {
+                    return model.singleCreate(player).$promise.then(function(player) {
                         angular.extend(player, self);
                         return player;
                     });
@@ -66,14 +85,16 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return player;
                 });
 
+                var model = $injector.get(self.model);
+
                 if (newPlayers.length) {
 
-                    newPlayers = self.resource.create(newPlayers).$promise;
+                    newPlayers = model.create(newPlayers).$promise;
                 }
 
                 currentPlayers = currentPlayers.map(function(player) {
 
-                    return self.resource.update(player).$promise;
+                    return model.update(player).$promise;
                 });
 
                 var allPlayers = currentPlayers.concat(newPlayers);
@@ -86,7 +107,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
             resendEmail: function(userId, teamId) {
                 var self = this;
 
-                return self.resource.resendEmail({
+                var model = $injector.get(self.model);
+
+                return model.resendEmail({
                     userId: userId,
                     teamId: teamId
                 });
@@ -98,6 +121,19 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 return roster.filter(function(player) {
                     return player.rosterStatuses[rosterId] === true;
                 });
+            },
+            transferPlayerInformation: function(fromRosterId, toRosterId) {
+
+                var self = this;
+
+                //if the player is active
+                if (self.rosterStatuses[fromRosterId]) {
+                    self.rosterIds.push(toRosterId);
+                    self.jerseyNumbers[toRosterId] = self.jerseyNumbers[fromRosterId];
+                    self.positionIds[toRosterId] = (self.positionIds[fromRosterId] && angular.isArray(self.positionIds[fromRosterId])) ? self.positionIds[fromRosterId].slice() : [];
+                    self.rosterStatuses[toRosterId] = true;
+                }
+
             }
         };
 
