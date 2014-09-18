@@ -1,9 +1,11 @@
 <div class="krossover-athlete">
-    <img data-ng-if="athlete.picture.url" data-ng-src="{{athlete.picture.url}}" width="40" height="40" alt="Avatar">
-    <profile-placeholder data-ng-if="!player.picture.url" data-size="small"></profile-placeholder>
+    <div data-ng-if="type === 'non-editable'">
+        <img data-ng-if="athlete.picture.url" data-ng-src="{{athlete.picture.url}}" width="40" height="40" alt="Avatar">
+        <profile-placeholder data-ng-if="!player.picture.url" data-size="small"></profile-placeholder>
 
-    <a>
-        <div>{{athlete.jerseyNumbers[rosterId]}}</div>
-        <div>{{athlete.firstName[0] + '.'}} {{athlete.lastName}}</div>
-    </a>
+        <a>
+            <div>{{athlete.jerseyNumbers[rosterId]}}</div>
+            <div>{{athlete.firstName[0] + '.'}} {{athlete.lastName}}</div>
+        </a>
+    </div>
 </div>
