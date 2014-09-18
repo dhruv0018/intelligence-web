@@ -62,7 +62,7 @@ Team.controller('Coach.Game.Team.controller', [
     function controller(config, $rootScope, $scope, $state, games, players, positionsets) {
         $scope.config = config;
 
-        $scope.positionset = positionsets.get($scope.league.positionSetId);
+        $scope.positionset = positionsets.get($scope.data.league.positionSetId);
         $scope.positions = $scope.positionset.indexedPositions;
 
         //TODO: temporary fix of tabs flow
