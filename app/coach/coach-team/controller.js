@@ -61,7 +61,7 @@ Team.controller('Coach.Team.controller', [
                 if (player.userId) {
                     if (typeof $scope.users[player.userId] === 'undefined') {
                         users.fetch(player.userId, function(user) {
-                            $scope.data.users[player.userId] = user.id;
+                            $scope.users[player.userId] = user.id;
                         });
                     } else {
                         var associatedUser = users.get(player.userId);
