@@ -124,7 +124,7 @@ GameArea.controller('Athlete.GameArea.controller', [
             $scope.gameStates.push(
                 {
                     name: 'Film Breakdown',
-                    state: 'ga-film-breakdown'
+                    state: 'Athlete.GameArea.Breakdown'
                 }
             );
         }
@@ -132,7 +132,7 @@ GameArea.controller('Athlete.GameArea.controller', [
         $scope.gameStates.push(
             {
                 name: 'Raw Film',
-                state: 'ga-raw-film'
+                state: 'Athlete.GameArea.RawFilm'
             }
         );
 

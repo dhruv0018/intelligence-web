@@ -175,11 +175,11 @@ GameArea.controller('Coach.GameArea.controller', [
             $scope.gameStates.push(
                 {
                     name: 'Film Breakdown',
-                    state: 'ga-film-breakdown'
+                    state: 'Coach.GameArea.Breakdown'
                 },
                 {
                     name: 'Raw Film',
-                    state: 'ga-raw-film'
+                    state: 'Coach.GameArea.RawFilm'
                 }
             );
 
@@ -213,7 +213,7 @@ GameArea.controller('Coach.GameArea.controller', [
             $scope.gameStates.push(
                 {
                     name: 'Raw Film',
-                    state: 'ga-raw-film'
+                    state: 'Coach.GameArea.RawFilm'
                 }
             );
         }
