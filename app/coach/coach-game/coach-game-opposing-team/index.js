@@ -68,6 +68,7 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
         $scope.teams = $scope.data.teams.getCollection();
 
         $scope.positionset = positionsets.get($scope.data.league.positionSetId);
+        $scope.positions = $scope.positionset.indexedPositions;
 
         $scope.$watch('data.game', function(game) {
             if (game.id) {
