@@ -102,6 +102,7 @@
     "main": "./src/main.js",
     "scripts": {
         "install": "napa; component install",
+        "postinstall": "node_modules/protractor/bin/webdriver-manager update",
         "test": "node_modules/.bin/grunt test"
     }
 }
