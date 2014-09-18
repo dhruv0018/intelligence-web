@@ -1,5 +1,5 @@
 <div class="krossover-athlete">
-    <div data-ng-if="type === 'non-editable'">
+    <div data-ng-if="!editable">
         <img data-ng-if="athlete.picture.url" data-ng-src="{{athlete.picture.url}}" width="40" height="40" alt="Avatar">
         <profile-placeholder data-ng-if="!player.picture.url" data-size="small"></profile-placeholder>
 
@@ -8,7 +8,7 @@
             <div>{{athlete.firstName[0] + '.'}} {{athlete.lastName}}</div>
         </a>
     </div>
-    <table data-ng-if="type === 'fully-editable' || type === 'partially-editable' ">
+    <table data-ng-if="editable">
         <tr>
             <td data-ng-if="team.isCustomerTeam"><profile-placeholder data-size="small"></profile-placeholder></td>
             <td><input size="3" data-ng-model="player.jerseyNumbers[rosterId]" required></td>
