@@ -47,6 +47,7 @@
         "browserify": "4.1.10",
         "browserify-shim": "3.5.0",
         "builder-html-minifier": "1.0.0",
+        "chai-as-promised": "^4.1.1",
         "component": "1.0.0-rc5",
         "component-builder-less": "0.0.1",
         "connect-modrewrite": "0.7.6",
