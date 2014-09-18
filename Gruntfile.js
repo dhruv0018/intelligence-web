@@ -385,6 +385,13 @@ module.exports = function(grunt) {
             }
         },
 
+        protractor: {
+            options: {
+                configFile: 'protractor.conf.js'
+            },
+            all: {}
+        },
+
 
         /* Documentation and reporting */
 
@@ -483,9 +490,13 @@ module.exports = function(grunt) {
                 files: ['app/**/*.js', 'lib/**/*.js'],
                 tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
             },
-            tests: {
+            unit: {
                 files: ['test/unit/**/*.js'],
                 tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'karma']
+            },
+            spec: {
+                files: ['test/spec/**/*.js'],
+                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'protractor']
             }
         },
 
@@ -504,7 +515,7 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['karma']);
+    grunt.registerTask('test', ['karma', 'protractor']);
     grunt.registerTask('lint', ['htmlhint', 'jshint', 'eslint', 'jscs']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
