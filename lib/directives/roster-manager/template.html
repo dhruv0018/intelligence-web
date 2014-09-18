@@ -2,11 +2,9 @@
     <form data-ng-if=" type === 'table' " class="table-manager form-team-active" name="formTeamActive" role="form" novalidate>
 
         <div class="table-responsive">
-
             <table data-ng-class="{'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}" class="table table-striped">
 
                 <thead>
-
                     <tr>
                         <th data-ng-if="team.isCustomerTeam">Picture</th>
                         <th>Jersey Number</th>
@@ -15,39 +13,14 @@
                         <th data-ng-if="keys(positions).length > 0">Position</th>
                         <th data-ng-if="team.isCustomerTeam">Did Not Play</th>
                     </tr>
-
                 </thead>
-
-                <tbody>
-
-                <tr ng-if="!player.isUnknown" data-ng-repeat="player in roster track by $index">
-                    <td data-ng-if="team.isCustomerTeam"><profile-placeholder data-size="small"></profile-placeholder></td>
-
-                    <td><input size="3" data-ng-model="player.jerseyNumbers[rosterId]" required></td>
-
-                    <td>
-                        <input data-ng-if="!team.isCustomerTeam" class="name" placeholder="First Name" data-ng-model="player.firstName" required>
-                        <span data-ng-if="team.isCustomerTeam"> {{player.firstName}}</span>
-                    </td>
-
-                    <td>
-                        <input data-ng-if="!team.isCustomerTeam" class="name" placeholder="Last Name" data-ng-model="player.lastName" required>
-                        <span data-ng-if="team.isCustomerTeam"> {{player.lastName}} </span>
-                    </td>
-
-                    <td data-ng-if="keys(positions).length > 0">
-                        <data-positions-dropdown data-ng-model="player.positionIds[rosterId]" data-player="player" data-positions="positions"></data-positions-dropdown>
-                        <button data-ng-if="!team.isCustomerTeam" class="btn btn-blank pull-right" data-ng-click="toggleActivation(player)"><i class="icon icon-remove"></i></button>
-                    </td>
-                    <td data-ng-if="team.isCustomerTeam" data-ng-click="player.rosterStatuses[game.rosters[game.teamId].id] = !player.rosterStatuses[game.rosters[game.teamId].id]">
-                        <i class="icon icon-check-square-o" data-ng-show="!player.rosterStatuses[game.rosters[game.teamId].id]"></i>
-                        <i class="icon icon-check-empty" data-ng-show="player.rosterStatuses[game.rosters[game.teamId].id]"></i>
-                    </td>
-                </tr>
-
-                </tbody>
-
             </table>
+
+            <krossover-roster data-team="team"
+                    data-type="{{editable}}"
+                    data-roster-id="rosterId"
+                    data-team="team"
+                    data-roster="roster"></krossover-roster>
 
         </div>
 

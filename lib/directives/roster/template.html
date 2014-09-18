@@ -1,3 +1,7 @@
 <div class="krossover-roster">
-    <krossover-athlete data-type="{{type}}" data-ng-repeat="athlete in roster" data-athlete="athlete" data-roster-id="rosterId"></krossover-athlete>
+    <krossover-athlete data-team="team"
+                       data-type="{{type}}"
+                       data-ng-repeat="athlete in roster | filter: {isUnknown: false}"
+                       data-athlete="athlete"
+                       data-roster-id="rosterId"></krossover-athlete>
 </div>

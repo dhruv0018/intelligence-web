@@ -8,4 +8,29 @@
             <div>{{athlete.firstName[0] + '.'}} {{athlete.lastName}}</div>
         </a>
     </div>
+    <table data-ng-if="type === 'fully-editable' || type === 'partially-editable' ">
+        <tr>
+            <td data-ng-if="team.isCustomerTeam"><profile-placeholder data-size="small"></profile-placeholder></td>
+            <td><input size="3" data-ng-model="player.jerseyNumbers[rosterId]" required></td>
+
+            <td>
+                <input data-ng-if="!team.isCustomerTeam" class="name" placeholder="First Name" data-ng-model="athlete.firstName" required>
+                <span data-ng-if="team.isCustomerTeam"> {{athlete.firstName}}</span>
+            </td>
+
+            <td>
+                <input data-ng-if="!team.isCustomerTeam" class="name" placeholder="Last Name" data-ng-model="athlete.lastName" required>
+                <span data-ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
+            </td>
+
+            <td data-ng-if="keys(positions).length > 0">
+                <data-positions-dropdown data-ng-model="athlete.positionIds[rosterId]" data-player="athlete" data-positions="positions"></data-positions-dropdown>
+                <button data-ng-if="!team.isCustomerTeam" class="btn btn-blank pull-right" data-ng-click="toggleActivation(athlete)"><i class="icon icon-remove"></i></button>
+            </td>
+            <td data-ng-if="team.isCustomerTeam" data-ng-click="athlete.rosterStatuses[game.rosters[game.teamId].id] = !athlete.rosterStatuses[game.rosters[game.teamId].id]">
+                <i class="icon icon-check-square-o" data-ng-show="!athlete.rosterStatuses[game.rosters[game.teamId].id]"></i>
+                <i class="icon icon-check-empty" data-ng-show="athlete.rosterStatuses[game.rosters[game.teamId].id]"></i>
+            </td>
+        </tr>
+    </table>
 </div>
