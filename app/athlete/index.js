@@ -41,13 +41,14 @@ Athlete.config([
  * @type {service}
  */
 Athlete.service('Athlete.Data.Dependencies', [
-    '$q', 'SessionService', 'UsersFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory',
-    function($q, session, users, teams, games, players) {
+    '$q', 'SessionService', 'PositionsetsFactory', 'UsersFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory',
+    function($q, session, positionsets, users, teams, games, players) {
 
         var teamId = session.currentUser.currentRole.teamId;
 
         var Data = {
 
+            positionsets: positionsets.load(),
             users: users.load(),
             teams: teams.load(),
             games: games.load({

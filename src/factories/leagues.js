@@ -24,9 +24,9 @@ IntelligenceWebClient.factory('LeaguesFactory', [
 
             description: 'leagues',
 
-            storage: LeaguesStorage,
+            model: 'LeaguesResource',
 
-            resource: LeaguesResource,
+            storage: 'LeaguesStorage'
         };
 
         angular.augment(LeaguesFactory, BaseFactory);
