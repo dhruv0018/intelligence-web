@@ -53,28 +53,5 @@ GameAreaInformation.controller('GameAreaInformationController', [
                 message: 'This film is currently uploading. You may still edit the Game Information for this film.'
             });
         }
-
-
-        $scope.confirmation = function() {
-            $modal.open({
-                scope: $scope,
-                templateUrl: 'coach/game-area/deleteGame.html',
-                controller: ['$scope', '$state', '$modalInstance', function($scope, $state, $modalInstance) {
-                    $scope.deleteGame = function() {
-                        $scope.game.isDeleted = true;
-
-                        $scope.game.save().then(function() {
-                            $modalInstance.close();
-                            $state.go('Coach.FilmHome');
-                        }, function() {
-                            $modalInstance.close();
-                        });
-                    };
-                }]
-
-            });
-
-        };
-
     }
 ]);

@@ -62,8 +62,8 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$q', '$rootScope', '$scope', '$window', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($q, $rootScope, $scope, $window, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+    '$q', '$rootScope', '$scope', '$modal', '$window', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    function controller($q, $rootScope, $scope, $modal, $window, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
 
         $scope.session = session;
 
@@ -314,6 +314,28 @@ Info.controller('Coach.Game.Info.controller', [
 
                 return prompt;
             }
+        };
+
+        //Confirmation for deleting a game
+        $scope.confirmation = function() {
+            $modal.open({
+                scope: $scope,
+                templateUrl: 'coach/game-area/deleteGame.html',
+                controller: ['$scope', '$state', '$modalInstance', function($scope, $state, $modalInstance) {
+                    $scope.deleteGame = function() {
+                        $scope.data.game.isDeleted = true;
+
+                        $scope.data.game.save().then(function() {
+                            $modalInstance.close();
+                            $state.go('Coach.FilmHome');
+                        }, function() {
+                            $modalInstance.close();
+                        });
+                    };
+                }]
+
+            });
+
         };
     }
 ]);
