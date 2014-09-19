@@ -8,5 +8,7 @@ exports.config = {
 
     cucumberOpts: {
         require: 'test/spec/**/*.js'
-    }
+    },
+
+    baseUrl: 'http://localhost:8000/intelligence'
 }
