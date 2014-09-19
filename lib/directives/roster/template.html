@@ -1,7 +1,9 @@
 <div class="krossover-roster">
     <krossover-athlete data-team="team"
                        data-editable="editable"
-                       data-ng-repeat="athlete in roster | filter: {isUnknown: false}"
+                       data-positions="positions"
+                       data-toggle="toggle"
+                       data-ng-repeat="athlete in roster"
                        data-athlete="athlete"
                        data-roster-id="rosterId"></krossover-athlete>
 </div>

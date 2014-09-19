@@ -19,8 +19,13 @@
             <krossover-roster data-team="team"
                     data-editable="editable"
                     data-roster-id="rosterId"
+                    data-positions="positions"
+                    data-toggle="toggleActivation"
+                    data-filter="isActive"
                     data-team="team"
                     data-roster="roster"></krossover-roster>
+
+            <athlete ng-repeat="athlete in roster | filter: applyFilter"></athlete>
 
         </div>
 
