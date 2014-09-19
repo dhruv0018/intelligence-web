@@ -1,11 +1,11 @@
 <div class="positions-dropdown">
-    <div
-        multi-select
-        input-model="dropdownInput"
-        button-label="name"
-        item-label="description name"
-        tick-property="ticked"
-        output-model="selectedPositions"
+
+    <x-multiselect
+        data-ng-model="selectedPositions"
+        data-options="position.id as position.description + ' (' + position.name + ')' for position in positions"
+        data-multiple="true"
+        data-template-url="positions-dropdown/positions-dropdown.html"
     >
-    </div>
+    </x-multiselect>
+
 </div>
