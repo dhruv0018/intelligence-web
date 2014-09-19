@@ -13,13 +13,15 @@
 
                 </header>
                 <div class="box-body col-md-12">
-                    <data-krossover-roster-manager data-type="table"
-                                                   data-roster-template-url="config.links.rosterTemplates.opposingTeamRoster.uri"
+                    <data-krossover-roster-manager data-type="table" data-roster-template-url="config.links.rosterTemplates.opposingTeamRoster.uri"
                                                    data-roster-id="data.game.rosters[data.game.teamId].id"
-                                                   data-roster="data.gamePlayerLists[data.game.teamId]"
+                                                   data-team="data.team"
                                                    data-game="data.game"
-                                                   data-positions="positions"
-                                                   data-validator="validation.scoutingTeam"></data-krossover-roster-manager>
+                                                   data-editable="true"
+                                                   data-filtering="active"
+                                                   data-roster="data.gamePlayerLists[data.game.teamId]"
+                                                   data-validator="validation.scoutingTeam"
+                                                   data-positions="positions"></data-krossover-roster-manager>
                 </div>
             </div>
 
