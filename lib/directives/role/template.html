@@ -6,22 +6,23 @@
 
     <div class="role-title">
 
-        <span data-ng-if="users.is(role, HEAD_COACH)">
-            <span class="role-type-name">
-                <span class="hc-variable-display">Head</span> Coach
+        <span class="head-coach" data-ng-if="users.is(role, HEAD_COACH)">
+            <span class="title">
+                <span class="title-prefix">Head</span>
+                Coach
             </span>
-            <span class="hc-variable-display">{{user.firstName}}</span>
-            {{user.lastName}}
+            <span class="first-name">{{user.firstName}}</span>
+            <span class="last-name">{{user.lastName}}</span>
         </span>
 
         <span data-ng-if="users.is(role, ASSISTANT_COACH)">
-              <span class="role-type-name">
+              <span class="title">
                   Assist Coach
               </span>
             {{user.firstName}} {{user.lastName}}
         </span>
 
-        <span data-ng-if="!users.is(role, HEAD_COACH) && !users.is(role, ASSISTANT_COACH)">
+        <span data-ng-if="!users.is(role, COACH)">
             {{user.firstName}}  {{user.lastName}}
         </span>
 

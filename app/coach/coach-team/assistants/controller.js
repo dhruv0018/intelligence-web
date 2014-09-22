@@ -14,8 +14,8 @@ var TeamRoster = angular.module('coach-team-assistants');
  * @type {controller}
  */
 TeamRoster.controller('Coach.Team.Assistants.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Data', 'PlayersFactory', 'UsersFactory', 'SessionService',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users, session) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Data', 'PlayersFactory', 'UsersFactory', 'TeamsFactory', 'LeaguesFactory', 'SessionService',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users, teams, leagues, session) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
@@ -30,12 +30,12 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
         ];
 
         //Collections
-        $scope.teams = $scope.data.teams.getCollection();
-        $scope.leagues = $scope.data.leagues.getCollection();
+        $scope.teams = teams.getCollection();
+        $scope.leagues = leagues.getCollection();
         $scope.users = users.getCollection();
 
         //Team
-        $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
+        $scope.team = teams.get(session.currentUser.currentRole.teamId);
 
         alerts.add({
             type: 'warning',

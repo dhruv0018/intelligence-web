@@ -205,7 +205,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 role.tenureEnd = null;
                 role.tenureStart = new Date();
 
-                if (typeof team !== 'undefined') {
+                if (team) {
                     role.teamId = team.id;
                 }
 
