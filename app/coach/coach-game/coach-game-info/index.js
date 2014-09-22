@@ -181,6 +181,7 @@ Info.controller('Coach.Game.Info.controller', [
                     teamPlayer.transferPlayerInformation(team.roster.id, game.rosters[game.teamId].id);
                     $scope.data.gamePlayerLists[game.teamId].push(teamPlayer);
                 });
+                //TODO not super happy about this or sure if it will work once we start importing real teams and their rosters
                 return players.save(game.rosters[game.teamId].id, $scope.data.gamePlayerLists[game.teamId]);
             }
         };

@@ -64,6 +64,10 @@ OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
     function controller(config, $rootScope, $scope, $state, $http, games, players) {
         $scope.config = config;
 
+        $scope.filter = {
+            type: 'active'
+        };
+
         //Collections
         $scope.teams = $scope.data.teams.getCollection();
 

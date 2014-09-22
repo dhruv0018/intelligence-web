@@ -62,6 +62,10 @@ Team.controller('Coach.Game.Team.controller', [
     function controller(config, $rootScope, $scope, $state, games, players) {
         $scope.config = config;
 
+        $scope.filter = {
+            type: 'active'
+        };
+
         //Positions
         $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
 
@@ -76,13 +80,7 @@ Team.controller('Coach.Game.Team.controller', [
         $scope.save = function() {
 
             enableAllTabs();
-
             $scope.tabs.opposing.active = true;
-
-            players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {
-                $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
-            });
-
         };
 
     }
