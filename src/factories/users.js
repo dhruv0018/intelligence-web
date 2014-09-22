@@ -292,9 +292,9 @@ IntelligenceWebClient.factory('UsersFactory', [
                     if (!team) {
                         return roleOfInterest;
                     } else {
-                        roleOfInterest = (roleOfInterest.teamId  && roleOfInterest === team.id) ? roleOfInterest : undefined;
-
+                        roleOfInterest = (roleOfInterest.teamId  && roleOfInterest.teamId === team.id) ? roleOfInterest : undefined;
                         if (roleOfInterest) {
+                            console.log(roleOfInterest);
                             return roleOfInterest;
                         }
                     }
