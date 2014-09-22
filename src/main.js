@@ -111,5 +111,5 @@ require('./directives/focus');
 require('./directives/autofocus');
 require('./directives/autotab');
 
-angular.bootstrap(document, [pkg.name]);
+// angular.bootstrap(document, [pkg.name]);
 
