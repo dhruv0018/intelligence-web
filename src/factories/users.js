@@ -272,6 +272,38 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
+             * @class User
+             * @method
+             *  * @param {Object} role - the role object to check for the match.
+             * @param {Object} team - the team object to match. Optional parameter.
+             * @returns {Object} the specified role object for the user.
+             * If no role is found, it will return `undefined`.
+             */
+            getRole: function(role, team) {
+                var self = this;
+                var roleOfInterest;
+
+                for (var index = 0; index < self.roles.length; index ++) {
+                    var tempRole = self.roles[index];
+                    if (tempRole.type.id === role.type.id) {
+                        roleOfInterest = tempRole;
+                    }
+
+                    if (!team) {
+                        return roleOfInterest;
+                    } else {
+                        roleOfInterest = (roleOfInterest.teamId  && roleOfInterest === team.id) ? roleOfInterest : undefined;
+
+                        if (roleOfInterest) {
+                            return roleOfInterest;
+                        }
+                    }
+                }
+
+                return undefined;
+            },
+
+            /**
             * @class User
             * @method
             * @param {Object} newDefaultRole - the role object to set the users
