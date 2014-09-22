@@ -1,5 +1,5 @@
 <div class="krossover-athlete">
-    <div data-ng-if="!editable">
+    <div class="sidebar-athlete" data-ng-if="!editable">
         <img data-ng-if="athlete.picture.url" data-ng-src="{{athlete.picture.url}}" width="40" height="40" alt="Avatar">
         <profile-placeholder data-ng-if="!player.picture.url" data-size="small"></profile-placeholder>
 
@@ -8,31 +8,36 @@
             <div>{{athlete.firstName[0] + '.'}} {{athlete.lastName}}</div>
         </a>
     </div>
-    <form  name="athleteForm" data-ng-if="editable && !athlete.isUnknown">
-        <div>
-            <profile-placeholder data-ng-if="team.isCustomerTeam" data-size="small"></profile-placeholder>
-            <input size="3" data-ng-change="updateAthleteInformation()" data-ng-model="athlete.jerseyNumbers[rosterId]" required>
-        </div>
+    <form name="athleteForm" data-ng-if="editable && !athlete.isUnknown">
+        <table class="table">
+            <tr>
+                <td class="athlete-column" data-ng-if="team.isCustomerTeam">
+                    <profile-placeholder data-size="small"></profile-placeholder>
+                </td>
+                <td class="athlete-column">
+                    <input size="3" data-ng-change="updateAthleteInformation()" data-ng-model="athlete.jerseyNumbers[rosterId]" required>
+                </td>
 
-        <div>
-            <input data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="First Name" data-ng-model="athlete.firstName" required>
-            <span data-ng-if="team.isCustomerTeam"> {{athlete.firstName}}</span>
-        </div>
+                <td class="athlete-column">
+                    <input data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="First Name" data-ng-model="athlete.firstName" required>
+                    <span data-ng-if="team.isCustomerTeam"> {{athlete.firstName}}</span>
+                </td>
 
-        <div>
-            <input data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="Last Name" data-ng-model="athlete.lastName" required>
-            <span data-ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
-        </div>
+                <td class="athlete-column">
+                    <input data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="Last Name" data-ng-model="athlete.lastName" required>
+                    <span data-ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
+                </td>
 
-        <div data-ng-if="keys(positions).length > 0">
-            <data-positions-dropdown data-ng-model="athlete.positionIds[rosterId]" data-player="athlete" data-positions="positions"></data-positions-dropdown>
-            <button data-ng-if="!team.isCustomerTeam" class="btn btn-blank pull-right" data-ng-click="toggle(athlete)"><i class="icon icon-remove"></i></button>
-        </div>
+                <td class="athlete-column" data-ng-if="keys(positions).length > 0">
+                    <data-positions-dropdown data-ng-model="athlete.positionIds[rosterId]" data-player="athlete" data-positions="positions"></data-positions-dropdown>
+                    <button data-ng-if="!team.isCustomerTeam" class="btn btn-blank pull-right" data-ng-click="toggle(athlete)"><i class="icon icon-remove"></i></button>
+                </td>
 
-        <div data-ng-if="team.isCustomerTeam" data-ng-click="athlete.rosterStatuses[rosterId] = !athlete.rosterStatuses[rosterId]">
-            <i class="icon icon-check-square-o" data-ng-show="!athlete.rosterStatuses[rosterId]"></i>
-            <i class="icon icon-check-empty" data-ng-show="athlete.rosterStatuses[rosterId]"></i>
-        </div>
-
+                <td class="athlete-column" data-ng-if="team.isCustomerTeam" data-ng-click="athlete.rosterStatuses[rosterId] = !athlete.rosterStatuses[rosterId]">
+                    <i class="icon icon-check-square-o" data-ng-show="!athlete.rosterStatuses[rosterId]"></i>
+                    <i class="icon icon-check-empty" data-ng-show="athlete.rosterStatuses[rosterId]"></i>
+                </td>
+            </tr>
+        </table>
     </form>
 </div>
