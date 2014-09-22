@@ -14,11 +14,11 @@ var AdminTeam = function AdminTeam() {
 
         get: function get(teamId) {
 
-            if (!config || !config.base_url) throw new Error('config.base_url not set');
+            if (!browser.baseUrl) throw new Error('config.base_url not set');
 
             teamId = teamId || 1;
 
-            browser.get(config.base_url + '/team/' + teamId).then(function(){
+            browser.get(browser.baseUrl + '/team/' + teamId).then(function(){
                 element(by.class('plans-and-packages')).click();
             });
 
