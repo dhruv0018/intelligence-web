@@ -274,7 +274,7 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
              * @class User
              * @method
-             *  * @param {Object} role - the role object to check for the match.
+             * @param {Object} role - the role object to check for the match.
              * @param {Object} team - the team object to match. Optional parameter.
              * @returns {Object} the specified role object for the user.
              * If no role is found, it will return `undefined`.
