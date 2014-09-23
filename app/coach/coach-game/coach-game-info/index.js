@@ -328,9 +328,8 @@ Info.controller('Coach.Game.Info.controller', [
             deleteGameModal.result.then(function() {
                 $scope.data.game.isDeleted = true;
 
-                $scope.data.game.save().then(function() {
-                    $state.go('Coach.FilmHome');
-                });
+                $scope.data.game.save();
+                $state.go('Coach.FilmHome');
             });
 
         };
