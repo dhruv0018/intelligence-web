@@ -385,6 +385,12 @@ module.exports = function(grunt) {
             }
         },
 
+        protractor_webdriver: {
+            options: {
+                keepAlive: true
+            }
+        },
+
         protractor: {
             options: {
                 configFile: 'protractor.conf.js'
