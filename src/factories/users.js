@@ -484,15 +484,17 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @method
              * Resend invitation to user based on their unique identifier (email or id)
              */
-            resendEmail: function(identifier){
+            resendEmail: function(type, params, identifier) {
                 var self = this;
 
                 var model = $injector.get(self.model);
                 var unique = identifier || self.id;
 
                 return model.resendEmail({
-                    unique: unique
-                }, null);
+                    unique: unique,
+                    type: type,
+                    params: params
+                });
             }
         };
 
