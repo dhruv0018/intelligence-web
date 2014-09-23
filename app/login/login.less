@@ -32,6 +32,7 @@
     .password-reset {
 
         .text-right;
+        line-height: 45px;
     }
 
     .user-remember,
@@ -80,20 +81,22 @@
             }
         }
     }
+}
 
-    .button-signin {
+.button-signin {
 
-        & {
+    width: 100%;
 
-            .btn;
-            .btn-lg;
-            padding: 0;
-        }
+    & {
 
-        &:enabled {
+        .btn;
+        .btn-lg;
+        padding: 0;
+    }
 
-            .btn-primary;
-        }
+    &:enabled {
+
+        .btn-primary;
     }
 }
 
@@ -142,7 +145,6 @@ and (min-width: 480px) {
         .button-signin {
 
             .pull-right;
-            width: 150px;
         }
     }
 }
