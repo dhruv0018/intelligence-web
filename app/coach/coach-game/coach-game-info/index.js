@@ -62,8 +62,8 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$q', '$rootScope', '$scope', '$modal', '$window', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($q, $rootScope, $scope, $modal, $window, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+    '$q', '$rootScope', '$scope', '$modal', '$window', '$state', 'BasicModals', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    function controller($q, $rootScope, $scope, $modal, $window, $state, modals, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
 
         $scope.session = session;
 
@@ -318,22 +318,19 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Confirmation for deleting a game
         $scope.confirmation = function() {
-            $modal.open({
-                scope: $scope,
-                templateUrl: 'coach/game-area/deleteGame.html',
-                controller: ['$scope', '$state', '$modalInstance', function($scope, $state, $modalInstance) {
-                    $scope.deleteGame = function() {
-                        $scope.data.game.isDeleted = true;
 
-                        $scope.data.game.save().then(function() {
-                            $modalInstance.close();
-                            $state.go('Coach.FilmHome');
-                        }, function() {
-                            $modalInstance.close();
-                        });
-                    };
-                }]
+            var deleteGameModal = modals.openForConfirm({
+                title: 'Delete Game',
+                bodyText: 'Deleteing this game will delete all the information associated with it.',
+                buttonText: 'Yes, I understand'
+            });
 
+            deleteGameModal.result.then(function() {
+                $scope.data.game.isDeleted = true;
+
+                $scope.data.game.save().then(function() {
+                    $state.go('Coach.FilmHome');
+                });
             });
 
         };

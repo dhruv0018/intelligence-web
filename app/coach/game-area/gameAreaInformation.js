@@ -14,7 +14,6 @@ GameAreaInformation.run([
     '$templateCache',
     function run($templateCache) {
         $templateCache.put('coach/game-area/gameAreaInformation.html', require('./gameAreaInformation.html'));
-        $templateCache.put('coach/game-area/deleteGame.html', require('./deleteGame.html'));
     }
 ]);
 
