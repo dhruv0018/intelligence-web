@@ -478,6 +478,21 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
             getLastAccessed: function(user) {
                 return new Date(user.lastAccessed);
+            },
+            /**
+             * @class User
+             * @method
+             * Resend invitation to user based on their unique identifier (email or id)
+             */
+            resendEmail: function(identifier){
+                var self = this;
+
+                var model = $injector.get(self.model);
+                var unique = identifier || self.id;
+
+                return model.resendEmail({
+                    unique: unique
+                }, null);
             }
         };
 

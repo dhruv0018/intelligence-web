@@ -37,7 +37,7 @@
             <div class="status col-md-12">
                 <div class="inactive" data-ng-if="assistant.id && !assistant.lastAccessed">
                     <strong>This assistant coach has an un-activated Krossover account.</strong> Once they activate their account you will no longer be able to edit their name and email address.
-                    <a data-ng-if="assistant.lastAccessed" data-ng-click="playersFactory.resendEmail(assistant.id, team.id)">Resend Invitation</a>
+                    <a data-ng-if="!assistant.lastAccessed" data-ng-click="assistant.resendEmail()">Resend Invitation</a>
                 </div>
                 <div class="active" data-ng-if="assistant.id && assistant.lastAccessed">
                     This assistant coach has activated their account with Krossover. You can no longer edit certain items, which the coach will now be responsible to edit.
