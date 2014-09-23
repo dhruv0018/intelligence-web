@@ -49,8 +49,8 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data.Dependencies', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies', 'ROLE_TYPE',
-    function($q, session, teams, games, players, users, leagues, tagsets, positions, baseData, ROLE_TYPE) {
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies', 'ROLE_TYPE', 'ROLES',
+    function($q, session, teams, games, players, users, leagues, tagsets, positions, baseData, ROLE_TYPE, ROLES) {
 
         var promises = {
             games: games.load({
@@ -77,11 +77,12 @@ Coach.service('Coach.Data.Dependencies', [
         promises.assistantCoaches = promises.users.then(function(users) {
             var assistantCoaches = [];
             angular.forEach(users.getList(), function(user) {
-                angular.forEach(user.roles, function(role) {
-                    if (role.type.id === ROLE_TYPE.ASSISTANT_COACH && role.teamId === session.currentUser.currentRole.teamId) {
-                        assistantCoaches.push(user);
-                    }
-                });
+                var assistantCoachRole = user.getRole(ROLES.ASSISTANT_COACH, teams.get(session.currentUser.currentRole.teamId));
+
+                if (assistantCoachRole) {
+                    assistantCoaches.push(user);
+                }
+
             });
             return assistantCoaches;
         });
