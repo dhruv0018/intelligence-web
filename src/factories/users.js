@@ -29,10 +29,13 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* If the user has roles. */
                 if (user.roles) {
 
+                    user.roleTypes = {};
+
                     /* For each role. */
                     user.roles.forEach(function(role) {
                         /* Default the tenureEnd to null. */
                         role.tenureEnd = role.tenureEnd || null;
+                        user.roleTypes[role.type] = (user.roleTypes[role.type]) ? user.roleTypes[role.type].push(role) : [role];
 
                         //TODO hotfixed, to be properly fixed later
                         if (!role.type.id) {
@@ -270,38 +273,6 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return undefined;
             },
-
-            /**
-             * @class User
-             * @method
-             * @param {Object} role - the role object to check for the match.
-             * @param {Object} team - the team object to match. Optional parameter.
-             * @returns {Object} the specified role object for the user.
-             * If no role is found, it will return `undefined`.
-             */
-            getRole: function(role, team) {
-                var self = this;
-                var roleOfInterest;
-
-                for (var index = 0; index < self.roles.length; index ++) {
-                    var tempRole = self.roles[index];
-                    if (tempRole.type.id === role.type.id) {
-                        roleOfInterest = tempRole;
-                    }
-
-                    if (!team) {
-                        return roleOfInterest;
-                    } else {
-                        roleOfInterest = (roleOfInterest && roleOfInterest.teamId  && roleOfInterest.teamId === team.id) ? roleOfInterest : undefined;
-                        if (roleOfInterest) {
-                            return roleOfInterest;
-                        }
-                    }
-                }
-
-                return undefined;
-            },
-
             /**
             * @class User
             * @method

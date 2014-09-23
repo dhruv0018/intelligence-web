@@ -77,13 +77,19 @@ Coach.service('Coach.Data.Dependencies', [
         promises.assistantCoaches = promises.users.then(function(users) {
             var assistantCoaches = [];
             angular.forEach(users.getList(), function(user) {
-                var assistantCoachRole = user.getRole(ROLES.ASSISTANT_COACH, teams.get(session.currentUser.currentRole.teamId));
+                if (user.roleTypes[ROLE_TYPE.ASSISTANT_COACH]) {
 
-                if (assistantCoachRole) {
-                    assistantCoaches.push(user);
+                    var assistantCoachRole = user.roleTypes[ROLE_TYPE.ASSISTANT_COACH].filter(function(role) {
+                        return role.teamId && role.teamId === session.currentUser.currentRole.teamId;
+                    })[0];
+
+                    if (assistantCoachRole) {
+                        assistantCoaches.push(user);
+                    }
+
                 }
-
             });
+
             return assistantCoaches;
         });
 
