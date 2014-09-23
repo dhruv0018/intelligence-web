@@ -205,7 +205,7 @@
             <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid || tabs['your-team'].disabled">Next</x-button-continue>
             <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid || tabs['scouting-team'].disabled">Next</x-button-continue>
 
-            <a class="game-remove" data-ng-click="confirmation()">
+            <a class="game-remove" data-ng-click="deleteGame()">
                 <i class="icon icon-remove"></i> Delete this game and all the data associated with it
             </a>
 

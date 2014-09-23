@@ -317,7 +317,7 @@ Info.controller('Coach.Game.Info.controller', [
         };
 
         //Confirmation for deleting a game
-        $scope.confirmation = function() {
+        $scope.deleteGame = function() {
 
             var deleteGameModal = modals.openForConfirm({
                 title: 'Delete Game',
