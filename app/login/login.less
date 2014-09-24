@@ -22,11 +22,6 @@
                 left: 0px !important;
             }
         }
-
-        .form-group:last-child {
-
-            margin-top: 30px;
-        }
     }
 
     .password-reset {
@@ -35,8 +30,7 @@
         line-height: 45px;
     }
 
-    .user-remember,
-    .button-signin {
+    .user-remember {
 
         height: 45px;
     }
@@ -86,6 +80,9 @@
 .button-signin {
 
     width: 100%;
+    height: 45px;
+    background-color: @btn-default-bg;
+    margin: auto;
 
     & {
 
@@ -133,32 +130,5 @@ and (max-width: 479px) {
 
             .hide;
         }
-    }
-}
-
-/* Screens over 480px */
-@media only screen
-and (min-width: 480px) {
-
-    .login-login {
-
-        .button-signin {
-
-            .pull-right;
-        }
-    }
-}
-
-
-/**
- * Browser fixes.
- */
-
-
-.login-login {
-
-    .button-signin {
-
-        background-color: @btn-default-bg;
     }
 }
