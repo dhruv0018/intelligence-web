@@ -1,7 +1,5 @@
 var pkg = require('../package.json');
 
-require('./analytics');
-
 /* Vendor dependencies */
 require('./vendor');
 
