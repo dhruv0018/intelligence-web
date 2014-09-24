@@ -1,7 +1,9 @@
 var environment = process.env.NODE_ENV;
 var baseUrl;
 
-if (environment === 'development' || environment === 'test') {
+baseUrl = 'http://localhost:8000/intelligence/';
+
+if (environment === 'development') {
   
     baseUrl = 'http://localhost:8000/intelligence/';
 
@@ -31,7 +33,17 @@ exports.config = {
         require: 'test/spec/**/*.js'
     },
 
-    baseUrl: baseUrl
+    baseUrl: baseUrl,
+
+    capabilities: {
+        browserName: 'chrome',
+        version: '',
+        platform: 'ANY'
+    },
+
+    rootElement: 'html',
+
+    allScriptsTimeout: 60000
 
 }
 
