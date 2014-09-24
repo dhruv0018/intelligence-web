@@ -22,10 +22,10 @@
         		<h3>Other Krossover Users</h3>
         		<i class="icon icon-logo"></i>
         	</div>
-        	<!--<div class="share-options" data-ng-click="withPublic = true">
+        	<div class="share-options" data-ng-click="withPublic = true">
         		<h3>Recruiters or others via public URL</h3>
         		<i class="icon icon-globe"></i>
-        	</div>-->
+        	</div>
         </div>
 
         <div class="sharing-with-others-container" data-ng-show="withOtherUsers">
@@ -40,6 +40,7 @@
         		<user-typeahead data-user="user"></user-typeahead>
         		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || game.isSharedWithUser(user) || user.id === currentUser.id" data-ng-click="game.shareWithUser(user); user = null">Add</button>
         	</form>
+        	<div class="how-to-search">Start typing the last name of the user you want to share with.</div>
         	<div data-ng-show="game.shares.length" class="shared-with-table">
         		<div class="shared-with-header">Name</div>
         		<div class="shared-with" data-ng-repeat="share in game.shares">
@@ -54,6 +55,10 @@
         		<button class="btn btn-default" data-ng-click="withOtherUsers = false">Back</button>
         		<button class="btn btn-primary pull-right" data-ng-click="shareSubmit()">Save and share</button>
         	</div>
+        </div>
+
+        <div class="sharing-with-public-container" data-ng-show="withPublic">
+        	<iframe height="636" allowtransparency="true" frameborder="0" scrolling="no" style="width:100%;border:none" src="https://krossover.wufoo.com/embed/rz0hmlj13906x9/"><a href="https://krossover.wufoo.com/forms/rz0hmlj13906x9/">Fill out the share request form</a></iframe>
         </div>
 
         <div class="share-successful" data-ng-show="shareSuccess">
