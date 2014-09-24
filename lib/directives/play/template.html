@@ -21,7 +21,8 @@
             </div>
         </h4>
     </div>
-    <div class="playBody" data-ng-class="{'playHide': !expandAll && play != playManager.current }">
+
+    <div class="playBody" data-ng-if="isIndexer || play === playManager.current || !play.summaries.length">
         <krossover-events data-auto-advance="autoAdvance" data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers"></krossover-events>
 
         <hr>

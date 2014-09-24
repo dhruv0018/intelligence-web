@@ -16,12 +16,6 @@
 
           <krossover-plays data-expand-all="expandAll" data-game="game" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="data.teamPlayers" data-opposing-team-players="data.opposingTeamPlayers" data-league="data.league"></krossover-plays>
 
-
-          <div class="expandrow">
-            <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
-            <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
-          </div>
-
           <no-results data-ng-hide="plays.length"></no-results>
         </aside>
 
