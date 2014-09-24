@@ -532,8 +532,25 @@ module.exports = function(grunt) {
     /* Tasks */
 
 
+    var server;
+
+    grunt.registerTask('spec', 'Run acceptance spec tests', function() {
+
+        server = grunt.util.spawn({
+            grunt: true,
+            args: ['browserSync:prod']
+        });
+
+        grunt.task.run('protractor', 'killServer');
+    });
+
+    grunt.registerTask('killServer', 'Kills the background server process', function() {
+
+        server.kill();
+    });
+
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['karma', 'serve', 'protractor']);
+    grunt.registerTask('test', ['karma', 'spec']);
     grunt.registerTask('lint', ['htmlhint', 'jshint', 'eslint', 'jscs']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
