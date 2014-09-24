@@ -48,7 +48,8 @@
         "breakdown-text",
         "player-information",
         "film-home-tabs",
-        "plays-filters"
+        "plays-filters",
+        "uploading-controls"
     ],
     "scripts": [
         "index.js"
