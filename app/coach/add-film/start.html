@@ -22,7 +22,7 @@
                         
                         <div class="row">
 
-                            <div data-flow-init data-flow-name="data.game.$flow" data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" data-ng-class="{active: hasRoster === 1}" class="select-boxes col-md-6">
+                            <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" data-ng-class="{active: hasRoster === 1}" class="select-boxes col-md-6">
 
                                 <div class="no-roster-warning" data-ng-if="hasRoster === 0">
                                     You must have a roster to upload a regular game.
@@ -40,7 +40,6 @@
                                     <i data-ng-if="hasRoster === 0" class="icon icon-warning"></i>
 
                                 </button>
-                                {{data.game.$flow}}
                             </div>
 
                             <div class="select-boxes active col-md-6">

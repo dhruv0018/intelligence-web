@@ -6,7 +6,8 @@
         </span>
     </div>
 
-    <div class="info-container">
+    <div flow-init flow-object="game.flow" class="info-container">
+        <div>{{game.flow.progress()}}</div>
         <krossover-coach-game data-data="data"></krossover-coach-game>
 
 	    <a class="game-remove" ng-click="confirmation()">

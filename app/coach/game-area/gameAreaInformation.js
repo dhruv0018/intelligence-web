@@ -54,7 +54,6 @@ GameAreaInformation.controller('GameAreaInformationController', [
             });
         }
 
-
         $scope.confirmation = function() {
             $modal.open({
                 scope: $scope,

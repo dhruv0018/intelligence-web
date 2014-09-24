@@ -22,7 +22,18 @@ IntelligenceWebClient.factory('GamesFactory', [
             model: 'GamesResource',
 
             storage: 'GamesStorage',
+            unextend: function(game) {
 
+                var self = this;
+
+                game = game || self;
+
+                /* Create a copy of the resource to break reference to orginal. */
+                var copy = angular.copy(game);
+                delete copy.flow;
+
+                return copy;
+            },
             extend: function(game) {
 
                 var self = this;
