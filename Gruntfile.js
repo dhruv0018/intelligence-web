@@ -425,14 +425,26 @@ module.exports = function(grunt) {
 
 
         browserSync: {
+            options: require('./bs-config.js'),
             dev: {
                 bsFiles: [
                     'public/intelligence/index.html',
                     'public/intelligence/styles.css',
                     'public/intelligence/scripts.js',
                     'public/intelligence/assets/**/*.png'
+                ]
+            },
+            prod: {
+                bsFiles: [
+                    'public/intelligence/index.html',
+                    'public/intelligence/styles.css',
+                    'public/intelligence/scripts.js',
+                    'public/intelligence/assets/**/*.png'
                 ],
-                options: require('./bs-config.js')
+                options: {
+                    open: false,
+                    watchTask: false
+                }
             }
         },
 
@@ -526,7 +538,7 @@ module.exports = function(grunt) {
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
-    grunt.registerTask('serve', ['browserSync']);
+    grunt.registerTask('serve', ['browserSync:dev']);
     grunt.registerTask('default', ['githooks', 'install', 'dev', 'notify:build', 'serve', 'watch']);
 
     grunt.registerTask('build', [

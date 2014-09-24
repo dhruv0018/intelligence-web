@@ -90,7 +90,7 @@ module.exports = {
      |--------------------------------------------------------------------------
      | https://github.com/shakyShane/browser-sync/wiki/options#wiki-open
      */
-    open: false,
+    open: true,
 
     /*
      |--------------------------------------------------------------------------
