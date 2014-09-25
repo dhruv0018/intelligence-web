@@ -536,17 +536,24 @@ module.exports = function(grunt) {
 
     grunt.registerTask('spec', 'Run acceptance spec tests', function() {
 
-        server = grunt.util.spawn({
-            grunt: true,
-            args: ['browserSync:prod']
+        var express = require('express');
+        var app = express();
+
+        app.use(express.static('public'));
+
+        app.use(function(req, res){
+
+            res.sendFile('index.html', { root: __dirname + '/public/intelligence' });
         });
 
-        grunt.task.run('protractor', 'killServer');
+        server = app.listen(8000);
+
+        grunt.task.run('protractor', 'close-server');
     });
 
-    grunt.registerTask('killServer', 'Kills the background server process', function() {
+    grunt.registerTask('close-server', 'Closes the background server process', function() {
 
-        server.kill();
+        server.close();
     });
 
     grunt.registerTask('install', ['install-dependencies']);
