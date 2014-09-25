@@ -88,8 +88,13 @@ AddFilm.controller('AddFilmController', [
 ]);
 
 AddFilm.controller('StartController', [
-    '$scope', 'GAME_TYPES', 'Coach.Data', 'SessionService', 'LeaguesFactory',
-    function($scope, GAME_TYPES, data, session, leagues) {
+    '$scope', 'GAME_TYPES', 'Coach.Data', 'SessionService', 'LeaguesFactory', 'AlertsService',
+    function($scope, GAME_TYPES, data, session, leagues, alerts) {
+
+        alerts.add({
+            type: 'info',
+            message: '<i class="icon icon-warning"></i> New to the upload process? It’s easy. <a target="_blank" href="http://support.krossover.com/customer/portal/articles/1251842-uploading-a-game-%E2%96%BA">Let us show you how.</a>'
+        });
 
         //intialize as -1 to remove flase negative. 0 means no team roster, 1 means valid team roster
         $scope.hasRoster = -1;
