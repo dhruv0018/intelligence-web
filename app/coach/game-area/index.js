@@ -128,24 +128,10 @@ GameArea.config([
 GameArea.controller('Coach.GameArea.controller', [
     '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'SessionService',
     function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, session) {
-        $scope.hasShotChart = false;
-        $scope.hasStatistics = true;
-        $scope.hasFormations = false;
-        $scope.hasDownAndDistance = false;
         $scope.expandAll = false;
         $scope.data = data;
         $scope.play = playManager;
         $scope.currentUser = session.currentUser;
-
-        if (data.league.sportId == SPORTS.BASKETBALL.id) {
-            $scope.hasShotChart = true;
-        }
-
-        if (data.league.sportId == SPORTS.FOOTBALL.id) {
-            $scope.hasFormations = true;
-            $scope.hasDownAndDistance = true;
-            $scope.hasStatistics = false;
-        }
 
         //constants
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -171,36 +157,64 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.totalPlays = angular.copy(data.plays);
         $scope.plays = $scope.totalPlays;
 
-        //view selector
+        //define states for view selector
+        $scope.gameStates = [];
+
         if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered()) {
-            $scope.dataType = 'film-breakdown';
-        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered()) {
-            $scope.dataType = 'raw-film';
-        } else if ($scope.game.isSharedWithUser(session.currentUser)) {
-            $scope.dataType = 'raw-film';
-        } else {
-            $scope.dataType = 'game-info';
+            $scope.gameStates.push(
+                {
+                    name: 'Film Breakdown',
+                    state: 'ga-film-breakdown'
+                },
+                {
+                    name: 'Raw Film',
+                    state: 'ga-raw-film'
+                }
+            );
+
+            if (data.league.sportId == SPORTS.BASKETBALL.id) {
+                $scope.gameStates.push(
+                    {
+                        name: 'Shot Chart',
+                        state: 'ga-shot-chart'
+                    }
+                );
+            } else if (data.league.sportId == SPORTS.FOOTBALL.id) {
+                $scope.gameStates.push(
+                    {
+                        name: 'Formation Report',
+                        state: 'ga-formations'
+                    },
+                    {
+                        name: 'Down and Distance Report',
+                        state: 'ga-down-distance'
+                    }
+                );
+            } else if (data.league.sportId == SPORTS.VOLLEYBALL.id) {
+                $scope.gameStates.push(
+                    {
+                        name: 'Statistics',
+                        state: 'ga-statistics'
+                    }
+                );
+            }
+        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered() || $scope.game.isSharedWithUser(session.currentUser)) {
+            $scope.gameStates.push(
+                {
+                    name: 'Raw Film',
+                    state: 'ga-raw-film'
+                }
+            );
         }
 
-        $scope.$watch('dataType', function(data) {
-            if ($scope.dataType === 'game-info') {
-                $state.go('ga-info');
-            } else if ($scope.dataType === 'raw-film') {
-                $state.go('ga-raw-film');
-            } else if ($scope.dataType === 'film-breakdown') {
-                $state.go('ga-film-breakdown');
-            } else if ($scope.dataType === 'statistics') {
-                $state.go('ga-statistics');
-            } else if ($scope.dataType === 'shot-chart') {
-                $state.go('ga-shot-chart');
-            } else if ($scope.dataType === 'formation-report') {
-                $state.go('ga-formations');
-            } else if ($scope.dataType === 'down-distance-report') {
-                $state.go('ga-down-distance');
-            } else {
-                $state.go('Coach.GameArea');
-            }
-        });
+        if (!$scope.game.isSharedWithUser(session.currentUser)) {
+            $scope.gameStates.push(
+                {
+                    name: 'Game Information',
+                    state: 'ga-info'
+                }
+            );
+        }
     }
 ]);
 
