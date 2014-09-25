@@ -160,7 +160,7 @@ GameArea.controller('Coach.GameArea.controller', [
         //define states for view selector
         $scope.gameStates = [];
 
-        if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered()) {
+        if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered() && !$scope.game.isSharedWithUser(session.currentUser)) {
             $scope.gameStates.push(
                 {
                     name: 'Film Breakdown',
@@ -198,7 +198,7 @@ GameArea.controller('Coach.GameArea.controller', [
                     }
                 );
             }
-        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered() || $scope.game.isSharedWithUser(session.currentUser)) {
+        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered()) {
             $scope.gameStates.push(
                 {
                     name: 'Raw Film',
