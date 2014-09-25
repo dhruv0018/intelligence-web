@@ -79,17 +79,20 @@ AddFilm.config([
  * @type {Controller}
  */
 AddFilm.controller('AddFilmController', [
-    '$scope', '$state', 'GamesFactory', 'Coach.Data', 'AlertsService',
-    function controller($scope, $state, games, data, alerts) {
+    '$scope', '$state', 'config', 'GamesFactory', 'Coach.Data', 'AlertsService',
+    function controller($scope, $state, config, games, data, alerts) {
         $scope.games = games;
         $scope.data = data;
         data.game = {};
+        $scope.howToUpload = config.links.addFilmHelp.howToUpload.uri;
+        $scope.commonIssues = config.links.addFilmHelp.commonIssues.uri;
+        $scope.moreQuestions = config.links.addFilmHelp.moreQuestions.uri;
 
         //Show message with link to support page if no games uploaded
         if (!data.games.getList().length) {
             alerts.add({
                 type: 'info',
-                message: '<i class="icon icon-warning"></i> New to the upload process? It’s easy. <a target="_blank" href="http://support.krossover.com/customer/portal/articles/1251842-uploading-a-game-%E2%96%BA">Let us show you how.</a>'
+                message: '<i class="icon icon-warning"></i> New to the upload process? It’s easy. <a target="_blank" href="' + $scope.howToUpload + '">Let us show you how.</a>'
             });
         }
     }
