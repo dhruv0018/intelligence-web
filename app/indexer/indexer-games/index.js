@@ -65,8 +65,8 @@ Games.service('Indexer.Games.Data.Dependencies', [
 
             sports: sports.load(),
             leagues: leagues.load(),
-            teams: teams.load(),
-            users: users.load(),
+            teams: teams.load({ relatedUserId: currentUser.id }),
+            users: users.load({ relatedUserId: currentUser.id }),
             games: games.load({
                 assignedUserId: currentUser.id
             })
@@ -110,9 +110,6 @@ Games.controller('indexer-games.Controller', [
             $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
         }
 
-        $scope.games = data.games.getList().filter(function(game) {
-
-            return game.isAssignedToUser(session.currentUser.id);
-        });
+        $scope.games = data.games.getList();
     }
 ]);
