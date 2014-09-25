@@ -49,7 +49,8 @@
         "player-information",
         "film-home-tabs",
         "plays-filters",
-        "uploading-controls"
+        "uploading-controls",
+        "upload-status"
     ],
     "scripts": [
         "index.js"

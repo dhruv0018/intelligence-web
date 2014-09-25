@@ -58,22 +58,22 @@ UploadingFilm.controller('UploadingFilmController', [
     'config', '$rootScope', '$scope', '$state', '$http', 'GamesFactory', 'PlayersFactory', 'GAME_STATUSES', 'Coach.Data', '$window',
     function controller(config, $rootScope, $scope, $state, $http, games, players, GAME_STATUSES, data, $window) {
 
-        $scope.isDefined = angular.isDefined;
-        $scope.GAME_STATUSES = GAME_STATUSES;
-        $scope.games = games;
-        $window.krossover = $window.krossover || {};
-        $window.krossover.videoUploadStatus = 'STARTED';
-
-        //TODO: switch to addEventListener
-        $window.onbeforeunload = function beforeunloadHandler() {
-
-            if ($scope.$flow.isUploading() ||
-                $window.krossover &&
-                ($window.krossover.videoUploadStatus === 'STARTED' && $window.krossover.videoUploadStatus !== 'COMPLETE')) {
-
-                return 'Video still uploading! Are you sure you want to close the page and cancel the upload?';
-            }
-        };
+        //$scope.isDefined = angular.isDefined;
+        //$scope.GAME_STATUSES = GAME_STATUSES;
+        //$scope.games = games;
+//        $window.krossover = $window.krossover || {};
+//        $window.krossover.videoUploadStatus = 'STARTED';
+//
+//        //TODO: switch to addEventListener
+//        $window.onbeforeunload = function beforeunloadHandler() {
+//
+//            if ($scope.$flow.isUploading() ||
+//                $window.krossover &&
+//                ($window.krossover.videoUploadStatus === 'STARTED' && $window.krossover.videoUploadStatus !== 'COMPLETE')) {
+//
+//                return 'Video still uploading! Are you sure you want to close the page and cancel the upload?';
+//            }
+//        };
 
         var deleteVideo = function() {
 
