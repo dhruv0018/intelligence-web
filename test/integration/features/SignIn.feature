@@ -7,5 +7,4 @@ Feature: Sign in as an Admin User
         And I enter my correct password "superadmin"
         And I press 'Sign In'
         Then I should see the page "users"
-
-
+        Then I should see no console errors

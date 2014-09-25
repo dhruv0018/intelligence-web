@@ -512,8 +512,8 @@ module.exports = function(grunt) {
                 files: ['test/unit/**/*.js'],
                 tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'karma']
             },
-            spec: {
-                files: ['test/spec/**/*.js'],
+            integration: {
+                files: ['test/integration/**/*.js'],
                 tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'protractor']
             }
         },
@@ -534,7 +534,7 @@ module.exports = function(grunt) {
 
     var server;
 
-    grunt.registerTask('spec', 'Run acceptance spec tests', function() {
+    grunt.registerTask('integration', 'Run integration tests', function() {
 
         var express = require('express');
         var app = express();
@@ -557,7 +557,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['karma', 'spec']);
+    grunt.registerTask('test', ['karma', 'integration']);
     grunt.registerTask('lint', ['htmlhint', 'jshint', 'eslint', 'jscs']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);

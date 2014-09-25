@@ -24,11 +24,11 @@ exports.config = {
     framework: 'cucumber',
 
     specs: [
-        'features/**/*.feature'
+        'test/integration/features/*.feature'
     ],
 
     cucumberOpts: {
-        require: 'test/spec/**/*.js'
+        require: 'test/integration/**/*.js'
     },
 
     baseUrl: baseUrl,
