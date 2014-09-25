@@ -663,18 +663,31 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             getFormationReport: function() {
+
                 var self = this;
+
                 var model = $injector.get(self.model);
-                return model.getFormationReport({id: self.id});
+
+                if (!self.id) throw new Error('Game must be saved before generating reports');
+
+                return model.getFormationReport({ id: self.id });
             },
 
             getDownAndDistanceReport: function(report) {
+
+                /* TODO: the only thing used from parameter is gameId */
+
+                var self = this;
+
+                /* TODO: gameId should come from self if not given. */
+
                 var Resource = $injector.get(self.model);
 
                 var dndReport = new Resource(report);
 
-                return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
+                return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
             },
+
             getRemainingTime: function(uploaderTeam, now) {
 
                 var self = this;

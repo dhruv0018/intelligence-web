@@ -41,7 +41,7 @@
                                         <td class="name">{{player.firstName}} {{player.lastName}}</td>
 
                                         <td data-ng-show="keys(positions).length > 0">
-                                            <data-positions-dropdown data-ng-model="player.positionIds[data.game.rosters[data.game.teamId].id]" data-player="player" data-positions="positions"></data-positions-dropdown>
+                                            <data-positions-dropdown data-ng-model="player.positionIds[data.game.rosters[data.game.teamId].id]" data-player="player" data-positionset="positionset"></data-positions-dropdown>
                                         </td>
 
                                         <td data-ng-click="player.rosterStatuses[data.game.rosters[data.game.teamId].id] = !player.rosterStatuses[data.game.rosters[data.game.teamId].id]">
