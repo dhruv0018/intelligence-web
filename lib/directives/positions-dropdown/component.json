@@ -1,7 +1,8 @@
 {
     "name": "positions-dropdown",
     "templates": [
-        "template.html"
+        "template.html",
+        "positions-dropdown.html"
     ],
     "styles": [
         "styles.less"
