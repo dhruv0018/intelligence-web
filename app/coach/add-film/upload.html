@@ -3,69 +3,11 @@
     <div class="upload-upload">
 
         <div class="row">
-
-            <div class="upload-files col-md-12" data-flow-drop data-ng-class="class" data-flow-drag-enter="class='files-drop-enter'" data-flow-drag-leave="class='files-drop-leave'">
-
-                <div class="row">
-
-                    <div class="titlebar col-md-12">
-
-                        <h3>
-                            <span data-ng-show="games.isRegular(data.game)">Uploading a regular game</span>
-                            <span data-ng-show="!games.isRegular(data.game)">Uploading a scouting/scrimmage game</span>
-                        </h3>
-
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-12">
-
-                            <button class="choose-files" data-ng-hide="$flow.files.length" data-flow-btn>
-
-                                <i class="icon icon-upload"></i>
-                                <h1>Choose files to upload…</h1>
-
-                            </button>
-
-                            <table class="files" data-flow-transfers>
-
-                                <tbody>
-
-                                    <tr class="file" data-ng-repeat="file in transfers" data-draggable>
-
-                                        <td class="drag"><i class="icon icon-align-justify"></i> {{ $index+1 }}. {{ file.name }} — {{ file.size | bytes }}</td>
-                                        <td class="remove"><button class="btn-remove" data-ng-click="file.cancel()"><i class="icon icon-remove"></i></button></td>
-
-                                    </tr>
-
-                                </tbody>
-
-                            </table>
-
-                            <button class="btn-choose-files" data-ng-show="$flow.files.length" data-flow-btn>
-
-                                <i class="icon icon-upload"></i> Choose files to upload…
-
-                            </button>
-
-                            <button class="btn-upload-start" data-ng-click="upload()" data-ng-disabled="!$flow.files.length || uploading">
-
-                                <span data-ng-hide="uploading">Start u</span><span data-ng-show="uploading">U</span>ploading…<i class="icon icon-chevron-right pull-right"></i>
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+            <kvs-uploader data-film="data.game" data-flow="data.game.flow"></kvs-uploader>
         </div>
-
         <div>
+            Test
+            {{data.game}}
             <h3>To ensure a smooth upload:</h3>
             <p>Prevent your computer, especially laptops, from going to sleep. Here's how for <a href="FIXME">Macs</a> and <a href="FIXME">PCs</a>.</p>
             <p>Test the speed of your internet connection. <a href="FIXME">Here's how</a>.</p>

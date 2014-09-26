@@ -50,7 +50,8 @@
         "film-home-tabs",
         "plays-filters",
         "uploading-controls",
-        "upload-status"
+        "upload-status",
+        "kvs-uploader"
     ],
     "scripts": [
         "index.js"

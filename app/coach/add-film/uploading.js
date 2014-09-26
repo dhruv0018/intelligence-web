@@ -57,7 +57,7 @@ UploadingFilm.config([
 UploadingFilm.controller('UploadingFilmController', [
     'config', '$rootScope', '$scope', '$state', '$http', 'GamesFactory', 'PlayersFactory', 'GAME_STATUSES', 'Coach.Data', '$window',
     function controller(config, $rootScope, $scope, $state, $http, games, players, GAME_STATUSES, data, $window) {
-
+        //$scope.data.game.flow = $scope.$flow;
         $scope.headings = {
             opposingTeam: 'Opposing Team',
             yourTeam: 'Team',
