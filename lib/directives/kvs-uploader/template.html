@@ -1,4 +1,5 @@
-<div data-flow-init data-flow-object="flow" class="kvs-uploader">
+<div data-flow-init data-flow-name="$parent.flow" class="kvs-uploader">
+
     <div class="upload-files col-md-12" data-flow-drop data-ng-class="class" data-flow-drag-enter="class='files-drop-enter'" data-flow-drag-leave="class='files-drop-leave'">
 
         <div class="row">
@@ -16,7 +17,7 @@
 
                 <div class="col-md-12">
 
-                    <button class="choose-files" data-ng-hide="flow.files.length" data-flow-btn>
+                    <button class="choose-files" data-ng-hide="film.flow.files.length" data-flow-btn>
 
                         <i class="icon icon-upload"></i>
                         <h1>Choose files to upload…</h1>
@@ -38,7 +39,7 @@
 
                     </table>
 
-                    <button class="btn-choose-files" data-ng-show="flow.files.length" data-flow-btn>
+                    <button class="btn-choose-files" data-ng-show="film.flow.files.length" data-flow-btn>
 
                         <i class="icon icon-upload"></i> Choose files to upload…
 
