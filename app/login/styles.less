@@ -2,16 +2,10 @@
 
 .login {
 
-    display: flex;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
     position: relative;
     color: @brand-blue;
     letter-spacing: normal;
+    display: block;
 
     .icon-krossover-logo {
 
@@ -22,7 +16,11 @@
         background-size: contain;
         background-position: center center;
         margin: auto;
-        display: table-caption;
+    }
+
+    .login-container {
+        margin: auto;
+        display: table;
     }
 
     h1 {
@@ -135,3 +133,11 @@ and (max-width: 479px) {
     }
 }
 
+/* Screens over 480px */
+@media only screen
+and (min-width: 480px) {
+    
+    .login {
+        padding-top: 200px;
+    }
+}
