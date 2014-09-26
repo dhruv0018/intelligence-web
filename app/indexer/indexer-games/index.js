@@ -86,8 +86,8 @@ Games.service('Indexer.Games.Data.Dependencies', [
  * @type {Controller}
  */
 Games.controller('indexer-games.Controller', [
-    '$scope', '$state', 'config', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
-    function controller($scope, $state, config, GAME_TYPES, teams, leagues, games, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
+    '$scope', '$state', '$interval', 'config', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
+    function controller($scope, $state, $interval, config, GAME_TYPES, teams, leagues, games, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.sports = data.sports.getCollection();
@@ -111,5 +111,29 @@ Games.controller('indexer-games.Controller', [
         }
 
         $scope.games = data.games.getList();
+
+        angular.forEach($scope.games, function(game) {
+            game.timeRemaining = game.assignmentTimeRemaining();
+        });
+
+        var refreshGames = function() {
+
+            angular.forEach($scope.games, function(game) {
+
+                if (game.timeRemaining) {
+
+                    game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
+                }
+            });
+        };
+
+        var ONE_MINUTE = 60000;
+
+        var refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
+
+        $scope.$on('$destroy', function() {
+
+            $interval.cancel(refreshGamesInterval);
+        });
     }
 ]);
