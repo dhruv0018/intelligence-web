@@ -17,6 +17,7 @@ IntelligenceWebClient.service('PlaysManager', [
         var indexing;
 
         this.plays = [];
+        this.currentPlayIndex = 0;
 
         /**
          * Resets the plays.
@@ -36,6 +37,14 @@ IntelligenceWebClient.service('PlaysManager', [
 
             return this.plays[this.plays.length - 1];
         };
+
+
+        this.getNextPlay = function getNextPlay(currentPlay) {
+            var nextPlay = currentPlay ? ((this.currentPlayIndex + 1) % this.plays.length) : 0;
+            this.currentPlayIndex = nextPlay;
+            return this.plays[nextPlay];
+        };
+
         /**
          * Adds a play.
          * @param {Object} play - play to be added.
