@@ -198,7 +198,7 @@ GameArea.controller('Coach.GameArea.controller', [
                     }
                 );
             }
-        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered()) {
+        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered() || $scope.game.isSharedWithUser(session.currentUser)) {
             $scope.gameStates.push(
                 {
                     name: 'Raw Film',
