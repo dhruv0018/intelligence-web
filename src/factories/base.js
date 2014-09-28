@@ -327,6 +327,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+                var all = '@';
+                var key = '@';
+
                 var key = '@';
 
                 filter = angular.copy(filter);
@@ -335,20 +338,21 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
-                var session = $injector.get('SessionService');
 
-                var single = function(id) {
+                var single = function() {
 
+                    storage.resource[key].promise = self.fetch(filter).then(function(resource) {
 
-                        storage.set(key, list);
+                        var promise = storage.resource[key].promise;
 
-                        return list;
-                    });
-                };
+                        storage.resource[all] = storage.resource[all] || [resource];
+                        storage.resource[all].promise = storage.resource[all].promise || promise;
+                        storage.resource[all].resolved = storage.resource[all].resolved || true;
 
-                var array = function(ids) {
+                        storage.resource[key] = [resource];
+                        storage.resource[key].promise = promise;
+                        storage.resource[key].resolved = true;
 
-                    var promises = [];
 
                     var numbers = ids.map(function(id) {
 
@@ -414,19 +418,63 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     from = angular.fromJson(from);
 
-                    if (angular.isArray(from)) {
-
-                        return from.map(function(string) {
-
-                            return toResource(string);
+                            return list;
                         });
                     }
 
                     else {
 
-                        var Model = $injector.get(self.model);
+                        storage.resource[key].promise = $q.when(storage.resource[key]);
+                        storage.resource[key].resolved = true;
+                    }
+                };
 
-                        var resource = new Model(from);
+                var other = function() {
+
+                    storage.resource[key].promise = self.retrieve(filter).then(function(list) {
+
+                        var promise = storage.resource[key].promise;
+
+                        storage.resource[all] = storage.resource[all] || list.concat();
+                        storage.resource[all].promise = storage.resource[all].promise || promise;
+                        storage.resource[all].resolved = storage.resource[all].resolved || true;
+
+                        storage.resource[key] = list.concat();
+                        storage.resource[key].promise = promise;
+                        storage.resource[key].resolved = true;
+
+                        return list;
+                    });
+                };
+
+                if (!storage.resource[key]) {
+
+                    storage.resource[key] = [];
+
+                    if (angular.isNumber(filter)) single();
+                    else if (angular.isArray(filter)) array();
+                    else other();
+                }
+
+                return storage.resource[key].promise;
+            },
+
+            /**
+             * Unloads resources.
+             * @param {Object} [filter] - an object hash of filter parameters.
+             */
+            unload: function(filter) {
+
+                var self = this;
+                        });
+                    }
+
+                    else {
+
+                        storage.resource[key].promise = $q.when(storage.resource[key]);
+                        storage.resource[key].resolved = true;
+                    }
+                };
 
                         resource = self.extend(resource);
 
@@ -450,10 +498,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 }, function() {
 
-                    if (angular.isNumber(filter)) return single(filter);
-                    else if (angular.isArray(filter)) return array(filter);
-                    else return other(filter);
-                });
+                return storage.resource[key].promise;
             },
 
             /**
