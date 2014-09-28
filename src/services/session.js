@@ -53,6 +53,32 @@ IntelligenceWebClient.service('SessionService', [
         };
 
         /**
+         * Converts a users role object to an encoded string representing it.
+         * @param {Object} role - a user role object.
+         */
+        this.serializeRole = function(role) {
+
+            role = role || this.currentUser ? this.currentUser.currentRole : null;
+
+            if (!role) return '';
+
+            var key = '@@';
+            var type = role.type.id;
+            var createdAt = role.createdAt;
+
+            createdAt = createdAt.toString();
+            createdAt = createdAt.replace(/\D/g,'');
+            createdAt = Number(createdAt);
+            createdAt = createdAt.toString(36);
+
+            key += type;
+            key += role.teamId || '';
+            key += createdAt;
+
+            return key;
+        };
+
+        /**
          * Converts a user resource object to an encoded string representing it.
          * @param {Object} user - a user resource object.
          */
