@@ -339,9 +339,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var single = function(id) {
 
-                    return self.fetch(id).then(function(resource) {
-
-                        var list = [resource];
 
                         storage.set(key, list);
 
