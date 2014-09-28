@@ -64,8 +64,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                if (!self.storage) throw new Error(self.description + ' storage not defined');
-
                 var storage = $injector.get(self.storage);
 
                 var resource;
@@ -73,7 +71,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* If given and ID lookup the resource in storage. */
                 if (id) {
 
-                    resource = storage.collection[id];
+                    resource = storage.resource[id];
                 }
 
                 /* If no ID, then assume the unsaved resource. */
@@ -96,13 +94,13 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                if (!self.storage) throw new Error(self.description + ' storage not defined');
+                filter = filter || '';
+
+                var key = '@' + JSON.stringify(filter);
 
                 var storage = $injector.get(self.storage);
 
-                var key = String(JSON.stringify(filter));
-
-                return storage.loads[key] ? storage.loads[key].list : storage.list;
+                return storage.resource[key];
             },
 
             /**
@@ -113,11 +111,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                if (!self.storage) throw new Error(self.description + ' storage not defined');
-
                 var storage = $injector.get(self.storage);
 
-                return storage.collection;
+                return storage.resource;
             },
 
             /**
@@ -182,9 +178,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     resource = self.extend(resource);
 
                     /* Store the resource locally in its storage collection. */
-                    storage.collection[resource.id] = resource;
-
-                    self.updateList();
+                    storage.resource[resource.id] = resource;
 
                     return resource;
                 });
@@ -245,10 +239,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                         resource = self.extend(resource);
 
                         /* Store the resource locally in its storage collection. */
-                        storage.collection[resource.id] = resource;
+                        storage.resource[resource.id] = resource;
                     });
-
-                    self.updateList();
 
                     return resources;
                 });
@@ -302,7 +294,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                         resource = self.extend(resource);
 
                         /* Store the resource locally in its storage collection. */
-                        storage.collection[resource.id] = resource;
+                        storage.resource[resource.id] = resource;
                     });
 
                     storage.query = storage.query || [];
@@ -310,8 +302,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     /* If all of the server resources have been retrieved. */
                     if (resources.length < filter.count) {
-
-                        self.updateList();
 
                         var query = storage.query.slice();
                         delete storage.query;
@@ -341,20 +331,20 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 filter = angular.copy(filter);
 
-                var key = String(JSON.stringify(filter));
+                filter = filter || '';
+
+                var key = '@' + JSON.stringify(filter);
 
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
 
-                storage.loads = storage.loads || Object.create(null);
-
-                if (!storage.loads[key]) {
+                if (!storage.resource[key]) {
 
                     if (angular.isNumber(filter)) {
 
-                        storage.loads[key] = self.fetch(filter).then(function() {
+                        storage.resource[key] = self.fetch(filter).then(function(resource) {
 
-                            return self;
+                            return resource;
                         });
                     }
 
@@ -419,16 +409,14 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else {
 
-                        storage.loads[key] = self.retrieve(filter).then(function(list) {
+                        storage.resource[key] = self.retrieve(filter).then(function(list) {
 
-                            storage.loads[key].list = list;
-
-                            return self;
+                            return list;
                         });
                     }
                 }
 
-                return storage.loads[key];
+                return storage.resource[key];
             },
 
             /**
@@ -439,11 +427,13 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var key = String(JSON.stringify(filter));
+                filter = filter || '';
+
+                var key = '@' + JSON.stringify(filter);
 
                 var storage = $injector.get(self.storage);
 
-                delete storage.loads[key];
+                delete storage.resource[key];
             },
 
             /**
@@ -514,8 +504,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                         angular.extend(resource, self.extend(created));
 
                         /* Add the resource to storage. */
-                        storage.list.push(resource);
-                        storage.collection[resource.id] = resource;
+                        storage.resource[resource.id] = resource;
 
                         return resource;
                     })
@@ -597,8 +586,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var storage = $injector.get(self.storage);
 
                 /* Remove the resource from storage. */
-                storage.list.splice(storage.list.indexOf(resource), 1);
-                delete storage.collection[resource.id];
+                delete storage.resource[resource.id];
 
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
@@ -606,23 +594,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                     /* Make a DELETE request to the server to delete the resource. */
                     return model.remove(parameters, resource, success, error).$promise;
                 }
-            },
-
-            updateList: function() {
-
-                var self = this;
-
-                var storage = $injector.get(self.storage);
-
-                /* Clear the storage list. */
-                storage.list.length = 0;
-
-                /* Loop through each resource in the storage collection. */
-                Object.keys(storage.collection).forEach(function(key) {
-
-                    /* Add the resource to the storage list. */
-                    storage.list.push(storage.collection[key]);
-                });
             }
         };
 
