@@ -94,9 +94,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                filter = filter || '';
+                var key = '@';
 
-                var key = '@' + JSON.stringify(filter);
+                if (filter) key += JSON.stringify(filter);
 
                 var storage = $injector.get(self.storage);
 
@@ -323,100 +323,141 @@ IntelligenceWebClient.factory('BaseFactory', [
             /**
              * Loads all resources from the server.
              * @param {Object} [filter] - an object hash of filter parameters.
-             * @return {Promise.<self>} - a promise of the resource factory.
+             * @return {Promise.<Array>} - a promise of the resource query.
              */
             load: function(filter) {
 
                 var self = this;
 
+                var all = '@';
+                var key = '@';
+
                 filter = angular.copy(filter);
 
-                filter = filter || '';
-
-                var key = '@' + JSON.stringify(filter);
+                if (filter) key += JSON.stringify(filter);
 
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
 
-                if (!storage.resource[key]) {
+                var single = function() {
 
-                    if (angular.isNumber(filter)) {
+                    storage.resource[key].promise = self.fetch(filter).then(function(resource) {
 
-                        storage.resource[key] = self.fetch(filter).then(function(resource) {
+                        var promise = storage.resource[key].promise;
 
-                            return resource;
+                        storage.resource[all] = storage.resource[all] || [resource];
+                        storage.resource[all].promise = storage.resource[all].promise || promise;
+                        storage.resource[all].resolved = storage.resource[all].resolved || true;
+
+                        storage.resource[key] = [resource];
+                        storage.resource[key].promise = promise;
+                        storage.resource[key].resolved = true;
+
+                        return [resource];
+                    });
+                };
+
+                var array = function() {
+
+                    var promises = [];
+
+                    if (storage.collection) {
+
+                        var ids = filter;
+
+                        var numbers = ids.map(function(id) {
+
+                            return Number(id);
                         });
-                    }
 
-                    else if (angular.isArray(filter)) {
+                        var valid = numbers.filter(function(id) {
 
-                        var promises = [];
+                            return id > 0 && !isNaN(id);
+                        });
 
-                        if (storage.collection) {
+                        var unique = valid.reduce(function(previous, current) {
 
-                            var ids = filter;
+                            if (!~previous.indexOf(current)) previous.push(current);
 
-                            var numbers = ids.map(function(id) {
+                            return previous;
 
-                                return Number(id);
-                            });
+                        }, []);
 
-                            var valid = numbers.filter(function(id) {
+                        var unstored = unique.filter(function(id) {
 
-                                return id > 0 && !isNaN(id);
-                            });
+                            return !angular.isDefined(storage.collection[id]);
+                        });
 
-                            var unique = valid.reduce(function(previous, current) {
+                        while (unstored.length) {
 
-                                if (!~previous.indexOf(current)) previous.push(current);
+                            ids = unstored.splice(0, 100);
 
-                                return previous;
+                            var query = {
 
-                            }, []);
+                                start: null,
+                                count: null,
+                                'id[]': ids
+                            };
 
-                            var unstored = unique.filter(function(id) {
-
-                                return !angular.isDefined(storage.collection[id]);
-                            });
-
-                            while (unstored.length) {
-
-                                ids = unstored.splice(0, 100);
-
-                                var query = {
-
-                                    start: null,
-                                    count: null,
-                                    'id[]': ids
-                                };
-
-                                promises.push(self.query(query));
-                            }
+                            promises.push(self.query(query));
                         }
 
-                        storage.loads[key] = $q.all(promises).then(function() {
+                        storage.loads[key].promise = $q.all(promises).then(function() {
 
                             var list = ids.map(function(id) {
 
                                 return storage.collection[id];
                             });
 
-                            storage.loads[key].list = list;
+                            var promise = storage.resource[key].promise;
 
-                            return self;
+                            storage.resource[all] = storage.resource[all] || list.concat();
+                            storage.resource[all].promise = storage.resource[all].promise || promise;
+                            storage.resource[all].resolved = storage.resource[all].resolved || true;
+
+                            storage.resource[key] = list.concat();
+                            storage.resource[key].promise = promise;
+                            storage.resource[key].resolved = true;
+
+                            return list;
                         });
                     }
 
                     else {
 
-                        storage.resource[key] = self.retrieve(filter).then(function(list) {
-
-                            return list;
-                        });
+                        storage.resource[key].promise = $q.when(storage.resource[key]);
+                        storage.resource[key].resolved = true;
                     }
+                };
+
+                var other = function() {
+
+                    storage.resource[key].promise = self.retrieve(filter).then(function(list) {
+
+                        var promise = storage.resource[key].promise;
+
+                        storage.resource[all] = storage.resource[all] || list.concat();
+                        storage.resource[all].promise = storage.resource[all].promise || promise;
+                        storage.resource[all].resolved = storage.resource[all].resolved || true;
+
+                        storage.resource[key] = list.concat();
+                        storage.resource[key].promise = promise;
+                        storage.resource[key].resolved = true;
+
+                        return list;
+                    });
+                };
+
+                if (!storage.resource[key]) {
+
+                    storage.resource[key] = [];
+
+                    if (angular.isNumber(filter)) single();
+                    else if (angular.isArray(filter)) array();
+                    else other();
                 }
 
-                return storage.resource[key];
+                return storage.resource[key].promise;
             },
 
             /**
