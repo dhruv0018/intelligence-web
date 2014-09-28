@@ -8,14 +8,6 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('TeamsStorage', [
-    function() {
-
-        this.list = [];
-        this.collection = {};
-    }
-]);
-
 IntelligenceWebClient.factory('TeamsFactory', [
     '$injector', '$rootScope', 'ROLES', 'ROLE_ID', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'ResourceManager',
     function($injector, $rootScope, ROLES, ROLE_ID, schools, usersResource, BaseFactory, users, managedResources) {

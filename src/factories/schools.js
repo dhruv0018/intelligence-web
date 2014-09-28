@@ -7,14 +7,6 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('SchoolsStorage', [
-    function() {
-
-        this.list = [];
-        this.collection = {};
-    }
-]);
-
 IntelligenceWebClient.factory('SchoolsFactory', [
     '$injector', 'BaseFactory', 'ResourceManager', 'SCHOOL_TYPES',
     function($injector, BaseFactory, managedResources, SCHOOL_TYPES) {
