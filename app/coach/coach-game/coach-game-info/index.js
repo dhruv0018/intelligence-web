@@ -77,7 +77,7 @@ Info.controller('Coach.Game.Info.controller', [
         $scope.games = games;
 
         //Collections
-        $scope.teams = $scope.data.teams.getCollection();
+        $scope.teams = teams.getCollection();
 
         //Game Manipulation
         $scope.data.game.notes = $scope.data.game.notes || {};
