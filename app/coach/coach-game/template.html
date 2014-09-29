@@ -13,33 +13,34 @@
     <x-tab
         data-active="gameTabs.opposing.active"
         data-disabled="gameTabs.opposing.disabled"
-        data-heading="{{ teams[data.game.opposingTeamId].name || 'Opposing Team' }}"
-    >
+        data-heading="{{ teams[data.game.opposingTeamId].name || 'Opposing Team' }}">
 
-        <krossover-coach-game-opposing-team data-tabs="gameTabs" data-validation="validation" data-data="data"></krossover-coach-game-opposing-team>
-
+        <game-tab data-type="table"
+                  data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"
+                  data-roster-id="data.game.rosters[data.game.opposingTeamId].id"
+                  data-team="data.opposingTeam"
+                  data-game="data.game"
+                  data-editable="true"
+                  data-filtering="{type: 'active'}"
+                  data-roster="data.gamePlayerLists[data.game.opposingTeamId]"
+                  data-validator="validation.opposingTeam"
+                  data-positions="positions"></game-tab>
     </x-tab>
 
-    <x-tab
-        data-ng-if="data.game.isRegular()"
-        data-active="gameTabs.team.active"
-        data-disabled="gameTabs.team.disabled"
-        data-heading="{{ teams[data.game.teamId].name || 'Team' }}"
-    >
+    <x-tab data-active="gameTabs.team.active"
+           data-disabled="gameTabs.team.disabled"
+           data-heading="{{ teams[data.game.teamId].name || 'Team' }}">
 
-        <krossover-coach-game-your-team data-tabs="gameTabs" data-data="data"></krossover-coach-game-your-team>
-
-    </x-tab>
-
-    <x-tab
-        data-ng-if="data.game.isNonRegular()"
-        data-active="gameTabs.scouting.active"
-        data-disabled="gameTabs.scouting.disabled"
-        data-heading="{{ teams[data.game.teamId].name || 'Team' }}"
-    >
-
-        <krossover-coach-game-team data-tabs="gameTabs" data-validation="validation"  data-data="data"></krossover-coach-game-team>
-
+        <game-tab data-tabs="gameTabs"
+                  data-data="data"
+                  data-type="table"
+                  data-roster-id="data.game.rosters[data.game.teamId].id"
+                  data-team="data.team"
+                  data-roster="data.gamePlayerLists[data.game.teamId]"
+                  data-editable="true"
+                  data-validation="validator.yourTeam"
+                  data-positions="positions"
+                  data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"></game-tab>
     </x-tab>
 
     <x-tab

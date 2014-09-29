@@ -13,12 +13,12 @@ var angular = window.angular;
 
 /**
  * Your Team page module.
- * @module YourTeam
+ * @module GameTab
  */
-var YourTeam = angular.module('Coach.Game.YourTeam', []);
+var GameTab = angular.module('Coach.Game.GameTab', []);
 
 /* Cache the template file */
-YourTeam.run([
+GameTab.run([
     '$templateCache',
     function run($templateCache) {
 
@@ -27,46 +27,52 @@ YourTeam.run([
 ]);
 
 /**
- * YourTeam directive.
- * @module YourTeam
- * @name YourTeam
+ * GameTab directive.
+ * @module GameTab
+ * @name GameTab
  * @type {directive}
  */
-YourTeam.directive('krossoverCoachGameYourTeam', [
+GameTab.directive('gameTab', [
     function directive() {
 
-        var krossoverCoachGameYourTeam = {
+        var coachGameGameTab = {
 
             restrict: TO += ELEMENTS,
             templateUrl: templateUrl,
-            controller: 'Coach.Game.YourTeam.controller',
+            controller: 'Coach.Game.GameTab.controller',
 
             scope: {
                 data: '=',
-                tabs: '='
+                tabs: '=',
+                type: '=',
+                rosterLinks: '=',
+                rosterId: '=',
+                team: '=',
+                game: '=',
+                editable: '=',
+                roster: '=',
+                validator: '=',
+                positions: '=',
+                heading: '@'
             }
         };
 
-        return krossoverCoachGameYourTeam;
+        return coachGameGameTab;
     }
 ]);
 /**
- * YourTeam controller.
- * @module YourTeam
- * @name YourTeam
+ * GameTab controller.
+ * @module GameTab
+ * @name GameTab
  * @type {controller}
  */
-YourTeam.controller('Coach.Game.YourTeam.controller', [
+GameTab.controller('Coach.Game.GameTab.controller', [
     '$scope', '$state', 'PlayersFactory', 'TeamsFactory',
     function controller($scope, $state, players, teams) {
-
         $scope.keys = window.Object.keys;
 
         //Collections
-        $scope.teams = $scope.data.teams.getCollection();
-
-        //Positions
-        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
+        $scope.teams = teams.getCollection();
 
         $scope.save = function() {
             players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {

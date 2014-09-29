@@ -4,7 +4,7 @@ var ELEMENTS = 'E';
 
 /* Component dependencies. */
 require('coach-game-info');
-require('coach-game-your-team');
+require('game-tab');
 require('coach-game-opposing-team');
 require('coach-game-instructions');
 require('coach-game-team');
@@ -26,7 +26,7 @@ var Game = angular.module('Coach.Game', [
     'ui.router',
     'ui.bootstrap',
     'Coach.Game.Info',
-    'Coach.Game.YourTeam',
+    'Coach.Game.GameTab',
     'Coach.Game.OpposingTeam',
     'Coach.Game.Instructions',
     'Coach.Game.Team'
@@ -84,8 +84,11 @@ Game.directive('krossoverCoachGame', [
  * @type {controller}
  */
 Game.controller('Coach.Game.controller', [
-    '$scope', 'TeamsFactory', 'GamesFactory',
-    function controller($scope, teams, games) {
+    '$scope', 'TeamsFactory', 'GamesFactory', 'config',
+    function controller($scope, teams, games, config) {
+
+        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
+        $scope.config = config;
 
         /* TODO: Remove this: */
         $scope.games = games;
