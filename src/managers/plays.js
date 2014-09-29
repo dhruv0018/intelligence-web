@@ -17,6 +17,11 @@ IntelligenceWebClient.service('PlaysManager', [
         var indexing;
 
         this.plays = [];
+        this.playScopeList = {
+            scopes: {},
+            head: void 0,
+            tail: void 0
+        };
         this.currentPlayIndex = 0;
 
         /**
@@ -38,11 +43,23 @@ IntelligenceWebClient.service('PlaysManager', [
             return this.plays[this.plays.length - 1];
         };
 
-
         this.getNextPlay = function getNextPlay(currentPlay) {
-            var nextPlay = currentPlay ? ((this.currentPlayIndex + 1) % this.plays.length) : 0;
-            this.currentPlayIndex = nextPlay;
-            return this.plays[nextPlay];
+            var currentPlayScope = this.playScopeList.scopes[currentPlay.id];
+            if (currentPlayScope) return currentPlayScope.nextPlayScope;
+        };
+
+        this.registerPlayScope = function registerPlayScope(playScope) {
+            //create hash of play scopes indexed by the scopes play's id
+            this.playScopeList.scopes[playScope.play.id] = playScope;
+
+            //Build linked list of play scopes
+            if (typeof this.playScopeList.head === 'undefined') {
+                this.playScopeList.head = playScope;
+                this.playScopeList.tail = playScope;
+            } else {
+                this.playScopeList.tail.nextPlayScope = playScope;
+                this.playScopeList.tail = playScope;
+            }
         };
 
         /**
