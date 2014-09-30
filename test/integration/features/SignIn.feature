@@ -23,29 +23,33 @@ Feature: Authentication
     @logout
     Scenario Outline: An unauthenticated user signing in with valid credentials
         Given I am a "<User>"
-        When I authenticate with the password "<Password>"
+        When I authenticate with valid credentials
         Then I should be shown the "<Landing Page>" page
-        Then I should see no console errors
+        # Then I should see no console errors
 
         Examples: Different user types should landing on a unique url
-            | User    | Landing Page | Password |
-            | Admin   | users        | superadmin |
+            | User    | Landing Page | 
+            | Admin   | users        | 
 
-    Scenario: An unauthenticated user signing in with inadequate credentials
-        Given I have an account
+    Scenario: An unauthenticated Admin signing in with inadequate credentials
+        
+        Only test the admin since all users should see the same result.
+        If the Admin doesn't get the correct result, no user will
+
+        Given I am a "Admin"
         When I authenticate with an invalid password
         Then I should be shown the "login" page
 
     Scenario Outline: An authenticated user signing out
-        Given I am a "<User>"
-        And I authenticate with the password "<Password>"
+        Given I am a "Admin"
+        And I authenticate with valid credentials
         And I sign out
         Then I should be shown the "login" page
-        Then I should see no console errors
+        # Then I should see no console errors
 
         Examples: Different user types
-            | User    | Password   |
-            | Admin   | superadmin |
+            | User    | 
+            | Admin   |
 
 #OLD LOGIN TEST
 # Scenario: Successfully Sign In As An Admin User

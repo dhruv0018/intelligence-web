@@ -2,67 +2,58 @@ var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 var expect = chai.expect;
+var Account = require("../../helper/account");
 
 module.exports = function() {
-    // var account = require("../../helper/account");
-    // console.log("account", account);
-
-    var emails = {
-        "Admin": "superadmin@krossover.com"
-    };
+    var account = new Account();
 
     this.When(/^I visit a restricted page$/, function (callback) {
-        callback.pending();
-    });
 
-    this.Then(/^I should be shown the "([^"]*)" page$/, function (relativeUrl, callback) {
-        callback.pending();
+        this.visitRelative("users");
+        
+        callback();
     });
 
     this.Given(/^I navigate to "([^"]*)"$/, function (relativeUrl, callback) {
-        browser.get(browser.baseUrl + relativeUrl);
+
+        this.visitRelative(relativeUrl);
+
         callback();
     });
 
     this.Given(/^I am a "([^"]*)"$/, function (User, callback) {
-        var email = emails[User];
-        var emailAddressField = element(by.model("$parent.login.email"));
-        emailAddressField.sendKeys(email);
+        this.user = User;
+        var email = account.getEmail(User);
+        account.enterEmail(email);
+
         callback();
     });
 
-    this.When(/^I authenticate with the password "([^"]*)"$/, function (Password, callback) {
-        var emailPassField = element(by.model("$parent.login.password"));
-        emailPassField.sendKeys(Password);
+    this.When(/^I authenticate with valid credentials$/, function (callback) {
+        var password = account.getPassword(this.user)
+        account.enterPassword(password);
+        account.clickSignin();
 
-        var signUpBtn = element(by.css(".button-signin"));
-        signUpBtn.click();
         callback();
     });
 
     this.Then(/^I should be shown the "([^"]*)" page$/, function (relativeUrl, callback) {
+
         expect(browser.getLocationAbsUrl()).to.eventually.equal(browser.baseUrl + relativeUrl).and.notify(callback);
     });
 
-    this.Given(/^I have an account$/, function (callback) {
-        callback.pending();
-    });
-
     this.When(/^I authenticate with an invalid password$/, function (callback) {
-        callback.pending();
-    });
 
-    this.Given(/^I sign in$/, function (callback) {
-        callback.pending();
+        account.enterPassword("invalidPassword");
+        account.clickSignin();
+
+        callback();
     });
 
     this.Given(/^I sign out$/, function (callback) {
-        callback.pending();
+        account.signout(callback);
     });
 
-    this.Then(/^I should see no console errors$/, function (callback) {
-        callback.pending();
-    });
     // this.Given(/^I have gone to the Home Page "([^"]*)" and I'm not Signed In$/, function (relativeUrl, callback) {
 
     //     browser.get(browser.baseUrl + relativeUrl);

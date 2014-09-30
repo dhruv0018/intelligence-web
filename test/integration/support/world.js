@@ -5,9 +5,9 @@ module.exports = function() {
     this.World = function World(callback) {
         
         // this.browser = new zombie();
-        // this.visit = function(url, callback) {
-        //     this.browser.visit(url, callback);
-        // };
+        this.visitRelative = function(relativeUrl) {
+            browser.get(browser.baseUrl + relativeUrl);
+        };
         callback();
     };
 }
