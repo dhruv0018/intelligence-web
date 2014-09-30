@@ -15,9 +15,9 @@ IntelligenceWebClient.factory('SportsFactory', [
 
             description: 'sports',
 
-            storage: SportsStorage,
+            model: 'SportsResource',
 
-            resource: SportsResource,
+            storage: 'SportsStorage'
         };
 
         angular.augment(SportsFactory, BaseFactory);

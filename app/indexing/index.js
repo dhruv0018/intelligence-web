@@ -270,7 +270,6 @@ Indexing.config([
                         Mousetrap.unbind('esc');
 
                         game.save();
-                        playsManager.save();
                     }
                 ]
             });

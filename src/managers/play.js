@@ -216,7 +216,9 @@ IntelligenceWebClient.service('PlayManager', [
             playsManager.plays[playIndex].isSaving = true;
 
             /* Save the play remotely. */
-            plays.save(play).then(function(play) {
+            plays.save(play)
+
+            .then(function(play) {
 
                 /* If the play exists in the play list. */
                 if (~playIndex) {
@@ -225,7 +227,14 @@ IntelligenceWebClient.service('PlayManager', [
                     playsManager.plays[playIndex] = play;
                 }
 
-            }).finally(function() {
+            })
+
+            .catch(function() {
+
+                playsManager.plays[playIndex].error = true;
+            })
+
+            .finally(function() {
 
                 playsManager.plays[playIndex].isSaving = false;
             });
