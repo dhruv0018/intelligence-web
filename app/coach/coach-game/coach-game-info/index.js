@@ -85,8 +85,7 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Opposing Team Construction
         if ($scope.data.game.id) {
-
-            /* TODO: Enable all tabs if the game has already been saved. */
+            $scope.tabs.enableAll();
 
             /* FIXME: Can this be removed? */
             $scope.data.opposingTeam = {
