@@ -70,6 +70,7 @@ GameTab.controller('Coach.Game.GameTab.controller', [
     '$scope', '$state', 'PlayersFactory', 'TeamsFactory',
     function controller($scope, $state, players, teams) {
         $scope.keys = window.Object.keys;
+        console.log($scope);
 
         //Collections
         $scope.teams = teams.getCollection();
