@@ -2,44 +2,43 @@
 var angular = window.angular;
 
 /**
- * Game Area Film Breakdown page module.
- * @module GameArea
+ * Coach game area raw film page module.
+ * @module RawFilm
  */
-var GameAreaRawFilm = angular.module('game-area-raw-film', [
+var RawFilm = angular.module('Coach.GameArea.RawFilm', [
     'ui.router',
-    'ui.bootstrap',
-    'Indexing'
+    'ui.bootstrap'
 ]);
 
-GameAreaRawFilm.run([
+RawFilm.run([
     '$templateCache',
     function run($templateCache) {
-        $templateCache.put('coach/game-area/gameAreaRawFilm.html', require('./gameAreaRawFilm.html'));
+
+        $templateCache.put('coach/game-area/raw-film/template.html', require('./template.html'));
     }
 ]);
 
-GameAreaRawFilm.config([
+RawFilm.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
         var gameArea = {
-            name: 'ga-raw-film',
+            name: 'Coach.GameArea.RawFilm',
             url: '/raw-film',
             parent: 'Coach.GameArea',
             views: {
                 'content@Coach.GameArea': {
-                    templateUrl: 'coach/game-area/gameAreaRawFilm.html',
-                    controller: 'GameAreaRawFilmController'
+                    templateUrl: 'coach/game-area/raw-film/template.html',
+                    controller: 'Coach.GameArea.RawFilm.controller'
                 }
             }
         };
 
         $stateProvider.state(gameArea);
-
     }
 ]);
 
-GameAreaRawFilm.controller('GameAreaRawFilmController', [
+RawFilm.controller('Coach.GameArea.RawFilm.controller', [
     '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory', 'Coach.Data',
     function controller($scope, $state, $stateParams, leagues, games, plays, data) {
         $scope.gameId = $state.params.id;
@@ -49,6 +48,6 @@ GameAreaRawFilm.controller('GameAreaRawFilmController', [
         $scope.league = $scope.leagues[$scope.team.leagueId];
         $scope.sources = data.game.getVideoSources();
         $scope.videoTitle = 'rawFilm';
-
     }
 ]);
+

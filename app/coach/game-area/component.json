@@ -6,11 +6,13 @@
     "paths": [
         "."
     ],
+    "local": [
+        "raw-film",
+        "breakdown"
+    ],
     "templates": [
         "template.html",
         "gameAreaInformation.html",
-        "gameAreaRawFilm.html",
-        "gameAreaFilmBreakdown.html",
         "gameAreaStatistics.html",
         "gameAreaShotChart.html",
         "gameAreaFormations.html",
@@ -19,8 +21,6 @@
     "scripts": [
         "index.js",
         "gameAreaInformation.js",
-        "gameAreaRawFilm.js",
-        "gameAreaFilmBreakdown.js",
         "gameAreaStatistics.js",
         "gameAreaShotChart.js",
         "gameAreaFormations.js",
