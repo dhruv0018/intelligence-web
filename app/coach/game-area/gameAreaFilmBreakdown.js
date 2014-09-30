@@ -40,8 +40,8 @@ GameAreaFilmBreakdown.config([
 ]);
 
 GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
-    function controller($scope, $state, $stateParams, games, plays, filtersets, data) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data', 'PlayManager',
+    function controller($scope, $state, $stateParams, games, plays, filtersets, data, playManager) {
         $scope.gameId = $state.params.id;
         $scope.videoTitle = 'filmBreakdown';
         $scope.data = data;
@@ -49,6 +49,6 @@ GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
         $scope.expandAll = false;
-        $scope.playAllPlays = true;
+        $scope.playManager = playManager;
     }
 ]);

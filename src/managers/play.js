@@ -25,6 +25,7 @@ IntelligenceWebClient.service('PlayManager', [
         this.gameId = null;
         this.current = null;
         this.playState = null; //current play playing/paused in video?. probably a better place for this, but this is convenient
+        this.playAllPlays = true;
 
         /**
          * Clear the current play.

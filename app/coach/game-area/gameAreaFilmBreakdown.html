@@ -1,7 +1,7 @@
 <div class="game-area-film-filters">
     <div class="play-count pull-left">
         <span>Viewing: All Plays ({{plays.length}})</span>
-        <a href data-ng-class="{active: playAllPlays}" class="play-all-plays" data-ng-click="playAllPlays = !playAllPlays">Play All</a>
+        <a href data-ng-class="{active: playManager.playAllPlays}" class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">Play All</a>
     </div>
     <plays-filter data-total-plays="totalPlays"
                   data-plays="plays"
@@ -26,6 +26,6 @@
         </aside>
 
         <div class="player breakdown-player">
-            <x-krossover-videoplayer data-sources="sources" data-play-start-time="play.current.startTime" data-play-end-time="play.current.endTime" data-play-all-plays="playAllPlays"></x-krossover-videoplayer>
+            <x-krossover-videoplayer data-sources="sources" data-play-start-time="play.current.startTime" data-play-end-time="play.current.endTime"></x-krossover-videoplayer>
         </div>
 </div>
