@@ -22,20 +22,9 @@
                 left: 0px !important;
             }
         }
-
-        .form-group:last-child {
-
-            margin-top: 30px;
-        }
     }
 
-    .password-reset {
-
-        .text-right;
-    }
-
-    .user-remember,
-    .button-signin {
+    .user-remember {
 
         height: 45px;
     }
@@ -80,20 +69,31 @@
             }
         }
     }
+}
 
-    .button-signin {
+.password-reset {
 
-        & {
+    .text-right;
+    line-height: 45px;
+}
 
-            .btn;
-            .btn-lg;
-            padding: 0;
-        }
+.button-signin {
 
-        &:enabled {
+    width: 100%;
+    height: 45px;
+    background-color: @btn-default-bg;
+    margin: auto;
 
-            .btn-primary;
-        }
+    & {
+
+        .btn;
+        .btn-lg;
+        padding: 0;
+    }
+
+    &:enabled {
+
+        .btn-primary;
     }
 }
 
@@ -130,33 +130,5 @@ and (max-width: 479px) {
 
             .hide;
         }
-    }
-}
-
-/* Screens over 480px */
-@media only screen
-and (min-width: 480px) {
-
-    .login-login {
-
-        .button-signin {
-
-            .pull-right;
-            width: 150px;
-        }
-    }
-}
-
-
-/**
- * Browser fixes.
- */
-
-
-.login-login {
-
-    .button-signin {
-
-        background-color: @btn-default-bg;
     }
 }

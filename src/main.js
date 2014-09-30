@@ -1,5 +1,7 @@
 var pkg = require('../package.json');
 
+require('./appcache');
+
 /* Vendor dependencies */
 require('./vendor');
 

@@ -7,23 +7,23 @@ var angular = window.angular;
  */
 var FilmHome = angular.module('Coach.FilmHome');
 
-
-
-
 /**
- * User controller. Controls the view for adding and editing a single user.
+ * FilmHome controller.
  * @module FilmHome
  * @name FilmHome.controller
  * @type {controller}
  */
 FilmHome.controller('Coach.FilmHome.controller', [
-    '$rootScope', '$scope', '$state', '$filter', 'GamesFactory', 'PlayersFactory', 'SessionService', 'Coach.Data',
-    function controller($rootScope, $scope, $state, $filter, games, players, session, data) {
+    '$rootScope', '$scope', '$state', '$filter', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'SessionService', 'Coach.Data',
+    function controller($rootScope, $scope, $state, $filter, teams, games, players, session,  data) {
+
+        var teamId = session.currentUser.currentRole.teamId;
+
         $scope.playersList = data.playersList;
         $scope.games = games.getCollection();
         $scope.gamesList = games.getList();
-        $scope.teams = data.teams.getCollection();
-        $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
+        $scope.teams = teams.getCollection();
+        $scope.team = teams.get(teamId);
         $scope.roster = $scope.team.roster;
         $scope.activeRoster = players.constructActiveRoster($scope.playersList, $scope.roster.id);
         $scope.query = '';

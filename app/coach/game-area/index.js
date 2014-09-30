@@ -1,6 +1,8 @@
+/* Component dependencies */
+require('raw-film');
+require('breakdown');
+
 require('./gameAreaInformation.js');
-require('./gameAreaRawFilm.js');
-require('./gameAreaFilmBreakdown.js');
 require('./gameAreaStatistics.js');
 require('./gameAreaShotChart.js');
 require('./gameAreaFormations.js');
@@ -18,9 +20,9 @@ var GameArea = angular.module('Coach.GameArea', [
     'ui.router',
     'ui.bootstrap',
     'Coach.Game',
+    'Coach.GameArea.RawFilm',
+    'Coach.GameArea.Breakdown',
     'game-area-information',
-    'game-area-raw-film',
-    'game-area-film-breakdown',
     'game-area-statistics',
     'game-area-shot-chart',
     'game-area-formations',
@@ -57,11 +59,23 @@ GameArea.config([
             },
             resolve: {
                 'Coach.Data': [
-                    '$q', '$stateParams', 'PlayersFactory', 'PlaysFactory', 'GamesFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
-                    function($q, $stateParams, players, plays, games, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
+                    '$q', '$stateParams', 'LeaguesFactory', 'FiltersetsFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
+                    function($q, $stateParams, leagues, filtersets, teams, games, players, plays, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
                         return $q.all(data).then(function(data) {
-                            var teamsCollection = data.teams.getCollection();
-                            var leaguesCollection = data.leagues.getCollection();
+
+                            var gameId = $stateParams.id;
+
+                            /* TODO: Maybe not do this. */
+                            var game = games.get(gameId);
+                            data.game = game;
+
+                            /* TODO: Or this. */
+                            var team = teams.get(game.teamId);
+                            var league = leagues.get(team.leagueId);
+                            data.league = league;
+
+                            var teamsCollection = teams.getCollection();
+                            var leaguesCollection = leagues.getCollection();
 
                             //Game related
                             data.game = games.get($stateParams.id);
@@ -69,7 +83,7 @@ GameArea.config([
                             data.gamePlayerLists = {};
                             data.players = players;
                             data.league = leaguesCollection[teamsCollection[data.game.teamId].leagueId];
-                            data.filterset = data.filtersets.get(data.league.filterSetId);
+                            data.filterset = filtersets.get(data.league.filterSetId);
 
                             //Player lists
                             var teamPlayerList = players.query({
@@ -96,7 +110,6 @@ GameArea.config([
                             return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function() {
                                 return $q.all(data);
                             });
-
                         });
                     }
                 ]
@@ -126,8 +139,8 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'SessionService',
-    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, session) {
+    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'TeamsFactory', 'SessionService',
+    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, teams, session) {
         $scope.expandAll = false;
         $scope.data = data;
         $scope.play = playManager;
@@ -143,15 +156,14 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.returnedDate = ($scope.game.isDelivered()) ? new Date($scope.game.currentAssignment().timeFinished) : null;
 
         //Collections
-        $scope.teams = data.teams.getCollection();
-
-        //Player List
-        $scope.teamPlayerList = data.gamePlayerLists[data.game.teamId];
-        $scope.opposingPlayerList = data.gamePlayerLists[data.game.opposingTeamId];
+        $scope.teams = teams.getCollection();
 
         //Teams
         $scope.team = $scope.teams[$scope.game.teamId];
         $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
+
+        //Filters
+        $scope.filtersetCategories = data.filtersetCategories;
 
         //Plays
         $scope.totalPlays = angular.copy(data.plays);
@@ -164,11 +176,11 @@ GameArea.controller('Coach.GameArea.controller', [
             $scope.gameStates.push(
                 {
                     name: 'Film Breakdown',
-                    state: 'ga-film-breakdown'
+                    state: 'Coach.GameArea.Breakdown'
                 },
                 {
                     name: 'Raw Film',
-                    state: 'ga-raw-film'
+                    state: 'Coach.GameArea.RawFilm'
                 }
             );
 
@@ -202,7 +214,7 @@ GameArea.controller('Coach.GameArea.controller', [
             $scope.gameStates.push(
                 {
                     name: 'Raw Film',
-                    state: 'ga-raw-film'
+                    state: 'Coach.GameArea.RawFilm'
                 }
             );
         }

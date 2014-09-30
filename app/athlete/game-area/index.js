@@ -108,7 +108,7 @@ GameArea.controller('Athlete.GameArea.controller', [
         $scope.returnedDate = ($scope.game.isDelivered()) ? new Date($scope.game.currentAssignment().timeFinished) : null;
 
         //Collections
-        $scope.teams = data.teams.getCollection();
+        $scope.teams = teams.getCollection();
 
         //Teams
         $scope.team = $scope.teams[$scope.game.teamId];
@@ -124,7 +124,7 @@ GameArea.controller('Athlete.GameArea.controller', [
             $scope.gameStates.push(
                 {
                     name: 'Film Breakdown',
-                    state: 'ga-film-breakdown'
+                    state: 'Athlete.GameArea.Breakdown'
                 }
             );
         }
@@ -132,7 +132,7 @@ GameArea.controller('Athlete.GameArea.controller', [
         $scope.gameStates.push(
             {
                 name: 'Raw Film',
-                state: 'ga-raw-film'
+                state: 'Athlete.GameArea.RawFilm'
             }
         );
 

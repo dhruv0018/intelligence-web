@@ -40,14 +40,17 @@ TeamInfo.config([
                     }
                 },
                 resolve: {
-                    'Coach.Data': ['$q', 'Coach.Data.Dependencies', 'SessionService', function($q, data, session) {
-                        return $q.all(data).then(function(data) {
-                            var teamsCollection = data.teams.getCollection();
-                            var team = teamsCollection[session.currentUser.currentRole.teamId];
-                            data.team = team;
-                            return data;
-                        });
-                    }]
+                    'Coach.Data': [
+                        '$q', 'Coach.Data.Dependencies', 'SessionService', 'TeamsFactory',
+                        function($q, data, session, teams) {
+                            return $q.all(data).then(function(data) {
+                                var teamsCollection = teams.getCollection();
+                                var team = teamsCollection[session.currentUser.currentRole.teamId];
+                                data.team = team;
+                                return data;
+                            });
+                        }
+                    ]
                 }
             })
             .state('Coach.Team.Info.Information', {
