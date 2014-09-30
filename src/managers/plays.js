@@ -45,7 +45,13 @@ IntelligenceWebClient.service('PlaysManager', [
 
         this.getNextPlay = function getNextPlay(currentPlay) {
             var currentPlayScope = this.playScopeList.scopes[currentPlay.id];
-            if (currentPlayScope) return currentPlayScope.nextPlayScope;
+
+            if (currentPlayScope.nextPlayScope.isHidden) {
+                //Find the next visible play
+                return this.getNextPlay(currentPlayScope.nextPlayScope.play);
+            } else if (currentPlayScope) {
+                return currentPlayScope.nextPlayScope;
+            }
         };
 
         this.registerPlayScope = function registerPlayScope(playScope) {
