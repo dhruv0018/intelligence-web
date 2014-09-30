@@ -47,12 +47,12 @@ GameAreaDownDistance.config([
 ]);
 
 GameAreaDownDistance.controller('GameAreaDownDistanceController', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'Coach.DownDistance.Data',
-    function controller($scope, $state, $stateParams, games, data) {
+    '$scope', '$state', '$stateParams', 'TeamsFactory', 'GamesFactory', 'Coach.DownDistance.Data',
+    function controller($scope, $state, $stateParams, teams, games, data) {
         var teamOnOffense = true;
         $scope.plays = data.plays;
         $scope.league = data.league;
-        $scope.teams = data.teams.getCollection();
+        $scope.teams = teams.getCollection();
         $scope.teamId = $scope.game.teamId;
         $scope.opposingTeamId = $scope.game.opposingTeamId;
         $scope.report = data.formationReport;

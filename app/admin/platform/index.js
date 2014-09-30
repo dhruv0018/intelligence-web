@@ -105,17 +105,17 @@ Platform.filter('filterDefaultPlans', function() {
 });
 
 Platform.controller('PlatformController', [
-    '$scope', '$modal', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'Platform.Data',
-    function controller($scope, $modal, turnaroundTimeMinTimeLookup, data) {
+    '$scope', '$modal', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'Platform.Data', 'SportsFactory', 'LeaguesFactory', 'PlansFactory',
+    function controller($scope, $modal, turnaroundTimeMinTimeLookup, data, sports, leagues, plans) {
 
-        $scope.leagues = data.leagues.getList();
-        $scope.indexedLeagues = data.leagues.getCollection();
-        $scope.plans = data.plans.getList();
-        $scope.sports = data.sports.getList();
+        $scope.leagues = leagues.getList();
+        $scope.indexedLeagues = leagues.getCollection();
+        $scope.plans = plans.getList();
+        $scope.sports = sports.getList();
 
         //TODO: plan should have sportId
         angular.forEach($scope.plans, function(plan) {
-            plan.sportId = data.leagues.get(plan.leagueIds[0]).sportId;
+            plan.sportId = leagues.get(plan.leagueIds[0]).sportId;
         });
 
         $scope.turnaroundTimeMinTimeLookup = turnaroundTimeMinTimeLookup;
@@ -137,7 +137,7 @@ Platform.controller('PlatformController', [
 
                     if (!returnedPlan) return;
 
-                    returnedPlan.sportId = data.leagues.get(returnedPlan.leagueIds[0]).sportId;
+                    returnedPlan.sportId = leagues.get(returnedPlan.leagueIds[0]).sportId;
                 });
             });
         };

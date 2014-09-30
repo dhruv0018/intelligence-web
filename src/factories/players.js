@@ -6,16 +6,16 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlayersFactory', [
-    '$q', 'PlayersResource', 'PlayersStorage', 'BaseFactory',
-    function($q, PlayersResource, PlansStorage, BaseFactory) {
+    '$injector', '$q', 'BaseFactory',
+    function($injector, $q, BaseFactory) {
 
         var PlayersFactory = {
 
             description: 'players',
 
-            storage: PlansStorage,
+            model: 'PlayersResource',
 
-            resource: PlayersResource,
+            storage: 'PlayersStorage',
 
             extend: function(player) {
 
@@ -40,13 +40,12 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     player.rosterIds.push(rosterId);
                 }
 
-                delete player.resource;
-                delete player.storage;
+                var model = $injector.get(self.model);
 
                 if (player.id) {
-                    return self.resource.update(player).$promise;
+                    return model.update(player).$promise;
                 } else {
-                    return self.resource.singleCreate(player).$promise.then(function(player) {
+                    return model.singleCreate(player).$promise.then(function(player) {
                         angular.extend(player, self);
                         return player;
                     });
@@ -86,14 +85,16 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     return player;
                 });
 
+                var model = $injector.get(self.model);
+
                 if (newPlayers.length) {
 
-                    newPlayers = self.resource.create(newPlayers).$promise;
+                    newPlayers = model.create(newPlayers).$promise;
                 }
 
                 currentPlayers = currentPlayers.map(function(player) {
 
-                    return self.resource.update(player).$promise;
+                    return model.update(player).$promise;
                 });
 
                 var allPlayers = currentPlayers.concat(newPlayers);
@@ -106,7 +107,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
             resendEmail: function(userId, teamId) {
                 var self = this;
 
-                return self.resource.resendEmail({
+                var model = $injector.get(self.model);
+
+                return model.resendEmail({
                     userId: userId,
                     teamId: teamId
                 });

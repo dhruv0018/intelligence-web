@@ -17,8 +17,8 @@ IntelligenceWebClient.service('TeamsStorage', [
 ]);
 
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$injector', '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'ResourceManager',
-    function($injector, $rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, usersResource, BaseFactory, users, managedResources) {
+    '$injector', '$rootScope', 'ROLES', 'ROLE_ID', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'ResourceManager',
+    function($injector, $rootScope, ROLES, ROLE_ID, schools, usersResource, BaseFactory, users, managedResources) {
 
         var TeamsFactory = {
 
@@ -26,9 +26,10 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
             description: 'teams',
 
-            storage: TeamsStorage,
+            model: 'TeamsResource',
 
-            resource: TeamsResource,
+            storage: 'TeamsStorage',
+
             extend: function(team) {
                 var self = this;
 
@@ -110,11 +111,14 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not save resource');
                 };
 
+                var model = $injector.get(self.model);
+                var storage = $injector.get(self.storage);
+
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
 
                     /* Make a PUT request to the server to update the resource. */
-                    var update = self.resource.update(parameters, copy, success, error);
+                    var update = model.update(parameters, copy, success, error);
 
                     /* Once the update request finishes. */
                     return update.$promise.then(function() {
@@ -126,8 +130,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
                             angular.extend(resource, self.extend(updated));
 
                             /* Update the resource in storage. */
-                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
-                            self.storage.collection[resource.id] = resource;
+                            storage.list[storage.list.indexOf(resource)] = resource;
+                            storage.collection[resource.id] = resource;
 
                             return resource;
                         });
@@ -137,7 +141,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 } else {
 
                     /* Make a POST request to the server to create the resource. */
-                    var create = self.resource.create(parameters, copy, success, error);
+                    var create = model.create(parameters, copy, success, error);
 
                     /* Once the create request finishes. */
                     return create.$promise.then(function(created) {
@@ -146,8 +150,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
                         angular.extend(resource, self.extend(created));
 
                         /* Add the resource to storage. */
-                        self.storage.list.push(resource);
-                        self.storage.collection[resource.id] = resource;
+                        storage.list.push(resource);
+                        storage.collection[resource.id] = resource;
 
                         return resource;
                     });
@@ -286,7 +290,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     throw new Error('Could not get remaining breakdowns for team');
                 };
 
-                return self.resource.getRemainingBreakdowns({ id: id }, callback, error).$promise;
+                var model = $injector.get(self.model);
+
+                return model.getRemainingBreakdowns({ id: id }, callback, error).$promise;
             },
             getMaxTurnaroundTime: function() {
                 var self = this;

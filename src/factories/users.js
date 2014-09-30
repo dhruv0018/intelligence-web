@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$injector', '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
-    function($injector, $rootScope, UsersResource, UsersStorage, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
+    '$injector', '$rootScope', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
+    function($injector, $rootScope, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
 
         var UsersFactory = {
 
@@ -15,9 +15,9 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             description: 'users',
 
-            storage: UsersStorage,
+            model: 'UsersResource',
 
-            resource: UsersResource,
+            storage: 'UsersStorage',
 
             extend: function(user) {
                 var self = this;
@@ -69,6 +69,23 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return user;
             },
 
+            unextend: function(user) {
+
+                var self = this;
+
+                /* Create a copy of the resource to break reference to original. */
+                var copy = angular.copy(user);
+
+                delete copy.defaultRole;
+                delete copy.currentRole;
+
+                angular.forEach(copy.roles, function(role) {
+                    role.type = (role.type.id) ? role.type.id : role.type;
+                });
+
+                return copy;
+            },
+
             search: function(query) {
 
                 var self = this;
@@ -97,75 +114,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                 });
             },
 
-            save: function(resource, success, error) {
-                var self = this;
-
-                resource = resource || self;
-
-                managedResources.reset(resource);
-
-                /* Create a copy of the resource to save to the server. */
-                var copy = self.unextend(resource);
-
-                angular.forEach(copy.roles, function(role) {
-                    role.type = (role.type.id) ? role.type.id : role.type;
-                });
-
-
-                parameters = {};
-
-                success = success || function(resource) {
-                    return self.extend(resource);
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not save resource');
-                };
-
-                /* If the resource has been saved to the server before. */
-                if (resource.id) {
-
-                    /* Make a PUT request to the server to update the resource. */
-                    var update = self.resource.update(parameters, copy, success, error);
-
-                    /* Once the update request finishes. */
-                    return update.$promise.then(function() {
-
-                        /* Fetch the updated resource. */
-                        return self.fetch(resource.id).then(function(updated) {
-
-                            /* Update local resource with server resource. */
-                            angular.extend(resource, self.extend(updated));
-
-                            /* Update the resource in storage. */
-                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
-                            self.storage.collection[resource.id] = resource;
-
-                            return resource;
-                        });
-                    });
-
-                    /* If the resource is new. */
-                } else {
-
-                    /* Make a POST request to the server to create the resource. */
-                    var create = self.resource.create(parameters, copy, success, error);
-
-                    /* Once the create request finishes. */
-                    return create.$promise.then(function(created) {
-
-                        /* Update local resource with server resource. */
-                        angular.extend(resource, self.extend(created));
-
-                        /* Add the resource to storage. */
-                        self.storage.list.push(resource);
-                        self.storage.collection[resource.id] = resource;
-
-                        return resource;
-                    });
-                }
-            },
             /**
             * @class User
             * @method

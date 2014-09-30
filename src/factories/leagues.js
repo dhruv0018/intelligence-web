@@ -17,16 +17,16 @@ IntelligenceWebClient.service('LeaguesStorage', [
 
 
 IntelligenceWebClient.factory('LeaguesFactory', [
-    'LeaguesStorage', 'LeaguesResource', 'BaseFactory',
-    function(LeaguesStorage, LeaguesResource, BaseFactory) {
+    'BaseFactory',
+    function(BaseFactory) {
 
         var LeaguesFactory = {
 
             description: 'leagues',
 
-            storage: LeaguesStorage,
+            model: 'LeaguesResource',
 
-            resource: LeaguesResource,
+            storage: 'LeaguesStorage'
         };
 
         angular.augment(LeaguesFactory, BaseFactory);
