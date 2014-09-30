@@ -45,9 +45,19 @@ Header.config([
                 },
                 resolve: {
                     'Base.Data': [
-                        '$q', 'Base.Data.Dependencies',
-                        function($q, data) {
-                            return $q.all(data);
+                        '$q', 'SessionService', 'TeamsFactory', 'Base.Data.Dependencies',
+                        function($q, session, teams, data) {
+
+                            var teamId = session.currentUser.currentRole.teamId;
+
+                            if (teamId) {
+
+                                var team = teams.load(teamId);
+
+                                return $q.all([team, data]);
+                            }
+
+                            else return $q.all(data);
                         }
                     ]
                 }
@@ -57,15 +67,24 @@ Header.config([
 
 
 Header.service('Base.Data.Dependencies', [
-    'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory',
-    function(sports, leagues, tagsets, filtersets) {
+    'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
+    function(session, sports, leagues, tagsets, filtersets, positionsets, teams) {
+
+        var teamIds = session.currentUser.getTeamIds();
 
         var Data = {
+
             sports: sports.load(),
             leagues: leagues.load(),
             tagsets: tagsets.load(),
-            filtersets: filtersets.load()
+            filtersets: filtersets.load(),
+            positionsets: positionsets.load()
         };
+
+        if (teamIds.length) {
+
+            Data.teams = teams.load({ 'id[]': teamIds });
+        }
 
         return Data;
     }

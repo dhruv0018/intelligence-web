@@ -51,20 +51,23 @@ AddFilm.config([
                 }
             },
             resolve: {
-                'Coach.Data': ['$q', 'Coach.Data.Dependencies', 'SessionService', 'TeamsFactory', function($q, data, session, teams) {
+                'Coach.Data': [
+                    '$q', 'Coach.Data.Dependencies', 'SessionService', 'LeaguesFactory', 'TeamsFactory',
+                    function($q, data, session, leagues, teams) {
 
-                    data.remainingBreakdowns = teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId);
+                        data.remainingBreakdowns = teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId);
 
-                    return $q.all(data).then(function(data) {
-                        var leaguesCollection = data.leagues.getCollection();
-                        var teamsCollection = data.teams.getCollection();
-                        var team = teamsCollection[session.currentUser.currentRole.teamId];
-                        data.league = leaguesCollection[team.leagueId];
-                        data.coachsTeam = team;
+                        return $q.all(data).then(function(data) {
+                            var leaguesCollection = leagues.getCollection();
+                            var teamsCollection = teams.getCollection();
+                            var team = teamsCollection[session.currentUser.currentRole.teamId];
+                            data.league = leaguesCollection[team.leagueId];
+                            data.coachsTeam = team;
 
-                        return data;
-                    });
-                }]
+                            return data;
+                        });
+                    }
+                ]
             }
         };
 
@@ -79,17 +82,40 @@ AddFilm.config([
  * @type {Controller}
  */
 AddFilm.controller('AddFilmController', [
-    '$scope', '$state', 'GamesFactory', 'Coach.Data',
-    function controller($scope, $state, games, data) {
+    '$scope', '$state', 'config', 'GamesFactory', 'Coach.Data', 'AlertsService',
+    function controller($scope, $state, config, games, data, alerts) {
         $scope.games = games;
         $scope.data = data;
         data.game = {};
+        $scope.howToUpload = config.links.addFilmHelp.howToUpload.uri;
+        $scope.commonIssues = config.links.addFilmHelp.commonIssues.uri;
+        $scope.moreQuestions = config.links.addFilmHelp.moreQuestions.uri;
+
+        //Show message with link to support page if no games uploaded
+        if (!games.getList().length) {
+            alerts.add({
+                type: 'info',
+                message: '<i class="icon icon-warning"></i> New to the upload process? It’s easy. <a target="_blank" href="' + $scope.howToUpload + '">Let us show you how.</a>'
+            });
+        }
     }
 ]);
 
 AddFilm.controller('StartController', [
-    '$scope', 'GAME_TYPES', 'Coach.Data', 'SessionService', 'LeaguesFactory',
-    function($scope, GAME_TYPES, data, session, leagues) {
+    '$scope', 'GAME_TYPES', 'Coach.Data', 'SessionService', 'LeaguesFactory', 'TeamsFactory',
+    function($scope, GAME_TYPES, data, session, leagues, teams) {
+
+        //intialize as -1 to remove flase negative. 0 means no team roster, 1 means valid team roster
+        $scope.hasRoster = -1;
+
+        //check if team has a valid roster
+        var team = teams.get(session.currentUser.currentRole.teamId);
+        if (data.playersList && data.playersList.some(function(player) { return !player.isUnknown && player.rosterStatuses[team.roster.id]; })) {
+            $scope.hasRoster = 1;
+        } else {
+            $scope.hasRoster = 0;
+        }
+
         $scope.GAME_TYPES = GAME_TYPES;
 
         $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];

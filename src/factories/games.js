@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',
-    function($sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, $q) {
+    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', '$q',
+    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, $q) {
 
         var GamesFactory = {
 
@@ -19,9 +19,9 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             description: 'games',
 
-            storage: GamesStorage,
+            model: 'GamesResource',
 
-            resource: GamesResource,
+            storage: 'GamesStorage',
 
             extend: function(game) {
 
@@ -29,6 +29,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 angular.augment(game, self);
 
+                game.video = game.video || {};
+                game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
                 game.notes = game.notes || [];
                 game.isDeleted = game.isDeleted || false;
 
@@ -69,7 +71,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                     throw new Error('Could not get stats for game');
                 };
 
-                return self.resource.generateStats({ id: id }, callback, error).$promise;
+                var model = $injector.get(self.model);
+
+                return model.generateStats({ id: id }, callback, error).$promise;
             },
 
             getStatus: function() {
@@ -103,6 +107,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 var sources = [];
+                var defaultVideo;
+                var DEFAULT_VIDEO_ID = config.defaultVideoId;
 
                 if (self.video && self.video.status) {
 
@@ -117,11 +123,18 @@ IntelligenceWebClient.factory('GamesFactory', [
                                     src: $sce.trustAsResourceUrl(profile.videoUrl)
                                 };
 
-                                sources.push(source);
+                                if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
+                                    defaultVideo = source;
+                                } else {
+                                    sources.push(source);
+                                }
                             }
                         });
+
                     }
                 }
+
+                if (defaultVideo) sources.unshift(defaultVideo);
 
                 return sources;
             },
@@ -607,39 +620,84 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return game;
             },
-            isRegular: function(game) {
-                return GAME_TYPES[GAME_TYPES_IDS[game.gameType]].type === 'regular';
+            isRegular: function isRegular(game) {
+
+                switch (game.gameType) {
+                    case GAME_TYPES.CONFERENCE.id:
+                    case GAME_TYPES.NON_CONFERENCE.id:
+                    case GAME_TYPES.PLAYOFF.id:
+                        return true;
+                    default:
+                        return false;
+                }
+            },
+
+            isNonRegular: function isNonRegular(game) {
+
+                switch (game.gameType) {
+
+                    case GAME_TYPES.SCOUTING.id:
+                    case GAME_TYPES.SCRIMMAGE.id:
+                        return true;
+                    default:
+                        return false;
+                }
             },
 
             getFormationReport: function() {
+
                 var self = this;
-                return self.resource.getFormationReport({id: self.id});
+
+                var model = $injector.get(self.model);
+
+                if (!self.id) throw new Error('Game must be saved before generating reports');
+
+                return model.getFormationReport({ id: self.id });
             },
 
             getDownAndDistanceReport: function(report) {
-                var Resource = this.resource;
+
+                /* TODO: the only thing used from parameter is gameId */
+
+                var self = this;
+
+                /* TODO: gameId should come from self if not given. */
+
+                var Resource = $injector.get(self.model);
 
                 var dndReport = new Resource(report);
 
-                return $q.when(dndReport.$generateDownAndDistanceReport({id: report.gameId}));
+                return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
             },
-            getRemainingTime: function(uploaderTeam) {
+
+            getRemainingTime: function(uploaderTeam, now) {
+
                 var self = this;
 
-                if (!self.submittedAt) {
-                    return 0;
+                now = now || moment.utc();
+
+                if (!self.submittedAt) return 0;
+
+                var submittedAt = moment.utc(self.submittedAt);
+
+                if (!submittedAt.isValid()) return 0;
+
+                var timePassed = moment.duration(submittedAt.diff(now));
+                var turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
+
+                var timeRemaining = moment.duration();
+
+                if (timePassed < 0) {
+
+                    timeRemaining = turnaroundTime.add(timePassed);
                 }
 
-                var timePassed = new Date() - moment.utc(self.submittedAt).toDate();
-                var turnoverTime = uploaderTeam.getMaxTurnaroundTime();
+                else {
 
-                if (turnoverTime > 0) {
-                    var turnoverTimeRemaining = moment.duration(turnoverTime, 'hours').subtract(timePassed, 'milliseconds');
-                    return turnoverTimeRemaining.asMilliseconds();
+                    timeRemaining = turnaroundTime.subtract(timePassed);
                 }
 
-                //no plans or packages and therefore no breakdowns available
-                return 0;
+                return timeRemaining.asMilliseconds();
             },
             setAside: function() {
                 var self = this;
@@ -692,9 +750,43 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
                 return self.status === GAME_STATUSES.FINALIZED.id;
             },
+            isShared: function() {
+                var self = this;
+                return self.status === GAME_STATUSES.NOT_INDEXED.id;
+            },
             isVideoTranscodeComplete: function() {
                 var self = this;
                 return self.video.status === VIDEO_STATUSES.COMPLETE.id;
+            },
+            isUploading: function() {
+                var self = this;
+                //return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
+                return false;
+            },
+            isProcessing: function() {
+                var self = this;
+                //return self.video.status === VIDEO_STATUSES.UPLOADED.id;
+                return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
+            },
+            isVideoTranscodeFailed: function() {
+                var self = this;
+                return self.video.status === VIDEO_STATUSES.FAILED.id;
+            },
+            isBeingBrokenDown: function() {
+                var self = this;
+                var isBeingBrokenDown = false;
+
+                switch (self.status) {
+                    case GAME_STATUSES.INDEXING.id:
+                    case GAME_STATUSES.READY_FOR_QA.id:
+                    case GAME_STATUSES.QAING.id:
+                    case GAME_STATUSES.SET_ASIDE.id:
+                    case GAME_STATUSES.INDEXED.id:
+                        isBeingBrokenDown = true;
+                        break;
+                }
+
+                return isBeingBrokenDown;
             }
         };
 

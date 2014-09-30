@@ -2,7 +2,6 @@
     "name": "indexing",
     "scripts": [
         "index.js",
-        "filters.js",
         "header-controller.js",
         "main-controller.js",
         "sidebar-notes-controller.js",
@@ -28,8 +27,5 @@
         "modal-delete-play.html",
         "modal-send-to-team.html",
         "modal-add-indexer-note.html"
-    ],
-    "dependencies": {
-        "moment/moment": "2.8.2"
-    }
+    ]
 }

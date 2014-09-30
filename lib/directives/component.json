@@ -13,6 +13,7 @@
         "events",
         "play",
         "plays",
+        "results",
         "no-results",
         "videoplayer",
         "athlete",
@@ -30,6 +31,7 @@
         "profile-placeholder",
         "notes-list",
         "positions-dropdown",
+        "state-selector",
         "uploader",
         "formation-chart",
         "arena",
@@ -47,7 +49,8 @@
         "videogular",
         "breakdown-text",
         "player-information",
-        "film-home-tabs"
+        "film-home-tabs",
+        "plays-filters"
     ],
     "scripts": [
         "index.js"

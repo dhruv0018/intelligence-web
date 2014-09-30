@@ -14,13 +14,13 @@ var TeamInfo = angular.module('Coach.Team.Info');
  * @type {controller}
  */
 TeamInfo.controller('Coach.Team.Info.Information.controller', [
-    '$rootScope', '$scope', '$state', '$http', 'config', 'GamesFactory', 'PlayersFactory', 'Coach.Data', 'SessionService',
-    function controller($rootScope, $scope, $state, $http, config, games, players, data, session) {
+    '$rootScope', '$scope', '$state', '$http', 'config', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'Coach.Data', 'SessionService',
+    function controller($rootScope, $scope, $state, $http, config, teams, games, players, data, session) {
         var reader = new FileReader();
         $scope.data = data;
 
         //Team
-        $scope.team = $scope.data.teams.getCollection()[session.currentUser.currentRole.teamId];
+        $scope.team = teams.get(session.currentUser.currentRole.teamId);
 
         $scope.setLogo = function(files) {
             $scope.logo = files[0];
@@ -44,7 +44,9 @@ TeamInfo.controller('Coach.Team.Info.Information.controller', [
                 transformRequest: angular.identity
             })
             .success(function(team) {
-                $scope.data.teams.getCollection()[session.currentUser.currentRole.teamId] = team;
+
+                /* TODO: Need to think about this more.... */
+                teams.getCollection()[session.currentUser.currentRole.teamId] = team;
             })
             .error(function() {
                 console.log('the image upload failed');

@@ -60,40 +60,26 @@ OpposingTeam.directive('krossoverCoachGameOpposingTeam', [
  * @type {controller}
  */
 OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
-    'config', '$rootScope', '$scope', '$state', '$http', 'GamesFactory', 'PlayersFactory',
-    function controller(config, $rootScope, $scope, $state, $http, games, players) {
+    'config', '$rootScope', '$scope', '$state', '$http', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PositionsetsFactory',
+    function controller(config, $rootScope, $scope, $state, $http, teams, games, players, positionsets) {
         $scope.config = config;
 
         //Collections
-        $scope.teams = $scope.data.teams.getCollection();
+        $scope.teams = teams.getCollection();
 
-        //Positions
-        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
+        $scope.positionset = positionsets.get($scope.data.league.positionSetId);
+        $scope.positions = $scope.positionset.indexedPositions;
 
         $scope.$watch('data.game', function(game) {
             if (game.id) {
                 $scope.data.game.opposingTeamRosterId = game.rosters[game.opposingTeamId].id;
-
-                angular.forEach($scope.data.gamePlayerLists[game.opposingTeamId], function(player) {
-                    player = players.constructPositionDropdown(player, game.rosters[game.opposingTeamId].id, $scope.positions);
-                });
             }
         });
 
         $scope.save = function() {
 
-            if (Object.keys($scope.positions).length > 0) {
-                angular.forEach($scope.data.gamePlayerLists[$scope.data.game.opposingTeamId], function(player) {
-                    player = players.getPositionsFromDowndown(player, $scope.data.game.opposingTeamRosterId, $scope.positions);
-                });
-            }
-
             players.save($scope.data.game.rosters[$scope.data.game.opposingTeamId].id, $scope.data.gamePlayerLists[$scope.data.game.opposingTeamId]).then(function(roster) {
                 $scope.data.gamePlayerLists[$scope.data.game.opposingTeamId] = roster;
-
-                angular.forEach($scope.data.gamePlayerLists[$scope.data.game.opposingTeamId], function(player) {
-                    player = players.constructPositionDropdown(player, $scope.data.game.opposingTeamRosterId, $scope.positions);
-                });
             });
 
             $scope.tabs.deactivateAll();

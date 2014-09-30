@@ -22,22 +22,28 @@
                         
                         <div class="row">
 
-                            <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" class="select-boxes col-md-6">
+                            <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" data-ng-class="{active: hasRoster === 1}" class="select-boxes col-md-6">
 
-                                <button type="button" data-ui-sref="upload-film">
+                                <div class="no-roster-warning" data-ng-if="hasRoster === 0">
+                                    You must have a roster to upload a regular game.
+                                    <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team">Add players to your roster.</a>
+                                </div>
+
+                                <button type="button" data-ui-sref="upload-film" data-ng-disabled="hasRoster < 1">
 
                                     <div>
                                         <h1>Regular Game</h1>
                                         <h2>Includes: regular season, conference and non conference, and playoff games.</h2>
                                         <p>Unlimited games for sharing</p>
                                     </div>
-                                    <i class="icon icon-upload"></i>
+                                    <i data-ng-if="hasRoster === 1" class="icon icon-upload"></i>
+                                    <i data-ng-if="hasRoster === 0" class="icon icon-warning"></i>
 
                                 </button>
 
                             </div>
 
-                            <div class="select-boxes col-md-6">
+                            <div class="select-boxes active col-md-6">
 
                                 <button type="button" data-ng-click="data.game.gameType = GAME_TYPES['SCOUTING'].id" data-ui-sref="upload-film">
 
@@ -66,7 +72,7 @@
 
                     <div class="col-md-4">
 
-                        <a href="http://support.krossover.com/customer/portal/articles/1251842-uploading-a-game-%E2%96%BA" target="_blank">
+                        <a href="{{howToUpload}}" target="_blank">
 
                             <div class="link-box">
 
@@ -84,7 +90,7 @@
 
                     <div class="col-md-4">
 
-                        <a href="http://support.krossover.com/customer/portal/articles/1252826-common-upload-issues" target="_blank">
+                        <a href="{{commonIssues}}" target="_blank">
 
                             <div class="link-box">
 
@@ -102,7 +108,7 @@
 
                     <div class="col-md-4">
 
-                        <a href="http://support.krossover.com/customer/portal/emails/new" target="_blank">
+                        <a href="{{moreQuestions}}" target="_blank">
 
                             <div class="link-box">
 

@@ -1,0 +1,9 @@
+{
+    "name": "raw-film",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

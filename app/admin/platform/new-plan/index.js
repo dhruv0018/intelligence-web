@@ -30,14 +30,14 @@ NewPlan.run([
  * @type {Controller}
  */
 NewPlan.controller('NewPlanController', [
-    '$scope', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'EditPlanObj', 'NewDate', 'PlatformData',
-    function controller($scope, $modalInstance, turnaroundTimeRanges, editPlanObj, newDate, data) {
+    '$scope', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'EditPlanObj', 'NewDate', 'PlatformData', 'SportsFactory', 'LeaguesFactory',
+    function controller($scope, $modalInstance, turnaroundTimeRanges, editPlanObj, newDate, data, sports, leagues) {
 
         $scope.defaultPlan = {};
         $scope.defaultPlan.leagueIds = [];
 
-        $scope.sports = data.sports.getList();
-        $scope.leagues = data.leagues.getList();
+        $scope.sports = sports.getList();
+        $scope.leagues = leagues.getList();
 
         $scope.maxTurnaroundTimes = turnaroundTimeRanges;
 
@@ -47,7 +47,7 @@ NewPlan.controller('NewPlanController', [
             if (editPlanObj.leagueIds.length) {
                 //All leagues must have the same sportId, so just grab the first
                 //TODO: default plan should have sportId?
-                $scope.defaultPlan.sportId = data.leagues.get(editPlanObj.leagueIds[0]).sportId;
+                $scope.defaultPlan.sportId = leagues.get(editPlanObj.leagueIds[0]).sportId;
             }
 
             //Format the saved dates for editing

@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$rootScope', 'UsersResource', 'UsersStorage', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
-    function($rootScope, UsersResource, UsersStorage, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
+    '$injector', '$rootScope', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
+    function($injector, $rootScope, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
 
         var UsersFactory = {
 
@@ -15,9 +15,9 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             description: 'users',
 
-            storage: UsersStorage,
+            model: 'UsersResource',
 
-            resource: UsersResource,
+            storage: 'UsersStorage',
 
             extend: function(user) {
                 var self = this;
@@ -46,11 +46,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                         }
                     });
                 }
-                /* Convert the last accessed string to a date object. */
-                user.lastAccessed = new Date(user.lastAccessed);
-
-                /* If the date conversion failed clear the value. */
-                if (isNaN(user.lastAccessed.valueOf())) user.lastAccessed = '';
 
                 /* Copy all of the properties from the retrieved $resource
                  * "user" object. */
@@ -73,75 +68,52 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return user;
             },
-            save: function(resource, success, error) {
+
+            unextend: function(user) {
+
                 var self = this;
 
-                resource = resource || self;
+                /* Create a copy of the resource to break reference to original. */
+                var copy = angular.copy(user);
 
-                managedResources.reset(resource);
-
-                /* Create a copy of the resource to save to the server. */
-                var copy = self.unextend(resource);
+                delete copy.defaultRole;
+                delete copy.currentRole;
 
                 angular.forEach(copy.roles, function(role) {
                     role.type = (role.type.id) ? role.type.id : role.type;
                 });
 
+                return copy;
+            },
 
-                parameters = {};
+            search: function(query) {
 
-                success = success || function(resource) {
-                    return self.extend(resource);
-                };
+                var self = this;
 
-                error = error || function() {
+                return self.retrieve(query).then(function(users) {
 
-                    throw new Error('Could not save resource');
-                };
+                    var teamIds = [];
 
-                /* If the resource has been saved to the server before. */
-                if (resource.id) {
+                    angular.forEach(users, function(user) {
 
-                    /* Make a PUT request to the server to update the resource. */
-                    var update = self.resource.update(parameters, copy, success, error);
+                        angular.forEach(user.roles, function(role) {
 
-                    /* Once the update request finishes. */
-                    return update.$promise.then(function() {
+                            if (role.teamId) {
 
-                        /* Fetch the updated resource. */
-                        return self.fetch(resource.id).then(function(updated) {
-
-                            /* Update local resource with server resource. */
-                            angular.extend(resource, self.extend(updated));
-
-                            /* Update the resource in storage. */
-                            self.storage.list[self.storage.list.indexOf(resource)] = resource;
-                            self.storage.collection[resource.id] = resource;
-
-                            return resource;
+                                teamIds.push(role.teamId);
+                            }
                         });
                     });
 
-                    /* If the resource is new. */
-                } else {
+                    var teams = $injector.get('TeamsFactory');
 
-                    /* Make a POST request to the server to create the resource. */
-                    var create = self.resource.create(parameters, copy, success, error);
+                    return teams.retrieve({ 'id[]': teamIds }).then(function() {
 
-                    /* Once the create request finishes. */
-                    return create.$promise.then(function(created) {
-
-                        /* Update local resource with server resource. */
-                        angular.extend(resource, self.extend(created));
-
-                        /* Add the resource to storage. */
-                        self.storage.list.push(resource);
-                        self.storage.collection[resource.id] = resource;
-
-                        return resource;
+                        return users;
                     });
-                }
+                });
             },
+
             /**
             * @class User
             * @method
@@ -259,6 +231,29 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
+            * @class User
+            * @method
+            * @returns {Array} an array on team ISs associated with the
+            * user.
+            */
+            getTeamIds: function() {
+
+                var roles = this.roles;
+
+                var teamIds = [];
+
+                roles.forEach(function(role) {
+
+                    if (role.teamId) {
+
+                        teamIds.push(role.teamId);
+                    }
+                });
+
+                return teamIds;
+            },
+
+            /**
              * @class User
              * @method
              * @param {Object} role - the role object to check for the match.
@@ -371,10 +366,9 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* Dictate what Admins can access. */
                 else if (this.is(role, ROLES.ADMIN)) {
 
-                    /* Admins can not access Super Admins or other Admins,
+                    /* Admins can not access Super Admins,
                      * but can access all other roles. */
-                    return this.is(verify, ROLES.SUPER_ADMIN) ||
-                           this.is(verify, ROLES.ADMIN) ? false : true;
+                    return this.is(verify, ROLES.SUPER_ADMIN) ? false : true;
                 }
 
                 /* Dictate what a Head Coach can access. */

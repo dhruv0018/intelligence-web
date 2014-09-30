@@ -50,12 +50,12 @@ GameAreaFormations.config([
 ]);
 
 GameAreaFormations.controller('GameAreaFormationsController', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'Coach.FormationReport.Data',
-    function controller($scope, $state, $stateParams, games, data) {
+    '$scope', '$state', '$stateParams', 'TeamsFactory', 'GamesFactory', 'Coach.FormationReport.Data',
+    function controller($scope, $state, $stateParams, teams, games, data) {
 
         $scope.plays = data.plays;
         $scope.league = data.league;
-        $scope.teams = data.teams.getCollection();
+        $scope.teams = teams.getCollection();
         $scope.teamId = $scope.game.teamId;
         $scope.opposingTeamId = $scope.game.opposingTeamId;
         $scope.teamPlayers = data.teamPlayers;

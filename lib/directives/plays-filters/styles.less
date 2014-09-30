@@ -1,0 +1,60 @@
+@import (reference) "main.less";
+
+.plays-filter{
+  .filter-dropdown{
+    margin-left: 20px;
+
+    .btn{
+      text-align: left;
+      border-radius: @border-radius-base;
+    }
+    ul{
+      padding-top: 25px;
+      width: 650px;
+      opacity: .95;
+
+      li{
+        position: relative;
+        display: inline-block;
+        height: 315px;
+        vertical-align: top;
+        padding:0 20px 0 20px;
+        border-right: 1px solid @gray-lighter;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        a{
+          width:160px;
+          margin-bottom: 7px;
+          padding-bottom: 2px;
+          padding-top: 2px;
+          border-radius:@border-radius-small;
+          letter-spacing: normal;
+          font-weight: 400;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          &.child{
+            margin-left: 10px;
+          }
+        }
+
+        &:last-of-type{
+          border:none;
+        }
+      }
+    }
+
+    .dropdown-toggle {
+      letter-spacing: normal;
+      text-decoration: none;
+      cursor: pointer;
+
+      .icon-chevron-down {
+        font-size: 12px;
+        margin-left: 5px;
+      }
+    }
+  }
+}

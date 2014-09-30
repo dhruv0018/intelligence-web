@@ -6,16 +6,16 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('TagsetsFactory', [
-    'TagsetsResource', 'TagsetsStorage', 'BaseFactory', '$filter',
-    function(TagsetsResource, TagsetsStorage, BaseFactory, $filter) {
+    'BaseFactory', '$filter',
+    function(BaseFactory, $filter) {
 
         var TagsetsFactory = {
 
             description: 'tagsets',
 
-            storage: TagsetsStorage,
+            model: 'TagsetsResource',
 
-            resource: TagsetsResource,
+            storage: 'TagsetsStorage',
 
             extend: function(tagset) {
 

@@ -49,10 +49,6 @@ TeamPackage.controller('TeamPackageController', [
             $scope.teamPackageObj = angular.copy(team.teamPackages[packageIndex]);
         }
 
-        $scope.cancel = function() {
-            $modalInstance.dismiss('cancel');
-        };
-
         $scope.saveTeamPackage = function() {
 
             var basicModalOptions = {};
