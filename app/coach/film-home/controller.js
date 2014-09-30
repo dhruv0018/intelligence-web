@@ -24,6 +24,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
         $scope.gamesList = games.getList();
         $scope.teams = data.teams.getCollection();
         $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
+        $scope.currentUser = session.currentUser;
         $scope.roster = $scope.team.roster;
         $scope.activeRoster = players.constructActiveRoster($scope.playersList, $scope.roster.id);
         $scope.query = '';
