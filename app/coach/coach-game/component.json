@@ -6,7 +6,6 @@
     "local": [
         "coach-game-info",
         "game-tab",
-        "coach-game-opposing-team",
         "coach-game-instructions",
         "coach-game-team"
     ],

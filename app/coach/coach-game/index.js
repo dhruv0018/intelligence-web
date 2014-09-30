@@ -5,7 +5,6 @@ var ELEMENTS = 'E';
 /* Component dependencies. */
 require('coach-game-info');
 require('game-tab');
-require('coach-game-opposing-team');
 require('coach-game-instructions');
 require('coach-game-team');
 
@@ -27,7 +26,6 @@ var Game = angular.module('Coach.Game', [
     'ui.bootstrap',
     'Coach.Game.Info',
     'Coach.Game.GameTab',
-    'Coach.Game.OpposingTeam',
     'Coach.Game.Instructions',
     'Coach.Game.Team'
 ]);
