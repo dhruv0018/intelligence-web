@@ -49,5 +49,6 @@ GameAreaFilmBreakdown.controller('GameAreaFilmBreakdownController', [
         $scope.leagues = data.leagues.getCollection();
         $scope.league = $scope.leagues[$scope.team.leagueId];
         $scope.expandAll = false;
+        $scope.playAllPlays = true;
     }
 ]);
