@@ -50,31 +50,29 @@ Coach.config([
  */
 Coach.service('Coach.Data.Dependencies', [
     '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies', 'ROLE_TYPE', 'ROLES',
-    function($q, session, teams, games, players, users, leagues, tagsets, positions, baseData, ROLE_TYPE, ROLES) {
+    function($q, session, teams, games, players, users, leagues, tagsets, positionsets, data, ROLE_TYPE, ROLES) {
+        var currentUser = session.currentUser;
+        var teamId = currentUser.currentRole.teamId;
 
-        var promises = {
-            games: games.load({
-                uploaderTeamId: session.currentUser.currentRole.teamId
-            }),
-            teams: teams.load({ relatedUserId: session.currentUser.id }),
-            users: users.load({ relatedUserId: session.currentUser.id }),
-            remainingBreakdowns: teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId),
-            positionSets: positions.load(),
-            leagues: baseData.leagues,
-            sports: baseData.sports,
-            filtersets: baseData.filtersets,
-            tagsets: baseData.tagsets
+        var Data = {
+            positionSets: positionsets.load(),
+            teams: teams.load({ relatedUserId: currentUser.id }),
+            users: users.load({ relatedUserId: currentUser.id }),
+            games: games.load({ uploaderTeamId: teamId })
         };
 
-        promises.playersList = promises.teams.then(function(teams) {
-            var userTeamId = session.currentUser.currentRole.teamId;
-            var userTeam = teams.get(userTeamId);
-            return players.query({
-                rosterId: userTeam.roster.id
+        Data.playersList = $q.all(data).then(function() {
+
+            var team = teams.get(teamId);
+
+            var playersFilter = { rosterId: team.roster.id };
+
+            return players.load(playersFilter).then(function() {
+                return players.getList(playersFilter);
             });
         });
 
-        promises.assistantCoaches = promises.users.then(function(users) {
+        Data.assistantCoaches = Data.users.then(function(users) {
             var assistantCoaches = [];
             angular.forEach(users.getList(), function(user) {
                 if (user.roleTypes[ROLE_TYPE.ASSISTANT_COACH]) {
@@ -93,6 +91,8 @@ Coach.service('Coach.Data.Dependencies', [
             return assistantCoaches;
         });
 
-        return promises;
+        angular.extend(Data, data);
+
+        return Data;
     }
 ]);

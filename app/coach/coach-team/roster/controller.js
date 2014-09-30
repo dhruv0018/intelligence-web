@@ -13,9 +13,10 @@ var TeamRoster = angular.module('coach-team-roster');
  * @name Team.controller
  * @type {controller}
  */
+
 TeamRoster.controller('Coach.Team.Roster.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Data', 'PlayersFactory', 'UsersFactory', 'TeamsFactory', 'LeaguesFactory', 'SessionService',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users, teams, leagues, session) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Team.Data', 'LeaguesFactory', 'PositionsetsFactory', 'TeamsFactory', 'PlayersFactory', 'UsersFactory', 'SessionService',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, leagues, positionsets, teams, players, users, session) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
@@ -41,7 +42,8 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
         $scope.league = leagues.get($scope.team.leagueId);
 
         //Positions
-        $scope.positions = ($scope.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.league.positionSetId].indexedPositions : {};
+        $scope.positionset = positionsets.get($scope.league.positionSetId);
+        $scope.positions = $scope.positionset.indexedPositions;
 
         //Roster
         $scope.roster = $scope.data.playersList;

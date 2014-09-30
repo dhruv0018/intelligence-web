@@ -25,6 +25,26 @@ Team.run([
 ]);
 
 /**
+ * Coach team data service.
+ * @module Team
+ * @type {service}
+ */
+Team.service('Coach.Team.Data.Dependencies', [
+    'UsersFactory', 'Coach.Data.Dependencies',
+    function(users, data) {
+
+        var Data = {
+
+            users: users.load()
+        };
+
+        angular.extend(Data, data);
+
+        return Data;
+    }
+]);
+
+/**
  * Team page state router.
  * @module Team
  * @type {UI-Router}
@@ -35,20 +55,20 @@ Team.config([
 
         $stateProvider
 
-        .state('Coach.Team', {
-            url: '/team',
-            resolve: {
-                'Coach.Data': ['$q','Coach.Data.Dependencies', function($q, data) {
-                    return $q.all(data).then(function(data) {
-                        return data;
-                    });
-                }]
-            },
-            views: {
-                'main@root': {
-                    templateUrl: 'coach/team/template.html'
+            .state('Coach.Team', {
+                url: '/team',
+                resolve: {
+                    'Coach.Team.Data': ['$q','Coach.Data.Dependencies', function($q, data) {
+                        return $q.all(data).then(function(data) {
+                            return data;
+                        });
+                    }]
+                },
+                views: {
+                    'main@root': {
+                        templateUrl: 'coach/team/template.html'
+                    }
                 }
-            }
-        });
+            });
     }
 ]);

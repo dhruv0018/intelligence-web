@@ -314,12 +314,12 @@
         "Assistant Coach": true
     },
 
-    "ga-raw-film": {
+    "Coach.GameArea.RawFilm": {
         "Head Coach": true,
         "Assistant Coach": true
     },
 
-    "ga-film-breakdown": {
+    "Coach.GameArea.Breakdown": {
         "Head Coach": true,
         "Assistant Coach": true
     },
