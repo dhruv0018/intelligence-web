@@ -42,7 +42,8 @@ Team.controller('Coach.Team.controller', [
         $scope.league = $scope.leagues[$scope.team.leagueId];
 
         //Positions
-        $scope.positions = ($scope.league.positionSetId) ? positionsets.getCollection()[$scope.league.positionSetId].indexedPositions : {};
+        $scope.positionset = positionsets.get($scope.league.positionSetId);
+        $scope.positions = $scope.positionset.indexedPositions;
 
         //Roster
         $scope.roster = $scope.data.playersList;

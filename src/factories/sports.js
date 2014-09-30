@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('SportsFactory', [
-    'BaseFactory', 'SportsResource', 'SportsStorage',
-    function(BaseFactory, SportsResource, SportsStorage) {
+    'BaseFactory',
+    function(BaseFactory) {
 
         var SportsFactory = {
 

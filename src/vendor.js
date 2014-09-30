@@ -6,7 +6,7 @@ require('angular-ui-unique/unique');
 require('angular-ui-showhide/showhide');
 require('angular-ui-validate/validate');
 require('angular-ui-router/release/angular-ui-router');
-require('angular-multi-select/angular-multi-select');
+require('angular-multiselect/src/multiselect');
 require('angulartics/src/angulartics');
 require('angulartics/src/angulartics-segmentio');
 require('flow/src/angular-flow');

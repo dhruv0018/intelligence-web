@@ -16,8 +16,7 @@
         "gameAreaStatistics.html",
         "gameAreaShotChart.html",
         "gameAreaFormations.html",
-        "gameAreaDownDistance.html",
-        "deleteGame.html"
+        "gameAreaDownDistance.html"
     ],
     "scripts": [
         "index.js",

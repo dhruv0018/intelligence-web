@@ -58,12 +58,12 @@ Team.directive('krossoverCoachGameTeam', [
  * @type {controller}
  */
 Team.controller('Coach.Game.Team.controller', [
-    'config', '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory',
-    function controller(config, $rootScope, $scope, $state, games, players) {
+    'config', '$rootScope', '$scope', '$state', 'GamesFactory', 'PlayersFactory', 'PositionsetsFactory',
+    function controller(config, $rootScope, $scope, $state, games, players, positionsets) {
         $scope.config = config;
 
-        //Positions
-        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
+        $scope.positionset = positionsets.get($scope.data.league.positionSetId);
+        $scope.positions = $scope.positionset.indexedPositions;
 
         //TODO: temporary fix of tabs flow
         function enableAllTabs() {

@@ -62,8 +62,8 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$q', '$rootScope', '$scope', '$window', '$state', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($q, $rootScope, $scope, $window, $state, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+    '$q', '$rootScope', '$scope', '$modal', '$window', '$state', 'BasicModals', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
+    function controller($q, $rootScope, $scope, $modal, $window, $state, modals, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
 
         $scope.session = session;
 
@@ -314,6 +314,24 @@ Info.controller('Coach.Game.Info.controller', [
 
                 return prompt;
             }
+        };
+
+        //Confirmation for deleting a game
+        $scope.deleteGame = function() {
+
+            var deleteGameModal = modals.openForConfirm({
+                title: 'Delete Game',
+                bodyText: 'Deleteing this game will delete all the information associated with it.',
+                buttonText: 'Yes, I understand'
+            });
+
+            deleteGameModal.result.then(function() {
+                $scope.data.game.isDeleted = true;
+
+                $scope.data.game.save();
+                $state.go('Coach.FilmHome');
+            });
+
         };
     }
 ]);
