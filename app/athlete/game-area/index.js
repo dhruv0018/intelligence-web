@@ -92,8 +92,8 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Athlete.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Athlete.Data', 'SPORTS', 'PlayManager',
-    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager) {
+    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Athlete.Data', 'SPORTS', 'PlayManager', 'SessionService',
+    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, session) {
         $scope.expandAll = false;
         $scope.data = data;
         $scope.play = playManager;
@@ -120,7 +120,7 @@ GameArea.controller('Athlete.GameArea.controller', [
         //define states for view selector
         $scope.gameStates = [];
 
-        if ($scope.game.isDelivered()) {
+        if ($scope.game.isDelivered() && !$scope.game.isSharedWithUser(session.currentUser)) {
             $scope.gameStates.push(
                 {
                     name: 'Film Breakdown',
