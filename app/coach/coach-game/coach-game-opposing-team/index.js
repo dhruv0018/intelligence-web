@@ -60,15 +60,12 @@ OpposingTeam.directive('krossoverCoachGameOpposingTeam', [
  * @type {controller}
  */
 OpposingTeam.controller('Coach.Game.OpposingTeam.controller', [
-    'config', '$rootScope', '$scope', '$state', '$http', 'PositionsetsFactory', 'GamesFactory', 'PlayersFactory',
-    function controller(config, $rootScope, $scope, $state, $http, positionsets, games, players) {
+    'config', '$rootScope', '$scope', '$state', '$http', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PositionsetsFactory',
+    function controller(config, $rootScope, $scope, $state, $http, teams, games, players, positionsets) {
         $scope.config = config;
 
         //Collections
-        $scope.config = config;
-
-        //Collections
-        $scope.teams = $scope.data.teams.getCollection();
+        $scope.teams = teams.getCollection();
 
         $scope.positionset = positionsets.get($scope.data.league.positionSetId);
         $scope.positions = $scope.positionset.indexedPositions;

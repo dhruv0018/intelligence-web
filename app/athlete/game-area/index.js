@@ -108,7 +108,7 @@ GameArea.controller('Athlete.GameArea.controller', [
         $scope.returnedDate = ($scope.game.isDelivered()) ? new Date($scope.game.currentAssignment().timeFinished) : null;
 
         //Collections
-        $scope.teams = data.teams.getCollection();
+        $scope.teams = teams.getCollection();
 
         //Teams
         $scope.team = $scope.teams[$scope.game.teamId];

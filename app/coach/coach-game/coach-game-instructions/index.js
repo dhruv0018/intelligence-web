@@ -60,7 +60,9 @@ Instructions.controller('Coach.Game.Instructions.controller', [
     function controller($scope, $state, GAME_STATUSES, positionsets, games, teams, session, alerts) {
 
         $scope.keys = window.Object.keys;
-        $scope.positions = ($scope.data.league.positionSetId) ? positionsets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
+
+        $scope.positionset = positionsets.get($scope.data.league.positionSetId);
+        $scope.positions = $scope.positionset.indexedPositions;
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;

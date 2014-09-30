@@ -59,8 +59,8 @@ GameArea.config([
             },
             resolve: {
                 'Coach.Data': [
-                    '$q', '$stateParams', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
-                    function($q, $stateParams, leagues, teams, games, players, plays, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
+                    '$q', '$stateParams', 'LeaguesFactory', 'FiltersetsFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
+                    function($q, $stateParams, leagues, filtersets, teams, games, players, plays, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
                         return $q.all(data).then(function(data) {
 
                             var gameId = $stateParams.id;
@@ -74,16 +74,16 @@ GameArea.config([
                             var league = leagues.get(team.leagueId);
                             data.league = league;
 
-                            var teamsCollection = data.teams.getCollection();
-                            var leaguesCollection = data.leagues.getCollection();
+                            var teamsCollection = teams.getCollection();
+                            var leaguesCollection = leagues.getCollection();
 
                             //Game related
-                            data.game = data.games.get($stateParams.id);
+                            data.game = games.get($stateParams.id);
                             data.gameStatus = data.game.status;
                             data.gamePlayerLists = {};
                             data.players = players;
                             data.league = leaguesCollection[teamsCollection[data.game.teamId].leagueId];
-                            data.filterset = data.filtersets.get(data.league.filterSetId);
+                            data.filterset = filtersets.get(data.league.filterSetId);
 
                             //Player lists
                             var teamPlayerList = players.query({
@@ -139,8 +139,8 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager',
-    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager) {
+    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'TeamsFactory',
+    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, teams) {
         $scope.expandAll = false;
         $scope.data = data;
         $scope.play = playManager;
@@ -155,7 +155,7 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.returnedDate = ($scope.game.isDelivered()) ? new Date($scope.game.currentAssignment().timeFinished) : null;
 
         //Collections
-        $scope.teams = data.teams.getCollection();
+        $scope.teams = teams.getCollection();
 
         //Teams
         $scope.team = $scope.teams[$scope.game.teamId];
