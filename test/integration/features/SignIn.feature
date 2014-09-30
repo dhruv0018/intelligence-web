@@ -15,7 +15,7 @@ Feature: Authentication
 
     However, if I do not provide adequate credentials, then I will not be redirected.
 
-    Once signed-in, I should be able to sign-out and be redirected to login page again.
+    Once signed-in, I should be able to sign-out and be redirected to the login page again.
 
     Background:
         Given I navigate to "login"
@@ -34,7 +34,7 @@ Feature: Authentication
     Scenario: An unauthenticated Admin signing in with inadequate credentials
         
         Only test the admin since all users should see the same result.
-        If the Admin doesn't get the correct result, no user will
+        If the Admin doesn't get the correct result, no user will.
 
         Given I am a "Admin"
         When I authenticate with an invalid password
@@ -50,6 +50,7 @@ Feature: Authentication
         Examples: Different user types
             | User    | 
             | Admin   |
+
 
 #OLD LOGIN TEST
 # Scenario: Successfully Sign In As An Admin User
