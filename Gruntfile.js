@@ -556,6 +556,15 @@ module.exports = function(grunt) {
         server.close();
     });
 
+    grunt.registerTask('date-manifest', 'Dates the cache manifest', function() {
+
+        var fs = require('fs');
+
+        var now = new Date();
+
+        fs.appendFileSync('public/intelligence/manifest.appcache', '# ' + now);
+    });
+
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['karma', 'integration']);
     grunt.registerTask('lint', ['htmlhint', 'jshint', 'eslint', 'jscs']);
@@ -584,7 +593,10 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:assets',
         'copy:dev',
-        'copy:build']);
+        'copy:build',
+        'copy:manifests',
+        'date-manifest'
+    ]);
 
     grunt.registerTask('qa', [
         'clean',
@@ -606,7 +618,10 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:build',
         'copy:htaccess',
-        'ver:prod']);
+        'copy:manifests',
+        'date-manifest',
+        'ver:prod'
+    ]);
 
     grunt.registerTask('prod', [
         'clean',
@@ -629,6 +644,8 @@ module.exports = function(grunt) {
         'copy:build',
         'copy:htaccess',
         'copy:manifests',
-        'ver:prod']);
+        'date-manifest',
+        'ver:prod'
+    ]);
 };
 
