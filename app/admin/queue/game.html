@@ -142,9 +142,9 @@
 
                             <h3><i class="icon icon-pushpin"></i> Indexing Notes:</h3>
 
-                            <div data-ng-repeat="note in game.notes[GAME_NOTE_TYPES.INDEXER_NOTE]">
+                            <div data-ng-repeat="note in game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] | orderBy:'gameTime'">
 
-                                <p>{{ note.content }}</p>
+                                <p>[<span class="game-time">{{note.gameTime | secondsToTime}}</span>] {{ note.content }}</p>
 
                             </div>
 
