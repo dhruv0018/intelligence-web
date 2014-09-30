@@ -53,7 +53,8 @@ GameTab.directive('gameTab', [
                 roster: '=',
                 validator: '=',
                 positions: '=',
-                heading: '@'
+                heading: '@',
+                nextTab: '='
             }
         };
 
@@ -70,16 +71,13 @@ GameTab.controller('Coach.Game.GameTab.controller', [
     '$scope', '$state', 'PlayersFactory', 'TeamsFactory',
     function controller($scope, $state, players, teams) {
         $scope.keys = window.Object.keys;
-        console.log($scope);
 
         //Collections
         $scope.teams = teams.getCollection();
 
-        $scope.save = function() {
-            players.save($scope.data.game.rosters[$scope.data.game.teamId].id, $scope.data.gamePlayerLists[$scope.data.game.teamId]).then(function(roster) {
-                $scope.data.gamePlayerLists[$scope.data.game.teamId] = roster;
-            });
-            $scope.tabs.opposing.active = true;
+        $scope.activateTab = function() {
+            $scope.tabs.deactivateAll();
+            $scope.nextTab.active = true;
         };
     }
 ]);

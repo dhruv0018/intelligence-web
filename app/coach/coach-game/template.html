@@ -1,5 +1,4 @@
 <x-tabset class="coach-game">
-
     <x-tab
         data-active="gameTabs.confirm.active"
         data-disabled="gameTabs.confirm.disabled"
@@ -15,7 +14,9 @@
         data-disabled="gameTabs.opposing.disabled"
         data-heading="{{ teams[data.game.opposingTeamId].name || 'Opposing Team' }}">
 
-        <game-tab data-type="table"
+        <game-tab data-next-tab="gameTabs.confirm"
+                  data-tabs="gameTabs"
+                  data-type="table"
                   data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"
                   data-roster-id="data.game.rosters[data.game.opposingTeamId].id"
                   data-team="data.opposingTeam"
@@ -31,14 +32,14 @@
            data-disabled="gameTabs.team.disabled"
            data-heading="{{ teams[data.game.teamId].name || 'Team' }}">
 
-        <game-tab data-tabs="gameTabs"
-                  data-data="data"
+        <game-tab data-next-tab="gameTabs.opposing"
+                  data-tabs="gameTabs"
                   data-type="table"
                   data-roster-id="data.game.rosters[data.game.teamId].id"
                   data-team="data.team"
                   data-roster="data.gamePlayerLists[data.game.teamId]"
                   data-editable="true"
-                  data-validation="validator.yourTeam"
+                  data-validation="validation.yourTeam"
                   data-positions="positions"
                   data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"></game-tab>
     </x-tab>

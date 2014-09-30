@@ -6,7 +6,6 @@ var ELEMENTS = 'E';
 require('coach-game-info');
 require('game-tab');
 require('coach-game-instructions');
-require('coach-game-team');
 
 /* Component settings */
 var templateUrl = 'coach/game/template.html';
@@ -26,8 +25,7 @@ var Game = angular.module('Coach.Game', [
     'ui.bootstrap',
     'Coach.Game.Info',
     'Coach.Game.GameTab',
-    'Coach.Game.Instructions',
-    'Coach.Game.Team'
+    'Coach.Game.Instructions'
 ]);
 
 /* Cache the template file */
@@ -102,10 +100,6 @@ Game.controller('Coach.Game.controller', [
         $scope.gameTabs = {
             info: {
                 active: true
-            },
-            scouting: {
-                active: false,
-                disabled: true
             },
             opposing: {
                 active: false,

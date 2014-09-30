@@ -228,12 +228,7 @@ Info.controller('Coach.Game.Info.controller', [
             $scope.tabs.enableAll();
             $scope.tabs.deactivateAll();
             $scope.formGameInfo.$dirty = false;
-
-            if ($scope.data.game.isRegular()) {
-                $scope.tabs.team.active = true;
-            } else {
-                $scope.tabs.scouting.active = true;
-            }
+            $scope.tabs.team.active = true;
         };
 
         var prompt = 'Your game will not get uploaded without entering in the game information.';
