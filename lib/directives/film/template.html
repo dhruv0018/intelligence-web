@@ -1,13 +1,13 @@
-<div class="krossover-film" data-ng-hide="currentUser.is(ATHLETE) && !game.isVideoTranscodeComplete()">
+<div class="krossover-film" data-ng-hide="hideFilm">
    <div class="film-info-header">
        {{game.datePlayed | date: 'MMM dd, yyyy' }}
 
        <br/>
 
-       <strong data-ng-if="game.isVideoTranscodeComplete() && isReady">Game Film: </strong>
-       <strong data-ng-if="game.isVideoTranscodeComplete() && !isReady">Breakdown In Progress: </strong>
-       <strong data-ng-if="game.isProcessing()">Film Is Processing: </strong>
-       <strong data-ng-if="game.isUploading()">Film Uploading: </strong>
+       <strong data-ng-if="game.isVideoTranscodeComplete() && isReady || isShared">Game Film: </strong>
+       <strong data-ng-if="game.isVideoTranscodeComplete() && !isReady && !isShared">Breakdown In Progress: </strong>
+       <strong data-ng-if="game.isProcessing() && !isShared">Film Is Processing: </strong>
+       <strong data-ng-if="game.isUploading() && !isShared">Film Uploading: </strong>
        <strong data-ng-if="game.isVideoTranscodeFailed()" class="film-fail-text">Film Failed Processing:</strong>
 
        <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:game.id})">
@@ -17,13 +17,14 @@
            {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
        </a>
        <br/>
-       Uploaded by {{uploaderName}}
+       <span data-ng-show="!isShared">Uploaded</span>
+       <span data-ng-show="isShared">Shared</span> by {{uploaderName}}
    </div>
    <krossover-thumbnail width="400" data-game="game"></krossover-thumbnail>
 
     <div class="film-info-footer">
 
-        <a data-ng-if="currentUser.is(COACH) && !game.isVideoTranscodeFailed()" data-open-modal="ShareFilm.Modal" class="share-game">
+        <a data-ng-if="currentUser.is(COACH) && !game.isVideoTranscodeFailed() && !isShared" data-ng-click="ShareFilmModal.open(game)" class="share-game">
             <i class="icon icon-share-square-o"></i>Share
         </a>
 
