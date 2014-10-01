@@ -92,8 +92,8 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Athlete.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Athlete.Data', 'SPORTS', 'PlayManager',
-    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager) {
+    '$scope', '$state', '$stateParams', 'TeamsFactory', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Athlete.Data', 'SPORTS', 'PlayManager',
+    function controller($scope, $state, $stateParams, teams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager) {
         $scope.expandAll = false;
         $scope.data = data;
         $scope.play = playManager;
