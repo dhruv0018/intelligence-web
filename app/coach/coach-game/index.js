@@ -83,7 +83,10 @@ Game.controller('Coach.Game.controller', [
     '$scope', 'TeamsFactory', 'GamesFactory', 'config',
     function controller($scope, teams, games, config) {
 
-        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
+        $scope.positionset = ($scope.data.league.positionSetId) ? $scope.data.positionSets.get($scope.data.league.positionSetId) : {};
+        $scope.positions = $scope.positionset.indexedPositions;
+
+
         $scope.config = config;
 
         /* TODO: Remove this: */

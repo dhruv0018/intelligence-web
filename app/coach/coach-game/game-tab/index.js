@@ -53,6 +53,7 @@ GameTab.directive('gameTab', [
                 roster: '=',
                 validator: '=',
                 positions: '=',
+                positionset: '=',
                 heading: '@',
                 nextTab: '='
             }
@@ -68,8 +69,8 @@ GameTab.directive('gameTab', [
  * @type {controller}
  */
 GameTab.controller('Coach.Game.GameTab.controller', [
-    '$scope', '$state', 'PlayersFactory', 'TeamsFactory',
-    function controller($scope, $state, players, teams) {
+    '$scope', '$state', 'PlayersFactory', 'TeamsFactory', 'PositionsetsFactory', 'LeaguesFactory',
+    function controller($scope, $state, players, teams, positionsets, leagues) {
         $scope.keys = window.Object.keys;
 
         //Collections
