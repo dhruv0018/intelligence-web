@@ -37,9 +37,13 @@
     <div class="modal-body">
         <div class="row">
             <div class="status col-md-12">
-                <div class="inactive" data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed">
+                <div class="inactive" data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-hide="sendingEmail">
                     <strong>This player has not yet activated their account with Krossover.</strong> Once they activate their account you will no longer be able to edit their name and email address.
-                    <a data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-click="playersFactory.resendEmail(athlete.userId, team.id)">Resend Invitation</a>
+                    <a data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-click="resendInvite(athlete.userId, team.id)">Resend Invitation</a>
+                </div>
+                <div class="resending-invite" data-ng-show="sendingEmail">
+                    <i class="icon icon-refresh" data-ng-show="!confirmSent"></i>
+                    <span data-ng-show="confirmSent"><i class="icon icon-ok"></i> The invitation has been resent.</span>
                 </div>
                 <div class="active" data-ng-if="athlete.userId && users[athlete.userId].lastAccessed">
                     This player has activated their account with Krossover. You can no longer edit certain items, which the player will now be responsible to edit.

@@ -28,6 +28,18 @@
       color: @state-warning-text;
     }
 
+    .resending-invite {
+      background-color: @state-success-bg;
+      border: 1px solid @state-success-border;
+      color: @state-success-text;
+      text-align: center;
+      padding: 40px;
+
+      .icon-refresh::before {
+        animation: spin 1s linear infinite;
+      }
+    }
+
   }
 
   .profile-image{
