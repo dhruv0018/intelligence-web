@@ -139,12 +139,13 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'TeamsFactory', 'SessionService',
-    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, teams, session) {
+    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'TeamsFactory', 'SessionService', 'ShareFilm.Modal',
+    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, teams, session, ShareFilmModal) {
         $scope.expandAll = false;
         $scope.data = data;
         $scope.play = playManager;
         $scope.currentUser = session.currentUser;
+        $scope.ShareFilmModal = ShareFilmModal;
 
         //constants
         $scope.GAME_STATUSES = GAME_STATUSES;
