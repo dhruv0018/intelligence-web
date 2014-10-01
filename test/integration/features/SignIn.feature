@@ -1,4 +1,5 @@
 Feature: Page Restrictions
+
     As a user that is unauthenticated, I should be redirected to the login page when visiting 
     restricted pages.
 
@@ -8,6 +9,7 @@ Feature: Page Restrictions
     Scenario: Redirect unauthenticated user to login page when visiting restricted page
         When I visit a restricted page
         Then I should be shown the "login" page
+
 
 Feature: Authentication
 
@@ -19,17 +21,17 @@ Feature: Authentication
 
     Background:
         Given I navigate to "login"
-    
-    @logout
-    Scenario Outline: An unauthenticated user signing in with valid credentials
+
+    Scenario Outline: An unauthenticated user signing in with valid credentials and signing out     
         Given I am a "<User>"
         When I authenticate with valid credentials
         Then I should be shown the "<Landing Page>" page
-        # Then I should see no console errors
+        And I sign out
+        Then I should be shown the "login" page
 
         Examples: Different user types should landing on a unique url
-            | User    | Landing Page | 
-            | Admin   | users        | 
+            | User  | Landing Page |  
+            | Admin | users        |  
 
     Scenario: An unauthenticated Admin signing in with inadequate credentials
         
@@ -39,18 +41,6 @@ Feature: Authentication
         Given I am a "Admin"
         When I authenticate with an invalid password
         Then I should be shown the "login" page
-
-    Scenario Outline: An authenticated user signing out
-        Given I am a "Admin"
-        And I authenticate with valid credentials
-        And I sign out
-        Then I should be shown the "login" page
-        # Then I should see no console errors
-
-        Examples: Different user types
-            | User    | 
-            | Admin   |
-
 
 #OLD LOGIN TEST
 # Scenario: Successfully Sign In As An Admin User

@@ -34,7 +34,6 @@ module.exports = function() {
 
         account.enterPassword("invalidPassword");
         account.clickSignin();
-
         callback();
     });
 
