@@ -101,7 +101,9 @@ Info.controller('Coach.Game.Info.controller', [
         $scope.save = function() {
 
             if ($scope.data.game.id) {
-                $q.all($scope.saveExisting()).then($scope.goToRoster);
+                //$q.all($scope.saveExisting()).then($scope.goToRoster);
+                $scope.saveExisting();
+                $scope.goToRoster();
             } else {
                 $q.all($scope.constructNewGame()).then($scope.goToRoster);
             }
