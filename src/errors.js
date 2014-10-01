@@ -123,6 +123,8 @@ IntelligenceWebClient.run([
 
             if (!event.defaultPrevented) {
 
+                ErrorReporter.reportError(error);
+
                 alerts.add({
                     type: 'warning',
                     message: 'Could not go to ' + toState.name
