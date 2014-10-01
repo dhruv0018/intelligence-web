@@ -29,7 +29,7 @@
                 </td>
 
                 <td class="athlete-column" data-ng-if="keys(positions).length > 0">
-                    <data-positions-dropdown data-ng-model="athlete.positionIds[rosterId]" data-player="athlete" data-positions="positions"></data-positions-dropdown>
+                    <data-positions-dropdown data-ng-model="athlete.positionIds[rosterId]" data-player="athlete" data-positionset="positionset"></data-positions-dropdown>
                     <button data-ng-if="!team.isCustomerTeam" class="btn btn-blank pull-right" data-ng-click="toggle(athlete)"><i class="icon icon-remove"></i></button>
                 </td>
 

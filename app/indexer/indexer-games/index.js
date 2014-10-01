@@ -86,14 +86,14 @@ Games.service('Indexer.Games.Data.Dependencies', [
  * @type {Controller}
  */
 Games.controller('indexer-games.Controller', [
-    '$scope', '$state', '$interval', 'config', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
-    function controller($scope, $state, $interval, config, GAME_TYPES, teams, leagues, games, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
+    '$scope', '$state', '$interval', 'config', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'SportsFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
+    function controller($scope, $state, $interval, config, GAME_TYPES, teams, leagues, games, sports, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
-        $scope.sports = data.sports.getCollection();
-        $scope.leagues = data.leagues.getCollection();
-        $scope.teams = data.teams.getCollection();
-        $scope.users = data.users.getCollection();
+        $scope.sports = sports.getCollection();
+        $scope.leagues = leagues.getCollection();
+        $scope.teams = teams.getCollection();
+        $scope.users = users.getCollection();
 
         $scope.userId = session.currentUser.id;
 
@@ -110,7 +110,7 @@ Games.controller('indexer-games.Controller', [
             $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
         }
 
-        $scope.games = data.games.getList();
+        $scope.games = games.getList();
 
         angular.forEach($scope.games, function(game) {
             game.timeRemaining = game.assignmentTimeRemaining();

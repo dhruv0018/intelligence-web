@@ -297,17 +297,17 @@ Teams.controller('TeamPlansController', [
  * @type {Controller}
  */
 Teams.controller('TeamController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SchoolsFactory', 'TeamsFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, schoolsFactory, teams) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, sports, leagues, schoolsFactory, teams, users) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
-        $scope.sports = data.sports.getList();
-        $scope.indexedSports = data.sports.getCollection();
+        $scope.sports = sports.getList();
+        $scope.indexedSports = sports.getCollection();
 
-        $scope.leagues = data.leagues.getList();
-        $scope.indexedLeagues = data.leagues.getCollection();
+        $scope.leagues = leagues.getList();
+        $scope.indexedLeagues = leagues.getCollection();
 
         var team;
         $scope.schoolName = '';
@@ -345,7 +345,7 @@ Teams.controller('TeamController', [
                 $scope.team = team;
                 $scope.team.members = team.getMembers();
 
-                $scope.sportId = data.leagues.get(team.leagueId).sportId;
+                $scope.sportId = leagues.get(team.leagueId).sportId;
 
                 $scope.updateTeamAddress();
             }
@@ -356,7 +356,7 @@ Teams.controller('TeamController', [
 
             if ($scope.addNewHeadCoach) {
 
-                $scope.users = data.users.getList();
+                $scope.users = users.getList();
             }
         });
 
@@ -428,8 +428,8 @@ Teams.controller('TeamController', [
  * @type {Controller}
  */
 Teams.controller('TeamsController', [
-    '$rootScope', '$scope', '$state', '$q', '$filter', 'SchoolsFactory', 'TeamsFactory', 'Teams.Data',
-    function controller($rootScope, $scope, $state, $q, $filter, schools, teams, data) {
+    '$rootScope', '$scope', '$state', '$q', '$filter', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'Teams.Data',
+    function controller($rootScope, $scope, $state, $q, $filter, sports, leagues, schools, teams, data) {
 
         $scope.teams = [];
 
@@ -438,11 +438,11 @@ Teams.controller('TeamsController', [
             isCustomerTeam: 1
         };
 
-        $scope.sports = data.sports.getList();
-        $scope.indexedSports = data.sports.getCollection();
+        $scope.sports = sports.getList();
+        $scope.indexedSports = sports.getCollection();
         $scope.schools = schools.getCollection();
-        $scope.leagues = data.leagues.getList();
-        $scope.indexedLeagues = data.leagues.getCollection();
+        $scope.leagues = leagues.getList();
+        $scope.indexedLeagues = leagues.getCollection();
 
         $scope.add = function() {
             $state.go('team-info');
