@@ -76,8 +76,6 @@ Coach.service('Coach.Data.Dependencies', [
             var assistantCoaches = [];
             angular.forEach(users.getList(), function(user) {
                 if (user.roleTypes[ROLE_TYPE.ASSISTANT_COACH]) {
-                    console.log(user);
-                    console.log(ROLE_TYPE.ASSISTANT_COACH);
                     var assistantCoachRole = user.roleTypes[ROLE_TYPE.ASSISTANT_COACH].filter(function(role) {
                         return role.teamId && role.teamId === session.currentUser.currentRole.teamId;
                     })[0];

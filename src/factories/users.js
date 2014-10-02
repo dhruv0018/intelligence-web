@@ -166,7 +166,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!user.roleTypes) {
                      user.roleTypes = {};
                 }
-                user.roleTypes[role.type.id] = (user.roleTypes[role.type.id]) ? user.roleTypes[role.type.id].push(role) : [role];
+
+                user.roleTypes[role.type.id].push(role);
             },
 
             /**
