@@ -56,7 +56,16 @@ IntelligenceWebClient.service('PlaysManager', [
 
         this.registerPlayScope = function registerPlayScope(playScope) {
             //create hash of play scopes indexed by the scopes play's id
-            this.playScopeList.scopes[playScope.play.id] = playScope;
+            var registeredId;
+            if (playScope.play.id) {
+                registeredId = playScope.play.id;
+            } else {
+                //Special case for indexing. Automatically selects play
+                //to keep the current play at the top of the playlist
+                registeredId = playScope.play.$$hashKey;
+                if (playScope.selectPlay) playScope.selectPlay();
+            }
+            this.playScopeList.scopes[registeredId] = playScope;
 
             //Build linked list of play scopes
             if (typeof this.playScopeList.head === 'undefined') {
