@@ -22,20 +22,22 @@ IntelligenceWebClient.factory('UsersFactory', [
             extend: function(user) {
                 var self = this;
 
+
+                user.roleTypes = {};
+                Object.keys(ROLE_TYPE).forEach(function(roleType) {
+                    user.roleTypes[ROLE_TYPE[roleType]] = [];
+                });
+
                 /* Remove the user password from the model. If set it will
                  * be sent in a resource call. So only set it if the intent
                  * is to change the password. */
                 delete user.password;
                 /* If the user has roles. */
                 if (user.roles) {
-
-                    user.roleTypes = {};
-
                     /* For each role. */
                     user.roles.forEach(function(role) {
                         /* Default the tenureEnd to null. */
                         role.tenureEnd = role.tenureEnd || null;
-                        user.roleTypes[role.type] = (user.roleTypes[role.type]) ? user.roleTypes[role.type].push(role) : [role];
 
                         //TODO hotfixed, to be properly fixed later
                         if (!role.type.id) {
@@ -47,6 +49,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                         if (!role.type.name) {
                             role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
                         }
+                        user.roleTypes[role.type.id].push(role);
                     });
                 }
 
