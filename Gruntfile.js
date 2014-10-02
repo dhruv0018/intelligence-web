@@ -548,6 +548,7 @@ module.exports = function(grunt) {
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
+        'copy:dev',
         'copy:build',
         'copy:htaccess',
         'ver:prod']);
