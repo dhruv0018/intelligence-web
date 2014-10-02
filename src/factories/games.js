@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', '$q', 'SessionService',
-    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, $q, session) {
+    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', '$q',
+    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, $q) {
 
         var GamesFactory = {
 
@@ -51,6 +51,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (session.currentUser.currentRole.teamId) {
 
                     game.uploaderTeamId = game.uploaderTeamId || session.currentUser.currentRole.teamId;
+                }
+
+                /* build lookup table of shares by userId shared with */
+                if (game.shares && game.shares.length) {
+                    game.sharedWithUsers = game.sharedWithUsers || {};
+
+                    angular.forEach(game.shares, function(share) {
+                        game.sharedWithUsers[share.sharedWithUserId] = share;
+                    });
                 }
 
                 return game;
@@ -639,7 +648,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return game;
             },
-            isRegular: function isRegular(game) {
+
+            isRegular: function(game) {
+
+                var self = this;
+
+                game = game || self;
 
                 game = game || this;
 
@@ -653,7 +667,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return false;
             },
 
-            isNonRegular: function isNonRegular(game) {
+            isNonRegular: function(game) {
+
+                var self = this;
+
+                game = game || self;
 
                 game = game || this;
 
@@ -810,6 +828,65 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 return isBeingBrokenDown;
+            },
+            shareWithUser: function(user) {
+
+                var self = this;
+
+                if (!user) throw new Error('No user to share with');
+
+                self.shares = self.shares || [];
+
+                self.sharedWithUsers = self.sharedWithUsers || {};
+
+                if (self.isSharedWithUser(user)) return;
+
+                var share = {
+                    userId: session.currentUser.id,
+                    gameId: self.id,
+                    sharedWithUserId: user.id,
+                    createdAt: moment.utc().toDate()
+                };
+
+                self.sharedWithUsers[user.id] = share;
+
+                self.shares.push(share);
+            },
+            stopSharingWithUser: function(user) {
+
+                var self = this;
+
+                if (!user) throw new Error('No user to remove');
+
+                if (!self.shares || !self.shares.length) return;
+
+                for (var index = 0; index < self.shares.length; index++) {
+                    if (self.shares[index].sharedWithUserId === user.id) {
+                        self.shares.splice(index, 1);
+                        delete self.sharedWithUsers[user.id];
+                        return;
+                    }
+                }
+            },
+            getShareByUser: function(user) {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
+                if (!user) throw new Error('No user to get share from');
+
+                var userId = user.id;
+
+                return self.sharedWithUsers[userId];
+            },
+            isSharedWithUser: function(user) {
+                var self = this;
+
+                if (!user) return false;
+
+                if (!self.sharedWithUsers) return false;
+
+                return angular.isDefined(self.getShareByUser(user));
             }
         };
 

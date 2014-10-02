@@ -140,11 +140,13 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'TeamsFactory',
-    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, teams) {
+    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'TeamsFactory', 'SessionService', 'ShareFilm.Modal',
+    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, teams, session, ShareFilmModal) {
         $scope.expandAll = false;
         $scope.data = data;
         $scope.play = playManager;
+        $scope.currentUser = session.currentUser;
+        $scope.ShareFilmModal = ShareFilmModal;
 
         //constants
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -172,7 +174,7 @@ GameArea.controller('Coach.GameArea.controller', [
         //define states for view selector
         $scope.gameStates = [];
 
-        if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered()) {
+        if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered() && !$scope.game.isSharedWithUser(session.currentUser)) {
             $scope.gameStates.push(
                 {
                     name: 'Film Breakdown',
@@ -210,7 +212,7 @@ GameArea.controller('Coach.GameArea.controller', [
                     }
                 );
             }
-        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered()) {
+        } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered() || $scope.game.isSharedWithUser(session.currentUser)) {
             $scope.gameStates.push(
                 {
                     name: 'Raw Film',
@@ -219,12 +221,14 @@ GameArea.controller('Coach.GameArea.controller', [
             );
         }
 
-        $scope.gameStates.push(
-            {
-                name: 'Game Information',
-                state: 'ga-info'
-            }
-        );
+        if (!$scope.game.isSharedWithUser(session.currentUser)) {
+            $scope.gameStates.push(
+                {
+                    name: 'Game Information',
+                    state: 'ga-info'
+                }
+            );
+        }
     }
 ]);
 

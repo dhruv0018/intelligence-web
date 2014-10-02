@@ -55,12 +55,20 @@ Coach.service('Coach.Data.Dependencies', [
         var currentUser = session.currentUser;
         var teamId = currentUser.currentRole.teamId;
 
+        var gamesForUser = games.load({
+            uploaderTeamId: session.currentUser.currentRole.teamId
+        });
+
+        var gamesSharedWithUser = games.load({
+            sharedWithUserId: session.currentUser.id
+        });
+
         var Data = {
 
             positionSets: positionsets.load(),
             teams: teams.load({ relatedUserId: currentUser.id }),
             users: users.load({ relatedUserId: currentUser.id }),
-            games: games.load({ uploaderTeamId: teamId })
+            games: $q.all([gamesForUser, gamesSharedWithUser])
         };
 
         Data.playersList = $q.all(data).then(function() {
