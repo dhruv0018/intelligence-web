@@ -6,7 +6,7 @@ module.exports = function() {
         
         // this.browser = new zombie();
         this.visitRelative = function(relativeUrl) {
-            browser.get(browser.baseUrl + relativeUrl);
+            return browser.get(browser.baseUrl + relativeUrl);
         };
         callback();
     };

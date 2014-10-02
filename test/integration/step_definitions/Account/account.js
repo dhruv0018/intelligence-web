@@ -38,7 +38,8 @@ module.exports = function() {
     });
 
     this.Given(/^I sign out$/, function (callback) {
-        account.signout(callback);
+        account.signout();
+        callback();
     });
 
 };
