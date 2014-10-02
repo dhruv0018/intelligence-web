@@ -559,3 +559,39 @@
   }
 }
 
+button.play-all-plays.btn {
+
+  margin-left: 15px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0;
+
+  .play-all-text {
+    padding: 2px 2px 2px 8px;
+  }
+
+  .on, .off {
+    padding: 4px;
+    display: inline-block;
+    color: #f9f9f9;
+    border-left: solid 1px #B1B3B3;
+  }
+
+  .on {
+    background: #54D14F;
+  }
+
+  .off {
+    background: @brand-primary;
+  }
+
+  &.playing-all {
+    color: #737474; 
+    border: solid #B1B3B3;
+    border-width: 2px 0 0 2px;
+    border-right: solid 1px #fff;
+    border-bottom: solid 2px #fff;
+    background-color: #f9f9f9;
+  }
+}
+
