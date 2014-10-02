@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'config', '$sce', 'BaseFactory', 'VIDEO_STATUSES',
-    function(config, $sce, BaseFactory, VIDEO_STATUSES) {
+    'config', '$sce', 'BaseFactory', 'VIDEO_STATUSES', 'PlaysResource',
+    function(config, $sce, BaseFactory, VIDEO_STATUSES, PlaysResource) {
 
         var PlaysFactory = {
 
