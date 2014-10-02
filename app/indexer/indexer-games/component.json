@@ -10,6 +10,6 @@
         "indexer-games.html"
     ],
     "dependencies": {
-        "moment/moment": "2.8.2"
+        "moment/moment": "2.5.1"
     }
 }
