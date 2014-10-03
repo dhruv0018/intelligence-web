@@ -87,6 +87,11 @@ Info.controller('Coach.Game.Info.controller', [
         //$scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = ($scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE]) ? $scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] : [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
         console.log($scope.game);
 
+
+        if ($scope.game.id && $scope.game.teamId && $scope.game.opposingTeamId) {
+            $scope.tabs.enableAll();
+        }
+
         if ($scope.game.isRegular()) {
             $scope.game.teamId = session.currentUser.currentRole.teamId;
         }
@@ -96,9 +101,6 @@ Info.controller('Coach.Game.Info.controller', [
             team: ($scope.teams[$scope.game.teamId]) ? $scope.teams[$scope.game.teamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id}),
             opposingTeam: ($scope.teams[$scope.game.opposingTeamId]) ? $scope.teams[$scope.game.opposingTeamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id})
         };
-
-        console.log($scope.game);
-
 
         //Save functionality
         $scope.save = function() {
