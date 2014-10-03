@@ -1,10 +1,10 @@
 <div class="game-area-film-filters">
     <div class="play-count pull-left">
         <span>Viewing: All Plays ({{plays.length}})</span>
-        <button data-ng-class="{'playing-all': playManager.playAllPlays}" class="play-all-plays btn" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
-          <span class="play-all-text">Play All</span>
-          <span class="on" data-ng-show="playManager.playAllPlays">ON</span>
-          <span class="off" data-ng-hide="playManager.playAllPlays">OFF</span></button>
+        <button class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
+          <span class="play-all-text">Continuous Play</span>
+          <span class="on" data-ng-class="{chosen: playManager.playAllPlays}">ON</span>
+          <span class="off" data-ng-class="{chosen: !playManager.playAllPlays}">OFF</span></button>
     </div>
     <plays-filter data-total-plays="totalPlays"
                   data-plays="plays"

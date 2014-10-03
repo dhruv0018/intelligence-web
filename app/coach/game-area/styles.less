@@ -85,7 +85,7 @@
 
     .play-count{
       border-right: 1px solid @gray-lighter;
-      width:290px;
+      width: 420px;
       padding-left: 20px;
       padding-right: 20px;
       letter-spacing: normal;
@@ -122,7 +122,7 @@
         bottom: 0px;
         border-top: thin solid @gray-border;
         background-color: white;
-        width: 100%;
+        width: 420px;
         height: 50px;
         padding: 0px 5px 0px 5px;
 
@@ -502,12 +502,14 @@
   }
 }
 
-button.play-all-plays.btn {
+button.play-all-plays {
 
-  margin-left: 15px;
+  margin-left: 75px;
   cursor: pointer;
   display: inline-block;
   padding: 0;
+  background: #ffffff;
+  border: 0;
 
   .play-all-text {
     padding: 2px 2px 2px 8px;
@@ -516,24 +518,18 @@ button.play-all-plays.btn {
   .on, .off {
     padding: 4px;
     display: inline-block;
-    color: #f9f9f9;
-    border-left: solid 1px #B1B3B3;
+    color: #e1e1e1;
+    background: #f9f9f9;
   }
 
-  .on {
+  .on.chosen {
     background: #54D14F;
+    color: #ffffff;
   }
 
-  .off {
+  .off.chosen {
     background: @brand-primary;
+    color: #ffffff;
   }
 
-  &.playing-all {
-    color: #737474; 
-    border: solid #B1B3B3;
-    border-width: 2px 0 0 2px;
-    border-right: solid 1px #fff;
-    border-bottom: solid 2px #fff;
-    background-color: #f9f9f9;
-  }
 }
