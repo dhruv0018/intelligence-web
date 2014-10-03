@@ -9,13 +9,11 @@
     "templates": [
         "template.html",
         "start.html",
-        "upload.html",
-        "uploading.html"
+        "upload.html"
     ],
     "scripts": [
         "index.js",
-        "upload.js",
-        "uploading.js"
+        "upload.js"
     ],
     "styles": [
         "styles.less",

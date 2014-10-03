@@ -71,8 +71,8 @@ GameArea.config([
                             data.game = game;
 
                             /* TODO: Or this. */
-                            var team = teams.get(game.teamId);
-                            var league = leagues.get(team.leagueId);
+                            var team = (data.game.teamId) ? teams.get(game.teamId) : {name: 'Team'};
+                            var league = (team.id) ? leagues.get(team.leagueId) : {};
 
 
                             var teamsCollection = teams.getCollection();
@@ -84,31 +84,41 @@ GameArea.config([
                             data.gamePlayerLists = {};
                             data.players = players;
                             data.league = league;
-                            data.filterset = filtersets.get(data.league.filterSetId);
+                            data.filterset = (data.league.id) ? filtersets.get(data.league.filterSetId) : {};
+
+                            var promises = [];
 
                             //Player lists
-                            var teamPlayerList = players.query({
-                                rosterId: data.game.rosters[data.game.teamId].id
-                            }).then(function(playerList) {
-                                data.teamPlayers = playerList;
-                                data.gamePlayerLists[data.game.teamId] = playerList;
-                            });
+//                            if (data.game.teamId) {
+//                                var teamPlayerList = players.query({
+//                                    rosterId: data.game.rosters[data.game.teamId].id
+//                                }).then(function(playerList) {
+//                                    data.teamPlayers = playerList;
+//                                    data.gamePlayerLists[data.game.teamId] = playerList;
+//                                });
+//                                promises.push(teamPlayerList);
+//                            }
+//
+//                            if (data.game.opposingTeamId) {
+//                                var opposingTeamPlayerList = players.query({
+//                                    rosterId: data.game.rosters[data.game.opposingTeamId].id
+//                                }).then(function(playerList) {
+//                                    data.opposingTeamPlayers = playerList;
+//                                    data.gamePlayerLists[data.game.opposingTeamId] = playerList;
+//                                });
+//                                promises.push(opposingTeamPlayerList);
+//                            }
 
-                            var opposingTeamPlayerList = players.query({
-                                rosterId: data.game.rosters[data.game.opposingTeamId].id
-                            }).then(function(playerList) {
-                                data.opposingTeamPlayers = playerList;
-                                data.gamePlayerLists[data.game.opposingTeamId] = playerList;
-                            });
 
                             var playsList = plays.query({
                                 gameId: data.game.id
                             }, function(plays) {
                                 data.plays = plays;
                             });
+                            promises.push(playsList);
 
 
-                            return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function() {
+                            return $q.all(promises).then(function() {
                                 return $q.all(data);
                             });
                         });

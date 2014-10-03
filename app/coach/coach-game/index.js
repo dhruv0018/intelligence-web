@@ -60,8 +60,9 @@ Game.directive('krossoverCoachGame', [
             link: link,
 
             scope: {
-                data: '=?',
-                $flow: '=?flow'
+                game: '=',
+                league: '=',
+                remainingBreakdowns: '='
             }
         };
 
@@ -82,11 +83,9 @@ Game.directive('krossoverCoachGame', [
 Game.controller('Coach.Game.controller', [
     '$scope', 'TeamsFactory', 'GamesFactory', 'config',
     function controller($scope, teams, games, config) {
-
-        $scope.positionset = ($scope.data.league.positionSetId) ? $scope.data.positionSets.get($scope.data.league.positionSetId) : {};
-        $scope.positions = $scope.positionset.indexedPositions;
-
-
+        //$scope.positionset = ($scope.data.league.id && $scope.data.league.positionSetId) ? $scope.data.positionSets.get($scope.data.league.positionSetId) : {};
+        //$scope.positions = ($scope.positionset.id) ? $scope.positionset.indexedPositions : {};
+        console.log($scope.league);
         $scope.config = config;
 
         /* TODO: Remove this: */

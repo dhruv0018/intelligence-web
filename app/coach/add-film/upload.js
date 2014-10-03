@@ -61,6 +61,5 @@ UploadFilm.controller('UploadFilmController', [
     function controller(config, ALLOWED_FILE_EXTENSIONS, $rootScope, $scope, $state, $http, alerts, session, games, coachData) {
         $scope.games = games;
         $scope.data = coachData;
-        console.log(coachData.game);
     }
 ]);

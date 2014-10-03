@@ -42,7 +42,8 @@ Instructions.directive('krossoverCoachGameInstructions', [
             controller: 'Coach.Game.Instructions.controller',
 
             scope: {
-                data: '='
+                game: '=',
+                remainingBreakdowns: '='
             }
         };
 
@@ -61,18 +62,18 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
         $scope.keys = window.Object.keys;
 
-        $scope.positionset = positionsets.get($scope.data.league.positionSetId);
-        $scope.positions = $scope.positionset.indexedPositions;
+//        $scope.positionset = ($scope.data.league && $scope.data.league.id) ? positionsets.get($scope.data.league.positionSetId) : {};
+//        $scope.positions = ($scope.positionset) ? $scope.positionset.indexedPositions : {};
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;
 
         //Make sure team has roster
         $scope.hasRoster = false;
-        $scope.isNonRegularGame = games.isNonRegular($scope.data.game);
+        $scope.isNonRegularGame = games.isNonRegular($scope.game);
 
-        $scope.$watch('data.gamePlayerLists[data.game.teamId]', function(x) {
-            if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
+        $scope.$watch('gamePlayerLists[game.teamId]', function() {
+            if ($scope.gamePlayerLists && $scope.gamePlayerLists[$scope.game.teamId] && !$scope.gamePlayerLists[$scope.game.teamId].every(function(player) { return player.isUnknown; })) {
 
                 $scope.hasRoster = true;
             }
@@ -86,15 +87,15 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         };
 
         var teamIdForThisGame = session.currentUser.currentRole.teamId;
-        if ($scope.data.game.uploaderTeamId) {
-            teamIdForThisGame = $scope.data.game.uploaderTeamId;
+        if ($scope.game.uploaderTeamId) {
+            teamIdForThisGame = $scope.game.uploaderTeamId;
         }
 
         $scope.activePlan = teams.get(teamIdForThisGame).getActivePlan() || {};
         $scope.activePackage = teams.get(teamIdForThisGame).getActivePackage() || {};
-        $scope.remainingBreakdowns = $scope.data.remainingBreakdowns;
+        $scope.remainingBreakdowns = $scope.remainingBreakdowns;
 
-        $scope.$watch('data.game', function(game) {
+        $scope.$watch('game', function(game) {
             if (typeof game !== 'undefined' && typeof game.status !== 'undefined' && game.status !== null) {
                 $scope.statusBuffer = game.status;
                 $scope.isBreakdownChoiceMade = true;
@@ -105,21 +106,21 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         });
 
         $scope.switchChoice = function() {
-            $scope.statusBuffer = ($scope.data.game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
+            $scope.statusBuffer = ($scope.game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
             $scope.isBreakdownChoiceMade = false;
         };
 
         $scope.save = function() {
-            $scope.data.game.status = $scope.statusBuffer;
+            $scope.game.status = $scope.statusBuffer;
 
-            if ($scope.data.game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
-                $scope.data.game.submittedAt = new Date().toISOString();
+            if ($scope.game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
+                $scope.game.submittedAt = new Date().toISOString();
             } else {
-                $scope.data.game.submittedAt = null;
+                $scope.game.submittedAt = null;
             }
 
             $scope.savingBreakdown = true;
-            $scope.data.game.save().then(function(game) {
+            $scope.game.save().then(function(game) {
                 $scope.savingBreakdown = false;
                 $scope.isBreakdownChoiceMade = true;
             });
