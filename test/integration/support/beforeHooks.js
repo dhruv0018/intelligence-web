@@ -8,13 +8,14 @@ var myBeforeHooks = function() {
     userTypes.forEach(function(userType) {
     
         self.Before( "@" + userType, function(callback) {
-            console.log("signin");
+            console.log("Signin", userType);
+            
             account.signin(userType).
                 then(function() {
-                    console.log("logged in");
+                    console.log("Signed in");
                     callback();
                 });
-                // then(callback);
+                
         });
 
     });

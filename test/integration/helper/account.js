@@ -1,3 +1,7 @@
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+var expect = chai.expect;
 
 module.exports = function Account() {
 
@@ -38,13 +42,9 @@ module.exports = function Account() {
 
     // Assumes that the user is currently logged in
     this.signout = function() {
-    
-        var roleDropdownButton = by.css(".role-dropdown");
-        var roleLogoutButton = by.css(".role-dropdown .dropdown-menu footer button");
-        
-        element(roleDropdownButton).click();
-        element.all(roleLogoutButton).get(1).click();
-
+        // browser.ignoreSynchronization = false;
+        element(by.css(".role-dropdown button")).click();
+        return element.all(by.css(".role-dropdown .dropdown-menu footer button")).get(1).click();
     };
 
     this.signin = function(userType) {
@@ -58,11 +58,10 @@ module.exports = function Account() {
         this.enterPassword(password);
         this.clickSignin();
 
-        // Need to wait to be redirected where .rolebar is expected
-        return browser.driver.wait(function() {
-            console.log("Confirm signin by waiting for rolebar to be present.");
-            return browser.isElementPresent(by.css(".rolebar"));
-        });
+        // Confirm signin by waiting for rolebar to be present.
+        return browser.driver.wait(
+            function() { return browser.isElementPresent(by.css(".rolebar")); }
+        , 10000);
 
     };
 

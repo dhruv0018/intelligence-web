@@ -4,18 +4,19 @@ var myAfterHooks = function () {
     var self = this;
     var account = new Account();
     var userTypes = account.getUserTypes();
-
-    self.After("@logout", function(callback) {
-        account.signout();
-        callback();
-    });
             
     userTypes.forEach(function(userType) {
 
-        self.After( "@" + userType, function(callback) {
-            console.log("signout");
-            account.signout();
-        });
+        // self.After( "@" + userType, function(callback) {
+        //     console.log("signout");
+        //     // browser.ignoreSynchronization = true;
+        //     account.signout().
+        //         then(function() {
+        //             console.log("Signed out");
+                    
+        //             callback();
+        //         });
+        // });
 
     });
 
