@@ -58,8 +58,8 @@ GameAreaStatistics.service('GameAreaStatistics.Data.Dependencies', [
 ]);
 
 GameAreaStatistics.controller('GameAreaStatisticsController', [
-    '$scope', '$state', '$stateParams', 'GameAreaStatistics.Data',
-    function controller($scope, $state, $stateParams, data) {
+    '$scope', '$state', '$stateParams', 'GameAreaStatistics.Data', 'SPORTS',
+    function controller($scope, $state, $stateParams, data, SPORTS) {
 
         $scope.gameLogTable = data.stats.gameLog;
         $scope.homeTeamStats = data.stats.homeTeamStats;
@@ -67,6 +67,8 @@ GameAreaStatistics.controller('GameAreaStatisticsController', [
 
         $scope.homeTeamName = data.stats.homeTeamStats.meta.teamName;
         $scope.awayTeamName = data.stats.awayTeamStats.meta.teamName;
+
+        $scope.scoreSummary = data.stats.scoreSummary;
 
         $scope.statsSelector = 'ga-log';
     }

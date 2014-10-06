@@ -10,6 +10,8 @@
 	<dynamic-table data-source="homeTeamStats" data-ng-show="statsSelector === 'ga-homestats'"></dynamic-table>
 	<dynamic-table data-source="awayTeamStats" data-ng-show="statsSelector === 'ga-awaystats'"></dynamic-table>
 
+	<dynamic-table data-ng-if="scoreSummary" data-source="scoreSummary" data-ng-show="statsSelector === 'ga-awaystats'"></dynamic-table>
+
 	<!--
 	<div class="bottom-links">
 		<a href><i class="icon-book"></i> Glossary</a>
