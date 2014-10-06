@@ -90,6 +90,24 @@ Coach.service('Coach.Data.Dependencies', [
             return assistantCoaches;
         });
 
+        Data.headCoach = Data.users.then(function(users) {
+            var headCoach;
+            angular.forEach(users.getList(), function(user) {
+                if (!headCoach) {
+                    if (user.roleTypes[ROLE_TYPE.HEAD_COACH]) {
+                        var headCoachRole = user.roleTypes[ROLE_TYPE.HEAD_COACH].filter(function(role) {
+                            return role.teamId && role.teamId === session.currentUser.currentRole.teamId;
+                        })[0];
+
+                        if (headCoachRole) {
+                            headCoach = user;
+                        }
+                    }
+                }
+            });
+            return headCoach;
+        });
+
         angular.extend(Data, data);
 
         return Data;

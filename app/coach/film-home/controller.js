@@ -27,6 +27,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
         $scope.query = '';
         $scope.data = data;
         $scope.ROLES = ROLES;
+        $scope.headCoach = data.headCoach;
     }
 ]);
 

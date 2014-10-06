@@ -46,7 +46,7 @@
             <a class="dropdown-toggle">Team</a>
             <ul class="dropdown-menu">
                 <li><a data-ui-sref="Coach.Team.Roster">Roster</a></li>
-                <li><a data-ui-sref="Coach.Team.Assistants">Coaches</a></li>
+                <li data-ng-if="currentUser.is(HEAD_COACH)"><a data-ui-sref="Coach.Team.Assistants">Coaches</a></li>
                 <!--<li data-ng-hide="true"><a href="#">Sets</a></li>-->
             </ul>
 

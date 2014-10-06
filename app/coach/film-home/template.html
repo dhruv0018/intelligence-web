@@ -8,8 +8,8 @@
 
         <krossover-role
                 data-ng-if="role.type.id === ROLES.HEAD_COACH.type.id && role.teamId == team.id"
-                data-ng-repeat="role in currentUser.roles"
-                data-user="currentUser"
+                data-ng-repeat="role in headCoach.roles"
+                data-user="headCoach"
                 data-role="role">
         </krossover-role>
 

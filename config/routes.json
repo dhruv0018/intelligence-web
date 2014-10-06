@@ -248,8 +248,7 @@
         "Assistant Coach": true
     },
     "Coach.Team.Assistants": {
-        "Head Coach": true,
-        "Assistant Coach": true
+        "Head Coach": true
     },
     "Coach.Team.Info": {
         "Head Coach": true,

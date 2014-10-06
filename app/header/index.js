@@ -104,6 +104,7 @@ Header.controller('HeaderController', [
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
         $scope.INDEXER = ROLES.INDEXER;
+        $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.COACH = ROLES.COACH;
         $scope.ATHLETE = ROLES.ATHLETE;
 
