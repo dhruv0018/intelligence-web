@@ -1,0 +1,17 @@
+<div class="film-breakdown-modal">
+
+    <header class="modal-header">
+    	<h3 class="modal-title">
+            <span data-ng-show="film.isRegular()">Uploading a regular game</span>
+            <span data-ng-show="film.isNonRegular()">Uploading a scouting/scrimmage game</span>
+        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i></h3>
+
+    </header>
+
+    <div class="modal-body">
+        <kvs-uploader
+                data-modal="modal"
+                data-film="film"></kvs-uploader>
+    </div>
+
+</div>

@@ -22,15 +22,19 @@
                         
                         <div class="row">
 
-                            <div data-ng-click="data.game.gameType = GAME_TYPES['CONFERENCE'].id" data-ng-class="{active: hasRoster === 1}" class="select-boxes col-md-6">
+                            <div data-ng-click="setGameType(GAME_TYPES['CONFERENCE'].id)"
+                                 data-open-modal="kvsUploaderInterface.Modal"
+                                 data-modal-options="options"
+                                 data-ng-class="{active: hasRoster === 1}"
+                                 class="select-boxes col-md-6">
 
                                 <div class="no-roster-warning" data-ng-if="hasRoster === 0">
                                     You must have a roster to upload a regular game.
                                     <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team">Add players to your roster.</a>
                                 </div>
 
-                                <button type="button" data-ui-sref="upload-film" data-ng-disabled="hasRoster < 1">
-
+                                <!--<button type="button" data-ui-sref="upload-film" data-ng-disabled="hasRoster < 1">-->
+                                <button type="button" data-ng-disabled="hasRoster < 1">
                                     <div>
                                         <h1>Regular Game</h1>
                                         <h2>Includes: regular season, conference and non conference, and playoff games.</h2>
@@ -44,7 +48,11 @@
 
                             <div class="select-boxes active col-md-6">
 
-                                <button type="button" data-ng-click="data.game.gameType = GAME_TYPES['SCOUTING'].id" data-ui-sref="upload-film">
+                                <button type="button"
+                                        data-open-modal="kvsUploaderInterface.Modal"
+                                        data-modal-options="options"
+                                        data-ng-class="{active: hasRoster === 1}"
+                                        data-ng-click="setGameType(GAME_TYPES['SCOUTING'].id)">
 
                                     <i class="icon icon-upload"></i>
                                     <div>

@@ -14,7 +14,8 @@
         "basic-modals",
         "athlete-info",
         "change-password",
-        "admin-management"
+        "admin-management",
+        "kvs-uploader-interface"
     ],
     "scripts": [
         "index.js"
