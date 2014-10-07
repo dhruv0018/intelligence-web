@@ -21,7 +21,14 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
         $scope.config = config;
         $scope.playersFactory = players;
         $scope.usersFactory = users;
-        $scope.data = data;
+
+        //Collections
+        $scope.teams = teams.getCollection();
+        $scope.leagues = leagues.getCollection();
+        $scope.users = users.getCollection();
+
+        $scope.team = teams.get(session.currentUser.currentRole.teamId);
+        $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team);
 
         //toggles between assistant views
         $scope.filtering = [
@@ -29,13 +36,7 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
             {type: 'inactive'}
         ];
 
-        //Collections
-        $scope.teams = teams.getCollection();
-        $scope.leagues = leagues.getCollection();
-        $scope.users = users.getCollection();
 
-        //Team
-        $scope.team = teams.get(session.currentUser.currentRole.teamId);
 
         alerts.add({
             type: 'warning',

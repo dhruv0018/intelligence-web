@@ -420,6 +420,41 @@ IntelligenceWebClient.factory('UsersFactory', [
                     type: type,
                     params: params
                 });
+            },
+            /**
+             * @class User
+             * @method
+             * @param {Object} role - the role object to check for the match.
+             * @param {Object} team - the team object which is used to check if a role is associated with a team
+             * @returns {Array} Array of users that fulfill the criteria of matching the role and team
+             */
+            findByRole: function(role, team) {
+                var self = this;
+                var storage = $injector.get(self.storage);
+
+                if (!role) {
+                    throw new Error('failed to pass in role');
+                }
+
+                var vettedUsers = [];
+
+                storage.list.forEach(function(user) {
+                    if (user.has(role)) {
+                        vettedUsers.push(user);
+                    }
+                });
+
+                if (team) {
+                   vettedUsers = vettedUsers.filter(function(user) {
+                       var vettedRoles = user.roleTypes[role.type.id].filter(function(role) {
+                         return role.teamId === team.id;
+                       });
+
+                       return vettedRoles.length > 0;
+                   });
+                }
+
+                return vettedUsers;
             }
         };
 

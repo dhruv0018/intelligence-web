@@ -72,42 +72,6 @@ Coach.service('Coach.Data.Dependencies', [
             });
         });
 
-        Data.assistantCoaches = Data.users.then(function(users) {
-            var assistantCoaches = [];
-            angular.forEach(users.getList(), function(user) {
-                if (user.roleTypes[ROLE_TYPE.ASSISTANT_COACH]) {
-                    var assistantCoachRole = user.roleTypes[ROLE_TYPE.ASSISTANT_COACH].filter(function(role) {
-                        return role.teamId && role.teamId === session.currentUser.currentRole.teamId;
-                    })[0];
-
-                    if (assistantCoachRole) {
-                        assistantCoaches.push(user);
-                    }
-
-                }
-            });
-
-            return assistantCoaches;
-        });
-
-        Data.headCoach = Data.users.then(function(users) {
-            var headCoach;
-            angular.forEach(users.getList(), function(user) {
-                if (!headCoach) {
-                    if (user.roleTypes[ROLE_TYPE.HEAD_COACH]) {
-                        var headCoachRole = user.roleTypes[ROLE_TYPE.HEAD_COACH].filter(function(role) {
-                            return role.teamId && role.teamId === session.currentUser.currentRole.teamId;
-                        })[0];
-
-                        if (headCoachRole) {
-                            headCoach = user;
-                        }
-                    }
-                }
-            });
-            return headCoach;
-        });
-
         angular.extend(Data, data);
 
         return Data;
