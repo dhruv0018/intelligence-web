@@ -16,7 +16,7 @@ var Game = angular.module('indexer-game');
  * @type {Controller}
  */
 Game.controller('indexer-game.Controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'RawFilm.Modal', 'Indexer.Game.Data', 'BasicModals', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory', 'Usersfactory',
+    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'RawFilm.Modal', 'Indexer.Game.Data', 'BasicModals', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
     function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, session, alerts, RawFilmModal, data, basicModal, sports, leagues, schools, teams, games, users) {
 
         $scope.GAME_TYPES = GAME_TYPES;
