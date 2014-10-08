@@ -14,11 +14,13 @@ IntelligenceWebClient.factory('UsersResource', [
             config.api.uri + 'users/:id',
 
             {
-                id: '@id'
+                id: '@id',
+                unique: '@unique'
 
             }, {
                 create: { method: 'POST' },
-                update: { method: 'PUT' }
+                update: { method: 'PUT' },
+                resendEmail: { method: 'POST', url: config.api.uri + 'users/:unique' + '/emailRequest' }
             }
         );
 

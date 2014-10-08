@@ -1,19 +1,15 @@
 {
-    "name": "coach-team",
+    "name": "profile",
     "templates": [
         "template.html"
+    ],
+    "paths": [
+        "."
     ],
     "scripts": [
         "index.js"
     ],
     "styles": [
         "styles.less"
-    ],
-    "paths": [
-        "."
-    ],
-    "locals": [
-        "roster",
-        "assistants"
     ]
 }
