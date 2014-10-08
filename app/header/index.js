@@ -109,9 +109,8 @@ Header.controller('HeaderController', [
         $scope.ATHLETE = ROLES.ATHLETE;
 
         $scope.config = config;
-
         $scope.$state = $state;
-
+        $scope.session = session;
         $scope.account = account;
 
         $scope.logout = function() {

@@ -88,7 +88,8 @@
                 <footer>
 
                     <button class="btn-footer" data-ui-sref="Account.ContactInfo" data-ng-disabled="$state.current.parent === 'Account'"><i class="icon icon-cog"></i> Your Account</button>
-                    <button class="btn-footer" data-ng-click="logout()"><i class="icon icon-signout"></i> Log out</button>
+                    <button class="btn-footer" data-ng-if="session.isPreviousUserStored()" data-ng-click="account.returnToPreviousUser()"><i class="icon icon-signout"></i> Return to previous user</button>
+                    <button class="btn-footer" data-ng-if="!session.isPreviousUserStored()" data-ng-click="logout()"><i class="icon icon-signout"></i> Log out</button>
 
                 </footer>
 
