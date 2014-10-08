@@ -105,7 +105,7 @@ IntelligenceWebClient.service('AccountService', [
                 var previousUser = session.retrievePreviousUser();
 
                 session.storeCurrentUser(previousUser);
-                delete session.previousUser;
+                session.clearPreviousUser();
 
                 var currentUser = session.retrieveCurrentUser();
 
