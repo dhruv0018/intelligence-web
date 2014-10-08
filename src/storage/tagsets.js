@@ -13,6 +13,11 @@ IntelligenceWebClient.factory('TagsetsStorage', [
 
         var TagsetsStorage = Object.create(BaseStorage, {
 
+            description: {
+
+                value: description
+            },
+
             resource: {
 
                 enumerable: false,

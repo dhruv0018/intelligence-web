@@ -13,6 +13,11 @@ IntelligenceWebClient.factory('PositionsetsStorage', [
 
         var PositionsetsStorage = Object.create(BaseStorage, {
 
+            description: {
+
+                value: description
+            },
+
             resource: {
 
                 enumerable: false,

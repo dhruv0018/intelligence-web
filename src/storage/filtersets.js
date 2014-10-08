@@ -13,6 +13,11 @@ IntelligenceWebClient.factory('FiltersetsStorage', [
 
         var FiltersetsStorage = Object.create(BaseStorage, {
 
+            description: {
+
+                value: description
+            },
+
             resource: {
 
                 enumerable: false,
