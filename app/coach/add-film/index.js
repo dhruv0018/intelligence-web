@@ -1,5 +1,4 @@
 /* File dependencies. */
-require('./upload.js');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -11,8 +10,7 @@ var angular = window.angular;
 var AddFilm = angular.module('add-film', [
     'ui.router',
     'ui.bootstrap',
-    'plan',
-    'upload-film'
+    'plan'
 ]);
 
 /* Cache the template file */

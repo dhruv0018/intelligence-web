@@ -8,15 +8,12 @@
     ],
     "templates": [
         "template.html",
-        "start.html",
-        "upload.html"
+        "start.html"
     ],
     "scripts": [
-        "index.js",
-        "upload.js"
+        "index.js"
     ],
     "styles": [
-        "styles.less",
-        "upload.less"
+        "styles.less"
     ]
 }

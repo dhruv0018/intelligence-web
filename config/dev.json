@@ -1,17 +1,17 @@
 {
     "oauth": {
-        "uri": "https://v2-qa.krossover.com/intelligence-api/oauth/",
+        "uri": "https://localhost:4436/intelligence-api/oauth/",
         "clientId": "cid",
         "clientSecret": "csecret",
         "state": "xyz"
     },
     "api": {
-        "uri": "https://v2-qa.krossover.com/intelligence-api/v1/"
+        "uri": "https://localhost:4436/intelligence-api/v1/"
     },
     "kvs": {
     },
     "passwordReset": {
-        "uri": "https://v2-qa.krossover.com/intelligence-api/v1/password-reset/"
+        "uri": "https://localhost:4436/intelligence-api/v1/password-reset/"
     },
     "links": {
         "signup": {
@@ -64,5 +64,6 @@
             "jump": 3,
             "speedlimit": 2
         }
-    }
+    },
+    "defaultVideoId": 2
 }

@@ -90,8 +90,8 @@
                                                 <td>
                                                     <h5 data-ng-if="game.isRegular()"> {{ teams[session.currentUser.currentRole.teamId].name }} </h5>
                                                     <!--if the scouting team already exists-->
-                                                    <input class="form-control" data-ng-if="game.isNonRegular() && game.teamId" name="team" placeholder="Team" data-ng-model="teams[game.teamId].name">
-                                                    <input class="form-control" data-ng-if="game.isNonRegular() && !game.teamId" name="team" placeholder="Team" data-ng-model="gameTeams.team.name">
+
+                                                    <team-typeahead data-ng-if="game.isNonRegular()" data-team="gameTeams.team"></team-typeahead>
                                                 </td>
 
                                                 <td class="score">
@@ -137,8 +137,7 @@
 
                                                 <td>
                                                     <!--Opposing Team already exists-->
-                                                    <input data-ng-if="game.opposingTeamId" class="form-control" name="opponent" placeholder="Opponent" data-ng-model="teams[game.opposingTeamId].name" >
-                                                    <input class="form-control" data-ng-if="!game.opposingTeamId" name="team" placeholder="Opponent" data-ng-model="gameTeams.opposingTeam.name">
+                                                    <team-typeahead data-ng-if="game.isNonRegular()" data-team="gameTeams.opposingTeam"></team-typeahead>
                                                 </td>
 
                                                 <td class="score">

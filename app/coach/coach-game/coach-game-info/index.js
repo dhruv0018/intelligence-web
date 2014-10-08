@@ -98,8 +98,8 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Temporary
         $scope.gameTeams = {
-            team: ($scope.teams[$scope.game.teamId]) ? $scope.teams[$scope.game.teamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id}),
-            opposingTeam: ($scope.teams[$scope.game.opposingTeamId]) ? $scope.teams[$scope.game.opposingTeamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id})
+            team: ($scope.teams[$scope.game.teamId]) ? $scope.teams[$scope.game.teamId] : {},
+            opposingTeam: ($scope.teams[$scope.game.opposingTeamId]) ? $scope.teams[$scope.game.opposingTeamId] : {}
         };
 
         //Save functionality
@@ -107,73 +107,31 @@ Info.controller('Coach.Game.Info.controller', [
 
             var promises = {};
 
-            if ($scope.game.id && $scope.game.teamId && $scope.game.opposingTeamId) {
-
-                //Saves the scouting team, if there is one
-                if ($scope.game.isNonRegular()) {
-                    $scope.gameTeams.team.save();
-                }
-                $scope.gameTeams.opposingTeam.save();
-                $scope.game.save();
-
-                $scope.goToRoster();
-            } else {
-
-                promises = {
-                    team: $scope.gameTeams.team.save(),
-                    opposingTeam: $scope.gameTeams.opposingTeam.save()
-                };
-
-                $q.all(promises).then(function(response) {
-                    $scope.game.teamId = response.team.id;
-                    $scope.game.opposingTeamId = response.opposingTeam.id;
-                    $scope.game.save().then(function() {
-                        //TODO add method to build the game rosters in this section when the backend is done
-                        $scope.goToRoster();
-                    });
-                });
-
+            if (!$scope.gameTeams.team.id) {
+                var newTeam = teams.create({isCustomerTeam: false, leagueId: $scope.league.id, name: $scope.gameTeams.team});
+                $scope.gameTeams.team = newTeam;
             }
+
+            if (!$scope.gameTeams.opposingTeam.id) {
+                var newOpposingTeam = teams.create({isCustomerTeam: false, leagueId: $scope.league.id, name: $scope.gameTeams.opposingTeam});
+                $scope.gameTeams.opposingTeam = newOpposingTeam;
+            }
+
+            promises = {
+                team: $scope.gameTeams.team.save(),
+                opposingTeam: $scope.gameTeams.opposingTeam.save()
+            };
+
+            $q.all(promises).then(function(response) {
+                $scope.game.teamId = response.team.id;
+                $scope.game.opposingTeamId = response.opposingTeam.id;
+                $scope.game.save().then(function() {
+                    //TODO add method to build the game rosters in this section when the backend is done
+                    $scope.goToRoster();
+                });
+            });
+
         };
-
-
-//        $scope.constructNewGame = function() {
-//
-//            var promises = {};
-//
-//            var game = $scope.game;
-//
-//            if (game.isNonRegular()) {
-//                promises.scouting = $scope.constructNewTeam('scouting');
-//            }
-//
-//            promises.opposing = $scope.constructNewTeam('opposing');
-//
-//            /* FIXME: Should be this: */
-//            //return $q.all(promises).then(function(promisedData) {
-//            return $q.all(promises).then(function(promisedData) {
-//                console.log(promisedData);
-//                if (game.isRegular()) {
-//                    $scope.game.teamId = session.currentUser.currentRole.teamId;
-//                } else {
-//                    $scope.game.teamId = promisedData.scouting.id;
-//                }
-//
-//                //Creating Game Rosters
-//                $scope.game.rosters = {};
-//                $scope.game.rosters[$scope.game.teamId] = {};
-//                $scope.game.rosters[promisedData.opposing.id] = {};
-//
-////                return $scope.game.save().then(function(game) {
-////                    $scope.game = game;
-////                    $scope.gamePlayerLists = {};
-////                    $scope.gamePlayerLists[promisedData.opposing.id] = [];
-////                    $scope.gamePlayerLists[$scope.game.teamId] = [];
-////                    return $scope.buildGameRoster(game);
-////                });
-//                return {};
-//            });
-//        };
 
         $scope.buildGameRoster = function(game) {
 
