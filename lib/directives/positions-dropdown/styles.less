@@ -1,22 +1,47 @@
 @import (reference) "main.less";
 
-.positions-dropdown{
+.positions-dropdown {
+	
+	line-height: normal;
+	text-align: left;
+	display: inline-block;
 
-	a.dropdown-toggle {
-		cursor: pointer;
+	.btn-group {
+		position: static;
 	}
-  
-  	ul {
 
-  		width: 390px;
-  		padding: 5px;
+	.position-label {
+		margin-right: 3px;
+	}
 
-		li {
-			display: inline-block;
+    .dropdown-menu {
 
-		    .btn{
-		    	margin: 5px;
-		    }
+        height: 250px;
+        width: 250px;
+        overflow-y: scroll;
+		letter-spacing: normal;
+		margin-top: 35px;
+		top: auto;
+		left: auto;
+
+		.position-filter {
+			padding: 5px 5px;
+			text-align: left;
 		}
+
+	    .position {
+
+	    	padding: 3px 5px;
+
+	        .icon {
+
+	            position: absolute;
+	        }
+
+	        .item-label {
+
+	            margin-left: 25px;
+	        }
+	    }
 	}
 }

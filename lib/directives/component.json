@@ -31,6 +31,7 @@
         "profile-placeholder",
         "notes-list",
         "positions-dropdown",
+        "state-selector",
         "uploader",
         "formation-chart",
         "arena",
@@ -50,7 +51,8 @@
         "videogular",
         "reel-play",
         "player-information",
-        "film-home-tabs"
+        "film-home-tabs",
+        "plays-filters"
     ],
     "scripts": [
         "index.js"

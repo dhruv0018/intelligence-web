@@ -1,6 +1,9 @@
 <div class="login-login">
-    <h1>Football and Volleyball</h1>
-    <h1>log in here:</h1>
+    <div>
+    <i class="icon icon-football"></i>
+    <i class="icon icon-volleyball"></i>
+    </div>
+    <h1>Football + Volleyball</h1>
 
     <form class="form-login" name="form" role="form" data-ng-submit="submitLogin()" novalidate>
 
@@ -18,16 +21,16 @@
 
         <div class="form-group">
 
+            <div class="user-remember">
+                <input id="remember" name="remember" type="checkbox" data-ng-model="$parent.login.remember">
+                <label for="remember"><i class="icon icon-ok"></i> Remember Me</label>
+            </div>
+
             <div class="password-reset"><a href data-ui-sref="forgot">Forgot your password?</a></div>
 
         </div>
 
         <div class="form-group">
-
-            <div class="user-remember">
-                <input id="remember" name="remember" type="checkbox" data-ng-model="$parent.login.remember">
-                <label for="remember"><i class="icon icon-ok"></i> Remember Me</label>
-            </div>
 
             <button class="button-signin" type="submit" data-ng-disabled="form.$invalid || $parent.login.submitted">
 

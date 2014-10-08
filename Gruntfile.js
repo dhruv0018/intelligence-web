@@ -209,7 +209,7 @@ module.exports = function(grunt) {
 
         concat: {
             unprefixed: {
-                src: ['fonts.css', 'icons.css', 'build/icons.data.svg.css', 'build/build.css', 'build/theme.css'],
+                src: ['fonts.css', 'icons.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'build/build.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
             }
         },
@@ -539,18 +539,16 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'browserify:prod',
         'ngAnnotate',
-        'uglify',
         'componentbuild:styles',
         'less',
         'svgmin',
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
-        'cssmin',
-        'htmlmin',
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
+        'copy:dev',
         'copy:build',
         'copy:htaccess',
         'ver:prod']);

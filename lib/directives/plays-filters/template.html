@@ -1,8 +1,4 @@
-<div class="game-area-film-filters">
-    <div class="play-count pull-left">
-        Viewing: All Plays ({{plays.length}})
-    </div>
-
+<div class="plays-filter">
     <div class="filter-dropdown pull-left dropdown"  data-is-open="filterMenu.isOpened">
 
         <a class="dropdown-toggle">
@@ -22,12 +18,12 @@
         <ul class="dropdown-menu">
             <li>
                 <div>
-                    <a class="btn" data-ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== team.id), 'btn-primary': (teamId === team.id)}">
+                    <a class="btn" data-ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== game.teamId), 'btn-primary': (teamId === game.teamId)}">
                         {{teams[game.teamId].name}}
                     </a>
                 </div>
                 <div>
-                    <a class="btn" data-ng-click="setTeam(game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== opposingTeam.id), 'btn-primary': (teamId === opposingTeam.id)}">
+                    <a class="btn" data-ng-click="setTeam(game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== game.opposingTeamId), 'btn-primary': (teamId === game.opposingTeamId)}">
                         {{teams[game.opposingTeamId].name}}
                     </a>
                 </div>
@@ -40,7 +36,7 @@
             </li>
             <li>
                 <div data-ng-repeat="(key,value) in filtersetCategories">
-                    <div data-ng-repeat="(innerkey, innerValue) in value.subFilters">
+                    <div data-ng-repeat="(innerkey, innerValue) in value.subFilters track by $index">
                         <a data-ng-if="!innerValue.customFilter" data-ng-hide="innerValue.filterCategoryId !== filterCategory" class="btn"  data-ng-class="{'child': (innerValue.parent !== null), 'btn-default':(!contains(activeFilters, innerValue.id)), 'btn-primary':(contains(activeFilters, innerValue.id))}" data-ng-click="setFilter(innerValue)">
                             {{innerValue.name}}
                         </a>
@@ -54,21 +50,3 @@
     </div>
 </div>
 
-<div class="game-area-film">
-        <aside class="playlist">
-
-          <krossover-plays data-expand-all="expandAll" data-game="game" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="data.teamPlayers" data-opposing-team-players="data.opposingTeamPlayers" data-league="data.league" data-reels="reels"></krossover-plays>
-
-
-          <div class="expandrow">
-            <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
-            <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
-          </div>
-
-          <no-results data-ng-hide="plays.length"></no-results>
-        </aside>
-
-        <div class="player breakdown-player">
-            <x-krossover-videoplayer data-sources="sources" data-play-start-time="play.current.startTime" data-play-end-time="play.current.endTime"></x-krossover-videoplayer>
-        </div>
-</div>

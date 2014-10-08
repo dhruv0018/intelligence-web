@@ -1,5 +1,3 @@
-
-
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -74,3 +72,4 @@ FilmHome.service('Coach.FilmHome.ReelsData', [
 
 /* File dependencies */
 require('./controller');
+

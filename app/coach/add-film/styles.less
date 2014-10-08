@@ -48,19 +48,34 @@ breakdown-text {
             }
         }
 
+        .no-roster-warning {
+            .alert-warning;           
+
+            border: solid 1px #F9E8BF;
+            display: inline-block;
+            width: 391px;
+            padding: 8px;
+            color: #000;
+            margin: 14px 20px -20px 20px;
+
+            a {
+                display: block;
+            }
+        }
+
         .select-boxes {
 
             padding: 0;
             border: 1px solid @gray-lighter;
             border-bottom: 1px solid @gray-lighter;
-            height: 245px;
+            height: 265px;
 
             &:last-child {
 
                 border-left: 0;
             }
 
-            &:hover {
+            &.active:hover {
 
                 background-color: rgb(246, 249, 253);
 
@@ -69,18 +84,6 @@ breakdown-text {
                     color: @brand-primary;
                     border-color: @brand-primary;
                 }
-            }
-
-            h1 {
-
-                color: @brand-blue;
-                font-size: 24px;
-                margin-top: 0;
-            }
-
-            h2 {
-
-                font-size: 16px;
             }
 
             button {
@@ -100,6 +103,10 @@ breakdown-text {
                     color: black;
                 }
 
+                &:disabled {
+                    cursor: not-allowed;
+                }
+
                 i {
 
                     position: absolute;
@@ -111,12 +118,29 @@ breakdown-text {
                     border-radius: 50%;
                     font-size: 50px;
 
+                    &.icon-warning {
+                        color: @brand-warning;
+                        border-color: @brand-warning;
+                    }
+
                     &::before {
 
                         width: 90px;
                         line-height: 90px;
                         text-align: center;
                     }
+                }
+
+                h1 {
+
+                    color: @brand-blue;
+                    font-size: 24px;
+                    margin-top: 0;
+                }
+
+                h2 {
+
+                    font-size: 16px;
                 }
             }
         }

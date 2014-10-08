@@ -6,16 +6,16 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'ReelsStorage', 'ReelsResource', 'BaseFactory',
-    function(ReelsStorage, ReelsResource, BaseFactory) {
+    'BaseFactory',
+    function(BaseFactory) {
 
         var ReelsFactory = {
 
             description: 'reels',
 
-            storage: ReelsStorage,
+            model: 'ReelsResource',
 
-            resource: ReelsResource,
+            storage: 'ReelsStorage',
 
             extend: function(reel) {
 

@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    '$sce', 'PlaysResource', 'PlaysStorage', 'BaseFactory',
-    function($sce, PlaysResource, PlaysStorage, BaseFactory) {
+    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory',
+    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory) {
 
         var PlaysFactory = {
 
@@ -15,9 +15,9 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             description: 'plays',
 
-            storage: PlaysStorage,
+            model: 'PlaysResource',
 
-            resource: PlaysResource,
+            storage: 'PlaysStorage',
 
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;

@@ -56,17 +56,20 @@ Instructions.directive('krossoverCoachGameInstructions', [
  * @type {controller}
  */
 Instructions.controller('Coach.Game.Instructions.controller', [
-    '$scope', '$state', 'GAME_STATUSES', 'GamesFactory', 'TeamsFactory', 'SessionService', 'AlertsService',
-    function controller($scope, $state, GAME_STATUSES, games, teams, session, alerts) {
+    '$scope', '$state', 'GAME_STATUSES', 'PositionsetsFactory', 'GamesFactory', 'TeamsFactory', 'SessionService', 'AlertsService',
+    function controller($scope, $state, GAME_STATUSES, positionsets, games, teams, session, alerts) {
 
         $scope.keys = window.Object.keys;
-        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
+
+        $scope.positionset = positionsets.get($scope.data.league.positionSetId);
+        $scope.positions = $scope.positionset.indexedPositions;
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;
 
         //Make sure team has roster
         $scope.hasRoster = false;
+        $scope.isNonRegularGame = games.isNonRegular($scope.data.game);
 
         $scope.$watch('data.gamePlayerLists[data.game.teamId]', function(x) {
             if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {

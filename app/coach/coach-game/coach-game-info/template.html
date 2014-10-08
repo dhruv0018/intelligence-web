@@ -1,5 +1,9 @@
 <div class="game-info">
 
+    <alert-message data-ng-if="data.game.isDelivered() || data.game.isBeingBrokenDown()" data-type="warning">
+        You may not edit your game rosters since the game is being indexed or has been delivered
+    </alert-message>
+
     <div class="row">
 
         <div class="box col-md-12">
@@ -200,6 +204,10 @@
 
             <x-button-continue data-ng-if="games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid || tabs['your-team'].disabled">Next</x-button-continue>
             <x-button-continue data-ng-if="!games.isRegular(data.game)" data-ng-disabled="formGameInfo.$invalid || tabs['scouting-team'].disabled">Next</x-button-continue>
+
+            <a class="game-delete" data-ng-click="deleteGame()">
+                <i class="icon icon-remove"></i> Delete this game and all the data associated with it
+            </a>
 
         </div>
 

@@ -7,7 +7,19 @@
             <i class="icon icon-circle"></i>
         </div>
         <div data-ng-if="thumbnail.length === 0" class="no-thumbnail">
-            <i class="icon icon-logo"></i>
+            <i data-ng-if="!game.isProcessing() && !game.isUploading() && !game.isVideoTranscodeFailed()" class="icon icon-logo"></i>
+            <div data-ng-if="game.isUploading()" class="film-status">
+                <i class="icon icon-upload status-uploading"></i>
+            </div>
+            <div data-ng-if="game.isProcessing()" class="film-status">
+                <i class="icon icon-tasks status-processing"></i>
+            </div>
+            <div data-ng-if="game.isVideoTranscodeFailed()" class="film-status">
+                <i class="icon icon-warning status-failed"></i>
+            </div>
+            <div data-ng-if="game.isProcessing()">Your video is still processing.</div>
+            <div data-ng-if="game.isUploading()">This film is currently being uploaded.</div>
+            <div data-ng-if="game.isVideoTranscodeFailed()"><strong>There is an issue with this film.</strong><br/>Please contact support@krossover.com</div>
         </div>
     </a>
     <a data-ui-sref="Coach.ReelsArea({id:film.id})" data-ng-if="!isGame">

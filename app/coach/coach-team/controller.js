@@ -14,8 +14,8 @@ var Team = angular.module('Coach.Team');
  * @type {controller}
  */
 Team.controller('Coach.Team.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Data', 'PlayersFactory', 'UsersFactory', 'SessionService',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users, session) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Team.Data', 'LeaguesFactory', 'PositionsetsFactory', 'TeamsFactory', 'PlayersFactory', 'UsersFactory', 'SessionService',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, leagues, positionsets, teams, players, users, session) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
@@ -31,8 +31,9 @@ Team.controller('Coach.Team.controller', [
         ];
 
         //Collections
-        $scope.teams = $scope.data.teams.getCollection();
-        $scope.leagues = $scope.data.leagues.getCollection();
+        $scope.teams = teams.getCollection();
+        $scope.leagues = leagues.getCollection();
+        $scope.users = users.getCollection();
 
         //Team
         $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
@@ -41,7 +42,8 @@ Team.controller('Coach.Team.controller', [
         $scope.league = $scope.leagues[$scope.team.leagueId];
 
         //Positions
-        $scope.positions = ($scope.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.league.positionSetId].indexedPositions : {};
+        $scope.positionset = positionsets.get($scope.league.positionSetId);
+        $scope.positions = $scope.positionset.indexedPositions;
 
         //Roster
         $scope.roster = $scope.data.playersList;
@@ -52,27 +54,19 @@ Team.controller('Coach.Team.controller', [
             message: 'All game film is automatically shared with Athletes on your active roster.'
         });
 
-        if (Object.keys($scope.positions).length > 0) {
-            angular.forEach($scope.roster, function(player) {
-                player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
-            });
-        }
-
         $scope.singleSave = function(player) {
-            var tempPlayer = (Object.keys($scope.positions).length > 0) ? players.getPositionsFromDowndown(player, $scope.rosterId, $scope.positions) : player;
 
-            players.singleSave($scope.rosterId, tempPlayer).then(function(responsePlayer) {
+            players.singleSave($scope.rosterId, player).then(function(responsePlayer) {
                 angular.extend(player, player, responsePlayer);
 
-                if (Object.keys($scope.positions).length > 0) {
-                    player = players.constructPositionDropdown(player, $scope.rosterId, $scope.positions);
-                }
-
                 if (player.userId) {
-                    if (typeof $scope.data.coachData.users[player.userId] === 'undefined') {
+                    if (typeof $scope.users[player.userId] === 'undefined') {
                         users.fetch(player.userId, function(user) {
-                            $scope.data.users[player.userId] = user.id;
+                            $scope.users[player.userId] = user.id;
                         });
+                    } else {
+                        var associatedUser = users.get(player.userId);
+                        associatedUser.save();
                     }
                 }
 
