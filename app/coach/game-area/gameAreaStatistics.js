@@ -70,7 +70,7 @@ GameAreaStatistics.controller('GameAreaStatisticsController', [
 
         $scope.scoreSummary = data.stats.scoreSummary;
 
-        $scope.statsSelector = 'ga-log';
+        $scope.statsSelector = data.stats.gameLog ? 'ga-log' : '';
     }
 ]);
 
