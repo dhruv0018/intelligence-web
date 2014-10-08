@@ -1,5 +1,5 @@
 <div class="krossover-film" data-ng-hide="hideFilm">
-   <div class="film-info-header">
+   <div class="film-info-header" data-ng-if="isGame">
        {{film.datePlayed | date: 'MMM dd, yyyy' }}
 
        <br/>
