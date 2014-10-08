@@ -14,24 +14,11 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
-    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
+    '$rootScope', '$state', '$stateParams', 'AuthenticationService', 'AuthorizationService', 'AlertsService', 'ResourceManager',
+    function run($rootScope, $state, $stateParams, auth, authz, alerts, managedResources) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-
-        /* Retrieve the current user. */
-        var currentUser = session.retrieveCurrentUser();
-
-        /* Expose the current user on the root scope. */
-        $rootScope.currentUser = currentUser;
-
-        /* Store the current user if logged in. */
-        if (auth.isLoggedIn) {
-
-            /* Store the current user. */
-            session.storeCurrentUser(currentUser);
-        }
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
