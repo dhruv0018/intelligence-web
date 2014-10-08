@@ -13,6 +13,11 @@ IntelligenceWebClient.factory('SportsStorage', [
 
         var SportsStorage = Object.create(BaseStorage, {
 
+            description: {
+
+                value: description
+            },
+
             resource: {
 
                 enumerable: false,
