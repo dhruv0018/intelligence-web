@@ -5,15 +5,16 @@ var angular = window.angular;
  * Team page module.
  * @module Team
  */
-var Team = angular.module('Coach.Team');
+var TeamRoster = angular.module('coach-team-roster');
 
 /**
- * Team controller.
+ * TeamRoster controller.
  * @module Team
  * @name Team.controller
  * @type {controller}
  */
-Team.controller('Coach.Team.controller', [
+
+TeamRoster.controller('Coach.Team.Roster.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Team.Data', 'LeaguesFactory', 'PositionsetsFactory', 'TeamsFactory', 'PlayersFactory', 'UsersFactory', 'SessionService',
     function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, leagues, positionsets, teams, players, users, session) {
         $scope.ROLES = ROLES;
@@ -21,7 +22,6 @@ Team.controller('Coach.Team.controller', [
         $scope.config = config;
         $scope.playersFactory = players;
         $scope.usersFactory = users;
-
         $scope.data = data;
 
         //toggles between player views
@@ -36,10 +36,10 @@ Team.controller('Coach.Team.controller', [
         $scope.users = users.getCollection();
 
         //Team
-        $scope.team = $scope.teams[session.currentUser.currentRole.teamId];
+        $scope.team = teams.get(session.currentUser.currentRole.teamId);
 
         //League
-        $scope.league = $scope.leagues[$scope.team.leagueId];
+        $scope.league = leagues.get($scope.team.leagueId);
 
         //Positions
         $scope.positionset = positionsets.get($scope.league.positionSetId);
@@ -47,7 +47,7 @@ Team.controller('Coach.Team.controller', [
 
         //Roster
         $scope.roster = $scope.data.playersList;
-        $scope.rosterId = $scope.teams[session.currentUser.currentRole.teamId].roster.id;
+        $scope.rosterId = $scope.team.roster.id;
 
         alerts.add({
             type: 'warning',

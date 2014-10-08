@@ -49,9 +49,8 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data.Dependencies', [
-    '$q', 'SessionService', 'UsersFactory', 'TeamsFactory', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'PositionsetsFactory', 'Base.Data.Dependencies',
-    function($q, session, users, teams, reels, games, players, positionsets, data) {
-
+    '$q', 'SessionService', 'TeamsFactory', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies', 'ROLE_TYPE', 'ROLES',
+    function($q, session, teams, reels, games, players, users, leagues, tagsets, positionsets, data, ROLE_TYPE, ROLES) {
         var currentUser = session.currentUser;
         var userId = session.currentUser.id;
         var teamId = currentUser.currentRole.teamId;
@@ -65,7 +64,6 @@ Coach.service('Coach.Data.Dependencies', [
         });
 
         var Data = {
-
             positionSets: positionsets.load(),
             teams: teams.load({ relatedUserId: currentUser.id }),
             users: users.load({ relatedUserId: currentUser.id }),
@@ -92,4 +90,3 @@ Coach.service('Coach.Data.Dependencies', [
         return Data;
     }
 ]);
-

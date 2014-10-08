@@ -22,13 +22,18 @@ IntelligenceWebClient.factory('UsersFactory', [
             extend: function(user) {
                 var self = this;
 
+
+                user.roleTypes = {};
+                Object.keys(ROLE_TYPE).forEach(function(roleType) {
+                    user.roleTypes[ROLE_TYPE[roleType]] = [];
+                });
+
                 /* Remove the user password from the model. If set it will
                  * be sent in a resource call. So only set it if the intent
                  * is to change the password. */
                 delete user.password;
                 /* If the user has roles. */
                 if (user.roles) {
-
                     /* For each role. */
                     user.roles.forEach(function(role) {
                         /* Default the tenureEnd to null. */
@@ -44,6 +49,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                         if (!role.type.name) {
                             role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
                         }
+                        user.roleTypes[role.type.id].push(role);
                     });
                 }
 
@@ -131,10 +137,11 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @method
              * @param {Object} user - the user to add the role to
              * @param {Object} role - a role object to add
+             * @param {Object} team - a team object to draw the teamId from
              * Adds the given role to the given user. If no user is specified,
              * this user will be used.
              */
-            addRole: function(user, role) {
+            addRole: function(user, role, team) {
 
                 var self = this;
 
@@ -149,8 +156,18 @@ IntelligenceWebClient.factory('UsersFactory', [
                 role.tenureEnd = null;
                 role.tenureStart = new Date();
 
+                if (team) {
+                    role.teamId = team.id;
+                }
+
                 user.roles = user.roles || [];
                 user.roles.unshift(role);
+
+                if (!user.roleTypes) {
+                     user.roleTypes = {};
+                }
+
+                user.roleTypes[role.type.id].push(role);
             },
 
             /**
@@ -210,7 +227,6 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return undefined;
             },
-
             /**
             * @class User
             * @method
@@ -387,6 +403,58 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
             getLastAccessed: function(user) {
                 return new Date(user.lastAccessed);
+            },
+            /**
+             * @class User
+             * @method
+             * Resend invitation to user based on their unique identifier (email or id)
+             */
+            resendEmail: function(type, params, identifier) {
+                var self = this;
+
+                var model = $injector.get(self.model);
+                var unique = identifier || self.id;
+
+                return model.resendEmail({
+                    unique: unique,
+                    type: type,
+                    params: params
+                });
+            },
+            /**
+             * @class User
+             * @method
+             * @param {Object} role - the role object to check for the match.
+             * @param {Object} team - the team object which is used to check if a role is associated with a team
+             * @returns {Array} Array of users that fulfill the criteria of matching the role and team
+             */
+            findByRole: function(role, team) {
+                var self = this;
+                var storage = $injector.get(self.storage);
+
+                if (!role) {
+                    throw new Error('failed to pass in role');
+                }
+
+                var vettedUsers = [];
+
+                storage.list.forEach(function(user) {
+                    if (user.has(role)) {
+                        vettedUsers.push(user);
+                    }
+                });
+
+                if (team) {
+                   vettedUsers = vettedUsers.filter(function(user) {
+                       var vettedRoles = user.roleTypes[role.type.id].filter(function(role) {
+                         return role.teamId === team.id;
+                       });
+
+                       return vettedRoles.length > 0;
+                   });
+                }
+
+                return vettedUsers;
             }
         };
 
