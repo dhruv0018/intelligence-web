@@ -49,10 +49,11 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data.Dependencies', [
-    '$q', 'SessionService', 'UsersFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PositionsetsFactory', 'Base.Data.Dependencies',
-    function($q, session, users, teams, games, players, positionsets, data) {
+    '$q', 'SessionService', 'UsersFactory', 'TeamsFactory', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'PositionsetsFactory', 'Base.Data.Dependencies',
+    function($q, session, users, teams, reels, games, players, positionsets, data) {
 
         var currentUser = session.currentUser;
+        var userId = session.currentUser.id;
         var teamId = currentUser.currentRole.teamId;
 
         var gamesForUser = games.load({
@@ -68,7 +69,11 @@ Coach.service('Coach.Data.Dependencies', [
             positionSets: positionsets.load(),
             teams: teams.load({ relatedUserId: currentUser.id }),
             users: users.load({ relatedUserId: currentUser.id }),
-            games: $q.all([gamesForUser, gamesSharedWithUser])
+            games: $q.all([gamesForUser, gamesSharedWithUser]),
+            reels: reels.load({
+                teamId: teamId,
+                userId: userId
+            })
         };
 
         Data.playersList = $q.all(data).then(function() {
