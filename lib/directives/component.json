@@ -25,7 +25,7 @@
         "add-time",
         "sport-placeholder",
         "role-icon",
-        "add-player",
+        "add-resource",
         "mascot-placeholder",
         "profile-placeholder",
         "notes-list",
@@ -34,7 +34,7 @@
         "uploader",
         "formation-chart",
         "arena",
-        "roster-manager",
+        "managers",
         "loading",
         "feedback-modal",
         "open-modal",
@@ -52,7 +52,9 @@
         "plays-filters",
         "uploading-controls",
         "upload-status",
-        "kvs-uploader"
+        "kvs-uploader",
+        "profile",
+        "plays-filters"
     ],
     "scripts": [
         "index.js"

@@ -1,5 +1,5 @@
 {
-    "name": "add-player",
+    "name": "add-resource",
     "templates": [
         "template.html"
     ],

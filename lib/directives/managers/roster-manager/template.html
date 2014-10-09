@@ -1,0 +1,58 @@
+<div class="roster-manager manager">
+    <form data-ng-if=" type === 'table' " class="table-manager form-team-active" name="formTeamActive" role="form" novalidate>
+
+        <div class="table-responsive">
+            <table data-ng-class="{'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}" class="table table-striped">
+
+                <thead>
+                    <tr>
+                        <th data-ng-if="team.isCustomerTeam">Picture</th>
+                        <th>Jersey Number</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <!--<th data-ng-if="keys(positions).length > 0">Position</th>-->
+                        <th data-ng-if="team.isCustomerTeam">Did Not Play</th>
+                    </tr>
+                </thead>
+            </table>
+
+            <krossover-athlete data-ng-repeat="athlete in roster | filter: filterType"
+                               data-athlete="athlete"
+                               data-roster-id="rosterId"
+                               data-positionset="positionset"
+                               data-positions="positions"
+                               data-toggle="toggleActivation"
+                               data-team="team"
+                               data-editable="editable"></krossover-athlete>
+
+        </div>
+
+        <button data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()" class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>
+
+        <a data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()" href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
+    </form>
+
+
+    <div data-ng-if=" type === 'interface' ">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-xs-2">
+                    <add-resource data-add-new-resource="addNewPlayer()" data-display-text="Add new player"></add-resource>
+                    <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options"><i class="icon icon-cloud-upload"></i> Upload Roster via Excel</a>
+                </div>
+
+                <div class="col-xs-10">
+                    <div class="row">
+                            <profile data-ng-repeat="player in roster | filter: filterType | orderBy: sortingType | filter: {isUnknown: false}"
+                                     data-role="ROLES.ATHLETE"
+                                     data-player="player"
+                                     data-positions="positions"
+                                     data-team="team"
+                                     data-options="options"
+                                     data-roster-id="rosterId"></profile>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
