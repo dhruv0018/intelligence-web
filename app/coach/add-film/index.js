@@ -114,12 +114,11 @@ AddFilm.controller('StartController', [
 
         //check if team has a valid roster
         var team = teams.get(session.currentUser.currentRole.teamId);
-        if (data.playersList && data.playersList.some(function(player) { return !player.isUnknown && player.rosterStatuses[team.roster.id]; })) {
+        if (team.roster.playerInfo) {
             $scope.hasRoster = 1;
         } else {
             $scope.hasRoster = 0;
         }
-
         $scope.GAME_TYPES = GAME_TYPES;
 
         $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];

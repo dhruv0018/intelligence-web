@@ -110,25 +110,42 @@ Info.controller('Coach.Game.Info.controller', [
             if (!$scope.gameTeams.team.id) {
                 var newTeam = teams.create({isCustomerTeam: false, leagueId: $scope.league.id, name: $scope.gameTeams.team});
                 $scope.gameTeams.team = newTeam;
+                promises.team = $scope.gameTeams.team.save();
             }
 
             if (!$scope.gameTeams.opposingTeam.id) {
                 var newOpposingTeam = teams.create({isCustomerTeam: false, leagueId: $scope.league.id, name: $scope.gameTeams.opposingTeam});
                 $scope.gameTeams.opposingTeam = newOpposingTeam;
+                promises.opposingTeam = $scope.gameTeams.opposingTeam.save();
             }
 
-            promises = {
-                team: $scope.gameTeams.team.save(),
-                opposingTeam: $scope.gameTeams.opposingTeam.save()
-            };
-
             $q.all(promises).then(function(response) {
-                $scope.game.teamId = response.team.id;
-                $scope.game.opposingTeamId = response.opposingTeam.id;
+                $scope.game.teamId = (response.team) ? response.team.id : $scope.gameTeams.team.id;
+                $scope.game.opposingTeamId = (response.opposingTeam) ? response.opposingTeam.id : $scope.gameTeams.opposingTeam.id;
+                console.log($scope.game);
+                $scope.game.rosters = {};
+
+
+//                $scope.game.rosters[$scope.game.teamId] = {
+//                    teamId: response.team.id,
+//                    playerInfo: response.team.roster.playerInfo
+//                };
+
+//
+//                $scope.game.rosters[$scope.game.opposingTeamId] = {
+//                    teamId: response.opposingTeam.id,
+//                    playerInfo: response.opposingTeam.roster.playerInfo
+//                };
+
                 $scope.game.save().then(function() {
-                    //TODO add method to build the game rosters in this section when the backend is done
-                    $scope.goToRoster();
+                    $scope.playersList = {};
+                    var teamPlayerFilter =
+                    $scope.playersList[$scope.game.teamId] = players.load({rosterId: $scope.game.roster.id}).then(function() {
+                        return players.getList(playersFilter);
+                    });
                 });
+
+                $scope.goToRoster();
             });
 
         };

@@ -15,7 +15,7 @@
                     <profile-placeholder data-size="small"></profile-placeholder>
                 </td>
                 <td class="athlete-column">
-                    <input size="3" data-ng-change="updateAthleteInformation()" data-ng-model="athlete.jerseyNumbers[rosterId]" required>
+                    <input size="3" data-ng-change="updateAthleteInformation()" data-ng-model="athlete.jerseyNumber" required>
                 </td>
 
                 <td class="athlete-column">
@@ -33,7 +33,7 @@
                     <!--<button data-ng-if="!team.isCustomerTeam" class="btn btn-blank pull-right" data-ng-click="toggle(athlete)"><i class="icon icon-remove"></i></button>-->
                 <!--</td>-->
 
-                <td class="athlete-column" data-ng-if="team.isCustomerTeam" data-ng-click="athlete.rosterStatuses[rosterId] = !athlete.rosterStatuses[rosterId]">
+                <td class="athlete-column" data-ng-if="team.isCustomerTeam" data-ng-click="athlete.isActive = !athlete.isActive">
                     <i class="icon icon-check-square-o" data-ng-show="!athlete.rosterStatuses[rosterId]"></i>
                     <i class="icon icon-check-empty" data-ng-show="athlete.rosterStatuses[rosterId]"></i>
                 </td>

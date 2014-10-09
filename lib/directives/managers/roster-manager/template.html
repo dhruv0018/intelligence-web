@@ -16,12 +16,14 @@
                 </thead>
             </table>
 
-            <krossover-athlete data-ng-repeat="athlete in roster | filter: filterType"
+            <krossover-athlete data-ng-repeat="(id, athlete) in game.rosters[team.id].playerInfo | filter: filterType"
                                data-athlete="athlete"
                                data-roster-id="rosterId"
                                data-positionset="positionset"
                                data-positions="positions"
                                data-toggle="toggleActivation"
+                               id="{{id}}"
+                               data-game="game"
                                data-team="team"
                                data-editable="editable"></krossover-athlete>
 
