@@ -52,6 +52,7 @@ ReelsArea.config([
                         data.games = games.load({reelId: reelId});
                         data.teams = teams.load({reelId: reelId});
                         data.plays = plays.load({reelId: reelId});
+                        data.leagues = leagues.load();
 
                         return $q.all(data);
                     }

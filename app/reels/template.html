@@ -17,6 +17,7 @@
                 </div>
 
                 <div class="reel-plays-container">
+
                     <div
                         krossover-reel-play
                         data-edit-flag="editMode"
@@ -25,11 +26,17 @@
                         data-draggable
                         data-draggable-flag="{{editMode}}"
                         data-play="data.plays.get(playId)"
-                        data-team="getOpposingTeam(playId)"
-                        data-opposing-team="getHomeTeam(playId)"
+                        data-team="getHomeTeam(playId)"
+                        data-opposing-team="getOpposingTeam(playId)"
                         data-date-played="getDatePlayed(playId)"
                         data-ng-class="{'last': $last}"
-                        data-ng-repeat="playId in data.reel.plays">
+                        data-ng-repeat="playId in data.reel.plays"
+
+                        data-plays="data.plays"
+                        data-game="data.games.get(data.plays.get(playId).gameId)"
+                        data-team-players="[]"
+                        data-opposing-team-players="[]"
+                        data-league="data.leagues.get(getHomeTeam(playId).leagueId)">
                     </div>
                 </div>
 
