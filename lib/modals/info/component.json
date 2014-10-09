@@ -1,0 +1,16 @@
+{
+    "name": "info",
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "assistant-info",
+        "athlete-info"
+    ]
+}
