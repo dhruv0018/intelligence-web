@@ -1,5 +1,5 @@
 <div class="plays-filter">
-    <div class="filter-dropdown pull-left dropdown"  data-is-open="filterMenu.isOpened">
+    <div class="filter-dropdown pull-left dropdown"  data-is-open="filterMenu.isOpen">
 
         <a class="dropdown-toggle">
             Filter Plays
@@ -18,12 +18,12 @@
         <ul class="dropdown-menu">
             <li>
                 <div>
-                    <a class="btn" data-ng-click="setTeam(game.teamId)" data-ng-class="{'btn-default' : (teamId !== game.teamId), 'btn-primary': (teamId === game.teamId)}">
+                    <a class="btn" data-ng-click="setTeam($event, game.teamId)" data-ng-class="{'btn-default' : (teamId !== game.teamId), 'btn-primary': (teamId === game.teamId)}">
                         {{teams[game.teamId].name}}
                     </a>
                 </div>
                 <div>
-                    <a class="btn" data-ng-click="setTeam(game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== game.opposingTeamId), 'btn-primary': (teamId === game.opposingTeamId)}">
+                    <a class="btn" data-ng-click="setTeam($event, game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== game.opposingTeamId), 'btn-primary': (teamId === game.opposingTeamId)}">
                         {{teams[game.opposingTeamId].name}}
                     </a>
                 </div>
@@ -31,7 +31,7 @@
 
             <li>
                 <div data-ng-repeat="(key, filterCategory) in filtersetCategories">
-                    <a data-ng-click="setFilterCategory(filterCategory.id)" class="btn" data-ng-class="{'btn-default':(filterCategory.id !== currentFilterCategory), 'btn-primary':(filterCategory.id === currentFilterCategory)}">{{filterCategory.name}}</a>
+                    <a data-ng-click="setFilterCategory($event, filterCategory.id)" class="btn" data-ng-class="{'btn-default':(filterCategory.id !== currentFilterCategory), 'btn-primary':(filterCategory.id === currentFilterCategory)}">{{filterCategory.name}}</a>
                 </div>
             </li>
             <li>
