@@ -30,8 +30,9 @@
 
     <div class="role-name">
 
-        <span data-ng-if="users.is(role, COACH)">{{team.name}}</span>
-        <span data-ng-if="!users.is(role, COACH)">{{role.type.name || 'Inactive'}}</span>
+        <span data-ng-if="user.id && users.is(role, COACH)">{{teams[role.teamId].name}}</span>
+        <span data-ng-if="user.id && !users.is(role, COACH)">{{role.type.name || 'Inactive'}}</span>
+        <span data-ng-if="!user.id">New User</span>
 
     </div>
 
