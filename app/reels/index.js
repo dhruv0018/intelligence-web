@@ -88,8 +88,8 @@ ReelsArea.service('Reels.Data.Dependencies', [
  * @type {Controller}
  */
 ReelsArea.controller('ReelsArea.controller', [
-    '$scope', '$state', '$stateParams', 'AccountService', 'AlertsService', 'Reels.Data', 'PlayManager',
-    function controller($scope, $state, $stateParams, account, alerts, data, playManager) {
+    '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'Reels.Data', 'PlayManager',
+    function controller($scope, $state, $stateParams, $modal, modals, account, alerts, data, playManager) {
 
         $scope.data = data;
         $scope.videoTitle = 'reelsPlayer';
@@ -172,10 +172,16 @@ ReelsArea.controller('ReelsArea.controller', [
         };
 
         $scope.deleteReel = function() {
-            data.reel.isDeleted = true;
-            data.reel.save();
-            account.gotoUsersHomeState();
-            //TODO: Create alert that confirms to the user that their reel has been deleted
+            var deleteReelModal = modals.openForConfirm({
+                title: 'Delete Reel',
+                bodyText: 'Are you sure you want to delete this reel?',
+                buttonText: 'Yes'
+            });
+
+            deleteReelModal.result.then(function() {
+                data.reel.remove();
+                account.gotoUsersHomeState();
+            });
         };
     }
 ]);

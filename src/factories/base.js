@@ -488,7 +488,9 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
-             * Removes a resources from the server.
+             * Removes a resource from the server.
+             * This performs our "soft-delete" by adding a flag to the resource
+             * and saving it as "deleted" so it no longer appears.
              * @param {Resource} resource - a resource.
              * @param {Function} success - called upon success.
              * @param {Function} error - called on error.
@@ -506,7 +508,49 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 error = error || function() {
 
-                    throw new Error('Could not remove ' + self.description);
+                    throw new Error('Could not remove ' + self.description.slice(0, -1)) + ' ' + resource.id;
+                };
+
+                var model = $injector.get(self.model);
+                var storage = $injector.get(self.storage);
+
+                /* Remove the resource from storage. */
+                storage.list.splice(storage.list.indexOf(resource), 1);
+                delete storage.collection[resource.id];
+
+                /* If the resource has been saved to the server before. */
+                if (resource.id) {
+
+                    /* Add the deleted flag. */
+                    resource.isDeleted = true;
+
+                    /* Save the resource. */
+                    return model.update(parameters, resource, success, error).$promise;
+                }
+            },
+
+            /**
+             * Deletes a resource from the server.
+             * This will send a DELETE request to the server. The resource will
+             * be permanently removed locally and remotely.
+             * @param {Resource} resource - a resource.
+             * @param {Function} success - called upon success.
+             * @param {Function} error - called on error.
+             * @return {Promise} - a promise.
+             */
+            delete: function(resource, success, error) {
+
+                var self = this;
+
+                var parameters = {};
+
+                resource = resource || self;
+
+                success = success || angular.noop;
+
+                error = error || function() {
+
+                    throw new Error('Could not delete ' + self.description.slice(0, -1)) + ' ' + resource.id;
                 };
 
                 var model = $injector.get(self.model);
