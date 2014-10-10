@@ -178,9 +178,7 @@ ReelsArea.controller('ReelsArea.controller', [
             });
 
             deleteReelModal.result.then(function() {
-                //TODO - use factory remove
-                data.reel.isDeleted = true;
-                data.reel.save();
+                data.reel.remove();
                 account.gotoUsersHomeState();
             });
         };
