@@ -66,7 +66,7 @@ IntelligenceWebClient.service('AuthenticationService', [
                         /* Get the user from the server. */
                         return user.get({ id: email }).$promise.then(function(user) {
 
-                            user = users.extend(user);
+                            user = session.deserializeUser(user);
 
                             /* Store the user in the session. Optionally persisting. */
                             session.storeCurrentUser(user, persist);
