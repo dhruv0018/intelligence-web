@@ -37,6 +37,7 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
 
         //Team
         $scope.team = teams.get(session.currentUser.currentRole.teamId);
+        console.log('on the roster page', $scope.team);
 
         //League
         $scope.league = leagues.get($scope.team.leagueId);
@@ -55,6 +56,13 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
         });
 
         $scope.singleSave = function(player, user) {
+
+            if (!user.email) {
+                return players.singleSave($scope.rosterId, player).then(function(responsePlayer) {
+                    angular.extend(player, player, responsePlayer);
+                    return responsePlayer;
+                });
+            }
 
             if (!player.userId) {
                 user.firstName = player.firstName;

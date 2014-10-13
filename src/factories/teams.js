@@ -66,7 +66,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                             rosterEntry.id = playerId;
                         });
                     } else {
-                        team.playerInfo = {};
+                        team.roster.playerInfo = {};
                     }
                 }
                 angular.extend(team, self);
