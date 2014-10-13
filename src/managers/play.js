@@ -198,7 +198,7 @@ IntelligenceWebClient.service('PlayManager', [
             if (play.id) {
 
                 /* Also remove it remotely. */
-                plays.remove(play);
+                plays.delete(play);
             }
         };
 
