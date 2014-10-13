@@ -89,7 +89,7 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         };
 
         //Collections
-        $scope.teams = $scope.data.teams.getCollection();
+        $scope.teams = teams.getCollection();
 
         //Game Roster for Coach Team
         $scope.gameRoster = [];

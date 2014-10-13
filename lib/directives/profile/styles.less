@@ -1,23 +1,14 @@
 @import (reference) "main.less";
 
-.krossover-roster-manager {
+.profile {
 
-  height: 100%;
-  padding-bottom: 60px;
-  overflow-y: auto;
-
-  .add-new-player {
-    margin: 0px auto;
-    cursor: pointer;
-  }
-
-  .athlete {
+  .manageable-resource {
     text-align: center;
     margin-top: 20px;
     height: 200px;
     letter-spacing: normal;
 
-  .athlete-picture {
+    .manageable-picture {
       margin-bottom: 5px;
 
       img{
@@ -25,9 +16,18 @@
       }
 
       .placeholder-picture {
-        margin: 0px auto;
+        display: inline-block;
+        margin-bottom: 5px;
       }
-  }
+    }
+
+    .resending {
+      color: @brand-success;
+
+      .icon-refresh::before {
+        animation: spin 1s linear infinite;
+      }
+    }
 
     p {
       margin: 0;

@@ -1,5 +1,5 @@
 {
-    "name": "add-player",
+    "name": "state-selector",
     "templates": [
         "template.html"
     ],

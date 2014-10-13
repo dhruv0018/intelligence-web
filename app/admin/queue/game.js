@@ -66,12 +66,12 @@ Game.config([
             },
             resolve: {
                 'Admin.Game.Data': [
-                    '$q', '$stateParams', 'Admin.Game.Data.Dependencies', 'SchoolsFactory',
-                    function($q, $stateParams, data, schools) {
+                    '$q', '$stateParams', 'Admin.Game.Data.Dependencies', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory',
+                    function($q, $stateParams, data, schools, teams, games) {
 
                         return $q.all(data).then(function(data) {
-                            var game = data.games.get($stateParams.id);
-                            var team = data.teams.get(game.teamId);
+                            var game = games.get($stateParams.id);
+                            var team = teams.get(game.teamId);
 
                             if (team.schoolId) {
                                 data.school = schools.fetch(team.schoolId);
@@ -83,12 +83,12 @@ Game.config([
                 ]
             },
             onEnter: [
-                '$stateParams', 'GAME_STATUSES', 'AlertsService', 'Admin.Game.Data',
-                function($stateParams, GAME_STATUSES, alerts, data) {
+                '$stateParams', 'GAME_STATUSES', 'AlertsService', 'Admin.Game.Data', 'GamesFactory',
+                function($stateParams, GAME_STATUSES, alerts, data, games) {
 
                     var gameId = $stateParams.id;
 
-                    var game = data.games.get(gameId);
+                    var game = games.get(gameId);
 
                     alerts.add({
                         type: game.isDelivered() ? 'success' : 'warning',
@@ -109,8 +109,8 @@ Game.config([
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal',
-    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal) {
+    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory',
+    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal, users, sports, leagues, teams, games) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -124,24 +124,24 @@ Game.controller('GameController', [
         var gameId = $stateParams.id;
 
         $scope.data = data;
-        $scope.game = data.games.get(gameId);
-        $scope.team = data.teams.get($scope.game.teamId);
-        $scope.teams = data.teams.getCollection();
-        $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
-        $scope.league = data.leagues.get($scope.team.leagueId);
-        $scope.sport = data.sports.get($scope.league.sportId);
+        $scope.game = games.get(gameId);
+        $scope.team = teams.get($scope.game.teamId);
+        $scope.teams = teams.getCollection();
+        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+        $scope.league = leagues.get($scope.team.leagueId);
+        $scope.sport = sports.get($scope.league.sportId);
 
         if (data.school) {
             $scope.school = data.school;
         }
 
-        $scope.users = data.users.getList();
+        $scope.users = users.getList();
 
         var headCoachRole = $scope.team.getHeadCoachRole();
 
         if (headCoachRole) {
 
-            $scope.headCoach = data.users.get(headCoachRole.userId);
+            $scope.headCoach = users.get(headCoachRole.userId);
         }
 
         $scope.deliverTime = $scope.game.getRemainingTime($scope.teams[$scope.game.uploaderTeamId]);

@@ -49,32 +49,39 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data.Dependencies', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies',
-    function($q, session, teams, games, players, users, leagues, tagsets, positions, baseData) {
+    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies', 'ROLE_TYPE', 'ROLES',
+    function($q, session, teams, games, players, users, leagues, tagsets, positionsets, data, ROLE_TYPE, ROLES) {
+        var currentUser = session.currentUser;
+        var teamId = currentUser.currentRole.teamId;
 
-        var promises = {
-            games: games.load({
-                uploaderTeamId: session.currentUser.currentRole.teamId
-            }),
-            teams: teams.load({ relatedUserId: session.currentUser.id }),
-            users: users.load({ relatedUserId: session.currentUser.id }),
-            remainingBreakdowns: teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId),
-            positionSets: positions.load(),
-            leagues: baseData.leagues,
-            sports: baseData.sports,
-            filtersets: baseData.filtersets,
-            tagsets: baseData.tagsets
+        var gamesForUser = games.load({
+            uploaderTeamId: session.currentUser.currentRole.teamId
+        });
+
+        var gamesSharedWithUser = games.load({
+            sharedWithUserId: session.currentUser.id
+        });
+
+        var Data = {
+            positionSets: positionsets.load(),
+            teams: teams.load({ relatedUserId: currentUser.id }),
+            users: users.load({ relatedUserId: currentUser.id }),
+            games: $q.all([gamesForUser, gamesSharedWithUser])
         };
 
-        promises.playersList = promises.teams.then(function(teams) {
-            var userTeamId = session.currentUser.currentRole.teamId;
-            var userTeam = teams.get(userTeamId);
-            return players.query({
-                rosterId: userTeam.roster.id
+        Data.playersList = $q.all(data).then(function() {
+
+            var team = teams.get(teamId);
+
+            var playersFilter = { rosterId: team.roster.id };
+
+            return players.load(playersFilter).then(function() {
+                return players.getList(playersFilter);
             });
         });
 
-        return promises;
+        angular.extend(Data, data);
+
+        return Data;
     }
 ]);
-

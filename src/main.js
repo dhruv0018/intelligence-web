@@ -1,5 +1,7 @@
 var pkg = require('../package.json');
 
+require('./appcache');
+
 /* Vendor dependencies */
 require('./vendor');
 
@@ -18,6 +20,7 @@ require('./config');
 require('./app');
 
 require('./flow');
+require('./users');
 require('./routes');
 require('./errors');
 

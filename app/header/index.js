@@ -45,9 +45,19 @@ Header.config([
                 },
                 resolve: {
                     'Base.Data': [
-                        '$q', 'Base.Data.Dependencies',
-                        function($q, data) {
-                            return $q.all(data);
+                        '$q', 'SessionService', 'TeamsFactory', 'Base.Data.Dependencies',
+                        function($q, session, teams, data) {
+
+                            var teamId = session.currentUser.currentRole.teamId;
+
+                            if (teamId) {
+
+                                var team = teams.load(teamId);
+
+                                return $q.all([team, data]);
+                            }
+
+                            else return $q.all(data);
                         }
                     ]
                 }
@@ -57,16 +67,18 @@ Header.config([
 
 
 Header.service('Base.Data.Dependencies', [
-    'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'TeamsFactory',
-    function(session, sports, leagues, tagsets, filtersets, teams) {
+    'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
+    function(session, sports, leagues, tagsets, filtersets, positionsets, teams) {
 
         var teamIds = session.currentUser.getTeamIds();
 
         var Data = {
+
             sports: sports.load(),
             leagues: leagues.load(),
             tagsets: tagsets.load(),
             filtersets: filtersets.load(),
+            positionsets: positionsets.load()
         };
 
         if (teamIds.length) {
@@ -92,13 +104,13 @@ Header.controller('HeaderController', [
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
         $scope.INDEXER = ROLES.INDEXER;
+        $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.COACH = ROLES.COACH;
         $scope.ATHLETE = ROLES.ATHLETE;
 
         $scope.config = config;
-
         $scope.$state = $state;
-
+        $scope.session = session;
         $scope.account = account;
 
         $scope.logout = function() {

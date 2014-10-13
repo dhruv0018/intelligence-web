@@ -61,11 +61,11 @@ Game.config([
                 },
                 resolve: {
                     'Indexer.Game.Data': [
-                        '$q', '$stateParams', 'Indexer.Game.Data.Dependencies', 'SchoolsFactory',
-                        function($q, $stateParams, data, schools) {
+                        '$q', '$stateParams', 'Indexer.Game.Data.Dependencies', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory',
+                        function($q, $stateParams, data, schools, teams, games) {
                             return $q.all(data).then(function(data) {
-                                var game = data.games.get($stateParams.id);
-                                var team = data.teams.get(game.teamId);
+                                var game = games.get($stateParams.id);
+                                var team = teams.get(game.teamId);
 
                                 if (team.schoolId) {
                                     data.school = schools.fetch(team.schoolId);
@@ -77,11 +77,11 @@ Game.config([
                     ]
                 },
                 onEnter: [
-                    '$state', '$stateParams', 'SessionService', 'AlertsService', 'Indexer.Game.Data',
-                    function($state, $stateParams, session, alerts, data) {
+                    '$state', '$stateParams', 'SessionService', 'AlertsService', 'Indexer.Game.Data', 'GamesFactory',
+                    function($state, $stateParams, session, alerts, data, games) {
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
-                        var game = data.games.get(gameId);
+                        var game = games.get(gameId);
                         var status = game.getStatus();
                         var indexable = game.isAssignedToIndexer() && game.canBeIndexed();
                         var qaAble = game.isAssignedToQa() && game.canBeQAed();
