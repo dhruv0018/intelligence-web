@@ -41,7 +41,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
             },
 
             updateDate: function() {
-                this.updatedAt = new Date();
+                this.updatedAt = moment.utc().toDate();
             },
             shareWithUser: function(user) {
 
