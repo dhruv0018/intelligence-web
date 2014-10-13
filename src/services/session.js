@@ -93,7 +93,7 @@ IntelligenceWebClient.service('SessionService', [
             user = user || this.currentUser;
 
             /* Store user in memory. */
-            this.currentUser = angular.copy(user);
+            this.currentUser = user;
 
             /* Store user in the session. */
             this.storeUser(CURRENT_USER_KEY, user, persist);
@@ -110,7 +110,7 @@ IntelligenceWebClient.service('SessionService', [
             if (!user) return;
 
             /* Store user in memory. */
-            this.previousUser = angular.copy(user);
+            this.previousUser = user;
 
             /* Store user in the session. */
             this.storeUser(PREVIOUS_USER_KEY, user, persist);

@@ -31,7 +31,7 @@
         <button class="btn-delete-play" data-ng-if="isIndexer" data-ng-disabled="play.isSaving" data-ng-click="deletePlay()">Delete Play</button>
         <div class="save-indicator" data-ng-if="isIndexer">
             <i class="icon icon-refresh active" data-ng-show="play.isSaving"></i>
-            <i class="icon icon-ok success" data-ng-show="play.id" data-ng-hide="play.isSaving || play.error"></i>
+            <i class="icon icon-ok success" data-ng-show="play.id" data-ng-hide="!play.id || play.isSaving || play.error"></i>
             <i class="icon icon-remove error" data-ng-show="play.error"></i>
         </div>
         <button class="play-link disabled" data-ng-if="!isIndexer"><i class="icon icon-plus"></i> Add to reel</button>
