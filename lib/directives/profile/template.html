@@ -6,7 +6,7 @@
         </div>
         <div class="description">
             <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
-                <span class="jerseyNumber">{{player.jerseyNumbers[rosterId]}}</span>
+                <span class="jerseyNumber">{{team.roster.playerInfo[player.id].jerseyNumber}}</span>
                 {{player.firstName}}
                 {{player.lastName[0]}}.
             </a>

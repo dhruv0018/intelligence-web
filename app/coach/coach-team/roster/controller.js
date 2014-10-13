@@ -54,27 +54,35 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
             message: 'All game film is automatically shared with Athletes on your active roster.'
         });
 
-        $scope.singleSave = function(player) {
+        $scope.singleSave = function(player, user) {
 
-            return players.singleSave($scope.rosterId, player).then(function(responsePlayer) {
-                angular.extend(player, player, responsePlayer);
+            if (!player.userId) {
+                user.firstName = player.firstName;
+                user.lastName = player.lastName;
+                users.addRole(user, ROLES.ATHLETE, $scope.team);
+                return user.save().then(function(user) {
+                    player.userId = user.id;
+                    return players.singleSave($scope.rosterId, player).then(function(responsePlayer) {
+                        angular.extend(player, player, responsePlayer);
+                        return responsePlayer;
+                    });
+                });
+            } else {
+                player.firstName = user.firstName;
+                player.lastName = user.lastName;
+                users.addRole(user, ROLES.ATHLETE, $scope.team);
+                user.save();
+                return players.singleSave($scope.rosterId, player).then(function(responsePlayer) {
+                    angular.extend(player, player, responsePlayer);
+                    return responsePlayer;
+                });
+            }
 
-//                if (player.userId) {
-//                    if (typeof $scope.users[player.userId] === 'undefined') {
-//                        users.fetch(player.userId, function(user) {
-//                            $scope.users[player.userId] = user.id;
-//                        });
-//                    } else {
-//                        var associatedUser = users.get(player.userId);
-//                        associatedUser.save();
-//                    }
-//                }
-                return responsePlayer;
-            });
         };
 
-        $scope.sortPlayers = function(player) {
-            return Number(player.jerseyNumbers[$scope.rosterId]);
+        $scope.sortPlayers = function(rosterEntry) {
+            console.log(rosterEntry);
+            return Number(rosterEntry.jerseyNumber);
         };
     }
 ]);
