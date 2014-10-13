@@ -77,17 +77,19 @@ Breakdown.controller('Coach.GameArea.Breakdown.controller', [
             $scope.filterset = filtersets.get($scope.league.filterSetId);
         }
 
-        // players
+        // Players
         var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
         $scope.teamPlayers = players.getList(teamPlayersFilter);
 
         var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
         $scope.opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
 
-        //Plays
+        // Plays
         var playsFilter = { gameId: game.id };
         $scope.totalPlays = plays.getList(playsFilter);
         $scope.plays = $scope.totalPlays;
+
+        $scope.filteredPlaysIds = [];
 
         $scope.expandAll = false;
     }

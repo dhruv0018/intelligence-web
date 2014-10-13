@@ -1,20 +1,20 @@
 <div class="game-area-film-filters">
     <div class="play-count pull-left">
-        Viewing: All Plays ({{plays.length}})
+        Viewing: All Plays ({{filteredPlaysIds.length}})
     </div>
 
     <plays-filter data-total-plays="totalPlays"
-                  data-plays="plays"
                   data-game="game"
                   data-team-player-list="teamPlayers"
                   data-opposing-player-list="opposingTeamPlayers"
-                  data-filterset="filterset"></plays-filter>
+                  data-filterset="filterset"
+                  data-ng-model="filteredPlaysIds"></plays-filter>
 </div>
 
 <div class="game-area-film">
         <aside class="playlist">
 
-          <krossover-plays data-expand-all="expandAll" data-game="game" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-league="league"></krossover-plays>
+          <krossover-plays data-expand-all="expandAll" data-game="game" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-filtered-plays-ids="filteredPlaysIds" data-league="league"></krossover-plays>
 
 
           <div class="expandrow">
