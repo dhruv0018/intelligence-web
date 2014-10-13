@@ -13,6 +13,9 @@
     "passwordReset": {
         "uri": "https://localhost:4436/intelligence-api/v1/password-reset/"
     },
+    "reels": {
+        "turnedOn": true
+    },
     "links": {
         "signup": {
             "uri": "http://krossover.com/sign-up.php"

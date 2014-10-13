@@ -381,6 +381,13 @@
     "Athlete.GameArea.Breakdown": {
 
         "Athlete": true
+    },
+
+    "ReelsArea": {
+
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
     }
 }
 

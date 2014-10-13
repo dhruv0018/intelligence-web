@@ -14,12 +14,15 @@ var FilmHome = angular.module('Coach.FilmHome');
  * @type {controller}
  */
 FilmHome.controller('Coach.FilmHome.controller', [
-    '$rootScope', '$scope', '$state', '$filter', 'GamesFactory', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', 'SessionService', 'Coach.Data', 'ROLES',
-    function controller($rootScope, $scope, $state, $filter, games, players, teams, users, session, data, ROLES) {
+    '$rootScope', '$scope', '$state', '$filter', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', 'SessionService', 'Coach.Data', 'ROLES',
+    function controller($rootScope, $scope, $state, $filter, reels, games, players, teams, users, session, data, ROLES) {
         var teamId = session.currentUser.currentRole.teamId;
         $scope.playersList = data.playersList;
         $scope.games = games.getCollection();
         $scope.gamesList = games.getList();
+        $scope.reels = reels.getCollection();
+        $scope.reelsList = reels.getList();
+        $scope.filmsList = $scope.gamesList.concat($scope.reelsList);
         $scope.teams = teams.getCollection();
         $scope.team = teams.get(teamId);
         $scope.users = users.getCollection();
