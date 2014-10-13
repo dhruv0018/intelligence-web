@@ -45,9 +45,10 @@
 
                 <div class="col-xs-10">
                     <div class="row">
-                            <profile data-ng-repeat="player in roster | filter: filterType | orderBy: sortingType | filter: {isUnknown: false}"
+                            <!--<profile data-ng-repeat="player in roster | filter: filterType | orderBy: sortingType | filter: {isUnknown: false}"-->
+                            <profile data-ng-repeat="(playerId, rosterEntry) in team.roster.playerInfo"
                                      data-role="ROLES.ATHLETE"
-                                     data-player="player"
+                                     data-player="players[playerId]"
                                      data-positions="positions"
                                      data-team="team"
                                      data-options="options"

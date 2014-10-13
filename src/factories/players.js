@@ -34,11 +34,11 @@ IntelligenceWebClient.factory('PlayersFactory', [
             singleSave: function(rosterId, player) {
                 var self = this;
 
-                player.rosterIds = (typeof player.rosterIds !== 'undefined' && angular.isArray(player.rosterIds)) ? player.rosterIds : [];
-
-                if (player.rosterIds.indexOf(rosterId) < 0) {
-                    player.rosterIds.push(rosterId);
-                }
+//                player.rosterIds = (typeof player.rosterIds !== 'undefined' && angular.isArray(player.rosterIds)) ? player.rosterIds : [];
+//
+//                if (player.rosterIds.indexOf(rosterId) < 0) {
+//                    player.rosterIds.push(rosterId);
+//                }
 
                 var model = $injector.get(self.model);
 

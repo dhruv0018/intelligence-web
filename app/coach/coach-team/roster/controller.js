@@ -56,20 +56,20 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
 
         $scope.singleSave = function(player) {
 
-            players.singleSave($scope.rosterId, player).then(function(responsePlayer) {
+            return players.singleSave($scope.rosterId, player).then(function(responsePlayer) {
                 angular.extend(player, player, responsePlayer);
 
-                if (player.userId) {
-                    if (typeof $scope.users[player.userId] === 'undefined') {
-                        users.fetch(player.userId, function(user) {
-                            $scope.users[player.userId] = user.id;
-                        });
-                    } else {
-                        var associatedUser = users.get(player.userId);
-                        associatedUser.save();
-                    }
-                }
-
+//                if (player.userId) {
+//                    if (typeof $scope.users[player.userId] === 'undefined') {
+//                        users.fetch(player.userId, function(user) {
+//                            $scope.users[player.userId] = user.id;
+//                        });
+//                    } else {
+//                        var associatedUser = users.get(player.userId);
+//                        associatedUser.save();
+//                    }
+//                }
+                return responsePlayer;
             });
         };
 

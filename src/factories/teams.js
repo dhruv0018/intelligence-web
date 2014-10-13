@@ -54,6 +54,21 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     });
                 }
 
+                //TODO roster related, should be put on backend at some point
+                if (!team.roster) {
+                    team.roster = {
+                        teamId: team.id,
+                        playerInfo: {}
+                    };
+                } else {
+                    if (team.roster.playerInfo) {
+                        angular.forEach(team.roster.playerInfo, function(rosterEntry, playerId) {
+                            rosterEntry.id = playerId;
+                        });
+                    } else {
+                        team.playerInfo = {};
+                    }
+                }
                 angular.extend(team, self);
 
                 return team;
