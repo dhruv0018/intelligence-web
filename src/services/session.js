@@ -48,7 +48,7 @@ IntelligenceWebClient.service('SessionService', [
          */
         this.deserializeUser = function(string) {
 
-            var storedObject = angular.fromJson(JSON.parse(string));
+            var storedObject = angular.fromJson(string);
             var user = new UsersResource(storedObject);
 
             user.description = 'users';
