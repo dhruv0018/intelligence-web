@@ -77,13 +77,13 @@ IntelligenceWebClient.service('PlaysManager', [
         };
 
         /**
-         * Removes all plays.
+         * Delete all plays.
          */
-        this.removeAllPlays = function() {
+        this.deleteAllPlays = function() {
 
             this.plays.forEach(function(play) {
 
-                play.remove();
+                play.delete();
             });
         };
 

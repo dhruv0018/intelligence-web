@@ -1,0 +1,21 @@
+<div class="assistant-manager manager">
+    <div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-xs-2">
+                    <add-resource data-add-new-resource="addNewAssistantCoach()" data-display-text="Add an Assistant Coach"></add-resource>
+                </div>
+
+                <div class="col-xs-10">
+                    <div class="row">
+                        <profile data-role="ROLES.ASSISTANT_COACH"
+                                 data-team="team"
+                                 data-options="options"
+                                 data-assistant="assistant"
+                                 data-ng-repeat="assistant in assistantCoaches | filter: filterType"></profile>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
