@@ -33,7 +33,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
             singleSave: function(rosterId, player) {
                 var self = this;
-
+                var storage = $injector.get(self.storage);
+                var collection = storage.collection;
 //                player.rosterIds = (typeof player.rosterIds !== 'undefined' && angular.isArray(player.rosterIds)) ? player.rosterIds : [];
 //
 //                if (player.rosterIds.indexOf(rosterId) < 0) {
@@ -47,6 +48,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 } else {
                     return model.singleCreate(player).$promise.then(function(player) {
                         angular.extend(player, self);
+                        collection[player.id] = player;
                         return player;
                     });
                 }
