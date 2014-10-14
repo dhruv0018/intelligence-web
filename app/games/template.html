@@ -1,9 +1,9 @@
 <div class="public-game">
 		<div class="public-game-header">
 			<div>
-				<span class="game-date">Nov 1, 2014</span><br/>
-				<span class="game-shared-by pull-right">Clip shared by Mike Smith</span>
-				<h3>Tigers 3 vs 1 Bears</h3>
+				<span class="game-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span><br/>
+				<span class="game-shared-by pull-right">Clip shared by {{uploadedBy.firstName}} {{uploadedBy.lastName}}</span>
+				<h3>{{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}</h3>
 			</div>
 		</div>
         <div class="player">

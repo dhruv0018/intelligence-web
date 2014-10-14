@@ -34,11 +34,19 @@ Games.config([
             },
             resolve: {
                 'Games.Data': [
-                    '$stateParams', 'GamesFactory',
-                    function($stateParams, games) {
-                        var gameId = $stateParams.id;
-                        var game = games.get(gameId);
-                        console.log(game);
+                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
+                    function($q, $stateParams, games, teams, users) {
+                        var gameId = Number($stateParams.id);
+                        var game = games.load(gameId);
+
+                        var Data = {
+                            game: game,
+                            user: users.load(game.uploaderUserId),
+                            team: teams.load(game.teamId),
+                            opposingTeam: teams.load(game.opposingTeamId)
+                        };
+
+                        return $q.all(Data);
                     }
                 ]
             }
@@ -49,13 +57,18 @@ Games.config([
 ]);
 
 Games.controller('Games.controller', [
-    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory',
-    function controller($scope, $state, $stateParams, leagues, games, plays) {
-        //$scope.data = data;
-        //$scope.teamId = data.game.teamId;
-        $scope.leagues = leagues.getCollection();
-        //$scope.league = $scope.leagues[$scope.team.leagueId];
-        //$scope.sources = data.game.getVideoSources();
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
+    function controller($scope, $state, $stateParams, leagues, games, teams, users) {
+        var gameId = $stateParams.id;
+        $scope.game = games.get(gameId);
+
+        $scope.teams = teams.getCollection();
+        $scope.team = $scope.teams[$scope.game.teamId];
+        $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
+
+        $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+
+        $scope.sources = $scope.game.getVideoSources();
         $scope.videoTitle = 'rawFilm';
     }
 ]);
