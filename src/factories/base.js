@@ -71,7 +71,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* If given and ID lookup the resource in storage. */
                 if (id) {
 
-                    resource = storage.resource[id];
+                    resource = storage.get(id);
                 }
 
                 /* If no ID, then assume the unsaved resource. */
@@ -79,8 +79,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     resource = storage.unsaved;
                 }
-
-                if (!resource) throw new Error('Could not get ' + self.description.slice(0, -1) + ' ' + id);
 
                 return resource;
             },
@@ -100,7 +98,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var storage = $injector.get(self.storage);
 
-                return storage.resource[key];
+                return storage.get(key);
             },
 
             /**
@@ -113,7 +111,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var storage = $injector.get(self.storage);
 
-                return storage.resource;
+                return storage.get();
             },
 
             /**
@@ -178,7 +176,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     resource = self.extend(resource);
 
                     /* Store the resource locally in its storage collection. */
-                    storage.resource[resource.id] = resource;
+                    storage.set(resource);
 
                     return resource;
                 });
@@ -239,7 +237,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                         resource = self.extend(resource);
 
                         /* Store the resource locally in its storage collection. */
-                        storage.resource[resource.id] = resource;
+                        storage.set(resource);
                     });
 
                     return resources;
@@ -294,7 +292,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                         resource = self.extend(resource);
 
                         /* Store the resource locally in its storage collection. */
-                        storage.resource[resource.id] = resource;
+                        storage.set(resource);
                     });
 
                     storage.query = storage.query || [];
@@ -329,7 +327,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var all = '@';
                 var key = '@';
 
                 filter = angular.copy(filter);
@@ -341,19 +338,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var single = function() {
 
-                    storage.resource[key].promise = self.fetch(filter).then(function(resource) {
+                    return self.fetch(filter).then(function(resource) {
 
-                        var promise = storage.resource[key].promise;
-
-                        storage.resource[all] = storage.resource[all] || [resource];
-                        storage.resource[all].promise = storage.resource[all].promise || promise;
-                        storage.resource[all].resolved = storage.resource[all].resolved || true;
-
-                        storage.resource[key] = [resource];
-                        storage.resource[key].promise = promise;
-                        storage.resource[key].resolved = true;
-
-                        return [resource];
+                        storage.set(key, [resource]);
                     });
                 };
 
@@ -361,100 +348,74 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     var promises = [];
 
-                    if (storage.collection) {
+                    var ids = filter;
 
-                        var ids = filter;
+                    var numbers = ids.map(function(id) {
 
-                        var numbers = ids.map(function(id) {
+                        return Number(id);
+                    });
 
-                            return Number(id);
-                        });
+                    var valid = numbers.filter(function(id) {
 
-                        var valid = numbers.filter(function(id) {
+                        return id > 0 && !isNaN(id);
+                    });
 
-                            return id > 0 && !isNaN(id);
-                        });
+                    var unique = valid.reduce(function(previous, current) {
 
-                        var unique = valid.reduce(function(previous, current) {
+                        if (!~previous.indexOf(current)) previous.push(current);
 
-                            if (!~previous.indexOf(current)) previous.push(current);
+                        return previous;
 
-                            return previous;
+                    }, []);
 
-                        }, []);
+                    var unstored = unique.filter(function(id) {
 
-                        var unstored = unique.filter(function(id) {
+                        return !storage.isStored(id);
+                    });
 
-                            return !angular.isDefined(storage.collection[id]);
-                        });
+                    while (unstored.length) {
 
-                        while (unstored.length) {
+                        ids = unstored.splice(0, 100);
 
-                            ids = unstored.splice(0, 100);
+                        var query = {
 
-                            var query = {
+                            start: null,
+                            count: null,
+                            'id[]': ids
+                        };
 
-                                start: null,
-                                count: null,
-                                'id[]': ids
-                            };
-
-                            promises.push(self.query(query));
-                        }
-
-                        storage.loads[key].promise = $q.all(promises).then(function() {
-
-                            var list = ids.map(function(id) {
-
-                                return storage.collection[id];
-                            });
-
-                            var promise = storage.resource[key].promise;
-
-                            storage.resource[all] = storage.resource[all] || list.concat();
-                            storage.resource[all].promise = storage.resource[all].promise || promise;
-                            storage.resource[all].resolved = storage.resource[all].resolved || true;
-
-                            storage.resource[key] = list.concat();
-                            storage.resource[key].promise = promise;
-                            storage.resource[key].resolved = true;
-
-                            return list;
-                        });
+                        promises.push(self.query(query));
                     }
 
-                    else {
+                    return $q.all(promises).then(function() {
 
-                        storage.resource[key].promise = $q.when(storage.resource[key]);
-                        storage.resource[key].resolved = true;
-                    }
+                        var list = ids.map(function(id) {
+
+                            return storage.get(id);
+                        });
+
+                        storage.set(key, list);
+                    });
                 };
 
                 var other = function() {
 
-                    storage.resource[key].promise = self.retrieve(filter).then(function(list) {
+                    return self.retrieve(filter).then(function(list) {
 
-                        var promise = storage.resource[key].promise;
-
-                        storage.resource[all] = storage.resource[all] || list.concat();
-                        storage.resource[all].promise = storage.resource[all].promise || promise;
-                        storage.resource[all].resolved = storage.resource[all].resolved || true;
-
-                        storage.resource[key] = list.concat();
-                        storage.resource[key].promise = promise;
-                        storage.resource[key].resolved = true;
-
-                        return list;
+                        storage.set(key, list);
                     });
                 };
 
-                if (!storage.resource[key]) {
+                if (!storage.isStored(key)) {
 
                     storage.resource[key] = [];
 
-                    if (angular.isNumber(filter)) single();
-                    else if (angular.isArray(filter)) array();
-                    else other();
+                    storage.resource[key].promise = $q.all(storage.promises).then(function() {
+
+                        if (angular.isNumber(filter)) return single();
+                        else if (angular.isArray(filter)) return array();
+                        else return other();
+                    });
                 }
 
                 return storage.resource[key].promise;
