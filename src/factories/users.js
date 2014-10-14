@@ -448,7 +448,9 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var vettedUsers = [];
 
-                storage.list.forEach(function(user) {
+                var users = self.getList();
+
+                users.forEach(function(user) {
                     if (user.has(role)) {
                         vettedUsers.push(user);
                     }
