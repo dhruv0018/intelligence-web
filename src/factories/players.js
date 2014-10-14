@@ -35,20 +35,16 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 var self = this;
                 var storage = $injector.get(self.storage);
                 var collection = storage.collection;
-//                player.rosterIds = (typeof player.rosterIds !== 'undefined' && angular.isArray(player.rosterIds)) ? player.rosterIds : [];
-//
-//                if (player.rosterIds.indexOf(rosterId) < 0) {
-//                    player.rosterIds.push(rosterId);
-//                }
 
                 var model = $injector.get(self.model);
 
                 if (player.id) {
+                    collection[player.id] = player;
                     return model.update(player).$promise;
                 } else {
                     return model.singleCreate(player).$promise.then(function(player) {
-                        angular.extend(player, self);
                         collection[player.id] = player;
+                        angular.extend(player, self);
                         return player;
                     });
                 }
