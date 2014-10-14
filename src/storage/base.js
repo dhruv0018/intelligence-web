@@ -70,6 +70,126 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     this.user[key] = value;
                 }
+            },
+
+            promises: {
+
+                get: function() {
+
+                    var self = this;
+
+                    var promises = Object.keys(self.resource)
+
+                    .filter(function(key) {
+
+                        return key.charAt(0) === '@';
+                    })
+
+                    .filter(function(key) {
+
+                        return self.resource[key].promise;
+                    })
+
+                    .map(function(key) {
+
+                        return self.resource[key].promise;
+                    });
+
+                    return promises;
+                }
+            },
+
+            update: {
+
+                value: function(resource) {
+
+                    var key = '@';
+
+                    this.resource[key] = this.resource[key] || [];
+
+                    if (resource) {
+
+                        var index = this.resource[key]
+                        .map(function(resource) { return resource.id; })
+                        .indexOf(resource.id);
+
+                        if (~index) this.resource[key][index] = resource;
+                        else this.resource[key].push(resource);
+                    }
+
+                    else {
+
+                        this.resource[key].length = 0;
+
+                        Object.keys(this.resource).forEach(function(id) {
+
+                            if (String(id).charAt(0) !== key) {
+
+                                this.resource[key].push(this.resource[id]);
+                            }
+
+                        }, this);
+                    }
+                }
+            },
+
+            isStored: {
+
+                value: function(key) {
+
+                    return angular.isDefined(this.resource[key]);
+                }
+            },
+
+            get: {
+
+                value: function(key) {
+
+                    if (!key) return this.resource;
+
+                    if (!this.isStored(key)) {
+
+                        if (String(key).charAt(0) === '@') throw new Error('Could not get ' + this.description.slice(0, -1) + ' list ' + key);
+                        throw new Error('Could not get ' + this.description.slice(0, -1) + ' ' + key);
+                    }
+
+                    return this.resource[key];
+                }
+            },
+
+            set: {
+
+                value: function(key, value) {
+
+                    if (!value) {
+
+                        value = key;
+                        key = value.id;
+                    }
+
+                    if (angular.isArray(value)) {
+
+                        value = value.concat();
+                    }
+
+                    if (this.resource[key]) {
+
+                        var promise = this.resource[key].promise;
+
+                        this.resource[key] = value;
+                        this.resource[key].promise = promise;
+                    }
+
+                    else {
+
+                        this.resource[key] = value;
+                    }
+
+                    if (angular.isArray(value)) {
+
+                        this.update();
+                    }
+                }
             }
         });
 
