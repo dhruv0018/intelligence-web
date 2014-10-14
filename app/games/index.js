@@ -31,6 +31,16 @@ Games.config([
                     templateUrl: 'games/template.html',
                     controller: 'Games.controller'
                 }
+            },
+            resolve: {
+                'Games.Data': [
+                    '$stateParams', 'GamesFactory',
+                    function($stateParams, games) {
+                        var gameId = $stateParams.id;
+                        var game = games.get(gameId);
+                        console.log(game);
+                    }
+                ]
             }
         };
 
@@ -41,7 +51,6 @@ Games.config([
 Games.controller('Games.controller', [
     '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory',
     function controller($scope, $state, $stateParams, leagues, games, plays) {
-        $scope.gameId = $state.params.id;
         //$scope.data = data;
         //$scope.teamId = data.game.teamId;
         $scope.leagues = leagues.getCollection();
