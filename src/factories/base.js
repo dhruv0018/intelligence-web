@@ -327,9 +327,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var all = '@';
-                var key = '@';
-
                 var key = '@';
 
                 filter = angular.copy(filter);
@@ -338,21 +335,23 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
+                var session = $injector.get('SessionService');
 
-                var single = function() {
+                var single = function(id) {
 
-                    storage.resource[key].promise = self.fetch(filter).then(function(resource) {
+                    return self.fetch(id).then(function(resource) {
 
-                        var promise = storage.resource[key].promise;
+                        var list = [resource];
 
-                        storage.resource[all] = storage.resource[all] || [resource];
-                        storage.resource[all].promise = storage.resource[all].promise || promise;
-                        storage.resource[all].resolved = storage.resource[all].resolved || true;
+                        storage.set(key, list);
 
-                        storage.resource[key] = [resource];
-                        storage.resource[key].promise = promise;
-                        storage.resource[key].resolved = true;
+                        return list;
+                    });
+                };
 
+                var array = function(ids) {
+
+                    var promises = [];
 
                     var numbers = ids.map(function(id) {
 
@@ -418,63 +417,19 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     from = angular.fromJson(from);
 
-                            return list;
+                    if (angular.isArray(from)) {
+
+                        return from.map(function(string) {
+
+                            return toResource(string);
                         });
                     }
 
                     else {
 
-                        storage.resource[key].promise = $q.when(storage.resource[key]);
-                        storage.resource[key].resolved = true;
-                    }
-                };
+                        var Model = $injector.get(self.model);
 
-                var other = function() {
-
-                    storage.resource[key].promise = self.retrieve(filter).then(function(list) {
-
-                        var promise = storage.resource[key].promise;
-
-                        storage.resource[all] = storage.resource[all] || list.concat();
-                        storage.resource[all].promise = storage.resource[all].promise || promise;
-                        storage.resource[all].resolved = storage.resource[all].resolved || true;
-
-                        storage.resource[key] = list.concat();
-                        storage.resource[key].promise = promise;
-                        storage.resource[key].resolved = true;
-
-                        return list;
-                    });
-                };
-
-                if (!storage.resource[key]) {
-
-                    storage.resource[key] = [];
-
-                    if (angular.isNumber(filter)) single();
-                    else if (angular.isArray(filter)) array();
-                    else other();
-                }
-
-                return storage.resource[key].promise;
-            },
-
-            /**
-             * Unloads resources.
-             * @param {Object} [filter] - an object hash of filter parameters.
-             */
-            unload: function(filter) {
-
-                var self = this;
-                        });
-                    }
-
-                    else {
-
-                        storage.resource[key].promise = $q.when(storage.resource[key]);
-                        storage.resource[key].resolved = true;
-                    }
-                };
+                        var resource = new Model(from);
 
                         resource = self.extend(resource);
 
@@ -498,7 +453,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 }, function() {
 
-                return storage.resource[key].promise;
+                    if (angular.isNumber(filter)) return single(filter);
+                    else if (angular.isArray(filter)) return array(filter);
+                    else return other(filter);
+                });
             },
 
             /**
@@ -682,4 +640,3 @@ IntelligenceWebClient.factory('BaseFactory', [
         return BaseFactory;
     }
 ]);
-
