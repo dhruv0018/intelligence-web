@@ -1,0 +1,11 @@
+{
+    "name": "draggable",
+    "templates": [
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
