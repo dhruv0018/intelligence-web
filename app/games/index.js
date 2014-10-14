@@ -58,7 +58,7 @@ Games.config([
 
 Games.controller('Games.controller', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($scope, $state, $stateParams, leagues, games, teams, users) {
+    function controller($scope, $state, $stateParams, games, teams, users) {
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
 
