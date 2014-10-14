@@ -53,7 +53,7 @@
         	</div>
         	<div class="button-row">
         		<button class="btn btn-default" data-ng-click="withOtherUsers = false">Back</button>
-        		<button class="btn btn-primary pull-right" data-ng-click="shareSubmit()">Save and share</button>
+        		<button class="btn btn-primary pull-right" data-ng-disabled="user !== null || game.shares.length == 0" data-ng-click="shareSubmit()">Save and share</button>
         	</div>
         </div>
 
