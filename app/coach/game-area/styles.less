@@ -202,8 +202,14 @@
 
   .table-responsive {
 
-    th, td {
-      text-align: center;
+    table {
+      width: auto;
+      margin: auto;
+      border-top: thin solid black;
+    }
+
+    td {
+      text-align: left;
     }
 
     th {
@@ -211,6 +217,7 @@
       border:thin solid black;
       background-color: @brand-blue;
       color: white;
+      text-align: center;
     }
 
     .fixed-table {
