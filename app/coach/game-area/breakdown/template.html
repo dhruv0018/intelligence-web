@@ -5,17 +5,16 @@
 
     <plays-filter data-total-plays="totalPlays"
                   data-plays="plays"
-                  data-game="data.game"
-                  data-team-player-list="data.gamePlayerLists[data.game.teamId]"
-                  data-opposing-player-list="data.gamePlayerLists[data.game.opposingTeamId]"
-                  data-filterset="data.filterset"></plays-filter>
+                  data-game="game"
+                  data-team-player-list="teamPlayers"
+                  data-opposing-player-list="opposingTeamPlayers"
+                  data-filterset="filterset"></plays-filter>
 </div>
 
 <div class="game-area-film">
         <aside class="playlist">
 
-          <krossover-plays data-expand-all="expandAll" data-game="game" data-reels="reels" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="data.teamPlayers" data-opposing-team-players="data.opposingTeamPlayers" data-league="data.league"></krossover-plays>
-
+          <krossover-plays data-expand-all="expandAll" data-game="game" data-reels="reels" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-league="league"></krossover-plays>
 
           <div class="expandrow">
             <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
