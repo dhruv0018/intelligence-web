@@ -52,6 +52,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
                             role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
                         }
                     });
+                } else {
+                    team.roles = [];
                 }
 
                 //TODO roster related, should be put on backend at some point
@@ -69,6 +71,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                         team.roster.playerInfo = {};
                     }
                 }
+
                 angular.extend(team, self);
 
                 return team;
@@ -191,7 +194,12 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     });
                 }
             },
-
+            addRole: function(user, role) {
+                var self = this;
+                role.userId = user.id;
+                role.teamId = self.id;
+                self.roles.push(role);
+            },
             getMembers: function() {
 
                 var members = [];
