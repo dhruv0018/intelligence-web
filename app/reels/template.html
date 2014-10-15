@@ -25,7 +25,7 @@
                         data-remove-reel-play="removeReelPlay(index)"
                         data-draggable
                         data-draggable-flag="{{editMode}}"
-                        data-play="data.plays.get(playId)"
+                        data-play="play"
                         data-team="getHomeTeam(playId)"
                         data-opposing-team="getOpposingTeam(playId)"
                         data-date-played="getDatePlayed(playId)"
@@ -33,10 +33,10 @@
                         data-ng-repeat="playId in data.reel.plays"
 
                         data-plays="data.plays"
-                        data-game="data.games.get(data.plays.get(playId).gameId)"
+                        data-game="game"
                         data-team-players="[]"
                         data-opposing-team-players="[]"
-                        data-league="data.leagues.get(getHomeTeam(playId).leagueId)">
+                        data-league="league">
                     </div>
                 </div>
 

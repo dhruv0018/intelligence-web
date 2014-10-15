@@ -98,6 +98,10 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.reelCreatedDate = (typeof $scope.reelCreatedDate === 'string') ? new Date(data.reel.createdAt) : data.reel.createdAt;
         $scope.reelUpdatedDate = (typeof $scope.reelUpdatedDate === 'string') ? new Date(data.reel.updatedAt) : data.reel.updatedAt;
 
+        $scope.league = data.leagues.get(getHomeTeam(playId).leagueId);
+        $scope.game = data.games.get(data.plays.get(playId).gameId);
+        $scope.play = data.plays.get(playId);
+
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,
             //NOT for exiting from commiting changes
