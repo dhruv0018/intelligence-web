@@ -37,7 +37,6 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
 
         //Team
         $scope.team = teams.get(session.currentUser.currentRole.teamId);
-        console.log('on the roster page', $scope.team);
 
         //League
         $scope.league = leagues.get($scope.team.leagueId);
@@ -80,10 +79,12 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
                         player.lastName = responsePlayer.lastName;
                         return playerOfInterest.save();
                     } else {
-                        alerts.add({
-                            type: 'warning',
-                            message: 'An athlete with that email already exists on your team'
-                        });
+                        if (!responsePlayer.userId || responseUser.id !== responsePlayer.userId) {
+                            alerts.add({
+                                type: 'warning',
+                                message: 'An athlete with that email already exists on your team'
+                            });
+                        }
                         return responsePlayer;
                     }
 
@@ -105,7 +106,6 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
         };
 
         $scope.sortPlayers = function(rosterEntry) {
-            console.log(rosterEntry);
             return Number(rosterEntry.jerseyNumber);
         };
     }
