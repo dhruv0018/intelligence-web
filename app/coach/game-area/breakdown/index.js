@@ -63,32 +63,34 @@ Breakdown.config([
 ]);
 
 Breakdown.controller('Coach.GameArea.Breakdown.controller', [
-    '$scope', '$stateParams', 'LeaguesFactory', 'FiltersetsFactory', 'ReelsFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory',
-    function controller($scope, $stateParams, leagues, filtersets, reels, teams, games, players, plays) {
+    '$scope', '$stateParams', 'LeaguesFactory', 'ReelsFactory', 'FiltersetsFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory',
+    function controller($scope, $stateParams, leagues, reels, filtersets, teams, games, players, plays) {
 
         var gameId = $stateParams.id;
         var game = games.get(gameId);
         $scope.game = game;
-        $scope.reels = reels.getList();
 
         var team = teams.get(game.teamId);
         $scope.league = leagues.get(team.leagueId);
+        $scope.reels = reels.getList();
 
         if (game.isDelivered()) {
             $scope.filterset = filtersets.get($scope.league.filterSetId);
         }
 
-        // players
+        // Players
         var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
         $scope.teamPlayers = players.getList(teamPlayersFilter);
 
         var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
         $scope.opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
 
-        //Plays
+        // Plays
         var playsFilter = { gameId: game.id };
         $scope.totalPlays = plays.getList(playsFilter);
         $scope.plays = $scope.totalPlays;
+
+        $scope.filteredPlaysIds = [];
 
         $scope.expandAll = false;
     }
