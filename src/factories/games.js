@@ -864,6 +864,26 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+            shareWithPublic: function() {
+                var self = this;
+
+                self.shares = self.shares || [];
+
+                var share = {
+                    userId: session.currentUser.id,
+                    gameId: self.id,
+                    sharedWithUserId: null,
+                    createdAt: moment.utc().toDate()
+                };
+
+                self.shares.push(share);
+            },
+            isSharedWithPublic: function() {
+                var self = this;
+
+                if (!self.shares) return false;
+
             }
         };
 

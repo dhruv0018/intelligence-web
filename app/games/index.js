@@ -22,6 +22,21 @@ Games.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
+        var shortGames = {
+            name: 'ShortGames',
+            url: '/g/:id',
+            parent: 'base',
+            abstract: true,
+            onEnter: [
+                '$state', '$stateParams',
+                function($state, $stateParams) {
+                    var gameId = parseInt($stateParams.id, 36);
+                    console.log(gameId);
+                    $state.go('Games', {id: gameId});
+                }
+            ]
+        };
+
         var Games = {
             name: 'Games',
             url: '/games/:id',
@@ -37,21 +52,22 @@ Games.config([
                     '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
                     function($q, $stateParams, games, teams, users) {
                         var gameId = Number($stateParams.id);
-                        var game = games.load(gameId);
+                        return games.load(gameId).then(function(game) {
 
-                        var Data = {
-                            game: game,
-                            user: users.load(game.uploaderUserId),
-                            team: teams.load(game.teamId),
-                            opposingTeam: teams.load(game.opposingTeamId)
-                        };
+                            var Data = {
+                                user: users.load(game.uploaderUserId),
+                                team: teams.load(game.teamId),
+                                opposingTeam: teams.load(game.opposingTeamId)
+                            };
 
-                        return $q.all(Data);
+                            return $q.all(Data);
+                        });
                     }
                 ]
             }
         };
 
+        $stateProvider.state(shortGames);
         $stateProvider.state(Games);
     }
 ]);
