@@ -18,6 +18,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
     function controller($rootScope, $scope, $state, $filter, games, players, teams, users, session, data, ROLES) {
         var teamId = session.currentUser.currentRole.teamId;
         $scope.playersList = data.playersList;
+        $scope.players = players.getCollection();
         $scope.games = games.getCollection();
         $scope.gamesList = games.getList();
         $scope.teams = teams.getCollection();

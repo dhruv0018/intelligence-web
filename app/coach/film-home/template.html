@@ -26,8 +26,9 @@
 
         <h3>Team Roster</h3>
 
-        <krossover-athlete data-ng-repeat="athlete in activeRoster"
-                           data-athlete="athlete"
+        <krossover-athlete data-ng-repeat="(playerId, rosterEntry) in team.roster.playerInfo"
+                           data-athlete="players[playerId]"
+                           data-team="team"
                            data-roster-id="roster.id"
                            data-editable="false"></krossover-athlete>
     </aside>
