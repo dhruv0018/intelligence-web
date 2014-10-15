@@ -112,8 +112,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     teamId: teamId
                 });
             },
-            toggleActivation: function(rosterId) {
-                this.rosterStatuses[rosterId] = !this.rosterStatuses[rosterId];
+            toggleActivation: function(team) {
+                var self = this;
+                team.roster.playerInfo[self.id].isActive = !team.roster.playerInfo[self.id].isActive;
             },
             constructActiveRoster: function(roster, rosterId) {
                 return roster.filter(function(player) {

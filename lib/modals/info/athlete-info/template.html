@@ -54,7 +54,7 @@
 
                 <div class="row form-group">
                     <div class="profile-image col-md-3">
-                        <profile-placeholder data-ng-if="!athlete.imageUrl || users[athlete.userId].imageUrl"></profile-placeholder>
+                        <profile-placeholder data-ng-if="!athlete.imageUrl || !users[athlete.userId].imageUrl"></profile-placeholder>
                         <img data-ng-if="athlete.imageUrl" data-ng-src="{{athlete.imageUrl}}" alt="profile image">
                         <img data-ng-if="users[athlete.userId].imageUrl" data-ng-src="{{users[athlete.userId].imageUrl}}" alt="profile image">
                         <krossover-uploader data-ng-hide="athlete.userId || athlete.userId === null || athlete.jerseyNumbers" data-upload-label="Change Image" data-on-upload="setProfileImage(files)"></krossover-uploader>
@@ -108,8 +108,8 @@
                     </div>
                     <div class="remove col-md-6">
                         <a class="pull-right" href data-ng-click="togglePlayer()">
-                            <span data-ng-if="athlete.id && athlete.rosterStatuses[rosterId] === true"><i class="icon icon-remove"></i> Remove from current roster</span>
-                            <span data-ng-if="athlete.id && athlete.rosterStatuses[rosterId] === false"><i class="icon icon-add"></i> Add player to current roster</span>
+                            <span data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === true"><i class="icon icon-remove"></i> Remove from current roster</span>
+                            <span data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === false"><i class="icon icon-add"></i> Add player to current roster</span>
                         </a>
                     </div>
                 </div>
