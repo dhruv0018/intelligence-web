@@ -88,8 +88,8 @@ ReelsArea.service('Reels.Data.Dependencies', [
  * @type {Controller}
  */
 ReelsArea.controller('ReelsArea.controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'Reels.Data', 'PlayManager',
-    function controller($scope, $state, $stateParams, $modal, modals, account, alerts, data, playManager) {
+    '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'Reels.Data', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory',
+    function controller($scope, $state, $stateParams, $modal, modals, account, alerts, data, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory) {
 
         $scope.data = data;
         $scope.videoTitle = 'reelsPlayer';
@@ -97,10 +97,6 @@ ReelsArea.controller('ReelsArea.controller', [
         var editAllowed = true;
         $scope.reelCreatedDate = (typeof $scope.reelCreatedDate === 'string') ? new Date(data.reel.createdAt) : data.reel.createdAt;
         $scope.reelUpdatedDate = (typeof $scope.reelUpdatedDate === 'string') ? new Date(data.reel.updatedAt) : data.reel.updatedAt;
-
-        $scope.league = data.leagues.get(getHomeTeam(playId).leagueId);
-        $scope.game = data.games.get(data.plays.get(playId).gameId);
-        $scope.play = data.plays.get(playId);
 
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,
@@ -128,6 +124,18 @@ ReelsArea.controller('ReelsArea.controller', [
             }
         };
 
+        $scope.getPlay = function(playId) {
+            return playsFactory.get(playId);
+        };
+
+        $scope.getLeague = function(playId) {
+            leaguesFactory.get($scope.getHomeTeam(playId).leagueId);
+        };
+
+        $scope.getGame = function(playId) {
+            gamesFactory.get(playsFactory.get(playId).gameId);
+        };
+
         $scope.getHomeTeam = function(playId) {
 
             if (playId) {
@@ -141,19 +149,19 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.getOpposingTeam = function(playId) {
 
             if (playId) {
-                var gameId = data.plays.get(playId).gameId;
-                var teamId = data.games.get(gameId).opposingTeamId;
+                var gameId = playsFactory.get(playId).gameId;
+                var teamId = gamesFactory.get(gameId).opposingTeamId;
 
-                return data.teams.get(teamId);
+                return teamsFactory.get(teamId);
             }
         };
 
         $scope.getDatePlayed = function(playId) {
 
             if (playId) {
-                var gameId = data.plays.get(playId).gameId;
+                var gameId = playsFactory.get(playId).gameId;
 
-                return data.games.get(gameId).datePlayed;
+                return gamesFactory.get(gameId).datePlayed;
             }
         };
 

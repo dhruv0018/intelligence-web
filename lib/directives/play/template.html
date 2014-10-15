@@ -14,32 +14,28 @@
             <span class="team">{{ opposingTeam.name }}</span>
         </h4>
         <h4 data-ng-if="!isIndexer" data-ng-class="{'playOpened': expandAll || play === playManager.current}">
-            <div data-ng-hide="isReelsPlayer">
-                <span class="team">{{teams[play.possessionTeamId].name}}</span>
-                <span class="playplay" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY}"><i class="icon icon-play-circle"></i></span>
-            </div>
+            <span class="team">{{teams[play.possessionTeamId].name}}</span>
+            <span class="playplay" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY}"><i class="icon icon-play-circle"></i></span>
             <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'priority'">
                 <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
             </div>
         </h4>
     </div>
 
-    <div data-ng-hide="isReelsPlayer"> 
-        <div class="playBody" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
-            <krossover-events data-auto-advance="autoAdvance" data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers"></krossover-events>
-        </div>
+    <div class="playBody" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
+        <krossover-events data-auto-advance="autoAdvance" data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers"></krossover-events>
+    </div>
 
-        <hr>
+    <hr>
 
-        <div class="playFooter">
-            <button class="btn-delete-play" data-ng-if="isIndexer" data-ng-disabled="play.isSaving" data-ng-click="deletePlay()">Delete Play</button>
-            <div class="save-indicator" data-ng-if="isIndexer">
-                <i class="icon icon-refresh active" data-ng-show="play.isSaving"></i>
-                <i class="icon icon-ok success" data-ng-show="play.id" data-ng-hide="play.isSaving || play.error"></i>
-                <i class="icon icon-remove error" data-ng-show="play.error"></i>
-            </div>
-            <button class="play-link" data-ng-if="!isIndexer" data-open-modal="AddReel.Modal" data-modal-options="options"><i class="icon icon-plus"></i> Add to reel</button>
-            <button class="play-link pull-right disabled ng-hide" data-ng-if="!isIndexer"><i class="icon icon-tag"></i> Label Play</button>
+    <div class="playFooter">
+        <button class="btn-delete-play" data-ng-if="isIndexer" data-ng-disabled="play.isSaving" data-ng-click="deletePlay()">Delete Play</button>
+        <div class="save-indicator" data-ng-if="isIndexer">
+            <i class="icon icon-refresh active" data-ng-show="play.isSaving"></i>
+            <i class="icon icon-ok success" data-ng-show="play.id" data-ng-hide="play.isSaving || play.error"></i>
+            <i class="icon icon-remove error" data-ng-show="play.error"></i>
         </div>
+        <button class="play-link" data-ng-if="!isIndexer" data-open-modal="AddReel.Modal" data-modal-options="options"><i class="icon icon-plus"></i> Add to reel</button>
+        <button class="play-link pull-right disabled ng-hide" data-ng-if="!isIndexer"><i class="icon icon-tag"></i> Label Play</button>
     </div>
 </div>
