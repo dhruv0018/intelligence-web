@@ -23,6 +23,7 @@ require('./flow');
 require('./users');
 require('./routes');
 require('./errors');
+require('./logs');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
