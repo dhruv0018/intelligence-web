@@ -61,8 +61,7 @@ FilmHome.service('Coach.FilmHome.ReelsData', [
 
         var Data = {
             reels: reels.load({
-                teamId: teamId,
-                userId: userId
+                teamId: teamId
             }),
         };
 
