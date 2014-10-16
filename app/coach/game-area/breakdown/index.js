@@ -153,8 +153,8 @@ Breakdown.config([
 ]);
 
 Breakdown.controller('Coach.GameArea.Breakdown.controller', [
-    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'ReelsFactory', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data',
-    function controller($scope, $state, $stateParams, leagues, reels, games, plays, filtersets, data) {
+    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'ReelsFactory', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Coach.Data', 'PlayManager',
+    function controller($scope, $state, $stateParams, leagues, reels, games, plays, filtersets, data, playManager) {
 
         $scope.gameId = $state.params.id;
         $scope.videoTitle = 'filmBreakdown';
@@ -164,6 +164,9 @@ Breakdown.controller('Coach.GameArea.Breakdown.controller', [
         $scope.league = $scope.leagues[$scope.team.leagueId];
         $scope.reels = reels.getList();
         $scope.expandAll = false;
+        $scope.playAllPlays = true;
+        $scope.playManager = playManager;
+
         $scope.filterCategory = data.filterset.categories[0].id;
         $scope.activeFilters = [];
         $scope.filterMenu = {
