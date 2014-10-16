@@ -213,7 +213,7 @@ IntelligenceWebClient.service('PlayManager', [
             if (play.id) {
 
                 /* Also remove it remotely. */
-                plays.remove(play);
+                plays.delete(play);
             }
         };
 
@@ -228,10 +228,10 @@ IntelligenceWebClient.service('PlayManager', [
 
             var playIndex = playsManager.plays.indexOf(play);
 
-            playsManager.plays[playIndex].isSaving = true;
-
             /* Save the play remotely. */
-            plays.save(play).then(function(play) {
+            plays.save(play)
+
+            .then(function(play) {
 
                 /* If the play exists in the play list. */
                 if (~playIndex) {
@@ -239,10 +239,11 @@ IntelligenceWebClient.service('PlayManager', [
                     /* Update the play in the play list. */
                     playsManager.plays[playIndex] = play;
                 }
+            })
 
-            }).finally(function() {
+            .catch(function() {
 
-                playsManager.plays[playIndex].isSaving = false;
+                playsManager.plays[playIndex].error = true;
             });
         };
     }

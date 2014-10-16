@@ -16,8 +16,8 @@ IntelligenceWebClient.service('PlansStorage', [
 ]);
 
 IntelligenceWebClient.factory('PlansFactory', [
-    '$injector', 'BaseFactory', 'PlansResource', 'PlansStorage',
-    function($injector, BaseFactory, PlansResource, PlansStorage) {
+    '$injector', 'BaseFactory',
+    function($injector, BaseFactory) {
 
         var PlansFactory = {
 

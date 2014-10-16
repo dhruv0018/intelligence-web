@@ -13,6 +13,9 @@
     "passwordReset": {
         "uri": "/intelligence-api/v1/password-reset/"
     },
+    "reels": {
+        "turnedOn": true
+    },
     "links": {
         "signup": {
             "uri": "/get-started/"
@@ -45,6 +48,17 @@
             },
             "volleyball": {
                 "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/Krossover-volleyball-rotation-position.pdf"
+            }
+        },
+        "addFilmHelp": {
+            "howToUpload": {
+                "uri": "http://support.krossover.com/customer/portal/articles/1251842-uploading-a-game-%E2%96%BA"
+            },
+            "commonIssues": {
+                "uri": "http://support.krossover.com/customer/portal/articles/1252826-common-upload-issues"
+            },
+            "moreQuestions": {
+                "uri": "http://support.krossover.com/customer/portal/emails/new"
             }
         }
     },

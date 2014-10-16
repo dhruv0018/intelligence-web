@@ -16,8 +16,8 @@ var Game = angular.module('indexer-game');
  * @type {Controller}
  */
 Game.controller('indexer-game.Controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'RawFilm.Modal', 'Indexer.Game.Data', 'BasicModals', 'SchoolsFactory',
-    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, session, alerts, RawFilmModal, data, basicModal, schools) {
+    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'RawFilm.Modal', 'Indexer.Game.Data', 'BasicModals', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, session, alerts, RawFilmModal, data, basicModal, sports, leagues, schools, teams, games, users) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -28,14 +28,14 @@ Game.controller('indexer-game.Controller', [
 
         var gameId = $stateParams.id;
 
-        $scope.game = data.games.get(gameId);
+        $scope.game = games.get(gameId);
 
         $scope.currentAssignment = $scope.game.currentAssignment();
 
-        $scope.team = data.teams.get($scope.game.teamId);
-        $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
-        var league = data.leagues.get($scope.team.leagueId);
-        $scope.sport = data.sports.get(league.sportId);
+        $scope.team = teams.get($scope.game.teamId);
+        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+        var league = leagues.get($scope.team.leagueId);
+        $scope.sport = sports.get(league.sportId);
 
         if (data.school) {
             $scope.school = data.school;
@@ -45,14 +45,14 @@ Game.controller('indexer-game.Controller', [
 
         if (headCoachRole) {
 
-            $scope.headCoach = data.users.get(headCoachRole.userId);
+            $scope.headCoach = users.get(headCoachRole.userId);
         }
 
         $scope.revertAssignment = function() {
             var previousAssignment = $scope.game.findLastIndexerAssignment();
             $scope.game.revert();
 
-            var remainingTime = $scope.game.getRemainingTime(data.teams.get($scope.game.uploaderTeamId));
+            var remainingTime = $scope.game.getRemainingTime(teams.get($scope.game.uploaderTeamId));
 
             //half of the remaining time
             var newDeadline = moment.utc().add(remainingTime / 2, 'milliseconds');

@@ -14,13 +14,15 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.Users.Controller', [
-    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'ROLES', 'Admin.Users.Data', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $modal, $stateParams, session, ROLES, data, sports, leagues, teams, users) {
+    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'AccountService', 'ROLES', 'Admin.Users.Data', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
+    function controller($rootScope, $scope, $state, $modal, $stateParams, session, account, ROLES, data, sports, leagues, teams, users) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.ASSISTANT_COACH = ROLES.ASSISTANT_COACH;
         $scope.ATHLETE = ROLES.ATHLETE;
+
+        $scope.account = account;
 
         $scope.users = [];
 
@@ -53,13 +55,6 @@ Users.controller('Users.Users.Controller', [
 
                 $scope.searching = false;
             });
-        };
-
-        $scope.goToAs = function(user) {
-            session.previousUser = angular.copy(session.currentUser);
-            session.currentUser = user;
-            $rootScope.currentUser = user;
-            $state.go('Account.ContactInfo');
         };
     }
 ]);

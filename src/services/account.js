@@ -87,6 +87,30 @@ IntelligenceWebClient.service('AccountService', [
 
                     $state.go('Account.ContactInfo');
                 }
+            },
+
+            gotoAsUser: function(user) {
+
+                session.storePreviousUser(session.currentUser, false);
+                session.storeCurrentUser(user, false);
+
+                var currentUser = session.retrieveCurrentUser();
+
+                $rootScope.currentUser = currentUser;
+                this.gotoUsersHomeState(currentUser, true);
+            },
+
+            returnToPreviousUser: function() {
+
+                var previousUser = session.retrievePreviousUser();
+
+                session.storeCurrentUser(previousUser);
+                session.clearPreviousUser();
+
+                var currentUser = session.retrieveCurrentUser();
+
+                $rootScope.currentUser = currentUser;
+                this.gotoUsersHomeState(currentUser, true);
             }
         };
     }

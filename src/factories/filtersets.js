@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('FiltersetsFactory', [
-    'FiltersetsStorage', 'FiltersetsResource', 'BaseFactory',
-    function(FiltersetsStorage, FiltersetsResource, BaseFactory) {
+    'BaseFactory',
+    function(BaseFactory) {
 
         var FiltersetsFactory = {
 

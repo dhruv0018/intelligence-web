@@ -120,8 +120,10 @@ IntelligenceWebClient.run([
         });
 
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-
+            console.log(error);
             if (!event.defaultPrevented) {
+
+                ErrorReporter.reportError(error);
 
                 alerts.add({
                     type: 'warning',
