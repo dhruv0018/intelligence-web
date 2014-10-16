@@ -42,9 +42,13 @@ FilmHome.config([
                 }
             },
             resolve: {
-                'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
-                    return $q.all(data);
-                }]
+                'Coach.Data': [
+                    '$q', 'Coach.Data.Dependencies',
+                    function($q, data) {
+
+                        return $q.all(data);
+                    }
+                ]
             }
         });
     }
