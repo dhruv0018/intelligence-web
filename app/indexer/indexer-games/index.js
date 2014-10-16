@@ -56,18 +56,54 @@ Games.config([
  * @type {Service}
  */
 Games.service('Indexer.Games.Data.Dependencies', [
-    'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory',
-    function(session, users, games, teams, leagues, sports) {
-
-        var userId = session.currentUser.id;
+    '$q', 'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'SchoolsFactory',
+    function($q, session, users, games, teams, leagues, sports, schools) {
 
         var Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
-            teams: teams.load({ relatedUserId: userId }),
-            users: users.load({ relatedUserId: userId }),
-            games: games.load({ assignedUserId: userId })
+
+            get users() {
+
+                var userId = session.currentUser.id;
+
+                return users.load({ relatedUserId: userId });
+            },
+
+            get teams() {
+
+                var userId = session.currentUser.id;
+
+                return teams.load({ relatedUserId: userId });
+            },
+
+            get schools() {
+
+                return this.teams.then(function(teams) {
+
+                    var schoolIds = teams
+
+                    .filter(function(team) {
+
+                        return team.schoolId;
+                    })
+
+                    .map(function(team) {
+
+                        return team.schoolId;
+                    });
+
+                    return schools.load(schoolIds);
+                });
+            },
+
+            get games() {
+
+                var userId = session.currentUser.id;
+
+                return games.load({ assignedUserId: userId });
+            }
         };
 
         return Data;
