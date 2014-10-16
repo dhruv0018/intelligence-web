@@ -884,6 +884,11 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!self.shares) return false;
 
+                self.shares.map(function(share) {
+                    return share.sharedWithUserId;
+                }).some(function(userId) {
+                    return userId === null;
+                });
             }
         };
 

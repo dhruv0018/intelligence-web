@@ -26,12 +26,10 @@ Games.config([
             name: 'ShortGames',
             url: '/g/:id',
             parent: 'base',
-            abstract: true,
             onEnter: [
                 '$state', '$stateParams',
                 function($state, $stateParams) {
                     var gameId = parseInt($stateParams.id, 36);
-                    console.log(gameId);
                     $state.go('Games', {id: gameId});
                 }
             ]
@@ -54,13 +52,16 @@ Games.config([
                         var gameId = Number($stateParams.id);
                         return games.load(gameId).then(function(game) {
 
-                            var Data = {
-                                user: users.load(game.uploaderUserId),
-                                team: teams.load(game.teamId),
-                                opposingTeam: teams.load(game.opposingTeamId)
-                            };
+                            if (game.isSharedWithPublic()) {
 
-                            return $q.all(Data);
+                                var Data = {
+                                    user: users.load(game.uploaderUserId),
+                                    team: teams.load(game.teamId),
+                                    opposingTeam: teams.load(game.opposingTeamId)
+                                };
+
+                                return $q.all(Data);
+                            }
                         });
                     }
                 ]
@@ -77,15 +78,20 @@ Games.controller('Games.controller', [
     function controller($scope, $state, $stateParams, games, teams, users) {
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
+        $scope.publiclyShared = false;
 
-        $scope.teams = teams.getCollection();
-        $scope.team = $scope.teams[$scope.game.teamId];
-        $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
+        if ($scope.game.isSharedWithPublic()) {
+            $scope.publiclyShared = true;
 
-        $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+            $scope.teams = teams.getCollection();
+            $scope.team = $scope.teams[$scope.game.teamId];
+            $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
 
-        $scope.sources = $scope.game.getVideoSources();
-        $scope.videoTitle = 'rawFilm';
+            $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+
+            $scope.sources = $scope.game.getVideoSources();
+            $scope.videoTitle = 'rawFilm';
+        }
     }
 ]);
 
