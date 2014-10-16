@@ -41,14 +41,10 @@ TeamInfo.config([
                 },
                 resolve: {
                     'Coach.Data': [
-                        '$q', 'Coach.Data.Dependencies', 'SessionService', 'TeamsFactory',
-                        function($q, data, session, teams) {
-                            return $q.all(data).then(function(data) {
-                                var teamsCollection = teams.getCollection();
-                                var team = teamsCollection[session.currentUser.currentRole.teamId];
-                                data.team = team;
-                                return data;
-                            });
+                        '$q', 'Coach.Data.Dependencies',
+                        function($q, data) {
+
+                            return $q.all(data);
                         }
                     ]
                 }
@@ -77,7 +73,4 @@ TeamInfo.config([
 
 require('./controller');
 require('./information-controller');
-
-
-
 

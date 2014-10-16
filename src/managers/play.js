@@ -198,7 +198,7 @@ IntelligenceWebClient.service('PlayManager', [
             if (play.id) {
 
                 /* Also remove it remotely. */
-                plays.remove(play);
+                plays.delete(play);
             }
         };
 
@@ -213,8 +213,6 @@ IntelligenceWebClient.service('PlayManager', [
 
             var playIndex = playsManager.plays.indexOf(play);
 
-            playsManager.plays[playIndex].isSaving = true;
-
             /* Save the play remotely. */
             plays.save(play)
 
@@ -226,17 +224,11 @@ IntelligenceWebClient.service('PlayManager', [
                     /* Update the play in the play list. */
                     playsManager.plays[playIndex] = play;
                 }
-
             })
 
             .catch(function() {
 
                 playsManager.plays[playIndex].error = true;
-            })
-
-            .finally(function() {
-
-                playsManager.plays[playIndex].isSaving = false;
             });
         };
     }
