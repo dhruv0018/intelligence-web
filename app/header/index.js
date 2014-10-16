@@ -44,8 +44,8 @@ Header.config([
                     }
                 },
                 resolve: {
-                    'Base.Data': [
-                        '$q', 'Base.Data.Dependencies',
+                    'Header.Data': [
+                        '$q', 'Header.Data.Dependencies',
                         function($q, data) {
 
                             return $q.all(data);
@@ -57,7 +57,7 @@ Header.config([
 ]);
 
 
-Header.factory('Base.Data.Dependencies', [
+Header.factory('Header.Data.Dependencies', [
     'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
     function(auth, session, sports, leagues, tagsets, filtersets, positionsets, teams) {
 
