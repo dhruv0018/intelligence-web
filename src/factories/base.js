@@ -336,9 +336,9 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
 
-                var single = function() {
+                var single = function(id) {
 
-                    return self.fetch(filter).then(function(resource) {
+                    return self.fetch(id).then(function(resource) {
 
                         var list = [resource];
 
@@ -348,11 +348,9 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 };
 
-                var array = function() {
+                var array = function(ids) {
 
                     var promises = [];
-
-                    var ids = filter;
 
                     var numbers = ids.map(function(id) {
 
@@ -404,7 +402,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 };
 
-                var other = function() {
+                var other = function(filter) {
 
                     return self.retrieve(filter).then(function(list) {
 
@@ -420,9 +418,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     storage.resource[key].promise = $q.all(storage.promises).then(function() {
 
-                        if (angular.isNumber(filter)) return single();
-                        else if (angular.isArray(filter)) return array();
-                        else return other();
+                        if (angular.isNumber(filter)) return single(filter);
+                        else if (angular.isArray(filter)) return array(filter);
+                        else return other(filter);
                     });
                 }
 
