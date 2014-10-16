@@ -57,30 +57,27 @@ Header.config([
 ]);
 
 
-Header.service('Base.Data.Dependencies', [
+Header.factory('Base.Data.Dependencies', [
     'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
     function(auth, session, sports, leagues, tagsets, filtersets, positionsets, teams) {
 
-        if (auth.isLoggedIn) {
+        var Data = {
 
-            var teamIds = session.currentUser.getTeamIds();
+            get sports() { if (auth.isLoggedIn) return sports.load(); },
+            get leagues() { if (auth.isLoggedIn) return leagues.load(); },
 
-            var Data = {
+            get teams() {
 
-                sports: sports.load(),
-                leagues: leagues.load(),
-                tagsets: tagsets.load(),
-                filtersets: filtersets.load(),
-                positionsets: positionsets.load()
-            };
+                if (auth.isLoggedIn) {
 
-            if (teamIds.length) {
+                    var userId = session.currentUser.id;
 
-                Data.teams = teams.load({ 'id[]': teamIds });
+                    return teams.load({ relatedUserId: userId });
+                }
             }
+        };
 
-            return Data;
-        }
+        return Data;
     }
 ]);
 
