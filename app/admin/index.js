@@ -19,19 +19,6 @@ var Admin = angular.module('Admin', [
     'platform'
 ]);
 
-Admin.service('Admin.Data.Dependencies', [
-    'Base.Data.Dependencies',
-    function(data) {
-
-        var Data = {
-
-        };
-
-        angular.extend(Data, data);
-
-        return Data;
-    }
-]);
 /**
  * Admin state router.
  * @module Admin
@@ -45,15 +32,7 @@ Admin.config([
             name: 'admin',
             url: '/admin',
             parent: 'base',
-            abstract: true,
-            resolve: {
-                'Admin.Data': [
-                    '$q', 'Admin.Data.Dependencies',
-                    function($q, data) {
-                        return $q.all(data);
-                    }
-                ]
-            }
+            abstract: true
         };
 
         $stateProvider.state(admin);
