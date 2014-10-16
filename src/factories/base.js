@@ -340,7 +340,11 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return self.fetch(filter).then(function(resource) {
 
-                        storage.set(key, [resource]);
+                        var list = [resource];
+
+                        storage.set(key, list);
+
+                        return list;
                     });
                 };
 
@@ -395,6 +399,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                         });
 
                         storage.set(key, list);
+
+                        return list;
                     });
                 };
 
@@ -403,6 +409,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                     return self.retrieve(filter).then(function(list) {
 
                         storage.set(key, list);
+
+                        return list;
                     });
                 };
 
