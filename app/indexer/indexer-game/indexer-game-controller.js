@@ -37,8 +37,8 @@ Game.controller('indexer-game.Controller', [
         var league = leagues.get($scope.team.leagueId);
         $scope.sport = sports.get(league.sportId);
 
-        if (data.school) {
-            $scope.school = data.school;
+        if ($scope.team.schoolId) {
+            $scope.school = schools.get($scope.team.schoolId);
         }
 
         var headCoachRole = $scope.team.getHeadCoachRole();

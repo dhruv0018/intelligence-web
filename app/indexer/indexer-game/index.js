@@ -23,18 +23,54 @@ Game.run([
  * @type {service}
  */
 Game.service('Indexer.Game.Data.Dependencies', [
-    'SessionService', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory',
-    function(session, users, sports, leagues, teams, games) {
-
-        var userId = session.currentUser.id;
+    'SessionService', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'UsersFactory', 'GamesFactory', 'SchoolsFactory',
+    function(session, teams, leagues, sports, users, games, schools) {
 
         var Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
-            teams: teams.load({ relatedUserId: userId }),
-            users: users.load({ relatedUserId: userId }),
-            games: games.load({ assignedUserId: userId })
+
+            get users() {
+
+                var userId = session.currentUser.id;
+
+                return users.load({ relatedUserId: userId });
+            },
+
+            get teams() {
+
+                var userId = session.currentUser.id;
+
+                return teams.load({ relatedUserId: userId });
+            },
+
+            get schools() {
+
+                return this.teams.then(function(teams) {
+
+                    var schoolIds = teams
+
+                    .filter(function(team) {
+
+                        return team.schoolId;
+                    })
+
+                    .map(function(team) {
+
+                        return team.schoolId;
+                    });
+
+                    return schools.load(schoolIds);
+                });
+            },
+
+            get games() {
+
+                var userId = session.currentUser.id;
+
+                return games.load({ assignedUserId: userId });
+            }
         };
 
         return Data;
@@ -63,18 +99,10 @@ Game.config([
                 },
                 resolve: {
                     'Indexer.Game.Data': [
-                        '$q', '$stateParams', 'Indexer.Game.Data.Dependencies', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory',
-                        function($q, $stateParams, data, schools, teams, games) {
-                            return $q.all(data).then(function(data) {
-                                var game = games.get($stateParams.id);
-                                var team = teams.get(game.teamId);
+                        '$q', 'Indexer.Game.Data.Dependencies',
+                        function($q, data) {
 
-                                if (team.schoolId) {
-                                    data.school = schools.fetch(team.schoolId);
-                                }
-
-                                return $q.all(data);
-                            });
+                            return $q.all(data);
                         }
                     ]
                 },
