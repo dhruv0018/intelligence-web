@@ -49,8 +49,20 @@ Indexing.service('Indexing.Data.Dependencies', [
 
             leagues: leagues.load(),
             tagsets: tagsets.load(),
-            teams: teams.load({ relatedUserId: userId }),
-            games: games.load({ assignedUserId: userId })
+
+            get teams() {
+
+                var userId = session.currentUser.id;
+
+                return teams.load({ relatedUserId: userId });
+            },
+
+            get games() {
+
+                var userId = session.currentUser.id;
+
+                return games.load({ assignedUserId: userId });
+            }
         };
 
         return Data;
