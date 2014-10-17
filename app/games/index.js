@@ -52,16 +52,13 @@ Games.config([
                         var gameId = Number($stateParams.id);
                         return games.load(gameId).then(function(game) {
 
-                            if (game.isSharedWithPublic()) {
+                            var Data = {
+                                user: users.load(game.uploaderUserId),
+                                team: teams.load(game.teamId),
+                                opposingTeam: teams.load(game.opposingTeamId)
+                            };
 
-                                var Data = {
-                                    user: users.load(game.uploaderUserId),
-                                    team: teams.load(game.teamId),
-                                    opposingTeam: teams.load(game.opposingTeamId)
-                                };
-
-                                return $q.all(Data);
-                            }
+                            return $q.all(Data);
                         });
                     }
                 ]
@@ -82,7 +79,6 @@ Games.controller('Games.controller', [
 
         if ($scope.game.isSharedWithPublic()) {
             $scope.publiclyShared = true;
-
             $scope.teams = teams.getCollection();
             $scope.team = $scope.teams[$scope.game.teamId];
             $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];

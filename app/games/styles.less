@@ -2,7 +2,10 @@
 
 .public-game {
 
-    .public-game-header {
+    overflow-y: scroll;
+
+    .public-game-header,
+    .public-game-header-mobile {
         background-color: @content-bg;
         border-bottom: thin solid @gray-border;
         margin-bottom: 20px;
@@ -27,9 +30,46 @@
             }
         }
     }
+
+    .public-game-header-mobile {
+        display: none;
+    }
     
     .player {
         margin: auto;
         display: table;
+    }
+}
+
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+    
+    .public-game {
+        .public-game-header {
+            display: none;
+        }
+
+        .public-game-header-mobile {
+            
+            display: block;
+
+            div {
+                width: 100%;
+
+                h3 {
+                    font-size: 16px;
+                }
+
+                .game-shared-by {
+                    display: block;
+                }
+            }
+        }
+
+        .player {
+            display: block;
+            width: 100%;
+        }
     }
 }

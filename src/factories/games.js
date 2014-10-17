@@ -870,6 +870,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 self.shares = self.shares || [];
 
+                if (self.isSharedWithPublic()) return;
+
                 var share = {
                     userId: session.currentUser.id,
                     gameId: self.id,
@@ -879,15 +881,27 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 self.shares.push(share);
             },
+            stopSharingWithPublic: function() {
+                var self = this;
+
+                if (!self.shares || !self.shares.length) return;
+
+                for (var index = 0; index < self.shares.length; index++) {
+                    if (!self.shares[index].sharedWithUserId) {
+                        self.shares.splice(index, 1);
+                        return;
+                    }
+                }
+            },
             isSharedWithPublic: function() {
                 var self = this;
 
                 if (!self.shares) return false;
 
-                self.shares.map(function(share) {
+                return self.shares.map(function(share) {
                     return share.sharedWithUserId;
                 }).some(function(userId) {
-                    return userId === null;
+                    return !userId;
                 });
             }
         };

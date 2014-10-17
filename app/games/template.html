@@ -9,6 +9,13 @@
         <div class="player" data-ng-if="publiclyShared">
             <x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
         </div>
+        <div class="public-game-header-mobile" data-ng-if="publiclyShared">
+			<div>
+				<span class="game-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span><br/>
+				<h3>{{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}</h3>
+				<span class="game-shared-by">Clip shared by {{uploadedBy.firstName}} {{uploadedBy.lastName}}</span>
+			</div>
+		</div>
         <div data-ng-if="!publiclyShared">
         	<h3>Access Restricted</h3>
         </div>

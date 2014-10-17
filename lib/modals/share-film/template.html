@@ -58,12 +58,19 @@
         </div>
 
         <div class="sharing-with-public-container" data-ng-show="withPublic">
-        	<p>Anyone with this URL will be able to access this game</p>
             <div class="public-link-box">
                 <a href="/intelligence/g/{{shortId}}" target="_blank">www.krossover.com/intelligence/g/{{shortId}}</a>
             </div>
-            <p>Copy and paste URL (web address)</p>
-            This link only allows the user with this URL to view the Raw Film for this game
+            <div class="activate-row">
+                <button class="btn btn-primary" data-ng-if="!linkActive" data-ng-click="activateLink()">Activate Link</button>
+                <button class="btn btn-primary btn-deactivate" data-ng-if="linkActive" data-ng-click="deactivateLink()">Deactivate Link</button>
+                <span data-ng-if="!linkActive">Link is not active.</span>
+                <span data-ng-if="linkActive">Link is active.</span>
+            </div>
+            <p data-ng-if="!linkActive">Once activated, you can copy this URL (web address) and share it with anyone.</p>
+            <p data-ng-if="linkActive">Once deactivated, no one can access this game with this link.</p>
+            <p data-ng-if="!linkActive">Anyone with this link will be able to access the Raw Film for this game</p>
+            <p data-ng-if="linkActive">If you have placed this game in another Krossover user's account, deactivating the link will not remove this game from their account.</p>
             <div class="button-row">
                 <button class="btn btn-default" data-ng-click="withPublic = false">Back</button>
             </div>
