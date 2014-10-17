@@ -122,28 +122,24 @@ Info.controller('Coach.Game.Info.controller', [
             $q.all(promises).then(function(response) {
                 $scope.game.teamId = (response.team) ? response.team.id : $scope.gameTeams.team.id;
                 $scope.game.opposingTeamId = (response.opposingTeam) ? response.opposingTeam.id : $scope.gameTeams.opposingTeam.id;
-                console.log($scope.game);
+
+                var team = teams.get($scope.game.teamId);
+                var opposingTeam = teams.get($scope.game.opposingTeamId);
+
                 $scope.game.rosters = {};
 
+                $scope.game.rosters[$scope.game.teamId] = {
+                    teamId: $scope.game.teamId,
+                    playerInfo: team.roster.playerInfo
+                };
 
-//                $scope.game.rosters[$scope.game.teamId] = {
-//                    teamId: response.team.id,
-//                    playerInfo: response.team.roster.playerInfo
-//                };
 
-//
-//                $scope.game.rosters[$scope.game.opposingTeamId] = {
-//                    teamId: response.opposingTeam.id,
-//                    playerInfo: response.opposingTeam.roster.playerInfo
-//                };
+                $scope.game.rosters[$scope.game.opposingTeamId] = {
+                    teamId: $scope.game.opposingTeamId,
+                    playerInfo: opposingTeam.roster.playerInfo
+                };
 
-                $scope.game.save().then(function() {
-                    $scope.playersList = {};
-                    var teamPlayerFilter =
-                    $scope.playersList[$scope.game.teamId] = players.load({rosterId: $scope.game.roster.id}).then(function() {
-                        return players.getList(playersFilter);
-                    });
-                });
+                $scope.game.save();
 
                 $scope.goToRoster();
             });

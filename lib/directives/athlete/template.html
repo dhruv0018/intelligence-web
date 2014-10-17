@@ -15,7 +15,7 @@
                     <profile-placeholder data-size="small"></profile-placeholder>
                 </td>
                 <td class="athlete-column">
-                    <input size="3" data-ng-change="updateAthleteInformation()" data-ng-model="athlete.jerseyNumber" required>
+                    <input size="3" data-ng-change="updateAthleteInformation()" data-ng-model="game.rosters[team.id].playerInfo[athlete.id].jerseyNumber" required>
                 </td>
 
                 <td class="athlete-column">
@@ -28,14 +28,14 @@
                     <span data-ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
                 </td>
 
-                <!--<td class="athlete-column" data-ng-if="keys(positions).length > 0">-->
-                    <!--<data-positions-dropdown data-ng-model="athlete.positionIds[rosterId]" data-player="athlete" data-positionset="positionset"></data-positions-dropdown>-->
+                <!--<td class="athlete-column">-->
+                    <!--<data-positions-dropdown data-ng-model="game.roster[team.id].playerInfo[athlete.id].positionIds" data-player="athlete" data-positionset="positionset"></data-positions-dropdown>-->
                     <!--<button data-ng-if="!team.isCustomerTeam" class="btn btn-blank pull-right" data-ng-click="toggle(athlete)"><i class="icon icon-remove"></i></button>-->
                 <!--</td>-->
 
-                <td class="athlete-column" data-ng-if="team.isCustomerTeam" data-ng-click="athlete.isActive = !athlete.isActive">
-                    <i class="icon icon-check-square-o" data-ng-show="!athlete.rosterStatuses[rosterId]"></i>
-                    <i class="icon icon-check-empty" data-ng-show="athlete.rosterStatuses[rosterId]"></i>
+                <td class="athlete-column" data-ng-if="team.isCustomerTeam" data-ng-click="game.rosters[team.id].playerInfo[athlete.id].isActive = !game.rosters[team.id].playerInfo[athlete.id].isActive">
+                    <i class="icon icon-check-square-o" data-ng-show="!game.rosters[team.id].playerInfo[athlete.id].isActive"></i>
+                    <i class="icon icon-check-empty" data-ng-show="game.rosters[team.id].playerInfo[athlete.id].isActive"></i>
                 </td>
             </tr>
         </table>
