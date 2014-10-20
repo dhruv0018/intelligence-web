@@ -1,7 +1,8 @@
 @import (reference) "main.less";
 
 .public-game {
-
+    
+    height: 100%;
     overflow-y: scroll;
 
     .public-game-header,
@@ -13,7 +14,8 @@
         letter-spacing: normal;
 
         div {
-            width: 850px;
+            width: 100%;
+            max-width: 850px;
             margin: auto;
 
             .game-date {
@@ -38,6 +40,20 @@
     .player {
         margin: auto;
         display: table;
+    }
+
+    .locked-game {
+        background-color: @content-bg;
+        width: 30%;
+        margin: auto;
+        margin-top: 40px;
+        padding: 10px;
+        border: thin solid @gray-border;
+        text-align: center;
+
+        i {
+            font-size: 100px;
+        }
     }
 }
 
@@ -70,6 +86,10 @@ and (max-width: 479px) {
         .player {
             display: block;
             width: 100%;
+        }
+
+        .locked-game {
+            width: 80%;
         }
     }
 }

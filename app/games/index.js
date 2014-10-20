@@ -50,7 +50,9 @@ Games.config([
                     '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
                     function($q, $stateParams, games, teams, users) {
                         var gameId = Number($stateParams.id);
-                        return games.load(gameId).then(function(game) {
+                        return games.load(gameId).then(function() {
+
+                            var game = games.get(gameId);
 
                             var Data = {
                                 user: users.load(game.uploaderUserId),
