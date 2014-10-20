@@ -42,14 +42,6 @@ Schools.config([
                         templateUrl: 'schools.html',
                         controller: 'SchoolsController'
                     }
-                },
-                resolve: {
-                    'Schools.Data': [
-                        '$q', 'Schools.Data.Dependencies',
-                        function($q, data) {
-                            return $q.all(data);
-                        }
-                    ]
                 }
             })
 
@@ -65,35 +57,18 @@ Schools.config([
                 },
                 resolve: {
                     'Schools.Data': [
-                        '$stateParams', '$q', 'Schools.Data.Dependencies', 'SchoolsFactory', 'TeamsFactory',
-                        function($stateParams, $q, data, schools, teams) {
+                        '$stateParams', '$q', 'SchoolsFactory', 'TeamsFactory',
+                        function($stateParams, $q, schools, teams) {
 
-                            return $q.all(data).then(function(data) {
+                            var schoolId = Number($stateParams.id);
 
-                                var schoolId = Number($stateParams.id);
+                            var Data = {
 
-                                if (schoolId) {
+                                school: schools.load(schoolId),
+                                teams: teams.load({ schoolId: schoolId })
+                            };
 
-                                    try {
-
-                                        data.school = schools.get(schoolId);
-                                    }
-
-                                    catch (error) {
-
-                                        data.school = schools.load(schoolId);
-                                    }
-
-                                    var schoolsTeamsFilter = { schoolId: schoolId };
-
-                                    data.schoolsTeams = teams.load(schoolsTeamsFilter).then(function() {
-
-                                        return teams.getList(schoolsTeamsFilter);
-                                    });
-                                }
-
-                                return $q.all(data);
-                            });
+                            return $q.all(Data);
                         }
                     ]
                 }
@@ -112,15 +87,6 @@ Schools.config([
     }
 ]);
 
-Schools.service('Schools.Data.Dependencies', [
-    function() {
-
-        var Data = {};
-
-        return Data;
-    }
-]);
-
 /**
  * School controller. Controls the view for adding and editing a single school.
  * @module School
@@ -128,17 +94,17 @@ Schools.service('Schools.Data.Dependencies', [
  * @type {Controller}
  */
 Schools.controller('SchoolController', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'Schools.Data', 'SchoolsFactory',
-    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, data, schools) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'SchoolsFactory', 'TeamsFactory',
+    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, schools, teams) {
 
         $scope.SCHOOL_TYPES = SCHOOL_TYPES;
 
-        var schoolId = $stateParams.id;
+        var schoolId = Number($stateParams.id);
 
         if (schoolId) {
 
             $scope.school = schools.get(schoolId);
-            $scope.teams = data.schoolsTeams;
+            $scope.teams = teams.getList({ schoolId: schoolId });
         }
 
         $scope.school = $scope.school || {};
@@ -159,8 +125,8 @@ Schools.controller('SchoolController', [
  * @type {Controller}
  */
 Schools.controller('SchoolsController', [
-    '$rootScope', '$scope', '$state', 'Schools.Data', 'SchoolsFactory',
-    function controller($rootScope, $scope, $state, data, schools) {
+    '$rootScope', '$scope', '$state', 'SchoolsFactory',
+    function controller($rootScope, $scope, $state, schools) {
 
         $scope.schools = [];
 
