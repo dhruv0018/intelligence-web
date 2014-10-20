@@ -81,11 +81,9 @@ Game.directive('krossoverCoachGame', [
  * @type {controller}
  */
 Game.controller('Coach.Game.controller', [
-    '$scope', 'TeamsFactory', 'GamesFactory', 'config',
-    function controller($scope, teams, games, config) {
-        //$scope.positionset = ($scope.data.league.id && $scope.data.league.positionSetId) ? $scope.data.positionSets.get($scope.data.league.positionSetId) : {};
-        //$scope.positions = ($scope.positionset.id) ? $scope.positionset.indexedPositions : {};
-        console.log($scope.league);
+    '$scope', 'TeamsFactory', 'GamesFactory', 'config', 'PositionsetsFactory',
+    function controller($scope, teams, games, config, positionSets) {
+        $scope.positionset = ($scope.league.id && $scope.league.positionSetId) ? positionSets.get($scope.league.positionSetId) : {};
         $scope.config = config;
 
         /* TODO: Remove this: */

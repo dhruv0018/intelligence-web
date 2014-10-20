@@ -106,8 +106,6 @@ GameAreaInformation.controller('GameAreaInformationController', [
         $scope.game = game;
         $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
         $scope.remainingBreakdowns = data.remainingBreakdowns;
-        $scope.positions = {};
-        $scope.positionset = {};
 
         //Player List
         $scope.teamPlayerList = data.gamePlayerLists[game.teamId];
