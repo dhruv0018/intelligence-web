@@ -56,8 +56,7 @@ Games.config([
 
                             var Data = {
                                 user: users.load(game.uploaderUserId),
-                                team: teams.load(game.teamId),
-                                opposingTeam: teams.load(game.opposingTeamId)
+                                team: teams.load([game.teamId, game.opposingTeamId])
                             };
 
                             return $q.all(Data);
