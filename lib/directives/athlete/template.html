@@ -9,7 +9,7 @@
         </a>
     </div>
     <form name="athleteForm" data-ng-if="editable && !athlete.isUnknown">
-        <table class="table">
+        <table data-ng-class="{'de-selected': !rosterEntry.isActive}" class="table">
             <tr>
                 <td class="athlete-column" data-ng-if="team.isCustomerTeam">
                     <profile-placeholder data-size="small"></profile-placeholder>
@@ -28,7 +28,7 @@
                     <span data-ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
                 </td>
 
-                <td data-ng-if="positionset.positions && positionset.positions.length > 0" class="athlete-column">
+                <td class="athlete-column">
                     <data-positions-dropdown data-ng-model="rosterEntry.positionIds" data-player="athlete" data-positionset="positionset"></data-positions-dropdown>
                     <button data-ng-if="!team.isCustomerTeam" class="btn btn-blank pull-right" data-ng-click="toggle(athlete)"><i class="icon icon-remove"></i></button>
                 </td>
