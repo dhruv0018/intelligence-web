@@ -1,14 +1,70 @@
 <div class="share-film">
 
-    <header class="modal-header">
-    	<h3 class="modal-title">Share Film
-        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i></h3>
+    <header class="modal-header" data-ng-class="{ 'success-title': shareSuccess }">
+    	<h3 class="modal-title">
+	    	<span data-ng-show="!withOtherUsers && !withPublic && !shareSuccess">Pick how you would like to share</span>
+	        <span data-ng-show="withOtherUsers">Share this film with other Krossover users</span>
+	        <span data-ng-show="withPublic">Share this film via public URL</span>
+	        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i>
+	    </h3>
 
     </header>
 
     <div class="modal-body">
 
-        <iframe height="636" allowtransparency="true" frameborder="0" scrolling="no" style="width:100%;border:none" src="https://krossover.wufoo.com/embed/rz0hmlj13906x9/"><a href="https://krossover.wufoo.com/forms/rz0hmlj13906x9/">Fill out the share request form</a></iframe>
+        <div class="share-options-container" data-ng-show="!withOtherUsers && !withPublic && !shareSuccess">
+        	<div class="share-options option-your-team">
+        		<h3>Your Team</h3>
+        		<i class="icon icon-group"></i>
+        		Games are automatically shared amongst team coaches and athletes on your active roster.
+        	</div>
+        	<div class="share-options middle-option" data-ng-click="withOtherUsers = true">
+        		<h3>Other Krossover Users</h3>
+        		<i class="icon icon-logo"></i>
+        	</div>
+        	<div class="share-options" data-ng-click="withPublic = true">
+        		<h3>Recruiters or others via public URL</h3>
+        		<i class="icon icon-globe"></i>
+        	</div>
+        </div>
+
+        <div class="sharing-with-others-container" data-ng-show="withOtherUsers">
+        	<div class="info-box">
+        		Games are automatically shared amongst team coaches and athletes on your active roster. <br/>
+        		If the person you want to share with does not have a Krossover account, <a data-ng-click="withOtherUsers = false; withPublic = true">share a URL</a> with them.
+        	</div>
+        	<span data-ng-show="game.isSharedWithUser(user)" class="share-error-message"><i class="icon icon-warning"></i> That user is already being shared with.</span>
+        	<span data-ng-show="user.id === currentUser.id" class="share-error-message"><i class="icon icon-warning"></i> You cannot share a game with yourself.</span>
+        	<h3>Sharing with:</h3>
+        	<form>
+        		<user-typeahead data-user="user" data-filter="filter"></user-typeahead>
+        		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || game.isSharedWithUser(user) || user.id === currentUser.id" data-ng-click="game.shareWithUser(user); user = null">Add</button>
+        	</form>
+        	<div class="how-to-search">Start typing the last name of the user you want to share with.</div>
+        	<div data-ng-show="game.shares.length" class="shared-with-table">
+        		<div class="shared-with-header">Name</div>
+        		<div class="shared-with" data-ng-repeat="share in game.shares">
+        			<strong>{{users[share.sharedWithUserId].firstName}} {{users[share.sharedWithUserId].lastName}}</strong>
+        			<span class="pull-right">
+        				Sharing raw film
+        				<i class="icon icon-remove" data-ng-click="game.stopSharingWithUser(users[share.sharedWithUserId])"></i>
+        			</span>
+        		</div>
+        	</div>
+        	<div class="button-row">
+        		<button class="btn btn-default" data-ng-click="withOtherUsers = false">Back</button>
+        		<button class="btn btn-primary pull-right" data-ng-disabled="user !== null || !game.shares.length" data-ng-click="shareSubmit()">Save and share</button>
+        	</div>
+        </div>
+
+        <div class="sharing-with-public-container" data-ng-show="withPublic">
+        	<iframe height="636" allowtransparency="true" frameborder="0" scrolling="no" style="width:100%;border:none" src="https://krossover.wufoo.com/embed/rz0hmlj13906x9/"><a href="https://krossover.wufoo.com/forms/rz0hmlj13906x9/">Fill out the share request form</a></iframe>
+        </div>
+
+        <div class="share-successful" data-ng-show="shareSuccess">
+        	<i class="icon icon-ok"></i>
+        	Sharing settings updated
+        </div>
 
     </div>
 

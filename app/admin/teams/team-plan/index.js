@@ -82,10 +82,6 @@ TeamPlan.controller('TeamPlanController', [
 
         $scope.defaultPlans = plans.getByLeague(team.leagueId);
 
-        $scope.cancel = function() {
-            $modalInstance.dismiss('cancel');
-        };
-
         $scope.saveTeam = function(team) {
 
             var basicModalOptions = {};

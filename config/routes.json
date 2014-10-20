@@ -243,7 +243,13 @@
         "Head Coach": true,
         "Assistant Coach": true
     },
-
+    "Coach.Team.Roster": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+    "Coach.Team.Assistants": {
+        "Head Coach": true
+    },
     "Coach.Team.Info": {
         "Head Coach": true,
         "Assistant Coach": true
@@ -307,12 +313,12 @@
         "Assistant Coach": true
     },
 
-    "ga-raw-film": {
+    "Coach.GameArea.RawFilm": {
         "Head Coach": true,
         "Assistant Coach": true
     },
 
-    "ga-film-breakdown": {
+    "Coach.GameArea.Breakdown": {
         "Head Coach": true,
         "Assistant Coach": true
     },
@@ -374,6 +380,13 @@
 
     "Athlete.GameArea.Breakdown": {
 
+        "Athlete": true
+    },
+
+    "ReelsArea": {
+
+        "Head Coach": true,
+        "Assistant Coach": true,
         "Athlete": true
     }
 }

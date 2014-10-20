@@ -16,8 +16,8 @@ IntelligenceWebClient.service('SchoolsStorage', [
 ]);
 
 IntelligenceWebClient.factory('SchoolsFactory', [
-    '$injector', 'SchoolsResource', 'SchoolsStorage', 'BaseFactory', 'ResourceManager', 'SCHOOL_TYPES',
-    function($injector, SchoolsResource, SchoolsStorage, BaseFactory, managedResources, SCHOOL_TYPES) {
+    '$injector', 'BaseFactory', 'ResourceManager', 'SCHOOL_TYPES',
+    function($injector, BaseFactory, managedResources, SCHOOL_TYPES) {
 
         var SchoolsFactory = {
 

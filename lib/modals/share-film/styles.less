@@ -4,34 +4,175 @@
 
 	letter-spacing: normal;
 
+	.icon-remove {
+		color: @brand-danger;
+		cursor: pointer;
+	}
+
 	.modal-header {
 
 		.modal-title {
 
 			text-align: left;
-
-			i {
-				cursor: pointer;
-				color: @brand-danger;
-			}
+			text-transform: none;
 		}
+	}
+
+	.success-title {
+		border: none;
 	}
 
 	.modal-body {
 
-		.formOption {
+		h3 {
+			color: @brand-blue;
+			font-size: 16px;
+		}
 
-			margin-top: 5px;
-			margin-bottom: 5px;
+		.share-options-container {
 
-			textarea {
-				display: block;
+			margin: auto;
+			text-align: center;
+
+			.share-options {
+
+				display: table-cell;
+				width: 32%;
+				height: 200px;
+				padding: 10px;
+				cursor: pointer;
+
+				&.option-your-team {
+
+					cursor: auto;
+
+					.icon {
+						color: @brand-blue;
+						font-size: 40px;
+					}
+
+					&:hover {
+						.icon {
+							color: @brand-blue;
+						}
+					}
+				}
+
+				&.middle-option {
+					border-left: thin solid @gray-border;
+					border-right: thin solid @gray-border;
+					width: 33%;
+				}
+
+				h3 {
+					margin-top: 0;
+					display: inline-flex;
+					height: 20px;
+				}
+
+				.icon {
+					display: block;
+					color: @gray-lighter;
+					margin-top: 30px;
+					font-size: 70px;
+
+					&::before {
+						height: 71px;
+					}
+				}
+
+				&:hover {
+					.icon {
+						color: @brand-primary;
+					}
+				}
 			}
 		}
-	}
 
-	.formSubmitted {
-		display: none;
+		.sharing-with-others-container {
+
+			h3 {
+				margin-top: 0px;
+			}
+
+			.share-error-message {
+				.pull-right;
+
+				.icon {
+					color: @brand-warning;
+				}
+			}
+
+			form {
+				.user-typeahead {
+					display: inline-block;
+					width: 460px;
+
+					input {
+						width: 100%;
+					}
+				}
+
+				button {
+					.pull-right;
+					display: inline-block;
+					width: 80px;
+				}
+			}
+
+			.how-to-search {
+				color: black;
+				margin-bottom: 10px;
+			}
+
+			.info-box {
+				border: thin solid @gray-border;
+				background-color: @content-bg;
+				margin-bottom: 10px;
+				padding: 5px;
+			}
+
+			.shared-with-table {
+
+				.shared-with-header {
+					background-color: @brand-blue;
+					color: white;
+					padding: 10px;
+				}
+
+				.shared-with {
+					border: thin solid @gray-border;
+					border-top: none;
+					padding: 10px;
+
+					.icon {
+						margin-left: 20px;
+						margin-right: 20px;
+					}
+				}
+			}
+
+			.button-row {
+				margin-top: 10px;
+			}
+		}
+
+		.share-successful {
+		color: @brand-success;
+		text-align: center;
+		font-size: 24px;
+
+		.icon {
+			display: block;
+			margin: auto;
+			font-size: 60px;
+			width: 100px;
+			height: 100px;
+			line-height: 95px;
+			border: 4px solid @brand-success;
+			border-radius: 50%;
+		}
+	}
 	}
 }
 

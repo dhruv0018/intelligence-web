@@ -92,25 +92,11 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Athlete.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Athlete.Data', 'SPORTS', 'PlayManager',
-    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager) {
-        $scope.hasShotChart = false;
-        $scope.hasStatistics = true;
-        $scope.hasFormations = false;
-        $scope.hasDownAndDistance = false;
+    '$scope', '$state', '$stateParams', 'TeamsFactory', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Athlete.Data', 'SPORTS', 'PlayManager', 'SessionService',
+    function controller($scope, $state, $stateParams, teams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, session) {
         $scope.expandAll = false;
         $scope.data = data;
         $scope.play = playManager;
-
-        if (data.league.sportId == SPORTS.BASKETBALL.id) {
-            $scope.hasShotChart = true;
-        }
-
-        if (data.league.sportId == SPORTS.FOOTBALL.id) {
-            $scope.hasFormations = true;
-            $scope.hasDownAndDistance = true;
-            $scope.hasStatistics = false;
-        }
 
         //constants
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -122,7 +108,7 @@ GameArea.controller('Athlete.GameArea.controller', [
         $scope.returnedDate = ($scope.game.isDelivered()) ? new Date($scope.game.currentAssignment().timeFinished) : null;
 
         //Collections
-        $scope.teams = data.teams.getCollection();
+        $scope.teams = teams.getCollection();
 
         //Teams
         $scope.team = $scope.teams[$scope.game.teamId];
@@ -131,21 +117,24 @@ GameArea.controller('Athlete.GameArea.controller', [
         //Filters
         $scope.filtersetCategories = data.filtersetCategories;
 
-        //view selector
-        if ($scope.game.isDelivered()) {
-            $scope.dataType = 'film-breakdown';
-        } else {
-            $scope.dataType = 'raw-film';
+        //define states for view selector
+        $scope.gameStates = [];
+
+        if ($scope.game.isDelivered() && !$scope.game.isSharedWithUser(session.currentUser)) {
+            $scope.gameStates.push(
+                {
+                    name: 'Film Breakdown',
+                    state: 'Athlete.GameArea.Breakdown'
+                }
+            );
         }
-        $scope.$watch('dataType', function(data) {
-            if ($scope.dataType === 'raw-film') {
-                $state.go('Athlete.GameArea.RawFilm');
-            } else if ($scope.dataType === 'film-breakdown') {
-                $state.go('Athlete.GameArea.Breakdown');
-            } else {
-                $state.go('Athlete.GameArea');
+
+        $scope.gameStates.push(
+            {
+                name: 'Raw Film',
+                state: 'Athlete.GameArea.RawFilm'
             }
-        });
+        );
 
     }
 ]);

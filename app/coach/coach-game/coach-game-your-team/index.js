@@ -57,8 +57,8 @@ YourTeam.directive('krossoverCoachGameYourTeam', [
  * @type {controller}
  */
 YourTeam.controller('Coach.Game.YourTeam.controller', [
-    '$scope', '$state', 'PlayersFactory', 'TeamsFactory',
-    function controller($scope, $state, players, teams) {
+    '$scope', '$state', 'PlayersFactory', 'TeamsFactory', 'PositionsetsFactory',
+    function controller($scope, $state, players, teams, positionsets) {
 
         //TODO: temporary fix of tabs flow
         function enableAllTabs() {
@@ -89,13 +89,14 @@ YourTeam.controller('Coach.Game.YourTeam.controller', [
         };
 
         //Collections
-        $scope.teams = $scope.data.teams.getCollection();
+        $scope.teams = teams.getCollection();
 
         //Game Roster for Coach Team
         $scope.gameRoster = [];
 
-        //Positions
-        $scope.positions = ($scope.data.league.positionSetId) ? $scope.data.positionSets.getCollection()[$scope.data.league.positionSetId].indexedPositions : {};
+        $scope.positionset = positionsets.get($scope.data.league.positionSetId);
+        $scope.positions = $scope.positionset.indexedPositions;
+
         $scope.$watchCollection('data.game', function(game) {
             //gets rid of inactive players
             templatePlayerList = templatePlayerList.filter(function(teamRosterPlayer) {

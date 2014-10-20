@@ -1,0 +1,41 @@
+@import (reference) "main.less";
+
+.profile {
+
+  .manageable-resource {
+    text-align: center;
+    margin-top: 20px;
+    height: 200px;
+    letter-spacing: normal;
+
+    .manageable-picture {
+      margin-bottom: 5px;
+
+      img{
+        width: 110px;
+      }
+
+      .placeholder-picture {
+        display: inline-block;
+        margin-bottom: 5px;
+      }
+    }
+
+    .resending {
+      color: @brand-success;
+
+      .icon-refresh::before {
+        animation: spin 1s linear infinite;
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .positions {
+      font-weight: 500;
+      color: black;
+    }
+  }
+}

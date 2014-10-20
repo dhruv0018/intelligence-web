@@ -1,5 +1,3 @@
-
-
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -45,7 +43,8 @@ FilmHome.config([
                 }
             },
             resolve: {
-                'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
+                'Coach.Data': ['$q', 'Coach.Data.Dependencies', 'Coach.FilmHome.ReelsData', function($q, data, reelsData) {
+                    angular.extend(data, reelsData);
                     return $q.all(data);
                 }]
             }
@@ -53,5 +52,23 @@ FilmHome.config([
     }
 ]);
 
+FilmHome.service('Coach.FilmHome.ReelsData', [
+    '$q', 'SessionService', 'ReelsFactory',
+    function($q, session, reels) {
+
+        var teamId = session.currentUser.currentRole.teamId;
+        var userId = session.currentUser.id;
+
+        var Data = {
+            reels: reels.load({
+                teamId: teamId
+            }),
+        };
+
+        return Data;
+    }
+]);
+
 /* File dependencies */
 require('./controller');
+

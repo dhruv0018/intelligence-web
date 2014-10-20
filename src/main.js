@@ -1,6 +1,6 @@
 var pkg = require('../package.json');
 
-require('./analytics');
+require('./appcache');
 
 /* Vendor dependencies */
 require('./vendor');
@@ -20,6 +20,7 @@ require('./config');
 require('./app');
 
 require('./flow');
+require('./users');
 require('./routes');
 require('./errors');
 
@@ -63,6 +64,7 @@ require('./models/tagsets');
 require('./models/positionsets');
 require('./models/plays');
 require('./models/filtersets');
+require('./models/reels');
 require('./models/plans');
 
 require('./storage/users');
@@ -75,6 +77,7 @@ require('./storage/plays');
 require('./storage/players');
 require('./storage/tagsets');
 require('./storage/filtersets');
+require('./storage/reels');
 require('./storage/positionsets');
 require('./storage/plans');
 
@@ -89,6 +92,7 @@ require('./factories/plays');
 require('./factories/players');
 require('./factories/tagsets');
 require('./factories/filtersets');
+require('./factories/reels');
 require('./factories/positionsets');
 require('./factories/plans');
 

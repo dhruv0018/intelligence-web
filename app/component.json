@@ -12,7 +12,8 @@
         "indexer",
         "indexing",
         "coach",
-        "athlete"
+        "athlete",
+        "reels"
     ],
     "scripts": [
         "index.js"

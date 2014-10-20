@@ -86,14 +86,14 @@ Games.service('Indexer.Games.Data.Dependencies', [
  * @type {Controller}
  */
 Games.controller('indexer-games.Controller', [
-    '$scope', '$state', 'config', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
-    function controller($scope, $state, config, GAME_TYPES, teams, leagues, games, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
+    '$scope', '$state', '$interval', 'config', 'GAME_TYPES', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
+    function controller($scope, $state, $interval, config, GAME_TYPES, sports, leagues, teams, games, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
-        $scope.sports = data.sports.getCollection();
-        $scope.leagues = data.leagues.getCollection();
-        $scope.teams = data.teams.getCollection();
-        $scope.users = data.users.getCollection();
+        $scope.sports = sports.getCollection();
+        $scope.leagues = leagues.getCollection();
+        $scope.teams = teams.getCollection();
+        $scope.users = users.getCollection();
 
         $scope.userId = session.currentUser.id;
 
@@ -110,9 +110,30 @@ Games.controller('indexer-games.Controller', [
             $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
         }
 
-        $scope.games = data.games.getList().filter(function(game) {
+        $scope.games = games.getList();
 
-            return game.isAssignedToUser(session.currentUser.id);
+        angular.forEach($scope.games, function(game) {
+            game.timeRemaining = game.assignmentTimeRemaining();
+        });
+
+        var refreshGames = function() {
+
+            angular.forEach($scope.games, function(game) {
+
+                if (game.timeRemaining) {
+
+                    game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
+                }
+            });
+        };
+
+        var ONE_MINUTE = 60000;
+
+        var refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
+
+        $scope.$on('$destroy', function() {
+
+            $interval.cancel(refreshGamesInterval);
         });
     }
 ]);
