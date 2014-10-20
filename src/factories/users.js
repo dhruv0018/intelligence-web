@@ -111,12 +111,17 @@ IntelligenceWebClient.factory('UsersFactory', [
                         });
                     });
 
-                    var teams = $injector.get('TeamsFactory');
+                    if (teamIds.length) {
 
-                    return teams.retrieve({ 'id[]': teamIds }).then(function() {
+                        var teams = $injector.get('TeamsFactory');
 
-                        return users;
-                    });
+                        return teams.retrieve({ 'id[]': teamIds }).then(function() {
+
+                            return users;
+                        });
+                    }
+
+                    else return users;
                 });
             },
 
