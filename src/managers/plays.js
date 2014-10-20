@@ -17,12 +17,11 @@ IntelligenceWebClient.service('PlaysManager', [
         var indexing;
 
         this.plays = [];
-        this.playScopeList = {
-            scopes: {},
-            head: void 0,
-            tail: void 0
-        };
-        this.currentPlayIndex = 0;
+
+        //Index of scopes assosicated with the plays
+        //indexed by 'id' for game breakdown playlist, and
+        //by '$$hashkey' for indexing playlist
+        this.playScopes = {};
 
         /**
          * Resets the plays.
@@ -43,17 +42,6 @@ IntelligenceWebClient.service('PlaysManager', [
             return this.plays[this.plays.length - 1];
         };
 
-        this.getNextPlay = function getNextPlay(currentPlay) {
-            var currentPlayScope = this.playScopeList.scopes[currentPlay.id];
-
-            if (currentPlayScope.nextPlayScope.isHidden) {
-                //Find the next visible play
-                return this.getNextPlay(currentPlayScope.nextPlayScope.play);
-            } else if (currentPlayScope) {
-                return currentPlayScope.nextPlayScope;
-            }
-        };
-
         this.registerPlayScope = function registerPlayScope(playScope) {
             //create hash of play scopes indexed by the scopes play's id
             var registeredId;
@@ -63,17 +51,24 @@ IntelligenceWebClient.service('PlaysManager', [
                 //Special case for indexing. Automatically selects play
                 //to keep the current play at the top of the playlist
                 registeredId = playScope.play.$$hashKey;
-                if (playScope.selectPlay) playScope.selectPlay();
+                if (typeof playScope.selectPlay === 'function') playScope.selectPlay();
             }
-            this.playScopeList.scopes[registeredId] = playScope;
+            this.playScopes[registeredId] = playScope;
+        };
 
-            //Build linked list of play scopes
-            if (typeof this.playScopeList.head === 'undefined') {
-                this.playScopeList.head = playScope;
-                this.playScopeList.tail = playScope;
-            } else {
-                this.playScopeList.tail.nextPlayScope = playScope;
-                this.playScopeList.tail = playScope;
+        this.getNextPlay = function getNextPlay(currentPlay) {
+
+            var currentPlayIndex = this.plays.indexOf(currentPlay);
+            var nextPlay = this.plays[currentPlayIndex + 1];
+
+            if (nextPlay) {
+
+                if (nextPlay.isHidden) {
+                    //Find the next visible play
+                    return this.getNextPlay(nextPlay);
+                } else {
+                    return this.playScopes[nextPlay.id];
+                }
             }
         };
 

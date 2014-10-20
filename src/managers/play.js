@@ -124,8 +124,8 @@ IntelligenceWebClient.service('PlayManager', [
             this.current.events.splice(index, 0, event);
 
             //Keep the current play element at the top of the playlist
-            var playScopeEventIsBeingAddedTo = playsManager.playScopeList.scopes[this.current.$$hashKey];
-            if (playScopeEventIsBeingAddedTo && playScopeEventIsBeingAddedTo.selectPlay) playScopeEventIsBeingAddedTo.selectPlay();
+            var playScopeEventIsBeingAddedTo = playsManager.playScopes[this.current.$$hashKey];
+            if (playScopeEventIsBeingAddedTo && typeof playScopeEventIsBeingAddedTo.selectPlay === 'function') playScopeEventIsBeingAddedTo.selectPlay();
         };
 
         /**

@@ -121,13 +121,12 @@ Indexing.config([
                 },
 
                 onEnter: [
-                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'VideoPlayerInstance', 'GamesFactory',
-                    function($state, $timeout, $stateParams, session, modals, data, indexing, Videoplayer, games) {
+                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'GamesFactory',
+                    function($state, $timeout, $stateParams, session, modals, data, indexing, games) {
 
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
                         var game = games.get(gameId);
-                        var videoPlayer = videoPlayerInstance.promise;
 
                         if (!game.isAssignedToUser(userId)) {
 
