@@ -209,7 +209,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
-                    return angular.isUndefined(filter[key]);
+                    if (angular.isArray(filter[key])) return !filter[key].length;
+                    else return angular.isUndefined(filter[key]);
                 });
 
                 if (aFilterIsUndefined) throw new Error('Undefined filter');
@@ -265,7 +266,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
-                    return angular.isUndefined(filter[key]);
+                    if (angular.isArray(filter[key])) return !filter[key].length;
+                    else return angular.isUndefined(filter[key]);
                 });
 
                 if (aFilterIsUndefined) throw new Error('Undefined filter');
