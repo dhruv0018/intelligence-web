@@ -203,7 +203,9 @@ GameArea.controller('Coach.GameArea.controller', [
                         state: 'ga-shot-chart'
                     }
                 );
-            } else if (data.league.sportId == SPORTS.FOOTBALL.id) {
+            }
+
+            if (data.league.sportId == SPORTS.FOOTBALL.id) {
                 $scope.gameStates.push(
                     {
                         name: 'Formation Report',
@@ -214,7 +216,9 @@ GameArea.controller('Coach.GameArea.controller', [
                         state: 'ga-down-distance'
                     }
                 );
-            } else if (data.league.sportId == SPORTS.VOLLEYBALL.id) {
+            }
+
+            if (data.league.sportId == SPORTS.VOLLEYBALL.id || data.league.sportId == SPORTS.FOOTBALL.id) {
                 $scope.gameStates.push(
                     {
                         name: 'Statistics',
@@ -222,6 +226,7 @@ GameArea.controller('Coach.GameArea.controller', [
                     }
                 );
             }
+
         } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered() || $scope.game.isSharedWithUser(session.currentUser)) {
             $scope.gameStates.push(
                 {

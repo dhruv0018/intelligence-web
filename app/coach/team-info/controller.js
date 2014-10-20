@@ -7,9 +7,6 @@ var angular = window.angular;
  */
 var TeamInfo = angular.module('Coach.Team.Info');
 
-
-
-
 /**
  * User controller. Controls the view for adding and editing a single user.
  * @module TeamInfo
@@ -20,16 +17,20 @@ var TeamInfo = angular.module('Coach.Team.Info');
 TeamInfo.controller('Coach.Team.Info.controller', [
     '$rootScope', '$scope', '$state', '$http', 'config', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
     function controller($rootScope, $scope, $state, $http, config, games, players, data) {
-        $state.go('Coach.Team.Info.Information');
 
+        $state.go('Coach.Team.Info.Information');
     }
 ]);
 
 TeamInfo.controller('Coach.Team.Plans.controller', [
-    '$rootScope', '$scope', '$state', '$http', 'config', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
-    function controller($rootScope, $scope, $state, $http, config, games, players, data) {
+    '$rootScope', '$scope', '$state', '$http', 'config', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
+    function controller($rootScope, $scope, $state, $http, config, session, teams, games, players, data) {
 
-        if (data.team) $scope.activePlan = data.team.getActivePlan();
-        if (data.team) $scope.activePackage = data.team.getActivePackage();
+        var teamId = session.currentUser.currentRole.teamId;
+        var team = teams.get(teamId);
+
+        $scope.activePlan = team.getActivePlan();
+        $scope.activePackage = team.getActivePackage();
     }
 ]);
+

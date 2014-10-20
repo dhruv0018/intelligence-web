@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'config', '$sce', 'BaseFactory', 'VIDEO_STATUSES', 'PlaysResource',
-    function(config, $sce, BaseFactory, VIDEO_STATUSES, PlaysResource) {
+    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory',
+    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory) {
 
         var PlaysFactory = {
 
@@ -56,31 +56,16 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 var profile;
                 var sources = [];
 
-                var defaultVideo;
-                var DEFAULT_VIDEO_ID = config.defaultVideoId;
+                for (profile in profiles) {
+                    if (profiles[profile].videoUrl) {
 
-                if (self.clip && self.clip.status === VIDEO_STATUSES.COMPLETE.id) {
-                    profiles.forEach(function(profile) {
-                        if (profile.videoUrl) {
+                        var source = {
+                            type: 'video/mp4',
+                            src: $sce.trustAsResourceUrl(profiles[profile].videoUrl)
+                        };
 
-                            if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                                var source = {
-                                    type: 'video/mp4',
-                                    src: $sce.trustAsResourceUrl(profile.videoUrl)
-                                };
-
-                                if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
-                                    defaultVideo = source;
-                                } else {
-                                    sources.push(source);
-                                }
-                            }
-
-                        }
-                    });
-
-                    if (defaultVideo) sources.unshift(defaultVideo);
+                        sources.push(source);
+                    }
                 }
 
                 return sources;

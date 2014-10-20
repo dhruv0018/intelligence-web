@@ -17,8 +17,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('SessionService', [
-    'UsersResource', 'UsersStorage', 'UsersFactory',
-    function(UsersResource, UsersStorage, users) {
+    'UsersResource', 'UsersFactory',
+    function(User, users) {
 
         /* Memory storage for current user. */
         this.currentUser = null;
@@ -32,13 +32,7 @@ IntelligenceWebClient.service('SessionService', [
          */
         this.serializeUser = function(user) {
 
-            var copy = angular.copy(user);
-
-            delete copy.description;
-            delete copy.resource;
-            delete copy.storage;
-
-            return JSON.stringify(angular.toJson(copy));
+            return angular.toJson(user);
         };
 
         /**
@@ -48,14 +42,12 @@ IntelligenceWebClient.service('SessionService', [
          */
         this.deserializeUser = function(string) {
 
-            var storedObject = angular.fromJson(JSON.parse(string));
-            var user = new UsersResource(storedObject);
+            var object = angular.fromJson(string);
 
-            user.description = 'users';
-            user.storage = UsersStorage;
-            user.resource = UsersResource;
+            user = new User(object);
+            user = users.extend(user);
 
-            return users.extend(user);
+            return user;
         };
 
         /**
@@ -93,7 +85,7 @@ IntelligenceWebClient.service('SessionService', [
             user = user || this.currentUser;
 
             /* Store user in memory. */
-            this.currentUser = angular.copy(user);
+            this.currentUser = user;
 
             /* Store user in the session. */
             this.storeUser(CURRENT_USER_KEY, user, persist);
@@ -110,7 +102,7 @@ IntelligenceWebClient.service('SessionService', [
             if (!user) return;
 
             /* Store user in memory. */
-            this.previousUser = angular.copy(user);
+            this.previousUser = user;
 
             /* Store user in the session. */
             this.storeUser(PREVIOUS_USER_KEY, user, persist);
