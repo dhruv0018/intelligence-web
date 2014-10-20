@@ -353,10 +353,13 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else if (angular.isArray(filter)) {
 
-                        filter.filter(function(id) {
+                        if (self.storage.collection) {
 
-                            return !angular.isDefined(self.storage.collection[id]);
-                        });
+                            filter = filter.filter(function(id) {
+
+                                return !angular.isDefined(self.storage.collection[id]);
+                            });
+                        }
 
                         if (filter.length) {
 
