@@ -15,7 +15,7 @@
                     <profile-placeholder data-size="small"></profile-placeholder>
                 </td>
                 <td class="athlete-column">
-                    <input size="3" data-ng-change="updateAthleteInformation()" data-ng-model="game.rosters[team.id].playerInfo[athlete.id].jerseyNumber" required>
+                    <input size="3" data-ng-change="updateAthleteInformation()" data-ng-model="rosterEntry.jerseyNumber" required>
                 </td>
 
                 <td class="athlete-column">
@@ -28,14 +28,14 @@
                     <span data-ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
                 </td>
 
-                <td class="athlete-column">
-                    <data-positions-dropdown data-ng-model="game.rosters[team.id].playerInfo[athlete.id].positionIds" data-player="athlete" data-positionset="positionset"></data-positions-dropdown>
+                <td data-ng-if="positionset.positions && positionset.positions.length > 0" class="athlete-column">
+                    <data-positions-dropdown data-ng-model="rosterEntry.positionIds" data-player="athlete" data-positionset="positionset"></data-positions-dropdown>
                     <button data-ng-if="!team.isCustomerTeam" class="btn btn-blank pull-right" data-ng-click="toggle(athlete)"><i class="icon icon-remove"></i></button>
                 </td>
 
-                <td class="athlete-column" data-ng-if="team.isCustomerTeam" data-ng-click="game.rosters[team.id].playerInfo[athlete.id].isActive = !game.rosters[team.id].playerInfo[athlete.id].isActive">
-                    <i class="icon icon-check-square-o" data-ng-show="!game.rosters[team.id].playerInfo[athlete.id].isActive"></i>
-                    <i class="icon icon-check-empty" data-ng-show="game.rosters[team.id].playerInfo[athlete.id].isActive"></i>
+                <td class="athlete-column" data-ng-if="team.isCustomerTeam" data-ng-click="rosterEntry.isActive = !rosterEntry.isActive">
+                    <i class="icon icon-check-square-o" data-ng-show="!rosterEntry.isActive"></i>
+                    <i class="icon icon-check-empty" data-ng-show="rosterEntry.isActive"></i>
                 </td>
             </tr>
         </table>

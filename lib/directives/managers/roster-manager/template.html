@@ -10,19 +10,18 @@
                         <th>Jersey Number</th>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <!--<th data-ng-if="keys(positions).length > 0">Position</th>-->
+                        <th data-ng-if="positionset.positions && positionset.positions.length > 0">Position</th>
                         <th data-ng-if="team.isCustomerTeam">Did Not Play</th>
                     </tr>
                 </thead>
             </table>
 
-            <krossover-athlete data-ng-repeat="(id, athlete) in team.roster.playerInfo"
-                               data-athlete="players[athlete.id]"
-                               data-roster-id="rosterId"
+            <krossover-athlete data-ng-repeat="(playerId, rosterEntry) in game.rosters[team.id].playerInfo"
+                               data-athlete="players[playerId]"
+                               data-roster="game.rosters[team.id]"
+                               data-roster-entry="rosterEntry"
                                data-positionset="positionset"
-                               data-positions="positions"
                                data-toggle="toggleActivation"
-                               id="{{id}}"
                                data-game="game"
                                data-team="team"
                                data-editable="editable"></krossover-athlete>
