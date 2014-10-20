@@ -1,3 +1,4 @@
+var PAGE_SIZE = 100;
 
 var pkg = require('../../package.json');
 
