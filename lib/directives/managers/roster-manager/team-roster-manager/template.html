@@ -9,13 +9,16 @@
 
             <div class="col-xs-10">
                 <div class="row">
-                        <profile data-ng-repeat="rosterEntry in team.roster.playerInfo | activeStatus: filtering | orderBy: sortingType"
-                                 data-role="ROLES.ATHLETE"
-                                 data-player="players[rosterEntry.id]"
-                                 data-positions="positions"
-                                 data-team="team"
-                                 data-options="options"
-                                 data-roster-id="rosterId"></profile>
+                    <!--| activeStatus: filtering | orderBy: sortingType-->
+                    <profile data-ng-repeat="rosterEntry in playerRosterEntries track by $index"
+                             data-role="ROLES.ATHLETE"
+                             data-player="rosterEntry.player"
+                             data-positionset="positionset"
+                             data-roster-entry="rosterEntry"
+                             data-team="team"
+                             data-options="options"
+                             data-roster-id="rosterId"></profile>
+
                 </div>
             </div>
         </div>

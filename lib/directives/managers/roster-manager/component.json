@@ -12,8 +12,5 @@
     "locals": [
         "game-roster-manager",
         "team-roster-manager"
-    ],
-    "styles": [
-        "styles.less"
     ]
 }

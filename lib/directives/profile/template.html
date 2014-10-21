@@ -5,15 +5,15 @@
             <img data-ng-if="users[player.userId].imageUrl" data-ng-src="{{users[player.userId].imageUrl}}" alt="profile picture">
         </div>
         <div class="description">
-            <a data-ng-if="player.firstName && player.lastName" data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
+            <a data-ng-if="rosterEntry.player.firstName && rosterEntry.player.lastName" data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = rosterEntry.player" href>
                 <span class="info">
-                    <span class="jerseyNumber">{{team.roster.playerInfo[player.id].jerseyNumber}}</span>
-                    {{player.firstName}}
-                    {{player.lastName[0]}}.
+                    <span class="jerseyNumber">{{rosterEntry.jerseyNumber}}</span>
+                    {{rosterEntry.player.firstName}}
+                    {{rosterEntry.player.lastName[0]}}.
                 </span>
             </a>
             <span data-ng-if="!player.firstName && !player.lastName">Saving Player</span>
-            <p data-ng-if="keys(positions).length > 0" class="positions">
+            <p data-ng-if="positionset.positions && positionset.positions.length > 0" class="positions">
                 <span data-ng-repeat="position in getPositions() track by $index">
                     {{position.name}}
                 </span>
