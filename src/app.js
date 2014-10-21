@@ -6,6 +6,7 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name, [
     'ngSanitize',
     'ngResource',
+    'LocalForageModule',
     'angulartics',
     'angulartics.segment.io',
     'flow',

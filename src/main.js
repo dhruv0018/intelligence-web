@@ -26,6 +26,7 @@ require('./errors');
 require('./viewports');
 require('./logs');
 require('./device');
+require('./localforage');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
