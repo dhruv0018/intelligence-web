@@ -1,0 +1,24 @@
+<div class="roster-manager team-roster manager">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-xs-2">
+                <add-resource data-add-new-resource="addNewPlayer()" data-display-text="Add new player"></add-resource>
+                <a href data-open-modal="ExcelUpload.Modal" data-modal-options="options"><i class="icon icon-cloud-upload"></i> Upload Roster via Excel</a>
+            </div>
+
+            <div class="col-xs-10">
+                <div class="row">
+                        <profile data-ng-repeat="rosterEntry in team.roster.playerInfo | activeStatus: filtering | orderBy: sortingType"
+                                 data-role="ROLES.ATHLETE"
+                                 data-player="players[rosterEntry.id]"
+                                 data-positions="positions"
+                                 data-team="team"
+                                 data-options="options"
+                                 data-roster-id="rosterId"></profile>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

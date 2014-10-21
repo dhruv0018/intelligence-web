@@ -1,5 +1,5 @@
 {
-    "name": "roster-manager",
+    "name": "game-roster-manager",
     "templates": [
         "template.html"
     ],
@@ -8,10 +8,6 @@
     ],
     "scripts": [
         "index.js"
-    ],
-    "locals": [
-        "game-roster-manager",
-        "team-roster-manager"
     ],
     "styles": [
         "styles.less"
