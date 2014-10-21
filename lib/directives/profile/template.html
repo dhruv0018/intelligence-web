@@ -5,11 +5,11 @@
             <img data-ng-if="users[player.userId].imageUrl" data-ng-src="{{users[player.userId].imageUrl}}" alt="profile picture">
         </div>
         <div class="description">
-            <a data-ng-if="rosterEntry.player.firstName && rosterEntry.player.lastName" data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = rosterEntry.player" href>
+            <a data-ng-if="player.firstName && player.lastName" data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
                 <span class="info">
-                    <span class="jerseyNumber">{{rosterEntry.jerseyNumber}}</span>
-                    {{rosterEntry.player.firstName}}
-                    {{rosterEntry.player.lastName[0]}}.
+                    <span class="jerseyNumber">{{rosterEntry.playerInfo.jerseyNumber}}</span>
+                    {{player.firstName}}
+                    {{player.lastName[0]}}.
                 </span>
             </a>
             <span data-ng-if="!player.firstName && !player.lastName">Saving Player</span>
