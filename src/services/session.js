@@ -88,6 +88,35 @@ IntelligenceWebClient.service('SessionService', [
         };
 
         /**
+         * Converts a user ID to an encoded string representing it.
+         * @param {Object} user - a user resource object.
+         */
+        this.serializeUserId = function(user) {
+
+            user = user || this.currentUser;
+
+            var key = '';
+            var userId = user ? user.id : '';
+
+            key = Number(userId).toString(36);
+
+            return key;
+        };
+
+        /**
+         * Converts a query to an encoded string representing it.
+         * @param {Object} query - a query.
+         */
+        this.serializeQuery = function(query) {
+
+            var key = '';
+
+            if (query) key += JSON.stringify(query);
+
+            return key;
+        };
+
+        /**
          * Converts a string to a user resource object.
          * @param {String} string - a string representing a user object that has
          * been encoded with the serializeUser method.
