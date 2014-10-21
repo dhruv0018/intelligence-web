@@ -41,8 +41,8 @@ ReelsArea.config([
             },
             resolve: {
                 'Reels.Data': [
-                    '$q', '$state', '$stateParams', 'Reels.Data.Dependencies', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory',
-                    function dataService($q, $state, $stateParams, data, games, plays, teams, reels, leagues) {
+                    '$q', '$state', '$stateParams', 'Reels.Data.Dependencies', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory',
+                    function dataService($q, $state, $stateParams, data, games, plays, teams, reels, leagues, tagsets) {
 
                         var reelId;
 
@@ -53,6 +53,9 @@ ReelsArea.config([
                         data.teams = teams.load({reelId: reelId});
                         data.plays = plays.load({reelId: reelId});
                         data.leagues = leagues.load();
+
+                        //Needed if reels page is directly navigated to through url
+                        data.tagsets = tagsets.load();
 
                         return $q.all(data);
                     }
@@ -98,6 +101,8 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.reelCreatedDate = (typeof $scope.reelCreatedDate === 'string') ? new Date(data.reel.createdAt) : data.reel.createdAt;
         $scope.reelUpdatedDate = (typeof $scope.reelUpdatedDate === 'string') ? new Date(data.reel.updatedAt) : data.reel.updatedAt;
 
+        $scope.plays = data.plays.getList();
+
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,
             //NOT for exiting from commiting changes
@@ -129,20 +134,20 @@ ReelsArea.controller('ReelsArea.controller', [
         };
 
         $scope.getLeague = function(playId) {
-            leaguesFactory.get($scope.getHomeTeam(playId).leagueId);
+            return leaguesFactory.get($scope.getHomeTeam(playId).leagueId);
         };
 
         $scope.getGame = function(playId) {
-            gamesFactory.get(playsFactory.get(playId).gameId);
+            return gamesFactory.get(playsFactory.get(playId).gameId);
         };
 
         $scope.getHomeTeam = function(playId) {
 
             if (playId) {
-                var gameId = data.plays.get(playId).gameId;
-                var teamId = data.games.get(gameId).teamId;
+                var gameId = playsFactory.get(playId).gameId;
+                var teamId = gamesFactory.get(gameId).teamId;
 
-                return data.teams.get(teamId);
+                return teamsFactory.get(teamId);
             }
         };
 
