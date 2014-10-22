@@ -20,7 +20,6 @@ IntelligenceWebClient.factory('PlayersFactory', [
             extend: function(player) {
 
                 var self = this;
-
                 angular.extend(player, self);
 
                 // FIXME

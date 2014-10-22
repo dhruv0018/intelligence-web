@@ -10,26 +10,24 @@
 
     <!--</x-tab>-->
 
-    <!--<x-tab-->
-        <!--data-active="gameTabs.opposing.active"-->
-        <!--data-disabled="gameTabs.opposing.disabled"-->
-        <!--data-heading="{{ teams[game.opposingTeamId].name || 'Opposing Team' }}">-->
+    <x-tab
+        data-active="gameTabs.opposing.active"
+        data-disabled="gameTabs.opposing.disabled"
+        data-heading="{{ teams[game.opposingTeamId].name || 'Opposing Team' }}">
 
-        <!--<game-tab data-next-tab="gameTabs.confirm"-->
-                  <!--data-tabs="gameTabs"-->
-                  <!--data-type="table"-->
-                  <!--data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"-->
-                  <!--data-roster-id="game.rosters[game.opposingTeamId].id"-->
-                  <!--data-team="data.opposingTeam"-->
-                  <!--data-game="game"-->
-                  <!--data-team="teams[game.teamId]"-->
-                  <!--data-editable="true"-->
-                  <!--data-filtering="{type: 'active'}"-->
-                  <!--data-roster="gamePlayerLists[game.opposingTeamId]"-->
-                  <!--data-validator="validation.opposingTeam"-->
-                  <!--data-positionset="positionset"-->
-                  <!--data-positions="positions"></game-tab>-->
-    <!--</x-tab>-->
+        <game-tab data-next-tab="gameTabs.confirm"
+                  data-tabs="gameTabs"
+                  data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"
+                  data-roster-id="game.rosters[game.opposingTeamId].id"
+                  data-team="teams[game.opposingTeamId]"
+                  data-game="game"
+                  data-team="teams[game.teamId]"
+                  data-editable="true"
+                  data-filtering="{type: 'active'}"
+                  data-roster="gamePlayerLists[game.opposingTeamId]"
+                  data-validator="validation.opposingTeam"
+                  data-positionset="positionset"></game-tab>
+    </x-tab>
 
     <x-tab data-active="gameTabs.team.active"
            data-disabled="gameTabs.team.disabled"

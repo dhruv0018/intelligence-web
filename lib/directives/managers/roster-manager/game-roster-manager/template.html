@@ -15,8 +15,8 @@
                     </tr>
                 </thead>
             </table>
-            <krossover-athlete  data-ng-repeat="(playerId, rosterEntry) in game.rosters[team.id].playerInfo"
-                                data-athlete="players[playerId]"
+            <krossover-athlete  data-ng-repeat="rosterEntry in playerRosterEntries"
+                                data-athlete="rosterEntry.player"
                                 data-roster="game.rosters[team.id]"
                                 data-roster-entry="rosterEntry"
                                 data-positionset="positionset"
