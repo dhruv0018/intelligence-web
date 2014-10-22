@@ -1,6 +1,6 @@
-<div class="roster-manager manager game-roster">
-    <form data-ng-if=" type === 'table' " class="table-manager form-team-active" name="formTeamActive" role="form" novalidate>
+<div class="roster-manager manager game-roster-manager">
 
+    <form class="table-manager form-team-active" name="formTeamActive" role="form" novalidate>
         <div class="table-responsive">
             <table data-ng-class="{'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}" class="table table-striped">
 
@@ -15,22 +15,22 @@
                     </tr>
                 </thead>
             </table>
+            <krossover-athlete  data-ng-repeat="(playerId, rosterEntry) in game.rosters[team.id].playerInfo"
+                                data-athlete="players[playerId]"
+                                data-roster="game.rosters[team.id]"
+                                data-roster-entry="rosterEntry"
+                                data-positionset="positionset"
+                                data-toggle="toggleActivation"
+                                data-game="game"
+                                data-team="team"
+                                data-editable="editable"></krossover-athlete>
 
-            <krossover-athlete data-ng-repeat="(playerId, rosterEntry) in game.rosters[team.id].playerInfo"
-                               data-athlete="players[playerId]"
-                               data-roster="game.rosters[team.id]"
-                               data-roster-entry="rosterEntry"
-                               data-positionset="positionset"
-                               data-toggle="toggleActivation"
-                               data-game="game"
-                               data-team="team"
-                               data-editable="editable"></krossover-athlete>
-
+            <!--<button data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()" class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>-->
+            <button data-ng-hide="team.isCustomerTeam" class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>
+            <!--<a data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()" href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>-->
+            <a data-ng-hide="team.isCustomerTeam" href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
         </div>
-
-        <!--<button data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()" class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>-->
-        <button data-ng-hide="team.isCustomerTeam" class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>
-        <!--<a data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()" href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>-->
-        <a data-ng-hide="team.isCustomerTeam" href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
     </form>
+
 </div>
+
