@@ -63,11 +63,11 @@ IntelligenceWebClient.service('PlaysManager', [
 
             if (nextPlay) {
 
-                if (nextPlay.isHidden) {
+                if (nextPlay.isFiltered) {
                     //Find the next visible play
-                    return this.getNextPlay(nextPlay);
-                } else {
                     return this.playScopes[nextPlay.id];
+                } else {
+                    return this.getNextPlay(nextPlay);
                 }
             }
         };
