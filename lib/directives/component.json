@@ -36,6 +36,7 @@
         "formation-chart",
         "arena",
         "managers",
+        "xy-coordinates",
         "loading",
         "feedback-modal",
         "open-modal",
