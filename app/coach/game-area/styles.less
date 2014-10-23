@@ -2,6 +2,8 @@
 
 .game-area {
 
+  flex-direction: column;
+
   header{
     background: @content-bg;
     border-bottom: 1px solid @gray-lighter;
@@ -44,7 +46,9 @@
   }
 
   div.main-highlight{
-    height: calc(~"100% - 50px");
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     
     .game-area-game-information {
       position: relative;
@@ -103,20 +107,23 @@
   }
 
   .game-area-film{
-    height: calc(~"100% - 55px");
+    display: flex;
+    flex: 1;
 
     .player{
-      padding-top:5%;
-      width: 70%;
-      margin: auto;
-    }
-
-    .breakdown-player {
-      padding-left:10%;
-      display: inline-block;
+      display: flex;
+      flex: 1;
+      margin: 1%;
     }
 
     .playlist {
+
+      width: 420px;
+      padding: 0px;
+      border-right: thin solid #dddddd;
+      -webkit-transform: translateZ(0);
+      display: flex;
+      flex-direction: column;
 
       .expandrow {
         position: absolute;
