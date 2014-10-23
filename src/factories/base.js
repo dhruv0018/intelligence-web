@@ -337,38 +337,13 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var storage = $injector.get(self.storage);
                 var session = $injector.get('SessionService');
 
-                var db = session.serializeUserId() + session.serializeRole() + '@' + self.description;
-
                 var single = function(id) {
 
                     return self.fetch(id).then(function(resource) {
 
                         var list = [resource];
-                        var resources;
 
                         storage.set(key, list);
-
-                        resources = list.map(function(resource) {
-
-                            resource = resource.unextend(resource);
-                            resource = angular.toJson(resource);
-
-                            return resource;
-                        });
-
-                        $localForage.setItem(db + key, resources);
-
-                        var all = storage.get('@');
-
-                        resources = all.map(function(resource) {
-
-                            resource = resource.unextend(resource);
-                            resource = angular.toJson(resource);
-
-                            return resource;
-                        });
-
-                        $localForage.setItem(db + '@', resources);
 
                         return list;
                     });
@@ -424,30 +399,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         storage.set(key, list);
 
-                        var resources;
-
-                        resources = list.map(function(resource) {
-
-                            resource = resource.unextend(resource);
-                            resource = angular.toJson(resource);
-
-                            return resource;
-                        });
-
-                        $localForage.setItem(db + key, resources);
-
-                        var all = storage.get('@');
-
-                        resources = all.map(function(resource) {
-
-                            resource = resource.unextend(resource);
-                            resource = angular.toJson(resource);
-
-                            return resource;
-                        });
-
-                        $localForage.setItem(db + '@', resources);
-
                         return list;
                     });
                 };
@@ -458,93 +409,51 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         storage.set(key, list);
 
-                        var resources;
-
-                        resources = list.map(function(resource) {
-
-                            resource = resource.unextend(resource);
-                            resource = angular.toJson(resource);
-
-                            return resource;
-                        });
-
-                        $localForage.setItem(db + key, resources);
-
-                        var all = storage.get('@');
-
-                        resources = all.map(function(resource) {
-
-                            resource = resource.unextend(resource);
-                            resource = angular.toJson(resource);
-
-                            return resource;
-                        });
-
-                        $localForage.setItem(db + '@', resources);
-
                         return list;
                     });
+                };
+
+                var toResource = function(from) {
+
+                    from = angular.fromJson(from);
+
+                    if (angular.isArray(from)) {
+
+                        return from.map(function(string) {
+
+                            return toResource(string);
+                        });
+                    }
+
+                    else {
+
+                        var resource = self.extend(from);
+
+                        storage.set(resource);
+
+                        return resource;
+                    }
                 };
 
                 if (!storage.isStored(key)) {
 
                     storage.resource[key] = [];
 
-                    storage.resource[key].promise = $localForage.getItem(db + key).then(function(item) {
+                    var db = session.serializeUserId() + '$' + session.serializeRole() + '!' + self.description + key;
 
-                        var sring;
-                        var object;
-                        var resource;
+                    storage.resource[key].promise = $localForage.getItem(db).then(function(item) {
 
                         if (item) {
 
-                            item = angular.fromJson(item);
+                            var resource = toResource(item);
 
-                            if (angular.isString(item)) {
+                            storage.set(key, resource);
 
-                                string = item;
+                            if (angular.isNumber(filter)) single(filter);
+                            else if (angular.isArray(filter)) array(filter);
+                            else other(filter);
 
-                                object = angular.fromJson(string);
-
-                                resource = self.extend(object);
-
-                                storage.set(resource);
-
-                                item = [resource];
-
-                                storage.set(key, item);
-                            }
-
-                            else if (angular.isArray(item)) {
-
-                                var resources = item;
-
-                                item = item.map(function(string) {
-
-                                    object = angular.fromJson(string);
-
-                                    resource = self.extend(object);
-
-                                    storage.set(resource);
-
-                                    return resource;
-                                });
-
-                                storage.set(key, item);
-                            }
-
-                            else if (angular.isObject(item)) {
-
-                                resource = self.extend(item);
-
-                                storage.set(resource);
-
-                                item = [resource];
-
-                                storage.set(key, item);
-                            }
-
-                            return item;
+                            return resource;
                         }
 
                         else {
