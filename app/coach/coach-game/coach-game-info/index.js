@@ -139,6 +139,10 @@ Info.controller('Coach.Game.Info.controller', [
                     playerInfo: opposingTeam.roster.playerInfo
                 };
 
+                console.log(team);
+                console.log(opposingTeam);
+                console.log($scope.game);
+
                 $scope.game.save();
 
                 $scope.goToRoster();

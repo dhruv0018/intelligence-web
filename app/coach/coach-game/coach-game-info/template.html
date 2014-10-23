@@ -89,7 +89,7 @@
 
                                                 <td>
                                                     <h5 data-ng-if="game.isRegular()"> {{ teams[session.currentUser.currentRole.teamId].name }} </h5>
-                                                    <team-typeahead data-ng-if="game.isNonRegular()" data-team="gameTeams.team"></team-typeahead>
+                                                    <team-typeahead data-customer-teams="false" data-ng-if="game.isNonRegular()" data-team="gameTeams.team"></team-typeahead>
                                                 </td>
 
                                                 <td class="score">
@@ -134,7 +134,7 @@
                                             <tr>
 
                                                 <td>
-                                                    <team-typeahead data-team="gameTeams.opposingTeam"></team-typeahead>
+                                                    <team-typeahead data-customer-teams="false" data-team="gameTeams.opposingTeam"></team-typeahead>
                                                 </td>
 
                                                 <td class="score">
