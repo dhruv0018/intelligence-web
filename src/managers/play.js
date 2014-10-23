@@ -25,6 +25,7 @@ IntelligenceWebClient.service('PlayManager', [
         this.gameId = null;
         this.current = null;
         this.playState = null; //current play playing/paused in video?. probably a better place for this, but this is convenient
+        this.playAllPlays = true;
 
         /**
          * Clear the current play.
@@ -33,6 +34,16 @@ IntelligenceWebClient.service('PlayManager', [
 
             this.current = null;
             this.playState = null;
+        };
+
+        this.register = function register(playScope) {
+            playsManager = playsManager || $injector.get('PlaysManager');
+            playsManager.registerPlayScope(playScope);
+        };
+
+        this.getNextPlay = function getNextPlay() {
+            playsManager = playsManager || $injector.get('PlaysManager');
+            return playsManager.getNextPlay(this.current);
         };
 
         /**
@@ -111,6 +122,10 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* Insert the event into the appropriate index. */
             this.current.events.splice(index, 0, event);
+
+            //Keep the current play element at the top of the playlist
+            var playScopeEventIsBeingAddedTo = playsManager.playScopes[this.current.$$hashKey];
+            if (playScopeEventIsBeingAddedTo && typeof playScopeEventIsBeingAddedTo.selectPlay === 'function') playScopeEventIsBeingAddedTo.selectPlay();
         };
 
         /**

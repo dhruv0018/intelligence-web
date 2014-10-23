@@ -130,11 +130,17 @@
 
         flex: 0 0 420px;
         border-left: 1px solid rgb(216, 216, 216);
-        overflow-y: auto;
+        overflow: visible;
+        height: ~"calc(100% - 0px)";
 
         &.ui-hide {
 
             flex: 0 0 0;
+        }
+
+        .plays {
+            overflow: scroll;
+            height: ~"calc(100% - 32px)";
         }
 
         .note-choice {
