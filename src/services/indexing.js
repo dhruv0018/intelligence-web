@@ -238,7 +238,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.delete(selectedEvent);
 
                 /* Save play. */
-                playManger.save();
+                playManager.save();
 
                 /* Clear the current play. */
                 playManager.clear();
