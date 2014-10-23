@@ -4,9 +4,9 @@
   .player-profile-container {
 
     border-bottom: 1px solid @gray-border;
-    height: 50px;
-    line-height: 50px;
     padding-bottom: 10px;
+    margin-bottom: 10px;
+    letter-spacing: normal;
 
     .placeholder-picture,
     .profile-picture {
@@ -18,7 +18,16 @@
       font-size: 35px;
     }
 
-    button {
+    .profile-picture {
+      border: thin solid @gray-border;
+    }
+
+    h3 {
+      margin: 0px;
+      display: inline;
+    }
+
+    a {
       .pull-right;
     }
 
@@ -56,16 +65,37 @@
     }
 
   .player-roles-info {
-
-    margin-top: 10px;
-    margin-bottom: 10px;
-    height: 40px;
-    line-height: 40px;
     letter-spacing: normal;
+    display: table-row;
+    font-weight: 500;
+    font-size: 18px;
 
-    .placeholder-sport {
-      display: inline-block;
-      margin-right: 10px;
+    sport-placeholder {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .player-info-text {
+      display: table-cell;
+      vertical-align: middle;
+      padding: 10px;
+    }
+
+    .comma {
+      display: none;
+    }
+
+    .team-name {
+      display: block;
+      font-weight: 400;
+      font-size: 16px;
+    }
+
+    &.last {
+
+      .comma {
+        display: inline;
+      }
     }
   }
 
