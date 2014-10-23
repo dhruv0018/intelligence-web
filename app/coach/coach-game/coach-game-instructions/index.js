@@ -62,21 +62,13 @@ Instructions.controller('Coach.Game.Instructions.controller', [
     function controller($scope, $state, GAME_STATUSES, positionsets, games, teams, session, alerts) {
 
         $scope.positionset = $scope.positionset;
-        console.log($scope.positionset.positions);
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;
 
         //Make sure team has roster
-        $scope.hasRoster = false;
+        $scope.hasRoster = ($scope.game.rosters[$scope.game.teamId].playerInfo && Object.keys($scope.game.rosters[$scope.game.teamId].playerInfo).length > 0) ? true : false;
         $scope.isNonRegularGame = games.isNonRegular($scope.game);
-
-        $scope.$watch('gamePlayerLists[game.teamId]', function() {
-            if ($scope.gamePlayerLists && $scope.gamePlayerLists[$scope.game.teamId] && !$scope.gamePlayerLists[$scope.game.teamId].every(function(player) { return player.isUnknown; })) {
-
-                $scope.hasRoster = true;
-            }
-        });
 
         $scope.returnToGameAlert = function() {
             alerts.add({
