@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('BaseStorage', [
-    '$injector',
-    function($injector) {
+    '$injector', '$localForage',
+    function($injector, $localForage) {
 
         var session;
 
@@ -103,7 +103,11 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 value: function(resource) {
 
+                    session = session || $injector.get('SessionService');
+
                     var key = '@';
+
+                    var db = session.serializeUserId() + '$' + session.serializeRole() + '!' + this.description + key;
 
                     this.resource[key] = this.resource[key] || [];
 
@@ -130,6 +134,16 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                         }, this);
                     }
+
+                    var list = this.resource[key].map(function(resource) {
+
+                        resource = resource.unextend(resource);
+                        resource = angular.toJson(resource);
+
+                        return resource;
+                    });
+
+                    $localForage.setItem(db, list);
                 }
             },
 
@@ -167,6 +181,10 @@ IntelligenceWebClient.factory('BaseStorage', [
                         key = value.id;
                     }
 
+                    session = session || $injector.get('SessionService');
+
+                    var db = session.serializeUserId() + '$' + session.serializeRole() + '!' + this.description + key;
+
                     if (angular.isArray(value)) {
 
                         value = value.concat();
@@ -188,6 +206,29 @@ IntelligenceWebClient.factory('BaseStorage', [
                     if (angular.isArray(value)) {
 
                         this.update();
+
+                        var list = value.map(function(resource) {
+
+                            return this.get(resource.id);
+
+                        }, this)
+
+                        .map(function(resource) {
+
+                            resource = resource.unextend(resource);
+                            resource = angular.toJson(resource);
+
+                            return resource;
+                        });
+
+                        $localForage.setItem(db, list);
+                    }
+
+                    else {
+
+                        value = angular.toJson(value);
+
+                        $localForage.setItem(db, value);
                     }
                 }
             }
