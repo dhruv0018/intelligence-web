@@ -47,10 +47,8 @@
   }
 
   .no-thumbnail {
-    color: @gray-light;
-    background-color: @brand-info;
-    opacity: 0.5;
-    font-size: 40px;
+    color: @gray-darker;
+    background-color: @gray-lighter;
     text-align: center;
     padding-top: 55px;
     width: 100%;
@@ -69,6 +67,10 @@
       }
     }
 
+    .icon {
+      font-size: 40px;
+    }
+
     .status-uploading {
       color: @brand-warning;
     }
@@ -80,5 +82,10 @@
     .status-failed {
       color: @brand-danger;
     }
+  }
+
+  .temp-thumbnail {
+    background-color: @brand-blue;
+    color: white;
   }
 }
