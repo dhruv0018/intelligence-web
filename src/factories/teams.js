@@ -59,6 +59,26 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return team;
             },
 
+            unextend: function(resource) {
+
+                var self = this;
+
+                resource = resource || self;
+
+                var copy = angular.copy(resource);
+
+                angular.forEach(copy.roles, function(role) {
+                    role.type = role.type.id;
+                });
+
+                delete copy.PAGE_SIZE;
+                delete copy.description;
+                delete copy.model;
+                delete copy.storage;
+
+                return copy;
+            },
+
             search: function(query) {
 
                 var self = this;

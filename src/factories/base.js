@@ -45,6 +45,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* Create a copy of the resource to break reference to orginal. */
                 var copy = angular.copy(resource);
 
+                delete copy.PAGE_SIZE;
+                delete copy.description;
+                delete copy.model;
+                delete copy.storage;
+
                 /* TODO: Remove any properties that should not exist. */
 
                 return copy;
