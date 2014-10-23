@@ -14,8 +14,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q', '$injector', 'ResourceManager',
-    function($q, $injector, managedResources) {
+    '$q', '$injector', '$localForage', 'ResourceManager',
+    function($q, $injector, $localForage, managedResources) {
 
         var BaseFactory = {
 
@@ -335,14 +335,40 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
+                var session = $injector.get('SessionService');
+
+                var db = session.serializeUserId() + session.serializeRole() + '@' + self.description;
 
                 var single = function(id) {
 
                     return self.fetch(id).then(function(resource) {
 
                         var list = [resource];
+                        var resources;
 
                         storage.set(key, list);
+
+                        resources = list.map(function(resource) {
+
+                            resource = resource.unextend(resource);
+                            resource = angular.toJson(resource);
+
+                            return resource;
+                        });
+
+                        $localForage.setItem(db + key, resources);
+
+                        var all = storage.get('@');
+
+                        resources = all.map(function(resource) {
+
+                            resource = resource.unextend(resource);
+                            resource = angular.toJson(resource);
+
+                            return resource;
+                        });
+
+                        $localForage.setItem(db + '@', resources);
 
                         return list;
                     });
@@ -398,6 +424,30 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         storage.set(key, list);
 
+                        var resources;
+
+                        resources = list.map(function(resource) {
+
+                            resource = resource.unextend(resource);
+                            resource = angular.toJson(resource);
+
+                            return resource;
+                        });
+
+                        $localForage.setItem(db + key, resources);
+
+                        var all = storage.get('@');
+
+                        resources = all.map(function(resource) {
+
+                            resource = resource.unextend(resource);
+                            resource = angular.toJson(resource);
+
+                            return resource;
+                        });
+
+                        $localForage.setItem(db + '@', resources);
+
                         return list;
                     });
                 };
@@ -408,6 +458,30 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         storage.set(key, list);
 
+                        var resources;
+
+                        resources = list.map(function(resource) {
+
+                            resource = resource.unextend(resource);
+                            resource = angular.toJson(resource);
+
+                            return resource;
+                        });
+
+                        $localForage.setItem(db + key, resources);
+
+                        var all = storage.get('@');
+
+                        resources = all.map(function(resource) {
+
+                            resource = resource.unextend(resource);
+                            resource = angular.toJson(resource);
+
+                            return resource;
+                        });
+
+                        $localForage.setItem(db + '@', resources);
+
                         return list;
                     });
                 };
@@ -416,11 +490,69 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     storage.resource[key] = [];
 
-                    storage.resource[key].promise = $q.all(storage.promises).then(function() {
+                    storage.resource[key].promise = $localForage.getItem(db + key).then(function(item) {
 
-                        if (angular.isNumber(filter)) return single(filter);
-                        else if (angular.isArray(filter)) return array(filter);
-                        else return other(filter);
+                        var sring;
+                        var object;
+                        var resource;
+
+                        if (item) {
+
+                            item = angular.fromJson(item);
+
+                            if (angular.isString(item)) {
+
+                                string = item;
+
+                                object = angular.fromJson(string);
+
+                                resource = self.extend(object);
+
+                                storage.set(resource);
+
+                                item = [resource];
+
+                                storage.set(key, item);
+                            }
+
+                            else if (angular.isArray(item)) {
+
+                                var resources = item;
+
+                                item = item.map(function(string) {
+
+                                    object = angular.fromJson(string);
+
+                                    resource = self.extend(object);
+
+                                    storage.set(resource);
+
+                                    return resource;
+                                });
+
+                                storage.set(key, item);
+                            }
+
+                            else if (angular.isObject(item)) {
+
+                                resource = self.extend(item);
+
+                                storage.set(resource);
+
+                                item = [resource];
+
+                                storage.set(key, item);
+                            }
+
+                            return item;
+                        }
+
+                        else {
+
+                            if (angular.isNumber(filter)) return single(filter);
+                            else if (angular.isArray(filter)) return array(filter);
+                            else return other(filter);
+                        }
                     });
                 }
 
