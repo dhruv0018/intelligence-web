@@ -1,4 +1,4 @@
-<section class="reels-player-area">   
+<section class="reels-player-area">
     <header>
         <h3 class="highlight-title">{{data.reel.name}} <span>(last updated on {{reelUpdatedDate | date}})</span></h3>
         <span class="delete-reel" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
@@ -19,8 +19,7 @@
                     data-edit-flag="editMode"
                     data-index="$index"
                     data-remove-reel-play="removeReelPlay(index)"
-                    data-draggable
-                    data-draggable-flag="{{editMode}}"
+                    data-draggable="editMode"
                     data-play="data.plays.get(playId)"
                     data-team="getOpposingTeam(playId)"
                     data-opposing-team="getHomeTeam(playId)"
