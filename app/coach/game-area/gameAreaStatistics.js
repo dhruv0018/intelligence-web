@@ -69,6 +69,11 @@ GameAreaStatistics.controller('GameAreaStatisticsController', [
         $scope.awayTeamName = data.stats.awayTeamStats.meta.teamName;
 
         $scope.scoreSummary = data.stats.scoreSummary;
+        $scope.showScoreSummary = false;
+
+        if (data.stats.scoreSummary !== null) {
+            $scope.showScoreSummary = true;
+        }
 
         $scope.statsSelector = data.stats.gameLog ? 'ga-log' : '';
     }

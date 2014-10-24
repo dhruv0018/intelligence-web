@@ -92,8 +92,8 @@ Breakdown.config([
 ]);
 
 Breakdown.controller('Athlete.GameArea.Breakdown.controller', [
-    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Athlete.GameArea.Breakdown.Data',
-    function controller($scope, $state, $stateParams, leagues, games, plays, filtersets, data) {
+    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Athlete.GameArea.Breakdown.Data', 'PlayManager',
+    function controller($scope, $state, $stateParams, leagues, games, plays, filtersets, data, playManager) {
 
         $scope.gameId = $state.params.id;
         $scope.videoTitle = 'filmBreakdown';
@@ -110,6 +110,7 @@ Breakdown.controller('Athlete.GameArea.Breakdown.controller', [
         //Plays
         $scope.totalPlays = angular.copy(data.plays);
         $scope.plays = $scope.totalPlays;
+        $scope.playManager = playManager;
 
     }
 ]);
