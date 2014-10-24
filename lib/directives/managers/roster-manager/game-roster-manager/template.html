@@ -17,7 +17,7 @@
             </table>
 
 
-            <krossover-athlete  data-ng-repeat="rosterEntry in playerRosterEntries| activeStatus: filtering"
+            <krossover-athlete  data-ng-repeat="rosterEntry in playerRosterEntries| activeStatus: filtering | filter: isUnknown track by $index"
                                 data-athlete="rosterEntry.player"
                                 data-roster="game.rosters[team.id]"
                                 data-roster-entry="rosterEntry"
