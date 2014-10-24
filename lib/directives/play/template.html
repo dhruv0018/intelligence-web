@@ -1,4 +1,4 @@
-<div class="play" data-ng-hide="!isIndexer && !play.hasVisibleEvents" data-ng-class="{ active: play.id == playManager.current.id}" data-ng-click="selectPlay()">
+<div data-ng-hide="!isIndexer && !play.hasVisibleEvents" data-ng-class="{ active: play.id == playManager.current.id, play: !isReelsPlayer}" data-ng-click="selectPlay()">
     <div class="playHeading">
         <h4 data-ng-if="isIndexer" data-ng-class="{'playOpened': expandAll || play === playManager.current}">
             <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
@@ -16,19 +16,21 @@
         <h4 data-ng-if="!isIndexer" data-ng-class="{'playOpened': expandAll || play === playManager.current}">
             <span class="team">{{teams[play.possessionTeamId].name}}</span>
             <span class="playplay" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY}"><i class="icon icon-play-circle"></i></span>
-            <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'priority'">
-                <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
+            <div class="summariesContainer">
+                <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority'">
+                    <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
+                </div>
             </div>
         </h4>
     </div>
 
-    <div class="playBody" data-ng-if="isIndexer || expandAll || play === playManager.current || !play.summaries.length">
+    <div class="playBody" data-ng-if="isIndexer || expandAll || play === playManager.current || !play.summaries.length" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
         <krossover-events data-auto-advance="autoAdvance" data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers"></krossover-events>
     </div>
 
-    <hr>
+    <hr class="summaryBodyDivider">
 
-    <div class="playFooter">
+    <div class="playFooter" data-ng-hide="isAthlete">
         <button class="btn-delete-play" data-ng-if="isIndexer" data-ng-disabled="play.isSaving" data-ng-click="deletePlay()">Delete Play</button>
         <div class="save-indicator" data-ng-if="isIndexer">
             <i class="icon icon-refresh active" data-ng-show="play.isSaving"></i>
