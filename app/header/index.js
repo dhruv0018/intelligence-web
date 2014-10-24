@@ -98,8 +98,8 @@ Header.service('Base.Data.Dependencies', [
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES',
-    function controller(config, $scope, $state, auth, session, account, ROLES) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'UsersFactory',
+    function controller(config, $scope, $state, auth, session, account, ROLES, users) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
@@ -112,6 +112,8 @@ Header.controller('HeaderController', [
         $scope.$state = $state;
         $scope.session = session;
         $scope.account = account;
+
+        $scope.currentUser = users.get(session.currentUser.id);
 
         $scope.logout = function() {
 
