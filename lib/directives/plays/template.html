@@ -1,18 +1,20 @@
 <div class="plays">
 
     <krossover-play
-    	data-expand-all="expandAll"
-    	data-auto-advance="autoAdvance"
-    	data-game="game"
-    	data-plays="plays"
-    	data-play="play"
-    	data-team="team"
-    	data-opposing-team="opposingTeam"
-    	data-team-players="teamPlayers"
-    	data-opposing-team-players="opposingTeamPlayers"
-    	data-league="league"
-    	data-reels="reels"
-    	data-ng-repeat="play in plays | orderBy:orderBy">
+        data-game="game"
+        data-team="team"
+        data-play="play"
+        data-plays="plays"
+        data-reels="reels"
+        data-opposing-team="opposingTeam"
+        data-league="league"
+        data-team-players="teamPlayers"
+        data-opposing-team-players="opposingTeamPlayers"
+        data-expand-all="expandAll"
+        data-filtered-plays-ids="filteredPlaysIds"
+        data-auto-advance="autoAdvance"
+        data-ng-repeat="play in plays | orderBy:orderBy"
+        data-ng-show="play.isFiltered">
     </krossover-play>
 
 </div>

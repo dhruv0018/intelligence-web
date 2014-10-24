@@ -15,7 +15,6 @@ IntelligenceWebClient.config([
 
         flow.defaults = {
 
-            withCredentials: true,
             permanentErrors: [404, 415, 501],
             maxChunkRetries: 100,
             chunkRetryInterval: ONE_SECOND * 2
