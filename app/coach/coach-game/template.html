@@ -25,7 +25,7 @@
                   data-game="game"
                   data-team="teams[game.teamId]"
                   data-editable="true"
-                  data-filtering="{type: 'active'}"
+                  data-filtering="filtering.type"
                   data-roster="gamePlayerLists[game.opposingTeamId]"
                   data-validator="validation.opposingTeam"
                   data-positionset="positionset"></game-tab>
@@ -45,7 +45,6 @@
                   data-validation="validation.yourTeam"
                   data-positions="positions"
                   data-positionset="positionset"
-                  data-filtering="{type: 'active'}"
                   data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"></game-tab>
     </x-tab>
 

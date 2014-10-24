@@ -15,7 +15,9 @@
                     </tr>
                 </thead>
             </table>
-            <krossover-athlete  data-ng-repeat="rosterEntry in playerRosterEntries"
+
+
+            <krossover-athlete  data-ng-repeat="rosterEntry in playerRosterEntries| activeStatus: filtering"
                                 data-athlete="rosterEntry.player"
                                 data-roster="game.rosters[team.id]"
                                 data-roster-entry="rosterEntry"

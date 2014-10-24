@@ -112,10 +112,6 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
 
             });
         };
-
-        $scope.sortPlayers = function(rosterEntry) {
-            return Number(rosterEntry.jerseyNumber);
-        };
     }
 ]);
 

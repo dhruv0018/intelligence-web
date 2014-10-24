@@ -97,6 +97,8 @@ Game.controller('Coach.Game.controller', [
             scoutingTeam: false
         };
 
+        $scope.filtering = {type: 'active'};
+
         $scope.gameTabs = {
             info: {
                 active: true

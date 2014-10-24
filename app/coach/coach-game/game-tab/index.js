@@ -52,7 +52,7 @@ GameTab.directive('gameTab', [
                 editable: '=',
                 roster: '=',
                 validator: '=',
-                positions: '=',
+                filtering: '=',
                 positionset: '=',
                 heading: '@',
                 nextTab: '='
@@ -71,8 +71,6 @@ GameTab.directive('gameTab', [
 GameTab.controller('Coach.Game.GameTab.controller', [
     '$scope', '$state', 'PlayersFactory', 'TeamsFactory', 'PositionsetsFactory', 'LeaguesFactory',
     function controller($scope, $state, players, teams, positionsets, leagues) {
-        $scope.keys = window.Object.keys;
-        console.log($scope.positionset);
 
         //Collections
         $scope.teams = teams.getCollection();
