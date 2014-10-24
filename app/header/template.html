@@ -75,7 +75,7 @@
 
             <ul class="dropdown-menu">
 
-                <li data-ng-repeat="role in currentUser.roles">
+                <li data-ng-hide="currentUser.is(ATHLETE)" data-ng-repeat="role in currentUser.roles">
 
                     <a href data-ng-click="account.changeCurrentUserRole(role)">
 
