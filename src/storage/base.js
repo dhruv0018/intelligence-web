@@ -245,13 +245,30 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                         $localForage.setItem(db, list);
                     }
+                }
+            },
 
-                    else {
+            grab: {
 
-                        value = angular.toJson(value);
+                value: function(key, hit, miss) {
 
-                        $localForage.setItem(db, value);
+                    var self = this;
+
+                    if (!this.isStored(key)) {
+
+                        this.resource[key] = [];
+
+                        var db = this.db + key;
+
+                        this.resource[key].promise = $localForage.getItem(db).then(function(item) {
+
+                            if (item) return hit(item);
+
+                            else return miss();
+                        });
                     }
+
+                    return this.resource[key].promise;
                 }
             }
         });
