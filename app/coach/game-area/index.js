@@ -89,25 +89,25 @@ GameArea.config([
                             var promises = [];
 
                             //Player lists
-//                            if (data.game.teamId) {
-//                                var teamPlayerList = players.query({
-//                                    rosterId: data.game.rosters[data.game.teamId].id
-//                                }).then(function(playerList) {
-//                                    data.teamPlayers = playerList;
-//                                    data.gamePlayerLists[data.game.teamId] = playerList;
-//                                });
-//                                promises.push(teamPlayerList);
-//                            }
-//
-//                            if (data.game.opposingTeamId) {
-//                                var opposingTeamPlayerList = players.query({
-//                                    rosterId: data.game.rosters[data.game.opposingTeamId].id
-//                                }).then(function(playerList) {
-//                                    data.opposingTeamPlayers = playerList;
-//                                    data.gamePlayerLists[data.game.opposingTeamId] = playerList;
-//                                });
-//                                promises.push(opposingTeamPlayerList);
-//                            }
+                            if (data.game.teamId) {
+                                var teamPlayerList = players.query({
+                                    rosterId: data.game.rosters[data.game.teamId].id
+                                }).then(function(playerList) {
+                                    data.teamPlayers = playerList;
+                                    data.gamePlayerLists[data.game.teamId] = playerList;
+                                });
+                                promises.push(teamPlayerList);
+                            }
+
+                            if (data.game.opposingTeamId) {
+                                var opposingTeamPlayerList = players.query({
+                                    rosterId: data.game.rosters[data.game.opposingTeamId].id
+                                }).then(function(playerList) {
+                                    data.opposingTeamPlayers = playerList;
+                                    data.gamePlayerLists[data.game.opposingTeamId] = playerList;
+                                });
+                                promises.push(opposingTeamPlayerList);
+                            }
 
 
                             var playsList = plays.query({
