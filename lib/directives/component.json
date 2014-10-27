@@ -53,7 +53,8 @@
         "player-information",
         "film-home-tabs",
         "profile",
-        "plays-filters"
+        "plays-filters",
+        "draggable"
     ],
     "scripts": [
         "index.js"

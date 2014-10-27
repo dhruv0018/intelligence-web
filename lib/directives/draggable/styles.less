@@ -1,0 +1,14 @@
+@import (reference) "main.less";
+
+// defaults
+[draggable].active {
+    user-select: none;
+    cursor: move;
+    transition: transform 0.01s linear;
+
+    &.moving {
+        background-color: @play-selected-bg;
+        transform: scale(0, 0);
+    }
+
+}

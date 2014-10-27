@@ -2,6 +2,8 @@
 
 .game-area {
 
+  flex-direction: column;
+
   header{
     background: @content-bg;
     border-bottom: 1px solid @gray-lighter;
@@ -44,7 +46,10 @@
   }
 
   div.main-highlight{
-    height: calc(~"100% - 50px");
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: scroll;
     
     .game-area-game-information {
       position: relative;
@@ -86,7 +91,7 @@
 
     .play-count{
       border-right: 1px solid @gray-lighter;
-      width:290px;
+      width: 420px;
       padding-left: 20px;
       padding-right: 20px;
       letter-spacing: normal;
@@ -103,49 +108,58 @@
   }
 
   .game-area-film{
-    height: calc(~"100% - 55px");
+    display: flex;
+    flex: 1;
 
     .player{
-      padding-top:5%;
-      width: 70%;
-      margin: auto;
+      display: flex;
+      flex: 1;
+      margin: 1%;
     }
 
-    .breakdown-player {
-      padding-left:10%;
-      display: inline-block;
-    }
+    .breakdown-sidebar {
 
-    .playlist {
+        display: flex;
+        flex-direction: column;
 
-      .expandrow {
-        position: absolute;
-        bottom: 0px;
-        border-top: thin solid @gray-border;
-        background-color: white;
-        width: 100%;
-        height: 50px;
-        padding: 0px 5px 0px 5px;
+        .playlist {
 
-        button {
-          .btn;
-          .btn-link;
-          font-size: 16px;
-          font-weight: 400;
-          letter-spacing: 0.01em;
-          padding-top: 10px;
-          padding-left: 0;
-          padding-right: 0;
-          padding-bottom: 10px;
-          border-left-width: 0;
-
-          &:focus,
-          &:hover {
-
-              text-decoration: none;
-          }
+            width: 420px;
+            padding: 0px;
+            border-right: thin solid #dddddd;
+            -webkit-transform: translateZ(0);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
-      }
+
+        .expandrow {
+            border-right: thin solid #dddddd;
+            border-top: thin solid @gray-border;
+            background-color: white;
+            width: 420px;
+            height: 50px;
+            padding: 0px 5px 0px 5px;
+
+            button {
+                .btn;
+                .btn-link;
+                font-size: 16px;
+                font-weight: 400;
+                letter-spacing: 0.01em;
+                padding-top: 10px;
+                padding-left: 0;
+                padding-right: 0;
+                padding-bottom: 10px;
+                border-left-width: 0;
+
+                &:focus,
+                &:hover {
+
+                    text-decoration: none;
+                }
+            }
+        }
     }
 
   }
@@ -474,3 +488,34 @@
   }
 }
 
+button.play-all-plays {
+
+  margin-left: 75px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0;
+  background: #ffffff;
+  border: 0;
+
+  .play-all-text {
+    padding: 2px 2px 2px 8px;
+  }
+
+  .on, .off {
+    padding: 4px;
+    display: inline-block;
+    color: #e1e1e1;
+    background: #f9f9f9;
+  }
+
+  .on.chosen {
+    background: #54D14F;
+    color: #ffffff;
+  }
+
+  .off.chosen {
+    background: @brand-primary;
+    color: #ffffff;
+  }
+
+}
