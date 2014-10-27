@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PositionsetsFactory', [
-    'PositionsetsResource', 'PositionsetsStorage', 'BaseFactory', '$filter',
-    function(PositionsetsResource, PositionsetsStorage, BaseFactory, $filter) {
+    'BaseFactory', '$filter',
+    function(BaseFactory, $filter) {
 
         var PositionsetsFactory = {
 

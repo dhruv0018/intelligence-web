@@ -61,8 +61,12 @@ IntelligenceWebClient.service('AuthenticationService', [
                         /* Store the tokens. Optionally persisting. */
                         tokens.setTokens(authTokens, persist);
 
+                        var user = $injector.get(users.model);
+
                         /* Get the user from the server. */
-                        return users.fetch(email).then(function(user) {
+                        return user.get({ id: email }).$promise.then(function(user) {
+
+                            user = session.deserializeUser(user);
 
                             /* Store the user in the session. Optionally persisting. */
                             session.storeCurrentUser(user, persist);

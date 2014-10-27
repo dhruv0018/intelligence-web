@@ -90,16 +90,16 @@ Indexing.config([
                 },
                 resolve: {
                     'Indexing.Data': [
-                        '$q', '$stateParams', 'Indexing.Data.Dependencies', 'PlayersFactory', 'PlaysFactory',
-                        function($q, $stateParams, data, players, plays) {
+                        '$q', '$stateParams', 'Indexing.Data.Dependencies', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory',
+                        function($q, $stateParams, data, teams, games, players, plays) {
 
                             return $q.all(data).then(function(data) {
 
                                 var gameId = $stateParams.id;
-                                var game = data.games.get(gameId);
+                                var game = games.get(gameId);
 
-                                var team = data.teams.get(game.teamId);
-                                var opposingTeam = data.teams.get(game.opposingTeamId);
+                                var team = teams.get(game.teamId);
+                                var opposingTeam = teams.get(game.opposingTeamId);
 
                                 var teamRoster = game.getRoster(team.id);
                                 var opposingTeamRoster = game.getRoster(opposingTeam.id);
@@ -121,12 +121,12 @@ Indexing.config([
                 },
 
                 onEnter: [
-                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'VideoPlayerInstance',
-                    function($state, $timeout, $stateParams, session, modals, data, indexing, Videoplayer) {
+                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'GamesFactory',
+                    function($state, $timeout, $stateParams, session, modals, data, indexing, games) {
 
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
-                        var game = data.games.get(gameId);
+                        var game = games.get(gameId);
 
                         if (!game.isAssignedToUser(userId)) {
 

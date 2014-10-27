@@ -1,29 +1,40 @@
 <div class="krossover-thumbnail">
 
-    <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:game.id})">
+    <a data-ng-if="isGame && currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:film.id})">
         <div data-ng-if="thumbnail.length > 0" class="has-thumbnail">
             <img class="img-responsive" data-ng-src="{{thumbnail}}" alt="thumbnail">
             <i class="icon icon-play"></i>
             <i class="icon icon-circle"></i>
         </div>
-        <div data-ng-if="thumbnail.length === 0" class="no-thumbnail">
-            <i data-ng-if="!game.isProcessing() && !game.isUploading() && !game.isVideoTranscodeFailed()" class="icon icon-logo"></i>
-            <div data-ng-if="game.isUploading()" class="film-status">
+        <div data-ng-if="thumbnail.length === 0" class="no-thumbnail" data-ng-class="{'temp-thumbnail':!film.isProcessing() && !film.isUploading() && !film.isVideoTranscodeFailed()}">
+            <i data-ng-if="!film.isProcessing() && !film.isUploading() && !film.isVideoTranscodeFailed()" class="icon icon-logo"></i>
+            <div data-ng-if="film.isUploading()" class="film-status">
                 <i class="icon icon-upload status-uploading"></i>
             </div>
-            <div data-ng-if="game.isProcessing()" class="film-status">
+            <div data-ng-if="film.isProcessing()" class="film-status">
                 <i class="icon icon-tasks status-processing"></i>
             </div>
-            <div data-ng-if="game.isVideoTranscodeFailed()" class="film-status">
+            <div data-ng-if="film.isVideoTranscodeFailed()" class="film-status">
                 <i class="icon icon-warning status-failed"></i>
             </div>
-            <div data-ng-if="game.isProcessing()">Your video is still processing.</div>
-            <div data-ng-if="game.isUploading()">This film is currently being uploaded.</div>
-            <div data-ng-if="game.isVideoTranscodeFailed()"><strong>There is an issue with this film.</strong><br/>Please contact support@krossover.com</div>
+            <div data-ng-if="film.isProcessing()">Your video is still processing.</div>
+            <div data-ng-if="film.isUploading()">This film is currently being uploaded.</div>
+            <div data-ng-if="film.isVideoTranscodeFailed()"><strong>There is an issue with this film.</strong><br/>Please contact support@krossover.com</div>
+        </div>
+    </a>
+    <a data-ui-sref="ReelsArea({id:film.id})" data-ng-if="!isGame">
+        <div data-ng-if="thumbnail.length > 0" class="has-thumbnail">
+            <img class="img-responsive" src="{{thumbnail}}" alt="thumbnail">
+            <i class="icon icon-play"></i>
+            <i class="icon icon-circle"></i>
+        </div>
+        <div data-ng-if="thumbnail.length === 0" class="no-thumbnail temp-thumbnail">
+            <i class="icon icon-logo"></i>
+            <p>{{ reels[film.id].name }}</p>
         </div>
     </a>
 
-    <a data-ng-if="currentUser.is(ATHLETE)" data-ui-sref="Athlete.GameArea({id:game.id})">
+    <a data-ng-if="isGame && currentUser.is(ATHLETE)" data-ui-sref="Athlete.GameArea({id:game.id})">
         <div data-ng-if="thumbnail.length > 0" class="has-thumbnail">
             <img class="img-responsive" data-ng-src="{{thumbnail}}" alt="thumbnail">
             <i class="icon icon-play"></i>

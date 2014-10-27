@@ -1,6 +1,10 @@
 <div class="game-area-film-filters">
     <div class="play-count pull-left">
-        Viewing: All Plays ({{plays.length}})
+        <span>Viewing: All Plays ({{plays.length}})</span> 
+        <button class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
+          <span class="play-all-text">Continuous Play</span>
+          <span class="on" data-ng-class="{chosen: playManager.playAllPlays}">ON</span>
+          <span class="off" data-ng-class="{chosen: !playManager.playAllPlays}">OFF</span></button>
     </div>
 
     <plays-filter data-total-plays="totalPlays"
@@ -12,20 +16,24 @@
 </div>
 
 <div class="game-area-film">
+
+    <div class="breakdown-sidebar">
+
         <aside class="playlist">
 
-          <krossover-plays data-expand-all="expandAll" data-game="game" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="data.teamPlayers" data-opposing-team-players="data.opposingTeamPlayers" data-league="data.league"></krossover-plays>
+            <krossover-plays data-expand-all="expandAll" data-game="game" data-plays="plays" data-team="team" data-opposing-team="opposingTeam" data-team-players="data.teamPlayers" data-opposing-team-players="data.opposingTeamPlayers" data-league="data.league"></krossover-plays>
 
-
-          <div class="expandrow">
-            <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
-            <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
-          </div>
-
-          <no-results data-ng-hide="plays.length"></no-results>
+            <no-results data-ng-hide="plays.length"></no-results>
         </aside>
 
-        <div class="player breakdown-player">
-            <x-krossover-videoplayer data-sources="sources" data-play-start-time="play.current.startTime" data-play-end-time="play.current.endTime"></x-krossover-videoplayer>
+        <div class="expandrow">
+          <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
+          <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
         </div>
+
+    </div>
+
+    <div class="player breakdown-player">
+        <x-krossover-videoplayer data-sources="sources" data-play-start-time="play.current.startTime" data-play-end-time="play.current.endTime"></x-krossover-videoplayer>
+    </div>
 </div>

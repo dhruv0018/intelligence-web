@@ -17,8 +17,8 @@ IntelligenceWebClient.service('LeaguesStorage', [
 
 
 IntelligenceWebClient.factory('LeaguesFactory', [
-    'LeaguesStorage', 'LeaguesResource', 'BaseFactory',
-    function(LeaguesStorage, LeaguesResource, BaseFactory) {
+    'BaseFactory',
+    function(BaseFactory) {
 
         var LeaguesFactory = {
 

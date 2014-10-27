@@ -22,13 +22,18 @@ IntelligenceWebClient.factory('UsersFactory', [
             extend: function(user) {
                 var self = this;
 
+
+                user.roleTypes = {};
+                Object.keys(ROLE_TYPE).forEach(function(roleType) {
+                    user.roleTypes[ROLE_TYPE[roleType]] = [];
+                });
+
                 /* Remove the user password from the model. If set it will
                  * be sent in a resource call. So only set it if the intent
                  * is to change the password. */
                 delete user.password;
                 /* If the user has roles. */
                 if (user.roles) {
-
                     /* For each role. */
                     user.roles.forEach(function(role) {
                         /* Default the tenureEnd to null. */
@@ -44,6 +49,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                         if (!role.type.name) {
                             role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
                         }
+                        user.roleTypes[role.type.id].push(role);
                     });
                 }
 
@@ -69,6 +75,23 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return user;
             },
 
+            unextend: function(user) {
+
+                var self = this;
+
+                /* Create a copy of the resource to break reference to original. */
+                var copy = angular.copy(user);
+
+                delete copy.defaultRole;
+                delete copy.currentRole;
+
+                angular.forEach(copy.roles, function(role) {
+                    role.type = (role.type.id) ? role.type.id : role.type;
+                });
+
+                return copy;
+            },
+
             search: function(query) {
 
                 var self = this;
@@ -88,87 +111,20 @@ IntelligenceWebClient.factory('UsersFactory', [
                         });
                     });
 
-                    var teams = $injector.get('TeamsFactory');
+                    if (teamIds.length) {
 
-                    return teams.retrieve({ 'id[]': teamIds }).then(function() {
+                        var teams = $injector.get('TeamsFactory');
 
-                        return users;
-                    });
-                });
-            },
+                        return teams.retrieve({ 'id[]': teamIds }).then(function() {
 
-            save: function(resource, success, error) {
-                var self = this;
-
-                resource = resource || self;
-
-                managedResources.reset(resource);
-
-                /* Create a copy of the resource to save to the server. */
-                var copy = self.unextend(resource);
-
-                angular.forEach(copy.roles, function(role) {
-                    role.type = (role.type.id) ? role.type.id : role.type;
-                });
-
-
-                parameters = {};
-
-                success = success || function(resource) {
-                    return self.extend(resource);
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not save resource');
-                };
-
-                var model = $injector.get(self.model);
-                var storage = $injector.get(self.storage);
-
-                /* If the resource has been saved to the server before. */
-                if (resource.id) {
-
-                    /* Make a PUT request to the server to update the resource. */
-                    var update = model.update(parameters, copy, success, error);
-
-                    /* Once the update request finishes. */
-                    return update.$promise.then(function() {
-
-                        /* Fetch the updated resource. */
-                        return self.fetch(resource.id).then(function(updated) {
-
-                            /* Update local resource with server resource. */
-                            angular.extend(resource, self.extend(updated));
-
-                            /* Update the resource in storage. */
-                            storage.list[storage.list.indexOf(resource)] = resource;
-                            storage.collection[resource.id] = resource;
-
-                            return resource;
+                            return users;
                         });
-                    });
+                    }
 
-                    /* If the resource is new. */
-                } else {
-
-                    /* Make a POST request to the server to create the resource. */
-                    var create = model.create(parameters, copy, success, error);
-
-                    /* Once the create request finishes. */
-                    return create.$promise.then(function(created) {
-
-                        /* Update local resource with server resource. */
-                        angular.extend(resource, self.extend(created));
-
-                        /* Add the resource to storage. */
-                        storage.list.push(resource);
-                        storage.collection[resource.id] = resource;
-
-                        return resource;
-                    });
-                }
+                    else return users;
+                });
             },
+
             /**
             * @class User
             * @method
@@ -186,10 +142,11 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @method
              * @param {Object} user - the user to add the role to
              * @param {Object} role - a role object to add
+             * @param {Object} team - a team object to draw the teamId from
              * Adds the given role to the given user. If no user is specified,
              * this user will be used.
              */
-            addRole: function(user, role) {
+            addRole: function(user, role, team) {
 
                 var self = this;
 
@@ -204,8 +161,18 @@ IntelligenceWebClient.factory('UsersFactory', [
                 role.tenureEnd = null;
                 role.tenureStart = new Date();
 
+                if (team) {
+                    role.teamId = team.id;
+                }
+
                 user.roles = user.roles || [];
                 user.roles.unshift(role);
+
+                if (!user.roleTypes) {
+                     user.roleTypes = {};
+                }
+
+                user.roleTypes[role.type.id].push(role);
             },
 
             /**
@@ -265,7 +232,6 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return undefined;
             },
-
             /**
             * @class User
             * @method
@@ -442,6 +408,58 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
             getLastAccessed: function(user) {
                 return new Date(user.lastAccessed);
+            },
+            /**
+             * @class User
+             * @method
+             * Resend invitation to user based on their unique identifier (email or id)
+             */
+            resendEmail: function(type, params, identifier) {
+                var self = this;
+
+                var model = $injector.get(self.model);
+                var unique = identifier || self.id;
+
+                return model.resendEmail({
+                    unique: unique,
+                    type: type,
+                    params: params
+                });
+            },
+            /**
+             * @class User
+             * @method
+             * @param {Object} role - the role object to check for the match.
+             * @param {Object} team - the team object which is used to check if a role is associated with a team
+             * @returns {Array} Array of users that fulfill the criteria of matching the role and team
+             */
+            findByRole: function(role, team) {
+                var self = this;
+                var storage = $injector.get(self.storage);
+
+                if (!role) {
+                    throw new Error('failed to pass in role');
+                }
+
+                var vettedUsers = [];
+
+                storage.list.forEach(function(user) {
+                    if (user.has(role)) {
+                        vettedUsers.push(user);
+                    }
+                });
+
+                if (team) {
+                   vettedUsers = vettedUsers.filter(function(user) {
+                       var vettedRoles = user.roleTypes[role.type.id].filter(function(role) {
+                         return role.teamId === team.id;
+                       });
+
+                       return vettedRoles.length > 0;
+                   });
+                }
+
+                return vettedUsers;
             }
         };
 

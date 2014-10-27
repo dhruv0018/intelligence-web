@@ -1,0 +1,67 @@
+@import (reference) "main.less";
+
+
+.reels-player-area {
+
+    flex-direction: column;
+
+    .main-highlight {
+        display: flex;
+        flex: 1;
+        overflow-x: scroll;
+    }
+
+    header {
+
+        border-bottom: 1px solid @gray-border;
+        background-color: #f7f8f8;
+        padding: 15px;
+        display: flex;
+        height: 50px;
+
+        h3 {
+            color: @brand-blue;
+            padding: 0;
+            margin: 0 0 10px 0;
+
+            span {
+                font-weight: 400;
+            }
+        }
+
+        .delete-reel {
+            margin-left: auto;
+            color: @brand-danger;
+            cursor: pointer;
+        }
+    }
+
+    aside.reels-playlist {
+        display: flex;
+        background: #fff;
+        flex-direction: column;
+        letter-spacing: normal;
+        width: 320px;
+        border-right: solid 1px #EEE;
+        overflow: scroll;
+
+        .reel-edit-controls {
+        
+            padding: 10px;
+            display: flex;
+
+            .save-edit {
+                color: @brand-success;
+            }
+        }
+
+        .reel-plays-container {
+        }
+    }
+
+    .player.reels-player {
+        display: flex;
+        flex: 1;
+        margin: 1%;
+    }
+} 

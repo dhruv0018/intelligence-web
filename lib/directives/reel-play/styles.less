@@ -1,0 +1,78 @@
+@import (reference) "main.less";
+
+.reel-play {
+	.clearfix;
+	letter-spacing: normal;
+	position: relative;
+	background: #fff;
+	color: #000;
+	border-top: solid 1px #EEE;
+	padding: 15px;
+
+	&.edit-mode {
+    	cursor: move;
+    }
+}
+
+.last .reel-play {
+    border-bottom: solid 1px #EEE;
+}
+
+.reel-play-text {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
+.play-reel-play {
+	.pull-right;
+
+	display: inline-block;
+	width: 36px;
+	font-size: 36px;
+	color: @gray-light;
+    cursor: pointer;
+
+    &:active,
+    &:focus,
+    &:hover {
+        color: @brand-primary;
+    }
+
+    &.invisible {
+    	visibility: hidden;
+    }
+
+    &.playing {
+        color: rgb(89, 159, 253);
+    }
+}
+
+.delete-reel-play {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 5px;
+
+	.icon {
+		color: @brand-danger;
+		cursor: pointer;
+	}
+}
+
+/* Hides everything except the play summary for the reels playlist */
+.reels-player-area {
+    
+    .playplay,
+    .team,
+    .playBody,
+    .playFooter,
+    .summaries,
+    .summaryBodyDivider {
+        display: none;
+    }
+
+    .summaries:first-child {
+    	display: block;
+    }
+}

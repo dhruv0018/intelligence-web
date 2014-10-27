@@ -26,15 +26,16 @@
         "add-time",
         "sport-placeholder",
         "role-icon",
-        "add-player",
+        "add-resource",
         "mascot-placeholder",
         "profile-placeholder",
         "notes-list",
         "positions-dropdown",
+        "state-selector",
         "uploader",
         "formation-chart",
         "arena",
-        "roster-manager",
+        "managers",
         "loading",
         "feedback-modal",
         "open-modal",
@@ -47,9 +48,13 @@
         "verify-password",
         "videogular",
         "breakdown-text",
+        "videogular",
+        "reel-play",
         "player-information",
         "film-home-tabs",
-        "plays-filters"
+        "profile",
+        "plays-filters",
+        "draggable"
     ],
     "scripts": [
         "index.js"

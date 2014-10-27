@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlayersFactory', [
-    '$injector', '$q', 'PlayersResource', 'PlayersStorage', 'BaseFactory',
-    function($injector, $q, PlayersResource, PlayersStorage, BaseFactory) {
+    '$injector', '$q', 'BaseFactory',
+    function($injector, $q, BaseFactory) {
 
         var PlayersFactory = {
 

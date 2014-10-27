@@ -13,6 +13,9 @@
     "passwordReset": {
         "uri": "/intelligence-api/v1/password-reset/"
     },
+    "reels": {
+        "turnedOn": true
+    },
     "links": {
         "signup": {
             "uri": "http://www.krossover.com/get-started/"
