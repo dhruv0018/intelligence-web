@@ -19,9 +19,6 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
 
         var Mousetrap = window.Mousetrap;
         var videoPlayer = videoPlayerInstance.promise;
-        $scope.savingNotes = false;
-        $scope.playManager = playManager;
-        $scope.VG_STATES = VG_STATES;
 
         $scope.noteValues = ['Camera did not follow play', 'Jersey not visible', 'Gap in film', 'Scoreboard shot', 'Other'];
 
@@ -29,8 +26,6 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
         $scope.currentTimestamp = 0;
 
         $scope.saveIndexingNote = function() {
-
-            $scope.savingNotes = true;
 
             videoPlayer.then(function(vp) {
                 vp.pause();
@@ -58,10 +53,7 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
                 //or back button the game will be saved to the server again with
                 //the notes still not having id's and the notes will be created twice
                 //the following code would need to be atomic to prevent that from happening
-                $scope.game.saveNotes().then(function(savedNotes) {
-                    $scope.savingNotes = false;
-                    $scope.game.notes = savedNotes;
-                });
+                $scope.game.save();
             });
         };
     }
