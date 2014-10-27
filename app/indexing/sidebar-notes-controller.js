@@ -26,11 +26,11 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
         $scope.currentTimestamp = 0;
 
         $scope.clearKeyListeners = function clearKeyListeners() {
-            Mousetrap.krossoverIsPaused = true;
+            Mousetrap.pause();
         };
 
         $scope.unclearKeyListeners = function unclearKeyListeners() {
-            Mousetrap.krossoverIsPaused = false;
+            Mousetrap.unpause();
         };
 
         $scope.saveIndexingNote = function() {
