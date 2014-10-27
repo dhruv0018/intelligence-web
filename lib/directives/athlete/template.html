@@ -30,7 +30,7 @@
 
                 <td class="athlete-column">
                     <data-positions-dropdown data-ng-model="rosterEntry.playerInfo.positionIds" data-player="athlete" data-positionset="positionset"></data-positions-dropdown>
-                    <button data-ng-if="!team.isCustomerTeam" class="btn btn-blank pull-right" data-ng-click="toggle(rosterEntry)"><i class="icon icon-remove"></i></button>
+                    <button data-ng-if="!team.isCustomerTeam" class="remove btn btn-blank pull-right" data-ng-click="toggle(rosterEntry)"><i class="icon icon-remove"></i></button>
                 </td>
 
                 <td class="athlete-column" data-ng-if="team.isCustomerTeam" data-ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">

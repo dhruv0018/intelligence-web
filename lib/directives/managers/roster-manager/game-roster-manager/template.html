@@ -27,10 +27,25 @@
                                 data-team="team"
                                 data-editable="editable"></krossover-athlete>
 
-            <!--<button data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()" class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>-->
-            <button data-ng-hide="team.isCustomerTeam" class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>
-            <!--<a data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()" href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>-->
-            <a data-ng-hide="team.isCustomerTeam" href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>
+            <div class="controls">
+                <!--<button data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()" class="btn btn-default pull-left" data-ng-click="addNewPlayer()">Add New Player <i class="icon icon-plus"></i></button>-->
+                <button data-ng-hide="team.isCustomerTeam"
+                        class="add-player btn btn-default pull-left"
+                        data-ng-click="addNewPlayer()">
+                    Add New Player
+                    <i class="icon icon-plus"></i>
+                </button>
+                <!--<a data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()" href data-open-modal="ExcelUpload.Modal" data-modal-options="options">Upload Roster via Excel</a>-->
+
+                <a class="excel-upload"
+                   data-ng-hide="team.isCustomerTeam"
+                   href
+                   data-open-modal="ExcelUpload.Modal"
+                   data-modal-options="options">
+                    Upload Roster via Excel
+                </a>
+            </div>
+
         </div>
     </form>
 
