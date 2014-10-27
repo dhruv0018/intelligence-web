@@ -13,6 +13,18 @@ IntelligenceWebClient.factory('BaseStorage', [
 
         var BaseStorage = Object.create({}, {
 
+            db: {
+
+                get: function() {
+
+                    session = session || $injector.get('SessionService');
+
+                    var key = session.serializeUserId() + '$' + session.serializeRole() + '!' + this.description;
+
+                    return key;
+                }
+            },
+
             root: {
 
                 value: Object.create(null)
@@ -107,7 +119,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     var key = '@';
 
-                    var db = session.serializeUserId() + '$' + session.serializeRole() + '!' + this.description + key;
+                    var db = this.db + key;
 
                     this.resource[key] = this.resource[key] || [];
 
@@ -183,7 +195,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     session = session || $injector.get('SessionService');
 
-                    var db = session.serializeUserId() + '$' + session.serializeRole() + '!' + this.description + key;
+                    var db = this.db + key;
 
                     if (angular.isArray(value)) {
 
