@@ -25,6 +25,16 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
+            keys: {
+
+                get: function() {
+
+                    var keys = Object.keys(this.resource);
+
+                    return keys;
+                }
+            },
+
             root: {
 
                 value: Object.create(null)
@@ -90,7 +100,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     var self = this;
 
-                    var promises = Object.keys(self.resource)
+                    var promises = this.keys
 
                     .filter(function(key) {
 
@@ -137,7 +147,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                         this.resource[key].length = 0;
 
-                        Object.keys(this.resource).forEach(function(id) {
+                        this.keys.forEach(function(id) {
 
                             if (String(id).charAt(0) !== key) {
 
