@@ -62,7 +62,7 @@ IntelligenceWebClient.service('SessionService', [
 
             if (!role) return '';
 
-            var key = '@@';
+            var key = '';
             var type = role.type.id;
             var createdAt = role.createdAt;
 
