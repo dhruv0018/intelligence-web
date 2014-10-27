@@ -8,7 +8,7 @@
 			<option data-ng-repeat="noteText in noteValues" value="{{noteText}}">{{noteText}}</option>
 		</select>
 	    <textarea data-ng-show="selectedNoteText === noteValues[noteValues.length-1]" data-ng-model="otherNoteValue"></textarea>
-	    <button class="save-note" data-ng-disabled="savingNotes || playManager.playState === VG_STATES.PLAY" data-ng-click="saveIndexingNote()">{{(savingNotes) ? 'Saving...' : 'Save Note'}}</button>
+	    <button class="save-note" data-ng-disabled="savingNotes" data-ng-click="saveIndexingNote()">{{(savingNotes) ? 'Saving...' : 'Save Note'}}</button>
     </div>
 
     <krossover-notes-list data-game="game"></krossover-notes-list>
