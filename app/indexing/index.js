@@ -174,8 +174,11 @@ Indexing.config([
 
                         Mousetrap.stopCallback = function(event, element, combo, sequence) {
 
-                            $timeout(function() {
+                            if (Mousetrap.krossoverIsPaused) {
+                                return true;
+                            }
 
+                            $timeout(function() {
                                 if (indexing.isIndexing) {
 
                                     if (globalCallbacks[combo] || globalCallbacks[sequence]) {

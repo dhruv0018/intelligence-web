@@ -25,6 +25,14 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
         $scope.selectedNoteText = $scope.noteValues[0];
         $scope.currentTimestamp = 0;
 
+        $scope.clearKeyListeners = function clearKeyListeners() {
+            Mousetrap.krossoverIsPaused = true;
+        };
+
+        $scope.unclearKeyListeners = function unclearKeyListeners() {
+            Mousetrap.krossoverIsPaused = false;
+        };
+
         $scope.saveIndexingNote = function() {
 
             videoPlayer.then(function(vp) {
