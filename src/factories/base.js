@@ -427,7 +427,11 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else {
 
-                        var resource = self.extend(from);
+                        var Model = $injector.get(self.model);
+
+                        var resource = new Model(from);
+
+                        resource = self.extend(resource);
 
                         storage.set(resource);
 
