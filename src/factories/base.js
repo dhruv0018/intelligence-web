@@ -439,37 +439,24 @@ IntelligenceWebClient.factory('BaseFactory', [
                     }
                 };
 
-                if (!storage.isStored(key)) {
+                return storage.grab(key, function(item) {
 
-                    storage.resource[key] = [];
+                    var resource = toResource(item);
 
-                    var db = session.serializeUserId() + '$' + session.serializeRole() + '!' + self.description + key;
+                    storage.set(key, resource);
 
-                    storage.resource[key].promise = $localForage.getItem(db).then(function(item) {
+                    if (angular.isNumber(filter)) single(filter);
+                    else if (angular.isArray(filter)) array(filter);
+                    else other(filter);
 
-                        if (item) {
+                    return resource;
 
-                            var resource = toResource(item);
+                }, function() {
 
-                            storage.set(key, resource);
-
-                            if (angular.isNumber(filter)) single(filter);
-                            else if (angular.isArray(filter)) array(filter);
-                            else other(filter);
-
-                            return resource;
-                        }
-
-                        else {
-
-                            if (angular.isNumber(filter)) return single(filter);
-                            else if (angular.isArray(filter)) return array(filter);
-                            else return other(filter);
-                        }
-                    });
-                }
-
-                return storage.resource[key].promise;
+                    if (angular.isNumber(filter)) return single(filter);
+                    else if (angular.isArray(filter)) return array(filter);
+                    else return other(filter);
+                });
             },
 
             /**
