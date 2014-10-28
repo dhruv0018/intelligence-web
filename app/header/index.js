@@ -98,8 +98,8 @@ Header.service('Base.Data.Dependencies', [
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES',
-    function controller(config, $scope, $state, auth, session, account, ROLES) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'LeaguesFactory', 'TeamsFactory', 'SPORTS',
+    function controller(config, $scope, $state, auth, session, account, ROLES, leagues, teams, SPORTS) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
@@ -112,6 +112,11 @@ Header.controller('HeaderController', [
         $scope.$state = $state;
         $scope.session = session;
         $scope.account = account;
+
+        //TEMP - get sport id to show Analytics tab for FB only
+        var team = teams.get(session.currentUser.currentRole.teamId);
+        $scope.league = leagues.get(team.leagueId);
+        $scope.SPORTS = SPORTS;
 
         $scope.logout = function() {
 
