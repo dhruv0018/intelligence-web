@@ -47,7 +47,7 @@
 
                                 </div>
 
-                                <div data-ng-if="games.isRegular(game)" class="form-group">
+                                <div data-ng-if="game.isRegular()" class="form-group">
 
                                     <h4>*Home/Away</h4>
 
@@ -89,7 +89,7 @@
 
                                                 <td>
                                                     <h5 data-ng-if="game.isRegular()"> {{ teams[session.currentUser.currentRole.teamId].name }} </h5>
-                                                    <input type="text" name="team" data-class="form-control" data-ng-if="game.isNonRegular()" data-ng-model="gameTeams.team.name">
+                                                    <input type="text" name="team" class="form-control" data-ng-if="game.isNonRegular()" data-ng-model="gameTeams.team.name">
                                                     <!--<team-typeahead data-customer-teams="false" data-ng-if="game.isNonRegular()" data-team="gameTeams.team"></team-typeahead>-->
                                                 </td>
 

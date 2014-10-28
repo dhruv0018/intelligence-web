@@ -81,11 +81,13 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Game Manipulation
         $scope.game.notes = $scope.game.notes || {};
-        console.log(GAME_NOTE_TYPES);
+
+        //prevents put request cascade
+        $scope.game.allowEdits = ($scope.game.opposingTeamId && $scope.game.teamId && $scope.game.rosters[$scope.game.teamId].id) ? true : false;
+
         //TODO figure out how this works
         //$scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = $scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
         //$scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = ($scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE]) ? $scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] : [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
-        console.log($scope.game);
 
 
         if ($scope.game.id && $scope.game.teamId && $scope.game.opposingTeamId) {
@@ -98,8 +100,8 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Temporary
         $scope.gameTeams = {
-            team: ($scope.teams[$scope.game.teamId]) ? $scope.teams[$scope.game.teamId] : {},
-            opposingTeam: ($scope.teams[$scope.game.opposingTeamId]) ? $scope.teams[$scope.game.opposingTeamId] : {}
+            team: ($scope.teams[$scope.game.teamId]) ? $scope.teams[$scope.game.teamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id}),
+            opposingTeam: ($scope.teams[$scope.game.opposingTeamId]) ? $scope.teams[$scope.game.opposingTeamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id})
         };
 
         //Save functionality
@@ -107,15 +109,11 @@ Info.controller('Coach.Game.Info.controller', [
 
             var promises = {};
 
-            if (!$scope.gameTeams.team.id) {
-                var newTeam = teams.create({isCustomerTeam: false, leagueId: $scope.league.id, name: $scope.gameTeams.team});
-                $scope.gameTeams.team = newTeam;
+            if (!$scope.game.teamId || $scope.gameTeams.team.name !== $scope.teams[$scope.game.teamId].name) {
                 promises.team = $scope.gameTeams.team.save();
             }
 
-            if (!$scope.gameTeams.opposingTeam.id) {
-                var newOpposingTeam = teams.create({isCustomerTeam: false, leagueId: $scope.league.id, name: $scope.gameTeams.opposingTeam});
-                $scope.gameTeams.opposingTeam = newOpposingTeam;
+            if (!$scope.game.opposingTeamId ||$scope.gameTeams.team.name !== $scope.teams[$scope.game.opposingTeamId].name) {
                 promises.opposingTeam = $scope.gameTeams.opposingTeam.save();
             }
 
@@ -126,11 +124,23 @@ Info.controller('Coach.Game.Info.controller', [
                 var team = teams.get($scope.game.teamId);
                 var opposingTeam = teams.get($scope.game.opposingTeamId);
 
+                console.log(team);
+                console.log(opposingTeam);
+                console.log($scope.game);
+
                 $scope.game.rosters = {};
+
+                //filtering out the players from your team roster who are inactive
+                var filteredPlayerInfo = {};
+                angular.forEach(team.roster.playerInfo, function(playerInfo, playerId) {
+                    if (playerInfo.isActive) {
+                        filteredPlayerInfo[playerId] = playerInfo;
+                    }
+                });
 
                 $scope.game.rosters[$scope.game.teamId] = {
                     teamId: $scope.game.teamId,
-                    playerInfo: team.roster.playerInfo
+                    playerInfo: filteredPlayerInfo
                 };
 
 
@@ -139,13 +149,10 @@ Info.controller('Coach.Game.Info.controller', [
                     playerInfo: opposingTeam.roster.playerInfo
                 };
 
-                console.log(team);
-                console.log(opposingTeam);
-                console.log($scope.game);
+                $scope.game.save().then(function() {
+                    $scope.goToRoster();
+                });
 
-                $scope.game.save();
-
-                $scope.goToRoster();
             });
 
         };
@@ -174,6 +181,7 @@ Info.controller('Coach.Game.Info.controller', [
             $scope.tabs.deactivateAll();
             $scope.formGameInfo.$dirty = false;
             $scope.tabs.team.active = true;
+            $scope.game.allowEdits = true; //prevents put request cascade
         };
 
         //Confirmation for deleting a game

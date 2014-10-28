@@ -67,7 +67,7 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         $scope.isBreakdownChoiceMade = false;
 
         //Make sure team has roster
-        $scope.hasRoster = ($scope.game.rosters[$scope.game.teamId].playerInfo && Object.keys($scope.game.rosters[$scope.game.teamId].playerInfo).length > 0) ? true : false;
+        $scope.hasRoster = ($scope.game.teamId && $scope.game.rosters[$scope.game.teamId].playerInfo && Object.keys($scope.game.rosters[$scope.game.teamId].playerInfo).length > 0) ? true : false;
         $scope.isNonRegularGame = games.isNonRegular($scope.game);
 
         $scope.returnToGameAlert = function() {
