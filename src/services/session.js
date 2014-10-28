@@ -42,11 +42,11 @@ IntelligenceWebClient.service('SessionService', [
          */
         this.deserializeUser = function(string) {
 
-            var object = angular.fromJson(string);
+            var userResourceObject = angular.fromJson(string);
 
-            object = dates.transformToDates(object);
+            userResourceObject = dates.transformToDates(userResourceObject);
 
-            var user = new User(object);
+            var user = new User(userResourceObject);
             user = users.extend(user);
 
             return user;
