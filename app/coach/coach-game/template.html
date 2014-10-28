@@ -25,7 +25,7 @@
                   data-game="game"
                   data-team="teams[game.teamId]"
                   data-editable="true"
-                  data-filtering="filtering.type"
+                  data-filtering="opposingTeamFiltering.type"
                   data-roster="gamePlayerLists[game.opposingTeamId]"
                   data-validator="validation.opposingTeam"
                   data-positionset="positionset"></game-tab>
@@ -43,6 +43,7 @@
                   data-roster="gamePlayerLists[game.teamId]"
                   data-editable="true"
                   data-validation="validation.yourTeam"
+                  data-filtering="teamFiltering.type"
                   data-positions="positions"
                   data-positionset="positionset"
                   data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"></game-tab>

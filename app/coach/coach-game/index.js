@@ -97,7 +97,8 @@ Game.controller('Coach.Game.controller', [
             scoutingTeam: false
         };
 
-        $scope.filtering = {type: 'active'};
+        $scope.opposingTeamFiltering = {type: 'active'};
+        $scope.teamFiltering = ($scope.game.isRegular()) ? {type: 'none'} : {type: 'active'};
 
         $scope.gameTabs = {
             info: {

@@ -113,7 +113,7 @@ Info.controller('Coach.Game.Info.controller', [
                 promises.team = $scope.gameTeams.team.save();
             }
 
-            if (!$scope.game.opposingTeamId ||$scope.gameTeams.team.name !== $scope.teams[$scope.game.opposingTeamId].name) {
+            if (!$scope.game.opposingTeamId ||$scope.gameTeams.opposingTeam.name !== $scope.teams[$scope.game.opposingTeamId].name) {
                 promises.opposingTeam = $scope.gameTeams.opposingTeam.save();
             }
 
@@ -128,26 +128,28 @@ Info.controller('Coach.Game.Info.controller', [
                 console.log(opposingTeam);
                 console.log($scope.game);
 
-                $scope.game.rosters = {};
+                $scope.game.rosters = ($scope.game.rosters && $scope.game.rosters[$scope.game.teamId]) ? $scope.game.rosters : {};
 
-                //filtering out the players from your team roster who are inactive
-                var filteredPlayerInfo = {};
-                angular.forEach(team.roster.playerInfo, function(playerInfo, playerId) {
-                    if (playerInfo.isActive) {
-                        filteredPlayerInfo[playerId] = playerInfo;
-                    }
-                });
+                if (!$scope.game.rosters[$scope.game.teamId]) {
+                    //filtering out the players from your team roster who are inactive
+                    var filteredPlayerInfo = {};
+                    angular.forEach(team.roster.playerInfo, function(playerInfo, playerId) {
+                        if (playerInfo.isActive) {
+                            filteredPlayerInfo[playerId] = playerInfo;
+                        }
+                    });
 
-                $scope.game.rosters[$scope.game.teamId] = {
-                    teamId: $scope.game.teamId,
-                    playerInfo: filteredPlayerInfo
-                };
+                    $scope.game.rosters[$scope.game.teamId] = {
+                        teamId: $scope.game.teamId,
+                        playerInfo: filteredPlayerInfo
+                    };
 
 
-                $scope.game.rosters[$scope.game.opposingTeamId] = {
-                    teamId: $scope.game.opposingTeamId,
-                    playerInfo: opposingTeam.roster.playerInfo
-                };
+                    $scope.game.rosters[$scope.game.opposingTeamId] = {
+                        teamId: $scope.game.opposingTeamId,
+                        playerInfo: opposingTeam.roster.playerInfo
+                    };
+                }
 
                 $scope.game.save().then(function() {
                     $scope.goToRoster();
