@@ -46,7 +46,7 @@ IntelligenceWebClient.service('SessionService', [
 
             object = dates.transformToDates(object);
 
-            user = new User(object);
+            var user = new User(object);
             user = users.extend(user);
 
             return user;
