@@ -7,9 +7,9 @@ var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
     'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayerInstance',
-    function(config, tagsManager, playsManager, playManager, eventManager, Videoplayer) {
+    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayerInstance) {
 
-        var videoplayer;
+        var videoPlayer = videoPlayerInstance.promise;
 
         var IndexingService = {
 
@@ -28,9 +28,9 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.reset(tagset, game.id);
                 playManager.clear();
 
-                Videoplayer.then(function(player) {
+                videoPlayerInstance.promise.then(function(player) {
 
-                    videoplayer = player;
+                    videoPlayer = player;
                     self.isReady = true;
                 });
             },
@@ -53,7 +53,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     this.showTags = true;
                     this.showScript = false;
                     this.eventSelected = false;
-                    videoplayer.pause();
+                    videoPlayer.pause();
                 }
             },
 
@@ -64,7 +64,7 @@ IntelligenceWebClient.factory('IndexingService', [
             selectTag: function(tagId) {
 
                 /* Get current time from the video. */
-                var time = videoplayer.getCurrentTime();
+                var time = videoPlayer.getCurrentTime();
 
                 /* Create new event. */
                 eventManager.create(tagId, time);
@@ -111,8 +111,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 /* Snap video back to time of current event. */
-                videoplayer.seekTime(eventManager.current.time);
-                videoplayer.play();
+                videoPlayer.seekTime(eventManager.current.time);
+                videoPlayer.play();
 
                 playManager.save();
                 playManager.clear();
@@ -156,8 +156,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 tagsManager.nextTags(tagId);
 
                 /* Snap video back to time of current event. */
-                videoplayer.seekTime(eventManager.current.time);
-                videoplayer.play();
+                videoPlayer.seekTime(eventManager.current.time);
+                videoPlayer.play();
             },
 
             /**
@@ -174,7 +174,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     this.showTags = true;
                     this.showScript = false;
                     this.isIndexing = true;
-                    videoplayer.play();
+                    videoPlayer.play();
                 }
 
                 /* If the tags are showing. */
@@ -184,7 +184,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     this.showTags = false;
                     this.showScript = false;
                     this.isIndexing = false;
-                    videoplayer.play();
+                    videoPlayer.play();
                 }
 
                 /* If the event doesn't have variables of If the first variable is empty. */
@@ -248,7 +248,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 if (this.isReady) {
 
-                    videoplayer.playPause();
+                    videoPlayer.playPause();
                 }
             },
 
@@ -256,9 +256,9 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 if (this.isReady) {
 
-                    var currentTime = videoplayer.getCurrentTime();
+                    var currentTime = videoPlayer.getCurrentTime();
                     var time = currentTime - config.indexing.video.jump;
-                    videoplayer.seekTime(time);
+                    videoPlayer.seekTime(time);
                 }
             },
 
@@ -266,9 +266,9 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 if (this.isReady) {
 
-                    var currentTime = videoplayer.getCurrentTime();
+                    var currentTime = videoPlayer.getCurrentTime();
                     var time = currentTime + config.indexing.video.jump;
-                    videoplayer.seekTime(time);
+                    videoPlayer.seekTime(time);
                 }
             }
         };
