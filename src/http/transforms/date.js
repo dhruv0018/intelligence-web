@@ -42,6 +42,18 @@ function transformToDates(data) {
     return data;
 }
 
+IntelligenceWebClient.factory('TransformDates', [
+    function() {
+
+        var TransformDates = {
+
+            transformToDates: transformToDates
+        };
+
+        return TransformDates;
+    }
+]);
+
 IntelligenceWebClient.config([
     '$httpProvider',
     function($httpProvider) {
