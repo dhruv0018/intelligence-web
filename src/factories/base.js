@@ -14,8 +14,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q', '$injector', '$localForage', 'ResourceManager',
-    function($q, $injector, $localForage, managedResources) {
+    '$q', '$injector', 'ResourceManager',
+    function($q, $injector, managedResources) {
 
         var BaseFactory = {
 
