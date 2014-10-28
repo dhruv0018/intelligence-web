@@ -77,9 +77,6 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
                         playerOfInterest.userId = responseUser.id;
                         users.addRole(user, ROLES.ATHLETE, $scope.team);
 
-                        //TODO might change
-                        $scope.team.addRole(responseUser, ROLES.ATHLETE);
-
                         player.firstName = responseUser.firstName;
                         player.lastName = responsePlayer.lastName;
                         return playerOfInterest.save();
@@ -101,8 +98,6 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
 
                     return user.save().then(function(responseUser) {
                         player.userId = responseUser.id;
-                        //TODO might change
-                        $scope.team.addRole(responseUser, ROLES.ATHLETE);
                         return players.singleSave($scope.rosterId, player).then(function(nestedResponsePlayer) {
                             return nestedResponsePlayer;
                         });
