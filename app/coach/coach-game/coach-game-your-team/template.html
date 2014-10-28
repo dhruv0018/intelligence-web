@@ -32,7 +32,7 @@
 
                                 <tbody>
 
-                                    <tr data-ng-if="!player.isUnknown" data-ng-repeat="player in gameRoster track by $index">
+                                    <tr data-ng-class="{'de-selected': !player.rosterStatuses[data.game.rosters[data.game.teamId].id]}" data-ng-if="!player.isUnknown" data-ng-repeat="player in gameRoster track by $index">
 
                                         <td><profile-placeholder data-size="small"></profile-placeholder></td>
 
