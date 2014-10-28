@@ -209,7 +209,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
-                    return angular.isUndefined(filter[key]);
+                    if (angular.isArray(filter[key])) return !filter[key].length;
+                    else return angular.isUndefined(filter[key]);
                 });
 
                 if (aFilterIsUndefined) throw new Error('Undefined filter');
@@ -265,7 +266,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
-                    return angular.isUndefined(filter[key]);
+                    if (angular.isArray(filter[key])) return !filter[key].length;
+                    else return angular.isUndefined(filter[key]);
                 });
 
                 if (aFilterIsUndefined) throw new Error('Undefined filter');
@@ -353,10 +355,13 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else if (angular.isArray(filter)) {
 
-                        filter.filter(function(id) {
+                        if (self.storage.collection) {
 
-                            return !angular.isDefined(self.storage.collection[id]);
-                        });
+                            filter = filter.filter(function(id) {
+
+                                return !angular.isDefined(self.storage.collection[id]);
+                            });
+                        }
 
                         if (filter.length) {
 

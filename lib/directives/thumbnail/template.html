@@ -6,7 +6,7 @@
             <i class="icon icon-play"></i>
             <i class="icon icon-circle"></i>
         </div>
-        <div data-ng-if="thumbnail.length === 0" class="no-thumbnail">
+        <div data-ng-if="thumbnail.length === 0" class="no-thumbnail" data-ng-class="{'temp-thumbnail':!film.isProcessing() && !film.isUploading() && !film.isVideoTranscodeFailed()}">
             <i data-ng-if="!film.isProcessing() && !film.isUploading() && !film.isVideoTranscodeFailed()" class="icon icon-logo"></i>
             <div data-ng-if="film.isUploading()" class="film-status">
                 <i class="icon icon-upload status-uploading"></i>
@@ -22,14 +22,15 @@
             <div data-ng-if="film.isVideoTranscodeFailed()"><strong>There is an issue with this film.</strong><br/>Please contact support@krossover.com</div>
         </div>
     </a>
-    <a data-ui-sref="Coach.ReelsArea({id:film.id})" data-ng-if="!isGame">
+    <a data-ui-sref="ReelsArea({id:film.id})" data-ng-if="!isGame">
         <div data-ng-if="thumbnail.length > 0" class="has-thumbnail">
             <img class="img-responsive" src="{{thumbnail}}" alt="thumbnail">
             <i class="icon icon-play"></i>
             <i class="icon icon-circle"></i>
         </div>
-        <div data-ng-if="thumbnail.length === 0" class="no-thumbnail">
+        <div data-ng-if="thumbnail.length === 0" class="no-thumbnail temp-thumbnail">
             <i class="icon icon-logo"></i>
+            <p>{{ reels[film.id].name }}</p>
         </div>
     </a>
 

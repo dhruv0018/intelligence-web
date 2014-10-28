@@ -37,7 +37,9 @@ IntelligenceWebClient.factory('ReelsFactory', [
             },
 
             addPlay: function(play) {
-                this.plays.push(play.id);
+                if (this.plays.indexOf(play.id) === -1) {
+                    this.plays.push(play.id);
+                }
             },
 
             updateDate: function() {
