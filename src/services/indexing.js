@@ -28,7 +28,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.reset(tagset, game.id);
                 playManager.clear();
 
-                videoPlayer.then(function(player) {
+                videoPlayerInstance.promise.then(function(player) {
 
                     videoPlayer = player;
                     self.isReady = true;
