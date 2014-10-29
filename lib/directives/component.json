@@ -56,7 +56,8 @@
         "upload-status",
         "kvs-uploader",
         "profile",
-        "plays-filters"
+        "plays-filters",
+        "draggable"
     ],
     "scripts": [
         "index.js"

@@ -1,21 +1,18 @@
 <section class="game-area">
 
-    <main class="content-full">
-        <header>
-            <div>
-
-                <span class="match-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span>
-                <span class="match-up">
-                     <span data-ng-if="game.opposingTeamId && game.teamId">{{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}</span>
-                     <span data-ng-if="!game.opposingTeamId || !game.teamId">Please add team information</span>
-                </span>
-                <!--<a data-ng-href="#"><i class="icon icon-download"></i> Download</a>-->
-                <a data-ng-if="!game.isVideoTranscodeFailed() && !game.isSharedWithUser(currentUser)" data-ng-click="ShareFilmModal.open(game)"><i class="icon icon-share-square-o"></i> Share</a>
-                <state-selector data-state-options="gameStates" data-ng-hide="game.isSharedWithUser(currentUser)"></state-selector>
-            </div>
-        </header>
-        <div class="main-highlight" data-ui-view="content"></div>
-    </main>
+    <header>
+        <div>
+            <span class="match-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span>
+            <span class="match-up">
+                 <span data-ng-if="game.opposingTeamId && game.teamId">{{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}</span>
+                 <span data-ng-if="!game.opposingTeamId || !game.teamId">Please add team information</span>
+            </span>
+            <!--<a data-ng-href="#"><i class="icon icon-download"></i> Download</a>-->
+            <a data-ng-if="!game.isVideoTranscodeFailed() && !game.isSharedWithUser(currentUser)" data-ng-click="ShareFilmModal.open(game)"><i class="icon icon-share-square-o"></i> Share</a>
+            <state-selector data-state-options="gameStates" data-ng-hide="game.isSharedWithUser(currentUser)"></state-selector>
+        </div>
+    </header>
+    <div class="main-highlight" data-ui-view="content"></div>
 
 </section>
 

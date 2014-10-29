@@ -5,9 +5,8 @@
 
 x-krossover-videoplayer {
 
-    display: block;
+    display: flex;
     width: 100%;
-    height: 100%;
 
     .error-video {
 
@@ -27,8 +26,13 @@ x-krossover-videoplayer {
     }
 }
 
+.time-current:after {
+    content: attr(data-current-time-value);
+}
+
 data-videogular {
 
+    width: 100%;
     position: relative;
     background-color: black;
     overflow: hidden;
@@ -165,7 +169,7 @@ x-krossover-play-pause-button {
     }
 }
 
-data-vg-timedisplay {
+.timedisplay {
     display: table-cell;
     font-size: 14px;
     width: 150px;

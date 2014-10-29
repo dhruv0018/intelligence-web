@@ -93,12 +93,17 @@ IntelligenceWebClient.factory('TeamsFactory', [
                         }
                     });
 
-                    var schools = $injector.get('SchoolsFactory');
+                    if (schoolIds.length) {
 
-                    return schools.retrieve({ 'id[]': schoolIds }).then(function() {
+                        var schools = $injector.get('SchoolsFactory');
 
-                        return teams;
-                    });
+                        return schools.retrieve({ 'id[]': schoolIds }).then(function() {
+
+                            return teams;
+                        });
+                    }
+
+                    else return teams;
                 });
             },
 

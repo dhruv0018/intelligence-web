@@ -11,11 +11,6 @@
 
 	&.edit-mode {
     	cursor: move;
-
-
-    	&:active {
-    		background-color: @play-selected-bg;
-    	}
     }
 }
 
@@ -63,4 +58,21 @@
 		color: @brand-danger;
 		cursor: pointer;
 	}
+}
+
+/* Hides everything except the play summary for the reels playlist */
+.reels-player-area {
+    
+    .playplay,
+    .team,
+    .playBody,
+    .playFooter,
+    .summaries,
+    .summaryBodyDivider {
+        display: none;
+    }
+
+    .summaries:first-child {
+    	display: block;
+    }
 }

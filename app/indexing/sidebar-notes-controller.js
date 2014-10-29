@@ -15,9 +15,10 @@ var Indexing = angular.module('Indexing');
  */
 Indexing.controller('Indexing.Sidebar.Notes.Controller', [
     '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS', 'GamesFactory', 'VideoPlayerInstance',
-    function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games, videoplayer) {
+    function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games, videoPlayerInstance) {
 
         var Mousetrap = window.Mousetrap;
+        var videoPlayer = videoPlayerInstance.promise;
 
         $scope.noteValues = ['Camera did not follow play', 'Jersey not visible', 'Gap in film', 'Scoreboard shot', 'Other'];
 
@@ -25,7 +26,7 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
         $scope.currentTimestamp = 0;
 
         $rootScope.$on(VG_EVENTS.ON_PAUSE, function() {
-            videoplayer.then(function(vp) {
+            videoPlayer.then(function(vp) {
                 $scope.currentTimestamp = window.Math.floor(vp.videoElement[0].currentTime);
             });
         });
