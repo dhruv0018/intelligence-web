@@ -14,17 +14,36 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$state', '$stateParams', 'AuthenticationService', 'AuthorizationService', 'AlertsService', 'ResourceManager',
-    function run($rootScope, $state, $stateParams, auth, authz, alerts, managedResources) {
+    '$rootScope', '$urlRouter', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
+    function run($rootScope, $urlRouter, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
+            /* If the user is accessing a public state. */
+            if (authz.isPublic(toState)) {
+
+                /* It there is no access token set. */
+                if (!tokens.getAccessToken()) {
+
+                    /* Prevent the state from loading. */
+                    event.preventDefault();
+
+                    /* Request client tokens. */
+                    tokens.requestClientTokens().then(function(authTokens) {
+
+                        tokens.setTokens(authTokens);
+
+                        $state.go(toState);
+                    });
+                }
+            }
+
             /* If not accessing a public state and not logged in, then
              * redirect the user to login. */
-            if (!authz.isPublic(toState) && !auth.isLoggedIn) {
+            else if (!auth.isLoggedIn) {
 
                 /* Prevent the state from loading. */
                 event.preventDefault();
