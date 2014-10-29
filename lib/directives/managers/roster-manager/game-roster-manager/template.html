@@ -36,7 +36,7 @@
                 </button>
 
                 <a class="excel-upload"
-                   data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
+                   data-ng-hide="!game.rosters[team.id].id || team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
                    href
                    data-open-modal="ExcelUpload.Modal"
                    data-modal-options="options">

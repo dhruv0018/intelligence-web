@@ -124,10 +124,6 @@ Info.controller('Coach.Game.Info.controller', [
                 var team = teams.get($scope.game.teamId);
                 var opposingTeam = teams.get($scope.game.opposingTeamId);
 
-                console.log(team);
-                console.log(opposingTeam);
-                console.log($scope.game);
-
                 $scope.game.rosters = ($scope.game.rosters && $scope.game.rosters[$scope.game.teamId]) ? $scope.game.rosters : {};
 
                 if (!$scope.game.rosters[$scope.game.teamId]) {
@@ -157,24 +153,6 @@ Info.controller('Coach.Game.Info.controller', [
 
             });
 
-        };
-
-        $scope.buildGameRoster = function(game) {
-
-            var team = teams.get(game.teamId);
-            var teamPlayers = $scope.data.playersList;
-            var activeTeamPlayers = players.constructActiveRoster(teamPlayers, team.roster.id);
-
-            if ((!$scope.gamePlayerLists[game.teamId] || $scope.gamePlayerLists[game.teamId].length <= 1) && $scope.game.isRegular()) {
-
-                angular.forEach(activeTeamPlayers, function(teamPlayer) {
-
-                    teamPlayer.transferPlayerInformation(team.roster.id, game.rosters[game.teamId].id);
-                    $scope.gamePlayerLists[game.teamId].push(teamPlayer);
-                });
-                //TODO not super happy about this or sure if it will work once we start importing real teams and their rosters
-                return players.save(game.rosters[game.teamId].id, $scope.gamePlayerLists[game.teamId]);
-            }
         };
 
         $scope.goToRoster = function() {
