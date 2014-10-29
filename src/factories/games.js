@@ -886,12 +886,11 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!self.shares || !self.shares.length) return;
 
-                for (var index = 0; index < self.shares.length; index++) {
-                    if (!self.shares[index].sharedWithUserId) {
+                self.shares.forEach(function(share, index) {
+                    if (!share.sharedWithUserId) {
                         self.shares.splice(index, 1);
-                        return;
                     }
-                }
+                });
             },
             isSharedWithPublic: function() {
                 var self = this;

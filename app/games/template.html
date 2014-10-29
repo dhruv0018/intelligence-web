@@ -3,7 +3,7 @@
 			<div>
 				<span class="game-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span><br/>
 				<span class="game-shared-by pull-right">Clip shared by {{uploadedBy.firstName}} {{uploadedBy.lastName}}</span>
-				<h3>{{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}</h3>
+				<h3>{{team.name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{opposingTeam.name}}</h3>
 			</div>
 		</div>
         <div class="player" data-ng-if="publiclyShared">
@@ -12,7 +12,7 @@
         <div class="public-game-header-mobile" data-ng-if="publiclyShared">
 			<div>
 				<span class="game-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span><br/>
-				<h3>{{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}</h3>
+				<h3>{{team.name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{opposingTeam.name}}</h3>
 				<span class="game-shared-by">Clip shared by {{uploadedBy.firstName}} {{uploadedBy.lastName}}</span>
 			</div>
 		</div>
