@@ -169,6 +169,39 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
+             * Requests an OAuth tokens from the server.
+             * @return {object} - the OAuth tokens
+             */
+            requestClientTokens: function() {
+
+                var self = this;
+
+                $http = $http || $injector.get('$http');
+
+                var url = config.oauth.uri + 'token';
+
+                var data = 'grant_type=client_credentials';
+
+                var auth = config.oauth.client.id + ':' + config.oauth.client.secret;
+
+                var headers = {
+
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic ' + btoa(auth)
+                };
+
+                var request = {
+
+                    method: 'POST',
+                    headers: headers,
+                    url: url,
+                    data: data
+                };
+
+                return $http(request).then(self.receiveTokens);
+            },
+
+            /**
              * Receives and parses the server response from the access token request.
              * @param {string} response - the response from requestAccessToken to parse
              */
