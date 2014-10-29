@@ -18,6 +18,7 @@
                         {{athlete.firstName}}
                         {{athlete.lastName[0]}}.
                     </span>
+                    <a href> (View Stats) </a>
                 </p>
                 <div class="pull-right">
                     <span data-ng-if="users[athlete.userId].lastAccessed">{{usersFactory.getLastAccessed(users[athlete.userId]) | date: 'mediumDate'}}</span>
@@ -64,16 +65,18 @@
                                 <tr>
                                     <th>First Name</th>
                                     <th>Last Name</th>
-                                    <th data-ng-if="athlete.jerseyNumbers">Jersey Number</th>
+                                    <th data-ng-if="athlete.description === 'players'">Jersey Number</th>
                                 </tr>
                             </thead>
                             <tr>
                                 <td><input type="text" class="name" placeholder="First Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.firstName" required></td>
                                 <td><input type="text" class="name" placeholder="Last Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.lastName" required></td>
-                                <td data-ng-if="athlete.jerseyNumbers"><input size="3" type="text" data-ng-model="athlete.jerseyNumbers[rosterId]" required></td>
+                                <td data-ng-if="athlete.description === 'players'">
+                                    <input placeholder="#" size="3" type="text" data-ng-model="playerInfo.jerseyNumber" required>
+                                </td>
                             </tr>
                         </table>
-                        <div data-ng-if="positions && keys(positions).length > 0" class="col-md-12 position-list">
+                        <div data-ng-if="athlete.description === 'players'" class="col-md-12 position-list">
                             <strong>*Position</strong>
                             <div class="row">
                                 <div class="col-md-12">
