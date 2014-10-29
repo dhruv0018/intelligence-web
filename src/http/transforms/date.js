@@ -7,9 +7,9 @@ var moment = require('moment');
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-var ISO8601_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/;
+var ISO8601_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3}Z|\+\d{2}:\d{2})/;
 
-function transformToDate(data) {
+function transformToDates(data) {
 
     if (angular.isObject(data)) {
 
@@ -34,7 +34,7 @@ function transformToDate(data) {
 
             else if (angular.isObject(value)) {
 
-                return transformToDate(value);
+                return transformToDates(value);
             }
         });
     }
@@ -42,11 +42,23 @@ function transformToDate(data) {
     return data;
 }
 
+IntelligenceWebClient.factory('TransformDates', [
+    function() {
+
+        var TransformDates = {
+
+            transformToDates: transformToDates
+        };
+
+        return TransformDates;
+    }
+]);
+
 IntelligenceWebClient.config([
     '$httpProvider',
     function($httpProvider) {
 
-        $httpProvider.defaults.transformResponse.push(transformToDate);
+        $httpProvider.defaults.transformResponse.push(transformToDates);
     }
 ]);
 
