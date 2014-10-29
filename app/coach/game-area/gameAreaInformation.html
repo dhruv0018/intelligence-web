@@ -7,7 +7,10 @@
     </div>
 
     <div class="info-container">
-        <uploading-controls data-ng-if="game.flow" data-redirect-state="add-film" data-flow="game.flow"></uploading-controls>
+        <uploading-controls data-ng-if="game.flow"
+                            data-film="game"
+                            data-redirect-state="add-film"
+                            data-flow="game.flow"></uploading-controls>
         <upload-status data-ng-if="game.flow" data-flow="game.flow" data-game="game"></upload-status>
 
         <krossover-coach-game data-game="game"
