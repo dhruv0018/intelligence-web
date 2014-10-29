@@ -113,8 +113,6 @@ Header.controller('HeaderController', [
         $scope.session = session;
         $scope.account = account;
 
-        $scope.currentUser = users.get(session.currentUser.id);
-
         $scope.logout = function() {
 
             auth.logoutUser();
