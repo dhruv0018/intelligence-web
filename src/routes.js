@@ -36,7 +36,7 @@ IntelligenceWebClient.run([
 
                         tokens.setTokens(authTokens);
 
-                        $state.go(toState);
+                        $state.go(toState, toParams);
                     });
                 }
             }
