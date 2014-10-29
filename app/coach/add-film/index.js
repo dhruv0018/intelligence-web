@@ -19,7 +19,6 @@ AddFilm.run([
     function run($templateCache) {
 
         $templateCache.put('coach/add-film/template.html', require('./template.html'));
-        $templateCache.put('coach/add-film/start.html', require('./start.html'));
     }
 ]);
 
@@ -40,10 +39,6 @@ AddFilm.config([
                 'main@root': {
                     templateUrl: 'coach/add-film/template.html',
                     controller: 'AddFilmController'
-                },
-                'content@add-film': {
-                    templateUrl: 'coach/add-film/start.html',
-                    controller: 'StartController'
                 }
             },
             resolve: {
@@ -78,8 +73,8 @@ AddFilm.config([
  * @type {Controller}
  */
 AddFilm.controller('AddFilmController', [
-    '$scope', '$state', 'config', 'GamesFactory', 'Coach.Data', 'AlertsService',
-    function controller($scope, $state, config, games, data, alerts) {
+    '$scope', '$state', 'config', 'GamesFactory', 'Coach.Data', 'AlertsService', 'TeamsFactory', 'SessionService', 'GAME_TYPES', 'LeaguesFactory',
+    function controller($scope, $state, config, games, data, alerts, teams, session, GAME_TYPES, leagues) {
         $scope.games = games;
         $scope.data = data;
         data.game = games.create();
@@ -94,12 +89,7 @@ AddFilm.controller('AddFilmController', [
                 message: '<i class="icon icon-warning"></i> New to the upload process? It’s easy. <a target="_blank" href="' + $scope.howToUpload + '">Let us show you how.</a>'
             });
         }
-    }
-]);
 
-AddFilm.controller('StartController', [
-    '$scope', 'GAME_TYPES', 'Coach.Data', 'SessionService', 'LeaguesFactory', 'TeamsFactory', 'kvsUploaderInterface.Modal',
-    function($scope, GAME_TYPES, data, session, leagues, teams) {
         //intialize as -1 to remove flase negative. 0 means no team roster, 1 means valid team roster
         $scope.hasRoster = -1;
 
@@ -126,7 +116,5 @@ AddFilm.controller('StartController', [
         $scope.activePackage = data.coachsTeam.getActivePackage() || {};
 
         $scope.remainingBreakdowns = data.remainingBreakdowns;
-
-
     }
 ]);
