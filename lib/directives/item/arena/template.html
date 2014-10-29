@@ -1,3 +1,19 @@
 <div class="arena-item">
-	<button data-ng-click="ArenaModal.open(options)">Arena</button>
+	<button
+        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
+        data-ng-disabled="!isCoach && !isIndexer"
+		data-ng-click="resetAndOpenModal()"
+    >
+    	{{ 'XY Coordinates' || 'Optional' }}
+    </button>
+	<button 
+        data-ng-required="item.isRequired"
+		data-ng-if="isUndefined(event.variableValues[item.id].value)"
+	    data-ng-model="event.variableValues[item.id].value"
+        data-ng-blur="onBlur()"
+        data-focus-on="shouldFocus()"
+        data-autofocus-when="autoAdvance && item.index === 1"
+	>
+		Arena!
+	</button>
 </div>
