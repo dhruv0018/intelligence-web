@@ -34,7 +34,7 @@ Indexing.controller('Indexing.Modal.AddIndexerNote.Controller', [
         }
 
         $scope.submit = function() {
-            $scope.game.saveNotes().then(function() {
+            $scope.game.save().then(function() {
                 $modalInstance.close();
             });
         };
