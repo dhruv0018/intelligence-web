@@ -56,11 +56,10 @@ Games.config([
  * @type {Service}
  */
 Games.service('Indexer.Games.Data.Dependencies', [
-    '$q', 'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory',
-    function($q, session, users, games, teams, leagues, sports) {
+    'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory',
+    function(session, users, games, teams, leagues, sports) {
 
         var currentUser = session.currentUser;
-
         var Data = {
 
             sports: sports.load(),
