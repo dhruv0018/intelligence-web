@@ -73,8 +73,8 @@ AddFilm.config([
  * @type {Controller}
  */
 AddFilm.controller('AddFilmController', [
-    '$scope', '$state', 'config', 'GamesFactory', 'Coach.Data', 'AlertsService', 'TeamsFactory', 'SessionService', 'GAME_TYPES', 'LeaguesFactory',
-    function controller($scope, $state, config, games, data, alerts, teams, session, GAME_TYPES, leagues) {
+    '$scope', '$state', 'config', 'GamesFactory', 'Coach.Data', 'AlertsService', 'TeamsFactory', 'SessionService', 'GAME_TYPES', 'LeaguesFactory', 'kvsUploaderInterface.Modal',
+    function controller($scope, $state, config, games, data, alerts, teams, session, GAME_TYPES, leagues, uploaderModal) {
         $scope.games = games;
         $scope.data = data;
         data.game = games.create();
@@ -125,5 +125,16 @@ AddFilm.controller('AddFilmController', [
         $scope.activePackage = data.coachsTeam.getActivePackage() || {};
 
         $scope.remainingBreakdowns = data.remainingBreakdowns;
+
+        //used only for regular games
+        //cannot use open modal directive because
+        //need to do a check to see if the user has a roster
+        //before this modal can be launches for a regular game
+        $scope.launchUploaderInterface = function(gameTypeId) {
+            if (gameTypeId === GAME_TYPES.CONFERENCE.id && $scope.hasRoster) {
+                $scope.setGameType(gameTypeId);
+                uploaderModal.open($scope.options);
+            }
+        };
     }
 ]);
