@@ -4,7 +4,13 @@
 
     main {
 
+        display: flex;
+        flex: 1;
+        min-width: 520px;
+        min-height: 460px;
         position: relative;
+        overflow-y: auto;
+        flex-direction: column;
     }
 
     .btn-delete-event {
@@ -19,8 +25,8 @@
 
     .indexing-block {
 
-        position: relative;
-        width: ~"calc(100% - 61px - 50px - 100px - 10px)";
+        display: flex;
+        height: 50px;
         margin-left: auto;
         margin-right: auto;
         margin-top: 25px;
@@ -138,11 +144,6 @@
             flex: 0 0 0;
         }
 
-        .plays {
-            overflow: scroll;
-            height: ~"calc(100% - 32px)";
-        }
-
         .note-choice {
 
             padding: 15px;
@@ -207,10 +208,11 @@
     }
 
     x-krossover-videoplayer {
+        flex: 1;
 
-        margin-left: auto;
-        margin-right: auto;
-        width: ~"calc(100% - 61px - 50px - 100px - 10px)";
-        height: ~"calc(100% - 61px - 50px - 100px - 10px)";
+        data-videogular {
+            margin-left: auto;
+            margin-right: auto;
+        }
     }
 }
