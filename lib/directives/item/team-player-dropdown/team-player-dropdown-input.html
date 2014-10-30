@@ -1,5 +1,5 @@
 <a data-ng-click="selectItem(match.model)">
-    <span ng-if="match.model.type === 'Team'" data-bind-html-unsafe="match.model.name | typeaheadHighlight:query"></span>
+    <span class="teamOption" ng-if="match.model.type === 'Team'" data-bind-html-unsafe="match.model.name | typeaheadHighlight:query"></span>
 
     <span ng-if="match.model.type === 'Player'">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
