@@ -85,11 +85,6 @@ Info.controller('Coach.Game.Info.controller', [
         //prevents put request cascade
         $scope.game.allowEdits = ($scope.game.opposingTeamId && $scope.game.teamId && $scope.game.rosters[$scope.game.teamId].id) ? true : false;
 
-        //TODO figure out how this works
-        //$scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = $scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
-        //$scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = ($scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE]) ? $scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] : [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
-
-
         if ($scope.game.id && $scope.game.teamId && $scope.game.opposingTeamId) {
             $scope.tabs.enableAll();
         }
@@ -98,7 +93,10 @@ Info.controller('Coach.Game.Info.controller', [
             $scope.game.teamId = session.currentUser.currentRole.teamId;
         }
 
-        //Temporary
+        //Temporary code to facilitate normal input team creation
+        //The true intention is to use a typeahead to pull in the teams
+        //right now that is not easily possible because the typeahead cannot scope down the search results to
+        //non-customer teams you have faced. Later on when this is available, this code will be modified
         $scope.gameTeams = {
             team: ($scope.teams[$scope.game.teamId]) ? $scope.teams[$scope.game.teamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id}),
             opposingTeam: ($scope.teams[$scope.game.opposingTeamId]) ? $scope.teams[$scope.game.opposingTeamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id})
