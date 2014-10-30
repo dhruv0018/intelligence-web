@@ -49,7 +49,7 @@
         data-typeahead-editable="false"
         data-typeahead-on-select="selectItem($item)"
         data-typeahead-template-url="item/team-player-dropdown-input.html"
-        data-typeahead="item for item in items | ORFilter:{ jerseyNumber: $viewValue, name: $viewValue }"
+        data-typeahead="item for item in items | ORFilter:{ jerseyNumber: $viewValue, name: $viewValue } | orderBy:'jerseyNumber'"
     >
 
 </span>

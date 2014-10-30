@@ -47,7 +47,7 @@
         data-typeahead-editable="false"
         data-typeahead-on-select="selectPlayer($item)"
         data-typeahead-template-url="item/player-dropdown-input.html"
-        data-typeahead="player as player.firstName for player in playersList | filter:{ jerseyNumber: $viewValue }"
+        data-typeahead="player as player.firstName for player in playersList | filter:{ jerseyNumber: $viewValue } | orderBy:'jerseyNumber'"
     >
 
 </span>
