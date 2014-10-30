@@ -65,10 +65,7 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;
-
-        //Make sure team has roster
-        $scope.hasRoster = ($scope.game.teamId && $scope.game.rosters[$scope.game.teamId].playerInfo && Object.keys($scope.game.rosters[$scope.game.teamId].playerInfo).length > 0) ? true : false;
-        $scope.isNonRegularGame = games.isNonRegular($scope.game);
+        $scope.isNonRegularGame = $scope.game.isNonRegular();
 
         $scope.returnToGameAlert = function() {
             alerts.add({
@@ -94,6 +91,12 @@ Instructions.controller('Coach.Game.Instructions.controller', [
                 $scope.statusBuffer = 0;
             }
 
+            //Make sure team has roster
+            //Note, this is not a team roster per se, rather, it is the roster from the game keyed by your team id
+
+            //var teamRoster = (game.teamId && game.rosters && game.rosters[game.teamId]) ? game.getRoster(game.teamId) : null;
+            //$scope.hasRoster = (teamRoster && teamRoster.playerInfo && Object.keys(teamRoster.playerInfo).length > 0) ? true : false;
+            //console.log($scope.hasRoster);
         });
 
         $scope.switchChoice = function() {

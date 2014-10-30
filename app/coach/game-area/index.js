@@ -88,6 +88,7 @@ GameArea.config([
 
                             var promises = [];
 
+                            console.log(data.game);
                             //Player lists
                             if (data.game.teamId && data.game.rosters[data.game.teamId].id) {
                                 var teamPlayerList = players.query({

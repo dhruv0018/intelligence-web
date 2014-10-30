@@ -63,7 +63,7 @@ Info.directive('krossoverCoachGameInfo', [
  */
 Info.controller('Coach.Game.Info.controller', [
     '$q', '$rootScope', '$scope', '$modal', '$window', '$state', 'BasicModals', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'PlayersFactory', 'GamesFactory',
-    function controller($q, $rootScope, $scope, $modal, $window, $state, modals, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games, players) {
+    function controller($q, $rootScope, $scope, $modal, $window, $state, modals, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues,  players, games) {
 
         $scope.session = session;
 
@@ -146,7 +146,11 @@ Info.controller('Coach.Game.Info.controller', [
                 }
 
                 $scope.game.save().then(function() {
-                    $scope.goToRoster();
+                    games.fetch($scope.game.id).then(function(game) {
+                        angular.extend($scope.game, game);
+                        console.log('after fetch ', $scope.game);
+                        $scope.goToRoster();
+                    });
                 });
 
             });
