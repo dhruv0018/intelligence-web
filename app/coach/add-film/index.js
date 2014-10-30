@@ -90,7 +90,7 @@ AddFilm.controller('AddFilmController', [
             });
         }
 
-        //intialize as -1 to remove flase negative. 0 means no team roster, 1 means valid team roster
+        //intialize as -1 to remove false negative. 0 means no team roster, 1 means valid team roster
         $scope.hasRoster = -1;
 
         $scope.options = {
@@ -104,11 +104,20 @@ AddFilm.controller('AddFilmController', [
 
         //check if team has a valid roster
         var team = teams.get(session.currentUser.currentRole.teamId);
-        if (team.roster.playerInfo) {
+
+        var activeRoster = {};
+        angular.forEach(team.roster.playerInfo, function(playerInfo, playerId) {
+            if (playerInfo.isActive) {
+                activeRoster[playerId] = playerInfo;
+            }
+        });
+
+        if (Object.keys(activeRoster).length > 0) {
             $scope.hasRoster = 1;
         } else {
             $scope.hasRoster = 0;
         }
+
         $scope.GAME_TYPES = GAME_TYPES;
 
         $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];
