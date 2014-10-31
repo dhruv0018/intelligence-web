@@ -38,12 +38,11 @@ Login.config([
 
             .state('login', {
                 url: '/login',
-                parent: 'root',
                 views: {
                     'header@login': {
                         templateUrl: 'signup.html'
                     },
-                    'main@root': {
+                    'root': {
                         templateUrl: 'template.html',
                         controller: 'LoginController'
                     },
