@@ -1,8 +1,5 @@
 {
     "name": "roster-manager",
-    "templates": [
-        "template.html"
-    ],
     "paths": [
         "."
     ],
