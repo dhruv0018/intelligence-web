@@ -39,7 +39,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                     game.sharedWithUsers = game.sharedWithUsers || {};
 
                     angular.forEach(game.shares, function(share) {
-                        game.sharedWithUsers[share.sharedWithUserId] = share;
+                        if (share.sharedWithUserId) {
+                            game.sharedWithUsers[share.sharedWithUserId] = share;
+                        }
                     });
                 }
 
@@ -864,6 +866,19 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+            getUserShares: function() {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
+                var sharesArray = [];
+
+                angular.forEach(self.sharedWithUsers, function(share, index) {
+                    sharesArray.push(share);
+                });
+
+                return sharesArray;
             },
             shareWithPublic: function() {
                 var self = this;
