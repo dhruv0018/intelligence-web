@@ -105,19 +105,45 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             save: function() {
 
-                this.showTags = false;
-                this.showScript = false;
-                this.isIndexing = false;
-                this.eventSelected = false;
+                /* Record the current event. */
+                var event = eventManager.current;
 
                 /* Snap video back to time of current event. */
                 videoPlayer.seekTime(eventManager.current.time);
-                videoPlayer.play();
 
                 playManager.save();
                 playManager.clear();
                 tagsManager.reset();
                 eventManager.reset();
+
+                /* If the event is an end-and-start event. */
+                if (eventManager.isEndAndStartEvent(event)) {
+
+                    /* Get the tagId of the event. */
+                    var tagId = event.tagId;
+
+                    /* Get the tag of the event. */
+                    var tag = tagsManager.tagset.tags[tagId];
+
+                    /* Get the child tag ID of the tag. */
+                    var childId = tag.children[0];
+
+                    this.isIndexing = true;
+
+                    /* Select the child tag. */
+                    this.selectTag(childId);
+                }
+
+                /* Otherwise; if the event is a normal end event. */
+                else {
+
+                    this.showTags = false;
+                    this.showScript = false;
+                    this.isIndexing = false;
+                    this.eventSelected = false;
+
+                    videoPlayer.play();
+                }
             },
 
             /**
