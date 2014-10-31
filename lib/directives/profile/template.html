@@ -17,7 +17,7 @@
                 <span data-ng-repeat="position in getPositions() track by $index">
                     {{position.name}}
                 </span>
-                <span data-ng-if="team.roster.playerInfo[player.id].positionIds.length === 0 || !team.roster.playerInfo[player.id].positionIds"> No Positions</span>
+                <span data-ng-if="player && player.id && team.roster.playerInfo[player.id].positionIds.length === 0 || !team.roster.playerInfo[player.id].positionIds"> No Positions</span>
             </p>
             <p>
                 <span data-ng-if="users[player.userId].lastAccessed">{{usersFactory.getLastAccessed(users[player.userId]) | date: 'mediumDate'}}</span>
