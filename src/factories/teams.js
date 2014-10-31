@@ -139,7 +139,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 var copy = self.unextend(resource);
 
                 angular.forEach(copy.roles, function(role) {
-                    role.type = role.type.id;
+                    //TODO soon should remove having to convert the types
+                    var roleType = role.type;
+                    role.type = roleType;
                 });
 
                 parameters = {};

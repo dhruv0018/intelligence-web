@@ -53,60 +53,6 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
             type: 'warning',
             message: 'All game film is automatically shared with Athletes on your active roster.'
         });
-
-        $scope.singleSave = function(player, user) {
-            var playerOfInterest = players.singleSave($scope.rosterId, player).then(function(responsePlayer) {
-                angular.extend(player, player, responsePlayer);
-                return responsePlayer;
-            });
-
-            if (!user.email) {
-                return playerOfInterest;
-            }
-
-
-            return playerOfInterest.then(function(responsePlayer) {
-
-                return users.fetch(user.email).then(function(responseUser) {
-                    //user exists in the system
-                    var usersThatExistWithTheSameEmail = users.getList().filter(function(currentUser) {
-                        return currentUser.email === responseUser.email;
-                    });
-
-                    if (usersThatExistWithTheSameEmail.length === 0) {
-                        playerOfInterest.userId = responseUser.id;
-                        users.addRole(user, ROLES.ATHLETE, $scope.team);
-
-                        player.firstName = responseUser.firstName;
-                        player.lastName = responsePlayer.lastName;
-                        return playerOfInterest.save();
-                    } else {
-                        if (!responsePlayer.userId || responseUser.id !== responsePlayer.userId) {
-                            alerts.add({
-                                type: 'warning',
-                                message: 'An athlete with that email already exists on your team'
-                            });
-                        }
-                        return responsePlayer;
-                    }
-
-                }, function() {
-                    //user does not exist
-                    user.firstName = player.firstName;
-                    user.lastName = player.lastName;
-                    users.addRole(user, ROLES.ATHLETE, $scope.team);
-
-                    return user.save().then(function(responseUser) {
-                        player.userId = responseUser.id;
-                        return players.singleSave($scope.rosterId, player).then(function(nestedResponsePlayer) {
-                            return nestedResponsePlayer;
-                        });
-                    });
-
-                });
-
-            });
-        };
     }
 ]);
 
