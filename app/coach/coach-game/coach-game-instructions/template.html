@@ -23,7 +23,7 @@
 
                                 <div class="select-boxes col-md-12">
 
-                                    <button data-ng-show="hasRoster || game.isNonRegular()" type="button" class="btn-radio breakdown-game" data-ng-disabled="data.remainingBreakdowns.planGamesRemaining <= 0 && data.remainingBreakdowns.packageGamesRemaining <= 0" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}">
+                                    <button data-ng-show="hasRoster || game.isNonRegular()" type="button" class="btn-radio breakdown-game" data-ng-disabled="remainingBreakdowns.planGamesRemaining <= 0 && remainingBreakdowns.packageGamesRemaining <= 0" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.READY_FOR_INDEXING.id">
 
                                         <i class="icon icon-bar-chart-o"></i>
                                         <div>
@@ -33,7 +33,7 @@
 
                                     </button>
 
-                                    <button data-ng-if="game.isRegular() && !hasRoster" type="button" class="btn-radio breakdown-game no-roster" data-ng-disabled="true" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}">
+                                    <button data-ng-show="game.isRegular() && !hasRoster" type="button" class="btn-radio breakdown-game no-roster" data-ng-disabled="true" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}">
 
                                         <i class="icon icon-bar-chart-o"></i>
                                         <div>
@@ -52,7 +52,7 @@
 
                                 <div class="select-boxes col-md-12">
 
-                                    <button type="button" class="btn-radio" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.NOT_INDEXED.id }}">
+                                    <button type="button" class="btn-radio" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.NOT_INDEXED.id">
 
                                         <i class="icon icon-share-square-o"></i>
                                         <div>
@@ -108,7 +108,7 @@
                                                     </p>
 
                                                     <div data-ng-hide="positionset.positions.length === 0" class="breakdowns">
-                                                        <div class="remaining-breakdowns">{{data.remainingBreakdowns.planGamesRemaining||0}}</div> Breakdowns left this week. {{data.remainingBreakdowns.packageGamesRemaining||0}} extra breakdowns. 
+                                                        <div class="remaining-breakdowns">{{data.remainingBreakdowns.planGamesRemaining||0}}</div> Breakdowns left this week. {{data.remainingBreakdowns.packageGamesRemaining||0}} extra breakdowns.
                                                     </div>
 
                                                     <button data-ng-hide="positionset.positions.length === 0" data-ng-disabled="statusBuffer > GAME_STATUSES['READY_FOR_INDEXING'].id || (data.remainingBreakdowns.planGamesRemaining <= 0 && data.remainingBreakdowns.packageGamesRemaining <= 0)" class="switch-choice" data-ng-click="switchChoice()">

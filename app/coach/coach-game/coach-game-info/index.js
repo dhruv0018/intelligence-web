@@ -147,8 +147,7 @@ Info.controller('Coach.Game.Info.controller', [
 
                 $scope.game.save().then(function() {
                     games.fetch($scope.game.id).then(function(game) {
-                        angular.extend($scope.game, game);
-                        console.log('after fetch ', $scope.game);
+                        angular.extend($scope.game, $scope.game, game);
                         $scope.goToRoster();
                     });
                 });
