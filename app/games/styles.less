@@ -2,11 +2,14 @@
 
 .public-game {
     
+    display: flex;
+    flex-direction: column;
     height: 100%;
     overflow-y: scroll;
 
     .public-game-header,
     .public-game-header-mobile {
+        display: flex;
         background-color: @content-bg;
         border-bottom: thin solid @gray-border;
         margin-bottom: 20px;
@@ -38,8 +41,13 @@
     }
     
     .player {
-        margin: auto;
-        display: table;
+        display: flex;
+        flex: 1;
+
+        data-videogular {
+            margin-left: auto;
+            margin-right: auto;
+        }
     }
 
     .locked-game {
