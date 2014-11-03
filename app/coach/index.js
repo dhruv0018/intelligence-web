@@ -59,11 +59,10 @@ Coach.service('Coach.Data.Dependencies', [
             uploaderTeamId: session.currentUser.currentRole.teamId
         });
 
-//        var gamesSharedWithUser = games.load({
-//            sharedWithUserId: session.currentUser.id
-//        });
-//TODO fix this at some point
-        var gamesSharedWithUser = [];
+        var gamesSharedWithUser = games.load({
+            sharedWithUserId: session.currentUser.id
+        });
+
         var Data = {
             positionSets: positionsets.load(),
             teams: teams.load({ relatedUserId: currentUser.id }),

@@ -86,9 +86,7 @@ Game.controller('Coach.Game.controller', [
         $scope.positionset = ($scope.league.id && $scope.league.positionSetId) ? positionSets.get($scope.league.positionSetId) : {};
         $scope.config = config;
 
-        /* TODO: Remove this: */
         $scope.games = games;
-
         $scope.teams = teams.getCollection();
 
         $scope.validation = {

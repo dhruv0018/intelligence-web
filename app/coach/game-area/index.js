@@ -89,7 +89,7 @@ GameArea.config([
                             var promises = [];
 
                             //Player lists
-                            if (data.game.teamId && data.game.rosters[data.game.teamId].id) {
+                            if (data.game.teamId && data.game.rosters && data.game.rosters[data.game.teamId].id) {
                                 var teamPlayerList = players.query({
                                     rosterId: data.game.rosters[data.game.teamId].id
                                 }).then(function(playerList) {
@@ -99,7 +99,7 @@ GameArea.config([
                                 promises.push(teamPlayerList);
                             }
 
-                            if (data.game.opposingTeamId && data.game.rosters[data.game.opposingTeamId].id) {
+                            if (data.game.opposingTeamId && data.game.rosters && data.game.rosters[data.game.opposingTeamId].id) {
                                 var opposingTeamPlayerList = players.query({
                                     rosterId: data.game.rosters[data.game.opposingTeamId].id
                                 }).then(function(playerList) {

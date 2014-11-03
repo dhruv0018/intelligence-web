@@ -69,8 +69,10 @@ GameTab.directive('gameTab', [
  * @type {controller}
  */
 GameTab.controller('Coach.Game.GameTab.controller', [
-    '$scope', '$state', 'PlayersFactory', 'TeamsFactory', 'PositionsetsFactory', 'LeaguesFactory',
-    function controller($scope, $state, players, teams, positionsets, leagues) {
+    '$scope', '$state', 'PlayersFactory', 'TeamsFactory', 'PositionsetsFactory', 'LeaguesFactory', 'config',
+    function controller($scope, $state, players, teams, positionsets, leagues, config) {
+
+        $scope.config = config;
 
         //Collections
         $scope.teams = teams.getCollection();

@@ -56,6 +56,50 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 return tagset;
             },
 
+            unextend: function(tagset) {
+
+                var self = this;
+
+                tagset = tagset || self;
+
+                var copy = angular.copy(tagset);
+
+                var tags = [];
+
+                Object.keys(copy.tags).forEach(function(tagKey) {
+
+                    var tag = copy.tags[tagKey];
+
+                    var tagVariables = [];
+
+                    Object.keys(tag.tagVariables).forEach(function(tagVariableKey) {
+
+                        var tagVariable = tag.tagVariables[tagVariableKey];
+
+                        var formations = [];
+
+                        Object.keys(tagVariable.formations).forEach(function(tagVariableFormationsKey) {
+
+                            var formation = tagVariable.formations[tagVariableFormationsKey];
+
+                            formations.push(formation);
+                        });
+
+                        tagVariable.formations = formations;
+
+                        tagVariables[--tagVariableKey] = tagVariable;
+                    });
+
+                    tag.tagVariables = tagVariables;
+
+                    tags.push(tag);
+                });
+
+                copy.tags = tags;
+
+                return copy;
+            },
+
             getStartTags: function() {
 
                 var tags = this.tags;

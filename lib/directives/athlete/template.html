@@ -9,7 +9,7 @@
         </a>
     </div>
     <form name="athleteForm" data-ng-if="editable && !athlete.isUnknown">
-        <table data-ng-class="{'de-selected': !rosterEntry.playerInfo.isActive,
+        <table data-ng-class="{'deselected': !rosterEntry.playerInfo.isActive,
                                'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}"
                class="table">
             <tr>

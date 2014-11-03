@@ -46,11 +46,13 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
-                game.uploaderUserId = game.uploaderUserId || session.currentUser.id;
 
-                if (session.currentUser.currentRole.teamId) {
+                if (!game.uploaderUserId && session.currentUser && session.currentUser.id) {
+                    game.uploaderUserId = session.currentUser.id;
+                }
 
-                    game.uploaderTeamId = game.uploaderTeamId || session.currentUser.currentRole.teamId;
+                if (!game.uploaderTeamId && session.currentUser && session.currentUser.currentRole && session.currentUser.currentRole.teamId) {
+                    game.uploaderTeamId = session.currentUser.currentRole.teamId;
                 }
 
                 /* build lookup table of shares by userId shared with */
@@ -63,25 +65,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 return game;
-            },
-            saveNotes: function() {
-
-                var deferred = $q.defer();
-
-                var self = this;
-                self.save().then(function() {
-
-                    deferred.notify('saved');
-
-                    GamesResource.get({ id: self.id }, function(result) {
-                        self.notes = result.notes;
-                        deferred.resolve(result.notes);
-                    }, function() {
-                        deferred.reject(null);
-                    });
-                });
-
-                return deferred.promise;
             },
 
             generateStats: function(id, success, error) {

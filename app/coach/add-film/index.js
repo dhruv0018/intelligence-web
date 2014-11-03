@@ -73,8 +73,8 @@ AddFilm.config([
  * @type {Controller}
  */
 AddFilm.controller('AddFilmController', [
-    '$scope', '$state', 'config', 'GamesFactory', 'Coach.Data', 'AlertsService', 'TeamsFactory', 'SessionService', 'GAME_TYPES', 'LeaguesFactory',
-    function controller($scope, $state, config, games, data, alerts, teams, session, GAME_TYPES, leagues) {
+    '$scope', '$state', 'config', 'GamesFactory', 'Coach.Data', 'AlertsService', 'TeamsFactory', 'SessionService', 'GAME_TYPES', 'LeaguesFactory', 'kvsUploaderInterface.Modal',
+    function controller($scope, $state, config, games, data, alerts, teams, session, GAME_TYPES, leagues, uploaderModal) {
         $scope.games = games;
         $scope.data = data;
         data.game = games.create();
@@ -90,7 +90,7 @@ AddFilm.controller('AddFilmController', [
             });
         }
 
-        //intialize as -1 to remove flase negative. 0 means no team roster, 1 means valid team roster
+        //intialize as -1 to remove false negative. 0 means no team roster, 1 means valid team roster
         $scope.hasRoster = -1;
 
         $scope.options = {
@@ -104,11 +104,20 @@ AddFilm.controller('AddFilmController', [
 
         //check if team has a valid roster
         var team = teams.get(session.currentUser.currentRole.teamId);
-        if (team.roster.playerInfo) {
+
+        var activeRoster = {};
+        angular.forEach(team.roster.playerInfo, function(playerInfo, playerId) {
+            if (playerInfo.isActive) {
+                activeRoster[playerId] = playerInfo;
+            }
+        });
+
+        if (Object.keys(activeRoster).length > 0) {
             $scope.hasRoster = 1;
         } else {
             $scope.hasRoster = 0;
         }
+
         $scope.GAME_TYPES = GAME_TYPES;
 
         $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];
@@ -116,5 +125,16 @@ AddFilm.controller('AddFilmController', [
         $scope.activePackage = data.coachsTeam.getActivePackage() || {};
 
         $scope.remainingBreakdowns = data.remainingBreakdowns;
+
+        //used only for regular games
+        //cannot use open modal directive because
+        //need to do a check to see if the user has a roster
+        //before this modal can be launches for a regular game
+        $scope.launchUploaderInterface = function(gameTypeId) {
+            if (gameTypeId === GAME_TYPES.CONFERENCE.id && $scope.hasRoster) {
+                $scope.setGameType(gameTypeId);
+                uploaderModal.open($scope.options);
+            }
+        };
     }
 ]);
