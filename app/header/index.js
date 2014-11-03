@@ -114,9 +114,11 @@ Header.controller('HeaderController', [
         $scope.account = account;
 
         //TEMP - get sport id to show Analytics tab for FB only
-        var team = teams.get(session.currentUser.currentRole.teamId);
-        $scope.league = leagues.get(team.leagueId);
-        $scope.SPORTS = SPORTS;
+        if (session.currentUser.is(ROLES.COACH)) {
+            var team = teams.get(session.currentUser.currentRole.teamId);
+            $scope.league = leagues.get(team.leagueId);
+            $scope.SPORTS = SPORTS;
+        }
 
         $scope.logout = function() {
 

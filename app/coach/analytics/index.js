@@ -52,8 +52,20 @@ Analytics.config([
  */
 
 Analytics.controller('AnalyticsController', [
-    '$scope', '$state', '$stateParams',
-    function controller($scope, $state, $stateParams) {
+    '$scope', '$state', '$stateParams', 'SessionService', 'LeaguesFactory', 'TeamsFactory',
+    function controller($scope, $state, $stateParams, session, leagues, teams) {
+        var teamId = session.currentUser.currentRole.teamId;
+        var team = teams.get(teamId);
+        var league = leagues.get(team.leagueId);
+        $scope.seasons = league.seasons;
+        $scope.filterQuery = {};
+
+        $scope.generateStats = function() {
+            team.generateStats($scope.filterQuery).then(function(data) {
+                $scope.data = data;
+                //Spinner goes here!
+            });
+        };
     }
 ]);
 

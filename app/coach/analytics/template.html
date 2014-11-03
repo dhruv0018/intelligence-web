@@ -1,4 +1,30 @@
 <section class="analytics">
-
+    <div class="analytics-options">
+        <div class="analytics-option">
+            <span>Season</span>
+            <select data-ng-options="season.id as season.startDate+'-'+season.endDate for season in seasons" data-ng-model="filterQuery.seasonId" data-ng-change="generateStats()"></select>
+        </div>
+        <div class="analytics-option">
+            <span>Game Type</span>
+            <select>
+                <option>All Stats</option>
+                <option>Conference Stats</option>
+                <option>Non-Conference Stats</option>
+                <option>Playoffs Stats</option>
+            </select>
+        </div>
+        <div class="analytics-option">
+            <span>Opponent</span>
+            <select>
+                <option>All</option>
+                <option>Other team</option>
+                <option>Another team</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="analytics-tables-container">
+    <dynamic-table data-source="data"></dynamic-table>
+    </div>
 </section>
 

@@ -18,6 +18,7 @@ var angular = window.angular;
 var Coach = angular.module('Coach', [
     'Coach.Game',
     'Coach.FilmHome',
+    'Coach.Analytics',
     'Coach.GameArea',
     'Coach.Team',
     'Coach.Team.Info',
