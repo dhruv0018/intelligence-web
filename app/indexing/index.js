@@ -121,8 +121,8 @@ Indexing.config([
                 },
 
                 onEnter: [
-                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'VideoPlayerInstance', 'GamesFactory',
-                    function($state, $timeout, $stateParams, session, modals, data, indexing, Videoplayer, games) {
+                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'GamesFactory',
+                    function($state, $timeout, $stateParams, session, modals, data, indexing, games) {
 
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
@@ -160,33 +160,6 @@ Indexing.config([
 
                             indexing.IS_INDEXING_STATE = true;
                         }
-
-                        var globalCallbacks = {
-                            'space': true,
-                            'left': true,
-                            'right': true,
-                            'enter': true,
-                            'tab': true,
-                            'esc': true
-                        };
-
-                        var originalStopCallback = Mousetrap.stopCallback;
-
-                        Mousetrap.stopCallback = function(event, element, combo, sequence) {
-
-                            $timeout(function() {
-
-                                if (indexing.isIndexing) {
-
-                                    if (globalCallbacks[combo] || globalCallbacks[sequence]) {
-                                        return false;
-                                    }
-                                }
-
-                                return originalStopCallback(event, element, combo);
-
-                            }, 0);
-                        };
 
                         Mousetrap.bind('space', function() {
 

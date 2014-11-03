@@ -14,7 +14,7 @@
         "uri": "/intelligence-api/v1/password-reset/"
     },
     "reels": {
-        "turnedOn": false
+        "turnedOn": true
     },
     "links": {
         "signup": {
