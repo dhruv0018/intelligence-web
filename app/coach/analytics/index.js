@@ -61,7 +61,6 @@ Analytics.controller('AnalyticsController', [
         $scope.filterQuery = {};
         $scope.data = {};
         $scope.loadingTables = false;
-        $scope.generateStats();
 
         $scope.generateStats = function() {
             team.generateStats($scope.filterQuery).then(function(data) {

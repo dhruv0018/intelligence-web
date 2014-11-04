@@ -7,11 +7,11 @@
             </div>
             <div class="analytics-option">
                 <span>Game Type</span>
-                <select data-ng-model="filterQuery.gameType" data-ng-init="filterQuery.gameType = 'All Stats'" data-ng-change="generateStats()">
-                    <option>All Stats</option>
-                    <option>Conference Stats</option>
-                    <option>Non-Conference Stats</option>
-                    <option>Playoffs Stats</option>
+                <select data-ng-model="filterQuery.gameType" data-ng-init="filterQuery.gameType = ''" data-ng-change="generateStats()">
+                    <option value="">All Stats</option>
+                    <option value="1">Conference Stats</option>
+                    <option value="2">Non-Conference Stats</option>
+                    <option value="3">Playoffs Stats</option>
                 </select>
             </div>
             <div class="analytics-option">
