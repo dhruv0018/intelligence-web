@@ -1,30 +1,33 @@
 <section class="analytics">
-    <div class="analytics-options">
-        <div class="analytics-option">
-            <span>Season</span>
-            <select data-ng-options="season.id as season.startDate+'-'+season.endDate for season in seasons" data-ng-model="filterQuery.seasonId" data-ng-change="generateStats()"></select>
+    <div>
+        <div class="analytics-options">
+            <div class="analytics-option">
+                <span>Season</span>
+                <select data-ng-options="season.id as season.startDate | date: 'yyyy' for season in seasons" data-ng-model="filterQuery.seasonId" data-ng-init="filterQuery.seasonId = seasons[0].id" data-ng-change="generateStats()"></select>
+            </div>
+            <div class="analytics-option">
+                <span>Game Type</span>
+                <select data-ng-model="filterQuery.gameType" data-ng-init="filterQuery.gameType = 'All Stats'" data-ng-change="generateStats()">
+                    <option>All Stats</option>
+                    <option>Conference Stats</option>
+                    <option>Non-Conference Stats</option>
+                    <option>Playoffs Stats</option>
+                </select>
+            </div>
+            <div class="analytics-option">
+                <span>Opponent</span>
+                <select>
+                    <option>All</option>
+                    <option>Other team</option>
+                    <option>Another team</option>
+                </select>
+            </div>
         </div>
-        <div class="analytics-option">
-            <span>Game Type</span>
-            <select>
-                <option>All Stats</option>
-                <option>Conference Stats</option>
-                <option>Non-Conference Stats</option>
-                <option>Playoffs Stats</option>
-            </select>
+        
+        <div data-ng-if="data.teamStats" class="analytics-tables-container">
+            <i class="icon icon-refresh" data-ng-show="loadingTables"></i>
+            <dynamic-table data-source="data.teamStats"></dynamic-table>
         </div>
-        <div class="analytics-option">
-            <span>Opponent</span>
-            <select>
-                <option>All</option>
-                <option>Other team</option>
-                <option>Another team</option>
-            </select>
-        </div>
-    </div>
-    
-    <div class="analytics-tables-container">
-    <dynamic-table data-source="data"></dynamic-table>
     </div>
 </section>
 

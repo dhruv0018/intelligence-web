@@ -59,12 +59,16 @@ Analytics.controller('AnalyticsController', [
         var league = leagues.get(team.leagueId);
         $scope.seasons = league.seasons;
         $scope.filterQuery = {};
+        $scope.data = {};
+        $scope.loadingTables = false;
+        $scope.generateStats();
 
         $scope.generateStats = function() {
             team.generateStats($scope.filterQuery).then(function(data) {
                 $scope.data = data;
-                //Spinner goes here!
+                $scope.loadingTables = true;
             });
+            $scope.loadingTables = false;
         };
     }
 ]);

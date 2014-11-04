@@ -49,7 +49,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    overflow-y: scroll;
+    height: calc(~"100% - 52px");
     
     .game-area-game-information {
       position: relative;
@@ -115,6 +115,11 @@
       display: flex;
       flex: 1;
       margin: 1%;
+
+      data-videogular {
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     .breakdown-sidebar {
@@ -184,6 +189,8 @@
 .statsPage {
   
   padding: 60px;
+  height: 100%;
+  overflow-y: auto;
 
   .stats-btn-group {
     text-align: center;
@@ -331,21 +338,154 @@
   }
 }
 
-.formations-teams-header {
-  width: 80%;
-  margin: 20px auto;
-  padding: 20px;
-  border: thin solid @gray-border;
-  background-color: @content-bg;
-  letter-spacing: normal;
-  font-weight: 500;
-  color: black;
-  position: relative;
+.game-area-formations {
 
-  .formationOption {
+  height: 100%;
+  overflow-y: auto;
+
+  .formations-teams-header {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    border: thin solid @gray-border;
+    background-color: @content-bg;
+    letter-spacing: normal;
+    font-weight: 500;
+    color: black;
+    position: relative;
+
+    .formationOption {
+        display: inline-block;
+        padding-right: 20px;
+        white-space: nowrap;
+
+        span {
+          display: block;
+        }
+
+        select {
+          background-color: white;
+          color: @gray-light;
+          font-weight: 400;
+          padding-right: 30px;
+          text-overflow: ellipsis;
+        }
+      }
+  }
+
+  .formations-chart-container {
+    border: thin solid @gray-border;
+    width: 80%;
+    margin: 20px auto;
+    letter-spacing: normal;
+
+    a.accordion-toggle:hover {
+      text-decoration: none;
+    }
+
+    .field-header {
+      color: white;
+      background-color: @brand-blue;
+      height: 50px;
+      line-height: 50px;
+      padding-left: 20px;
+      padding-right: 20px;
+      font-weight: 400;
+
+      .field-info {
+        margin-right: 30px;
+
+        .field-info-title {
+          font-weight: 500;
+          color: yellow;
+        }
+      }
+
+      i {
+        line-height: 50px;
+        font-size: 30px;
+      }
+    }
+
+    .field-header-collapsed {
+      background-color: @gray-lighter;
+      color: @brand-blue;
+
+      .field-info {
+        .field-info-title {
+          color: @brand-blue;
+        }
+      }
+    }
+
+    .field-options {
+      background-color: @content-bg;
+      color: @gray-light;
+      height: 50px;
+      line-height: 50px;
+      padding-left: 20px;
+      padding-right: 20px;
+
+      .offense-defense {
+        margin-right: 60px;
+        cursor: pointer;
+      }
+
+      .active-report {
+        color: @brand-primary;
+      }
+
+      .print-formation {
+        .pull-right;
+        color: @brand-primary;
+        cursor: pointer;
+      }
+    }
+
+    .field {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+  }
+}
+
+.game-area-down-distance {
+  
+  height: 100%;
+  overflow-y: auto;
+
+  .down-distance-info-container {
+    width: 80%;
+    margin: 20px auto;
+    border: thin solid @gray-border;
+    background-color: @content-bg;
+    letter-spacing: normal;
+    font-weight: 500;
+    color: black;
+    position: relative;
+
+    .dndInfoHeader {
+      height: 40px;
+      padding: 10px 20px;
+      background-color: @gray-lighter;
+      color: @brand-blue;
+    }
+
+    .dndInfoBody {
+      padding: 20px;
+    }
+
+    .dndOption {
       display: inline-block;
       padding-right: 20px;
       white-space: nowrap;
+
+      &.lastOption {
+        padding: 0;
+        position: absolute;
+        bottom: 21px;
+        right: 20px;
+      }
 
       span {
         display: block;
@@ -356,134 +496,13 @@
         color: @gray-light;
         font-weight: 400;
         padding-right: 30px;
-        text-overflow: ellipsis;
       }
-    }
-}
 
-.formations-chart-container {
-  border: thin solid @gray-border;
-  width: 80%;
-  margin: 20px auto;
-  letter-spacing: normal;
-
-  a.accordion-toggle:hover {
-    text-decoration: none;
-  }
-
-  .field-header {
-    color: white;
-    background-color: @brand-blue;
-    height: 50px;
-    line-height: 50px;
-    padding-left: 20px;
-    padding-right: 20px;
-    font-weight: 400;
-
-    .field-info {
-      margin-right: 30px;
-
-      .field-info-title {
-        font-weight: 500;
-        color: yellow;
+      .create-report-btn {
+        .pull-right;
+        .btn;
+        .btn-primary;
       }
-    }
-
-    i {
-      line-height: 50px;
-      font-size: 30px;
-    }
-  }
-
-  .field-header-collapsed {
-    background-color: @gray-lighter;
-    color: @brand-blue;
-
-    .field-info {
-      .field-info-title {
-        color: @brand-blue;
-      }
-    }
-  }
-
-  .field-options {
-    background-color: @content-bg;
-    color: @gray-light;
-    height: 50px;
-    line-height: 50px;
-    padding-left: 20px;
-    padding-right: 20px;
-
-    .offense-defense {
-      margin-right: 60px;
-      cursor: pointer;
-    }
-
-    .active-report {
-      color: @brand-primary;
-    }
-
-    .print-formation {
-      .pull-right;
-      color: @brand-primary;
-      cursor: pointer;
-    }
-  }
-
-  .field {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-}
-
-.down-distance-info-container {
-  width: 80%;
-  margin: 20px auto;
-  border: thin solid @gray-border;
-  background-color: @content-bg;
-  letter-spacing: normal;
-  font-weight: 500;
-  color: black;
-  position: relative;
-
-  .dndInfoHeader {
-    height: 40px;
-    padding: 10px 20px;
-    background-color: @gray-lighter;
-    color: @brand-blue;
-  }
-
-  .dndInfoBody {
-    padding: 20px;
-  }
-
-  .dndOption {
-    display: inline-block;
-    padding-right: 20px;
-    white-space: nowrap;
-
-    &.lastOption {
-      padding: 0;
-      position: absolute;
-      bottom: 21px;
-      right: 20px;
-    }
-
-    span {
-      display: block;
-    }
-
-    select {
-      background-color: white;
-      color: @gray-light;
-      font-weight: 400;
-      padding-right: 30px;
-    }
-
-    .create-report-btn {
-      .pull-right;
-      .btn;
-      .btn-primary;
     }
   }
 }
