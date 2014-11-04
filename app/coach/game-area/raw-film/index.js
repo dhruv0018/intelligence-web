@@ -39,13 +39,14 @@ RawFilm.config([
 ]);
 
 RawFilm.controller('Coach.GameArea.RawFilm.controller', [
-    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory', 'Coach.Data',
-    function controller($scope, $state, $stateParams, leagues, games, plays, data) {
+    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'TeamsFactory', 'PlaysFactory', 'Coach.Data',
+    function controller($scope, $state, $stateParams, leagues, games, teams, plays, data) {
         $scope.gameId = $state.params.id;
         $scope.data = data;
         $scope.teamId = data.game.teamId;
+        $scope.team = teams.get($scope.teamId);
         $scope.leagues = leagues.getCollection();
-        $scope.league = data.league;
+        $scope.league = leagues.get($scope.team.leagueId);
         $scope.sources = data.game.getVideoSources();
         $scope.videoTitle = 'rawFilm';
     }
