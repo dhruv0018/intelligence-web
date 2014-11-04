@@ -81,6 +81,17 @@ AddFilm.controller('AddFilmController', [
         $scope.howToUpload = config.links.addFilmHelp.howToUpload.uri;
         $scope.commonIssues = config.links.addFilmHelp.commonIssues.uri;
         $scope.moreQuestions = config.links.addFilmHelp.moreQuestions.uri;
+        $scope.team = teams.get(session.currentUser.currentRole.teamId);
+        $scope.hasRoster = $scope.team.hasActivePlayerInfo();
+        $scope.GAME_TYPES = GAME_TYPES;
+        $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];
+        $scope.activePlan = data.coachsTeam.getActivePlan() || {};
+        $scope.activePackage = data.coachsTeam.getActivePackage() || {};
+        $scope.remainingBreakdowns = data.remainingBreakdowns;
+        $scope.options = {
+            scope: $scope,
+            film: $scope.game
+        };
 
         //Show message with link to support page if no games uploaded
         if (!games.getList().length) {
@@ -90,38 +101,6 @@ AddFilm.controller('AddFilmController', [
             });
         }
 
-        //intialize as -1 to remove false negative. 0 means no team roster, 1 means valid team roster
-        $scope.hasRoster = false;
-
-        $scope.options = {
-            scope: $scope,
-            film: $scope.game
-        };
-
-        //check if team has a valid roster
-        var team = teams.get(session.currentUser.currentRole.teamId);
-
-        var activeRoster = {};
-        angular.forEach(team.roster.playerInfo, function(playerInfo, playerId) {
-            if (playerInfo.isActive) {
-                activeRoster[playerId] = playerInfo;
-            }
-        });
-
-        if (Object.keys(activeRoster).length > 0) {
-            $scope.hasRoster = 1;
-        } else {
-            $scope.hasRoster = 0;
-        }
-
-        $scope.GAME_TYPES = GAME_TYPES;
-
-        $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];
-        $scope.activePlan = data.coachsTeam.getActivePlan() || {};
-        $scope.activePackage = data.coachsTeam.getActivePackage() || {};
-
-        $scope.remainingBreakdowns = data.remainingBreakdowns;
-
         $scope.launchUploaderInterface = function(gameTypeId) {
             $scope.game.gameType = gameTypeId;
 
@@ -129,5 +108,6 @@ AddFilm.controller('AddFilmController', [
                 uploaderModal.open($scope.options);
             }
         };
+
     }
 ]);
