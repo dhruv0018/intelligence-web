@@ -77,7 +77,7 @@ AddFilm.controller('AddFilmController', [
     function controller($scope, $state, config, games, data, alerts, teams, session, GAME_TYPES, leagues, uploaderModal) {
         $scope.games = games;
         $scope.data = data;
-        data.game = games.create();
+        $scope.game = games.create();
         $scope.howToUpload = config.links.addFilmHelp.howToUpload.uri;
         $scope.commonIssues = config.links.addFilmHelp.commonIssues.uri;
         $scope.moreQuestions = config.links.addFilmHelp.moreQuestions.uri;
@@ -91,15 +91,11 @@ AddFilm.controller('AddFilmController', [
         }
 
         //intialize as -1 to remove false negative. 0 means no team roster, 1 means valid team roster
-        $scope.hasRoster = -1;
+        $scope.hasRoster = false;
 
         $scope.options = {
-            scope: $scope
-        };
-
-        $scope.setGameType = function(gameType) {
-            data.game.gameType = gameType;
-            $scope.options.film = data.game;
+            scope: $scope,
+            film: $scope.game
         };
 
         //check if team has a valid roster
@@ -126,13 +122,10 @@ AddFilm.controller('AddFilmController', [
 
         $scope.remainingBreakdowns = data.remainingBreakdowns;
 
-        //used only for regular games
-        //cannot use open modal directive because
-        //need to do a check to see if the user has a roster
-        //before this modal can be launches for a regular game
         $scope.launchUploaderInterface = function(gameTypeId) {
-            if (gameTypeId === GAME_TYPES.CONFERENCE.id && $scope.hasRoster) {
-                $scope.setGameType(gameTypeId);
+            $scope.game.gameType = gameTypeId;
+
+            if ($scope.game.isNonRegular() || $scope.game.isRegular() && $scope.hasRoster) {
                 uploaderModal.open($scope.options);
             }
         };
