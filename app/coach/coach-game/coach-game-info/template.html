@@ -12,7 +12,7 @@
 
                 <header class="box-header col-md-12">
 
-                    <x-button-continue data-ng-disabled="formGameInfo.$invalid || game.isSaving"><span data-ng-hide="game.isSaving">Next</span><span data-ng-show="game.isSaving">Saving game…</span></x-button-continue>
+                    <x-button-continue data-ng-disabled="formGameInfo.$invalid || game.isSaving || game.isFetching"><span data-ng-hide="game.isSaving || game.isFetching">Next</span><span data-ng-show="game.isSaving || game.isFetching">Saving game…</span></x-button-continue>
 
                 </header>
 
@@ -193,7 +193,7 @@
 
             </div>
 
-            <x-button-continue data-ng-disabled="formGameInfo.$invalid || game.isSaving"><span data-ng-hide="game.isSaving">Next</span><span data-ng-show="game.isSaving">Saving game…</span></x-button-continue>
+            <x-button-continue data-ng-disabled="formGameInfo.$invalid || game.isSaving || game.isFetching"><span data-ng-hide="game.isSaving || game.isFetching">Next</span><span data-ng-show="game.isSaving || game.isFetching">Saving game…</span></x-button-continue>
 
             <a class="game-delete" data-ng-click="deleteGame()">
                 <i class="icon icon-remove"></i> Delete this game and all the data associated with it

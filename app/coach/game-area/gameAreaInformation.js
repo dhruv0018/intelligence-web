@@ -42,45 +42,15 @@ GameAreaInformation.config([
 
                             var teamId = session.currentUser.currentRole.teamId;
 
-                            /* TODO: Maybe not do this. */
+
                             var game = games.get(gameId);
                             data.game = game;
-
-                            /* TODO: Or this. */
-//                            var team = (game.teamId) ? teams.get(game.teamId) : {};
-//                            var league = (team.id) ? leagues.get(team.leagueId) : {};
-                            //data.league = league;
-
-                            /* TODO: Refactor this. */
                             data.gamePlayerLists = {};
 
                             var promises = [];
                             promises.push(teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
                                 data.remainingBreakdowns = breakdownData;
                             }));
-
-
-//                            if (game.teamId) {
-//                                var teamPlayersFilter = { rosterId: game.rosters[game.teamId].id };
-//                                var teamPlayerList = players.load(teamPlayersFilter).then(function() {
-//
-//                                    var teamPlayers = players.getList(teamPlayersFilter);
-//                                    data.teamPlayers = teamPlayers;
-//                                    data.gamePlayerLists[game.teamId] = teamPlayers;
-//                                });
-//                                promises.push(teamPlayerList);
-//                            }
-//
-//                            if (game.opposingTeamId) {
-//                                var opposingTeamPlayersFilter = { rosterId: game.rosters[game.opposingTeamId].id };
-//                                var opposingTeamPlayerList = players.load(opposingTeamPlayersFilter).then(function() {
-//
-//                                    var opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
-//                                    data.opposingTeamPlayers = opposingTeamPlayers;
-//                                    data.gamePlayerLists[game.opposingTeamId] = opposingTeamPlayers;
-//                                });
-//                                promises.push(opposingTeamPlayerList);
-//                            }
 
                             return $q.all(promises).then(function() {
 

@@ -77,10 +77,21 @@ AddFilm.controller('AddFilmController', [
     function controller($scope, $state, config, games, data, alerts, teams, session, GAME_TYPES, leagues, uploaderModal) {
         $scope.games = games;
         $scope.data = data;
-        data.game = games.create();
+        $scope.game = games.create();
         $scope.howToUpload = config.links.addFilmHelp.howToUpload.uri;
         $scope.commonIssues = config.links.addFilmHelp.commonIssues.uri;
         $scope.moreQuestions = config.links.addFilmHelp.moreQuestions.uri;
+        $scope.team = teams.get(session.currentUser.currentRole.teamId);
+        $scope.hasRoster = $scope.team.hasActivePlayerInfo();
+        $scope.GAME_TYPES = GAME_TYPES;
+        $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];
+        $scope.activePlan = data.coachsTeam.getActivePlan() || {};
+        $scope.activePackage = data.coachsTeam.getActivePackage() || {};
+        $scope.remainingBreakdowns = data.remainingBreakdowns;
+        $scope.options = {
+            scope: $scope,
+            film: $scope.game
+        };
 
         //Show message with link to support page if no games uploaded
         if (!games.getList().length) {
@@ -90,51 +101,13 @@ AddFilm.controller('AddFilmController', [
             });
         }
 
-        //intialize as -1 to remove false negative. 0 means no team roster, 1 means valid team roster
-        $scope.hasRoster = -1;
-
-        $scope.options = {
-            scope: $scope
-        };
-
-        $scope.setGameType = function(gameType) {
-            data.game.gameType = gameType;
-            $scope.options.film = data.game;
-        };
-
-        //check if team has a valid roster
-        var team = teams.get(session.currentUser.currentRole.teamId);
-
-        var activeRoster = {};
-        angular.forEach(team.roster.playerInfo, function(playerInfo, playerId) {
-            if (playerInfo.isActive) {
-                activeRoster[playerId] = playerInfo;
-            }
-        });
-
-        if (Object.keys(activeRoster).length > 0) {
-            $scope.hasRoster = 1;
-        } else {
-            $scope.hasRoster = 0;
-        }
-
-        $scope.GAME_TYPES = GAME_TYPES;
-
-        $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];
-        $scope.activePlan = data.coachsTeam.getActivePlan() || {};
-        $scope.activePackage = data.coachsTeam.getActivePackage() || {};
-
-        $scope.remainingBreakdowns = data.remainingBreakdowns;
-
-        //used only for regular games
-        //cannot use open modal directive because
-        //need to do a check to see if the user has a roster
-        //before this modal can be launches for a regular game
         $scope.launchUploaderInterface = function(gameTypeId) {
-            if (gameTypeId === GAME_TYPES.CONFERENCE.id && $scope.hasRoster) {
-                $scope.setGameType(gameTypeId);
+            $scope.game.gameType = gameTypeId;
+
+            if ($scope.game.isNonRegular() || $scope.game.isRegular() && $scope.hasRoster) {
                 uploaderModal.open($scope.options);
             }
         };
+
     }
 ]);

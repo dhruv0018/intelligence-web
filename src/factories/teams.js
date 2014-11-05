@@ -360,6 +360,26 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 //no plans or packages means no breakdowns
                 return 0;
+            },
+            getActivePlayerInfo: function() {
+                var self = this;
+
+                var activePlayerInfo = {};
+
+                angular.forEach(self.roster.playerInfo, function(playerInfo, playerId) {
+                    if (playerInfo.isActive) {
+                        activePlayerInfo[playerId] = playerInfo;
+                    }
+                });
+
+                return activePlayerInfo;
+            },
+            hasActivePlayerInfo: function() {
+                var self = this;
+
+                var activePlayerInfo = self.getActivePlayerInfo();
+
+                return Object.keys(activePlayerInfo).length > 0;
             }
         };
 

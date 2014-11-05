@@ -106,9 +106,15 @@
                         </p>
                     </div>
                     <div class="col-md-6">
-                        <input type="submit" class="btn btn-primary" value="Save" data-ng-click="savePlayer()">
+                        <input type="submit" data-ng-if="athlete.description !== 'players'" class="btn btn-primary" value="Save" data-ng-click="savePlayer()">
+                        <input type="submit"
+                               data-ng-if="athlete.description === 'players'"
+                               class="btn btn-primary"
+                               data-ng-disabled="athleteForm.$invalid"
+                               value="Save"
+                               data-ng-click="savePlayer()">
                     </div>
-                    <div class="remove col-md-6">
+                    <div data-ng-if="athlete.description === 'players'" class="remove col-md-6">
                         <a class="pull-right" href data-ng-click="togglePlayer()">
                             <span data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === true"><i class="icon icon-remove"></i> Remove from current roster</span>
                             <span data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === false"><i class="icon icon-add"></i> Add player to current roster</span>

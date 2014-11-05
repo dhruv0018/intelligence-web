@@ -8,13 +8,13 @@
                 <header class="box-header col-md-12">
 
                     <h3 class="box-title">{{team.name}} Roster</h3>
-                    <button class="btn-submit-continue" data-ng-click="activateTab()">Next</button>
+                    <button class="btn-submit-continue" data-ng-click="activateNextTab()">Next</button>
 
                 </header>
 
                 <div class="box-body col-md-12">
 
-                    <form class="form-your-team" name="formYourTeam" role="form">
+                    <form>
 
                         <div class="table-responsive">
                             <game-roster-manager
@@ -25,8 +25,7 @@
                                                data-filtering="filtering"
                                                data-editable="true"
                                                data-roster="roster"
-                                               data-positionset="positionset"
-                                               data-validator="validation.yourTeam"></game-roster-manager>
+                                               data-positionset="positionset"></game-roster-manager>
                         </div>
 
                     </form>
@@ -37,7 +36,7 @@
 
         </div>
 
-        <button class="btn-submit-continue" data-ng-click="activateTab()">Next</button>
+        <button class="btn-submit-continue" data-ng-click="activateNextTab()">Next</button>
 
     </div>
 
