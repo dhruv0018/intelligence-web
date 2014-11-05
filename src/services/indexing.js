@@ -128,6 +128,9 @@ IntelligenceWebClient.factory('IndexingService', [
                     /* Get the child tag ID of the tag. */
                     var childId = tag.children[0];
 
+                    /* Get the next set of tags based on the child tag. */
+                    tagsManager.nextTags(childId);
+
                     /* Set the current event. */
                     eventManager.current = event;
 
