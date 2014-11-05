@@ -5,6 +5,7 @@
 	    	<span data-ng-show="!withOtherUsers && !withPublic && !shareSuccess">Pick how you would like to share</span>
 	        <span data-ng-show="withOtherUsers">Share this film with other Krossover users</span>
 	        <span data-ng-show="withPublic">Share this film via public URL</span>
+            <span data-ng-show="withWufoo">Film Room Sharing</span>
 	        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i>
 	    </h3>
 
@@ -12,7 +13,7 @@
 
     <div class="modal-body">
 
-        <div class="share-options-container" data-ng-show="!withOtherUsers && !withPublic && !shareSuccess">
+        <div class="share-options-container" data-ng-show="!withOtherUsers && !withPublic && !shareSuccess && !withWufoo">
         	<div class="share-options option-your-team">
         		<h3>Your Team</h3>
         		<i class="icon icon-group"></i>
@@ -26,6 +27,9 @@
         		<h3>Recruiters or others via public URL</h3>
         		<i class="icon icon-globe"></i>
         	</div>
+            <div class="temp-wufoo-btn">
+                <button class="btn btn-primary" data-ng-click="withWufoo = true">Film Room Sharing</button>
+            </div>
         </div>
 
         <div class="sharing-with-others-container" data-ng-show="withOtherUsers">
@@ -74,6 +78,10 @@
             <div class="button-row">
                 <button class="btn btn-default" data-ng-click="withPublic = false">Back</button>
             </div>
+        </div>
+
+        <div class="wufoo-form" data-ng-show="withWufoo">
+            <iframe height="636" allowtransparency="true" frameborder="0" scrolling="no" style="width:100%;border:none" src="https://krossover.wufoo.com/embed/rz0hmlj13906x9/"><a href="https://krossover.wufoo.com/forms/rz0hmlj13906x9/">Fill out the share request form</a></iframe>
         </div>
 
         <div class="share-successful" data-ng-show="shareSuccess">
