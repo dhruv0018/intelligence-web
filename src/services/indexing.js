@@ -134,6 +134,9 @@ IntelligenceWebClient.factory('IndexingService', [
 
                     /* Set the tag ID for the current event to the child ID. */
                     eventManager.current.tagId = childId;
+
+                    /* Add event to the current play. */
+                    playManager.addEvent(eventManager.current);
                 }
 
                 /* Otherwise; if the event is a normal end event. */
