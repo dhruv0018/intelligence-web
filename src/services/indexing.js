@@ -129,9 +129,9 @@ IntelligenceWebClient.factory('IndexingService', [
                     var childId = tag.children[0];
 
                     this.isIndexing = true;
+                    /* Set the current event. */
+                    eventManager.current = event;
 
-                    /* Select the child tag. */
-                    this.selectTag(childId);
                 }
 
                 /* Otherwise; if the event is a normal end event. */
