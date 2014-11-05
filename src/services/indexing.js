@@ -132,6 +132,8 @@ IntelligenceWebClient.factory('IndexingService', [
                     /* Set the current event. */
                     eventManager.current = event;
 
+                    /* Set the tag ID for the current event to the child ID. */
+                    eventManager.current.tagId = childId;
                 }
 
                 /* Otherwise; if the event is a normal end event. */
