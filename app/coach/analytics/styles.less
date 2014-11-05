@@ -7,16 +7,21 @@
 	
 	.analytics-options {
 
-		padding: 20px;
-		margin: auto;
-		text-align: center;
+		width: 80%;
+		max-width: 1172px;
+	    margin: 20px auto;
+	    padding: 20px;
+	    border: thin solid @gray-border;
+	    background-color: @content-bg;
+	    letter-spacing: normal;
+	    font-weight: 500;
+	    color: @gray-darker;
 
 		.analytics-option {
 
 			display: inline-block;
 			padding-right: 20px;
 			white-space: nowrap;
-			text-align: left;
 
 			span {
 				display: block;
@@ -26,7 +31,22 @@
 				padding-right: 30px;
 				overflow: ellipsis;
 				min-width: 75px;
+				background-color: white;
 			}
+		}
+	}
+
+	.spinner {
+
+		text-align: center;
+		margin-top: 60px;
+
+		.icon-refresh {
+			font-size: 40px;
+
+			&::before {
+		    	animation: spin 1s linear infinite;
+		    }
 		}
 	}
 

@@ -58,16 +58,25 @@ Analytics.controller('AnalyticsController', [
         var team = teams.get(teamId);
         var league = leagues.get(team.leagueId);
         $scope.seasons = league.seasons;
-        $scope.filterQuery = {};
+        $scope.loadingTables = true;
         $scope.data = {};
-        $scope.loadingTables = false;
+
+        $scope.filterQuery = {
+            seasonId: league.seasons[0].id,
+            gameType: ''
+        };
+
+        team.generateStats($scope.filterQuery).then(function(data) {
+            $scope.data = data;
+            $scope.loadingTables = false;
+        });
 
         $scope.generateStats = function() {
+            $scope.loadingTables = true;
             team.generateStats($scope.filterQuery).then(function(data) {
                 $scope.data = data;
-                $scope.loadingTables = true;
+                $scope.loadingTables = false;
             });
-            $scope.loadingTables = false;
         };
     }
 ]);
