@@ -161,8 +161,37 @@ Indexing.config([
                             indexing.IS_INDEXING_STATE = true;
                         }
 
-                        Mousetrap.bind('space', function() {
+                        var globalCallbacks = {
+                            'space': true,
+                            'left': true,
+                            'right': true,
+                            'enter': true,
+                            'tab': true,
+                            'esc': true
+                        };
 
+                        var originalStopCallback = Mousetrap.stopCallback;
+
+                        Mousetrap.stopCallback = function(event, element, combo, sequence) {
+
+                            if (Mousetrap.krossoverIsPaused) {
+                                return true;
+                            }
+
+                            $timeout(function() {
+                                if (indexing.isIndexing) {
+
+                                    if (globalCallbacks[combo] || globalCallbacks[sequence]) {
+                                        return false;
+                                    }
+                                }
+
+                                return originalStopCallback(event, element, combo);
+
+                            }, 0);
+                        };
+
+                        Mousetrap.bind('space', function() {
                             $timeout(function() {
 
                                 indexing.playPause();
@@ -195,7 +224,6 @@ Indexing.config([
                         });
 
                         Mousetrap.bind('enter', function() {
-
                             $timeout(function() {
 
                                 indexing.index();
@@ -206,7 +234,6 @@ Indexing.config([
                         });
 
                         Mousetrap.bind('tab', function() {
-
                             $timeout(function() {
 
                                 indexing.step();
@@ -232,7 +259,6 @@ Indexing.config([
                 onExit: [
                     '$stateParams', 'GamesFactory', 'PlaysManager',
                     function($stateParams, games, playsManager) {
-
                         var gameId = $stateParams.id;
                         var game = games.get(gameId);
 
