@@ -109,7 +109,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 var event = eventManager.current;
 
                 /* Snap video back to time of current event. */
-                videoPlayer.seekTime(eventManager.current.time);
+                videoPlayer.seekTime(event.time);
 
                 playManager.save();
                 playManager.clear();
