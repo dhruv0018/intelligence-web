@@ -77,7 +77,7 @@ GameTab.controller('Coach.Game.GameTab.controller', [
         //Collections
         $scope.teams = teams.getCollection();
 
-        $scope.activateTab = function() {
+        $scope.activateNextTab = function() {
             $scope.tabs.deactivateAll();
             $scope.nextTab.active = true;
         };

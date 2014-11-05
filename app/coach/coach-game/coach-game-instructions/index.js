@@ -88,13 +88,15 @@ Instructions.controller('Coach.Game.Instructions.controller', [
             } else {
                 $scope.statusBuffer = 0;
             }
-            //Make sure team has roster
-            //Note, this is not a team roster per se, rather, it is the roster from the game keyed by your team id
 
-            var teamRoster = ($scope.game.teamId && $scope.game.rosters && $scope.game.rosters[$scope.game.teamId]) ? $scope.game.getRoster($scope.game.teamId) : null;
-            //greater than 1 because game rosters always have an unknown player
-            //so an empty check is to see if there are more than one player besides the unknown player
-            $scope.hasRoster = (teamRoster && teamRoster.playerInfo && Object.keys(teamRoster.playerInfo).length > 1) ? true : false;
+            if ($scope.game.isRegular()) {
+                //Make sure team has roster
+                //Note, this is not a team roster per se, rather, it is the roster from the game keyed by your team id
+                var teamRoster = ($scope.game.teamId && $scope.game.rosters && $scope.game.rosters[$scope.game.teamId]) ? $scope.game.getRoster($scope.game.teamId) : null;
+                //greater than 1 because game rosters always have an unknown player
+                //so an empty check is to see if there are more than one player besides the unknown player
+                $scope.hasRoster = (teamRoster && teamRoster.playerInfo && Object.keys(teamRoster.playerInfo).length > 1) ? true : false;
+            }
 
         }, true);
 
