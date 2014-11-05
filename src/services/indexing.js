@@ -128,7 +128,6 @@ IntelligenceWebClient.factory('IndexingService', [
                     /* Get the child tag ID of the tag. */
                     var childId = tag.children[0];
 
-                    this.isIndexing = true;
                     /* Set the current event. */
                     eventManager.current = event;
 
@@ -139,16 +138,12 @@ IntelligenceWebClient.factory('IndexingService', [
                     playManager.addEvent(eventManager.current);
                 }
 
-                /* Otherwise; if the event is a normal end event. */
-                else {
+                this.showTags = false;
+                this.showScript = false;
+                this.isIndexing = false;
+                this.eventSelected = false;
 
-                    this.showTags = false;
-                    this.showScript = false;
-                    this.isIndexing = false;
-                    this.eventSelected = false;
-
-                    videoPlayer.play();
-                }
+                videoPlayer.play();
             },
 
             /**
