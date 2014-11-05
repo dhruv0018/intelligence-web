@@ -491,8 +491,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                         storage.list.push(resource);
                         storage.collection[resource.id] = resource;
 
-                        delete resource.isSaving;
-
                         return resource;
                     })
 
