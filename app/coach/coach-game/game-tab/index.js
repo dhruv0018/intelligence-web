@@ -51,7 +51,6 @@ GameTab.directive('gameTab', [
                 game: '=',
                 editable: '=',
                 roster: '=',
-                validator: '=',
                 filtering: '=',
                 positionset: '=',
                 heading: '@',

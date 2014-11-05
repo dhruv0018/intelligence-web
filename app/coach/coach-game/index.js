@@ -89,12 +89,6 @@ Game.controller('Coach.Game.controller', [
         $scope.games = games;
         $scope.teams = teams.getCollection();
 
-        $scope.validation = {
-            opposingTeam: false,
-            yourTeam: false,
-            scoutingTeam: false
-        };
-
         $scope.opposingTeamFiltering = {type: 'active'};
         $scope.teamFiltering = ($scope.game.isRegular()) ? {type: 'none'} : {type: 'active'};
 
