@@ -146,7 +146,11 @@ Info.controller('Coach.Game.Info.controller', [
                 }
 
                 $scope.game.save().then(function() {
+                    //This will be removed later when the rosters are values and do not have an id
+                    //roster ids are currently used for uploading an excel roster
+                    $scope.game.isFetching = true;
                     games.fetch($scope.game.id).then(function(game) {
+                        delete $scope.game.isFetching;
                         angular.extend($scope.game, $scope.game, game);
                         $scope.goToRoster();
                     });
