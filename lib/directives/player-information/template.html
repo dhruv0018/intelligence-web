@@ -5,14 +5,6 @@
         <h3>{{user.firstName}} {{user.lastName}}</h3>
         <a href open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = user">Edit Profile</a>
     </div>
-    <!--<div class="profile">
-        <button open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = user" class="btn btn-default">Edit</button>
-        <div class="profile-image">
-            <profile-placeholder data-ng-if="!user.imageUrl"></profile-placeholder>
-            <img alt="profile image" class="profile-picture" data-ng-if="user.imageUrl" data-ng-src="{{user.imageUrl}}">
-        </div>
-        <p>{{user.firstName}} {{user.lastName}}</p>
-    </div>-->
     <div class="player-roles-info" data-ng-repeat="roleInfo in rolesInfo">
         <sport-placeholder data-sport="roleInfo.sport"></sport-placeholder>
         <div class="player-info-text">
