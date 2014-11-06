@@ -1,20 +1,23 @@
 <div class="arena-item">
-	<input
-        type="button"
+	<button
+        class="btn-arena"
+        ng-class="{'btn-arena-focus': isFocused}"
         data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
         data-ng-disabled="!isIndexer"
 		data-ng-click="resetAndOpenModal()"
-        value="Arena"
-    />
+        >Arena
+    </button>
 
 	<input
         type="button"
+        class="btn-arena"
+        ng-class="{'btn-arena-focus': isFocused}"
         data-ng-required="item.isRequired"
 		data-ng-if="isUndefined(event.variableValues[item.id].value)"
-        data-ng-blur="onBlur()"
+        
         data-focus-on="shouldFocus()"
         data-autofocus-when="autoAdvance && item.index === 1"
         data-ng-focus="openArenaModal()"
-        value="Arena"
+        value="Select"
 	/>
 </div>
