@@ -174,8 +174,11 @@ Indexing.config([
 
                         Mousetrap.stopCallback = function(event, element, combo, sequence) {
 
-                            $timeout(function() {
+                            if (Mousetrap.krossoverIsPaused) {
+                                return true;
+                            }
 
+                            $timeout(function() {
                                 if (indexing.isIndexing) {
 
                                     if (globalCallbacks[combo] || globalCallbacks[sequence]) {
@@ -259,7 +262,6 @@ Indexing.config([
                 onExit: [
                     '$stateParams', 'GamesFactory', 'PlaysManager',
                     function($stateParams, games, playsManager) {
-
                         var gameId = $stateParams.id;
                         var game = games.get(gameId);
 
@@ -267,6 +269,7 @@ Indexing.config([
                         Mousetrap.unbind('left');
                         Mousetrap.unbind('right');
                         Mousetrap.unbind('enter');
+                        Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
 
                         game.save();

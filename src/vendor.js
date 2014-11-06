@@ -19,4 +19,5 @@ require('flow/src/directives/events');
 require('flow/src/directives/transfers');
 require('flow/src/directives/img');
 require('Mousetrap');
+require('Mousetrap/plugins/pause/mousetrap-pause');
 
