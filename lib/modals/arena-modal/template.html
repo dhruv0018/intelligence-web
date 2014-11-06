@@ -1,11 +1,7 @@
-<button 
-	class="btn btn-arena-modal" 
-	ng-if="!autoAdvance" 
-	ng-click="closeModal()"
+<div 
+	class="arena-modal"
+	data-ng-blur="onBlur()"
 >
-	Close
-</button>  
-<div class="arena-modal">
     <xy-coordinates data-ng-model="variable.value" data-arena="item.arena"></xy-coordinates>
 </div>
  
