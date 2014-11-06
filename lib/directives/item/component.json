@@ -22,6 +22,7 @@
         "formation",
         "passing-zone",
         "team-dropdown",
-        "player-dropdown"
+        "player-dropdown",
+        "team-player-dropdown"
     ]
 }
