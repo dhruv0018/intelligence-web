@@ -192,6 +192,7 @@ Indexing.config([
                         };
 
                         Mousetrap.bind('space', function() {
+
                             $timeout(function() {
 
                                 indexing.playPause();
@@ -224,6 +225,7 @@ Indexing.config([
                         });
 
                         Mousetrap.bind('enter', function() {
+
                             $timeout(function() {
 
                                 indexing.index();
@@ -234,6 +236,7 @@ Indexing.config([
                         });
 
                         Mousetrap.bind('tab', function() {
+
                             $timeout(function() {
 
                                 indexing.step();
@@ -266,6 +269,7 @@ Indexing.config([
                         Mousetrap.unbind('left');
                         Mousetrap.unbind('right');
                         Mousetrap.unbind('enter');
+                        Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
 
                         game.save();
