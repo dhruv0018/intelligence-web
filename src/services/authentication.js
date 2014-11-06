@@ -109,34 +109,6 @@ IntelligenceWebClient.service('AuthenticationService', [
                 throw new Error('Illegal attempt to override function isLoggedIn');
             },
 
-            requestPasswordReset: function(email, success, error) {
-                var endpoint = config.passwordReset.uri + email;
-                var request = {
-                    method: 'GET',
-                    url: endpoint
-                };
-                success = success || {};
-                error = error || function(data, status) {
-                    throw new Error('Password reset request error: Http Status : ' + status);
-                };
-                $http(request).success(success).error(error);
-            },
-
-            processPasswordReset: function(token, password, success, error) {
-                var endpoint = config.passwordReset.uri + token;
-                var request = {
-                    method: 'POST',
-                    data: 'password=' + password,
-                    url: endpoint,
-                    headers: {'Content-type': 'application/x-www-form-urlencoded'}
-                };
-                success = success || {};
-                error = error || function(data, status) {
-                    throw new Error('Password reset processing error: Http Status : ' + status);
-                };
-                $http(request).success(success).error(error);
-            },
-
             /**
              * Validates the password for a given email and password. If no
              * email is given, then the current users email address is used.

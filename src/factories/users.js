@@ -460,6 +460,21 @@ IntelligenceWebClient.factory('UsersFactory', [
                 }
 
                 return vettedUsers;
+            },
+
+            processPasswordReset: function(token, password, success, error) {
+                var endpoint = config.passwordReset.uri + token;
+                var request = {
+                    method: 'POST',
+                    data: 'password=' + password,
+                    url: endpoint,
+                    headers: {'Content-type': 'application/x-www-form-urlencoded'}
+                };
+                success = success || {};
+                error = error || function(data, status) {
+                    throw new Error('Password reset processing error: Http Status : ' + status);
+                };
+                $http(request).success(success).error(error);
             }
         };
 
