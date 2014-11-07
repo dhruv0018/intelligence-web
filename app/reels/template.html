@@ -1,6 +1,6 @@
 <section class="reels-player-area">
     <header>
-        <h3 class="highlight-title">{{data.reel.name}} <span>(last updated on {{reelUpdatedDate | date}})</span></h3>
+        <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reelUpdatedDate | date}})</span></h3>
         <span class="delete-reel" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
     </header>
 
@@ -30,11 +30,11 @@
                     data-league="getLeague(playId)"
                     data-date-played="getDatePlayed(playId)"
                     data-ng-class="{'last': $last}"
-                    data-ng-repeat="playId in data.reel.plays">
+                    data-ng-repeat="playId in reel.plays">
                 </div>
             </div>
 
-            <no-results data-ng-hide="data.reel && data.reel.plays && data.reel.plays.length"></no-results>
+            <no-results data-ng-hide="reel && reel.plays && reel.plays.length"></no-results>
 
         </aside>
 
