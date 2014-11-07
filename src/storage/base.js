@@ -5,6 +5,8 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
+IntelligenceWebClient.value('RootStorage', Object.create(null));
+
 IntelligenceWebClient.factory('BaseStorage', [
     '$injector', '$localForage',
     function($injector, $localForage) {
