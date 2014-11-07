@@ -92,8 +92,12 @@ IntelligenceWebClient.service('AuthenticationService', [
                 session.clearCurrentUser();
                 sessionStorage.clear();
                 localStorage.clear();
-                $localForage.clear();
                 storage.clear();
+
+                $localForage.clear().then(function() {
+
+                    location.reload();
+                });
             },
 
             /**
