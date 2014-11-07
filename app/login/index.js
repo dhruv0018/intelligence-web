@@ -226,7 +226,7 @@ Login.controller('LoginController', [
 
             var email = $scope.$parent.login.email;
 
-            users.resendEmail(EMAIL_REQUEST_TYPES.FORGOTTEN_PASSWORD, null, email).then(function() {
+            users.resendEmail(EMAIL_REQUEST_TYPES.FORGOTTEN_PASSWORD, null, email).then(
 
                 function success() {
 
@@ -244,7 +244,7 @@ Login.controller('LoginController', [
                             message: 'An email has been sent to ' + email + ' with further instructions'
                         });
                     });
-                }
+                },
 
                 function error(data, status) {
 
@@ -268,14 +268,15 @@ Login.controller('LoginController', [
                     }
                 }
 
-            });
+            );
         };
 
         $scope.submitResetPassword = function() {
 
             if ($stateParams.token) {
 
-                users.processPasswordReset($stateParams.token, $scope.reset.password,
+                users.passwordReset($stateParams.token, $scope.reset.password).then(
+
 
                     function success(data, status) {
 
