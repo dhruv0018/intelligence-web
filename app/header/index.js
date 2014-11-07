@@ -117,7 +117,6 @@ Header.controller('HeaderController', [
         $scope.logout = function() {
 
             auth.logoutUser();
-            $state.go('login');
         };
 
         // This scope functionality limits a menu element to only one sub-menu
