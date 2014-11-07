@@ -99,11 +99,11 @@ Header.controller('HeaderController', [
         $scope.COACH = ROLES.COACH;
         $scope.ATHLETE = ROLES.ATHLETE;
 
+        $scope.auth = auth;
         $scope.config = config;
         $scope.$state = $state;
         $scope.session = session;
         $scope.account = account;
-        $scope.auth = auth;
 
         //TEMP - get sport id to show Analytics tab for FB only
         if (auth.isLoggedIn) {
@@ -113,11 +113,6 @@ Header.controller('HeaderController', [
                 $scope.SPORTS = SPORTS;
             }
         }
-
-        $scope.logout = function() {
-
-            auth.logoutUser();
-        };
 
         // This scope functionality limits a menu element to only one sub-menu
         $scope.subMenu = false;
