@@ -110,6 +110,7 @@ require('./managers/tags');
 require('./managers/play');
 require('./managers/plays');
 require('./managers/event');
+require('./managers/storage');
 require('./managers/resource');
 
 require('./directives/alert');
