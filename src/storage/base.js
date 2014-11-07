@@ -8,8 +8,8 @@ var IntelligenceWebClient = angular.module(package.name);
 IntelligenceWebClient.value('RootStorage', Object.create(null));
 
 IntelligenceWebClient.factory('BaseStorage', [
-    '$injector', '$localForage',
-    function($injector, $localForage) {
+    '$injector', '$localForage', 'RootStorage',
+    function($injector, $localForage, root) {
 
         var session;
 
@@ -37,11 +37,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
-            root: {
-
-                value: Object.create(null)
-            },
-
             user: {
 
                 enumerable: false,
@@ -52,9 +47,9 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     var user = session.currentUser;
 
-                    this.root[user.id] = this.root[user.id] || Object.create(null);
+                    root[user.id] = root[user.id] || Object.create(null);
 
-                    return this.root[user.id];
+                    return root[user.id];
                 },
 
                 set: function(value) {
@@ -63,9 +58,9 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     var user = session.currentUser;
 
-                    this.root[user.id] = this.root[user.id] || Object.create(null);
+                    root[user.id] = root[user.id] || Object.create(null);
 
-                    this.root[user.id] = value;
+                    root[user.id] = value;
                 }
             },
 
