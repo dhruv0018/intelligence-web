@@ -9,9 +9,9 @@
                 <span>Game Type</span>
                 <select data-ng-model="filterQuery.gameType" data-ng-change="generateStats()">
                     <option value="">All Stats</option>
-                    <option value="1">Conference Stats</option>
-                    <option value="2">Non-Conference Stats</option>
-                    <option value="3">Playoffs Stats</option>
+                    <option value="CONFERENCE.id">Conference Stats</option>
+                    <option value="NON_CONFERENCE.id">Non-Conference Stats</option>
+                    <option value="PLAYOFF.id">Playoffs Stats</option>
                 </select>
             </div>
             <div class="analytics-option">
@@ -28,7 +28,7 @@
             <p>Loading Statistics...</p>
         </div>
         <div class="analytics-tables-container" data-ng-hide="loadingTables">
-            <dynamic-table data-ng-if="data.teamStats" data-source="data.teamStats"></dynamic-table>
+            <dynamic-table data-ng-if="statsData.teamStats" data-source="statsData.teamStats"></dynamic-table>
         </div>
     </div>
 </section>
