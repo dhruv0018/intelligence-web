@@ -1,0 +1,105 @@
+@import (reference) "main.less";
+
+.public-game {
+    
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: scroll;
+
+    .public-game-header,
+    .public-game-header-mobile {
+        display: flex;
+        background-color: @content-bg;
+        border-bottom: thin solid @gray-border;
+        margin-bottom: 20px;
+        padding: 10px;
+        letter-spacing: normal;
+
+        div {
+            width: 100%;
+            max-width: 850px;
+            margin: auto;
+
+            .game-date {
+                color: @brand-blue;
+            }
+
+            .game-shared-by {
+                font-style: italic;
+            }
+
+            h3 {
+                display: inline;
+                color: @brand-blue;
+            }
+        }
+    }
+
+    .public-game-header-mobile {
+        display: none;
+    }
+    
+    .player {
+        display: flex;
+        flex: 1;
+
+        data-videogular {
+            max-width: 850px;
+            max-height: 538px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .locked-game {
+        background-color: @content-bg;
+        width: 30%;
+        margin: auto;
+        margin-top: 40px;
+        padding: 10px;
+        border: thin solid @gray-border;
+        text-align: center;
+
+        i {
+            font-size: 100px;
+        }
+    }
+}
+
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+    
+    .public-game {
+        .public-game-header {
+            display: none;
+        }
+
+        .public-game-header-mobile {
+            
+            display: block;
+
+            div {
+                width: 100%;
+
+                h3 {
+                    font-size: 16px;
+                }
+
+                .game-shared-by {
+                    display: block;
+                }
+            }
+        }
+
+        .player {
+            display: block;
+            width: 100%;
+        }
+
+        .locked-game {
+            width: 80%;
+        }
+    }
+}
