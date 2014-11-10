@@ -1,13 +1,13 @@
-<span class="player-dropdown">
+<span class="team-player-dropdown">
 
     <button
-        class="player-dropdown"
+        class="team-player-dropdown"
         data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
         data-ng-disabled="!isCoach && !isIndexer"
         data-ng-click="reset()"
     >
 
-        <span data-ng-if="event.variableValues[item.id].value">
+        <span data-ng-if="event.variableValues[item.id].value && event.variableValues[item.id].type === 'Player'">
 
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
 
@@ -28,26 +28,28 @@
 
         </span>
 
+        <span data-ng-if="event.variableValues[item.id].value && event.variableValues[item.id].type === 'Team'"> {{ teams[event.variableValues[item.id].value].name }}</span>
+
         <span data-ng-if="event.variableValues[item.id].value === null">Optional</span>
 
     </button>
 
     <input
         type="text"
-        class="player-dropdown"
+        class="team-player-dropdown"
         placeholder="Select"
         tabindex="{{ item.index }}"
         data-ng-required="item.isRequired"
         data-ng-if="isUndefined(event.variableValues[item.id].value)"
-        data-ng-model="selectedPlayer"
+        data-ng-model="selectedItem"
         data-ng-change="onChange()"
         data-ng-blur="onBlur()"
         data-focus-on="shouldFocus()"
         data-autofocus-when="autoAdvance && item.index == 1"
         data-typeahead-editable="false"
-        data-typeahead-on-select="selectPlayer($item)"
-        data-typeahead-template-url="item/player-dropdown-input.html"
-        data-typeahead="player as player.firstName for player in playersList | filter:{ jerseyNumber: $viewValue } | orderBy:'jerseyNumber'"
+        data-typeahead-on-select="selectItem($item)"
+        data-typeahead-template-url="item/team-player-dropdown-input.html"
+        data-typeahead="option for option in teamPlayerOptions | ORFilter:{ jerseyNumber: $viewValue, name: $viewValue } | orderBy:'jerseyNumber'"
     >
 
 </span>
