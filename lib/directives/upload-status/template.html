@@ -12,7 +12,7 @@
         <h2>Please try to submit your game again.</h2>
     </div>
 
-    <div class="uploaded" data-ng-if="complete">
+    <div class="uploaded" data-ng-if="(game && !flow) || (game && !flow.isUploading())">
         <h1>Your upload is complete!</h1>
         <h2 data-ng-if="game.status === null || !isDefined(game.status)">Complete the rest of the game information.</h2>
         <h2 data-ng-if="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">This game has been submitted for breakdown.</h2>
