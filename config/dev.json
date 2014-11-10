@@ -1,6 +1,16 @@
 {
     "oauth": {
         "uri": "https://localhost:4436/intelligence-api/oauth/",
+        "user": {
+            "id": "cid",
+            "secret": "csecret",
+            "state": "xyz"
+        },
+        "client": {
+            "id": "cid",
+            "secret": "csecret",
+            "state": "xyz"
+        },
         "clientId": "cid",
         "clientSecret": "csecret",
         "state": "xyz"

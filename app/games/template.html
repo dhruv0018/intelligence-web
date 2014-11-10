@@ -1,0 +1,25 @@
+<div class="public-game">
+		<div class="public-game-header" data-ng-if="publiclyShared">
+			<div>
+				<span class="game-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span><br/>
+				<span class="game-shared-by pull-right">Clip shared by {{uploadedBy.firstName}} {{uploadedBy.lastName}}</span>
+				<h3>{{team.name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{opposingTeam.name}}</h3>
+			</div>
+		</div>
+        <div class="player" data-ng-if="publiclyShared">
+            <x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
+        </div>
+        <div class="public-game-header-mobile" data-ng-if="publiclyShared">
+			<div>
+				<span class="game-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span><br/>
+				<h3>{{team.name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{opposingTeam.name}}</h3>
+				<span class="game-shared-by">Clip shared by {{uploadedBy.firstName}} {{uploadedBy.lastName}}</span>
+			</div>
+		</div>
+        <div data-ng-if="!publiclyShared">
+        	<div class="locked-game">
+        		<i class="icon icon-lock"></i>
+        		<h3>You do not have permission to access this game</h3>
+        	</div>
+        </div>
+</div>
