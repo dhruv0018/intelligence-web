@@ -1,4 +1,4 @@
-<x-krossover-rolebar></x-krossover-rolebar>
+<x-krossover-rolebar data-ng-if="auth.isLoggedIn"></x-krossover-rolebar>
 
 <nav class="header header-default" role="navigation">
 
@@ -61,7 +61,7 @@
 
     </menu>
 
-    <div class="nav navbar-nav navbar-right">
+    <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-right">
 
         <div class="role-dropdown" data-dropdown data-is-open="status.isopen">
 
@@ -96,6 +96,11 @@
 
         </div>
 
+    </div>
+
+    <div data-ng-if="!auth.isLoggedIn" class="nav navbar-nav navbar-right public-view">
+        <a data-ui-sref="login" class="go-to-login"><i class="icon icon-sign-in"></i> Log in</a>
+        <a href="http://www.krossover.com"><i class="icon icon-info-circle"></i> Find out more</a>
     </div>
 
 </nav>

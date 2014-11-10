@@ -48,16 +48,18 @@ Header.config([
                         '$q', 'SessionService', 'TeamsFactory', 'Base.Data.Dependencies',
                         function($q, session, teams, data) {
 
-                            var teamId = session.currentUser.currentRole.teamId;
+                            if (session.currentUser) {
+                                var teamId = session.currentUser.currentRole.teamId;
 
-                            if (teamId) {
+                                if (teamId) {
 
-                                var team = teams.load(teamId);
+                                    var team = teams.load(teamId);
 
-                                return $q.all([team, data]);
+                                    return $q.all([team, data]);
+                                }
+
+                                else return $q.all(data);
                             }
-
-                            else return $q.all(data);
                         }
                     ]
                 }
@@ -70,23 +72,25 @@ Header.service('Base.Data.Dependencies', [
     'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
     function(session, sports, leagues, tagsets, filtersets, positionsets, teams) {
 
-        var teamIds = session.currentUser.getTeamIds();
+        if (session.currentUser) {
+            var teamIds = session.currentUser.getTeamIds();
 
-        var Data = {
+            var Data = {
 
-            sports: sports.load(),
-            leagues: leagues.load(),
-            tagsets: tagsets.load(),
-            filtersets: filtersets.load(),
-            positionsets: positionsets.load()
-        };
+                sports: sports.load(),
+                leagues: leagues.load(),
+                tagsets: tagsets.load(),
+                filtersets: filtersets.load(),
+                positionsets: positionsets.load()
+            };
 
-        if (teamIds.length) {
+            if (teamIds.length) {
 
-            Data.teams = teams.load({ 'id[]': teamIds });
+                Data.teams = teams.load({ 'id[]': teamIds });
+            }
+
+            return Data;
         }
-
-        return Data;
     }
 ]);
 
@@ -112,6 +116,7 @@ Header.controller('HeaderController', [
         $scope.$state = $state;
         $scope.session = session;
         $scope.account = account;
+        $scope.auth = auth;
 
         //TEMP - get sport id to show Analytics tab for FB only
         if (session.currentUser.is(ROLES.COACH)) {

@@ -161,6 +161,36 @@ Indexing.config([
                             indexing.IS_INDEXING_STATE = true;
                         }
 
+                        var globalCallbacks = {
+                            'space': true,
+                            'left': true,
+                            'right': true,
+                            'enter': true,
+                            'tab': true,
+                            'esc': true
+                        };
+
+                        var originalStopCallback = Mousetrap.stopCallback;
+
+                        Mousetrap.stopCallback = function(event, element, combo, sequence) {
+
+                            if (Mousetrap.krossoverIsPaused) {
+                                return true;
+                            }
+
+                            $timeout(function() {
+                                if (indexing.isIndexing) {
+
+                                    if (globalCallbacks[combo] || globalCallbacks[sequence]) {
+                                        return false;
+                                    }
+                                }
+
+                                return originalStopCallback(event, element, combo);
+
+                            }, 0);
+                        };
+
                         Mousetrap.bind('space', function() {
 
                             $timeout(function() {
@@ -232,7 +262,6 @@ Indexing.config([
                 onExit: [
                     '$stateParams', 'GamesFactory', 'PlaysManager',
                     function($stateParams, games, playsManager) {
-
                         var gameId = $stateParams.id;
                         var game = games.get(gameId);
 
@@ -240,6 +269,7 @@ Indexing.config([
                         Mousetrap.unbind('left');
                         Mousetrap.unbind('right');
                         Mousetrap.unbind('enter');
+                        Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
 
                         game.save();

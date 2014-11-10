@@ -30,6 +30,7 @@
         margin-right: auto;
         margin-top: 45px;
         margin-bottom: 25px;
+        padding: 0 50px;
     }
 
     .indexing-block.fullscreen {
@@ -133,10 +134,11 @@
     .sidebar-notes,
     .sidebar-playlist {
 
+        display: flex;
+        flex-direction: column;
         flex: 0 0 420px;
         border-left: 1px solid rgb(216, 216, 216);
-        overflow-y: scroll;
-        height: ~"calc(100% - 0px)";
+        overflow-y: hidden;
 
         &.ui-hide {
 
