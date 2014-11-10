@@ -116,8 +116,11 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
             $scope.savingBreakdown = true;
             $scope.game.save().then(function(game) {
-                $scope.savingBreakdown = false;
-                $scope.isBreakdownChoiceMade = true;
+                games.fetch($scope.game.id).then(function(responseGame) {
+                    angular.extend($scope.game, responseGame);
+                    $scope.savingBreakdown = false;
+                    $scope.isBreakdownChoiceMade = true;
+                });
             });
         };
     }

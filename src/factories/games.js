@@ -47,6 +47,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.isDeleted = game.isDeleted || false;
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
 
+                //TODO remove when the back end makes notes always a object
+                if (angular.isArray(game.notes)) {
+                    game.notes = {};
+                }
+
                 if (!game.uploaderUserId && session.currentUser && session.currentUser.id) {
                     game.uploaderUserId = session.currentUser.id;
                 }

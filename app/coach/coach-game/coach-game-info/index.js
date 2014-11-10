@@ -81,6 +81,7 @@ Info.controller('Coach.Game.Info.controller', [
 
         //Game Manipulation
         $scope.game.notes = $scope.game.notes || {};
+        $scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = $scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
 
         //prevents put request cascade
         $scope.game.allowEdits = ($scope.game.opposingTeamId && $scope.game.teamId && $scope.game.rosters[$scope.game.teamId].id) ? true : false;
