@@ -4,7 +4,13 @@
 
     main {
 
+        display: flex;
+        flex: 1;
+        min-width: 520px;
+        min-height: 460px;
         position: relative;
+        overflow-y: auto;
+        flex-direction: column;
     }
 
     .btn-delete-event {
@@ -19,12 +25,12 @@
 
     .indexing-block {
 
-        position: relative;
-        width: ~"calc(100% - 61px - 50px - 100px - 10px)";
+        display: flex;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 25px;
+        margin-top: 45px;
         margin-bottom: 25px;
+        padding: 0 50px;
     }
 
     .indexing-block.fullscreen {
@@ -128,19 +134,15 @@
     .sidebar-notes,
     .sidebar-playlist {
 
+        display: flex;
+        flex-direction: column;
         flex: 0 0 420px;
         border-left: 1px solid rgb(216, 216, 216);
-        overflow-y: scroll;
-        height: ~"calc(100% - 0px)";
+        overflow-y: hidden;
 
         &.ui-hide {
 
             flex: 0 0 0;
-        }
-
-        .plays {
-            overflow: scroll;
-            height: ~"calc(100% - 32px)";
         }
 
         .note-choice {
@@ -207,10 +209,11 @@
     }
 
     x-krossover-videoplayer {
+        flex: 1;
 
-        margin-left: auto;
-        margin-right: auto;
-        width: ~"calc(100% - 61px - 50px - 100px - 10px)";
-        height: ~"calc(100% - 61px - 50px - 100px - 10px)";
+        data-videogular {
+            margin-left: auto;
+            margin-right: auto;
+        }
     }
 }

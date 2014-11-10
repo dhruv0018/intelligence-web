@@ -45,6 +45,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* Create a copy of the resource to break reference to orginal. */
                 var copy = angular.copy(resource);
 
+                delete copy.PAGE_SIZE;
+                delete copy.description;
+                delete copy.model;
+                delete copy.storage;
+
                 /* TODO: Remove any properties that should not exist. */
 
                 return copy;
@@ -355,11 +360,11 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else if (angular.isArray(filter)) {
 
-                        if (self.storage.collection) {
+                        if (storage.collection) {
 
                             filter = filter.filter(function(id) {
 
-                                return !angular.isDefined(self.storage.collection[id]);
+                                return !angular.isDefined(storage.collection[id]);
                             });
                         }
 
@@ -367,9 +372,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                             filter = { 'id[]': filter };
 
-                            self.storage.loads[key] = self.retrieve(filter).then(function(list) {
+                            storage.loads[key] = self.retrieve(filter).then(function(list) {
 
-                                self.storage.loads[key].list = list;
+                                storage.loads[key].list = list;
 
                                 return self;
                             });
@@ -379,8 +384,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                             var deferred = $q.defer();
 
-                            self.storage.loads[key] = deferred.promise;
-                            self.storage.loads[key].list = [];
+                            storage.loads[key] = deferred.promise;
+                            storage.loads[key].list = [];
 
                             deferred.resolve(self);
                         }

@@ -1,4 +1,4 @@
-<x-krossover-rolebar></x-krossover-rolebar>
+<x-krossover-rolebar data-ng-if="auth.isLoggedIn"></x-krossover-rolebar>
 
 <nav class="header header-default" role="navigation">
 
@@ -42,7 +42,7 @@
         <li data-ui-sref-active="active"><a data-ui-sref="Coach.FilmHome">Film Home</a></li>
         <!-- <li class="disabled hide-option" data-ui-sref-active="active"><a data-ui-sref="analytics">Analytics</a></li> -->
 
-        <li class="header-dropdown" data-ui-sref-active="active">
+        <li class="header-dropdown" data-ng-class="{active: $state.includes('Coach.Team')}">
             <a class="dropdown-toggle">Team</a>
             <ul class="dropdown-menu">
                 <li><a data-ui-sref="Coach.Team.Roster">Roster</a></li>
@@ -62,7 +62,7 @@
 
     </menu>
 
-    <div class="nav navbar-nav navbar-right">
+    <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-right">
 
         <div class="role-dropdown" data-dropdown data-is-open="status.isopen">
 
@@ -97,6 +97,11 @@
 
         </div>
 
+    </div>
+
+    <div data-ng-if="!auth.isLoggedIn" class="nav navbar-nav navbar-right public-view">
+        <a data-ui-sref="login" class="go-to-login"><i class="icon icon-sign-in"></i> Log in</a>
+        <a href="http://www.krossover.com"><i class="icon icon-info-circle"></i> Find out more</a>
     </div>
 
 </nav>
