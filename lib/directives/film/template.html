@@ -14,12 +14,12 @@
 
        <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:film.id})">
            <span data-ng-if="film.opposingTeamId && film.teamId">{{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}</span>
-           <span data-ng-if="!film.opposingTeamId || !film.teamId">Please add team information</span>
+           <span data-ng-if="!film.opposingTeamId || !film.teamId">Raw Film - No Game Information Entered</span>
        </a>
 
        <a data-ng-if="currentUser.is(ATHLETE)" data-ui-sref="Athlete.GameArea({id:film.id})">
            <span data-ng-if="film.opposingTeamId && film.teamId">{{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}</span>
-           <span data-ng-if="!film.opposingTeamId || !film.teamId">Please add team information</span>
+           <span data-ng-if="!film.opposingTeamId || !film.teamId">Raw Film - No Game Information Entered</span>
        </a>
 
        <br/>
