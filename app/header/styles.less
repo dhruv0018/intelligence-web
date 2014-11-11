@@ -313,7 +313,8 @@ and (min-width: 1280px) {
 @media only screen
 and (max-width: 1024px) {
 
-    menu.navbar-nav {
+    menu.navbar-nav,
+    .public-view {
         display: none;
     }
 
@@ -332,6 +333,10 @@ and (max-width: 1024px) {
          */
         margin-left: calc(~"(100% - 111px - 60px - 111px)/2");
         border-right: none !important; // Remove default styling
+
+        &.public {
+            margin-left: calc(~"(100% - 60px)/2");
+        }
     }
 
     .navbar-right {
