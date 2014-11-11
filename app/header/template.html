@@ -2,6 +2,52 @@
 
 <nav class="header header-default" role="navigation">
 
+    <!-- Mobile Menu Begin -->
+    <div class="nav navbar-nav navbar-left dropdown mobile-nav">
+
+        <button class="dropdown-toggle">Menu</button>
+
+        <!-- Admin Menu -->
+        <menu class="dropdown-menu" data-ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
+            <li data-ui-sref-active="active"><a data-ui-sref="users">Users</a></li>
+            <li data-ui-sref-active="active"><a data-ui-sref="teams">Teams</a></li>
+            <li data-ui-sref-active="active"><a data-ui-sref="schools">Schools</a></li>
+            <li data-ui-sref-active="active"><a data-ui-sref="queue">Queue</a></li>
+            <!-- <li class="header-dropdown" data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)"><a class="dropdown-toggle">Platform</a>
+                <ul class="dropdown-menu">
+                    <li><a data-ui-sref="plan-defaults">Plan Defaults</a></li>
+                    <li><a data-ui-sref="leagues">Leagues</a></li>
+                </ul>
+            </li> -->
+        </menu>
+
+        <!-- Indexer Menu -->
+        <menu class="dropdown-menu" data-ng-if="currentUser.is(INDEXER)">
+            <li data-ui-sref-active="active"><a data-ui-sref="indexer-games">Games</a></li>
+        </menu>
+
+        <!-- Coach Menu -->
+        <menu class="dropdown-menu" data-ng-if="currentUser.is(COACH)">
+            <li data-ui-sref-active="active"><a data-ui-sref="Coach.FilmHome">Film Home</a></li>
+            <!-- <li class="header-dropdown" data-ng-class="{active: $state.includes('Coach.Team')}">
+                <a class="dropdown-toggle">Team</a>
+                <ul class="dropdown-menu">
+                    <li><a data-ui-sref="Coach.Team.Roster">Roster</a></li>
+                    <li data-ng-if="currentUser.is(HEAD_COACH)"><a data-ui-sref="Coach.Team.Assistants">Coaches</a></li>
+                </ul>
+            </li> -->
+            <li><a data-ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
+            <li data-ui-sref-active="active"><button class="btn btn-primary navbar-btn" data-ng-click="tabs.reset()" data-ui-sref="add-film" data-ui-sref-opts="{reload: true}">Add Film</button></li>
+        </menu>
+
+        <!-- Athlete Menu -->
+        <menu class="dropdown-menu" data-ng-if="currentUser.is(ATHLETE)">
+            <li data-ui-sref-active="active"><a data-ui-sref="Athlete.FilmHome">Film Home</a></li>
+        </menu>
+
+    </div>
+    <!-- Mobile Menu End -->
+
     <header class="navbar-header">
 
         <a class="navbar-brand" data-sref="Account.ContactInfo"><div class="icon icon-krossover-symbol"></div></a>

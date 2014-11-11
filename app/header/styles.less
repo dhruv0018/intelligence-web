@@ -68,7 +68,7 @@
     .role-dropdown {
 
         .dropdown;
-        padding-left: 20px;
+        padding-left: 25px;
 
         .role-title {
             .head-coach {
@@ -306,6 +306,49 @@ and (min-width: 1280px) {
 
             width: @dropdown-full-width;
         }
+    }
+}
+
+/* Screens < 1024px wide */
+@media only screen
+and (max-width: 1024px) {
+
+    menu.navbar-nav {
+        display: none;
+    }
+
+    .navbar-left {
+        position: static !important;
+        border-right: 1px solid @gray-border;
+    }
+
+    .navbar-header {
+        margin-left: calc(~"(100% - 95px - 60px - 111px)/2");
+        border-right: none !important;
+    }
+
+    .navbar-right {
+        border-left: 1px solid @gray-border;
+    }
+
+    .mobile-nav {
+
+        .dropdown-toggle {
+            margin: 0 25px;
+            border: none;
+            background-color: transparent;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+    }
+}
+
+/* Screens >= 1024px wide */
+@media only screen
+and (min-width: 1025px) {
+
+    .mobile-nav {
+        display: none;
     }
 }
 
