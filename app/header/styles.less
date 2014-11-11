@@ -323,8 +323,15 @@ and (max-width: 1024px) {
     }
 
     .navbar-header {
+        /* 
+         * Hack to center logo
+         * window.width: 100%, 
+         * .navbar-left: 95px, 
+         * .navbar-header: 60px,
+         * .navbar-right: 111px
+         */
         margin-left: calc(~"(100% - 95px - 60px - 111px)/2");
-        border-right: none !important;
+        border-right: none !important; // Remove default styling
     }
 
     .navbar-right {
@@ -335,20 +342,21 @@ and (max-width: 1024px) {
 
         .dropdown-toggle {
             margin: 0 25px;
-            border: none;
-            background-color: transparent;
+            border: none; // Remove default styling
+            background-color: transparent; // Remove default styling
             font-weight: 500;
             text-transform: uppercase;
         }
 
         .dropdown-menu {
             right: 0;
-            padding: 0;
-            border-top: none;
+            padding: 0; // Remove default styling
+            border-top: none; // Remove default styling
 
             li {
                 width: 100%;
                 border: none;
+                cursor: pointer;
 
                 &:not(:last-child) {
                     border-bottom: 1px solid @gray-border;
@@ -359,6 +367,27 @@ and (max-width: 1024px) {
                     color: @brand-primary;
                 }
             }
+        }
+
+        .mobile-submenu {
+            list-style-type: none; // Remove default styling
+            padding: 0; // Remove default styling
+            margin: 0; // Remove default styling
+
+            li {
+                &:first-child {
+                    border-top: 1px solid @gray-border;
+                }
+
+                a {
+                    display: block;
+                    padding: 3px 20px; // Standardize <li> height
+                }
+            }
+        }
+
+        .navbar-btn {
+            margin: 15px 0; // Standardize <li> height
         }
     }
 }
