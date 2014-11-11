@@ -330,7 +330,7 @@ and (max-width: 1024px) {
          * .navbar-header: 60px,
          * .navbar-right: 111px
          */
-        margin-left: calc(~"(100% - 95px - 60px - 111px)/2");
+        margin-left: calc(~"(100% - 111px - 60px - 111px)/2");
         border-right: none !important; // Remove default styling
     }
 
@@ -341,7 +341,7 @@ and (max-width: 1024px) {
     .mobile-nav {
 
         .dropdown-toggle {
-            width: 95px;
+            width: 111px;
             border: none; // Remove default styling
             background-color: transparent; // Remove default styling
             font-weight: 500;
@@ -349,16 +349,27 @@ and (max-width: 1024px) {
         }
 
         .dropdown-menu {
-            right: 0;
+            width: @screen-xs;
+            margin: 0 auto;
             padding: 0; // Remove default styling
-            border-top: none; // Remove default styling
+            border-top: 1px solid @gray-border;
 
             li {
                 width: 100%;
                 border: none;
+                text-align: left;
 
                 &:not(:last-child) {
                     border-bottom: 1px solid @gray-border;
+                }
+
+                button {
+                    margin-left: 40px;
+                }
+
+                a {
+                    padding-left: 40px;
+                    text-align: left;
                 }
 
                 &.active a {
@@ -378,6 +389,7 @@ and (max-width: 1024px) {
             margin: 0; // Remove default styling
 
             li {
+
                 &:first-child {
                     border-top: 1px solid @gray-border;
                 }
@@ -385,6 +397,14 @@ and (max-width: 1024px) {
                 a {
                     display: block;
                     padding: 3px 20px; // Standardize <li> height
+                    padding-left: 70px;
+                    color: @gray-dark;
+                    text-align: left;
+                    text-decoration: none;
+
+                    &:hover {
+                        background-color: @navbar-default-link-hover-bg;
+                    }
                 }
             }
         }
