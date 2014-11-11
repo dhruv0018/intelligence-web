@@ -41,7 +41,10 @@ IntelligenceWebClient.run([
 
                     .finally(function() {
 
-                        $state.go(toState, toParams);
+                        $state.go(toState.name, toParams, {notify: false}).then(function() {
+
+                            $rootScope.$broadcast('$stateChangeSuccess', toState, toParams, fromState, fromParams);
+                        });
                     });
                 }
             }
