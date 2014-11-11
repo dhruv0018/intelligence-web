@@ -341,7 +341,7 @@ and (max-width: 1024px) {
     .mobile-nav {
 
         .dropdown-toggle {
-            margin: 0 25px;
+            width: 95px;
             border: none; // Remove default styling
             background-color: transparent; // Remove default styling
             font-weight: 500;
@@ -356,7 +356,6 @@ and (max-width: 1024px) {
             li {
                 width: 100%;
                 border: none;
-                cursor: pointer;
 
                 &:not(:last-child) {
                     border-bottom: 1px solid @gray-border;
@@ -367,6 +366,10 @@ and (max-width: 1024px) {
                     color: @brand-primary;
                 }
             }
+        }
+
+        .mobile-submenu-toggle {
+            cursor: pointer;
         }
 
         .mobile-submenu {

@@ -13,7 +13,7 @@
             <li data-ui-sref-active="active"><a data-ui-sref="teams">Teams</a></li>
             <li data-ui-sref-active="active"><a data-ui-sref="schools">Schools</a></li>
             <li data-ui-sref-active="active"><a data-ui-sref="queue">Queue</a></li>
-            <li data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)" data-ng-click="toggleSubMenu($event)">
+            <li data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)" data-ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
                 <a>Platform</a>
                 <ul class="mobile-submenu" data-ng-show="subMenu">
                     <li><a data-ui-sref="plan-defaults">Plan Defaults</a></li>
@@ -30,7 +30,7 @@
         <!-- Coach Menu -->
         <menu class="dropdown-menu" data-ng-if="currentUser.is(COACH)">
             <li data-ui-sref-active="active"><a data-ui-sref="Coach.FilmHome">Film Home</a></li>
-            <li data-ng-class="{active: $state.includes('Coach.Team')}" data-ng-click="toggleSubMenu($event)">
+            <li data-ng-class="{active: $state.includes('Coach.Team')}" data-ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
                 <a>Team</a>
                 <ul class="mobile-submenu" data-ng-show="subMenu">
                     <li><a data-ui-sref="Coach.Team.Roster">Roster</a></li>
