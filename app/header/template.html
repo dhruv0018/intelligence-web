@@ -3,7 +3,7 @@
 <nav class="header header-default" role="navigation">
 
     <!-- Mobile Menu Begin -->
-    <div class="nav navbar-nav navbar-left dropdown mobile-nav">
+    <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-left dropdown mobile-nav">
 
         <button class="dropdown-toggle">Menu</button>
 
@@ -109,6 +109,7 @@
 
     </menu>
 
+    <!-- Role Dropdown -->
     <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-right">
 
         <div class="role-dropdown" data-dropdown data-is-open="status.isopen">
