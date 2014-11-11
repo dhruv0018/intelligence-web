@@ -47,12 +47,13 @@
         </menu>
 
     </div>
-    <!-- Mobile Menu End -->
 
+    <!-- Logo -->
     <header class="navbar-header" data-ng-class="{public: !auth.isLoggedIn}">
-
         <a class="navbar-brand" data-sref="Account.ContactInfo"><div class="icon icon-krossover-symbol"></div></a>
-
+    </header>
+    <header class="navbar-header navbar-brand-lg" data-ng-if="!auth.isLoggedIn">
+        <a class="navbar-brand" data-sref="Account.ContactInfo" href="http://www.krossover.com"><div class="icon icon-krossover-logo"></div></a>
     </header>
 
     <!-- Admin menu -->
@@ -148,8 +149,7 @@
     </div>
 
     <div data-ng-if="!auth.isLoggedIn" class="nav navbar-nav navbar-right public-view">
-        <a data-ui-sref="login" class="go-to-login"><i class="icon icon-sign-in"></i> Log in</a>
-        <a href="http://www.krossover.com"><i class="icon icon-info-circle"></i> Find out more</a>
+        <a data-ui-sref="login" class="btn btn-primary">Sign In</a>
     </div>
 
 </nav>
