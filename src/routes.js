@@ -32,9 +32,14 @@ IntelligenceWebClient.run([
                     event.preventDefault();
 
                     /* Request client tokens. */
-                    tokens.requestClientTokens().then(function(authTokens) {
+                    tokens.requestClientTokens()
+
+                    .then(function(authTokens) {
 
                         tokens.setTokens(authTokens);
+                    })
+
+                    .finally(function() {
 
                         $state.go(toState, toParams);
                     });
