@@ -5,12 +5,6 @@
 
     flex-direction: column;
 
-    .main-highlight {
-        display: flex;
-        flex: 1;
-        overflow-x: scroll;
-    }
-
     header {
 
         border-bottom: 1px solid @gray-border;
@@ -36,31 +30,50 @@
         }
     }
 
-    aside.reels-playlist {
-        display: flex;
-        background: #fff;
-        flex-direction: column;
-        letter-spacing: normal;
-        width: 320px;
-        border-right: solid 1px #EEE;
-        overflow: scroll;
-
-        .reel-edit-controls {
-        
-            padding: 10px;
-            
-            .save-edit {
-                color: @brand-success;
-            }
-        }
-
-        .reel-plays-container {
-        }
-    }
-
-    .player.reels-player {
+    .main-highlight {
         display: flex;
         flex: 1;
-        margin: 1%;
+        flex-direction: row;
+        background-color: #f7f8f8;
     }
+
+        .sidebar__reel {
+            display: flex;
+            flex-direction: column;
+            flex: 0 0 420px;
+            padding: 0;
+            border: none;
+        }
+
+            .reel-edit-controls {
+                
+                padding: 10px;
+                
+                .save-edit {
+                    color: @brand-success;
+                }
+            }
+
+            .playlist-container {
+                overflow-y: auto;
+                overflow-x: hidden;
+                border-top: thin solid #dddddd;
+            }
+
+                .playlist {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 0px;
+                    background-color: #ffffff;
+                    border-right: thin solid #dddddd;
+                    -webkit-transform: translateZ(0);
+                    position: static;
+                    float: none;
+                    letter-spacing: normal;
+                }
+
+            .player.reels-player {
+                display: flex;
+                margin: 1%;
+            }
 } 

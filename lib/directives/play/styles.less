@@ -16,6 +16,10 @@
         background-color: @play-selected-bg;
     }
 
+    &.edit-mode {
+        cursor: move;
+    }
+
     a.accordion-toggle {
         display: block;
         text-decoration: none;
@@ -177,4 +181,70 @@
         }
     }
 }
+
+.play__reel {
+    .clearfix;
+    
+    letter-spacing: normal;
+    position: relative;
+    background: #fff;
+    color: #000;
+    padding-right: 25px;
+
+    &.edit-mode {
+        cursor: move;
+    }
+
+    .last {
+        border-bottom: solid 1px #EEE;
+    }
+
+    .reel-play-text {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+    }
+
+    .play-reel-play {
+        .pull-right;
+
+        display: inline-block;
+        width: 36px;
+        font-size: 36px;
+        color: @gray-light;
+        cursor: pointer;
+
+        &:active,
+        &:focus,
+        &:hover {
+            color: @brand-primary;
+        }
+
+        &.invisible {
+            visibility: hidden;
+        }
+
+        &.playing {
+            color: rgb(89, 159, 253);
+        }
+    }
+
+    .delete-reel-play {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        padding: 3px;
+
+        .icon {
+            color: @brand-danger;
+            cursor: pointer;
+        }
+    }
+}
+
+
+
+
+
+
 

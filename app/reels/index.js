@@ -109,7 +109,8 @@ ReelsArea.controller('ReelsArea.controller', [
         // Get the reel
         var reelId = Number($stateParams.id);
         $scope.reel = reels.get(reelId);
-
+        console.log('reel', $scope.reel);
+        console.log('reel plays', $scope.reel.plays);
         $scope.videoTitle = 'reelsPlayer';
         $scope.editMode = false;
         var editAllowed = true;
@@ -121,12 +122,13 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,
             //NOT for exiting from commiting changes
-
+            console.log('toggleEditMode');
             if (!editAllowed) return;
 
             $scope.editMode = !$scope.editMode;
 
             if ($scope.editMode) {
+                console.log('enter edit mode');
                 //entering edit mode, cache plays array
                 if ($scope.reel && $scope.reel.plays && angular.isArray($scope.reel.plays)) {
                     $scope.toggleEditMode.playsCache = angular.copy($scope.reel.plays);
@@ -136,12 +138,15 @@ ReelsArea.controller('ReelsArea.controller', [
 
                 if ($scope.toggleEditMode.playsCache) {
                     //get rid of dirty plays array
+                    console.log('delete reel plays');
                     delete $scope.reel.plays;
 
                     //in with clean
                     $scope.reel.plays = $scope.toggleEditMode.playsCache;
+                    console.log('plays', $scope.reel.plays);
                 }
             }
+            console.log('$scope.toggleEditMode.playsCache', $scope.toggleEditMode.playsCache);
         };
 
         $scope.getPlay = function(playId) {
@@ -185,11 +190,11 @@ ReelsArea.controller('ReelsArea.controller', [
             }
         };
 
-        $scope.removeReelPlay = function(index) {
-            if ($scope.reel && $scope.reel.plays && angular.isArray($scope.reel.plays)) {
+        $scope.$on('delete-reel-play', function(index) {
+            if ($scope.editMode && $scope.reel && $scope.reel.plays && angular.isArray($scope.reel.plays)) {
                 $scope.reel.plays.splice(index, 1);
             }
-        };
+        });
 
         $scope.saveReels = function() {
             //delete cached plays
