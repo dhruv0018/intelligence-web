@@ -56,7 +56,6 @@ Athlete.service('Athlete.Data.Dependencies', [
                 uploaderTeamId: teamId
             }),
             reels: reels.load({
-                teamId: null,
                 userId: userId
             })
         };
