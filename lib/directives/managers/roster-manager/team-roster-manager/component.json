@@ -1,0 +1,15 @@
+{
+    "name": "team-roster-manager",
+    "templates": [
+        "template.html"
+    ],
+    "paths": [
+        "."
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

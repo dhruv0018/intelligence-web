@@ -1,8 +1,11 @@
 @import (reference) "main.less";
 
 .krossover-athlete{
-  padding: 5px;
   letter-spacing: normal;
+
+  .de-selected {
+    opacity:.5;
+  }
 
   a {
   	margin-left: 5px;
@@ -18,5 +21,25 @@
   div {
   	display: inline-block;
   	margin-right: 5px;
+  }
+
+  .sidebar-athlete {
+    padding: 5px;
+  }
+
+  table {
+    border-top: none;
+
+    td.athlete-column {
+      border: none;
+      input {
+        border-radius: @border-radius-small;
+        border: 1px solid @gray-border;
+      }
+
+      button.remove{
+        line-height: 50px;
+      }
+    }
   }
 }
