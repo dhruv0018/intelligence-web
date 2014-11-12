@@ -308,6 +308,9 @@ and (min-width: 1280px) {
     }
 }
 
+@menu-item-indent: 49px;
+@submenu-item-indent: @menu-item-indent + 30px;
+
 /* Screens < 1024px wide */
 @media only screen
 and (max-width: 1024px) {
@@ -368,11 +371,11 @@ and (max-width: 1024px) {
                 }
 
                 button {
-                    margin-left: 40px;
+                    margin-left: @menu-item-indent;
                 }
 
                 a {
-                    padding-left: 40px;
+                    padding-left: @menu-item-indent;
                     text-align: left;
                 }
 
@@ -401,7 +404,7 @@ and (max-width: 1024px) {
                 a {
                     display: block;
                     padding: 3px 20px; // Standardize <li> height
-                    padding-left: 70px;
+                    padding-left: @submenu-item-indent;
                     color: @gray-dark;
                     text-align: left;
                     text-decoration: none;
