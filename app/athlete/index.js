@@ -50,11 +50,9 @@ Athlete.service('Athlete.Data.Dependencies', [
         var Data = {
 
             positionsets: positionsets.load(),
-            users: users.load(),
-            teams: teams.load(),
-            games: games.load({
-                uploaderTeamId: teamId
-            }),
+            users: users.load({ relatedUserId: session.currentUser.id }),
+            teams: teams.load({ relatedUserId: session.currentUser.id }),
+            games: games.load({ relatedUserId: session.currentUser.id }),
             reels: reels.load({
                 userId: userId
             })

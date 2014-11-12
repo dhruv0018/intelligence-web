@@ -1,8 +1,8 @@
 <div class="share-film">
 
-    <header class="modal-header" data-ng-class="{ 'success-title': shareSuccess }">
+    <header class="modal-header">
     	<h3 class="modal-title">
-	    	<span data-ng-show="!withOtherUsers && !withPublic && !shareSuccess">Pick how you would like to share</span>
+	    	<span data-ng-show="!withOtherUsers && !withPublic && !withWufoo">Pick how you would like to share</span>
 	        <span data-ng-show="withOtherUsers">Share this film with other Krossover users</span>
 	        <span data-ng-show="withPublic">Share this film via public URL</span>
             <span data-ng-show="withWufoo">Film Room Sharing</span>
@@ -42,7 +42,7 @@
         	<h3>Sharing with:</h3>
         	<form>
         		<user-typeahead data-user="user" data-filter="filter"></user-typeahead>
-        		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || game.isSharedWithUser(user) || user.id === currentUser.id" data-ng-click="game.shareWithUser(user); user = null">Add</button>
+        		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || game.isSharedWithUser(user) || user.id === currentUser.id" data-ng-click="shareSubmit(user); user = null">Add</button>
         	</form>
         	<div class="how-to-search">Start typing the last name of the user you want to share with.</div>
         	<div data-ng-show="game.getUserShares().length" class="shared-with-table">
@@ -51,13 +51,13 @@
         			<strong>{{users[share.sharedWithUserId].firstName}} {{users[share.sharedWithUserId].lastName}}</strong>
         			<span class="pull-right">
         				Sharing raw film
-        				<i class="icon icon-remove" data-ng-click="game.stopSharingWithUser(users[share.sharedWithUserId])"></i>
+        				<i class="icon icon-remove" data-ng-click="shareRevoke(users[share.sharedWithUserId])"></i>
         			</span>
         		</div>
         	</div>
         	<div class="button-row">
         		<button class="btn btn-default" data-ng-click="withOtherUsers = false">Back</button>
-        		<button class="btn btn-primary pull-right" data-ng-click="shareSubmit()">Save and share</button>
+        		<button class="btn btn-primary pull-right" data-ng-click="$close()">Done</button>
         	</div>
         </div>
 
@@ -82,11 +82,6 @@
 
         <div class="wufoo-form" data-ng-show="withWufoo">
             <iframe height="636" allowtransparency="true" frameborder="0" scrolling="no" style="width:100%;border:none" src="https://krossover.wufoo.com/embed/rz0hmlj13906x9/"><a href="https://krossover.wufoo.com/forms/rz0hmlj13906x9/">Fill out the share request form</a></iframe>
-        </div>
-
-        <div class="share-successful" data-ng-show="shareSuccess">
-        	<i class="icon icon-ok"></i>
-        	Sharing settings updated
         </div>
 
     </div>

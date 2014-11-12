@@ -232,6 +232,12 @@
         "Assistant Coach": true
     },
 
+    "Coach.Analytics": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "Coach.GameArea": {
 
         "Head Coach": true,

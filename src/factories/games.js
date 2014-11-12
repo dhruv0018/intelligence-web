@@ -22,17 +22,43 @@ IntelligenceWebClient.factory('GamesFactory', [
             model: 'GamesResource',
 
             storage: 'GamesStorage',
+            unextend: function(game) {
 
+                var self = this;
+
+                game = game || self;
+
+                /* Create a copy of the resource to break reference to orginal. */
+                var copy = angular.copy(game);
+                delete copy.flow;
+
+                return copy;
+            },
             extend: function(game) {
 
                 var self = this;
 
                 angular.augment(game, self);
-
+                game.isSaving = false;
                 game.video = game.video || {};
                 game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
-                game.notes = game.notes || [];
+                game.notes = game.notes || {};
+                game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
+                game.datePlayed = game.datePlayed || moment.utc().toDate();
+
+                //TODO remove when the back end makes notes always a object
+                if (angular.isArray(game.notes)) {
+                    game.notes = {};
+                }
+
+                if (!game.uploaderUserId && session.currentUser && session.currentUser.id) {
+                    game.uploaderUserId = session.currentUser.id;
+                }
+
+                if (!game.uploaderTeamId && session.currentUser && session.currentUser.currentRole && session.currentUser.currentRole.teamId) {
+                    game.uploaderTeamId = session.currentUser.currentRole.teamId;
+                }
 
                 /* build lookup table of shares by userId shared with */
                 if (game.shares && game.shares.length) {
@@ -619,14 +645,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 game = game || self;
 
+                game = game || this;
+
                 switch (game.gameType) {
                     case GAME_TYPES.CONFERENCE.id:
                     case GAME_TYPES.NON_CONFERENCE.id:
                     case GAME_TYPES.PLAYOFF.id:
                         return true;
-                    default:
-                        return false;
                 }
+
+                return false;
             },
 
             isNonRegular: function(game) {
@@ -635,14 +663,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 game = game || self;
 
+                game = game || this;
+
                 switch (game.gameType) {
 
                     case GAME_TYPES.SCOUTING.id:
                     case GAME_TYPES.SCRIMMAGE.id:
                         return true;
-                    default:
-                        return false;
                 }
+
+                return false;
             },
 
             getFormationReport: function() {

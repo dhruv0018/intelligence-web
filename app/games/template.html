@@ -7,7 +7,9 @@
 			</div>
 		</div>
         <div class="player" data-ng-if="publiclyShared">
-            <x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
+            <div class="video-container">
+            	<x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
+            </div>
         </div>
         <div class="public-game-header-mobile" data-ng-if="publiclyShared">
 			<div>
