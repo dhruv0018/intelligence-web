@@ -330,6 +330,12 @@ module.exports = function(grunt) {
                 src:    '**',
                 dest:   'public/intelligence/assets'
             },
+            qaassets: {
+                expand: true,
+                cwd:    'build/assets',
+                src:    '**',
+                dest:   'public/<%= gitinfo.local.branch.current.name %>/intelligence/assests'
+            },
             dev: {
                 files: {
                     'build/index.html': 'src/index.html',
@@ -345,6 +351,15 @@ module.exports = function(grunt) {
             manifests: {
                 files: {
                     'public/intelligence/manifest.appcache': 'manifest.appcache'
+                }
+            },
+            qa: {
+                files: {
+                    'public/<%= gitinfo.local.branch.current.name %>/intelligence/.htaccess': 'src/.htaccess',
+                    'public/<%= gitinfo.local.branch.current.name %>/intelligence/manifest.appcache': 'manifest.appcache',
+                    'public/<%= gitinfo.local.branch.current.name %>/intelligence/index.html': 'build/index.html',
+                    'public/<%= gitinfo.local.branch.current.name %>/intelligence/styles.css': 'build/styles.css',
+                    'public/<%= gitinfo.local.branch.current.name %>/intelligence/scripts.js': 'build/scripts.js'
                 }
             },
             build: {
