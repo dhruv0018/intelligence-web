@@ -10,7 +10,7 @@ intelligence-web-client:
 		git checkout $$branch && \
 	    git pull && \
         npm install && \
-        grunt ${GRUNT_TARGET};
+        grunt ${GRUNT_TARGET}; \
 	done
 
 clean:
