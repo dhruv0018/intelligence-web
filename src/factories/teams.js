@@ -52,6 +52,24 @@ IntelligenceWebClient.factory('TeamsFactory', [
                             role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
                         }
                     });
+                } else {
+                    team.roles = [];
+                }
+
+                //TODO roster related, should be put on backend at some point
+                if (!team.roster) {
+                    team.roster = {
+                        teamId: team.id,
+                        playerInfo: {}
+                    };
+                } else {
+                    if (team.roster.playerInfo) {
+                        angular.forEach(team.roster.playerInfo, function(rosterEntry, playerId) {
+                            rosterEntry.id = playerId;
+                        });
+                    } else {
+                        team.roster.playerInfo = {};
+                    }
                 }
 
                 angular.extend(team, self);
@@ -108,7 +126,6 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     else return teams;
                 });
             },
-
             removeRole: function(role) {
 
                 /* Remove role from team. */
@@ -128,7 +145,12 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     });
                 }
             },
-
+            addRole: function(user, role) {
+                var self = this;
+                role.userId = user.id;
+                role.teamId = self.id;
+                self.roles.push(role);
+            },
             getMembers: function() {
 
                 var members = [];
@@ -276,6 +298,26 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 var model = $injector.get(self.model);
 
                 return model.generateStats(query).$promise;
+            },
+            getActivePlayerInfo: function() {
+                var self = this;
+
+                var activePlayerInfo = {};
+
+                angular.forEach(self.roster.playerInfo, function(playerInfo, playerId) {
+                    if (playerInfo.isActive) {
+                        activePlayerInfo[playerId] = playerInfo;
+                    }
+                });
+
+                return activePlayerInfo;
+            },
+            hasActivePlayerInfo: function() {
+                var self = this;
+
+                var activePlayerInfo = self.getActivePlayerInfo();
+
+                return Object.keys(activePlayerInfo).length > 0;
             }
         };
 

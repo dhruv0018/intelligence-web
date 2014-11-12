@@ -74,15 +74,26 @@
 
             <ul class="dropdown-menu">
 
-                <li data-ng-repeat="role in currentUser.roles">
+                <div data-ng-repeat="roleType in currentUser.roleTypes">
+                    <li data-ng-if="roleType[0].type.id !== ATHLETE.type.id" data-ng-repeat="role in roleType">
 
-                    <a href data-ng-click="account.changeCurrentUserRole(role)">
+                        <a href data-ng-click="account.changeCurrentUserRole(role)">
 
-                        <x-krossover-role user="currentUser" role="role"></x-krossover-role>
+                            <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
-                    </a>
+                        </a>
 
-                </li>
+                    </li>
+                    <li data-ng-if="roleType[0].type.id === ATHLETE.type.id">
+
+                        <a href data-ng-click="account.changeCurrentUserRole(roleType[0])">
+
+                            <x-krossover-role user="currentUser" role="roleType[0]"></x-krossover-role>
+
+                        </a>
+
+                    </li>
+                </div>
 
                 <footer>
 

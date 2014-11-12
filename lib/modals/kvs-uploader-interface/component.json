@@ -1,15 +1,12 @@
 {
-    "name": "roster",
+    "name": "kvs-uploader-interface",
     "templates": [
         "template.html"
     ],
-    "paths": [
-        "."
+    "styles": [
+        "styles.less"
     ],
     "scripts": [
         "index.js"
-    ],
-    "styles": [
-        "styles.less"
     ]
 }

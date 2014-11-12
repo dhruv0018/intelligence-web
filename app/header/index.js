@@ -102,8 +102,8 @@ Header.service('Base.Data.Dependencies', [
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'LeaguesFactory', 'TeamsFactory', 'SPORTS',
-    function controller(config, $scope, $state, auth, session, account, ROLES, leagues, teams, SPORTS) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'UsersFactory', 'LeaguesFactory', 'TeamsFactory', 'SPORTS',
+    function controller(config, $scope, $state, auth, session, account, ROLES, users, leagues, teams, SPORTS) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;

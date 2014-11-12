@@ -4,10 +4,8 @@ var ELEMENTS = 'E';
 
 /* Component dependencies. */
 require('coach-game-info');
-require('coach-game-your-team');
-require('coach-game-opposing-team');
+require('game-tab');
 require('coach-game-instructions');
-require('coach-game-team');
 
 /* Component settings */
 var templateUrl = 'coach/game/template.html';
@@ -26,10 +24,8 @@ var Game = angular.module('Coach.Game', [
     'ui.router',
     'ui.bootstrap',
     'Coach.Game.Info',
-    'Coach.Game.YourTeam',
-    'Coach.Game.OpposingTeam',
-    'Coach.Game.Instructions',
-    'Coach.Game.Team'
+    'Coach.Game.GameTab',
+    'Coach.Game.Instructions'
 ]);
 
 /* Cache the template file */
@@ -64,8 +60,9 @@ Game.directive('krossoverCoachGame', [
             link: link,
 
             scope: {
-                data: '=?',
-                $flow: '=?flow'
+                game: '=',
+                league: '=',
+                remainingBreakdowns: '='
             }
         };
 
@@ -84,29 +81,20 @@ Game.directive('krossoverCoachGame', [
  * @type {controller}
  */
 Game.controller('Coach.Game.controller', [
-    '$scope', 'GamesFactory',
-    function controller($scope, games) {
+    '$scope', 'TeamsFactory', 'GamesFactory', 'config', 'PositionsetsFactory',
+    function controller($scope, teams, games, config, positionSets) {
+        $scope.positionset = ($scope.league.id && $scope.league.positionSetId) ? positionSets.get($scope.league.positionSetId) : {};
+        $scope.config = config;
+
         $scope.games = games;
+        $scope.teams = teams.getCollection();
 
-        $scope.headings = {
-            opposingTeam: 'Opposing Team',
-            yourTeam: 'Team',
-            scoutingTeam: 'Scouting'
-        };
-
-        $scope.validation = {
-            opposingTeam: false,
-            yourTeam: false,
-            scoutingTeam: false
-        };
+        $scope.opposingTeamFiltering = {type: 'active'};
+        $scope.teamFiltering = ($scope.game.isRegular()) ? {type: 'none'} : {type: 'active'};
 
         $scope.gameTabs = {
             info: {
                 active: true
-            },
-            scouting: {
-                active: false,
-                disabled: true
             },
             opposing: {
                 active: false,
@@ -121,10 +109,11 @@ Game.controller('Coach.Game.controller', [
                 disabled: true
             },
             enableAll: function() {
-                // this.scouting.disabled = false;
-                // this.opposing.disabled = false;
-                // this.team.disabled = false;
-                // this.confirm.disabled = false;
+                var self = this;
+                var keys = Object.keys(self);
+                angular.forEach(keys, function(key) {
+                    self[key].disabled = false;
+                });
             },
             deactivateAll: function() {
                 var self = this;
@@ -134,8 +123,6 @@ Game.controller('Coach.Game.controller', [
                 });
             }
         };
-
-//        $scope.game = $scope.game || {};
     }
 ]);
 

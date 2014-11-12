@@ -76,6 +76,8 @@ Coach.service('Coach.Data.Dependencies', [
             })
         };
 
+
+
         Data.playersList = $q.all(data).then(function() {
 
             var team = teams.get(teamId);
