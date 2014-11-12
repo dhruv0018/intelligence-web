@@ -52,6 +52,19 @@
         display: none;
     }
 
+    .public-view {
+        border-left: thin solid @gray-border;
+        line-height: 61px;
+        padding: 0px 20px;
+        letter-spacing: normal;
+
+        .go-to-login {
+            margin-right: 10px;
+            padding-right: 10px;
+            border-right: thin solid @gray-border;
+        }
+    }
+
     .role-dropdown {
 
         .dropdown;
@@ -235,10 +248,16 @@ and (max-height: 480px) {
 
         .navbar-header {
 
+            width: auto;
+
             .navbar-brand {
 
                 padding: 5px;
             }
+        }
+
+        .public-view {
+            line-height: 31px;
         }
 
         .role-title {

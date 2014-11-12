@@ -32,11 +32,24 @@ IntelligenceWebClient.run([
                     event.preventDefault();
 
                     /* Request client tokens. */
-                    tokens.requestClientTokens().then(function(authTokens) {
+                    tokens.requestClientTokens()
 
+                    /* If the tokens request is successful. */
+                    .then(function(authTokens) {
+
+                        /* Set the tokens. */
                         tokens.setTokens(authTokens);
+                    })
 
-                        $state.go(toState, toParams);
+                    /* In any case, finally. */
+                    .finally(function() {
+
+                        /* Go to state, but without starting state transition again. */
+                        $state.go(toState.name, toParams, {notify: false}).then(function() {
+
+                            /* Broadcast the success of the state transition. */
+                            $rootScope.$broadcast('$stateChangeSuccess', toState, toParams, fromState, fromParams);
+                        });
                     });
                 }
             }
