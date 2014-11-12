@@ -563,11 +563,9 @@ module.exports = function(grunt) {
         'autoprefixer',
         'componentbuild:files',
         'copy:theme-assets',
-        'copy:assets',
+        'copy:qaassets',
         'copy:dev',
-        'copy:build',
-        'copy:htaccess',
-        'ver:prod']);
+        'copy:qa']);
 
     grunt.registerTask('prod', [
         'clean',
