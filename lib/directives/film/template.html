@@ -1,6 +1,8 @@
 <div class="krossover-film" data-ng-hide="hideFilm">
+
    <div class="film-info-header" data-ng-if="isGame">
-       {{film.datePlayed | date: 'MMM dd, yyyy' }}
+       <span data-ng-if="!film.datePlayed">TBD</span>
+       <span data-ng-if="film.datePlayed">{{film.datePlayed | date: 'MMM dd, yyyy' }}</span>
 
        <br/>
 
@@ -11,11 +13,15 @@
        <strong data-ng-if="film.isVideoTranscodeFailed()" class="film-fail-text">Film Failed Processing:</strong>
 
        <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:film.id})">
-           {{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}
+           <span data-ng-if="film.opposingTeamId && film.teamId">{{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}</span>
+           <span data-ng-if="!film.opposingTeamId || !film.teamId">Raw Film - No Game Information Entered</span>
        </a>
+
        <a data-ng-if="currentUser.is(ATHLETE)" data-ui-sref="Athlete.GameArea({id:film.id})">
-           {{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}
+           <span data-ng-if="film.opposingTeamId && film.teamId">{{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}</span>
+           <span data-ng-if="!film.opposingTeamId || !film.teamId">Raw Film - No Game Information Entered</span>
        </a>
+
        <br/>
        <span data-ng-show="!isShared">Uploaded</span>
        <span data-ng-show="isShared">Shared</span> by {{uploaderName}}
