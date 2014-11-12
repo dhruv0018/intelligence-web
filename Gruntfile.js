@@ -549,6 +549,26 @@ module.exports = function(grunt) {
         'copy:build']);
 
     grunt.registerTask('qa', [
+        'clean',
+        'env:qa',
+        'componentbuild:prod',
+        'browserify:prod',
+        'ngAnnotate',
+        'componentbuild:styles',
+        'less',
+        'svgmin',
+        'grunticon',
+        'concat:unprefixed',
+        'autoprefixer',
+        'componentbuild:files',
+        'copy:theme-assets',
+        'copy:assets',
+        'copy:dev',
+        'copy:build',
+        'copy:htaccess',
+        'ver:prod']);
+
+    grunt.registerTask('new-qa', [
         'gitinfo',
         'clean',
         'env:qa',
