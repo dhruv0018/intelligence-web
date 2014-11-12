@@ -124,7 +124,7 @@ Header.controller('HeaderController', [
             $state.go('login');
         };
 
-        // This scope functionality limits a menu element to only sub-menu
+        // This scope functionality limits a menu element to only one sub-menu
         $scope.subMenu = false;
 
         $scope.toggleSubMenu = function($event) {
