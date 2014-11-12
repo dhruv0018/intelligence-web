@@ -132,6 +132,7 @@ data-vg-controls #controls-container {
     position: absolute;
     display: table;
     zoom: 1;
+    display: flex;
 }
 
 data-vg-controls #controls-container .video-control {
@@ -155,23 +156,14 @@ data-vg-controls #controls-container .video-control:last-child {
     border-right: 1px solid rgb(200, 200, 200);
 }
 
-x-krossover-play-pause-button {
-    display: table-cell;
-    width: 50px;
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
-    border-right: none;
-
-    i {
-
-        font-size: 18px;
-    }
+.play-pause-button {
+    border-left: 1px solid @video-controls-border;
 }
 
 .timedisplay {
     display: table-cell;
     font-size: 14px;
+    padding-top: 16px;
     width: 150px;
     vertical-align: middle;
     text-align: center;
@@ -186,6 +178,11 @@ x-krossover-play-pause-button {
 .time-divider {
 
     font-size: 12px;
+}
+
+.controls-space {
+    display: flex;
+    flex: 1;
 }
 
 data-vg-scrubbar {
