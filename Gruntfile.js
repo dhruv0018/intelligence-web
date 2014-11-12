@@ -549,6 +549,7 @@ module.exports = function(grunt) {
         'copy:build']);
 
     grunt.registerTask('qa', [
+        'gitinfo',
         'clean',
         'env:qa',
         'componentbuild:prod',
