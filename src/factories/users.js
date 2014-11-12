@@ -472,28 +472,40 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var activeRoles = [];
 
-                activeRoles = self.roles.filter(function(role) {
-                    return (!role.tenureEnd) ? true : false;
+                activeRoles = self.roles.filter(function(temporaryRole) {
+                    return (!temporaryRole.tenureEnd) ? true : false;
                 });
 
                 if (role) {
-                   console.log('extra processing');
+                    activeRoles = activeRoles.filter(function(temporaryRole) {
+                        return temporaryRole.type === role.type;
+                    });
                 }
+
                 console.log(activeRoles);
                 return activeRoles;
             },
+            /**
+             * @class User
+             * @method inactiveRoles
+             * @param {Object} optional role object
+             * @returns {Array} Array of roles
+             */
             inactiveRoles: function(role) {
                 var self = this;
 
                 var inactiveRoles = [];
 
-                inactiveRoles = self.roles.filter(function(role) {
-                    return (role.tenureEnd) ? false : true;
+                inactiveRoles = self.roles.filter(function(temporaryRole) {
+                    return (temporaryRole.tenureEnd) ? false : true;
                 });
 
                 if (role) {
-                    console.log('extra processing');
+                    inactiveRoles = inactiveRoles.filter(function(temporaryRole) {
+                        return temporaryRole.type === role.type;
+                    });
                 }
+
                 console.log(inactiveRoles);
                 return inactiveRoles;
 
