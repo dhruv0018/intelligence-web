@@ -29,7 +29,9 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     reel.sharedWithUsers = reel.sharedWithUsers || {};
 
                     angular.forEach(reel.shares, function(share) {
-                        reel.sharedWithUsers[share.sharedWithUserId] = share;
+                        if (share.sharedWithUserId) {
+                            reel.sharedWithUsers[share.sharedWithUserId] = share;
+                        }
                     });
                 }
 
@@ -59,7 +61,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 var share = {
                     userId: session.currentUser.id,
-                    gameId: self.id,
+                    reelId: self.id,
                     sharedWithUserId: user.id,
                     createdAt: moment.utc().toDate()
                 };
@@ -79,6 +81,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 for (var index = 0; index < self.shares.length; index++) {
                     if (self.shares[index].sharedWithUserId === user.id) {
                         self.shares.splice(index, 1);
+                        delete self.sharedWithUsers[user.id];
                         return;
                     }
                 }
@@ -102,6 +105,57 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+            getUserShares: function() {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
+                var sharesArray = [];
+
+                angular.forEach(self.sharedWithUsers, function(share, index) {
+                    sharesArray.push(share);
+                });
+
+                return sharesArray;
+            },
+            shareWithPublic: function() {
+                var self = this;
+
+                self.shares = self.shares || [];
+
+                if (self.isSharedWithPublic()) return;
+
+                var share = {
+                    userId: session.currentUser.id,
+                    reelId: self.id,
+                    sharedWithUserId: null,
+                    createdAt: moment.utc().toDate()
+                };
+
+                self.shares.push(share);
+            },
+            stopSharingWithPublic: function() {
+                var self = this;
+
+                if (!self.shares || !self.shares.length) return;
+
+                self.shares.forEach(function(share, index) {
+                    if (!share.sharedWithUserId) {
+                        self.shares.splice(index, 1);
+                    }
+                });
+            },
+            isSharedWithPublic: function() {
+                var self = this;
+
+                if (!self.shares) return false;
+
+                return self.shares.map(function(share) {
+                    return share.sharedWithUserId;
+                }).some(function(userId) {
+                    return !userId;
+                });
             }
         };
 
