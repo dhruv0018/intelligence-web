@@ -5,8 +5,6 @@ qa: clean
 intelligence-web-client:
 	git for-each-ref --format='%(refname:short)' refs/heads | while read branch; do \
 		echo $$branch; \
-		mkdir -p $$branch && \
-		cd $$branch && \
 		git checkout $$branch && \
 	    git pull && \
         npm install && \
