@@ -556,7 +556,7 @@ module.exports = function(grunt) {
         'ngAnnotate',
         'componentbuild:styles',
         'less',
-        'svgmin',
+        'copy:svg',
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
