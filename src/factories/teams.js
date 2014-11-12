@@ -285,6 +285,20 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 //no plans or packages means no breakdowns
                 return 0;
             },
+            generateStats: function(query) {
+                var self = this;
+
+                query.id = query.id || self.id;
+
+                var error = function() {
+
+                    throw new Error('Could not get stats for team');
+                };
+
+                var model = $injector.get(self.model);
+
+                return model.generateStats(query).$promise;
+            },
             getActivePlayerInfo: function() {
                 var self = this;
 
