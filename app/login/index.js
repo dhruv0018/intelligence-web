@@ -169,7 +169,7 @@ Login.controller('LoginController', [
             auth.loginUser(email, password, persist).then(function(user) {
 
                 if (user) {
-
+                    console.log(user.activeRoles());
                     /* If the user has more than one role, but has not selected
                      * a default one yet. */
                     if (user.roles && user.roles.length > 1 && !user.defaultRole) {

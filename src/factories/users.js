@@ -460,6 +460,43 @@ IntelligenceWebClient.factory('UsersFactory', [
                 }
 
                 return vettedUsers;
+            },
+            /**
+             * @class User
+             * @method activeRoles
+             * @param {Object} optional role object
+             * @returns {Array} Array of roles
+             */
+            activeRoles: function(role) {
+                var self = this;
+
+                var activeRoles = [];
+
+                activeRoles = self.roles.filter(function(role) {
+                    return (!role.tenureEnd) ? true : false;
+                });
+
+                if (role) {
+                   console.log('extra processing');
+                }
+                console.log(activeRoles);
+                return activeRoles;
+            },
+            inactiveRoles: function(role) {
+                var self = this;
+
+                var inactiveRoles = [];
+
+                inactiveRoles = self.roles.filter(function(role) {
+                    return (role.tenureEnd) ? false : true;
+                });
+
+                if (role) {
+                    console.log('extra processing');
+                }
+                console.log(inactiveRoles);
+                return inactiveRoles;
+
             }
         };
 
