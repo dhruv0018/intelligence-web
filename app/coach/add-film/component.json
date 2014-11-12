@@ -7,18 +7,12 @@
         "."
     ],
     "templates": [
-        "template.html",
-        "start.html",
-        "upload.html",
-        "uploading.html"
+        "template.html"
     ],
     "scripts": [
-        "index.js",
-        "upload.js",
-        "uploading.js"
+        "index.js"
     ],
     "styles": [
-        "styles.less",
-        "upload.less"
+        "styles.less"
     ]
 }

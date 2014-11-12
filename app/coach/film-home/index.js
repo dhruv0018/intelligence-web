@@ -9,7 +9,6 @@ var FilmHome = angular.module('Coach.FilmHome', [
     'ui.router',
     'ui.bootstrap',
     'coach-info',
-    'roster',
     'film',
     'no-results'
 ]);

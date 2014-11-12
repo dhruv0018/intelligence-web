@@ -18,6 +18,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
     function controller($rootScope, $scope, $state, $filter, reels, games, players, teams, users, session, data, ROLES) {
         var teamId = session.currentUser.currentRole.teamId;
         $scope.playersList = data.playersList;
+        $scope.players = players.getCollection();
         $scope.games = games.getCollection();
         $scope.gamesList = games.getList();
         $scope.reels = reels.getCollection();
@@ -27,7 +28,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
         $scope.team = teams.get(teamId);
         $scope.users = users.getCollection();
         $scope.roster = $scope.team.roster;
-        $scope.activeRoster = players.constructActiveRoster($scope.playersList, $scope.roster.id);
+        $scope.activeRoster = [];
         $scope.query = '';
         $scope.data = data;
         $scope.ROLES = ROLES;

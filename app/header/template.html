@@ -88,8 +88,7 @@
     <menu class="nav navbar-nav" data-ng-if="currentUser.is(COACH)">
 
         <li data-ui-sref-active="active"><a data-ui-sref="Coach.FilmHome">Film Home</a></li>
-        <!-- <li class="disabled hide-option" data-ui-sref-active="active"><a data-ui-sref="analytics">Analytics</a></li> -->
-
+        <li data-ng-if="league.sportId === SPORTS.FOOTBALL.id" data-ui-sref-active="active"><a data-ui-sref="Coach.Analytics">Analytics</a></li>
         <li class="header-dropdown" data-ng-class="{active: $state.includes('Coach.Team')}">
             <a class="dropdown-toggle">Team</a>
             <ul class="dropdown-menu">
@@ -124,15 +123,26 @@
 
             <ul class="dropdown-menu">
 
-                <li data-ng-repeat="role in currentUser.roles">
+                <div data-ng-repeat="roleType in currentUser.roleTypes">
+                    <li data-ng-if="roleType[0].type.id !== ATHLETE.type.id" data-ng-repeat="role in roleType">
 
-                    <a href data-ng-click="account.changeCurrentUserRole(role)">
+                        <a href data-ng-click="account.changeCurrentUserRole(role)">
 
-                        <x-krossover-role user="currentUser" role="role"></x-krossover-role>
+                            <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
-                    </a>
+                        </a>
 
-                </li>
+                    </li>
+                    <li data-ng-if="roleType[0].type.id === ATHLETE.type.id">
+
+                        <a href data-ng-click="account.changeCurrentUserRole(roleType[0])">
+
+                            <x-krossover-role user="currentUser" role="roleType[0]"></x-krossover-role>
+
+                        </a>
+
+                    </li>
+                </div>
 
                 <footer>
 

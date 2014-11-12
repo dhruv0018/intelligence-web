@@ -42,7 +42,9 @@ Instructions.directive('krossoverCoachGameInstructions', [
             controller: 'Coach.Game.Instructions.controller',
 
             scope: {
-                data: '='
+                game: '=',
+                positionset: '=',
+                remainingBreakdowns: '='
             }
         };
 
@@ -58,25 +60,10 @@ Instructions.directive('krossoverCoachGameInstructions', [
 Instructions.controller('Coach.Game.Instructions.controller', [
     '$scope', '$state', 'GAME_STATUSES', 'PositionsetsFactory', 'GamesFactory', 'TeamsFactory', 'SessionService', 'AlertsService',
     function controller($scope, $state, GAME_STATUSES, positionsets, games, teams, session, alerts) {
-
-        $scope.keys = window.Object.keys;
-
-        $scope.positionset = positionsets.get($scope.data.league.positionSetId);
-        $scope.positions = $scope.positionset.indexedPositions;
-
+        $scope.positionset = $scope.positionset;
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.isBreakdownChoiceMade = false;
-
-        //Make sure team has roster
-        $scope.hasRoster = false;
-        $scope.isNonRegularGame = games.isNonRegular($scope.data.game);
-
-        $scope.$watch('data.gamePlayerLists[data.game.teamId]', function(x) {
-            if ($scope.data.gamePlayerLists && $scope.data.gamePlayerLists[$scope.data.game.teamId] && !$scope.data.gamePlayerLists[$scope.data.game.teamId].every(function(player) { return player.isUnknown; })) {
-
-                $scope.hasRoster = true;
-            }
-        });
+        $scope.isNonRegularGame = $scope.game.isNonRegular();
 
         $scope.returnToGameAlert = function() {
             alerts.add({
@@ -86,15 +73,15 @@ Instructions.controller('Coach.Game.Instructions.controller', [
         };
 
         var teamIdForThisGame = session.currentUser.currentRole.teamId;
-        if ($scope.data.game.uploaderTeamId) {
-            teamIdForThisGame = $scope.data.game.uploaderTeamId;
+        if ($scope.game.uploaderTeamId) {
+            teamIdForThisGame = $scope.game.uploaderTeamId;
         }
 
         $scope.activePlan = teams.get(teamIdForThisGame).getActivePlan() || {};
         $scope.activePackage = teams.get(teamIdForThisGame).getActivePackage() || {};
-        $scope.remainingBreakdowns = $scope.data.remainingBreakdowns;
+        $scope.remainingBreakdowns = $scope.remainingBreakdowns;
 
-        $scope.$watch('data.game', function(game) {
+        $scope.$watch('game', function(game) {
             if (typeof game !== 'undefined' && typeof game.status !== 'undefined' && game.status !== null) {
                 $scope.statusBuffer = game.status;
                 $scope.isBreakdownChoiceMade = true;
@@ -102,26 +89,38 @@ Instructions.controller('Coach.Game.Instructions.controller', [
                 $scope.statusBuffer = 0;
             }
 
-        });
+            if ($scope.game.isRegular()) {
+                //Make sure team has roster
+                //Note, this is not a team roster per se, rather, it is the roster from the game keyed by your team id
+                var teamRoster = ($scope.game.teamId && $scope.game.rosters && $scope.game.rosters[$scope.game.teamId]) ? $scope.game.getRoster($scope.game.teamId) : null;
+                //greater than 1 because game rosters always have an unknown player
+                //so an empty check is to see if there are more than one player besides the unknown player
+                $scope.hasRoster = (teamRoster && teamRoster.playerInfo && Object.keys(teamRoster.playerInfo).length > 1) ? true : false;
+            }
+
+        }, true);
 
         $scope.switchChoice = function() {
-            $scope.statusBuffer = ($scope.data.game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
+            $scope.statusBuffer = ($scope.game.status === $scope.GAME_STATUSES.NOT_INDEXED.id) ? $scope.GAME_STATUSES.READY_FOR_INDEXING.id : $scope.GAME_STATUSES.NOT_INDEXED.id;
             $scope.isBreakdownChoiceMade = false;
         };
 
         $scope.save = function() {
-            $scope.data.game.status = $scope.statusBuffer;
+            $scope.game.status = $scope.statusBuffer;
 
-            if ($scope.data.game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
-                $scope.data.game.submittedAt = new Date().toISOString();
+            if ($scope.game.status === GAME_STATUSES.READY_FOR_INDEXING.id) {
+                $scope.game.submittedAt = new Date().toISOString();
             } else {
-                $scope.data.game.submittedAt = null;
+                $scope.game.submittedAt = null;
             }
 
             $scope.savingBreakdown = true;
-            $scope.data.game.save().then(function(game) {
-                $scope.savingBreakdown = false;
-                $scope.isBreakdownChoiceMade = true;
+            $scope.game.save().then(function(game) {
+                games.fetch($scope.game.id).then(function(responseGame) {
+                    angular.extend($scope.game, responseGame);
+                    $scope.savingBreakdown = false;
+                    $scope.isBreakdownChoiceMade = true;
+                });
             });
         };
     }
