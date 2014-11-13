@@ -160,6 +160,24 @@ data-vg-controls #controls-container .video-control:last-child {
     border-left: 1px solid @video-controls-border;
 }
 
+@media (max-width: 530px) {
+    .direction-controls {
+        display: none;
+    }
+}
+
+@media (max-width: 250px) {
+    .timedisplay {
+        display: none;
+    }
+}
+
+@media (max-width: 150px) {
+    .controls-container-full {
+        display: none;
+    }
+}
+
 .timedisplay {
     display: table-cell;
     font-size: 14px;
