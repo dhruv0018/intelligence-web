@@ -32,6 +32,22 @@
         }
     }
 
+    .reel-edit-control-container {
+        background-color: #f7f8f8;
+    }
+
+        .reel-edit-controls {
+                    
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            max-width: 420px;
+
+            .save-edit {
+                color: @brand-success;
+            }
+        }
+
     .main-highlight {
         background-color: #f7f8f8;
         display: flex;
@@ -53,14 +69,20 @@
             border: none;
         }
 
-            .reel-edit-controls {
-                
-                padding: 10px;
-                
-                .save-edit {
-                    color: @brand-success;
-                }
+            .playlist-control {
+                display: flex;
+                background: #ffffff;
+                border-top: thin solid #dddddd;
+                border-right: thin solid #dddddd;
+                padding: 15px;
+                justify-content: space-between;
+                align-items: center;
             }
+
+                .play-all-plays {
+                    margin: 0;
+                    outline: 0;
+                }
 
             .playlist-container {
                 flex: 1;
@@ -83,7 +105,6 @@
 
             .player.reels-player {
                 display: flex;
-                margin: 1%;
                 flex: 1;
             }
 } 

@@ -4,20 +4,27 @@
         <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reelUpdatedDate | date}})</span></h3>
         <span class="delete-reel" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
     </header>
+    
+    <div class="reel-edit-control-container">
+
+        <div class="reel-edit-controls">
+
+            <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
+            <a href data-ng-show="editMode" data-ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
+            <a href data-ng-show="editMode" data-ng-click="toggleEditMode()">Cancel</a>
+
+        </div>
+
+    </div>
 
     <div class="main-highlight ng-scope" data-ui-view="content">
 
+
         <aside class="sidebar__reel">
 
-            <div class="reel-edit-controls">
+            <div class="playlist-control" ng-hide="editMode">
 
-                <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
-                <a href data-ng-show="editMode" data-ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
-                <a href data-ng-show="editMode" data-ng-click="toggleEditMode()" class="pull-right">Cancel</a>
-
-            </div>
-
-            <div class="playlist-control">
+                <span>Viewing: All Plays ({{ reel.plays.length }})</span> 
 
                 <button data-ng-hide="editMode" class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
                     <span class="play-all-text">Continuous Play</span>
