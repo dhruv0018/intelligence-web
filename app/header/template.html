@@ -1,11 +1,59 @@
-<x-krossover-rolebar data-ng-if="auth.isLoggedIn"></x-krossover-rolebar>
+<x-krossover-rolebar></x-krossover-rolebar>
 
 <nav class="header header-default" role="navigation">
 
-    <header class="navbar-header">
+    <!-- Mobile Menu Begin -->
+    <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-left dropdown mobile-nav">
 
+        <button class="dropdown-toggle"><i class="icon icon-bars">&nbsp;</i>Menu</button>
+
+        <!-- Admin Menu -->
+        <menu class="dropdown-menu" data-ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
+            <li data-ui-sref-active="active"><a data-ui-sref="users">Users</a></li>
+            <li data-ui-sref-active="active"><a data-ui-sref="teams">Teams</a></li>
+            <li data-ui-sref-active="active"><a data-ui-sref="schools">Schools</a></li>
+            <li data-ui-sref-active="active"><a data-ui-sref="queue">Queue</a></li>
+            <li data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)" data-ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
+                <a>Platform</a>
+                <ul class="mobile-submenu" data-ng-show="subMenu">
+                    <li><a data-ui-sref="plan-defaults">Plan Defaults</a></li>
+                    <li><a data-ui-sref="leagues">Leagues</a></li>
+                </ul>
+            </li>
+        </menu>
+
+        <!-- Indexer Menu -->
+        <menu class="dropdown-menu" data-ng-if="currentUser.is(INDEXER)">
+            <li data-ui-sref-active="active"><a data-ui-sref="indexer-games">Games</a></li>
+        </menu>
+
+        <!-- Coach Menu -->
+        <menu class="dropdown-menu" data-ng-if="currentUser.is(COACH)">
+            <li data-ui-sref-active="active"><a data-ui-sref="Coach.FilmHome">Film Home</a></li>
+            <li data-ng-class="{active: $state.includes('Coach.Team')}" data-ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
+                <a>Team</a>
+                <ul class="mobile-submenu" data-ng-show="subMenu">
+                    <li><a data-ui-sref="Coach.Team.Roster">Roster</a></li>
+                    <li data-ng-if="currentUser.is(HEAD_COACH)"><a data-ui-sref="Coach.Team.Assistants">Coaches</a></li>
+                </ul>
+            </li>
+            <li><a data-ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
+            <li data-ui-sref-active="active"><button class="btn btn-primary navbar-btn" data-ng-click="tabs.reset()" data-ui-sref="add-film" data-ui-sref-opts="{reload: true}">Add Film</button></li>
+        </menu>
+
+        <!-- Athlete Menu -->
+        <menu class="dropdown-menu" data-ng-if="currentUser.is(ATHLETE)">
+            <li data-ui-sref-active="active"><a data-ui-sref="Athlete.FilmHome">Film Home</a></li>
+        </menu>
+
+    </div>
+
+    <!-- Logo -->
+    <header class="navbar-header" data-ng-class="{public: !auth.isLoggedIn}">
         <a class="navbar-brand" data-sref="Account.ContactInfo"><div class="icon icon-krossover-symbol"></div></a>
-
+    </header>
+    <header class="navbar-header navbar-brand-lg" data-ng-if="!auth.isLoggedIn">
+        <a class="navbar-brand" data-sref="Account.ContactInfo" href="http://www.krossover.com"><div class="icon icon-krossover-logo-tagline"></div></a>
     </header>
 
     <!-- Admin menu -->
@@ -61,6 +109,7 @@
 
     </menu>
 
+    <!-- Role Dropdown -->
     <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-right">
 
         <div class="role-dropdown" data-dropdown data-is-open="status.isopen">
@@ -110,8 +159,7 @@
     </div>
 
     <div data-ng-if="!auth.isLoggedIn" class="nav navbar-nav navbar-right public-view">
-        <a data-ui-sref="login" class="go-to-login"><i class="icon icon-sign-in"></i> Log in</a>
-        <a href="http://www.krossover.com"><i class="icon icon-info-circle"></i> Find out more</a>
+        <a data-ui-sref="login" class="btn btn-primary">Sign In</a>
     </div>
 
 </nav>
