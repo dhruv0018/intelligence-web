@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    background-color: #f7f8f8;
 
     header {
 
@@ -32,79 +33,91 @@
         }
     }
 
-    .reel-edit-control-container {
-        background-color: #f7f8f8;
-    }
-
-        .reel-edit-controls {
-                    
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            max-width: 420px;
-
-            .save-edit {
-                color: @brand-success;
-            }
-        }
-
-    .main-highlight {
-        background-color: #f7f8f8;
+    .reel-body {
         display: flex;
+        flex-direction: column;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 15px;
+        background: #f7f8f8;
         flex: 1;
-        flex-direction: row;
     }
 
-    // ADD MEDIA QUERY HERE
-    // .main-highlight {
-    //     flex-direction: column-reverse;
-    // }
-
-        .sidebar__reel {
-            display: flex;
-            flex-direction: column;
-            flex: 0 0 420px;
-            height: initial;
-            padding: 0;
-            border: none;
+        .reel-edit-control-container {
+            background-color: #f7f8f8;
         }
 
-            .playlist-control {
-                display: flex;
-                background: #ffffff;
-                border-top: thin solid #dddddd;
-                border-right: thin solid #dddddd;
+            .reel-edit-controls {
+                        
                 padding: 15px;
+                display: flex;
                 justify-content: space-between;
-                align-items: center;
+                max-width: 420px;
+
+                .save-edit {
+                    color: @brand-success;
+                }
             }
 
-                .play-all-plays {
-                    margin: 0;
-                    outline: 0;
-                }
+        .main-highlight {
+            background-color: #f7f8f8;
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+        }
 
-            .playlist-container {
+        // ADD MEDIA QUERY HERE
+        // .main-highlight {
+        //     flex-direction: column-reverse;
+        // }
+
+            .sidebar__reel {
                 display: flex;
                 flex-direction: column;
-                flex: 1;
-                border-top: thin solid #dddddd;
+                flex: 0 0 420px;
+                height: initial;
+                padding: 0;
+                border: 1px solid #dddddd;
+                box-shadow: 0px 5px 10px #A3A3A3;
             }
 
-                .playlist {
-                    overflow-y: auto;
-                    overflow-x: hidden;    
-                    padding: 0px;
-                    background-color: #ffffff;
-                    border-right: thin solid #dddddd;
-                    -webkit-transform: translateZ(0);
-                    position: static;
-                    float: none;
-                    letter-spacing: normal;
+                .playlist-control {
+                    display: flex;
+                    background: #ffffff;
+                    padding: 15px;
+                    justify-content: space-between;
+                    align-items: center;
                 }
 
-            .player.reels-player {
-                display: flex;
-                flex: 1;
-            }
+                    .play-all-plays {
+                        margin: 0;
+                        outline: 0;
+                    }
+
+                .playlist-container {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                    border-top: thin solid #dddddd;
+                }
+
+                    .playlist {
+                        overflow-y: auto;
+                        overflow-x: hidden;    
+                        padding: 0px;
+                        background-color: #ffffff;
+                        flex: 1;
+                        border: none;
+                        width: auto;
+                        -webkit-transform: translateZ(0);
+                        position: static;
+                        float: none;
+                        letter-spacing: normal;
+                    }
+
+                .player.reels-player {
+                    display: flex;
+                    flex: 1;
+                    margin-left: 15px;
+                }
 } 

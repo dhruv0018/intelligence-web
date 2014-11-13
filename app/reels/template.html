@@ -4,67 +4,71 @@
         <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reelUpdatedDate | date}})</span></h3>
         <span class="delete-reel" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
     </header>
+
+    <div class="reel-body">
     
-    <div class="reel-edit-control-container">
+        <div class="reel-edit-control-container">
 
-        <div class="reel-edit-controls">
+            <div class="reel-edit-controls">
 
-            <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
-            <a href data-ng-show="editMode" data-ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
-            <a href data-ng-show="editMode" data-ng-click="toggleEditMode()">Cancel</a>
+                <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
+                <a href data-ng-show="editMode" data-ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
+                <a href data-ng-show="editMode" data-ng-click="toggleEditMode()">Cancel</a>
+
+            </div>
 
         </div>
 
-    </div>
-
-    <div class="main-highlight ng-scope" data-ui-view="content">
+        <div class="main-highlight ng-scope" data-ui-view="content">
 
 
-        <aside class="sidebar__reel">
+            <aside class="sidebar__reel">
 
-            <div class="playlist-control" ng-hide="editMode">
+                <div class="playlist-control" ng-hide="editMode">
 
-                <span>Viewing: All Plays ({{ reel.plays.length }})</span> 
+                    <span>Viewing: All Plays ({{ reel.plays.length }})</span> 
 
-                <button data-ng-hide="editMode" class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
-                    <span class="play-all-text">Continuous Play</span>
-                    <span class="on" data-ng-class="{chosen: playManager.playAllPlays}">ON</span>
-                    <span class="off" data-ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
-                </button>
-
-            </div>
-
-            <div class="playlist-container">
-
-                <div class="playlist">
-
-                    <krossover-play
-                        data-edit-flag="editMode"
-                        data-is-reels-play="true"
-                        data-index="$index"
-                        data-draggable="editMode"
-                        data-play="getPlay(playId)"
-                        data-game="getGame(playId)"
-                        data-team="getHomeTeam(playId)"
-                        data-opposing-team="getOpposingTeam(playId)"
-                        data-team-players="[]"
-                        data-opposing-team-players="[]"
-                        data-league="getLeague(playId)"
-                        data-date-played="getDatePlayed(playId)"
-                        data-ng-class="{'last': $last}"
-                        data-ng-repeat="playId in reel.plays">
-                    </krossover-play>
-
-                    <no-results data-ng-hide="reel && reel.plays && reel.plays.length"></no-results>
+                    <button data-ng-hide="editMode" class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
+                        <span class="play-all-text">Continuous Play</span>
+                        <span class="on" data-ng-class="{chosen: playManager.playAllPlays}">ON</span>
+                        <span class="off" data-ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
+                    </button>
 
                 </div>
 
+                <div class="playlist-container">
+
+                    <div class="playlist">
+
+                        <krossover-play
+                            data-edit-flag="editMode"
+                            data-is-reels-play="true"
+                            data-index="$index"
+                            data-draggable="editMode"
+                            data-play="getPlay(playId)"
+                            data-game="getGame(playId)"
+                            data-team="getHomeTeam(playId)"
+                            data-opposing-team="getOpposingTeam(playId)"
+                            data-team-players="[]"
+                            data-opposing-team-players="[]"
+                            data-league="getLeague(playId)"
+                            data-date-played="getDatePlayed(playId)"
+                            data-ng-class="{'last': $last}"
+                            data-ng-repeat="playId in reel.plays">
+                        </krossover-play>
+
+                        <no-results data-ng-hide="reel && reel.plays && reel.plays.length"></no-results>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+            <div class="player reels-player">
+                <x-krossover-videoplayer class="reels-video-container" data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
             </div>
 
-        </aside>
-
-        <div class="player reels-player">
-            <x-krossover-videoplayer class="reels-video-container" data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
         </div>
 
     </div>
