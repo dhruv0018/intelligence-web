@@ -27,6 +27,24 @@ IntelligenceWebClient.service('EventManager', [
         this.current = angular.copy(model);
 
         /**
+         * Checks whether the event is a floating event.
+         * @returns - true if the event is floating event; false otherwise.
+         */
+        this.isFloatingEvent = function(event) {
+
+            event = event || this.current;
+
+            /* If there is no current event or the event hasn't been created
+             * then its can not be a floating event. */
+            if (!event || !event.tagId) return false;
+
+            console.log('isFloatingEvent tagId', event.tagId);
+
+            /* Check if the given event is an end tag. */
+            return this.tagset.isFloatTag(event.tagId);
+        };
+
+        /**
          * Checks whether the event is an ending event.
          * @returns - true if the event is an end event; false otherwise.
          */
