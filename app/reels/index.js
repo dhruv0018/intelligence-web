@@ -115,9 +115,10 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.reelCreatedDate = (typeof $scope.reelCreatedDate === 'string') ? new Date($scope.reel.createdAt) : $scope.reel.createdAt;
         $scope.reelUpdatedDate = (typeof $scope.reelUpdatedDate === 'string') ? new Date($scope.reel.updatedAt) : $scope.reel.updatedAt;
 
+        var plays = playsFactory.getList();
         $scope.playManager = playManager;
 
-        angular.forEach($scope.reel.plays, function(play) {
+        angular.forEach(plays, function(play) {
             playsManager.addPlay(play);
         });
 
