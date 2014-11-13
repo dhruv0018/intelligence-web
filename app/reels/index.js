@@ -65,8 +65,8 @@ ReelsArea.config([
 ]);
 
 ReelsArea.service('Reels.Data.Dependencies', [
-    'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory',
-    function dataService(games, plays, teams, reels, leagues, tagsets) {
+    'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory',
+    function dataService(games, plays, teams, reels, leagues, tagsets, players) {
 
         var service = function(stateParams) {
 
@@ -81,6 +81,7 @@ ReelsArea.service('Reels.Data.Dependencies', [
                         games: games.load({reelId: reelId}),
                         teams: teams.load({reelId: reelId}),
                         plays: plays.load({reelId: reelId}),
+                        players: players.load({reelId: reelId}),
                         tagset: tagsets.load(), // Needed if reels page is directly navigated to through url
                         leagues: leagues.load()
                     };
