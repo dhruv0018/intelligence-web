@@ -57,10 +57,8 @@ IntelligenceWebClient.service('PlaysManager', [
         };
 
         this.getNextPlay = function getNextPlay(currentPlay) {
-            console.log('currentPlay', currentPlay);
             var currentPlayIndex = this.plays.indexOf(currentPlay);
             var nextPlay = this.plays[(currentPlayIndex + 1) % this.plays.length];
-            console.log('plays', currentPlayIndex, this.plays, nextPlay);
             if (nextPlay) {
 
                 if (angular.isUndefined(nextPlay.isFiltered) || nextPlay.isFiltered) {
