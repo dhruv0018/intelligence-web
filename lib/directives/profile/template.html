@@ -1,20 +1,23 @@
-<div class="profile">
-    <div data-ng-if="role.type.id === ROLE_TYPE.ATHLETE" class="manageable-resource col-xs-2">
+<div class="profile col-xs-2">
+    <div data-ng-if="role.type.id === ROLE_TYPE.ATHLETE" class="manageable-resource col-xs-12">
         <div class="manageable-picture">
             <profile-placeholder data-ng-if="!users[player.userId].imageUrl"></profile-placeholder>
             <img data-ng-if="users[player.userId].imageUrl" data-ng-src="{{users[player.userId].imageUrl}}" alt="profile picture">
         </div>
         <div class="description">
-            <a data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
-                <span class="jerseyNumber">{{player.jerseyNumbers[rosterId]}}</span>
-                {{player.firstName}}
-                {{player.lastName[0]}}.
+            <a data-ng-if="player.firstName && player.lastName" data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
+                <span class="info">
+                    <span class="jerseyNumber">{{rosterEntry.playerInfo.jerseyNumber}}</span>
+                    {{player.firstName}}
+                    {{player.lastName[0]}}.
+                </span>
             </a>
-            <p data-ng-if="keys(positions).length > 0" class="positions">
-                <span data-ng-repeat="position in getPositions(player)">
+            <span data-ng-if="!player.firstName && !player.lastName">Saving Player</span>
+            <p data-ng-if="positionset.positions && positionset.positions.length > 0" class="positions">
+                <span data-ng-repeat="position in getPositions() track by $index">
                     {{position.name}}
                 </span>
-                <span data-ng-if="!player.positionIds[rosterId]"> No Positions</span>
+                <span data-ng-if="player && player.id && team.roster.playerInfo[player.id].positionIds.length === 0 || !team.roster.playerInfo[player.id].positionIds"> No Positions</span>
             </p>
             <p>
                 <span data-ng-if="users[player.userId].lastAccessed">{{usersFactory.getLastAccessed(users[player.userId]) | date: 'mediumDate'}}</span>
@@ -27,7 +30,7 @@
             </p>
         </div>
     </div>
-    <div data-ng-if="role.type.id === ROLE_TYPE.ASSISTANT_COACH" class="manageable-resource col-xs-2">
+    <div data-ng-if="role.type.id === ROLE_TYPE.ASSISTANT_COACH" class="manageable-resource col-xs-12">
 
         <div class="manageable-picture">
             <profile-placeholder data-ng-if="!assistant.imageUrl"></profile-placeholder>

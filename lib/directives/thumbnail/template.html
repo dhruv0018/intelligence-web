@@ -8,17 +8,17 @@
         </div>
         <div data-ng-if="thumbnail.length === 0" class="no-thumbnail" data-ng-class="{'temp-thumbnail':!film.isProcessing() && !film.isUploading() && !film.isVideoTranscodeFailed()}">
             <i data-ng-if="!film.isProcessing() && !film.isUploading() && !film.isVideoTranscodeFailed()" class="icon icon-logo"></i>
-            <div data-ng-if="film.isUploading()" class="film-status">
+            <div data-ng-if="film.flow && film.flow.isUploading()" class="film-status">
                 <i class="icon icon-upload status-uploading"></i>
             </div>
-            <div data-ng-if="film.isProcessing()" class="film-status">
+            <div data-ng-if="film.isProcessing() && !film.flow || (film.flow && !film.flow.isUploading())" class="film-status">
                 <i class="icon icon-tasks status-processing"></i>
             </div>
             <div data-ng-if="film.isVideoTranscodeFailed()" class="film-status">
                 <i class="icon icon-warning status-failed"></i>
             </div>
-            <div data-ng-if="film.isProcessing()">Your video is still processing.</div>
-            <div data-ng-if="film.isUploading()">This film is currently being uploaded.</div>
+            <div data-ng-if="film.isProcessing() && !film.flow || (film.flow && !film.flow.isUploading())">Your video is still processing.</div>
+            <div data-ng-if="film.flow && film.flow.isUploading()">This film is currently being uploaded.</div>
             <div data-ng-if="film.isVideoTranscodeFailed()"><strong>There is an issue with this film.</strong><br/>Please contact support@krossover.com</div>
         </div>
     </a>

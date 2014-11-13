@@ -1,15 +1,13 @@
 {
     "name": "roster-manager",
-    "templates": [
-        "template.html"
-    ],
     "paths": [
         "."
     ],
     "scripts": [
         "index.js"
     ],
-    "styles": [
-        "styles.less"
+    "locals": [
+        "game-roster-manager",
+        "team-roster-manager"
     ]
 }
