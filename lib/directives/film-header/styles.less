@@ -1,7 +1,6 @@
 @import (reference) "main.less";
 
-.public-game-header,
-.public-game-header-mobile {
+.public-game-header {
     display: flex;
     background-color: @content-bg;
     border-bottom: thin solid @gray-border;
@@ -18,19 +17,11 @@
             color: @brand-blue;
         }
 
-        .game-shared-by {
-            font-style: italic;
-        }
-
         h3 {
             display: inline;
             color: @brand-blue;
         }
     }
-}
-
-.public-game-header-mobile {
-    display: none;
 }
 
 /* Screens under 480px */
@@ -39,22 +30,5 @@ and (max-width: 479px) {
 
     .public-game-header {
         display: none;
-    }
-
-    .public-game-header-mobile {
-        
-        display: block;
-
-        div {
-            width: 100%;
-
-            h3 {
-                font-size: 16px;
-            }
-
-            .game-shared-by {
-                display: block;
-            }
-        }
     }
 }

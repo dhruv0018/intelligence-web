@@ -1,7 +1,7 @@
 <div class="public-game-header" data-ng-if="isPublic">
 	<div>
 		<span class="game-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span><br/>
-		<span class="game-shared-by pull-right">Clip shared by {{user.firstName}} {{user.lastName}}</span>
-		<h3>{{homeTeam.name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{opposingTeam.name}}</h3>
+		<h3>{{homeTeam.name}} {{game.finalScore}}</h3>
+		<h3>{{game.opposingFinalScore}} {{opposingTeam.name}}</h3>
 	</div>
 </div>
