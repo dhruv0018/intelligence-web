@@ -5,7 +5,8 @@
 
             <span class="match-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span>
             <span class="match-up">
-                {{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}
+                <span data-ng-if="game.opposingTeamId && game.teamId">{{teams[game.teamId].name}} {{game.finalScore}} vs {{game.opposingFinalScore}} {{teams[game.opposingTeamId].name}}</span>
+                <span data-ng-if="!game.opposingTeamId || !game.teamId">Raw Film - No Game Information Entered</span>
             </span>
             <!--<a data-ng-href="#"><i class="icon icon-download"></i> Download</a>
             <a data-ng-href="#"><i class="icon icon-share-square-o"></i> Share</a>-->

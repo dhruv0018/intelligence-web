@@ -26,6 +26,10 @@ IntelligenceWebClient.factory('TeamsResource', [
             getRemainingBreakdowns: {
                 method: 'GET',
                 url: url + '/remainingBreakdowns'
+            },
+            generateStats: {
+                method: 'GET',
+                url: url + '/analytics'
             }
         };
 

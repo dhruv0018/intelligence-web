@@ -1,26 +1,19 @@
 <div class="player-information">
-    <div class="profile">
-        <button open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = user" class="btn btn-default">Edit</button>
-        <div class="profile-image">
-            <profile-placeholder data-ng-if="!user.imageUrl"></profile-placeholder>
-            <img alt="profile image" class="profile-picture" data-ng-if="user.imageUrl" data-ng-src="{{user.imageUrl}}">
-        </div>
-        <p>{{user.firstName}} {{user.lastName}}</p>
+    <div class="player-profile-container">
+        <profile-placeholder data-ng-if="!user.imageUrl"></profile-placeholder>
+        <img alt="profile image" class="profile-picture" data-ng-if="user.imageUrl" data-ng-src="{{user.imageUrl}}">
+        <h3>{{user.firstName}} {{user.lastName}}</h3>
+        <a href open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = user">Edit Profile</a>
     </div>
-    <table class="player-information">
-        <tr>
-            <td class="sport">
-                <sport-placeholder data-sport="roleInfo.sport"></sport-placeholder>
-            </td>
-            <td class="positions">
-                <div class="team">{{roleInfo.team.name}}</div>
-                <div>
-                    <span data-ng-repeat="positionId in roleInfo.positionIds">{{positions[positionId].name}}</span>
-                </div>
-            </td>
-            <td class="jersey-number">
-                {{roleInfo.jerseyNumber}}
-            </td>
-        </tr>
-    </table>
+    <div class="player-roles-info" data-ng-repeat="roleInfo in rolesInfo">
+        <sport-placeholder data-sport="roleInfo.sport"></sport-placeholder>
+        <div class="player-info-text">
+            <span>#{{roleInfo.jerseyNumber}}</span>
+            <span data-ng-repeat="positionId in roleInfo.positionIds" data-ng-class="{'last': $last}">
+                <span data-ng-if="roleInfo.positionIds.length > 1" class="multiple-positions">{{roleInfo.positions[positionId].name}}<span class="comma">,</span></span>
+                <span data-ng-if="roleInfo.positionIds.length === 1" class="one-position">{{roleInfo.positions[positionId].description}}</span>
+            </span>
+            <span class="team-name">{{roleInfo.team.name}}</span>
+        </div>
+    </div>
 </div>
