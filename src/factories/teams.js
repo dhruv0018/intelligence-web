@@ -22,7 +22,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
         var TeamsFactory = {
 
-            PAGE_SIZE: 500,
+            PAGE_SIZE: 100,
 
             description: 'teams',
 
