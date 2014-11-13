@@ -17,6 +17,16 @@
 
             </div>
 
+            <div class="playlist-control">
+
+                <button data-ng-hide="editMode" class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
+                    <span class="play-all-text">Continuous Play</span>
+                    <span class="on" data-ng-class="{chosen: playManager.playAllPlays}">ON</span>
+                    <span class="off" data-ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
+                </button>
+
+            </div>
+
             <div class="playlist-container">
 
                 <div class="playlist">
@@ -27,7 +37,6 @@
                         data-index="$index"
                         data-draggable="editMode"
                         data-play="getPlay(playId)"
-                        data-plays="plays"
                         data-game="getGame(playId)"
                         data-team="getHomeTeam(playId)"
                         data-opposing-team="getOpposingTeam(playId)"

@@ -103,21 +103,23 @@ ReelsArea.service('Reels.Data.Dependencies', [
  * @type {Controller}
  */
 ReelsArea.controller('ReelsArea.controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory',
-    function controller($scope, $state, $stateParams, $modal, modals, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory) {
+    '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager',
+    function controller($scope, $state, $stateParams, $modal, modals, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager) {
 
         // Get the reel
         var reelId = Number($stateParams.id);
         $scope.reel = reels.get(reelId);
-        console.log('reel', $scope.reel);
-        console.log('reel plays', $scope.reel.plays);
         $scope.videoTitle = 'reelsPlayer';
         $scope.editMode = false;
         var editAllowed = true;
         $scope.reelCreatedDate = (typeof $scope.reelCreatedDate === 'string') ? new Date($scope.reel.createdAt) : $scope.reel.createdAt;
         $scope.reelUpdatedDate = (typeof $scope.reelUpdatedDate === 'string') ? new Date($scope.reel.updatedAt) : $scope.reel.updatedAt;
 
-        $scope.plays = playsFactory.getList();
+        $scope.playManager = playManager;
+
+        angular.forEach($scope.reel.plays, function(play) {
+            playsManager.addPlay(play);
+        });
 
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,

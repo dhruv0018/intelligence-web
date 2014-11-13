@@ -3,7 +3,9 @@
 
 .reels-player-area {
 
+    display: flex;
     flex-direction: column;
+    flex: 1;
 
     header {
 
@@ -31,16 +33,22 @@
     }
 
     .main-highlight {
+        background-color: #f7f8f8;
         display: flex;
         flex: 1;
         flex-direction: row;
-        background-color: #f7f8f8;
     }
+
+    // ADD MEDIA QUERY HERE
+    // .main-highlight {
+    //     flex-direction: column-reverse;
+    // }
 
         .sidebar__reel {
             display: flex;
             flex-direction: column;
             flex: 0 0 420px;
+            height: initial;
             padding: 0;
             border: none;
         }
@@ -55,6 +63,7 @@
             }
 
             .playlist-container {
+                flex: 1;
                 overflow-y: auto;
                 overflow-x: hidden;
                 border-top: thin solid #dddddd;
@@ -75,5 +84,6 @@
             .player.reels-player {
                 display: flex;
                 margin: 1%;
+                flex: 1;
             }
 } 

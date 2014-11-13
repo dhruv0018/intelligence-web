@@ -97,6 +97,10 @@
             &.playing {
                 color: rgb(89, 159, 253);
             }
+
+            &.invisible {
+                visibility: hidden;
+            }
         }
     }
 
@@ -190,43 +194,30 @@
     background: #fff;
     color: #000;
     padding-right: 25px;
+    
+    .playHeading {
+        margin-bottom: 10px;
+
+        h4 {
+            position: relative;
+            letter-spacing: normal;
+            font-size: large;
+            font-weight: 200;
+            color: black;
+            margin: 0;
+        }
+
+        h5 {
+            font-weight: 100;
+            font-size: small;
+            letter-spacing: 0.03em;
+            color: black;
+            margin: 0;
+        }
+    }
 
     &.edit-mode {
         cursor: move;
-    }
-
-    .last {
-        border-bottom: solid 1px #EEE;
-    }
-
-    .reel-play-text {
-        display: inline-block;
-        margin: 0;
-        padding: 0;
-    }
-
-    .play-reel-play {
-        .pull-right;
-
-        display: inline-block;
-        width: 36px;
-        font-size: 36px;
-        color: @gray-light;
-        cursor: pointer;
-
-        &:active,
-        &:focus,
-        &:hover {
-            color: @brand-primary;
-        }
-
-        &.invisible {
-            visibility: hidden;
-        }
-
-        &.playing {
-            color: rgb(89, 159, 253);
-        }
     }
 
     .delete-reel-play {
