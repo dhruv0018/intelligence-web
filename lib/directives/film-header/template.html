@@ -1,7 +1,18 @@
-<div class="public-game-header" data-ng-if="isPublic">
-	<div>
-		<span class="game-date">{{game.datePlayed | date: 'MMM d, yyyy'}}</span><br/>
-		<h3>{{homeTeam.name}} {{game.finalScore}}</h3>
-		<h3>{{game.opposingFinalScore}} {{opposingTeam.name}}</h3>
+<div class="film-header" data-ng-if="isPublic">
+	<div class="game-info">
+		<h5>{{game.datePlayed | date: 'MMM. d, yyyy'}}</h5>
+		<div class="team">
+			<h3>{{opposingTeam.name}}</h3>
+			<h3>{{game.opposingFinalScore}}</h3>
+		</div>
+		<div class="team">
+			<h3>{{homeTeam.name}}</h3>
+			<h3>{{game.finalScore}}</h3>
+		</div>
+	</div>
+	<div class="game-title"></div>
+	<div class="social-media">
+		<i class="icon icon-twitter-square"></i>
+		<i class="icon icon-facebook-square"></i>
 	</div>
 </div>

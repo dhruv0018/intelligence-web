@@ -1,34 +1,52 @@
 @import (reference) "main.less";
 
-.public-game-header {
-    display: flex;
-    background-color: @content-bg;
+.film-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
     border-bottom: thin solid @gray-border;
-    margin-bottom: 20px;
-    padding: 10px;
-    letter-spacing: normal;
+    background-color: white;
+    color: black;
 
-    div {
-        width: 100%;
-        max-width: 850px;
-        margin: auto;
+    .game-info {
+    	width: @screen-xs;
+    	padding: 0px 20px;
+    	border-right: thin solid @gray-border;
 
-        .game-date {
-            color: @brand-blue;
-        }
+    	.team {
+    		display: flex;
+    		justify-content: space-between;
+    	}
 
-        h3 {
-            display: inline;
-            color: @brand-blue;
-        }
+    	h3,
+    	h5 {
+    		display: inline-block;
+    		margin: 0;
+    		font-weight: 100;
+    	}
+
+    	h3 {
+    		margin-bottom: 10px;
+    	}
+
+    	h5 {
+    		padding: 10px 0;
+    	}
     }
-}
 
-/* Screens under 480px */
-@media only screen
-and (max-width: 479px) {
+    .social-media {
+    	margin-right: 15px;
 
-    .public-game-header {
-        display: none;
+    	.icon {
+    		font-size: 40px;
+
+    		&.icon-twitter-square {
+    			color: @twitter-blue;
+    		}
+
+    		&.icon-facebook-square {
+    			color: @facebook-blue;
+    		}
+    	}
     }
 }
