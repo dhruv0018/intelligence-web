@@ -121,6 +121,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             getFloatTags: function() {
 
+                var self = this;
+
                 var tags = this.tags;
 
                 return Object.keys(tags)
@@ -132,7 +134,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 .filter(function(tag) {
 
-                    return this.isFloatTag(tag.id);
+                    return self.isFloatTag(tag.id);
                 });
             },
 
