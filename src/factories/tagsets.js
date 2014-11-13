@@ -143,6 +143,16 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 return tag.isStart;
             },
 
+            isFloatTag: function(tagId) {
+
+                var tags = this.tags;
+                var tag = tags[tagId];
+
+                return tag.isStart === false &&
+                       tag.isEnd === false &&
+                       tag.children.length === 0;
+            },
+
             isEndTag: function(tagId) {
 
                 var tags = this.tags;
