@@ -102,8 +102,8 @@ Header.service('Base.Data.Dependencies', [
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES',
-    function controller(config, $scope, $state, auth, session, account, ROLES) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'UsersFactory', 'LeaguesFactory', 'TeamsFactory', 'SPORTS',
+    function controller(config, $scope, $state, auth, session, account, ROLES, users, leagues, teams, SPORTS) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
@@ -118,10 +118,27 @@ Header.controller('HeaderController', [
         $scope.account = account;
         $scope.auth = auth;
 
+        //TEMP - get sport id to show Analytics tab for FB only
+        if (auth.isLoggedIn) {
+            if (session.currentUser.is(ROLES.COACH)) {
+                var team = teams.get(session.currentUser.currentRole.teamId);
+                $scope.league = leagues.get(team.leagueId);
+                $scope.SPORTS = SPORTS;
+            }
+        }
+
         $scope.logout = function() {
 
             auth.logoutUser();
             $state.go('login');
+        };
+
+        // This scope functionality limits a menu element to only one sub-menu
+        $scope.subMenu = false;
+
+        $scope.toggleSubMenu = function($event) {
+            $event.stopPropagation();
+            $scope.subMenu = !$scope.subMenu;
         };
     }
 ]);

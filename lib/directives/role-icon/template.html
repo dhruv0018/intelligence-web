@@ -4,9 +4,16 @@
 
 </div>
 
-<div class="role-icon" data-ng-if="users.is(role, COACH) || users.is(role, ATHLETE)">
+<div class="role-icon" data-ng-if="users.is(role, COACH)">
 
     <sport-placeholder data-sport="sports[leagues[teams[role.teamId].leagueId].sportId]"></sport-placeholder>
+
+</div>
+
+<div class="role-icon" data-ng-if="user.is(role, ATHLETE)">
+
+	<profile-placeholder data-ng-if="!user.imageUrl"></profile-placeholder>
+	<img alt="profile image" class="profile-picture" data-ng-if="user.imageUrl" data-ng-src="{{user.imageUrl}}">
 
 </div>
 

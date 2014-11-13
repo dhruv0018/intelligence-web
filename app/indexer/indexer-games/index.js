@@ -56,11 +56,10 @@ Games.config([
  * @type {Service}
  */
 Games.service('Indexer.Games.Data.Dependencies', [
-    '$q', 'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory',
-    function($q, session, users, games, teams, leagues, sports) {
+    'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory',
+    function(session, users, games, teams, leagues, sports) {
 
         var currentUser = session.currentUser;
-
         var Data = {
 
             sports: sports.load(),
@@ -86,8 +85,8 @@ Games.service('Indexer.Games.Data.Dependencies', [
  * @type {Controller}
  */
 Games.controller('indexer-games.Controller', [
-    '$scope', '$state', '$interval', 'config', 'GAME_TYPES', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
-    function controller($scope, $state, $interval, config, GAME_TYPES, sports, leagues, teams, games, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
+    '$scope', '$state', '$interval', 'config', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'SportsFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
+    function controller($scope, $state, $interval, config, GAME_TYPES, teams, leagues, games, sports, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.sports = sports.getCollection();

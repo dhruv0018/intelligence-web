@@ -20,7 +20,6 @@
         "team-info",
         "coach-info",
         "thumbnail",
-        "roster",
         "film",
         "date",
         "add-time",
@@ -53,6 +52,10 @@
         "videogular",
         "player-information",
         "film-home-tabs",
+        "plays-filters",
+        "uploading-controls",
+        "upload-status",
+        "kvs-uploader",
         "profile",
         "plays-filters",
         "draggable"
