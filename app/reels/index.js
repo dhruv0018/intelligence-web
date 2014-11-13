@@ -194,7 +194,7 @@ ReelsArea.controller('ReelsArea.controller', [
             }
         };
 
-        $scope.$on('delete-reel-play', function(index) {
+        $scope.$on('delete-reel-play', function($event, index) {
             if ($scope.editMode && $scope.reel && $scope.reel.plays && angular.isArray($scope.reel.plays)) {
                 $scope.reel.plays.splice(index, 1);
             }
