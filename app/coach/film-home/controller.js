@@ -17,11 +17,15 @@ FilmHome.controller('Coach.FilmHome.controller', [
     '$rootScope', '$scope', '$state', '$filter', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', 'SessionService', 'Coach.Data', 'ROLES',
     function controller($rootScope, $scope, $state, $filter, reels, games, players, teams, users, session, data, ROLES) {
 
+        var currentUser = session.currentUser;
+        var currentRole = currentUser.currentRole;
+        var userId = currentUser.id;
+        var teamId = currentRole.teamId;
+
         //Constants
         $scope.ROLES = ROLES;
 
         //team related
-        var teamId = session.currentUser.currentRole.teamId;
         $scope.team = teams.get(teamId);
         $scope.roster = $scope.team.roster;
 
@@ -30,8 +34,11 @@ FilmHome.controller('Coach.FilmHome.controller', [
 
         //Arrays of resources
         $scope.playersList = players.getList(playersFilter);
+
+        $scope.gamesForTeam = games.getList({ uploaderTeamId: teamId });
+        $scope.gamesSharedWithUser = games.getList({ sharedWithUserId: userId });
+        $scope.gamesList = $scope.gamesForTeam.concat($scope.gamesSharedWithUser);
         $scope.reelsList = reels.getList();
-        $scope.gamesList = games.getList();
         $scope.filmsList = $scope.gamesList.concat($scope.reelsList);
 
         //Collections of resources
