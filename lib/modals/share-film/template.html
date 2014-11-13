@@ -17,7 +17,7 @@
         	<div class="share-options option-your-team">
         		<h3>Your Team</h3>
         		<i class="icon icon-group"></i>
-        		Games are automatically shared amongst team coaches and athletes on your active roster.
+        		<span data-ng-show="isGame">Games are automatically shared amongst team coaches and athletes on your active roster.</span>
         	</div>
         	<div class="share-options middle-option" data-ng-click="withOtherUsers = true">
         		<h3>Other Krossover Users</h3>
@@ -34,11 +34,11 @@
 
         <div class="sharing-with-others-container" data-ng-show="withOtherUsers">
         	<div class="info-box">
-        		Games are automatically shared amongst team coaches and athletes on your active roster. <br/>
+        		<span data-ng-show="isGame">Games are automatically shared amongst team coaches and athletes on your active roster.<br/></span>
         		If the person you want to share with does not have a Krossover account, <a data-ng-click="withOtherUsers = false; withPublic = true">share a URL</a> with them.
         	</div>
         	<span data-ng-show="film.isSharedWithUser(user)" class="share-error-message"><i class="icon icon-warning"></i> That user is already being shared with.</span>
-        	<span data-ng-show="user.id === currentUser.id" class="share-error-message"><i class="icon icon-warning"></i> You cannot share a game with yourself.</span>
+        	<span data-ng-show="user.id === currentUser.id" class="share-error-message"><i class="icon icon-warning"></i> You cannot share with yourself.</span>
         	<h3>Sharing with:</h3>
         	<form>
         		<user-typeahead data-user="user" data-filter="filter"></user-typeahead>
