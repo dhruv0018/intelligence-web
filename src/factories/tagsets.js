@@ -113,7 +113,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 .filter(function(tag) {
 
-                    return tag.isStart;
+                    return this.isStartTag(tag.id);
                 });
             },
 
@@ -133,6 +133,14 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                     return this.getStartTags();
                 }
+            },
+
+            isStartTag: function(tagId) {
+
+                var tags = this.tags;
+                var tag = tags[tagId];
+
+                return tag.isStart;
             },
 
             isEndTag: function(tagId) {
