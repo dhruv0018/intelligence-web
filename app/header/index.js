@@ -132,6 +132,14 @@ Header.controller('HeaderController', [
             auth.logoutUser();
             $state.go('login');
         };
+
+        // This scope functionality limits a menu element to only one sub-menu
+        $scope.subMenu = false;
+
+        $scope.toggleSubMenu = function($event) {
+            $event.stopPropagation();
+            $scope.subMenu = !$scope.subMenu;
+        };
     }
 ]);
 
