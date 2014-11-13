@@ -2,12 +2,12 @@
 
     <header>
         <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reelUpdatedDate | date}})</span></h3>
-        <span class="delete-reel" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
+        <span class="delete-reel" ng-if="canUserDelete()" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
     </header>
 
     <div class="reel-body">
     
-        <div class="reel-edit-control-container">
+        <div class="reel-edit-control-container" ng-if="canUserEdit()">
 
             <div class="reel-edit-controls">
 
@@ -19,8 +19,7 @@
 
         </div>
 
-        <div class="main-highlight ng-scope" data-ui-view="content">
-
+        <div class="main-highlight ng-scope" data-ui-view="content" ng-class="{'not-editable': !canUserEdit()}">
 
             <aside class="sidebar__reel">
 
@@ -54,7 +53,8 @@
                             data-league="getLeague(playId)"
                             data-date-played="getDatePlayed(playId)"
                             data-ng-class="{'last': $last}"
-                            data-ng-repeat="playId in reel.plays">
+                            data-ng-repeat="playId in reel.plays"
+                            data-is-editable="false">
                         </krossover-play>
 
                         <no-results data-ng-hide="reel && reel.plays && reel.plays.length"></no-results>

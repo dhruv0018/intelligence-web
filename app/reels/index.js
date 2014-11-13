@@ -103,8 +103,8 @@ ReelsArea.service('Reels.Data.Dependencies', [
  * @type {Controller}
  */
 ReelsArea.controller('ReelsArea.controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager',
-    function controller($scope, $state, $stateParams, $modal, modals, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager) {
+    '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES',
+    function controller($scope, $state, $stateParams, $modal, modals, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES) {
 
         // Get the reel
         var reelId = Number($stateParams.id);
@@ -127,6 +127,31 @@ ReelsArea.controller('ReelsArea.controller', [
         angular.forEach(plays, function(play) {
             playsManager.addPlay(play);
         });
+
+        var editModeRestrictions = {
+            DELETABLE: 'DELETABLE',
+            EDITABLE: 'EDITABLE',
+            VIEWABLE: 'VIEWABLE'
+        };
+
+        /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
+        // DEFAULT RESTRICTION
+        $scope.restrictionLevel = editModeRestrictions.VIEWABLE;
+
+        var isCoach = session.currentUser.is(ROLES.HEAD_COACH) || session.currentUser.is(ROLES.ASSISTANT_COACH);
+        var isACoachOfThisTeam = isCoach || session.currentUser.currentRole.teamId === reel.uploaderTeamId;
+        var isOwner = session.currentUser.id === $scope.reel.uploaderUserId;
+
+        if (isACoachOfThisTeam) $scope.restrictionLevel = editModeRestrictions.EDITABLE;
+        if (isOwner) $scope.restrictionLevel = editModeRestrictions.DELETABLE;
+
+        $scope.canUserDelete = function() {
+            return $scope.restrictionLevel === editModeRestrictions.DELETABLE;
+        };
+
+        $scope.canUserEdit = function() {
+            return $scope.restrictionLevel === editModeRestrictions.DELETABLE || $scope.restrictionLevel === editModeRestrictions.EDITABLE;
+        };
 
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,
