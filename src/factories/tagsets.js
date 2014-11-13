@@ -144,7 +144,9 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                     return tag.children.map(function(childId) {
 
                         return tags[childId];
-                    });
+                    })
+
+                    .concat(this.getFloatTags());
 
                 } else {
 
