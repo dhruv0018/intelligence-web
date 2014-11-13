@@ -20,8 +20,7 @@ IntelligenceWebClient.factory('PlayersResource', [
         };
 
         var actions = {
-            singleCreate: {method: 'POST', url: config.api.uri + base},
-            create: { method: 'POST', isArray: true, url: config.api.uri + 'batch/players' },
+            create: {method: 'POST', url: config.api.uri + base},
             update: { method: 'PUT' },
             resendEmail: { method: 'POST', url: config.api.uri + base + '/reminder-email'}
         };
