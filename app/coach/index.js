@@ -65,15 +65,21 @@ Coach.service('Coach.Data.Dependencies', [
             sharedWithUserId: session.currentUser.id
         });
 
+        var reelsForUser = reels.load({
+            teamId: teamId,
+            userId: userId
+        });
+
+        var reelsSharedWithUser = reels.load({
+            sharedWithUserId: session.currentUser.id
+        });
+
         var Data = {
             positionSets: positionsets.load(),
             teams: teams.load({ relatedUserId: currentUser.id }),
             users: users.load({ relatedUserId: currentUser.id }),
             games: $q.all([gamesForUser, gamesSharedWithUser]),
-            reels: reels.load({
-                teamId: teamId,
-                userId: userId
-            })
+            reels: $q.all([reelsForUser, reelsSharedWithUser])
         };
 
 

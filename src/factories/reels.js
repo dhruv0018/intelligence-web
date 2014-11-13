@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'BaseFactory',
-    function(BaseFactory) {
+    'BaseFactory', 'SessionService',
+    function(BaseFactory, session) {
 
         var ReelsFactory = {
 
@@ -23,10 +23,11 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 angular.extend(reel, self);
                 reel.plays = reel.plays || [];
+                reel.shares = reel.shares || [];
+                reel.sharedWithUsers = reel.sharedWithUsers || {};
 
                 /* build lookup table of shares by userId shared with */
                 if (reel.shares && reel.shares.length) {
-                    reel.sharedWithUsers = reel.sharedWithUsers || {};
 
                     angular.forEach(reel.shares, function(share) {
                         if (share.sharedWithUserId) {
