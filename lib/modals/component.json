@@ -16,7 +16,8 @@
         "info",
         "arena-modal",
         "change-password",
-        "admin-management"
+        "admin-management",
+        "kvs-uploader-interface"
     ],
     "scripts": [
         "index.js"
