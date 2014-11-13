@@ -116,6 +116,12 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.reelUpdatedDate = (typeof $scope.reelUpdatedDate === 'string') ? new Date($scope.reel.updatedAt) : $scope.reel.updatedAt;
 
         var plays = playsFactory.getList();
+
+        var playsCollection = {};
+        angular.forEach(plays, function(play) {
+            playsCollection[play.id] = play;
+        });
+
         $scope.playManager = playManager;
 
         angular.forEach(plays, function(play) {
@@ -125,13 +131,11 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,
             //NOT for exiting from commiting changes
-            console.log('toggleEditMode');
             if (!editAllowed) return;
 
             $scope.editMode = !$scope.editMode;
 
             if ($scope.editMode) {
-                console.log('enter edit mode');
                 //entering edit mode, cache plays array
                 if ($scope.reel && $scope.reel.plays && angular.isArray($scope.reel.plays)) {
                     $scope.toggleEditMode.playsCache = angular.copy($scope.reel.plays);
@@ -141,15 +145,12 @@ ReelsArea.controller('ReelsArea.controller', [
 
                 if ($scope.toggleEditMode.playsCache) {
                     //get rid of dirty plays array
-                    console.log('delete reel plays');
                     delete $scope.reel.plays;
 
                     //in with clean
                     $scope.reel.plays = $scope.toggleEditMode.playsCache;
-                    console.log('plays', $scope.reel.plays);
                 }
             }
-            console.log('$scope.toggleEditMode.playsCache', $scope.toggleEditMode.playsCache);
         };
 
         $scope.getPlay = function(playId) {
@@ -208,6 +209,13 @@ ReelsArea.controller('ReelsArea.controller', [
 
             $scope.reel.save().then(function() {
                 editAllowed = true;
+
+                // Refresh the playManager
+                playsManager.reset();
+
+                angular.forEach($scope.reel.plays, function(playId) {
+                    playsManager.addPlay(playsCollection[playId]);
+                });
             });
         };
 
