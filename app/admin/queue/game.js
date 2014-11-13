@@ -29,16 +29,24 @@ Game.run([
  * @type {service}
  */
 Game.service('Admin.Game.Data.Dependencies', [
-    'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory','TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function(ROLE_TYPE, sports, leagues, teams, games, users) {
+    'ROLE_TYPE', 'GAME_STATUSES', 'VIDEO_STATUSES', 'SportsFactory', 'LeaguesFactory','TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(ROLE_TYPE, GAME_STATUSES, VIDEO_STATUSES, sports, leagues, teams, games, users) {
+
+        var statuses = [
+            GAME_STATUSES.READY_FOR_INDEXING.id,
+            GAME_STATUSES.INDEXING.id,
+            GAME_STATUSES.READY_FOR_QA.id,
+            GAME_STATUSES.QAING.id,
+            GAME_STATUSES.SET_ASIDE.id
+        ];
 
         var Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
-            teams: teams.load(),
-            games: games.load(),
-            users: users.load(),
+            users: users.load({ 'relatedGameStatus[]': statuses }),
+            teams: teams.load({ 'relatedGameStatus[]': statuses }),
+            games: games.load({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
         };
 
         return Data;
