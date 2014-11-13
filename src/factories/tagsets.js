@@ -102,6 +102,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             getStartTags: function() {
 
+                var self = this;
+
                 var tags = this.tags;
 
                 return Object.keys(tags)
@@ -113,7 +115,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 .filter(function(tag) {
 
-                    return this.isStartTag(tag.id);
+                    return self.isStartTag(tag.id);
                 });
             },
 
