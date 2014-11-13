@@ -117,6 +117,23 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 });
             },
 
+            getFloatTags: function() {
+
+                var tags = this.tags;
+
+                return Object.keys(tags)
+
+                .map(function(key) {
+
+                    return tags[key];
+                })
+
+                .filter(function(tag) {
+
+                    return this.isFloatTag(tag.id);
+                });
+            },
+
             getNextTags: function(tagId) {
 
                 var tags = this.tags;
