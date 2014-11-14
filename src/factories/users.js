@@ -49,7 +49,11 @@ IntelligenceWebClient.factory('UsersFactory', [
                         if (!role.type.name) {
                             role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
                         }
-                        user.roleTypes[role.type.id].push(role);
+
+                        //active roles only
+                        if (!role.tenureEnd) {
+                            user.roleTypes[role.type.id].push(role);
+                        }
                     });
                 }
 
@@ -103,7 +107,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                     angular.forEach(users, function(user) {
 
                         angular.forEach(user.roles, function(role) {
-                            
+
                             if (role.teamId && teamIds.indexOf(role.teamId) < 0) {
 
                                 teamIds.push(role.teamId);
@@ -297,6 +301,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!role) return false;
                 if (!match) throw new Error('No role to match specified');
                 if (!role.type || !match.type) return false;
+                if (role.tenureEnd) return false;
 
                 var roleIds = role.type.id;
                 var matchIds = match.type.id;
@@ -482,7 +487,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                     });
                 }
 
-                console.log(activeRoles);
                 return activeRoles;
             },
             /**
@@ -506,9 +510,12 @@ IntelligenceWebClient.factory('UsersFactory', [
                     });
                 }
 
-                console.log(inactiveRoles);
                 return inactiveRoles;
 
+            },
+            isActive: function(role) {
+                var self = this;
+                return self.activeRoles(role).length >= 1;
             }
         };
 

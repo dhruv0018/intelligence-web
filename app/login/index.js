@@ -140,8 +140,8 @@ Login.config([
  * @type {Controller}
  */
 Login.controller('LoginController', [
-    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService', 'AlertsService',
-    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, account, alerts) {
+    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService', 'AlertsService', 'UsersFactory',
+    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, account, alerts, users) {
 
         $scope.config = config;
 
@@ -167,17 +167,12 @@ Login.controller('LoginController', [
 
             /* Login the user. */
             auth.loginUser(email, password, persist).then(function(user) {
-
                 if (user) {
-                    console.log(user.activeRoles());
                     /* If the user has more than one role, but has not selected
                      * a default one yet. */
-                    if (user.roles && user.roles.length > 1 && !user.defaultRole) {
-
+                    if (user.isActive() && !user.defaultRole) {
                         $state.go('roles', false);
-
                     } else {
-
                         account.gotoUsersHomeState(user);
                     }
 
