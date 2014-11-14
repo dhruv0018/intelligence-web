@@ -27,14 +27,39 @@
 
     	h3 {
     		margin-bottom: 10px;
+
+    		&.winner {
+    			font-weight: 700;
+    		}
     	}
 
     	h5 {
     		padding: 10px 0;
     	}
+
+    	.icon-play {
+    		position: relative;
+    		top: -2px;
+    		font-size: 11px;
+
+    		&:before {
+    			transform: scale(-1, 1);
+    		}
+
+    		&.invisible {
+    			opacity: 0;
+    		}
+    	}
+    }
+
+    .game-title {
+    	flex: 1;
+    	margin-left: 20px;
+    	font-weight: @headings-font-weight;
     }
 
     .social-media {
+    	width: 88px;
     	margin-right: 15px;
 
     	.icon {
@@ -49,4 +74,21 @@
     		}
     	}
     }
+}
+
+/* Screens < 768px wide */
+@media only screen
+and (max-width: @screen-sm) {
+
+	.film-header {
+
+		.game-info {
+			width: @screen-sm;
+		}
+
+		.game-title,
+		.social-media {
+			display: none;
+		} 
+	}
 }
