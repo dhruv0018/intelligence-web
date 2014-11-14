@@ -8,7 +8,7 @@
                 <span ng-show="editFlag">{{index + 1}}.</span>
                 <span class="summary" ng-if="play.summary.items && play.summary.items.length > 0">{{ play.summary.items[0] }} - </span>
                 <span class="datePlayed">{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
-                <span class="playplay" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY, invisible: editFlag}"><i class="icon icon-play-circle"></i></span>
+                <span class="playplay" data-ng-click="playPlay($event)" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY, invisible: editFlag}"><i class="icon icon-play-circle"></i></span>
             </h4>
 
             <h5 class="subtitle">
