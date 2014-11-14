@@ -1,13 +1,13 @@
 <section class="reels-player-area">
 
     <header>
-        <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reelUpdatedDate | date}})</span></h3>
-        <span class="delete-reel" ng-if="canUserDelete()" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
+        <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reel.updatedAt | date}})</span></h3>
+        <span class="delete-reel" ng-if="canUserDelete" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
     </header>
 
     <div class="reel-body">
     
-        <div class="reel-edit-control-container" ng-if="canUserEdit()">
+        <div class="reel-edit-control-container" ng-if="canUserEdit">
 
             <div class="reel-edit-controls">
 
@@ -19,7 +19,7 @@
 
         </div>
 
-        <div class="main-highlight ng-scope" data-ui-view="content" ng-class="{'not-editable': !canUserEdit()}">
+        <div class="main-highlight ng-scope" data-ui-view="content" ng-class="{'not-editable': !canUserEdit}">
 
             <aside class="sidebar__reel">
 

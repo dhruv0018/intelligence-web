@@ -77,7 +77,7 @@ ReelsArea.service('Reels.Data.Dependencies', [
                     var reelId = Number(stateParams.id);
 
                     var data = {
-                        reel: reels.fetch(reelId),
+                        reel: reels.load({reelId: reelId}),
                         games: games.load({reelId: reelId}),
                         teams: teams.load({reelId: reelId}),
                         plays: plays.load({reelId: reelId}),
@@ -107,21 +107,14 @@ ReelsArea.controller('ReelsArea.controller', [
     '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES',
     function controller($scope, $state, $stateParams, $modal, modals, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES) {
 
-        // Get the reel
+        // Get reel
         var reelId = Number($stateParams.id);
         $scope.reel = reels.get(reelId);
         $scope.videoTitle = 'reelsPlayer';
         $scope.editMode = false;
         var editAllowed = true;
-        $scope.reelCreatedDate = (typeof $scope.reelCreatedDate === 'string') ? new Date($scope.reel.createdAt) : $scope.reel.createdAt;
-        $scope.reelUpdatedDate = (typeof $scope.reelUpdatedDate === 'string') ? new Date($scope.reel.updatedAt) : $scope.reel.updatedAt;
 
-        var plays = playsFactory.getList();
-
-        var playsCollection = {};
-        angular.forEach(plays, function(play) {
-            playsCollection[play.id] = play;
-        });
+        var plays = playsFactory.getList({ reelId: reelId });
 
         $scope.playManager = playManager;
 
@@ -146,13 +139,8 @@ ReelsArea.controller('ReelsArea.controller', [
         if (isACoachOfThisTeam) $scope.restrictionLevel = editModeRestrictions.EDITABLE;
         if (isOwner) $scope.restrictionLevel = editModeRestrictions.DELETABLE;
 
-        $scope.canUserDelete = function() {
-            return $scope.restrictionLevel === editModeRestrictions.DELETABLE;
-        };
-
-        $scope.canUserEdit = function() {
-            return $scope.restrictionLevel === editModeRestrictions.DELETABLE || $scope.restrictionLevel === editModeRestrictions.EDITABLE;
-        };
+        $scope.canUserDelete = $scope.restrictionLevel === editModeRestrictions.DELETABLE;
+        $scope.canUserEdit = $scope.restrictionLevel === editModeRestrictions.DELETABLE || $scope.restrictionLevel === editModeRestrictions.EDITABLE;
 
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,
@@ -240,7 +228,7 @@ ReelsArea.controller('ReelsArea.controller', [
                 playsManager.reset();
 
                 angular.forEach($scope.reel.plays, function(playId) {
-                    playsManager.addPlay(playsCollection[playId]);
+                    playsManager.addPlay(playsFactory.get(playId));
                 });
             });
         };
