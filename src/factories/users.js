@@ -477,13 +477,17 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var activeRoles = [];
 
+                if (!self.roles) {
+                    return [];
+                }
+
                 activeRoles = self.roles.filter(function(temporaryRole) {
                     return (!temporaryRole.tenureEnd) ? true : false;
                 });
 
                 if (role) {
                     activeRoles = activeRoles.filter(function(temporaryRole) {
-                        return temporaryRole.type === role.type;
+                        return temporaryRole.type.id === role.type.id;
                     });
                 }
 
@@ -500,13 +504,17 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var inactiveRoles = [];
 
+                if (!self.roles) {
+                    return [];
+                }
+
                 inactiveRoles = self.roles.filter(function(temporaryRole) {
                     return (temporaryRole.tenureEnd) ? false : true;
                 });
 
                 if (role) {
                     inactiveRoles = inactiveRoles.filter(function(temporaryRole) {
-                        return temporaryRole.type === role.type;
+                        return temporaryRole.type.id === role.type.id;
                     });
                 }
 
