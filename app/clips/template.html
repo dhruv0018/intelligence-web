@@ -1,0 +1,19 @@
+<div class="public-game">
+	<film-header
+		data-is-public="publiclyShared"
+		data-film="game"
+		data-home-team="team"
+		data-opposing-team="opposingTeam">
+	</film-header>
+    <div class="player" data-ng-if="publiclyShared">
+        <div class="video-container">
+        	<x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
+        </div>
+    </div>
+    <div data-ng-if="!publiclyShared">
+    	<div class="locked-game">
+    		<i class="icon icon-lock"></i>
+    		<h3>You do not have permission to access this game</h3>
+    	</div>
+    </div>
+</div>
