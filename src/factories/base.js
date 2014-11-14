@@ -466,22 +466,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     .then(function() {
 
-                        /* Fetch the updated resource. */
-                        return self.fetch(resource.id).then(function(updated) {
-
-                            /* Update local resource with server resource. */
-                            angular.extend(resource, self.extend(updated));
-
-                            /* Update the resource in storage. */
-                            storage.list[storage.list.indexOf(resource)] = resource;
-                            storage.collection[resource.id] = resource;
-
-                            return resource;
-                        });
+                        return resource;
                     })
 
                     .finally(function() {
-
                         delete resource.isSaving;
                     });
 

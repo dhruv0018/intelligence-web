@@ -43,6 +43,25 @@ IntelligenceWebClient.service('EventManager', [
         };
 
         /**
+         * Checks whether the event is an end-and-start event.
+         * @returns - true if the event is an end-and-start event; false otherwise.
+         */
+        this.isEndAndStartEvent = function(event) {
+
+            event = event || this.current;
+
+            /* If there is no current event or the event hasn't been created
+             * then its can not be a end event. */
+            if (!event || !event.tagId) return false;
+
+            var tagId = event.tagId;
+            var tag = this.tagset.tags[tagId];
+
+            /* Check if the given event is an end tag and only has one child. */
+            return this.isEndEvent(event) && tag.children.length === 1;
+        };
+
+        /**
          * Checks whether the event has variables.
          * @returns - true if the event has variables; false otherwise.
          */

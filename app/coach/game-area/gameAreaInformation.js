@@ -42,37 +42,17 @@ GameAreaInformation.config([
 
                             var teamId = session.currentUser.currentRole.teamId;
 
-                            /* TODO: Maybe not do this. */
+
                             var game = games.get(gameId);
                             data.game = game;
-
-                            /* TODO: Or this. */
-                            var team = teams.get(game.teamId);
-                            var league = leagues.get(team.leagueId);
-                            data.league = league;
-
-                            data.remainingBreakdowns = teams.getRemainingBreakdowns(teamId);
-
-                            /* TODO: Refactor this. */
                             data.gamePlayerLists = {};
 
-                            var teamPlayersFilter = { rosterId: game.rosters[game.teamId].id };
-                            var teamPlayerList = players.load(teamPlayersFilter).then(function() {
+                            var promises = [];
+                            promises.push(teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
+                                data.remainingBreakdowns = breakdownData;
+                            }));
 
-                                var teamPlayers = players.getList(teamPlayersFilter);
-                                data.teamPlayers = teamPlayers;
-                                data.gamePlayerLists[game.teamId] = teamPlayers;
-                            });
-
-                            var opposingTeamPlayersFilter = { rosterId: game.rosters[game.opposingTeamId].id };
-                            var opposingTeamPlayerList = players.load(opposingTeamPlayersFilter).then(function() {
-
-                                var opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
-                                data.opposingTeamPlayers = opposingTeamPlayers;
-                                data.gamePlayerLists[game.opposingTeamId] = opposingTeamPlayers;
-                            });
-
-                            return $q.all([teamPlayerList, opposingTeamPlayerList, data]).then(function() {
+                            return $q.all(promises).then(function() {
 
                                 return data;
                             });
@@ -88,14 +68,14 @@ GameAreaInformation.config([
 ]);
 
 GameAreaInformation.controller('GameAreaInformationController', [
-    '$scope', '$state', '$stateParams', '$modal', 'AlertsService', 'GamesFactory', 'GameAreaInformation.Data',
-    function controller($scope, $state, $stateParams, $modal, alerts, games, data) {
+    '$scope', '$state', '$stateParams', '$modal', 'AlertsService', 'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'GameAreaInformation.Data',
+    function controller($scope, $state, $stateParams, $modal, alerts, session, games, teams, leagues, data) {
 
         var gameId = $stateParams.id;
-
         var game = games.get(gameId);
-
-        $scope.data = data;
+        $scope.game = game;
+        $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
+        $scope.remainingBreakdowns = data.remainingBreakdowns;
 
         //Player List
         $scope.teamPlayerList = data.gamePlayerLists[game.teamId];

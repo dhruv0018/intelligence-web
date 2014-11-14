@@ -27,7 +27,7 @@
                 </p>
 
                 <div class="positions-list shaded">
-                    <div class="position" data-ng-class="{'pull-left': !$last}" data-ng-repeat="position in positions">
+                    <div class="position" data-ng-class="{'pull-left': !$last}" data-ng-repeat="position in positionset.positions">
                         <span class="description">{{position.description}}</span>
                         <span class="name">{{position.name}}</span>
                     </div>
@@ -36,7 +36,7 @@
                 <div class="positions-list">
                     Separate multiple positions with a comma, like this:
                     <div>
-                        <span data-ng-repeat="position in positions">
+                        <span data-ng-repeat="position in positionset.positions">
                             <strong>
                                 {{position.name}}<span data-ng-if="!$last">,</span>
                             </strong>
