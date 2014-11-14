@@ -132,7 +132,7 @@ ReelsArea.controller('ReelsArea.controller', [
         // DEFAULT RESTRICTION
         $scope.restrictionLevel = editModeRestrictions.VIEWABLE;
 
-        var isCoach = session.currentUser.is(ROLES.HEAD_COACH) || session.currentUser.is(ROLES.ASSISTANT_COACH);
+        var isCoach = session.currentUser.is(ROLES.COACH);
         var isACoachOfThisTeam = isCoach || session.currentUser.currentRole.teamId === reel.uploaderTeamId;
         var isOwner = session.currentUser.id === $scope.reel.uploaderUserId;
 
