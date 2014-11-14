@@ -59,3 +59,19 @@ Users.controller('Users.Users.Controller', [
     }
 ]);
 
+Users.filter('rolesFilter', [
+    'ROLE_ID', 'ROLE_TYPE', 'ROLES',
+    function(ROLE_ID, ROLE_TYPE, ROLES) {
+        return function(users, roleID) {
+            if (!roleID) {
+                return users;
+            }
+
+            var role = ROLES[ROLE_ID[roleID]];
+
+            return users.filter(function(user) {
+                return user.isActive(role);
+            });
+        };
+    }]);
+
