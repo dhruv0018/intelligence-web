@@ -9,6 +9,8 @@ IntelligenceWebClient.run([
     'VIEWPORTS', '$rootScope', '$window',
     function run(VIEWPORTS, $rootScope, $window) {
 
+        $rootScope.viewport = $window.outerWidth < VIEWPORTS.MOBILE.width ? VIEWPORTS.MOBILE : VIEWPORTS.DESKTOP;
+
         angular.element($window).bind('resize',function() {
 
             var resize = {
