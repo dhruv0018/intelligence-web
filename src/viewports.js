@@ -15,7 +15,7 @@ IntelligenceWebClient.run([
 
             var resize = {
 
-                width: $window.outerWidth
+                width: $window.innerWidth
             };
 
             if (resize.width < VIEWPORTS.MOBILE.width) {
