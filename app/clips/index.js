@@ -2,51 +2,51 @@
 var angular = window.angular;
 
 /**
- * Coach game area raw film page module.
- * @module Games
+ * Public clips page module.
+ * @module Clips
  */
-var Games = angular.module('Games', [
+var Clips = angular.module('Clips', [
     'ui.router',
     'ui.bootstrap'
 ]);
 
-Games.run([
+Clips.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('games/template.html', require('./template.html'));
+        $templateCache.put('clips/template.html', require('./template.html'));
     }
 ]);
 
-Games.config([
+Clips.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var shortGames = {
-            name: 'ShortGames',
-            url: '/g/:id',
+        var shortClips = {
+            name: 'ShortClips',
+            url: '/c/:id',
             parent: 'base',
             onEnter: [
                 '$state', '$stateParams',
                 function($state, $stateParams) {
-                    var gameId = parseInt($stateParams.id, 36);
-                    $state.go('Games', {id: gameId});
+                    var clipId = parseInt($stateParams.id, 36);
+                    $state.go('Clips', {id: clipId});
                 }
             ]
         };
 
-        var Games = {
-            name: 'Games',
-            url: '/games/:id',
+        var Clips = {
+            name: 'Clips',
+            url: '/clips/:id',
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: 'games/template.html',
-                    controller: 'Games.controller'
+                    templateUrl: 'clips/template.html',
+                    controller: 'Clips.controller'
                 }
             },
             resolve: {
-                'Games.Data': [
+                'Clips.Data': [
                     '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
                     function($q, $stateParams, games, teams, users) {
                         var gameId = Number($stateParams.id);
@@ -66,12 +66,12 @@ Games.config([
             }
         };
 
-        $stateProvider.state(shortGames);
-        $stateProvider.state(Games);
+        $stateProvider.state(shortClips);
+        $stateProvider.state(Clips);
     }
 ]);
 
-Games.controller('Games.controller', [
+Clips.controller('Clips.controller', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
     function controller($scope, $state, $stateParams, games, teams, users) {
         var gameId = $stateParams.id;
