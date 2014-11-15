@@ -49,17 +49,21 @@ Clips.config([
                 'Clips.Data': [
                     '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'PlaysFactory', 'PlayersFactory',
                     function($q, $stateParams, games, teams, users, plays) {
+
                         var playId = Number($stateParams.id);
+
                         return plays.load(playId).then(function() {
+
                             var play = plays.get(playId);
                             var gameId = play.gameId;
-                            var game = games.load(gameId).then(function() {
-                                var Data = {
-                                    team: teams.load([game.teamId, game.opposingTeamId])
-                                };
 
-                                return $q.all(Data);
+                            return games.load(gameId).then(function() {
+
+                                var game = games.get(gameId);
+
+                                return teams.load([game.teamId, game.opposingTeamId]);
                             });
+
                         });
                     }
                 ]
