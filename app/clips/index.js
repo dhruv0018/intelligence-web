@@ -47,19 +47,19 @@ Clips.config([
             },
             resolve: {
                 'Clips.Data': [
-                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
-                    function($q, $stateParams, games, teams, users) {
-                        var gameId = Number($stateParams.id);
-                        return games.load(gameId).then(function() {
+                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'PlaysFactory', 'PlayersFactory',
+                    function($q, $stateParams, games, teams, users, plays) {
+                        var playId = Number($stateParams.id);
+                        return plays.load(playId).then(function() {
+                            var play = plays.get(playId);
+                            var gameId = play.gameId;
+                            var game = games.load(gameId).then(function() {
+                                var Data = {
+                                    team: teams.load([game.teamId, game.opposingTeamId])
+                                };
 
-                            var game = games.get(gameId);
-
-                            var Data = {
-                                user: users.load(game.uploaderUserId),
-                                team: teams.load([game.teamId, game.opposingTeamId])
-                            };
-
-                            return $q.all(Data);
+                                return $q.all(Data);
+                            });
                         });
                     }
                 ]
@@ -72,21 +72,20 @@ Clips.config([
 ]);
 
 Clips.controller('Clips.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($scope, $state, $stateParams, games, teams, users) {
-        var gameId = $stateParams.id;
-        $scope.game = games.get(gameId);
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'PlaysFactory',
+    function controller($scope, $state, $stateParams, games, teams, plays) {
+        var playId = $stateParams.id;
+        $scope.play = plays.get(playId);
+        $scope.game = games.get($scope.play.gameId);
+
         $scope.publiclyShared = false;
 
-        if ($scope.game.isSharedWithPublic()) {
+        if (!$scope.publiclyShared) { // Temp hack
             $scope.publiclyShared = true;
             $scope.team = teams.get($scope.game.teamId);
             $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
-            $scope.uploadedBy = users.get($scope.game.uploaderUserId);
-
-            $scope.sources = $scope.game.getVideoSources();
-            $scope.videoTitle = 'rawFilm';
+            $scope.sources = $scope.play.getVideoSources();
         }
     }
 ]);
