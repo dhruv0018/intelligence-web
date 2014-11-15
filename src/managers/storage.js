@@ -15,9 +15,7 @@ IntelligenceWebClient.service('StorageManager', [
 
         this.clear = function() {
 
-            console.log('root before', root);
             root = Object.create(null);
-            console.log('root after', root);
         };
     }
 ]);
