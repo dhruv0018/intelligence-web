@@ -90,6 +90,7 @@ Clips.controller('Clips.controller', [
             $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
             $scope.sources = $scope.play.getVideoSources();
+            $scope.filmTitle = $scope.play.description;
         }
     }
 ]);
