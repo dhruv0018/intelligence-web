@@ -1,6 +1,6 @@
 {
     "oauth": {
-        "uri": "https://localhost:4436/intelligence-api/oauth/",
+        "uri": "//localhost:4436/intelligence-api/oauth/",
         "user": {
             "id": "cid",
             "secret": "csecret",
@@ -16,7 +16,7 @@
         "state": "xyz"
     },
     "api": {
-        "uri": "https://localhost:4436/intelligence-api/v1/"
+        "uri": "//localhost:4436/intelligence-api/v1/"
     },
     "kvs": {
     },
