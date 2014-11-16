@@ -517,7 +517,7 @@ module.exports = function(grunt) {
 
     /* Tasks */
 
-    grunt.registerTask('date-manifest', 'Dates the cache manifest', function() {
+    grunt.registerTask('date-manifests', 'Dates the cache manifest', function() {
 
         var fs = require('fs');
 
@@ -533,6 +533,7 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['browserSync']);
+    grunt.registerTask('manifests', ['copy:manifests', 'date-manifests']);
     grunt.registerTask('default', ['githooks', 'install', 'dev', 'notify:build', 'serve', 'watch']);
 
     grunt.registerTask('build', [
@@ -556,8 +557,7 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:dev',
         'copy:build',
-        'copy:manifests',
-        'date-manifest'
+        'manifests'
     ]);
 
     grunt.registerTask('qa', [
@@ -578,8 +578,7 @@ module.exports = function(grunt) {
         'copy:dev',
         'copy:build',
         'copy:htaccess',
-        'copy:manifests',
-        'date-manifest',
+        'manifests',
         'ver:prod'
     ]);
 
@@ -601,8 +600,7 @@ module.exports = function(grunt) {
         'copy:qaassets',
         'copy:dev',
         'copy:qa',
-        'copy:manifests',
-        'date-manifest'
+        'manifests'
     ]);
 
     grunt.registerTask('prod', [
@@ -625,8 +623,7 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:build',
         'copy:htaccess',
-        'copy:manifests',
-        'date-manifest',
+        'manifests',
         'ver:prod'
     ]);
 };
