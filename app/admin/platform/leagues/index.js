@@ -172,9 +172,6 @@ Leagues.controller('LeaguesController', [
             {label: 'coed', value: 'coed'}
         ];
 
-        $scope.add = function() {
-            $state.go('league-info');
-        };
 
         $scope.search = function(filter) {
 
