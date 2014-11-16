@@ -129,14 +129,12 @@ Leagues.controller('LeagueController', [
 
         var leagueId = $stateParams.id;
 
-        if (!leagueId) leagues.create();
-
-        $scope.league = leagues.get(leagueId);
         $scope.sports = sports.getList();
         $scope.indexedSports = sports.getCollection();
         $scope.tagsets = tagsets.getList();
         $scope.positionsets = positionsets.getList();
         $scope.filtersets = filtersets.getList();
+        $scope.league = leagueId ? leagues.get(leagueId) : leagues.create();
 
         $scope.genders = ['male', 'female', 'coed'];
 
