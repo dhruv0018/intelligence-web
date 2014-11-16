@@ -626,6 +626,7 @@ module.exports = function(grunt) {
         'copy:build',
         'copy:htaccess',
         'copy:manifests',
+        'date-manifest',
         'ver:prod'
     ]);
 };
