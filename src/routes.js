@@ -13,14 +13,6 @@ IntelligenceWebClient.config([
     }
 ]);
 
-IntelligenceWebClient.config([
-    '$urlRouterProvider',
-    function config($urlRouterProvider) {
-
-        $urlRouterProvider.otherwise('/login');
-    }
-]);
-
 IntelligenceWebClient.run([
     '$rootScope', '$urlRouter', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
     function run($rootScope, $urlRouter, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
