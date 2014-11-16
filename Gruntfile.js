@@ -517,6 +517,14 @@ module.exports = function(grunt) {
 
     /* Tasks */
 
+    grunt.registerTask('date-manifest', 'Dates the cache manifest', function() {
+
+        var fs = require('fs');
+
+        var now = new Date();
+
+        fs.appendFileSync('public/intelligence/manifest.appcache', '# ' + now);
+    });
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['karma']);
@@ -530,7 +538,8 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
         'env:prod',
         'componentbuild:prod',
-        'browserify:prod']);
+        'browserify:prod'
+    ]);
 
     grunt.registerTask('dev', [
         'env:dev',
@@ -546,7 +555,10 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:assets',
         'copy:dev',
-        'copy:build']);
+        'copy:build',
+        'copy:manifests',
+        'date-manifest'
+    ]);
 
     grunt.registerTask('qa', [
         'clean',
@@ -566,7 +578,10 @@ module.exports = function(grunt) {
         'copy:dev',
         'copy:build',
         'copy:htaccess',
-        'ver:prod']);
+        'copy:manifests',
+        'date-manifest',
+        'ver:prod'
+    ]);
 
     grunt.registerTask('new-qa', [
         'gitinfo',
@@ -585,7 +600,10 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:qaassets',
         'copy:dev',
-        'copy:qa']);
+        'copy:qa',
+        'copy:manifests',
+        'date-manifest'
+    ]);
 
     grunt.registerTask('prod', [
         'clean',
@@ -608,6 +626,8 @@ module.exports = function(grunt) {
         'copy:build',
         'copy:htaccess',
         'copy:manifests',
-        'ver:prod']);
+        'date-manifest',
+        'ver:prod'
+    ]);
 };
 
