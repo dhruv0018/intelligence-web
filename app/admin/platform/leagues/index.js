@@ -140,12 +140,8 @@ Leagues.controller('LeagueController', [
 
         $scope.save = function(league) {
 
-            data.leagues.save(league).then(function() {
-                $state.go('leagues');
-            });
-        };
+            league.save();
 
-        $scope.cancel = function() {
             $state.go('leagues');
         };
     }
