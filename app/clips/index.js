@@ -61,7 +61,16 @@ Clips.config([
 
                                 var game = games.get(gameId);
 
-                                return teams.load([game.teamId, game.opposingTeamId]);
+                                var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
+                                var loadTeamPlayers = players.load(teamPlayersFilter);
+
+                                var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
+                                var loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
+
+                                return teams.load([game.teamId, game.opposingTeamId]).then(function() {
+
+                                    return leagues.load(teams.get(game.teamId));
+                                });
                             });
 
                         });
@@ -76,21 +85,30 @@ Clips.config([
 ]);
 
 Clips.controller('Clips.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'PlaysFactory',
-    function controller($scope, $state, $stateParams, games, teams, plays) {
-        var playId = $stateParams.id;
-        $scope.play = plays.get(playId);
-        $scope.game = games.get($scope.play.gameId);
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory',
+    function controller($scope, $state, $stateParams, games, teams, plays, leagues, players) {
 
         $scope.publiclyShared = false;
 
         if (!$scope.publiclyShared) { // Temp hack
+
+            // Film Header data-attributes
             $scope.publiclyShared = true;
+            $scope.game = games.get($scope.play.gameId);
             $scope.team = teams.get($scope.game.teamId);
             $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
+            // Krossover Play data-attributes
+            var playId = $stateParams.id;
+            $scope.play = plays.get(playId);
+            var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
+            $scope.teamPlayers = players.getList(teamPlayersFilter);
+            var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
+            $scope.opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
+
+            // Krossover VideoPlayer data-attributes
             $scope.sources = $scope.play.getVideoSources();
-            $scope.filmTitle = $scope.play.description;
+            $scope.videoTitle = 'clip';
         }
     }
 ]);
