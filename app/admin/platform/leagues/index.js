@@ -180,7 +180,7 @@ Leagues.controller('LeaguesController', [
 
             $scope.leagues.length = 0;
 
-            $scope.query = data.leagues.query(filter).then(function(leagues) {
+            $scope.query = leagues.query(filter).then(function(leagues) {
 
                 $scope.leagues = leagues;
             });
