@@ -14,7 +14,7 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="sport" data-ng-model="filter.sport" data-ng-options="sport.id as sport.name for sport in sports">
+                <select class="form-control" name="sport" data-ng-model="filter.sportId" data-ng-options="sport.id as sport.name for sport in sportsList">
                     <option value="">Sport</option>
                 </select>
 
@@ -49,7 +49,7 @@
                     <tr data-ng-repeat="league in leagues">
 
                         <td><a data-ui-sref="league-info({ id: league.id })">{{league.name}}</a></td>
-                        <td ng-repeat="sport in sports | filter:{id: league.sportId}">{{sport.name}}</td>
+                        <td>{{sports[league.sportId].name}}</td>
                         <td>{{league.gender}}</td>
 
                     </tr>

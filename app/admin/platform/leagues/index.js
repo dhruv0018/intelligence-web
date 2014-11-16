@@ -157,8 +157,9 @@ Leagues.controller('LeaguesController', [
     '$scope', '$state', 'SportsFactory', 'LeaguesFactory',
     function controller($scope, $state, sports, leagues) {
 
+        $scope.sports = sports.getCollection();
+        $scope.sportsList = sports.getList();
         $scope.leagues = leagues.getList();
-        $scope.sports = sports.getList();
 
         $scope.genders = [
             {label: 'male', value: 'male'},
