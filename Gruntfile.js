@@ -517,6 +517,14 @@ module.exports = function(grunt) {
 
     /* Tasks */
 
+    grunt.registerTask('date-manifest', 'Dates the cache manifest', function() {
+
+        var fs = require('fs');
+
+        var now = new Date();
+
+        fs.appendFileSync('public/intelligence/manifest.appcache', '# ' + now);
+    });
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['karma']);
