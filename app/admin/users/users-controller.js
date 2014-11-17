@@ -63,7 +63,7 @@ Users.filter('rolesFilter', [
     'ROLE_ID', 'ROLE_TYPE', 'ROLES',
     function(ROLE_ID, ROLE_TYPE, ROLES) {
         return function(users, filter) {
-            if (!filter.role) {
+            if (filter && !filter.role) {
                 return users;
             }
 
