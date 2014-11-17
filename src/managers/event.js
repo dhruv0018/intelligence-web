@@ -38,8 +38,6 @@ IntelligenceWebClient.service('EventManager', [
              * then its can not be a floating event. */
             if (!event || !event.tagId) return false;
 
-            console.log('isFloatingEvent tagId', event.tagId);
-
             /* Check if the given event is an end tag. */
             return this.tagset.isFloatTag(event.tagId);
         };
