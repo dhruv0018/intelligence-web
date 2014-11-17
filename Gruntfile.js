@@ -468,35 +468,35 @@ module.exports = function(grunt) {
             },
             config: {
                 files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             index: {
                 files: ['src/index.html'],
-                tasks: ['newer:htmlhint', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:htmlhint', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
-                tasks: ['newer:htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             css: {
                 files: ['app/**/*.css', 'lib/**/*.css'],
-                tasks: ['newer:csslint', 'componentbuild:styles', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:csslint', 'componentbuild:styles', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             less: {
                 files: ['app/**/*.less', 'lib/**/*.less'],
-                tasks: ['componentbuild:styles', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['componentbuild:styles', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:less:theme', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             tests: {
                 files: ['test/unit/**/*.js'],
@@ -517,7 +517,7 @@ module.exports = function(grunt) {
 
     /* Tasks */
 
-    grunt.registerTask('date-manifest', 'Dates the cache manifest', function() {
+    grunt.registerTask('date-manifests', 'Dates the cache manifest', function() {
 
         var fs = require('fs');
 
@@ -533,6 +533,7 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['browserSync']);
+    grunt.registerTask('manifests', ['copy:manifests', 'date-manifests']);
     grunt.registerTask('default', ['githooks', 'install', 'dev', 'notify:build', 'serve', 'watch']);
 
     grunt.registerTask('build', [
@@ -556,8 +557,7 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:dev',
         'copy:build',
-        'copy:manifests',
-        'date-manifest'
+        'manifests'
     ]);
 
     grunt.registerTask('qa', [
@@ -578,8 +578,7 @@ module.exports = function(grunt) {
         'copy:dev',
         'copy:build',
         'copy:htaccess',
-        'copy:manifests',
-        'date-manifest',
+        'manifests',
         'ver:prod'
     ]);
 
@@ -601,8 +600,7 @@ module.exports = function(grunt) {
         'copy:qaassets',
         'copy:dev',
         'copy:qa',
-        'copy:manifests',
-        'date-manifest'
+        'manifests'
     ]);
 
     grunt.registerTask('prod', [
@@ -625,8 +623,7 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:build',
         'copy:htaccess',
-        'copy:manifests',
-        'date-manifest',
+        'manifests',
         'ver:prod'
     ]);
 };
