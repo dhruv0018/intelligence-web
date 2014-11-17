@@ -70,7 +70,13 @@
             "moreQuestions": {
                 "uri": "http://support.krossover.com/customer/portal/emails/new"
             }
-        }
+        },
+        "sleep": {
+            "mac": "http://support.krossover.com/customer/portal/articles/1642640-turning-off-your-computer-s-sleep-settings",
+            "pc": "http://support.krossover.com/customer/portal/articles/1642640-turning-off-your-computer-s-sleep-settings"
+        },
+        "speedTest": "http://support.krossover.com/customer/portal/articles/1642636-testing-your-upload-speed",
+        "finalCutPro": " http://vimeo.com/41165826"
     },
     "indexing": {
         "video": {
