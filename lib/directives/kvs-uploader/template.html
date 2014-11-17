@@ -18,7 +18,7 @@
 
                         <tbody>
 
-                        <tr class="file" data-ng-repeat="file in transfers" data-draggable>
+                        <tr class="file" data-ng-repeat="file in transfers" data-draggable="true">
 
                             <td class="drag"><i class="icon icon-align-justify"></i> {{ $index+1 }}. {{ file.name }} — {{ file.size | bytes }}</td>
                             <td class="remove"><button class="btn-remove" data-ng-click="file.cancel()"><i class="icon icon-remove"></i></button></td>
