@@ -157,6 +157,42 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }).some(function(userId) {
                     return !userId;
                 });
+            },
+            toggleTeamShare: function(teamId) {
+                var self = this;
+
+                if (!teamId) throw new Error('No team id');
+
+                self.shares = self.shares || [];
+
+                if (self.isSharedWithTeam()) {
+                    self.shares.forEach(function(share, index) {
+                        if (share.sharedWithTeamId) {
+                            self.shares.splice(index, 1);
+                        }
+                    });
+                } else {
+
+                    var share = {
+                        userId: session.currentUser.id,
+                        reelId: self.id,
+                        sharedWithTeamId: teamId,
+                        createdAt: moment.utc().toDate()
+                    };
+
+                    self.shares.push(share);
+                }
+            },
+            isSharedWithTeam: function() {
+                var self = this;
+
+                if (!self.shares) return false;
+
+                return self.shares.map(function(share) {
+                    return share.sharedWithTeamId;
+                }).some(function(teamId) {
+                    return teamId;
+                });
             }
         };
 
