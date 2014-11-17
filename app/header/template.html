@@ -3,9 +3,9 @@
 <nav class="header header-default" role="navigation">
 
     <!-- Mobile Menu Begin -->
-    <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-left dropdown mobile-nav">
+    <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-left dropdown mobile-nav" dropdown>
 
-        <button class="dropdown-toggle"><i class="icon icon-bars">&nbsp;</i>Menu</button>
+        <button class="dropdown-toggle" dropdown-toggle><i class="icon icon-bars">&nbsp;</i>Menu</button>
 
         <!-- Admin Menu -->
         <menu class="dropdown-menu" data-ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
@@ -64,7 +64,7 @@
         <li data-ui-sref-active="active"><a data-ui-sref="schools">Schools</a></li>
         <li data-ui-sref-active="active"><a data-ui-sref="queue">Queue</a></li>
         <!--<li class="disabled" data-ui-sref-active="active"><a data-ui-sref="reports">Reports</a></li>-->
-        <li class="header-dropdown" data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)"><a class="dropdown-toggle">Platform</a>
+        <li class="header-dropdown" data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)"><a class="dropdown-toggle" dropdown-toggle>Platform</a>
             <ul class="dropdown-menu">
                 <li><a data-ui-sref="plan-defaults">Plan Defaults</a></li>
                 <li><a data-ui-sref="leagues">Leagues</a></li>
@@ -90,7 +90,7 @@
         <li data-ui-sref-active="active"><a data-ui-sref="Coach.FilmHome">Film Home</a></li>
         <li data-ng-if="league.sportId === SPORTS.FOOTBALL.id" data-ui-sref-active="active"><a data-ui-sref="Coach.Analytics">Analytics</a></li>
         <li class="header-dropdown" data-ng-class="{active: $state.includes('Coach.Team')}">
-            <a class="dropdown-toggle">Team</a>
+            <a class="dropdown-toggle" dropdown-toggle>Team</a>
             <ul class="dropdown-menu">
                 <li><a data-ui-sref="Coach.Team.Roster">Roster</a></li>
                 <li data-ng-if="currentUser.is(HEAD_COACH)"><a data-ui-sref="Coach.Team.Assistants">Coaches</a></li>
@@ -114,7 +114,7 @@
 
         <div class="role-dropdown" data-dropdown data-is-open="status.isopen">
 
-            <button class="dropdown-toggle">
+            <button class="dropdown-toggle" dropdown-toggle>
 
                 <i class="icon" data-ng-class="{'icon-chevron-up': status.isopen, 'icon-chevron-down': !status.isopen}"></i>
                 <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
