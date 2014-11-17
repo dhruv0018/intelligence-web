@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
         var GamesFactory = {
 
-            PAGE_SIZE: 1500,
+            PAGE_SIZE: 1000,
 
             description: 'games',
 
@@ -61,8 +61,10 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 /* build lookup table of shares by userId shared with */
+                game.shares = game.shares || [];
+                game.sharedWithUsers = game.sharedWithUsers || {};
+
                 if (game.shares && game.shares.length) {
-                    game.sharedWithUsers = game.sharedWithUsers || {};
 
                     angular.forEach(game.shares, function(share) {
                         if (share.sharedWithUserId) {
