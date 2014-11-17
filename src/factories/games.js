@@ -76,6 +76,28 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return game;
             },
 
+            isPlayerOnTeam: function(playerId) {
+
+                var self = this;
+
+                var teamId = self.teamId;
+                var teamRoster = self.getRoster(teamId);
+
+                /* Check if the player is on the team roster. */
+                return angular.isDefined(teamRoster.playerInfo[playerId]);
+            },
+
+            isPlayerOnOpposingTeam: function(playerId) {
+
+                var self = this;
+
+                var opposingTeamId = self.opposingTeamId;
+                var opposingTeamRoster = self.getRoster(opposingTeamId);
+
+                /* Check if the player is on the team roster. */
+                return angular.isDefined(opposingTeamRoster.playerInfo[playerId]);
+            },
+
             generateStats: function(id, success, error) {
                 var self = this;
 
