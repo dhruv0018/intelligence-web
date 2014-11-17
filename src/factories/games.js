@@ -82,9 +82,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var teamId = self.teamId;
                 var teamRoster = self.getRoster(teamId);
+                var playerInfo = teamRoster.playerInfo;
+
+                if (!playerInfo) return false;
 
                 /* Check if the player is on the team roster. */
-                return angular.isDefined(teamRoster.playerInfo[playerId]);
+                return angular.isDefined(playerInfo[playerId]);
             },
 
             isPlayerOnOpposingTeam: function(playerId) {
@@ -93,9 +96,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var opposingTeamId = self.opposingTeamId;
                 var opposingTeamRoster = self.getRoster(opposingTeamId);
+                var playerInfo = opposingTeamRoster.playerInfo;
 
-                /* Check if the player is on the team roster. */
-                return angular.isDefined(opposingTeamRoster.playerInfo[playerId]);
+                if (!playerInfo) return false;
+
+                /* Check if the player is on the opposing team roster. */
+                return angular.isDefined(playerInfo[playerId]);
             },
 
             generateStats: function(id, success, error) {
@@ -150,8 +156,11 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var teamId = self.teamId;
                 var teamRoster = self.getRoster(teamId);
+                var playerInfo = teamRoster.playerInfo;
 
-                var teamPlayers = Object.keys(teamRoster.playerInfo)
+                if (!playerInfo) return [];
+
+                var teamPlayers = Object.keys(playerInfo)
 
                 .filter(function(playerId) {
 
@@ -171,9 +180,12 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 var opposingTeamId = self.opposingTeamId;
-                var oppsingTeamRoster = self.getRoster(opposingTeamId);
+                var opposingTeamRoster = self.getRoster(opposingTeamId);
+                var playerInfo = opposingTeamRoster.playerInfo;
 
-                var opposingTeamPlayers = Object.keys(opposingTeamRoster.playerInfo)
+                if (!playerInfo) return [];
+
+                var opposingTeamPlayers = Object.keys(playerInfo)
 
                 .filter(function(playerId) {
 
