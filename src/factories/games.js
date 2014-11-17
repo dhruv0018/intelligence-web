@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', '$q',
-    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, $q) {
+    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
+    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, players, $q) {
 
         var GamesFactory = {
 
@@ -120,6 +120,48 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!roster) throw new Error('No team roster for game');
 
                 return roster;
+            },
+
+            getTeamPlayers: function() {
+
+                var self = this;
+
+                var teamId = self.teamId;
+                var teamRoster = self.getRoster(teamId);
+
+                var teamPlayers = Object.keys(teamRoster.playerInfo).map(function(playerId) {
+
+                    return players.get(playerId);
+                });
+
+                return teamPlayers;
+            },
+
+            getOpposingTeamPlayers: function() {
+
+                var self = this;
+
+                var opposingTeamId = self.opposingTeamId;
+                var oppsingTeamRoster = self.getRoster(opposingTeamId);
+
+                var opposingTeamPlayers = Object.keys(opposingTeamRoster.playerInfo).map(function(playerId) {
+
+                    return players.get(playerId);
+                });
+
+                return opposingTeamPlayers;
+            },
+
+            getPlayers: function() {
+
+                var self = this;
+
+                var teamPlayers = self.getTeamPlayers();
+                var opposingTeamPlayers = self.getOpposingTeamPlayers();
+
+                var players = teamPlayers.concat(opposingTeamPlayers);
+
+                return players;
             },
 
             getVideoSources: function() {
