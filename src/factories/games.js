@@ -129,7 +129,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var teamId = self.teamId;
                 var teamRoster = self.getRoster(teamId);
 
-                var teamPlayers = Object.keys(teamRoster.playerInfo).map(function(playerId) {
+                var teamPlayers = Object.keys(teamRoster.playerInfo)
+
+                .filter(function(playerId) {
+
+                    return teamRoster.playerInfo[playerId].isActive;
+                })
+
+                .map(function(playerId) {
 
                     return players.get(playerId);
                 });
@@ -144,7 +151,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var opposingTeamId = self.opposingTeamId;
                 var oppsingTeamRoster = self.getRoster(opposingTeamId);
 
-                var opposingTeamPlayers = Object.keys(opposingTeamRoster.playerInfo).map(function(playerId) {
+                var opposingTeamPlayers = Object.keys(opposingTeamRoster.playerInfo)
+
+                .filter(function(playerId) {
+
+                    return opposingTeamRoster.playerInfo[playerId].isActive;
+                })
+
+                .map(function(playerId) {
 
                     return players.get(playerId);
                 });
