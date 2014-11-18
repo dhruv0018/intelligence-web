@@ -48,9 +48,6 @@ GameAreaInformation.config([
                             data.gamePlayerLists = {};
 
                             var promises = [];
-                            promises.push(teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
-                                data.remainingBreakdowns = breakdownData;
-                            }));
 
                             return $q.all(promises).then(function() {
 
