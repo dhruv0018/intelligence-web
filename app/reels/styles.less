@@ -1,6 +1,5 @@
 @import (reference) "main.less";
 
-
 .reels-player-area {
 
     display: flex;
@@ -43,90 +42,89 @@
         flex: 1;
     }
 
-        .reel-edit-control-container {
-            background-color: #f7f8f8;
-        }
+    .reel-edit-control-container {
+        background-color: #f7f8f8;
+    }
 
-            .reel-edit-controls {
-                        
-                padding: 15px;
-                display: flex;
-                justify-content: space-between;
-                max-width: 420px;
-
-                .save-edit {
-                    color: @brand-success;
-                }
-            }
-
-        .main-highlight {
-            background-color: #f7f8f8;
+        .reel-edit-controls {
+                    
+            padding: 15px;
             display: flex;
-            flex: 1;
-            flex-direction: row;
+            justify-content: space-between;
+            max-width: 420px;
 
-            &.not-editable {
-                padding-top: 15px;
+            .save-edit {
+                color: @brand-success;
             }
         }
 
-        // ADD MEDIA QUERY HERE
-        // .main-highlight {
-        //     flex-direction: column-reverse;
-        // }
+    .main-highlight {
+        background-color: #f7f8f8;
+        display: flex;
+        flex: 1;
+        flex-direction: row;
 
-            .sidebar__reel {
-                display: flex;
-                flex-direction: column;
-                flex: 0 0 420px;
-                height: initial;
-                padding: 0;
-                border: 1px solid #dddddd;
-            }
+        &.not-editable {
+            padding-top: 15px;
+        }
+    }
 
-                .playlist-control {
-                    display: flex;
-                    background: #ffffff;
-                    padding: 15px;
-                    justify-content: space-between;
-                    align-items: center;
-                }
+    // ADD MEDIA QUERY HERE
+    // .main-highlight {
+    //     flex-direction: column-reverse;
+    // }
 
-                    .play-all-plays {
-                        margin: 0;
-                        outline: 0;
-                    }
+    .sidebar__reel {
+        display: flex;
+        flex-direction: column;
+        flex: 0 0 420px;
+        height: initial;
+        padding: 0;
+        border: 1px solid #dddddd;
+    }
 
-                .playlist-container {
-                    display: flex;
-                    flex-direction: column;
-                    flex: 1;
-                    border-top: thin solid #dddddd;
-                }
+    .playlist-control {
+        display: flex;
+        background: #ffffff;
+        padding: 15px;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-                    .playlist {
-                        overflow-y: auto;
-                        overflow-x: hidden;    
-                        padding: 0px;
-                        background-color: #ffffff;
-                        flex: 1;
-                        border: none;
-                        width: auto;
-                        -webkit-transform: translateZ(0);
-                        position: static;
-                        float: none;
-                        letter-spacing: normal;
+    .play-all-plays {
+        margin: 0;
+        outline: 0;
+    }
 
-                        &.edit-mode {
-                            display: flex;
-                            flex-direction: column;
-                        }
-                    }
+    .playlist-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        border-top: thin solid #dddddd;
+    }
 
+    .playlist {
+        overflow-y: auto;
+        overflow-x: hidden;    
+        padding: 0px;
+        background-color: #ffffff;
+        flex: 1;
+        border: none;
+        width: auto;
+        -webkit-transform: translateZ(0);
+        position: static;
+        float: none;
+        letter-spacing: normal;
 
-                .player.reels-player {
-                    display: flex;
-                    flex: 1;
-                    margin-left: 15px;
-                }
+        &.edit-mode {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .player.reels-player {
+        display: flex;
+        flex: 1;
+        margin-left: 15px;
+    }
 } 
