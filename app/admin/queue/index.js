@@ -51,9 +51,11 @@ Queue.service('Admin.Queue.Data.Dependencies', [
 
             get teams() {
 
-                return this.games.then(function(gamesList) {
+                return this.games.then(function() {
 
                     var teamIds = [];
+
+                    var gamesList = games.getList({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id });
 
                     gamesList.forEach(function(game) {
 
