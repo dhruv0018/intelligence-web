@@ -46,8 +46,6 @@ AddFilm.config([
                     '$q', 'Coach.Data.Dependencies', 'SessionService', 'LeaguesFactory', 'TeamsFactory',
                     function($q, data, session, leagues, teams) {
 
-                        data.remainingBreakdowns = teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId);
-
                         return $q.all(data).then(function(data) {
                             var leaguesCollection = leagues.getCollection();
                             var teamsCollection = teams.getCollection();
@@ -87,12 +85,11 @@ AddFilm.controller('AddFilmController', [
         $scope.league = leagues.getCollection()[data.coachsTeam.leagueId];
         $scope.activePlan = data.coachsTeam.getActivePlan() || {};
         $scope.activePackage = data.coachsTeam.getActivePackage() || {};
-        $scope.remainingBreakdowns = data.remainingBreakdowns;
+        $scope.remainingBreakdowns = session.currentUser.remainingBreakdowns;
         $scope.options = {
             scope: $scope,
             film: $scope.game
         };
-
         //Show message with link to support page if no games uploaded
         if (!games.getList().length) {
             alerts.add({
