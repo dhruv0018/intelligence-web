@@ -1,11 +1,5 @@
 @import (reference) "main.less";
 
-.reels-player-area {
-    .play .playplay {
-        padding: 12px 12px 0 0;
-    }
-}
-
 .play {
 
     width: 100%;
@@ -15,6 +9,9 @@
     padding-right: 15px;
     border-bottom: 1px solid rgb(216, 216, 216) !important;
     min-height: 60px;
+
+    display: flex;
+    flex-direction: column;
 
     &:hover,
     &.active {
@@ -32,67 +29,80 @@
         margin-bottom: 10px;
     }
 
-    .playHeading {
-        h4 {
-            position: relative;
-            color: @gray-light;
-            font-size: 16px;
-            font-weight: 200;
-            letter-spacing: -0.01em;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            text-decoration: none;
+    .playHeadingContainer {
 
-            .dash,
-            .period,
-            .time,
-            .team,
-            .vs,
-            .score {
+        display: flex;
+        cursor: pointer;
 
-                display: inline-block;
-            }
+        .playHeading {
 
-            .team {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
 
-                position: relative;
-                top: 3px;
-                max-width: 12ex;
-                .text-overflow();
-            }
+            h4 {
+                display: flex;
+                color: @gray-light;
+                font-size: 16px;
+                font-weight: 200;
+                letter-spacing: -0.01em;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                text-decoration: none;
 
-            .summaries {
-                button {
-                    pointer-events: none;
-                    color: @gray-light;
-                    text-decoration: none;
+                .dash,
+                .period,
+                .time,
+                .team,
+                .vs,
+                .score {
+
+                    display: inline-block;
                 }
-            }
 
-            &.vs {
-                font-weight:500;
-                padding-bottom: 10px;
-            }
+                .team {
 
-            &.playOpened {
-                color: black;
+                    position: relative;
+                    top: 3px;
+                    max-width: 12ex;
+                    .text-overflow();
+                }
 
                 .summaries {
                     button {
-                        color: black;
+                        pointer-events: none;
+                        color: @gray-light;
+                        text-decoration: none;
                     }
                 }
+
+                &.vs {
+                    font-weight:500;
+                    padding-bottom: 10px;
+                }
+
+                &.playOpened {
+                    color: black;
+
+                    .summaries {
+                        button {
+                            color: black;
+                        }
+                    }
+                }
+            }
+
+            .subtitle {
+                display: flex;
             }
         }
 
         .playplay {
-            .pull-right;
-            position: absolute;
-            top: -6px;
-            right: 0px;
             font-size: 36px;
+            width: 36px;
             color: @gray-light;
             cursor: pointer;
+            display: flex;
 
             &:active,
             &:focus,
@@ -196,7 +206,6 @@
     .clearfix;
     
     letter-spacing: normal;
-    position: relative;
     background: #fff;
     color: #000;
     
@@ -220,6 +229,8 @@
             margin: 0;
         }
     }
+
+    .
 
     &.edit-mode {
         cursor: move;
