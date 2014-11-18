@@ -17,6 +17,10 @@
     &.active {
 
         background-color: @play-selected-bg;
+
+        .playHeadingContainer .playHeading h4 {
+            color: black;
+        }
     }
 
     &.edit-mode {
@@ -209,24 +213,26 @@
     background: #fff;
     color: #000;
     
-    .playHeading {
-        margin-bottom: 10px;
+    .playHeadingContainer {
 
-        h4 {
-            position: relative;
-            letter-spacing: normal;
-            font-size: large;
-            font-weight: 200;
-            color: black;
-            margin: 0;
-        }
+        .playHeading {
+            margin-bottom: 10px;
 
-        h5 {
-            font-weight: 100;
-            font-size: small;
-            letter-spacing: 0.03em;
-            color: black;
-            margin: 0;
+            h4 {
+                position: relative;
+                letter-spacing: normal;
+                font-size: large;
+                font-weight: 200;
+                margin: 0;
+            }
+
+            h5 {
+                font-weight: 100;
+                font-size: small;
+                letter-spacing: 0.03em;
+                color: black;
+                margin: 0;
+            }
         }
     }
 
