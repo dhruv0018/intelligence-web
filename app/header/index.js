@@ -45,21 +45,10 @@ Header.config([
                 },
                 resolve: {
                     'Base.Data': [
-                        '$q', 'SessionService', 'TeamsFactory', 'Base.Data.Dependencies',
-                        function($q, session, teams, data) {
+                        '$q', 'Base.Data.Dependencies',
+                        function($q, data) {
 
-                            if (session.currentUser) {
-                                var teamId = session.currentUser.currentRole.teamId;
-
-                                if (teamId) {
-
-                                    var team = teams.load(teamId);
-
-                                    return $q.all([team, data]);
-                                }
-
-                                else return $q.all(data);
-                            }
+                            return $q.all(data);
                         }
                     ]
                 }
