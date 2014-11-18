@@ -64,8 +64,8 @@ Breakdown.config([
 ]);
 
 Breakdown.controller('Athlete.GameArea.Breakdown.controller', [
-    '$scope', '$stateParams', 'LeaguesFactory', 'FiltersetsFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'PlayManager',
-    function controller($scope, $stateParams, leagues, filtersets, teams, games, players, plays, playManager) {
+    '$scope', '$stateParams', 'LeaguesFactory', 'FiltersetsFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'PlayManager', 'ReelsFactory',
+    function controller($scope, $stateParams, leagues, filtersets, teams, games, players, plays, playManager, reels) {
 
         var gameId = $stateParams.id;
         var game = games.get(gameId);
@@ -73,6 +73,7 @@ Breakdown.controller('Athlete.GameArea.Breakdown.controller', [
 
         var team = teams.get(game.teamId);
         $scope.league = leagues.get(team.leagueId);
+        $scope.reels = reels.getList();
 
         if (game.isDelivered()) {
             $scope.filterset = filtersets.get($scope.league.filterSetId);
