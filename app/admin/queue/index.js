@@ -51,11 +51,11 @@ Queue.service('Admin.Queue.Data.Dependencies', [
 
             get teams() {
 
-                return this.games.then(function(games) {
+                return this.games.then(function(gamesList) {
 
                     var teamIds = [];
 
-                    games.forEach(function(game) {
+                    gamesList.forEach(function(game) {
 
                         teamIds.push(game.teamId);
                         teamIds.push(game.opposingTeamId);
