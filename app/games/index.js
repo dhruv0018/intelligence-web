@@ -86,7 +86,7 @@ Games.controller('Games.controller', [
             $scope.uploadedBy = users.get($scope.game.uploaderUserId);
 
             $scope.sources = $scope.game.getVideoSources();
-            $scope.videoTitle = 'rawFilm';
+            $scope.filmTitle = $scope.game.description;
         }
     }
 ]);
