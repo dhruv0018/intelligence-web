@@ -69,10 +69,11 @@ Header.config([
 
 
 Header.service('Base.Data.Dependencies', [
-    'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
-    function(session, sports, leagues, tagsets, filtersets, positionsets, teams) {
+    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
+    function(auth, session, sports, leagues, tagsets, filtersets, positionsets, teams) {
 
-        if (session.currentUser) {
+        if (auth.isLoggedIn) {
+
             var teamIds = session.currentUser.getTeamIds();
 
             var Data = {
