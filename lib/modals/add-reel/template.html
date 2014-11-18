@@ -20,7 +20,7 @@
 
         <div class="select-reel-container" data-ng-show="hasReels && !isNaming && !addSuccess">
             <form>
-                <select data-ng-model="reel" data-ng-options="reel as reel.name for reel in reels"></select>
+                <select data-ng-model="reel" data-ng-options="reel as reel.name for reel in userReels"></select>
                 <button class="btn btn-primary" data-ng-click="addToReel(reel, play)">Add</button>
             </form>
         </div>
