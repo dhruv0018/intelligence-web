@@ -43,6 +43,11 @@
         flex: 1;
     }
 
+    .mobile.reel-body {
+        margin: 0;
+        padding: 0;
+    }
+
         .reel-edit-control-container {
             background-color: #f7f8f8;
         }
@@ -70,63 +75,9 @@
             }
         }
 
-        // ADD MEDIA QUERY HERE
-        // .main-highlight {
-        //     flex-direction: column-reverse;
-        // }
-
-            .sidebar__reel {
-                display: flex;
-                flex-direction: column;
-                flex: 0 0 420px;
-                height: initial;
-                padding: 0;
-                border: 1px solid #dddddd;
-            }
-
-                .playlist-control {
-                    display: flex;
-                    background: #ffffff;
-                    padding: 15px;
-                    justify-content: space-between;
-                    align-items: center;
-                }
-
-                    .play-all-plays {
-                        margin: 0;
-                        outline: 0;
-                    }
-
-                .playlist-container {
-                    display: flex;
-                    flex-direction: column;
-                    flex: 1;
-                    border-top: thin solid #dddddd;
-                }
-
-                    .playlist {
-                        overflow-y: auto;
-                        overflow-x: hidden;    
-                        padding: 0px;
-                        background-color: #ffffff;
-                        flex: 1;
-                        border: none;
-                        width: auto;
-                        -webkit-transform: translateZ(0);
-                        position: static;
-                        float: none;
-                        letter-spacing: normal;
-
-                        &.edit-mode {
-                            display: flex;
-                            flex-direction: column;
-                        }
-                    }
-
-
-                .player.reels-player {
-                    display: flex;
-                    flex: 1;
-                    margin-left: 15px;
-                }
+        .player.reels-player {
+            display: flex;
+            flex: 1;
+            margin-left: 15px;
+        }
 } 

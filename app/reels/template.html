@@ -1,12 +1,11 @@
 <section class="reels-player-area">
 
     <header>
-        <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reel.updatedAt | date}})</span></h3>
+        <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reel.updatedAt | date}})</span></h3><h3>{{$root.viewport}}</h3>
         <span class="delete-reel" ng-if="canUserDelete" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
     </header>
 
-    <div class="reel-body">
-    
+    <div class="reel-body" ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
         <div class="reel-edit-control-container" ng-if="canUserEdit">
 
             <div class="reel-edit-controls">
@@ -20,7 +19,36 @@
         </div>
 
         <div class="main-highlight ng-scope" data-ui-view="content" ng-class="{'not-editable': !canUserEdit}">
+            
+            <krossover-sidebar>
 
+                <!-- <krossover-playlist-control>
+                </krossover-playlist-control> -->
+
+                <krossover-playlist>
+
+                    <krossover-plays
+                        data-edit-flag="editMode"
+                        data-is-reels-play="true"
+                        data-index="$index"
+                        data-draggable="editMode"
+                        data-play="getPlay(playId)"
+                        data-game="getGame(playId)"
+                        data-team="getHomeTeam(playId)"
+                        data-opposing-team="getOpposingTeam(playId)"
+                        data-team-players="[]"
+                        data-opposing-team-players="[]"
+                        data-league="getLeague(playId)"
+                        data-date-played="getDatePlayed(playId)"
+                        data-ng-class="{'last': $last}"
+                        data-ng-repeat="playId in reel.plays"
+                        data-is-editable="false">
+                    </krossover-plays>
+
+                </krossover-playlist>
+                
+            </krossover-sidebar>
+<!-- 
             <aside class="sidebar__reel">
 
                 <div class="playlist-control" ng-hide="editMode">
@@ -33,38 +61,28 @@
                         <span class="off" data-ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
                     </button>
 
-                </div>
+                </div> -->
 
-                <div class="playlist-container">
+              <!--   <krossover-plays
+                    data-edit-flag="editMode"
+                    data-is-reels-play="true"
+                    data-index="$index"
+                    data-draggable="editMode"
+                    data-play="getPlay(playId)"
+                    data-game="getGame(playId)"
+                    data-team="getHomeTeam(playId)"
+                    data-opposing-team="getOpposingTeam(playId)"
+                    data-team-players="[]"
+                    data-opposing-team-players="[]"
+                    data-league="getLeague(playId)"
+                    data-date-played="getDatePlayed(playId)"
+                    data-ng-class="{'last': $last}"
+                    data-ng-repeat="playId in reel.plays"
+                    data-is-editable="false">
+                </krossover-plays> -->
 
-                    <div class="playlist" ng-class="{'edit-mode': editMode}">
-
-                        <krossover-play
-                            data-edit-flag="editMode"
-                            data-is-reels-play="true"
-                            data-index="$index"
-                            data-draggable="editMode"
-                            data-play="getPlay(playId)"
-                            data-game="getGame(playId)"
-                            data-team="getHomeTeam(playId)"
-                            data-opposing-team="getOpposingTeam(playId)"
-                            data-team-players="[]"
-                            data-opposing-team-players="[]"
-                            data-league="getLeague(playId)"
-                            data-date-played="getDatePlayed(playId)"
-                            data-ng-class="{'last': $last}"
-                            data-ng-repeat="playId in reel.plays"
-                            data-is-editable="false">
-                        </krossover-play>
-
-                        <no-results data-ng-hide="reel && reel.plays && reel.plays.length"></no-results>
-
-                    </div>
-
-                </div>
-
-            </aside>
-
+<!--             </aside>
+ -->
             <div class="player reels-player">
                 <x-krossover-videoplayer class="reels-video-container" data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
             </div>
