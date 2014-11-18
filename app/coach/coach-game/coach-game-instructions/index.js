@@ -79,7 +79,7 @@ Instructions.controller('Coach.Game.Instructions.controller', [
 
         $scope.activePlan = teams.get(teamIdForThisGame).getActivePlan() || {};
         $scope.activePackage = teams.get(teamIdForThisGame).getActivePackage() || {};
-        $scope.remainingBreakdowns = $scope.remainingBreakdowns;
+        $scope.remainingBreakdowns = session.currentUser.remainingBreakdowns;
 
         $scope.$watch('game', function(game) {
             if (typeof game !== 'undefined' && typeof game.status !== 'undefined' && game.status !== null) {
@@ -120,6 +120,10 @@ Instructions.controller('Coach.Game.Instructions.controller', [
                     angular.extend($scope.game, responseGame);
                     $scope.savingBreakdown = false;
                     $scope.isBreakdownChoiceMade = true;
+                    teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId).then(function(breakdownData) {
+                        session.currentUser.remainingBreakdowns = breakdownData;
+                        $scope.remainingBreakdowns = session.currentUser.remainingBreakdowns;
+                    });
                 });
             });
         };
