@@ -108,7 +108,7 @@
                                                     </p>
 
                                                     <div class="breakdowns">
-                                                        <div class="remaining-breakdowns">{{data.remainingBreakdowns.planGamesRemaining||0}}</div> Breakdowns left this week. {{data.remainingBreakdowns.packageGamesRemaining||0}} extra breakdowns.
+                                                        <div class="remaining-breakdowns">{{remainingBreakdowns.planGamesRemaining||0}}</div> Breakdowns left this week. {{remainingBreakdowns.packageGamesRemaining||0}} extra breakdowns.
                                                     </div>
 
                                                     <button data-ng-disabled="statusBuffer > GAME_STATUSES['READY_FOR_INDEXING'].id || (data.remainingBreakdowns.planGamesRemaining <= 0 && data.remainingBreakdowns.packageGamesRemaining <= 0)" class="switch-choice" data-ng-click="switchChoice()">
