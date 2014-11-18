@@ -14,8 +14,8 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$urlRouter', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
-    function run($rootScope, $urlRouter, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
+    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
+    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -39,6 +39,18 @@ IntelligenceWebClient.run([
 
                         /* Set the tokens. */
                         tokens.setTokens(authTokens);
+
+                        /* Deserialize the anonymous user into a user. */
+                        var user = session.deserializeUser(ANONYMOUS_USER);
+
+                        /* Store the user in the session. */
+                        session.storeCurrentUser(user);
+
+                        /* Retrieve the user from the session. */
+                        var currentUser = session.retrieveCurrentUser();
+
+                        /* Expose the current user on the root scope. */
+                        $rootScope.currentUser = currentUser;
                     })
 
                     /* In any case, finally. */
