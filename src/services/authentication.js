@@ -18,8 +18,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('AuthenticationService', [
-    '$rootScope', '$injector', '$q', '$http', 'config', 'TokensService', 'SessionService', 'UsersFactory',
-    function($rootScope, $injector, $q, $http, config, tokens, session, users) {
+    'ANONYMOUS_USER', '$rootScope', '$injector', '$q', '$http', 'config', 'TokensService', 'SessionService', 'UsersFactory',
+    function(ANONYMOUS_USER, $rootScope, $injector, $q, $http, config, tokens, session, users) {
 
         var AuthenticationService = {
 
@@ -100,7 +100,7 @@ IntelligenceWebClient.service('AuthenticationService', [
              */
             get isLoggedIn() {
 
-                return tokens.areTokensSet() && session.isCurrentUserStored();
+                return tokens.areTokensSet() && session.isCurrentUserStored() && session.currentUser !== ANONYMOUS_USER;
             },
 
             /* Prevent overriding. */
