@@ -1,0 +1,24 @@
+<div class="film-header" data-ng-if="isPublic">
+	<div class="film-info">
+		<h5>{{film.datePlayed | date: 'MMM. d, yyyy'}}</h5>
+		<div class="team">
+			<h3 class="team-name" data-ng-class="{winner: opponentWon}">{{opposingTeam.name}}</h3>
+			<span>
+				<h3 data-ng-class="{winner: opponentWon}">{{film.opposingFinalScore}}</h3>
+				<i class="icon icon-play" data-ng-class="{invisible: homeWon}"></i>
+			</span>
+		</div>
+		<div class="team">
+			<h3 class="team-name" data-ng-class="{winner: homeWon}">{{homeTeam.name}}</h3>
+			<span>
+				<h3 data-ng-class="{winner: homeWon}">{{film.finalScore}}</h3>
+				<i class="icon icon-play" data-ng-class="{invisible: opponentWon}"></i>
+			</span>
+		</div>
+	</div>
+	<div class="film-title">{{filmTitle}}</div>
+	<div class="social-media">
+		<a href="http://twitter.com/Krossovr" target="_blank"><i class="icon icon-twitter-square"></i></a>
+		<a href="http://www.facebook.com/KrossoverIntelligence" target="_blank"><i class="icon icon-facebook-square"></i></a>
+	</div>
+</div>

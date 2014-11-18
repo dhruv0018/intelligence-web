@@ -1,0 +1,95 @@
+@import (reference) "main.less";
+
+.film-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: thin solid @gray-border;
+    background-color: white;
+    color: black;
+
+    .film-info {
+        width: @screen-xs;
+        padding: 0px 20px;
+        border-right: thin solid @gray-border;
+
+        .team {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        h3,
+        h5 {
+            display: inline-block;
+            margin: 0;
+            font-weight: 100;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+
+            &.winner {
+                font-weight: 700;
+            }
+        }
+
+        h5 {
+            padding: 10px 0;
+        }
+
+        .icon-play {
+            position: relative;
+            top: -2px;
+            font-size: 11px;
+
+            &:before {
+                transform: scale(-1, 1);
+            }
+
+            &.invisible {
+                opacity: 0;
+            }
+        }
+    }
+
+    .film-title {
+        flex: 1;
+        margin-left: 20px;
+        font-weight: @headings-font-weight;
+    }
+
+    .social-media {
+        width: 88px;
+        margin-right: 15px;
+
+        .icon {
+            font-size: 40px;
+
+            &.icon-twitter-square {
+                color: @twitter-blue;
+            }
+
+            &.icon-facebook-square {
+                color: @facebook-blue;
+            }
+        }
+    }
+}
+
+/* Screens < 768px wide */
+@media only screen
+and (max-width: @screen-sm) {
+
+    .film-header {
+
+        .film-info {
+            width: @screen-sm;
+        }
+
+        .film-title,
+        .social-media {
+            display: none;
+        } 
+    }
+}
