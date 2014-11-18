@@ -13,6 +13,8 @@ IntelligenceWebClient.run([
 
         angular.element($window).bind('resize',function() {
 
+            var oldViewport = $rootScope.viewport;
+
             var resize = {
 
                 width: $window.innerWidth
@@ -26,6 +28,10 @@ IntelligenceWebClient.run([
             else {
 
                 $rootScope.viewport = VIEWPORTS.DESKTOP;
+            }
+
+            if (oldViewport !== $rootScope.viewport) {
+                $rootScope.$apply();
             }
 
             $rootScope.$broadcast('resize', resize);
