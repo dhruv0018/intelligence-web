@@ -1,26 +1,5 @@
-<div class="krossover-playlist-container">
+<div class="krossover-playlist">
 
-    <div class="playlist" ng-class="{'edit-mode': editMode}">
-        
-        <ng-transclude></ng-transclude>
-        
-    </div>
+    <div class="playlist" ng-class="{'edit-mode': editMode}" ng-transclude></div>
+
 </div>
-
-<!-- TODO: TRANSCLUDE THIS PART
-<krossover-play
-    data-game="game"
-    data-team="team"
-    data-play="play"
-    data-plays="plays"
-    data-reels="reels"
-    data-opposing-team="opposingTeam"
-    data-league="league"
-    data-team-players="teamPlayers"
-    data-opposing-team-players="opposingTeamPlayers"
-    data-expand-all="expandAll"
-    data-filtered-plays-ids="filteredPlaysIds"
-    data-auto-advance="autoAdvance"
-    data-ng-repeat="play in plays | orderBy:orderBy"
-    data-ng-show="play.isFiltered">
-</krossover-play> -->

@@ -1,5 +1,5 @@
 {
-    "name": "plays",
+    "name": "playlist",
     "templates": [
         "template.html"
     ],

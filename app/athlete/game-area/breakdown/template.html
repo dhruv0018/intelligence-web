@@ -19,13 +19,14 @@
 
 <div class="game-area-film">
 
-    <div class="breakdown-sidebar">
+   <div class="breakdown-sidebar">
 
         <aside class="playlist">
 
-            <krossover-playlist
+            <krossover-plays
                 data-expand-all="expandAll"
                 data-game="game"
+                data-reels="reels"
                 data-plays="plays"
                 data-team="team"
                 data-opposing-team="opposingTeam"
@@ -33,7 +34,7 @@
                 data-opposing-team-players="opposingTeamPlayers"
                 data-filtered-plays-ids="filteredPlaysIds"
                 data-league="league">
-            </krossover-playlist>
+            </krossover-plays>
 
             <no-results data-ng-hide="plays.length"></no-results>
         </aside>

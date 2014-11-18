@@ -115,7 +115,7 @@ ReelsArea.controller('ReelsArea.controller', [
         var editAllowed = true;
 
         var plays = playsFactory.getList({ reelId: reelId });
-
+        $scope.plays = plays;
         $scope.playManager = playManager;
 
         $scope.VIEWPORTS = VIEWPORTS;

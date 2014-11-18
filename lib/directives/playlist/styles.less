@@ -1,33 +1,32 @@
 @import (reference) "main.less";
 
-.krossover-playlist-container {
+.krossover-playlist {
     display: flex;
     flex-direction: column;
     flex: 1;
-    border-top: thin solid #dddddd;
+    border: 0;
 
-    .playlist {
-        overflow-y: auto;
-        overflow-x: hidden;    
-        padding: 0px;
-        background-color: #ffffff;
-        flex: 1;
-        border: none;
-        width: auto;
-        -webkit-transform: translateZ(0);
-        position: static;
-        float: none;
-        letter-spacing: normal;
+        .playlist {
+            overflow-y: auto;
+            overflow-x: hidden;    
+            padding: 0px;
+            background-color: #ffffff;
+            flex: 1;
+            border: none;
+            width: auto;
+            -webkit-transform: translateZ(0);
+            position: static;
+            float: none;
+            letter-spacing: normal;
 
-        &.edit-mode {
-            display: flex;
-            flex-direction: column;
+            &.edit-mode {
+                display: flex;
+                flex-direction: column;
+            }
         }
+
+    .mobile .krossover-playlist {
+        border: none
     }
-}
-
-.mobile .krossover-playlist {
-    border: none
-}
-
     
+}

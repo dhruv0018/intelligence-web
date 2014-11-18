@@ -1,7 +1,7 @@
 <section class="reels-player-area">
 
     <header>
-        <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reel.updatedAt | date}})</span></h3><h3>{{$root.viewport}}</h3>
+        <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reel.updatedAt | date}})</span></h3>
         <span class="delete-reel" ng-if="canUserDelete" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
     </header>
 
@@ -22,12 +22,13 @@
             
             <krossover-sidebar>
 
-                <!-- <krossover-playlist-control>
-                </krossover-playlist-control> -->
+                <krossover-playlist-control
+                    data-ng-hide="editMode">
+                </krossover-playlist-control>
 
                 <krossover-playlist>
 
-                    <krossover-plays
+                    <krossover-play
                         data-edit-flag="editMode"
                         data-is-reels-play="true"
                         data-index="$index"
@@ -43,7 +44,7 @@
                         data-ng-class="{'last': $last}"
                         data-ng-repeat="playId in reel.plays"
                         data-is-editable="false">
-                    </krossover-plays>
+                    </krossover-play>
 
                 </krossover-playlist>
                 
