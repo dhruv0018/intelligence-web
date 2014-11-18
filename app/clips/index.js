@@ -47,8 +47,8 @@ Clips.config([
             },
             resolve: {
                 'Clips.Data': [
-                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'PlaysFactory', 'PlayersFactory', 'LeaguesFactory',
-                    function($q, $stateParams, games, teams, users, plays, players, leagues) {
+                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'PlaysFactory', 'PlayersFactory', 'LeaguesFactory', 'TagsetsFactory',
+                    function($q, $stateParams, games, teams, users, plays, players, leagues, tagsets) {
 
                         var playId = Number($stateParams.id);
 
@@ -71,7 +71,12 @@ Clips.config([
 
                                     var team = teams.get(game.teamId);
 
-                                    return leagues.load(team.leagueId);
+                                    return leagues.load(team.leagueId).then(function() {
+
+                                        var league = leagues.get(team.leagueId);
+
+                                        return tagsets.load(league.tagSetId);
+                                    });
                                 });
                             });
 
@@ -104,6 +109,7 @@ Clips.controller('Clips.controller', [
             $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
             // Krossover Play data-attributes
+            $scope.league = leagues.get($scope.team.leagueId);
             var teamPlayersFilter = { rosterId: $scope.game.getRoster($scope.game.teamId).id };
             $scope.teamPlayers = players.getList(teamPlayersFilter);
             var opposingTeamPlayersFilter = { rosterId: $scope.game.getRoster($scope.game.opposingTeamId).id };
