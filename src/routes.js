@@ -25,6 +25,22 @@ IntelligenceWebClient.run([
             /* If the user is accessing a public state. */
             if (authz.isPublic(toState)) {
 
+                /* If not logged in. */
+                if (!auth.isLoggedIn) {
+
+                    /* Deserialize the anonymous user into a user. */
+                    var user = session.deserializeUser(ANONYMOUS_USER);
+
+                    /* Store the user in the session. */
+                    session.storeCurrentUser(user);
+
+                    /* Retrieve the user from the session. */
+                    var currentUser = session.retrieveCurrentUser();
+
+                    /* Expose the current user on the root scope. */
+                    $rootScope.currentUser = currentUser;
+                }
+
                 /* It there is no access token set. */
                 if (!tokens.getAccessToken()) {
 
@@ -39,18 +55,6 @@ IntelligenceWebClient.run([
 
                         /* Set the tokens. */
                         tokens.setTokens(authTokens);
-
-                        /* Deserialize the anonymous user into a user. */
-                        var user = session.deserializeUser(ANONYMOUS_USER);
-
-                        /* Store the user in the session. */
-                        session.storeCurrentUser(user);
-
-                        /* Retrieve the user from the session. */
-                        var currentUser = session.retrieveCurrentUser();
-
-                        /* Expose the current user on the root scope. */
-                        $rootScope.currentUser = currentUser;
                     })
 
                     /* In any case, finally. */
