@@ -13,7 +13,7 @@
         <header class="filter-bar">
             <ul class="nav nav-tabs">
                 <li><h3>Filter Film:</h3></li>
-                <film-home-tabs data-ng-model="gamesList"></film-home-tabs>
+                <film-home-tabs data-ng-model="filmsList"></film-home-tabs>
 
                 <form class="film-search">
                     <input type="text" class="film-search-input" data-ng-model="query" placeholder="Search for film"/>
@@ -22,10 +22,10 @@
             </ul>
         </header>
 
-        <no-results ng-if="gamesList.length === 0"></no-results>
+        <no-results ng-if="filmsList.length === 0"></no-results>
         <!-- NG-REPEAT FILM DIRECTIVES -->
-        <div ng-if="gamesList.length > 0" class="films-area">
-            <krossover-film data-ng-repeat="game in gamesList | filter: {isDeleted: false}| orderBy: '-datePlayed'| nameOfTheFilm: query" data-film="game" data-teams="teams"></krossover-film>
+        <div ng-if="filmsList.length > 0" class="films-area">
+            <krossover-film data-ng-repeat="film in filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate" data-film="film" data-teams="teams"></krossover-film>
         </div>
     </main>
 

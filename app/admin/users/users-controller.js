@@ -33,6 +33,8 @@ Users.controller('Users.Users.Controller', [
         $scope.leagues = leagues.getCollection();
         $scope.teams = teams.getCollection();
 
+        $scope.filter = {};
+
         $scope.add = function() {
 
             $modal.open({
@@ -72,6 +74,7 @@ Users.filter('rolesFilter', [
             return users.filter(function(user) {
                 return user.isActive(role);
             });
+
         };
     }]);
 
