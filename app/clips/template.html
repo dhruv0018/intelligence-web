@@ -6,24 +6,38 @@
 		data-home-team="team"
 		data-opposing-team="opposingTeam">
 	</film-header>
-    <krossover-play
-        data-game="game"
-        data-team="team"
-        data-play="play"
-        data-opposing-team="opposingTeam"
-        data-league="league"
-        data-team-players="teamPlayers"
-        data-opposing-team-players="opposingTeamPlayers">
-    </krossover-play>
-    <div class="player" data-ng-if="publiclyShared">
-        <div class="video-container">
-        	<x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
+    
+    <div class="clip-body" data-ng-if="publiclyShared">
+
+        <krossover-sidebar>
+
+            <krossover-playlist>
+
+                <krossover-play
+                    data-game="game"
+                    data-team="team"
+                    data-play="play"
+                    data-opposing-team="opposingTeam"
+                    data-league="league"
+                    data-team-players="teamPlayers"
+                    data-opposing-team-players="opposingTeamPlayers">
+                </krossover-play>
+
+            </krossover-playlist>
+
+        </krossover-sidebar>
+
+        <div class="player">
+           	<x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
+        </div>
+
+    </div>
+
+    <div data-ng-if="!publiclyShared">
+        <div class="locked-game">
+            <i class="icon icon-lock"></i>
+            <h3>You do not have permission to access this game</h3>
         </div>
     </div>
-    <div data-ng-if="!publiclyShared">
-    	<div class="locked-game">
-    		<i class="icon icon-lock"></i>
-    		<h3>You do not have permission to access this game</h3>
-    	</div>
-    </div>
+    
 </div>
