@@ -26,7 +26,7 @@ Users.filter('EditableRolesByRole', [
                     if (users.hasAccess(role, filterRole)) {
 
                         /* FIXME: Temporarily removing "Parent" role. */
-                        if (!users.is(filterRole, ROLES.PARENT)) {
+                        if (!users.is(filterRole, ROLES.ANONYMOUS) && !users.is(filterRole, ROLES.PARENT)) {
 
                             filtered.push(filterRole);
                         }
