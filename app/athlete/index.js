@@ -53,13 +53,14 @@ Athlete.service('Athlete.Data.Dependencies', [
         });
 
         //Get reels shared with athlete
-        var userRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
+        var athleteRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
         var reelsSharedWithTeam = [];
 
-        userRoles.forEach(function(role, index) {
+        //TODO - use relatedUserId
+        athleteRoles.forEach(function(role, index) {
 
             reelsSharedWithTeam[index] = reels.load({
-                sharedWithTeamId: userRoles[index].teamId
+                sharedWithTeamId: athleteRoles[index].teamId
             });
         });
 
