@@ -16,6 +16,7 @@
             </div>
 
             <a class="playplay" data-ui-sref="clips({ id: play.id })"><i class="icon icon-play-circle"></i></a>
+
         </div>
 
     </div>
@@ -56,8 +57,6 @@
                     data-play="play"
                     data-events="play.events"
                     data-league="league"
-                    data-team-players="teamPlayers"
-                    data-opposing-team-players="opposingTeamPlayers"
                     data-is-editable="isEditable">
                 </krossover-events>
 
@@ -106,7 +105,7 @@
 
             <div class="playBody" data-ng-if="isIndexer || expandAll || play === playManager.current || !play.summaries.length" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
 
-                <krossover-events data-auto-advance="autoAdvance" data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers"></krossover-events>
+                <krossover-events data-auto-advance="autoAdvance" data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league"></krossover-events>
 
             </div>
 

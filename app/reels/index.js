@@ -226,7 +226,11 @@ ReelsArea.controller('ReelsArea.controller', [
                 editAllowed = true;
 
                 // Refresh the playManager
-                playsManager.reset($scope.reel.plays);
+                playsManager.reset();
+
+                angular.forEach($scope.reel.plays, function(playId) {
+                    playsManager.addPlay(playsFactory.get(playId));
+                });
             });
         };
 
