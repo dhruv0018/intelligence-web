@@ -172,7 +172,10 @@ IntelligenceWebClient.service('EventManager', [
 
             if (!playManager.current) return null;
 
+            /* Get the index of the current event in the current play. */
             var index = playManager.current.events.indexOf(event);
+
+            if (index < 1) return null;
 
             return playManager.current.events[index - 1];
         };
