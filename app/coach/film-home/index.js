@@ -42,29 +42,12 @@ FilmHome.config([
                 }
             },
             resolve: {
-                'Coach.Data': ['$q', 'Coach.Data.Dependencies', 'Coach.FilmHome.ReelsData', function($q, data, reelsData) {
-                    angular.extend(data, reelsData);
+                'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
+                    angular.extend(data);
                     return $q.all(data);
                 }]
             }
         });
-    }
-]);
-
-FilmHome.service('Coach.FilmHome.ReelsData', [
-    '$q', 'SessionService', 'ReelsFactory',
-    function($q, session, reels) {
-
-        var teamId = session.currentUser.currentRole.teamId;
-        var userId = session.currentUser.id;
-
-        var Data = {
-            reels: reels.load({
-                teamId: teamId
-            }),
-        };
-
-        return Data;
     }
 ]);
 
