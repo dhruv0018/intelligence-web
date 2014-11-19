@@ -189,7 +189,8 @@ IntelligenceWebClient.factory('IndexingService', [
                     /* While the previous event is a float. */
                     while (eventManager.isFloatingEvent(previousEvent)) {
 
-                        previousEvent = eventManager.previousEvent();
+                        /* Get the previous event. */
+                        previousEvent = eventManager.previousEvent(previousEvent);
                     }
 
                     /* Get the tagId of the previous event. */
