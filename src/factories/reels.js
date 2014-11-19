@@ -48,6 +48,19 @@ IntelligenceWebClient.factory('ReelsFactory', [
             updateDate: function() {
                 this.updatedAt = moment.utc().toDate();
             },
+            getMyReels: function(reels) {
+                var self = this;
+
+                var myReels = [];
+
+                reels.forEach(function(reel, index) {
+                    if (reel.uploaderUserId == session.currentUser.id) {
+                        myReels.push(reel);
+                    }
+                });
+
+                return myReels;
+            },
             shareWithUser: function(user) {
 
                 var self = this;
