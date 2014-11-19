@@ -43,7 +43,6 @@ FilmHome.config([
             },
             resolve: {
                 'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
-                    angular.extend(data);
                     return $q.all(data);
                 }]
             }

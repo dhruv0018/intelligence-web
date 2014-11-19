@@ -44,7 +44,6 @@ FilmHome.config([
                 'Athlete.Data': [
                     '$q', 'Athlete.Data.Dependencies',
                     function($q, data) {
-                        angular.extend(data);
                         return $q.all(data);
                     }
                 ]
