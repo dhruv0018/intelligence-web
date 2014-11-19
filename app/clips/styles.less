@@ -37,6 +37,20 @@
         background: #f7f8f8;
         flex: 1;
     }
+
+    // MOBILE
+    @media only screen
+    and (max-width: 1024px) {
+        .clip-body {
+            margin: 0;
+            padding: 0;
+            flex-direction: column-reverse;
+        }
+
+        .player {
+            margin: 0 auto;
+        }
+    }
 }
 
 /* Screens under 480px */

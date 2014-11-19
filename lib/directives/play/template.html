@@ -1,24 +1,66 @@
 <div ng-if="$root.viewport.name === VIEWPORTS.MOBILE.name">
-    <!-- MOBILE REEL PLAY -->
-    <div data-ng-if="isReelsPlay" class="play play__reel" data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }">
+    
+    <div data-ng-switch data-on="isReelsPlay" data-ng-hide="!play.hasVisibleEvents && !isIndexer">
+        <!-- MOBILE REEL PLAY -->
+        <div data-ng-switch-when="true" class="play play__reel" data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }">
 
-        <div class="playHeadingContainer">
-            <div class="playHeading">
-                <h4 class="title">
-                    <span class="summary" ng-if="play.summary.items && play.summary.items.length > 0">{{ play.summary.items[0] }} - </span>
-                    <span class="datePlayed">{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
-                </h4>
+            <div class="playHeadingContainer">
+                <div class="playHeading">
+                    <h4 class="title">
+                        <span class="summary" ng-if="play.summary.items && play.summary.items.length > 0">{{ play.summary.items[0] }} - </span>
+                        <span class="datePlayed">{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
+                    </h4>
 
-                <h5 class="subtitle">
-                    <span class="teams">{{team.name}} vs {{opposingTeam.name}}</span>
-                </h5>
+                    <h5 class="subtitle">
+                        <span class="teams">{{team.name}} vs {{opposingTeam.name}}</span>
+                    </h5>
+                    
+                 </div>
+
+                <a class="playplay" data-ui-sref="Clips({ id: play.id })"><i class="icon icon-play-circle"></i></a>
                 
+                <!-- HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE.
+                DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO
+                UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
+                <krossover-events
+                    data-ng-hide="true"
+                    data-auto-advance="autoAdvance"
+                    data-game="game"
+                    data-plays="plays"
+                    data-play="play"
+                    data-events="play.events"
+                    data-league="league"
+                    data-is-editable="isEditable">
+                </krossover-events>
             </div>
-
-            <a class="playplay" data-ui-sref="Clips({ id: play.id })"><i class="icon icon-play-circle"></i></a>
 
         </div>
 
+
+        <div data-ng-switch-default class="play play__reel" data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }">
+
+            <div class="playHeadingContainer">
+                <div class="playHeading">
+                    <h4 class="title">
+                        <span class="summary" ng-if="play.summary.items && play.summary.items.length > 0">{{ play.summary.items[0] }}</span>
+                    </h4>
+                </div>
+
+                <!-- HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE.
+                DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO
+                UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
+                <krossover-events
+                    data-ng-hide="true"
+                    data-auto-advance="autoAdvance"
+                    data-game="game"
+                    data-plays="plays"
+                    data-play="play"
+                    data-events="play.events"
+                    data-league="league"
+                    data-is-editable="isEditable">
+                </krossover-events>
+            </div>
+        </div>
     </div>
 </div>
 
