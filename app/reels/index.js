@@ -110,7 +110,7 @@ ReelsArea.controller('ReelsArea.controller', [
         // Get reel
         var reelId = Number($stateParams.id);
         $scope.reel = reels.get(reelId);
-        $scope.videoTitle = 'reelsPlayer';
+        playManager.videoTitle = 'reelsPlayer';
         $scope.editMode = false;
         var editAllowed = true;
 
