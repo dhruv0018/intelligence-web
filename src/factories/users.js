@@ -49,7 +49,11 @@ IntelligenceWebClient.factory('UsersFactory', [
                         if (!role.type.name) {
                             role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
                         }
-                        user.roleTypes[role.type.id].push(role);
+
+                        //active roles only
+                        if (!role.tenureEnd) {
+                            user.roleTypes[role.type.id].push(role);
+                        }
                     });
                 }
 
@@ -103,7 +107,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                     angular.forEach(users, function(user) {
 
                         angular.forEach(user.roles, function(role) {
-                            
+
                             if (role.teamId && teamIds.indexOf(role.teamId) < 0) {
 
                                 teamIds.push(role.teamId);
@@ -297,6 +301,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!role) return false;
                 if (!match) throw new Error('No role to match specified');
                 if (!role.type || !match.type) return false;
+                if (role.tenureEnd) return false;
 
                 var roleIds = role.type.id;
                 var matchIds = match.type.id;
@@ -460,6 +465,65 @@ IntelligenceWebClient.factory('UsersFactory', [
                 }
 
                 return vettedUsers;
+            },
+            /**
+             * @class User
+             * @method activeRoles
+             * @param {Object} optional role object
+             * @returns {Array} Array of roles
+             */
+            activeRoles: function(role) {
+                var self = this;
+
+                var activeRoles = [];
+
+                if (!self.roles) {
+                    return [];
+                }
+
+                activeRoles = self.roles.filter(function(temporaryRole) {
+                    return (!temporaryRole.tenureEnd) ? true : false;
+                });
+
+                if (role) {
+                    activeRoles = activeRoles.filter(function(temporaryRole) {
+                        return temporaryRole.type.id === role.type.id;
+                    });
+                }
+
+                return activeRoles;
+            },
+            /**
+             * @class User
+             * @method inactiveRoles
+             * @param {Object} optional role object
+             * @returns {Array} Array of roles
+             */
+            inactiveRoles: function(role) {
+                var self = this;
+
+                var inactiveRoles = [];
+
+                if (!self.roles) {
+                    return [];
+                }
+
+                inactiveRoles = self.roles.filter(function(temporaryRole) {
+                    return (temporaryRole.tenureEnd) ? false : true;
+                });
+
+                if (role) {
+                    inactiveRoles = inactiveRoles.filter(function(temporaryRole) {
+                        return temporaryRole.type.id === role.type.id;
+                    });
+                }
+
+                return inactiveRoles;
+
+            },
+            isActive: function(role) {
+                var self = this;
+                return self.activeRoles(role).length >= 1;
             }
         };
 

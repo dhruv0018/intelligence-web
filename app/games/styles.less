@@ -5,40 +5,8 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    overflow-y: scroll;
-
-    .public-game-header,
-    .public-game-header-mobile {
-        display: flex;
-        background-color: @content-bg;
-        border-bottom: thin solid @gray-border;
-        margin-bottom: 20px;
-        padding: 10px;
-        letter-spacing: normal;
-
-        div {
-            width: 100%;
-            max-width: 850px;
-            margin: auto;
-
-            .game-date {
-                color: @brand-blue;
-            }
-
-            .game-shared-by {
-                font-style: italic;
-            }
-
-            h3 {
-                display: inline;
-                color: @brand-blue;
-            }
-        }
-    }
-
-    .public-game-header-mobile {
-        display: none;
-    }
+    overflow-y: auto;
+    background-color: @content-bg;
     
     .player {
         display: flex;
@@ -93,26 +61,6 @@
 and (max-width: 479px) {
     
     .public-game {
-        .public-game-header {
-            display: none;
-        }
-
-        .public-game-header-mobile {
-            
-            display: block;
-
-            div {
-                width: 100%;
-
-                h3 {
-                    font-size: 16px;
-                }
-
-                .game-shared-by {
-                    display: block;
-                }
-            }
-        }
 
         .player {
             display: block;
