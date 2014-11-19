@@ -18,10 +18,6 @@
 		}
 	}
 
-	.success-title {
-		border: none;
-	}
-
 	.modal-body {
 
 		h3 {
@@ -86,6 +82,11 @@
 						color: @brand-primary;
 					}
 				}
+			}
+
+			.temp-wufoo-btn {
+				text-align: right;
+				margin-top: 10px;
 			}
 		}
 
@@ -153,7 +154,59 @@
 			}
 
 			.button-row {
-				margin-top: 10px;
+				margin-top: 20px;
+			}
+		}
+
+		.sharing-with-public-container {
+
+			.public-link-box {
+				border: 2px solid @gray-border;
+				border-radius: 4px;
+				width: 70%;
+				margin-bottom: 10px;
+				padding: 10px;
+			}
+
+			.inActive {
+				background-color: @gray-lighter;
+				pointer-events: none;
+
+				a {
+					color: @gray-light;
+					font-style: italic;
+					user-select: none;
+				}
+			}
+
+			#holdtext {
+				display: none;
+			}
+
+			.activate-row {
+
+				width: 70%;
+				margin-bottom: 10px;
+				height: 36px;
+				line-height: 36px;
+
+				span {
+					color: black;
+					font-weight: 500;
+				}
+
+				button {
+					.pull-right;
+				}
+
+				.btn-deactivate {
+					background-color: @brand-blue;
+					border-color: @brand-blue;
+				}
+			}
+
+			.button-row {
+				margin-top: 30px;
 			}
 		}
 

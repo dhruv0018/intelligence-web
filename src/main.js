@@ -111,10 +111,7 @@ require('./directives/button');
 require('./directives/input');
 require('./directives/submit');
 require('./directives/keyboard');
-require('./directives/draggable');
 require('./directives/focus');
 require('./directives/autofocus');
 require('./directives/autotab');
-
-angular.bootstrap(document, [pkg.name]);
 

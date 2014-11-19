@@ -5,45 +5,51 @@
     data-vg-update-size="onUpdateSize"
     data-vg-update-volume="onUpdateVolume"
     data-vg-update-state="onUpdateState"
-    data-vg-width="config.width"
-    data-vg-height="config.height"
-    data-vg-theme="config.theme.url"
     data-vg-autoplay="config.autoPlay"
-    data-vg-stretch="config.stretch.value"
-    data-vg-responsive="false"
     data-vg-sources="sources">
 
     <div class="error-video" data-ng-hide="videoTitle === 'reelsPlayer' || sources.length"><h1>Could not load video</h1></div>
 
-    <video-spot></video-spot>
+    <video-spot krossover-play-pause-button></video-spot>
 
     <data-vg-buffering></data-vg-buffering>
 
-    <data-vg-scrubbar>
-        <data-vg-scrubbarcurrenttime></data-vg-scrubbarcurrenttime>
-    </data-vg-scrubbar>
+    <div class="controls-container-full">
+        <data-vg-scrubbar>
+            <data-vg-scrubbarcurrenttime></data-vg-scrubbarcurrenttime>
+        </data-vg-scrubbar>
 
-    <data-vg-controls data-vg-autohide="false" style="height: 50px;">
+        <data-vg-controls data-vg-autohide="false" style="height: 50px;">
 
-        <x-krossover-play-pause-button class="video-control"></x-krossover-play-pause-button>
+            <button krossover-play-pause-button class="play-pause-button btn-video">
+                <i class="icon icon-play" data-ng-hide="playManager.playState === VG_STATES.PLAY"></i>
+                <i class="icon icon-pause" data-ng-show="playManager.playState === VG_STATES.PLAY"></i>
+            </button>
 
-        <data-vg-timedisplay class="video-control"><span class="time-current">{{ ((currentClipTime - playStartTime) > (clipEndTime - playStartTime)) ? 0 : (currentClipTime - playStartTime) | secondsToTime }}</span> <span class="time-divider">/</span> {{ clipEndTime - playStartTime | secondsToTime }}</data-vg-timedisplay>
+            <span class="timedisplay video-control">
+                <span data-current-time-value="00:00" class="time-current"></span> <span class="time-divider">/</span> <span>{{ clipEndTime - playStartTime | secondsToTime }}</span>
+            </span>
 
-        <button class="btn-video jump-button" data-ng-click="onClickFastBackward()"><i class="icon icon-fast-backward"></i></button>
-        <button class="btn-video jump-button" data-ng-class="{active: videoElement.playbackRate === 3.0}" data-ng-click="onClickFastForward()"><i class="icon icon-fast-forward"></i></button>
+            <span class="direction-controls">
+                <button class="btn-video jump-button" data-ng-click="onClickFastBackward()"><i class="icon icon-fast-backward"></i></button>
+                <button class="btn-video jump-button" data-ng-class="{active: videoElement.playbackRate === 3.0}" data-ng-click="onClickFastForward()"><i class="icon icon-fast-forward"></i></button>
 
-        <button class="btn-video jump-button" data-ng-click="onClickJumpBackward()"><i class="icon icon-step-backward"></i></button>
-        <button class="btn-video jump-button" data-ng-class="{active: videoElement.playbackRate === 0.25}" data-ng-click="onClickJumpForward()"><i class="icon icon-step-forward"></i></button>
+                <button class="btn-video jump-button" data-ng-click="onClickJumpBackward()"><i class="icon icon-step-backward"></i></button>
+                <button class="btn-video jump-button" data-ng-class="{active: videoElement.playbackRate === 0.25}" data-ng-click="onClickJumpForward()"><i class="icon icon-step-forward"></i></button>
+            </span>
 
-        <data-vg-volume class="video-control">
+            <span class="controls-space"></span>
 
-            <x-krossover-mute-button></x-krossover-mute-button>
-            <data-vg-volumebar></data-vg-volumebar>
+            <data-vg-volume class="video-control">
 
-        </data-vg-volume>
+                <x-krossover-mute-button></x-krossover-mute-button>
+                <data-vg-volumebar></data-vg-volumebar>
 
-        <x-krossover-fullscreen-button class="video-control"></x-krossover-fullscreen-button>
+            </data-vg-volume>
 
-    </data-vg-controls>
+            <x-krossover-fullscreen-button class="video-control"></x-krossover-fullscreen-button>
+
+        </data-vg-controls>
+    </div>
 
 </data-videogular>

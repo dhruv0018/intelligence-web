@@ -2,6 +2,8 @@
 
 .game-area {
 
+  flex-direction: column;
+
   header{
     background: @content-bg;
     border-bottom: 1px solid @gray-lighter;
@@ -44,7 +46,10 @@
   }
 
   div.main-highlight{
-    height: calc(~"100% - 50px");
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: calc(~"100% - 52px");
     
     .game-area-game-information {
       position: relative;
@@ -86,7 +91,7 @@
 
     .play-count{
       border-right: 1px solid @gray-lighter;
-      width:290px;
+      width: 420px;
       padding-left: 20px;
       padding-right: 20px;
       letter-spacing: normal;
@@ -103,49 +108,63 @@
   }
 
   .game-area-film{
-    height: calc(~"100% - 55px");
+    display: flex;
+    flex: 1;
 
     .player{
-      padding-top:5%;
-      width: 70%;
-      margin: auto;
-    }
+      display: flex;
+      flex: 1;
+      margin: 1%;
 
-    .breakdown-player {
-      padding-left:10%;
-      display: inline-block;
-    }
-
-    .playlist {
-
-      .expandrow {
-        position: absolute;
-        bottom: 0px;
-        border-top: thin solid @gray-border;
-        background-color: white;
-        width: 100%;
-        height: 50px;
-        padding: 0px 5px 0px 5px;
-
-        button {
-          .btn;
-          .btn-link;
-          font-size: 16px;
-          font-weight: 400;
-          letter-spacing: 0.01em;
-          padding-top: 10px;
-          padding-left: 0;
-          padding-right: 0;
-          padding-bottom: 10px;
-          border-left-width: 0;
-
-          &:focus,
-          &:hover {
-
-              text-decoration: none;
-          }
-        }
+      data-videogular {
+        margin-left: auto;
+        margin-right: auto;
       }
+    }
+
+    .breakdown-sidebar {
+
+        display: flex;
+        flex-direction: column;
+
+        .playlist {
+
+            width: 420px;
+            padding: 0px;
+            border-right: thin solid #dddddd;
+            -webkit-transform: translateZ(0);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .expandrow {
+            border-right: thin solid #dddddd;
+            border-top: thin solid @gray-border;
+            background-color: white;
+            width: 420px;
+            height: 50px;
+            padding: 0px 5px 0px 5px;
+
+            button {
+                .btn;
+                .btn-link;
+                font-size: 16px;
+                font-weight: 400;
+                letter-spacing: 0.01em;
+                padding-top: 10px;
+                padding-left: 0;
+                padding-right: 0;
+                padding-bottom: 10px;
+                border-left-width: 0;
+
+                &:focus,
+                &:hover {
+
+                    text-decoration: none;
+                }
+            }
+        }
     }
 
   }
@@ -170,6 +189,8 @@
 .statsPage {
   
   padding: 60px;
+  height: 100%;
+  overflow-y: auto;
 
   .stats-btn-group {
     text-align: center;
@@ -202,8 +223,14 @@
 
   .table-responsive {
 
-    th, td {
-      text-align: center;
+    table {
+      width: auto;
+      margin: auto;
+      border-top: thin solid black;
+    }
+
+    td {
+      text-align: left;
     }
 
     th {
@@ -211,6 +238,7 @@
       border:thin solid black;
       background-color: @brand-blue;
       color: white;
+      text-align: center;
     }
 
     .fixed-table {
@@ -310,21 +338,154 @@
   }
 }
 
-.formations-teams-header {
-  width: 80%;
-  margin: 20px auto;
-  padding: 20px;
-  border: thin solid @gray-border;
-  background-color: @content-bg;
-  letter-spacing: normal;
-  font-weight: 500;
-  color: black;
-  position: relative;
+.game-area-formations {
 
-  .formationOption {
+  height: 100%;
+  overflow-y: auto;
+
+  .formations-teams-header {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    border: thin solid @gray-border;
+    background-color: @content-bg;
+    letter-spacing: normal;
+    font-weight: 500;
+    color: black;
+    position: relative;
+
+    .formationOption {
+        display: inline-block;
+        padding-right: 20px;
+        white-space: nowrap;
+
+        span {
+          display: block;
+        }
+
+        select {
+          background-color: white;
+          color: @gray-light;
+          font-weight: 400;
+          padding-right: 30px;
+          text-overflow: ellipsis;
+        }
+      }
+  }
+
+  .formations-chart-container {
+    border: thin solid @gray-border;
+    width: 80%;
+    margin: 20px auto;
+    letter-spacing: normal;
+
+    a.accordion-toggle:hover {
+      text-decoration: none;
+    }
+
+    .field-header {
+      color: white;
+      background-color: @brand-blue;
+      height: 50px;
+      line-height: 50px;
+      padding-left: 20px;
+      padding-right: 20px;
+      font-weight: 400;
+
+      .field-info {
+        margin-right: 30px;
+
+        .field-info-title {
+          font-weight: 500;
+          color: yellow;
+        }
+      }
+
+      i {
+        line-height: 50px;
+        font-size: 30px;
+      }
+    }
+
+    .field-header-collapsed {
+      background-color: @gray-lighter;
+      color: @brand-blue;
+
+      .field-info {
+        .field-info-title {
+          color: @brand-blue;
+        }
+      }
+    }
+
+    .field-options {
+      background-color: @content-bg;
+      color: @gray-light;
+      height: 50px;
+      line-height: 50px;
+      padding-left: 20px;
+      padding-right: 20px;
+
+      .offense-defense {
+        margin-right: 60px;
+        cursor: pointer;
+      }
+
+      .active-report {
+        color: @brand-primary;
+      }
+
+      .print-formation {
+        .pull-right;
+        color: @brand-primary;
+        cursor: pointer;
+      }
+    }
+
+    .field {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+  }
+}
+
+.game-area-down-distance {
+  
+  height: 100%;
+  overflow-y: auto;
+
+  .down-distance-info-container {
+    width: 80%;
+    margin: 20px auto;
+    border: thin solid @gray-border;
+    background-color: @content-bg;
+    letter-spacing: normal;
+    font-weight: 500;
+    color: black;
+    position: relative;
+
+    .dndInfoHeader {
+      height: 40px;
+      padding: 10px 20px;
+      background-color: @gray-lighter;
+      color: @brand-blue;
+    }
+
+    .dndInfoBody {
+      padding: 20px;
+    }
+
+    .dndOption {
       display: inline-block;
       padding-right: 20px;
       white-space: nowrap;
+
+      &.lastOption {
+        padding: 0;
+        position: absolute;
+        bottom: 21px;
+        right: 20px;
+      }
 
       span {
         display: block;
@@ -335,135 +496,45 @@
         color: @gray-light;
         font-weight: 400;
         padding-right: 30px;
-        text-overflow: ellipsis;
+      }
+
+      .create-report-btn {
+        .pull-right;
+        .btn;
+        .btn-primary;
       }
     }
-}
-
-.formations-chart-container {
-  border: thin solid @gray-border;
-  width: 80%;
-  margin: 20px auto;
-  letter-spacing: normal;
-
-  a.accordion-toggle:hover {
-    text-decoration: none;
-  }
-
-  .field-header {
-    color: white;
-    background-color: @brand-blue;
-    height: 50px;
-    line-height: 50px;
-    padding-left: 20px;
-    padding-right: 20px;
-    font-weight: 400;
-
-    .field-info {
-      margin-right: 30px;
-
-      .field-info-title {
-        font-weight: 500;
-        color: yellow;
-      }
-    }
-
-    i {
-      line-height: 50px;
-      font-size: 30px;
-    }
-  }
-
-  .field-header-collapsed {
-    background-color: @gray-lighter;
-    color: @brand-blue;
-
-    .field-info {
-      .field-info-title {
-        color: @brand-blue;
-      }
-    }
-  }
-
-  .field-options {
-    background-color: @content-bg;
-    color: @gray-light;
-    height: 50px;
-    line-height: 50px;
-    padding-left: 20px;
-    padding-right: 20px;
-
-    .offense-defense {
-      margin-right: 60px;
-      cursor: pointer;
-    }
-
-    .active-report {
-      color: @brand-primary;
-    }
-
-    .print-formation {
-      .pull-right;
-      color: @brand-primary;
-      cursor: pointer;
-    }
-  }
-
-  .field {
-    padding-left: 40px;
-    padding-right: 40px;
   }
 }
 
-.down-distance-info-container {
-  width: 80%;
-  margin: 20px auto;
-  border: thin solid @gray-border;
-  background-color: @content-bg;
-  letter-spacing: normal;
-  font-weight: 500;
-  color: black;
-  position: relative;
+button.play-all-plays {
 
-  .dndInfoHeader {
-    height: 40px;
-    padding: 10px 20px;
-    background-color: @gray-lighter;
-    color: @brand-blue;
+  margin-left: 75px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0;
+  background: #ffffff;
+  border: 0;
+
+  .play-all-text {
+    padding: 2px 2px 2px 8px;
   }
 
-  .dndInfoBody {
-    padding: 20px;
-  }
-
-  .dndOption {
+  .on, .off {
+    padding: 4px;
     display: inline-block;
-    padding-right: 20px;
-    white-space: nowrap;
-
-    &.lastOption {
-      padding: 0;
-      position: absolute;
-      bottom: 21px;
-      right: 20px;
-    }
-
-    span {
-      display: block;
-    }
-
-    select {
-      background-color: white;
-      color: @gray-light;
-      font-weight: 400;
-      padding-right: 30px;
-    }
-
-    .create-report-btn {
-      .pull-right;
-      .btn;
-      .btn-primary;
-    }
+    color: #e1e1e1;
+    background: #f9f9f9;
   }
-}
 
+  .on.chosen {
+    background: #54D14F;
+    color: #ffffff;
+  }
+
+  .off.chosen {
+    background: @brand-primary;
+    color: #ffffff;
+  }
+
+}

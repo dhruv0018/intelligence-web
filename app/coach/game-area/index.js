@@ -59,6 +59,7 @@ GameArea.config([
             },
             resolve: {
                 'Coach.Data': [
+
                     '$q', '$stateParams', 'LeaguesFactory', 'FiltersetsFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'SessionService',  'FILTERSET_CATEGORIES', 'GAME_STATUS_IDS', 'Coach.Data.Dependencies',
                     function($q, $stateParams, leagues, filtersets, teams, games, players, plays, session, FILTERSET_CATEGORIES, GAME_STATUS_IDS, data) {
                         return $q.all(data).then(function(data) {
@@ -70,9 +71,9 @@ GameArea.config([
                             data.game = game;
 
                             /* TODO: Or this. */
-                            var team = teams.get(game.teamId);
-                            var league = leagues.get(team.leagueId);
-                            data.league = league;
+                            var team = (data.game.teamId) ? teams.get(game.teamId) : {name: 'Team'};
+                            var league = (team.id) ? leagues.get(team.leagueId) : {};
+
 
                             var teamsCollection = teams.getCollection();
                             var leaguesCollection = leagues.getCollection();
@@ -82,32 +83,42 @@ GameArea.config([
                             data.gameStatus = data.game.status;
                             data.gamePlayerLists = {};
                             data.players = players;
-                            data.league = leaguesCollection[teamsCollection[data.game.teamId].leagueId];
-                            data.filterset = filtersets.get(data.league.filterSetId);
+                            data.league = league;
+                            data.filterset = (data.league.id) ? filtersets.get(data.league.filterSetId) : {};
+
+                            var promises = [];
 
                             //Player lists
-                            var teamPlayerList = players.query({
-                                rosterId: data.game.rosters[data.game.teamId].id
-                            }).then(function(playerList) {
-                                data.teamPlayers = playerList;
-                                data.gamePlayerLists[data.game.teamId] = playerList;
-                            });
+                            if (data.game.teamId && data.game.rosters && data.game.rosters[data.game.teamId].id) {
+                                var teamPlayerList = players.query({
+                                    rosterId: data.game.rosters[data.game.teamId].id
+                                }).then(function(playerList) {
+                                    data.teamPlayers = playerList;
+                                    data.gamePlayerLists[data.game.teamId] = playerList;
+                                });
+                                promises.push(teamPlayerList);
+                            }
 
-                            var opposingTeamPlayerList = players.query({
-                                rosterId: data.game.rosters[data.game.opposingTeamId].id
-                            }).then(function(playerList) {
-                                data.opposingTeamPlayers = playerList;
-                                data.gamePlayerLists[data.game.opposingTeamId] = playerList;
-                            });
+                            if (data.game.opposingTeamId && data.game.rosters && data.game.rosters[data.game.opposingTeamId].id) {
+                                var opposingTeamPlayerList = players.query({
+                                    rosterId: data.game.rosters[data.game.opposingTeamId].id
+                                }).then(function(playerList) {
+                                    data.opposingTeamPlayers = playerList;
+                                    data.gamePlayerLists[data.game.opposingTeamId] = playerList;
+                                });
+                                promises.push(opposingTeamPlayerList);
+                            }
+
 
                             var playsList = plays.query({
                                 gameId: data.game.id
                             }, function(plays) {
                                 data.plays = plays;
                             });
+                            promises.push(playsList);
 
 
-                            return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function() {
+                            return $q.all(promises).then(function() {
                                 return $q.all(data);
                             });
                         });
@@ -160,8 +171,8 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.teams = teams.getCollection();
 
         //Teams
-        $scope.team = $scope.teams[$scope.game.teamId];
-        $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
+        $scope.team = data.team;
+        $scope.opposingTeam = data.opposingTeam;
 
         //Filters
         $scope.filtersetCategories = data.filtersetCategories;
@@ -192,7 +203,9 @@ GameArea.controller('Coach.GameArea.controller', [
                         state: 'ga-shot-chart'
                     }
                 );
-            } else if (data.league.sportId == SPORTS.FOOTBALL.id) {
+            }
+
+            if (data.league.sportId == SPORTS.FOOTBALL.id) {
                 $scope.gameStates.push(
                     {
                         name: 'Formation Report',
@@ -203,7 +216,9 @@ GameArea.controller('Coach.GameArea.controller', [
                         state: 'ga-down-distance'
                     }
                 );
-            } else if (data.league.sportId == SPORTS.VOLLEYBALL.id) {
+            }
+
+            if (data.league.sportId == SPORTS.VOLLEYBALL.id || data.league.sportId == SPORTS.FOOTBALL.id) {
                 $scope.gameStates.push(
                     {
                         name: 'Statistics',
@@ -211,6 +226,7 @@ GameArea.controller('Coach.GameArea.controller', [
                     }
                 );
             }
+
         } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered() || $scope.game.isSharedWithUser(session.currentUser)) {
             $scope.gameStates.push(
                 {

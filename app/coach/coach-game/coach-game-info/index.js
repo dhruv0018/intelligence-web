@@ -45,9 +45,9 @@ Info.directive('krossoverCoachGameInfo', [
 
             scope: {
                 headings: '=',
-                $flow: '=?flow',
-                data: '=',
-                tabs: '='
+                tabs: '=',
+                game: '=',
+                league: '='
             }
         };
 
@@ -62,8 +62,8 @@ Info.directive('krossoverCoachGameInfo', [
  * @type {controller}
  */
 Info.controller('Coach.Game.Info.controller', [
-    '$q', '$rootScope', '$scope', '$modal', '$window', '$state', 'BasicModals', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory',
-    function controller($q, $rootScope, $scope, $modal, $window, $state, modals, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues, games) {
+    '$q', '$rootScope', '$scope', '$modal', '$window', '$state', 'BasicModals', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'PlayersFactory', 'GamesFactory',
+    function controller($q, $rootScope, $scope, $modal, $window, $state, modals, GAME_TYPES, GAME_NOTE_TYPES, session, teams, leagues,  players, games) {
 
         $scope.session = session;
 
@@ -80,240 +80,98 @@ Info.controller('Coach.Game.Info.controller', [
         $scope.teams = teams.getCollection();
 
         //Game Manipulation
-        $scope.data.game.notes = $scope.data.game.notes || {};
-        $scope.data.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = $scope.data.game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
-        if (!$scope.data.game.dateplayed) {
-            $scope.data.game.dateplayed = Date.now();
+        $scope.game.notes = $scope.game.notes || {};
+        $scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] = $scope.game.notes[GAME_NOTE_TYPES.COACH_NOTE] || [{noteTypeId: GAME_NOTE_TYPES.COACH_NOTE, content: ''}];
+
+        //prevents put request cascade
+        $scope.game.allowEdits = ($scope.game.opposingTeamId && $scope.game.teamId && $scope.game.rosters[$scope.game.teamId].id) ? true : false;
+
+        if ($scope.game.id && $scope.game.teamId && $scope.game.opposingTeamId) {
+            $scope.tabs.enableAll();
         }
 
-        //Opposing Team Construction
-        if ($scope.data.game.id) {
-            $scope.data.opposingTeam = {
-                name:  $scope.teams[$scope.data.game.opposingTeamId].name || ''
-            };
+        if ($scope.game.isRegular()) {
+            $scope.game.teamId = session.currentUser.currentRole.teamId;
         }
 
-        if (games.isRegular($scope.data.game)) {
-            $scope.headings.yourTeam = 'Team';
-        } else {
-            $scope.headings.scoutingTeam = 'Scouting Team';
-        }
-
-        $scope.$watch('formGameInfo.$dirty', function(dirtyBit) {
-
-            if (!dirtyBit && !$scope.data.game.id) return;
-
-            $scope.tabs.scouting.disabled = dirtyBit;
-            $scope.tabs.opposing.disabled = dirtyBit;
-            $scope.tabs.team.disabled = dirtyBit;
-            $scope.tabs.confirm.disabled = dirtyBit;
-        });
-
-        $scope.$watch('data.game.teamId', function(teamId) {
-
-            if (teamId) {
-
-                $scope.team = teams.get(teamId);
-
-                if (games.isRegular($scope.data.game)) {
-                    $scope.headings.yourTeam = $scope.team.name || 'Team';
-                } else {
-                    $scope.headings.scoutingTeam = $scope.team.name || 'Scouting Team';
-                }
-            }
-        });
-
-        $scope.headings.opposingTeam = 'Opposing Team';
-
-        $scope.$watch('data.game.opposingTeamId', function(opposingTeamId) {
-
-            if (opposingTeamId) {
-
-                $scope.opposingTeam = teams.get(opposingTeamId);
-
-                $scope.headings.opposingTeam = $scope.opposingTeam.name || 'Opposing Team';
-            }
-        });
-
-        $scope.setTabHeadings = function() {
-
+        //Temporary code to facilitate normal input team creation
+        //The true intention is to use a typeahead to pull in the teams
+        //right now that is not easily possible because the typeahead cannot scope down the search results to
+        //non-customer teams you have faced. Later on when this is available, this code will be modified
+        $scope.gameTeams = {
+            team: ($scope.teams[$scope.game.teamId]) ? $scope.teams[$scope.game.teamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id}),
+            opposingTeam: ($scope.teams[$scope.game.opposingTeamId]) ? $scope.teams[$scope.game.opposingTeamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id})
         };
 
-        //Headings
-        if ($scope.data.game.id) {
-            $scope.setTabHeadings();
-        }
-
-        if (typeof $scope.data.game.isHomeGame === 'undefined') {
-            $scope.data.game.isHomeGame = true;
-        }
+        //stores the previous team name
+        $scope.previousTeamName = $scope.gameTeams.team.name;
+        $scope.previousOpposingTeamName = $scope.gameTeams.opposingTeam.name;
 
         //Save functionality
         $scope.save = function() {
-            if ($scope.data.game.id) {
-                $q.all($scope.saveExisting()).then($scope.goToRoster);
-            } else {
-                $q.all($scope.constructNewGame()).then($scope.goToRoster);
-            }
-        };
 
-        $scope.saveExisting = function() {
-            var promises = [];
-
-            //Saves the scouting team
-            if (!games.isRegular($scope.data.game)) {
-                promises.push($scope.teams[$scope.data.game.teamId].save());
-            }
-
-            //Saves the opposing team
-            promises.push($scope.teams[$scope.data.game.opposingTeamId].save());
-
-            //Saves the game
-            promises.push($scope.data.game.save());
-
-            return promises;
-        };
-
-        $scope.constructNewGame = function() {
             var promises = {};
 
-            if (!games.isRegular($scope.data.game)) {
-                promises.scouting = $scope.constructNewTeam('scouting');
+            if (!$scope.game.teamId || $scope.gameTeams.team.name !== $scope.previousTeamName) {
+                promises.team = $scope.gameTeams.team.save();
             }
 
-            promises.opposing = $scope.constructNewTeam('opposing');
+            if (!$scope.game.opposingTeamId ||$scope.gameTeams.opposingTeam.name !== $scope.previousOpposingTeamName) {
+                promises.opposingTeam = $scope.gameTeams.opposingTeam.save();
+            }
 
-            $q.all(promises).then(function(promisedData) {
+            $q.all(promises).then(function(response) {
+                $scope.game.teamId = (response.team) ? response.team.id : $scope.gameTeams.team.id;
+                $scope.game.opposingTeamId = (response.opposingTeam) ? response.opposingTeam.id : $scope.gameTeams.opposingTeam.id;
 
-                $scope.data.game.uploaderUserId = session.currentUser.id;
-                $scope.data.game.uploaderTeamId = session.currentUser.currentRole.teamId;
+                var team = teams.get($scope.game.teamId);
+                var opposingTeam = teams.get($scope.game.opposingTeamId);
 
-                if (games.isRegular($scope.data.game)) {
-                    $scope.data.game.teamId = session.currentUser.currentRole.teamId;
-                } else {
-                    $scope.data.game.teamId = promisedData.scouting.id;
+                $scope.game.rosters = ($scope.game.rosters && $scope.game.rosters[$scope.game.teamId]) ? $scope.game.rosters : {};
+
+                if (!$scope.game.rosters[$scope.game.teamId]) {
+                    //filtering out the players from your team roster who are inactive
+                    var filteredPlayerInfo = {};
+                    angular.forEach(team.roster.playerInfo, function(playerInfo, playerId) {
+                        if (playerInfo.isActive) {
+                            filteredPlayerInfo[playerId] = playerInfo;
+                        }
+                    });
+
+                    $scope.game.rosters[$scope.game.teamId] = {
+                        teamId: $scope.game.teamId,
+                        playerInfo: filteredPlayerInfo
+                    };
+
+
+                    $scope.game.rosters[$scope.game.opposingTeamId] = {
+                        teamId: $scope.game.opposingTeamId,
+                        playerInfo: opposingTeam.roster.playerInfo
+                    };
                 }
 
-                //Creating Game Rosters
-                $scope.data.game.rosters = {};
-                $scope.data.game.rosters[$scope.data.game.teamId] = {};
-                $scope.data.game.rosters[promisedData.opposing.id] = {};
-
-                return games.extend($scope.data.game).save().then(function(game) {
-                    $scope.data.game = game;
-                    $scope.data.gamePlayerLists = {};
-                    $scope.data.gamePlayerLists[promisedData.opposing.id] = [];
-                    $scope.data.gamePlayerLists[$scope.data.game.teamId] = [];
+                $scope.game.save().then(function() {
+                    //This will be removed later when the rosters are values and do not have an id
+                    //roster ids are currently used for uploading an excel roster
+                    $scope.game.isFetching = true;
+                    games.fetch($scope.game.id).then(function(game) {
+                        delete $scope.game.isFetching;
+                        angular.extend($scope.game, $scope.game, game);
+                        $scope.goToRoster();
+                    });
                 });
+
             });
-        };
-
-        $scope.constructNewTeam = function(type) {
-
-            if (type === 'opposing') {
-                var newOpposingTeam = {
-                    isCustomerTeam: false,
-                    leagueId: $scope.data.league.id,
-                    primaryAwayColor: $scope.isHomeGame ? $scope.data.game.opposingPrimaryColor : null,
-                    primaryHomeColor: $scope.isHomeGame ? null : $scope.data.game.opposingPrimaryColor,
-                    secondaryAwayColor: $scope.isHomeGame ? $scope.data.game.opposingSecondaryColor : null,
-                    secondaryHomeColor: $scope.isHomeGame ? null : $scope.data.game.opposingSecondaryColor
-                };
-                angular.extend($scope.data.opposingTeam, $scope.data.opposingTeam, newOpposingTeam);
-                return teams.save($scope.data.opposingTeam).then(function(opposingTeam) {
-                    $scope.data.game.opposingTeamId = opposingTeam.id;
-                    return opposingTeam;
-                });
-            } else if (type === 'scouting') {
-                var scoutingTeam = {
-                    name: $scope.data.team.name,
-                    isCustomerTeam: false,
-                    leagueId: $scope.data.league.id,
-                    primaryAwayColor: $scope.data.game.primaryJerseyColor,
-                    primaryHomeColor: $scope.data.game.primaryJerseyColor,
-                    secondaryAwayColor: $scope.data.game.secondaryJerseyColor,
-                    secondaryHomeColor: $scope.data.game.secondaryJerseyColor
-                };
-                angular.extend($scope.data.team, $scope.data.team, scoutingTeam);
-
-                return teams.save($scope.data.team).then(function(scoutingTeam) {
-                    $scope.data.game.teamId = scoutingTeam.id;
-                    return scoutingTeam;
-                });
-            }
 
         };
-
 
         $scope.goToRoster = function() {
+
+            $scope.tabs.enableAll();
             $scope.tabs.deactivateAll();
             $scope.formGameInfo.$dirty = false;
-
-            if (games.isRegular($scope.data.game)) {
-                $scope.tabs.team.active = true;
-                $scope.tabs.team.disabled = false;
-            } else {
-                $scope.tabs.scouting.active = true;
-                $scope.tabs.scouting.disabled = false;
-                $scope.tabs.opposing.disabled = false;
-                $scope.tabs.confirm.disabled = false;
-            }
-            $scope.setTabHeadings();
-        };
-
-//        $scope.$watch('formGameInfo.$invalid', function(invalid) {
-//            tabs['your-team'].disabled = invalid;
-//            tabs['scouting-team'].disabled = invalid;
-//        });
-
-        var prompt = 'Your game will not get uploaded without entering in the game information.';
-
-        /* When changing state. */
-        $rootScope.$on('$stateChangeStart', function(event) {
-
-            /* If the game has not been saved and the game information has not been completed .*/
-            if (!$scope.data.game.id && $scope.formGameInfo.$invalid) {
-
-                if (confirm(prompt + '\n\nDo you still want to leave?')) {
-
-                    $scope.$flow.cancel();
-                }
-
-                else {
-
-                    event.preventDefault();
-                    $rootScope.$broadcast('$stateChangeError');
-                }
-            }
-        });
-
-        /* When changing location. */
-        $rootScope.$on('$locationChangeStart', function(event) {
-
-            /* If the game has not been saved and the game information has not been completed .*/
-            if (!$scope.data.game.id && $scope.formGameInfo.$invalid) {
-
-                if (confirm(prompt + '\n\nDo you still want to leave?')) {
-
-                    $scope.$flow.cancel();
-                }
-
-                else {
-
-                    event.preventDefault();
-                    $rootScope.$broadcast('$stateChangeError');
-                }
-            }
-        });
-
-        /* Before unloading the page. */
-        $window.onbeforeunload = function beforeunloadHandler() {
-
-            /* If the game information has not been completed .*/
-            if ($scope.formGameInfo.$invalid) {
-
-                return prompt;
-            }
+            $scope.tabs.team.active = true;
+            $scope.game.allowEdits = true; //prevents put request cascade
         };
 
         //Confirmation for deleting a game
@@ -326,9 +184,9 @@ Info.controller('Coach.Game.Info.controller', [
             });
 
             deleteGameModal.result.then(function() {
-                $scope.data.game.isDeleted = true;
+                $scope.game.isDeleted = true;
 
-                $scope.data.game.save();
+                $scope.game.save();
                 $state.go('Coach.FilmHome');
             });
 

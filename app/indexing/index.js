@@ -40,13 +40,15 @@ Indexing.run([
  * @type {service}
  */
 Indexing.service('Indexing.Data.Dependencies', [
-    'Indexer.Games.Data.Dependencies', 'TeamsFactory', 'LeaguesFactory', 'TagsetsFactory',
-    function(data, teams, leagues, tagsets) {
+    'Indexer.Games.Data.Dependencies', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'TagsetsFactory',
+    function(data, session, teams, leagues, tagsets) {
+
+        var userId = session.currentUser.id;
 
         var Data = {
 
             games: data.games,
-            teams: teams.load(),
+            teams: teams.load({ relatedUserId: userId }),
             leagues: leagues.load(),
             tagsets: tagsets.load()
         };
@@ -121,8 +123,8 @@ Indexing.config([
                 },
 
                 onEnter: [
-                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'VideoPlayerInstance', 'GamesFactory',
-                    function($state, $timeout, $stateParams, session, modals, data, indexing, Videoplayer, games) {
+                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'GamesFactory',
+                    function($state, $timeout, $stateParams, session, modals, data, indexing, games) {
 
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
@@ -174,8 +176,11 @@ Indexing.config([
 
                         Mousetrap.stopCallback = function(event, element, combo, sequence) {
 
-                            $timeout(function() {
+                            if (Mousetrap.krossoverIsPaused) {
+                                return true;
+                            }
 
+                            $timeout(function() {
                                 if (indexing.isIndexing) {
 
                                     if (globalCallbacks[combo] || globalCallbacks[sequence]) {
@@ -259,7 +264,6 @@ Indexing.config([
                 onExit: [
                     '$stateParams', 'GamesFactory', 'PlaysManager',
                     function($stateParams, games, playsManager) {
-
                         var gameId = $stateParams.id;
                         var game = games.get(gameId);
 
@@ -267,6 +271,7 @@ Indexing.config([
                         Mousetrap.unbind('left');
                         Mousetrap.unbind('right');
                         Mousetrap.unbind('enter');
+                        Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
 
                         game.save();

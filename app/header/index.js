@@ -45,19 +45,10 @@ Header.config([
                 },
                 resolve: {
                     'Base.Data': [
-                        '$q', 'SessionService', 'TeamsFactory', 'Base.Data.Dependencies',
-                        function($q, session, teams, data) {
+                        '$q', 'Base.Data.Dependencies',
+                        function($q, data) {
 
-                            var teamId = session.currentUser.currentRole.teamId;
-
-                            if (teamId) {
-
-                                var team = teams.load(teamId);
-
-                                return $q.all([team, data]);
-                            }
-
-                            else return $q.all(data);
+                            return $q.all(data);
                         }
                     ]
                 }
@@ -67,26 +58,29 @@ Header.config([
 
 
 Header.service('Base.Data.Dependencies', [
-    'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
-    function(session, sports, leagues, tagsets, filtersets, positionsets, teams) {
+    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
+    function(auth, session, sports, leagues, tagsets, filtersets, positionsets, teams) {
 
-        var teamIds = session.currentUser.getTeamIds();
+        if (auth.isLoggedIn) {
 
-        var Data = {
+            var teamIds = session.currentUser.getTeamIds();
 
-            sports: sports.load(),
-            leagues: leagues.load(),
-            tagsets: tagsets.load(),
-            filtersets: filtersets.load(),
-            positionsets: positionsets.load()
-        };
+            var Data = {
 
-        if (teamIds.length) {
+                sports: sports.load(),
+                leagues: leagues.load(),
+                tagsets: tagsets.load(),
+                filtersets: filtersets.load(),
+                positionsets: positionsets.load()
+            };
 
-            Data.teams = teams.load({ 'id[]': teamIds });
+            if (teamIds.length) {
+
+                Data.teams = teams.load({ 'id[]': teamIds });
+            }
+
+            return Data;
         }
-
-        return Data;
     }
 ]);
 
@@ -98,8 +92,8 @@ Header.service('Base.Data.Dependencies', [
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES',
-    function controller(config, $scope, $state, auth, session, account, ROLES) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'UsersFactory', 'LeaguesFactory', 'TeamsFactory', 'SPORTS',
+    function controller(config, $scope, $state, auth, session, account, ROLES, users, leagues, teams, SPORTS) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
@@ -112,11 +106,29 @@ Header.controller('HeaderController', [
         $scope.$state = $state;
         $scope.session = session;
         $scope.account = account;
+        $scope.auth = auth;
+
+        //TEMP - get sport id to show Analytics tab for FB only
+        if (auth.isLoggedIn) {
+            if (session.currentUser.is(ROLES.COACH)) {
+                var team = teams.get(session.currentUser.currentRole.teamId);
+                $scope.league = leagues.get(team.leagueId);
+                $scope.SPORTS = SPORTS;
+            }
+        }
 
         $scope.logout = function() {
 
             auth.logoutUser();
             $state.go('login');
+        };
+
+        // This scope functionality limits a menu element to only one sub-menu
+        $scope.subMenu = false;
+
+        $scope.toggleSubMenu = function($event) {
+            $event.stopPropagation();
+            $scope.subMenu = !$scope.subMenu;
         };
     }
 ]);

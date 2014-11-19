@@ -5,10 +5,8 @@
     ],
     "local": [
         "coach-game-info",
-        "coach-game-your-team",
-        "coach-game-opposing-team",
-        "coach-game-instructions",
-        "coach-game-team"
+        "game-tab",
+        "coach-game-instructions"
     ],
     "templates": [
         "template.html"

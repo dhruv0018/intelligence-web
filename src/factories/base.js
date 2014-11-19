@@ -45,6 +45,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* Create a copy of the resource to break reference to orginal. */
                 var copy = angular.copy(resource);
 
+                delete copy.PAGE_SIZE;
+                delete copy.description;
+                delete copy.model;
+                delete copy.storage;
+
                 /* TODO: Remove any properties that should not exist. */
 
                 return copy;
@@ -204,12 +209,13 @@ IntelligenceWebClient.factory('BaseFactory', [
                 }
 
                 filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
+                if (filter.start !== null) filter.start = filter.start || 0;
+                if (filter.count !== null) filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
                 var aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
-                    return angular.isUndefined(filter[key]);
+                    if (angular.isArray(filter[key])) return !filter[key].length;
+                    else return angular.isUndefined(filter[key]);
                 });
 
                 if (aFilterIsUndefined) throw new Error('Undefined filter');
@@ -260,12 +266,13 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var self = this;
 
                 filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
+                if (filter.start !== null) filter.start = filter.start || 0;
+                if (filter.count !== null) filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
                 var aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
-                    return angular.isUndefined(filter[key]);
+                    if (angular.isArray(filter[key])) return !filter[key].length;
+                    else return angular.isUndefined(filter[key]);
                 });
 
                 if (aFilterIsUndefined) throw new Error('Undefined filter');
@@ -353,18 +360,21 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else if (angular.isArray(filter)) {
 
-                        filter.filter(function(id) {
+                        if (storage.collection) {
 
-                            return !angular.isDefined(self.storage.collection[id]);
-                        });
+                            filter = filter.filter(function(id) {
+
+                                return !angular.isDefined(storage.collection[id]);
+                            });
+                        }
 
                         if (filter.length) {
 
                             filter = { 'id[]': filter };
 
-                            self.storage.loads[key] = self.retrieve(filter).then(function(list) {
+                            storage.loads[key] = self.retrieve(filter).then(function(list) {
 
-                                self.storage.loads[key].list = list;
+                                storage.loads[key].list = list;
 
                                 return self;
                             });
@@ -374,8 +384,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                             var deferred = $q.defer();
 
-                            self.storage.loads[key] = deferred.promise;
-                            self.storage.loads[key].list = [];
+                            storage.loads[key] = deferred.promise;
+                            storage.loads[key].list = [];
 
                             deferred.resolve(self);
                         }
@@ -456,22 +466,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     .then(function() {
 
-                        /* Fetch the updated resource. */
-                        return self.fetch(resource.id).then(function(updated) {
-
-                            /* Update local resource with server resource. */
-                            angular.extend(resource, self.extend(updated));
-
-                            /* Update the resource in storage. */
-                            storage.list[storage.list.indexOf(resource)] = resource;
-                            storage.collection[resource.id] = resource;
-
-                            return resource;
-                        });
+                        return resource;
                     })
 
                     .finally(function() {
-
                         delete resource.isSaving;
                     });
 

@@ -17,8 +17,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('SessionService', [
-    'UsersResource', 'UsersFactory',
-    function(User, users) {
+    'TransformDates', 'UsersResource', 'UsersFactory',
+    function(dates, User, users) {
 
         /* Memory storage for current user. */
         this.currentUser = null;
@@ -42,9 +42,11 @@ IntelligenceWebClient.service('SessionService', [
          */
         this.deserializeUser = function(string) {
 
-            var object = angular.fromJson(string);
+            var userResourceObject = angular.fromJson(string);
 
-            user = new User(object);
+            userResourceObject = dates.transformToDates(userResourceObject);
+
+            var user = new User(userResourceObject);
             user = users.extend(user);
 
             return user;

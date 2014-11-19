@@ -14,17 +14,65 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$state', '$stateParams', 'AuthenticationService', 'AuthorizationService', 'AlertsService', 'ResourceManager',
-    function run($rootScope, $state, $stateParams, auth, authz, alerts, managedResources) {
+    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
+    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
+            /* If the user is accessing a public state. */
+            if (authz.isPublic(toState)) {
+
+                /* If not logged in. */
+                if (!auth.isLoggedIn) {
+
+                    /* Deserialize the anonymous user into a user. */
+                    var user = session.deserializeUser(ANONYMOUS_USER);
+
+                    /* Store the user in the session. */
+                    session.storeCurrentUser(user);
+
+                    /* Retrieve the user from the session. */
+                    var currentUser = session.retrieveCurrentUser();
+
+                    /* Expose the current user on the root scope. */
+                    $rootScope.currentUser = currentUser;
+                }
+
+                /* It there is no access token set. */
+                if (!tokens.getAccessToken()) {
+
+                    /* Prevent the state from loading. */
+                    event.preventDefault();
+
+                    /* Request client tokens. */
+                    tokens.requestClientTokens()
+
+                    /* If the tokens request is successful. */
+                    .then(function(authTokens) {
+
+                        /* Set the tokens. */
+                        tokens.setTokens(authTokens);
+                    })
+
+                    /* In any case, finally. */
+                    .finally(function() {
+
+                        /* Go to state, but without starting state transition again. */
+                        $state.go(toState.name, toParams, {notify: false}).then(function() {
+
+                            /* Broadcast the success of the state transition. */
+                            $rootScope.$broadcast('$stateChangeSuccess', toState, toParams, fromState, fromParams);
+                        });
+                    });
+                }
+            }
+
             /* If not accessing a public state and not logged in, then
              * redirect the user to login. */
-            if (!authz.isPublic(toState) && !auth.isLoggedIn) {
+            else if (!auth.isLoggedIn) {
 
                 /* Prevent the state from loading. */
                 event.preventDefault();

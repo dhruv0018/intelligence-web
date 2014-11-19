@@ -10,59 +10,98 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', '$q',
-    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, $q) {
+    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
+    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, players, $q) {
 
         var GamesFactory = {
 
-            PAGE_SIZE: 1500,
+            PAGE_SIZE: 1000,
 
             description: 'games',
 
             model: 'GamesResource',
 
             storage: 'GamesStorage',
+            unextend: function(game) {
 
+                var self = this;
+
+                game = game || self;
+
+                /* Create a copy of the resource to break reference to orginal. */
+                var copy = angular.copy(game);
+                delete copy.flow;
+
+                return copy;
+            },
             extend: function(game) {
 
                 var self = this;
 
                 angular.augment(game, self);
-
+                game.isSaving = false;
                 game.video = game.video || {};
                 game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
-                game.notes = game.notes || [];
+                game.notes = game.notes || {};
+                game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
+                game.datePlayed = game.datePlayed || moment.utc().toDate();
+
+                //TODO remove when the back end makes notes always a object
+                if (angular.isArray(game.notes)) {
+                    game.notes = {};
+                }
+
+                if (!game.uploaderUserId && session.currentUser && session.currentUser.id) {
+                    game.uploaderUserId = session.currentUser.id;
+                }
+
+                if (!game.uploaderTeamId && session.currentUser && session.currentUser.currentRole && session.currentUser.currentRole.teamId) {
+                    game.uploaderTeamId = session.currentUser.currentRole.teamId;
+                }
 
                 /* build lookup table of shares by userId shared with */
+                game.shares = game.shares || [];
+                game.sharedWithUsers = game.sharedWithUsers || {};
+
                 if (game.shares && game.shares.length) {
-                    game.sharedWithUsers = game.sharedWithUsers || {};
 
                     angular.forEach(game.shares, function(share) {
-                        game.sharedWithUsers[share.sharedWithUserId] = share;
+                        if (share.sharedWithUserId) {
+                            game.sharedWithUsers[share.sharedWithUserId] = share;
+                        }
                     });
                 }
 
                 return game;
             },
-            saveNotes: function() {
 
-                var deferred = $q.defer();
+            isPlayerOnTeam: function(playerId) {
 
                 var self = this;
-                self.save().then(function() {
 
-                    deferred.notify('saved');
+                var teamId = self.teamId;
+                var teamRoster = self.getRoster(teamId);
+                var playerInfo = teamRoster.playerInfo;
 
-                    GamesResource.get({ id: self.id }, function(result) {
-                        self.notes = result.notes;
-                        deferred.resolve(result.notes);
-                    }, function() {
-                        deferred.reject(null);
-                    });
-                });
+                if (!playerInfo) return false;
 
-                return deferred.promise;
+                /* Check if the player is on the team roster. */
+                return angular.isDefined(playerInfo[playerId]);
+            },
+
+            isPlayerOnOpposingTeam: function(playerId) {
+
+                var self = this;
+
+                var opposingTeamId = self.opposingTeamId;
+                var opposingTeamRoster = self.getRoster(opposingTeamId);
+                var playerInfo = opposingTeamRoster.playerInfo;
+
+                if (!playerInfo) return false;
+
+                /* Check if the player is on the opposing team roster. */
+                return angular.isDefined(playerInfo[playerId]);
             },
 
             generateStats: function(id, success, error) {
@@ -109,6 +148,68 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!roster) throw new Error('No team roster for game');
 
                 return roster;
+            },
+
+            getTeamPlayers: function() {
+
+                var self = this;
+
+                var teamId = self.teamId;
+                var teamRoster = self.getRoster(teamId);
+                var playerInfo = teamRoster.playerInfo;
+
+                if (!playerInfo) return [];
+
+                var teamPlayers = Object.keys(playerInfo)
+
+                .filter(function(playerId) {
+
+                    return teamRoster.playerInfo[playerId].isActive;
+                })
+
+                .map(function(playerId) {
+
+                    return players.get(playerId);
+                });
+
+                return teamPlayers;
+            },
+
+            getOpposingTeamPlayers: function() {
+
+                var self = this;
+
+                var opposingTeamId = self.opposingTeamId;
+                var opposingTeamRoster = self.getRoster(opposingTeamId);
+                var playerInfo = opposingTeamRoster.playerInfo;
+
+                if (!playerInfo) return [];
+
+                var opposingTeamPlayers = Object.keys(playerInfo)
+
+                .filter(function(playerId) {
+
+                    return opposingTeamRoster.playerInfo[playerId].isActive;
+                })
+
+                .map(function(playerId) {
+
+                    return players.get(playerId);
+                });
+
+                return opposingTeamPlayers;
+            },
+
+            getPlayers: function() {
+
+                var self = this;
+
+                var teamPlayers = self.getTeamPlayers();
+                var opposingTeamPlayers = self.getOpposingTeamPlayers();
+
+                var players = teamPlayers.concat(opposingTeamPlayers);
+
+                return players;
             },
 
             getVideoSources: function() {
@@ -636,14 +737,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 game = game || self;
 
+                game = game || this;
+
                 switch (game.gameType) {
                     case GAME_TYPES.CONFERENCE.id:
                     case GAME_TYPES.NON_CONFERENCE.id:
                     case GAME_TYPES.PLAYOFF.id:
                         return true;
-                    default:
-                        return false;
                 }
+
+                return false;
             },
 
             isNonRegular: function(game) {
@@ -652,14 +755,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 game = game || self;
 
+                game = game || this;
+
                 switch (game.gameType) {
 
                     case GAME_TYPES.SCOUTING.id:
                     case GAME_TYPES.SCRIMMAGE.id:
                         return true;
-                    default:
-                        return false;
                 }
+
+                return false;
             },
 
             getFormationReport: function() {
@@ -864,6 +969,57 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+            getUserShares: function() {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
+                var sharesArray = [];
+
+                angular.forEach(self.sharedWithUsers, function(share, index) {
+                    sharesArray.push(share);
+                });
+
+                return sharesArray;
+            },
+            shareWithPublic: function() {
+                var self = this;
+
+                self.shares = self.shares || [];
+
+                if (self.isSharedWithPublic()) return;
+
+                var share = {
+                    userId: session.currentUser.id,
+                    gameId: self.id,
+                    sharedWithUserId: null,
+                    createdAt: moment.utc().toDate()
+                };
+
+                self.shares.push(share);
+            },
+            stopSharingWithPublic: function() {
+                var self = this;
+
+                if (!self.shares || !self.shares.length) return;
+
+                self.shares.forEach(function(share, index) {
+                    if (!share.sharedWithUserId) {
+                        self.shares.splice(index, 1);
+                    }
+                });
+            },
+            isSharedWithPublic: function() {
+                var self = this;
+
+                if (!self.shares) return false;
+
+                return self.shares.map(function(share) {
+                    return share.sharedWithUserId;
+                }).some(function(userId) {
+                    return !userId;
+                });
             }
         };
 

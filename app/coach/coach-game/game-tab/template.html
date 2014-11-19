@@ -1,0 +1,44 @@
+<div class="game-tab">
+    <div class="row">
+
+        <div class="box col-md-12">
+
+            <div class="box-content row">
+
+                <header class="box-header col-md-12">
+
+                    <h3 class="box-title">{{team.name}} Roster</h3>
+                    <button class="btn-submit-continue" data-ng-click="activateNextTab()">Next</button>
+
+                </header>
+
+                <div class="box-body col-md-12">
+
+                    <form>
+
+                        <div class="table-responsive">
+                            <game-roster-manager
+                                               data-roster-template-url="config.links.rosterTemplates.opposingTeamRoster.uri"
+                                               data-roster-id="rosterId"
+                                               data-team="team"
+                                               data-game="game"
+                                               data-filtering="filtering"
+                                               data-editable="true"
+                                               data-roster="roster"
+                                               data-positionset="positionset"></game-roster-manager>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <button class="btn-submit-continue" data-ng-click="activateNextTab()">Next</button>
+
+    </div>
+
+</div>
+

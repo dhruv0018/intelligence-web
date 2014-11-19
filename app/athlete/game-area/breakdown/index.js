@@ -34,52 +34,24 @@ Breakdown.config([
             },
             resolve: {
                 'Athlete.GameArea.Breakdown.Data': [
-                    '$q', '$stateParams', 'FiltersetsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'Athlete.Data.Dependencies',
-                    function($q, $stateParams, filtersets, leagues, teams, games, players, plays, data) {
+                    '$q', '$stateParams', 'FiltersetsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'Coach.Data.Dependencies',
+                    function($q, $stateParams, filtersets, games, players, plays, data) {
 
-                        return $q.all(data).then(function(data) {
+                        return $q.all(data).then(function() {
 
                             var gameId = $stateParams.id;
-
-                            /* TODO: Maybe not do this. */
                             var game = games.get(gameId);
-                            data.game = game;
 
-                            /* TODO: Or this. */
-                            var team = teams.get(game.teamId);
-                            var league = leagues.get(team.leagueId);
-                            data.league = league;
-                            data.filterset = filtersets.get(data.league.filterSetId);
+                            var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
+                            var loadTeamPlayers = players.load(teamPlayersFilter);
 
-                            /* TODO: Refactor this. */
-                            data.gamePlayerLists = {};
-
-                            var teamPlayersFilter = { rosterId: game.rosters[game.teamId].id };
-                            var teamPlayerList = players.load(teamPlayersFilter).then(function() {
-
-                                var teamPlayers = players.getList(teamPlayersFilter);
-                                data.teamPlayers = teamPlayers;
-                                data.gamePlayerLists[game.teamId] = teamPlayers;
-                            });
-
-                            var opposingTeamPlayersFilter = { rosterId: game.rosters[game.opposingTeamId].id };
-                            var opposingTeamPlayerList = players.load(opposingTeamPlayersFilter).then(function() {
-
-                                var opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
-                                data.opposingTeamPlayers = opposingTeamPlayers;
-                                data.gamePlayerLists[game.opposingTeamId] = opposingTeamPlayers;
-                            });
+                            var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
+                            var loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
 
                             var playsFilter = { gameId: game.id };
+                            var loadPlays = plays.load(playsFilter);
 
-                            var playsList = plays.load(playsFilter).then(function() {
-
-                                data.plays = plays.getList(playsList);
-                            });
-
-                            return $q.all([teamPlayerList, opposingTeamPlayerList, playsList]).then(function() {
-                                return $q.all(data);
-                            });
+                            return $q.all([loadTeamPlayers, loadOpposingTeamPlayers, loadPlays]);
                         });
                     }
                 ]
@@ -92,24 +64,35 @@ Breakdown.config([
 ]);
 
 Breakdown.controller('Athlete.GameArea.Breakdown.controller', [
-    '$scope', '$state', '$stateParams', 'LeaguesFactory', 'GamesFactory', 'PlaysFactory', 'FiltersetsFactory', 'Athlete.GameArea.Breakdown.Data',
-    function controller($scope, $state, $stateParams, leagues, games, plays, filtersets, data) {
+    '$scope', '$stateParams', 'LeaguesFactory', 'FiltersetsFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'PlayManager', 'ReelsFactory',
+    function controller($scope, $stateParams, leagues, filtersets, teams, games, players, plays, playManager, reels) {
 
-        $scope.gameId = $state.params.id;
-        $scope.videoTitle = 'filmBreakdown';
-        $scope.data = data;
-        $scope.teamId = data.game.teamId;
-        $scope.leagues = leagues.getCollection();
-        $scope.league = $scope.leagues[$scope.team.leagueId];
-        $scope.expandAll = false;
+        var gameId = $stateParams.id;
+        var game = games.get(gameId);
+        $scope.game = game;
 
-        //Player List
-        $scope.teamPlayerList = data.gamePlayerLists[data.game.teamId];
-        $scope.opposingPlayerList = data.gamePlayerLists[data.game.opposingTeamId];
+        var team = teams.get(game.teamId);
+        $scope.league = leagues.get(team.leagueId);
+        $scope.reels = reels.getList();
 
-        //Plays
-        $scope.totalPlays = angular.copy(data.plays);
+        if (game.isDelivered()) {
+            $scope.filterset = filtersets.get($scope.league.filterSetId);
+        }
+
+        // Players
+        var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
+        $scope.teamPlayers = players.getList(teamPlayersFilter);
+
+        var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
+        $scope.opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
+
+        // Plays
+        var playsFilter = { gameId: game.id };
+        $scope.totalPlays = plays.getList(playsFilter);
         $scope.plays = $scope.totalPlays;
 
+        $scope.filteredPlaysIds = [];
+
+        $scope.expandAll = false;
     }
 ]);

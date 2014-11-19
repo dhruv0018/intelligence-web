@@ -43,7 +43,6 @@
   }
 
   div.main-highlight{
-    height: calc(~"100% - 50px");
     
     .game-area-game-information {
       position: relative;
@@ -85,7 +84,7 @@
 
     .play-count{
       border-right: 1px solid @gray-lighter;
-      width:290px;
+      width: 420px;
       padding-left: 20px;
       padding-right: 20px;
       letter-spacing: normal;
@@ -152,54 +151,6 @@
         .icon-chevron-down {
           font-size: 12px;
           margin-left: 5px;
-        }
-      }
-    }
-
-  }
-
-  .game-area-film{
-    height: calc(~"100% - 55px");
-
-    .player{
-      padding-top:5%;
-      width: 70%;
-      margin: auto;
-    }
-
-    .breakdown-player {
-      padding-left:10%;
-      display: inline-block;
-    }
-
-    .playlist {
-
-      .expandrow {
-        position: absolute;
-        bottom: 0px;
-        border-top: thin solid @gray-border;
-        background-color: white;
-        width: 100%;
-        height: 50px;
-        padding: 0px 5px 0px 5px;
-
-        button {
-          .btn;
-          .btn-link;
-          font-size: 16px;
-          font-weight: 400;
-          letter-spacing: 0.01em;
-          padding-top: 10px;
-          padding-left: 0;
-          padding-right: 0;
-          padding-bottom: 10px;
-          border-left-width: 0;
-
-          &:focus,
-          &:hover {
-
-              text-decoration: none;
-          }
         }
       }
     }
@@ -550,3 +501,34 @@
   }
 }
 
+button.play-all-plays {
+
+  margin-left: 75px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0;
+  background: #ffffff;
+  border: 0;
+
+  .play-all-text {
+    padding: 2px 2px 2px 8px;
+  }
+
+  .on, .off {
+    padding: 4px;
+    display: inline-block;
+    color: #e1e1e1;
+    background: #f9f9f9;
+  }
+
+  .on.chosen {
+    background: #54D14F;
+    color: #ffffff;
+  }
+
+  .off.chosen {
+    background: @brand-primary;
+    color: #ffffff;
+  }
+
+}

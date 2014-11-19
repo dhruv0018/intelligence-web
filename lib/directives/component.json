@@ -20,11 +20,11 @@
         "team-info",
         "coach-info",
         "thumbnail",
-        "roster",
         "film",
         "date",
         "add-time",
         "sport-placeholder",
+        "arena-placeholder",
         "role-icon",
         "add-resource",
         "mascot-placeholder",
@@ -36,6 +36,7 @@
         "formation-chart",
         "arena",
         "managers",
+        "xy-coordinates",
         "loading",
         "feedback-modal",
         "open-modal",
@@ -52,8 +53,14 @@
         "reel-play",
         "player-information",
         "film-home-tabs",
+        "plays-filters",
+        "uploading-controls",
+        "upload-status",
+        "kvs-uploader",
         "profile",
-        "plays-filters"
+        "film-header",
+        "plays-filters",
+        "draggable"
     ],
     "scripts": [
         "index.js"

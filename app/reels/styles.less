@@ -1,54 +1,66 @@
 @import (reference) "main.less";
 
-aside.reels-playlist {
-    .pull-left;
-    letter-spacing: normal;
-    width: 320px;
-    height: 100%;
-    border-right: solid 1px #EEE;
-    overflow: scroll;
-}
 
-.reel-edit-controls {
-    
-    padding: 10px;
+.reels-player-area {
 
-    .save-edit {
-        color: @brand-success;
+    flex-direction: column;
+
+    .main-highlight {
+        display: flex;
+        flex: 1;
+        overflow-x: scroll;
     }
-}
 
-.player.reels-player {
-    .pull-left;
+    header {
 
-    margin: 50px 0 0 100px;
-}
+        border-bottom: 1px solid @gray-border;
+        background-color: #f7f8f8;
+        padding: 15px;
+        display: flex;
+        height: 50px;
 
-.reels-player-area header {
+        h3 {
+            color: @brand-blue;
+            padding: 0;
+            margin: 0 0 10px 0;
 
-    border-bottom: 1px solid @gray-border;
-    background-color: #f7f8f8;
-    padding: 15px;
-    height: 50px;
+            span {
+                font-weight: 400;
+            }
+        }
 
-    h3 {
-        color: @brand-blue;
-        padding: 0;
-        margin: 0 0 10px 0;
-
-        span {
-            font-weight: 400;
+        .delete-reel {
+            margin-left: auto;
+            color: @brand-danger;
+            cursor: pointer;
         }
     }
 
-    .delete-reel {
-        .pull-right;
-        color: @brand-danger;
-        cursor: pointer;
-    }
-}
- 
-.reels-player-area .main-highlight {
-    height: calc(~"100% - 50px");
-}
+    aside.reels-playlist {
+        display: flex;
+        background: #fff;
+        flex-direction: column;
+        letter-spacing: normal;
+        width: 320px;
+        border-right: solid 1px #EEE;
+        overflow: scroll;
 
+        .reel-edit-controls {
+        
+            padding: 10px;
+            
+            .save-edit {
+                color: @brand-success;
+            }
+        }
+
+        .reel-plays-container {
+        }
+    }
+
+    .player.reels-player {
+        display: flex;
+        flex: 1;
+        margin: 1%;
+    }
+} 

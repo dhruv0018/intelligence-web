@@ -52,10 +52,22 @@
         display: none;
     }
 
+    .public-view {
+        line-height: 61px;
+        padding: 0px 20px;
+        letter-spacing: normal;
+
+        .go-to-login {
+            margin-right: 10px;
+            padding-right: 10px;
+            border-right: thin solid @gray-border;
+        }
+    }
+
     .role-dropdown {
 
         .dropdown;
-        padding-left: 20px;
+        padding-left: 25px;
 
         .role-title {
             .head-coach {
@@ -167,7 +179,8 @@ and (min-width: 1280px) {
 
         .role-dropdown > .dropdown-toggle {
 
-            .role-title {
+            .role-title,
+            .role-name {
 
                 display: block;
             }
@@ -218,12 +231,6 @@ and (min-width: 1280px) {
 
             height: @header-lg-height;
         }
-
-        .dropdown-toggle img,
-        .dropdown-menu img {
-
-            margin-top: 5.5px;
-        }
     }
 }
 
@@ -235,10 +242,16 @@ and (max-height: 480px) {
 
         .navbar-header {
 
+            width: auto;
+
             .navbar-brand {
 
                 padding: 5px;
             }
+        }
+
+        .public-view {
+            line-height: 31px;
         }
 
         .role-title {
@@ -246,7 +259,8 @@ and (max-height: 480px) {
             line-height: @header-sm-height;
         }
 
-        .role-dropdown > .dropdown-toggle img {
+        .role-dropdown > .dropdown-toggle img,
+        .role-icon {
 
             width: 20px;
             height: 20px
@@ -290,3 +304,142 @@ and (min-width: 1280px) {
     }
 }
 
+@menu-item-indent: 49px;
+@submenu-item-indent: @menu-item-indent + 30px;
+
+/* Screens < 1024px wide */
+@media only screen
+and (max-width: 1024px) {
+
+    menu.navbar-nav,
+    .public-view {
+        display: none;
+    }
+
+    .navbar-left {
+        position: static !important;
+    }
+
+    .navbar-header {
+        /* 
+         * Hack to center logo
+         * window.width: 100%, 
+         * .navbar-left: 95px, 
+         * .navbar-header: 60px,
+         * .navbar-right: 111px
+         */
+        margin-left: calc(~"(100% - 111px - 60px - 111px)/2");
+        border-right: none !important; // Remove default styling
+
+        &.navbar-brand-lg {
+            /* 
+             * Hack to center logo
+             * window.width: 100%,
+             * .navbar-brand-lg: 185px
+             */
+            margin-left: calc(~"(100% - 185px)/2");
+        }
+    }
+
+    .mobile-nav {
+
+        .dropdown-toggle {
+            width: 111px;
+            border: none; // Remove default styling
+            background-color: transparent; // Remove default styling
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .dropdown-menu {
+            width: @screen-xs;
+            margin: 0 auto;
+            padding: 0; // Remove default styling
+            border-top: 1px solid @gray-border;
+
+            li {
+                width: 100%;
+                border: none;
+                text-align: left;
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid @gray-border;
+                }
+
+                button {
+                    margin-left: @menu-item-indent;
+                }
+
+                a {
+                    padding-left: @menu-item-indent;
+                    text-align: left;
+                }
+
+                &.active a {
+                    background-color: @navbar-default-link-hover-bg;
+                    color: @brand-primary;
+                }
+            }
+        }
+
+        .mobile-submenu-toggle {
+            cursor: pointer;
+        }
+
+        .mobile-submenu {
+            list-style-type: none; // Remove default styling
+            padding: 0; // Remove default styling
+            margin: 0; // Remove default styling
+
+            li {
+
+                &:first-child {
+                    border-top: 1px solid @gray-border;
+                }
+
+                a {
+                    display: block;
+                    padding: 3px 20px; // Standardize <li> height
+                    padding-left: @submenu-item-indent;
+                    color: @gray-dark;
+                    text-align: left;
+                    text-decoration: none;
+
+                    &:hover {
+                        background-color: @navbar-default-link-hover-bg;
+                    }
+                }
+            }
+        }
+
+        .navbar-btn {
+            margin: 15px 0; // Standardize <li> height
+        }
+    }
+}
+
+/* Screens >= 1024px wide */
+@media only screen
+and (min-width: 1025px) {
+
+    .mobile-nav {
+        display: none;
+    }
+}
+
+.navbar-header.public {
+    display: none;
+}
+
+.navbar-brand-lg {
+    border-right: none !important;
+
+    .navbar-brand {
+        width: 185px !important;
+        padding: 10px !important;
+    }
+
+    .icon-krossover-logo-tagline {
+        height: 40px;
+    }
+}
