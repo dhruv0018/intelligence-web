@@ -47,8 +47,26 @@ Queue.service('Admin.Queue.Data.Dependencies', [
             sports: sports.load(),
             leagues: leagues.load(),
             users: users.load({ 'relatedGameStatus[]': statuses }),
-            teams: teams.load({ 'relatedGameStatus[]': statuses }),
-            games: games.load({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
+            games: games.load({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id }),
+
+            get teams() {
+
+                return this.games.then(function() {
+
+                    var teamIds = [];
+
+                    var gamesList = games.getList({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id });
+
+                    gamesList.forEach(function(game) {
+
+                        teamIds.push(game.teamId);
+                        teamIds.push(game.opposingTeamId);
+                        teamIds.push(game.uploaderTeamId);
+                    });
+
+                    return teams.load(teamIds);
+                });
+            },
         };
 
         return Data;

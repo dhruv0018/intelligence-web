@@ -1,6 +1,6 @@
 {
     "oauth": {
-        "uri": "//localhost:4436/intelligence-api/oauth/",
+        "uri": "https://localhost:4436/intelligence-api/oauth/",
         "user": {
             "id": "cid",
             "secret": "csecret",
@@ -16,7 +16,7 @@
         "state": "xyz"
     },
     "api": {
-        "uri": "//localhost:4436/intelligence-api/v1/"
+        "uri": "https://localhost:4436/intelligence-api/v1/"
     },
     "kvs": {
     },
@@ -70,7 +70,13 @@
             "moreQuestions": {
                 "uri": "http://support.krossover.com/customer/portal/emails/new"
             }
-        }
+        },
+        "sleep": {
+            "mac": "http://support.krossover.com/customer/portal/articles/1642640-turning-off-your-computer-s-sleep-settings",
+            "pc": "http://support.krossover.com/customer/portal/articles/1642640-turning-off-your-computer-s-sleep-settings"
+        },
+        "speedTest": "http://support.krossover.com/customer/portal/articles/1642636-testing-your-upload-speed",
+        "finalCutPro": " http://vimeo.com/41165826"
     },
     "indexing": {
         "video": {
