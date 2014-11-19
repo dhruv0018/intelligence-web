@@ -36,6 +36,20 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reel;
             },
 
+            getByTeam: function(teamId) {
+
+                teamId = teamId || session.getCurrentTeamId();
+
+                if (!teamId) throw new Error('No teamId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderTeamId == teamId;
+                });
+            },
+
             addPlay: function(play) {
                 if (this.plays.indexOf(play.id) === -1) {
                     this.plays.push(play.id);
