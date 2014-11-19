@@ -51,15 +51,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
             getMyReels: function(reels) {
                 var self = this;
 
-                var myReels = [];
+                reels = reels || self.getList();
 
-                reels.forEach(function(reel, index) {
-                    if (reel.uploaderUserId == session.currentUser.id) {
-                        myReels.push(reel);
-                    }
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderUserId == session.currentUser.id;
                 });
-
-                return myReels;
             },
             shareWithUser: function(user) {
 
