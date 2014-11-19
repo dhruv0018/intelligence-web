@@ -61,13 +61,9 @@ Clips.config([
 
                                 var game = games.get(gameId);
 
-                                var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
-                                var loadTeamPlayers = players.load(teamPlayersFilter);
+                                var playersPromise = players.load({ gameId: gameId });
 
-                                var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
-                                var loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
-
-                                return teams.load([game.teamId, game.opposingTeamId]).then(function() {
+                                var teamsPromise = teams.load([game.teamId, game.opposingTeamId]).then(function() {
 
                                     var team = teams.get(game.teamId);
 
@@ -78,6 +74,8 @@ Clips.config([
                                         return tagsets.load(league.tagSetId);
                                     });
                                 });
+
+                                return $q.all([playersPromise, teamsPromise]);
                             });
 
                         });
