@@ -7,6 +7,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
 
 var ROLE_ID = {
 
+    0: 'ANONYMOUS',
     1: 'SUPER_ADMIN',
     2: 'ADMIN',
     9: 'COACH',
@@ -21,6 +22,7 @@ IntelligenceWebClient.constant('ROLE_ID', ROLE_ID);
 
 var ROLE_TYPE = {
 
+    ANONYMOUS: 0,
     SUPER_ADMIN: 1,
     ADMIN: 2,
     COACH: 9,
@@ -34,6 +36,15 @@ var ROLE_TYPE = {
 IntelligenceWebClient.constant('ROLE_TYPE', ROLE_TYPE);
 
 var ROLES = {
+
+    ANONYMOUS: {
+
+        type: {
+
+            id: ROLE_TYPE.ANONYMOUS,
+            name: 'Anonymous'
+        }
+    },
 
     SUPER_ADMIN: {
 
@@ -136,3 +147,10 @@ IntelligenceWebClient.constant('INDEXER_GROUPS', INDEXER_GROUPS);
 
 IntelligenceWebClient.constant('ROLES', ROLES);
 
+var ANONYMOUS_USER = {
+
+    id: 0,
+    role: ROLE_TYPE.ANONYMOUS
+};
+
+IntelligenceWebClient.constant('ANONYMOUS_USER', ANONYMOUS_USER);
