@@ -39,7 +39,7 @@
         		<i class="icon icon-globe"></i>
         	</div>
             <div class="temp-wufoo-btn">
-                <button class="btn btn-primary" data-ng-click="withWufoo = true">Film Room Sharing</button>
+                <button class="btn btn-primary" data-ng-show="isGame" data-ng-click="withWufoo = true">Film Room Sharing</button>
             </div>
         </div>
 
@@ -61,7 +61,8 @@
         		<div class="shared-with" data-ng-repeat="share in film.getUserShares()">
         			<strong>{{users[share.sharedWithUserId].firstName}} {{users[share.sharedWithUserId].lastName}}</strong>
         			<span class="pull-right">
-        				Sharing raw film
+        				<span data-ng-show="isGame">Sharing raw film</span>
+                        <span data-ng-show="!isGame">Sharing reel</span>
         				<i class="icon icon-remove" data-ng-click="shareRevoke(users[share.sharedWithUserId])"></i>
         			</span>
         		</div>
@@ -74,7 +75,8 @@
 
         <div class="sharing-with-public-container" data-ng-show="withPublic">
             <div class="public-link-box" data-ng-class="{inActive:!linkActive}">
-                <a href="/intelligence/g/{{shortId}}" target="_blank">krossover.com/g/{{shortId}}</a>
+                <a data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">krossover.com/g/{{shortId}}</a>
+                <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">krossover.com/r/{{shortId}}</a>
             </div>
             <div class="activate-row">
                 <button class="btn btn-primary" data-ng-if="!linkActive" data-ng-click="activateLink()">Activate Link</button>
