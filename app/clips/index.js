@@ -108,8 +108,8 @@ Clips.controller('Clips.controller', [
 
             // Krossover Play data-attributes
             $scope.league = leagues.get($scope.team.leagueId);
-            $scope.teamPlayers = games.getTeamPlayers();
-            $scope.opposingTeamPlayers = games.getOpposingTeamPlayers();
+            $scope.teamPlayers = $scope.game.getTeamPlayers();
+            $scope.opposingTeamPlayers = $scope.game.getOpposingTeamPlayers();
 
             // Krossover VideoPlayer data-attributes
             $scope.sources = $scope.play.getVideoSources();
