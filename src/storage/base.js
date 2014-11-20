@@ -7,9 +7,47 @@ var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.value('RootStorage', Object.create(null));
 
+IntelligenceWebClient.factory('UserStorage', [
+    '$injector', 'SessionService', 'RootStorage',
+    function($injector, session, root) {
+
+        var UserStorage = Object.create(null, {
+
+            user: {
+
+                enumerable: false,
+
+                get: function() {
+
+                    session = session || $injector.get('SessionService');
+
+                    var user = session.currentUser;
+
+                    root[user.id] = root[user.id] || Object.create(null);
+
+                    return root[user.id];
+                },
+
+                set: function(value) {
+
+                    session = session || $injector.get('SessionService');
+
+                    var user = session.currentUser;
+
+                    root[user.id] = root[user.id] || Object.create(null);
+
+                    root[user.id] = value;
+                }
+            }
+        });
+
+        return UserStorage;
+    }
+]);
+
 IntelligenceWebClient.factory('BaseStorage', [
-    '$injector', '$localForage', 'RootStorage',
-    function($injector, $localForage, root) {
+    '$injector', '$localForage', 'UserStorage',
+    function($injector, $localForage, user) {
 
         var session;
 
@@ -43,24 +81,12 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 get: function() {
 
-                    session = session || $injector.get('SessionService');
-
-                    var user = session.currentUser;
-
-                    root[user.id] = root[user.id] || Object.create(null);
-
-                    return root[user.id];
+                    return user.user;
                 },
 
                 set: function(value) {
 
-                    session = session || $injector.get('SessionService');
-
-                    var user = session.currentUser;
-
-                    root[user.id] = root[user.id] || Object.create(null);
-
-                    root[user.id] = value;
+                    user.user = value;
                 }
             },
 
