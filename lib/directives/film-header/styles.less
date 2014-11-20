@@ -53,7 +53,17 @@
         }
     }
 
-    .film-title {
+    .meta-data {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .film-title-mobile {
+        display: none;
+    }
+
+    .film-title-desktop {
         flex: 1;
         margin-left: 20px;
         font-weight: @headings-font-weight;
@@ -87,7 +97,11 @@ and (max-width: @screen-sm) {
             width: @screen-sm;
         }
 
-        .film-title,
+        .film-title-mobile {
+            display: block;
+        }
+
+        .film-title-desktop,
         .social-media {
             display: none;
         } 

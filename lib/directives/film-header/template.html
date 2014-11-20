@@ -1,6 +1,9 @@
 <div class="film-header" data-ng-if="isPublic">
 	<div class="film-info">
-		<h5>{{film.datePlayed | date: 'MMM. d, yyyy'}}</h5>
+		<div class="meta-data">
+			<h5>{{film.datePlayed | date: 'MMM. d, yyyy'}}</h5>
+			<div class="film-title-mobile">{{filmTitle}}</div>
+		</div>
 		<div class="team">
 			<h3 class="team-name" data-ng-class="{winner: opponentWon}">{{opposingTeam.name}}</h3>
 			<span>
@@ -16,7 +19,7 @@
 			</span>
 		</div>
 	</div>
-	<div class="film-title">{{filmTitle}}</div>
+	<div class="film-title-desktop">{{filmTitle}}</div>
 	<div class="social-media">
 		<a href="http://twitter.com/Krossovr" target="_blank"><i class="icon icon-twitter-square"></i></a>
 		<a href="http://www.facebook.com/KrossoverIntelligence" target="_blank"><i class="icon icon-facebook-square"></i></a>
