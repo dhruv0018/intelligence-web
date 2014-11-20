@@ -102,6 +102,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             getStartTags: function() {
 
+                var self = this;
+
                 var tags = this.tags;
 
                 return Object.keys(tags)
@@ -113,7 +115,26 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 .filter(function(tag) {
 
-                    return tag.isStart;
+                    return self.isStartTag(tag.id);
+                });
+            },
+
+            getFloatTags: function() {
+
+                var self = this;
+
+                var tags = this.tags;
+
+                return Object.keys(tags)
+
+                .map(function(key) {
+
+                    return tags[key];
+                })
+
+                .filter(function(tag) {
+
+                    return self.isFloatTag(tag.id);
                 });
             },
 
@@ -127,12 +148,32 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                     return tag.children.map(function(childId) {
 
                         return tags[childId];
-                    });
+                    })
+
+                    .concat(this.getFloatTags());
 
                 } else {
 
                     return this.getStartTags();
                 }
+            },
+
+            isStartTag: function(tagId) {
+
+                var tags = this.tags;
+                var tag = tags[tagId];
+
+                return tag.isStart;
+            },
+
+            isFloatTag: function(tagId) {
+
+                var tags = this.tags;
+                var tag = tags[tagId];
+
+                return tag.isStart === false &&
+                       tag.isEnd === false &&
+                       tag.children.length === 0;
             },
 
             isEndTag: function(tagId) {

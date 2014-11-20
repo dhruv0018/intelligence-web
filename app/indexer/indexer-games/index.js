@@ -59,20 +59,18 @@ Games.service('Indexer.Games.Data.Dependencies', [
     'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory',
     function(session, users, games, teams, leagues, sports) {
 
-        var currentUser = session.currentUser;
+        var userId = session.currentUser.id;
+
         var Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
-            teams: teams.load({ relatedUserId: currentUser.id }),
-            users: users.load({ relatedUserId: currentUser.id }),
-            games: games.load({
-                assignedUserId: currentUser.id
-            })
+            teams: teams.load({ relatedUserId: userId }),
+            users: users.load({ relatedUserId: userId }),
+            games: games.load({ assignedUserId: userId })
         };
 
         return Data;
-
     }
 ]);
 

@@ -73,10 +73,12 @@ Coach.service('Coach.Data.Dependencies', [
             reels: reels.load({
                 teamId: teamId,
                 userId: userId
+            }),
+            remainingBreakdowns:  teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
+                session.currentUser.remainingBreakdowns = breakdownData;
+                return breakdownData;
             })
         };
-
-
 
         Data.playersList = $q.all(data).then(function() {
 
