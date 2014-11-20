@@ -50,7 +50,7 @@
                             data-opposing-team="getOpposingTeam(playId)"
                             data-league="getLeague(playId)"
                             data-date-played="getDatePlayed(playId)"
-                            data-ng-class="{'last': $last}"
+                            data-ng-class="{'last': $last, 'edit-mode': editMode}"
                             data-ng-repeat="playId in reel.plays"
                             data-is-editable="false">
                         </krossover-play>
