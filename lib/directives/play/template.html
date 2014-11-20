@@ -3,10 +3,14 @@
     <div data-ng-if="isReelsPlay" class="play play__reel" data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }">
 
         <div class="playHeadingContainer">
-            <div class="playHeading">
+
+            <div class="playHeading" data-ng-click="selectPlay()">
+    
                 <h4 class="title">
-                    <span class="summary" ng-if="play.summary.items && play.summary.items.length > 0">{{ play.summary.items[0] }} - </span>
-                    <span class="datePlayed">{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
+                    <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
+                        <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
+                    </div>
+                    <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                 </h4>
 
                 <h5 class="subtitle">
@@ -16,7 +20,19 @@
             </div>
 
             <a class="playplay" data-ui-sref="Clips({ id: play.id })"><i class="icon icon-play-circle"></i></a>
-
+            
+            <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
+            WANT TO SHOW THE EVENTS ON MOBILE -->
+            <krossover-events
+                data-ng-hide="true"
+                data-auto-advance="autoAdvance"
+                data-game="game"
+                data-plays="plays"
+                data-play="play"
+                data-events="play.events"
+                data-league="league"
+                data-is-editable="isEditable">
+            </krossover-events>
         </div>
 
     </div>
@@ -32,9 +48,11 @@
                 <div class="playHeading" data-ng-click="selectPlay()">
 
                     <h4 class="title">
-                        <span ng-show="editFlag">{{index + 1}}.</span>
-                        <span class="summary" ng-if="play.summary.items && play.summary.items.length > 0">{{ play.summary.items[0] }} - </span>
-                        <span class="datePlayed">{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
+                        <span ng-show="editFlag">{{index + 1}}.&nbsp;</span>
+                        <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
+                            <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
+                        </div>
+                        <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                     </h4>
 
                     <h5 class="subtitle">

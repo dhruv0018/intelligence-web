@@ -40,13 +40,15 @@ Indexing.run([
  * @type {service}
  */
 Indexing.service('Indexing.Data.Dependencies', [
-    'Indexer.Games.Data.Dependencies', 'TeamsFactory', 'LeaguesFactory', 'TagsetsFactory',
-    function(data, teams, leagues, tagsets) {
+    'Indexer.Games.Data.Dependencies', 'SessionService', 'TeamsFactory', 'LeaguesFactory', 'TagsetsFactory',
+    function(data, session, teams, leagues, tagsets) {
+
+        var userId = session.currentUser.id;
 
         var Data = {
 
             games: data.games,
-            teams: teams.load(),
+            teams: teams.load({ relatedUserId: userId }),
             leagues: leagues.load(),
             tagsets: tagsets.load()
         };

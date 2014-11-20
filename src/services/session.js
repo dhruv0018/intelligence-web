@@ -26,6 +26,32 @@ IntelligenceWebClient.service('SessionService', [
         /* Memory storage for previous user. */
         this.previousUser = null;
 
+        this.getCurrentUser = function() {
+
+            return this.currentUser;
+        };
+
+        this.getCurrentRole = function() {
+
+            var currentUser = this.getCurrentUser();
+
+            return currentUser.currentRole;
+        };
+
+        this.getCurrentUserId = function() {
+
+            var currentUser = this.getCurrentUser();
+
+            return currentUser.id;
+        };
+
+        this.getCurrentTeamId = function() {
+
+            var currentRole = this.getCurrentRole();
+
+            return currentRole.teamId;
+        };
+
         /**
          * Converts a user resource object to an encoded string representing it.
          * @param {Object} user - a user resource object.

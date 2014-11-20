@@ -121,7 +121,14 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.VIEWPORTS = VIEWPORTS;
 
         // Refresh the playManager
-        playsManager.reset(plays);
+        playsManager.reset();
+
+        // Add each play individually to the playsManager to keep play order consistent with the reels ordering.
+        console.log('$scope.reel.plays', $scope.reel.plays);
+        angular.forEach($scope.reel.plays, function(playId) {
+            playsManager.addPlay(playsFactory.get(playId));
+        });
+        console.log('playsManager.plays', playsManager.plays);
 
         var editModeRestrictions = {
             DELETABLE: 'DELETABLE',

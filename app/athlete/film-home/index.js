@@ -42,30 +42,13 @@ FilmHome.config([
             },
             resolve: {
                 'Athlete.Data': [
-                    '$q', 'Athlete.Data.Dependencies', 'Athlete.FilmHome.ReelsData',
-                    function($q, data, reelsData) {
-                        angular.extend(data, reelsData);
+                    '$q', 'Athlete.Data.Dependencies',
+                    function($q, data) {
                         return $q.all(data);
                     }
                 ]
             }
         });
-    }
-]);
-
-FilmHome.service('Athlete.FilmHome.ReelsData', [
-    '$q', 'SessionService', 'ReelsFactory',
-    function($q, session, reels) {
-
-        var teamId = session.currentUser.currentRole.teamId;
-
-        var Data = {
-            reels: reels.load({
-                teamId: teamId
-            }),
-        };
-
-        return Data;
     }
 ]);
 
