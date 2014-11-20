@@ -4,11 +4,13 @@
 
         <div class="playHeadingContainer">
             <div class="playHeading" data-ng-click="selectPlay()">
-
+    
                 <h4 class="title">
                     <span ng-show="editFlag">{{index + 1}}.&nbsp;</span>
-                    <span class="summary" ng-if="play.summary.items && play.summary.items.length > 0">{{ play.summary.items[0] }} - </span>
-                    <span class="datePlayed">{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
+                    <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
+                        <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
+                    </div>
+                    <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                 </h4>
 
                 <h5 class="subtitle">
