@@ -103,16 +103,20 @@ Info.controller('Coach.Game.Info.controller', [
             opposingTeam: ($scope.teams[$scope.game.opposingTeamId]) ? $scope.teams[$scope.game.opposingTeamId] : teams.create({isCustomerTeam: false, leagueId: $scope.league.id})
         };
 
+        //stores the previous team name
+        $scope.previousTeamName = $scope.gameTeams.team.name;
+        $scope.previousOpposingTeamName = $scope.gameTeams.opposingTeam.name;
+
         //Save functionality
         $scope.save = function() {
 
             var promises = {};
 
-            if (!$scope.game.teamId || $scope.gameTeams.team.name !== $scope.teams[$scope.game.teamId].name) {
+            if (!$scope.game.teamId || $scope.gameTeams.team.name !== $scope.previousTeamName) {
                 promises.team = $scope.gameTeams.team.save();
             }
 
-            if (!$scope.game.opposingTeamId ||$scope.gameTeams.opposingTeam.name !== $scope.teams[$scope.game.opposingTeamId].name) {
+            if (!$scope.game.opposingTeamId ||$scope.gameTeams.opposingTeam.name !== $scope.previousOpposingTeamName) {
                 promises.opposingTeam = $scope.gameTeams.opposingTeam.save();
             }
 
