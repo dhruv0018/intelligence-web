@@ -467,10 +467,10 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var model = $injector.get(self.model);
 
-                return model.resetPassword({
-                    token: token,
-                    password: password
-                }).$promise;
+                return model.resetPassword(
+                    {token: token},
+                    {password: password}
+                ).$promise;
             }
         };
 

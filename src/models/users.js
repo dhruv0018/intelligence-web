@@ -15,14 +15,13 @@ IntelligenceWebClient.factory('UsersResource', [
 
             {
                 id: '@id',
-                unique: '@unique',
-                token: '@token'
+                unique: '@unique'
 
             }, {
                 create: { method: 'POST' },
                 update: { method: 'PUT' },
                 resendEmail: { method: 'POST', url: config.api.uri + 'users/:unique' + '/emailRequest' },
-                resetPassword: { method: 'POST', url: config.api.uri + 'users/password-reset/:token', headers: {'Content-type': 'application/x-www-form-urlencoded'} }
+                resetPassword: { method: 'POST', url: config.api.uri + 'users/password-reset/:token', params: {token: '@token'} }
             }
         );
 
