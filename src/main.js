@@ -23,6 +23,7 @@ require('./flow');
 require('./users');
 require('./routes');
 require('./errors');
+require('./device');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
@@ -40,6 +41,7 @@ require('./services/alerts');
 require('./services/scripts');
 require('./services/indexing');
 require('./services/date');
+require('./services/detectDevice');
 
 require('./constants/users');
 require('./constants/games');
@@ -52,6 +54,7 @@ require('./constants/turnaroundtimes');
 require('./constants/football/gaps');
 require('./constants/football/zones');
 require('./constants/sports');
+require('./constants/device');
 
 require('./models/users');
 require('./models/sports');

@@ -6,6 +6,7 @@
     data-vg-update-volume="onUpdateVolume"
     data-vg-update-state="onUpdateState"
     data-vg-autoplay="config.autoPlay"
+    data-is-mobile="isMobile"
     data-vg-sources="sources">
 
     <div class="error-video" data-ng-hide="videoTitle === 'reelsPlayer' || sources.length"><h1>Could not load video</h1></div>
@@ -14,7 +15,7 @@
 
     <data-vg-buffering></data-vg-buffering>
 
-    <div class="controls-container-full">
+    <div class="controls-container-full" data-ng-if="!isMobile">
         <data-vg-scrubbar>
             <data-vg-scrubbarcurrenttime></data-vg-scrubbarcurrenttime>
         </data-vg-scrubbar>
