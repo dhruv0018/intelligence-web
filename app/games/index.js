@@ -76,23 +76,10 @@ Games.config([
 Games.controller('Games.controller', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
     function controller($scope, $state, $stateParams, games, teams, users) {
-        var gameId = $stateParams.id;
-        $scope.game = games.get(gameId);
-        $scope.publiclyShared = false;
 
-        if ($scope.game.isSharedWithPublic()) {
-            $scope.publiclyShared = true;
-            $scope.team = teams.get($scope.game.teamId);
-            $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-
-            $scope.uploadedBy = users.get($scope.game.uploaderUserId);
-
-            $scope.sources = $scope.game.getVideoSources();
-            $scope.filmTitle = $scope.game.description;
-        }
-//        $scope.$watch('$scope.game', function() {
-//            $state.go('Games.RawFilm');
-//        });
+        $scope.$watch('$scope.game', function() {
+            $state.go('Games.RawFilm');
+        });
     }
 ]);
 

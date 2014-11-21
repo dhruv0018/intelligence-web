@@ -1,74 +1,78 @@
 @import (reference) "main.less";
 
-.public-game {
-    
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow-y: auto;
-    background-color: @content-bg;
-    
-    .player {
-        display: flex;
-        flex: 1;
-
-        .video-container {
-            margin-left: auto;
-            margin-right: auto;
-
-            data-videogular {
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-
-        @media (min-width: 850px) and (min-height: 685px) {
-            .video-container {
-                width: 850px;
-                height: 538px;
-            }
-
-            x-krossover-videoplayer {
-                height: 100%;
-            }
-        }
-
-        @media (max-width: 850px), (max-height: 685px) {
-            .video-container {
-                display: flex;
-                flex: 1;
-            }
-        }
-    }
-
-    .locked-game {
-        background-color: @content-bg;
-        width: 30%;
-        margin: auto;
-        margin-top: 40px;
-        padding: 10px;
-        border: thin solid @gray-border;
-        text-align: center;
-
-        i {
-            font-size: 100px;
-        }
-    }
+.public-game-container{
+  height: 100%;
 }
 
-/* Screens under 480px */
-@media only screen
-and (max-width: 479px) {
-    
-    .public-game {
-
-        .player {
-            display: block;
-            width: 100%;
-        }
-
-        .locked-game {
-            width: 80%;
-        }
-    }
-}
+//.public-game {
+//
+//    display: flex;
+//    flex-direction: column;
+//    height: 100%;
+//    overflow-y: auto;
+//    background-color: @content-bg;
+//
+//    .player {
+//        display: flex;
+//        flex: 1;
+//
+//        .video-container {
+//            margin-left: auto;
+//            margin-right: auto;
+//
+//            data-videogular {
+//                margin-left: auto;
+//                margin-right: auto;
+//            }
+//        }
+//
+//        @media (min-width: 850px) and (min-height: 685px) {
+//            .video-container {
+//                width: 850px;
+//                height: 538px;
+//            }
+//
+//            x-krossover-videoplayer {
+//                height: 100%;
+//            }
+//        }
+//
+//        @media (max-width: 850px), (max-height: 685px) {
+//            .video-container {
+//                display: flex;
+//                flex: 1;
+//            }
+//        }
+//    }
+//
+//    .locked-game {
+//        background-color: @content-bg;
+//        width: 30%;
+//        margin: auto;
+//        margin-top: 40px;
+//        padding: 10px;
+//        border: thin solid @gray-border;
+//        text-align: center;
+//
+//        i {
+//            font-size: 100px;
+//        }
+//    }
+//}
+//
+///* Screens under 480px */
+//@media only screen
+//and (max-width: 479px) {
+//
+//    .public-game {
+//
+//        .player {
+//            display: block;
+//            width: 100%;
+//        }
+//
+//        .locked-game {
+//            width: 80%;
+//        }
+//    }
+//}
