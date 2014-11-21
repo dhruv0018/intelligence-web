@@ -5,8 +5,9 @@
         <span class="delete-reel" ng-if="canUserDelete" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
     </header>
 
-    <div class="reel-body" ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
-        <div class="reel-edit-control-container" ng-if="canUserEdit">
+    <div class="reel-body">
+        
+        <div class="reel-edit-control-container" ng-if="canUserEdit && $root.viewport.name === VIEWPORTS.DESKTOP.name">
 
             <div class="reel-edit-controls">
 
@@ -23,6 +24,7 @@
             <krossover-sidebar>
 
                 <krossover-playlist-control
+                    data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name"
                     data-ng-hide="editMode">
                 </krossover-playlist-control>
 
@@ -35,10 +37,6 @@
                         data-draggable="editMode"
                         data-play="getPlay(playId)"
                         data-game="getGame(playId)"
-                        data-team="getHomeTeam(playId)"
-                        data-opposing-team="getOpposingTeam(playId)"
-                        data-team-players="[]"
-                        data-opposing-team-players="[]"
                         data-league="getLeague(playId)"
                         data-date-played="getDatePlayed(playId)"
                         data-ng-class="{'last': $last, 'edit-mode': editMode}"
@@ -52,39 +50,11 @@
                 
             </krossover-sidebar>
 
-            <div class="player reels-player">
+            <div class="player reels-player" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
                 <x-krossover-videoplayer class="reels-video-container" data-sources="[]"></x-krossover-videoplayer>
             </div>
 
         </div>
-
-    </div>
-
-    <div class="reel-body" ng-if="$root.viewport.name === VIEWPORTS.MOBILE.name">
-        
-        <krossover-sidebar>
-
-            <krossover-playlist>
-
-                <krossover-play
-                    data-edit-flag="editMode"
-                    data-is-reels-play="true"
-                    data-index="$index"
-                    data-draggable="editMode"
-                    data-play="getPlay(playId)"
-                    data-game="getGame(playId)"
-                    data-team="getHomeTeam(playId)"
-                    data-opposing-team="getOpposingTeam(playId)"
-                    data-league="getLeague(playId)"
-                    data-date-played="getDatePlayed(playId)"
-                    data-ng-class="{'last': $last}"
-                    data-ng-repeat="playId in reel.plays"
-                    data-is-editable="false">
-                </krossover-play>
-
-            </krossover-playlist>
-                
-        </krossover-sidebar>
 
     </div>
 
