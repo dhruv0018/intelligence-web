@@ -23,16 +23,18 @@ Game.run([
  * @type {service}
  */
 Game.service('Indexer.Game.Data.Dependencies', [
-    'Indexer.Games.Data.Dependencies', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'UsersFactory',
-    function(data, teams, leagues, sports, users) {
+    'SessionService', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory',
+    function(session, users, sports, leagues, teams, games) {
+
+        var userId = session.currentUser.id;
 
         var Data = {
 
-            games: data.games,
-            teams: teams.load(),
-            leagues: leagues.load(),
             sports: sports.load(),
-            users: users.load()
+            leagues: leagues.load(),
+            teams: teams.load({ relatedUserId: userId }),
+            users: users.load({ relatedUserId: userId }),
+            games: games.load({ assignedUserId: userId })
         };
 
         return Data;

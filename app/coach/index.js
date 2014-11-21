@@ -55,7 +55,7 @@ Coach.service('Coach.Data.Dependencies', [
     function($q, session, teams, reels, games, players, users, leagues, tagsets, positionsets, data, ROLE_TYPE, ROLES) {
 
         var userId = session.currentUser.id;
-        var teamId = currentUser.currentRole.teamId;
+        var teamId = session.currentUser.currentRole.teamId;
 
         var gamesForUser = games.load({
             uploaderTeamId: session.currentUser.currentRole.teamId
