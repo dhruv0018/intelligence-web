@@ -15,8 +15,9 @@ IntelligenceWebClient.config([
     function config($provide) {
 
         $provide.decorator('$log', [
-            '$delegate',
-            function($delegate) {
+            '$delegate', '$window',
+            function($delegate, $window) {
+                $delegate.decorated = false;
 
                 var decorate = function(method, decoratee) {
 
@@ -24,14 +25,26 @@ IntelligenceWebClient.config([
 
                         var args = Array.prototype.slice.call(arguments);
 
+                        //mapping track to every method for now until we can
+                        //figure out why console[method] isnt working
+                        $window.trackJs.track.apply(null, args);
+
+                        //calls the appropriate tracking method -- not working ATM
+                        //$window.trackJs.console[method].apply(null, args);
+
                         decoratee.apply(null, args);
                     };
                 };
 
-                ['log', 'debug', 'info', 'warn', 'error'].forEach(function(method) {
 
-                    $delegate[method] = decorate(method, $delegate[method]);
-                });
+                //async decoration
+                $delegate.initDecoration = function() {
+                    ['log', 'debug', 'info', 'warn', 'error'].forEach(function(method) {
+                        console.log($window);
+                        $delegate[method] = decorate(method, $delegate[method]);
+                    });
+                    $delegate.decorated = true;
+                };
 
                 return $delegate;
             }
