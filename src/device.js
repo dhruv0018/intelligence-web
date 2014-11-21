@@ -9,6 +9,8 @@ IntelligenceWebClient.run([
     'DEVICE', '$rootScope', '$window', 'DetectDeviceService',
     function run(DEVICE, $rootScope, $window, detectDevice) {
 
+        $rootScope.DEVICE = DEVICE.DESKTOP;
+
         if (detectDevice.Android()) {
             $rootScope.DEVICE = DEVICE.MOBILE;
             DEVICE.MOBILE.ANDROID = true;
