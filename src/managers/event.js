@@ -27,6 +27,22 @@ IntelligenceWebClient.service('EventManager', [
         this.current = angular.copy(model);
 
         /**
+         * Checks whether the event is a floating event.
+         * @returns - true if the event is floating event; false otherwise.
+         */
+        this.isFloatingEvent = function(event) {
+
+            event = event || this.current;
+
+            /* If there is no current event or the event hasn't been created
+             * then its can not be a floating event. */
+            if (!event || !event.tagId) return false;
+
+            /* Check if the given event is an end tag. */
+            return this.tagset.isFloatTag(event.tagId);
+        };
+
+        /**
          * Checks whether the event is an ending event.
          * @returns - true if the event is an end event; false otherwise.
          */
@@ -142,6 +158,26 @@ IntelligenceWebClient.service('EventManager', [
                 /* Check if the variable has a value. */
                 return !!variable.value;
             });
+        };
+
+        /**
+         * Gets the previous event.
+         * @returns {Object} the previous event, if there is one; null if not.
+         */
+        this.previousEvent = function(event) {
+
+            event = event || this.current;
+
+            playManager = playManager || $injector.get('PlayManager');
+
+            if (!playManager.current) return null;
+
+            /* Get the index of the current event in the current play. */
+            var index = playManager.current.events.indexOf(event);
+
+            if (index < 1) return null;
+
+            return playManager.current.events[index - 1];
         };
 
         /**

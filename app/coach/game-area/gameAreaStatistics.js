@@ -33,9 +33,14 @@ GameAreaStatistics.config([
             },
             resolve: {
                 'GameAreaStatistics.Data': [
-                    '$q', 'GameAreaStatistics.Data.Dependencies',
-                    function($q, data) {
-                        return $q.all(data);
+                    '$q', '$stateParams', 'Coach.Data.Dependencies', 'GamesFactory',
+                    function($q, $stateParams, data, games) {
+                        return $q.all(data).then(function(data) {
+                            return games.generateStats($stateParams.id).then(function(stats) {
+                                data.stats = stats;
+                                return data;
+                            });
+                        });
                     }
                 ]
             }
@@ -46,21 +51,9 @@ GameAreaStatistics.config([
     }
 ]);
 
-GameAreaStatistics.service('GameAreaStatistics.Data.Dependencies', [
-    '$stateParams', 'GamesFactory',
-    function($stateParams, games) {
-        var Data = {};
-
-        Data.stats = games.generateStats($stateParams.id);
-
-        return Data;
-    }
-]);
-
 GameAreaStatistics.controller('GameAreaStatisticsController', [
     '$scope', '$state', '$stateParams', 'GameAreaStatistics.Data', 'SPORTS',
     function controller($scope, $state, $stateParams, data, SPORTS) {
-
         $scope.gameLogTable = data.stats.gameLog;
         $scope.homeTeamStats = data.stats.homeTeamStats;
         $scope.awayTeamStats = data.stats.awayTeamStats;
