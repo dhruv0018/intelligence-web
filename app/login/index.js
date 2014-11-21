@@ -167,17 +167,12 @@ Login.controller('LoginController', [
 
             /* Login the user. */
             auth.loginUser(email, password, persist).then(function(user) {
-
                 if (user) {
-
                     /* If the user has more than one role, but has not selected
                      * a default one yet. */
-                    if (user.roles && user.roles.length > 1 && !user.defaultRole) {
-
+                    if (user.isActive() && !user.defaultRole) {
                         $state.go('roles', false);
-
                     } else {
-
                         account.gotoUsersHomeState(user);
                     }
 

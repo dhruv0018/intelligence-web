@@ -173,15 +173,38 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             next: function() {
 
+                var tagId;
+
                 this.showTags = false;
                 this.showScript = false;
                 this.isIndexing = false;
                 this.eventSelected = false;
 
-                /* Get the tagId of the current event. */
-                var tagId = eventManager.current.tagId;
+                /* If the event is a floating event. */
+                if (eventManager.isFloatingEvent()) {
 
-                /* Get the next set of tags based on the tag in the current event. */
+                    /* Get the previous event. */
+                    var previousEvent = eventManager.previousEvent();
+
+                    /* While the previous event is a float. */
+                    while (eventManager.isFloatingEvent(previousEvent)) {
+
+                        /* Get the previous event. */
+                        previousEvent = eventManager.previousEvent(previousEvent);
+                    }
+
+                    /* Get the tagId of the previous event. */
+                    tagId = previousEvent.tagId;
+                }
+
+                /* Otherwise; if the event is a normal event. */
+                else {
+
+                    /* Get the tagId of the current event. */
+                    tagId = eventManager.current.tagId;
+                }
+
+                /* Get the next set of tags. */
                 tagsManager.nextTags(tagId);
 
                 /* Snap video back to time of current event. */

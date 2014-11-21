@@ -53,7 +53,7 @@
 
                 <tbody>
 
-                    <tr data-ng-repeat="user in users">
+                    <tr data-ng-repeat="user in users | rolesFilter: filter track by user.id">
 
                         <td><div class="email">{{user.email}}</div></td>
 
@@ -63,13 +63,14 @@
 
                             <ul>
 
-                                <li data-ng-repeat="role in user.roles">
-
-                                    <span data-ng-if="Users.is(role, HEAD_COACH)">Head Coach, {{ teams[role.teamId].name }}</span>
-                                    <span data-ng-if="Users.is(role, ASSISTANT_COACH)">Assist. Coach, {{ teams[role.teamId].name }}</span>
-                                    <span data-ng-if="Users.is(role, ATHLETE)">Athlete, {{ sports[leagues[teams[role.teamId].leagueId].sportId].name }}</span>
-                                    <span data-ng-if="!Users.is(role, HEAD_COACH) && !Users.is(role, ASSISTANT_COACH) && !Users.is(role, ATHLETE)">{{role.type.name}}</span>
-
+                                <li data-ng-repeat="role in user.activeRoles()">
+                                    <!--only show the roles which have not ended-->
+                                    <span data-ng-show="!role.tenureEnd">
+                                        <span data-ng-if="Users.is(role, HEAD_COACH)">Head Coach, {{ teams[role.teamId].name }}</span>
+                                        <span data-ng-if="Users.is(role, ASSISTANT_COACH)">Assist. Coach, {{ teams[role.teamId].name }}</span>
+                                        <span data-ng-if="Users.is(role, ATHLETE)">Athlete, {{ sports[leagues[teams[role.teamId].leagueId].sportId].name }}</span>
+                                        <span data-ng-if="!Users.is(role, HEAD_COACH) && !Users.is(role, ASSISTANT_COACH) && !Users.is(role, ATHLETE)">{{role.type.name}}</span>
+                                    </span>
                                 </li>
 
                             </ul>

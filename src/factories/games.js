@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', '$q',
-    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, $q) {
+    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
+    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, players, $q) {
 
         var GamesFactory = {
 
@@ -61,8 +61,10 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 /* build lookup table of shares by userId shared with */
+                game.shares = game.shares || [];
+                game.sharedWithUsers = game.sharedWithUsers || {};
+
                 if (game.shares && game.shares.length) {
-                    game.sharedWithUsers = game.sharedWithUsers || {};
 
                     angular.forEach(game.shares, function(share) {
                         if (share.sharedWithUserId) {
@@ -72,6 +74,34 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 return game;
+            },
+
+            isPlayerOnTeam: function(playerId) {
+
+                var self = this;
+
+                var teamId = self.teamId;
+                var teamRoster = self.getRoster(teamId);
+                var playerInfo = teamRoster.playerInfo;
+
+                if (!playerInfo) return false;
+
+                /* Check if the player is on the team roster. */
+                return angular.isDefined(playerInfo[playerId]);
+            },
+
+            isPlayerOnOpposingTeam: function(playerId) {
+
+                var self = this;
+
+                var opposingTeamId = self.opposingTeamId;
+                var opposingTeamRoster = self.getRoster(opposingTeamId);
+                var playerInfo = opposingTeamRoster.playerInfo;
+
+                if (!playerInfo) return false;
+
+                /* Check if the player is on the opposing team roster. */
+                return angular.isDefined(playerInfo[playerId]);
             },
 
             generateStats: function(id, success, error) {
@@ -118,6 +148,68 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!roster) throw new Error('No team roster for game');
 
                 return roster;
+            },
+
+            getTeamPlayers: function() {
+
+                var self = this;
+
+                var teamId = self.teamId;
+                var teamRoster = self.getRoster(teamId);
+                var playerInfo = teamRoster.playerInfo;
+
+                if (!playerInfo) return [];
+
+                var teamPlayers = Object.keys(playerInfo)
+
+                .filter(function(playerId) {
+
+                    return teamRoster.playerInfo[playerId].isActive;
+                })
+
+                .map(function(playerId) {
+
+                    return players.get(playerId);
+                });
+
+                return teamPlayers;
+            },
+
+            getOpposingTeamPlayers: function() {
+
+                var self = this;
+
+                var opposingTeamId = self.opposingTeamId;
+                var opposingTeamRoster = self.getRoster(opposingTeamId);
+                var playerInfo = opposingTeamRoster.playerInfo;
+
+                if (!playerInfo) return [];
+
+                var opposingTeamPlayers = Object.keys(playerInfo)
+
+                .filter(function(playerId) {
+
+                    return opposingTeamRoster.playerInfo[playerId].isActive;
+                })
+
+                .map(function(playerId) {
+
+                    return players.get(playerId);
+                });
+
+                return opposingTeamPlayers;
+            },
+
+            getPlayers: function() {
+
+                var self = this;
+
+                var teamPlayers = self.getTeamPlayers();
+                var opposingTeamPlayers = self.getOpposingTeamPlayers();
+
+                var players = teamPlayers.concat(opposingTeamPlayers);
+
+                return players;
             },
 
             getVideoSources: function() {

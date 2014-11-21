@@ -209,8 +209,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                 }
 
                 filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
+                if (filter.start !== null) filter.start = filter.start || 0;
+                if (filter.count !== null) filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
                 var aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
@@ -266,8 +266,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var self = this;
 
                 filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
+                if (filter.start !== null) filter.start = filter.start || 0;
+                if (filter.count !== null) filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
                 var aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
