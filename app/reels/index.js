@@ -110,7 +110,7 @@ ReelsArea.controller('ReelsArea.controller', [
         // Get reel
         var reelId = Number($stateParams.id);
         $scope.reel = reels.get(reelId);
-        $scope.videoTitle = 'reelsPlayer';
+        playManager.videoTitle = 'reelsPlayer';
         $scope.editMode = false;
         var editAllowed = true;
 
@@ -121,7 +121,12 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.VIEWPORTS = VIEWPORTS;
 
         // Refresh the playManager
-        playsManager.reset(plays);
+        playsManager.reset();
+
+        // Add each play individually to the playsManager to keep play order consistent with the reels ordering.
+        angular.forEach($scope.reel.plays, function(playId) {
+            playsManager.addPlay(playsFactory.get(playId));
+        });
 
         var editModeRestrictions = {
             DELETABLE: 'DELETABLE',
