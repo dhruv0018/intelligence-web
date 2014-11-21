@@ -397,7 +397,10 @@
     },
 
     "Games": {
+        "*": true
+    },
 
+    "Games.RawFilm": {
         "*": true
     },
 

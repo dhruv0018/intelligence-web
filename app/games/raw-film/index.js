@@ -1,50 +1,32 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-
-var rawFilm = require('raw-film');
-
 /**
  * Coach game area raw film page module.
  * @module Games
  */
-var Games = angular.module('Games', [
-    'Games.RawFilm'
-]);
+var GamesRawFilm = angular.module('Games.RawFilm', []);
 
-Games.run([
+GamesRawFilm.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('games/template.html', require('./template.html'));
+        $templateCache.put('games/raw-film/template.html', require('./template.html'));
     }
 ]);
 
-Games.config([
+GamesRawFilm.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var shortGames = {
-            name: 'ShortGames',
-            url: '/g/:id',
-            parent: 'base',
-            onEnter: [
-                '$state', '$stateParams',
-                function($state, $stateParams) {
-                    var gameId = parseInt($stateParams.id, 36);
-                    $state.go('Games', {id: gameId});
-                }
-            ]
-        };
-
-        var Games = {
-            name: 'Games',
-            url: '/games/:id',
-            parent: 'base',
+        var GamesRawFilm = {
+            name: 'Games.RawFilm',
+            url: '/raw-film',
+            parent: 'Games',
             views: {
-                'main@root': {
-                    templateUrl: 'games/template.html',
-                    controller: 'Games.controller'
+                'gameView@Games': {
+                    templateUrl: 'games/raw-film/template.html',
+                    controller: 'Games.Rawfilm.controller'
                 }
             },
             resolve: {
@@ -68,15 +50,15 @@ Games.config([
             }
         };
 
-        $stateProvider.state(shortGames);
-        $stateProvider.state(Games);
+        $stateProvider.state(GamesRawFilm);
     }
 ]);
 
-Games.controller('Games.controller', [
+GamesRawFilm.controller('Games.Rawfilm.controller', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
     function controller($scope, $state, $stateParams, games, teams, users) {
         var gameId = $stateParams.id;
+
         $scope.game = games.get(gameId);
         $scope.publiclyShared = false;
 
@@ -90,9 +72,7 @@ Games.controller('Games.controller', [
             $scope.sources = $scope.game.getVideoSources();
             $scope.filmTitle = $scope.game.description;
         }
-//        $scope.$watch('$scope.game', function() {
-//            $state.go('Games.RawFilm');
-//        });
     }
 ]);
+
 
