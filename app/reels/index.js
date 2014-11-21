@@ -139,7 +139,7 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.restrictionLevel = editModeRestrictions.VIEWABLE;
 
         var isCoach = session.currentUser.is(ROLES.COACH);
-        var isACoachOfThisTeam = isCoach || session.currentUser.currentRole.teamId === $scope.reel.uploaderTeamId;
+        var isACoachOfThisTeam = isCoach && session.currentUser.currentRole.teamId === $scope.reel.uploaderTeamId;
         var isOwner = session.currentUser.id === $scope.reel.uploaderUserId;
 
         if (isACoachOfThisTeam) $scope.restrictionLevel = editModeRestrictions.EDITABLE;
