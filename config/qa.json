@@ -20,9 +20,6 @@
     },
     "kvs": {
     },
-    "passwordReset": {
-        "uri": "/intelligence-api/v1/password-reset/"
-    },
     "reels": {
         "turnedOn": true
     },
