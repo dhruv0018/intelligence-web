@@ -40,7 +40,6 @@ IntelligenceWebClient.config([
                 //async decoration
                 $delegate.initDecoration = function() {
                     ['log', 'debug', 'info', 'warn', 'error'].forEach(function(method) {
-                        console.log($window);
                         $delegate[method] = decorate(method, $delegate[method]);
                     });
                     $delegate.decorated = true;
