@@ -28,9 +28,21 @@ ReelsArea.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        $stateProvider
+        var shortReelsState = {
+            name: 'ShortReels',
+            url: '/r/:id',
+            parent: 'base',
+            onEnter: [
+                '$state', '$stateParams',
+                function($state, $stateParams) {
+                    var reelId = parseInt($stateParams.id, 36);
+                    $state.go('ReelsArea', {id: reelId});
+                }
+            ]
+        };
 
-        .state('ReelsArea', {
+        var reelsState = {
+            name: 'ReelsArea',
             url: '/reel/:id',
             parent: 'base',
             views: {
@@ -60,7 +72,10 @@ ReelsArea.config([
                     }
                 }
             ]
-        });
+        };
+
+        $stateProvider.state(shortReelsState);
+        $stateProvider.state(reelsState);
     }
 ]);
 
