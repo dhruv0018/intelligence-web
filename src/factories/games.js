@@ -32,6 +32,13 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var copy = angular.copy(game);
                 delete copy.flow;
 
+                copy.shares = copy.shares || [];
+
+                if (copy.isSharedWithPublic()) {
+                    copy.shares.push(copy.publicShare);
+                    delete copy.publicShare;
+                }
+
                 return copy;
             },
             extend: function(game) {
@@ -66,9 +73,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (game.shares && game.shares.length) {
 
-                    angular.forEach(game.shares, function(share) {
+                    angular.forEach(game.shares, function(share, index) {
                         if (share.sharedWithUserId) {
                             game.sharedWithUsers[share.sharedWithUserId] = share;
+                        } else if (!share.sharedWithUserId && !share.sharedWithTeamId) {
+                            game.publicShare = share;
+                            game.shares.slice(index, 1);
                         }
                     });
                 }
@@ -989,11 +999,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 self.shares = self.shares || [];
 
                 if (self.isSharedWithPublic()) {
-                    self.shares.forEach(function(share, index) {
-                        if (!share.sharedWithUserId) {
-                            self.shares.splice(index, 1);
-                        }
-                    });
+                    delete self.publicShare;
                 } else {
                     var share = {
                         userId: session.currentUser.id,
@@ -1002,19 +1008,13 @@ IntelligenceWebClient.factory('GamesFactory', [
                         createdAt: moment.utc().toDate()
                     };
 
-                    self.shares.push(share);
+                    self.publicShare = share;
                 }
             },
             isSharedWithPublic: function() {
                 var self = this;
 
-                if (!self.shares) return false;
-
-                return self.shares.map(function(share) {
-                    return share.sharedWithUserId;
-                }).some(function(userId) {
-                    return !userId;
-                });
+                return !!self.publicShare;
             }
         };
 

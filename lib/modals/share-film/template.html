@@ -74,6 +74,10 @@
         </div>
 
         <div class="sharing-with-public-container" data-ng-show="withPublic">
+            <!--<div data-ng-if="isGame && film.isDelivered()">
+                <button type="button" class="btn-radio" data-ng-model="" data-btn-radio="" required>Share Raw Film Only</button>
+                <button type="button" class="btn-radio" data-ng-model="" data-btn-radio="" required>Share Breakdown and Raw Film</button>
+            </div>-->
             <div class="public-link-box" data-ng-class="{inActive:!linkActive}">
                 <a data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">krossover.com/g/{{shortId}}</a>
                 <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">krossover.com/r/{{shortId}}</a>
