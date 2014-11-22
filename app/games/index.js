@@ -36,7 +36,6 @@ Games.config([
                 }
             ]
         };
-
         var Games = {
             name: 'Games',
             url: '/games/:id',
@@ -46,25 +45,6 @@ Games.config([
                     templateUrl: 'games/template.html',
                     controller: 'Games.controller'
                 }
-            },
-            resolve: {
-                'Games.Data': [
-                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
-                    function($q, $stateParams, games, teams, users) {
-                        var gameId = Number($stateParams.id);
-                        return games.load(gameId).then(function() {
-
-                            var game = games.get(gameId);
-
-                            var Data = {
-                                user: users.load(game.uploaderUserId),
-                                team: teams.load([game.teamId, game.opposingTeamId])
-                            };
-
-                            return $q.all(Data);
-                        });
-                    }
-                ]
             }
         };
 
@@ -76,7 +56,6 @@ Games.config([
 Games.controller('Games.controller', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
     function controller($scope, $state, $stateParams, games, teams, users) {
-
         $scope.$watch('$scope.game', function() {
             $state.go('Games.RawFilm');
         });
