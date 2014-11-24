@@ -1,5 +1,5 @@
 {
-    "name": "games",
+    "name": "breakdown",
     "templates": [
         "template.html"
     ],
@@ -8,12 +8,5 @@
     ],
     "scripts": [
         "index.js"
-    ],
-    "locals": [
-        "raw-film",
-        "breakdown"
-    ],
-    "paths": [
-        "."
     ]
 }

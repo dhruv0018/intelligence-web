@@ -3,13 +3,16 @@ var angular = window.angular;
 
 
 var rawFilm = require('raw-film');
+var breakDown = require('breakdown');
+
 
 /**
  * Coach game area raw film page module.
  * @module Games
  */
 var Games = angular.module('Games', [
-    'Games.RawFilm'
+    'Games.RawFilm',
+    'Games.Breakdown'
 ]);
 
 Games.run([
@@ -58,6 +61,7 @@ Games.controller('Games.controller', [
     function controller($scope, $state, $stateParams, games, teams, users) {
         $scope.$watch('$scope.game', function() {
             $state.go('Games.RawFilm');
+            //$state.go('Games.Breakdown');
         });
     }
 ]);
