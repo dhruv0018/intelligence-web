@@ -130,7 +130,7 @@
                         <span class="team">{{ opposingTeam.name }}</span>
                     </h4>
 
-                    <h4 data-ng-if="!isIndexer" data-ng-class="{'playOpened': expandAll || play === playManager.current}">
+                    <h4 class="column" data-ng-if="!isIndexer" data-ng-class="{'playOpened': expandAll || play === playManager.current}">
 
                         <span class="team">{{teams[play.possessionTeamId].name}}</span>
 
@@ -165,7 +165,7 @@
 
             <hr class="summaryBodyDivider">
 
-            <div class="playFooter" data-ng-if="!isAthlete">
+            <div class="playFooter">
             
                 <button class="btn-delete-play" data-ng-if="isIndexer" data-ng-disabled="play.isSaving" data-ng-click="deletePlay()">Delete Play</button>
                 
