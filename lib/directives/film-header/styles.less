@@ -7,16 +7,29 @@
     margin-bottom: 20px;
     border-bottom: thin solid @gray-border;
     background-color: white;
-    color: black;
 
     .film-info {
         width: @screen-xs;
+        height: 105px;
         border-right: thin solid @gray-border;
+
+        h3 {
+            font-size: 18px;
+        }
+
+        .icon-play {
+            font-size: 11px;
+        }
+
+        .film-title {
+            display: none;
+        }
     }
    
     .film-title-desktop {
         flex: 1;
         margin-left: 20px;
+        color: @gray-darker;
         font-weight: @headings-font-weight;
     }
 
@@ -43,11 +56,12 @@
 and (max-width: @screen-sm) {
 
     .film-header {
+        margin-bottom: 0;
 
         .film-info {
             width: @screen-sm;
 
-            .film-title-mobile {
+            .film-title {
                 display: block;
             }
         }

@@ -1,10 +1,27 @@
 @import (reference) "main.less";
 
-.film-info {
-    padding: 0px 20px;
+@bold-film-info: 700; 
 
-    .team {
+film-info {
+    display: flex;
+}
+
+.film-info {
+    flex: 1;
+    
+    height: 95px;
+    display: flex;
+    padding: 10px 20px;
+    color: @gray-darker;
+
+    .game-info,
+    .reel-info {
+        // As a flex-item
+        flex-grow: 1;
+
+        // As a flex-box
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
     }
 
@@ -16,21 +33,21 @@
     }
 
     h3 {
-        margin-bottom: 10px;
+        font-size: 16px;
 
         &.winner {
-            font-weight: 700;
+            font-weight: @bold-film-info;
         }
     }
 
     h5 {
-        padding: 10px 0;
+        font-size: 14px;
     }
 
     .icon-play {
         position: relative;
         top: -2px;
-        font-size: 11px;
+        font-size: 9px;
 
         &:before {
             transform: scale(-1, 1);
@@ -42,12 +59,39 @@
     }
 
     .meta-data {
+        // As a flex-item
+        flex: 1;
+        align-items: center;
+
+        // As a flex-box
         display: flex;
         justify-content: space-between;
-        align-items: center;
+
+        .film-title {
+            color: @brand-primary;
+        }
     }
 
-    .film-title-mobile {
-        display: none;
+    .team {
+        // As a flex-item
+        flex: 1;
+        align-items: center;
+
+        // As a flex-box
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .reel-title {
+        // As a flex-item
+        flex: 2;
+
+        // As a flex-box
+        display: flex;
+        align-items: center;
+
+        h3 {
+            font-weight: @bold-film-info;
+        }
     }
 }
