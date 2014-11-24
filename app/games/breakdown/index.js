@@ -77,14 +77,18 @@ GamesBreakdown.config([
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'Games.Data',
-    function controller($scope, $state, $stateParams, games, teams, leagues, users, players, plays, filtersets, data) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'ReelsFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'Games.Data', 'PlayManager',
+    function controller($scope, $state, $stateParams, games, reels, teams, leagues, users, players, plays, filtersets, data, playManager) {
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
         $scope.publiclyShared = false;
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
+        //todo figure out why this is not working
+        //$scope.reels = reels.getList();
+        $scope.playManager = playManager;
+        $scope.videoTitle = 'filmBreakdown';
 
         if ($scope.game.isSharedWithPublic()) {
             $scope.publiclyShared = true;
