@@ -38,7 +38,8 @@
         </div>
 
         <!-- MOBILE DEFAULT PLAY -->
-        <div data-ng-switch-default class="play play__reel" data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }">
+        <!-- Default to 'active' since this is currently only used for public clips -->
+        <div data-ng-switch-default class="active play play__reel">
 
             <div class="playHeadingContainer">
                 <div class="playHeading">
