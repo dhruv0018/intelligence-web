@@ -11,58 +11,9 @@
 
     .film-info {
         width: @screen-xs;
-        padding: 0px 20px;
         border-right: thin solid @gray-border;
-
-        .team {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        h3,
-        h5 {
-            display: inline-block;
-            margin: 0;
-            font-weight: 100;
-        }
-
-        h3 {
-            margin-bottom: 10px;
-
-            &.winner {
-                font-weight: 700;
-            }
-        }
-
-        h5 {
-            padding: 10px 0;
-        }
-
-        .icon-play {
-            position: relative;
-            top: -2px;
-            font-size: 11px;
-
-            &:before {
-                transform: scale(-1, 1);
-            }
-
-            &.invisible {
-                opacity: 0;
-            }
-        }
     }
-
-    .meta-data {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .film-title-mobile {
-        display: none;
-    }
-
+   
     .film-title-desktop {
         flex: 1;
         margin-left: 20px;
@@ -95,10 +46,10 @@ and (max-width: @screen-sm) {
 
         .film-info {
             width: @screen-sm;
-        }
 
-        .film-title-mobile {
-            display: block;
+            .film-title-mobile {
+                display: block;
+            }
         }
 
         .film-title-desktop,

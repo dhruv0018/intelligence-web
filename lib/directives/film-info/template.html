@@ -1,0 +1,20 @@
+<div class="film-info">
+	<div class="meta-data">
+		<h5>{{film.datePlayed | date: 'MMM. d, yyyy'}}</h5>
+		<div class="film-title-mobile">{{title}}</div>
+	</div>
+	<div class="team">
+		<h3 class="team-name" data-ng-class="{winner: opponentWon}">{{ opposingTeamName }}</h3>
+		<span data-ng-if="gameScoresExist">
+			<h3 data-ng-class="{winner: opponentWon}">{{ opposingTeamScore }}</h3>
+			<i class="icon icon-play" data-ng-class="{invisible: homeWon}"></i>
+		</span>
+	</div>
+	<div class="team">
+		<h3 class="team-name" data-ng-class="{winner: homeWon}">{{ homeTeamName }}</h3>
+		<span data-ng-if="gameScoresExist">
+			<h3 data-ng-class="{winner: homeWon}">{{ homeTeamScore }}</h3>
+			<i class="icon icon-play" data-ng-class="{invisible: opponentWon}"></i>
+		</span>
+	</div>
+</div>
