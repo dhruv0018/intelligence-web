@@ -54,6 +54,7 @@ require('./constants/football/gaps');
 require('./constants/football/zones');
 require('./constants/sports');
 require('./constants/viewports');
+require('./constants/arenas');
 
 require('./models/users');
 require('./models/sports');
