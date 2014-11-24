@@ -74,25 +74,25 @@
         </div>
 
         <div class="sharing-with-public-container" data-ng-show="withPublic">
-            <!--<div data-ng-if="isGame && film.isDelivered()">
-                <button type="button" class="btn-radio" data-ng-model="" data-btn-radio="" required>Share Raw Film Only</button>
-                <button type="button" class="btn-radio" data-ng-model="" data-btn-radio="" required>Share Breakdown and Raw Film</button>
-            </div>-->
-            <div class="public-link-box" data-ng-class="{inActive:!linkActive}">
-                <a data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">krossover.com/g/{{shortId}}</a>
-                <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">krossover.com/r/{{shortId}}</a>
-            </div>
             <div class="activate-row">
-                <button class="btn btn-primary" data-ng-if="!linkActive" data-ng-click="togglePublicLink()">Activate Link</button>
-                <button class="btn btn-primary btn-deactivate" data-ng-if="linkActive" data-ng-click="togglePublicLink()">Deactivate Link</button>
                 <span data-ng-if="!linkActive">Link is not active.</span>
                 <span data-ng-if="linkActive">Link is active.</span>
+            </div>
+            <div class="public-link-box" data-ng-class="{inActive:!linkActive}">
+                <a data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">http://www.krossover.com/g/{{shortId}}</a>
+                <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">http://www.krossover.com/r/{{shortId}}</a>
+            </div>
+            <div class="public-share-types" data-ng-show="isGame && film.isDelivered() && linkActive">
+                <button type="button" class="btn-radio" data-ng-model="film.publicShare.withBreakdown" data-btn-radio="false" data-ng-change="film.save()" required>Share Raw Film Only</button>
+                <button type="button" class="btn-radio" data-ng-model="film.publicShare.withBreakdown" data-btn-radio="true" data-ng-change="film.save()" required>Share Breakdown and Raw Film</button>
             </div>
             <p data-ng-if="!linkActive">Once activated, you can copy this URL (web address) and share it with anyone.</p>
             <p data-ng-if="linkActive">Once deactivated, no one can access this game with this link.</p>
             <p data-ng-if="!linkActive">Anyone with this link will be able to access the Raw Film for this game.</p>
             <p data-ng-if="linkActive">If you have placed this game in another Krossover user's account, deactivating the link will not remove this game from their account.</p>
             <div class="button-row">
+                <button class="btn btn-primary pull-right" data-ng-if="!linkActive" data-ng-click="togglePublicLink()">Activate Link</button>
+                <button class="btn btn-primary btn-deactivate pull-right" data-ng-if="linkActive" data-ng-click="togglePublicLink()">Deactivate Link</button>
                 <button class="btn btn-default" data-ng-click="withPublic = false">Back</button>
             </div>
         </div>
