@@ -10,22 +10,6 @@ var angular = window.angular;
  */
 var Root = angular.module('root', []);
 
-Root.run([
-    '$rootScope', '$window',
-    function run($rootScope, $window) {
-
-        angular.element($window).bind('resize',function() {
-
-            var resize = {
-
-                width: $window.outerWidth
-            };
-
-            $rootScope.$broadcast('resize', resize);
-        });
-    }
-]);
-
 /* Cache the template file */
 Root.run([
     '$templateCache',

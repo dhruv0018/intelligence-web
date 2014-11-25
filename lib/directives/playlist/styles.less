@@ -1,0 +1,35 @@
+@import (reference) "main.less";
+
+.krossover-playlist {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border: 0;
+
+        .playlist {
+            overflow-y: auto;
+            overflow-x: hidden;    
+            padding: 0px;
+            background-color: #ffffff;
+            flex: 1;
+            border: none;
+            width: auto;
+            -webkit-transform: translateZ(0);
+            position: static;
+            float: none;
+            letter-spacing: normal;
+
+            &.edit-mode {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+    @media only screen
+    and (max-width: 1024px) {
+        .mobile .krossover-playlist {
+            border: none
+        }
+    }
+    
+}

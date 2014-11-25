@@ -1,5 +1,15 @@
 <ul class="events">
 
-    <krossover-event data-auto-advance="autoAdvance" data-game="game" data-plays="plays" data-play="play" data-event="event" data-league="league" data-videoplayer="videoplayer" data-ng-repeat="event in events | orderBy:'time'"></krossover-event>
+    <krossover-event
+        data-auto-advance="autoAdvance"
+        data-game="game"
+        data-plays="plays"
+        data-play="play"
+        data-event="event" 
+        data-league="league"
+        data-videoplayer="videoplayer"
+        data-is-editable="isEditable"
+        data-ng-repeat="event in events | orderBy:'time'">
+    </krossover-event>
 
 </ul>
