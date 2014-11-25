@@ -83,8 +83,8 @@
                 <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">http://www.krossover.com/r/{{shortId}}</a>
             </div>
             <div class="public-share-types" data-ng-show="isGame && film.isDelivered() && linkActive">
-                <button type="button" class="btn-radio" data-ng-model="film.publicShare.withBreakdown" data-btn-radio="false" data-ng-change="film.save()" required>Share Raw Film Only</button>
-                <button type="button" class="btn-radio" data-ng-model="film.publicShare.withBreakdown" data-btn-radio="true" data-ng-change="film.save()" required>Share Breakdown and Raw Film</button>
+                <button type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="false" data-ng-change="film.save()" required>Share Raw Film Only</button>
+                <button type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="true" data-ng-change="film.save()" required>Share Breakdown and Raw Film</button>
             </div>
             <p data-ng-if="!linkActive">Once activated, you can copy this URL (web address) and share it with anyone.</p>
             <p data-ng-if="linkActive">Once deactivated, no one can access this game with this link.</p>

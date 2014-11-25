@@ -1005,7 +1005,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                         userId: session.currentUser.id,
                         gameId: self.id,
                         sharedWithUserId: null,
-                        createdAt: moment.utc().toDate(),
+                        createdAt: moment.utc().toDate()
                     };
 
                     self.publicShare = share;
