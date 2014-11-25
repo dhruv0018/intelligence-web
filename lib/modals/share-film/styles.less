@@ -38,6 +38,10 @@
 				padding: 10px;
 				cursor: pointer;
 
+				.icon-group {
+					margin-bottom: 30px;
+				}
+
 				&.option-your-team {
 
 					cursor: auto;
@@ -51,6 +55,33 @@
 						.icon {
 							color: @brand-blue;
 						}
+					}
+				}
+
+				&.option-your-team-reels {
+
+					.icon-check-empty,
+					.icon-check-square-o {
+						display: inline;
+						color: @brand-blue;
+						font-size: 25px;
+						margin-right: 5px;
+
+						&::before {
+							width: 25px;
+							text-align: left;
+						}
+					}
+
+					&:hover {
+						.icon-check-empty,
+						.icon-check-square-o {
+							color: @brand-blue;
+						}
+					}
+
+					.team-share-toggle {
+						line-height: 25px;
 					}
 				}
 
@@ -71,10 +102,6 @@
 					color: @gray-lighter;
 					margin-top: 30px;
 					font-size: 70px;
-
-					&::before {
-						height: 71px;
-					}
 				}
 
 				&:hover {

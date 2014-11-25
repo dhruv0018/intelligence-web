@@ -3,7 +3,7 @@
         class="btn-arena"
         ng-class="{'btn-arena-focus': isFocused}"
         data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
-        data-ng-disabled="!isIndexer"
+        data-ng-disabled="!isIndexer || !isEditable"
 		data-ng-click="resetAndOpenModal()"
         >x,y 
     </button>
