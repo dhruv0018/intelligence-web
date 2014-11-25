@@ -12,12 +12,7 @@
        <strong data-ng-if="film.isUploading() && !isShared">Film Uploading: </strong>
        <strong data-ng-if="film.isVideoTranscodeFailed()" class="film-fail-text">Film Failed Processing:</strong>
 
-       <a data-ng-if="currentUser.is(COACH)" data-ui-sref="Coach.GameArea({id:film.id})">
-           <span data-ng-if="film.opposingTeamId && film.teamId">{{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}</span>
-           <span data-ng-if="!film.opposingTeamId || !film.teamId">Raw Film - No Game Information Entered</span>
-       </a>
-
-       <a data-ng-if="currentUser.is(ATHLETE)" data-ui-sref="Athlete.GameArea({id:film.id})">
+       <a data-ui-sref="Games({id:film.id})">
            <span data-ng-if="film.opposingTeamId && film.teamId">{{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}</span>
            <span data-ng-if="!film.opposingTeamId || !film.teamId">Raw Film - No Game Information Entered</span>
        </a>
