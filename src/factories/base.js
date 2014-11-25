@@ -360,6 +360,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else if (angular.isArray(filter)) {
 
+                        var promises = [];
+
                         if (storage.collection) {
 
                             var ids = filter;
@@ -386,22 +388,20 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                                 return !angular.isDefined(storage.collection[id]);
                             });
-                        }
 
-                        var promises = [];
+                            while (unstored.length) {
 
-                        while (unstored.length) {
+                                ids = unstored.splice(0, 100);
 
-                            ids = unstored.splice(0, 100);
+                                var query = {
 
-                            var query = {
+                                    start: null,
+                                    count: null,
+                                    'id[]': ids
+                                };
 
-                                start: null,
-                                count: null,
-                                'id[]': ids
-                            };
-
-                            promises.push(self.query(query));
+                                promises.push(self.query(query));
+                            }
                         }
 
                         storage.loads[key] = $q.all(promises).then(function() {
