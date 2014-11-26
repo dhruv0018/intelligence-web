@@ -4,6 +4,7 @@ var angular = window.angular;
 
 var rawFilm = require('raw-film');
 var breakDown = require('breakdown');
+var dnd = require('down-and-distance');
 
 
 /**
@@ -12,7 +13,8 @@ var breakDown = require('breakdown');
  */
 var Games = angular.module('Games', [
     'Games.RawFilm',
-    'Games.Breakdown'
+    'Games.Breakdown',
+    'Games.DownAndDistance'
 ]);
 
 Games.run([
@@ -119,7 +121,7 @@ Games.controller('Games.controller', [
                     },
                     {
                         name: 'Down and Distance Report',
-                        state: 'ga-down-distance'
+                        state: 'Games.DownAndDistance'
                     }
                 );
             }
