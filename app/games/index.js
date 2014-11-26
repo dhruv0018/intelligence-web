@@ -60,8 +60,8 @@ Games.controller('Games.controller', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
     function controller($scope, $state, $stateParams, games, teams, users) {
         $scope.$watch('$scope.game', function() {
-            $state.go('Games.RawFilm');
-            //$state.go('Games.Breakdown');
+            //$state.go('Games.RawFilm');
+            $state.go('Games.Breakdown');
         });
     }
 ]);
