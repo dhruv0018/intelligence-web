@@ -34,7 +34,7 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.tagset = tagsets.get($scope.league.tagSetId);
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
-        $scope.videoTitle = 'indexing';
+        play.videoTitle = 'indexing'; //playManager.videoTitle
 
         indexing.reset($scope.tagset, $scope.game, data.plays);
 

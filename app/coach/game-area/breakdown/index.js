@@ -69,7 +69,7 @@ Breakdown.controller('Coach.GameArea.Breakdown.controller', [
         var gameId = $stateParams.id;
         var game = games.get(gameId);
         $scope.game = game;
-        $scope.videoTitle = 'filmBreakdown';
+        playManager.videoTitle = 'filmBreakdown';
         $scope.playManager = playManager;
 
         var team = teams.get(game.teamId);
