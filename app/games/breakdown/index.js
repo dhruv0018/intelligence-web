@@ -31,48 +31,73 @@ GamesBreakdown.config([
             },
             resolve: {
                 'Games.Data': [
-                    '$q', '$stateParams', 'UsersFactory', 'TeamsFactory', 'FiltersetsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'LeaguesFactory',
-                    function($q, $stateParams, users, teams, filtersets, games, players, plays, leagues) {
+                    '$q', '$stateParams', 'Games.Data.Dependencies',
+                    function($q, $stateParams, data) {
 
-                        var gameId = Number($stateParams.id);
-                        return games.load(gameId).then(function() {
+                        return $q.all(data($stateParams).load());
 
-                            var game = games.get(gameId);
-
-                            var Data = {
-                                user: users.load(game.uploaderUserId),
-                                team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
-                            };
-
-                            var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
-                            Data.loadTeamPlayers = players.load(teamPlayersFilter);
-
-                            var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
-                            Data.loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
-
-                            var playsFilter = { gameId: game.id };
-                            Data.loadPlays = plays.load(playsFilter);
-
-                            //todo -- deal with this, real slow because of nesting
-                            Data.league = Data.team.then(function() {
-                                var uploaderTeam = teams.get(game.uploaderTeamId);
-                                return leagues.fetch(uploaderTeam.leagueId);
-                            });
-
-                            Data.filterSet = Data.league.then(function() {
-                                var uploaderTeam = teams.get(game.uploaderTeamId);
-                                var uploaderLeague = leagues.get(uploaderTeam.leagueId);
-                                return filtersets.fetch(uploaderLeague.filterSetId);
-                            });
-
-                            return $q.all(Data);
-                        });
                     }
                 ]
             }
         };
 
         $stateProvider.state(GamesBreakdown);
+    }
+]);
+
+GamesBreakdown.service('Games.Data.Dependencies', [
+    '$q', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory',
+    function dataService($q, games, plays, teams, reels, leagues, tagsets, players, filtersets, users) {
+
+        var service = function(stateParams) {
+
+            var obj = {
+
+                load: function() {
+
+                    var gameId = Number(stateParams.id);
+
+                    return games.load(gameId).then(function() {
+
+                        var game = games.get(gameId);
+
+                        var Data = {
+                            user: users.load(game.uploaderUserId),
+                            team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
+                        };
+
+                        var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
+                        Data.loadTeamPlayers = players.load(teamPlayersFilter);
+
+                        var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
+                        Data.loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
+
+                        var playsFilter = { gameId: game.id };
+                        Data.loadPlays = plays.load(playsFilter);
+
+                        // TODO: Fix this, really slow because of nesting
+                        Data.league = Data.team.then(function() {
+                            var uploaderTeam = teams.get(game.uploaderTeamId);
+                            return leagues.fetch(uploaderTeam.leagueId);
+                        });
+
+                        Data.filterSet = Data.league.then(function() {
+                            var uploaderTeam = teams.get(game.uploaderTeamId);
+                            var uploaderLeague = leagues.get(uploaderTeam.leagueId);
+                            return filtersets.fetch(uploaderLeague.filterSetId);
+                        });
+
+                        Data.tagset = tagsets.load();
+
+                        return $q.all(Data);
+                    });
+                }
+            };
+
+            return obj;
+        };
+
+        return service;
     }
 ]);
 
