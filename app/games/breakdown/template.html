@@ -37,14 +37,13 @@
                         data-game="game"
                         data-reels="reels"
                         data-play="play"
-                        data-plays="plays"
                         data-filtered-plays-ids="filteredPlaysIds"
                         data-league="league"
-                        data-ng-repeat="play in plays">
+                        data-ng-show="play.isFiltered"
+                        data-ng-repeat="play in plays | orderBy:orderBy">
                     </krossover-play>
 
                     <no-results data-ng-hide="plays.length"></no-results>
-                <!-- </aside> -->
 
                     <div class="expandrow">
                       <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>

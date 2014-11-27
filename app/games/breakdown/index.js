@@ -111,6 +111,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
         $scope.VIEWPORTS = VIEWPORTS;
+        $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
 
         if ($scope.game.isSharedWithPublic()) {
             $scope.publiclyShared = true;
@@ -122,7 +123,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             $scope.sources = $scope.game.getVideoSources();
             $scope.filmTitle = $scope.game.description;
         }
-
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
         if ($scope.game.isDelivered()) {
