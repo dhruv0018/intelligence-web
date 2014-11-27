@@ -77,14 +77,15 @@ GamesBreakdown.config([
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'Games.Data',
-    function controller($scope, $state, $stateParams, games, teams, leagues, users, players, plays, filtersets, data) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'VIEWPORTS', 'Games.Data',
+    function controller($rootScope, $scope, $state, $stateParams, games, teams, leagues, users, players, plays, filtersets, VIEWPORTS, data) {
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
         $scope.publiclyShared = false;
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
+        $scope.VIEWPORTS = VIEWPORTS;
 
         if ($scope.game.isSharedWithPublic()) {
             $scope.publiclyShared = true;
