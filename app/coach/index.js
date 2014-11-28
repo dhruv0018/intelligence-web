@@ -1,5 +1,4 @@
 /* Component dependencies */
-require('coach-game');
 require('film-home');
 require('game-area');
 require('coach-team');
@@ -16,7 +15,6 @@ var angular = window.angular;
  */
 
 var Coach = angular.module('Coach', [
-    'Coach.Game',
     'Coach.FilmHome',
     'Coach.Analytics',
     'Coach.GameArea',

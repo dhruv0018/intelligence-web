@@ -12,7 +12,8 @@
     "locals": [
         "raw-film",
         "breakdown",
-        "down-and-distance"
+        "down-and-distance",
+        "game-info"
     ],
     "paths": [
         "."

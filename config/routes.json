@@ -412,6 +412,10 @@
         "*": true
     },
 
+    "Games.Info": {
+        "*": true
+    },
+
     "ShortGames": {
 
         "*": true

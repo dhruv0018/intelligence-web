@@ -5,7 +5,7 @@ var angular = window.angular;
 var rawFilm = require('raw-film');
 var breakDown = require('breakdown');
 var dnd = require('down-and-distance');
-
+require('game-info');
 
 /**
  * Coach game area raw film page module.
@@ -14,7 +14,8 @@ var dnd = require('down-and-distance');
 var Games = angular.module('Games', [
     'Games.RawFilm',
     'Games.Breakdown',
-    'Games.DownAndDistance'
+    'Games.DownAndDistance',
+    'Games.Info'
 ]);
 
 Games.run([
@@ -148,15 +149,15 @@ Games.controller('Games.controller', [
             $scope.gameStates.push(
                 {
                     name: 'Game Information',
-                    state: 'ga-info'
+                    state: 'Games.Info'
                 }
             );
         }
 
-        $scope.$watch('$scope.game', function(game) {
-            $state.go('Games.RawFilm');
-            //$state.go('Games.Breakdown');
-        });
+//        $scope.$watch('$scope.game', function(game) {
+//            $state.go('Games.RawFilm');
+//            //$state.go('Games.Breakdown');
+//        });
     }
 ]);
 

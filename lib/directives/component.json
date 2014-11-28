@@ -60,7 +60,8 @@
         "profile",
         "film-header",
         "plays-filters",
-        "draggable"
+        "draggable",
+        "coach-game"
     ],
     "scripts": [
         "index.js"
