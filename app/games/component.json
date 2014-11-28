@@ -13,7 +13,8 @@
         "raw-film",
         "breakdown",
         "down-and-distance",
-        "game-info"
+        "game-info",
+        "stats"
     ],
     "paths": [
         "."

@@ -416,6 +416,10 @@
         "*": true
     },
 
+    "Games.Stats": {
+        "*": true
+    },
+
     "ShortGames": {
 
         "*": true
