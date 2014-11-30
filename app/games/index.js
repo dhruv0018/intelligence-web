@@ -8,6 +8,7 @@ var dnd = require('down-and-distance');
 require('game-info');
 require('stats');
 require('formations');
+require('shot-chart');
 
 /**
  * Coach game area raw film page module.
@@ -19,7 +20,8 @@ var Games = angular.module('Games', [
     'Games.DownAndDistance',
     'Games.Info',
     'Games.Stats',
-    'Games.Formations'
+    'Games.Formations',
+    'Games.ShotChart'
 ]);
 
 Games.run([
@@ -97,6 +99,7 @@ Games.controller('Games.controller', [
         //define states for view selector
         $scope.gameStates = [];
 
+
         if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered() && !$scope.game.isSharedWithUser(session.currentUser)) {
             $scope.gameStates.push(
                 {
@@ -113,7 +116,7 @@ Games.controller('Games.controller', [
                 $scope.gameStates.push(
                     {
                         name: 'Shot Chart',
-                        state: 'ga-shot-chart'
+                        state: 'Games.ShotChart'
                     }
                 );
             }

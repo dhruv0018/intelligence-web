@@ -424,6 +424,10 @@
         "*": true
     },
 
+    "Games.ShotChart": {
+        "*": true
+    },
+
     "ShortGames": {
 
         "*": true

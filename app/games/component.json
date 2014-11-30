@@ -15,7 +15,8 @@
         "down-and-distance",
         "game-info",
         "stats",
-        "formations"
+        "formations",
+        "shot-chart"
     ],
     "paths": [
         "."
