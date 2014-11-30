@@ -14,7 +14,8 @@
         "breakdown",
         "down-and-distance",
         "game-info",
-        "stats"
+        "stats",
+        "formations"
     ],
     "paths": [
         "."

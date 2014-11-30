@@ -420,6 +420,10 @@
         "*": true
     },
 
+    "Games.Formations": {
+        "*": true
+    },
+
     "ShortGames": {
 
         "*": true

@@ -7,6 +7,7 @@ var breakDown = require('breakdown');
 var dnd = require('down-and-distance');
 require('game-info');
 require('stats');
+require('formations');
 
 /**
  * Coach game area raw film page module.
@@ -17,7 +18,8 @@ var Games = angular.module('Games', [
     'Games.Breakdown',
     'Games.DownAndDistance',
     'Games.Info',
-    'Games.Stats'
+    'Games.Stats',
+    'Games.Formations'
 ]);
 
 Games.run([
@@ -120,7 +122,7 @@ Games.controller('Games.controller', [
                 $scope.gameStates.push(
                     {
                         name: 'Formation Report',
-                        state: 'ga-formations'
+                        state: 'Games.Formations'
                     },
                     {
                         name: 'Down and Distance Report',
