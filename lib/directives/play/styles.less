@@ -9,11 +9,22 @@
     padding-right: 15px;
     border-bottom: 1px solid rgb(216, 216, 216) !important;
     min-height: 60px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 
     &:hover,
     &.active {
 
         background-color: @play-selected-bg;
+
+        .playHeadingContainer .playHeading h4 {
+            color: black;
+        }
+    }
+
+    &.edit-mode {
+        cursor: move;
     }
 
     a.accordion-toggle {
@@ -22,67 +33,95 @@
         margin-bottom: 10px;
     }
 
-    .playHeading {
-        h4 {
-            position: relative;
-            color: @gray-light;
-            font-size: 16px;
-            font-weight: 200;
-            letter-spacing: -0.01em;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            text-decoration: none;
+    .playHeadingContainer {
 
-            .dash,
-            .period,
-            .time,
-            .team,
-            .vs,
-            .score {
+        display: flex;
+        cursor: pointer;
 
-                display: inline-block;
-            }
+        .playHeading {
 
-            .team {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            
+            h4 {
+                color: @gray-light;
+                font-size: 16px;
+                font-weight: 200;
+                letter-spacing: -0.01em;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                text-decoration: none;
 
-                position: relative;
-                top: 3px;
-                max-width: 12ex;
-                .text-overflow();
-            }
+                .dash,
+                .period,
+                .time,
+                .team,
+                .vs,
+                .score {
 
-            .summaries {
-                button {
-                    pointer-events: none;
-                    color: @gray-light;
-                    text-decoration: none;
+                    display: inline-block;
                 }
-            }
 
-            &.vs {
-                font-weight:500;
-                padding-bottom: 10px;
-            }
+                .team {
 
-            &.playOpened {
-                color: black;
+                    position: relative;
+                    top: 3px;
+                    max-width: 12ex;
+                    .text-overflow();
+                }
 
                 .summaries {
                     button {
-                        color: black;
+                        pointer-events: none;
+                        color: @gray-light;
+                        text-decoration: none;
                     }
                 }
+
+                &.vs {
+                    font-weight:500;
+                    padding-bottom: 10px;
+                }
+
+                &.playOpened {
+                    color: black;
+
+                    .summaries {
+                        button {
+                            color: black;
+                        }
+                    }
+                }
+
+                &.title {
+                    flex-direction: row;
+                    display: flex;
+                    align-items: baseline;
+                }
+
+                &.column {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+
+            .subtitle {
+                display: flex;
+            }
+
+            .summariesContainer {
+                margin-top: 10px;
+                margin-left: 10px;
             }
         }
 
         .playplay {
-            .pull-right;
-            position: absolute;
-            top: -6px;
-            right: 0px;
             font-size: 36px;
+            width: 36px;
             color: @gray-light;
             cursor: pointer;
+            display: flex;
 
             &:active,
             &:focus,
@@ -93,12 +132,16 @@
             &.playing {
                 color: rgb(89, 159, 253);
             }
+
+            &.invisible {
+                visibility: hidden;
+            }
         }
     }
 
     hr {
-
-        margin-bottom: 0;
+        margin: 0;
+        margin-top: 10px;
     }
 
     .playBody {
@@ -177,4 +220,57 @@
         }
     }
 }
+
+.play__reel {
+    .clearfix;
+    
+    letter-spacing: normal;
+    background: #fff;
+    color: #000;
+    
+    .playHeadingContainer {
+
+        .playHeading {
+            margin-bottom: 10px;
+
+            h4 {
+                position: relative;
+                letter-spacing: normal;
+                font-size: large;
+                font-weight: 200;
+                margin: 0;
+            }
+
+            h5 {
+                font-weight: 100;
+                font-size: small;
+                letter-spacing: 0.03em;
+                color: black;
+                margin: 0;
+            }
+        }
+    }
+
+    &.edit-mode {
+        cursor: move;
+    }
+
+    .delete-reel-play {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        padding: 3px;
+
+        .icon {
+            color: @brand-danger;
+            cursor: pointer;
+        }
+    }
+}
+
+
+
+
+
+
 

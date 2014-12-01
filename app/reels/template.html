@@ -1,43 +1,61 @@
 <section class="reels-player-area">
+
     <header>
-        <h3 class="highlight-title">{{data.reel.name}} <span>(last updated on {{reelUpdatedDate | date}})</span></h3>
-        <span class="delete-reel" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
+        <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reel.updatedAt | date}})</span></h3>
+        <span class="delete-reel" ng-if="canUserDelete" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
     </header>
 
-    <div class="main-highlight ng-scope" data-ui-view="content">
-        <aside class="reels-playlist">
+    <div class="reel-body">
+        
+        <div class="reel-edit-control-container" ng-if="canUserEdit && $root.viewport.name === VIEWPORTS.DESKTOP.name">
 
             <div class="reel-edit-controls">
+
                 <a href data-ng-hide="editMode" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
                 <a href data-ng-show="editMode" data-ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
-                <a href data-ng-show="editMode" data-ng-click="toggleEditMode()" class="pull-right">Cancel</a>
+                <a href data-ng-show="editMode" data-ng-click="toggleEditMode()">Cancel</a>
+
             </div>
 
-            <div class="reel-plays-container">
-                <div
-                    krossover-reel-play
-                    data-edit-flag="editMode"
-                    data-index="$index"
-                    data-remove-reel-play="removeReelPlay(index)"
-                    data-draggable="editMode"
-                    data-play="getPlay(playId)"
-                    data-plays="plays"
-                    data-game="getGame(playId)"
-                    data-team="getHomeTeam(playId)"
-                    data-opposing-team="getOpposingTeam(playId)"
-                    data-league="getLeague(playId)"
-                    data-date-played="getDatePlayed(playId)"
-                    data-ng-class="{'last': $last}"
-                    data-ng-repeat="playId in data.reel.plays">
-                </div>
-            </div>
-
-            <no-results data-ng-hide="data.reel && data.reel.plays && data.reel.plays.length"></no-results>
-
-        </aside>
-
-        <div class="player reels-player">
-            <x-krossover-videoplayer class="reels-video-container" data-video-title="videoTitle" data-sources="[]"></x-krossover-videoplayer>
         </div>
+
+        <div class="main-highlight ng-scope" data-ui-view="content" ng-class="{'not-editable': !canUserEdit}">
+            
+            <krossover-sidebar>
+
+                <krossover-playlist-control
+                    data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name"
+                    data-ng-hide="editMode">
+                </krossover-playlist-control>
+
+                <krossover-playlist>
+
+                    <krossover-play
+                        data-edit-flag="editMode"
+                        data-is-reels-play="true"
+                        data-index="$index"
+                        data-draggable="editMode"
+                        data-play="getPlay(playId)"
+                        data-game="getGame(playId)"
+                        data-league="getLeague(playId)"
+                        data-date-played="getDatePlayed(playId)"
+                        data-ng-class="{'last': $last, 'edit-mode': editMode}"
+                        data-ng-repeat="playId in reel.plays"
+                        data-is-editable="false">
+                    </krossover-play>
+
+                    <no-results data-ng-hide="reel && reel.plays && reel.plays.length"></no-results>
+
+                </krossover-playlist>
+                
+            </krossover-sidebar>
+
+            <div class="player reels-player" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
+                <x-krossover-videoplayer class="reels-video-container" data-sources="[]"></x-krossover-videoplayer>
+            </div>
+
+        </div>
+
     </div>
+
 </section>

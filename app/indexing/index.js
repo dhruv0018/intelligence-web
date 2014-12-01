@@ -16,7 +16,7 @@ var Indexing = angular.module('Indexing', [
     'Event',
     'Events',
     'Play',
-    'Plays'
+    'Playlist'
 ]);
 
 /* Cache the template file */
