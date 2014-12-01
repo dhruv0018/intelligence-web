@@ -1,14 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Game Area Formation Report page module.
- * @module GameArea
- */
-var GamesFormations = angular.module('Games.Formations', [
-    'ui.router',
-    'ui.bootstrap'
-]);
+var GamesFormations = angular.module('Games.Formations', []);
 
 GamesFormations.run([
     '$templateCache',

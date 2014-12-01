@@ -1,14 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Game Area Information page module.
- * @module GameArea
- */
-var GameAreaInformation = angular.module('Games.Info', [
-    'ui.router',
-    'ui.bootstrap'
-]);
+var GameAreaInformation = angular.module('Games.Info', []);
 
 GameAreaInformation.run([
     '$templateCache',

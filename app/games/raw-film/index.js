@@ -1,10 +1,6 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Coach game area raw film page module.
- * @module Games
- */
 var GamesRawFilm = angular.module('Games.RawFilm', []);
 
 GamesRawFilm.run([
@@ -30,7 +26,7 @@ GamesRawFilm.config([
                 }
             },
             resolve: {
-                'Games.Data': [
+                'Games.Rawfilm.Data': [
                     '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
                     function($q, $stateParams, games, teams, users) {
                         var gameId = Number($stateParams.id);

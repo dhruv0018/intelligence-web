@@ -1,10 +1,6 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Game Area Shot Chart page module.
- * @module GameArea
- */
 var GamesShotChart = angular.module('Games.ShotChart', [
     'ui.router',
     'ui.bootstrap'

@@ -1,14 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Game Area Statistics page module.
- * @module GameArea
- */
-var GamesStats = angular.module('Games.Stats', [
-    'ui.router',
-    'ui.bootstrap'
-]);
+var GamesStats = angular.module('Games.Stats', []);
 
 GamesStats.run([
     '$templateCache',

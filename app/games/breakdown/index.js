@@ -1,10 +1,6 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Coach game area raw film page module.
- * @module Games
- */
 var GamesBreakdown = angular.module('Games.Breakdown', []);
 
 GamesBreakdown.run([
@@ -30,7 +26,7 @@ GamesBreakdown.config([
                 }
             },
             resolve: {
-                'Games.Data': [
+                'Games.Breakdown.Data': [
                     '$q', '$stateParams', 'UsersFactory', 'TeamsFactory', 'FiltersetsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'LeaguesFactory',
                     function($q, $stateParams, users, teams, filtersets, games, players, plays, leagues) {
 
@@ -77,7 +73,7 @@ GamesBreakdown.config([
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'ReelsFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'Games.Data', 'PlayManager',
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'ReelsFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'Games.Breakdown.Data', 'PlayManager',
     function controller($scope, $state, $stateParams, games, reels, teams, leagues, users, players, plays, filtersets, data, playManager) {
 
         var gameId = $stateParams.id;

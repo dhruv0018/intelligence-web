@@ -1,14 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Game Area Formation Report page module.
- * @module GameArea
- */
-var GamesDownAndDistance = angular.module('Games.DownAndDistance', [
-    'ui.router',
-    'ui.bootstrap'
-]);
+var GamesDownAndDistance = angular.module('Games.DownAndDistance', []);
 
 GamesDownAndDistance.run([
     '$templateCache',
