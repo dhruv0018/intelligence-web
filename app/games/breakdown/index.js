@@ -86,16 +86,17 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.playManager = playManager;
         $scope.videoTitle = 'filmBreakdown';
 
-        if ($scope.game.isSharedWithPublic()) {
-            $scope.publiclyShared = true;
-            $scope.team = teams.get($scope.game.teamId);
-            $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
-            $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+        //Todo remove some of this later
+        $scope.publiclyShared = true;
+        $scope.team = teams.get($scope.game.teamId);
+        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
-            $scope.sources = $scope.game.getVideoSources();
-            $scope.filmTitle = $scope.game.description;
-        }
+        $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+
+        $scope.sources = $scope.game.getVideoSources();
+        $scope.filmTitle = $scope.game.description;
+
 
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope

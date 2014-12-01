@@ -58,16 +58,16 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         $scope.game = games.get(gameId);
         $scope.publiclyShared = false;
 
-        if ($scope.game.isSharedWithPublic()) {
-            $scope.publiclyShared = true;
-            $scope.team = teams.get($scope.game.teamId);
-            $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+        //TODO remove some of this stuff later
+        $scope.publiclyShared = true;
+        $scope.team = teams.get($scope.game.teamId);
+        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
-            $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+        $scope.uploadedBy = users.get($scope.game.uploaderUserId);
 
-            $scope.sources = $scope.game.getVideoSources();
-            $scope.filmTitle = $scope.game.description;
-        }
+        $scope.sources = $scope.game.getVideoSources();
+        $scope.filmTitle = $scope.game.description;
+
     }
 ]);
 
