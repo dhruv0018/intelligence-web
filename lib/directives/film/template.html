@@ -2,7 +2,18 @@
 
     <film-info
         data-title="filmTitle"
-        data-film="film">
+        data-film="film"
+        data-ng-if="currentUser.is(COACH)"
+        data-ui-sref="Coach.GameArea({id:film.id})"
+        >
+    </film-info>
+
+    <film-info
+        data-title="filmTitle"
+        data-film="film"
+        data-ng-if="currentUser.is(ATHLETE)"
+        data-ui-sref="Athlete.GameArea({id:film.id})"
+        >
     </film-info>
 
     <krossover-thumbnail width="400" data-film="film" data-is-game="isGame"></krossover-thumbnail>
