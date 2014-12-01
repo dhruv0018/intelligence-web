@@ -1,0 +1,76 @@
+@import (reference) "main.less";
+
+.public-clip {
+    
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    background-color: @content-bg;
+    
+    .player {
+        display: flex;
+        flex: 1;
+        margin-left: 15px;
+    }
+
+    .locked-game {
+        background-color: @content-bg;
+        width: 30%;
+        margin: auto;
+        margin-top: 40px;
+        padding: 10px;
+        border: thin solid @gray-border;
+        text-align: center;
+
+        i {
+            font-size: 100px;
+        }
+    }
+
+    .clip-body {
+        display: flex;
+        flex-direction: row;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 15px;
+        background: #f7f8f8;
+        flex: 1;
+    }
+
+    x-krossover-videoplayer {
+        margin-left: 15px;
+    }
+
+    // MOBILE
+    @media only screen
+    and (max-width: 1024px) {
+        .clip-body {
+            margin: 0;
+            padding: 0;
+            flex-direction: column-reverse;
+        }
+
+        x-krossover-videoplayer {
+            justify-content: center;
+            margin: 0;
+        }
+    }
+}
+
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+    
+    .public-clip {
+
+        .player {
+            display: block;
+            width: 100%;
+        }
+
+        .locked-game {
+            width: 80%;
+        }
+    }
+}

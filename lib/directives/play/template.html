@@ -1,40 +1,69 @@
 <div ng-if="$root.viewport.name === VIEWPORTS.MOBILE.name">
-    <!-- MOBILE REEL PLAY -->
-    <div data-ng-if="isReelsPlay" class="play play__reel" data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }">
-
-        <div class="playHeadingContainer">
-
-            <div class="playHeading" data-ng-click="selectPlay()">
     
-                <h4 class="title">
-                    <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
-                        <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
-                    </div>
-                    <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
-                </h4>
+    <div data-ng-switch data-on="isReelsPlay" data-ng-hide="!play.hasVisibleEvents && !isIndexer">
+        <!-- MOBILE REEL PLAY -->
+        <div data-ng-switch-when="true" class="play play__reel" data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }">
 
-                <h5 class="subtitle">
-                    <span class="teams">{{team.name}} vs {{opposingTeam.name}}</span>
-                </h5>
+            <div class="playHeadingContainer">
+
+                <div class="playHeading" data-ng-click="selectPlay()">
+        
+                    <h4 class="title">
+                        <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
+                            <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
+                        </div>
+                        <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
+                    </h4>
+
+                    <h5 class="subtitle">
+                        <span class="teams">{{team.name}} vs {{opposingTeam.name}}</span>
+                    </h5>
+                </div>
+
+                <a class="playplay" data-ui-sref="Clips({ id: play.id })"><i class="icon icon-play-circle"></i></a>
                 
+                <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
+                WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
+                <krossover-events
+                    data-ng-hide="true"
+                    data-auto-advance="autoAdvance"
+                    data-game="game"
+                    data-plays="plays"
+                    data-play="play"
+                    data-events="play.events"
+                    data-league="league"
+                    data-is-editable="isEditable">
+                </krossover-events>
             </div>
-
-            <a class="playplay" data-ui-sref="Clips({ id: play.id })"><i class="icon icon-play-circle"></i></a>
-            
-            <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
-            WANT TO SHOW THE EVENTS ON MOBILE -->
-            <krossover-events
-                data-ng-hide="true"
-                data-auto-advance="autoAdvance"
-                data-game="game"
-                data-plays="plays"
-                data-play="play"
-                data-events="play.events"
-                data-league="league"
-                data-is-editable="isEditable">
-            </krossover-events>
         </div>
 
+        <!-- MOBILE DEFAULT PLAY -->
+        <!-- Default to 'active' since this is currently only used for public clips -->
+        <div data-ng-switch-default class="active play play__reel">
+
+            <div class="playHeadingContainer">
+                <div class="playHeading">
+                    <h4 class="title">
+                        <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
+                            <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
+                        </div>
+                    </h4>
+                </div>
+
+                <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
+                WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
+                <krossover-events
+                    data-ng-hide="true"
+                    data-auto-advance="autoAdvance"
+                    data-game="game"
+                    data-plays="plays"
+                    data-play="play"
+                    data-events="play.events"
+                    data-league="league"
+                    data-is-editable="isEditable">
+                </krossover-events>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -123,7 +152,15 @@
 
             <div class="playBody" data-ng-if="isIndexer || expandAll || play === playManager.current || !play.summaries.length" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
 
-                <krossover-events data-auto-advance="autoAdvance" data-game="game" data-plays="plays" data-play="play" data-events="play.events" data-league="league"></krossover-events>
+                <krossover-events
+                    data-auto-advance="autoAdvance"
+                    data-game="game"
+                    data-plays="plays"
+                    data-play="play"
+                    data-events="play.events"
+                    data-league="league"
+                    data-is-editable="isEditable">
+                </krossover-events>
 
             </div>
 

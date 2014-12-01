@@ -414,6 +414,16 @@
     "ShortGames": {
 
         "*": true
+    },
+
+    "Clips": {
+
+        "*": true
+    },
+
+    "ShortClips": {
+
+        "*": true
     }
 }
 
