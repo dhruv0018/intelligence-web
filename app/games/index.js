@@ -2,9 +2,9 @@
 var angular = window.angular;
 
 
-var rawFilm = require('raw-film');
-var breakDown = require('breakdown');
-var dnd = require('down-and-distance');
+require('raw-film');
+require('breakdown');
+require('down-and-distance');
 require('game-info');
 require('stats');
 require('formations');
@@ -29,6 +29,7 @@ Games.run([
     function run($templateCache) {
 
         $templateCache.put('games/template.html', require('./template.html'));
+        $templateCache.put('games/restricted.html', require('./restricted.html'));
     }
 ]);
 
@@ -48,10 +49,38 @@ Games.config([
                 }
             ]
         };
+
+        var restrictedGames = {
+            name: 'Games.Restricted',
+            url: 'games/:id/restricted',
+            parent: 'base',
+            views: {
+                'main@root': {
+                    templateUrl: 'games/restricted.html'
+                }
+            }
+        };
+
         var Games = {
             name: 'Games',
             url: '/games/:id',
             parent: 'base',
+            onEnter: [
+                '$state', 'Games.Data', 'SessionService', 'GamesFactory',
+                function($state, data, session, games) {
+                    var currentUser = session.currentUser;
+
+                    var hasAccess = false;
+
+                    if (data.game.isSharedWithPublic() || data.game.uploaderTeamId === currentUser.currentRole.teamId || games.isSharedWithUser(currentUser)) {
+                        hasAccess = true;
+                    } else {
+                        $state.go('Games.Restricted', {id: data.game.id});
+                    }
+
+                    console.log(hasAccess);
+                }
+            ],
             views: {
                 'main@root': {
                     templateUrl: 'games/template.html',
@@ -68,7 +97,8 @@ Games.config([
 
                             var Data = {
                                 user: users.load(game.uploaderUserId),
-                                team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
+                                team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId]),
+                                game: game
                             };
 
                             //todo -- deal with this, real slow because of nesting
@@ -85,6 +115,7 @@ Games.config([
         };
 
         $stateProvider.state(shortGames);
+        $stateProvider.state(restrictedGames);
         $stateProvider.state(Games);
     }
 ]);

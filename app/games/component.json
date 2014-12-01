@@ -1,7 +1,8 @@
 {
     "name": "games",
     "templates": [
-        "template.html"
+        "template.html",
+        "restricted.html"
     ],
     "styles": [
         "styles.less"

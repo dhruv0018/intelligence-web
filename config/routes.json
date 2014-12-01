@@ -400,6 +400,10 @@
         "*": true
     },
 
+    "Games.Restricted": {
+        "*": true
+    },
+
     "Games.RawFilm": {
         "*": true
     },
