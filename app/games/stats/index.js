@@ -84,7 +84,7 @@ GamesStats.config([
 ]);
 
 GamesStats.controller('GamesStatsController', [
-    '$scope', '$state', '$stateParams', 'Game.Stats.Data', 'SPORTS',
+    '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'SPORTS',
     function controller($scope, $state, $stateParams, data, SPORTS) {
         $scope.gameLogTable = data.stats.gameLog;
         $scope.homeTeamStats = data.stats.homeTeamStats;
