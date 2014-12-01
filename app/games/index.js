@@ -147,7 +147,7 @@ Games.controller('Games.controller', [
             $scope.gameStates.push(
                 {
                     name: 'Raw Film',
-                    state: 'Coach.GameArea.RawFilm'
+                    state: 'Games.RawFilm'
                 }
             );
         }
