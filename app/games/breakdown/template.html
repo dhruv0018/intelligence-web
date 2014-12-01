@@ -9,7 +9,7 @@
 
     <div class="film-breakdown-body">
 
-        <div class="filter-container" ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
+        <div class="filter-container" ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name && publiclyShared">
 
             <plays-filter
                     data-total-plays="totalPlays"
@@ -22,12 +22,11 @@
 
         </div>
 
-        <div class="main-highlight">
+        <div class="main-highlight" data-ng-if="publiclyShared">
 
-            <krossover-sidebar data-ng-if="publiclyShared">
+            <krossover-sidebar>
 
-                <krossover-playlist-control
-                    data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
+                <krossover-playlist-control data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
                 </krossover-playlist-control>
 
                 <krossover-playlist>
@@ -43,30 +42,31 @@
                         data-ng-repeat="play in plays | orderBy:orderBy">
                     </krossover-play>
 
-                    <no-results data-ng-hide="plays.length"></no-results>
-
-                    <div class="expandrow">
-                      <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
-                      <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
-                    </div>
-        
                 </krossover-playlist>
+
+                <no-results data-ng-hide="plays.length"></no-results>
+
+                <div class="expandrow">
+                  <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
+                  <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
+                </div>
 
             </krossover-sidebar>
 
-            <div class="player" data-ng-if="publiclyShared">
+            <div class="player">
                 <div class="video-container">
-                    <x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
-                </div>
-            </div>
-
-            <div data-ng-if="!publiclyShared">
-                <div class="locked-game">
-                    <i class="icon icon-lock"></i>
-                    <h3>You do not have permission to access this game</h3>
+                    <x-krossover-videoplayer data-sources="sources" data-video-title="filmTitle"></x-krossover-videoplayer>
                 </div>
             </div>
 
         </div>
+
+        <div data-ng-if="!publiclyShared">
+            <div class="locked-game">
+                <i class="icon icon-lock"></i>
+                <h3>You do not have permission to access this game</h3>
+            </div>
+        </div>
+
     </div>
 </div>

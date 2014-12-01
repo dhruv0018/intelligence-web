@@ -6,6 +6,7 @@
     flex-direction: column;
     flex: 1;
     background-color: @gray-lightest;
+    overflow: none;
 
     .film-breakdown-body {
         display: flex;
@@ -13,6 +14,7 @@
         padding-left: 15px;
         padding-right: 15px;
         margin-bottom: 15px;
+        margin-top: -20px;
         background: @gray-lightest;
         flex: 1;
     }
@@ -27,6 +29,39 @@
     .filter-container {
         background-color: @gray-lightest;
         padding: 10px 0;
+    }
+
+    .expandrow {
+        border-top: thin solid @gray-border;
+        background-color: white;
+        width: 100%;
+        height: 50px;
+        padding: 0 15px;
+        display: flex;
+
+        button {
+            .btn;
+            .btn-link;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            padding-top: 10px;
+            padding-left: 0;
+            padding-right: 0;
+            padding-bottom: 10px;
+            border-left-width: 0;
+            outline: none;
+
+            &:focus,
+            &:hover {
+
+                text-decoration: none;
+            }
+        }
+    }
+
+    .player {
+        margin-left: 15px;
     }
 }
     
