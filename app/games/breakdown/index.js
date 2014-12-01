@@ -102,8 +102,8 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'VIEWPORTS', 'Games.Data',
-    function controller($rootScope, $scope, $state, $stateParams, games, teams, leagues, users, players, plays, filtersets, VIEWPORTS, data) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'VIEWPORTS', 'PlayManager', 'Games.Data',
+    function controller($rootScope, $scope, $state, $stateParams, games, teams, leagues, users, players, plays, filtersets, VIEWPORTS, playManager, data) {
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
@@ -112,8 +112,9 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
         $scope.VIEWPORTS = VIEWPORTS;
         $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
+        $scope.playManager = playManager;
 
-        if ($scope.game.isSharedWithPublic()) {
+        if (!$scope.game.isSharedWithPublic()) {
             $scope.publiclyShared = true;
             $scope.team = teams.get($scope.game.teamId);
             $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
@@ -122,6 +123,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             $scope.sources = $scope.game.getVideoSources();
             $scope.filmTitle = $scope.game.description;
+            playManager.videoTitle = 'filmBreakdown';
         }
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
