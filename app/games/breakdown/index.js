@@ -27,11 +27,14 @@ GamesBreakdown.config([
             },
             resolve: {
                 'Games.Breakdown.Data': [
-                    '$q', '$stateParams', 'UsersFactory', 'TeamsFactory', 'FiltersetsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'LeaguesFactory',
-                    function($q, $stateParams, users, teams, filtersets, games, players, plays, leagues) {
+                    '$q', '$stateParams', 'UsersFactory', 'TeamsFactory', 'FiltersetsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'LeaguesFactory', 'ReelsFactory', 'SessionService',
+                    function($q, $stateParams, users, teams, filtersets, games, players, plays, leagues, reels, session) {
 
                         var gameId = Number($stateParams.id);
                         return games.load(gameId).then(function() {
+                            var currentUser = session.currentUser;
+                            var userId = session.currentUser.id;
+                            var teamId = currentUser.currentRole.teamId;
 
                             var game = games.get(gameId);
 
@@ -61,6 +64,11 @@ GamesBreakdown.config([
                                 return filtersets.fetch(uploaderLeague.filterSetId);
                             });
 
+                            Data.reels =  reels.load({
+                                teamId: teamId,
+                                userId: userId
+                            });
+
                             return $q.all(Data);
                         });
                     }
@@ -82,7 +90,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
         //todo figure out why this is not working
-        //$scope.reels = reels.getList();
+        $scope.reels = reels.getList();
         $scope.playManager = playManager;
         $scope.videoTitle = 'filmBreakdown';
 
