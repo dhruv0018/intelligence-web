@@ -30,13 +30,6 @@ GamesBreakdown.config([
                 'Games.Breakdown.Data': [
                     '$q', '$stateParams', 'Games.Data.Dependencies',
                     function($q, $stateParams, data) {
-
-                        var gameId = Number($stateParams.id);
-//                        return games.load(gameId).then(function() {
-//                            var currentUser = session.currentUser;
-//                            var userId = session.currentUser.id;
-//                            var teamId = currentUser.currentRole.teamId;
-//                        });
                         return $q.all(data($stateParams).load());
                     }
                 ]
