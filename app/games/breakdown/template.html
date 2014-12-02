@@ -53,11 +53,7 @@
 
             </krossover-sidebar>
 
-            <div class="player" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
-                <div class="video-container">
-                    <x-krossover-videoplayer data-sources="sources" data-video-title="filmTitle" data-play-start-time="playManager.current.startTime" data-play-end-time="playManager.current.endTime"></x-krossover-videoplayer>
-                </div>
-            </div>
+            <x-krossover-videoplayer data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name" data-sources="sources" data-video-title="filmTitle" data-play-start-time="playManager.current.startTime" data-play-end-time="playManager.current.endTime"></x-krossover-videoplayer>
 
         </div>
 
