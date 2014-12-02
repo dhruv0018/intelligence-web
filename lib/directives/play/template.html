@@ -176,7 +176,7 @@
                     <i class="icon icon-remove error" data-ng-show="play.error"></i>
                 </div>
                 
-                <button class="play-link" data-ng-if="!isIndexer && reelsActive" data-open-modal="AddReel.Modal" data-modal-options="options"><i class="icon icon-plus"></i> Add to reel</button>
+                <button class="play-link" data-ng-if="reelsActive && isTeamMember" data-open-modal="AddReel.Modal" data-modal-options="options"><i class="icon icon-plus"></i> Add to reel</button>
                 
                 <button class="play-link pull-right disabled ng-hide" data-ng-if="!isIndexer"><i class="icon icon-tag"></i> Label Play</button>
 
