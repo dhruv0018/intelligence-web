@@ -51,7 +51,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
         var session;
 
-        var BaseStorage = Object.create({}, {
+        var BaseStorage = Object.create(Object.prototype, {
 
             db: {
 
@@ -75,30 +75,22 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
-            role: {
+            resource: {
 
                 enumerable: false,
 
                 get: function() {
 
-                    session = session || $injector.get('SessionService');
+                    user.user[this.description] = user.user[this.description] || Object.create(null);
 
-                    var key = session.serializeRole();
-
-                    user.user[key] = user.user[key] || Object.create(null);
-
-                    return user.user[key];
+                    return user.user[this.description];
                 },
 
                 set: function(value) {
 
-                    session = session || $injector.get('SessionService');
+                    user.user[this.description] = user.user[this.description] || Object.create(null);
 
-                    var key = session.serializeRole();
-
-                    user.user[key] = user.user[key] || Object.create(null);
-
-                    user.user[key] = value;
+                    user.user[this.description] = value;
                 }
             },
 

@@ -6,37 +6,12 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysStorage', [
-    'BaseStorage',
-    function(BaseStorage) {
+    'BaseStorage', 'PlaysFactory',
+    function(BaseStorage, plays) {
 
-        var description = 'plays';
+        var PlaysStorage = Object.create(BaseStorage);
 
-        var PlaysStorage = Object.create(BaseStorage, {
-
-            description: {
-
-                value: description
-            },
-
-            resource: {
-
-                enumerable: false,
-
-                get: function() {
-
-                    this.role[description] = this.role[description] || Object.create(null);
-
-                    return this.role[description];
-                },
-
-                set: function(value) {
-
-                    this.role[description] = this.role[description] || Object.create(null);
-
-                    this.role[description] = value;
-                }
-            }
-        });
+        PlaysStorage.description = plays.description;
 
         return PlaysStorage;
     }
