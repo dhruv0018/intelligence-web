@@ -90,8 +90,8 @@ Clips.config([
 ]);
 
 Clips.controller('Clips.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory',
-    function controller($scope, $state, $stateParams, games, teams, plays, leagues, players) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory', 'PlayManager',
+    function controller($scope, $state, $stateParams, games, teams, plays, leagues, players, playManager) {
 
         $scope.publiclyShared = false;
 
@@ -114,6 +114,7 @@ Clips.controller('Clips.controller', [
             // Krossover VideoPlayer data-attributes
             $scope.sources = $scope.play.getVideoSources();
             $scope.videoTitle = 'clip';
+            playManager.videoTitle = 'reelsPlayer';
         }
     }
 ]);

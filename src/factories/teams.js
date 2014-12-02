@@ -171,6 +171,18 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return members;
             },
 
+            isMember: function(userId) {
+
+                if (angular.isUndefined(userId)) throw new Error('isMember(): Missing argument \'userId\'');
+                if (!this.roles) return false;
+
+                var isMember = this.roles.some(function(role) {
+                    return role.userId === userId;
+                });
+
+                return isMember;
+            },
+
             getHeadCoachRole: function() {
 
                 if (!this.roles) return undefined;
