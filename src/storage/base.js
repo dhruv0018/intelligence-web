@@ -75,21 +75,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
-            user: {
-
-                enumerable: false,
-
-                get: function() {
-
-                    return user.user;
-                },
-
-                set: function(value) {
-
-                    user.user = value;
-                }
-            },
-
             role: {
 
                 enumerable: false,
@@ -100,9 +85,9 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     var key = session.serializeRole();
 
-                    this.user[key] = this.user[key] || Object.create(null);
+                    user.user[key] = user.user[key] || Object.create(null);
 
-                    return this.user[key];
+                    return user.user[key];
                 },
 
                 set: function(value) {
@@ -111,9 +96,9 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     var key = session.serializeRole();
 
-                    this.user[key] = this.user[key] || Object.create(null);
+                    user.user[key] = user.user[key] || Object.create(null);
 
-                    this.user[key] = value;
+                    user.user[key] = value;
                 }
             },
 
