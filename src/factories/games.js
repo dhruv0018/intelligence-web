@@ -937,7 +937,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                     userId: session.currentUser.id,
                     gameId: self.id,
                     sharedWithUserId: user.id,
-                    createdAt: moment.utc().toDate()
+                    createdAt: moment.utc().toDate(),
+                    isBreakdownShared: false
                 };
 
                 self.sharedWithUsers[user.id] = share;
@@ -1005,7 +1006,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                         userId: session.currentUser.id,
                         gameId: self.id,
                         sharedWithUserId: null,
-                        createdAt: moment.utc().toDate()
+                        createdAt: moment.utc().toDate(),
+                        isBreakdownShared: false
                     };
 
                     self.publicShare = share;

@@ -61,7 +61,10 @@
         		<div class="shared-with" data-ng-repeat="share in film.getUserShares()">
         			<strong>{{users[share.sharedWithUserId].firstName}} {{users[share.sharedWithUserId].lastName}}</strong>
                     <span class="pull-right">
-                        <span data-ng-show="isGame">Sharing raw film</span>
+                        <select data-ng-model="share.isBreakdownShared" data-ng-change="film.save()" data-ng-show="isGame">
+                            <option value="false">Sharing raw film only</option>
+                            <option value="true">Sharing raw film and breakdown</option>
+                        </select>
                         <span data-ng-show="!isGame">Sharing reel</span>
                     	<i class="icon icon-remove" data-ng-click="shareRevoke(users[share.sharedWithUserId])"></i>
                     </span>
