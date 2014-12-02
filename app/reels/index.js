@@ -28,9 +28,21 @@ ReelsArea.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        $stateProvider
+        var shortReelsState = {
+            name: 'ShortReels',
+            url: '/r/:id',
+            parent: 'base',
+            onEnter: [
+                '$state', '$stateParams',
+                function($state, $stateParams) {
+                    var reelId = parseInt($stateParams.id, 36);
+                    $state.go('ReelsArea', {id: reelId});
+                }
+            ]
+        };
 
-        .state('ReelsArea', {
+        var reelsState = {
+            name: 'ReelsArea',
             url: '/reel/:id',
             parent: 'base',
             views: {
@@ -41,46 +53,62 @@ ReelsArea.config([
             },
             resolve: {
                 'Reels.Data': [
-                    '$q', '$state', '$stateParams', 'Reels.Data.Dependencies', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory',
-                    function dataService($q, $state, $stateParams, data, games, plays, teams, reels, leagues, tagsets) {
+                    '$q', '$state', '$stateParams', 'Reels.Data.Dependencies',
+                    function dataService($q, $state, $stateParams, data) {
 
-                        var reelId;
-
-                        reelId = Number($stateParams.id);
-
-                        data.reel = reels.fetch(reelId);
-                        data.games = games.load({reelId: reelId});
-                        data.teams = teams.load({reelId: reelId});
-                        data.plays = plays.load({reelId: reelId});
-                        data.leagues = leagues.load();
-
-                        //Needed if reels page is directly navigated to through url
-                        data.tagsets = tagsets.load();
-
-                        return $q.all(data);
+                        return $q.all(data($stateParams).load());
                     }
                 ]
             },
             onEnter: [
-                '$state', 'AccountService', 'Reels.Data',
-                function($state, account, data) {
-                    if (data.reel.isDeleted) {
+                '$state', '$stateParams', 'AccountService', 'ReelsFactory',
+                function($state, $stateParams, account, reels) {
+
+                    var reelId = Number($stateParams.id);
+                    var reel = reels.get(reelId);
+
+                    if (reel.isDeleted) {
                         account.gotoUsersHomeState();
                     }
                 }
             ]
-        });
+        };
+
+        $stateProvider.state(shortReelsState);
+        $stateProvider.state(reelsState);
     }
 ]);
 
 ReelsArea.service('Reels.Data.Dependencies', [
-    '$state', 'GamesFactory', 'PlaysFactory', 'TeamsFactory',
-    function dataService($state, games, plays, teams) {
+    'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory',
+    function dataService(games, plays, teams, reels, leagues, tagsets, players) {
 
-        var Data = {};
+        var service = function(stateParams) {
 
-        return Data;
+            var obj = {
 
+                load: function() {
+
+                    var reelId = Number(stateParams.id);
+
+                    var data = {
+                        reel: reels.load({reelId: reelId}),
+                        games: games.load({reelId: reelId}),
+                        teams: teams.load({reelId: reelId}),
+                        plays: plays.load({reelId: reelId}),
+                        players: players.load({reelId: reelId}),
+                        tagset: tagsets.load(), // Needed if reels page is directly navigated to through url
+                        leagues: leagues.load()
+                    };
+
+                    return data;
+                }
+            };
+
+            return obj;
+        };
+
+        return service;
     }
 ]);
 
@@ -91,40 +119,71 @@ ReelsArea.service('Reels.Data.Dependencies', [
  * @type {Controller}
  */
 ReelsArea.controller('ReelsArea.controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'Reels.Data', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory',
-    function controller($scope, $state, $stateParams, $modal, modals, account, alerts, data, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES', 'VIEWPORTS',
+    function controller($rootScope, $scope, $state, $stateParams, $modal, modals, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES, VIEWPORTS) {
 
-        $scope.data = data;
-        $scope.videoTitle = 'reelsPlayer';
+        // Get reel
+        var reelId = Number($stateParams.id);
+        $scope.reel = reels.get(reelId);
+        playManager.videoTitle = 'reelsPlayer';
         $scope.editMode = false;
         var editAllowed = true;
-        $scope.reelCreatedDate = (typeof $scope.reelCreatedDate === 'string') ? new Date(data.reel.createdAt) : data.reel.createdAt;
-        $scope.reelUpdatedDate = (typeof $scope.reelUpdatedDate === 'string') ? new Date(data.reel.updatedAt) : data.reel.updatedAt;
 
-        $scope.plays = data.plays.getList();
+        var plays = playsFactory.getList({ reelId: reelId });
+        $scope.plays = plays;
+        $scope.playManager = playManager;
+
+        $scope.VIEWPORTS = VIEWPORTS;
+
+        // Refresh the playManager
+        playsManager.reset();
+
+        // Add each play individually to the playsManager to keep play order consistent with the reels ordering.
+        angular.forEach($scope.reel.plays, function(playId) {
+            playsManager.addPlay(playsFactory.get(playId));
+        });
+
+        var editModeRestrictions = {
+            DELETABLE: 'DELETABLE',
+            EDITABLE: 'EDITABLE',
+            VIEWABLE: 'VIEWABLE'
+        };
+
+        /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
+        // DEFAULT RESTRICTION
+        $scope.restrictionLevel = editModeRestrictions.VIEWABLE;
+
+        var isCoach = session.currentUser.is(ROLES.COACH);
+        var isACoachOfThisTeam = isCoach && session.currentUser.currentRole.teamId === $scope.reel.uploaderTeamId;
+        var isOwner = session.currentUser.id === $scope.reel.uploaderUserId;
+
+        if (isACoachOfThisTeam) $scope.restrictionLevel = editModeRestrictions.EDITABLE;
+        if (isOwner) $scope.restrictionLevel = editModeRestrictions.DELETABLE;
+
+        $scope.canUserDelete = $scope.restrictionLevel === editModeRestrictions.DELETABLE;
+        $scope.canUserEdit = $scope.restrictionLevel === editModeRestrictions.DELETABLE || $scope.restrictionLevel === editModeRestrictions.EDITABLE;
 
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,
             //NOT for exiting from commiting changes
-
             if (!editAllowed) return;
 
             $scope.editMode = !$scope.editMode;
 
             if ($scope.editMode) {
                 //entering edit mode, cache plays array
-                if (data.reel && data.reel.plays && angular.isArray(data.reel.plays)) {
-                    $scope.toggleEditMode.playsCache = angular.copy(data.reel.plays);
+                if ($scope.reel && $scope.reel.plays && angular.isArray($scope.reel.plays)) {
+                    $scope.toggleEditMode.playsCache = angular.copy($scope.reel.plays);
                 }
             } else {
                 //cancelling edit mode
 
                 if ($scope.toggleEditMode.playsCache) {
                     //get rid of dirty plays array
-                    delete data.reel.plays;
+                    delete $scope.reel.plays;
 
                     //in with clean
-                    data.reel.plays = $scope.toggleEditMode.playsCache;
+                    $scope.reel.plays = $scope.toggleEditMode.playsCache;
                 }
             }
         };
@@ -170,11 +229,11 @@ ReelsArea.controller('ReelsArea.controller', [
             }
         };
 
-        $scope.removeReelPlay = function(index) {
-            if (data.reel && data.reel.plays && angular.isArray(data.reel.plays)) {
-                data.reel.plays.splice(index, 1);
+        $scope.$on('delete-reel-play', function($event, index) {
+            if ($scope.editMode && $scope.reel && $scope.reel.plays && angular.isArray($scope.reel.plays)) {
+                $scope.reel.plays.splice(index, 1);
             }
-        };
+        });
 
         $scope.saveReels = function() {
             //delete cached plays
@@ -183,8 +242,15 @@ ReelsArea.controller('ReelsArea.controller', [
             $scope.editMode = false;
             editAllowed = false;
 
-            data.reel.save().then(function() {
+            $scope.reel.save().then(function() {
                 editAllowed = true;
+
+                // Refresh the playManager
+                playsManager.reset();
+
+                angular.forEach($scope.reel.plays, function(playId) {
+                    playsManager.addPlay(playsFactory.get(playId));
+                });
             });
         };
 
@@ -196,7 +262,7 @@ ReelsArea.controller('ReelsArea.controller', [
             });
 
             deleteReelModal.result.then(function() {
-                data.reel.remove();
+                $scope.reel.remove();
                 account.gotoUsersHomeState();
             });
         };

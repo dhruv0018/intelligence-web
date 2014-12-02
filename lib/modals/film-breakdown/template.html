@@ -1,19 +1,21 @@
 <div class="film-breakdown-modal">
 
     <header class="modal-header">
-    	<h3 class="modal-title">Play Breakdown
+        <h3 class="modal-title">Play Breakdown
         <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i></h3>
 
     </header>
 
     <div class="modal-body">
+
 	    <aside class="playlist">
-	    	<krossover-plays data-expand-all="expandAll" data-game="game" data-reels="reels" data-plays="currentPlays" data-team="team" data-opposing-team="opposingTeam" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-league="league"></krossover-plays>
+	    	<krossover-plays data-expand-all="expandAll" data-game="game" data-reels="reels" data-plays="currentPlays" data-team="team" data-opposing-team="opposingTeam" data-league="league"></krossover-plays>
 	    <!--	<no-results data-ng-hide="plays.length"></no-results>-->
 	    </aside>
 	    <div class="breakdown-video two">
     		<x-krossover-videoplayer data-sources="sources" data-override-width="videoWidthOverride" data-override-height="videoHeightOverride" data-play-start-time="play.current.startTime" data-play-end-time="play.current.endTime"></x-krossover-videoplayer>
     	</div>
+
     </div>
 
 </div>

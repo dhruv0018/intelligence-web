@@ -26,51 +26,18 @@ GamesBreakdown.config([
                 }
             },
             resolve: {
+
                 'Games.Breakdown.Data': [
-                    '$q', '$stateParams', 'UsersFactory', 'TeamsFactory', 'FiltersetsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'LeaguesFactory', 'ReelsFactory', 'SessionService',
-                    function($q, $stateParams, users, teams, filtersets, games, players, plays, leagues, reels, session) {
+                    '$q', '$stateParams', 'Games.Data.Dependencies',
+                    function($q, $stateParams, data) {
 
                         var gameId = Number($stateParams.id);
-                        return games.load(gameId).then(function() {
-                            var currentUser = session.currentUser;
-                            var userId = session.currentUser.id;
-                            var teamId = currentUser.currentRole.teamId;
-
-                            var game = games.get(gameId);
-
-                            var Data = {
-                                user: users.load(game.uploaderUserId),
-                                team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
-                            };
-
-                            var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
-                            Data.loadTeamPlayers = players.load(teamPlayersFilter);
-
-                            var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
-                            Data.loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
-
-                            var playsFilter = { gameId: game.id };
-                            Data.loadPlays = plays.load(playsFilter);
-
-                            //todo -- deal with this, real slow because of nesting
-                            Data.league = Data.team.then(function() {
-                                var uploaderTeam = teams.get(game.uploaderTeamId);
-                                return leagues.fetch(uploaderTeam.leagueId);
-                            });
-
-                            Data.filterSet = Data.league.then(function() {
-                                var uploaderTeam = teams.get(game.uploaderTeamId);
-                                var uploaderLeague = leagues.get(uploaderTeam.leagueId);
-                                return filtersets.fetch(uploaderLeague.filterSetId);
-                            });
-
-                            Data.reels =  reels.load({
-                                teamId: teamId,
-                                userId: userId
-                            });
-
-                            return $q.all(Data);
-                        });
+//                        return games.load(gameId).then(function() {
+//                            var currentUser = session.currentUser;
+//                            var userId = session.currentUser.id;
+//                            var teamId = currentUser.currentRole.teamId;
+//                        });
+                        return $q.all(data($stateParams).load());
                     }
                 ]
             }
@@ -80,20 +47,86 @@ GamesBreakdown.config([
     }
 ]);
 
+GamesBreakdown.service('Games.Data.Dependencies', [
+    '$q', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory', 'SessionService',
+    function dataService($q, games, plays, teams, reels, leagues, tagsets, players, filtersets, users, session) {
+
+        var service = function(stateParams) {
+
+            var obj = {
+
+                load: function() {
+                    var currentUser = session.currentUser;
+                    var userId = session.currentUser.id;
+                    var teamId = currentUser.currentRole.teamId;
+
+                    var gameId = Number(stateParams.id);
+
+                    return games.load(gameId).then(function() {
+
+                        var game = games.get(gameId);
+
+                        var Data = {
+                            user: users.load(game.uploaderUserId),
+                            team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
+                        };
+
+                        var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
+                        Data.loadTeamPlayers = players.load(teamPlayersFilter);
+
+                        var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
+                        Data.loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
+
+                        Data.reels =  reels.load({
+                            teamId: teamId,
+                            userId: userId
+                        });
+
+                        var playsFilter = { gameId: game.id };
+                        Data.loadPlays = plays.load(playsFilter);
+
+                        // TODO: Fix this, really slow because of nesting
+                        Data.league = Data.team.then(function() {
+                            var uploaderTeam = teams.get(game.uploaderTeamId);
+                            return leagues.fetch(uploaderTeam.leagueId);
+                        });
+
+                        Data.filterSet = Data.league.then(function() {
+                            var uploaderTeam = teams.get(game.uploaderTeamId);
+                            var uploaderLeague = leagues.get(uploaderTeam.leagueId);
+                            return filtersets.fetch(uploaderLeague.filterSetId);
+                        });
+
+                        Data.tagset = tagsets.load();
+
+                        return $q.all(Data);
+                    });
+                }
+            };
+
+            return obj;
+        };
+
+        return service;
+    }
+]);
+
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'ReelsFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'Games.Breakdown.Data', 'PlayManager',
-    function controller($scope, $state, $stateParams, games, reels, teams, leagues, users, players, plays, filtersets, data, playManager) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'Games.Breakdown.Data',
+    function controller($rootScope, $scope, $state, $stateParams, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, data) {
+
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
         $scope.publiclyShared = false;
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
-        //todo figure out why this is not working
+
         $scope.reels = reels.getList();
         $scope.playManager = playManager;
         $scope.videoTitle = 'filmBreakdown';
-
+        $scope.VIEWPORTS = VIEWPORTS;
+        $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
 
         //Todo remove some of this later
         $scope.publiclyShared = true;
@@ -104,8 +137,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
         $scope.sources = $scope.game.getVideoSources();
         $scope.filmTitle = $scope.game.description;
-
-
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
         if ($scope.game.isDelivered()) {

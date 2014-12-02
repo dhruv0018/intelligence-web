@@ -391,9 +391,12 @@
 
     "ReelsArea": {
 
-        "Head Coach": true,
-        "Assistant Coach": true,
-        "Athlete": true
+        "*": true
+    },
+
+    "ShortReels": {
+
+        "*": true
     },
 
     "Games": {

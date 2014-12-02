@@ -13,6 +13,8 @@
         "events",
         "play",
         "plays",
+        "playlist",
+        "playlist-control",
         "results",
         "no-results",
         "videoplayer",
@@ -50,7 +52,6 @@
         "videogular",
         "breakdown-text",
         "videogular",
-        "reel-play",
         "player-information",
         "film-home-tabs",
         "plays-filters",
@@ -60,8 +61,9 @@
         "profile",
         "film-header",
         "plays-filters",
+        "coach-game",
         "draggable",
-        "coach-game"
+        "sidebar"
     ],
     "scripts": [
         "index.js"

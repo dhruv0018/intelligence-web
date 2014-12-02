@@ -51,27 +51,24 @@ Coach.config([
 Coach.service('Coach.Data.Dependencies', [
     '$q', 'SessionService', 'TeamsFactory', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies', 'ROLE_TYPE', 'ROLES',
     function($q, session, teams, reels, games, players, users, leagues, tagsets, positionsets, data, ROLE_TYPE, ROLES) {
-        var currentUser = session.currentUser;
+
         var userId = session.currentUser.id;
-        var teamId = currentUser.currentRole.teamId;
+        var teamId = session.currentUser.currentRole.teamId;
 
         var gamesForUser = games.load({
             uploaderTeamId: session.currentUser.currentRole.teamId
         });
 
         var gamesSharedWithUser = games.load({
-            sharedWithUserId: session.currentUser.id
+            sharedWithUserId: userId
         });
 
         var Data = {
             positionSets: positionsets.load(),
-            teams: teams.load({ relatedUserId: currentUser.id }),
-            users: users.load({ relatedUserId: currentUser.id }),
+            teams: teams.load({ relatedUserId: userId }),
+            users: users.load({ relatedUserId: userId }),
             games: $q.all([gamesForUser, gamesSharedWithUser]),
-            reels: reels.load({
-                teamId: teamId,
-                userId: userId
-            }),
+            reels: reels.load({ relatedUserId: userId }),
             remainingBreakdowns:  teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
                 session.currentUser.remainingBreakdowns = breakdownData;
                 return breakdownData;
