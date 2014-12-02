@@ -6,37 +6,12 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('TagsetsStorage', [
-    'BaseStorage',
-    function(BaseStorage) {
+    'BaseStorage', 'TagsetsFactory',
+    function(BaseStorage, tagsets) {
 
-        var description = 'tagsets';
+        var TagsetsStorage = Object.create(BaseStorage);
 
-        var TagsetsStorage = Object.create(BaseStorage, {
-
-            description: {
-
-                value: description
-            },
-
-            resource: {
-
-                enumerable: false,
-
-                get: function() {
-
-                    this.role[description] = this.role[description] || Object.create(null);
-
-                    return this.role[description];
-                },
-
-                set: function(value) {
-
-                    this.role[description] = this.role[description] || Object.create(null);
-
-                    this.role[description] = value;
-                }
-            }
-        });
+        TagsetsStorage.description = tagsets.description;
 
         return TagsetsStorage;
     }
