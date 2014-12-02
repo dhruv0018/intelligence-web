@@ -3,7 +3,7 @@
     <film-info
         data-title="filmTitle"
         data-film="film"
-        data-ng-if="currentUser.is(COACH)"
+        data-ng-if="isGame && currentUser.is(COACH)"
         data-ui-sref="Coach.GameArea({id:film.id})"
         >
     </film-info>
@@ -11,8 +11,16 @@
     <film-info
         data-title="filmTitle"
         data-film="film"
-        data-ng-if="currentUser.is(ATHLETE)"
+        data-ng-if="isGame && currentUser.is(ATHLETE)"
         data-ui-sref="Athlete.GameArea({id:film.id})"
+        >
+    </film-info>
+
+    <film-info
+        data-title="filmTitle"
+        data-film="film"
+        data-ng-if="!isGame"
+        data-ui-sref="ReelsArea({id:film.id})"
         >
     </film-info>
 
