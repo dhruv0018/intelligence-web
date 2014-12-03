@@ -102,33 +102,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
-            promises: {
-
-                get: function() {
-
-                    var self = this;
-
-                    var promises = this.keys
-
-                    .filter(function(key) {
-
-                        return key.charAt(0) === '@';
-                    })
-
-                    .filter(function(key) {
-
-                        return self.resource[key].promise;
-                    })
-
-                    .map(function(key) {
-
-                        return self.resource[key].promise;
-                    });
-
-                    return promises;
-                }
-            },
-
             update: {
 
                 value: function(resource) {
