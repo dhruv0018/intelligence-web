@@ -11,6 +11,7 @@ IntelligenceWebClient.factory('FiltersetsStorage', [
 
         var FiltersetsStorage = Object.create(BaseStorage);
 
+        FiltersetsStorage.factory = filtersets;
         FiltersetsStorage.description = filtersets.description;
 
         return FiltersetsStorage;

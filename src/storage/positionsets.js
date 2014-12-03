@@ -11,6 +11,7 @@ IntelligenceWebClient.factory('PositionsetsStorage', [
 
         var PositionsetsStorage = Object.create(BaseStorage);
 
+        PositionsetsStorage.factory = positionsets;
         PositionsetsStorage.description = positionsets.description;
 
         return PositionsetsStorage;

@@ -11,6 +11,7 @@ IntelligenceWebClient.factory('ReelsStorage', [
 
         var ReelsStorage = Object.create(BaseStorage);
 
+        ReelsStorage.factory = reels;
         ReelsStorage.description = reels.description;
 
         return ReelsStorage;

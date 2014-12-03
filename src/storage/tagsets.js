@@ -11,6 +11,7 @@ IntelligenceWebClient.factory('TagsetsStorage', [
 
         var TagsetsStorage = Object.create(BaseStorage);
 
+        TagsetsStorage.factory = tagsets;
         TagsetsStorage.description = tagsets.description;
 
         return TagsetsStorage;

@@ -11,6 +11,7 @@ IntelligenceWebClient.factory('TeamsStorage', [
 
         var TeamsStorage = Object.create(BaseStorage);
 
+        TeamsStorage.factory = teams;
         TeamsStorage.description = teams.description;
 
         return TeamsStorage;
