@@ -190,11 +190,6 @@ Games.controller('Games.controller', [
                 }
             );
         }
-
-//        $scope.$watch('$scope.game', function(game) {
-//            $state.go('Games.RawFilm');
-//            //$state.go('Games.Breakdown');
-//        });
     }
 ]);
 
