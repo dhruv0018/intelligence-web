@@ -1,0 +1,38 @@
+<div class="public-clip">
+	<film-header
+        data-title="filmTitle"
+		data-is-public="publiclyShared"
+		data-film="game"
+		data-home-team="team"
+		data-opposing-team="opposingTeam">
+	</film-header>
+    
+    <div class="clip-body" data-ng-if="publiclyShared">
+
+        <krossover-sidebar>
+
+            <krossover-playlist>
+
+                <krossover-play
+                    data-game="game"
+                    data-play="play"                
+                    data-league="league"
+                    data-is-editable="false">
+                </krossover-play>
+
+            </krossover-playlist>
+
+        </krossover-sidebar>
+
+        <x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
+
+    </div>
+
+    <div data-ng-if="!publiclyShared">
+        <div class="locked-game">
+            <i class="icon icon-lock"></i>
+            <h3>You do not have permission to access this game</h3>
+        </div>
+    </div>
+    
+</div>
