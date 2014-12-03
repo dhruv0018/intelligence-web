@@ -171,7 +171,7 @@ Games.controller('Games.controller', [
                 );
             }
 
-            if ($scope.league.sportId == SPORTS.VOLLEYBALL.id || $scope.league.sportId == SPORTS.FOOTBALL.id && currentUser.is(ROLES.COACH)) {
+            if (($scope.league.sportId == SPORTS.VOLLEYBALL.id || $scope.league.sportId == SPORTS.FOOTBALL.id) && currentUser.is(ROLES.COACH)) {
                 $scope.gameStates.push(
                     {
                         name: 'Statistics',
