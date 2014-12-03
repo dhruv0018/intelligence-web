@@ -194,25 +194,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                     }
 
                     this.resource[key] = value;
-
-                    if (angular.isArray(value)) {
-
-                        var list = value.map(function(resource) {
-
-                            return this.get(resource.id);
-
-                        }, this)
-
-                        .map(function(resource) {
-
-                            resource = resource.unextend(resource);
-                            resource = angular.toJson(resource);
-
-                            return resource;
-                        });
-
-                        $localForage.setItem(db, list);
-                    }
                 }
             },
 
