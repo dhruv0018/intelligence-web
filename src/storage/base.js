@@ -75,6 +75,8 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             db: {
 
+                enumerable: false,
+
                 get: function() {
 
                     return key + this.description;
