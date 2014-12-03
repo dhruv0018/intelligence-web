@@ -132,12 +132,12 @@ Games.controller('Games.controller', [
         if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered() && !$scope.game.isSharedWithUser(session.currentUser)) {
             $scope.gameStates.push(
                 {
-                    name: 'Raw Film',
-                    state: 'Games.RawFilm'
-                },
-                {
                     name: 'Film Breakdown',
                     state: 'Games.Breakdown'
+                },
+                {
+                    name: 'Raw Film',
+                    state: 'Games.RawFilm'
                 }
             );
 

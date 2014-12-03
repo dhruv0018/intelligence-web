@@ -416,23 +416,28 @@
     },
 
     "Games.DownAndDistance": {
-        "*": true
+        "Head Coach": true,
+        "Assistant Coach": true
     },
 
     "Games.Info": {
-        "*": true
+        "Head Coach": true,
+        "Assistant Coach": true
     },
 
     "Games.Stats": {
-        "*": true
+        "Head Coach": true,
+        "Assistant Coach": true
     },
 
     "Games.Formations": {
-        "*": true
+        "Head Coach": true,
+        "Assistant Coach": true
     },
 
     "Games.ShotChart": {
-        "*": true
+        "Head Coach": true,
+        "Assistant Coach": true
     },
 
     "ShortGames": {
