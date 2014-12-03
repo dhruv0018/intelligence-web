@@ -319,7 +319,16 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var single = function(id) {
 
-                    return self.fetch(id).then(function(resource) {
+                    if (storage.isStored(id)) {
+
+                        var resource = storage.get(id);
+
+                        var list = [resource];
+
+                        return list;
+                    }
+
+                    else return self.fetch(id).then(function(resource) {
 
                         var list = [resource];
 
