@@ -329,11 +329,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var key = '@';
-
                 filter = angular.copy(filter);
-
-                if (filter) key += JSON.stringify(filter);
+                filter = JSON.stringify(filter);
 
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
@@ -435,7 +432,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     }
                 };
 
-                return storage.grab(key, function(item) {
+                return storage.grab(function(item) {
 
                     var resource = toResource(item);
 
@@ -462,8 +459,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var self = this;
 
                 filter = filter || '';
-
-                var key = '@' + JSON.stringify(filter);
 
                 var storage = $injector.get(self.storage);
 
