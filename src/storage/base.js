@@ -75,14 +75,9 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             get keys() {
 
-                var keys = Object.keys(this.resource);
+                var keys = Object.keys(this.map);
 
                 return keys;
-            },
-
-            get all() {
-
-                return this.resource;
             },
 
             get list() {
@@ -91,7 +86,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 var list = self.keys.map(function(key) {
 
-                    return self.resource[key];
+                    return self.map[key];
                 });
 
                 return list;
@@ -103,7 +98,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 if (this.isStored(id)) {
 
-                    var resource = this.resource[id];
+                    var resource = this.map[id];
 
                     return resource;
                 }
@@ -121,7 +116,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 if (angular.isObject(value)) {
 
-                    this.resource[key] = value;
+                    this.map[key] = value;
                 }
 
                 else if (angular.isArray(value)) {
@@ -150,7 +145,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             isStored: function(key) {
 
-                return angular.isDefined(this.resource[key]);
+                return angular.isDefined(this.map[key]);
             },
 
             grab: function(hit, miss) {
@@ -176,7 +171,7 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
-            resource: {
+            map: {
 
                 enumerable: false,
 
