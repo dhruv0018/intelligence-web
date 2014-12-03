@@ -24,6 +24,7 @@ require('./users');
 require('./routes');
 require('./errors');
 require('./viewports');
+require('./device');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
@@ -41,6 +42,7 @@ require('./services/alerts');
 require('./services/scripts');
 require('./services/indexing');
 require('./services/date');
+require('./services/detectDevice');
 
 require('./constants/users');
 require('./constants/games');
@@ -55,6 +57,7 @@ require('./constants/football/zones');
 require('./constants/sports');
 require('./constants/viewports');
 require('./constants/arenas');
+require('./constants/device');
 
 require('./models/users');
 require('./models/sports');

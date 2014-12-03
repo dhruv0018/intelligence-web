@@ -7,6 +7,7 @@
     data-vg-update-volume="onUpdateVolume"
     data-vg-update-state="onUpdateState"
     data-vg-autoplay="config.autoPlay"
+    data-is-mobile="isMobile"
     data-vg-sources="sources">
 
     <div class="posterImage" data-ng-hide="played || !isMobile" data-ng-click="played = true"></div>
@@ -19,7 +20,7 @@
 
         <data-vg-buffering></data-vg-buffering>
 
-        <div class="controls-container-full">
+        <div class="controls-container-full" data-ng-if="!isMobile">
             <data-vg-scrubbar>
                 <data-vg-scrubbarcurrenttime></data-vg-scrubbarcurrenttime>
             </data-vg-scrubbar>
