@@ -83,14 +83,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
-            all: {
-
-                get: function() {
-
-                    return this.resource;
-                }
-            },
-
             keys: {
 
                 get: function() {
@@ -98,6 +90,14 @@ IntelligenceWebClient.factory('BaseStorage', [
                     var keys = Object.keys(this.resource);
 
                     return keys;
+                }
+            },
+
+            all: {
+
+                get: function() {
+
+                    return this.resource;
                 }
             },
 
