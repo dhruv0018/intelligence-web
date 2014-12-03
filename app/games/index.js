@@ -121,11 +121,12 @@ Games.config([
 ]);
 
 Games.controller('Games.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SessionService',
-    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, session) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SessionService', 'ROLES',
+    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, session, ROLES) {
         $scope.game = games.get($stateParams.id);
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
+        var currentUser = session.currentUser;
 
         //define states for view selector
         $scope.gameStates = [];
@@ -143,7 +144,7 @@ Games.controller('Games.controller', [
                 }
             );
 
-            if ($scope.league.sportId == SPORTS.BASKETBALL.id) {
+            if ($scope.league.sportId == SPORTS.BASKETBALL.id && currentUser.is(ROLES.COACH)) {
                 $scope.gameStates.push(
                     {
                         name: 'Shot Chart',
@@ -152,7 +153,7 @@ Games.controller('Games.controller', [
                 );
             }
 
-            if ($scope.league.sportId == SPORTS.FOOTBALL.id) {
+            if ($scope.league.sportId == SPORTS.FOOTBALL.id && currentUser.is(ROLES.COACH)) {
                 $scope.gameStates.push(
                     {
                         name: 'Formation Report',
@@ -165,7 +166,7 @@ Games.controller('Games.controller', [
                 );
             }
 
-            if ($scope.league.sportId == SPORTS.VOLLEYBALL.id || $scope.league.sportId == SPORTS.FOOTBALL.id) {
+            if ($scope.league.sportId == SPORTS.VOLLEYBALL.id || $scope.league.sportId == SPORTS.FOOTBALL.id && currentUser.is(ROLES.COACH)) {
                 $scope.gameStates.push(
                     {
                         name: 'Statistics',
@@ -183,7 +184,7 @@ Games.controller('Games.controller', [
             );
         }
 
-        if (!$scope.game.isSharedWithUser(session.currentUser)) {
+        if (!$scope.game.isSharedWithUser(session.currentUser) && currentUser.is(ROLES.COACH)) {
             $scope.gameStates.push(
                 {
                     name: 'Game Information',

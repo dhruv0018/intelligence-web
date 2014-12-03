@@ -82,9 +82,9 @@ GameAreaInformation.config([
 GameAreaInformation.controller('GamesInformationController', [
     '$scope', '$state', '$stateParams', '$modal', 'AlertsService', 'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'Games.Info.Data',
     function controller($scope, $state, $stateParams, $modal, alerts, session, games, teams, leagues, Data) {
-        console.log('still working games info controller');
         var game = Data.game;
         $scope.game = game;
+        $scope.returnedDate = ($scope.game.isDelivered()) ? new Date($scope.game.currentAssignment().timeFinished) : null;
         $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
         $scope.remainingBreakdowns = Data.remainingBreakdowns;
 
