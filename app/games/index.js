@@ -77,8 +77,6 @@ Games.config([
                     } else {
                         $state.go('Games.Restricted', {id: data.game.id});
                     }
-
-                    console.log(hasAccess);
                 }
             ],
             views: {
