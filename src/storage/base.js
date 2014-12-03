@@ -5,10 +5,10 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
-IntelligenceWebClient.value('RootStorage', Object.create(null));
+IntelligenceWebClient.value('RootStore', Object.create(null));
 
-IntelligenceWebClient.factory('UserStorage', [
-    '$injector', 'SessionService', 'RootStorage',
+IntelligenceWebClient.factory('UserStore', [
+    '$injector', 'SessionService', 'RootStore',
     function($injector, session, root) {
 
         var UserStorage = Object.create(null, {
