@@ -6,7 +6,7 @@ var GamesFormations = angular.module('Games.Formations', []);
 GamesFormations.run([
     '$templateCache',
     function run($templateCache) {
-        $templateCache.put('coach/game-area/gameAreaFormations.html', require('./template.html'));
+        $templateCache.put('games/formations.html', require('./template.html'));
     }
 ]);
 
@@ -20,8 +20,8 @@ GamesFormations.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'coach/game-area/gameAreaFormations.html',
-                    controller: 'GamesFormationsController'
+                    templateUrl: 'games/formations.html',
+                    controller: 'GamesFormations.controller'
                 }
             },
             resolve: {
@@ -76,7 +76,7 @@ GamesFormations.config([
     }
 ]);
 
-GamesFormations.controller('GamesFormationsController', [
+GamesFormations.controller('GamesFormations.controller', [
     '$scope', '$state', '$stateParams', 'TeamsFactory', 'GamesFactory', 'Games.FormationReport.Data',
     function controller($scope, $state, $stateParams, teams, games, data) {
 
