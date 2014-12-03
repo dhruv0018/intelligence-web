@@ -106,6 +106,23 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
+            get: {
+
+                value: function(key) {
+
+                    var id = key;
+
+                    if (this.isStored(id)) {
+
+                        var resource = this.resource[id];
+
+                        return resource;
+                    }
+
+                    else throw new Error('Could not get ' + this.description.slice(0, -1) + ' ' + id);
+                }
+            },
+
             resource: {
 
                 enumerable: false,
@@ -153,21 +170,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
-            get: {
-
-                value: function(key) {
-
-                    if (!key) return this.resource;
-
-                    if (!this.isStored(key)) {
-
-                        if (String(key).charAt(0) === '@') throw new Error('Could not get ' + this.description.slice(0, -1) + ' list ' + key);
-                        throw new Error('Could not get ' + this.description.slice(0, -1) + ' ' + key);
-                    }
-
-                    return this.resource[key];
-                }
-            },
 
             set: {
 
