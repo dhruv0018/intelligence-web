@@ -153,7 +153,7 @@ IntelligenceWebClient.factory('BaseStorage', [
                 return angular.isDefined(this.resource[key]);
             },
 
-            grab: function(key, hit, miss) {
+            grab: function(hit, miss) {
 
                 return $localForage.getItem(this.db).then(function(item) {
 
