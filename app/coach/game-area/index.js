@@ -150,8 +150,8 @@ GameArea.config([
  * @type {Controller}
  */
 GameArea.controller('Coach.GameArea.controller', [
-    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'TeamsFactory', 'SessionService', 'ShareFilm.Modal',
-    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, teams, session, ShareFilmModal) {
+    '$scope', '$state', '$stateParams', 'PlayersFactory', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'Coach.Data', 'SPORTS', 'PlayManager', 'TeamsFactory', 'SessionService', 'ShareFilm.Modal', 'ARENA_TYPES_IDS', 'ARENA_TYPES',
+    function controller($scope, $state, $stateParams, players, GAME_STATUS_IDS, GAME_STATUSES, data, SPORTS, playManager, teams, session, ShareFilmModal, ARENA_TYPES_IDS, ARENA_TYPES) {
         $scope.expandAll = false;
         $scope.data = data;
         $scope.play = playManager;
@@ -180,6 +180,9 @@ GameArea.controller('Coach.GameArea.controller', [
         //Plays
         $scope.totalPlays = angular.copy(data.plays);
         $scope.plays = $scope.totalPlays;
+
+        //Constant for arena
+        $scope.arenaType = ARENA_TYPES[ARENA_TYPES_IDS[7]].type;
 
         //define states for view selector
         $scope.gameStates = [];
