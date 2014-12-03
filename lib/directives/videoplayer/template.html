@@ -1,4 +1,5 @@
 <data-videogular 
+    data-ng-class="{'mobile': isMobile}"
     data-vg-player-ready="onPlayerReady"
     data-vg-complete="onCompleteVideo"
     data-vg-update-time="onUpdateTime"
@@ -8,9 +9,9 @@
     data-vg-autoplay="config.autoPlay"
     data-vg-sources="sources">
 
-    <div class="posterImage"></div>
+    <div class="posterImage" data-ng-hide="played || !isMobile" data-ng-click="played = true"></div>
 
-    <div class="video-container">
+    <div data-ng-hide="isMobile && !played" class="video-container">
 
         <div class="error-video" data-ng-hide="playManager.videoTitle === 'reelsPlayer' || sources.length"><h1>Could not load video</h1></div>
 
