@@ -260,23 +260,14 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 value: function(key, hit, miss) {
 
-                    var self = this;
+                    var db = this.db + key;
 
-                    if (!this.isStored(key)) {
+                    return $localForage.getItem(db).then(function(item) {
 
-                        this.resource[key] = [];
+                        if (item) return hit(item);
 
-                        var db = this.db + key;
-
-                        this.resource[key].promise = $localForage.getItem(db).then(function(item) {
-
-                            if (item) return hit(item);
-
-                            else return miss();
-                        });
-                    }
-
-                    return this.resource[key].promise;
+                        else return miss();
+                    });
                 }
             }
         });
