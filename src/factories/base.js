@@ -327,7 +327,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 };
 
-                var array = function(ids) {
+                var multiple = function(ids) {
 
                     var promises = [];
 
@@ -418,7 +418,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     var resource = toResource(item);
 
                     if (angular.isNumber(filter)) single(filter);
-                    else if (angular.isArray(filter)) array(filter);
+                    else if (angular.isArray(filter)) multiple(filter);
                     else other(filter);
 
                     return resource;
@@ -426,7 +426,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 }, function() {
 
                     if (angular.isNumber(filter)) return single(filter);
-                    else if (angular.isArray(filter)) return array(filter);
+                    else if (angular.isArray(filter)) return multiple(filter);
                     else return other(filter);
                 });
             },
