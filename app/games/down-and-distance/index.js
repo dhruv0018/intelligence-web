@@ -6,7 +6,7 @@ var GamesDownAndDistance = angular.module('Games.DownAndDistance', []);
 GamesDownAndDistance.run([
     '$templateCache',
     function run($templateCache) {
-        $templateCache.put('coach/games/downDistance.html', require('./template.html'));
+        $templateCache.put('games/downDistance.html', require('./template.html'));
     }
 ]);
 
@@ -14,14 +14,14 @@ GamesDownAndDistance.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var gameArea = {
+        var dnd = {
             name: 'Games.DownAndDistance',
             url: '/down-and-distance',
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'coach/games/downDistance.html',
-                    controller: 'GamesDownAndDistanceController'
+                    templateUrl: 'games/downDistance.html',
+                    controller: 'GamesDownAndDistance.controller'
                 }
             },
             resolve: {
@@ -73,17 +73,15 @@ GamesDownAndDistance.config([
             }
         };
 
-        $stateProvider.state(gameArea);
+        $stateProvider.state(dnd);
 
     }
 ]);
 
-GamesDownAndDistance.controller('GamesDownAndDistanceController', [
-    '$scope', '$state', '$stateParams', 'TeamsFactory', 'GamesFactory', 'Games.DownAndDistance.Data',
-    function controller($scope, $state, $stateParams, teams, games, data) {
+GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
+    '$scope', 'TeamsFactory', 'GamesFactory', 'Games.DownAndDistance.Data',
+    function controller($scope, teams, games, data) {
         var teamOnOffense = true;
-
-        //var gameId = Number($stateParams.id);
         $scope.game = data.game;
         $scope.plays = data.plays;
         $scope.league = data.league;
