@@ -50,7 +50,7 @@ Games.config([
             ]
         };
 
-        var restrictedGames = {
+        var GamesRestricted = {
             name: 'Games.Restricted',
             url: 'games/:id/restricted',
             parent: 'base',
@@ -113,7 +113,7 @@ Games.config([
         };
 
         $stateProvider.state(shortGames);
-        $stateProvider.state(restrictedGames);
+        $stateProvider.state(GamesRestricted);
         $stateProvider.state(Games);
     }
 ]);
