@@ -220,18 +220,7 @@ IntelligenceWebClient.factory('BaseStorage', [
                         value = value.concat();
                     }
 
-                    if (this.resource[key]) {
-
-                        var promise = this.resource[key].promise;
-
-                        this.resource[key] = value;
-                        this.resource[key].promise = promise;
-                    }
-
-                    else {
-
-                        this.resource[key] = value;
-                    }
+                    this.resource[key] = value;
 
                     if (angular.isArray(value)) {
 
