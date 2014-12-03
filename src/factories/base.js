@@ -92,13 +92,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var key = '@';
-
-                if (filter) key += JSON.stringify(filter);
-
                 var storage = $injector.get(self.storage);
 
-                return storage.get(key);
+                return storage.list;
             },
 
             /**
