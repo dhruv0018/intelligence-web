@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('RootKey', [
 
                 session = session || $injector.get('SessionService');
 
-                var key = session.serializeUserId();
+                var key = '@' + session.serializeUserId() + '!';
 
                 return key;
             }
