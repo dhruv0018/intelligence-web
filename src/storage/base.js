@@ -183,9 +183,6 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 value: function(resource) {
 
-                    var key = '@';
-
-                    var db = this.db + key;
 
                     var list = this.list.map(function(resource) {
 
@@ -195,7 +192,7 @@ IntelligenceWebClient.factory('BaseStorage', [
                         return resource;
                     });
 
-                    $localForage.setItem(db, list);
+                    $localForage.setItem(this.db, list);
                 }
             },
 
@@ -211,9 +208,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 value: function(key, hit, miss) {
 
-                    var db = this.db + key;
-
-                    return $localForage.getItem(db).then(function(item) {
+                    return $localForage.getItem(this.db).then(function(item) {
 
                         if (item) return hit(item);
 
