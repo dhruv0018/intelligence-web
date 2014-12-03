@@ -123,6 +123,33 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
+            set: {
+
+                value: function(key, value) {
+
+                    if (!value) {
+
+                        value = key;
+                        key = value.id;
+                    }
+
+                    if (angular.isObject(value)) {
+
+                        this.resource[key] = value;
+                    }
+
+                    else if (angular.isArray(value)) {
+
+                        var list = value.concat();
+
+                        list.forEach(function(item) {
+
+                            this.resource[key] = item;
+                        });
+                    }
+                }
+            },
+
             resource: {
 
                 enumerable: false,
@@ -167,30 +194,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 value: function(key) {
 
                     return angular.isDefined(this.resource[key]);
-                }
-            },
-
-
-            set: {
-
-                value: function(key, value) {
-
-                    if (!value) {
-
-                        value = key;
-                        key = value.id;
-                    }
-
-                    session = session || $injector.get('SessionService');
-
-                    var db = this.db + key;
-
-                    if (angular.isArray(value)) {
-
-                        value = value.concat();
-                    }
-
-                    this.resource[key] = value;
                 }
             },
 
