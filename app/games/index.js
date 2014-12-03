@@ -80,8 +80,6 @@ Games.controller('Games.controller', [
 
         if ($scope.game.isSharedWithPublic()) {
             $scope.publiclyShared = true;
-            $scope.team = teams.get($scope.game.teamId);
-            $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
             $scope.uploadedBy = users.get($scope.game.uploaderUserId);
 
