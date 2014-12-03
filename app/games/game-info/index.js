@@ -1,27 +1,27 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var GameAreaInformation = angular.module('Games.Info', []);
+var GamesInformation = angular.module('Games.Info', []);
 
-GameAreaInformation.run([
+GamesInformation.run([
     '$templateCache',
     function run($templateCache) {
-        $templateCache.put('coach/games/game-information.html', require('./template.html'));
+        $templateCache.put('games/game-information.html', require('./template.html'));
     }
 ]);
 
-GameAreaInformation.config([
+GamesInformation.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var gameArea = {
+        var gameInfo = {
             name: 'Games.Info',
             url: '/information',
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'coach/games/game-information.html',
-                    controller: 'GamesInformationController'
+                    templateUrl: 'games/game-information.html',
+                    controller: 'GamesInformation.controller'
                 }
             },
             resolve: {
@@ -74,14 +74,15 @@ GameAreaInformation.config([
             }
         };
 
-        $stateProvider.state(gameArea);
+        $stateProvider.state(gameInfo);
 
     }
 ]);
 
-GameAreaInformation.controller('GamesInformationController', [
+GamesInformation.controller('GamesInformation.controller', [
     '$scope', '$state', '$stateParams', '$modal', 'AlertsService', 'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'Games.Info.Data',
     function controller($scope, $state, $stateParams, $modal, alerts, session, games, teams, leagues, Data) {
+
         var game = Data.game;
         $scope.game = game;
         $scope.returnedDate = ($scope.game.isDelivered()) ? new Date($scope.game.currentAssignment().timeFinished) : null;
