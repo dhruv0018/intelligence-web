@@ -310,9 +310,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                filter = angular.copy(filter);
-                filter = JSON.stringify(filter);
-
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
                 var session = $injector.get('SessionService');
@@ -422,15 +419,19 @@ IntelligenceWebClient.factory('BaseFactory', [
                     }
                 };
 
-                return storage.grab(function(item) {
+                var promise = JSON.stringify(filter);
 
-                    var resource = toResource(item);
+                storage.promises = storage.promises || Object.create(null);
+
+                storage.promises[promise] = storage.grab(function(item) {
+
+                    var resources = toResource(item);
 
                     if (angular.isNumber(filter)) single(filter);
                     else if (angular.isArray(filter)) multiple(filter);
                     else other(filter);
 
-                    return resource;
+                    return resources;
 
                 }, function() {
 
@@ -438,6 +439,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else if (angular.isArray(filter)) return multiple(filter);
                     else return other(filter);
                 });
+
+                return storage.promises[promise];
             },
 
             /**
