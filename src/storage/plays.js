@@ -11,6 +11,7 @@ IntelligenceWebClient.factory('PlaysStorage', [
 
         var PlaysStorage = Object.create(BaseStorage);
 
+        PlaysStorage.factory = plays;
         PlaysStorage.description = plays.description;
 
         return PlaysStorage;
