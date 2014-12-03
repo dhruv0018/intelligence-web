@@ -1,0 +1,12 @@
+{
+    "name": "lacrosse-womens-outdoor-arena",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
