@@ -10,7 +10,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('StorageManager', [
-    'RootStorage',
+    'RootStore',
     function service(root) {
 
         this.clear = function() {
