@@ -5,11 +5,31 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
+IntelligenceWebClient.factory('RootKey', [
+    '$injector', 'SessionService',
+    function($injector, session) {
+
+        var RootKey = {
+
+            get key() {
+
+                session = session || $injector.get('SessionService');
+
+                var key = session.serializeUserId();
+
+                return key;
+            }
+        };
+
+        return RootKey.key;
+    }
+]);
+
 IntelligenceWebClient.value('RootStore', Object.create(null));
 
 IntelligenceWebClient.factory('UserStore', [
-    '$injector', 'SessionService', 'RootStore',
-    function($injector, session, root) {
+    'RootKey', 'RootStore',
+    function(key, root) {
 
         var UserStorage = Object.create(null, {
 
@@ -19,24 +39,16 @@ IntelligenceWebClient.factory('UserStore', [
 
                 get: function() {
 
-                    session = session || $injector.get('SessionService');
+                    root[key] = root[key] || Object.create(null);
 
-                    var user = session.currentUser;
-
-                    root[user.id] = root[user.id] || Object.create(null);
-
-                    return root[user.id];
+                    return root[key];
                 },
 
                 set: function(value) {
 
-                    session = session || $injector.get('SessionService');
+                    root[key] = root[key] || Object.create(null);
 
-                    var user = session.currentUser;
-
-                    root[user.id] = root[user.id] || Object.create(null);
-
-                    root[user.id] = value;
+                    root[key] = value;
                 }
             }
         });
@@ -54,8 +66,8 @@ IntelligenceWebClient.value('Store', [
 ]);
 
 IntelligenceWebClient.factory('BaseStorage', [
-    '$injector', '$localForage', 'Store',
-    function($injector, $localForage, store) {
+    '$localForage', 'RootKey', 'Store',
+    function($localForage, key, store) {
 
         var session;
 
@@ -65,11 +77,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 get: function() {
 
-                    session = session || $injector.get('SessionService');
-
-                    var key = session.serializeUserId() + '$' + session.serializeRole() + '!' + this.description;
-
-                    return key;
+                    return key + this.description;
                 }
             },
 
