@@ -91,6 +91,21 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
+            list: {
+
+                get: function() {
+
+                    var self = this;
+
+                    var list = self.keys.map(function(key) {
+
+                        return self.resource[key];
+                    });
+
+                    return list;
+                }
+            },
+
             resource: {
 
                 enumerable: false,
