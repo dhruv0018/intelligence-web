@@ -1,3 +1,11 @@
-<state-selector data-state-options="gameStates" data-ng-hide="game.isSharedWithUser(currentUser)"></state-selector>
+
+<film-header
+    data-game-states="gameStates"
+    data-title="filmTitle"
+    data-is-public="publiclyShared"
+    data-film="game"
+    data-home-team="team"
+    data-opposing-team="opposingTeam">
+</film-header>
 <div class="public-game" data-ui-view="gameView"></div>
 

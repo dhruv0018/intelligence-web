@@ -122,6 +122,14 @@ Games.controller('Games.controller', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SessionService', 'ROLES',
     function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, session, ROLES) {
         $scope.game = games.get($stateParams.id);
+
+        $scope.teams = teams.getCollection();
+        $scope.team = $scope.teams[$scope.game.teamId];
+        $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
+
+        //todo alex -- remove this when it is not needed for header
+        $scope.isPublic = true;
+
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
         var currentUser = session.currentUser;
