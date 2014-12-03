@@ -181,9 +181,6 @@ GameArea.controller('Coach.GameArea.controller', [
         $scope.totalPlays = angular.copy(data.plays);
         $scope.plays = $scope.totalPlays;
 
-        //Constant for arena
-        $scope.arenaType = ARENA_TYPES[ARENA_TYPES_IDS[7]].type;
-
         //define states for view selector
         $scope.gameStates = [];
 
