@@ -66,21 +66,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var storage = $injector.get(self.storage);
 
-                var resource;
-
-                /* If given and ID lookup the resource in storage. */
-                if (id) {
-
-                    resource = storage.get(id);
-                }
-
-                /* If no ID, then assume the unsaved resource. */
-                else {
-
-                    resource = storage.unsaved;
-                }
-
-                return resource;
+                return storage.get(id);
             },
 
             /**
@@ -131,9 +117,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                 resource = self.extend(resource);
 
                 var storage = $injector.get(self.storage);
-
-                /* Add the resource to storage. */
-                storage.unsaved = resource;
 
                 return resource;
             },
