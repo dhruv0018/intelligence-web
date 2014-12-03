@@ -71,7 +71,100 @@ IntelligenceWebClient.factory('BaseStorage', [
 
         var session;
 
-        var BaseStorage = Object.create(Object.prototype, {
+        var BaseStorage = {
+
+            get keys() {
+
+                var keys = Object.keys(this.resource);
+
+                return keys;
+            },
+
+            get all() {
+
+                return this.resource;
+            },
+
+            get list() {
+
+                var self = this;
+
+                var list = self.keys.map(function(key) {
+
+                    return self.resource[key];
+                });
+
+                return list;
+            },
+
+            get: function(key) {
+
+                var id = key;
+
+                if (this.isStored(id)) {
+
+                    var resource = this.resource[id];
+
+                    return resource;
+                }
+
+                else throw new Error('Could not get ' + this.description.slice(0, -1) + ' ' + id);
+            },
+
+            set: function(key, value) {
+
+                if (!value) {
+
+                    value = key;
+                    key = value.id;
+                }
+
+                if (angular.isObject(value)) {
+
+                    this.resource[key] = value;
+                }
+
+                else if (angular.isArray(value)) {
+
+                    var list = value.concat();
+
+                    list.forEach(function(item) {
+
+                        this.resource[key] = item;
+                    });
+                }
+            },
+
+            update: function(resource) {
+
+                var list = this.list.map(function(resource) {
+
+                    resource = resource.unextend(resource);
+                    resource = angular.toJson(resource);
+
+                    return resource;
+                });
+
+                $localForage.setItem(this.db, list);
+            },
+
+            isStored: function(key) {
+
+                return angular.isDefined(this.resource[key]);
+            },
+
+            grab: function(key, hit, miss) {
+
+                return $localForage.getItem(this.db).then(function(item) {
+
+                    if (item) return hit(item);
+
+                    else return miss();
+                });
+            }
+        };
+
+        Object.defineProperties(BaseStorage, {
 
             db: {
 
@@ -80,83 +173,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 get: function() {
 
                     return key + this.description;
-                }
-            },
-
-            keys: {
-
-                get: function() {
-
-                    var keys = Object.keys(this.resource);
-
-                    return keys;
-                }
-            },
-
-            all: {
-
-                get: function() {
-
-                    return this.resource;
-                }
-            },
-
-            list: {
-
-                get: function() {
-
-                    var self = this;
-
-                    var list = self.keys.map(function(key) {
-
-                        return self.resource[key];
-                    });
-
-                    return list;
-                }
-            },
-
-            get: {
-
-                value: function(key) {
-
-                    var id = key;
-
-                    if (this.isStored(id)) {
-
-                        var resource = this.resource[id];
-
-                        return resource;
-                    }
-
-                    else throw new Error('Could not get ' + this.description.slice(0, -1) + ' ' + id);
-                }
-            },
-
-            set: {
-
-                value: function(key, value) {
-
-                    if (!value) {
-
-                        value = key;
-                        key = value.id;
-                    }
-
-                    if (angular.isObject(value)) {
-
-                        this.resource[key] = value;
-                    }
-
-                    else if (angular.isArray(value)) {
-
-                        var list = value.concat();
-
-                        list.forEach(function(item) {
-
-                            this.resource[key] = item;
-                        });
-                    }
                 }
             },
 
@@ -176,44 +192,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                     store[this.description] = store[this.description] || Object.create(null);
 
                     store[this.description] = value;
-                }
-            },
-
-            update: {
-
-                value: function(resource) {
-
-
-                    var list = this.list.map(function(resource) {
-
-                        resource = resource.unextend(resource);
-                        resource = angular.toJson(resource);
-
-                        return resource;
-                    });
-
-                    $localForage.setItem(this.db, list);
-                }
-            },
-
-            isStored: {
-
-                value: function(key) {
-
-                    return angular.isDefined(this.resource[key]);
-                }
-            },
-
-            grab: {
-
-                value: function(key, hit, miss) {
-
-                    return $localForage.getItem(this.db).then(function(item) {
-
-                        if (item) return hit(item);
-
-                        else return miss();
-                    });
                 }
             }
         });
