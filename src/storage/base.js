@@ -130,12 +130,12 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     list.forEach(function(item) {
 
-                        this.resource[key] = item;
+                        this.map[key] = item;
                     });
                 }
             },
 
-            update: function(resource) {
+            update: function() {
 
                 var list = this.list.map(function(resource) {
 
