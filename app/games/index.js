@@ -129,7 +129,6 @@ Games.controller('Games.controller', [
         //define states for view selector
         $scope.gameStates = [];
 
-
         if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered() && !$scope.game.isSharedWithUser(session.currentUser)) {
             $scope.gameStates.push(
                 {

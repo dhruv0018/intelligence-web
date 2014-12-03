@@ -1,53 +1,39 @@
 <div class="krossover-film" data-ng-hide="hideFilm">
 
-   <div class="film-info-header" data-ng-if="isGame">
-       <span data-ng-if="!film.datePlayed">TBD</span>
-       <span data-ng-if="film.datePlayed">{{film.datePlayed | date: 'MMM dd, yyyy' }}</span>
 
-       <br/>
+    <film-info
+        data-title="filmTitle"
+        data-film="film"
+        data-ng-if="isGame"
+        data-ui-sref="Games({id:film.id})">
+    </film-info>
 
-       <strong data-ng-if="film.isVideoTranscodeComplete() && isReady || isShared">Game Film: </strong>
-       <strong data-ng-if="film.isVideoTranscodeComplete() && !isReady && !isShared">Breakdown In Progress: </strong>
-       <strong data-ng-if="film.isProcessing() && !isShared">Film Is Processing: </strong>
-       <strong data-ng-if="film.isUploading() && !isShared">Film Uploading: </strong>
-       <strong data-ng-if="film.isVideoTranscodeFailed()" class="film-fail-text">Film Failed Processing:</strong>
+    <film-info
+        data-title="filmTitle"
+        data-film="film"
+        data-ng-if="!isGame"
+        data-ui-sref="ReelsArea({id:film.id})">
+    </film-info>
 
-       <a data-ui-sref="Games({id:film.id})">
-           <span data-ng-if="film.opposingTeamId && film.teamId">{{teams[film.teamId].name}} {{film.finalScore}} vs {{film.opposingFinalScore}} {{teams[film.opposingTeamId].name}}</span>
-           <span data-ng-if="!film.opposingTeamId || !film.teamId">Raw Film - No Game Information Entered</span>
-       </a>
-
-       <br/>
-       <span data-ng-show="!isShared">Uploaded</span>
-       <span data-ng-show="isShared">Shared</span> by {{uploaderName}}
-   </div>
-   <div class="film-info-header" data-ng-if="!isGame">
-       {{film.updatedAt | date: 'MMM dd, yyyy' }}
-
-       <br/>
-
-       <strong>Reel: </strong>
-
-
-       <a data-ui-sref="ReelsArea({id:film.id})">
-           {{film.name}}
-       </a>
-       <br/>
-       <span data-ng-show="!isShared">Uploaded</span>
-       <span data-ng-show="isShared">Shared</span> by {{uploaderName}}
-   </div>
-   <krossover-thumbnail width="400" data-film="film" data-is-game="isGame"></krossover-thumbnail>
+    <krossover-thumbnail width="400" data-film="film" data-is-game="isGame"></krossover-thumbnail>
 
     <div class="film-info-footer">
 
-        <a data-ng-if="((currentUser.is(COACH) && !film.isVideoTranscodeFailed() && !isShared) || 
-                      (currentUser.is(ATHLETE) && !isGame && !isShared))"
-            data-ng-click="ShareFilmModal.open(film)"
-            class="share-game">
-            <i class="icon icon-share-square-o"></i>Share
+        <div class="user-info">
+            <span data-ng-show="!isShared">Uploaded</span>
+            <span data-ng-show="isShared">Shared</span>
+            by {{uploaderName}}
+        </div>
+
+        <a data-ng-if="!film.isVideoTranscodeFailed() && !isShared && (film.uploaderUserId === currentUser.id)"
+           data-ng-click="ShareFilmModal.open(film)"
+           class="share-game">
+            <i class="icon icon-share"></i>Share
         </a>
 
-        <a data-ng-disabled="true" data-ng-href="#" class="embed-game">
+        <a data-ng-if="false"
+           data-ng-href="#"
+           class="embed-game">
             <i class="icon icon-link"></i>Embed
         </a>
 
