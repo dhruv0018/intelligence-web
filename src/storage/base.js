@@ -129,39 +129,11 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 value: function(resource) {
 
-                    session = session || $injector.get('SessionService');
-
                     var key = '@';
 
                     var db = this.db + key;
 
-                    this.resource[key] = this.resource[key] || [];
-
-                    if (resource) {
-
-                        var index = this.resource[key]
-                        .map(function(resource) { return resource.id; })
-                        .indexOf(resource.id);
-
-                        if (~index) this.resource[key][index] = resource;
-                        else this.resource[key].push(resource);
-                    }
-
-                    else {
-
-                        this.resource[key].length = 0;
-
-                        this.keys.forEach(function(id) {
-
-                            if (String(id).charAt(0) !== key) {
-
-                                this.resource[key].push(this.resource[id]);
-                            }
-
-                        }, this);
-                    }
-
-                    var list = this.resource[key].map(function(resource) {
+                    var list = this.list.map(function(resource) {
 
                         resource = resource.unextend(resource);
                         resource = angular.toJson(resource);
