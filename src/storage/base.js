@@ -73,6 +73,14 @@ IntelligenceWebClient.factory('BaseStorage', [
                 }
             },
 
+            all: {
+
+                get: function() {
+
+                    return this.resource;
+                }
+            },
+
             keys: {
 
                 get: function() {

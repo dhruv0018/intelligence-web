@@ -111,7 +111,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var storage = $injector.get(self.storage);
 
-                return storage.get();
+                return storage.all;
             },
 
             /**
