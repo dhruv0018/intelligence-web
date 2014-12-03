@@ -39,6 +39,25 @@ data-videogular {
     display: block;
     user-select: none;
     border-bottom: 1px solid @video-controls-border;
+
+    .posterImage {
+        width: 100%;
+        height: 100%;
+        background: #0f0;
+        display: none;
+    }
+
+    .video-container {
+        display: block
+    }
+
+    /* Show poster image on mobile */
+    &.mobile > .posterImage {
+        display: block;
+    }
+    &.mobile > .video-container {
+        display: none;
+    }
 }
 
 data-videogular.fullscreen {
