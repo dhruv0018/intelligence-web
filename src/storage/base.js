@@ -45,9 +45,17 @@ IntelligenceWebClient.factory('UserStore', [
     }
 ]);
 
+IntelligenceWebClient.value('Store', [
+    'UserStorage',
+    function(user) {
+
+        return user.user;
+    }
+]);
+
 IntelligenceWebClient.factory('BaseStorage', [
-    '$injector', '$localForage', 'UserStorage',
-    function($injector, $localForage, user) {
+    '$injector', '$localForage', 'Store',
+    function($injector, $localForage, store) {
 
         var session;
 
@@ -81,16 +89,16 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 get: function() {
 
-                    user.user[this.description] = user.user[this.description] || Object.create(null);
+                    store[this.description] = store[this.description] || Object.create(null);
 
-                    return user.user[this.description];
+                    return store[this.description];
                 },
 
                 set: function(value) {
 
-                    user.user[this.description] = user.user[this.description] || Object.create(null);
+                    store[this.description] = store[this.description] || Object.create(null);
 
-                    user.user[this.description] = value;
+                    store[this.description] = value;
                 }
             },
 
