@@ -541,8 +541,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                         /* Update local resource with server resource. */
                         angular.extend(resource, self.extend(created));
 
-                        /* Add the resource to storage. */
-                        storage.resource[resource.id] = resource;
+                        /* Store the resource locally in its storage collection. */
+                        storage.set(resource);
 
                         return resource;
                     })
