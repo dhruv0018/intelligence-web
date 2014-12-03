@@ -6,7 +6,7 @@ var GamesStats = angular.module('Games.Stats', []);
 GamesStats.run([
     '$templateCache',
     function run($templateCache) {
-        $templateCache.put('coach/game-area/gameAreaStatistics.html', require('./template.html'));
+        $templateCache.put('games/statistics.html', require('./template.html'));
     }
 ]);
 
@@ -14,14 +14,14 @@ GamesStats.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var gameArea = {
+        var gameStats = {
             name: 'Games.Stats',
             url: '/statistics',
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'coach/game-area/gameAreaStatistics.html',
-                    controller: 'GamesStatsController'
+                    templateUrl: 'games/statistics.html',
+                    controller: 'GamesStats.controller'
                 }
             },
             resolve: {
@@ -71,12 +71,12 @@ GamesStats.config([
             }
         };
 
-        $stateProvider.state(gameArea);
+        $stateProvider.state(gameStats);
 
     }
 ]);
 
-GamesStats.controller('GamesStatsController', [
+GamesStats.controller('GamesStats.controller', [
     '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'SPORTS',
     function controller($scope, $state, $stateParams, data, SPORTS) {
         $scope.gameLogTable = data.stats.gameLog;
