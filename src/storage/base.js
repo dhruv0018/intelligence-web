@@ -197,8 +197,6 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     if (angular.isArray(value)) {
 
-                        this.update();
-
                         var list = value.map(function(resource) {
 
                             return this.get(resource.id);
