@@ -94,8 +94,7 @@
             <p data-ng-if="!linkActive">Anyone with this link will be able to access the Raw Film for this game.</p>
             <p data-ng-if="linkActive">If you have placed this game in another Krossover user's account, deactivating the link will not remove this game from their account.</p>
             <div class="button-row">
-                <button class="btn btn-primary pull-right" data-ng-if="!linkActive" data-ng-click="togglePublicLink()">Activate Link</button>
-                <button class="btn btn-primary btn-deactivate pull-right" data-ng-if="linkActive" data-ng-click="togglePublicLink()">Deactivate Link</button>
+                <button class="btn btn-primary pull-right" data-ng-class="{'btn-deactivate': linkActive}" data-ng-click="togglePublicLink()">{{linkActive ? 'Deactivate' : 'Activate'}} Link</button>
                 <button class="btn btn-default" data-ng-click="withPublic = false">Back</button>
             </div>
         </div>
