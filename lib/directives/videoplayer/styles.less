@@ -43,20 +43,41 @@ data-videogular {
     .posterImage {
         width: 100%;
         height: 100%;
-        background: #0f0;
-        display: none;
-    }
-
-    .video-container {
-        display: block
-    }
-
-    /* Show poster image on mobile */
-    &.mobile > .posterImage {
+        background: #000;
         display: block;
-    }
-    &.mobile > .video-container {
-        display: none;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        i {
+            position: absolute;
+            font-size: 60px;
+            width: 100%;
+
+            &.icon-play {
+                font-size: 25px;
+                z-index: 1;
+                width: 52px;
+                height: 52px;
+                color: @brand-primary;
+                cursor: pointer; /* not that it matters, since it's only on mobile */
+
+                /* responsive center play button */
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin-left: -26px;
+                margin-top: -26px;
+                padding: 14px 14px 14px 18px;
+
+                /* make background a circle */
+                background: #ebebeb;
+                border-radius: 99px;
+            }
+        }
     }
 }
 

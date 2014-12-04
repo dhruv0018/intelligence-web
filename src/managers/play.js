@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    '$injector', 'PlaysFactory', 'EventManager',
-    function service($injector, plays, eventManager) {
+    '$injector', 'PlaysFactory', 'EventManager', 'GamesFactory',
+    function service($injector, plays, eventManager, gamesFactory) {
 
         var playsManager;
 
@@ -34,6 +34,11 @@ IntelligenceWebClient.service('PlayManager', [
 
             this.current = null;
             this.playState = null;
+        };
+
+        this.currentPlayGame = function currentPlayGameId() {
+            var game = gamesFactory.get(plays.get(this.current.id).gameId);
+            return game;
         };
 
         this.register = function register(playScope) {
