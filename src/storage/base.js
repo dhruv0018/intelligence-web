@@ -148,14 +148,10 @@ IntelligenceWebClient.factory('BaseStorage', [
                 return angular.isDefined(this.map[key]);
             },
 
-            grab: function(hit, miss) {
+            grab: function() {
 
-                return $localForage.getItem(this.db).then(function(item) {
 
-                    if (item) return hit(item);
-
-                    else return miss();
-                });
+                return $localForage.getItem(this.db);
             }
         };
 
