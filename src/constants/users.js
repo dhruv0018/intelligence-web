@@ -149,7 +149,7 @@ IntelligenceWebClient.constant('ROLES', ROLES);
 
 var ANONYMOUS_USER = {
 
-    id: 0,
+    id: null,
     role: ROLE_TYPE.ANONYMOUS
 };
 
