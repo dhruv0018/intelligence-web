@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
         var GamesFactory = {
 
-            PAGE_SIZE: 1000,
+            PAGE_SIZE: 100,
 
             description: 'games',
 
@@ -983,32 +983,27 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return sharesArray;
             },
-            shareWithPublic: function() {
+            togglePublicSharing: function() {
                 var self = this;
 
                 self.shares = self.shares || [];
 
-                if (self.isSharedWithPublic()) return;
+                if (self.isSharedWithPublic()) {
+                    self.shares.forEach(function(share, index) {
+                        if (!share.sharedWithUserId) {
+                            self.shares.splice(index, 1);
+                        }
+                    });
+                } else {
+                    var share = {
+                        userId: session.currentUser.id,
+                        gameId: self.id,
+                        sharedWithUserId: null,
+                        createdAt: moment.utc().toDate()
+                    };
 
-                var share = {
-                    userId: session.currentUser.id,
-                    gameId: self.id,
-                    sharedWithUserId: null,
-                    createdAt: moment.utc().toDate()
-                };
-
-                self.shares.push(share);
-            },
-            stopSharingWithPublic: function() {
-                var self = this;
-
-                if (!self.shares || !self.shares.length) return;
-
-                self.shares.forEach(function(share, index) {
-                    if (!share.sharedWithUserId) {
-                        self.shares.splice(index, 1);
-                    }
-                });
+                    self.shares.push(share);
+                }
             },
             isSharedWithPublic: function() {
                 var self = this;

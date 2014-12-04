@@ -360,35 +360,61 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else if (angular.isArray(filter)) {
 
+                        var promises = [];
+
                         if (storage.collection) {
 
-                            filter = filter.filter(function(id) {
+                            var ids = filter;
+
+                            var numbers = ids.map(function(id) {
+
+                                return Number(id);
+                            });
+
+                            var valid = numbers.filter(function(id) {
+
+                                return id > 0 && !isNaN(id);
+                            });
+
+                            var unique = valid.reduce(function(previous, current) {
+
+                                if (!~previous.indexOf(current)) previous.push(current);
+
+                                return previous;
+
+                            }, []);
+
+                            var unstored = unique.filter(function(id) {
 
                                 return !angular.isDefined(storage.collection[id]);
                             });
+
+                            while (unstored.length) {
+
+                                ids = unstored.splice(0, 100);
+
+                                var query = {
+
+                                    start: null,
+                                    count: null,
+                                    'id[]': ids
+                                };
+
+                                promises.push(self.query(query));
+                            }
                         }
 
-                        if (filter.length) {
+                        storage.loads[key] = $q.all(promises).then(function() {
 
-                            filter = { 'id[]': filter };
+                            var list = ids.map(function(id) {
 
-                            storage.loads[key] = self.retrieve(filter).then(function(list) {
-
-                                storage.loads[key].list = list;
-
-                                return self;
+                                return storage.collection[id];
                             });
-                        }
 
-                        else {
+                            storage.loads[key].list = list;
 
-                            var deferred = $q.defer();
-
-                            storage.loads[key] = deferred.promise;
-                            storage.loads[key].list = [];
-
-                            deferred.resolve(self);
-                        }
+                            return self;
+                        });
                     }
 
                     else {

@@ -124,8 +124,8 @@ Leagues.config([
  * @type {Controller}
  */
 Leagues.controller('LeagueController', [
-    '$scope', '$state', '$stateParams', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'FiltersetsFactory',
-    function controller($scope, $state, $stateParams, sports, leagues, tagsets, positionsets, filtersets) {
+    '$scope', '$state', '$stateParams', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'FiltersetsFactory', 'ARENA_TYPES',
+    function controller($scope, $state, $stateParams, sports, leagues, tagsets, positionsets, filtersets, ARENA_TYPES) {
 
         var leagueId = $stateParams.id;
 
@@ -135,12 +135,14 @@ Leagues.controller('LeagueController', [
         $scope.positionsets = positionsets.getList();
         $scope.filtersets = filtersets.getList();
         $scope.league = leagueId ? leagues.get(leagueId) : leagues.create();
+        $scope.arenas = ARENA_TYPES;
+        $scope.arenaIds = Object.keys($scope.arenas);
 
         $scope.genders = ['male', 'female', 'coed'];
 
-        $scope.save = function(league) {
+        $scope.save = function() {
 
-            league.save();
+            $scope.league.save();
 
             $state.go('leagues');
         };
