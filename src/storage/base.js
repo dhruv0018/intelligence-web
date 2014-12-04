@@ -66,8 +66,8 @@ IntelligenceWebClient.value('Store', [
 ]);
 
 IntelligenceWebClient.factory('BaseStorage', [
-    '$localForage', 'RootKey', 'Store',
-    function($localForage, key, store) {
+    '$q', '$localForage', 'RootKey', 'Store',
+    function($q, $localForage, key, store) {
 
         var session;
 
@@ -150,8 +150,21 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             grab: function() {
 
+                var deferred = $q.defer();
 
-                return $localForage.getItem(this.db);
+                $localForage.getItem(this.db).then(function(item) {
+
+                    if (item) {
+
+                        deferred.resolve(item);
+
+                    } else {
+
+                        deferred.reject();
+                    }
+                });
+
+                return deferred.promise;
             }
         };
 
