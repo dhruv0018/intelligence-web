@@ -423,7 +423,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 storage.promises = storage.promises || Object.create(null);
 
-                storage.promises[promise] = storage.grab(function(item) {
+                storage.promises[promise] = storage.grab().then(function(item) {
 
                     var resources = toResource(item);
 
