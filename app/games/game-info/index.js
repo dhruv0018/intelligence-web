@@ -80,17 +80,17 @@ GamesInfo.config([
 ]);
 
 GamesInfo.controller('GamesInfo.controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'AlertsService', 'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'Games.Info.Data',
-    function controller($scope, $state, $stateParams, $modal, alerts, session, games, teams, leagues, Data) {
-        var game = Data.game;
-        $scope.game = game;
+    '$scope', '$state', '$stateParams', '$modal', 'AlertsService', 'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'Games.Info.Data', 'uploadManager',
+    function controller($scope, $state, $stateParams, $modal, alerts, session, games, teams, leagues, Data, uploadManager) {
+        $scope.game = games.get($stateParams.id);
+        $scope.game.flow = uploadManager.get($scope.game.id);
         $scope.returnedDate = ($scope.game.isDelivered()) ? new Date($scope.game.currentAssignment().timeFinished) : null;
         $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
         $scope.remainingBreakdowns = Data.remainingBreakdowns;
 
         //Player List
-        $scope.teamPlayerList = Data.gamePlayerLists[game.teamId];
-        $scope.opposingPlayerList = Data.gamePlayerLists[game.opposingTeamId];
+        $scope.teamPlayerList = Data.gamePlayerLists[$scope.game.teamId];
+        $scope.opposingPlayerList = Data.gamePlayerLists[$scope.game.opposingTeamId];
 
         if ($scope.game.isProcessing()) {
             alerts.add({
