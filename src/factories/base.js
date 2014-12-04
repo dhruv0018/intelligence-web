@@ -421,9 +421,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var promise = JSON.stringify(filter);
 
-                storage.promises = storage.promises || Object.create(null);
+                storage.promises = storage.promises || {};
 
-                storage.promises[promise] = storage.grab().then(function(item) {
+                storage.promises[promise] = storage.promises[promise] || storage.grab().then(function(item) {
 
                     var resources = toResource(item);
 
