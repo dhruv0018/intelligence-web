@@ -106,8 +106,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 resource = resource || {};
 
-                delete resource.id;
-
                 var Model = $injector.get(self.model);
 
                 /* Create new resource instance. */
