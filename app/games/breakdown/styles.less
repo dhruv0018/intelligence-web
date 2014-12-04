@@ -1,83 +1,79 @@
 @import (reference) "main.less";
 
-.public-game-subtype {
-    
+.games-breakdown {
+
     display: flex;
     flex-direction: column;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 15px;
+    margin-top: -20px;
+    background: @gray-lightest;
     flex: 1;
-    background-color: @gray-lightest;
     overflow: none;
 
-    .film-breakdown-body {
-        display: flex;
-        flex-direction: column;
-        padding-left: 15px;
-        padding-right: 15px;
-        margin-bottom: 15px;
-        margin-top: -20px;
-        background: @gray-lightest;
-        flex: 1;
-    }
+        .filter-container {
+            background-color: @gray-lightest;
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
 
-    .main-highlight {
-        background-color: @gray-lightest;
-        display: flex;
-        flex: 1;
-        flex-direction: row;
-    }
+        .main-highlight {
+            background-color: @gray-lightest;
+            display: flex;
+            flex: 1;
+            flex-direction: row;
 
-    .filter-container {
-        background-color: @gray-lightest;
-        height: 50px;
-        display: flex;
-        align-items: center;
-    }
-
-    .expandrow {
-        border-top: thin solid @gray-border;
-        background-color: white;
-        width: 100%;
-        height: 50px;
-        padding: 0 15px;
-        display: flex;
-
-        button {
-            .btn;
-            .btn-link;
-            font-size: 16px;
-            font-weight: 400;
-            letter-spacing: 0.01em;
-            padding-top: 10px;
-            padding-left: 0;
-            padding-right: 0;
-            padding-bottom: 10px;
-            border-left-width: 0;
-            outline: none;
-
-            &:focus,
-            &:hover {
-
-                text-decoration: none;
+            &.not-editable {
+                padding-top: 15px;
             }
         }
-    }
+
+            .expandrow {
+                border-top: thin solid @gray-border;
+                background-color: white;
+                width: 100%;
+                height: 50px;
+                padding: 0 15px;
+                display: flex;
+
+                button {
+                    .btn;
+                    .btn-link;
+                    font-size: 16px;
+                    font-weight: 400;
+                    letter-spacing: 0.01em;
+                    padding-top: 10px;
+                    padding-left: 0;
+                    padding-right: 0;
+                    padding-bottom: 10px;
+                    border-left-width: 0;
+                    outline: none;
+
+                    &:focus,
+                    &:hover {
+
+                        text-decoration: none;
+                    }
+                }
+            }
 
     x-krossover-videoplayer {
         margin-left: 15px;
     }
+}
 
-    // MOBILE
-    @media only screen
-    and (max-width: 1024px) {
-        .film-breakdown-body {
-            margin: 0;
-            margin-top: -20px;
-            padding: 0;
-        }
+// MOBILE
+@media only screen
+and (max-width: 1024px) {
+    .games-breakdown {
+        margin: 0;
+        margin-top: -20px;
+        padding: 0;
+    }
 
-        krossover-play {
-            flex: 0 0 60px;
-        }
+    krossover-play {
+        flex: 0 0 60px;
     }
 }
-    

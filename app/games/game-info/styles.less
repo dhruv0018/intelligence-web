@@ -1,8 +1,10 @@
 @import (reference) "main.less";
 
-.game-area-game-information {
+.games-game-info {
     height: 100%;
     position: relative;
+    min-height: 100%;
+    background-color: @content-bg;
 
     .broken-down {
         position: absolute;
@@ -11,5 +13,11 @@
         z-index: 1;
         color: @brand-success;
         letter-spacing: normal;
+    }
+
+    .info-container {
+        position: relative;
+        background-color: @content-bg;
+        height: 100%;
     }
 }
