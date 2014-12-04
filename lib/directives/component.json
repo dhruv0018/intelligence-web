@@ -59,6 +59,8 @@
         "kvs-uploader",
         "profile",
         "film-header",
+        "film-info",
+        "plays-filters",
         "draggable",
         "sidebar"
     ],
