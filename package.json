@@ -33,8 +33,8 @@
         "angular-ui-validate": "angular-ui/ui-utils#validate-0.1.1",
         "angular-multiselect": "amitava82/angular-multiselect",
         "angular-ui-router": "angular-ui/ui-router#0.2.10",
-        "flow": "flowjs/ng-flow",
-        "flowjs": "flowjs/flow.js",
+        "flow": "flowjs/ng-flow#v2.5.1",
+        "flowjs": "flowjs/flow.js#v2.6.2",
         "Mousetrap": "ccampbell/mousetrap",
         "bootstrap": "twbs/bootstrap"
     },
