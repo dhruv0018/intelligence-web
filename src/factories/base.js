@@ -393,35 +393,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 };
 
-                var toResource = function(from) {
-
-                    from = angular.fromJson(from);
-
-                    if (angular.isArray(from)) {
-
-                        return from.map(function(string) {
-
-                            return toResource(string);
-                        });
-                    }
-
-                    else {
-
-                        var resource = self.create(from);
-
-                        storage.set(resource);
-
-                        return resource;
-                    }
-                };
-
                 var promise = JSON.stringify(filter);
 
                 storage.promises = storage.promises || {};
 
-                storage.promises[promise] = storage.promises[promise] || storage.grab().then(function(item) {
-
-                    var resources = toResource(item);
+                storage.promises[promise] = storage.promises[promise] || storage.grab().then(function(resources) {
 
                     if (angular.isNumber(filter)) single(filter);
                     else if (angular.isArray(filter)) multiple(filter);
