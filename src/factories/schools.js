@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('SchoolsFactory', [
-    '$injector', 'BaseFactory', 'ResourceManager', 'SCHOOL_TYPES',
-    function($injector, BaseFactory, managedResources, SCHOOL_TYPES) {
+    '$injector', 'BaseFactory', 'SCHOOL_TYPES',
+    function($injector, BaseFactory, SCHOOL_TYPES) {
 
         var SchoolsFactory = {
 
