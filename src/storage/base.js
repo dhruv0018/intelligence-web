@@ -92,6 +92,20 @@ IntelligenceWebClient.factory('BaseStorage', [
                 return list;
             },
 
+            get map() {
+
+                store[this.description] = store[this.description] || Object.create(null);
+
+                return store[this.description];
+            },
+
+            set map(value) {
+
+                store[this.description] = store[this.description] || Object.create(null);
+
+                store[this.description] = value;
+            },
+
             get: function(key) {
 
                 var id = key;
@@ -197,25 +211,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 get: function() {
 
                     return key + this.description;
-                }
-            },
-
-            map: {
-
-                enumerable: false,
-
-                get: function() {
-
-                    store[this.description] = store[this.description] || Object.create(null);
-
-                    return store[this.description];
-                },
-
-                set: function(value) {
-
-                    store[this.description] = store[this.description] || Object.create(null);
-
-                    store[this.description] = value;
                 }
             }
         });
