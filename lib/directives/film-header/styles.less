@@ -4,7 +4,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
     border-bottom: thin solid @gray-border;
     background-color: white;
 
@@ -12,6 +11,7 @@
         width: @screen-xs;
         height: 105px;
         border-right: thin solid @gray-border;
+        cursor: default;
 
         h3 {
             font-size: 18px;
@@ -24,6 +24,10 @@
         .film-title {
             display: none;
         }
+
+        &:hover {
+            color: inherit;
+        }
     }
    
     .film-title-desktop {
@@ -34,6 +38,7 @@
     }
 
     .social-media {
+        display: none; // Hide until we set up real social media sharing
         width: 88px;
         margin-right: 15px;
 
@@ -67,7 +72,8 @@ and (max-width: @screen-sm) {
         }
 
         .film-title-desktop,
-        .social-media {
+        .social-media,
+        .state-selector {
             display: none;
         } 
     }
