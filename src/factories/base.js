@@ -496,6 +496,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         /* Store the resource locally in its storage collection. */
                         storage.set(resource);
+                        storage.update();
 
                         return resource;
                     })
