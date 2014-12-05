@@ -174,9 +174,23 @@
 					border-top: none;
 					padding: 10px;
 
+					&:after {
+						clear: both;
+						content: "";
+						display: block;
+					}
+
+					strong {
+						line-height: 38px;
+					}
+
 					.icon {
 						margin-left: 20px;
 						margin-right: 20px;
+					}
+
+					select {
+						padding-right: 30px;
 					}
 				}
 			}
@@ -188,17 +202,51 @@
 
 		.sharing-with-public-container {
 
+			.btn-radio {
+				.btn;
+				background-color: white;
+				border: none;
+
+				&::before {
+					content: "";
+					display: inline-block;
+					width: 12px;
+					height: 12px;
+					border: 1px solid @gray-lighter;
+					border-radius: 50%;
+					background-color: @gray-lighter;
+					margin-right: 10px;
+		        }
+
+				&.active {
+
+					color: rgb(54, 54, 54);
+					box-shadow: none;
+
+					&::before {
+
+						background-color: @brand-primary;
+						border-color: @brand-primary;
+					}
+				}
+
+				&:focus {
+				    outline: none !important;
+				}
+			}
+
 			.public-link-box {
 				border: 2px solid @gray-border;
 				border-radius: 4px;
 				width: 70%;
-				margin-bottom: 10px;
+				margin: 0px auto 10px;
 				padding: 10px;
 			}
 
 			.inActive {
 				background-color: @gray-lighter;
 				pointer-events: none;
+				margin-bottom: 20px;
 
 				a {
 					color: @gray-light;
@@ -207,34 +255,27 @@
 				}
 			}
 
-			#holdtext {
-				display: none;
+			.public-share-types {
+				text-align: center;
+				margin-bottom: 20px;
 			}
 
 			.activate-row {
-
-				width: 70%;
+				
 				margin-bottom: 10px;
-				height: 36px;
-				line-height: 36px;
+				font-size: 18px;
+				text-align: center;
+				color: black;
+				font-weight: 500;
+			}
 
-				span {
-					color: black;
-					font-weight: 500;
-				}
-
-				button {
-					.pull-right;
-				}
+			.button-row {
+				margin-top: 30px;
 
 				.btn-deactivate {
 					background-color: @brand-blue;
 					border-color: @brand-blue;
 				}
-			}
-
-			.button-row {
-				margin-top: 30px;
 			}
 		}
 
