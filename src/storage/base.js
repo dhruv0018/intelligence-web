@@ -143,6 +143,12 @@ IntelligenceWebClient.factory('BaseStorage', [
                 $localForage.setItem(this.db, list);
             },
 
+            clear: function() {
+
+                this.map = Object.create(null);
+                $localForage.removeItem(this.db);
+            },
+
             isStored: function(key) {
 
                 return angular.isDefined(this.map[key]);

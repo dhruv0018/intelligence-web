@@ -417,9 +417,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
             /**
              * Unloads resources.
-             * @param {Object} [filter] - an object hash of filter parameters.
              */
-            unload: function(filter) {
+            unload: function() {
 
                 var self = this;
 
@@ -427,7 +426,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var storage = $injector.get(self.storage);
 
-                delete storage.resource[key];
+                storage.clear();
             },
 
             /**
