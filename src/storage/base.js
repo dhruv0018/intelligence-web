@@ -150,13 +150,27 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             grab: function() {
 
+                var self = this;
+
                 var deferred = $q.defer();
 
                 $localForage.getItem(this.db).then(function(item) {
 
                     if (item) {
 
-                        deferred.resolve(item);
+                        var array = angular.fromJson(item);
+
+                        var resources = array.map(function(string) {
+
+                            var object = angular.fromJson(string);
+                            var resource = self.factory.create(object);
+
+                            self.set(resource);
+
+                            return resource;
+                        });
+
+                        deferred.resolve(resources);
 
                     } else {
 
