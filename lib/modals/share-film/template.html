@@ -91,8 +91,8 @@
                 <span data-ng-if="linkActive">Link is active.</span>
             </div>
             <div class="public-link-box" data-ng-class="{inActive:!linkActive}">
-                <a data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">http://www.krossover.com/g/{{shortId}}</a>
-                <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">http://www.krossover.com/r/{{shortId}}</a>
+                <a data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">http://new.krossover.com/g/{{shortId}}</a>
+                <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">http://new.krossover.com/r/{{shortId}}</a>
             </div>
             <div class="public-share-types" data-ng-show="isGame && film.isDelivered() && linkActive">
                 <button type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="false" data-ng-change="film.save()" required>Share Raw Film Only</button>
