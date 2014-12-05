@@ -14,8 +14,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q', '$injector', 'ResourceManager',
-    function($q, $injector, managedResources) {
+    '$q', '$injector',
+    function($q, $injector) {
 
         var BaseFactory = {
 
@@ -441,8 +441,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var self = this;
 
                 resource = resource || self;
-
-                managedResources.reset(resource);
 
                 /* Create a copy of the resource to save to the server. */
                 var copy = self.unextend(resource);
