@@ -1,12 +1,25 @@
 {
     "name": "games",
     "templates": [
-        "template.html"
+        "template.html",
+        "restricted.html"
     ],
     "styles": [
         "styles.less"
     ],
     "scripts": [
         "index.js"
+    ],
+    "locals": [
+        "raw-film",
+        "breakdown",
+        "down-and-distance",
+        "game-info",
+        "stats",
+        "formations",
+        "shot-chart"
+    ],
+    "paths": [
+        "."
     ]
 }

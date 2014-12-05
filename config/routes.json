@@ -400,11 +400,57 @@
     },
 
     "Games": {
+        "*": true
+    },
+
+    "Games.Restricted": {
+        "*": true
+    },
+
+    "Games.RawFilm": {
+        "*": true
+    },
+
+    "Games.Breakdown": {
+        "*": true
+    },
+
+    "Games.DownAndDistance": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "Games.Info": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "Games.Stats": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "Games.Formations": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "Games.ShotChart": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "ShortGames": {
 
         "*": true
     },
 
-    "ShortGames": {
+    "Clips": {
+
+        "*": true
+    },
+
+    "ShortClips": {
 
         "*": true
     }
