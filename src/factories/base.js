@@ -276,8 +276,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                         storage.set(resource);
                     });
 
-                    storage.update();
-
                     storage.query = storage.query || [];
                     storage.query = storage.query.concat(resources);
 
@@ -286,6 +284,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         var query = storage.query.slice();
                         delete storage.query;
+                        storage.update();
+
                         return query;
                     }
 
