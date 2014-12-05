@@ -137,7 +137,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 error = error || function() {
 
-                    throw new Error('Could not get ' + self.description);
+                    throw new Error('Could not fetch ' + self.description.slice(0, -1) + ' ' + id);
                 };
 
                 var model = $injector.get(self.model);
