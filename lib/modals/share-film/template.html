@@ -2,7 +2,8 @@
 
     <header class="modal-header">
     	<h3 class="modal-title">
-	    	<span data-ng-show="!withOtherUsers && !withPublic && !withWufoo">Pick how you would like to share</span>
+	    	<span data-ng-show="!withTeam && !withOtherUsers && !withPublic && !withWufoo">Pick how you would like to share</span>
+            <span data-ng-show="withTeam">Share this film with your team</span>
 	        <span data-ng-show="withOtherUsers">Share this film with other Krossover users</span>
 	        <span data-ng-show="withPublic">Share this film via public URL</span>
             <span data-ng-show="withWufoo && isGame">Film Room Sharing</span>
@@ -13,7 +14,7 @@
 
     <div class="modal-body">
 
-        <div class="share-options-container" data-ng-show="!withOtherUsers && !withPublic && !withWufoo">
+        <div class="share-options-container" data-ng-show="!withTeam && !withOtherUsers && !withPublic && !withWufoo">
         	<!--With Team Option for Game-->
             <div class="share-options option-your-team" data-ng-show="isGame">
         		<h3>Your Team</h3>
@@ -21,14 +22,9 @@
         		Games are automatically shared amongst team coaches and athletes on your active roster.
         	</div>
             <!--With Team Option for Reel-->
-            <div class="share-options option-your-team-reels" data-ng-show="!isGame" data-ng-click="shareReelWithTeamToggle()">
+            <div class="share-options option-your-team-reels" data-ng-show="!isGame" data-ng-click="withTeam = true">
                 <h3>Your Team</h3>
                 <i class="icon icon-group"></i>
-                <div class="team-share-toggle">
-                    <i class="icon icon-check-empty" data-ng-show="!shareWithTeam"></i>
-                    <i class="icon icon-check-square-o" data-ng-show="shareWithTeam"></i>
-                    Share With My Team
-                </div>
             </div>
         	<div class="share-options middle-option" data-ng-click="withOtherUsers = true">
         		<h3>Other Krossover Users</h3>
@@ -40,6 +36,19 @@
         	</div>
             <div class="temp-wufoo-btn">
                 <button class="btn btn-primary" data-ng-show="isGame" data-ng-click="withWufoo = true">Film Room Sharing</button>
+            </div>
+        </div>
+
+        <div class="sharing-with-team-container" data-ng-show="withTeam">
+            <div class="team-share-toggle" data-ng-click="shareReelWithTeamToggle()">
+                <p>Allow this reel to be shared with your active roster</p>
+                <i class="icon icon-check-empty" data-ng-show="!sharedWithTeam"></i>
+                <i class="icon icon-check-square-o" data-ng-show="sharedWithTeam"></i>
+            </div>
+
+            <div class="button-row">
+                <button class="btn btn-default" data-ng-click="withTeam = false">Back</button>
+                <button class="btn btn-primary pull-right" data-ng-click="$close()">Done</button>
             </div>
         </div>
 

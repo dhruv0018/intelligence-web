@@ -58,33 +58,6 @@
 					}
 				}
 
-				&.option-your-team-reels {
-
-					.icon-check-empty,
-					.icon-check-square-o {
-						display: inline;
-						color: @brand-blue;
-						font-size: 25px;
-						margin-right: 5px;
-
-						&::before {
-							width: 25px;
-							text-align: left;
-						}
-					}
-
-					&:hover {
-						.icon-check-empty,
-						.icon-check-square-o {
-							color: @brand-blue;
-						}
-					}
-
-					.team-share-toggle {
-						line-height: 25px;
-					}
-				}
-
 				&.middle-option {
 					border-left: thin solid @gray-border;
 					border-right: thin solid @gray-border;
@@ -114,6 +87,34 @@
 			.temp-wufoo-btn {
 				text-align: right;
 				margin-top: 10px;
+			}
+		}
+
+		.sharing-with-team-container {
+
+			.team-share-toggle {
+				margin: 25px 0px;
+				cursor: pointer;
+				color: @gray-darker;
+				
+				p {
+					display: inline;
+					vertical-align: middle;
+					font-size: 18px;
+				}
+
+				.icon-check-empty,
+				.icon-check-square-o {
+					display: inline;
+					vertical-align: middle;
+					font-size: 25px;
+					margin-left: 5px;
+
+					&::before {
+						width: 25px;
+						text-align: left;
+					}
+				}
 			}
 		}
 
