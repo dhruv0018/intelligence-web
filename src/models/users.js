@@ -20,7 +20,8 @@ IntelligenceWebClient.factory('UsersResource', [
             }, {
                 create: { method: 'POST' },
                 update: { method: 'PUT' },
-                resendEmail: { method: 'POST', url: config.api.uri + 'users/:unique' + '/emailRequest' }
+                resendEmail: { method: 'POST', url: config.api.uri + 'users/:unique' + '/emailRequest' },
+                resetPassword: { method: 'POST', url: config.api.uri + 'users/password-reset/:token', params: {token: '@token'} }
             }
         );
 

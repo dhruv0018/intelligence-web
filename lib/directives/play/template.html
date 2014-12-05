@@ -39,7 +39,7 @@
 
         <!-- MOBILE DEFAULT PLAY -->
         <!-- Default to 'active' since this is currently only used for public clips -->
-        <div data-ng-switch-default class="active play play__reel">
+        <div data-ng-switch-default class="active play play__reel" data-ng-class="{ active: play.id == playManager.current.id}">
 
             <div class="playHeadingContainer">
                 <div class="playHeading">
@@ -49,6 +49,9 @@
                         </div>
                     </h4>
                 </div>
+
+                <a class="playplay" data-ui-sref="Clips({ id: play.id })"><i class="icon icon-play-circle"></i></a>
+
 
                 <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
                 WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->

@@ -60,6 +60,9 @@
         "kvs-uploader",
         "profile",
         "film-header",
+        "coach-game",
+        "film-info",
+        "plays-filters",
         "draggable",
         "sidebar"
     ],

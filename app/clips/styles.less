@@ -7,12 +7,6 @@
     height: 100%;
     overflow-y: auto;
     background-color: @content-bg;
-    
-    .player {
-        display: flex;
-        flex: 1;
-        margin-left: 15px;
-    }
 
     .locked-game {
         background-color: @content-bg;
@@ -58,16 +52,12 @@
     }
 }
 
+// TODO: move this .locked-game to directive?
 /* Screens under 480px */
 @media only screen
 and (max-width: 479px) {
     
     .public-clip {
-
-        .player {
-            display: block;
-            width: 100%;
-        }
 
         .locked-game {
             width: 80%;

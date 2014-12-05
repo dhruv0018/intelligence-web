@@ -140,8 +140,8 @@ Login.config([
  * @type {Controller}
  */
 Login.controller('LoginController', [
-    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService', 'AlertsService', 'UsersFactory',
-    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, account, alerts, users) {
+    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService', 'AlertsService', 'UsersFactory', 'EMAIL_REQUEST_TYPES',
+    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, account, alerts, users, EMAIL_REQUEST_TYPES) {
 
         $scope.config = config;
 
@@ -221,7 +221,7 @@ Login.controller('LoginController', [
 
             var email = $scope.$parent.login.email;
 
-            auth.requestPasswordReset(email,
+            users.resendEmail(EMAIL_REQUEST_TYPES.FORGOTTEN_PASSWORD, null, email).then(
 
                 function success() {
 
@@ -262,6 +262,7 @@ Login.controller('LoginController', [
                         });
                     }
                 }
+
             );
         };
 
@@ -269,7 +270,8 @@ Login.controller('LoginController', [
 
             if ($stateParams.token) {
 
-                auth.processPasswordReset($stateParams.token, $scope.reset.password,
+                users.passwordReset($stateParams.token, $scope.reset.password).then(
+
 
                     function success(data, status) {
 

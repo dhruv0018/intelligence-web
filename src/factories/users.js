@@ -429,7 +429,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                     unique: unique,
                     type: type,
                     params: params
-                });
+                }).$promise;
             },
             /**
              * @class User
@@ -465,6 +465,16 @@ IntelligenceWebClient.factory('UsersFactory', [
                 }
 
                 return vettedUsers;
+            },
+            passwordReset: function(token, password) {
+                var self = this;
+
+                var model = $injector.get(self.model);
+
+                return model.resetPassword(
+                    {token: token},
+                    {password: password}
+                ).$promise;
             },
             /**
              * @class User
