@@ -42,7 +42,7 @@
         <div data-ng-switch-default class="active play play__reel" data-ng-class="{ active: play.id == playManager.current.id}">
 
             <div class="playHeadingContainer">
-                <div class="playHeading">
+                <div class="playHeading" data-ng-click="selectMobileClipPlay()">
                     <h4 class="title">
                         <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
                             <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
@@ -50,7 +50,7 @@
                     </h4>
                 </div>
 
-                <a class="playplay" data-ui-sref="Clips({ id: play.id })"><i class="icon icon-play-circle"></i></a>
+                <a class="playplay" data-ng-click="selectMobileClipPlay()"><i class="icon icon-play-circle"></i></a>
 
 
                 <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
