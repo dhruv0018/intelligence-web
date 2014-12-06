@@ -39,6 +39,10 @@
         "bootstrap": "twbs/bootstrap"
     },
     "dependencies": {
+        "express": "^4.10.4",
+        "spdy": "^1.29.1",
+        "spdy-keys": "0.0.0",
+        "spdy-push": "^1.0.0"
     },
     "devDependencies": {
         "moment": "2.7.0",
