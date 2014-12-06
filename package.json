@@ -102,6 +102,8 @@
     "main": "./src/main.js",
     "scripts": {
         "install": "napa; component install",
+        "serve": "node server.js",
+        "server": "node server.js",
         "test": "node_modules/.bin/grunt test"
     }
 }
