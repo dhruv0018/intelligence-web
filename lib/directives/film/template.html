@@ -1,27 +1,18 @@
 <div class="krossover-film" data-ng-hide="hideFilm">
 
-    <film-info
-        data-title="filmTitle"
-        data-film="film"
-        data-ng-if="isGame && currentUser.is(COACH)"
-        data-ui-sref="Coach.GameArea({id:film.id})"
-        >
-    </film-info>
 
     <film-info
         data-title="filmTitle"
         data-film="film"
-        data-ng-if="isGame && currentUser.is(ATHLETE)"
-        data-ui-sref="Athlete.GameArea({id:film.id})"
-        >
+        data-ng-if="isGame"
+        data-ui-sref="Games({id:film.id})">
     </film-info>
 
     <film-info
         data-title="filmTitle"
         data-film="film"
         data-ng-if="!isGame"
-        data-ui-sref="ReelsArea({id:film.id})"
-        >
+        data-ui-sref="ReelsArea({id:film.id})">
     </film-info>
 
     <krossover-thumbnail width="400" data-film="film" data-is-game="isGame"></krossover-thumbnail>
@@ -34,14 +25,14 @@
             by {{uploaderName}}
         </div>
 
-        <a data-ng-if="!film.isVideoTranscodeFailed() && !isShared && (film.uploaderUserId === currentUser.id)" 
-           data-ng-click="ShareFilmModal.open(film)" 
+        <a data-ng-if="!film.isVideoTranscodeFailed() && !isShared && (film.uploaderUserId === currentUser.id)"
+           data-ng-click="ShareFilmModal.open(film)"
            class="share-game">
             <i class="icon icon-share"></i>Share
         </a>
 
         <a data-ng-if="false"
-           data-ng-href="#" 
+           data-ng-href="#"
            class="embed-game">
             <i class="icon icon-link"></i>Embed
         </a>
