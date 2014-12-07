@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var PORT = 8002;
 
 var fs = require('fs');
