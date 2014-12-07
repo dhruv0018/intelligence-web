@@ -16,7 +16,7 @@ brew install redis
 
 # Run databases
 ```
-mysql &
+mysqld &
 redis-server &
 ```
 
