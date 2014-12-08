@@ -1,5 +1,8 @@
 <div class="krossover-playlist">
 
+    <krossover-playlist-control data-play-count="filteredPlaysIds.length" ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
+    </krossover-playlist-control>
+
     <div class="playlist" ng-class="{'edit-mode': editMode}">
 
         <krossover-play
