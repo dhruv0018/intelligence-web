@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
-var PORT = 8002;
+var PORT = 8000;
+
+var port = process.env.PORT || PORT;
 
 var fs = require('fs');
 var path = require('path');
@@ -32,5 +34,5 @@ app.use(function(request, response){
     }
 });
 
-spdy.createServer(keys, app).listen(PORT);
+spdy.createServer(keys, app).listen(port);
 
