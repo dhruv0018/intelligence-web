@@ -133,12 +133,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
         if ($scope.game.isDelivered()) {
-            // Players
-            var teamPlayersFilter = { rosterId: $scope.game.getRoster($scope.game.teamId).id };
-            $scope.teamPlayers = players.getList(teamPlayersFilter);
-
-            var opposingTeamPlayersFilter = { rosterId: $scope.game.getRoster($scope.game.opposingTeamId).id };
-            $scope.opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
 
             // Plays
             var playsFilter = { gameId: $scope.game.id };
