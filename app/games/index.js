@@ -139,16 +139,38 @@ Games.controller('Games.controller', [
         $scope.gameStates = [];
 
         if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered() && !$scope.game.isSharedWithUser(session.currentUser)) {
-            $scope.gameStates.push(
-                {
-                    name: 'Film Breakdown',
-                    state: 'Games.Breakdown'
-                },
-                {
-                    name: 'Raw Film',
-                    state: 'Games.RawFilm'
+            if (!$scope.game.publicShare) {
+                $scope.gameStates.push(
+                    {
+                        name: 'Film Breakdown',
+                        state: 'Games.Breakdown'
+                    },
+                    {
+                        name: 'Raw Film',
+                        state: 'Games.RawFilm'
+                    }
+                );
+            } else {
+                if ($scope.game.publicShare.isBreakdownShared) {
+                    $scope.gameStates.push(
+                        {
+                            name: 'Film Breakdown',
+                            state: 'Games.Breakdown'
+                        },
+                        {
+                            name: 'Raw Film',
+                            state: 'Games.RawFilm'
+                        }
+                    );
+                } else {
+                    $scope.gameStates.push(
+                        {
+                            name: 'Raw Film',
+                            state: 'Games.RawFilm'
+                        }
+                    );
                 }
-            );
+            }
 
             if ($scope.league.sportId == SPORTS.BASKETBALL.id && currentUser.is(ROLES.COACH)) {
                 $scope.gameStates.push(
@@ -184,7 +206,6 @@ Games.controller('Games.controller', [
         } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered() || $scope.game.isSharedWithUser(session.currentUser)) {
             var isShared = $scope.game.isSharedWithUser(session.currentUser);
             var share = isShared ? $scope.game.getShareByUser(session.currentUser) : null;
-
             if (share && share.isBreakdownShared) {
                 $scope.gameStates.push({
                     name: 'Film Breakdown',
