@@ -136,8 +136,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             // Plays
             var playsFilter = { gameId: $scope.game.id };
-            $scope.totalPlays = plays.getList(playsFilter);
-            $scope.plays = $scope.totalPlays;
+            $scope.plays = plays.getList(playsFilter);
 
             $scope.filteredPlaysIds = [];
 
