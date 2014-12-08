@@ -2,25 +2,27 @@
 
     <krossover-playlist-control data-play-count="filteredPlaysIds.length" ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
     </krossover-playlist-control>
+    
+    <div class="playlist-container">
+        <div class="playlist" ng-class="{'edit-mode': editMode}">
 
-    <div class="playlist" ng-class="{'edit-mode': editMode}">
+            <krossover-play
+                data-expand-all="expandAll"
+                data-game="game"
+                data-reels="reels"
+                data-play="play"
+                data-filtered-plays-ids="filteredPlaysIds"
+                data-league="league"
+                data-ng-show="play.isFiltered"
+                data-ng-repeat="play in plays | orderBy:orderBy">
+            </krossover-play>
 
-        <krossover-play
-            data-expand-all="expandAll"
-            data-game="game"
-            data-reels="reels"
-            data-play="play"
-            data-filtered-plays-ids="filteredPlaysIds"
-            data-league="league"
-            data-ng-show="play.isFiltered"
-            data-ng-repeat="play in plays | orderBy:orderBy">
-        </krossover-play>
+            <no-results data-ng-hide="plays.length"></no-results>
 
-        <no-results data-ng-hide="plays.length"></no-results>
-
+        </div>
     </div>
 
-    <div class="expandrow" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
+    <div class="playlist-footer" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
         <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
         <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
     </div>
