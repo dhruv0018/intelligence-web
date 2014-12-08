@@ -23,7 +23,21 @@
             
             <krossover-sidebar>
 
-                <krossover-playlist-control
+                <krossover-playlist></krossover-playlist>
+                
+            </krossover-sidebar>
+
+            <div class="player reels-player" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
+                <x-krossover-videoplayer class="reels-video-container" data-sources="[]"></x-krossover-videoplayer>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+                <!-- <krossover-playlist-control
                     data-play-count="plays.length"
                     data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name"
                     data-ng-hide="editMode">
@@ -43,20 +57,7 @@
                         data-ng-class="{'last': $last, 'edit-mode': editMode}"
                         data-ng-repeat="playId in reel.plays"
                         data-is-editable="false">
-                    </krossover-play>
+                    </krossover-play> 
+        <no-results data-ng-hide="reel && reel.plays && reel.plays.length"></no-results>
+                -->
 
-                    <no-results data-ng-hide="reel && reel.plays && reel.plays.length"></no-results>
-
-                </krossover-playlist>
-                
-            </krossover-sidebar>
-
-            <div class="player reels-player" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
-                <x-krossover-videoplayer class="reels-video-container" data-sources="[]"></x-krossover-videoplayer>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
