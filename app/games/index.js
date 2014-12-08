@@ -182,12 +182,24 @@ Games.controller('Games.controller', [
             }
 
         } else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered() || $scope.game.isSharedWithUser(session.currentUser)) {
+            var isShared = $scope.game.isSharedWithUser(session.currentUser);
+            var share = isShared ? $scope.game.getShareByUser(session.currentUser) : null;
+
+            if (share && share.isBreakdownShared) {
+                $scope.gameStates.push({
+                    name: 'Film Breakdown',
+                    state: 'Games.Breakdown'
+                });
+            }
+
             $scope.gameStates.push(
                 {
                     name: 'Raw Film',
                     state: 'Games.RawFilm'
                 }
             );
+
+
         }
 
         if (!$scope.game.isSharedWithUser(session.currentUser) && currentUser.is(ROLES.COACH)) {
