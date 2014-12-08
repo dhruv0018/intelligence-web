@@ -91,12 +91,16 @@
                 <span data-ng-if="linkActive">Link is active.</span>
             </div>
             <div class="public-link-box" data-ng-class="{inActive:!linkActive}">
-                <a data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">http://new.krossover.com/g/{{shortId}}</a>
-                <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">http://new.krossover.com/r/{{shortId}}</a>
+                <a data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/g/{{shortId}}</a>
+                <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/r/{{shortId}}</a>
             </div>
             <div class="public-share-types" data-ng-show="isGame && film.isDelivered() && linkActive">
                 <button type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="false" data-ng-change="film.save()" required>Share Raw Film Only</button>
                 <button type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="true" data-ng-change="film.save()" required>Share Breakdown and Raw Film</button>
+            </div>
+            <p>Copy the code below to embed this film</p>
+            <div class="public-link-box" data-ng-show="isGame && film.isDelivered() && linkActive">
+                <code>&lt;iframe src="{{config.links.intelligence.uri}}/games/{{film.id}}" style="width:480px;height:500px;"&gt;&lt;/iframe&gt;</code>
             </div>
             <p data-ng-if="!linkActive">Once activated, you can copy this URL (web address) and share it with anyone.</p>
             <p data-ng-if="linkActive">Once deactivated, no one can access this game with this link.</p>

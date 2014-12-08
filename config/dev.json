@@ -27,6 +27,9 @@
         "signup": {
             "uri": "http://krossover.com/sign-up.php"
         },
+        "intelligence": {
+            "uri": "localhost:8000.krossover.com"
+        },
         "support": {
             "uri": "http://support.krossover.com"
         },
