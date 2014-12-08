@@ -66,16 +66,17 @@ Games.config([
             url: '/games/:id',
             parent: 'base',
             onEnter: [
-                '$state', 'Games.Data', 'SessionService', 'GamesFactory',
-                function($state, data, session, games) {
+                '$state', '$stateParams', 'Games.Data', 'SessionService', 'GamesFactory',
+                function($state, $stateParams, data, session, games) {
+
                     var currentUser = session.currentUser;
-
                     var hasAccess = false;
+                    var game = games.get($stateParams.id);
 
-                    if (data.game.isSharedWithPublic() || data.game.uploaderTeamId === currentUser.currentRole.teamId || games.isSharedWithUser(currentUser)) {
+                    if (game.isSharedWithPublic() || game.uploaderTeamId === currentUser.currentRole.teamId || game.isSharedWithUser(currentUser)) {
                         hasAccess = true;
                     } else {
-                        $state.go('Games.Restricted', {id: data.game.id});
+                        $state.go('Games.Restricted', {id: game.id});
                     }
                 }
             ],
