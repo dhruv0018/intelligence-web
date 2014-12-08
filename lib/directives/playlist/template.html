@@ -1,5 +1,18 @@
 <div class="krossover-playlist">
 
-    <div class="playlist" ng-class="{'edit-mode': editMode}" ng-transclude></div>
+    <div class="playlist" ng-class="{'edit-mode': editMode}">
+
+        <krossover-play
+            data-expand-all="expandAll"
+            data-game="game"
+            data-reels="reels"
+            data-play="play"
+            data-filtered-plays-ids="filteredPlaysIds"
+            data-league="league"
+            data-ng-show="play.isFiltered"
+            data-ng-repeat="play in plays | orderBy:orderBy">
+        </krossover-play>
+
+    </div>
 
 </div>

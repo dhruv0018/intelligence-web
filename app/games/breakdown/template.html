@@ -20,20 +20,7 @@
             <krossover-playlist-control data-play-count="filteredPlaysIds.length" ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
             </krossover-playlist-control>
 
-            <krossover-playlist>
-
-                <krossover-play
-                    data-expand-all="expandAll"
-                    data-game="game"
-                    data-reels="reels"
-                    data-play="play"
-                    data-filtered-plays-ids="filteredPlaysIds"
-                    data-league="league"
-                    data-ng-show="play.isFiltered"
-                    data-ng-repeat="play in plays | orderBy:orderBy">
-                </krossover-play>
-
-            </krossover-playlist>
+            <krossover-playlist></krossover-playlist>
 
             <no-results data-ng-hide="plays.length"></no-results>
 
