@@ -154,7 +154,9 @@ IntelligenceWebClient.factory('ANONYMOUS_USER', [
         var ANONYMOUS_USER = users.create({
 
             id: null,
-            role: ROLE_TYPE.ANONYMOUS
+            roles: [{
+                type: ROLE_TYPE.ANONYMOUS
+            }]
         });
 
         return ANONYMOUS_USER;
