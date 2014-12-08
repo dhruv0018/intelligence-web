@@ -13,6 +13,8 @@
             data-ng-repeat="play in plays | orderBy:orderBy">
         </krossover-play>
 
+        <no-results data-ng-hide="plays.length"></no-results>
+
     </div>
 
 </div>
