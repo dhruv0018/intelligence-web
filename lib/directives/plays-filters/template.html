@@ -15,7 +15,7 @@
             Clear
         </a>
 
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" data-ng-if="filterMenu.isOpen">
             <li>
                 <div>
                     <a class="btn" data-ng-click="setTeam($event, game.teamId)" data-ng-class="{'btn-default' : (teamId !== game.teamId), 'btn-primary': (teamId === game.teamId)}">
