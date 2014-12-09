@@ -144,11 +144,19 @@ Games.controller('Games.controller', [
         var gameBelongsToUserTeam = $scope.game.uploaderTeamId === currentUser.currentRole.teamId;
         var sharedWithCurrentUser = $scope.game.isSharedWithUser(currentUser);
         var publiclyAvailable = ($scope.game.publicShare) ? true : false;
-        var breakdownShared = $scope.game.publicShare && $scope.game.publicShare.isBreakdownShared;
+        var breakdownShared = $scope.game.publicShare && $scope.game.publicShare.isBreakdownShared ||
+                              sharedWithCurrentUser && $scope.game.getShareByUser(currentUser).isBreakdownShared;
 
-        //sport related states
         if (gameBelongsToUserTeam) {
+            //game information
             $scope.gameStates.push({name: 'Game Information', state: 'Games.Info'});
+
+            //statistics related states
+            if (gameDelivered && sport.hasStatistics) {
+                $scope.gameStates.push({name: 'Statistics', state: 'Games.Stats'});
+            }
+
+            //sport specific states
             switch (sport.id) {
                 case SPORTS.BASKETBALL.id:
                     $scope.gameStates.push({name: 'Shot Chart', state: 'Games.ShotChart'});
@@ -162,113 +170,22 @@ Games.controller('Games.controller', [
             }
         }
 
-        //statistics related states
-        if (gameDelivered && sport.hasStatistics) {
-            $scope.gameStates.push({name: 'Statistics', state: 'Games.Stats'});
-        }
-
         //video related states
         if (transcodeCompleted) {
+
             $scope.gameStates.unshift({name: 'Raw Film', state: 'Games.RawFilm'});
+
             if (gameDelivered) {
                 $scope.gameStates.unshift({name: 'Film Breakdown', state: 'Games.Breakdown'});
             }
+
+            //handles public sharing
+            if ((publiclyAvailable || sharedWithCurrentUser) && !breakdownShared) {
+                $scope.gameStates.shift();
+            }
+
         }
 
-
-        //if ($scope.game.isVideoTranscodeComplete() && $scope.game.isDelivered() && !$scope.game.isSharedWithUser(session.currentUser)) {
-        //    if (!$scope.game.publicShare) {
-        //        $scope.gameStates.push(
-        //            {
-        //                name: 'Film Breakdown',
-        //                state: 'Games.Breakdown'
-        //            },
-        //            {
-        //                name: 'Raw Film',
-        //                state: 'Games.RawFilm'
-        //            }
-        //        );
-        //    } else {
-        //        if ($scope.game.publicShare.isBreakdownShared) {
-        //            $scope.gameStates.push(
-        //                {
-        //                    name: 'Film Breakdown',
-        //                    state: 'Games.Breakdown'
-        //                },
-        //                {
-        //                    name: 'Raw Film',
-        //                    state: 'Games.RawFilm'
-        //                }
-        //            );
-        //        } else {
-        //            $scope.gameStates.push(
-        //                {
-        //                    name: 'Raw Film',
-        //                    state: 'Games.RawFilm'
-        //                }
-        //            );
-        //        }
-        //    }
-        //
-        //    if ($scope.league.sportId == SPORTS.BASKETBALL.id && currentUser.is(ROLES.COACH)) {
-        //        $scope.gameStates.push(
-        //            {
-        //                name: 'Shot Chart',
-        //                state: 'Games.ShotChart'
-        //            }
-        //        );
-        //    }
-        //
-        //    if ($scope.league.sportId == SPORTS.FOOTBALL.id && currentUser.is(ROLES.COACH)) {
-        //        $scope.gameStates.push(
-        //            {
-        //                name: 'Formation Report',
-        //                state: 'Games.Formations'
-        //            },
-        //            {
-        //                name: 'Down and Distance Report',
-        //                state: 'Games.DownAndDistance'
-        //            }
-        //        );
-        //    }
-        //
-        //    if (($scope.league.sportId == SPORTS.VOLLEYBALL.id || $scope.league.sportId == SPORTS.FOOTBALL.id) && currentUser.is(ROLES.COACH)) {
-        //        $scope.gameStates.push(
-        //            {
-        //                name: 'Statistics',
-        //                state: 'Games.Stats'
-        //            }
-        //        );
-        //    }
-        //
-        //} else if ($scope.game.isVideoTranscodeComplete() && !$scope.game.isDelivered() || $scope.game.isSharedWithUser(session.currentUser)) {
-        //    var isShared = $scope.game.isSharedWithUser(session.currentUser);
-        //    var share = isShared ? $scope.game.getShareByUser(session.currentUser) : null;
-        //    if (share && share.isBreakdownShared) {
-        //        $scope.gameStates.push({
-        //            name: 'Film Breakdown',
-        //            state: 'Games.Breakdown'
-        //        });
-        //    }
-        //
-        //    $scope.gameStates.push(
-        //        {
-        //            name: 'Raw Film',
-        //            state: 'Games.RawFilm'
-        //        }
-        //    );
-        //
-        //
-        //}
-        //
-        //if (!$scope.game.isSharedWithUser(session.currentUser) && currentUser.is(ROLES.COACH)) {
-        //    $scope.gameStates.push(
-        //        {
-        //            name: 'Game Information',
-        //            state: 'Games.Info'
-        //        }
-        //    );
-        //}
     }
 ]);
 
