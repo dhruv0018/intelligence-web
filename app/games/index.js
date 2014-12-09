@@ -66,8 +66,8 @@ Games.config([
             url: '/games/:id',
             parent: 'base',
             onEnter: [
-                '$state', '$stateParams', 'Games.Data', 'SessionService', 'GamesFactory',
-                function($state, $stateParams, data, session, games) {
+                '$state', '$stateParams', 'SessionService', 'GamesFactory',
+                function($state, $stateParams, session, games) {
 
                     var currentUser = session.currentUser;
                     var hasAccess = false;
