@@ -122,26 +122,29 @@ ReelsArea.controller('ReelsArea.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES', 'VIEWPORTS',
     function controller($rootScope, $scope, $state, $stateParams, $modal, modals, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES, VIEWPORTS) {
 
+        $scope.isReelsPlay = true;
+
+        playManager.videoTitle = 'reelsPlayer';
+
         // Get reel
         var reelId = Number($stateParams.id);
         $scope.reel = reels.get(reelId);
-        playManager.videoTitle = 'reelsPlayer';
-        $scope.editMode = false;
-        var editAllowed = true;
+
+
+        // Setup plays
 
         var plays = playsFactory.getList({ reelId: reelId });
         $scope.plays = plays;
+
         $scope.playManager = playManager;
+        // Refresh the playsManager
+        playsManager.reset($scope.plays);
 
-        $scope.VIEWPORTS = VIEWPORTS;
 
-        // Refresh the playManager
-        playsManager.reset();
+        // Editing config
 
-        // Add each play individually to the playsManager to keep play order consistent with the reels ordering.
-        angular.forEach($scope.reel.plays, function(playId) {
-            playsManager.addPlay(playsFactory.get(playId));
-        });
+        $scope.editFlag = false;
+        var editAllowed = true;
 
         var editModeRestrictions = {
             DELETABLE: 'DELETABLE',
@@ -163,75 +166,37 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.canUserDelete = $scope.restrictionLevel === editModeRestrictions.DELETABLE;
         $scope.canUserEdit = $scope.restrictionLevel === editModeRestrictions.DELETABLE || $scope.restrictionLevel === editModeRestrictions.EDITABLE;
 
+        $scope.VIEWPORTS = VIEWPORTS;
+
         $scope.toggleEditMode = function() {
             //This method is for entering edit mode, or cancelling,
             //NOT for exiting from commiting changes
             if (!editAllowed) return;
 
-            $scope.editMode = !$scope.editMode;
+            $scope.editFlag = !$scope.editFlag;
 
-            if ($scope.editMode) {
+            if ($scope.editFlag) {
                 //entering edit mode, cache plays array
-                if ($scope.reel && $scope.reel.plays && angular.isArray($scope.reel.plays)) {
-                    $scope.toggleEditMode.playsCache = angular.copy($scope.reel.plays);
+                if ($scope.plays && angular.isArray($scope.plays)) {
+                    $scope.toggleEditMode.playsCache = angular.copy($scope.plays);
                 }
             } else {
                 //cancelling edit mode
 
                 if ($scope.toggleEditMode.playsCache) {
                     //get rid of dirty plays array
-                    delete $scope.reel.plays;
+                    delete $scope.plays;
 
                     //in with clean
-                    $scope.reel.plays = $scope.toggleEditMode.playsCache;
+                    $scope.plays = $scope.toggleEditMode.playsCache;
                 }
             }
         };
 
-        $scope.getPlay = function(playId) {
-            return playsFactory.get(playId);
-        };
-
-        $scope.getLeague = function(playId) {
-            return leaguesFactory.get($scope.getHomeTeam(playId).leagueId);
-        };
-
-        $scope.getGame = function(playId) {
-            return gamesFactory.get(playsFactory.get(playId).gameId);
-        };
-
-        $scope.getHomeTeam = function(playId) {
-
-            if (playId) {
-                var gameId = playsFactory.get(playId).gameId;
-                var teamId = gamesFactory.get(gameId).teamId;
-
-                return teamsFactory.get(teamId);
-            }
-        };
-
-        $scope.getOpposingTeam = function(playId) {
-
-            if (playId) {
-                var gameId = playsFactory.get(playId).gameId;
-                var teamId = gamesFactory.get(gameId).opposingTeamId;
-
-                return teamsFactory.get(teamId);
-            }
-        };
-
-        $scope.getDatePlayed = function(playId) {
-
-            if (playId) {
-                var gameId = playsFactory.get(playId).gameId;
-
-                return gamesFactory.get(gameId).datePlayed;
-            }
-        };
-
         $scope.$on('delete-reel-play', function($event, index) {
-            if ($scope.editMode && $scope.reel && $scope.reel.plays && angular.isArray($scope.reel.plays)) {
-                $scope.reel.plays.splice(index, 1);
+            console.log('delete', index);
+            if ($scope.editFlag && $scope.plays && angular.isArray($scope.plays)) {
+                $scope.plays.splice(index, 1);
             }
         });
 
@@ -239,18 +204,20 @@ ReelsArea.controller('ReelsArea.controller', [
             //delete cached plays
             delete $scope.toggleEditMode.playsCache;
 
-            $scope.editMode = false;
+            $scope.editFlag = false;
             editAllowed = false;
+
+            // Update reel locally
+            var reelPlayIds = $scope.plays.map(function(play) {
+                return play.id;
+            });
+            $scope.reel.plays = reelPlayIds;
 
             $scope.reel.save().then(function() {
                 editAllowed = true;
 
                 // Refresh the playManager
-                playsManager.reset();
-
-                angular.forEach($scope.reel.plays, function(playId) {
-                    playsManager.addPlay(playsFactory.get(playId));
-                });
+                playsManager.reset($scope.plays);
             });
         };
 
