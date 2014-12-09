@@ -10,10 +10,7 @@
     data-is-mobile="isMobile"
     data-vg-sources="sources">
 
-    <div krossover-play-pause-button class="posterImage" data-ng-hide="played || !isMobile" data-ng-click="played = true">
-        <img class="img-responsive" data-ng-src="{{posterImageSrc}}" alt="">
-        <i class="icon icon-play"></i>
-    </div>
+    <poster-image krossover-play-pause-button class="posterImage" data-ng-hide="played || !isMobile" data-ng-click="played = true"></poster-image>
 
     <div data-ng-show="!isMobile || played" class="video-container">
 

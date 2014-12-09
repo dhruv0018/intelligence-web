@@ -64,7 +64,8 @@
         "film-info",
         "plays-filters",
         "draggable",
-        "sidebar"
+        "sidebar",
+        "poster-image"
     ],
     "scripts": [
         "index.js"

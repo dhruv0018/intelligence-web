@@ -36,11 +36,6 @@ IntelligenceWebClient.service('PlayManager', [
             this.playState = null;
         };
 
-        this.currentPlayGame = function currentPlayGameId() {
-            var game = gamesFactory.get(plays.get(this.current.id).gameId);
-            return game;
-        };
-
         this.register = function register(playScope) {
             playsManager = playsManager || $injector.get('PlaysManager');
             playsManager.registerPlayScope(playScope);
