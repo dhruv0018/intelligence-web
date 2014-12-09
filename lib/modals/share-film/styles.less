@@ -25,6 +25,13 @@
 			font-size: 16px;
 		}
 
+		.info-box {
+			border: thin solid @gray-border;
+			background-color: @content-bg;
+			margin-bottom: 10px;
+			padding: 5px;
+		}
+
 		.share-options-container {
 
 			margin: auto;
@@ -96,6 +103,7 @@
 				margin: 25px 0px;
 				cursor: pointer;
 				color: @gray-darker;
+				text-align: center;
 				
 				p {
 					display: inline;
@@ -108,7 +116,7 @@
 					display: inline;
 					vertical-align: middle;
 					font-size: 25px;
-					margin-left: 5px;
+					margin-right: 5px;
 
 					&::before {
 						width: 25px;
@@ -152,13 +160,6 @@
 			.how-to-search {
 				color: black;
 				margin-bottom: 10px;
-			}
-
-			.info-box {
-				border: thin solid @gray-border;
-				background-color: @content-bg;
-				margin-bottom: 10px;
-				padding: 5px;
 			}
 
 			.shared-with-table {
@@ -235,12 +236,27 @@
 				}
 			}
 
+			.public-share-option-title {
+				font-weight: 500;
+				font-size: 18px;
+			}
+
+			.method-row {
+				&:after {
+					clear: both;
+					content: "";
+					display: block;
+				}
+			}
+
 			.public-link-box {
 				border: 2px solid @gray-border;
 				border-radius: 4px;
-				width: 70%;
+				width: 65%;
 				margin: 0px auto 10px;
 				padding: 10px;
+				display: inline-block;
+				word-wrap: break-word;
 
 				code {
 					background-color: @content-bg;
@@ -261,26 +277,46 @@
 			}
 
 			.public-share-types {
-				text-align: center;
 				margin-bottom: 20px;
+			}
+
+			.public-share-methods {
+				height: 160px;
+
+				.link-label {
+					line-height: 40px;
+				}
+
+				.embed-label {
+					line-height: 104px;
+				}
 			}
 
 			.activate-row {
 				
-				margin-bottom: 10px;
+				margin-bottom: 20px;
 				font-size: 18px;
-				text-align: center;
-				color: black;
 				font-weight: 500;
+				width: 70%;
+				height: 36px;
+				line-height: 36px;
+
+				button {
+					background-color: @brand-blue;
+					border-color: @brand-blue;
+				}
+
+				.video-status-public {
+					color: @brand-success;
+				}
+
+				.video-status-private {
+					color: @brand-danger;
+				}
 			}
 
 			.button-row {
 				margin-top: 30px;
-
-				.btn-deactivate {
-					background-color: @brand-blue;
-					border-color: @brand-blue;
-				}
 			}
 		}
 

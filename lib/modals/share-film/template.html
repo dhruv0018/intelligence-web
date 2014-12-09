@@ -3,7 +3,7 @@
     <header class="modal-header">
     	<h3 class="modal-title">
 	    	<span data-ng-show="!withTeam && !withOtherUsers && !withPublic && !withWufoo">Pick how you would like to share</span>
-            <span data-ng-show="withTeam">Share this film with your team</span>
+            <span data-ng-show="withTeam">Share this reel with your team</span>
 	        <span data-ng-show="withOtherUsers">Share this film with other Krossover users</span>
 	        <span data-ng-show="withPublic">Share this film via public URL</span>
             <span data-ng-show="withWufoo && isGame">Film Room Sharing</span>
@@ -41,9 +41,9 @@
 
         <div class="sharing-with-team-container" data-ng-show="withTeam">
             <div class="team-share-toggle" data-ng-click="shareReelWithTeamToggle()">
-                <p>Allow this reel to be shared with your active roster</p>
                 <i class="icon icon-check-empty" data-ng-show="!sharedWithTeam"></i>
                 <i class="icon icon-check-square-o" data-ng-show="sharedWithTeam"></i>
+                <p>Allow this reel to be shared with your active roster</p>
             </div>
 
             <div class="button-row">
@@ -86,29 +86,42 @@
         </div>
 
         <div class="sharing-with-public-container" data-ng-show="withPublic">
+            <div class="info-box">
+                <p data-ng-if="!linkActive">Once public, you can copy this URL (web address) and share it with anyone.</p>
+                <p data-ng-if="linkActive">Once private, no one can access this game with this link.</p>
+                <p data-ng-if="!linkActive">Anyone with this link will be able to access this film.</p>
+                <p data-ng-if="linkActive">If you have placed this game in another Krossover user's account, unpublishing the game will not remove it from their account.</p>
+            </div>
             <div class="activate-row">
-                <span data-ng-if="!linkActive">Link is not active.</span>
-                <span data-ng-if="linkActive">Link is active.</span>
+                <span class="video-status-private" data-ng-if="!linkActive">Video is currently private.</span>
+                <span class="video-status-public" data-ng-if="linkActive">Video is now public on the web.</span>
+                <button class="btn btn-primary pull-right" data-ng-click="togglePublicLink()">{{linkActive ? 'Make Private' : 'Publish to Web'}}</button>
             </div>
-            <div class="public-link-box" data-ng-class="{inActive:!linkActive}">
-                <a data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/g/{{shortId}}</a>
-                <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/r/{{shortId}}</a>
-            </div>
+            <p class="public-share-option-title" data-ng-show="isGame && film.isDelivered() && linkActive">What would you like to share?</p>
             <div class="public-share-types" data-ng-show="isGame && film.isDelivered() && linkActive">
                 <button type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="false" data-ng-change="film.save()" required>Share Raw Film Only</button>
                 <button type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="true" data-ng-change="film.save()" required>Share Breakdown and Raw Film</button>
             </div>
-            <p>Copy the code below to embed this film</p>
-            <div class="public-link-box" data-ng-show="isGame && film.isDelivered() && linkActive">
-                <code>&lt;iframe src="{{config.links.intelligence.uri}}/games/{{film.id}}" style="width:480px;height:500px;"&gt;&lt;/iframe&gt;</code>
+            <p class="public-share-option-title" data-ng-show="linkActive">How would you like to share?</p>
+            <div class="public-share-methods" data-ng-show="linkActive">
+                <div class="method-row">
+                    <span class="link-label">Share link with anyone</span>
+                    <div class="public-link-box pull-right" data-ng-class="{inActive:!linkActive}">
+                        <a data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/g/{{shortId}}</a>
+                        <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/r/{{shortId}}</a>
+                    </div>
+                </div>
+                <div class="method-row">
+                    <span class="embed-label">Embed video on your website</span>
+                    <div class="public-link-box pull-right" data-ng-show="linkActive">
+                        <code data-ng-show="isGame">&lt;iframe src="{{config.links.intelligence.uri}}/games/{{film.id}}" style="width:480px;height:500px;"&gt;&lt;/iframe&gt;</code>
+                        <code data-ng-show="!isGame">&lt;iframe src="{{config.links.intelligence.uri}}/reels/{{film.id}}" style="width:480px;height:500px;"&gt;&lt;/iframe&gt;</code>
+                    </div>
+                </div>
             </div>
-            <p data-ng-if="!linkActive">Once activated, you can copy this URL (web address) and share it with anyone.</p>
-            <p data-ng-if="linkActive">Once deactivated, no one can access this game with this link.</p>
-            <p data-ng-if="!linkActive">Anyone with this link will be able to access the Raw Film for this game.</p>
-            <p data-ng-if="linkActive">If you have placed this game in another Krossover user's account, deactivating the link will not remove this game from their account.</p>
             <div class="button-row">
-                <button class="btn btn-primary pull-right" data-ng-class="{'btn-deactivate': linkActive}" data-ng-click="togglePublicLink()">{{linkActive ? 'Deactivate' : 'Activate'}} Link</button>
                 <button class="btn btn-default" data-ng-click="withPublic = false">Back</button>
+                <button class="btn btn-primary pull-right" data-ng-click="$close()">Done</button>
             </div>
         </div>
 
