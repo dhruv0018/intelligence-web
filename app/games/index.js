@@ -149,23 +149,20 @@ Games.controller('Games.controller', [
 
         if (gameBelongsToUserTeam) {
             //game information
-            $scope.gameStates.push({name: 'Game Information', state: 'Games.Info'});
+            $scope.gameStates.push({name: 'Games.Info'});
 
             //statistics related states
             if (gameDelivered && sport.hasStatistics) {
-                $scope.gameStates.push({name: 'Statistics', state: 'Games.Stats'});
+                $scope.gameStates.push({name: 'Games.Stats'});
             }
 
             //sport specific states
             switch (sport.id) {
                 case SPORTS.BASKETBALL.id:
-                    $scope.gameStates.push({name: 'Shot Chart', state: 'Games.ShotChart'});
+                    $scope.gameStates.push({name: 'Games.ShotChart'});
                     break;
                 case SPORTS.FOOTBALL.id:
-                    $scope.gameStates.push(
-                        {name: 'Formation Report', state: 'Games.Formations'},
-                        {name: 'Down and Distance Report', state: 'Games.DownAndDistance'}
-                    );
+                    $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
                     break;
             }
         }
@@ -173,10 +170,10 @@ Games.controller('Games.controller', [
         //video related states
         if (transcodeCompleted) {
 
-            $scope.gameStates.unshift({name: 'Raw Film', state: 'Games.RawFilm'});
+            $scope.gameStates.unshift({name: 'Games.RawFilm'});
 
             if (gameDelivered) {
-                $scope.gameStates.unshift({name: 'Film Breakdown', state: 'Games.Breakdown'});
+                $scope.gameStates.unshift({name: 'Games.Breakdown'});
             }
 
             //handles public sharing
