@@ -1,5 +1,5 @@
 <select class="state-selector"
-        data-ng-init="stateSelected = stateSelected || (stateOptions | availableStates)[0]"
+        data-ng-init="stateSelected = stateSelected || (stateOptions | onlyAuthorizedStates)[0]"
         data-ng-model="stateSelected"
-        data-ng-options="STATE_NAMES[state.name].display for state in stateOptions | availableStates">
+        data-ng-options="STATE_NAMES[state.name].display for state in stateOptions | onlyAuthorizedStates">
 </select>
