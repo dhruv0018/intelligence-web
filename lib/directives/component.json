@@ -63,7 +63,8 @@
         "film-info",
         "plays-filters",
         "draggable",
-        "sidebar"
+        "sidebar",
+        "spinner"
     ],
     "scripts": [
         "index.js"
