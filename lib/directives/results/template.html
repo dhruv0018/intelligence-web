@@ -7,24 +7,5 @@
     <h2 data-ng-hide="querying || queried">Enter your search.</h2>
     <h2 data-ng-show="queried">Try your search again.</h2>
 
-    <div data-ng-show="querying" class="spinner">
-    	<div class="spinner-container container1">
-    		<div class="circle1"></div>
-    		<div class="circle2"></div>
-    		<div class="circle3"></div>
-    		<div class="circle4"></div>
-    	</div>
-    	<div class="spinner-container container2">
-    		<div class="circle1"></div>
-    		<div class="circle2"></div>
-    		<div class="circle3"></div>
-    		<div class="circle4"></div>
-    	</div>
-    	<div class="spinner-container container3">
-    		<div class="circle1"></div>
-    		<div class="circle2"></div>
-    		<div class="circle3"></div>
-    		<div class="circle4"></div>
-    	</div>
-    </div>
+    <krossover-spinner data-ng-if="querying"></krossover-spinner>
 </div>
