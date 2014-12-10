@@ -6,21 +6,32 @@
     <div class="playlist-container">
         <div class="playlist" ng-class="{'edit-mode': editFlag}">
 
+            <!-- Game Play -->
             <krossover-play
+                data-ng-if="!isReelsPlay"
                 data-play="play"
                 data-plays="plays"
                 data-reels="reels"
-                data-videoplayer="videoplayer"
                 data-expand-all="expandAll"
-                data-is-reels-play="isReelsPlay"
                 data-filtered-plays-ids="filteredPlaysIds"
-                data-auto-advance="autoAdvance"
+                data-is-editable="isEditable"
+                data-ng-show="play.isFiltered"
+                data-ng-repeat="play in plays | orderBy:orderBy">
+            </krossover-play>
+
+            <!-- Reel Play -->
+            <krossover-play
+                data-ng-if="isReelsPlay"
+                data-play="play"
+                data-plays="plays"
+                data-reels="reels"
+                data-is-reels-play="isReelsPlay"
+                data-expand-all="expandAll"
                 data-edit-flag="editFlag"
                 data-index="$index"
                 data-is-editable="isEditable"
-                data-ng-show="play.isFiltered"
-                data-ng-class="{'edit-mode': editFlag}"
                 data-draggable="editFlag"
+                data-ng-class="{'edit-mode': editFlag}"
                 data-ng-repeat="play in plays | orderBy:orderBy">
             </krossover-play>
 

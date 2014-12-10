@@ -24,16 +24,15 @@
                 
                 <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
                 WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
-                <krossover-events
+                <krossover-event
                     data-ng-hide="true"
-                    data-auto-advance="autoAdvance"
                     data-game="game"
                     data-plays="plays"
                     data-play="play"
-                    data-events="play.events"
+                    data-event="event"
                     data-league="league"
-                    data-is-editable="isEditable">
-                </krossover-events>
+                    data-ng-repeat="event in play.events">
+                </krossover-event>
             </div>
         </div>
 
@@ -55,16 +54,15 @@
 
                 <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
                 WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
-                <krossover-events
+                <krossover-event
                     data-ng-hide="true"
-                    data-auto-advance="autoAdvance"
                     data-game="game"
                     data-plays="plays"
                     data-play="play"
-                    data-events="play.events"
+                    data-event="event"
                     data-league="league"
-                    data-is-editable="isEditable">
-                </krossover-events>
+                    data-ng-repeat="event in play.events">
+                </krossover-event>
             </div>
         </div>
     </div>
@@ -100,15 +98,16 @@
 
             <div class="playBody" data-ng-if="!editFlag && (isIndexer || expandAll || play === playManager.current || !play.summaries.length)" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
 
-                <krossover-events
+                <krossover-event
                     data-auto-advance="autoAdvance"
                     data-game="game"
                     data-plays="plays"
                     data-play="play"
-                    data-events="play.events"
+                    data-event="event"
                     data-league="league"
-                    data-is-editable="isEditable">
-                </krossover-events>
+                    data-is-editable="isEditable"
+                    data-ng-repeat="event in play.events">
+                </krossover-event>
 
             </div>
         </div>
@@ -155,15 +154,16 @@
 
             <div class="playBody" data-ng-if="isIndexer || expandAll || play === playManager.current || !play.summaries.length" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
 
-                <krossover-events
+                <krossover-event
                     data-auto-advance="autoAdvance"
                     data-game="game"
                     data-plays="plays"
                     data-play="play"
-                    data-events="play.events"
+                    data-event="event"
                     data-league="league"
-                    data-is-editable="isEditable">
-                </krossover-events>
+                    data-is-editable="isEditable"
+                    data-ng-repeat="event in play.events">
+                </krossover-event>
 
             </div>
 
