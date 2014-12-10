@@ -78,6 +78,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             getByUploaderTeamId: function(teamId) {
 
+                if (!teamId) throw new Error('No teamId');
+
                 var self = this;
 
                 var games = self.getList();
