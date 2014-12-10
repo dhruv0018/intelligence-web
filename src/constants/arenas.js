@@ -5,42 +5,60 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
+var ARENA_TYPES_IDS = {
+    1: 'BASKETBALL_HS',
+    2: 'BASKETBALL_NCAA',
+    3: 'BASKETBALL_NBA',
+    4: 'BASKETBALL_FIBA',
+    5: 'LACROSSE_MENS_OUTDOOR',
+    6: 'LACROSSE_WOMENS_OUTDOOR',
+    7: 'FOOTBALL'
+};
+
+IntelligenceWebClient.constant('ARENA_TYPES_IDS', ARENA_TYPES_IDS);
+
 var ARENA_TYPES = {
 
-    1: {
+    BASKETBALL_HS: {
         id: 1,
         name: 'High School Basketball',
-        svg: 'hs-arena'
+        type: 'BASKETBALL_HS'
     },
 
-    2: {
+    BASKETBALL_NCAA: {
         id: 2,
         name: 'NCAA Basketball',
-        svg: 'ncaa-arena'
+        type: 'BASKETBALL_NCAA'
     },
 
-    3: {
+    BASKETBALL_NBA: {
         id: 3,
         name: 'NBA Basketball',
-        svg: 'nba-arena'
+        type: 'BASKETBALL_NBA'
     },
 
-    4: {
+    BASKETBALL_FIBA: {
         id: 4,
         name: 'FIBA Basketball',
-        svg: 'fiba-arena'
+        type: 'BASKETBALL_FIBA'
     },
 
-    5: {
+    LACROSSE_MENS_OUTDOOR: {
         id: 5,
         name: 'Men\'s Outdoor Lacrosse',
-        svg: 'mens-outdoor-lax-arena'
+        type: 'LACROSSE_MENS_OUTDOOR'
     },
 
-    6: {
+    LACROSSE_WOMENS_OUTDOOR: {
         id: 6,
         name: 'Women\'s Outdoor Lacrosse',
-        svg: 'womens-outdoor-lax-arena'
+        type: 'LACROSSE_WOMENS_OUTDOOR'
+    },
+
+    FOOTBALL: {
+        id: 7,
+        name: 'Football',
+        type: 'FOOTBALL'
     }
 
 };

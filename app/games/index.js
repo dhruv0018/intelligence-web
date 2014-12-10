@@ -120,8 +120,9 @@ Games.config([
 ]);
 
 Games.controller('Games.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'SessionService', 'ROLES',
-    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, session, ROLES) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'SessionService', 'ROLES', 'ARENA_TYPES_IDS',
+    'ARENA_TYPES',
+    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, session, ROLES, ARENA_TYPES_IDS, ARENA_TYPES) {
         $scope.game = games.get($stateParams.id);
 
         $scope.teams = teams.getCollection();

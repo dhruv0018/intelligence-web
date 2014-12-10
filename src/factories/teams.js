@@ -173,7 +173,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
             isMember: function(userId) {
 
-                if (angular.isUndefined(userId)) throw new Error('isMember(): Missing argument \'userId\'');
+                if (!angular.isNumber(userId)) return false;
                 if (!this.roles) return false;
 
                 var isMember = this.roles.some(function(role) {
