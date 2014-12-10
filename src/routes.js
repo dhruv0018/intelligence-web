@@ -28,11 +28,8 @@ IntelligenceWebClient.run([
                 /* If not logged in. */
                 if (!auth.isLoggedIn) {
 
-                    /* Deserialize the anonymous user into a user. */
-                    var user = session.deserializeUser(ANONYMOUS_USER);
-
                     /* Store the user in the session. */
-                    session.storeCurrentUser(user);
+                    session.storeCurrentUser(ANONYMOUS_USER);
 
                     /* Retrieve the user from the session. */
                     var currentUser = session.retrieveCurrentUser();
