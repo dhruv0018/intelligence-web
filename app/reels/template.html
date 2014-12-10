@@ -1,10 +1,7 @@
 <section class="reels-player-area">
 
-    <header>
-        <h3 class="highlight-title">{{reel.name}} <span>(last updated on {{reel.updatedAt | date}})</span></h3>
-        <span class="delete-reel" ng-if="canUserDelete" data-ng-click="deleteReel()"><i class="icon icon-remove"></i> Delete Reel</span>
-    </header>
-
+    <film-header data-film="reel"></film-header>
+    
     <div class="reel-body">
         
         <div class="reel-edit-control-container" ng-if="canUserEdit && $root.viewport.name === VIEWPORTS.DESKTOP.name">
