@@ -10,9 +10,17 @@
         "index.js"
     ],
     "paths": [
-        "football"
+        "football",
+        "basketball",
+        "lacrosse"
     ],
-    "local": [
-        "football-field"
+    "locals": [
+        "football-field",
+        "basketball-hs-arena",
+        "basketball-ncaa-arena",
+        "basketball-nba-arena",
+        "basketball-fiba-arena",
+        "lacrosse-mens-outdoor-arena",
+        "lacrosse-womens-outdoor-arena"
     ]
 }
