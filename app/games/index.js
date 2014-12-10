@@ -152,18 +152,19 @@ Games.controller('Games.controller', [
             $scope.gameStates.push({name: 'Games.Info'});
 
             //statistics related states
-            if (gameDelivered && sport.hasStatistics) {
-                $scope.gameStates.push({name: 'Games.Stats'});
-            }
-
-            //sport specific states
-            switch (sport.id) {
-                case SPORTS.BASKETBALL.id:
-                    $scope.gameStates.push({name: 'Games.ShotChart'});
-                    break;
-                case SPORTS.FOOTBALL.id:
-                    $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
-                    break;
+            if (gameDelivered) {
+                if (sport.hasStatistics) {
+                    $scope.gameStates.push({name: 'Games.Stats'});
+                }
+                //sport specific states
+                switch (sport.id) {
+                    case SPORTS.BASKETBALL.id:
+                        $scope.gameStates.push({name: 'Games.ShotChart'});
+                        break;
+                    case SPORTS.FOOTBALL.id:
+                        $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                        break;
+                }
             }
         }
 
