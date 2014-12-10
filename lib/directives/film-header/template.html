@@ -12,9 +12,10 @@
 
 	<a class="share-game" 
        data-ng-click="ShareFilmModal.open(film)"
-	   data-ng-if="!film.isVideoTranscodeFailed() &&
+	   data-ng-if="isUploader &&
 	   			   !isPublic &&
-                   isUploader">
+	   			   film.isVideoTranscodeComplete() &&
+	   			   !film.isVideoTranscodeFailed()">
         <i class="icon icon-share"></i>Share
     </a>
 
