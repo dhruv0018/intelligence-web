@@ -1,0 +1,12 @@
+{
+    "name": "basketball-ncaa-arena",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

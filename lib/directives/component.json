@@ -26,7 +26,6 @@
         "date",
         "add-time",
         "sport-placeholder",
-        "arena-placeholder",
         "role-icon",
         "add-resource",
         "mascot-placeholder",
@@ -64,7 +63,8 @@
         "film-info",
         "plays-filters",
         "draggable",
-        "sidebar"
+        "sidebar",
+        "spinner"
     ],
     "scripts": [
         "index.js"

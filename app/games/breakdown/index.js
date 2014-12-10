@@ -41,8 +41,8 @@ GamesBreakdown.config([
 ]);
 
 GamesBreakdown.service('Games.Data.Dependencies', [
-    '$q', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory', 'SessionService',
-    function dataService($q, games, plays, teams, reels, leagues, tagsets, players, filtersets, users, session) {
+    '$q', 'AuthenticationService', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory', 'SessionService',
+    function dataService($q, auth, games, plays, teams, reels, leagues, tagsets, players, filtersets, users, session) {
 
         var service = function(stateParams) {
 
@@ -70,10 +70,13 @@ GamesBreakdown.service('Games.Data.Dependencies', [
                         var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
                         Data.loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
 
-                        Data.reels =  reels.load({
-                            teamId: teamId,
-                            userId: userId
-                        });
+                        if (auth.isLoggedIn) {
+
+                            Data.reels =  reels.load({
+                                teamId: teamId,
+                                userId: userId
+                            });
+                        }
 
                         var playsFilter = { gameId: game.id };
                         Data.loadPlays = plays.load(playsFilter);
@@ -105,8 +108,8 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'Games.Breakdown.Data',
-    function controller($rootScope, $scope, $state, $stateParams, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, data) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'Games.Breakdown.Data',
+    function controller($rootScope, $scope, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, data) {
 
 
         var gameId = $stateParams.id;
@@ -115,7 +118,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
 
-        $scope.reels = reels.getList();
+        $scope.reels = auth.isLoggedIn ? reels.getList() : [];
         $scope.playManager = playManager;
         $scope.videoTitle = 'filmBreakdown';
         $scope.VIEWPORTS = VIEWPORTS;
