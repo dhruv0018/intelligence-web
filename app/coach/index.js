@@ -80,12 +80,8 @@ Coach.service('Coach.Data.Dependencies', [
             get reels() {
 
                 var userId = session.currentUser.id;
-                var teamId = session.currentUser.currentRole.teamId;
 
-                return reels.load({
-                    userId: userId,
-                    teamId: teamId
-                });
+                return reels.load({ relatedUserId: userId });
             },
 
             get playersList() {
