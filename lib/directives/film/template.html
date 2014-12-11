@@ -25,8 +25,9 @@
             by {{uploaderName}}
         </div>
 
-        <a data-ng-if="!film.isVideoTranscodeFailed() && !isShared && (film.uploaderUserId === currentUser.id)"
-           data-ng-click="ShareFilmModal.open(film)"
+        <a data-ng-if="!film.isVideoTranscodeFailed() &&
+                       (isUploader || isCoachOnUploaderTeam)" 
+           data-ng-click="ShareFilmModal.open(film)" 
            class="share-game">
             <i class="icon icon-share"></i>Share
         </a>

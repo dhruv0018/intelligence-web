@@ -37,7 +37,7 @@
 
             <no-results data-ng-hide="plays.length"></no-results>
 
-            <div class="expandrow" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
+            <div class="expandrow" data-ng-show="$root.viewport.name === VIEWPORTS.DESKTOP.name">
               <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
               <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
             </div>

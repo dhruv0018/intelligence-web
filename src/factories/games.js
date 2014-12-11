@@ -76,6 +76,32 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return game;
             },
 
+            getByUploaderTeamId: function(teamId) {
+
+                if (!teamId) throw new Error('No teamId');
+
+                var self = this;
+
+                var games = self.getList();
+
+                return games.filter(function(game) {
+
+                    return game.uploaderTeamId == teamId;
+                });
+            },
+
+            getBySharedWithUser: function(user) {
+
+                var self = this;
+
+                var games = self.getList();
+
+                return games.filter(function(game) {
+
+                    return game.isSharedWithUser(user);
+                });
+            },
+
             isPlayerOnTeam: function(playerId) {
 
                 var self = this;
@@ -996,7 +1022,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                     });
                 } else {
                     var share = {
-                        userId: session.currentUser.id,
+                        userId: session.getCurrentUserId(),
+                        teamId: session.getCurrentTeamId(),
                         gameId: self.id,
                         sharedWithUserId: null,
                         createdAt: moment.utc().toDate()

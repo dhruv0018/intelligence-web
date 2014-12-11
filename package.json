@@ -39,6 +39,10 @@
         "bootstrap": "twbs/bootstrap"
     },
     "dependencies": {
+        "express": "^4.10.4",
+        "spdy": "^1.29.1",
+        "spdy-keys": "0.0.0",
+        "spdy-push": "^1.0.0"
     },
     "devDependencies": {
         "moment": "2.7.0",
@@ -97,7 +101,9 @@
     },
     "main": "./src/main.js",
     "scripts": {
-        "install": "napa; component install",
+        "install": "node_modules/.bin/napa; node_modules/.bin/component install",
+        "serve": "node server.js",
+        "server": "node server.js",
         "test": "node_modules/.bin/grunt test"
     }
 }

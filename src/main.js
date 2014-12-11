@@ -58,6 +58,7 @@ require('./constants/sports');
 require('./constants/viewports');
 require('./constants/arenas');
 require('./constants/device');
+require('./constants/states');
 
 require('./models/users');
 require('./models/sports');
