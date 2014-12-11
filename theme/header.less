@@ -57,31 +57,15 @@ and (max-height: 480px) {
 
     .header {
 
-        flex: 0 0 @header-sm-height;
-        min-height: @header-sm-height;
-
-        .nav,
-        .navbar-brand,
-        .dropdown,
-        .dropdown-toggle {
-
-            height: @header-sm-height;
-        }
-
         .navbar-brand {
 
             padding-top: 4.5px;
             padding-bottom: 0px;
         }
 
-        menu li a {
-
-            line-height: @header-sm-height;
-        }
-
         .navbar-btn {
 
-            height: @header-sm-height;
+            height: @header-lg-height;
             width: 100%;
             margin-top: 0;
             margin-bottom: 0;
@@ -93,33 +77,28 @@ and (max-height: 480px) {
     }
 }
 
-/* Screens over 481px high */
-@media only screen
-and (min-height: 481px) {
+.header {
 
-    .header {
+    flex: 0 0 @header-lg-height;
+    min-height: @header-lg-height;
 
-        flex: 0 0 @header-lg-height;
-        min-height: @header-lg-height;
+    .nav,
+    .navbar-brand,
+    .dropdown,
+    .dropdown-toggle {
 
-        .nav,
-        .navbar-brand,
-        .dropdown,
-        .dropdown-toggle {
+        height: @header-lg-height;
+    }
 
-            height: @header-lg-height;
-        }
+    .navbar-brand {
 
-        .navbar-brand {
+        padding-top: 13px;
+        padding-bottom: 13px;
+    }
 
-            padding-top: 13px;
-            padding-bottom: 13px;
-        }
+    menu li a {
 
-        menu li a {
-
-            line-height: @header-lg-height;
-        }
+        line-height: @header-lg-height;
     }
 }
 
