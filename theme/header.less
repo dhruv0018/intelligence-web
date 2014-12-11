@@ -39,48 +39,11 @@
 
 /* Responsive sizes */
 
-
 /* All screens */
 
 .header {
 
-    .navbar-brand {
-
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-}
-
-/* Screens under 480px high */
-@media only screen
-and (max-height: 480px) {
-
-    .header {
-
-        .navbar-brand {
-
-            padding-top: 4.5px;
-            padding-bottom: 0px;
-        }
-
-        .navbar-btn {
-
-            height: @header-lg-height;
-            width: 100%;
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-top: 3px;
-            padding-bottom: 3px;
-            border: 0;
-            border-radius: 0;
-        }
-    }
-}
-
-.header {
-
     flex: 0 0 @header-lg-height;
-    min-height: @header-lg-height;
 
     .nav,
     .navbar-brand,
@@ -90,15 +53,28 @@ and (max-height: 480px) {
         height: @header-lg-height;
     }
 
-    .navbar-brand {
-
-        padding-top: 13px;
-        padding-bottom: 13px;
-    }
-
     menu li a {
 
         line-height: @header-lg-height;
     }
 }
 
+// /* Screens under 480px high */
+// @media only screen
+// and (max-height: 480px) {
+
+//     .header {
+
+//         .navbar-btn {
+
+//             height: @header-lg-height;
+//             width: 100%;
+//             margin-top: 0;
+//             margin-bottom: 0;
+//             padding-top: 3px;
+//             padding-bottom: 3px;
+//             border: 0;
+//             border-radius: 0;
+//         }
+//     }
+// }
