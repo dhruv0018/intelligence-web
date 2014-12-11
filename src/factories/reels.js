@@ -39,6 +39,20 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reel;
             },
 
+            getByUploaderUserId: function(userId) {
+
+                userId = userId || session.getCurrentUserId();
+
+                if (!userId) throw new Error('No userId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderUserId == session.currentUser.id;
+                });
+            },
+
             getByUploaderTeamId: function(teamId) {
 
                 teamId = teamId || session.getCurrentTeamId();
@@ -55,9 +69,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
             getBySharedWithUser: function(user) {
 
-                var self = this;
-
-                var reels = self.getList();
+                var reels = this.getList();
 
                 return reels.filter(function(reel) {
 
@@ -73,16 +85,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
             updateDate: function() {
                 this.updatedAt = moment.utc().toDate();
-            },
-            getMyReels: function(reels) {
-                var self = this;
-
-                reels = reels || self.getList();
-
-                return reels.filter(function(reel) {
-
-                    return reel.uploaderUserId == session.currentUser.id;
-                });
             },
             shareWithUser: function(user) {
 
