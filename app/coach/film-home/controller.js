@@ -35,18 +35,18 @@ FilmHome.controller('Coach.FilmHome.controller', [
         //Arrays of resources
         $scope.playersList = players.getList(playersFilter);
 
-        $scope.gamesForTeam = games.getList({ uploaderTeamId: teamId });
-        $scope.gamesSharedWithUser = games.getList({ sharedWithUserId: userId });
+        $scope.gamesForTeam = games.getByUploaderTeamId(teamId);
+        $scope.gamesSharedWithUser = games.getBySharedWithUser(currentUser);
         $scope.gamesList = $scope.gamesForTeam.concat($scope.gamesSharedWithUser);
         $scope.reelsList = reels.getList();
         $scope.filmsList = $scope.gamesList.concat($scope.reelsList);
 
         //Collections of resources
+        $scope.users = users.getCollection();
+        $scope.teams = teams.getCollection();
         $scope.games = games.getCollection();
         $scope.reels = reels.getCollection();
         $scope.players = players.getCollection();
-        $scope.teams = teams.getCollection();
-        $scope.users = users.getCollection();
 
         //TODO not sure what this is used for -- potentially remove
         $scope.activeRoster = [];
