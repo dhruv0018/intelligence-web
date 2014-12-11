@@ -9,23 +9,35 @@ var SPORTS = {
 
     BASKETBALL: {
         id: 1,
-        name: 'Basketball'
+        name: 'Basketball',
+        hasStatistics: false
     },
 
     FOOTBALL: {
         id: 2,
-        name: 'Football'
+        name: 'Football',
+        hasStatistics: true
     },
 
     LACROSSE: {
         id: 3,
-        name: 'Lacrosse'
+        name: 'Lacrosse',
+        hasStatistics: false
     },
 
     VOLLEYBALL: {
         id: 4,
-        name: 'Volleyball'
+        name: 'Volleyball',
+        hasStatistics: true
     }
 };
 
+var SPORT_IDS = {
+    1: 'BASKETBALL',
+    2: 'FOOTBALL',
+    3: 'LACROSSE',
+    4: 'VOLLEYBALL'
+};
+
+IntelligenceWebClient.constant('SPORT_IDS', SPORT_IDS);
 IntelligenceWebClient.constant('SPORTS', SPORTS);
