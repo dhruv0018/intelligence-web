@@ -242,14 +242,6 @@
 				font-size: 18px;
 			}
 
-			.method-row {
-				&:after {
-					clear: both;
-					content: "";
-					display: block;
-				}
-			}
-
 			.public-link-box {
 				border: 2px solid @gray-border;
 				border-radius: 4px;
@@ -260,8 +252,9 @@
 				word-wrap: break-word;
 
 				code {
-					background-color: @content-bg;
+					background-color: white;
 					color: @gray-darker;
+					font-size: 12px;
 				}
 			}
 
@@ -282,14 +275,33 @@
 			}
 
 			.public-share-methods {
-				height: 183px;
+				height: 165px;
+
+				.method-row {
+
+					.method-column {
+						width: 180px;
+						display: inline-block;
+						padding-top: 20px;
+
+						select {
+							padding-right: 35px;
+							margin-left: 5px;
+						}
+					}
+
+					&:after {
+						clear: both;
+						content: "";
+						display: block;
+					}
+				}
 
 				.link-label {
 					line-height: 40px;
 				}
 
 				.embed-label {
-					line-height: 125px;
 				}
 			}
 

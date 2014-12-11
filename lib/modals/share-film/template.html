@@ -87,7 +87,7 @@
 
         <div class="sharing-with-public-container" data-ng-show="withPublic">
             <div class="info-box">
-                <p data-ng-if="!linkActive">By clikcing on "Publish to Web," you can share  this video with anyone by copying the link or embedding the video in your website.</p>
+                <p data-ng-if="!linkActive">By clicking on "Publish to Web", you can share  this video with anyone by copying the link or embedding the video in your website.</p>
                 <p data-ng-if="linkActive">If you would like to make the video private, no one will be able to access this game with this link.</p>
                 <p data-ng-if="!linkActive">Anyone with this link will be able to access this video.</p>
                 <p data-ng-if="linkActive">If you have shared this game with another Krossover user's account, making the video private will not remove it from their account.</p>
@@ -112,10 +112,17 @@
                     </div>
                 </div>
                 <div class="method-row">
-                    <span class="embed-label">Embed video on your website</span>
                     <div class="public-link-box pull-right" data-ng-show="linkActive">
-                        <code data-ng-show="isGame">&lt;iframe src="{{config.links.intelligence.uri}}/games/{{film.id}}" style="width:480px;height:500px;"&gt;&lt;/iframe&gt;</code>
-                        <code data-ng-show="!isGame">&lt;iframe src="{{config.links.intelligence.uri}}/reels/{{film.id}}" style="width:480px;height:500px;"&gt;&lt;/iframe&gt;</code>
+                        <code data-ng-show="isGame">&lt;iframe src="{{config.links.intelligence.uri}}/games/{{film.id}}" style="{{embedSize}}"&gt;&lt;/iframe&gt;</code>
+                        <code data-ng-show="!isGame">&lt;iframe src="{{config.links.intelligence.uri}}/reels/{{film.id}}" style="{{embedSize}}"&gt;&lt;/iframe&gt;</code>
+                    </div>
+                    <div class="method-column">
+                        <p class="embed-label">Embed video on your website</p>
+                        Video Size:
+                        <select data-ng-model="embedSize">
+                            <option value="width:480;height:500px;">480x500</option>
+                            <option value="width:720;height:750px;">720x750</option>
+                        </select>
                     </div>
                 </div>
             </div>
