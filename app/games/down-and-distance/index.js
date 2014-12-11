@@ -91,7 +91,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
 
         //Play Related
         var playsFilter = { gameId: gameId };
-        $scope.plays = plays.load(playsFilter);
+        $scope.plays = plays.getList(playsFilter);
 
         //League Related
         $scope.league = leagues.get(team.leagueId);
