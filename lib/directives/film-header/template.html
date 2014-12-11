@@ -1,9 +1,24 @@
 <div class="film-header">
-	<film-info data-title="filmTitle" data-film="film"></film-info>
-	<div class="film-title-desktop">{{filmTitle}}</div>
+
+    <film-info data-title="filmTitle" data-film="film"></film-info>
+    <div class="film-title-desktop">{{filmTitle}}</div>
+
     <state-selector data-ng-if="isGame && !isClip" data-state-options="gameStates" data-ng-hide="game.isSharedWithUser(currentUser)"></state-selector>
-    <div class="social-media">
-		<a href="http://twitter.com/Krossovr" target="_blank"><i class="icon icon-twitter-square"></i></a>
-		<a href="http://www.facebook.com/KrossoverIntelligence" target="_blank"><i class="icon icon-facebook-square"></i></a>
-	</div>
+
+    <div class="social-media" data-ng-if="userIsLoggedIn">
+        <a href="http://twitter.com/Krossovr" target="_blank"><i class="icon icon-twitter-square"></i></a>
+        <a href="http://www.facebook.com/KrossoverIntelligence" target="_blank"><i class="icon icon-facebook-square"></i></a>
+    </div>
+
+    <a class="share-game" 
+       data-ng-click="ShareFilmModal.open(film)"
+       data-ng-if="isUploader && !userIsLoggedIn && validVideo">
+        <i class="icon icon-share"></i>Share
+    </a>
+
+    <span class="delete-reel" 
+          data-ng-if="!userIsLoggedIn && isReel && isUploader" 
+          data-ng-click="deleteReel()">
+        <i class="icon icon-remove"></i>Delete Reel
+    </span>
 </div>
