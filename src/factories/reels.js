@@ -53,6 +53,18 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 });
             },
 
+            getBySharedWithUser: function(user) {
+
+                var self = this;
+
+                var reels = self.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.isSharedWithUser(user);
+                });
+            },
+
             addPlay: function(play) {
                 if (this.plays.indexOf(play.id) === -1) {
                     this.plays.push(play.id);
