@@ -108,8 +108,8 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'Games.Breakdown.Data',
-    function controller($rootScope, $scope, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, data) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager',
+    function controller($rootScope, $scope, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager) {
 
 
         var gameId = $stateParams.id;

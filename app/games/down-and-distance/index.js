@@ -74,8 +74,8 @@ GamesDownAndDistance.config([
 ]);
 
 GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
-    '$stateParams', '$scope', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'LeaguesFactory', 'Games.DownAndDistance.Data',
-    function controller($stateParams, $scope, teams, games, plays,  leagues, data) {
+    '$stateParams', '$scope', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'LeaguesFactory',
+    function controller($stateParams, $scope, teams, games, plays,  leagues) {
 
         //Collections
         $scope.teams = teams.getCollection();
