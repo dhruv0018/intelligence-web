@@ -14,6 +14,8 @@
 
                 <div class="box-body col-md-12">
 
+                    <p class="roster-edit-alert" data-ng-if="game.isDelivered() || game.isBeingBrokenDown()"><i class="icon icon-warning"></i> You may not edit your game rosters since the game is being indexed or has been delivered</p>
+
                     <form>
 
                         <div class="table-responsive">

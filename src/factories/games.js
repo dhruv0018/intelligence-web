@@ -1042,7 +1042,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                     });
                 } else {
                     var share = {
-                        userId: session.currentUser.id,
+                        userId: session.getCurrentUserId(),
+                        teamId: session.getCurrentTeamId(),
                         gameId: self.id,
                         sharedWithUserId: null,
                         createdAt: moment.utc().toDate()
