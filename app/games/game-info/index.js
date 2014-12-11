@@ -80,17 +80,19 @@ GamesInfo.config([
 ]);
 
 GamesInfo.controller('GamesInfo.controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'AlertsService', 'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'Games.Info.Data', 'uploadManager',
-    function controller($scope, $state, $stateParams, $modal, alerts, session, games, teams, leagues, Data, uploadManager) {
+    '$scope', '$state', '$stateParams', '$modal', 'AlertsService', 'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'PlayersFactory', 'Games.Info.Data', 'uploadManager',
+    function controller($scope, $state, $stateParams, $modal, alerts, session, games, teams, leagues, players, Data, uploadManager) {
         $scope.game = games.get($stateParams.id);
         $scope.game.flow = uploadManager.get($scope.game.id);
         $scope.returnedDate = ($scope.game.isDelivered()) ? new Date($scope.game.currentAssignment().timeFinished) : null;
         $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
+
+        //TODO special case to remove
         $scope.remainingBreakdowns = Data.remainingBreakdowns;
 
         //Player List
-        $scope.teamPlayerList = Data.gamePlayerLists[$scope.game.teamId];
-        $scope.opposingPlayerList = Data.gamePlayerLists[$scope.game.opposingTeamId];
+        $scope.teamPlayerList = ($scope.game.rosters && $scope.game.teamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.teamId] }) : [];
+        $scope.opposingPlayerList = ($scope.game.rosters && $scope.game.opposingTeamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.opposingTeamId] }) : [];
 
         if ($scope.game.isProcessing()) {
             alerts.add({
