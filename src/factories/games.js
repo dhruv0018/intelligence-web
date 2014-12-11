@@ -100,6 +100,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     return game.isSharedWithUser(user);
                 });
+            },
 
             saveNotes: function() {
 
