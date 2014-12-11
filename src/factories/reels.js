@@ -39,7 +39,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reel;
             },
 
-            getByTeam: function(teamId) {
+            getByUploaderTeamId: function(teamId) {
 
                 teamId = teamId || session.getCurrentTeamId();
 
