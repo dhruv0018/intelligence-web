@@ -131,7 +131,7 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.reel = reels.get(reelId);
 
 
-        // Setup plays
+        // Setup playlist
 
         var plays = playsFactory.getList({ reelId: reelId });
         $scope.plays = plays;
@@ -140,6 +140,7 @@ ReelsArea.controller('ReelsArea.controller', [
         // Refresh the playsManager
         playsManager.reset($scope.plays);
 
+        $scope.expandAll = false;
 
         // Editing config
 
@@ -194,7 +195,6 @@ ReelsArea.controller('ReelsArea.controller', [
         };
 
         $scope.$on('delete-reel-play', function($event, index) {
-            console.log('delete', index);
             if ($scope.editFlag && $scope.plays && angular.isArray($scope.plays)) {
                 $scope.plays.splice(index, 1);
             }

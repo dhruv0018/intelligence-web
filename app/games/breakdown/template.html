@@ -1,6 +1,6 @@
 <div class="games-breakdown">
 
-    <div class="filter-container" ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name && publiclyShared">
+    <div class="filter-container screen-lg-min" ng-if="publiclyShared">
 
         <plays-filter
                 data-total-plays="totalPlays"
@@ -21,7 +21,7 @@
 
         </krossover-sidebar>
 
-        <x-krossover-videoplayer data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name" data-sources="sources" data-video-title="filmTitle" data-play-start-time="playManager.current.startTime" data-play-end-time="playManager.current.endTime"></x-krossover-videoplayer>
+        <x-krossover-videoplayer class="screen-lg-min" data-sources="sources" data-video-title="filmTitle" data-play-start-time="playManager.current.startTime" data-play-end-time="playManager.current.endTime"></x-krossover-videoplayer>
 
     </div>
 </div>

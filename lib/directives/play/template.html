@@ -24,15 +24,16 @@
                 
                 <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
                 WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
-                <krossover-event
-                    data-ng-hide="true"
-                    data-game="game"
-                    data-plays="plays"
-                    data-play="play"
-                    data-event="event"
-                    data-league="league"
-                    data-ng-repeat="event in play.events">
-                </krossover-event>
+                <ul ng-hide="true">
+                    <krossover-event
+                        data-game="game"
+                        data-plays="plays"
+                        data-play="play"
+                        data-event="event"
+                        data-league="league"
+                        data-ng-repeat="event in play.events">
+                    </krossover-event>
+                </ul>
             </div>
         </div>
 
@@ -51,18 +52,19 @@
 
                 <a class="playplay" data-ui-sref="Clips({ id: play.id })"><i class="icon icon-play-circle"></i></a>
 
-
                 <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
                 WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
-                <krossover-event
-                    data-ng-hide="true"
-                    data-game="game"
-                    data-plays="plays"
-                    data-play="play"
-                    data-event="event"
-                    data-league="league"
-                    data-ng-repeat="event in play.events">
-                </krossover-event>
+                <ul ng-hide="true">
+
+                    <krossover-event
+                        data-game="game"
+                        data-plays="plays"
+                        data-play="play"
+                        data-event="event"
+                        data-league="league"
+                        data-ng-repeat="event in play.events">
+                    </krossover-event>
+                </ul>
             </div>
         </div>
     </div>
@@ -95,8 +97,9 @@
 
                 <span class="playplay" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY, invisible: editFlag}"><i class="icon icon-play-circle"></i></span>
             </div>
-
-            <div class="playBody" data-ng-if="!editFlag && (isIndexer || expandAll || play === playManager.current || !play.summaries.length)" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
+            
+            <ul class="playBody" data-ng-show="!editFlag && (expandAll || !play.summaries.length)" data-ng-hide="!expandAll && (editFlag || play !== playManager.current)" >
+            
 
                 <krossover-event
                     data-auto-advance="autoAdvance"
@@ -109,7 +112,7 @@
                     data-ng-repeat="event in play.events">
                 </krossover-event>
 
-            </div>
+            </ul>
         </div>
 
         <!-- DEFAULT PLAY -->
@@ -152,7 +155,7 @@
 
             </div>
 
-            <div class="playBody" data-ng-if="isIndexer || expandAll || play === playManager.current || !play.summaries.length" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
+            <ul class="playBody" data-ng-if="isIndexer || expandAll || play === playManager.current || !play.summaries.length" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
 
                 <krossover-event
                     data-auto-advance="autoAdvance"
@@ -165,7 +168,7 @@
                     data-ng-repeat="event in play.events">
                 </krossover-event>
 
-            </div>
+            </ul>
 
             <hr class="summaryBodyDivider">
 
