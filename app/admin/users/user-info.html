@@ -50,7 +50,7 @@
         {{ user.isLocked ? "Unlock" : "Lock" }}
     </button>
 
-    <button class="btn btn-danger" data-ng-click="auth.requestPasswordReset(user.email)">Password Reset</button>
+    <button class="btn btn-danger" data-ng-click="users.resendEmail(passwordRequest, null, user.email)">Password Reset</button>
 
     <a class="pull-right" href data-ui-sref="users">Cancel</a>
 
