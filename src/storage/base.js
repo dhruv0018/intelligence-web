@@ -27,11 +27,11 @@ IntelligenceWebClient.factory('Keys', [
 
 IntelligenceWebClient.value('RootStore', Object.create(null));
 
-IntelligenceWebClient.factory('UserStore', [
+IntelligenceWebClient.factory('Stores', [
     'Keys', 'RootStore',
     function(keys, root) {
 
-        var UserStorage = Object.create(null, {
+        var Stores = Object.create(null, {
 
             user: {
 
@@ -53,21 +53,13 @@ IntelligenceWebClient.factory('UserStore', [
             }
         });
 
-        return UserStorage;
-    }
-]);
-
-IntelligenceWebClient.value('Store', [
-    'UserStorage',
-    function(user) {
-
-        return user.user;
+        return Stores;
     }
 ]);
 
 IntelligenceWebClient.factory('BaseStorage', [
-    '$q', '$localForage', 'Keys', 'Store',
-    function($q, $localForage, keys, store) {
+    '$q', '$localForage', 'Keys', 'Stores',
+    function($q, $localForage, keys, stores) {
 
         var session;
 
@@ -94,16 +86,16 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             get map() {
 
-                store[this.description] = store[this.description] || Object.create(null);
+                stores.user[this.description] = stores.user[this.description] || Object.create(null);
 
-                return store[this.description];
+                return stores.user[this.description];
             },
 
             set map(value) {
 
-                store[this.description] = store[this.description] || Object.create(null);
+                stores.user[this.description] = stores.user[this.description] || Object.create(null);
 
-                store[this.description] = value;
+                stores.user[this.description] = value;
             },
 
             get: function(key) {
