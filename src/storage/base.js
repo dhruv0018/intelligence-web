@@ -5,13 +5,13 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(package.name);
 
-IntelligenceWebClient.factory('RootKey', [
+IntelligenceWebClient.factory('Keys', [
     '$injector', 'SessionService',
     function($injector, session) {
 
-        var RootKey = {
+        var Keys = {
 
-            get key() {
+            get user() {
 
                 session = session || $injector.get('SessionService');
 
@@ -21,15 +21,15 @@ IntelligenceWebClient.factory('RootKey', [
             }
         };
 
-        return RootKey.key;
+        return Keys;
     }
 ]);
 
 IntelligenceWebClient.value('RootStore', Object.create(null));
 
 IntelligenceWebClient.factory('UserStore', [
-    'RootKey', 'RootStore',
-    function(key, root) {
+    'Keys', 'RootStore',
+    function(keys, root) {
 
         var UserStorage = Object.create(null, {
 
@@ -39,16 +39,16 @@ IntelligenceWebClient.factory('UserStore', [
 
                 get: function() {
 
-                    root[key] = root[key] || Object.create(null);
+                    root[keys.user] = root[keys.user] || Object.create(null);
 
-                    return root[key];
+                    return root[keys.user];
                 },
 
                 set: function(value) {
 
-                    root[key] = root[key] || Object.create(null);
+                    root[keys.user] = root[keys.user] || Object.create(null);
 
-                    root[key] = value;
+                    root[keys.user] = value;
                 }
             }
         });
@@ -66,8 +66,8 @@ IntelligenceWebClient.value('Store', [
 ]);
 
 IntelligenceWebClient.factory('BaseStorage', [
-    '$q', '$localForage', 'RootKey', 'Store',
-    function($q, $localForage, key, store) {
+    '$q', '$localForage', 'Keys', 'Store',
+    function($q, $localForage, keys, store) {
 
         var session;
 
@@ -210,7 +210,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 get: function() {
 
-                    return key + this.description;
+                    return keys.user + this.description;
                 }
             }
         });
