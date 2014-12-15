@@ -53,12 +53,17 @@ Athlete.service('Athlete.Data.Dependencies', [
         //Get reels shared with athlete
         var athleteRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
         var reelsSharedWithTeam = [];
+        var reelsSharedWithUser = [];
 
         //TODO - use relatedUserId
         athleteRoles.forEach(function(role, index) {
 
             reelsSharedWithTeam[index] = reels.load({
                 sharedWithTeamId: athleteRoles[index].teamId
+            });
+
+            reelsSharedWithUser[index] = reels.load({
+                sharedWithUserId: userId
             });
         });
 
@@ -68,7 +73,7 @@ Athlete.service('Athlete.Data.Dependencies', [
             users: users.load({ relatedUserId: userId }),
             teams: teams.load({ relatedUserId: userId }),
             games: games.load({ relatedUserId: userId }),
-            reels: $q.all([reelsForUser, reelsSharedWithTeam])
+            reels: $q.all([reelsForUser, reelsSharedWithTeam, reelsSharedWithUser])
         };
 
         Data.athlete = {
