@@ -8,7 +8,7 @@
 
                 <div class="playHeading" data-ng-click="selectPlay()">
         
-                    <h4 class="title">
+                    <h4 class="title title-reel">
                         <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
                             <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
                         </div>
@@ -44,6 +44,9 @@
             <div class="playHeadingContainer">
                 <div class="playHeading">
                     <h4 class="title">
+
+                        <span class="team">{{teams[play.possessionTeamId].name}}</span>
+
                         <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
                             <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
                         </div>

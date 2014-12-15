@@ -109,6 +109,13 @@
                     align-items: baseline;
                 }
 
+                @media only screen
+                and (max-width: @screen-md-max) {
+                    &.title:not(.title-reel){
+                        flex-direction: column;
+                    }
+                }
+
                 &.column {
                     display: flex;
                     flex-direction: column;
