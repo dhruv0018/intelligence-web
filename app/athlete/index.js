@@ -45,13 +45,30 @@ Athlete.service('Athlete.Data.Dependencies', [
         var userId = session.currentUser.id;
         var teamId = session.currentUser.currentRole.teamId;
 
+        //Get reels created by user
+        var reelsForUser = reels.load({
+            userId: userId
+        });
+
+        //Get reels shared with athlete
+        var athleteRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
+        var reelsSharedWithTeam = [];
+
+        //TODO - use relatedUserId
+        athleteRoles.forEach(function(role, index) {
+
+            reelsSharedWithTeam[index] = reels.load({
+                sharedWithTeamId: athleteRoles[index].teamId
+            });
+        });
+
         var Data = {
 
             positionsets: positionsets.load(),
             users: users.load({ relatedUserId: userId }),
             teams: teams.load({ relatedUserId: userId }),
             games: games.load({ relatedUserId: userId }),
-            reels: reels.load({ relatedUserId: userId })
+            reels: $q.all([reelsForUser, reelsSharedWithTeam])
         };
 
         Data.athlete = {
