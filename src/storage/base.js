@@ -25,10 +25,10 @@ IntelligenceWebClient.factory('Keys', [
     }
 ]);
 
-IntelligenceWebClient.value('RootStore', Object.create(null));
+IntelligenceWebClient.value('Stores.root', Object.create(null));
 
 IntelligenceWebClient.factory('Stores', [
-    'Keys', 'RootStore',
+    'Keys', 'Stores.root',
     function(keys, root) {
 
         var Stores = Object.create(null, {
