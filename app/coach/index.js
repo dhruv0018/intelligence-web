@@ -94,18 +94,6 @@ Coach.service('Coach.Data.Dependencies', [
 
                     return players.load({ rosterId: team.roster.id });
                 });
-            },
-
-            get remainingBreakdowns() {
-
-                var teamId = session.currentUser.currentRole.teamId;
-
-                return teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
-
-                    session.currentUser.remainingBreakdowns = breakdownData;
-
-                    return breakdownData;
-                });
             }
         };
 
