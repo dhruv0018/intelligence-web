@@ -179,7 +179,7 @@ Games.controller('Games.controller', [
             }
 
             //handles public sharing
-            if ((publiclyAvailable || sharedWithCurrentUser) && !breakdownShared) {
+            if (gameDelivered && (publiclyAvailable || sharedWithCurrentUser) && !breakdownShared) {
                 $scope.gameStates.shift();
             }
 
