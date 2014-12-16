@@ -144,9 +144,7 @@ Games.controller('Games.controller', [
         var gameDelivered = $scope.game.isDelivered();
         var gameBelongsToUserTeam = $scope.game.uploaderTeamId === currentUser.currentRole.teamId;
         var sharedWithCurrentUser = $scope.game.isSharedWithUser(currentUser);
-        var publiclyAvailable = ($scope.game.publicShare) ? true : false;
-        var breakdownShared = $scope.game.publicShare && $scope.game.publicShare.isBreakdownShared ||
-                              sharedWithCurrentUser && $scope.game.getShareByUser(currentUser).isBreakdownShared;
+        var breakdownShared = $scope.game.publicShare && $scope.game.publicShare.isBreakdownShared || sharedWithCurrentUser && $scope.game.getShareByUser(currentUser).isBreakdownShared;
 
         if (gameBelongsToUserTeam) {
             //game information
@@ -176,13 +174,12 @@ Games.controller('Games.controller', [
 
             if (gameDelivered) {
                 $scope.gameStates.unshift({name: 'Games.Breakdown'});
-            }
 
-            //handles public sharing
-            if (gameDelivered && (publiclyAvailable || sharedWithCurrentUser) && !breakdownShared) {
-                $scope.gameStates.shift();
+                //handles public sharing
+                if (!breakdownShared && !gameBelongsToUserTeam) {
+                    $scope.gameStates.shift();
+                }
             }
-
         }
 
     }
