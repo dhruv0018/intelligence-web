@@ -43,7 +43,7 @@
 
             <div class="playHeadingContainer">
                 <div class="playHeading">
-                    <h4 class="title">
+                    <h4 class="title" data-ng-click="selectPlay()">
 
                         <span class="team">{{teams[play.possessionTeamId].name}}</span>
 
@@ -54,21 +54,19 @@
                 </div>
 
                 <a class="playplay" data-ui-sref="Clips({ id: play.id })"><i class="icon icon-play-circle"></i></a>
-
-                <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
-                WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
-                <ul ng-hide="true">
-
-                    <krossover-event
-                        data-game="game"
-                        data-plays="plays"
-                        data-play="play"
-                        data-event="event"
-                        data-league="league"
-                        data-ng-repeat="event in play.events">
-                    </krossover-event>
-                </ul>
+                
             </div>
+
+            <ul class="playBody" data-ng-hide="play !== playManager.current" >
+                <krossover-event
+                    data-game="game"
+                    data-plays="plays"
+                    data-play="play"
+                    data-event="event"
+                    data-league="league"
+                    data-ng-repeat="event in play.events">
+                </krossover-event>
+            </ul>
         </div>
     </div>
 </div>
