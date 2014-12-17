@@ -93,7 +93,7 @@ IntelligenceWebClient.run([
             }
         });
 
-        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
             /* Clear any alerts. */
             alerts.clear();
@@ -102,7 +102,7 @@ IntelligenceWebClient.run([
             managedResources.restore();
 
             /* Store previous state */
-            $previousState = from;
+            $previousState = fromState;
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {
