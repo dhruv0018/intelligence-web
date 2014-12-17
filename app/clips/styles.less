@@ -1,7 +1,6 @@
 @import (reference) "main.less";
 
 .public-clip {
-    
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -52,6 +51,31 @@
         x-krossover-videoplayer {
             justify-content: center;
             margin: 0;
+        }
+    }
+
+    .clips-navigation {
+        height: 50px;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: @content-bg;
+        border-top: 1px solid #d8d8d8;
+        font-size: 14px;
+
+        .clip-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .icon {
+            position: relative;
+            top: 2px;
+            margin: 0 7px;
         }
     }
 }
