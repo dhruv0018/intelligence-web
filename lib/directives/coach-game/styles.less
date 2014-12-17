@@ -42,12 +42,55 @@ breakdown-text {
         background-color: white;
         height: 74px;
 
-        & > li {
+        li {
 
             float: right;
             margin-left: 10px;
 
-            & > a {
+
+
+            &.active,
+            &:active,
+            &:focus {
+
+                a,
+                a:hover {
+
+                    color: white;
+                    border-color: @brand-blue;
+                    background-color: @brand-blue;
+
+                    // Triangle marker 
+                    &:before,
+                    &:after {
+
+                        content: "";
+                        width: 0;
+                        height: 0;
+                        position: absolute;
+                        left: 50%;
+                        bottom: -21px;
+                    }
+
+                    &:before {
+
+                        border-bottom: 11px solid @gray-border;
+                        border-left: 11px solid transparent;
+                        border-right: 11px solid transparent;
+                        margin-left: -11px;
+                    }
+
+                    &:after {
+
+                        border-bottom: 10px solid @content-bg;
+                        border-left: 10px solid transparent;
+                        border-right: 10px solid transparent;
+                        margin-left: -10px;
+                    }
+                }
+            }
+
+            a {
 
                 color: @gray-darker;
                 border-color: @gray-border;
@@ -65,49 +108,11 @@ breakdown-text {
                 }
             }
         }
-
-        & > li.active > a {
-
-            &,
-            &:hover {
-
-                color: white;
-                border-color: @brand-blue;
-                background-color: @brand-blue;
-
-                &:before,
-                &:after {
-
-                    content: "";
-                    width: 0;
-                    height: 0;
-                    position: absolute;
-                    left: 50%;
-                    bottom: -21px;
-                }
-
-                &:before {
-
-                    border-bottom: 11px solid @gray-border;
-                    border-left: 11px solid transparent;
-                    border-right: 11px solid transparent;
-                    margin-left: -11px;
-                }
-
-                &:after {
-
-                    border-bottom: 10px solid @content-bg;
-                    border-left: 10px solid transparent;
-                    border-right: 10px solid transparent;
-                    margin-left: -10px;
-                }
-            }
-        }
     }
 
     .game-delete {
         position: relative;
         top: 10px;
         cursor: pointer;
-      }
+    }
 }
