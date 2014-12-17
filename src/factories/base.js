@@ -393,23 +393,30 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 };
 
+                var remote = function() {
+
+                    var request;
+
+                    if (angular.isNumber(filter)) request = single(filter);
+                    else if (angular.isArray(filter)) request = multiple(filter);
+                    else request = other(filter);
+
+                    return request;
+                };
+
                 var promise = JSON.stringify(filter);
 
                 storage.promises = storage.promises || {};
 
                 storage.promises[promise] = storage.promises[promise] || storage.grab().then(function(resources) {
 
-                    if (angular.isNumber(filter)) single(filter);
-                    else if (angular.isArray(filter)) multiple(filter);
-                    else other(filter);
+                    remote();
 
                     return resources;
 
                 }, function() {
 
-                    if (angular.isNumber(filter)) return single(filter);
-                    else if (angular.isArray(filter)) return multiple(filter);
-                    else return other(filter);
+                    return remote();
                 });
 
                 return storage.promises[promise];
