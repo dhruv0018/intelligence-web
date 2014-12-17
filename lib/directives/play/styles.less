@@ -79,6 +79,15 @@
                     }
                 }
 
+                @media only screen
+                and (max-width: @screen-md-max) {
+                    .summaries {
+                        button {
+                            color: black;
+                        }
+                    }
+                }
+
                 &.vs {
                     font-weight:500;
                     padding-bottom: 10px;
@@ -98,6 +107,13 @@
                     flex-direction: row;
                     display: flex;
                     align-items: baseline;
+                }
+
+                @media only screen
+                and (max-width: @screen-md-max) {
+                    &.title:not(.title-reel){
+                        flex-direction: column;
+                    }
                 }
 
                 &.column {
@@ -147,6 +163,8 @@
     .playBody {
 
         color: black;
+
+        .list-group;
 
         &.playHide {
             display: none;

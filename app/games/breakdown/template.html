@@ -1,6 +1,6 @@
 <div class="games-breakdown">
 
-    <div class="filter-container" ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name && publiclyShared">
+    <div class="filter-container screen-lg-min" data-ng-if="publiclyShared">
 
         <plays-filter
                 data-total-plays="totalPlays"
@@ -17,34 +17,11 @@
 
         <krossover-sidebar>
 
-            <krossover-playlist-control data-play-count="filteredPlaysIds.length" ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
-            </krossover-playlist-control>
-
-            <krossover-playlist>
-
-                <krossover-play
-                    data-expand-all="expandAll"
-                    data-game="game"
-                    data-reels="reels"
-                    data-play="play"
-                    data-filtered-plays-ids="filteredPlaysIds"
-                    data-league="league"
-                    data-ng-show="play.isFiltered"
-                    data-ng-repeat="play in plays | orderBy:orderBy">
-                </krossover-play>
-
-            </krossover-playlist>
-
-            <no-results data-ng-hide="plays.length"></no-results>
-
-            <div class="expandrow" data-ng-show="$root.viewport.name === VIEWPORTS.DESKTOP.name">
-              <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
-              <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
-            </div>
+            <krossover-playlist></krossover-playlist>
 
         </krossover-sidebar>
 
-        <x-krossover-videoplayer data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name" data-sources="sources" data-video-title="filmTitle" data-play-start-time="playManager.current.startTime" data-play-end-time="playManager.current.endTime"></x-krossover-videoplayer>
+        <x-krossover-videoplayer class="screen-lg-min" data-sources="sources" data-video-title="filmTitle" data-play-start-time="playManager.current.startTime" data-play-end-time="playManager.current.endTime"></x-krossover-videoplayer>
 
     </div>
 </div>

@@ -99,6 +99,7 @@ Clips.controller('Clips.controller', [
 
             var playId = $stateParams.id;
             $scope.play = plays.get(playId);
+            $scope.plays = [$scope.play];
 
             // Film Header data-attributes
             $scope.publiclyShared = true;
@@ -106,14 +107,18 @@ Clips.controller('Clips.controller', [
             $scope.team = teams.get($scope.game.teamId);
             $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
-            // Krossover Play data-attributes
+            // Krossover Playlist data-attributes
             $scope.league = leagues.get($scope.team.leagueId);
             $scope.teamPlayers = $scope.game.getTeamPlayers();
             $scope.opposingTeamPlayers = $scope.game.getOpposingTeamPlayers();
+            $scope.showHeader = false;
+            $scope.showFooter = false;
 
             // Krossover VideoPlayer data-attributes
             $scope.sources = $scope.play.getVideoSources();
             $scope.videoTitle = 'clip';
+
+            // TODO: This should be refactored, code-smell...
             playManager.videoTitle = 'reelsPlayer';
         }
     }

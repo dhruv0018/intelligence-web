@@ -6,13 +6,18 @@
     min-height: 100%;
     background-color: @content-bg;
 
-    .broken-down {
+    .breakdown-status {
         position: absolute;
         left: 100px;
         top: 35px;
         z-index: 1;
         color: @brand-success;
         letter-spacing: normal;
+
+        .broken-down {
+            position: relative;
+            top: -9px;
+        }
     }
 
     .info-container {
