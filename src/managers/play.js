@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    '$injector', 'PlaysFactory', 'EventManager',
-    function service($injector, plays, eventManager) {
+    '$injector', 'PlaysFactory', 'EventManager', 'GamesFactory',
+    function service($injector, plays, eventManager, gamesFactory) {
 
         var playsManager;
 
