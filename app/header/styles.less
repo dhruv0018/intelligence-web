@@ -290,9 +290,9 @@ and (min-width: 1280px) {
 @menu-item-indent: 49px;
 @submenu-item-indent: @menu-item-indent + 30px;
 
-/* Screens < 1024px wide */
+/* Screens less than this size */
 @media only screen
-and (max-width: 1024px) {
+and (max-width: @screen-md-max) {
 
     menu.navbar-nav,
     .public-view {
@@ -401,9 +401,9 @@ and (max-width: 1024px) {
     }
 }
 
-/* Screens >= 1024px wide */
+/* Screens >= @screen-lg wide */
 @media only screen
-and (min-width: 1025px) {
+and (min-width: @screen-lg) {
 
     .mobile-nav {
         display: none;
