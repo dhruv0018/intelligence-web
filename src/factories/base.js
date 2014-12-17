@@ -395,13 +395,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var remote = function() {
 
-                    var request;
-
-                    if (angular.isNumber(filter)) request = single(filter);
-                    else if (angular.isArray(filter)) request = multiple(filter);
-                    else request = other(filter);
-
-                    return request;
+                    if (angular.isNumber(filter)) return single(filter);
+                    else if (angular.isArray(filter)) return multiple(filter);
+                    else return other(filter);
                 };
 
                 var local = function() {
