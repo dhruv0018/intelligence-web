@@ -14,8 +14,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q', '$injector',
-    function($q, $injector) {
+    '$q', '$injector', 'AuthenticationService',
+    function($q, $injector, auth) {
 
         var BaseFactory = {
 
@@ -418,7 +418,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 storage.promises = storage.promises || {};
 
-                storage.promises[promise] = storage.promises[promise] || local();
+                storage.promises[promise] = storage.promises[promise] || auth.isLoggedIn ? local() : remote();
 
                 return storage.promises[promise];
             },
