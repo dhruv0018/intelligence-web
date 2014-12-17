@@ -1,0 +1,12 @@
+{
+    "name": "public-footer",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
