@@ -404,20 +404,25 @@ IntelligenceWebClient.factory('BaseFactory', [
                     return request;
                 };
 
+                var local = function() {
+
+                    return storage.grab().then(function(resources) {
+
+                        remote();
+
+                        return resources;
+
+                    }, function() {
+
+                        return remote();
+                    });
+                };
+
                 var promise = JSON.stringify(filter);
 
                 storage.promises = storage.promises || {};
 
-                storage.promises[promise] = storage.promises[promise] || storage.grab().then(function(resources) {
-
-                    remote();
-
-                    return resources;
-
-                }, function() {
-
-                    return remote();
-                });
+                storage.promises[promise] = storage.promises[promise] || local();
 
                 return storage.promises[promise];
             },
