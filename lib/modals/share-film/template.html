@@ -2,11 +2,10 @@
 
     <header class="modal-header">
     	<h3 class="modal-title">
-	    	<span data-ng-show="!withTeam && !withOtherUsers && !withPublic && !withWufoo">Pick how you would like to share</span>
+	    	<span data-ng-show="!withTeam && !withOtherUsers && !withPublic">Pick how you would like to share</span>
             <span data-ng-show="withTeam">Share this reel with your team</span>
 	        <span data-ng-show="withOtherUsers">Share this film with other Krossover users</span>
 	        <span data-ng-show="withPublic">Share this film via public URL</span>
-            <span data-ng-show="withWufoo && isGame">Film Room Sharing</span>
 	        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i>
 	    </h3>
 
@@ -14,7 +13,7 @@
 
     <div class="modal-body">
 
-        <div class="share-options-container" data-ng-show="!withTeam && !withOtherUsers && !withPublic && !withWufoo">
+        <div class="share-options-container" data-ng-show="!withTeam && !withOtherUsers && !withPublic">
         	<!--With Team Option for Game-->
             <div class="share-options option-your-team" data-ng-show="isGame">
         		<h3>Your Team</h3>
@@ -34,9 +33,6 @@
         		<h3>Recruiters or others via public URL</h3>
         		<i class="icon icon-globe"></i>
         	</div>
-            <div class="temp-wufoo-btn">
-                <button class="btn btn-primary" data-ng-show="isGame" data-ng-click="withWufoo = true">Film Room Sharing</button>
-            </div>
         </div>
 
         <div class="sharing-with-team-container" data-ng-show="withTeam">
@@ -130,10 +126,6 @@
                 <button class="btn btn-default" data-ng-click="withPublic = false">Back</button>
                 <button class="btn btn-primary pull-right" data-ng-click="$close()">Done</button>
             </div>
-        </div>
-
-        <div class="wufoo-form" data-ng-show="withWufoo && isGame">
-            <iframe height="636" allowtransparency="true" frameborder="0" scrolling="no" style="width:100%;border:none" src="https://krossover.wufoo.com/embed/rz0hmlj13906x9/"><a href="https://krossover.wufoo.com/forms/rz0hmlj13906x9/">Fill out the share request form</a></iframe>
         </div>
 
     </div>
