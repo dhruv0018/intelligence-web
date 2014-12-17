@@ -24,8 +24,8 @@
 
     .clip-body {
         display: flex;
-        flex-direction: row;
         padding-top: 15px;
+        flex-direction: row-reverse;
         padding-left: 15px;
         padding-right: 15px;
         margin-bottom: 15px;
@@ -40,7 +40,10 @@
     // MOBILE
     @media only screen
     and (max-width: @screen-md-max) {
+        display: block;
+
         .clip-body {
+            display: block;
             margin: 0;
             padding: 0;
             flex-direction: column-reverse;
