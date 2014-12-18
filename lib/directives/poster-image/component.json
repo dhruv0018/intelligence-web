@@ -1,0 +1,12 @@
+{
+    "name": "poster-image",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

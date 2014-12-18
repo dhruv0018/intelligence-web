@@ -51,8 +51,8 @@ GamesRawFilm.config([
 ]);
 
 GamesRawFilm.controller('Games.Rawfilm.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($scope, $state, $stateParams, games, teams, users) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'PlayManager',
+    function controller($scope, $state, $stateParams, games, teams, users, playManager) {
         var gameId = $stateParams.id;
 
         $scope.game = games.get(gameId);
@@ -67,6 +67,7 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         $scope.sources = $scope.game.getVideoSources();
         $scope.filmTitle = $scope.game.description;
+        playManager.videoTitle = 'rawFilm';
 
     }
 ]);

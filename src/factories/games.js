@@ -102,6 +102,26 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
             },
 
+            saveNotes: function() {
+
+                var deferred = $q.defer();
+
+                var self = this;
+                self.save().then(function() {
+
+                    deferred.notify('saved');
+
+                    GamesResource.get({ id: self.id }, function(result) {
+                        self.notes = result.notes;
+                        deferred.resolve(result.notes);
+                    }, function() {
+                        deferred.reject(null);
+                    });
+                });
+
+                return deferred.promise;
+            },
+
             isPlayerOnTeam: function(playerId) {
 
                 var self = this;
