@@ -56,17 +56,35 @@ IntelligenceWebClient.service('PlaysManager', [
             this.playScopes[registeredId] = playScope;
         };
 
-        this.getNextPlay = function getNextPlay(currentPlay) {
-            var currentPlayIndex = this.plays.indexOf(currentPlay);
-            var nextPlay = this.plays[(currentPlayIndex + 1) % this.plays.length];
-            if (nextPlay) {
+        /* Retreives the previous play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Object} previousPlay
+         */
+        this.getPreviousPlay = function getPreviousPlay(currentPlay) {
+            var index = this.plays.indexOf(currentPlay);
 
-                if (angular.isUndefined(nextPlay.isFiltered) || nextPlay.isFiltered) {
-                    //Find the next visible play
-                    return this.playScopes[nextPlay.id];
-                } else {
-                    return this.getNextPlay(nextPlay);
-                }
+            if (--index >= 0) {
+
+                var prevPlay = this.plays[index];
+                return (angular.isUndefined(prevPlay.isFiltered) || prevPlay.isFiltered) ? this.playScopes[prevPlay.id] : this.getPreviousPlay(prevPlay);
+            } else {
+                return null;
+            }
+        };
+
+        /* Retreives the next play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Object} nextPlay
+         */
+        this.getNextPlay = function getNextPlay(currentPlay) {
+            var index = this.plays.indexOf(currentPlay);
+
+            if (++index < this.plays.length) {
+
+                var nextPlay = this.plays[index];
+                return (angular.isUndefined(nextPlay.isFiltered) || nextPlay.isFiltered) ? this.playScopes[nextPlay.id] : this.getNextPlay(nextPlay);
+            } else {
+                return null;
             }
         };
 
