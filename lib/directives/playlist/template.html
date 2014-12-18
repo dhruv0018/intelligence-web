@@ -14,7 +14,6 @@
                 data-reels="reels"
                 data-expand-all="expandAll"
                 data-filtered-plays-ids="filteredPlaysIds"
-                data-is-editable="isEditable"
                 data-ng-show="play.isFiltered"
                 data-ng-repeat="play in plays | orderBy:orderBy">
             </krossover-play>
@@ -29,7 +28,6 @@
                 data-expand-all="expandAll"
                 data-edit-flag="editFlag"
                 data-index="$index"
-                data-is-editable="isEditable"
                 data-draggable="editFlag"
                 data-ng-class="{'edit-mode': editFlag}"
                 data-ng-repeat="play in plays | orderBy:orderBy">
