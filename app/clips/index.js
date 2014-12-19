@@ -90,8 +90,8 @@ Clips.config([
 ]);
 
 Clips.controller('Clips.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory', 'PlayManager',
-    function controller($scope, $state, $stateParams, games, teams, plays, leagues, players, playManager) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'ReelsFactory', 'TeamsFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory', 'PlayManager', 'PlaysManager',
+    function controller($scope, $state, $stateParams, games, reels, teams, plays, leagues, players, playManager, playsManager) {
 
         $scope.publiclyShared = false;
 
@@ -121,6 +121,30 @@ Clips.controller('Clips.controller', [
             // TODO: This should be refactored, code-smell...
             playManager.videoTitle = 'reelsPlayer';
         }
+
+        /* Logic for clips navigation */
+        $scope.reelId = $stateParams.reel;
+        var reel = reels.get($scope.reelId);
+
+        var reelPlays = [];
+        for (var i = 0; i < reel.plays.length; i++) {
+            var play = plays.get(reel.plays[i]);
+            reelPlays.push(play);
+        }
+
+        playsManager.reset(reelPlays);
+
+        $scope.reelName = reel.name;
+        $scope.clipIndex = playsManager.getIndex($scope.play) + 1;
+        $scope.clipTotal = reel.plays.length;
+        $scope.previousPlay = playsManager.getPreviousPlay($scope.play);
+        $scope.nextPlay = playsManager.getNextPlay($scope.play);
+
+        $scope.goToPlay = function(play) {
+            if (play) {
+                $state.go('Clips', {id: play.id, reel: $scope.reelId});
+            }
+        };
     }
 ]);
 
