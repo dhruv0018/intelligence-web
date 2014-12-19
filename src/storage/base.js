@@ -190,13 +190,16 @@ IntelligenceWebClient.factory('BaseStorage', [
                 this.update();
             },
 
-            grab: function() {
+            grab: function(store) {
 
                 var self = this;
 
+                var item = self.db;
+                if (store) item += '?' + encodeURIComponent(JSON.stringify(store));
+
                 var deferred = $q.defer();
 
-                $localForage.getItem(this.db).then(function(item) {
+                $localForage.getItem(item).then(function(item) {
 
                     if (item) {
 
