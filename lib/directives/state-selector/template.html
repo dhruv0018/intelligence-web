@@ -1,3 +1,4 @@
-<select class="state-selector" data-ng-init="stateSelected = stateSelected || stateOptions[0]" data-ng-model="stateSelected" data-ng-options="state.name for state in stateOptions">
-
+<select class="state-selector"
+        data-ng-model="stateSelected"
+        data-ng-options="STATE_NAMES[state.name].display for state in stateOptions | onlyAuthorizedStates">
 </select>

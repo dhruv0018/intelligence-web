@@ -1,0 +1,28 @@
+@import (reference) "main.less";
+
+.games-game-info {
+    height: 100%;
+    position: relative;
+    min-height: 100%;
+    background-color: @content-bg;
+
+    .breakdown-status {
+        position: absolute;
+        left: 100px;
+        top: 35px;
+        z-index: 1;
+        color: @brand-success;
+        letter-spacing: normal;
+
+        .broken-down {
+            position: relative;
+            top: -9px;
+        }
+    }
+
+    .info-container {
+        position: relative;
+        background-color: @content-bg;
+        height: 100%;
+    }
+}

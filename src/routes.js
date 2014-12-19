@@ -13,9 +13,11 @@ IntelligenceWebClient.config([
     }
 ]);
 
+IntelligenceWebClient.value('$previousState', {});
+
 IntelligenceWebClient.run([
-    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
-    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
+    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', '$previousState', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
+    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, $previousState, tokens, auth, authz, session, alerts, managedResources) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -28,11 +30,8 @@ IntelligenceWebClient.run([
                 /* If not logged in. */
                 if (!auth.isLoggedIn) {
 
-                    /* Deserialize the anonymous user into a user. */
-                    var user = session.deserializeUser(ANONYMOUS_USER);
-
                     /* Store the user in the session. */
-                    session.storeCurrentUser(user);
+                    session.storeCurrentUser(ANONYMOUS_USER);
 
                     /* Retrieve the user from the session. */
                     var currentUser = session.retrieveCurrentUser();
@@ -94,13 +93,16 @@ IntelligenceWebClient.run([
             }
         });
 
-        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
             /* Clear any alerts. */
             alerts.clear();
 
             /* Restore any active resources to their backups. */
             managedResources.restore();
+
+            /* Store previous state */
+            $previousState = fromState;
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {

@@ -14,8 +14,11 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.User.Info.Controller', [
-    '$scope', '$stateParams', 'ROLES', 'SessionService', 'AlertsService', 'UsersFactory', 'Admin.Users.Data',
-    function controller($scope, $stateParams, ROLES, session, alerts, users, data) {
+    '$scope', '$stateParams', 'ROLES', 'SessionService', 'AlertsService', 'UsersFactory', 'Admin.Users.Data', 'EMAIL_REQUEST_TYPES',
+    function controller($scope, $stateParams, ROLES, session, alerts, users, data, EMAIL_REQUEST_TYPES) {
+
+        $scope.users = users;
+        $scope.passwordRequest = EMAIL_REQUEST_TYPES.FORGOTTEN_PASSWORD;
 
         $scope.isLockDisabled = function() {
 

@@ -171,6 +171,18 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return members;
             },
 
+            isMember: function(userId) {
+
+                if (!angular.isNumber(userId)) return false;
+                if (!this.roles) return false;
+
+                var isMember = this.roles.some(function(role) {
+                    return role.userId === userId;
+                });
+
+                return isMember;
+            },
+
             getHeadCoachRole: function() {
 
                 if (!this.roles) return undefined;

@@ -147,10 +147,19 @@ IntelligenceWebClient.constant('INDEXER_GROUPS', INDEXER_GROUPS);
 
 IntelligenceWebClient.constant('ROLES', ROLES);
 
-var ANONYMOUS_USER = {
+IntelligenceWebClient.factory('ANONYMOUS_USER', [
+    'UsersFactory',
+    function run(users) {
 
-    id: 0,
-    role: ROLE_TYPE.ANONYMOUS
-};
+        var ANONYMOUS_USER = users.create({
 
-IntelligenceWebClient.constant('ANONYMOUS_USER', ANONYMOUS_USER);
+            id: 0,
+            roles: [{
+                type: ROLE_TYPE.ANONYMOUS
+            }]
+        });
+
+        return ANONYMOUS_USER;
+    }
+]);
+

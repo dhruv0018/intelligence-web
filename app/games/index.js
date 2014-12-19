@@ -1,13 +1,27 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+
+require('raw-film');
+require('breakdown');
+require('down-and-distance');
+require('game-info');
+require('stats');
+require('formations');
+require('shot-chart');
+
 /**
  * Coach game area raw film page module.
  * @module Games
  */
 var Games = angular.module('Games', [
-    'ui.router',
-    'ui.bootstrap'
+    'Games.RawFilm',
+    'Games.Breakdown',
+    'Games.DownAndDistance',
+    'Games.Info',
+    'Games.Stats',
+    'Games.Formations',
+    'Games.ShotChart'
 ]);
 
 Games.run([
@@ -15,6 +29,7 @@ Games.run([
     function run($templateCache) {
 
         $templateCache.put('games/template.html', require('./template.html'));
+        $templateCache.put('games/restricted.html', require('./restricted.html'));
     }
 ]);
 
@@ -35,10 +50,36 @@ Games.config([
             ]
         };
 
+        var GamesRestricted = {
+            name: 'Games.Restricted',
+            url: 'games/:id/restricted',
+            parent: 'base',
+            views: {
+                'main@root': {
+                    templateUrl: 'games/restricted.html'
+                }
+            }
+        };
+
         var Games = {
             name: 'Games',
             url: '/games/:id',
             parent: 'base',
+            onEnter: [
+                '$state', '$stateParams', 'SessionService', 'GamesFactory',
+                function($state, $stateParams, session, games) {
+
+                    var currentUser = session.currentUser;
+                    var hasAccess = false;
+                    var game = games.get($stateParams.id);
+
+                    if (game.isSharedWithPublic() || game.uploaderTeamId === currentUser.currentRole.teamId || game.isSharedWithUser(currentUser)) {
+                        hasAccess = true;
+                    } else {
+                        $state.go('Games.Restricted', {id: game.id});
+                    }
+                }
+            ],
             views: {
                 'main@root': {
                     templateUrl: 'games/template.html',
@@ -47,17 +88,23 @@ Games.config([
             },
             resolve: {
                 'Games.Data': [
-                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
-                    function($q, $stateParams, games, teams, users) {
+                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'LeaguesFactory',
+                    function($q, $stateParams, games, teams, users, leagues) {
                         var gameId = Number($stateParams.id);
                         return games.load(gameId).then(function() {
-
                             var game = games.get(gameId);
 
                             var Data = {
                                 user: users.load(game.uploaderUserId),
-                                team: teams.load([game.teamId, game.opposingTeamId])
+                                team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId]),
+                                game: game
                             };
+
+                            //todo -- deal with this, real slow because of nesting
+                            Data.league = Data.team.then(function() {
+                                var uploaderTeam = teams.get(game.uploaderTeamId);
+                                return leagues.fetch(uploaderTeam.leagueId);
+                            });
 
                             return $q.all(Data);
                         });
@@ -67,27 +114,74 @@ Games.config([
         };
 
         $stateProvider.state(shortGames);
+        $stateProvider.state(GamesRestricted);
         $stateProvider.state(Games);
     }
 ]);
 
 Games.controller('Games.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($scope, $state, $stateParams, games, teams, users) {
-        var gameId = $stateParams.id;
-        $scope.game = games.get(gameId);
-        $scope.publiclyShared = false;
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'SessionService', 'ROLES', 'ARENA_TYPES_IDS',
+    'ARENA_TYPES',
+    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, session, ROLES, ARENA_TYPES_IDS, ARENA_TYPES) {
+        $scope.game = games.get($stateParams.id);
 
-        if ($scope.game.isSharedWithPublic()) {
-            $scope.publiclyShared = true;
-            $scope.team = teams.get($scope.game.teamId);
-            $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+        $scope.teams = teams.getCollection();
+        $scope.team = $scope.teams[$scope.game.teamId];
+        $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
 
-            $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+        //todo alex -- remove this when it is not needed for header
+        $scope.isPublic = true;
 
-            $scope.sources = $scope.game.getVideoSources();
-            $scope.filmTitle = $scope.game.description;
+        $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
+        $scope.league = leagues.get($scope.uploaderTeam.leagueId);
+        var currentUser = session.currentUser;
+
+        //define states for view selector
+        $scope.gameStates = [];
+
+        var sport = SPORTS[SPORT_IDS[$scope.league.sportId]];
+        var transcodeCompleted = $scope.game.isVideoTranscodeComplete();
+        var gameDelivered = $scope.game.isDelivered();
+        var gameBelongsToUserTeam = $scope.game.uploaderTeamId === currentUser.currentRole.teamId;
+        var sharedWithCurrentUser = $scope.game.isSharedWithUser(currentUser);
+        var breakdownShared = $scope.game.publicShare && $scope.game.publicShare.isBreakdownShared || sharedWithCurrentUser && $scope.game.getShareByUser(currentUser).isBreakdownShared;
+
+        if (gameBelongsToUserTeam) {
+            //game information
+            $scope.gameStates.push({name: 'Games.Info'});
+
+            //statistics related states
+            if (gameDelivered) {
+                if (sport.hasStatistics) {
+                    $scope.gameStates.push({name: 'Games.Stats'});
+                }
+                //sport specific states
+                switch (sport.id) {
+                    case SPORTS.BASKETBALL.id:
+                        $scope.gameStates.push({name: 'Games.ShotChart'});
+                        break;
+                    case SPORTS.FOOTBALL.id:
+                        $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                        break;
+                }
+            }
         }
+
+        //video related states
+        if (transcodeCompleted) {
+
+            $scope.gameStates.unshift({name: 'Games.RawFilm'});
+
+            if (gameDelivered) {
+                $scope.gameStates.unshift({name: 'Games.Breakdown'});
+
+                //handles public sharing
+                if (!breakdownShared && !gameBelongsToUserTeam) {
+                    $scope.gameStates.shift();
+                }
+            }
+        }
+
     }
 ]);
 

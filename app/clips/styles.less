@@ -1,0 +1,70 @@
+@import (reference) "main.less";
+
+.public-clip {
+    
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    background-color: @content-bg;
+
+    .locked-game {
+        background-color: @content-bg;
+        width: 30%;
+        margin: auto;
+        margin-top: 40px;
+        padding: 10px;
+        border: thin solid @gray-border;
+        text-align: center;
+
+        i {
+            font-size: 100px;
+        }
+    }
+
+    .clip-body {
+        display: flex;
+        padding-top: 15px;
+        flex-direction: row-reverse;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 15px;
+        background: #f7f8f8;
+        flex: 1;
+    }
+
+    x-krossover-videoplayer {
+        margin-left: 15px;
+    }
+
+    // MOBILE
+    @media only screen
+    and (max-width: @screen-md-max) {
+        display: block;
+
+        .clip-body {
+            display: block;
+            margin: 0;
+            padding: 0;
+            flex-direction: column-reverse;
+        }
+
+        x-krossover-videoplayer {
+            justify-content: center;
+            margin: 0;
+        }
+    }
+}
+
+// TODO: move this .locked-game to directive?
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+    
+    .public-clip {
+
+        .locked-game {
+            width: 80%;
+        }
+    }
+}

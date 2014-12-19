@@ -1,0 +1,107 @@
+@import (reference) "main.less";
+
+@bold-film-info: 700; 
+
+film-info {
+    display: flex;
+}
+
+.film-info {
+    flex: 1;
+    
+    height: 95px;
+    display: flex;
+    padding: 10px 20px;
+    color: @gray-darker;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        color: fade(@gray-darker, 50%);
+    }
+
+    .game-info,
+    .reel-info {
+        // As a flex-item
+        flex-grow: 1;
+
+        // As a flex-box
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    h3,
+    h5 {
+        display: inline-block;
+        margin: 0;
+        font-weight: 100;
+    }
+
+    h3 {
+        font-size: 16px;
+
+        &.winner {
+            font-weight: @bold-film-info;
+        }
+    }
+
+    h5 {
+        font-size: 14px;
+    }
+
+    .icon-play {
+        position: relative;
+        top: -2px;
+        font-size: 9px;
+
+        &:before {
+            transform: scale(-1, 1);
+        }
+
+        &.invisible {
+            opacity: 0;
+        }
+    }
+
+    .meta-data {
+        // As a flex-item
+        flex: 1;
+        align-items: center;
+
+        // As a flex-box
+        display: flex;
+        justify-content: space-between;
+
+        h5 {
+            letter-spacing: 0px;
+        }
+    }
+
+    .team {
+        // As a flex-item
+        flex: 1;
+        align-items: center;
+
+        // As a flex-box
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .reel-title {
+        // As a flex-item
+        flex: 1;
+
+        // As a flex-box
+        display: flex;
+        align-items: center;
+
+        h3 {
+            font-weight: @bold-film-info;
+        }
+    }
+
+    .reel-plays {
+        flex: 1;
+    }
+}

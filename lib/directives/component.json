@@ -26,7 +26,6 @@
         "date",
         "add-time",
         "sport-placeholder",
-        "arena-placeholder",
         "role-icon",
         "add-resource",
         "mascot-placeholder",
@@ -60,8 +59,13 @@
         "kvs-uploader",
         "profile",
         "film-header",
+        "coach-game",
+        "film-info",
+        "plays-filters",
         "draggable",
-        "sidebar"
+        "sidebar",
+        "poster-image",
+        "spinner"
     ],
     "scripts": [
         "index.js"
