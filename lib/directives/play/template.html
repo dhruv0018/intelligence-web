@@ -26,7 +26,6 @@
                 WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
                 <ul ng-hide="true">
                     <krossover-event
-                        data-game="game"
                         data-plays="plays"
                         data-play="play"
                         data-event="event"
@@ -60,7 +59,6 @@
 
             <ul class="playBody" data-ng-hide="play !== playManager.current" >
                 <krossover-event
-                    data-game="game"
                     data-plays="plays"
                     data-play="play"
                     data-event="event"
@@ -105,12 +103,10 @@
 
                 <krossover-event
                     data-auto-advance="autoAdvance"
-                    data-game="game"
                     data-plays="plays"
                     data-play="play"
                     data-event="event"
                     data-league="league"
-                    data-is-editable="isEditable"
                     data-ng-repeat="event in play.events">
                 </krossover-event>
 
@@ -161,12 +157,10 @@
 
                 <krossover-event
                     data-auto-advance="autoAdvance"
-                    data-game="game"
                     data-plays="plays"
                     data-play="play"
                     data-event="event"
                     data-league="league"
-                    data-is-editable="isEditable"
                     data-ng-repeat="event in play.events">
                 </krossover-event>
 
