@@ -42,6 +42,14 @@ IntelligenceWebClient.service('PlaysManager', [
             return this.plays[this.plays.length - 1];
         };
 
+        /* Returns the index of a play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Number} index
+         */
+        this.getIndex = function(currentPlay) {
+            return this.plays.indexOf(currentPlay);
+        };
+
         /* Retreives the previous play in a sequence of plays
          * @param {Object} currentPlay
          * @return {Object} previousPlay
