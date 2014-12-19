@@ -165,16 +165,7 @@ IntelligenceWebClient.factory('BaseStorage', [
                 var item = this.db;
                 if (store) item += '?' + encodeURIComponent(JSON.stringify(store));
 
-                if (angular.isObject(value)) {
-
-                    var resource = value;
-                    var object = resource.unextend(resource);
-                    var string = angular.toJson(resource);
-
-                    $localForage.setItem(item, string);
-                }
-
-                else if (angular.isArray(value)) {
+                if (angular.isArray(value)) {
 
                     var list = value.map(function(resource) {
 
@@ -185,6 +176,15 @@ IntelligenceWebClient.factory('BaseStorage', [
                     });
 
                     $localForage.setItem(item, list);
+                }
+
+                else if (angular.isObject(value)) {
+
+                    var resource = value;
+                    var object = resource.unextend(resource);
+                    var string = angular.toJson(resource);
+
+                    $localForage.setItem(item, string);
                 }
 
                 this.update();
