@@ -14,8 +14,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q', '$injector', 'AuthenticationService',
-    function($q, $injector, auth) {
+    '$q', '$injector',
+    function($q, $injector) {
 
         var BaseFactory = {
 
@@ -310,6 +310,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+                var auth = $injector.get('AuthenticationService');
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
                 var session = $injector.get('SessionService');
