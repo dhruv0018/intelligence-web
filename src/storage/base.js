@@ -140,10 +140,10 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 var list = this.list.map(function(resource) {
 
-                    resource = resource.unextend(resource);
-                    resource = angular.toJson(resource);
+                    var object = resource.unextend(resource);
+                    var string = angular.toJson(resource);
 
-                    return resource;
+                    return string;
                 });
 
                 $localForage.setItem(this.db, list);
