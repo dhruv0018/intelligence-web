@@ -310,6 +310,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+                var key = JSON.stringify(filter);
+
                 var auth = $injector.get('AuthenticationService');
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
@@ -415,13 +417,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 };
 
-                var promise = JSON.stringify(filter);
-
                 storage.promises = storage.promises || {};
 
-                storage.promises[promise] = storage.promises[promise] || auth.isLoggedIn ? local() : remote();
+                storage.promises[key] = storage.promises[key] || auth.isLoggedIn ? local() : remote();
 
-                return storage.promises[promise];
+                return storage.promises[key];
             },
 
             /**
