@@ -160,6 +160,36 @@ IntelligenceWebClient.factory('BaseStorage', [
                 return angular.isDefined(this.map[key]);
             },
 
+            store: function(store, value) {
+
+                var item = this.db;
+                if (store) item += '?' + encodeURIComponent(JSON.stringify(store));
+
+                if (angular.isObject(value)) {
+
+                    var resource = value;
+                    var object = resource.unextend(resource);
+                    var string = angular.toJson(resource);
+
+                    $localForage.setItem(item, string);
+                }
+
+                else if (angular.isArray(value)) {
+
+                    var list = value.map(function(resource) {
+
+                        var object = resource.unextend(resource);
+                        var string = angular.toJson(resource);
+
+                        return string;
+                    });
+
+                    $localForage.setItem(item, list);
+                }
+
+                this.update();
+            },
+
             grab: function() {
 
                 var self = this;
