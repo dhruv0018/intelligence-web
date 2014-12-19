@@ -118,28 +118,35 @@ Clips.controller('Clips.controller', [
         playManager.videoTitle = 'reelsPlayer';
 
         /* Logic for clips navigation */
-        $scope.reelId = $stateParams.reel;
-        var reel = reels.get($scope.reelId);
 
-        var reelPlays = [];
-        for (var i = 0; i < reel.plays.length; i++) {
-            var play = plays.get(reel.plays[i]);
-            reelPlays.push(play);
-        }
+        if ($stateParams.reel !== null) {
 
-        playsManager.reset(reelPlays);
+            if (angular.isDefined($stateParams.reel)) {
 
-        $scope.reelName = reel.name;
-        $scope.clipIndex = playsManager.getIndex($scope.play) + 1;
-        $scope.clipTotal = reel.plays.length;
-        $scope.previousPlay = playsManager.getPreviousPlay($scope.play);
-        $scope.nextPlay = playsManager.getNextPlay($scope.play);
+                $scope.reelId = $stateParams.reel;
+                var reel = reels.get($scope.reelId);
 
-        $scope.goToPlay = function(play) {
-            if (play) {
-                $state.go('Clips', {id: play.id, reel: $scope.reelId});
+                var reelPlays = [];
+                for (var i = 0; i < reel.plays.length; i++) {
+                    var play = plays.get(reel.plays[i]);
+                    reelPlays.push(play);
+                }
+
+                playsManager.reset(reelPlays);
+
+                $scope.reelName = reel.name;
+                $scope.clipIndex = playsManager.getIndex($scope.play) + 1;
+                $scope.clipTotal = reel.plays.length;
+                $scope.previousPlay = playsManager.getPreviousPlay($scope.play);
+                $scope.nextPlay = playsManager.getNextPlay($scope.play);
+
+                $scope.goToPlay = function(play) {
+                    if (play) {
+                        $state.go('Clips', {id: play.id, reel: $scope.reelId});
+                    }
+                };
             }
-        };
+        }
     }
 ]);
 
