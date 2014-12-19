@@ -184,7 +184,7 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 else if (angular.isObject(value)) {
 
-                    var resource = value;
+                    var resource = angular.copy(value);
                     var object = resource.unextend(resource);
                     var string = angular.toJson(resource);
 
