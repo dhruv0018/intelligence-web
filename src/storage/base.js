@@ -164,6 +164,8 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             store: function(store, value) {
 
+                this.set(value);
+
                 var item = this.db;
                 if (store) item += '?' + encodeURIComponent(JSON.stringify(store));
 
