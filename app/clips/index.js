@@ -24,7 +24,7 @@ Clips.config([
 
         var shortClips = {
             name: 'ShortClips',
-            url: '/c/:id',
+            url: '/c/:id?reel',
             parent: 'base',
             onEnter: [
                 '$state', '$stateParams',
@@ -37,7 +37,7 @@ Clips.config([
 
         var Clips = {
             name: 'Clips',
-            url: '/clips/:id',
+            url: '/clips/:id?reel',
             parent: 'base',
             views: {
                 'main@root': {
