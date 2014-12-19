@@ -416,6 +416,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                         return remote().then(function(resources) {
 
                             storage.store(key, resources);
+
+                            return resources;
                         });
                     });
                 };
