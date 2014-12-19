@@ -56,7 +56,7 @@ IntelligenceWebClient.service('PlaysManager', [
             this.playScopes[registeredId] = playScope;
         };
 
-        this.getNextPlay = function getNextPlay(currentPlay) {
+        this.getNextPlayScope = function getNextPlayScope(currentPlay) {
             var currentPlayIndex = this.plays.indexOf(currentPlay);
             var nextPlay = this.plays[(currentPlayIndex + 1) % this.plays.length];
             if (nextPlay) {
@@ -65,7 +65,7 @@ IntelligenceWebClient.service('PlaysManager', [
                     //Find the next visible play
                     return this.playScopes[nextPlay.id];
                 } else {
-                    return this.getNextPlay(nextPlay);
+                    return this.getNextPlayScope(nextPlay);
                 }
             }
         };
