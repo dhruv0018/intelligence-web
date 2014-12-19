@@ -42,6 +42,24 @@ IntelligenceWebClient.service('PlaysManager', [
             return this.plays[this.plays.length - 1];
         };
 
+        /* Retreives the previous play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Object} previousPlay
+         */
+        this.getPreviousPlay = function(currentPlay) {
+            var index = this.plays.indexOf(currentPlay);
+            return (--index >= 0) ? this.plays[index] : null;
+        };
+
+        /* Retreives the next play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Object} nextPlay
+         */
+        this.getNextPlay = function(currentPlay) {
+            var index = this.plays.indexOf(currentPlay);
+            return (++index < this.plays.length) ? this.plays[index] : null;
+        };
+
         this.registerPlayScope = function registerPlayScope(playScope) {
             //create hash of play scopes indexed by the scopes play's id
             var registeredId;
