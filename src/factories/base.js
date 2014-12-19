@@ -405,7 +405,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var local = function() {
 
-                    return storage.grab().then(function(resources) {
+                    return storage.grab(key).then(function(resources) {
 
                         remote();
 
