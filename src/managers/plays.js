@@ -56,35 +56,17 @@ IntelligenceWebClient.service('PlaysManager', [
             this.playScopes[registeredId] = playScope;
         };
 
-        /* Retreives the previous play in a sequence of plays
-         * @param {Object} currentPlay
-         * @return {Object} previousPlay
-         */
-        this.getPreviousPlay = function getPreviousPlay(currentPlay) {
-            var index = this.plays.indexOf(currentPlay);
-
-            if (--index >= 0) {
-
-                var prevPlay = this.plays[index];
-                return (angular.isUndefined(prevPlay.isFiltered) || prevPlay.isFiltered) ? this.playScopes[prevPlay.id] : this.getPreviousPlay(prevPlay);
-            } else {
-                return null;
-            }
-        };
-
-        /* Retreives the next play in a sequence of plays
-         * @param {Object} currentPlay
-         * @return {Object} nextPlay
-         */
         this.getNextPlay = function getNextPlay(currentPlay) {
-            var index = this.plays.indexOf(currentPlay);
+            var currentPlayIndex = this.plays.indexOf(currentPlay);
+            var nextPlay = this.plays[(currentPlayIndex + 1) % this.plays.length];
+            if (nextPlay) {
 
-            if (++index < this.plays.length) {
-
-                var nextPlay = this.plays[index];
-                return (angular.isUndefined(nextPlay.isFiltered) || nextPlay.isFiltered) ? this.playScopes[nextPlay.id] : this.getNextPlay(nextPlay);
-            } else {
-                return null;
+                if (angular.isUndefined(nextPlay.isFiltered) || nextPlay.isFiltered) {
+                    //Find the next visible play
+                    return this.playScopes[nextPlay.id];
+                } else {
+                    return this.getNextPlay(nextPlay);
+                }
             }
         };
 
