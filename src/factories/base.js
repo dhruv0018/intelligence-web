@@ -413,7 +413,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     }, function() {
 
-                        return remote();
+                        return remote().then(function(resources) {
+
+                            storage.store(key, resources);
+                        });
                     });
                 };
 
