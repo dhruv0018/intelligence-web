@@ -93,34 +93,29 @@ Clips.controller('Clips.controller', [
     '$scope', '$state', '$stateParams', 'GamesFactory', 'ReelsFactory', 'TeamsFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory', 'PlayManager', 'PlaysManager',
     function controller($scope, $state, $stateParams, games, reels, teams, plays, leagues, players, playManager, playsManager) {
 
-        $scope.publiclyShared = false;
+        var playId = $stateParams.id;
+        $scope.play = plays.get(playId);
+        $scope.plays = [$scope.play];
 
-        if (!$scope.publiclyShared) { // Temp hack
+        // Film Header data-attributes
+        $scope.publiclyShared = true;
+        $scope.game = games.get($scope.play.gameId);
+        $scope.team = teams.get($scope.game.teamId);
+        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
-            var playId = $stateParams.id;
-            $scope.play = plays.get(playId);
-            $scope.plays = [$scope.play];
+        // Krossover Playlist data-attributes
+        $scope.league = leagues.get($scope.team.leagueId);
+        $scope.teamPlayers = $scope.game.getTeamPlayers();
+        $scope.opposingTeamPlayers = $scope.game.getOpposingTeamPlayers();
+        $scope.showHeader = false;
+        $scope.showFooter = false;
 
-            // Film Header data-attributes
-            $scope.publiclyShared = true;
-            $scope.game = games.get($scope.play.gameId);
-            $scope.team = teams.get($scope.game.teamId);
-            $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+        // Krossover VideoPlayer data-attributes
+        $scope.sources = $scope.play.getVideoSources();
+        $scope.videoTitle = 'clip';
 
-            // Krossover Playlist data-attributes
-            $scope.league = leagues.get($scope.team.leagueId);
-            $scope.teamPlayers = $scope.game.getTeamPlayers();
-            $scope.opposingTeamPlayers = $scope.game.getOpposingTeamPlayers();
-            $scope.showHeader = false;
-            $scope.showFooter = false;
-
-            // Krossover VideoPlayer data-attributes
-            $scope.sources = $scope.play.getVideoSources();
-            $scope.videoTitle = 'clip';
-
-            // TODO: This should be refactored, code-smell...
-            playManager.videoTitle = 'reelsPlayer';
-        }
+        // TODO: This should be refactored, code-smell...
+        playManager.videoTitle = 'reelsPlayer';
 
         /* Logic for clips navigation */
         $scope.reelId = $stateParams.reel;
