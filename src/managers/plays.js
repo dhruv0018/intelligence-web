@@ -50,7 +50,7 @@ IntelligenceWebClient.service('PlaysManager', [
             return this.plays.indexOf(currentPlay);
         };
 
-        /* Retreives the previous play in a sequence of plays
+        /* Retrieves the previous play in a sequence of plays
          * @param {Object} currentPlay
          * @return {Object} previousPlay
          */
@@ -59,7 +59,7 @@ IntelligenceWebClient.service('PlaysManager', [
             return (--index >= 0) ? this.plays[index] : null;
         };
 
-        /* Retreives the next play in a sequence of plays
+        /* Retrieves the next play in a sequence of plays
          * @param {Object} currentPlay
          * @return {Object} nextPlay
          */
