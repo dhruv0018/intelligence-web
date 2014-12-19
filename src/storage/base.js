@@ -114,25 +114,27 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             set: function(key, value) {
 
+                var self = this;
+
                 if (!value) {
 
                     value = key;
                     key = value.id;
                 }
 
-                if (angular.isObject(value)) {
-
-                    this.map[key] = value;
-                }
-
-                else if (angular.isArray(value)) {
+                if (angular.isArray(value)) {
 
                     var list = value.concat();
 
                     list.forEach(function(item) {
 
-                        this.map[key] = item;
+                        self.map[item.id] = item;
                     });
+                }
+
+                else if (angular.isObject(value)) {
+
+                    self.map[key] = value;
                 }
             },
 
