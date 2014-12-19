@@ -332,6 +332,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         var list = [resource];
 
+                        storage.store(key, list);
+
                         return list;
                     });
                 };
@@ -384,6 +386,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                             return storage.get(id);
                         });
 
+                        storage.store(key, list);
+
                         return list;
                     });
                 };
@@ -392,39 +396,41 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return self.retrieve(filter).then(function(list) {
 
+                        storage.store(key, list);
+
                         return list;
-                    });
-                };
-
-                var remote = function() {
-
-                    if (angular.isNumber(filter)) return single(filter);
-                    else if (angular.isArray(filter)) return multiple(filter);
-                    else return other(filter);
-                };
-
-                var local = function() {
-
-                    return storage.grab(key).then(function(resources) {
-
-                        remote();
-
-                        return resources;
-
-                    }, function() {
-
-                        return remote().then(function(resources) {
-
-                            storage.store(key, resources);
-
-                            return resources;
-                        });
                     });
                 };
 
                 storage.promises = storage.promises || {};
 
-                storage.promises[key] = storage.promises[key] || auth.isLoggedIn ? local() : remote();
+                if (!storage.promises[key]) {
+
+                    if (auth.isLoggedIn) {
+
+                        storage.promises[key] = storage.grab(key).then(function(resources) {
+
+                            if (angular.isNumber(filter)) single(filter);
+                            else if (angular.isArray(filter)) multiple(filter);
+                            else other(filter);
+
+                            return resources;
+
+                        }, function() {
+
+                            if (angular.isNumber(filter)) return single(filter);
+                            else if (angular.isArray(filter)) return multiple(filter);
+                            else return other(filter);
+                        });
+                    }
+
+                    else {
+
+                        if (angular.isNumber(filter)) return single(filter);
+                        else if (angular.isArray(filter)) return multiple(filter);
+                        else return other(filter);
+                    }
+                }
 
                 return storage.promises[key];
             },
