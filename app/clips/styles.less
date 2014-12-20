@@ -52,6 +52,10 @@
             justify-content: center;
             margin: 0;
         }
+
+        .vertical-spacer {
+            height: 48px;
+        }
     }
 
     .clips-navigation {
@@ -114,7 +118,7 @@
         }
 
         .reel-title {
-            color: @brand-primary
+            color: @brand-primary;
         }
 }
 }
@@ -134,7 +138,11 @@ and (max-width: 479px) {
 
 @media only screen
 and (min-width: @screen-lg) {
-    .clips-navigation {
-        display: none;
+    
+    .public-clip {
+
+        .clips-navigation {
+            display: none;
+        }
     }
 }

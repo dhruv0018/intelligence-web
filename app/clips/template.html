@@ -14,6 +14,27 @@
 
         </krossover-sidebar>
 
+        <div class="vertical-spacer"></div>
+
+        <footer data-ng-if="reelId" class="clips-navigation">
+
+            <div data-ng-class="{disabled: !previousPlay}"
+                 class="clip-previous"
+                 data-ng-click="goToPlay(previousPlay)">
+                <i class="icon icon-chevron-left"></i>Prev
+            </div>
+
+            <div class="clip-info">
+                <div class="reel-title" data-ui-sref="ReelsArea({id: reelId})">{{reelName}}</div>
+                <div class="clip-count">Clip&nbsp;{{clipIndex}}/{{clipTotal}}</div>
+            </div>
+
+            <div data-ng-class="{disabled: !nextPlay}"
+                 class="clip-next"
+                 data-ng-click="goToPlay(nextPlay)">
+                Next<i class="icon icon-chevron-right"></i>
+            </div>
+        </footer>
     </div>
 
     <!-- TODO: This should be taken of by the controller for games, and the locked-game should be a
@@ -24,24 +45,5 @@
             <h3>You do not have permission to access this game</h3>
         </div>
     </div> -->
-    
-    <footer data-ng-if="reelId" class="clips-navigation">
 
-        <div data-ng-class="{disabled: !previousPlay}"
-             class="clip-previous"
-             data-ng-click="goToPlay(previousPlay)">
-            <i class="icon icon-chevron-left"></i>Prev
-        </div>
-
-        <div class="clip-info">
-            <div class="reel-title" data-ui-sref="ReelsArea({id: reelId})">{{reelName}}</div>
-            <div class="clip-count">Clip&nbsp;{{clipIndex}}/{{clipTotal}}</div>
-        </div>
-
-        <div data-ng-class="{disabled: !nextPlay}"
-             class="clip-next"
-             data-ng-click="goToPlay(nextPlay)">
-            Next<i class="icon icon-chevron-right"></i>
-        </div>
-    </footer>
 </div>
