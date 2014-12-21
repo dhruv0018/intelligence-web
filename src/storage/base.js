@@ -241,6 +241,25 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     return keys.user + this.description;
                 }
+            },
+
+            promises: {
+
+                enumerable: false,
+
+                get: function() {
+
+                    stores.user.promises = stores.user.promises || Object.create(null);
+
+                    return stores.user.promises;
+                },
+
+                set: function(value) {
+
+                    stores.user.promises = stores.user.promises || Object.create(null);
+
+                    stores.user.promises = value;
+                }
             }
         });
 
