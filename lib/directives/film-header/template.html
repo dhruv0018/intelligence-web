@@ -1,9 +1,8 @@
 <div class="film-header">
 
     <film-info data-title="filmTitle" data-film="film"></film-info>
-    <div class="film-title-desktop">{{filmTitle}}</div>
 
-    <state-selector data-ng-if="isGame && !isClip" data-state-options="gameStates" data-ng-hide="game.isSharedWithUser(currentUser)"></state-selector>
+    <state-selector data-ng-if="isGame && !isClip" data-state-options="gameStates" data-states-as-dropdown="false" data-ng-hide="game.isSharedWithUser(currentUser)"></state-selector>
 
     <div class="social-media" data-ng-if="userIsLoggedIn">
         <a href="http://twitter.com/Krossovr" target="_blank"><i class="icon icon-twitter-square"></i></a>

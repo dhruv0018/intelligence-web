@@ -4,3 +4,23 @@
 	width: 200px;
 	margin-right: 20px;
 }
+
+.state-tabs {
+    list-style-type: none;
+    letter-spacing: normal;
+    margin-bottom: 3px;
+
+    li {
+        display: inline;
+        text-align: center;
+        font-size: 18px;
+        padding-bottom: 2px;
+        margin-right: 25px;
+        cursor: pointer;
+
+        &.active-state {
+            color: @brand-primary;
+            border-bottom: 3px solid @brand-primary;
+        }
+    }
+}

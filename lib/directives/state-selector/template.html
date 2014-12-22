@@ -1,4 +1,9 @@
 <select class="state-selector"
+        data-ng-show="statesAsDropdown"
         data-ng-model="stateSelected"
         data-ng-options="STATE_NAMES[state.name].display for state in stateOptions | onlyAuthorizedStates">
 </select>
+
+<ul class="state-tabs" data-ng-show="!statesAsDropdown">
+    <li data-ng-repeat="state in stateOptions | onlyAuthorizedStates" data-ng-click="selectState(state)" data-ng-class="{'active-state': stateSelected === state}">{{STATE_NAMES[state.name].display}}</li>
+</ul>
