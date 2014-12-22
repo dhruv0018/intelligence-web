@@ -402,37 +402,20 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 };
 
-                storage.promises = storage.promises || {};
+                return storage.grab(key).then(function(resources) {
 
-                if (!storage.promises[key]) {
+                    if (angular.isNumber(filter)) single(filter);
+                    else if (angular.isArray(filter)) multiple(filter);
+                    else other(filter);
 
-                    if (auth.isLoggedIn) {
+                    return resources;
 
-                        storage.promises[key] = storage.grab(key).then(function(resources) {
+                }, function() {
 
-                            if (angular.isNumber(filter)) single(filter);
-                            else if (angular.isArray(filter)) multiple(filter);
-                            else other(filter);
-
-                            return resources;
-
-                        }, function() {
-
-                            if (angular.isNumber(filter)) return single(filter);
-                            else if (angular.isArray(filter)) return multiple(filter);
-                            else return other(filter);
-                        });
-                    }
-
-                    else {
-
-                        if (angular.isNumber(filter)) return single(filter);
-                        else if (angular.isArray(filter)) return multiple(filter);
-                        else return other(filter);
-                    }
-                }
-
-                return storage.promises[key];
+                    if (angular.isNumber(filter)) return single(filter);
+                    else if (angular.isArray(filter)) return multiple(filter);
+                    else return other(filter);
+                });
             },
 
             /**
