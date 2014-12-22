@@ -58,13 +58,13 @@ Header.config([
 
 
 Header.factory('Header.Data.Dependencies', [
-    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
-    function(auth, session, sports, leagues, tagsets, filtersets, positionsets, teams) {
+    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory',
+    function(auth, session, sports, leagues, teams) {
 
         var Data = {
 
-            get sports() { if (auth.isLoggedIn) return sports.load(); },
-            get leagues() { if (auth.isLoggedIn) return leagues.load(); },
+            sports: sports.load(),
+            leagues: leagues.load(),
 
             get teams() {
 
