@@ -140,15 +140,18 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             update: function() {
 
-                var list = this.list.map(function(resource) {
+                var self = this;
 
-                    var object = resource.unextend(resource);
-                    var string = angular.toJson(resource);
+                var list = self.list.map(function(resource) {
+
+                    var copy = angular.copy(resource);
+                    var object = self.factory.unextend(copy);
+                    var string = angular.toJson(object);
 
                     return string;
                 });
 
-                $localForage.setItem(this.db, list);
+                $localForage.setItem(self.db, list);
             },
 
             clear: function() {
@@ -164,17 +167,20 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             store: function(store, value) {
 
-                this.set(value);
+                var self = this;
 
-                var item = this.db;
+                self.set(value);
+
+                var item = self.db;
                 if (store) item += '?' + encodeURIComponent(JSON.stringify(store));
 
                 if (angular.isArray(value)) {
 
                     var list = value.map(function(resource) {
 
-                        var object = resource.unextend(resource);
-                        var string = angular.toJson(resource);
+                        var copy = angular.copy(resource);
+                        var object = self.factory.unextend(copy);
+                        var string = angular.toJson(object);
 
                         return string;
                     });
@@ -184,14 +190,14 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 else if (angular.isObject(value)) {
 
-                    var resource = angular.copy(value);
-                    var object = resource.unextend(resource);
-                    var string = angular.toJson(resource);
+                    var copy = angular.copy(value);
+                    var object = self.factory.unextend(copy);
+                    var string = angular.toJson(object);
 
                     $localForage.setItem(item, string);
                 }
 
-                this.update();
+                self.update();
             },
 
             grab: function(store) {
