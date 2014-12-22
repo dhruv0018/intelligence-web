@@ -63,8 +63,8 @@ Header.factory('Header.Data.Dependencies', [
 
         var Data = {
 
-            sports: sports.load(),
-            leagues: leagues.load(),
+            get sports() { return sports.load(); },
+            get leagues() { return leagues.load(); },
 
             get teams() {
 
