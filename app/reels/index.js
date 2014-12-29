@@ -92,7 +92,7 @@ ReelsArea.service('Reels.Data.Dependencies', [
                     var reelId = Number(stateParams.id);
 
                     var data = {
-                        reel: reels.load({reelId: reelId}),
+                        reel: reels.load(reelId),
                         games: games.load({reelId: reelId}),
                         teams: teams.load({reelId: reelId}),
                         plays: plays.load({reelId: reelId}),
