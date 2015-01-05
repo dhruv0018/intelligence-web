@@ -486,10 +486,15 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     .then(function() {
 
+                        /* Store the resource locally in its storage collection. */
+                        storage.set(resource);
+                        storage.update();
+
                         return resource;
                     })
 
                     .finally(function() {
+
                         delete resource.isSaving;
                     });
 
