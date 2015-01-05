@@ -79,6 +79,23 @@
             margin-right: 2px;
         }
     }
+
+    .state-selector {
+        margin-left: 10px;
+        margin-bottom: 33px;
+    }
+}
+
+/* Screens < 1024px wide */
+@media only screen
+and (max-width: @screen-lg) {
+
+    .film-header {
+    
+        .share-game {
+            margin-bottom: 42px;
+        }
+    }
 }
 
 /* Screens < 768px wide */
@@ -93,7 +110,8 @@ and (max-width: @screen-sm) {
         }
 
         .social-media,
-        .state-selector {
+        .state-selector,
+        .state-tabs {
             display: none;
         } 
     }
