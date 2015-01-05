@@ -42,6 +42,32 @@ IntelligenceWebClient.service('PlaysManager', [
             return this.plays[this.plays.length - 1];
         };
 
+        /* Returns the index of a play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Number} index
+         */
+        this.getIndex = function(currentPlay) {
+            return this.plays.indexOf(currentPlay);
+        };
+
+        /* Retrieves the previous play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Object} previousPlay
+         */
+        this.getPreviousPlay = function(currentPlay) {
+            var index = this.plays.indexOf(currentPlay);
+            return (--index >= 0) ? this.plays[index] : null;
+        };
+
+        /* Retrieves the next play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Object} nextPlay
+         */
+        this.getNextPlay = function(currentPlay) {
+            var index = this.plays.indexOf(currentPlay);
+            return (++index < this.plays.length) ? this.plays[index] : null;
+        };
+
         this.registerPlayScope = function registerPlayScope(playScope) {
             //create hash of play scopes indexed by the scopes play's id
             var registeredId;
@@ -56,7 +82,7 @@ IntelligenceWebClient.service('PlaysManager', [
             this.playScopes[registeredId] = playScope;
         };
 
-        this.getNextPlay = function getNextPlay(currentPlay) {
+        this.getNextPlayScope = function getNextPlayScope(currentPlay) {
             var currentPlayIndex = this.plays.indexOf(currentPlay);
             var nextPlay = this.plays[(currentPlayIndex + 1) % this.plays.length];
             if (nextPlay) {
@@ -65,7 +91,7 @@ IntelligenceWebClient.service('PlaysManager', [
                     //Find the next visible play
                     return this.playScopes[nextPlay.id];
                 } else {
-                    return this.getNextPlay(nextPlay);
+                    return this.getNextPlayScope(nextPlay);
                 }
             }
         };

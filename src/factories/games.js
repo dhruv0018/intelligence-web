@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
         var GamesFactory = {
 
-            PAGE_SIZE: 100,
+            PAGE_SIZE: 1000,
 
             description: 'games',
 
