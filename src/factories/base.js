@@ -321,11 +321,13 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     if (storage.isStored(id)) {
 
+                        var deferred = $q.defer();
                         var resource = storage.get(id);
-
                         var list = [resource];
 
-                        return list;
+                        deferred.resolve(list);
+
+                        return deferred.promise;
                     }
 
                     else return self.fetch(id).then(function(resource) {
