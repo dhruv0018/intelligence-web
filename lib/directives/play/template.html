@@ -114,19 +114,19 @@
         </div>
 
         <!-- DEFAULT PLAY -->
-        <div data-ng-switch-default data-ng-hide="!play.hasVisibleEvents && !isIndexer" class="play" data-ng-class="{ active: play.id == playManager.current.id }" data-ng-click="selectPlay()">
+        <div data-ng-switch-default data-ng-hide="!play.hasVisibleEvents && !isIndexer" class="play" data-ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll }" data-ng-click="selectPlay()">
 
             <div class="playHeadingContainer">
         
                 <div class="playHeading">
 
-                    <h4 data-ng-if="isIndexer" data-ng-class="{'playOpened': expandAll || play === playManager.current}">
+                    <h4 data-ng-if="isIndexer">
                         <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
                         <span class="dash"> — </span>
                         <time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time>
                     </h4>
 
-                    <h4 data-ng-if="isIndexer" data-ng-class="{'playOpened': expandAll || play === playManager.current}">
+                    <h4 data-ng-if="isIndexer">
                         <span class="team">{{ team.name }}</span>
                         <span class="score">{{ play.teamIndexedScore }}</span>
                         <span class="vs">&nbsp;vs&nbsp;</span>
@@ -134,7 +134,7 @@
                         <span class="team">{{ opposingTeam.name }}</span>
                     </h4>
 
-                    <h4 class="column" data-ng-if="!isIndexer" data-ng-class="{'playOpened': expandAll || play === playManager.current}">
+                    <h4 class="column" data-ng-if="!isIndexer">
 
                         <span class="team">{{teams[play.possessionTeamId].name}}</span>
 
