@@ -402,20 +402,30 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 };
 
-                return storage.grab(key).then(function(resources) {
+                if (auth.isLoggedIn) {
 
-                    if (angular.isNumber(filter)) single(filter);
-                    else if (angular.isArray(filter)) multiple(filter);
-                    else other(filter);
+                    return storage.grab(key).then(function(resources) {
 
-                    return resources;
+                        if (angular.isNumber(filter)) single(filter);
+                        else if (angular.isArray(filter)) multiple(filter);
+                        else other(filter);
 
-                }, function() {
+                        return resources;
+
+                    }, function() {
+
+                        if (angular.isNumber(filter)) return single(filter);
+                        else if (angular.isArray(filter)) return multiple(filter);
+                        else return other(filter);
+                    });
+                }
+
+                else {
 
                     if (angular.isNumber(filter)) return single(filter);
                     else if (angular.isArray(filter)) return multiple(filter);
                     else return other(filter);
-                });
+                }
             },
 
             /**
