@@ -24,7 +24,7 @@ Clips.config([
 
         var shortClips = {
             name: 'ShortClips',
-            url: '/c/:id',
+            url: '/c/:id?reel',
             parent: 'base',
             onEnter: [
                 '$state', '$stateParams',
@@ -37,7 +37,7 @@ Clips.config([
 
         var Clips = {
             name: 'Clips',
-            url: '/clips/:id',
+            url: '/clips/:id?reel',
             parent: 'base',
             views: {
                 'main@root': {
@@ -90,36 +90,62 @@ Clips.config([
 ]);
 
 Clips.controller('Clips.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory', 'PlayManager',
-    function controller($scope, $state, $stateParams, games, teams, plays, leagues, players, playManager) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'ReelsFactory', 'TeamsFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory', 'PlayManager', 'PlaysManager',
+    function controller($scope, $state, $stateParams, games, reels, teams, plays, leagues, players, playManager, playsManager) {
 
-        $scope.publiclyShared = false;
+        var playId = $stateParams.id;
+        $scope.play = plays.get(playId);
+        $scope.plays = [$scope.play];
 
-        if (!$scope.publiclyShared) { // Temp hack
+        // Film Header data-attributes
+        $scope.publiclyShared = true;
+        $scope.game = games.get($scope.play.gameId);
+        $scope.team = teams.get($scope.game.teamId);
+        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
-            var playId = $stateParams.id;
-            $scope.play = plays.get(playId);
-            $scope.plays = [$scope.play];
+        // Krossover Playlist data-attributes
+        $scope.league = leagues.get($scope.team.leagueId);
+        $scope.teamPlayers = $scope.game.getTeamPlayers();
+        $scope.opposingTeamPlayers = $scope.game.getOpposingTeamPlayers();
+        $scope.showHeader = false;
+        $scope.showFooter = false;
 
-            // Film Header data-attributes
-            $scope.publiclyShared = true;
-            $scope.game = games.get($scope.play.gameId);
-            $scope.team = teams.get($scope.game.teamId);
-            $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+        // Krossover VideoPlayer data-attributes
+        $scope.sources = $scope.play.getVideoSources();
+        $scope.videoTitle = 'clip';
 
-            // Krossover Playlist data-attributes
-            $scope.league = leagues.get($scope.team.leagueId);
-            $scope.teamPlayers = $scope.game.getTeamPlayers();
-            $scope.opposingTeamPlayers = $scope.game.getOpposingTeamPlayers();
-            $scope.showHeader = false;
-            $scope.showFooter = false;
+        // TODO: This should be refactored, code-smell...
+        playManager.videoTitle = 'reelsPlayer';
 
-            // Krossover VideoPlayer data-attributes
-            $scope.sources = $scope.play.getVideoSources();
-            $scope.videoTitle = 'clip';
+        /* Logic for clips navigation */
 
-            // TODO: This should be refactored, code-smell...
-            playManager.videoTitle = 'reelsPlayer';
+        if ($stateParams.reel !== null) {
+
+            if (angular.isDefined($stateParams.reel)) {
+
+                $scope.reelId = $stateParams.reel;
+                var reel = reels.get($scope.reelId);
+
+                var reelPlays = [];
+                for (var i = 0; i < reel.plays.length; i++) {
+                    var play = plays.get(reel.plays[i]);
+                    reelPlays.push(play);
+                }
+
+                playsManager.reset(reelPlays);
+
+                $scope.reelName = reel.name;
+                $scope.clipIndex = playsManager.getIndex($scope.play) + 1;
+                $scope.clipTotal = reel.plays.length;
+                $scope.previousPlay = playsManager.getPreviousPlay($scope.play);
+                $scope.nextPlay = playsManager.getNextPlay($scope.play);
+
+                $scope.goToPlay = function(play) {
+                    if (play) {
+                        $state.go('Clips', {id: play.id, reel: $scope.reelId});
+                    }
+                };
+            }
         }
     }
 ]);
