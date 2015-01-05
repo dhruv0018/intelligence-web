@@ -555,7 +555,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 /* Remove the resource from storage. */
                 storage.list.splice(storage.list.indexOf(resource), 1);
-                delete storage.collection[resource.id];
+                delete storage.map[resource.id];
 
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
