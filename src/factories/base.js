@@ -383,7 +383,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return $q.all(promises).then(function() {
 
-                        localStorage.setItem(key, ids);
+                        localStorage.setItem(key, unique);
 
                         var list = unique.map(function(id) {
 
