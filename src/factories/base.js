@@ -369,16 +369,12 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     while (unstored.length) {
 
-                        ids = unstored.splice(0, 100);
-
-                        var query = {
+                        promises.push(self.query({
 
                             start: null,
                             count: null,
-                            'id[]': ids
-                        };
-
-                        promises.push(self.query(query));
+                            'id[]': unstored.splice(0, 100)
+                        }));
                     }
 
                     return $q.all(promises).then(function() {
