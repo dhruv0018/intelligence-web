@@ -132,10 +132,11 @@ ReelsArea.controller('ReelsArea.controller', [
         var reelId = Number($stateParams.id);
         $scope.reel = reels.get(reelId);
 
-
         // Setup playlist
 
-        var plays = playsFactory.getList({ reelId: reelId });
+        var plays = $scope.reel.plays.map(function getPlays(playId) {
+            return playsFactory.get(playId);
+        });
         $scope.plays = plays;
 
         $scope.playManager = playManager;
