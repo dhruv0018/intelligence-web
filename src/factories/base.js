@@ -385,7 +385,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         localStorage.setItem(key, ids);
 
-                        var list = ids.map(function(id) {
+                        var list = unique.map(function(id) {
 
                             return storage.get(id);
                         });
