@@ -165,48 +165,10 @@ IntelligenceWebClient.factory('BaseStorage', [
                 return angular.isDefined(this.map[key]);
             },
 
-            store: function(store, value) {
+            grab: function() {
 
                 var self = this;
-
-                self.set(value);
-
                 var item = self.db;
-                if (store) item += '?' + encodeURIComponent(JSON.stringify(store));
-
-                if (angular.isArray(value)) {
-
-                    var list = value.map(function(resource) {
-
-                        var copy = angular.copy(resource);
-                        var object = self.factory.unextend(copy);
-                        var string = angular.toJson(object);
-
-                        return string;
-                    });
-
-                    $localForage.setItem(item, list);
-                }
-
-                else if (angular.isObject(value)) {
-
-                    var copy = angular.copy(value);
-                    var object = self.factory.unextend(copy);
-                    var string = angular.toJson(object);
-
-                    $localForage.setItem(item, string);
-                }
-
-                self.update();
-            },
-
-            grab: function(store) {
-
-                var self = this;
-
-                var item = self.db;
-                if (store) item += '?' + encodeURIComponent(JSON.stringify(store));
-
                 var deferred = $q.defer();
 
                 $localForage.getItem(item).then(function(item) {

@@ -310,12 +310,12 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var key = JSON.stringify(filter);
-
                 var auth = $injector.get('AuthenticationService');
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
                 var session = $injector.get('SessionService');
+
+                var key = '@' + session.serializeUserId() + '!' + self.description + '?' + encodeURIComponent(JSON.stringify(filter));
 
                 var single = function(id) {
 
@@ -332,9 +332,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else return self.fetch(id).then(function(resource) {
 
-                        var list = [resource];
+                        localStorage.setItem(key, [resource.id]);
 
-                        storage.store(key, list);
+                        var list = [resource];
 
                         return list;
                     });
@@ -383,12 +383,12 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return $q.all(promises).then(function() {
 
+                        localStorage.setItem(key, ids);
+
                         var list = ids.map(function(id) {
 
                             return storage.get(id);
                         });
-
-                        storage.store(key, list);
 
                         return list;
                     });
@@ -398,27 +398,36 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return self.retrieve(filter).then(function(list) {
 
-                        storage.store(key, list);
+                        var ids = list.map(function(resource) {
+
+                            return resource.id;
+                        });
+
+                        localStorage.setItem(key, ids);
 
                         return list;
                     });
                 };
 
+                var ids = null;
+
                 if (auth.isLoggedIn) {
 
-                    return storage.grab(key).then(function(resources) {
+                    ids = localStorage.getItem(key);
+                }
+
+                if (ids) {
+
+                    return storage.grab(self.description).then(function(resources) {
 
                         if (angular.isNumber(filter)) single(filter);
                         else if (angular.isArray(filter)) multiple(filter);
                         else other(filter);
 
-                        return resources;
+                        return resources.filter(function(resource) {
 
-                    }, function() {
-
-                        if (angular.isNumber(filter)) return single(filter);
-                        else if (angular.isArray(filter)) return multiple(filter);
-                        else return other(filter);
+                            return ~ids.indexOf(resource.id);
+                        });
                     });
                 }
 
