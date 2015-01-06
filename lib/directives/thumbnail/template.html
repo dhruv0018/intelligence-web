@@ -1,7 +1,7 @@
 <div class="krossover-thumbnail">
 
     <div data-ng-if="isGame" 
-         data-ng-show="film.isBeingBrokenDown()" 
+         data-ng-show="userIsCoachOnUploaderTeam && film.isBeingBrokenDown()" 
          class="breakdown-status">
         <i class="icon icon-bar-chart-o"></i>
         Breakdown In Progress

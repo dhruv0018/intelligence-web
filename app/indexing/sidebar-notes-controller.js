@@ -61,7 +61,9 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
                 //or back button the game will be saved to the server again with
                 //the notes still not having id's and the notes will be created twice
                 //the following code would need to be atomic to prevent that from happening
-                $scope.game.save();
+                $scope.game.saveNotes().then(function(updatedNotes) {
+                    $scope.game.notes = updatedNotes;
+                });
             });
         };
     }

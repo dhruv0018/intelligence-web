@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
         var GamesFactory = {
 
-            PAGE_SIZE: 100,
+            PAGE_SIZE: 1000,
 
             description: 'games',
 
@@ -31,6 +31,13 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* Create a copy of the resource to break reference to orginal. */
                 var copy = angular.copy(game);
                 delete copy.flow;
+
+                copy.shares = copy.shares || [];
+
+                if (copy.isSharedWithPublic()) {
+                    copy.shares.push(copy.publicShare);
+                    delete copy.publicShare;
+                }
 
                 return copy;
             },
@@ -66,9 +73,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (game.shares && game.shares.length) {
 
-                    angular.forEach(game.shares, function(share) {
+                    angular.forEach(game.shares, function(share, index) {
                         if (share.sharedWithUserId) {
                             game.sharedWithUsers[share.sharedWithUserId] = share;
+                        } else if (!share.sharedWithUserId && !share.sharedWithTeamId) {
+                            game.publicShare = share;
+                            game.shares.slice(index, 1);
                         }
                     });
                 }
@@ -100,6 +110,26 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     return game.isSharedWithUser(user);
                 });
+            },
+
+            saveNotes: function() {
+
+                var deferred = $q.defer();
+
+                var self = this;
+                self.save().then(function() {
+
+                    deferred.notify('saved');
+
+                    GamesResource.get({ id: self.id }, function(result) {
+                        self.notes = result.notes;
+                        deferred.resolve(result.notes);
+                    }, function() {
+                        deferred.reject(null);
+                    });
+                });
+
+                return deferred.promise;
             },
 
             isPlayerOnTeam: function(playerId) {
@@ -953,7 +983,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                     userId: session.currentUser.id,
                     gameId: self.id,
                     sharedWithUserId: user.id,
-                    createdAt: moment.utc().toDate()
+                    createdAt: moment.utc().toDate(),
+                    isBreakdownShared: false
                 };
 
                 self.sharedWithUsers[user.id] = share;
@@ -1015,33 +1046,24 @@ IntelligenceWebClient.factory('GamesFactory', [
                 self.shares = self.shares || [];
 
                 if (self.isSharedWithPublic()) {
-                    self.shares.forEach(function(share, index) {
-                        if (!share.sharedWithUserId) {
-                            self.shares.splice(index, 1);
-                        }
-                    });
+                    delete self.publicShare;
                 } else {
                     var share = {
                         userId: session.getCurrentUserId(),
                         teamId: session.getCurrentTeamId(),
                         gameId: self.id,
                         sharedWithUserId: null,
-                        createdAt: moment.utc().toDate()
+                        createdAt: moment.utc().toDate(),
+                        isBreakdownShared: false
                     };
 
-                    self.shares.push(share);
+                    self.publicShare = share;
                 }
             },
             isSharedWithPublic: function() {
                 var self = this;
 
-                if (!self.shares) return false;
-
-                return self.shares.map(function(share) {
-                    return share.sharedWithUserId;
-                }).some(function(userId) {
-                    return !userId;
-                });
+                return !!self.publicShare;
             }
         };
 

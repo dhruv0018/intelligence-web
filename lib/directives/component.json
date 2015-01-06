@@ -65,6 +65,7 @@
         "plays-filters",
         "draggable",
         "sidebar",
+        "poster-image",
         "spinner"
     ],
     "scripts": [
