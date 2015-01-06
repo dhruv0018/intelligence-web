@@ -39,87 +39,22 @@
 
 /* Responsive sizes */
 
-
 /* All screens */
 
 .header {
 
-    .navbar-brand {
+    flex: 0 0 @header-lg-height;
 
-        padding-left: 30px;
-        padding-right: 30px;
+    .nav,
+    .navbar-brand,
+    .dropdown,
+    .dropdown-toggle {
+
+        height: @header-lg-height;
+    }
+
+    menu li a {
+
+        line-height: @header-lg-height;
     }
 }
-
-/* Screens under 480px high */
-@media only screen
-and (max-height: 480px) {
-
-    .header {
-
-        flex: 0 0 @header-sm-height;
-        min-height: @header-sm-height;
-
-        .nav,
-        .navbar-brand,
-        .dropdown,
-        .dropdown-toggle {
-
-            height: @header-sm-height;
-        }
-
-        .navbar-brand {
-
-            padding-top: 4.5px;
-            padding-bottom: 0px;
-        }
-
-        menu li a {
-
-            line-height: @header-sm-height;
-        }
-
-        .navbar-btn {
-
-            height: @header-sm-height;
-            width: 100%;
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-top: 3px;
-            padding-bottom: 3px;
-            border: 0;
-            border-radius: 0;
-        }
-    }
-}
-
-/* Screens over 481px high */
-@media only screen
-and (min-height: 481px) {
-
-    .header {
-
-        flex: 0 0 @header-lg-height;
-        min-height: @header-lg-height;
-
-        .nav,
-        .navbar-brand,
-        .dropdown,
-        .dropdown-toggle {
-
-            height: @header-lg-height;
-        }
-
-        .navbar-brand {
-
-            padding-top: 13px;
-            padding-bottom: 13px;
-        }
-
-        menu li a {
-
-            line-height: @header-lg-height;
-        }
-    }
-}
-
