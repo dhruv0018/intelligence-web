@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
         var GamesFactory = {
 
-            PAGE_SIZE: 100,
+            PAGE_SIZE: 1000,
 
             description: 'games',
 
@@ -84,6 +84,52 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 return game;
+            },
+
+            getByUploaderTeamId: function(teamId) {
+
+                if (!teamId) throw new Error('No teamId');
+
+                var self = this;
+
+                var games = self.getList();
+
+                return games.filter(function(game) {
+
+                    return game.uploaderTeamId == teamId;
+                });
+            },
+
+            getBySharedWithUser: function(user) {
+
+                var self = this;
+
+                var games = self.getList();
+
+                return games.filter(function(game) {
+
+                    return game.isSharedWithUser(user);
+                });
+            },
+
+            saveNotes: function() {
+
+                var deferred = $q.defer();
+
+                var self = this;
+                self.save().then(function() {
+
+                    deferred.notify('saved');
+
+                    GamesResource.get({ id: self.id }, function(result) {
+                        self.notes = result.notes;
+                        deferred.resolve(result.notes);
+                    }, function() {
+                        deferred.reject(null);
+                    });
+                });
+
+                return deferred.promise;
             },
 
             isPlayerOnTeam: function(playerId) {
@@ -1003,7 +1049,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                     delete self.publicShare;
                 } else {
                     var share = {
-                        userId: session.currentUser.id,
+                        userId: session.getCurrentUserId(),
+                        teamId: session.getCurrentTeamId(),
                         gameId: self.id,
                         sharedWithUserId: null,
                         createdAt: moment.utc().toDate(),

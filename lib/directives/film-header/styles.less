@@ -54,17 +54,46 @@
             }
         }
     }
+
+    .share-game {
+        padding-right: 20px;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: none;
+        }
+        
+        .icon {
+            position: relative;
+            top: 1px;
+            margin-right: 5px;
+        }
+    }
+
+    .delete-reel {
+        margin-right: 20px;
+        color: @gray;
+        cursor: pointer;
+
+        &:hover {
+            color: @brand-primary;
+        }
+
+        .icon {
+            margin-right: 2px;
+        }
+    }
 }
 
-/* Screens < 768px wide */
+/* Screens < @screen-lg wide */
 @media only screen
-and (max-width: @screen-sm) {
+and (max-width: @screen-md-max) {
 
     .film-header {
         margin-bottom: 0;
 
         .film-info {
-            width: @screen-sm;
+            width: @screen-lg;
 
             .film-title {
                 display: block;
@@ -72,8 +101,10 @@ and (max-width: @screen-sm) {
         }
 
         .film-title-desktop,
+        state-selector,
         .social-media,
-        .state-selector {
+        .share-game,
+        .delete-reel {
             display: none;
         } 
     }

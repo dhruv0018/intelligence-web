@@ -3,7 +3,7 @@
 .play {
 
     width: 100%;
-
+    opacity: 0.6;
     padding-top: 10px;
     padding-left: 15px;
     padding-right: 15px;
@@ -15,12 +15,16 @@
 
     &:hover,
     &.active {
-
+        opacity: 1;
         background-color: @play-selected-bg;
 
         .playHeadingContainer .playHeading h4 {
             color: black;
         }
+    }
+
+    &.fully-opaque {
+        opacity: 1;
     }
 
     &.edit-mode {
@@ -43,9 +47,9 @@
             display: flex;
             flex: 1;
             flex-direction: column;
-            
+            color: black;
+
             h4 {
-                color: @gray-light;
                 font-size: 16px;
                 font-weight: 200;
                 letter-spacing: -0.01em;
@@ -73,8 +77,8 @@
 
                 .summaries {
                     button {
+                        color: black;
                         pointer-events: none;
-                        color: @gray-light;
                         text-decoration: none;
                     }
                 }
@@ -84,20 +88,17 @@
                     padding-bottom: 10px;
                 }
 
-                &.playOpened {
-                    color: black;
-
-                    .summaries {
-                        button {
-                            color: black;
-                        }
-                    }
-                }
-
                 &.title {
                     flex-direction: row;
                     display: flex;
                     align-items: baseline;
+                }
+
+                @media only screen
+                and (max-width: @screen-md-max) {
+                    &.title:not(.title-reel){
+                        flex-direction: column;
+                    }
                 }
 
                 &.column {
@@ -147,6 +148,8 @@
     .playBody {
 
         color: black;
+
+        .list-group;
 
         &.playHide {
             display: none;
@@ -232,6 +235,7 @@
 
         .playHeading {
             margin-bottom: 10px;
+            color: black;
 
             h4 {
                 position: relative;
@@ -245,7 +249,6 @@
                 font-weight: 100;
                 font-size: small;
                 letter-spacing: 0.03em;
-                color: black;
                 margin: 0;
             }
         }

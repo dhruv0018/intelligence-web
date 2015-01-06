@@ -1,3 +1,7 @@
+@import (reference) "krossover-variables.less";
+
+// MIXINS
+
 .form-control-focus(@color: @input-border-focus) {
   @color-rgba: rgba(red(@color), green(@color), blue(@color), .6);
   &:focus {
@@ -9,5 +13,55 @@
 
 .light-box-shadow() {
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+
+/************************************************
+* For displaying at MOST the screen-size specified
+*************************************************/
+.screen-md-max {
+    @media only screen
+    and (min-width: @screen-lg) {
+        display: none !important;
+    }
+}
+
+.screen-sm-max {
+    @media only screen
+    and (min-width: @screen-md) {
+        display: none !important;
+    }
+}
+
+.screen-xs-max {
+    @media only screen
+    and (min-width: @screen-sm) {
+        display: none !important;
+    }
+}
+
+/*******************************************************
+* For displaying only at LEAST the screen size specified
+********************************************************/
+.screen-lg-min {
+    @media only screen
+    and (max-width: @screen-md-max) {
+        display: none !important;
+    }
+}
+
+// At least medium sized screens
+.screen-md-min {
+    @media only screen
+    and (max-width: @screen-sm-max) {
+        display: none !important;
+    }
+}
+
+// At least small sized screens
+.screen-sm-min {
+    @media only screen
+    and (max-width: @screen-xs-max) {
+        display: none !important;
+    }
 }
 

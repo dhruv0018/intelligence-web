@@ -39,6 +39,20 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reel;
             },
 
+            getByTeam: function(teamId) {
+
+                teamId = teamId || session.getCurrentTeamId();
+
+                if (!teamId) throw new Error('No teamId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderTeamId == teamId;
+                });
+            },
+
             addPlay: function(play) {
                 if (this.plays.indexOf(play.id) === -1) {
                     this.plays.push(play.id);
@@ -198,6 +212,23 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }).some(function(teamId) {
                     return teamId;
                 });
+            },
+            getTeamShare: function() {
+                var self = this;
+
+                if (!self.shares) throw new Error('No shares found');
+
+                var teamShare = null;
+
+                if (self.isSharedWithTeam()) {
+                    self.shares.forEach(function(share, index) {
+                        if (share.sharedWithTeamId) {
+                            teamShare = share;
+                        }
+                    });
+                }
+
+                return teamShare;
             }
         };
 

@@ -44,14 +44,10 @@
 
     // MOBILE
     @media only screen
-    and (max-width: 1024px) {
+    and (max-width: @screen-md-max) {
         .reel-body {
             margin: 0;
             padding: 0;
-        }
-
-        krossover-play {
-            flex: 0 0 60px;
         }
     }
 
@@ -78,13 +74,10 @@
             flex-direction: row;
 
             &.not-editable {
-                padding-top: 15px;
-            }
-        }
-
-        krossover-play {
-            &.edit-mode {
-                flex: 0 0 60px;
+                @media only screen
+                and (min-width: @screen-lg) {
+                    padding-top: 15px;
+                }
             }
         }
 

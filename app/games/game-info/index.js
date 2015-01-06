@@ -91,17 +91,5 @@ GamesInfo.controller('GamesInfo.controller', [
         //Player List
         $scope.teamPlayerList = Data.gamePlayerLists[$scope.game.teamId];
         $scope.opposingPlayerList = Data.gamePlayerLists[$scope.game.opposingTeamId];
-
-        if ($scope.game.isProcessing()) {
-            alerts.add({
-                type: 'warning',
-                message: 'Your video is still processing. You may still edit the Game Information for this film.'
-            });
-        } else if ($scope.game.isUploading()) {
-            alerts.add({
-                type: 'warning',
-                message: 'This film is currently uploading. You may still edit the Game Information for this film.'
-            });
-        }
     }
 ]);
