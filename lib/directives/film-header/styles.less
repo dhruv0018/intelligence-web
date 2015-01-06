@@ -79,39 +79,28 @@
             margin-right: 2px;
         }
     }
-
-    .state-selector {
-        margin-left: 10px;
-        margin-bottom: 33px;
-    }
 }
 
-/* Screens < 1024px wide */
+/* Screens < @screen-lg wide */
 @media only screen
-and (max-width: @screen-lg) {
-
-    .film-header {
-    
-        .share-game {
-            margin-bottom: 42px;
-        }
-    }
-}
-
-/* Screens < 768px wide */
-@media only screen
-and (max-width: @screen-sm) {
+and (max-width: @screen-md-max) {
 
     .film-header {
         margin-bottom: 0;
 
         .film-info {
-            width: @screen-sm;
+            width: @screen-lg;
+
+            .film-title {
+                display: block;
+            }
         }
 
+        .film-title-desktop,
+        state-selector,
         .social-media,
-        .state-selector,
-        .state-tabs {
+        .share-game,
+        .delete-reel {
             display: none;
         } 
     }

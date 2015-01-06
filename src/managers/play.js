@@ -41,9 +41,9 @@ IntelligenceWebClient.service('PlayManager', [
             playsManager.registerPlayScope(playScope);
         };
 
-        this.getNextPlay = function getNextPlay() {
+        this.getNextPlayScope = function getNextPlayScope() {
             playsManager = playsManager || $injector.get('PlaysManager');
-            return playsManager.getNextPlay(this.current);
+            return playsManager.getNextPlayScope(this.current);
         };
 
         /**

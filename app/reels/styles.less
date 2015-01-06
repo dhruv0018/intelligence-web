@@ -74,7 +74,10 @@
             flex-direction: row;
 
             &.not-editable {
-                padding-top: 15px;
+                @media only screen
+                and (min-width: @screen-lg) {
+                    padding-top: 15px;
+                }
             }
         }
 
