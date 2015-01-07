@@ -165,7 +165,7 @@ IntelligenceWebClient.factory('BaseStorage', [
                 return angular.isDefined(this.map[key]);
             },
 
-            grab: function() {
+            grab: function(filter) {
 
                 var self = this;
                 var item = self.db;
@@ -177,9 +177,30 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                         var array = angular.fromJson(item);
 
-                        var resources = array.map(function(string) {
+                        var objects = array.map(function(string) {
 
                             var object = angular.fromJson(string);
+
+                            return object;
+                        });
+
+                        var filtered = objects.filter(function(object) {
+
+                            if (filter && angular.isNumber(filter.id)) {
+
+                                return id == object.id;
+                            }
+
+                            else if (filter && angular.isArray(filter.id)) {
+
+                                return ~filter.id.indexOf(object.id);
+                            }
+
+                            else return true;
+                        });
+
+                        var resources = filtered.map(function(object) {
+
                             var resource = self.factory.create(object);
 
                             self.set(resource);
