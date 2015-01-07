@@ -59,6 +59,9 @@ FilmHome.controller('Coach.FilmHome.controller', [
         //specific members of the team
         $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team);
         $scope.headCoach = users.findByRole(ROLES.HEAD_COACH, $scope.team)[0];
+
+        //ui
+        $scope.filteredFilmsList = $scope.filmsList;
     }
 ]);
 
