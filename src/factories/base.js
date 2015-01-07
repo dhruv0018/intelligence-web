@@ -80,7 +80,24 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var storage = $injector.get(self.storage);
 
-                return storage.list;
+                if (filter) {
+
+                    var session = $injector.get('SessionService');
+                    var key = '@' + session.serializeUserId() + '!' + self.description + '?' + encodeURIComponent(JSON.stringify(filter));
+                    var ids = localStorage.getItem(key);
+
+                    if (ids) {
+
+                        return storage.list.filter(function(resource) {
+
+                            return ~ids.indexOf(resource.id);
+                        });
+                    }
+
+                    else return storage.list;
+                }
+
+                else return storage.list;
             },
 
             /**
@@ -405,25 +422,17 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 };
 
-                var ids = null;
-
-                if (auth.isLoggedIn) {
-
-                    ids = localStorage.getItem(key);
-                }
+                var ids = auth.isLoggedIn ? localStorage.getItem(key) : null;
 
                 if (ids) {
 
-                    return storage.grab(self.description).then(function(resources) {
+                    return storage.grab({ id: ids }).then(function(resources) {
 
                         if (angular.isNumber(filter)) single(filter);
                         else if (angular.isArray(filter)) multiple(filter);
                         else other(filter);
 
-                        return resources.filter(function(resource) {
-
-                            return ~ids.indexOf(resource.id);
-                        });
+                        return resources;
                     });
                 }
 
