@@ -27,6 +27,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 reel.sharedWithUsers = reel.sharedWithUsers || {};
 
                 /* build lookup table of shares by userId shared with */
+                //TODO find out why this doesnt look for a public share
                 if (reel.shares && reel.shares.length) {
 
                     angular.forEach(reel.shares, function(share) {
