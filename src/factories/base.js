@@ -422,12 +422,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 };
 
-                var ids = null;
-
-                if (auth.isLoggedIn) {
-
-                    ids = localStorage.getItem(key);
-                }
+                var ids = auth.isLoggedIn ? localStorage.getItem(key) : null;
 
                 if (ids) {
 
