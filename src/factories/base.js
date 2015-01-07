@@ -426,16 +426,13 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 if (ids) {
 
-                    return storage.grab(self.description).then(function(resources) {
+                    return storage.grab({ id: ids }).then(function(resources) {
 
                         if (angular.isNumber(filter)) single(filter);
                         else if (angular.isArray(filter)) multiple(filter);
                         else other(filter);
 
-                        return resources.filter(function(resource) {
-
-                            return ~ids.indexOf(resource.id);
-                        });
+                        return resources;
                     });
                 }
 
