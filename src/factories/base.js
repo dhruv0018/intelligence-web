@@ -84,7 +84,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     var session = $injector.get('SessionService');
                     var key = '@' + session.serializeUserId() + '!' + self.description + '?' + encodeURIComponent(JSON.stringify(filter));
-                    var ids = localStorage.getItem(key);
+                    var ids = JSON.parse(localStorage.getItem(key));
 
                     if (ids) {
 
@@ -349,7 +349,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     else return self.fetch(id).then(function(resource) {
 
-                        localStorage.setItem(key, [resource.id]);
+                        localStorage.setItem(key, JSON.stringify([resource.id]));
 
                         var list = [resource];
 
@@ -396,7 +396,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return $q.all(promises).then(function() {
 
-                        localStorage.setItem(key, unique);
+                        localStorage.setItem(key, JSON.stringify(unique));
 
                         var list = unique.map(function(id) {
 
@@ -416,13 +416,13 @@ IntelligenceWebClient.factory('BaseFactory', [
                             return resource.id;
                         });
 
-                        localStorage.setItem(key, ids);
+                        localStorage.setItem(key, JSON.stringify(ids));
 
                         return list;
                     });
                 };
 
-                var ids = auth.isLoggedIn ? localStorage.getItem(key) : null;
+                var ids = auth.isLoggedIn ? JSON.parse(localStorage.getItem(key)) : null;
 
                 if (ids) {
 
