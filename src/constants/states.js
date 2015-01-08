@@ -8,11 +8,11 @@ var IntelligenceWebClient = angular.module(pkg.name);
 var STATE_NAMES = {
 
     'Games.RawFilm': {
-        display: 'Raw Film'
+        display: 'Raw'
     },
 
     'Games.Breakdown': {
-        display: 'Film Breakdown'
+        display: 'Breakdown'
     },
 
     'Games.DownAndDistance': {
@@ -20,11 +20,11 @@ var STATE_NAMES = {
     },
 
     'Games.Info': {
-        display: 'Game Information'
+        display: 'Game Info'
     },
 
     'Games.Stats': {
-        display: 'Statistics'
+        display: 'Stats'
     },
 
     'Games.Formations': {
