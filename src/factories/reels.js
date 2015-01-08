@@ -25,6 +25,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 reel.plays = reel.plays || [];
                 reel.shares = reel.shares || [];
                 reel.sharedWithUsers = reel.sharedWithUsers || {};
+                reel.isDeleted = reel.isDeleted || false;
 
                 /* build lookup table of shares by userId shared with */
                 //TODO find out why this doesnt look for a public share
