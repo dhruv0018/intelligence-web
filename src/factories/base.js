@@ -555,32 +555,16 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var parameters = {};
-
                 resource = resource || self;
 
-                success = success || angular.noop;
-
-                error = error || function() {
-
-                    throw new Error('Could not remove ' + self.description.slice(0, -1)) + ' ' + resource.id;
-                };
-
-                var model = $injector.get(self.model);
-                var storage = $injector.get(self.storage);
-
-                /* Remove the resource from storage. */
-                storage.list.splice(storage.list.indexOf(resource), 1);
-                delete storage.map[resource.id];
+                /* Add the deleted flag. */
+                resource.isDeleted = true;
 
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
 
-                    /* Add the deleted flag. */
-                    resource.isDeleted = true;
-
                     /* Save the resource. */
-                    return model.update(parameters, resource, success, error).$promise;
+                    resource.save();
                 }
             },
 
