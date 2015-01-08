@@ -146,7 +146,7 @@ Games.controller('Games.controller', [
         var sharedWithCurrentUser = $scope.game.isSharedWithUser(currentUser);
         var breakdownShared = $scope.game.publicShare && $scope.game.publicShare.isBreakdownShared || sharedWithCurrentUser && $scope.game.getShareByUser(currentUser).isBreakdownShared;
 
-        if (gameBelongsToUserTeam) {
+        if (gameBelongsToUserTeam && currentUser.is(ROLES.COACH)) {
             //game information
             $scope.gameStates.push({name: 'Games.Info'});
 
