@@ -119,33 +119,49 @@ Clips.controller('Clips.controller', [
 
         /* Logic for clips navigation */
 
-        if ($stateParams.reel !== null) {
+        $scope.fromReel = ($stateParams.reel !== null);
+        $scope.fromGame = ($stateParams.game !== null);
 
-            if (angular.isDefined($stateParams.reel)) {
+        if ($scope.fromReel || $scope.fromGame) {
 
-                $scope.reelId = $stateParams.reel;
-                var reel = reels.get($scope.reelId);
+            var playsArray = [];
+            var film;
 
-                var reelPlays = [];
-                for (var i = 0; i < reel.plays.length; i++) {
-                    var play = plays.get(reel.plays[i]);
-                    reelPlays.push(play);
-                }
-
-                playsManager.reset(reelPlays);
-
-                $scope.reelName = reel.name;
-                $scope.clipIndex = playsManager.getIndex($scope.play) + 1;
-                $scope.clipTotal = reel.plays.length;
-                $scope.previousPlay = playsManager.getPreviousPlay($scope.play);
-                $scope.nextPlay = playsManager.getNextPlay($scope.play);
-
-                $scope.goToPlay = function(play) {
-                    if (play) {
-                        $state.go('Clips', {id: play.id, reel: $scope.reelId});
-                    }
-                };
+            // Set up film type specific information
+            if ($scope.fromReel) {
+                $scope.filmId = $stateParams.reel;
+                film = reels.get($scope.filmId);
+                $scope.filmName = film.name;
+            } else if ($scope.fromGame) {
+                $scope.filmId = $stateParams.game;
+                film = games.get($scope.filmId);
+                $scope.filmName = teams.get(film.opposingTeamId).name + ' vs. ' + teams.get(film.teamId).name;
             }
+
+            // Populate the array with play objects from playIds
+            for (var i = 0; i < film.plays.length; i++) {
+                var play = plays.get(film.plays[i]);
+                playsArray.push(play);
+            }
+
+            // Load the plays in the plays manager
+            playsManager.reset(playsArray);
+
+            // Template information/functions
+            $scope.clipIndex = playsManager.getIndex($scope.play) + 1;
+            $scope.clipTotal = film.plays.length;
+            $scope.previousPlay = playsManager.getPreviousPlay($scope.play);
+            $scope.nextPlay = playsManager.getNextPlay($scope.play);
+
+            $scope.goToPlay = function(play) {
+                if (play) { // Can be null in first/last play edge cases
+                    if ($scope.fromReel) {
+                        $state.go('Clips', {id: play.id, reel: $scope.filmId});
+                    } else if ($scope.fromGame) {
+                        $state.go('Clips', {id: play.id, game: $scope.filmId});
+                    }
+                }
+            };
         }
     }
 ]);
