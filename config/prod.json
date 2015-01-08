@@ -27,6 +27,9 @@
         "signup": {
             "uri": "http://www.krossover.com/get-started/"
         },
+        "intelligence": {
+            "uri": "http://new.krossover.com"
+        },
         "support": {
             "uri": "http://support.krossover.com"
         },
