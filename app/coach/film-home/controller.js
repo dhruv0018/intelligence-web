@@ -16,22 +16,38 @@ var FilmHome = angular.module('Coach.FilmHome');
 FilmHome.controller('Coach.FilmHome.controller', [
     '$rootScope', '$scope', '$state', '$filter', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', 'SessionService', 'Coach.Data', 'ROLES',
     function controller($rootScope, $scope, $state, $filter, reels, games, players, teams, users, session, data, ROLES) {
-        var teamId = session.currentUser.currentRole.teamId;
-        $scope.playersList = data.playersList;
-        $scope.players = players.getCollection();
-        $scope.games = games.getCollection();
-        $scope.gamesList = games.getList();
-        $scope.reels = reels.getCollection();
-        $scope.reelsList = reels.getList();
-        $scope.filmsList = $scope.gamesList.concat($scope.reelsList);
-        $scope.teams = teams.getCollection();
-        $scope.team = teams.get(teamId);
-        $scope.users = users.getCollection();
-        $scope.roster = $scope.team.roster;
-        $scope.activeRoster = [];
-        $scope.query = '';
-        $scope.data = data;
+
+        //Constants
         $scope.ROLES = ROLES;
+
+        //team related
+        var teamId = session.currentUser.currentRole.teamId;
+        $scope.team = teams.get(teamId);
+        $scope.roster = $scope.team.roster;
+
+        //player related
+        var playersFilter = { rosterId: $scope.team.roster.id };
+
+        //Arrays of resources
+        $scope.playersList = players.getList(playersFilter);
+        $scope.reelsList = reels.getList();
+        $scope.gamesList = games.getList();
+        $scope.filmsList = $scope.gamesList.concat($scope.reelsList);
+
+        //Collections of resources
+        $scope.games = games.getCollection();
+        $scope.reels = reels.getCollection();
+        $scope.players = players.getCollection();
+        $scope.teams = teams.getCollection();
+        $scope.users = users.getCollection();
+
+        //TODO not sure what this is used for -- potentially remove
+        $scope.activeRoster = [];
+
+        //used for search
+        $scope.query = '';
+
+        //specific members of the team
         $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team);
         $scope.headCoach = users.findByRole(ROLES.HEAD_COACH, $scope.team)[0];
     }

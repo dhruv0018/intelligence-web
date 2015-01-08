@@ -77,23 +77,50 @@ GamesFormations.config([
 ]);
 
 GamesFormations.controller('GamesFormations.controller', [
-    '$scope', '$state', '$stateParams', 'TeamsFactory', 'GamesFactory', 'Games.FormationReport.Data',
-    function controller($scope, $state, $stateParams, teams, games, data) {
+    '$scope', '$state', '$stateParams', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory', 'Games.FormationReport.Data',
+    function controller($scope, $state, $stateParams, teams, games, plays, leagues, players, data) {
+        //Game Related
+        var gameId = $stateParams.id;
+        $scope.game = games.get(gameId);
 
-        $scope.plays = data.plays;
-        $scope.league = data.league;
+        //Team Related
         $scope.teams = teams.getCollection();
+        $scope.team = teams.get($scope.game.teamId);
         $scope.teamId = $scope.game.teamId;
         $scope.opposingTeamId = $scope.game.opposingTeamId;
-        $scope.teamPlayers = data.teamPlayers;
-        $scope.opposingTeamPlayers = data.opposingTeamPlayers;
+
+        //Play Related
+        var playsFilter = { gameId: gameId };
+        $scope.plays = plays.getList(playsFilter);
+
+        //League Related
+        $scope.league = leagues.get($scope.team.leagueId);
+
+        var teamPlayersFilter = { rosterId: $scope.game.getRoster($scope.game.teamId).id };
+        $scope.teamPlayers = players.getList(teamPlayersFilter);
+
+        var opposingTeamPlayersFilter = { rosterId: $scope.game.getRoster($scope.game.opposingTeamId).id };
+        $scope.opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
+
+        //TODO formation report is a special case of data
+        //This is going to go away relatively soon
         $scope.report = data.formationReport;
 
+        //TODO get rid of the previous code and use this code instead once caching is in
+        //$scope.game.getFormationReport().$promise.then(function(formationReport) {
+        //    $scope.report = formationReport;
+        //});
+
+        //todo strange string representation of a boolean
         $scope.myTeam = 'true';
+
+        //todo seems like a candidate for removal
         $scope.$watch('myTeam', function(myTeam) {
+            //TODO use of implicit casting is risky IMO
             if ($scope.myTeam == 'true') {
                 $scope.teamId = $scope.game.teamId;
                 $scope.opposingTeamId = $scope.game.opposingTeamId;
+            //todo also implicit casting
             } else if ($scope.myTeam == 'false') {
                 $scope.teamId = $scope.game.opposingTeamId;
                 $scope.opposingTeamId = $scope.game.teamId;

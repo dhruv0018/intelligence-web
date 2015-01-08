@@ -15,14 +15,13 @@ var TeamRoster = angular.module('coach-team-roster');
  */
 
 TeamRoster.controller('Coach.Team.Roster.controller', [
-    '$q', '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Team.Data', 'LeaguesFactory', 'PositionsetsFactory', 'TeamsFactory', 'PlayersFactory', 'UsersFactory', 'SessionService',
-    function controller($q, $rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, leagues, positionsets, teams, players, users, session) {
+    '$q', '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'LeaguesFactory', 'PositionsetsFactory', 'TeamsFactory', 'PlayersFactory', 'UsersFactory', 'SessionService',
+    function controller($q, $rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, leagues, positionsets, teams, players, users, session) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
         $scope.playersFactory = players;
         $scope.usersFactory = users;
-        $scope.data = data;
 
         //toggles between player views
         $scope.filtering = [
@@ -46,7 +45,9 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
         $scope.positions = $scope.positionset.indexedPositions;
 
         //Roster
-        $scope.roster = $scope.data.playersList;
+        //TODO honestly, this should be renamed, the roster is a specific thing and NOT a array of players
+        var playersFilter = { rosterId: $scope.team.roster.id };
+        $scope.roster = players.getList(playersFilter);
         $scope.rosterId = $scope.team.roster.id;
 
         alerts.add({

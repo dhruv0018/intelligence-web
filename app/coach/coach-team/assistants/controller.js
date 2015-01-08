@@ -14,8 +14,8 @@ var TeamRoster = angular.module('coach-team-assistants');
  * @type {controller}
  */
 TeamRoster.controller('Coach.Team.Assistants.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'Coach.Team.Data', 'PlayersFactory', 'UsersFactory', 'TeamsFactory', 'LeaguesFactory', 'SessionService',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, data, players, users, teams, leagues, session) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'PlayersFactory', 'UsersFactory', 'TeamsFactory', 'LeaguesFactory', 'SessionService',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, players, users, teams, leagues, session) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
@@ -35,8 +35,6 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
             {type: 'active'},
             {type: 'inactive'}
         ];
-
-
 
         alerts.add({
             type: 'warning',
