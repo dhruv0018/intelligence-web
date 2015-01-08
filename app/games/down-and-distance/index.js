@@ -61,11 +61,6 @@ GamesDownAndDistance.config([
                                 return filtersets.fetch(uploaderLeague.filterSetId);
                             });
 
-                            //todo not 100% sure this belongs here -- doesn't seem right -- transporting anyway
-                            Data.formationReport = game.getFormationReport().$promise.then(function(formationReport) {
-                                return formationReport;
-                            });
-
                             return $q.all(Data);
                         });
                     }
@@ -79,17 +74,31 @@ GamesDownAndDistance.config([
 ]);
 
 GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
-    '$scope', 'TeamsFactory', 'GamesFactory', 'Games.DownAndDistance.Data',
-    function controller($scope, teams, games, data) {
-        var teamOnOffense = true;
-        $scope.game = data.game;
-        $scope.plays = data.plays;
-        $scope.league = data.league;
+    '$stateParams', '$scope', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'LeaguesFactory',
+    function controller($stateParams, $scope, teams, games, plays,  leagues) {
+
+        //Collections
         $scope.teams = teams.getCollection();
+
+        //Game Related
+        var gameId = $stateParams.id;
+        $scope.game = games.get(gameId);
+
+        //Team Related
         $scope.teamId = $scope.game.teamId;
         $scope.opposingTeamId = $scope.game.opposingTeamId;
-        $scope.report = data.formationReport;
+        var team = teams.get($scope.teamId);
 
+        //Play Related
+        var playsFilter = { gameId: gameId };
+        $scope.plays = plays.getList(playsFilter);
+
+        //League Related
+        $scope.league = leagues.get(team.leagueId);
+
+        var teamOnOffense = true;
+
+        //Used to render the view for the
         $scope.options = {
             'distance': {
                 'Any': undefined,
@@ -118,6 +127,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
             }
         };
 
+        //Default Report request
         $scope.dndReport = {
             gameId: $scope.game.id,
             teamId: $scope.teamId,
@@ -128,14 +138,18 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
             down: $scope.options.down[0]
         };
 
+
+        //Generates a down and distant report based on various properties stored on the dndReport object
         $scope.createDownAndDistanceReport = function() {
 
+            //TODO This casting seems very awkward -- perhaps the generation method should handle the casting
             if ($scope.dndReport.redZone === 'true') {
                 $scope.dndReport.redZone = true;
             } else {
                 $scope.dndReport.redZone = false;
             }
 
+            //TODO this doesn't seem to be doing anything at all, it is basically setting the variable back to itself
             if ($scope.dndReport.teamId == $scope.teamId) {
                 $scope.dndReport.teamId = $scope.teamId;
             } else if ($scope.dndReport.teamId == $scope.opposingTeamId) {

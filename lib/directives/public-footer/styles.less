@@ -1,0 +1,32 @@
+@import (reference) "main.less";
+
+.public-footer {
+    
+    border-top: thin solid @gray-border;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 100px;
+    color: @gray-darker;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-transform: uppercase;
+
+    .footer-column {
+
+        i {
+            font-size: 25px;
+            vertical-align: middle;
+        }
+
+        span {
+            vertical-align: middle;
+        }
+
+        a {
+            color: @gray-darker;
+            text-decoration: none;
+        }
+    }
+}

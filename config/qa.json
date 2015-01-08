@@ -33,6 +33,17 @@
         "support": {
             "uri": "http://support.krossover.com"
         },
+        "social": {
+            "instagram": {
+                "uri": "http://instagram.com/krossovr"
+            },
+            "twitter": {
+                "uri": "http://twitter.com/krossovr"
+            },
+            "facebook": {
+                "uri": "https://www.facebook.com/KrossoverIntelligence"
+            }
+        },
         "rosterTemplates": {
             "opposingTeamRoster": {
                 "uri": "https://drive.google.com/file/d/0Bwb8n8gzhXzLbXJMcWFhNGlmZUk/edit?usp=sharing"

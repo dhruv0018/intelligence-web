@@ -108,8 +108,8 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'Games.Breakdown.Data',
-    function controller($rootScope, $scope, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, data) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager',
+    function controller($rootScope, $scope, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager) {
 
 
         var gameId = $stateParams.id;
@@ -149,10 +149,26 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             $scope.totalPlays = plays.getList(playsFilter);
             $scope.plays = $scope.totalPlays;
 
+            /* Attaching playIds array to game object to mirror reels properties
+             * This array is utilized on the clips page for clips navigation
+             * BEWARE: It only contains viewable, i.e. has a clip, plays
+             */
+            $scope.game.plays = $scope.plays
+            .filter(function(play) {
+                return play.clip !== null;
+            })
+            .sort(function(first, second) {
+                return first.startTime - second.startTime;
+            })
+            .map(function(play) {
+                return play.id;
+            });
+
             $scope.filteredPlaysIds = [];
 
             $scope.expandAll = false;
         }
+
     }
 ]);
 
