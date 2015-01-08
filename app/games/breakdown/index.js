@@ -149,10 +149,26 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             $scope.totalPlays = plays.getList(playsFilter);
             $scope.plays = $scope.totalPlays;
 
+            /* Attaching playIds array to game object to mirror reels properties
+             * This array is utilized on the clips page for clips navigation
+             * BEWARE: It only contains viewable, i.e. has a clip, plays
+             */
+            $scope.game.plays = $scope.plays
+            .filter(function(play) {
+                return play.clip !== null;
+            })
+            .sort(function(first, second) {
+                return first.startTime - second.startTime;
+            })
+            .map(function(play) {
+                return play.id;
+            });
+
             $scope.filteredPlaysIds = [];
 
             $scope.expandAll = false;
         }
+
     }
 ]);
 
