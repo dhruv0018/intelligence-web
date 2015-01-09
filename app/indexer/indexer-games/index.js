@@ -127,9 +127,7 @@ Games.controller('indexer-games.Controller', [
         $scope.leagues = leagues.getCollection();
         $scope.teams = teams.getCollection();
         $scope.users = users.getCollection();
-
         $scope.userId = session.currentUser.id;
-
         $scope.footballFAQ = config.links.indexerFAQ.football.uri;
         $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
 
@@ -170,3 +168,17 @@ Games.controller('indexer-games.Controller', [
         });
     }
 ]);
+
+//TODO find out why games are coming down for indexers if they are not assigned to them or their assignment has finished
+Games.filter('assignedGames',
+    ['SessionService',
+        function(session) {
+            return function(games) {
+                return games.filter(function(game) {
+                    return game.indexerAssignments.some(function(assignment) {
+                        return !assignment.timeFinished && assignment.userId === session.currentUser.id;
+                    });
+                });
+            };
+        }
+    ]);

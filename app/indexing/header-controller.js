@@ -35,7 +35,11 @@ Indexing.controller('Indexing.Header.Controller', [
 
             indexing.isIndexing = false;
             $scope.game.finishAssignment(userId);
-            $state.go('indexer-games');
+
+            //TODO find out why it update locally without the callback
+            $scope.game.save().then(function() {
+                $state.go('indexer-games');
+            });
         };
 
         $scope.sendToTeam = function() {
