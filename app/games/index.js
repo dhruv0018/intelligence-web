@@ -115,9 +115,9 @@ Games.config([
 ]);
 
 Games.controller('Games.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'SessionService', 'ROLES', 'ARENA_TYPES_IDS',
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'AuthenticationService', 'SessionService', 'ROLES', 'ARENA_TYPES_IDS',
     'ARENA_TYPES',
-    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, session, ROLES, ARENA_TYPES_IDS, ARENA_TYPES) {
+    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, auth, session, ROLES, ARENA_TYPES_IDS, ARENA_TYPES) {
         $scope.game = games.get($stateParams.id);
 
         $scope.teams = teams.getCollection();
@@ -129,6 +129,7 @@ Games.controller('Games.controller', [
 
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
+        $scope.auth = auth;
         var currentUser = session.currentUser;
 
         //define states for view selector
@@ -141,7 +142,7 @@ Games.controller('Games.controller', [
         var sharedWithCurrentUser = $scope.game.isSharedWithUser(currentUser);
         var breakdownShared = $scope.game.publicShare && $scope.game.publicShare.isBreakdownShared || sharedWithCurrentUser && $scope.game.getShareByUser(currentUser).isBreakdownShared;
 
-        if (gameBelongsToUserTeam) {
+        if (gameBelongsToUserTeam && currentUser.is(ROLES.COACH)) {
             //game information
             $scope.gameStates.push({name: 'Games.Info'});
 

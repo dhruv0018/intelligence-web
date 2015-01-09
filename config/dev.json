@@ -27,8 +27,22 @@
         "signup": {
             "uri": "http://krossover.com/sign-up.php"
         },
+        "intelligence": {
+            "uri": "localhost:8000"
+        },
         "support": {
             "uri": "http://support.krossover.com"
+        },
+        "social": {
+            "instagram": {
+                "uri": "http://instagram.com/krossovr"
+            },
+            "twitter": {
+                "uri": "http://twitter.com/krossovr"
+            },
+            "facebook": {
+                "uri": "https://www.facebook.com/KrossoverIntelligence"
+            }
         },
         "rosterTemplates": {
             "opposingTeamRoster": {

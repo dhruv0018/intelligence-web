@@ -2,8 +2,7 @@
 
 .film-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     border-bottom: thin solid @gray-border;
     background-color: white;
 
@@ -21,20 +20,16 @@
             font-size: 11px;
         }
 
-        .film-title {
-            display: none;
-        }
-
         &:hover {
             color: inherit;
         }
     }
-   
-    .film-title-desktop {
-        flex: 1;
-        margin-left: 20px;
-        color: @gray-darker;
-        font-weight: @headings-font-weight;
+
+    .social-media,
+    .film-options {
+        margin-left: auto;
+        margin-bottom: 5px;
+        letter-spacing: normal;
     }
 
     .social-media {
@@ -56,7 +51,7 @@
     }
 
     .share-game {
-        padding-right: 20px;
+        margin-right: 20px;
         cursor: pointer;
 
         &:hover {

@@ -18,6 +18,8 @@ var ErrorReporter = {
      */
     reportError: function(error) {
 
+        if (!error) return;
+
         /* TODO: Check if this is the same error as the last one;
          * in which case we don't need to report it again. */
 
@@ -106,12 +108,14 @@ IntelligenceWebClient.config([
 ]);
 
 IntelligenceWebClient.run([
-    '$rootScope', '$location', '$state', 'AlertsService',
-    function run($rootScope, $location, $state, alerts) {
+    '$rootScope', '$log', '$location', '$state', 'AlertsService',
+    function run($rootScope, $log, $location, $state, alerts) {
 
         $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
 
             event.preventDefault();
+
+            $log.warn('State not found; coming from "' + fromState.name + '" looking for "' + unfoundState.name + '"');
 
             alerts.add({
                 type: 'info',
@@ -120,8 +124,10 @@ IntelligenceWebClient.run([
         });
 
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-            console.log(error);
+
             if (!event.defaultPrevented) {
+
+                $log.error('State change error; going from "' + fromState.name + '" to "' + toState.name + '"');
 
                 ErrorReporter.reportError(error);
 
