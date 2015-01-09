@@ -284,7 +284,8 @@ Indexing.config([
                         Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
 
-                        game.save();
+                        //TODO this is not working correctly with caching
+                        //game.save();
                     }
                 ]
             });
