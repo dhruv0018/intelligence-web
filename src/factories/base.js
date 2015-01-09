@@ -596,7 +596,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var storage = $injector.get(self.storage);
 
                 /* Remove the resource from storage. */
-                delete storage.resource[resource.id];
+                delete storage.map[resource.id];
 
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
