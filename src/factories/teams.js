@@ -1,4 +1,4 @@
-var PAGE_SIZE = 100;
+var PAGE_SIZE = 1000;
 
 var pkg = require('../../package.json');
 var moment = require('moment');
