@@ -46,9 +46,10 @@ Queue.service('Admin.Queue.Data.Dependencies', [
 
             sports: sports.load(),
             leagues: leagues.load(),
-            users: users.load({ 'relatedGameStatus[]': statuses }),
-            teams: teams.load({ 'relatedGameStatus[]': statuses }),
-            games: games.load({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
+            //TODO should be able to use load, but causes wierd caching issues
+            users: users.retrieve({ 'relatedGameStatus[]': statuses }),
+            teams: teams.retrieve({ 'relatedGameStatus[]': statuses }),
+            games: games.retrieve({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
         };
 
         return Data;

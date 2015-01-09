@@ -1,4 +1,4 @@
-var PAGE_SIZE = 100;
+var PAGE_SIZE = 1000;
 
 var pkg = require('../../package.json');
 var moment = require('moment');
@@ -14,7 +14,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
         var TeamsFactory = {
 
-            PAGE_SIZE: 100,
+            PAGE_SIZE: PAGE_SIZE,
 
             description: 'teams',
 
