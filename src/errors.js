@@ -18,6 +18,8 @@ var ErrorReporter = {
      */
     reportError: function(error) {
 
+        if (!error) return;
+
         /* TODO: Check if this is the same error as the last one;
          * in which case we don't need to report it again. */
 
