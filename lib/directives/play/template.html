@@ -43,7 +43,7 @@
             <div class="playHeadingContainer">
 
                 <div class="playHeading">
-                    <h4 class="title" data-ng-click="selectPlay()">
+                    <h4 class="title" data-ng-click="selectMobileClipPlay()">
 
                         <span class="team">{{teams[play.possessionTeamId].name}}</span>
 
@@ -57,7 +57,7 @@
 
             </div>
 
-            <ul class="playBody" data-ng-hide="play !== playManager.current" >
+            <ul class="playBody" data-ng-hide="play !== playManager.current || playIsInBreakdown" >
                 <krossover-event
                     data-plays="plays"
                     data-play="play"
