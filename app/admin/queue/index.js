@@ -47,26 +47,9 @@ Queue.service('Admin.Queue.Data.Dependencies', [
             sports: sports.load(),
             leagues: leagues.load(),
             users: users.load({ 'relatedGameStatus[]': statuses }),
-            games: games.load({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id }),
-
-            get teams() {
-
-                return this.games.then(function() {
-
-                    var teamIds = [];
-
-                    var gamesList = games.getList({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id });
-
-                    gamesList.forEach(function(game) {
-
-                        teamIds.push(game.teamId);
-                        teamIds.push(game.opposingTeamId);
-                        teamIds.push(game.uploaderTeamId);
-                    });
-
-                    return teams.load(teamIds);
-                });
-            },
+            //TODO should be able to use load, but causes wierd caching issues
+            teams: teams.retrieve({ 'relatedGameStatus[]': statuses }),
+            games: games.retrieve({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
         };
 
         return Data;
