@@ -117,6 +117,20 @@ IntelligenceWebClient.service('SessionService', [
         };
 
         /**
+         * Converts a user resource query to an encoded string representing it.
+         * @param {String} description - a description of the query.
+         * @param {Object} query - a query.
+         */
+        this.serializeUserResourceQuery = function(description, query) {
+
+            var key = '@' + this.serializeUserId() + '!' + description;
+
+            if (query) key += '?' + this.serializeQuery(query);
+
+            return key;
+        };
+
+        /**
          * Converts a string to a user resource object.
          * @param {String} string - a string representing a user object that has
          * been encoded with the serializeUser method.
