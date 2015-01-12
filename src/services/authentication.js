@@ -18,8 +18,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('AuthenticationService', [
-    'ANONYMOUS_USER', '$rootScope', '$injector', '$q', '$http', '$localForage', 'config', 'TokensService', 'SessionService', 'StorageManager', 'UsersFactory',
-    function(ANONYMOUS_USER, $rootScope, $injector, $q, $http, $localForage, config, tokens, session, storage, users) {
+    'ANONYMOUS_USER', '$rootScope', '$injector', '$q', '$http', 'config', 'TokensService', 'SessionService', 'StorageManager', 'UsersFactory',
+    function(ANONYMOUS_USER, $rootScope, $injector, $q, $http, config, tokens, session, storage, users) {
 
         var AuthenticationService = {
 
@@ -93,11 +93,7 @@ IntelligenceWebClient.service('AuthenticationService', [
                 sessionStorage.clear();
                 localStorage.clear();
                 storage.clear();
-
-                $localForage.clear().then(function() {
-
-                    location.reload();
-                });
+                indexedDB.deleteDatabase(pkg.name);
             },
 
             /**

@@ -20,6 +20,7 @@ require('./config');
 require('./app');
 
 require('./utilities');
+require('./indexeddb');
 require('./flow');
 require('./users');
 require('./routes');
@@ -27,7 +28,6 @@ require('./errors');
 require('./viewports');
 require('./logs');
 require('./device');
-require('./localforage');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');

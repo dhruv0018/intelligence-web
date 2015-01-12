@@ -15,12 +15,10 @@
     },
     "browserify-shim": {
         "angular": "angular",
-        "angular-localforage": "angular-localforage",
         "flow": "flowjs"
     },
     "browser": {
         "angular": "./node_modules/angular/angular.js",
-        "angular-localforage": "./node_modules/angular-localforage/dist/angular-localForage.js",
         "flow": "./node_modules/flowjs/src/flow.js"
     },
     "napa": {
@@ -35,7 +33,6 @@
         "angular-ui-validate": "angular-ui/ui-utils#validate-0.1.1",
         "angular-multiselect": "amitava82/angular-multiselect",
         "angular-ui-router": "angular-ui/ui-router#0.2.10",
-        "angular-localforage": "ocombe/angular-localForage#1.0.0",
         "flow": "flowjs/ng-flow#v2.5.1",
         "flowjs": "flowjs/flow.js#v2.6.2",
         "Mousetrap": "ccampbell/mousetrap",
@@ -98,7 +95,6 @@
         "karma-phantomjs-launcher": "0.1.4",
         "less": "1.7.0",
         "load-grunt-tasks": "0.5.0",
-        "localforage": "^1.1.1",
         "mocha": "1.20.1",
         "napa": "0.4.1",
         "time-grunt": "0.3.2"
