@@ -128,6 +128,19 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
+             * Gets a map of resources.
+             * @returns {Map.<Number,Resource>} - a map of resources, indexed by ID.
+             */
+            getMap: function() {
+
+                var self = this;
+
+                var storage = $injector.get(self.storage);
+
+                return storage.map;
+            },
+
+            /**
              * Gets a collection of resources.
              * @returns {Map.<Number,Resource>} - a map of resources, indexed by ID.
              */
@@ -135,9 +148,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var storage = $injector.get(self.storage);
-
-                return storage.map;
+                return self.getMap();
             },
 
             /**
