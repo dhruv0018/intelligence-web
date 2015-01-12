@@ -234,6 +234,16 @@ IntelligenceWebClient.factory('BaseFactory', [
                 }
 
                 filter = filter || {};
+
+                /* If filtering by an array of IDs. */
+                if (filter['id[]']) {
+
+                    /* Clear start and count filters. */
+                    filter.start = null;
+                    filter.count = null;
+                    filter['id[]'] = util.unique(filter['id[]']);
+                }
+
                 if (filter.start !== null) filter.start = filter.start || 0;
                 if (filter.count !== null) filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
@@ -244,14 +254,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                 });
 
                 if (aFilterIsUndefined) throw new Error('Undefined filter');
-
-                /* If filtering by an array of IDs. */
-                if (filter['id[]']) {
-
-                    /* Clear start and count filters. */
-                    filter.start = null;
-                    filter.count = null;
-                }
 
                 success = success || function(resources) {
 
@@ -299,17 +301,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+
+
                 filter = filter || {};
-                if (filter.start !== null) filter.start = filter.start || 0;
-                if (filter.count !== null) filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
-
-                var aFilterIsUndefined = Object.keys(filter).some(function(key) {
-
-                    if (angular.isArray(filter[key])) return !filter[key].length;
-                    else return angular.isUndefined(filter[key]);
-                });
-
-                if (aFilterIsUndefined) throw new Error('Undefined filter');
 
                 /* If filtering by an array of IDs. */
                 if (filter['id[]']) {
@@ -321,6 +315,17 @@ IntelligenceWebClient.factory('BaseFactory', [
                     /* Take the first set of IDs. */
                     filter['id[]'] = filter['id[]'].splice(0, 100);
                 }
+
+                if (filter.start !== null) filter.start = filter.start || 0;
+                if (filter.count !== null) filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
+
+                var aFilterIsUndefined = Object.keys(filter).some(function(key) {
+
+                    if (angular.isArray(filter[key])) return !filter[key].length;
+                    else return angular.isUndefined(filter[key]);
+                });
+
+                if (aFilterIsUndefined) throw new Error('Undefined filter');
 
                 success = success || function(resources) {
 
