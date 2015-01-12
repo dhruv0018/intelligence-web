@@ -19,6 +19,7 @@ require('./config');
 
 require('./app');
 
+require('./utilities');
 require('./flow');
 require('./users');
 require('./routes');
