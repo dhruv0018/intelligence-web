@@ -299,6 +299,11 @@ IntelligenceWebClient.factory('BaseStorage', [
                 var ids = JSON.parse(item);
 
                 return ids;
+            },
+
+            dropView: function(key) {
+
+                localStorage.removeItem(key);
             }
         };
 
