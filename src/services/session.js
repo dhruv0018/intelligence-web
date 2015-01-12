@@ -111,7 +111,7 @@ IntelligenceWebClient.service('SessionService', [
 
             var key = '';
 
-            if (query) key += JSON.stringify(query);
+            if (query) key += encodeURIComponent(JSON.stringify(query));
 
             return key;
         };
