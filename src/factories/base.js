@@ -328,8 +328,12 @@ IntelligenceWebClient.factory('BaseFactory', [
                     /* If there are more resources on the server to retrieve. */
                     else {
 
-                        /* Move the start filter to the next resource set. */
-                        filter.start += filter.count;
+                        /* If the start and count filters are both set. */
+                        if (filter.start && filter.count) {
+
+                            /* Move the start filter to the next resource set. */
+                            filter.start += filter.count;
+                        }
 
                         /* Keep retrieving resources until all are retrieved. */
                         return self.retrieve(filter);
