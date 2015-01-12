@@ -207,6 +207,14 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 if (aFilterIsUndefined) throw new Error('Undefined filter');
 
+                /* If filtering by an array of IDs. */
+                if (filter['id[]']) {
+
+                    /* Clear start and count filters. */
+                    filter.start = null;
+                    filter.count = null;
+                }
+
                 success = success || function(resources) {
 
                     return resources;
@@ -265,6 +273,17 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 if (aFilterIsUndefined) throw new Error('Undefined filter');
 
+                /* If filtering by an array of IDs. */
+                if (filter['id[]']) {
+
+                    /* Clear start and count filters. */
+                    filter.start = null;
+                    filter.count = null;
+
+                    /* Take the first set of IDs. */
+                    filter['id[]'] = filter['id[]'].splice(0, 100);
+                }
+
                 success = success || function(resources) {
 
                     return resources;
@@ -297,7 +316,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     storage.query = storage.query.concat(resources);
 
                     /* If all of the server resources have been retrieved. */
-                    if (resources.length < filter.count) {
+                    if ((filter['id[]'] && filter['id[]'].length < 100) || resources.length < filter.count) {
 
                         var query = storage.query.slice();
                         delete storage.query;
