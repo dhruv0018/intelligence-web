@@ -209,7 +209,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     /* Store the resource locally in its storage collection. */
                     storage.set(resource);
-                    storage.update();
 
                     return resource;
                 });
@@ -283,8 +282,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                         storage.set(resource);
                     });
 
-                    /* Update persistent storage. */
-                    storage.update();
 
                     return resources;
                 });
@@ -363,7 +360,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         var query = storage.query.slice();
                         delete storage.query;
-                        storage.update();
 
                         return query;
                     }
@@ -570,7 +566,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         /* Store the resource locally in its storage collection. */
                         storage.set(resource);
-                        storage.update();
 
                         return resource;
                     })
@@ -596,7 +591,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         /* Store the resource locally in its storage collection. */
                         storage.set(resource);
-                        storage.update();
 
                         return resource;
                     })
