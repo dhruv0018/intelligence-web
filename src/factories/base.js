@@ -70,6 +70,33 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
+             * Gets a list of resource IDs.
+             * @param {Array} [list] - a list of resources to map.
+             * @param {Object} [filter] - an object hash of filter parameters.
+             * @returns {Array.<Number>} - an array of resource IDs.
+             */
+            getIds: function(list, filter) {
+
+                var self = this;
+
+                if (!filter) filter = list;
+
+                if (!angular.isArray(list)) {
+
+                    /* Get list of resources. */
+                    list = self.getList(filter);
+                }
+
+                /* Create a map of resource IDs. */
+                var ids = list.map(function(resource) {
+
+                    return resource.id;
+                });
+
+                return ids;
+            },
+
+            /**
              * Gets a list of resources.
              * @param {Object} [filter] - an object hash of filter parameters.
              * @returns {Array.<Resource>} - an array of resources.
