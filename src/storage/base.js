@@ -58,8 +58,8 @@ IntelligenceWebClient.factory('Stores', [
 ]);
 
 IntelligenceWebClient.factory('BaseStorage', [
-    '$q', '$localForage', 'Keys', 'Stores',
-    function($q, $localForage, keys, stores) {
+    '$q', 'IndexedDB', 'Keys', 'Stores',
+    function($q, db, keys, stores) {
 
         var session;
 
@@ -136,28 +136,40 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     self.map[key] = value;
                 }
-            },
 
-            update: function() {
+                db.then(function(db) {
 
-                var self = this;
+                    var transaction = db.transaction(self.description, 'readwrite');
+                    var objectStore = transaction.objectStore(self.description);
 
-                var list = self.list.map(function(resource) {
+                    if (angular.isArray(value)) {
 
-                    var copy = angular.copy(resource);
-                    var object = self.factory.unextend(copy);
-                    var string = angular.toJson(object);
+                        var list = value.concat();
 
-                    return string;
+                        list.forEach(function(item) {
+
+                            item = self.factory.unextend(item);
+                            item = angular.toJson(item);
+                            item = angular.fromJson(item);
+
+                            objectStore.put(item);
+                        });
+                    }
+
+                    else if (angular.isObject(value)) {
+
+                        value = self.factory.unextend(value);
+                        value = angular.toJson(value);
+                        value = angular.fromJson(value);
+
+                        objectStore.put(value);
+                    }
                 });
-
-                $localForage.setItem(self.db, list);
             },
 
             clear: function() {
 
                 this.map = Object.create(null);
-                $localForage.removeItem(this.db);
             },
 
             isStored: function(key) {
@@ -169,54 +181,109 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 var self = this;
                 var item = self.db;
-                var deferred = $q.defer();
+                var request;
+                var resources = [];
 
-                $localForage.getItem(item).then(function(item) {
+                return db.then(function(db) {
 
-                    if (item) {
+                    var deferred = $q.defer();
 
-                        var array = angular.fromJson(item);
+                    var transaction = db.transaction(self.description);
+                    var objectStore = transaction.objectStore(self.description);
 
-                        var objects = array.map(function(string) {
-
-                            var object = angular.fromJson(string);
-
-                            return object;
-                        });
-
-                        var filtered = objects.filter(function(object) {
-
-                            if (filter && angular.isNumber(filter.id)) {
-
-                                return id == object.id;
-                            }
-
-                            else if (filter && angular.isArray(filter.id)) {
-
-                                return ~filter.id.indexOf(object.id);
-                            }
-
-                            else return true;
-                        });
-
-                        var resources = filtered.map(function(object) {
-
-                            var resource = self.factory.create(object);
-
-                            self.set(resource);
-
-                            return resource;
-                        });
-
-                        deferred.resolve(resources);
-
-                    } else {
+                    if (filter && angular.isObject(filter) && angular.isDefined(filter.id) && filter.id === null) {
 
                         deferred.reject();
                     }
+
+                    else if (filter && angular.isObject(filter) && angular.isNumber(filter.id)) {
+
+                        request = objectStore.get(filter.id);
+
+                        request.onsuccess = function(event) {
+
+                            var result = event.target.result;
+
+                            var resource = self.factory.create(result);
+
+                            self.map[resource.id] = resource;
+
+                            resources.push(resource);
+
+                            deferred.resolve(resources);
+                        };
+
+                        request.onerror = function(event) {
+
+                            deferred.reject();
+                        };
+                    }
+
+                    else if (filter && angular.isObject(filter) && angular.isArray(filter.id)) {
+
+                        var promises = [];
+
+                        utils.unique(filter.id).forEach(function(id) {
+
+                            var promise = $q.defer();
+
+                            request = objectStore.get(id);
+
+                            request.onsuccess = function(event) {
+
+                                var result = event.target.result;
+
+                                var resource = self.factory.create(result);
+
+                                self.map[resource.id] = resource;
+
+                                resources.push(resource);
+
+                                promise.resolve(resources);
+                            };
+
+                            request.onerror = function(event) {
+
+                                promise.reject();
+                            };
+
+                            promises.push(promise);
+                        });
+
+                        $q.all(promises).then(deferred.resolve(resources));
+                    }
+
+                    else {
+
+                        request = objectStore.openCursor();
+
+                        request.onsuccess = function(event) {
+
+                            var result = event.target.result;
+
+                            if (result) {
+
+                                var resource = self.factory.create(result);
+
+                                self.map[resource.id] = resource;
+
+                                resources.push(resource);
+
+                                result.continue();
+                            }
+
+                            else deferred.resolve(resources);
+                        };
+
+                        request.onerror = function(event) {
+
+                            promise.reject();
+                        };
+                    }
+
+                    return deferred.promise;
                 });
 
-                return deferred.promise;
             }
         };
 
