@@ -58,8 +58,8 @@ IntelligenceWebClient.factory('Stores', [
 ]);
 
 IntelligenceWebClient.factory('BaseStorage', [
-    '$q', 'IndexedDB', 'Keys', 'Stores',
-    function($q, db, keys, stores) {
+    '$q', 'Utilities', 'IndexedDB', 'Keys', 'Stores',
+    function($q, utils, db, keys, stores) {
 
         var session;
 
@@ -283,7 +283,22 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     return deferred.promise;
                 });
+            },
 
+            saveView: function(key, view) {
+
+                var unique = utils.unique(view);
+                var ids = JSON.stringify(unique);
+
+                localStorage.setItem(key, ids);
+            },
+
+            loadView: function(key) {
+
+                var item = localStorage.getItem(key);
+                var ids = JSON.parse(item);
+
+                return ids;
             }
         };
 
