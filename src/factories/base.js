@@ -518,16 +518,19 @@ IntelligenceWebClient.factory('BaseFactory', [
 
             /**
              * Unloads resources.
+             * @param {Object} [filter] - an object hash of filter parameters.
              */
-            unload: function() {
+            unload: function(filter) {
 
                 var self = this;
 
-                filter = filter || '';
-
                 var storage = $injector.get(self.storage);
+                var session = $injector.get('SessionService');
 
-                storage.clear();
+                /* Get the view key based on the filter. */
+                var view = session.serializeUserResourceQuery(self.description, filter);
+
+                storage.dropView(view);
             },
 
             /**
