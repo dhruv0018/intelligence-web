@@ -11,34 +11,34 @@ var ISO8601_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3}Z|\+\d{2}:\d{2}
 
 function transformToDates(data) {
 
-    if (angular.isObject(data)) {
-
-        Object.keys(data).forEach(function(key) {
-
-            var value = data[key];
-
-            if (angular.isString(value)) {
-
-                var match = value.match(ISO8601_REGEX);
-
-                if (match) {
-
-                    var date = moment.utc(match[0]);
-
-                    if (date.isValid()) {
-
-                        data[key] = date.toDate();
-                    }
-                }
-            }
-
-            else if (angular.isObject(value)) {
-
-                return transformToDates(value);
-            }
-        });
-    }
-
+    //if (angular.isObject(data)) {
+    //
+    //    Object.keys(data).forEach(function(key) {
+    //
+    //        var value = data[key];
+    //
+    //        if (angular.isString(value)) {
+    //
+    //            var match = value.match(ISO8601_REGEX);
+    //
+    //            if (match) {
+    //
+    //                var date = moment.utc(match[0]);
+    //
+    //                if (date.isValid()) {
+    //
+    //                    data[key] = date.toDate();
+    //                }
+    //            }
+    //        }
+    //
+    //        else if (angular.isObject(value)) {
+    //
+    //            return transformToDates(value);
+    //        }
+    //    });
+    //}
+    //console.log(data);
     return data;
 }
 
