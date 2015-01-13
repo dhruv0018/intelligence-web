@@ -173,7 +173,6 @@ IntelligenceWebClient.factory('BaseStorage', [
             grab: function(filter) {
 
                 var self = this;
-                var item = self.db;
                 var request;
                 var resources = [];
 
@@ -299,38 +298,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 localStorage.removeItem(key);
             }
         };
-
-        Object.defineProperties(BaseStorage, {
-
-            db: {
-
-                enumerable: false,
-
-                get: function() {
-
-                    return keys.user + this.description;
-                }
-            },
-
-            promises: {
-
-                enumerable: false,
-
-                get: function() {
-
-                    stores.user.promises = stores.user.promises || Object.create(null);
-
-                    return stores.user.promises;
-                },
-
-                set: function(value) {
-
-                    stores.user.promises = stores.user.promises || Object.create(null);
-
-                    stores.user.promises = value;
-                }
-            }
-        });
 
         return BaseStorage;
     }
