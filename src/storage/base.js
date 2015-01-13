@@ -91,13 +91,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 return stores.user[this.description];
             },
 
-            set map(value) {
-
-                stores.user[this.description] = stores.user[this.description] || Object.create(null);
-
-                stores.user[this.description] = value;
-            },
-
             get: function(key) {
 
                 var id = key;
