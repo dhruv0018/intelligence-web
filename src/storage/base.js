@@ -11,8 +11,6 @@ IntelligenceWebClient.factory('BaseStorage', [
     '$q', 'Utilities', 'IndexedDB', 'RootStorage',
     function($q, utils, db, root) {
 
-        var session;
-
         var BaseStorage = {
 
             get keys() {
