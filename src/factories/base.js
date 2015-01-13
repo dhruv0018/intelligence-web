@@ -232,6 +232,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                     filter = null;
                 }
 
+                var session = $injector.get('SessionService');
+
+                var view = session.serializeUserResourceQuery(self.description, filter);
+
                 filter = filter || {};
 
                 /* If filtering by an array of IDs. */
@@ -282,6 +286,13 @@ IntelligenceWebClient.factory('BaseFactory', [
                         storage.set(resource);
                     });
 
+                    /* If not filtering by an array of IDs. */
+                    if (!filter['id[]']) {
+
+                        var ids = self.getIds(resources);
+
+                        storage.saveView(view, ids);
+                    }
 
                     return resources;
                 });
@@ -298,7 +309,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+                var session = $injector.get('SessionService');
 
+                var view = session.serializeUserResourceQuery(self.description, filter);
 
                 filter = filter || {};
 
@@ -310,7 +323,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     filter.count = null;
 
                     /* Take the first set of IDs. */
-                    filter['id[]'] = filter['id[]'].splice(0, 100);
+                    filter['id[]'] = util.unique(filter['id[]']).splice(0, 100);
                 }
 
                 if (filter.start !== null) filter.start = filter.start || 0;
@@ -359,6 +372,15 @@ IntelligenceWebClient.factory('BaseFactory', [
                     if ((filter['id[]'] && filter['id[]'].length < 100) || resources.length < filter.count) {
 
                         var query = storage.query.slice();
+
+                        /* If not filtering by an array of IDs. */
+                        if (!filter['id[]']) {
+
+                            var ids = self.getIds(resources);
+
+                            storage.saveView(view, ids);
+                        }
+
                         delete storage.query;
 
                         return query;
