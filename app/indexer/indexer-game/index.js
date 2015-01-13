@@ -61,7 +61,7 @@ Game.service('Indexer.Game.Data.Dependencies', [
                         return team.schoolId;
                     });
 
-                    return schools.load(schoolIds);
+                    if (schoolIds.length) return schools.load(schoolIds);
                 });
             },
 
