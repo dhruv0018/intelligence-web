@@ -10,13 +10,18 @@
     data-is-mobile="isMobile"
     data-vg-sources="sources">
 
+    <telestration-menu class="telestration-menu"></telestration-menu>
+
     <poster-image krossover-play-pause-button class="posterImage" data-ng-hide="played || !isMobile" data-ng-click="played = true"></poster-image>
 
     <div data-ng-show="!isMobile || played" class="video-container">
 
         <div class="error-video" data-ng-hide="playManager.videoTitle === 'reelsPlayer' || sources.length"><h1>Could not load video</h1></div>
 
-        <video-spot krossover-play-pause-button></video-spot>
+        <video-spot 
+            krossover-play-pause-button
+            telestration>
+        </video-spot>
 
         <data-vg-buffering></data-vg-buffering>
 
@@ -45,6 +50,12 @@
                 </span>
 
                 <span class="controls-space"></span>
+
+                <button 
+                    telestration-menu-button
+                    data-ng-click="toggleControlsMenu()">
+                    Tel
+                </button>
 
                 <data-vg-volume class="video-control">
 

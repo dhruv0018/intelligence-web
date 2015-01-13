@@ -1,0 +1,13 @@
+{
+    "name": "telestration",
+    "templates": [
+        "menu-template.html",
+        "menu-item-template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}
