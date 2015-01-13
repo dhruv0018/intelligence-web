@@ -86,9 +86,9 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             get map() {
 
-                stores.user[this.description] = stores.user[this.description] || Object.create(null);
+                root[this.description] = root[this.description] || Object.create(null);
 
-                return stores.user[this.description];
+                return root[this.description];
             },
 
             get: function(key) {
