@@ -36,10 +36,17 @@
         </div>
 
         <div class="sharing-with-team-container" data-ng-show="withTeam">
-            <div class="team-share-toggle" data-ng-click="shareReelWithTeamToggle()">
-                <i class="icon icon-check-empty" data-ng-show="!sharedWithTeam"></i>
-                <i class="icon icon-check-square-o" data-ng-show="sharedWithTeam"></i>
-                <p>Allow this reel to be shared with your active roster</p>
+            <div class="info-box">
+                Reels are automatically shared amongst team coaches.<br/>
+                Players must have an email address associated with their profile in order to be selected.
+            </div>
+
+            <div class="team-share-table">
+                <div class="team-share-player" data-ng-repeat="player in playersWithAccounts" data-ng-click="shareReelWithPlayerToggle(player)">
+                    <i class="icon icon-check-empty" data-ng-show="!film.isSharedWithUser(users[player.userId])"></i>
+                    <i class="icon icon-check-square-o" data-ng-show="film.isSharedWithUser(users[player.userId])"></i>
+                    <span data-ng-show="team.roster.playerInfo[player.id].jerseyNumber">#{{team.roster.playerInfo[player.id].jerseyNumber}}&nbsp;</span> {{player.firstName}} {{player.lastName}}
+                </div>
             </div>
 
             <div class="button-row">
