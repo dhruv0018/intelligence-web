@@ -108,16 +108,6 @@ IntelligenceWebClient.factory('BaseStorage', [
                 });
             },
 
-            clear: function() {
-
-                this.map = Object.create(null);
-            },
-
-            isStored: function(key) {
-
-                return angular.isDefined(this.map[key]);
-            },
-
             grab: function(filter) {
 
                 var self = this;
@@ -223,6 +213,24 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     return deferred.promise;
                 });
+            },
+
+            clear: function() {
+
+                root[this.description] = Object.create(null);
+
+                db.then(function(db) {
+
+                    var transaction = db.transaction(self.description);
+                    var objectStore = transaction.objectStore(self.description);
+
+                    objectStore.clear();
+                });
+            },
+
+            isStored: function(key) {
+
+                return angular.isDefined(this.map[key]);
             },
 
             saveView: function(key, view) {
