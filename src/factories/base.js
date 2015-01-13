@@ -389,120 +389,108 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var auth = $injector.get('AuthenticationService');
-                var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
                 var session = $injector.get('SessionService');
 
-                var key = '@' + session.serializeUserId() + '!' + self.description + '?' + encodeURIComponent(JSON.stringify(filter));
+                /* Determine the type of filter and return the appropriate response. */
+                if (angular.isNumber(filter)) return single(filter);
+                else if (angular.isArray(filter)) return multiple(filter);
+                else return other(filter);
 
-                var single = function(id) {
+                /**
+                 * Single load. Loads a single resource.
+                 * @param {Number} id - an ID of the resource to load.
+                 * @return {Promise.<Array>} - a promise of the resource query.
+                 */
+                function single(id) {
 
-                    if (storage.isStored(id)) {
+                    /* Attempt to grab the resource from storage. */
+                    return storage.grab({ id: id }).then(
 
-                        var deferred = $q.defer();
-                        var resource = storage.get(id);
-                        var list = [resource];
+                        /* Handle successful cache hit. */
+                        function hit(resources) {
 
-                        deferred.resolve(list);
+                            /* Fetch the resource again to update it. */
+                            self.fetch(id);
 
-                        return deferred.promise;
-                    }
+                            return resources;
+                        },
 
-                    else return self.fetch(id).then(function(resource) {
+                        /* Handle cache miss. */
+                        function miss() {
 
-                        localStorage.setItem(key, JSON.stringify([resource.id]));
+                            /* Fetch the resource from the server. */
+                            return self.fetch(id)
 
-                        var list = [resource];
+                            .then(function(resource) {
 
-                        return list;
-                    });
-                };
-
-                var multiple = function(ids) {
-
-                    var promises = [];
-
-                    var numbers = ids.map(function(id) {
-
-                        return Number(id);
-                    });
-
-                    var valid = numbers.filter(function(id) {
-
-                        return id > 0 && !isNaN(id);
-                    });
-
-                    var unique = valid.reduce(function(previous, current) {
-
-                        if (!~previous.indexOf(current)) previous.push(current);
-
-                        return previous;
-
-                    }, []);
-
-                    var unstored = unique.filter(function(id) {
-
-                        return !storage.isStored(id);
-                    });
-
-                    while (unstored.length) {
-
-                        promises.push(self.query({
-
-                            start: null,
-                            count: null,
-                            'id[]': unstored.splice(0, 100)
-                        }));
-                    }
-
-                    return $q.all(promises).then(function() {
-
-                        localStorage.setItem(key, JSON.stringify(unique));
-
-                        var list = unique.map(function(id) {
-
-                            return storage.get(id);
-                        });
-
-                        return list;
-                    });
-                };
-
-                var other = function(filter) {
-
-                    return self.retrieve(filter).then(function(list) {
-
-                        var ids = list.map(function(resource) {
-
-                            return resource.id;
-                        });
-
-                        localStorage.setItem(key, JSON.stringify(ids));
-
-                        return list;
-                    });
-                };
-
-                var ids = auth.isLoggedIn ? JSON.parse(localStorage.getItem(key)) : null;
-
-                if (ids) {
-
-                    return storage.grab({ id: ids }).then(function(resources) {
-
-                        if (angular.isNumber(filter)) single(filter);
-                        else if (angular.isArray(filter)) multiple(filter);
-                        else other(filter);
-
-                        return resources;
-                    });
+                                /* Convert the return into an array. */
+                                return [resource];
+                            });
+                        }
+                    );
                 }
 
-                else {
+                /**
+                 * Multiple load. Loads a multiple resources.
+                 * @param {Array.<Number>} ids - an array of IDs of the resources to load.
+                 * @return {Promise.<Array>} - a promise of the resource query.
+                 */
+                function multiple(ids) {
 
-                    if (angular.isNumber(filter)) return single(filter);
-                    else if (angular.isArray(filter)) return multiple(filter);
-                    else return other(filter);
+                    /* Attempt to grab the resources from storage. */
+                    return storage.grab({ id: ids }).then(
+
+                        /* Handle successful cache hit. */
+                        function hit(resources) {
+
+                            /* Retrieve the resources again to update them. */
+                            self.retrieve({ 'id[]': ids });
+
+                            return resources;
+                        },
+
+                        /* Handle cache miss. */
+                        function miss() {
+
+                            /* Retrieve the resources from the server. */
+                            return self.retrieve({ 'id[]': ids });
+                        }
+                    );
+                }
+
+                /**
+                 * Loads resources with a filter.
+                 * @param {Object} [filter] - an object hash of filter parameters.
+                 * @return {Promise.<Array>} - a promise of the resource query.
+                 */
+                function other(filter) {
+
+                    /* Get the view key based on the filter. */
+                    var view = session.serializeUserResourceQuery(self.description, filter);
+
+                    /* Load the view. */
+                    var ids = storage.loadView(view);
+
+                    /* Attempt to grab the resources from storage. */
+                    return storage.grab({ id: ids }).then(
+
+                        /* Handle successful cache hit. */
+                        function hit(resources) {
+
+                            /* Retrieve the resources again to update them. */
+                            self.retrieve(filter);
+
+                            return resources;
+                        },
+
+                        /* Handle cache miss. */
+                        function miss() {
+
+                            /* Retrieve the resources from the server. */
+                            return self.retrieve(filter);
+                        }
+                    );
                 }
             },
 
