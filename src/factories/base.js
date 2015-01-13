@@ -256,7 +256,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else return angular.isUndefined(filter[key]);
                 });
 
-                if (aFilterIsUndefined) throw new Error('Undefined filter');
+                if (aFilterIsUndefined) throw new Error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
 
                 success = success || function(resources) {
 
@@ -335,7 +335,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else return angular.isUndefined(filter[key]);
                 });
 
-                if (aFilterIsUndefined) throw new Error('Undefined filter');
+                if (aFilterIsUndefined) throw new Error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
 
                 success = success || function(resources) {
 
