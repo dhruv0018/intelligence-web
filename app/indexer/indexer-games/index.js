@@ -141,7 +141,7 @@ Games.controller('indexer-games.Controller', [
             $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
         }
 
-        $scope.games = games.getList();
+        $scope.games = games.getList({ assignedUserId: $scope.userId });
 
         angular.forEach($scope.games, function(game) {
             game.timeRemaining = game.assignmentTimeRemaining();
