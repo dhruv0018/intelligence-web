@@ -390,7 +390,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else {
 
                         /* If the start and count filters are both set. */
-                        if (filter.start && filter.count) {
+                        if (angular.isNumber(filter.start) && angular.isNumber(filter.count)) {
 
                             /* Move the start filter to the next resource set. */
                             filter.start += filter.count;
