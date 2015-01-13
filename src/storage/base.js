@@ -5,61 +5,11 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.factory('Keys', [
-    '$injector', 'SessionService',
-    function($injector, session) {
-
-        var Keys = {
-
-            get user() {
-
-                session = session || $injector.get('SessionService');
-
-                var key = '@' + session.serializeUserId() + '!';
-
-                return key;
-            }
-        };
-
-        return Keys;
-    }
-]);
-
-IntelligenceWebClient.value('Stores.root', Object.create(null));
-
-IntelligenceWebClient.factory('Stores', [
-    'Keys', 'Stores.root',
-    function(keys, root) {
-
-        var Stores = Object.create(null, {
-
-            user: {
-
-                enumerable: false,
-
-                get: function() {
-
-                    root[keys.user] = root[keys.user] || Object.create(null);
-
-                    return root[keys.user];
-                },
-
-                set: function(value) {
-
-                    root[keys.user] = root[keys.user] || Object.create(null);
-
-                    root[keys.user] = value;
-                }
-            }
-        });
-
-        return Stores;
-    }
-]);
+IntelligenceWebClient.value('RootStorage', Object.create(null));
 
 IntelligenceWebClient.factory('BaseStorage', [
-    '$q', 'Utilities', 'IndexedDB', 'Keys', 'Stores',
-    function($q, utils, db, keys, stores) {
+    '$q', 'Utilities', 'IndexedDB', 'RootStorage',
+    function($q, utils, db, root) {
 
         var session;
 
