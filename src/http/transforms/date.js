@@ -11,6 +11,9 @@ var ISO8601_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3}Z|\+\d{2}:\d{2}
 
 function transformToDates(data) {
 
+    data = angular.toJson(data);
+    data = angular.fromJson(data);
+
     angular.forEach(data, function(value, key) {
 
         if (angular.isString(value)) {
