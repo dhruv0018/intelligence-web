@@ -1,0 +1,21 @@
+{
+    "name": "basketball-arena",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "basketball-hs-arena",
+        "basketball-ncaa-arena",
+        "basketball-nba-arena",
+        "basketball-fiba-arena"
+    ]
+}
