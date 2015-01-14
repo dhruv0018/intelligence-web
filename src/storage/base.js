@@ -172,121 +172,79 @@ IntelligenceWebClient.factory('BaseStorage', [
             grab: function(filter) {
 
                 var self = this;
-                var request;
                 var resources = [];
+                var transaction;
+                var objectStore;
 
                 /* After the database connection is opened. */
                 return db.then(function(db) {
 
-                    var deferred = $q.defer();
+                    /* Create a read transaction. */
+                    transaction = db.transaction(self.description);
 
-                    var transaction = db.transaction(self.description);
-                    var objectStore = transaction.objectStore(self.description);
+                    /* Get the object storage based on description. */
+                    objectStore = transaction.objectStore(self.description);
 
                     if (filter && angular.isObject(filter) && angular.isDefined(filter.id) && filter.id === null) {
 
+                        var deferred = $q.defer();
                         deferred.reject();
+                        return deferred.promise;
                     }
 
                     else if (filter && angular.isObject(filter) && angular.isNumber(filter.id)) {
 
                         var id = filter.id;
 
-                        if (self.isStored(id)) {
-
-                            var resource = self.get(id);
-
-                            deferred.resolve(resource);
-                        }
-
-                        else {
-
-                            request = objectStore.get(filter.id);
-
-                            request.onsuccess = function(event) {
-
-                                var result = event.target.result;
-
-                                var resource = self.factory.create(result);
-
-                                self.map[resource.id] = resource;
-
-                                resources.push(resource);
-
-                                deferred.resolve(resources);
-                            };
-
-                            request.onerror = function(event) {
-
-                                deferred.reject();
-                            };
-                        }
+                        return getOne(id);
                     }
 
                     else if (filter && angular.isObject(filter) && angular.isArray(filter.id)) {
 
                         var promises = [];
 
-                        utils.unique(filter.id).forEach(function(id) {
+                        var ids = utils.unique(filter.id);
 
-                            var promise = $q.defer();
+                        ids.forEach(function(id) {
 
-                            if (self.isStored(id)) {
-
-                                var resource = self.get(id);
-
-                                promise.resolve(resource);
-                            }
-
-                            else {
-
-                                request = objectStore.get(id);
-
-                                request.onsuccess = function(event) {
-
-                                    var result = event.target.result;
-
-                                    var resource = self.factory.create(result);
-
-                                    self.map[resource.id] = resource;
-
-                                    resources.push(resource);
-
-                                    promise.resolve(resources);
-                                };
-
-                                request.onerror = function(event) {
-
-                                    promise.reject();
-                                };
-                            }
-
-                            promises.push(promise);
+                            promises.push(getOne(id));
                         });
 
-                        $q.all(promises).then(deferred.resolve(resources));
+                        return $q.all(promises);
                     }
 
                     else {
 
-                        request = objectStore.openCursor();
+                        return getAll();
+                    }
+                });
+
+                function getOne(id) {
+
+                    var promise = $q.defer();
+
+                    if (self.isStored(id)) {
+
+                        var resource = self.get(id);
+
+                        promise.resolve(resource);
+                    }
+
+                    else {
+
+                        var request = objectStore.get(id);
 
                         request.onsuccess = function(event) {
 
                             var result = event.target.result;
 
-                            if (result) {
+                            var resource = self.factory.create(result);
 
-                                var resource = self.factory.create(result);
+                            self.map[resource.id] = resource;
 
-                                self.map[resource.id] = resource;
+                            resources.push(resource);
 
-                                resources.push(resource);
-
-                                result.continue();
-                            }
-
-                            else deferred.resolve(resources);
+                            promise.resolve(resources);
                         };
 
                         request.onerror = function(event) {
@@ -295,8 +253,36 @@ IntelligenceWebClient.factory('BaseStorage', [
                         };
                     }
 
-                    return deferred.promise;
-                });
+                    return promise.promise;
+                }
+
+                function getAll() {
+
+                    var request = objectStore.openCursor();
+
+                    request.onsuccess = function(event) {
+
+                        var result = event.target.result;
+
+                        if (result) {
+
+                            var resource = self.factory.create(result);
+
+                            self.map[resource.id] = resource;
+
+                            resources.push(resource);
+
+                            result.continue();
+                        }
+
+                        else deferred.resolve(resources);
+                    };
+
+                    request.onerror = function(event) {
+
+                        deferred.reject();
+                    };
+                }
             },
 
             /**
