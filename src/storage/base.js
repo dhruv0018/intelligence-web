@@ -194,13 +194,16 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             /**
              * Grab resources in storage.
+             * Grabs resources by first looking for them in memory, if not there
+             * then looking in the database. Results can be filtered by an ID or
+             * an array of IDs. If no filter is provided all resources in the
+             * database are returned.
              * @param {Object} filter - filter for querying storage.
              * @returns {Promise.<Array>.<Resource>} - an array of resources.
              */
             grab: function(filter) {
 
                 var self = this;
-                var resources = [];
                 var transaction;
                 var objectStore;
 
@@ -213,68 +216,115 @@ IntelligenceWebClient.factory('BaseStorage', [
                     /* Get the object storage based on description. */
                     objectStore = transaction.objectStore(self.description);
 
+                    /* If the ID filter is null. */
                     if (filter && angular.isObject(filter) && angular.isDefined(filter.id) && filter.id === null) {
 
-                        var deferred = $q.defer();
-                        deferred.reject();
-                        return deferred.promise;
+                        /* Reject the promise. */
+                        var promise = $q.defer();
+                        promise.reject();
+                        return promise.promise;
                     }
 
+                    /* If the ID filter is a number. */
                     else if (filter && angular.isObject(filter) && angular.isNumber(filter.id)) {
 
+                        /* Use the ID in the filter for lookup. */
                         var id = filter.id;
 
+                        /* Return the promise of one resource. */
                         return getOne(id);
                     }
 
+                    /* If the ID filter is an array. */
                     else if (filter && angular.isObject(filter) && angular.isArray(filter.id)) {
 
-                        var promises = [];
+                        var promises = [];   // The promises for each resource.
+                        var resources = [];  // The list of resources to return.
 
+                        /* Use the unique IDs in the filter for lookup. */
                         var ids = utils.unique(filter.id);
 
+                        /* For each ID. */
                         ids.forEach(function(id) {
 
-                            promises.push(getOne(id));
+                            /* Hold onto the promise of getting one resource. */
+                            var promise = getOne(id)
+
+                            /* After successfully getting the resource. */
+                            .then(function(resource) {
+
+                                /* Add that resource to the list of resources. */
+                                resources.push(resource);
+                            });
+
+                            /* Add the promise to the others. */
+                            promises.push(promise);
                         });
 
-                        return $q.all(promises);
+                        /* Wait for all of the promises to complete. */
+                        return $q.all(promises)
+
+                        /* After successfully getting all of the resource. */
+                        .then(function() {
+
+                            /* Return list of all resources. */
+                            return resources;
+                        });
                     }
 
+                    /* Otherwise; if no filters match. */
                     else {
 
+                        /* Return all of the resources. */
                         return getAll();
                     }
                 });
 
+                /**
+                 * Get one resource in storage.
+                 * @param {Number} id - the resource ID to lookup.
+                 * @returns {Promise.<Resource>} - a resource.
+                 */
                 function getOne(id) {
 
+                    /* Create a promise. */
                     var promise = $q.defer();
 
+                    /* If the resource is stored in memory already. */
                     if (self.isStored(id)) {
 
+                        /* Get the resource. */
                         var resource = self.get(id);
 
+                        /* Resolve the promise with the resource from memory. */
                         promise.resolve(resource);
                     }
 
+                    /* If the resource is not stored in memory already, look in
+                     * the database for it. */
                     else {
 
+                        /* Create a request to the object store for the resource
+                         * with the given ID. */
                         var request = objectStore.get(id);
 
+                        /* If the request is successful. */
                         request.onsuccess = function(event) {
 
+                            /* Get the result of the request. */
                             var result = event.target.result;
 
+                            /* Use the relevant factory to create a resource. */
                             var resource = self.factory.create(result);
 
-                            self.map[resource.id] = resource;
+                            /* Set the resource in memory. */
+                            self.ram(resource);
 
-                            resources.push(resource);
-
-                            promise.resolve(resources);
+                            /* Resolve the promise with the database resource. */
+                            promise.resolve(resource);
                         };
 
+                        /* If there is an error with the request. */
                         request.onerror = function(event) {
 
                             promise.reject();
@@ -284,32 +334,55 @@ IntelligenceWebClient.factory('BaseStorage', [
                     return promise.promise;
                 }
 
+                /**
+                 * Get all resources in storage.
+                 * @returns {Promise.<Array>.<Resource>} - an array of resources.
+                 */
                 function getAll() {
 
+                    /* Create a promise. */
+                    var promise = $q.defer();
+
+                    var resources = [];  // The list of resources to return.
+
+                    /* Create a request to the object store for a cursor. */
                     var request = objectStore.openCursor();
 
+                    /* If the request is successful. */
                     request.onsuccess = function(event) {
 
+                        /* Get the result of the request. */
                         var result = event.target.result;
 
+                        /* If there is a result, the cursor has found data. */
                         if (result) {
 
+                            /* Use the relevant factory to create a resource. */
                             var resource = self.factory.create(result);
 
-                            self.map[resource.id] = resource;
+                            /* Set the resource in memory. */
+                            self.ram(resource);
 
+                            /* Add that resource to the list of resources. */
                             resources.push(resource);
 
+                            /* Continue the cursor looking for more results. */
                             result.continue();
                         }
 
-                        else deferred.resolve(resources);
+                        /* If there are no more results, then the cursor is
+                         * finished. Resolve the promise with all of the
+                         * resources in th cursor. */
+                        else promise.resolve(resources);
                     };
 
+                    /* If there is an error with the request. */
                     request.onerror = function(event) {
 
-                        deferred.reject();
+                        promise.reject();
                     };
+
+                    return promise.promise;
                 }
             },
 
