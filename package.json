@@ -20,7 +20,6 @@
         "flow": "./node_modules/flowjs/src/flow.js"
     },
     "napa": {
-        "angular-bootstrap": "angular-ui/bootstrap-bower#0.12.0",
         "angular-ui-unique": "angular-ui/ui-utils#unique-0.1.1",
         "angular-ui-showhide": "angular-ui/ui-utils#showhide-0.1.1",
         "angular-ui-validate": "angular-ui/ui-utils#validate-0.1.1",
@@ -38,6 +37,7 @@
     },
     "devDependencies": {
         "angular": "1.3.8",
+        "angular-bootstrap": "0.12.0",
         "angular-mocks": "1.3.8",
         "angular-resource": "1.3.8",
         "angular-sanitize": "1.3.8",
