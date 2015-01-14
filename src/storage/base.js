@@ -190,36 +190,18 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                     else if (filter && angular.isObject(filter) && angular.isNumber(filter.id)) {
 
-                        request = objectStore.get(filter.id);
+                        var id = filter.id;
 
-                        request.onsuccess = function(event) {
+                        if (self.isStored(id)) {
 
-                            var result = event.target.result;
+                            var resource = self.get(id);
 
-                            var resource = self.factory.create(result);
+                            deferred.resolve(resource);
+                        }
 
-                            self.map[resource.id] = resource;
+                        else {
 
-                            resources.push(resource);
-
-                            deferred.resolve(resources);
-                        };
-
-                        request.onerror = function(event) {
-
-                            deferred.reject();
-                        };
-                    }
-
-                    else if (filter && angular.isObject(filter) && angular.isArray(filter.id)) {
-
-                        var promises = [];
-
-                        utils.unique(filter.id).forEach(function(id) {
-
-                            var promise = $q.defer();
-
-                            request = objectStore.get(id);
+                            request = objectStore.get(filter.id);
 
                             request.onsuccess = function(event) {
 
@@ -231,13 +213,53 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                                 resources.push(resource);
 
-                                promise.resolve(resources);
+                                deferred.resolve(resources);
                             };
 
                             request.onerror = function(event) {
 
-                                promise.reject();
+                                deferred.reject();
                             };
+                        }
+                    }
+
+                    else if (filter && angular.isObject(filter) && angular.isArray(filter.id)) {
+
+                        var promises = [];
+
+                        utils.unique(filter.id).forEach(function(id) {
+
+                            var promise = $q.defer();
+
+                            if (self.isStored(id)) {
+
+                                var resource = self.get(id);
+
+                                promise.resolve(resource);
+                            }
+
+                            else {
+
+                                request = objectStore.get(id);
+
+                                request.onsuccess = function(event) {
+
+                                    var result = event.target.result;
+
+                                    var resource = self.factory.create(result);
+
+                                    self.map[resource.id] = resource;
+
+                                    resources.push(resource);
+
+                                    promise.resolve(resources);
+                                };
+
+                                request.onerror = function(event) {
+
+                                    promise.reject();
+                                };
+                            }
 
                             promises.push(promise);
                         });
