@@ -28,8 +28,8 @@ GamesBreakdown.config([
             resolve: {
 
                 'Games.Breakdown.Data': [
-                    '$q', '$stateParams', 'Games.Data.Dependencies',
-                    function($q, $stateParams, data) {
+                    '$stateParams', 'Games.Data.Dependencies',
+                    function($stateParams, data) {
                         return data($stateParams).load();
                     }
                 ]
@@ -111,7 +111,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager',
     function controller($rootScope, $scope, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager) {
 
-        console.log('inside the controller');
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
         $scope.publiclyShared = false;
@@ -148,7 +147,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             var playsFilter = { gameId: $scope.game.id };
             $scope.totalPlays = plays.getList(playsFilter);
             $scope.plays = $scope.totalPlays;
-            console.log($scope.totalPlays);
             /* Attaching playIds array to game object to mirror reels properties
              * This array is utilized on the clips page for clips navigation
              * BEWARE: It only contains viewable, i.e. has a clip, plays
