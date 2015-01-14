@@ -2,38 +2,98 @@
 	<!-- Generator: Adobe Illustrator 18.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 	<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 		 viewbox="0 0 1080 645" enable-background="new 0 0 1080 645" xml:space="preserve">
+
+	<defs>
+		<path id="left-arc" stroke-width="4" stroke-miterlimit="10" d="M1.1,586.5h102.2c0,0,220.7-26.5,220.7-264.5 C324,85,103.3,57.9,103.3,57.9H1.1"/>
+
+		<polyline id="left-key" stroke-width="4" stroke-miterlimit="10" points="1.9,399.7 246.2,399.7 246.2,247.7 1.9,247.7"/>
+
+		<path id="left-around-rim" d="M0,265 h55 a55,55,0,0,1,0,120 h-55 z" />
+
+		<path id="right-arc" stroke-width="4" stroke-miterlimit="10" d="M1081,57.9H978.8c0,0-220.7,26.5-220.7,264.5 c0,237,220.7,264.1,220.7,264.1H1081"/>
+
+		<polyline id="right-key" stroke-width="4" stroke-miterlimit="10" points="1080.3,244.7 835.9,244.7 835.9,396.8 1080.3,396.8"/>
+
+		<path id="right-around-rim" d="M1080,380 h-55 a55,55,0,0,1,0,-120 h55 z" />
+	</defs>
+
+	<!-- Court Background -->
 	<g>
 		<polygon fill="#D1B98B" points="1,644.2 1,0.2 1081,0.2 1081,644.2 	"/>
 	</g>
+
+	<!-- Left Half of Court -->
 	<g>
-		<path fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" d="M1.1,586.5h102.2c0,0,220.7-26.5,220.7-264.5
-			C324,85,103.3,57.9,103.3,57.9H1.1"/>
+		<!-------- Indexable Regions -------->
+
+		<!-- Behind the Arc -->
+		<rect class="behind-the-arc indexable-region" x="0" y="0" width="50%" height="100%" fill="#D1B98B" />
+
+		<!-- Mid Range -->
+		<use class="mid-range indexable-region" xlink:href="#left-arc" fill="#D1B98B" />
+
+		<!-- Inside the Paint -->
+		<use class="inside-the-paint indexable-region" xlink:href="#left-key" fill="#D1B98B" />
+
+		<!-- Around the Rim -->
+		<use class="around-the-rim indexable-region" xlink:href="#left-around-rim" fill="#D1B98B" />
+	
+		<!-------- Visible Regions -------->
+
+		<!-- Rim -->
+		<g>
+			<line fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" x1="54.6" y1="285.6" x2="54.6" y2="361.7"/>
+			<path fill="#FFFFFF" d="M71.3,317.8c3.3,0,5.9,2.7,5.9,5.9s-2.7,5.9-5.9,5.9s-5.9-2.7-5.9-5.9S68,317.8,71.3,317.8 M71.3,313.8
+				c-5.5,0-9.9,4.4-9.9,9.9c0,5.5,4.4,9.9,9.9,9.9s9.9-4.4,9.9-9.9C81.2,318.2,76.8,313.8,71.3,313.8L71.3,313.8z"/>
+		</g>
+
+		<!-- Key -->
+		<use xlink:href="#left-key" fill="none" stroke="#FFFFFF" />
+	
+		<!-- Free Throw Circle -->
 		<circle fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" cx="248" cy="323.7" r="76"/>
-		<polyline fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" points="1.9,399.7 246.2,399.7 246.2,247.7 
-			1.9,247.7 	"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" x1="54.6" y1="285.6" x2="54.6" y2="361.7"/>
-		<g>
-			<g>
-				<path fill="#FFFFFF" d="M71.3,317.8c3.3,0,5.9,2.7,5.9,5.9s-2.7,5.9-5.9,5.9s-5.9-2.7-5.9-5.9S68,317.8,71.3,317.8 M71.3,313.8
-					c-5.5,0-9.9,4.4-9.9,9.9c0,5.5,4.4,9.9,9.9,9.9s9.9-4.4,9.9-9.9C81.2,318.2,76.8,313.8,71.3,313.8L71.3,313.8z"/>
-			</g>
-		</g>
+
+		<!-- Three Point Arc -->
+		<use xlink:href="#left-arc" fill="none" stroke="#FFFFFF" />
 	</g>
+
+	<!-- Right Half of Court -->
 	<g>
-		<path fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" d="M1081,57.9H978.8c0,0-220.7,26.5-220.7,264.5
-			c0,237,220.7,264.1,220.7,264.1H1081"/>
-		<circle fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" cx="834.1" cy="320.7" r="76"/>
-		<polyline fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" points="1080.3,244.7 835.9,244.7 835.9,396.8 
-			1080.3,396.8 	"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" x1="1027.5" y1="358.8" x2="1027.5" y2="282.8"/>
+		<!-------- Indexable Regions -------->
+
+		<!-- Behind the Arc -->
+		<rect class="behind-the-arc indexable-region" x="540" y="0" width="50%" height="100%" fill="#D1B98B" />
+
+		<!-- Mid Range -->
+		<use class="mid-range indexable-region" xlink:href="#right-arc" fill="#D1B98B" />
+
+		<!-- Inside the Paint -->
+		<use class="inside-the-paint indexable-region" xlink:href="#right-key" fill="#D1B98B" />
+
+		<!-- Around the Rim -->
+		<use class="around-the-rim indexable-region" xlink:href="#right-around-rim" fill="#D1B98B" />
+	
+		<!-------- Visible Regions -------->
+
+		<!-- Rim -->
 		<g>
-			<g>
-				<path fill="#FFFFFF" d="M1010.8,314.8c3.3,0,5.9,2.7,5.9,5.9s-2.7,5.9-5.9,5.9s-5.9-2.7-5.9-5.9S1007.6,314.8,1010.8,314.8
-					 M1010.8,310.8c-5.5,0-9.9,4.4-9.9,9.9c0,5.5,4.4,9.9,9.9,9.9s9.9-4.4,9.9-9.9C1020.8,315.3,1016.3,310.8,1010.8,310.8
-					L1010.8,310.8z"/>
-			</g>
+			<line fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" x1="1027.5" y1="358.8" x2="1027.5" y2="282.8"/>
+			<path fill="#FFFFFF" d="M1010.8,314.8c3.3,0,5.9,2.7,5.9,5.9s-2.7,5.9-5.9,5.9s-5.9-2.7-5.9-5.9S1007.6,314.8,1010.8,314.8
+				 M1010.8,310.8c-5.5,0-9.9,4.4-9.9,9.9c0,5.5,4.4,9.9,9.9,9.9s9.9-4.4,9.9-9.9C1020.8,315.3,1016.3,310.8,1010.8,310.8
+				L1010.8,310.8z"/>
 		</g>
+
+		<!-- Key -->
+		<use xlink:href="#right-key" fill="none" stroke="#FFFFFF" />
+	
+		<!-- Free Throw Circle -->
+		<circle fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" cx="834.1" cy="320.7" r="76"/>
+
+		<!-- Three Point Arc -->
+		<use xlink:href="#right-arc" fill="none" stroke="#FFFFFF" />
 	</g>
+
+	<!-- Krossover Logo and Half Court Line -->
 	<g>
 		<line fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" x1="541" y1="-0.3" x2="541" y2="246.7"/>
 		<line fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" x1="541" y1="398.7" x2="541" y2="643.7"/>
