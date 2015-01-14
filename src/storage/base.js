@@ -92,10 +92,28 @@ IntelligenceWebClient.factory('BaseStorage', [
 
             /**
              * Sets a resource.
+             * Sets the resource in both memory and the database.
              * @param {Number|String} key - a key, used to store the resource.
              * @param {Resource} value - a resource.
              */
             set: function(key, value) {
+
+                var self = this;
+
+                /* Set the resource in memory. */
+                self.ram(key, value);
+
+                /* Set the resource in the database. */
+                self.put(value);
+            },
+
+            /**
+             * Sets a resource.
+             * Sets the resource in memory.
+             * @param {Number|String} key - a key, used to store the resource.
+             * @param {Resource} value - a resource.
+             */
+            ram: function(key, value) {
 
                 var self = this;
 
@@ -124,6 +142,16 @@ IntelligenceWebClient.factory('BaseStorage', [
                     /* Set the entry in the map by key. */
                     self.map[key] = value;
                 }
+            },
+
+            /**
+             * Puts a resource.
+             * Puts the resource in the database.
+             * @param {Resource} value - a resource.
+             */
+            put: function(value) {
+
+                var self = this;
 
                 /* After the database connection is opened. */
                 db.then(function(db) {
