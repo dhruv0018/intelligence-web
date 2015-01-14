@@ -272,10 +272,7 @@ Indexing.config([
                 ],
 
                 onExit: [
-                    '$stateParams', 'GamesFactory', 'PlaysManager',
-                    function($stateParams, games, playsManager) {
-                        var gameId = $stateParams.id;
-                        var game = games.get(gameId);
+                    function() {
 
                         Mousetrap.unbind('space');
                         Mousetrap.unbind('left');
@@ -283,9 +280,6 @@ Indexing.config([
                         Mousetrap.unbind('enter');
                         Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
-
-                        //TODO this is not working correctly with caching
-                        //game.save();
                     }
                 ]
             });
