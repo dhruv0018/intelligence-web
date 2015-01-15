@@ -32,33 +32,73 @@ function openDB(name, version) {
     /* Reference to the database. */
     var db;
 
-    /* If given a version, open the database with the given version. */
-    /* Otherwise; if no version is given, open the current version of the database. */
-    var request = version ? indexedDB.open(name, version) : indexedDB.open(name);
+    /* If indexedDB can not be found, assume it is not supported. */
+    if (!window.indexedDB) IndexedDB.reject('IndexedDB not supported');
 
-    /* Handle a successful connection to the database. */
-    request.onsuccess = function(event) {
+    /* If indexedDB is available. */
+    else {
 
-        /* Get the database. */
-        db = event.target.result;
+        /* If given a version, open the database with the given version. */
+        /* Otherwise; if no version is given, open the current version of the database. */
+        var request = version ? window.indexedDB.open(name, version) : window.indexedDB.open(name);
 
-        /* If the database needs to be upgraded. */
-        if (db.version < migrations.length) {
+        /* Handle a successful connection to the database. */
+        request.onsuccess = function(event) {
 
-            /* Close the database. */
-            db.close();
+            /* Get the database. */
+            db = event.target.result;
 
-            /* Open database one version higher. */
-            openDB(name, db.version + 1);
-        }
+            /* If the database needs to be upgraded. */
+            if (db.version < migrations.length) {
 
-        /* If the database opened successfully and does not need to be upgraded. */
-        else IndexedDB.resolve(db);
+                /* Close the database. */
+                db.close();
 
-        /* Handle database version changes. */
-        db.onversionchange = function(event) {
+                /* Open database one version higher. */
+                openDB(name, db.version + 1);
+            }
 
-            console.info('Database changed to version ' + version);
+            /* If the database opened successfully and does not need to be upgraded. */
+            else IndexedDB.resolve(db);
+
+            /* Handle database version changes. */
+            db.onversionchange = function(event) {
+
+                console.info('Database changed to version ' + version);
+
+                /* Close the database. */
+                db.close();
+
+                /* Reload the window. */
+                window.location.reload();
+            };
+        };
+
+        /* Handle an error connecting to the database. */
+        request.onerror = function(event) {
+
+            /* Get the database. */
+            var error = event.target.error;
+
+            /* If version given is less than the database version. */
+            if (error.name === 'VersionError') {
+
+                /* Close the database. */
+                db.close();
+
+                /* Open the current database version. */
+                openDB(name);
+            }
+
+            /* Throw an error. */
+            else IndexedDB.reject(new Error(JSON.stringify(event)));
+        };
+
+        /* Handle blocked connections to the database. */
+        request.onblocked = function(event) {
+
+            /* Get the database. */
+            db = event.target.result;
 
             /* Close the database. */
             db.close();
@@ -66,76 +106,43 @@ function openDB(name, version) {
             /* Reload the window. */
             window.location.reload();
         };
-    };
 
-    /* Handle an error connecting to the database. */
-    request.onerror = function(event) {
+        request.onupgradeneeded = function(event) {
 
-        /* Get the database. */
-        var error = event.target.error;
+            /* Get the database. */
+            db = event.target.result;
 
-        /* If version given is less than the database version. */
-        if (error.name === 'VersionError') {
+            console.info('Database needs to be upgraded');
 
-            /* Close the database. */
-            db.close();
+            /* Find the appropriate migration to run. */
+            var migrationToRun = version ? version - 1 : 0;
 
-            /* Open the current database version. */
-            openDB(name);
-        }
+            /* Lookup the migration. */
+            var migration = migrations[migrationToRun];
 
-        /* Throw an error. */
-        else IndexedDB.reject(new Error(JSON.stringify(event)));
-    };
+            /* If the migration is found. */
+            if (migration) {
 
-    /* Handle blocked connections to the database. */
-    request.onblocked = function(event) {
+                console.info('Running migration for database version ' + version);
 
-        /* Get the database. */
-        db = event.target.result;
+                /* Try running the migration. */
+                try {
 
-        /* Close the database. */
-        db.close();
+                    /* Run the migration. */
+                    migration(db, OPTIONS);
+                }
 
-        /* Reload the window. */
-        window.location.reload();
-    };
+                /* Catch any errors running the migration. */
+                catch (error) {
 
-    request.onupgradeneeded = function(event) {
-
-        /* Get the database. */
-        db = event.target.result;
-
-        console.info('Database needs to be upgraded');
-
-        /* Find the appropriate migration to run. */
-        var migrationToRun = version ? version - 1 : 0;
-
-        /* Lookup the migration. */
-        var migration = migrations[migrationToRun];
-
-        /* If the migration is found. */
-        if (migration) {
-
-            console.info('Running migration for database version ' + version);
-
-            /* Try running the migration. */
-            try {
-
-                /* Run the migration. */
-                migration(db, OPTIONS);
+                    throw new Error('Error in database version ' + version + ' migration', error);
+                }
             }
 
-            /* Catch any errors running the migration. */
-            catch (error) {
-
-                throw new Error('Error in database version ' + version + ' migration', error);
-            }
-        }
-
-        /* If the migration is not found. */
-        else throw new Error('No migration found for database version ' + version);
-    };
+            /* If the migration is not found. */
+            else throw new Error('No migration found for database version ' + version);
+        };
+    }
 }
 
 IntelligenceWebClient.value('IndexedDB', IndexedDB.promise);
