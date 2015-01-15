@@ -11,11 +11,10 @@
     ],
     "paths": [
         ".",
-        "football",
         "lacrosse"
     ],
     "locals": [
-        "football-field",
+        "football-arena",
         "basketball-arena",
         "lacrosse-mens-outdoor-arena",
         "lacrosse-womens-outdoor-arena"

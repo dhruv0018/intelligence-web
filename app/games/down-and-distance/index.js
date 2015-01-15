@@ -74,8 +74,8 @@ GamesDownAndDistance.config([
 ]);
 
 GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
-    '$stateParams', '$scope', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'LeaguesFactory',
-    function controller($stateParams, $scope, teams, games, plays,  leagues) {
+    '$stateParams', '$scope', 'TeamsFactory', 'GamesFactory', 'LeaguesFactory',
+    function controller($stateParams, $scope, teams, games, leagues) {
 
         //Collections
         $scope.teams = teams.getCollection();
@@ -89,14 +89,10 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
         $scope.opposingTeamId = $scope.game.opposingTeamId;
         var team = teams.get($scope.teamId);
 
-        //Play Related
-        var playsFilter = { gameId: gameId };
-        $scope.plays = plays.getList(playsFilter);
+        var teamOnOffense = true;
 
         //League Related
         $scope.league = leagues.get(team.leagueId);
-
-        var teamOnOffense = true;
 
         //Used to render the view for the
         $scope.options = {

@@ -77,8 +77,8 @@ GamesFormations.config([
 ]);
 
 GamesFormations.controller('GamesFormations.controller', [
-    '$scope', '$state', '$stateParams', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory', 'Games.FormationReport.Data',
-    function controller($scope, $state, $stateParams, teams, games, plays, leagues, players, data) {
+    '$scope', '$state', '$stateParams', 'TeamsFactory', 'GamesFactory', 'LeaguesFactory', 'PlayersFactory', 'Games.FormationReport.Data',
+    function controller($scope, $state, $stateParams, teams, games, leagues, players, data) {
         //Game Related
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
@@ -89,18 +89,8 @@ GamesFormations.controller('GamesFormations.controller', [
         $scope.teamId = $scope.game.teamId;
         $scope.opposingTeamId = $scope.game.opposingTeamId;
 
-        //Play Related
-        var playsFilter = { gameId: gameId };
-        $scope.plays = plays.getList(playsFilter);
-
         //League Related
         $scope.league = leagues.get($scope.team.leagueId);
-
-        var teamPlayersFilter = { rosterId: $scope.game.getRoster($scope.game.teamId).id };
-        $scope.teamPlayers = players.getList(teamPlayersFilter);
-
-        var opposingTeamPlayersFilter = { rosterId: $scope.game.getRoster($scope.game.opposingTeamId).id };
-        $scope.opposingTeamPlayers = players.getList(opposingTeamPlayersFilter);
 
         //TODO formation report is a special case of data
         //This is going to go away relatively soon
