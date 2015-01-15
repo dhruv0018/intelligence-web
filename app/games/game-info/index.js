@@ -43,7 +43,7 @@ GamesInfo.config([
                             var teamIds = [];
                             if (game.teamId) teamIds.push(game.teamId);
                             if (game.opposingTeamId) teamIds.push(game.opposingTeamId);
-                            if (teamIds.length) Data.teams = teams.load(teamIds),
+                            if (teamIds.length) Data.teams = teams.load(teamIds);
 
                             Data.gamePlayerLists = {};
                             //Player lists
