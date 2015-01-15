@@ -49,54 +49,40 @@ GamesBreakdown.service('Games.Data.Dependencies', [
             var obj = {
 
                 load: function() {
-                    var currentUser = session.currentUser;
-                    var userId = session.currentUser.id;
-                    var teamId = currentUser.currentRole.teamId;
 
                     var gameId = Number(stateParams.id);
+                    var userId = session.getCurrentUserId();
+                    var teamId = session.getCurrentTeamId();
 
-                    return games.load(gameId).then(function() {
+                    var Data = {
+                        leagues: leagues.load(),
+                        tagsets: tagsets.load(),
+                        filtersets: filtersets.load(),
+                        plays: plays.load({ gameId: gameId }),
+                        players: players.load({ gameId: gameId })
+                    };
+
+                    if (auth.isLoggedIn) {
+
+                        Data.reels = reels.load({
+                            teamId: teamId,
+                            userId: userId
+                        });
+                    }
+
+                    Data.game = games.load(gameId).then(function() {
 
                         var game = games.get(gameId);
 
-                        var Data = {
-                            user: users.load(game.uploaderUserId),
-                            team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
+                        var GameData = {
+                            users: users.load(game.uploaderUserId),
+                            teams: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
                         };
 
-                        var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
-                        Data.loadTeamPlayers = players.load(teamPlayersFilter);
-
-                        var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
-                        Data.loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
-
-                        if (auth.isLoggedIn) {
-
-                            Data.reels =  reels.load({
-                                teamId: teamId,
-                                userId: userId
-                            });
-                        }
-
-                        var playsFilter = { gameId: game.id };
-                        Data.loadPlays = plays.load(playsFilter);
-
-                        // TODO: Fix this, really slow because of nesting
-                        Data.league = Data.team.then(function() {
-                            var uploaderTeam = teams.get(game.uploaderTeamId);
-                            return leagues.fetch(uploaderTeam.leagueId);
-                        });
-
-                        Data.filterSet = Data.league.then(function() {
-                            var uploaderTeam = teams.get(game.uploaderTeamId);
-                            var uploaderLeague = leagues.get(uploaderTeam.leagueId);
-                            return filtersets.fetch(uploaderLeague.filterSetId);
-                        });
-
-                        Data.tagset = tagsets.load();
-
-                        return $q.all(Data);
+                        return $q.all(GameData);
                     });
+
+                    return $q.all(Data);
                 }
             };
 

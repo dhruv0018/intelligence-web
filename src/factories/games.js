@@ -78,7 +78,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                             game.sharedWithUsers[share.sharedWithUserId] = share;
                         } else if (!share.sharedWithUserId && !share.sharedWithTeamId) {
                             game.publicShare = share;
-                            game.shares.slice(index, 1);
+                            game.shares.splice(index, 1);
                         }
                     });
                 }

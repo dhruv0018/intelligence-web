@@ -162,9 +162,6 @@ Login.controller('LoginController', [
             var password = $scope.login.password;
             var persist = $scope.login.remember;
 
-            /* Ensure any past login is cleared. */
-            auth.logoutUser();
-
             /* Login the user. */
             auth.loginUser(email, password, persist).then(function(user) {
                 if (user) {

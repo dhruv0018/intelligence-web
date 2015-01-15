@@ -26,8 +26,8 @@ GamesInfo.config([
             },
             resolve: {
                 'Games.Info.Data': [
-                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'SessionService', 'PlayersFactory',
-                    function($q, $stateParams, games, teams, users, session, players) {
+                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'SessionService', 'PlayersFactory', 'PositionsetsFactory',
+                    function($q, $stateParams, games, teams, users, session, players, positionsets) {
                         var gameId = Number($stateParams.id);
                         return games.load(gameId).then(function() {
 
@@ -36,9 +36,14 @@ GamesInfo.config([
 
                             var Data = {
                                 user: users.load(game.uploaderUserId),
-                                team: teams.load([game.teamId, game.opposingTeamId]),
+                                positionSets: positionsets.load(),
                                 game: game
                             };
+
+                            var teamIds = [];
+                            if (game.teamId) teamIds.push(game.teamId);
+                            if (game.opposingTeamId) teamIds.push(game.opposingTeamId);
+                            if (teamIds.length) Data.teams = teams.load(teamIds),
 
                             Data.gamePlayerLists = {};
                             //Player lists

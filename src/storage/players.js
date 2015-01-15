@@ -5,11 +5,16 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('PlayersStorage', [
-    function() {
+IntelligenceWebClient.factory('PlayersStorage', [
+    'BaseStorage', 'PlayersFactory',
+    function(BaseStorage, players) {
 
-        this.list = [];
-        this.collection = Object.create(null);
+        var PlayersStorage = Object.create(BaseStorage);
+
+        PlayersStorage.factory = players;
+        PlayersStorage.description = players.description;
+
+        return PlayersStorage;
     }
 ]);
 

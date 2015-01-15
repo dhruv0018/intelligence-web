@@ -70,13 +70,11 @@ Games.config([
                 function($state, $stateParams, session, games) {
 
                     var currentUser = session.currentUser;
-                    var hasAccess = false;
-                    var game = games.get($stateParams.id);
+                    var gameId = Number($stateParams.id);
+                    var game = games.get(gameId);
 
-                    if (game.isSharedWithPublic() || game.uploaderTeamId === currentUser.currentRole.teamId || game.isSharedWithUser(currentUser)) {
-                        hasAccess = true;
-                    } else {
-                        $state.go('Games.Restricted', {id: game.id});
+                    if (!game.isSharedWithPublic() && game.uploaderTeamId !== currentUser.currentRole.teamId && !game.isSharedWithUser(currentUser)) {
+                        $state.go('Games.Restricted', { id: gameId });
                     }
                 }
             ],
@@ -90,21 +88,18 @@ Games.config([
                 'Games.Data': [
                     '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'LeaguesFactory',
                     function($q, $stateParams, games, teams, users, leagues) {
+
                         var gameId = Number($stateParams.id);
+
                         return games.load(gameId).then(function() {
+
                             var game = games.get(gameId);
 
                             var Data = {
-                                user: users.load(game.uploaderUserId),
-                                team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId]),
-                                game: game
+                                leagues: leagues.load(),
+                                users: users.load(game.uploaderUserId),
+                                teams: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
                             };
-
-                            //todo -- deal with this, real slow because of nesting
-                            Data.league = Data.team.then(function() {
-                                var uploaderTeam = teams.get(game.uploaderTeamId);
-                                return leagues.fetch(uploaderTeam.leagueId);
-                            });
 
                             return $q.all(Data);
                         });
