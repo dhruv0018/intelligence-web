@@ -1,5 +1,15 @@
 @import (reference) "main.less";
 
 .lacrosse-arena {
-	
+
+	.indexable-region {
+		fill: #92B286;
+
+		&:hover,
+		&:active,
+		&:focus {
+			fill: darken(#92B286, 10%);
+			transition: fill 0.5s;
+		}
+	}
 }
