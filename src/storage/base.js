@@ -100,6 +100,14 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 var self = this;
 
+                /* If no value argument is given, assume the key is the value
+                 * and use its ID property as the key. */
+                if (!value) {
+
+                    value = key;
+                    key = value.id;
+                }
+
                 /* Set the resource in memory. */
                 self.ram(key, value);
 
