@@ -162,7 +162,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
                 return play.id;
             });
 
-            console.log($scope.plays);
             $scope.filteredPlaysIds = [];
 
             $scope.expandAll = false;
