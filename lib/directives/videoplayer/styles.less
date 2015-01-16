@@ -40,6 +40,20 @@ data-videogular {
     user-select: none;
     border-bottom: 1px solid @video-controls-border;
     .light-box-shadow;
+
+    video-spot {
+        display: flex;
+        flex-direction: column;
+
+        video {
+            width: 100%;
+            height: auto;
+        }
+
+        glyph {
+            position: absolute;
+        }
+    }
 }
 
 data-videogular.fullscreen {
@@ -47,13 +61,6 @@ data-videogular.fullscreen {
     position: absolute;
     left: 0;
     top: 0;
-}
-
-data-videogular video {
-
-    position: absolute;
-    width: 100%;
-    height: auto;
 }
 
 
