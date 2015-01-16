@@ -141,8 +141,10 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
             //TODO This casting seems very awkward -- perhaps the generation method should handle the casting
             if ($scope.dndReport.redZone === 'true') {
                 $scope.dndReport.redZone = true;
+                $scope.redzone = true;
             } else {
                 $scope.dndReport.redZone = false;
+                $scope.redzone = false;
             }
 
             //TODO this doesn't seem to be doing anything at all, it is basically setting the variable back to itself
@@ -154,6 +156,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
 
             games.getDownAndDistanceReport($scope.dndReport).then(function(dndReport) {
                 $scope.game.dndReport = dndReport;
+                $scope.chart = $scope.game.dndReport;
             });
 
         };
