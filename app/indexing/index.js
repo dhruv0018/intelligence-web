@@ -119,7 +119,7 @@ Indexing.config([
                                 var gameData = {
 
                                     game: game,
-                                    plays: plays.query({ gameId: gameId }),
+                                    plays: plays.load({ gameId: gameId }),
                                     players: players,
                                     teamPlayers: players.load({ rosterId: teamRoster.id }),
                                     opposingTeamPlayers: players.load({ rosterId: opposingTeamRoster.id })
