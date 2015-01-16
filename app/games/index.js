@@ -97,9 +97,14 @@ Games.config([
 
                             var Data = {
                                 leagues: leagues.load(),
-                                users: users.load(game.uploaderUserId),
-                                teams: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
+                                users: users.load(game.uploaderUserId)
                             };
+
+                            var teamIds = [];
+                            if (game.teamId) teamIds.push(game.teamId);
+                            if (game.opposingTeamId) teamIds.push(game.opposingTeamId);
+                            if (game.uploaderTeamId) teamIds.push(game.uploaderTeamId);
+                            if (teamIds.length) Data.teams = teams.load(teamIds);
 
                             return $q.all(Data);
                         });
