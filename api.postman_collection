@@ -34,7 +34,6 @@
 				"93e742eb-b148-36f0-925e-96efa25ec1b3",
 				"1190d458-e23d-df51-53c5-9ee9eca45272",
 				"69cb7ea8-b327-d617-b1aa-b31b8bc48334",
-				"d290c586-3c7b-3eae-12cb-7d658b820d38",
 				"516627e1-99f3-c531-797d-ea585537cc2e"
 			],
 			"collection_name": "Intelligence API",
@@ -944,26 +943,6 @@
 			"responses": [],
 			"synced": false,
 			"rawModeData": "{\n\"name\":\"TEST\",\n\"sportId\":1,\n\"gender\":\"male\",\n\"seasonStartMonth\":8,\n\"seasonStartDay\":1,\n\"seasonEndMonth\":2,\n\"seasonEndDay\":1,\n\"tagSetId\":1,\n\"numberOfPeriods\":1,\n\"periodLabel\":\"Set\",\n\"periodAbbreviationLabel\":\"Set\",\n\"positionSetId\":1,\n\"flagRuleSetId\":1,\n\"filterSetId\":1\n}"
-		},
-		{
-			"id": "d290c586-3c7b-3eae-12cb-7d658b820d38",
-			"headers": "Authorization: Bearer 8d4057d88e61e7aab819bf6dc057dd8f3a1f9e35\n",
-			"url": "{{url}}/{{version}}/games/{{gameId}}/formation-report",
-			"preRequestScript": "var gameId = postman.getEnvironmentVariable(\"gameId\");\nif (!gameId) postman.setEnvironmentVariable(\"gameId\", 1);",
-			"pathVariables": {},
-			"method": "GET",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1420426859240,
-			"name": "Formation Report",
-			"description": "",
-			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
-			"responses": [],
-			"synced": false
 		},
 		{
 			"id": "d94e27d1-49c8-77e2-2f34-7021b0aa35ad",
