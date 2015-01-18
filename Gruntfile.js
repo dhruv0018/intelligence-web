@@ -593,9 +593,13 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['githooks', 'install', 'dev', 'notify:build', 'serve', 'watch']);
 
     grunt.registerTask('build', [
-        'env:prod',
+        'env:test',
         'componentbuild:prod',
-        'browserify:prod'
+        'browserify:prod',
+        'ngAnnotate',
+        'uglify',
+        'copy:build',
+        'manifests'
     ]);
 
     grunt.registerTask('dev', [
