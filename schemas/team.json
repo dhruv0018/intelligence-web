@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Team Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "schoolId": {
+            "type": "integer"
+        },
+        "address": { "$ref": "address" },
+        "roles": {
+            "type": "array",
+            "items": { "$ref": "role" }
+        },
+        "teamPlans": {
+            "type": "array",
+            "items": { "$ref": "plan" }
+        },
+        "teamPackages": {
+            "type": "array",
+            "items": { "$ref": "package" }
+        },
+        "leagueId": {
+            "type": "integer"
+        },
+        "isCustomerTeam": {
+            "type": "boolean"
+        },
+        "roster": { "$ref": "roster" }
+    },
+    "additionalProperties": false
+}
