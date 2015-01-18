@@ -598,6 +598,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'ngAnnotate',
         'uglify',
+        'htmlmin',
         'copy:build',
         'manifests'
     ]);
