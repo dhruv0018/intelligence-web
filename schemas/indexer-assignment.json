@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Indexer Assignment Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "gameId": {
+            "type": "integer"
+        },
+        "userId": {
+            "type": "integer"
+        },
+        "timeAssigned": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "timeStarted": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "timeFinished": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "deadline": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "isQa": {
+            "type": "boolean"
+        }
+    },
+    "additionalProperties": false
+}

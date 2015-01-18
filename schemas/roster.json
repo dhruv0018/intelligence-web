@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Roster Schema",
+    "type": "object",
+    "patternProperties": {
+        "[0-9]": {
+            "id": {
+                "type": "integer"
+            },
+            "geamId": {
+                "type": "integer"
+            },
+            "teamId": {
+                "type": "integer"
+            },
+            "playerInfo": {
+                "type": "object",
+                "patternProperties": {
+                    "[0-9]": {
+                        "jerseyNumber": {
+                            "type": ["integer", "string"]
+                        },
+                        "isActive": {
+                            "type": "boolean"
+                        },
+                        "positionIds": {
+                            "type": "array",
+                            "items": "integer"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "additionalProperties": false
+}
