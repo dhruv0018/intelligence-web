@@ -31,6 +31,7 @@
 			"name": "Games",
 			"description": "",
 			"order": [
+				"c5980857-810f-1202-84be-03031e26f73d",
 				"93e742eb-b148-36f0-925e-96efa25ec1b3",
 				"1190d458-e23d-df51-53c5-9ee9eca45272",
 				"69cb7ea8-b327-d617-b1aa-b31b8bc48334",
@@ -922,6 +923,27 @@
 			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
 			"responses": [],
 			"synced": false
+		},
+		{
+			"id": "c5980857-810f-1202-84be-03031e26f73d",
+			"headers": "Authorization: Bearer {{access_token}}\nContent-Type: application/json\n",
+			"url": "{{url}}/{{version}}/games",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "var league = JSON.parse(responseBody);\n\npostman.setGlobalVariable(\"leagueId\", league.id);",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1421553114766,
+			"name": "Create",
+			"description": "Add a new game",
+			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
+			"responses": [],
+			"synced": false,
+			"rawModeData": "{\n  \"datePlayed\":\"2013-11-15T23:00:00+00:00\",\n  \"gameType\":1,\n  \"isHomeGame\":false,\n  \"teamId\":2,\n  \"opposingTeamId\":3,\n  \"primaryJerseyColor\":\"#ffff00\",\n  \"opposingPrimaryJerseyColor\":\"#804040\",\n  \"opposingSecondaryJerseyColor\":\"#ffffff\",\n  \"finalScore\":2,\n  \"opposingFinalScore\":3,\n  \"isDeleted\":false,\n  \"uploaderUserId\":13,\n  \"uploaderTeamId\":2,\n  \"createdAt\":\"2014-07-14T20:54:45+00:00\",\n  \"isClone\":false,\n  \"notes\":{}\n}"
 		},
 		{
 			"id": "d00f202b-574e-bf86-d41d-9f6314a750b8",
