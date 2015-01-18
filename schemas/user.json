@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "User Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "firstName": {
+            "type": "string"
+        },
+        "lastName": {
+            "type": "string"
+        },
+        "roles": {
+            "type": "array",
+            "items": { "$ref": "role" }
+        },
+        "email": {
+            "type": "string"
+        },
+        "isLocked": {
+            "type": "boolean"
+        },
+        "lastAccessed": {
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "additionalProperties": false
+}
