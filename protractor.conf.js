@@ -28,6 +28,7 @@ exports.config = {
     ],
 
     cucumberOpts: {
+        format: 'summary',
         require: 'test/integration/**/*.js'
     },
 
