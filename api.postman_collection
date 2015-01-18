@@ -106,6 +106,20 @@
 			"collection_id": "a986666f-c853-0902-2f9d-9800a54633e7"
 		},
 		{
+			"id": "854b782a-5314-2815-1a1f-89ecbdb4f3a8",
+			"name": "Reels",
+			"description": "",
+			"order": [
+				"1f8c0bfc-7748-2d9f-8381-a79914a3357e",
+				"3c7f3409-4747-c169-7ba8-a89555ef0790",
+				"e58623e1-3f40-c141-5243-f6458a14223e",
+				"51fe8cca-7566-ece7-f542-7e0f31117197",
+				"f8e5f170-d0d5-7706-fd80-aeaffffd5a91"
+			],
+			"collection_name": "Intelligence API",
+			"collection_id": "a986666f-c853-0902-2f9d-9800a54633e7"
+		},
+		{
 			"id": "a624fd91-7943-ce16-5225-9c7b7e8228e3",
 			"name": "Schools",
 			"description": "",
@@ -314,6 +328,27 @@
 			"rawModeData": "{\"id\":1,\"name\":\"Golden Shield\",\"schoolId\":1,\"address\":{\"id\":1,\"street1\":\"1400 Barry Downe Rd\",\"city\":\"Greater Sudbury\",\"regionCode\":\"ON\",\"postalCode\":\"P3A 3V8\",\"countryCode\":\"CN\"},\"roles\":[{\"userId\":5295,\"type\":4,\"teamId\":1,\"tenureStart\":\"2014-09-17T09:39:56+00:00\",\"isDefault\":false,\"createdAt\":\"2014-09-17T09:39:59+00:00\"},{\"userId\":5501,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-09-19T13:39:45+00:00\"},{\"userId\":5500,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-09-19T13:37:59+00:00\"},{\"userId\":5884,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:28:15+00:00\"},{\"userId\":5883,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:27:37+00:00\"},{\"userId\":5887,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:30:43+00:00\"},{\"userId\":5888,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:31:03+00:00\"},{\"userId\":5889,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:31:50+00:00\"},{\"userId\":5891,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:33:04+00:00\"},{\"userId\":5885,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:29:27+00:00\"},{\"userId\":5892,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:33:28+00:00\"},{\"userId\":5890,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:32:23+00:00\"},{\"userId\":5882,\"type\":7,\"teamId\":1,\"isDefault\":true,\"createdAt\":\"2014-10-09T11:26:58+00:00\"},{\"userId\":5893,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:33:58+00:00\"},{\"userId\":12,\"type\":3,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-07-14T06:07:57+00:00\"},{\"userId\":5886,\"type\":7,\"teamId\":1,\"isDefault\":false,\"createdAt\":\"2014-10-09T11:30:00+00:00\"}],\"teamPlans\":[{\"startDate\":\"2014-07-15T00:00:00+00:00\",\"endDate\":\"2014-07-15T23:59:59+00:00\",\"id\":2,\"name\":\"\",\"maxGamesPerPlan\":0,\"maxAnyGames\":0,\"maxTurnaroundTime\":0,\"price\":0},{\"startDate\":\"2014-08-01T00:00:00+00:00\",\"endDate\":\"2015-03-01T00:00:00+00:00\",\"id\":312,\"name\":\"Champion\",\"maxGamesPerPlan\":84,\"maxAnyGames\":3,\"maxTurnaroundTime\":36,\"price\":0}],\"teamPackages\":[{\"id\":595,\"maxGamesPerPackage\":5,\"maxTurnaroundTime\":48,\"startDate\":\"2014-07-15T00:00:00+00:00\",\"endDate\":\"2014-08-12T23:59:59+00:00\"}],\"leagueId\":5,\"isCustomerTeam\":true,\"roster\":{\"id\":1,\"teamId\":1,\"playerInfo\":{\"34326\":{\"jerseyNumber\":\"1\",\"isActive\":true,\"positionIds\":[2]},\"34327\":{\"jerseyNumber\":\"14\",\"isActive\":true,\"positionIds\":[1]},\"46528\":{\"jerseyNumber\":\"2\",\"isActive\":true,\"positionIds\":[3]},\"46529\":{\"jerseyNumber\":\"3\",\"isActive\":true,\"positionIds\":[5]},\"46530\":{\"jerseyNumber\":\"4\",\"isActive\":true,\"positionIds\":[3]},\"46531\":{\"jerseyNumber\":\"5\",\"isActive\":true,\"positionIds\":[5]},\"46532\":{\"jerseyNumber\":\"6\",\"isActive\":true,\"positionIds\":[2]},\"46533\":{\"jerseyNumber\":\"7\",\"isActive\":true,\"positionIds\":[5]},\"46534\":{\"jerseyNumber\":\"8\",\"isActive\":true,\"positionIds\":[1]},\"46535\":{\"jerseyNumber\":\"9\",\"isActive\":true,\"positionIds\":[5]},\"46536\":{\"jerseyNumber\":\"10\",\"isActive\":true,\"positionIds\":[6]},\"46537\":{\"jerseyNumber\":\"12\",\"isActive\":true,\"positionIds\":[1]},\"46538\":{\"jerseyNumber\":\"15\",\"isActive\":true,\"positionIds\":[3]},\"46539\":{\"jerseyNumber\":\"16\",\"isActive\":true,\"positionIds\":[5]}}}}"
 		},
 		{
+			"id": "1f8c0bfc-7748-2d9f-8381-a79914a3357e",
+			"headers": "Authorization: Bearer {{access_token}}\nContent-Type: application/json\n",
+			"url": "{{url}}/{{version}}/reels",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "var reel = JSON.parse(responseBody);\n\npostman.setGlobalVariable(\"reelId\", reel.id);",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1421610934230,
+			"name": "Create",
+			"description": "Add a new reel",
+			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
+			"responses": [],
+			"synced": false,
+			"rawModeData": "{\n  \"name\":\"Test\",\n  \"uploaderUserId\":1,\n  \"uploaderTeamId\":1,\n  \"plays\":[1]\n}"
+		},
+		{
 			"id": "25c0b60b-11b1-fdd3-b6e1-f90638432bd2",
 			"headers": "Content-Type: application/x-www-form-urlencoded\nAuthorization: Basic Y2lkOmNzZWNyZXQ=\n",
 			"url": "{{url}}/oauth/token",
@@ -461,6 +496,26 @@
 			"synced": false
 		},
 		{
+			"id": "3c7f3409-4747-c169-7ba8-a89555ef0790",
+			"headers": "Authorization: Bearer {{access_token}}\n",
+			"url": "{{url}}/{{version}}/reels/{{reelId}}",
+			"preRequestScript": "var reelId = postman.getEnvironmentVariable(\"reelId\");\nif (!reelId) postman.setEnvironmentVariable(\"reelId\", 1);",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var reel = JSON.parse(responseBody);\n\npostman.setEnvironmentVariable(\"reelId\", reel.id);\n\nvar reelSchema =\n{\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n    \"title\": \"Reel Schema\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"id\": {\n            \"type\": \"integer\"\n        },\n        \"name\": {\n            \"type\": \"string\"\n        },\n        \"uploaderUserId\": {\n            \"type\": \"integer\"\n        },\n        \"uploaderTeamId\": {\n            \"type\": \"integer\"\n        },\n        \"createdAt\": {\n            \"type\": \"string\",\n            \"format\": \"date-time\"\n        },\n        \"updatedAt\": {\n            \"type\": \"string\",\n            \"format\": \"date-time\"\n        },\n        \"plays\": {\n            \"type\": \"array\",\n            \"items\": \"integer\"\n        },\n        \"isDeleted\": {\n            \"type\": \"boolean\"\n        },\n        \"shares\": {\n            \"type\": \"array\",\n            \"items\": { \"$ref\": \"share\" }\n        }\n    },\n    \"additionalProperties\": false\n}\n          \ntv4.addFormat('date-time', function(data, schema) {\n\n    var ISO8601 = /[0-9]{4,}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+|)(?:[+-][0-9]{2}:[0-9]{2}|Z)/;\n\n    if (ISO8601.test(data) && !isNaN(Date.parse(data))) return null;\n\n    else return 'A valid ISO 8601 date/time string expected';\n});\n\nvar reel = JSON.parse(responseBody);\n\ntests[\"Reel conforms to schema\"] = tv4.validate(reel, reelSchema);\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1421611560650,
+			"name": "Get",
+			"description": "Endpoint used to retrieve a single reel based on ID.\n",
+			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
+			"responses": [],
+			"synced": false
+		},
+		{
 			"id": "40616a6b-117e-b06a-430a-5dfa046b73bf",
 			"headers": "Authorization: Bearer {{access_token}}\nContent-Type: application/json\n",
 			"url": "{{url}}/{{version}}/plays/{{playId}}",
@@ -583,6 +638,26 @@
 			"responses": [],
 			"synced": false,
 			"rawModeData": "{\"id\":1,\"datePlayed\":\"2013-11-15T23:00:00+00:00\",\"gameType\":1,\"isHomeGame\":false,\"teamId\":2,\"opposingTeamId\":3,\"primaryJerseyColor\":\"#ffff00\",\"opposingPrimaryJerseyColor\":\"#804040\",\"opposingSecondaryJerseyColor\":\"#ffffff\",\"finalScore\":2,\"opposingFinalScore\":3,\"rosters\":{\"2\":{\"id\":4,\"gameId\":1,\"teamId\":2,\"playerInfo\":{\"1\":{\"jerseyNumber\":\"6\",\"isActive\":true,\"positionIds\":[6]},\"2\":{\"jerseyNumber\":\"17\",\"isActive\":false,\"positionIds\":[2,7]},\"3\":{\"jerseyNumber\":\"20\",\"isActive\":true,\"positionIds\":[4]},\"4\":{\"jerseyNumber\":\"15\",\"isActive\":false,\"positionIds\":[1]},\"5\":{\"jerseyNumber\":\"14\",\"isActive\":false,\"positionIds\":[5]},\"6\":{\"jerseyNumber\":\"10\",\"isActive\":false,\"positionIds\":[4,5,6]},\"7\":{\"jerseyNumber\":\"19\",\"isActive\":true,\"positionIds\":[5]},\"8\":{\"jerseyNumber\":\"7\",\"isActive\":false,\"positionIds\":[4,5]},\"9\":{\"jerseyNumber\":\"2\",\"isActive\":true,\"positionIds\":[1]},\"10\":{\"jerseyNumber\":\"9\",\"isActive\":true,\"positionIds\":[4,5]},\"11\":{\"jerseyNumber\":\"16\",\"isActive\":false,\"positionIds\":[1]},\"12\":{\"jerseyNumber\":\"5\",\"isActive\":true,\"positionIds\":[1]},\"13\":{\"jerseyNumber\":\"4\",\"isActive\":true,\"positionIds\":[2]},\"14\":{\"jerseyNumber\":\"18\",\"isActive\":false,\"positionIds\":[2,7]},\"15\":{\"jerseyNumber\":\"11\",\"isActive\":true,\"positionIds\":[4]},\"16\":{\"jerseyNumber\":\"3\",\"isActive\":true,\"positionIds\":[2,7]},\"17\":{\"jerseyNumber\":\"1\",\"isActive\":false,\"positionIds\":[6]},\"18\":{\"jerseyNumber\":\"12\",\"isActive\":true,\"positionIds\":[6]},\"19\":{\"jerseyNumber\":\"\",\"isActive\":true}}},\"3\":{\"id\":5,\"gameId\":1,\"teamId\":3,\"playerInfo\":{\"20\":{\"jerseyNumber\":\"\",\"isActive\":true},\"21\":{\"jerseyNumber\":\"1\",\"isActive\":true},\"22\":{\"jerseyNumber\":\"4\",\"isActive\":true},\"23\":{\"jerseyNumber\":\"6\",\"isActive\":true},\"24\":{\"jerseyNumber\":\"10\",\"isActive\":true},\"25\":{\"jerseyNumber\":\"11\",\"isActive\":true},\"26\":{\"jerseyNumber\":\"17\",\"isActive\":true},\"27\":{\"jerseyNumber\":\"8\",\"isActive\":true},\"28\":{\"jerseyNumber\":\"14\",\"isActive\":true},\"29\":{\"jerseyNumber\":\"18\",\"isActive\":true},\"30\":{\"jerseyNumber\":\"22\",\"isActive\":true},\"31\":{\"jerseyNumber\":\"24\",\"isActive\":true}}}},\"video\":{\"id\":1,\"guid\":\"ec2-54-90-109-171.compute-1.amazonaws.com53c478d27cfac\",\"status\":4,\"videoTranscodeProfiles\":[{\"id\":7,\"videoId\":1,\"transcodeProfile\":{\"id\":1,\"targetBitrate\":600,\"maximumBitrate\":800,\"minimumBitrate\":0,\"description\":\"SD Low Resolution (360p)\",\"targetDisplayWidth\":640,\"targetDisplayHeight\":360,\"aspectRatio\":\"16:9\"},\"status\":4,\"videoUrl\":\"http:\\/\\/krossover-com-prod-content.cdn.krossover.com\\/videos\\/finished\\/ec2-54-90-109-171.compute-1.amazonaws.com53c478d27cfac_600.mp4\"},{\"id\":8,\"videoId\":1,\"transcodeProfile\":{\"id\":2,\"targetBitrate\":1600,\"maximumBitrate\":1900,\"minimumBitrate\":1000,\"description\":\"SD High Resolution (480p)\",\"targetDisplayWidth\":848,\"targetDisplayHeight\":480,\"aspectRatio\":\"16:9\"},\"status\":4,\"videoUrl\":\"http:\\/\\/krossover-com-prod-content.cdn.krossover.com\\/videos\\/finished\\/ec2-54-90-109-171.compute-1.amazonaws.com53c478d27cfac_1600.mp4\"},{\"id\":9,\"videoId\":1,\"transcodeProfile\":{\"id\":3,\"targetBitrate\":3500,\"maximumBitrate\":5000,\"minimumBitrate\":2400,\"description\":\"HD Resolution (720p)\",\"targetDisplayWidth\":1280,\"targetDisplayHeight\":720,\"aspectRatio\":\"16:9\"},\"status\":4,\"videoUrl\":\"http:\\/\\/krossover-com-prod-content.cdn.krossover.com\\/videos\\/finished\\/ec2-54-90-109-171.compute-1.amazonaws.com53c478d27cfac_3500.mp4\"}],\"duration\":7500,\"thumbnail\":\"http:\\/\\/krossover-com-prod-content.cdn.krossover.com\\/images\\/thumbnails\\/ec2-54-90-109-171.compute-1.amazonaws.com53c478d27cfac_3500.jpg\"},\"status\":7,\"indexerAssignments\":[{\"id\":1,\"gameId\":1,\"userId\":5,\"timeAssigned\":\"2014-07-15T08:09:10+00:00\",\"timeStarted\":\"2014-07-15T08:09:28+00:00\",\"timeFinished\":\"2014-07-16T08:42:44+00:00\",\"deadline\":\"2014-07-17T08:09:08+00:00\",\"isQa\":false},{\"id\":5,\"gameId\":1,\"userId\":5,\"timeAssigned\":\"2014-07-16T08:52:33+00:00\",\"timeStarted\":\"2014-07-16T08:52:45+00:00\",\"timeFinished\":\"2014-07-16T11:09:54+00:00\",\"deadline\":\"2014-07-18T08:52:31+00:00\",\"isQa\":true}],\"isDeleted\":false,\"uploaderUserId\":13,\"uploaderTeamId\":2,\"createdAt\":\"2014-07-14T20:54:45+00:00\",\"isClone\":false,\"notes\":{\"1\":[{\"id\":1,\"noteTypeId\":1,\"gameId\":1,\"content\":\"Our starting Setter for this match was #2- Kyana Miller. Our other Setter for this match (we ran a 6-2 offense) was #5- Aimee Schubert.\",\"gameTime\":null}],\"2\":[{\"id\":4,\"noteTypeId\":2,\"gameId\":1,\"content\":\"College of Charleston #5 not listed on roster.\",\"gameTime\":2400},{\"id\":7,\"noteTypeId\":2,\"gameId\":1,\"content\":\"College of Charleston #3 not listed on roster.\",\"gameTime\":7200},{\"id\":8,\"noteTypeId\":2,\"gameId\":1,\"content\":\"Injury occurs here. The play is whistled dead.\",\"gameTime\":7500},{\"id\":9,\"noteTypeId\":2,\"gameId\":1,\"content\":\"Gap in film\",\"gameTime\":7500},{\"id\":10,\"noteTypeId\":2,\"gameId\":1,\"content\":\"The game film ends in the middle of 5th set.\",\"gameTime\":7500}]}}"
+		},
+		{
+			"id": "51fe8cca-7566-ece7-f542-7e0f31117197",
+			"headers": "Authorization: Bearer {{access_token}}\n",
+			"url": "{{url}}/{{version}}/games?start={{start}}&count={{count}}&teamId={{teamId}}&userId={{userId}}",
+			"preRequestScript": "var start = postman.getEnvironmentVariable(\"start\");\nif (!start) postman.setEnvironmentVariable(\"start\", 0);\n\nvar count = postman.getEnvironmentVariable(\"count\");\nif (!count) postman.setEnvironmentVariable(\"count\", 100);\n\nvar sportId = postman.getEnvironmentVariable(\"teamId\");\nif (!sportId) postman.setEnvironmentVariable(\"teamId\", 1);\n\nvar statusId = postman.getEnvironmentVariable(\"userId\");\nif (!statusId) postman.setEnvironmentVariable(\"userId\", 1);\n",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1421611855603,
+			"name": "Filter",
+			"description": "- **{{start}}** _{Integer}_ offset to start results from\n\n- **{{count}}** _{Integer}_ number of results\n\n- **{{teamId}}** _{Integer}_ team ID\n\n- **{{userId}}** _{Integer}_ user ID\n",
+			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
+			"responses": [],
+			"synced": false
 		},
 		{
 			"id": "5272f356-2492-9d2b-847d-0a2f09c0f497",
@@ -1051,10 +1126,10 @@
 			"data": [],
 			"dataMode": "raw",
 			"version": 2,
-			"tests": "var league = JSON.parse(responseBody);\n\npostman.setGlobalVariable(\"leagueId\", league.id);",
+			"tests": "var game = JSON.parse(responseBody);\n\npostman.setGlobalVariable(\"gameId\", game.id);",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1421553114766,
+			"time": 1421610518174,
 			"name": "Create",
 			"description": "Add a new game",
 			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
@@ -1103,6 +1178,26 @@
 			"responses": [],
 			"synced": false,
 			"rawModeData": "{\"id\":1,\"firstName\":\"Krossover\",\"lastName\":\"Super Admin\",\"roles\":[{\"userId\":1,\"type\":1,\"isDefault\":true,\"createdAt\":\"2014-07-01T13:28:06+00:00\"}],\"email\":\"superadmin@krossover.com\",\"isLocked\":false,\"lastAccessed\":\"2015-01-05T01:30:48+00:00\"}"
+		},
+		{
+			"id": "e58623e1-3f40-c141-5243-f6458a14223e",
+			"headers": "Authorization: Bearer {{access_token}}\n",
+			"url": "{{url}}/{{version}}/reels",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1421610615890,
+			"name": "Query",
+			"description": "Endpoint used to get all reels and to search for reels using Query String filters.  If no filters are passed, it will return an array of all reels.  Start and Count  are used to control how many results are returned and from what offset.",
+			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
+			"responses": [],
+			"synced": false
 		},
 		{
 			"id": "e694952f-d019-f211-a976-333401f477bb",
@@ -1164,6 +1259,27 @@
 			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
 			"responses": [],
 			"synced": false
+		},
+		{
+			"id": "f8e5f170-d0d5-7706-fd80-aeaffffd5a91",
+			"headers": "Authorization: Bearer {{access_token}}\nContent-Type: application/json\n",
+			"url": "{{url}}/{{version}}/reels/{{reelId}}",
+			"preRequestScript": "var reelId = postman.getEnvironmentVariable(\"reelId\");\nif (!reelId) postman.setEnvironmentVariable(\"reelId\", 1);",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1421611015061,
+			"name": "Update",
+			"description": "",
+			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
+			"responses": [],
+			"synced": false,
+			"rawModeData": "{\"id\":1,\"name\":\"Test\",\"uploaderUserId\":1,\"uploaderTeamId\":1,\"createdAt\":\"2015-01-18T19:55:56+00:00\",\"updatedAt\":\"2015-01-18T19:55:56+00:00\",\"plays\":[1],\"isDeleted\":false}"
 		}
 	]
 }
