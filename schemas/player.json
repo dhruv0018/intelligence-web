@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Player Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "firstName": {
+            "type": "string"
+        },
+        "lastName": {
+            "type": "string"
+        },
+        "userId": {
+            "type": ["integer", "null"]
+        },
+        "isUnknown": {
+            "type": "boolean"
+        }
+    },
+    "additionalProperties": false
+}
