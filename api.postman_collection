@@ -243,7 +243,7 @@
 			"tests": "",
 			"time": 1393559983170,
 			"name": "Query",
-			"description": "",
+			"description": "Endpoint used to get all games and to search for games using Query String filters.  If no filters are passed, it will return an array of all games.  Start and Count  are used to control how many results are returned and from what offset.",
 			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
 			"responses": [],
 			"synced": false
@@ -663,7 +663,7 @@
 			"helperAttributes": {},
 			"time": 1420423250205,
 			"name": "Filter",
-			"description": "",
+			"description": "- **{{start}}** _{Integer}_ offset to start results from\n\n- **{{count}}** _{Integer}_ number of results\n\n- **{{status}}** _{Integer}_ game status\n\t0. Not indexed\n\t1. Indexing, not started\n\t2. Indexing, in progress\n    3. QA, not started\n    4. QA, in progress\n    5. Set Aside\n    6. Indexed\n    7. Finalized\n\n- **{{gameType}}** _{Integer|Array.<Integer>}_ game type\n\t1. Conference\n    2. Non-conference\n    3. Playoff\n    4. Scouting\n    5. Scrimmage\n\n- **{{rosterId}}** _{Integer}_ roster ID\n\n- **{{team}}** _{String}_ team name\n\n- **{{teamId}}** _{Integer}_ team ID\n\n- **{{sportId}}** _{Integer}_ sport ID\n\n- **{{coachFirstName}}** _{String}_ coach first name\n\n- **{{coachLastName}}** _{String}_ coach last name\n\n- **{{indexerFirstName}}** _{String}_ indexer first name\n\n- **{{indexerLastName}}** _{String}_ indexer last name\n\n- **{{qaFirstName}}** _{String}_ QA first name\n\n- **{{qaLastName}}** _{String}_ QA last name\n\n- **{{assignedUserId}}** _{Integer}_ user ID assigned to game\n\n- **{{uploaderUserId}}** _{Integer}_ user ID who uploaded the game\n\n- **{{uploaderTeamId}}** _{Integer}_ team ID which uploaded the game\n\n- **{{reelId}}** _{Integer}_ reel ID game appears in\n\n- **{{videoStatus}}** _{Integer}_ video status\n\t1. Incomplete\n    2. Uploaded\n    3. Complete\n    4. Failed\n\n- **{{createdAt}}** _{String}_ date game was created\n\n- **{{isClone}}** _{Boolean}_ is game cloned\n\n- **{{sharedWithUserId}}** _{Integer}_ user ID who the game is shared with\n\n- **{{sharedWithTeamId}}** _{Integer}_ team ID which the game is shared with\n\n",
 			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
 			"responses": [],
 			"synced": false
@@ -801,7 +801,7 @@
 			"helperAttributes": {},
 			"time": 1421547645436,
 			"name": "Get",
-			"description": "",
+			"description": "Endpoint used to retrieve a single game based on ID.\n",
 			"collectionId": "a986666f-c853-0902-2f9d-9800a54633e7",
 			"responses": [],
 			"synced": false
