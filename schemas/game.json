@@ -37,7 +37,15 @@
         "opposingFinalScore": {
             "type": "integer"
         },
-        "rosters": { "$ref": "roster" },
+        "rosters": {
+            "type": "object",
+            "patternProperties": {
+                "[0-9]": {
+                    "type": "object",
+                    "items": { "$ref": "roster" }
+                }
+            }
+        },
         "video": { "$ref": "video" },
         "status": {
             "type": "integer"
