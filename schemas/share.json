@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Share Schema",
+    "type": "object",
+    "properties": {
+        "userId": {
+            "type": "integer"
+        },
+        "gameId": {
+            "type": "integer"
+        },
+        "reelId": {
+            "type": "integer"
+        },
+        "playId": {
+            "type": "integer"
+        },
+        "sharedWithUserId": {
+            "type": "integer"
+        },
+        "sharedWithTeamId": {
+            "type": "integer"
+        },
+        "isBreakdownShared": {
+            "type": "boolean"
+        },
+        "createdAt": {
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "additionalProperties": false
+}

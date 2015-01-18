@@ -77,6 +77,10 @@
                     "items": { "$ref": "note" }
                 }
             }
+        },
+        "shares": {
+            "type": "array",
+            "items": { "$ref": "share" }
         }
     },
     "additionalProperties": false
