@@ -1,0 +1,20 @@
+{
+    "name": "coach-game",
+    "paths": [
+        "."
+    ],
+    "local": [
+        "coach-game-info",
+        "game-tab",
+        "coach-game-instructions"
+    ],
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

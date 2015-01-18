@@ -14,18 +14,18 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Header.Controller', [
-    '$window', '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'SessionService', 'IndexingService', 'Indexing.Sidebar', 'Indexing.Data',
-    function controller($window, $scope, $state, $stateParams, $modal, GAME_STATUSES, session, indexing, sidebar, data) {
+    '$window', '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'SessionService', 'IndexingService', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory',
+    function controller($window, $scope, $state, $stateParams, $modal, GAME_STATUSES, session, indexing, sidebar, data, leagues, teams, games) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
 
         var gameId = $stateParams.id;
         var userId = session.currentUser.id;
 
-        $scope.game = data.games.get(gameId);
-        $scope.team = data.teams.get($scope.game.teamId);
-        $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
-        $scope.league = data.leagues.get($scope.team.leagueId);
+        $scope.game = games.get(gameId);
+        $scope.team = teams.get($scope.game.teamId);
+        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+        $scope.league = leagues.get($scope.team.leagueId);
 
         $scope.sidebar = sidebar;
 
@@ -35,6 +35,7 @@ Indexing.controller('Indexing.Header.Controller', [
 
             indexing.isIndexing = false;
             $scope.game.finishAssignment(userId);
+            $scope.game.save();
             $state.go('indexer-games');
         };
 

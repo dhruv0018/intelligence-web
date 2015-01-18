@@ -4,8 +4,7 @@
         "."
     ],
     "local": [
-        "film-home",
-        "game-area"
+        "film-home"
     ],
     "scripts": [
         "index.js"

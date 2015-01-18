@@ -14,8 +14,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q', '$injector', 'ResourceManager',
-    function($q, $injector, managedResources) {
+    '$q', '$injector', 'Utilities',
+    function($q, $injector, util) {
 
         var BaseFactory = {
 
@@ -45,6 +45,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                 /* Create a copy of the resource to break reference to orginal. */
                 var copy = angular.copy(resource);
 
+                delete copy.PAGE_SIZE;
+                delete copy.description;
+                delete copy.model;
+                delete copy.storage;
+
                 /* TODO: Remove any properties that should not exist. */
 
                 return copy;
@@ -59,27 +64,36 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                if (!self.storage) throw new Error(self.description + ' storage not defined');
-
                 var storage = $injector.get(self.storage);
 
-                var resource;
+                return storage.get(id);
+            },
 
-                /* If given and ID lookup the resource in storage. */
-                if (id) {
+            /**
+             * Gets a list of resource IDs.
+             * @param {Array} [list] - a list of resources to map.
+             * @param {Object} [filter] - an object hash of filter parameters.
+             * @returns {Array.<Number>} - an array of resource IDs.
+             */
+            getIds: function(list, filter) {
 
-                    resource = storage.collection[id];
+                var self = this;
+
+                if (!filter) filter = list;
+
+                if (!angular.isArray(list)) {
+
+                    /* Get list of resources. */
+                    list = self.getList(filter);
                 }
 
-                /* If no ID, then assume the unsaved resource. */
-                else {
+                /* Create a map of resource IDs. */
+                var ids = list.map(function(resource) {
 
-                    resource = storage.unsaved;
-                }
+                    return resource.id;
+                });
 
-                if (!resource) throw new Error('Could not get ' + self.description.slice(0, -1) + ' ' + id);
-
-                return resource;
+                return ids;
             },
 
             /**
@@ -91,13 +105,39 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                if (!self.storage) throw new Error(self.description + ' storage not defined');
+                var storage = $injector.get(self.storage);
+
+                if (filter) {
+
+                    var session = $injector.get('SessionService');
+                    var key = '@' + session.serializeUserId() + '!' + self.description + '?' + encodeURIComponent(JSON.stringify(filter));
+                    var ids = JSON.parse(localStorage.getItem(key));
+
+                    if (ids) {
+
+                        return storage.list.filter(function(resource) {
+
+                            return ~ids.indexOf(resource.id);
+                        });
+                    }
+
+                    else return storage.list;
+                }
+
+                else return storage.list;
+            },
+
+            /**
+             * Gets a map of resources.
+             * @returns {Map.<Number,Resource>} - a map of resources, indexed by ID.
+             */
+            getMap: function() {
+
+                var self = this;
 
                 var storage = $injector.get(self.storage);
 
-                var key = String(JSON.stringify(filter));
-
-                return storage.loads[key] ? storage.loads[key].list : storage.list;
+                return storage.map;
             },
 
             /**
@@ -108,11 +148,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                if (!self.storage) throw new Error(self.description + ' storage not defined');
-
-                var storage = $injector.get(self.storage);
-
-                return storage.collection;
+                return self.getMap();
             },
 
             /**
@@ -125,8 +161,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 resource = resource || {};
 
-                delete resource.id;
-
                 var Model = $injector.get(self.model);
 
                 /* Create new resource instance. */
@@ -136,9 +170,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                 resource = self.extend(resource);
 
                 var storage = $injector.get(self.storage);
-
-                /* Add the resource to storage. */
-                storage.unsaved = resource;
 
                 return resource;
             },
@@ -161,7 +192,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 error = error || function() {
 
-                    throw new Error('Could not get ' + self.description);
+                    throw new Error('Could not fetch ' + self.description.slice(0, -1) + ' ' + id);
                 };
 
                 var model = $injector.get(self.model);
@@ -177,9 +208,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     resource = self.extend(resource);
 
                     /* Store the resource locally in its storage collection. */
-                    storage.collection[resource.id] = resource;
-
-                    self.updateList();
+                    storage.set(resource);
 
                     return resource;
                 });
@@ -203,16 +232,31 @@ IntelligenceWebClient.factory('BaseFactory', [
                     filter = null;
                 }
 
+                var session = $injector.get('SessionService');
+
+                var view = session.serializeUserResourceQuery(self.description, filter);
+
                 filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
+
+                /* If filtering by an array of IDs. */
+                if (filter['id[]']) {
+
+                    /* Clear start and count filters. */
+                    filter.start = null;
+                    filter.count = null;
+                    filter['id[]'] = util.unique(filter['id[]']);
+                }
+
+                if (filter.start !== null) filter.start = filter.start || 0;
+                if (filter.count !== null) filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
                 var aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
-                    return angular.isUndefined(filter[key]);
+                    if (angular.isArray(filter[key])) return !filter[key].length;
+                    else return angular.isUndefined(filter[key]);
                 });
 
-                if (aFilterIsUndefined) throw new Error('Undefined filter');
+                if (aFilterIsUndefined) throw new Error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
 
                 success = success || function(resources) {
 
@@ -239,10 +283,16 @@ IntelligenceWebClient.factory('BaseFactory', [
                         resource = self.extend(resource);
 
                         /* Store the resource locally in its storage collection. */
-                        storage.collection[resource.id] = resource;
+                        storage.set(resource);
                     });
 
-                    self.updateList();
+                    /* If not filtering by an array of IDs. */
+                    if (!filter['id[]']) {
+
+                        var ids = self.getIds(resources);
+
+                        storage.saveView(view, ids);
+                    }
 
                     return resources;
                 });
@@ -259,16 +309,33 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+                var session = $injector.get('SessionService');
+
+                var view = session.serializeUserResourceQuery(self.description, filter);
+
                 filter = filter || {};
-                filter.start = filter.start || 0;
-                filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
+
+                /* If filtering by an array of IDs. */
+                if (filter['id[]']) {
+
+                    /* Clear start and count filters. */
+                    filter.start = null;
+                    filter.count = null;
+
+                    /* Take the first set of IDs. */
+                    filter['id[]'] = util.unique(filter['id[]']).splice(0, 100);
+                }
+
+                if (filter.start !== null) filter.start = filter.start || 0;
+                if (filter.count !== null) filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
                 var aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
-                    return angular.isUndefined(filter[key]);
+                    if (angular.isArray(filter[key])) return !filter[key].length;
+                    else return angular.isUndefined(filter[key]);
                 });
 
-                if (aFilterIsUndefined) throw new Error('Undefined filter');
+                if (aFilterIsUndefined) throw new Error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
 
                 success = success || function(resources) {
 
@@ -295,27 +362,39 @@ IntelligenceWebClient.factory('BaseFactory', [
                         resource = self.extend(resource);
 
                         /* Store the resource locally in its storage collection. */
-                        storage.collection[resource.id] = resource;
+                        storage.set(resource);
                     });
 
                     storage.query = storage.query || [];
                     storage.query = storage.query.concat(resources);
 
                     /* If all of the server resources have been retrieved. */
-                    if (resources.length < filter.count) {
-
-                        self.updateList();
+                    if ((filter['id[]'] && filter['id[]'].length < 100) || resources.length < filter.count) {
 
                         var query = storage.query.slice();
+
+                        /* If not filtering by an array of IDs. */
+                        if (!filter['id[]']) {
+
+                            var ids = self.getIds(resources);
+
+                            storage.saveView(view, ids);
+                        }
+
                         delete storage.query;
+
                         return query;
                     }
 
                     /* If there are more resources on the server to retrieve. */
                     else {
 
-                        /* Move the start filter to the next resource set. */
-                        filter.start += filter.count;
+                        /* If the start and count filters are both set. */
+                        if (angular.isNumber(filter.start) && angular.isNumber(filter.count)) {
+
+                            /* Move the start filter to the next resource set. */
+                            filter.start += filter.count;
+                        }
 
                         /* Keep retrieving resources until all are retrieved. */
                         return self.retrieve(filter);
@@ -326,73 +405,115 @@ IntelligenceWebClient.factory('BaseFactory', [
             /**
              * Loads all resources from the server.
              * @param {Object} [filter] - an object hash of filter parameters.
-             * @return {Promise.<self>} - a promise of the resource factory.
+             * @return {Promise.<Array>} - a promise of the resource query.
              */
             load: function(filter) {
 
                 var self = this;
 
-                filter = angular.copy(filter);
-
-                var key = String(JSON.stringify(filter));
-
-                var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
+                var session = $injector.get('SessionService');
 
-                storage.loads = storage.loads || Object.create(null);
+                /* Determine the type of filter and return the appropriate response. */
+                if (angular.isNumber(filter)) return single(filter);
+                else if (angular.isArray(filter)) return multiple(filter);
+                else return other(filter);
 
-                if (!storage.loads[key]) {
+                /**
+                 * Single load. Loads a single resource.
+                 * @param {Number} id - an ID of the resource to load.
+                 * @return {Promise.<Array>} - a promise of the resource query.
+                 */
+                function single(id) {
 
-                    if (angular.isNumber(filter)) {
+                    /* Attempt to grab the resource from storage. */
+                    return storage.grab({ id: id }).then(
 
-                        storage.loads[key] = self.fetch(filter).then(function() {
+                        /* Handle successful cache hit. */
+                        function hit(resources) {
 
-                            return self;
-                        });
-                    }
+                            /* Fetch the resource again to update it. */
+                            self.fetch(id);
 
-                    else if (angular.isArray(filter)) {
+                            return resources;
+                        },
 
-                        filter.filter(function(id) {
+                        /* Handle cache miss. */
+                        function miss() {
 
-                            return !angular.isDefined(self.storage.collection[id]);
-                        });
+                            /* Fetch the resource from the server. */
+                            return self.fetch(id)
 
-                        if (filter.length) {
+                            .then(function(resource) {
 
-                            filter = { 'id[]': filter };
-
-                            self.storage.loads[key] = self.retrieve(filter).then(function(list) {
-
-                                self.storage.loads[key].list = list;
-
-                                return self;
+                                /* Convert the return into an array. */
+                                return [resource];
                             });
                         }
-
-                        else {
-
-                            var deferred = $q.defer();
-
-                            self.storage.loads[key] = deferred.promise;
-                            self.storage.loads[key].list = [];
-
-                            deferred.resolve(self);
-                        }
-                    }
-
-                    else {
-
-                        storage.loads[key] = self.retrieve(filter).then(function(list) {
-
-                            storage.loads[key].list = list;
-
-                            return self;
-                        });
-                    }
+                    );
                 }
 
-                return storage.loads[key];
+                /**
+                 * Multiple load. Loads a multiple resources.
+                 * @param {Array.<Number>} ids - an array of IDs of the resources to load.
+                 * @return {Promise.<Array>} - a promise of the resource query.
+                 */
+                function multiple(ids) {
+
+                    /* Attempt to grab the resources from storage. */
+                    return storage.grab({ id: ids }).then(
+
+                        /* Handle successful cache hit. */
+                        function hit(resources) {
+
+                            /* Retrieve the resources again to update them. */
+                            self.retrieve({ 'id[]': ids });
+
+                            return resources;
+                        },
+
+                        /* Handle cache miss. */
+                        function miss() {
+
+                            /* Retrieve the resources from the server. */
+                            return self.retrieve({ 'id[]': ids });
+                        }
+                    );
+                }
+
+                /**
+                 * Loads resources with a filter.
+                 * @param {Object} [filter] - an object hash of filter parameters.
+                 * @return {Promise.<Array>} - a promise of the resource query.
+                 */
+                function other(filter) {
+
+                    /* Get the view key based on the filter. */
+                    var view = session.serializeUserResourceQuery(self.description, filter);
+
+                    /* Load the view. */
+                    var ids = storage.loadView(view);
+
+                    /* Attempt to grab the resources from storage. */
+                    return storage.grab({ id: ids }).then(
+
+                        /* Handle successful cache hit. */
+                        function hit(resources) {
+
+                            /* Retrieve the resources again to update them. */
+                            self.retrieve(filter);
+
+                            return resources;
+                        },
+
+                        /* Handle cache miss. */
+                        function miss() {
+
+                            /* Retrieve the resources from the server. */
+                            return self.retrieve(filter);
+                        }
+                    );
+                }
             },
 
             /**
@@ -403,11 +524,13 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
-                var key = String(JSON.stringify(filter));
-
                 var storage = $injector.get(self.storage);
+                var session = $injector.get('SessionService');
 
-                delete storage.loads[key];
+                /* Get the view key based on the filter. */
+                var view = session.serializeUserResourceQuery(self.description, filter);
+
+                storage.dropView(view);
             },
 
             /**
@@ -423,10 +546,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 resource = resource || self;
 
-                managedResources.reset(resource);
-
                 /* Create a copy of the resource to save to the server. */
                 var copy = self.unextend(resource);
+
+                resource.isSaving = true;
 
                 parameters = {};
 
@@ -450,20 +573,19 @@ IntelligenceWebClient.factory('BaseFactory', [
                     var update = model.update(parameters, copy, success, error);
 
                     /* Once the update request finishes. */
-                    return update.$promise.then(function() {
+                    return update.$promise
 
-                        /* Fetch the updated resource. */
-                        return self.fetch(resource.id).then(function(updated) {
+                    .then(function() {
 
-                            /* Update local resource with server resource. */
-                            angular.extend(resource, self.extend(updated));
+                        /* Store the resource locally in its storage collection. */
+                        storage.set(resource);
 
-                            /* Update the resource in storage. */
-                            storage.list[storage.list.indexOf(resource)] = resource;
-                            storage.collection[resource.id] = resource;
+                        return resource;
+                    })
 
-                            return resource;
-                        });
+                    .finally(function() {
+
+                        delete resource.isSaving;
                     });
 
                 /* If the resource is new. */
@@ -473,28 +595,62 @@ IntelligenceWebClient.factory('BaseFactory', [
                     var create = model.create(parameters, copy, success, error);
 
                     /* Once the create request finishes. */
-                    return create.$promise.then(function(created) {
+                    return create.$promise
+
+                    .then(function(created) {
 
                         /* Update local resource with server resource. */
                         angular.extend(resource, self.extend(created));
 
-                        /* Add the resource to storage. */
-                        storage.list.push(resource);
-                        storage.collection[resource.id] = resource;
+                        /* Store the resource locally in its storage collection. */
+                        storage.set(resource);
 
                         return resource;
+                    })
+
+                    .finally(function() {
+
+                        delete resource.isSaving;
                     });
                 }
             },
 
             /**
-             * Removes a resources from the server.
+             * Removes a resource from the server.
+             * This performs our "soft-delete" by adding a flag to the resource
+             * and saving it as "deleted" so it no longer appears.
              * @param {Resource} resource - a resource.
              * @param {Function} success - called upon success.
              * @param {Function} error - called on error.
              * @return {Promise} - a promise.
              */
             remove: function(resource, success, error) {
+
+                var self = this;
+
+                resource = resource || self;
+
+                /* Add the deleted flag. */
+                resource.isDeleted = true;
+
+                /* If the resource has been saved to the server before. */
+                if (resource.id) {
+
+                    /* Save the resource. */
+                    resource.save();
+                }
+            },
+
+            /**
+             * Deletes a resource from the server.
+             * This will send a DELETE request to the server. The resource will
+             * be permanently removed locally and remotely.
+             * @param {Resource} resource - a resource.
+             * @param {Function} success - called upon success.
+             * @param {Function} error - called on error.
+             * @return {Promise} - a promise.
+             */
+            delete: function(resource, success, error) {
 
                 var self = this;
 
@@ -506,15 +662,14 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 error = error || function() {
 
-                    throw new Error('Could not remove ' + self.description);
+                    throw new Error('Could not delete ' + self.description.slice(0, -1)) + ' ' + resource.id;
                 };
 
                 var model = $injector.get(self.model);
                 var storage = $injector.get(self.storage);
 
                 /* Remove the resource from storage. */
-                storage.list.splice(storage.list.indexOf(resource), 1);
-                delete storage.collection[resource.id];
+                delete storage.map[resource.id];
 
                 /* If the resource has been saved to the server before. */
                 if (resource.id) {
@@ -522,27 +677,9 @@ IntelligenceWebClient.factory('BaseFactory', [
                     /* Make a DELETE request to the server to delete the resource. */
                     return model.remove(parameters, resource, success, error).$promise;
                 }
-            },
-
-            updateList: function() {
-
-                var self = this;
-
-                var storage = $injector.get(self.storage);
-
-                /* Clear the storage list. */
-                storage.list.length = 0;
-
-                /* Loop through each resource in the storage collection. */
-                Object.keys(storage.collection).forEach(function(key) {
-
-                    /* Add the resource to the storage list. */
-                    storage.list.push(storage.collection[key]);
-                });
             }
         };
 
         return BaseFactory;
     }
 ]);
-

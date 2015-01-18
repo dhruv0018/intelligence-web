@@ -1,0 +1,13 @@
+{
+    "name": "roster-manager",
+    "paths": [
+        "."
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "locals": [
+        "game-roster-manager",
+        "team-roster-manager"
+    ]
+}

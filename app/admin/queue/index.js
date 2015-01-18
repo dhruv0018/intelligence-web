@@ -46,9 +46,10 @@ Queue.service('Admin.Queue.Data.Dependencies', [
 
             sports: sports.load(),
             leagues: leagues.load(),
-            users: users.load({ 'relatedGameStatus[]': statuses }),
-            teams: teams.load({ 'relatedGameStatus[]': statuses }),
-            games: games.load({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
+            //TODO should be able to use load, but causes wierd caching issues
+            users: users.retrieve({ 'relatedGameStatus[]': statuses }),
+            teams: teams.retrieve({ 'relatedGameStatus[]': statuses }),
+            games: games.retrieve({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
         };
 
         return Data;
@@ -116,8 +117,8 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$interval', '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'TeamsFactory', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
-    function controller($interval, $rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, teams, games, data, SelectIndexerModal) {
+    '$interval', '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
+    function controller($interval, $rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, users, sports, leagues, teams, games, data, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -126,15 +127,15 @@ Queue.controller('QueueController', [
         $scope.SelectIndexerModal = SelectIndexerModal;
 
         $scope.data = data;
-        $scope.sports = data.sports.getCollection();
-        $scope.leagues = data.leagues.getCollection();
-        $scope.teams = data.teams.getCollection();
-        $scope.users = data.users.getCollection();
+        $scope.sports = sports.getCollection();
+        $scope.leagues = leagues.getCollection();
+        $scope.teams = teams.getCollection();
+        $scope.users = users.getCollection();
 
-        $scope.sportsList = data.sports.getList();
-        $scope.teamsList = data.teams.getList();
-        $scope.usersList = data.users.getList();
-        $scope.games = data.games.getList().filter(function(game) {
+        $scope.sportsList = sports.getList();
+        $scope.teamsList = teams.getList();
+        $scope.usersList = users.getList();
+        $scope.games = games.getList().filter(function(game) {
             return !game.isDeleted && game.status !== GAME_STATUSES.NOT_INDEXED.id;
         });
 

@@ -1,5 +1,3 @@
-
-
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -11,7 +9,6 @@ var FilmHome = angular.module('Coach.FilmHome', [
     'ui.router',
     'ui.bootstrap',
     'coach-info',
-    'roster',
     'film',
     'no-results'
 ]);
@@ -45,9 +42,13 @@ FilmHome.config([
                 }
             },
             resolve: {
-                'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
-                    return $q.all(data);
-                }]
+                'Coach.Data': [
+                    '$q', 'Coach.Data.Dependencies',
+                    function($q, data) {
+
+                        return $q.all(data);
+                    }
+                ]
             }
         });
     }
@@ -55,3 +56,4 @@ FilmHome.config([
 
 /* File dependencies */
 require('./controller');
+

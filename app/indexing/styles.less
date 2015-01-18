@@ -4,33 +4,33 @@
 
     main {
 
+        display: flex;
+        flex: 1;
+        min-width: 520px;
+        min-height: 460px;
         position: relative;
+        overflow-y: auto;
+        flex-direction: column;
     }
 
     .btn-delete-event {
 
         .btn;
-        .btn-link;
+        .btn-xs;
+        .btn-danger;
         position: absolute;
+        top: 12.5px;
         right: 100px;
-        height: 50px;
-        padding: 0;
-
-        &:focus,
-        &:hover {
-
-            text-decoration: none;
-        }
     }
 
     .indexing-block {
 
-        position: relative;
-        width: ~"calc(100% - 61px - 50px - 100px - 10px)";
+        display: flex;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 25px;
+        margin-top: 45px;
         margin-bottom: 25px;
+        padding: 0 50px;
     }
 
     .indexing-block.fullscreen {
@@ -131,12 +131,18 @@
         }
     }
 
+    .notes {
+        overflow-y: auto;
+    }
+
     .sidebar-notes,
     .sidebar-playlist {
 
+        display: flex;
+        flex-direction: column;
         flex: 0 0 420px;
         border-left: 1px solid rgb(216, 216, 216);
-        overflow-y: auto;
+        overflow-y: hidden;
 
         &.ui-hide {
 
@@ -207,10 +213,11 @@
     }
 
     x-krossover-videoplayer {
+        flex: 1;
 
-        margin-left: auto;
-        margin-right: auto;
-        width: ~"calc(100% - 61px - 50px - 100px - 10px)";
-        height: ~"calc(100% - 61px - 50px - 100px - 10px)";
+        data-videogular {
+            margin-left: auto;
+            margin-right: auto;
+        }
     }
 }

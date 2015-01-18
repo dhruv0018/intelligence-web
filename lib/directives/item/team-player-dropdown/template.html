@@ -1,0 +1,55 @@
+<span class="team-player-dropdown">
+
+    <button
+        class="team-player-dropdown"
+        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
+        data-ng-disabled="!isCoach && !isIndexer || !isEditable"
+        data-ng-click="reset()"
+    >
+
+        <span data-ng-if="event.variableValues[item.id].value && event.variableValues[item.id].type === 'Player'">
+
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+
+                <rect data-ng-if="game.isPlayerOnTeam(event.variableValues[item.id].value)" data-ng-attr-fill="{{ game.primaryJerseyColor }}" x="0" y="0" width="16px" height="16px" />
+                <rect data-ng-if="game.isPlayerOnOpposingTeam(event.variableValues[item.id].value)" data-ng-attr-fill="{{ game.opposingPrimaryJerseyColor }}" x="0" y="0" width="16px" height="16px" />
+
+            </svg>
+
+            <span class="jersey-number" data-ng-if="game.isPlayerOnTeam(event.variableValues[item.id].value)">
+                {{ teamRoster.playerInfo[event.variableValues[item.id].value].jerseyNumber }}
+            </span>
+
+            <span class="jersey-number" data-ng-if="game.isPlayerOnOpposingTeam(event.variableValues[item.id].value)">
+                {{ opposingTeamRoster.playerInfo[event.variableValues[item.id].value].jerseyNumber }}
+            </span>
+
+            {{ players[event.variableValues[item.id].value].firstName }} {{ players[event.variableValues[item.id].value].lastName }}
+
+        </span>
+
+        <span data-ng-if="event.variableValues[item.id].value && event.variableValues[item.id].type === 'Team'"> {{ teams[event.variableValues[item.id].value].name }}</span>
+
+        <span data-ng-if="event.variableValues[item.id].value === null">Optional</span>
+
+    </button>
+
+    <input
+        type="text"
+        class="team-player-dropdown"
+        placeholder="Select"
+        tabindex="{{ item.index }}"
+        data-ng-required="item.isRequired"
+        data-ng-if="isUndefined(event.variableValues[item.id].value)"
+        data-ng-model="selectedItem"
+        data-ng-change="onChange()"
+        data-ng-blur="onBlur()"
+        data-focus-on="shouldFocus()"
+        data-autofocus-when="autoAdvance && item.index == 1"
+        data-typeahead-editable="false"
+        data-typeahead-on-select="selectItem($item)"
+        data-typeahead-template-url="item/team-player-dropdown-input.html"
+        data-typeahead="option for option in teamPlayerOptions | ORFilter:{ jerseyNumber: $viewValue, name: $viewValue } | orderBy:'jerseyNumber'"
+    >
+
+</span>

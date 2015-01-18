@@ -18,6 +18,9 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         env: {
+            test: {
+                NODE_ENV: 'test'
+            },
             dev: {
                 NODE_ENV: 'development'
             },
@@ -330,6 +333,12 @@ module.exports = function(grunt) {
                 src:    '**',
                 dest:   'public/intelligence/assets'
             },
+            qaassets: {
+                expand: true,
+                cwd:    'build/assets',
+                src:    '**',
+                dest:   'public/<%= gitinfo.local.branch.current.name %>/intelligence/assests'
+            },
             dev: {
                 files: {
                     'build/index.html': 'src/index.html',
@@ -345,6 +354,15 @@ module.exports = function(grunt) {
             manifests: {
                 files: {
                     'public/intelligence/manifest.appcache': 'manifest.appcache'
+                }
+            },
+            qa: {
+                files: {
+                    'public/<%= gitinfo.local.branch.current.name %>/intelligence/.htaccess': 'src/.htaccess',
+                    'public/<%= gitinfo.local.branch.current.name %>/intelligence/manifest.appcache': 'manifest.appcache',
+                    'public/<%= gitinfo.local.branch.current.name %>/intelligence/index.html': 'build/index.html',
+                    'public/<%= gitinfo.local.branch.current.name %>/intelligence/styles.css': 'build/styles.css',
+                    'public/<%= gitinfo.local.branch.current.name %>/intelligence/scripts.js': 'build/scripts.js'
                 }
             },
             build: {
@@ -478,35 +496,35 @@ module.exports = function(grunt) {
             },
             config: {
                 files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             index: {
                 files: ['src/index.html'],
-                tasks: ['newer:htmlhint', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:htmlhint', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
-                tasks: ['newer:htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             css: {
                 files: ['app/**/*.css', 'lib/**/*.css'],
-                tasks: ['newer:csslint', 'componentbuild:styles', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:csslint', 'componentbuild:styles', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             less: {
                 files: ['app/**/*.less', 'lib/**/*.less'],
-                tasks: ['componentbuild:styles', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['componentbuild:styles', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:less:theme', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'notify:build']
+                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             unit: {
                 files: ['test/unit/**/*.js'],
@@ -531,6 +549,14 @@ module.exports = function(grunt) {
 
     /* Tasks */
 
+    grunt.registerTask('date-manifests', 'Dates the cache manifest', function() {
+
+        var fs = require('fs');
+
+        var now = new Date();
+
+        fs.appendFileSync('public/intelligence/manifest.appcache', '# ' + now);
+    });
 
     var server;
 
@@ -556,28 +582,21 @@ module.exports = function(grunt) {
         server.close();
     });
 
-    grunt.registerTask('date-manifest', 'Dates the cache manifest', function() {
-
-        var fs = require('fs');
-
-        var now = new Date();
-
-        fs.appendFileSync('public/intelligence/manifest.appcache', '# ' + now);
-    });
-
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['karma', 'integration']);
+    grunt.registerTask('test', ['build', 'karma', 'integration']);
     grunt.registerTask('lint', ['htmlhint', 'jshint', 'eslint', 'jscs']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['browserSync:dev']);
+    grunt.registerTask('manifests', ['copy:manifests', 'date-manifests']);
     grunt.registerTask('default', ['githooks', 'install', 'dev', 'notify:build', 'serve', 'watch']);
 
     grunt.registerTask('build', [
         'env:prod',
         'componentbuild:prod',
-        'browserify:prod']);
+        'browserify:prod'
+    ]);
 
     grunt.registerTask('dev', [
         'env:dev',
@@ -594,8 +613,7 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:dev',
         'copy:build',
-        'copy:manifests',
-        'date-manifest'
+        'manifests'
     ]);
 
     grunt.registerTask('qa', [
@@ -604,23 +622,41 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'browserify:prod',
         'ngAnnotate',
-        'uglify',
         'componentbuild:styles',
         'less',
         'svgmin',
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
-        'cssmin',
-        'htmlmin',
         'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
+        'copy:dev',
         'copy:build',
         'copy:htaccess',
-        'copy:manifests',
-        'date-manifest',
+        'manifests',
         'ver:prod'
+    ]);
+
+    grunt.registerTask('new-qa', [
+        'gitinfo',
+        'clean',
+        'env:qa',
+        'componentbuild:prod',
+        'browserify:prod',
+        'ngAnnotate',
+        'componentbuild:styles',
+        'less',
+        'copy:svg',
+        'grunticon',
+        'concat:unprefixed',
+        'autoprefixer',
+        'componentbuild:files',
+        'copy:theme-assets',
+        'copy:qaassets',
+        'copy:dev',
+        'copy:qa',
+        'manifests'
     ]);
 
     grunt.registerTask('prod', [
@@ -643,8 +679,7 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:build',
         'copy:htaccess',
-        'copy:manifests',
-        'date-manifest',
+        'manifests',
         'ver:prod'
     ]);
 };

@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('TagsetsFactory', [
-    'TagsetsResource', 'TagsetsStorage', 'BaseFactory', '$filter',
-    function(TagsetsResource, TagsetsStorage, BaseFactory, $filter) {
+    'BaseFactory', '$filter',
+    function(BaseFactory, $filter) {
 
         var TagsetsFactory = {
 
@@ -56,7 +56,53 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 return tagset;
             },
 
+            unextend: function(tagset) {
+
+                var self = this;
+
+                tagset = tagset || self;
+
+                var copy = angular.copy(tagset);
+
+                var tags = [];
+
+                Object.keys(copy.tags).forEach(function(tagKey) {
+
+                    var tag = copy.tags[tagKey];
+
+                    var tagVariables = [];
+
+                    Object.keys(tag.tagVariables).forEach(function(tagVariableKey) {
+
+                        var tagVariable = tag.tagVariables[tagVariableKey];
+
+                        var formations = [];
+
+                        Object.keys(tagVariable.formations).forEach(function(tagVariableFormationsKey) {
+
+                            var formation = tagVariable.formations[tagVariableFormationsKey];
+
+                            formations.push(formation);
+                        });
+
+                        tagVariable.formations = formations;
+
+                        tagVariables[--tagVariableKey] = tagVariable;
+                    });
+
+                    tag.tagVariables = tagVariables;
+
+                    tags.push(tag);
+                });
+
+                copy.tags = tags;
+
+                return copy;
+            },
+
             getStartTags: function() {
+
+                var self = this;
 
                 var tags = this.tags;
 
@@ -69,7 +115,26 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 .filter(function(tag) {
 
-                    return tag.isStart;
+                    return self.isStartTag(tag.id);
+                });
+            },
+
+            getFloatTags: function() {
+
+                var self = this;
+
+                var tags = this.tags;
+
+                return Object.keys(tags)
+
+                .map(function(key) {
+
+                    return tags[key];
+                })
+
+                .filter(function(tag) {
+
+                    return self.isFloatTag(tag.id);
                 });
             },
 
@@ -83,12 +148,32 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                     return tag.children.map(function(childId) {
 
                         return tags[childId];
-                    });
+                    })
+
+                    .concat(this.getFloatTags());
 
                 } else {
 
                     return this.getStartTags();
                 }
+            },
+
+            isStartTag: function(tagId) {
+
+                var tags = this.tags;
+                var tag = tags[tagId];
+
+                return tag.isStart;
+            },
+
+            isFloatTag: function(tagId) {
+
+                var tags = this.tags;
+                var tag = tags[tagId];
+
+                return tag.isStart === false &&
+                       tag.isEnd === false &&
+                       tag.children.length === 0;
             },
 
             isEndTag: function(tagId) {

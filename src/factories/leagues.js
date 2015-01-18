@@ -7,18 +7,9 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('LeaguesStorage', [
-    function() {
-
-        this.list = [];
-        this.collection = {};
-    }
-]);
-
-
 IntelligenceWebClient.factory('LeaguesFactory', [
-    'LeaguesStorage', 'LeaguesResource', 'BaseFactory',
-    function(LeaguesStorage, LeaguesResource, BaseFactory) {
+    'BaseFactory',
+    function(BaseFactory) {
 
         var LeaguesFactory = {
 

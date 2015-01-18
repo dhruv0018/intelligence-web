@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html ng-app="intelligence-web-client" lang="en" manifest="/intelligence/manifest.appcache">
+<html data-ng-app="intelligence-web-client" lang="en" manifest="/intelligence/manifest.appcache">
 
     <head>
 
@@ -28,7 +28,9 @@
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="msapplication-TileImage" content="assets/favicons/mstile-144x144.png">
 
-        <script async src="//cdn.segment.io/analytics.js/v1/pnpw1h6l2q/analytics.min.js"></script>
+        <script defer async src="//cdn.segment.io/analytics.js/v1/pnpw1h6l2q/analytics.min.js"></script>
+
+        <script src="scripts.js"></script>
 
     </head>
 
@@ -41,8 +43,6 @@
                 <div class="icon icon-krossover-symbol"></div>
             </div>
         </div>
-
-        <script src="scripts.js"></script>
 
     </body>
 

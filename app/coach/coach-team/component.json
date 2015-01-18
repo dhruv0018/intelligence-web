@@ -4,10 +4,16 @@
         "template.html"
     ],
     "scripts": [
-        "index.js",
-        "controller.js"
+        "index.js"
     ],
     "styles": [
         "styles.less"
+    ],
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "roster",
+        "assistants"
     ]
 }

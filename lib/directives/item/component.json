@@ -16,11 +16,13 @@
         "gap",
         "text",
         "yard",
+        "arena",
         "static",
         "dropdown",
         "formation",
         "passing-zone",
         "team-dropdown",
-        "player-dropdown"
+        "player-dropdown",
+        "team-player-dropdown"
     ]
 }

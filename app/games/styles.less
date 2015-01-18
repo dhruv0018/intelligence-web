@@ -1,0 +1,41 @@
+@import (reference) "main.less";
+
+.games {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .games-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        height: calc(~"100% - 106px");
+        background: @gray-lightest;
+    }
+}
+
+// TODO: This is for restricted.html which should be moved to a generic directive
+.locked-game {
+    background-color: @content-bg;
+    width: 30%;
+    margin: auto;
+    margin-top: 40px;
+    padding: 10px;
+    border: thin solid @gray-border;
+    text-align: center;
+
+    i {
+        font-size: 100px;
+    }
+}
+
+// TODO: This is for restricted.html which should be moved to a generic directive
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+    
+    .locked-game {
+        width: 80%;
+    }
+
+}

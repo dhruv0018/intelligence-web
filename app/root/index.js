@@ -10,22 +10,6 @@ var angular = window.angular;
  */
 var Root = angular.module('root', []);
 
-Root.run([
-    '$rootScope', '$window',
-    function run($rootScope, $window) {
-
-        angular.element($window).bind('resize',function() {
-
-            var resize = {
-
-                width: $window.outerWidth
-            };
-
-            $rootScope.$broadcast('resize', resize);
-        });
-    }
-]);
-
 /* Cache the template file */
 Root.run([
     '$templateCache',
@@ -61,9 +45,14 @@ Root.config([
  * @type {Controller}
  */
 Root.controller('RootController', [
-    '$scope',
-    function controller($scope) {
+    '$scope', '$window', '$log',
+    function controller($scope, $window, $log) {
 
+        $scope.$watch('$window.trackJs', function() {
+            if (!$log.decorated) {
+                $log.initDecoration();
+            }
+        });
     }
 ]);
 

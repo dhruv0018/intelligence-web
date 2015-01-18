@@ -1,0 +1,15 @@
+{
+    "name": "assistant-manager",
+    "templates": [
+        "template.html"
+    ],
+    "paths": [
+        "."
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

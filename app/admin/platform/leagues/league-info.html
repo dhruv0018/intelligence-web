@@ -1,42 +1,70 @@
 <div class="row">
 
-    <div class="col-md-4">
+    <div class="col-md-7">
 
         <form class="form-info" name="form" role="form">
 
             <div class="form-group">
 
+                <label>Sport</label>
                 <select class="form-control" name="sport" data-ng-model="league.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
-                    <option value="">Sport</option>
+                    <option value="">Select a sport</option>
                 </select>
 
-                <input class="form-control" name="name" placeholder="Name" data-ng-model="league.name" type="text" required />
+                <label>Name</label>
+                <input class="form-control" name="name" placeholder="Enter a name" data-ng-model="league.name" type="text" required />
 
+                <label>Gender</label>
                 <select class="form-control" name="gender" data-ng-model="league.gender" data-ng-options="gender for gender in genders" required>
-                    <option value="">Gender</option>
+                    <option value="">Select a gender</option>
                 </select>
+
+                <label>Tag Set</label>
                 <select class="form-control" name="tagset" data-ng-model="league.tagSetId" data-ng-options="tagset.id as tagset.name for tagset in tagsets">
-                    <option value="">Tag Set</option>
+                    <option value="">Select a tag set</option>
                 </select>
+
+                <label>Filter Set</label>
                 <select class="form-control" name="filterset" data-ng-model="league.filterSetId" data-ng-options="filterset.id as filterset.name for filterset in filtersets">
-                    <option value="">Filter Set</option>
+                    <option value="">Select a filter set</option>
                 </select>
+
+                <label>Position Set</label>
                 <select class="form-control" name="positionset" data-ng-model="league.positionSetId" data-ng-options="positionset.id as positionset.name for positionset in positionsets">
-                    <option value="">Position Set</option>
+                    <option value="">Select a position set</option>
                 </select>
-                <input class="form-control" name="number-of-periods" placeholder="Number of Periods" data-ng-model="league.numberOfPeriods" type="number" min="1" />
-                <input class="form-control" name="period-label" placeholder="Period Label" data-ng-model="league.periodLabel" type="text" />
-                <input class="form-control" name="period-abbreviation" placeholder="Period Abbreviation" data-ng-model="league.periodAbbreviationLabel" type="text" />
-                <input class="form-control" name="season-start-month" placeholder="Season Start Month" data-ng-model="league.seasonStartMonth" type="number"  min="1" required />
-                <input class="form-control" name="season-start-day" placeholder="Season Start Day" data-ng-model="league.seasonStartDay" type="number"  min="1" required />
-                <input class="form-control" name="season-end-month" placeholder="Season End Month" data-ng-model="league.seasonEndMonth" type="number"  min="1" required />
-                <input class="form-control" name="season-end-day" placeholder="Season End Day" data-ng-model="league.seasonEndDay" type="number" min="1" required />
+
+                <label>Arena</label>
+                <select class="form-control" name="arena" data-ng-model="league.arenaId" data-ng-options="arena.id as arena.name for (arenaIds, arena) in arenas">
+                    <option value="">Select an arena</option>
+                </select>
+
+                <label>Number of Periods</label>
+                <input class="form-control" name="number-of-periods" placeholder="4" data-ng-model="league.numberOfPeriods" type="number" min="1" />
+                
+                <label>Name of Period</label>
+                <input class="form-control" name="period-label" placeholder="Quarter" data-ng-model="league.periodLabel" type="text" />
+                
+                <label>Period Abbreviation</label>
+                <input class="form-control" name="period-abbreviation" placeholder="Qtr" data-ng-model="league.periodAbbreviationLabel" type="text" />
+                
+                <label>Season Start Month</label>
+                <input class="form-control" name="season-start-month" placeholder="1" data-ng-model="league.seasonStartMonth" type="number"  min="1" required />
+                
+                <label>Season Start Day</label>
+                <input class="form-control" name="season-start-day" placeholder="1" data-ng-model="league.seasonStartDay" type="number"  min="1" required />
+                
+                <label>Season End Month</label>
+                <input class="form-control" name="season-end-month" placeholder="6" data-ng-model="league.seasonEndMonth" type="number"  min="1" required />
+                
+                <label>Season End Day</label>
+                <input class="form-control" name="season-end-day" placeholder="30" data-ng-model="league.seasonEndDay" type="number" min="1" required />
 
             </div>
 
             <div class="form-group">
 
-                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(league)">Save</button>
+                <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save()">Save</button>
                 <a class="pull-right" href data-ui-sref="leagues">cancel</a>
 
             </div>

@@ -1,7 +1,7 @@
 require('angular/angular');
 require('angular-sanitize/angular-sanitize');
 require('angular-resource/angular-resource');
-require('angular-bootstrap/ui-bootstrap-tpls');
+require('angular-bootstrap/dist/ui-bootstrap-tpls');
 require('angular-ui-unique/unique');
 require('angular-ui-showhide/showhide');
 require('angular-ui-validate/validate');
@@ -19,4 +19,5 @@ require('flow/src/directives/events');
 require('flow/src/directives/transfers');
 require('flow/src/directives/img');
 require('Mousetrap');
+require('Mousetrap/plugins/pause/mousetrap-pause');
 

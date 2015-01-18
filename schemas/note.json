@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Note Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "noteTypeId": {
+            "type": "integer"
+        },
+        "geamId": {
+            "type": "integer"
+        },
+        "content": {
+            "type": "string"
+        },
+        "gameTime": {
+            "type": ["integer", "null"]
+        }
+    }
+}

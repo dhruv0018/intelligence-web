@@ -1,0 +1,12 @@
+{
+    "name": "upload-status",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

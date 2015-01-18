@@ -1,0 +1,89 @@
+@import (reference) "main.less";
+
+.reels-player-area {
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: @gray-lightest;
+
+    header {
+
+        border-bottom: 1px solid @gray-border;
+        background-color: @gray-lightest;
+        padding: 15px;
+        display: flex;
+        height: 50px;
+
+        h3 {
+            color: @brand-blue;
+            padding: 0;
+            margin: 0 0 10px 0;
+
+            span {
+                font-weight: 400;
+            }
+        }
+
+        .delete-reel {
+            margin-left: auto;
+            color: @brand-danger;
+            cursor: pointer;
+        }
+    }
+
+    .reel-body {
+        display: flex;
+        flex-direction: column;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 15px;
+        background: @gray-lightest;
+        flex: 1;
+    }
+
+    // MOBILE
+    @media only screen
+    and (max-width: @screen-md-max) {
+        .reel-body {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+        .reel-edit-control-container {
+            background-color: @gray-lightest;
+        }
+
+        .reel-edit-controls {
+                    
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            max-width: 420px;
+
+            .save-edit {
+                color: @brand-success;
+            }
+        }
+
+        .main-highlight {
+            background-color: @gray-lightest;
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+
+            &.not-editable {
+                @media only screen
+                and (min-width: @screen-lg) {
+                    padding-top: 15px;
+                }
+            }
+        }
+
+            .player.reels-player {
+                display: flex;
+                flex: 1;
+                margin-left: 15px;
+            }
+} 

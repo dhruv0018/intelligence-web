@@ -56,24 +56,57 @@ Games.config([
  * @type {Service}
  */
 Games.service('Indexer.Games.Data.Dependencies', [
-    '$q', 'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory',
-    function($q, session, users, games, teams, leagues, sports) {
-
-        var currentUser = session.currentUser;
+    '$q', 'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'SchoolsFactory',
+    function($q, session, users, games, teams, leagues, sports, schools) {
 
         var Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
-            teams: teams.load({ relatedUserId: currentUser.id }),
-            users: users.load({ relatedUserId: currentUser.id }),
-            games: games.load({
-                assignedUserId: currentUser.id
-            })
+
+            get users() {
+
+                var userId = session.currentUser.id;
+
+                return users.load({ relatedUserId: userId });
+            },
+
+            get teams() {
+
+                var userId = session.currentUser.id;
+
+                return teams.load({ relatedUserId: userId });
+            },
+
+            get schools() {
+
+                return this.teams.then(function(teams) {
+
+                    var schoolIds = teams
+
+                    .filter(function(team) {
+
+                        return team.schoolId;
+                    })
+
+                    .map(function(team) {
+
+                        return team.schoolId;
+                    });
+
+                    if (schoolIds.length) return schools.load(schoolIds);
+                });
+            },
+
+            get games() {
+
+                var userId = session.currentUser.id;
+
+                return games.load({ assignedUserId: userId });
+            }
         };
 
         return Data;
-
     }
 ]);
 
@@ -86,17 +119,15 @@ Games.service('Indexer.Games.Data.Dependencies', [
  * @type {Controller}
  */
 Games.controller('indexer-games.Controller', [
-    '$scope', '$state', 'config', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
-    function controller($scope, $state, config, GAME_TYPES, teams, leagues, games, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
+    '$scope', '$state', '$interval', 'config', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'SportsFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
+    function controller($scope, $state, $interval, config, GAME_TYPES, teams, leagues, games, sports, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
-        $scope.sports = data.sports.getCollection();
-        $scope.leagues = data.leagues.getCollection();
-        $scope.teams = data.teams.getCollection();
-        $scope.users = data.users.getCollection();
-
+        $scope.sports = sports.getCollection();
+        $scope.leagues = leagues.getCollection();
+        $scope.teams = teams.getCollection();
+        $scope.users = users.getCollection();
         $scope.userId = session.currentUser.id;
-
         $scope.footballFAQ = config.links.indexerFAQ.football.uri;
         $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
 
@@ -110,6 +141,44 @@ Games.controller('indexer-games.Controller', [
             $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
         }
 
-        $scope.games = data.games.getList();
+        $scope.games = games.getList({ assignedUserId: $scope.userId });
+
+        angular.forEach($scope.games, function(game) {
+            game.timeRemaining = game.assignmentTimeRemaining();
+        });
+
+        var refreshGames = function() {
+
+            angular.forEach($scope.games, function(game) {
+
+                if (game.timeRemaining) {
+
+                    game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
+                }
+            });
+        };
+
+        var ONE_MINUTE = 60000;
+
+        var refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
+
+        $scope.$on('$destroy', function() {
+
+            $interval.cancel(refreshGamesInterval);
+        });
     }
 ]);
+
+//TODO find out why games are coming down for indexers if they are not assigned to them or their assignment has finished
+Games.filter('assignedGames',
+    ['SessionService',
+        function(session) {
+            return function(games) {
+                return games.filter(function(game) {
+                    return game.indexerAssignments.some(function(assignment) {
+                        return !assignment.timeFinished && assignment.userId === session.currentUser.id;
+                    });
+                });
+            };
+        }
+    ]);

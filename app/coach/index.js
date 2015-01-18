@@ -1,10 +1,9 @@
 /* Component dependencies */
-require('coach-game');
 require('film-home');
-require('game-area');
 require('coach-team');
 require('add-film');
 require('team-info');
+require('analytics');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -15,9 +14,8 @@ var angular = window.angular;
  */
 
 var Coach = angular.module('Coach', [
-    'Coach.Game',
     'Coach.FilmHome',
-    'Coach.GameArea',
+    'Coach.Analytics',
     'Coach.Team',
     'Coach.Team.Info',
     'add-film'
@@ -49,32 +47,63 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data.Dependencies', [
-    '$q', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies',
-    function($q, session, teams, games, players, users, leagues, tagsets, positions, baseData) {
+    '$q', 'SessionService', 'TeamsFactory', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'ROLE_TYPE', 'ROLES',
+    function($q, session, teams, reels, games, players, users, leagues, tagsets, filtersets, positionsets, ROLE_TYPE, ROLES) {
 
-        var promises = {
-            games: games.load({
-                uploaderTeamId: session.currentUser.currentRole.teamId
-            }),
-            teams: teams.load({ relatedUserId: session.currentUser.id }),
-            users: users.load({ relatedUserId: session.currentUser.id }),
-            remainingBreakdowns: teams.getRemainingBreakdowns(session.currentUser.currentRole.teamId),
-            positionSets: positions.load(),
-            leagues: baseData.leagues,
-            sports: baseData.sports,
-            filtersets: baseData.filtersets,
-            tagsets: baseData.tagsets
+        var teamId = session.currentUser.currentRole.teamId;
+
+        var Data = {
+
+            tagsets: tagsets.load(),
+            filtersets: filtersets.load(),
+            positionsets: positionsets.load(),
+
+            get users() {
+
+                var userId = session.currentUser.id;
+
+                return users.load({ relatedUserId: userId });
+            },
+
+            get teams() {
+
+                var userId = session.currentUser.id;
+
+                return teams.load({ relatedUserId: userId });
+            },
+
+            get games() {
+
+                var userId = session.currentUser.id;
+
+                return games.load({ relatedUserId: userId });
+            },
+
+            get reels() {
+
+                var userId = session.currentUser.id;
+
+                return reels.load({ relatedUserId: userId });
+            },
+
+            get playersList() {
+
+                return teams.load(teamId).then(function() {
+
+                    var team = teams.get(teamId);
+
+                    return players.load({ rosterId: team.roster.id });
+                });
+            },
+
+            get remainingBreakdowns() {
+                return teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
+                    session.currentUser.remainingBreakdowns = breakdownData;
+                    return breakdownData;
+                });
+            }
         };
 
-        promises.playersList = promises.teams.then(function(teams) {
-            var userTeamId = session.currentUser.currentRole.teamId;
-            var userTeam = teams.get(userTeamId);
-            return players.query({
-                rosterId: userTeam.roster.id
-            });
-        });
-
-        return promises;
+        return Data;
     }
 ]);
-

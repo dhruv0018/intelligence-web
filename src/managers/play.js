@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    '$injector', 'PlaysFactory', 'EventManager',
-    function service($injector, plays, eventManager) {
+    '$injector', 'PlaysFactory', 'EventManager', 'GamesFactory',
+    function service($injector, plays, eventManager, gamesFactory) {
 
         var playsManager;
 
@@ -25,6 +25,7 @@ IntelligenceWebClient.service('PlayManager', [
         this.gameId = null;
         this.current = null;
         this.playState = null; //current play playing/paused in video?. probably a better place for this, but this is convenient
+        this.playAllPlays = true;
 
         /**
          * Clear the current play.
@@ -33,6 +34,16 @@ IntelligenceWebClient.service('PlayManager', [
 
             this.current = null;
             this.playState = null;
+        };
+
+        this.register = function register(playScope) {
+            playsManager = playsManager || $injector.get('PlaysManager');
+            playsManager.registerPlayScope(playScope);
+        };
+
+        this.getNextPlayScope = function getNextPlayScope() {
+            playsManager = playsManager || $injector.get('PlaysManager');
+            return playsManager.getNextPlayScope(this.current);
         };
 
         /**
@@ -111,6 +122,10 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* Insert the event into the appropriate index. */
             this.current.events.splice(index, 0, event);
+
+            //Keep the current play element at the top of the playlist
+            var playScopeEventIsBeingAddedTo = playsManager.playScopes[this.current.$$hashKey];
+            if (playScopeEventIsBeingAddedTo && typeof playScopeEventIsBeingAddedTo.selectPlay === 'function') playScopeEventIsBeingAddedTo.selectPlay();
         };
 
         /**
@@ -198,7 +213,7 @@ IntelligenceWebClient.service('PlayManager', [
             if (play.id) {
 
                 /* Also remove it remotely. */
-                plays.remove(play);
+                plays.delete(play);
             }
         };
 
@@ -213,10 +228,10 @@ IntelligenceWebClient.service('PlayManager', [
 
             var playIndex = playsManager.plays.indexOf(play);
 
-            playsManager.plays[playIndex].isSaving = true;
-
             /* Save the play remotely. */
-            plays.save(play).then(function(play) {
+            plays.save(play)
+
+            .then(function(play) {
 
                 /* If the play exists in the play list. */
                 if (~playIndex) {
@@ -224,10 +239,11 @@ IntelligenceWebClient.service('PlayManager', [
                     /* Update the play in the play list. */
                     playsManager.plays[playIndex] = play;
                 }
+            })
 
-            }).finally(function() {
+            .catch(function() {
 
-                playsManager.plays[playIndex].isSaving = false;
+                playsManager.plays[playIndex].error = true;
             });
         };
     }

@@ -13,31 +13,65 @@ IntelligenceWebClient.config([
     }
 ]);
 
+IntelligenceWebClient.value('$previousState', {});
+
 IntelligenceWebClient.run([
-    '$rootScope', '$http', '$location', '$state', '$stateParams', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
-    function run($rootScope, $http, $location, $state, $stateParams, tokens, auth, authz, session, alerts, managedResources) {
+    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', '$previousState', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService',
+    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, $previousState, tokens, auth, authz, session, alerts) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
-        /* Retrieve the current user. */
-        var currentUser = session.retrieveCurrentUser();
-
-        /* Expose the current user on the root scope. */
-        $rootScope.currentUser = currentUser;
-
-        /* Store the current user if logged in. */
-        if (auth.isLoggedIn) {
-
-            /* Store the current user. */
-            session.storeCurrentUser(currentUser);
-        }
-
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
+            /* If the user is accessing a public state. */
+            if (authz.isPublic(toState)) {
+
+                /* If not logged in. */
+                if (!auth.isLoggedIn) {
+
+                    /* Store the user in the session. */
+                    session.storeCurrentUser(ANONYMOUS_USER);
+
+                    /* Retrieve the user from the session. */
+                    var currentUser = session.retrieveCurrentUser();
+
+                    /* Expose the current user on the root scope. */
+                    $rootScope.currentUser = currentUser;
+                }
+
+                /* It there is no access token set. */
+                if (!tokens.getAccessToken()) {
+
+                    /* Prevent the state from loading. */
+                    event.preventDefault();
+
+                    /* Request client tokens. */
+                    tokens.requestClientTokens()
+
+                    /* If the tokens request is successful. */
+                    .then(function(authTokens) {
+
+                        /* Set the tokens. */
+                        tokens.setTokens(authTokens);
+                    })
+
+                    /* In any case, finally. */
+                    .finally(function() {
+
+                        /* Go to state, but without starting state transition again. */
+                        $state.go(toState.name, toParams, {notify: false}).then(function() {
+
+                            /* Broadcast the success of the state transition. */
+                            $rootScope.$broadcast('$stateChangeSuccess', toState, toParams, fromState, fromParams);
+                        });
+                    });
+                }
+            }
 
             /* If not accessing a public state and not logged in, then
              * redirect the user to login. */
-            if (!authz.isPublic(toState) && !auth.isLoggedIn) {
+            else if (!auth.isLoggedIn) {
 
                 /* Prevent the state from loading. */
                 event.preventDefault();
@@ -59,13 +93,13 @@ IntelligenceWebClient.run([
             }
         });
 
-        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
             /* Clear any alerts. */
             alerts.clear();
 
-            /* Restore any active resources to their backups. */
-            managedResources.restore();
+            /* Store previous state */
+            $previousState = fromState;
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {

@@ -1,5 +1,7 @@
 var pkg = require('../package.json');
 
+require('./appcache');
+
 /* Vendor dependencies */
 require('./vendor');
 
@@ -17,9 +19,15 @@ require('./config');
 
 require('./app');
 
+require('./utilities');
+require('./indexeddb');
 require('./flow');
+require('./users');
 require('./routes');
 require('./errors');
+require('./viewports');
+require('./logs');
+require('./device');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
@@ -37,6 +45,7 @@ require('./services/alerts');
 require('./services/scripts');
 require('./services/indexing');
 require('./services/date');
+require('./services/detectDevice');
 
 require('./constants/users');
 require('./constants/games');
@@ -49,6 +58,10 @@ require('./constants/turnaroundtimes');
 require('./constants/football/gaps');
 require('./constants/football/zones');
 require('./constants/sports');
+require('./constants/viewports');
+require('./constants/arenas');
+require('./constants/device');
+require('./constants/states');
 
 require('./models/users');
 require('./models/sports');
@@ -61,8 +74,10 @@ require('./models/tagsets');
 require('./models/positionsets');
 require('./models/plays');
 require('./models/filtersets');
+require('./models/reels');
 require('./models/plans');
 
+require('./storage/base');
 require('./storage/users');
 require('./storage/teams');
 require('./storage/games');
@@ -73,6 +88,7 @@ require('./storage/plays');
 require('./storage/players');
 require('./storage/tagsets');
 require('./storage/filtersets');
+require('./storage/reels');
 require('./storage/positionsets');
 require('./storage/plans');
 
@@ -87,6 +103,7 @@ require('./factories/plays');
 require('./factories/players');
 require('./factories/tagsets');
 require('./factories/filtersets');
+require('./factories/reels');
 require('./factories/positionsets');
 require('./factories/plans');
 
@@ -94,7 +111,7 @@ require('./managers/tags');
 require('./managers/play');
 require('./managers/plays');
 require('./managers/event');
-require('./managers/resource');
+require('./managers/storage');
 
 require('./directives/alert');
 require('./directives/match');
@@ -104,10 +121,7 @@ require('./directives/button');
 require('./directives/input');
 require('./directives/submit');
 require('./directives/keyboard');
-require('./directives/draggable');
 require('./directives/focus');
 require('./directives/autofocus');
 require('./directives/autotab');
-
-// angular.bootstrap(document, [pkg.name]);
 

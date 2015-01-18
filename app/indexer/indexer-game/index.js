@@ -23,16 +23,54 @@ Game.run([
  * @type {service}
  */
 Game.service('Indexer.Game.Data.Dependencies', [
-    'Indexer.Games.Data.Dependencies', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'UsersFactory',
-    function(data, teams, leagues, sports, users) {
+    'SessionService', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'UsersFactory', 'GamesFactory', 'SchoolsFactory',
+    function(session, teams, leagues, sports, users, games, schools) {
 
         var Data = {
 
-            games: data.games,
-            teams: teams.load(),
-            leagues: leagues.load(),
             sports: sports.load(),
-            users: users.load()
+            leagues: leagues.load(),
+
+            get users() {
+
+                var userId = session.currentUser.id;
+
+                return users.load({ relatedUserId: userId });
+            },
+
+            get teams() {
+
+                var userId = session.currentUser.id;
+
+                return teams.load({ relatedUserId: userId });
+            },
+
+            get schools() {
+
+                return this.teams.then(function(teams) {
+
+                    var schoolIds = teams
+
+                    .filter(function(team) {
+
+                        return team.schoolId;
+                    })
+
+                    .map(function(team) {
+
+                        return team.schoolId;
+                    });
+
+                    if (schoolIds.length) return schools.load(schoolIds);
+                });
+            },
+
+            get games() {
+
+                var userId = session.currentUser.id;
+
+                return games.load({ assignedUserId: userId });
+            }
         };
 
         return Data;
@@ -61,27 +99,19 @@ Game.config([
                 },
                 resolve: {
                     'Indexer.Game.Data': [
-                        '$q', '$stateParams', 'Indexer.Game.Data.Dependencies', 'SchoolsFactory',
-                        function($q, $stateParams, data, schools) {
-                            return $q.all(data).then(function(data) {
-                                var game = data.games.get($stateParams.id);
-                                var team = data.teams.get(game.teamId);
+                        '$q', 'Indexer.Game.Data.Dependencies',
+                        function($q, data) {
 
-                                if (team.schoolId) {
-                                    data.school = schools.fetch(team.schoolId);
-                                }
-
-                                return $q.all(data);
-                            });
+                            return $q.all(data);
                         }
                     ]
                 },
                 onEnter: [
-                    '$state', '$stateParams', 'SessionService', 'AlertsService', 'Indexer.Game.Data',
-                    function($state, $stateParams, session, alerts, data) {
+                    '$state', '$stateParams', 'SessionService', 'AlertsService', 'Indexer.Game.Data', 'GamesFactory',
+                    function($state, $stateParams, session, alerts, data, games) {
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
-                        var game = data.games.get(gameId);
+                        var game = games.get(gameId);
                         var status = game.getStatus();
                         var indexable = game.isAssignedToIndexer() && game.canBeIndexed();
                         var qaAble = game.isAssignedToQa() && game.canBeQAed();

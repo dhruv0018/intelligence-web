@@ -10,32 +10,108 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'BaseFactory', 'GamesResource', 'GamesStorage', '$q',
-    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, BaseFactory, GamesResource, GamesStorage, $q) {
+    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
+    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, players, $q) {
 
         var GamesFactory = {
 
-            PAGE_SIZE: 1500,
+            PAGE_SIZE: 1000,
 
             description: 'games',
 
             model: 'GamesResource',
 
             storage: 'GamesStorage',
+            unextend: function(game) {
 
+                var self = this;
+
+                game = game || self;
+
+                /* Create a copy of the resource to break reference to orginal. */
+                var copy = angular.copy(game);
+                delete copy.flow;
+
+                copy.shares = copy.shares || [];
+
+                if (copy.isSharedWithPublic()) {
+                    copy.shares.push(copy.publicShare);
+                    delete copy.publicShare;
+                }
+
+                return copy;
+            },
             extend: function(game) {
 
                 var self = this;
 
                 angular.augment(game, self);
-
+                game.isSaving = false;
                 game.video = game.video || {};
                 game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
-                game.notes = game.notes || [];
+                game.notes = game.notes || {};
+                game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
+                game.datePlayed = game.datePlayed || moment.utc().toDate();
+
+                //TODO remove when the back end makes notes always a object
+                if (angular.isArray(game.notes)) {
+                    game.notes = {};
+                }
+
+                if (!game.uploaderUserId && session.currentUser && session.currentUser.id) {
+                    game.uploaderUserId = session.currentUser.id;
+                }
+
+                if (!game.uploaderTeamId && session.currentUser && session.currentUser.currentRole && session.currentUser.currentRole.teamId) {
+                    game.uploaderTeamId = session.currentUser.currentRole.teamId;
+                }
+
+                /* build lookup table of shares by userId shared with */
+                game.shares = game.shares || [];
+                game.sharedWithUsers = game.sharedWithUsers || {};
+
+                if (game.shares && game.shares.length) {
+
+                    angular.forEach(game.shares, function(share, index) {
+                        if (share.sharedWithUserId) {
+                            game.sharedWithUsers[share.sharedWithUserId] = share;
+                        } else if (!share.sharedWithUserId && !share.sharedWithTeamId) {
+                            game.publicShare = share;
+                            game.shares.splice(index, 1);
+                        }
+                    });
+                }
 
                 return game;
             },
+
+            getByUploaderTeamId: function(teamId) {
+
+                if (!teamId) throw new Error('No teamId');
+
+                var self = this;
+
+                var games = self.getList();
+
+                return games.filter(function(game) {
+
+                    return game.uploaderTeamId == teamId;
+                });
+            },
+
+            getBySharedWithUser: function(user) {
+
+                var self = this;
+
+                var games = self.getList();
+
+                return games.filter(function(game) {
+
+                    return game.isSharedWithUser(user);
+                });
+            },
+
             saveNotes: function() {
 
                 var deferred = $q.defer();
@@ -54,6 +130,34 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
 
                 return deferred.promise;
+            },
+
+            isPlayerOnTeam: function(playerId) {
+
+                var self = this;
+
+                var teamId = self.teamId;
+                var teamRoster = self.getRoster(teamId);
+                var playerInfo = teamRoster.playerInfo;
+
+                if (!playerInfo) return false;
+
+                /* Check if the player is on the team roster. */
+                return angular.isDefined(playerInfo[playerId]);
+            },
+
+            isPlayerOnOpposingTeam: function(playerId) {
+
+                var self = this;
+
+                var opposingTeamId = self.opposingTeamId;
+                var opposingTeamRoster = self.getRoster(opposingTeamId);
+                var playerInfo = opposingTeamRoster.playerInfo;
+
+                if (!playerInfo) return false;
+
+                /* Check if the player is on the opposing team roster. */
+                return angular.isDefined(playerInfo[playerId]);
             },
 
             generateStats: function(id, success, error) {
@@ -100,6 +204,68 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!roster) throw new Error('No team roster for game');
 
                 return roster;
+            },
+
+            getTeamPlayers: function() {
+
+                var self = this;
+
+                var teamId = self.teamId;
+                var teamRoster = self.getRoster(teamId);
+                var playerInfo = teamRoster.playerInfo;
+
+                if (!playerInfo) return [];
+
+                var teamPlayers = Object.keys(playerInfo)
+
+                .filter(function(playerId) {
+
+                    return teamRoster.playerInfo[playerId].isActive;
+                })
+
+                .map(function(playerId) {
+
+                    return players.get(playerId);
+                });
+
+                return teamPlayers;
+            },
+
+            getOpposingTeamPlayers: function() {
+
+                var self = this;
+
+                var opposingTeamId = self.opposingTeamId;
+                var opposingTeamRoster = self.getRoster(opposingTeamId);
+                var playerInfo = opposingTeamRoster.playerInfo;
+
+                if (!playerInfo) return [];
+
+                var opposingTeamPlayers = Object.keys(playerInfo)
+
+                .filter(function(playerId) {
+
+                    return opposingTeamRoster.playerInfo[playerId].isActive;
+                })
+
+                .map(function(playerId) {
+
+                    return players.get(playerId);
+                });
+
+                return opposingTeamPlayers;
+            },
+
+            getPlayers: function() {
+
+                var self = this;
+
+                var teamPlayers = self.getTeamPlayers();
+                var opposingTeamPlayers = self.getOpposingTeamPlayers();
+
+                var players = teamPlayers.concat(opposingTeamPlayers);
+
+                return players;
             },
 
             getVideoSources: function() {
@@ -620,28 +786,41 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return game;
             },
-            isRegular: function isRegular(game) {
+
+            isRegular: function(game) {
+
+                var self = this;
+
+                game = game || self;
+
+                game = game || this;
 
                 switch (game.gameType) {
                     case GAME_TYPES.CONFERENCE.id:
                     case GAME_TYPES.NON_CONFERENCE.id:
                     case GAME_TYPES.PLAYOFF.id:
                         return true;
-                    default:
-                        return false;
                 }
+
+                return false;
             },
 
-            isNonRegular: function isNonRegular(game) {
+            isNonRegular: function(game) {
+
+                var self = this;
+
+                game = game || self;
+
+                game = game || this;
 
                 switch (game.gameType) {
 
                     case GAME_TYPES.SCOUTING.id:
                     case GAME_TYPES.SCRIMMAGE.id:
                         return true;
-                    default:
-                        return false;
                 }
+
+                return false;
             },
 
             getFormationReport: function() {
@@ -787,6 +966,104 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 return isBeingBrokenDown;
+            },
+            shareWithUser: function(user) {
+
+                var self = this;
+
+                if (!user) throw new Error('No user to share with');
+
+                self.shares = self.shares || [];
+
+                self.sharedWithUsers = self.sharedWithUsers || {};
+
+                if (self.isSharedWithUser(user)) return;
+
+                var share = {
+                    userId: session.currentUser.id,
+                    gameId: self.id,
+                    sharedWithUserId: user.id,
+                    createdAt: moment.utc().toDate(),
+                    isBreakdownShared: false
+                };
+
+                self.sharedWithUsers[user.id] = share;
+
+                self.shares.push(share);
+            },
+            stopSharingWithUser: function(user) {
+
+                var self = this;
+
+                if (!user) throw new Error('No user to remove');
+
+                if (!self.shares || !self.shares.length) return;
+
+                for (var index = 0; index < self.shares.length; index++) {
+                    if (self.shares[index].sharedWithUserId === user.id) {
+                        self.shares.splice(index, 1);
+                        delete self.sharedWithUsers[user.id];
+                        return;
+                    }
+                }
+            },
+            getShareByUser: function(user) {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
+                if (!user) throw new Error('No user to get share from');
+
+                var userId = user.id;
+
+                return self.sharedWithUsers[userId];
+            },
+            isSharedWithUser: function(user) {
+                var self = this;
+
+                if (!user) return false;
+
+                if (!self.sharedWithUsers) return false;
+
+                return angular.isDefined(self.getShareByUser(user));
+            },
+            getUserShares: function() {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
+                var sharesArray = [];
+
+                angular.forEach(self.sharedWithUsers, function(share, index) {
+                    sharesArray.push(share);
+                });
+
+                return sharesArray;
+            },
+            togglePublicSharing: function() {
+                var self = this;
+
+                self.shares = self.shares || [];
+
+                if (self.isSharedWithPublic()) {
+                    delete self.publicShare;
+                } else {
+                    var share = {
+                        userId: session.getCurrentUserId(),
+                        teamId: session.getCurrentTeamId(),
+                        gameId: self.id,
+                        sharedWithUserId: null,
+                        createdAt: moment.utc().toDate(),
+                        isBreakdownShared: false
+                    };
+
+                    self.publicShare = share;
+                }
+            },
+            isSharedWithPublic: function() {
+                var self = this;
+
+                return !!self.publicShare;
             }
         };
 

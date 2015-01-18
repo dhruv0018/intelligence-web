@@ -18,6 +18,11 @@ IntelligenceWebClient.service('PlaysManager', [
 
         this.plays = [];
 
+        //Index of scopes assosicated with the plays
+        //indexed by 'id' for game breakdown playlist, and
+        //by '$$hashkey' for indexing playlist
+        this.playScopes = {};
+
         /**
          * Resets the plays.
          * @param {Array} plays - array to set the plays to.
@@ -36,6 +41,61 @@ IntelligenceWebClient.service('PlaysManager', [
 
             return this.plays[this.plays.length - 1];
         };
+
+        /* Returns the index of a play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Number} index
+         */
+        this.getIndex = function(currentPlay) {
+            return this.plays.indexOf(currentPlay);
+        };
+
+        /* Retrieves the previous play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Object} previousPlay
+         */
+        this.getPreviousPlay = function(currentPlay) {
+            var index = this.plays.indexOf(currentPlay);
+            return (--index >= 0) ? this.plays[index] : null;
+        };
+
+        /* Retrieves the next play in a sequence of plays
+         * @param {Object} currentPlay
+         * @return {Object} nextPlay
+         */
+        this.getNextPlay = function(currentPlay) {
+            var index = this.plays.indexOf(currentPlay);
+            return (++index < this.plays.length) ? this.plays[index] : null;
+        };
+
+        this.registerPlayScope = function registerPlayScope(playScope) {
+            //create hash of play scopes indexed by the scopes play's id
+            var registeredId;
+            if (playScope.play.id) {
+                registeredId = playScope.play.id;
+            } else {
+                //Special case for indexing. Automatically selects play
+                //to keep the current play at the top of the playlist
+                registeredId = playScope.play.$$hashKey;
+                if (typeof playScope.selectPlay === 'function') playScope.selectPlay();
+            }
+            this.playScopes[registeredId] = playScope;
+        };
+
+        this.getNextPlayScope = function getNextPlayScope(currentPlay) {
+            var currentPlayIndex = this.plays.indexOf(currentPlay);
+            var nextPlay = this.plays[(currentPlayIndex + 1) % this.plays.length];
+            if (nextPlay) {
+
+                if (angular.isUndefined(nextPlay.isFiltered) || nextPlay.isFiltered) {
+                    //Find the next visible play
+                    return this.playScopes[nextPlay.id];
+                } else {
+                    return this.getNextPlayScope(nextPlay);
+                }
+            }
+        };
+
         /**
          * Adds a play.
          * @param {Object} play - play to be added.
@@ -77,13 +137,13 @@ IntelligenceWebClient.service('PlaysManager', [
         };
 
         /**
-         * Removes all plays.
+         * Delete all plays.
          */
-        this.removeAllPlays = function() {
+        this.deleteAllPlays = function() {
 
             this.plays.forEach(function(play) {
 
-                play.remove();
+                play.delete();
             });
         };
 

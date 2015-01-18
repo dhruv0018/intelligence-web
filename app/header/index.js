@@ -44,9 +44,10 @@ Header.config([
                     }
                 },
                 resolve: {
-                    'Base.Data': [
-                        '$q', 'Base.Data.Dependencies',
+                    'Header.Data': [
+                        '$q', 'Header.Data.Dependencies',
                         function($q, data) {
+
                             return $q.all(data);
                         }
                     ]
@@ -56,23 +57,25 @@ Header.config([
 ]);
 
 
-Header.service('Base.Data.Dependencies', [
-    'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'TeamsFactory',
-    function(session, sports, leagues, tagsets, filtersets, teams) {
-
-        var teamIds = session.currentUser.getTeamIds();
+Header.factory('Header.Data.Dependencies', [
+    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory',
+    function(auth, session, sports, leagues, teams) {
 
         var Data = {
-            sports: sports.load(),
-            leagues: leagues.load(),
-            tagsets: tagsets.load(),
-            filtersets: filtersets.load(),
+
+            get sports() { return sports.load(); },
+            get leagues() { return leagues.load(); },
+
+            get teams() {
+
+                if (auth.isLoggedIn) {
+
+                    var userId = session.currentUser.id;
+
+                    return teams.load({ relatedUserId: userId });
+                }
+            }
         };
-
-        if (teamIds.length) {
-
-            Data.teams = teams.load({ 'id[]': teamIds });
-        }
 
         return Data;
     }
@@ -86,25 +89,37 @@ Header.service('Base.Data.Dependencies', [
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES',
-    function controller(config, $scope, $state, auth, session, account, ROLES) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'UsersFactory', 'LeaguesFactory', 'TeamsFactory', 'SPORTS',
+    function controller(config, $scope, $state, auth, session, account, ROLES, users, leagues, teams, SPORTS) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
         $scope.INDEXER = ROLES.INDEXER;
+        $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.COACH = ROLES.COACH;
         $scope.ATHLETE = ROLES.ATHLETE;
 
+        $scope.auth = auth;
         $scope.config = config;
-
         $scope.$state = $state;
-
+        $scope.session = session;
         $scope.account = account;
 
-        $scope.logout = function() {
+        //TEMP - get sport id to show Analytics tab for FB only
+        if (auth.isLoggedIn) {
+            if (session.currentUser.is(ROLES.COACH)) {
+                var team = teams.get(session.currentUser.currentRole.teamId);
+                $scope.league = leagues.get(team.leagueId);
+                $scope.SPORTS = SPORTS;
+            }
+        }
 
-            auth.logoutUser();
-            $state.go('login');
+        // This scope functionality limits a menu element to only one sub-menu
+        $scope.subMenu = false;
+
+        $scope.toggleSubMenu = function($event) {
+            $event.stopPropagation();
+            $scope.subMenu = !$scope.subMenu;
         };
     }
 ]);

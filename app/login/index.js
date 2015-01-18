@@ -38,12 +38,11 @@ Login.config([
 
             .state('login', {
                 url: '/login',
-                parent: 'root',
                 views: {
                     'header@login': {
                         templateUrl: 'signup.html'
                     },
-                    'main@root': {
+                    'root': {
                         templateUrl: 'template.html',
                         controller: 'LoginController'
                     },
@@ -141,8 +140,8 @@ Login.config([
  * @type {Controller}
  */
 Login.controller('LoginController', [
-    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService', 'AlertsService',
-    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, account, alerts) {
+    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService', 'AlertsService', 'UsersFactory', 'EMAIL_REQUEST_TYPES',
+    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, account, alerts, users, EMAIL_REQUEST_TYPES) {
 
         $scope.config = config;
 
@@ -163,22 +162,14 @@ Login.controller('LoginController', [
             var password = $scope.login.password;
             var persist = $scope.login.remember;
 
-            /* Ensure any past login is cleared. */
-            auth.logoutUser();
-
             /* Login the user. */
             auth.loginUser(email, password, persist).then(function(user) {
-
                 if (user) {
-
                     /* If the user has more than one role, but has not selected
                      * a default one yet. */
-                    if (user.roles && user.roles.length > 1 && !user.defaultRole) {
-
+                    if (user.isActive() && !user.defaultRole) {
                         $state.go('roles', false);
-
                     } else {
-
                         account.gotoUsersHomeState(user);
                     }
 
@@ -227,7 +218,7 @@ Login.controller('LoginController', [
 
             var email = $scope.$parent.login.email;
 
-            auth.requestPasswordReset(email,
+            users.resendEmail(EMAIL_REQUEST_TYPES.FORGOTTEN_PASSWORD, null, email).then(
 
                 function success() {
 
@@ -268,6 +259,7 @@ Login.controller('LoginController', [
                         });
                     }
                 }
+
             );
         };
 
@@ -275,7 +267,8 @@ Login.controller('LoginController', [
 
             if ($stateParams.token) {
 
-                auth.processPasswordReset($stateParams.token, $scope.reset.password,
+                users.passwordReset($stateParams.token, $scope.reset.password).then(
+
 
                     function success(data, status) {
 

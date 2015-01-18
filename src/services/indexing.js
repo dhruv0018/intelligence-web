@@ -7,9 +7,9 @@ var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
     'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayerInstance',
-    function(config, tagsManager, playsManager, playManager, eventManager, Videoplayer) {
+    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayerInstance) {
 
-        var videoplayer;
+        var videoPlayer = videoPlayerInstance.promise;
 
         var IndexingService = {
 
@@ -28,9 +28,9 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.reset(tagset, game.id);
                 playManager.clear();
 
-                Videoplayer.then(function(player) {
+                videoPlayerInstance.promise.then(function(player) {
 
-                    videoplayer = player;
+                    videoPlayer = player;
                     self.isReady = true;
                 });
             },
@@ -53,7 +53,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     this.showTags = true;
                     this.showScript = false;
                     this.eventSelected = false;
-                    videoplayer.pause();
+                    videoPlayer.pause();
                 }
             },
 
@@ -64,7 +64,7 @@ IntelligenceWebClient.factory('IndexingService', [
             selectTag: function(tagId) {
 
                 /* Get current time from the video. */
-                var time = videoplayer.getCurrentTime();
+                var time = videoPlayer.getCurrentTime();
 
                 /* Create new event. */
                 eventManager.create(tagId, time);
@@ -105,19 +105,48 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             save: function() {
 
-                this.showTags = false;
-                this.showScript = false;
-                this.isIndexing = false;
-                this.eventSelected = false;
+                /* Record the current event. */
+                var event = eventManager.current;
 
                 /* Snap video back to time of current event. */
-                videoplayer.seekTime(eventManager.current.time);
-                videoplayer.play();
+                videoPlayer.seekTime(event.time);
 
                 playManager.save();
                 playManager.clear();
                 tagsManager.reset();
                 eventManager.reset();
+
+                /* If the event is an end-and-start event. */
+                if (eventManager.isEndAndStartEvent(event)) {
+
+                    /* Get the tagId of the event. */
+                    var tagId = event.tagId;
+
+                    /* Get the tag of the event. */
+                    var tag = tagsManager.tagset.tags[tagId];
+
+                    /* Get the child tag ID of the tag. */
+                    var childId = tag.children[0];
+
+                    /* Get the next set of tags based on the child tag. */
+                    tagsManager.nextTags(childId);
+
+                    /* Set the current event. */
+                    eventManager.current = event;
+
+                    /* Set the tag ID for the current event to the child ID. */
+                    eventManager.current.tagId = childId;
+
+                    /* Add event to the current play. */
+                    playManager.addEvent(eventManager.current);
+                }
+
+                this.showTags = false;
+                this.showScript = false;
+                this.isIndexing = false;
+                this.eventSelected = false;
+
+                videoPlayer.play();
             },
 
             /**
@@ -144,20 +173,43 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             next: function() {
 
+                var tagId;
+
                 this.showTags = false;
                 this.showScript = false;
                 this.isIndexing = false;
                 this.eventSelected = false;
 
-                /* Get the tagId of the current event. */
-                var tagId = eventManager.current.tagId;
+                /* If the event is a floating event. */
+                if (eventManager.isFloatingEvent()) {
 
-                /* Get the next set of tags based on the tag in the current event. */
+                    /* Get the previous event. */
+                    var previousEvent = eventManager.previousEvent();
+
+                    /* While the previous event is a float. */
+                    while (eventManager.isFloatingEvent(previousEvent)) {
+
+                        /* Get the previous event. */
+                        previousEvent = eventManager.previousEvent(previousEvent);
+                    }
+
+                    /* Get the tagId of the previous event. */
+                    tagId = previousEvent.tagId;
+                }
+
+                /* Otherwise; if the event is a normal event. */
+                else {
+
+                    /* Get the tagId of the current event. */
+                    tagId = eventManager.current.tagId;
+                }
+
+                /* Get the next set of tags. */
                 tagsManager.nextTags(tagId);
 
                 /* Snap video back to time of current event. */
-                videoplayer.seekTime(eventManager.current.time);
-                videoplayer.play();
+                videoPlayer.seekTime(eventManager.current.time);
+                videoPlayer.play();
             },
 
             /**
@@ -174,7 +226,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     this.showTags = true;
                     this.showScript = false;
                     this.isIndexing = true;
-                    videoplayer.play();
+                    videoPlayer.play();
                 }
 
                 /* If the tags are showing. */
@@ -184,7 +236,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     this.showTags = false;
                     this.showScript = false;
                     this.isIndexing = false;
-                    videoplayer.play();
+                    videoPlayer.play();
                 }
 
                 /* If the event doesn't have variables of If the first variable is empty. */
@@ -238,7 +290,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.delete(selectedEvent);
 
                 /* Save play. */
-                playManger.save();
+                playManager.save();
 
                 /* Clear the current play. */
                 playManager.clear();
@@ -248,7 +300,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 if (this.isReady) {
 
-                    videoplayer.playPause();
+                    videoPlayer.playPause();
                 }
             },
 
@@ -256,9 +308,9 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 if (this.isReady) {
 
-                    var currentTime = videoplayer.getCurrentTime();
+                    var currentTime = videoPlayer.getCurrentTime();
                     var time = currentTime - config.indexing.video.jump;
-                    videoplayer.seekTime(time);
+                    videoPlayer.seekTime(time);
                 }
             },
 
@@ -266,9 +318,9 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 if (this.isReady) {
 
-                    var currentTime = videoplayer.getCurrentTime();
+                    var currentTime = videoPlayer.getCurrentTime();
                     var time = currentTime + config.indexing.video.jump;
-                    videoplayer.seekTime(time);
+                    videoPlayer.seekTime(time);
                 }
             }
         };

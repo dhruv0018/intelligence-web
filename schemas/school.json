@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "School Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "address": { "$ref": "address" },
+        "conference": {
+            "type": ["null", "string"]
+        },
+        "division": {
+            "type": ["null", "string"]
+        },
+        "mascot": {
+            "type": ["null", "string"]
+        }
+    },
+    "additionalProperties": true
+}

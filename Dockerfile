@@ -32,7 +32,6 @@ ADD . /intelligence-web-client
 
 # Expose ports
 EXPOSE 8000
-EXPOSE 8001
 
 # Run Grunt
 CMD ["grunt"]

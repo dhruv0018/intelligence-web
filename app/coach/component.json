@@ -4,12 +4,11 @@
         "."
     ],
     "local": [
-        "coach-game",
         "film-home",
-        "game-area",
         "coach-team",
         "add-film",
-        "team-info"
+        "team-info",
+        "analytics"
     ],
     "scripts": [
         "index.js"

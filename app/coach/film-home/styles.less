@@ -6,7 +6,7 @@
 
 		width: 100%;
 		border-bottom: 1px solid @gray-border;
-		background-color: #f7f8f8;
+		background-color: @gray-lightest;
 		padding: 20px;
 		line-height: normal;
 
@@ -91,6 +91,18 @@
 		.krossover-athlete {
 			padding-left: 10px;
 		}
+
+        .role-title{
+            .title{
+              color: @brand-blue;
+              margin-right: 10px;
+              font-weight: 500;
+            }
+        }
+
+        .sport, .role-name, .role-icon {
+          display: none;
+        }
 	}
 
 }

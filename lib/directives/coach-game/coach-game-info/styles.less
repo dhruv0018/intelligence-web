@@ -1,0 +1,140 @@
+@import (reference) "main.less";
+
+.game-info {
+
+    .team-typeahead{
+      text-align: center;
+    }
+
+    .box {
+
+        border: 1px solid transparent;
+
+        .box-header {
+
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        .box-body {
+
+            background-color: transparent;
+
+            th {
+
+                text-align: left;
+            }
+
+            th.score,
+            td.score {
+
+                text-align: center;
+            }
+
+
+            td {
+
+                padding: 15px;
+                vertical-align: middle;
+                background-color: white;
+
+                .row {
+
+                    height: 100%;
+                }
+
+                input {
+
+                   height: 40px;
+                }
+
+                input[type="color"] {
+
+                    height: 32px;
+                }
+
+                input[name="opponent"], input[name="team"] {
+
+                    text-align: left;
+                }
+
+                h5 {
+
+                    margin-left: 10px;
+                }
+
+                h5,
+                select,
+                input {
+
+                    color: rgb(87, 87, 87);
+                    font-size: 20px;
+                    font-weight: 500;
+                }
+
+                h5,
+                select {
+
+                    text-align: left;
+                }
+
+                select {
+
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                }
+
+                h6 {
+
+                    font-size: 14px;
+                    color: rgb(106, 106, 106);
+                    margin-top: 0;
+                }
+
+                &.score h6 {
+
+                    margin-bottom: 0;
+                }
+
+                &.score {
+
+                    background-color: rgb(245, 245, 245);
+                }
+
+                &.score input {
+
+                    border: 1px solid @gray-lighter;
+                    border-radius: @border-radius-base;
+                }
+            }
+        }
+    }
+
+    .teamTableTitle {
+
+        h4 {
+            display: inline-block;
+        }
+    }
+
+    h4 {
+
+        color: @brand-blue;
+        font-size: 18px;
+        letter-spacing: 0.01em;
+        margin-bottom: 5px;
+    }
+
+    .btn-submit-continue {
+      margin-right: 15px;
+    }
+
+    header {
+      .btn-submit-continue {
+        margin-right: 0px;
+      }
+    }
+}
+

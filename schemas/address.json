@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Address Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "street1": {
+            "type": ["null", "string"]
+        },
+        "street2": {
+            "type": ["null", "string"]
+        },
+        "city": {
+            "type": "string"
+        },
+        "regionCode": {
+            "type": "string"
+        },
+        "postalCode": {
+            "type": "string"
+        },
+        "countryCode": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

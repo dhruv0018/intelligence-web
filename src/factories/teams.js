@@ -1,4 +1,4 @@
-var PAGE_SIZE = 100;
+var PAGE_SIZE = 1000;
 
 var pkg = require('../../package.json');
 var moment = require('moment');
@@ -8,21 +8,13 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('TeamsStorage', [
-    function() {
-
-        this.list = [];
-        this.collection = {};
-    }
-]);
-
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$injector', '$rootScope', 'ROLES', 'ROLE_ID', 'TeamsStorage', 'TeamsResource', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory', 'ResourceManager',
-    function($injector, $rootScope, ROLES, ROLE_ID, TeamsStorage, TeamsResource, schools, usersResource, BaseFactory, users, managedResources) {
+    '$injector', '$rootScope', 'ROLES', 'ROLE_ID', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory',
+    function($injector, $rootScope, ROLES, ROLE_ID, schools, usersResource, BaseFactory, users) {
 
         var TeamsFactory = {
 
-            PAGE_SIZE: 1500,
+            PAGE_SIZE: PAGE_SIZE,
 
             description: 'teams',
 
@@ -52,11 +44,49 @@ IntelligenceWebClient.factory('TeamsFactory', [
                             role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
                         }
                     });
+                } else {
+                    team.roles = [];
+                }
+
+                //TODO roster related, should be put on backend at some point
+                if (!team.roster) {
+                    team.roster = {
+                        teamId: team.id,
+                        playerInfo: {}
+                    };
+                } else {
+                    if (team.roster.playerInfo) {
+                        angular.forEach(team.roster.playerInfo, function(rosterEntry, playerId) {
+                            rosterEntry.id = playerId;
+                        });
+                    } else {
+                        team.roster.playerInfo = {};
+                    }
                 }
 
                 angular.extend(team, self);
 
                 return team;
+            },
+
+            unextend: function(resource) {
+
+                var self = this;
+
+                resource = resource || self;
+
+                var copy = angular.copy(resource);
+
+                angular.forEach(copy.roles, function(role) {
+                    role.type = role.type.id;
+                });
+
+                delete copy.PAGE_SIZE;
+                delete copy.description;
+                delete copy.model;
+                delete copy.storage;
+
+                return copy;
             },
 
             search: function(query) {
@@ -75,87 +105,18 @@ IntelligenceWebClient.factory('TeamsFactory', [
                         }
                     });
 
-                    var schools = $injector.get('SchoolsFactory');
+                    if (schoolIds.length) {
 
-                    return schools.retrieve({ 'id[]': schoolIds }).then(function() {
+                        var schools = $injector.get('SchoolsFactory');
 
-                        return teams;
-                    });
-                });
-            },
+                        return schools.retrieve({ 'id[]': schoolIds }).then(function() {
 
-            save: function(resource, success, error) {
-
-                var self = this;
-
-                resource = resource || self;
-
-                managedResources.reset(resource);
-
-                /* Create a copy of the resource to save to the server. */
-                var copy = self.unextend(resource);
-
-                angular.forEach(copy.roles, function(role) {
-                    role.type = role.type.id;
-                });
-
-                parameters = {};
-
-                success = success || function(resource) {
-
-                    return self.extend(resource);
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not save resource');
-                };
-
-                var model = $injector.get(self.model);
-                var storage = $injector.get(self.storage);
-
-                /* If the resource has been saved to the server before. */
-                if (resource.id) {
-
-                    /* Make a PUT request to the server to update the resource. */
-                    var update = model.update(parameters, copy, success, error);
-
-                    /* Once the update request finishes. */
-                    return update.$promise.then(function() {
-
-                        /* Fetch the updated resource. */
-                        return self.fetch(resource.id).then(function(updated) {
-
-                            /* Update local resource with server resource. */
-                            angular.extend(resource, self.extend(updated));
-
-                            /* Update the resource in storage. */
-                            storage.list[storage.list.indexOf(resource)] = resource;
-                            storage.collection[resource.id] = resource;
-
-                            return resource;
+                            return teams;
                         });
-                    });
+                    }
 
-                    /* If the resource is new. */
-                } else {
-
-                    /* Make a POST request to the server to create the resource. */
-                    var create = model.create(parameters, copy, success, error);
-
-                    /* Once the create request finishes. */
-                    return create.$promise.then(function(created) {
-
-                        /* Update local resource with server resource. */
-                        angular.extend(resource, self.extend(created));
-
-                        /* Add the resource to storage. */
-                        storage.list.push(resource);
-                        storage.collection[resource.id] = resource;
-
-                        return resource;
-                    });
-                }
+                    else return teams;
+                });
             },
             removeRole: function(role) {
 
@@ -176,7 +137,12 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     });
                 }
             },
-
+            addRole: function(user, role) {
+                var self = this;
+                role.userId = user.id;
+                role.teamId = self.id;
+                self.roles.push(role);
+            },
             getMembers: function() {
 
                 var members = [];
@@ -195,6 +161,18 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 }
 
                 return members;
+            },
+
+            isMember: function(userId) {
+
+                if (!angular.isNumber(userId)) return false;
+                if (!this.roles) return false;
+
+                var isMember = this.roles.some(function(role) {
+                    return role.userId === userId;
+                });
+
+                return isMember;
             },
 
             getHeadCoachRole: function() {
@@ -310,6 +288,40 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 //no plans or packages means no breakdowns
                 return 0;
+            },
+            generateStats: function(query) {
+                var self = this;
+
+                query.id = query.id || self.id;
+
+                var error = function() {
+
+                    throw new Error('Could not get stats for team');
+                };
+
+                var model = $injector.get(self.model);
+
+                return model.generateStats(query).$promise;
+            },
+            getActivePlayerInfo: function() {
+                var self = this;
+
+                var activePlayerInfo = {};
+
+                angular.forEach(self.roster.playerInfo, function(playerInfo, playerId) {
+                    if (playerInfo.isActive) {
+                        activePlayerInfo[playerId] = playerInfo;
+                    }
+                });
+
+                return activePlayerInfo;
+            },
+            hasActivePlayerInfo: function() {
+                var self = this;
+
+                var activePlayerInfo = self.getActivePlayerInfo();
+
+                return Object.keys(activePlayerInfo).length > 0;
             }
         };
 

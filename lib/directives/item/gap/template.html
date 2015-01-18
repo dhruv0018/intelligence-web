@@ -3,7 +3,7 @@
     <button
         class="gap"
         data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
-        data-ng-disabled="!isCoach && !isIndexer"
+        data-ng-disabled="!isCoach && !isIndexer || !isEditable"
         data-ng-click="reset()"
     >{{ GAPS[GAP_IDS[event.variableValues[item.id].value]].name || 'Optional' }}</button>
 
@@ -13,10 +13,9 @@
         data-ng-required="item.isRequired"
         data-ng-if="isUndefined(event.variableValues[item.id].value)"
         data-ng-model="event.variableValues[item.id].value"
-        data-ng-change="event.activeEventVariableIndex = item.index + 1"
-        data-ng-blur="event.variableValues[item.id].value = event.variableValues[item.id].value ? event.variableValues[item.id].value : item.isRequired ? previousValue : null"
-        data-ng-focus="event.activeEventVariableIndex = item.index; isReset = false"
-        data-focus-on="isUndefined(autoAdvance) ? isReset : autoAdvance === true ? event.activeEventVariableIndex == item.index : false"
+        data-ng-change="onChange()"
+        data-ng-blur="onBlur()"
+        data-focus-on="shouldFocus()"
         data-autofocus-when="autoAdvance && item.index === 1"
     >
 

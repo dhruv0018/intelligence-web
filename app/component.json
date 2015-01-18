@@ -12,7 +12,10 @@
         "indexer",
         "indexing",
         "coach",
-        "athlete"
+        "athlete",
+        "games",
+        "clips",
+        "reels"
     ],
     "scripts": [
         "index.js"

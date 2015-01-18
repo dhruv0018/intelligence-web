@@ -18,8 +18,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('AuthenticationService', [
-    '$rootScope', '$injector', '$q', '$http', 'config', 'TokensService', 'SessionService', 'UsersFactory',
-    function($rootScope, $injector, $q, $http, config, tokens, session, users) {
+    'ANONYMOUS_USER', '$rootScope', '$injector', '$q', '$http', 'config', 'TokensService', 'SessionService', 'StorageManager', 'UsersFactory',
+    function(ANONYMOUS_USER, $rootScope, $injector, $q, $http, config, tokens, session, storage, users) {
 
         var AuthenticationService = {
 
@@ -61,8 +61,12 @@ IntelligenceWebClient.service('AuthenticationService', [
                         /* Store the tokens. Optionally persisting. */
                         tokens.setTokens(authTokens, persist);
 
+                        var user = $injector.get(users.model);
+
                         /* Get the user from the server. */
-                        return users.fetch(email).then(function(user) {
+                        return user.get({ id: email }).$promise.then(function(user) {
+
+                            user = session.deserializeUser(user);
 
                             /* Store the user in the session. Optionally persisting. */
                             session.storeCurrentUser(user, persist);
@@ -88,6 +92,8 @@ IntelligenceWebClient.service('AuthenticationService', [
                 session.clearCurrentUser();
                 sessionStorage.clear();
                 localStorage.clear();
+                storage.clear();
+                indexedDB.deleteDatabase(pkg.name);
             },
 
             /**
@@ -96,41 +102,13 @@ IntelligenceWebClient.service('AuthenticationService', [
              */
             get isLoggedIn() {
 
-                return tokens.areTokensSet() && session.isCurrentUserStored();
+                return tokens.areTokensSet() && session.isCurrentUserStored() && session.currentUser !== ANONYMOUS_USER;
             },
 
             /* Prevent overriding. */
             set isLoggedIn(noop) {
 
                 throw new Error('Illegal attempt to override function isLoggedIn');
-            },
-
-            requestPasswordReset: function(email, success, error) {
-                var endpoint = config.passwordReset.uri + email;
-                var request = {
-                    method: 'GET',
-                    url: endpoint
-                };
-                success = success || {};
-                error = error || function(data, status) {
-                    throw new Error('Password reset request error: Http Status : ' + status);
-                };
-                $http(request).success(success).error(error);
-            },
-
-            processPasswordReset: function(token, password, success, error) {
-                var endpoint = config.passwordReset.uri + token;
-                var request = {
-                    method: 'POST',
-                    data: 'password=' + password,
-                    url: endpoint,
-                    headers: {'Content-type': 'application/x-www-form-urlencoded'}
-                };
-                success = success || {};
-                error = error || function(data, status) {
-                    throw new Error('Password reset processing error: Http Status : ' + status);
-                };
-                $http(request).success(success).error(error);
             },
 
             /**

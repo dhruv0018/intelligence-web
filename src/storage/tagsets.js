@@ -5,11 +5,16 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('TagsetsStorage', [
-    function() {
+IntelligenceWebClient.factory('TagsetsStorage', [
+    'BaseStorage', 'TagsetsFactory',
+    function(BaseStorage, tagsets) {
 
-        this.list = [];
-        this.collection = Object.create(null);
+        var TagsetsStorage = Object.create(BaseStorage);
+
+        TagsetsStorage.factory = tagsets;
+        TagsetsStorage.description = tagsets.description;
+
+        return TagsetsStorage;
     }
 ]);
 

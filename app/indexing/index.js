@@ -16,7 +16,7 @@ var Indexing = angular.module('Indexing', [
     'Event',
     'Events',
     'Play',
-    'Plays'
+    'Playlist'
 ]);
 
 /* Cache the template file */
@@ -40,15 +40,27 @@ Indexing.run([
  * @type {service}
  */
 Indexing.service('Indexing.Data.Dependencies', [
-    'Indexer.Games.Data.Dependencies', 'TeamsFactory', 'LeaguesFactory', 'TagsetsFactory',
-    function(data, teams, leagues, tagsets) {
+    'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'TagsetsFactory',
+    function(session, games, teams, leagues, tagsets) {
 
         var Data = {
 
-            games: data.games,
-            teams: teams.load(),
             leagues: leagues.load(),
-            tagsets: tagsets.load()
+            tagsets: tagsets.load(),
+
+            get teams() {
+
+                var userId = session.currentUser.id;
+
+                return teams.load({ relatedUserId: userId });
+            },
+
+            get games() {
+
+                var userId = session.currentUser.id;
+
+                return games.load({ assignedUserId: userId });
+            }
         };
 
         return Data;
@@ -90,16 +102,16 @@ Indexing.config([
                 },
                 resolve: {
                     'Indexing.Data': [
-                        '$q', '$stateParams', 'Indexing.Data.Dependencies', 'PlayersFactory', 'PlaysFactory',
-                        function($q, $stateParams, data, players, plays) {
+                        '$q', '$stateParams', 'Indexing.Data.Dependencies', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory',
+                        function($q, $stateParams, data, teams, games, players, plays) {
 
                             return $q.all(data).then(function(data) {
 
                                 var gameId = $stateParams.id;
-                                var game = data.games.get(gameId);
+                                var game = games.get(gameId);
 
-                                var team = data.teams.get(game.teamId);
-                                var opposingTeam = data.teams.get(game.opposingTeamId);
+                                var team = teams.get(game.teamId);
+                                var opposingTeam = teams.get(game.opposingTeamId);
 
                                 var teamRoster = game.getRoster(team.id);
                                 var opposingTeamRoster = game.getRoster(opposingTeam.id);
@@ -107,10 +119,10 @@ Indexing.config([
                                 var gameData = {
 
                                     game: game,
-                                    plays: plays.query({ gameId: gameId }),
+                                    plays: plays.load({ gameId: gameId }),
                                     players: players,
-                                    teamPlayers: players.query({ rosterId: teamRoster.id }),
-                                    opposingTeamPlayers: players.query({ rosterId: opposingTeamRoster.id })
+                                    teamPlayers: players.load({ rosterId: teamRoster.id }),
+                                    opposingTeamPlayers: players.load({ rosterId: opposingTeamRoster.id })
                                 };
 
                                 return $q.all(angular.extend(data, gameData));
@@ -121,12 +133,12 @@ Indexing.config([
                 },
 
                 onEnter: [
-                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'VideoPlayerInstance',
-                    function($state, $timeout, $stateParams, session, modals, data, indexing, Videoplayer) {
+                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'GamesFactory',
+                    function($state, $timeout, $stateParams, session, modals, data, indexing, games) {
 
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
-                        var game = data.games.get(gameId);
+                        var game = games.get(gameId);
 
                         if (!game.isAssignedToUser(userId)) {
 
@@ -174,8 +186,11 @@ Indexing.config([
 
                         Mousetrap.stopCallback = function(event, element, combo, sequence) {
 
-                            $timeout(function() {
+                            if (Mousetrap.krossoverIsPaused) {
+                                return true;
+                            }
 
+                            $timeout(function() {
                                 if (indexing.isIndexing) {
 
                                     if (globalCallbacks[combo] || globalCallbacks[sequence]) {
@@ -257,20 +272,14 @@ Indexing.config([
                 ],
 
                 onExit: [
-                    '$stateParams', 'GamesFactory', 'PlaysManager',
-                    function($stateParams, games, playsManager) {
-
-                        var gameId = $stateParams.id;
-                        var game = games.get(gameId);
+                    function() {
 
                         Mousetrap.unbind('space');
                         Mousetrap.unbind('left');
                         Mousetrap.unbind('right');
                         Mousetrap.unbind('enter');
+                        Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
-
-                        game.save();
-                        playsManager.save();
                     }
                 ]
             });

@@ -14,7 +14,7 @@
 @gray:                   lighten(#000, 33.5%); // #555
 @gray-light:             #CACACA;
 @gray-lighter:           #EBEBEB;
-@gray-lightest:          rgb(242, 242, 242);
+@gray-lightest:          #FCFCFC;
 
 // Brand colors
 // -------------------------
@@ -33,6 +33,7 @@
 @content-bg:            rgb(247, 248, 248);
 @text-color:            @gray-dark;
 @gray-border:			rgb(221, 221, 221);
+@play-selected-bg:		rgb(246, 249, 253);
 
 // Links
 // -------------------------
@@ -222,7 +223,7 @@
 @screen-desktop:             @screen-md;
 
 // Large screen / wide desktop
-@screen-lg:                  1200px;
+@screen-lg:                  1024px;
 @screen-lg-desktop:          @screen-lg;
 
 // So media queries don't overlap when required, provide a maximum
@@ -239,7 +240,7 @@
 // Padding, to be divided by two and applied to the left and right of all columns
 @grid-gutter-width:         30px;
 // Point at which the navbar stops collapsing
-@grid-float-breakpoint:     @screen-tablet;
+@grid-float-breakpoint:     0;
 
 
 // Navbar
@@ -630,3 +631,7 @@
 
 // Large screen / wide desktop
 @container-lg-desktop:        ((1140px + @grid-gutter-width));
+
+// Social Media Colors
+@twitter-blue: #4099FF;
+@facebook-blue: #3B5998;

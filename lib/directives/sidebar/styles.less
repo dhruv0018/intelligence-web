@@ -1,0 +1,21 @@
+@import (reference) "main.less";
+
+.krossover-sidebar {
+    
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 420px;
+    height: initial;
+    padding: 0;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    .light-box-shadow;
+}
+
+// MOBILE
+@media only screen
+and (max-width: @screen-md-max) {
+    .krossover-sidebar {
+        flex: 1;
+    }
+}

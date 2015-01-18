@@ -17,15 +17,13 @@
 	}
 
 	.modal-body {
+		display: flex;
 		padding: 0;
-		height: 380px;
-
-		.sidebar {
-	      width:290px;
+		height: 538px;
+		.playlist {
+		  display: flex;
+	      width: 335px;
 	      height: 100%;
-	      max-height: 100%;
-	      display: inline-block;
-	      position: relative;
 	      overflow-y: hidden;
 	      overflow-x: hidden;
 	      float:left;
@@ -38,7 +36,8 @@
 	    }
 
 	    div.breakdown-video {
-	    	display: inline-block;
+	    	display: flex;
+	    	flex: 1;
 	    }
 	}
 
@@ -46,6 +45,8 @@
 
 .film-breakdown-size {
 	.modal-dialog {
-		width: 1032px;
+		width: 75%;
+		min-width: 844px;
+		max-width: 1187px;
 	}
 }

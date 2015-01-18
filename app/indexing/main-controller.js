@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance',
-    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, videoplayerInstance) {
+    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory',
+    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, videoplayerInstance, leagues, tagsets, teams, games) {
 
         var gameId = Number($stateParams.id);
 
@@ -25,16 +25,16 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.event = event;
         $scope.sidebar = sidebar;
         $scope.indexing = indexing;
-        $scope.game = data.games.get(gameId);
-        $scope.team = data.teams.get($scope.game.teamId);
-        $scope.opposingTeam = data.teams.get($scope.game.opposingTeamId);
+        $scope.game = games.get(gameId);
+        $scope.team = teams.get($scope.game.teamId);
+        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
         $scope.teamPlayers = data.teamPlayers;
         $scope.opposingTeamPlayers = data.opposingTeamPlayers;
-        $scope.league = data.leagues.get($scope.team.leagueId);
-        $scope.tagset = data.tagsets.get($scope.league.tagSetId);
+        $scope.league = leagues.get($scope.team.leagueId);
+        $scope.tagset = tagsets.get($scope.league.tagSetId);
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
-        $scope.videoTitle = 'indexing';
+        play.videoTitle = 'indexing'; //playManager.videoTitle
 
         indexing.reset($scope.tagset, $scope.game, data.plays);
 

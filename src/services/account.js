@@ -41,7 +41,7 @@ IntelligenceWebClient.service('AccountService', [
                     /* Broadcast successful role change. */
                     $rootScope.$broadcast('roleChangeSuccess', role);
 
-                    this.gotoUsersHomeState(user);
+                    this.gotoUsersHomeState(user, true);
 
                 } else {
 
@@ -55,38 +55,62 @@ IntelligenceWebClient.service('AccountService', [
                 this.changeUserRole(session.currentUser, role);
             },
 
-            gotoUsersHomeState: function(user) {
+            gotoUsersHomeState: function(user, reload) {
 
                 user = user || session.currentUser;
 
                 /* If the user is a super admin or an admin. */
                 if (user.is(ROLES.SUPER_ADMIN) || user.is(ROLES.ADMIN)) {
 
-                    $state.go('users');
+                    $state.go('users', null, { reload: reload });
                 }
 
                 /* If the user is an indexer. */
                 else if (user.is(ROLES.INDEXER)) {
 
-                    $state.go('indexer-games');
+                    $state.go('indexer-games', null, { reload: reload });
                 }
 
                 /* If the user is a coach. */
                 else if (user.is(ROLES.COACH)) {
 
-                    $state.go('Coach.FilmHome');
+                    $state.go('Coach.FilmHome', null, { reload: reload });
                 }
 
                 /* If the user is an athlete. */
                 else if (user.is(ROLES.ATHLETE)) {
 
-                    $state.go('Athlete.FilmHome');
+                    $state.go('Athlete.FilmHome', null, { reload: reload });
                 }
 
                 else {
 
-                    $state.go('Account.ContactInfo');
+                    $state.go('Account.ContactInfo', null, { reload: reload });
                 }
+            },
+
+            gotoAsUser: function(user) {
+
+                session.storePreviousUser(session.currentUser, false);
+                session.storeCurrentUser(user, false);
+
+                var currentUser = session.retrieveCurrentUser();
+
+                $rootScope.currentUser = currentUser;
+                this.gotoUsersHomeState(currentUser, true);
+            },
+
+            returnToPreviousUser: function() {
+
+                var previousUser = session.retrievePreviousUser();
+
+                session.storeCurrentUser(previousUser);
+                session.clearPreviousUser();
+
+                var currentUser = session.retrieveCurrentUser();
+
+                $rootScope.currentUser = currentUser;
+                this.gotoUsersHomeState(currentUser, true);
             }
         };
     }

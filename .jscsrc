@@ -36,6 +36,12 @@
     "disallowDanglingUnderscores": true,
     "disallowSpaceAfterObjectKeys": true,
     "requireCommaBeforeLineBreak": true,
+    "requireSpacesInConditionalExpression": {
+        "afterTest": true,
+        "beforeConsequent": true,
+        "afterConsequent": true,
+        "beforeAlternate": true
+    },
     "requireOperatorBeforeLineBreak": [
         "?",
         "+",
@@ -52,40 +58,6 @@
         "<",
         "<="
     ],
-    "disallowLeftStickedOperators": [
-        "?",
-        "+",
-        /*"-",*/
-        "/",
-        "*",
-        "=",
-        "==",
-        "===",
-        "!=",
-        "!==",
-        ">",
-        ">=",
-        "<",
-        "<="
-    ],
-    "requireRightStickedOperators": ["!"],
-    "disallowRightStickedOperators": [
-        "?",
-        "+",
-        "/",
-        "*",
-        ":",
-        "=",
-        "==",
-        "===",
-        "!=",
-        "!==",
-        ">",
-        ">=",
-        "<",
-        "<="
-    ],
-    "requireLeftStickedOperators": [","],
     "disallowSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~", "!"],
     "disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
     "requireSpaceBeforeBinaryOperators": [
@@ -110,6 +82,7 @@
         "!=",
         "!=="
     ],
+    "disallowSpaceBeforeBinaryOperators": [","],
     "disallowImplicitTypeConversion": [
         "numeric",
         /*"boolean",*/

@@ -2,7 +2,7 @@
 
     <main class="content-full">
 
-        <button class="btn-delete-event" data-ng-if="indexing.eventSelected" data-ng-click="indexing.deleteEvent(event.current)"><i class="icon icon-remove"></i> Delete Event</button>
+        <button class="btn-delete-event" data-ng-if="indexing.eventSelected" data-ng-click="indexing.deleteEvent(event.current)">Delete Event</button>
 
         <button class="btn-back" data-ng-if="indexing.isIndexing" data-ng-click="indexing.back()">Back (Esc)</button>
 
@@ -40,12 +40,12 @@
 
         </div>
 
-        <x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
+        <x-krossover-videoplayer data-sources="sources"></x-krossover-videoplayer>
 
     </main>
 
-    <aside class="sidebar-notes" data-ui-view="sidebar-notes" data-ui-toggle="sidebar.notes"></aside>
+    <aside class="sidebar-notes" data-ng-hide="sidebar.playlist" data-ui-view="sidebar-notes" data-ui-toggle="sidebar.notes"></aside>
 
-    <aside class="sidebar-playlist" data-ui-view="sidebar-playlist" data-ui-toggle="sidebar.playlist"></aside>
+    <aside class="sidebar-playlist" data-ng-hide="sidebar.notes" data-ui-view="sidebar-playlist" data-ui-toggle="sidebar.playlist"></aside>
 
 </section>

@@ -7,14 +7,17 @@
         "roles",
         "raw-film",
         "delete-game",
+        "add-reel",
         "select-indexer",
         "film-breakdown",
         "share-film",
         "excel-upload",
         "basic-modals",
-        "athlete-info",
+        "info",
+        "arena-modal",
         "change-password",
-        "admin-management"
+        "admin-management",
+        "kvs-uploader-interface"
     ],
     "scripts": [
         "index.js"

@@ -1,0 +1,148 @@
+@import (reference) "main.less";
+
+.public-clip {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    background-color: @content-bg;
+
+    .locked-game {
+        background-color: @content-bg;
+        width: 30%;
+        margin: auto;
+        margin-top: 40px;
+        padding: 10px;
+        border: thin solid @gray-border;
+        text-align: center;
+
+        i {
+            font-size: 100px;
+        }
+    }
+
+    .clip-body {
+        display: flex;
+        padding-top: 15px;
+        flex-direction: row-reverse;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 15px;
+        background: #f7f8f8;
+        flex: 1;
+    }
+
+    x-krossover-videoplayer {
+        margin-left: 15px;
+    }
+
+    // MOBILE
+    @media only screen
+    and (max-width: @screen-md-max) {
+        display: block;
+
+        .clip-body {
+            display: block;
+            margin: 0;
+            padding: 0;
+            flex-direction: column-reverse;
+        }
+
+        x-krossover-videoplayer {
+            justify-content: center;
+            margin: 0;
+        }
+
+        .vertical-spacer {
+            height: 48px;
+        }
+    }
+
+    .clips-navigation {
+        height: 50px;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: @content-bg;
+        border-top: thin solid @gray-border;
+        box-shadow: 0 -1px 3px fade(#E6E5E4, 70%);
+        font-size: 14px;
+        letter-spacing: 0px;
+
+        .clip-previous,
+        .clip-next {
+            height: 100%;
+            padding: 0 8px;
+            font-size: 12px;
+            line-height: 50px;
+            text-transform: uppercase;
+            cursor: pointer;
+    
+            &.disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        
+            .icon {
+                font-size: 10px;
+            }
+}
+
+        .clip-previous {
+            border-right: thin solid @gray-border;
+
+            .icon {
+                margin-right: 3px;
+            }
+        }
+
+        .clip-next {
+            border-left: thin solid @gray-border;
+
+            .icon {
+                margin-left: 3px;
+            }
+        }
+
+        .clip-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .clip-count {
+            font-size: 12px;
+        }
+
+        .film-title {
+            color: @brand-primary;
+        }
+}
+}
+
+// TODO: move this .locked-game to directive?
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+    
+    .public-clip {
+
+        .locked-game {
+            width: 80%;
+        }
+    }
+}
+
+@media only screen
+and (min-width: @screen-lg) {
+    
+    .public-clip {
+
+        .clips-navigation {
+            display: none;
+        }
+    }
+}

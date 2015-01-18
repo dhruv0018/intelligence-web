@@ -7,17 +7,9 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('PlansStorage', [
-    function() {
-
-        this.list = [];
-        this.collection = {};
-    }
-]);
-
 IntelligenceWebClient.factory('PlansFactory', [
-    '$injector', 'BaseFactory', 'PlansResource', 'PlansStorage',
-    function($injector, BaseFactory, PlansResource, PlansStorage) {
+    '$injector', 'BaseFactory',
+    function($injector, BaseFactory) {
 
         var PlansFactory = {
 
