@@ -1,0 +1,42 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Plan Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "leagueIds": {
+            "type": "array",
+            "items": "integer"
+        },
+        "startDay": {
+            "type": "integer"
+        },
+        "startMonth": {
+            "type": "integer"
+        },
+        "endDay": {
+            "type": "integer"
+        },
+        "endMonth": {
+            "type": "integer"
+        },
+        "maxGamesPerPlan": {
+            "type": "integer"
+        },
+        "maxAnyGames": {
+            "type": "integer"
+        },
+        "maxTurnaroundTime": {
+            "type": "integer"
+        },
+        "price": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false
+}
