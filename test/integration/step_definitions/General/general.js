@@ -5,25 +5,19 @@ var expect = chai.expect;
 
 module.exports = function() {
 
-    this.Then(/^I should be shown the "([^"]*)" page$/, function (relativeUrl, callback) {
-        // return browser.driver.wait(
-        //     function() { return browser.isElementPresent(by.css(".rolebar")); }
-        // , 10000);
-        browser.getLocationAbsUrl().then(function(url) {console.log("URL", url);})
-        expect(browser.getLocationAbsUrl()).to.eventually.equal(browser.baseUrl + relativeUrl).and.notify(callback);
-    });
+    this.Given(/^I navigate to the "([^"]*)" page$/, function(relativeUrl, done) {
 
-    this.Given(/^I navigate to "([^"]*)"$/, function (relativeUrl, callback) {
-        
-        browser.ignoreSynchronization = true;
+        browser.get(relativeUrl).then(function() {
 
-        this.visitRelative(relativeUrl).then(function() {
-            console.log("Navigated to ", relativeUrl);
-            browser.ignoreSynchronization = false;
-            callback();       
+            console.log("Navigated to " + relativeUrl);
+
+            done();
         });
-
-        
     });
 
+    this.Then(/^I should see the "([^"]*)" page$/, function(pageName, done) {
+
+        expect(this.urlContains(pageName)).to.eventually.be.true.and.notify(done);
+    });
 };
+
