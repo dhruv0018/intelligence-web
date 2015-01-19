@@ -7,17 +7,9 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('SchoolsStorage', [
-    function() {
-
-        this.list = [];
-        this.collection = {};
-    }
-]);
-
 IntelligenceWebClient.factory('SchoolsFactory', [
-    '$injector', 'BaseFactory', 'ResourceManager', 'SCHOOL_TYPES',
-    function($injector, BaseFactory, managedResources, SCHOOL_TYPES) {
+    '$injector', 'BaseFactory', 'SCHOOL_TYPES',
+    function($injector, BaseFactory, SCHOOL_TYPES) {
 
         var SchoolsFactory = {
 
@@ -46,77 +38,19 @@ IntelligenceWebClient.factory('SchoolsFactory', [
 
                 return school;
             },
-            save: function(resource, success, error) {
+
+            unextend: function(school) {
 
                 var self = this;
 
-                resource = resource || self;
+                school = school || self;
 
-                managedResources.reset(resource);
-
-                /* Create a copy of the resource to save to the server. */
-                var copy = self.unextend(resource);
+                var copy = angular.copy(school);
 
                 //TODO temporary fix
                 copy.type = copy.type.id;
 
-                parameters = {};
-
-                success = success || function(resource) {
-
-                    return self.extend(resource);
-                };
-
-                error = error || function() {
-
-                    throw new Error('Could not save resource');
-                };
-
-                var model = $injector.get(self.model);
-                var storage = $injector.get(self.storage);
-
-                /* If the resource has been saved to the server before. */
-                if (resource.id) {
-
-                    /* Make a PUT request to the server to update the resource. */
-                    var update = model.update(parameters, copy, success, error);
-
-                    /* Once the update request finishes. */
-                    return update.$promise.then(function() {
-
-                        /* Fetch the updated resource. */
-                        return self.fetch(resource.id).then(function(updated) {
-
-                            /* Update local resource with server resource. */
-                            angular.extend(resource, self.extend(updated));
-
-                            /* Update the resource in storage. */
-                            storage.list[storage.list.indexOf(resource)] = resource;
-                            storage.collection[resource.id] = resource;
-
-                            return resource;
-                        });
-                    });
-
-                    /* If the resource is new. */
-                } else {
-
-                    /* Make a POST request to the server to create the resource. */
-                    var create = model.create(parameters, copy, success, error);
-
-                    /* Once the create request finishes. */
-                    return create.$promise.then(function(created) {
-
-                        /* Update local resource with server resource. */
-                        angular.extend(resource, self.extend(created));
-
-                        /* Add the resource to storage. */
-                        storage.list.push(resource);
-                        storage.collection[resource.id] = resource;
-
-                        return resource;
-                    });
-                }
+                return copy;
             }
         };
 

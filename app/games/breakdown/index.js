@@ -28,9 +28,9 @@ GamesBreakdown.config([
             resolve: {
 
                 'Games.Breakdown.Data': [
-                    '$q', '$stateParams', 'Games.Data.Dependencies',
-                    function($q, $stateParams, data) {
-                        return $q.all(data($stateParams).load());
+                    '$stateParams', 'Games.Data.Dependencies',
+                    function($stateParams, data) {
+                        return data($stateParams).load();
                     }
                 ]
             }
@@ -49,54 +49,40 @@ GamesBreakdown.service('Games.Data.Dependencies', [
             var obj = {
 
                 load: function() {
-                    var currentUser = session.currentUser;
-                    var userId = session.currentUser.id;
-                    var teamId = currentUser.currentRole.teamId;
 
                     var gameId = Number(stateParams.id);
+                    var userId = session.getCurrentUserId();
+                    var teamId = session.getCurrentTeamId();
 
-                    return games.load(gameId).then(function() {
+                    var Data = {
+                        leagues: leagues.load(),
+                        tagsets: tagsets.load(),
+                        filtersets: filtersets.load(),
+                        plays: plays.load({ gameId: gameId }),
+                        players: players.load({ gameId: gameId })
+                    };
+
+                    if (auth.isLoggedIn) {
+
+                        Data.reels = reels.load({
+                            teamId: teamId,
+                            userId: userId
+                        });
+                    }
+
+                    Data.game = games.load(gameId).then(function() {
 
                         var game = games.get(gameId);
 
-                        var Data = {
-                            user: users.load(game.uploaderUserId),
-                            team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
+                        var GameData = {
+                            users: users.load(game.uploaderUserId),
+                            teams: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
                         };
 
-                        var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
-                        Data.loadTeamPlayers = players.load(teamPlayersFilter);
-
-                        var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
-                        Data.loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
-
-                        if (auth.isLoggedIn) {
-
-                            Data.reels =  reels.load({
-                                teamId: teamId,
-                                userId: userId
-                            });
-                        }
-
-                        var playsFilter = { gameId: game.id };
-                        Data.loadPlays = plays.load(playsFilter);
-
-                        // TODO: Fix this, really slow because of nesting
-                        Data.league = Data.team.then(function() {
-                            var uploaderTeam = teams.get(game.uploaderTeamId);
-                            return leagues.fetch(uploaderTeam.leagueId);
-                        });
-
-                        Data.filterSet = Data.league.then(function() {
-                            var uploaderTeam = teams.get(game.uploaderTeamId);
-                            var uploaderLeague = leagues.get(uploaderTeam.leagueId);
-                            return filtersets.fetch(uploaderLeague.filterSetId);
-                        });
-
-                        Data.tagset = tagsets.load();
-
-                        return $q.all(Data);
+                        return $q.all(GameData);
                     });
+
+                    return $q.all(Data);
                 }
             };
 
@@ -110,7 +96,6 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 GamesBreakdown.controller('Games.Breakdown.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager',
     function controller($rootScope, $scope, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager) {
-
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
@@ -148,7 +133,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             var playsFilter = { gameId: $scope.game.id };
             $scope.totalPlays = plays.getList(playsFilter);
             $scope.plays = $scope.totalPlays;
-
             /* Attaching playIds array to game object to mirror reels properties
              * This array is utilized on the clips page for clips navigation
              * BEWARE: It only contains viewable, i.e. has a clip, plays

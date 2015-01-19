@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Video Transcode Profile Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "videoId": {
+            "type": "integer"
+        },
+        "transcodeProfile": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "targetBitrate": {
+                    "type": "integer"
+                },
+                "maximumBitrate": {
+                    "type": "integer"
+                },
+                "minimumBitrate": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "targetDisplayWidth": {
+                    "type": "integer"
+                },
+                "targetDisplayHeight": {
+                    "type": "integer"
+                },
+                "aspectRatio": {
+                    "type": "string"
+                }
+            }
+        },
+        "status": {
+            "type": "integer"
+        },
+        "videoUrl": {
+            "type": "string"
+        },
+    },
+    "additionalProperties": false
+}

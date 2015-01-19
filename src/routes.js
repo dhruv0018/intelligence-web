@@ -16,8 +16,8 @@ IntelligenceWebClient.config([
 IntelligenceWebClient.value('$previousState', {});
 
 IntelligenceWebClient.run([
-    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', '$previousState', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'ResourceManager',
-    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, $previousState, tokens, auth, authz, session, alerts, managedResources) {
+    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', '$previousState', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService',
+    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, $previousState, tokens, auth, authz, session, alerts) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -97,9 +97,6 @@ IntelligenceWebClient.run([
 
             /* Clear any alerts. */
             alerts.clear();
-
-            /* Restore any active resources to their backups. */
-            managedResources.restore();
 
             /* Store previous state */
             $previousState = fromState;

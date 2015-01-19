@@ -1,15 +1,20 @@
-var package = require('../../package.json');
+var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('ReelsStorage', [
-    function() {
+IntelligenceWebClient.factory('ReelsStorage', [
+    'BaseStorage', 'ReelsFactory',
+    function(BaseStorage, reels) {
 
-        this.list = [];
-        this.collection = Object.create(null);
+        var ReelsStorage = Object.create(BaseStorage);
+
+        ReelsStorage.factory = reels;
+        ReelsStorage.description = reels.description;
+
+        return ReelsStorage;
     }
 ]);
 

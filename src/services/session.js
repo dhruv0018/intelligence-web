@@ -53,12 +53,81 @@ IntelligenceWebClient.service('SessionService', [
         };
 
         /**
+         * Converts a users role object to an encoded string representing it.
+         * @param {Object} role - a user role object.
+         */
+        this.serializeRole = function(role) {
+
+            role = role || this.currentUser ? this.currentUser.currentRole : null;
+
+            if (!role) return '';
+
+            var key = '';
+            var type = role.type.id;
+            var createdAt = role.createdAt;
+
+            createdAt = createdAt.toString();
+            createdAt = createdAt.replace(/\D/g,'');
+            createdAt = Number(createdAt);
+            createdAt = createdAt.toString(36);
+
+            key += type;
+            key += role.teamId || '';
+            key += createdAt;
+
+            return key;
+        };
+
+        /**
          * Converts a user resource object to an encoded string representing it.
          * @param {Object} user - a user resource object.
          */
         this.serializeUser = function(user) {
 
             return angular.toJson(user);
+        };
+
+        /**
+         * Converts a user ID to an encoded string representing it.
+         * @param {Object} user - a user resource object.
+         */
+        this.serializeUserId = function(user) {
+
+            user = user || this.currentUser;
+
+            var key = '';
+            var userId = user ? user.id : '';
+
+            key = Number(userId).toString(36);
+
+            return key;
+        };
+
+        /**
+         * Converts a query to an encoded string representing it.
+         * @param {Object} query - a query.
+         */
+        this.serializeQuery = function(query) {
+
+            var key = '';
+
+            if (query) key += encodeURIComponent(JSON.stringify(query));
+
+            return key;
+        };
+
+        /**
+         * Converts a user resource query to an encoded string representing it.
+         * @param {String} description - a description of the query.
+         * @param {Object} query - a query.
+         */
+        this.serializeUserResourceQuery = function(description, query) {
+
+            var key = '@' + this.serializeUserId() + '!' + description;
+
+            if (query) key += '?' + this.serializeQuery(query);
+
+            return key;
         };
 
         /**

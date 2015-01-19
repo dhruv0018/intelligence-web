@@ -19,6 +19,8 @@ require('./config');
 
 require('./app');
 
+require('./utilities');
+require('./indexeddb');
 require('./flow');
 require('./users');
 require('./routes');
@@ -75,6 +77,7 @@ require('./models/filtersets');
 require('./models/reels');
 require('./models/plans');
 
+require('./storage/base');
 require('./storage/users');
 require('./storage/teams');
 require('./storage/games');
@@ -108,7 +111,7 @@ require('./managers/tags');
 require('./managers/play');
 require('./managers/plays');
 require('./managers/event');
-require('./managers/resource');
+require('./managers/storage');
 
 require('./directives/alert');
 require('./directives/match');
