@@ -24,7 +24,7 @@ exports.config = {
     framework: 'cucumber',
 
     specs: [
-        'test/integration/features/*.feature'
+        'features/**/*.feature'
     ],
 
     cucumberOpts: {
