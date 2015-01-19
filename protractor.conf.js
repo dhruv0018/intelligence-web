@@ -29,7 +29,7 @@ exports.config = {
 
     cucumberOpts: {
         format: 'pretty',
-        require: 'test/integration/**/*.js'
+        require: 'test/acceptance/**/*.js'
     },
 
     baseUrl: baseUrl,
