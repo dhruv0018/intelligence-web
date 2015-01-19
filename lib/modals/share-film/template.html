@@ -37,7 +37,7 @@
 
         <div class="sharing-with-team-container" data-ng-show="withTeam">
             <div class="info-box">
-                Reels are automatically shared amongst team coaches.<br/>
+                <span data-ng-show="currentUser.is(ROLES.COACH)">Reels are automatically shared amongst team coaches.<br/></span>
                 Players must have an email address associated with their profile in order to be selected.
             </div>
 
