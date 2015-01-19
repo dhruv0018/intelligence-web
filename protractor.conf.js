@@ -28,11 +28,13 @@ exports.config = {
     ],
 
     cucumberOpts: {
-        format: 'summary',
+        format: 'pretty',
         require: 'test/integration/**/*.js'
     },
 
     baseUrl: baseUrl,
+
+    rootElement: 'html',
 
     capabilities: {
         browserName: 'chrome',
@@ -43,10 +45,6 @@ exports.config = {
         }
     },
 
-    rootElement: 'html',
-
     allScriptsTimeout: 60000
-
 }
-
 
