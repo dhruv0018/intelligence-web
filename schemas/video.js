@@ -17,7 +17,7 @@
             "items": { "$ref": "transcodeProfile" }
         },
         "duration": {
-            "type": "integer"
+            "type": "number"
         },
         "thumbnail": {
             "type": "string"
