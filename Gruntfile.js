@@ -18,6 +18,9 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         env: {
+            test: {
+                NODE_ENV: 'test'
+            },
             dev: {
                 NODE_ENV: 'development'
             },
@@ -400,6 +403,19 @@ module.exports = function(grunt) {
             }
         },
 
+        protractor_webdriver: {
+            options: {
+                keepAlive: true
+            }
+        },
+
+        protractor: {
+            options: {
+                configFile: 'protractor.conf.js'
+            },
+            all: {}
+        },
+
 
         /* Documentation and reporting */
 
@@ -427,14 +443,26 @@ module.exports = function(grunt) {
 
 
         browserSync: {
+            options: require('./bs-config.js'),
             dev: {
                 bsFiles: [
                     'public/intelligence/index.html',
                     'public/intelligence/styles.css',
                     'public/intelligence/scripts.js',
                     'public/intelligence/assets/**/*.png'
+                ]
+            },
+            prod: {
+                bsFiles: [
+                    'public/intelligence/index.html',
+                    'public/intelligence/styles.css',
+                    'public/intelligence/scripts.js',
+                    'public/intelligence/assets/**/*.png'
                 ],
-                options: require('./bs-config.js')
+                options: {
+                    open: false,
+                    watchTask: false
+                }
             }
         },
 
@@ -498,9 +526,13 @@ module.exports = function(grunt) {
                 files: ['app/**/*.js', 'lib/**/*.js'],
                 tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
-            tests: {
+            unit: {
                 files: ['test/unit/**/*.js'],
                 tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'karma']
+            },
+            integration: {
+                files: ['test/integration/**/*.js'],
+                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'protractor']
             }
         },
 
@@ -526,20 +558,49 @@ module.exports = function(grunt) {
         fs.appendFileSync('public/intelligence/manifest.appcache', '# ' + now);
     });
 
+    var server;
+
+    grunt.registerTask('integration', 'Run integration tests', function() {
+
+        var express = require('express');
+        var app = express();
+
+        app.use(express.static('public'));
+
+        app.use(function(req, res){
+
+            res.sendFile('index.html', { root: __dirname + '/public/intelligence' });
+        });
+
+        server = app.listen(8000);
+
+        grunt.task.run('protractor', 'close-server');
+    });
+
+    grunt.registerTask('close-server', 'Closes the background server process', function() {
+
+        server.close();
+    });
+
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['karma']);
+    grunt.registerTask('test', ['build', 'karma', 'integration']);
     grunt.registerTask('lint', ['htmlhint', 'jshint', 'eslint', 'jscs']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
-    grunt.registerTask('serve', ['browserSync']);
+    grunt.registerTask('serve', ['browserSync:dev']);
     grunt.registerTask('manifests', ['copy:manifests', 'date-manifests']);
     grunt.registerTask('default', ['githooks', 'install', 'dev', 'notify:build', 'serve', 'watch']);
 
     grunt.registerTask('build', [
-        'env:prod',
+        'env:test',
         'componentbuild:prod',
-        'browserify:prod'
+        'browserify:prod',
+        'ngAnnotate',
+        'uglify',
+        'htmlmin',
+        'copy:build',
+        'manifests'
     ]);
 
     grunt.registerTask('dev', [

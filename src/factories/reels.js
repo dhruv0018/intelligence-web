@@ -25,8 +25,10 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 reel.plays = reel.plays || [];
                 reel.shares = reel.shares || [];
                 reel.sharedWithUsers = reel.sharedWithUsers || {};
+                reel.isDeleted = reel.isDeleted || false;
 
                 /* build lookup table of shares by userId shared with */
+                //TODO find out why this doesnt look for a public share
                 if (reel.shares && reel.shares.length) {
 
                     angular.forEach(reel.shares, function(share) {
@@ -39,7 +41,21 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reel;
             },
 
-            getByTeam: function(teamId) {
+            getByUploaderUserId: function(userId) {
+
+                userId = userId || session.getCurrentUserId();
+
+                if (!userId) throw new Error('No userId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderUserId == session.currentUser.id;
+                });
+            },
+
+            getByUploaderTeamId: function(teamId) {
 
                 teamId = teamId || session.getCurrentTeamId();
 
@@ -53,6 +69,16 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 });
             },
 
+            getBySharedWithUser: function(user) {
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.isSharedWithUser(user);
+                });
+            },
+
             addPlay: function(play) {
                 if (this.plays.indexOf(play.id) === -1) {
                     this.plays.push(play.id);
@@ -61,16 +87,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
             updateDate: function() {
                 this.updatedAt = moment.utc().toDate();
-            },
-            getMyReels: function(reels) {
-                var self = this;
-
-                reels = reels || self.getList();
-
-                return reels.filter(function(reel) {
-
-                    return reel.uploaderUserId == session.currentUser.id;
-                });
             },
             shareWithUser: function(user) {
 

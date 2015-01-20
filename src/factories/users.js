@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$injector', '$rootScope', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'ResourceManager',
-    function($injector, $rootScope, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, managedResources) {
+    '$injector', '$rootScope', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES',
+    function($injector, $rootScope, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES) {
 
         var UsersFactory = {
 
@@ -448,7 +448,9 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 var vettedUsers = [];
 
-                storage.list.forEach(function(user) {
+                var users = self.getList();
+
+                users.forEach(function(user) {
                     if (user.has(role)) {
                         vettedUsers.push(user);
                     }

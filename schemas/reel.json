@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Reel Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "uploaderUserId": {
+            "type": "integer"
+        },
+        "uploaderTeamId": {
+            "type": "integer"
+        },
+        "createdAt": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "plays": {
+            "type": "array",
+            "items": "integer"
+        },
+        "isDeleted": {
+            "type": "boolean"
+        },
+        "shares": {
+            "type": "array",
+            "items": { "$ref": "share" }
+        }
+    },
+    "additionalProperties": false
+}

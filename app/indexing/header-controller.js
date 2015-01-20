@@ -35,6 +35,7 @@ Indexing.controller('Indexing.Header.Controller', [
 
             indexing.isIndexing = false;
             $scope.game.finishAssignment(userId);
+            $scope.game.save();
             $state.go('indexer-games');
         };
 

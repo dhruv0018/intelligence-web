@@ -5,11 +5,16 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('PositionsetsStorage', [
-    function() {
+IntelligenceWebClient.factory('PositionsetsStorage', [
+    'BaseStorage', 'PositionsetsFactory',
+    function(BaseStorage, positionsets) {
 
-        this.list = [];
-        this.collection = Object.create(null);
+        var PositionsetsStorage = Object.create(BaseStorage);
+
+        PositionsetsStorage.factory = positionsets;
+        PositionsetsStorage.description = positionsets.description;
+
+        return PositionsetsStorage;
     }
 ]);
 

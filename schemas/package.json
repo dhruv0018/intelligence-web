@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Package Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "startDate": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "endDate": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "maxGamesPerPackage": {
+            "type": "integer"
+        },
+        "maxTurnaroundTime": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false
+}
