@@ -1,10 +1,11 @@
 {
     "name": "telestration",
     "templates": [
-        "menu-template.html",
-        "menu-item-template.html"
+        "menu-template.html"
     ],
     "scripts": [
+        "glyph.js",
+        "telestration-menu.js",
         "index.js"
     ],
     "styles": [
