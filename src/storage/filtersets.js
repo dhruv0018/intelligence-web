@@ -5,11 +5,16 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('FiltersetsStorage', [
-    function() {
+IntelligenceWebClient.factory('FiltersetsStorage', [
+    'BaseStorage', 'FiltersetsFactory',
+    function(BaseStorage, filtersets) {
 
-        this.list = [];
-        this.collection = Object.create(null);
+        var FiltersetsStorage = Object.create(BaseStorage);
+
+        FiltersetsStorage.factory = filtersets;
+        FiltersetsStorage.description = filtersets.description;
+
+        return FiltersetsStorage;
     }
 ]);
 

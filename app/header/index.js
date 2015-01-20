@@ -44,8 +44,8 @@ Header.config([
                     }
                 },
                 resolve: {
-                    'Base.Data': [
-                        '$q', 'Base.Data.Dependencies',
+                    'Header.Data': [
+                        '$q', 'Header.Data.Dependencies',
                         function($q, data) {
 
                             return $q.all(data);
@@ -57,30 +57,27 @@ Header.config([
 ]);
 
 
-Header.service('Base.Data.Dependencies', [
-    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'TeamsFactory',
-    function(auth, session, sports, leagues, tagsets, filtersets, positionsets, teams) {
+Header.factory('Header.Data.Dependencies', [
+    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory',
+    function(auth, session, sports, leagues, teams) {
 
-        if (auth.isLoggedIn) {
+        var Data = {
 
-            var teamIds = session.currentUser.getTeamIds();
+            get sports() { return sports.load(); },
+            get leagues() { return leagues.load(); },
 
-            var Data = {
+            get teams() {
 
-                sports: sports.load(),
-                leagues: leagues.load(),
-                tagsets: tagsets.load(),
-                filtersets: filtersets.load(),
-                positionsets: positionsets.load()
-            };
+                if (auth.isLoggedIn) {
 
-            if (teamIds.length) {
+                    var userId = session.currentUser.id;
 
-                Data.teams = teams.load({ 'id[]': teamIds });
+                    return teams.load({ relatedUserId: userId });
+                }
             }
+        };
 
-            return Data;
-        }
+        return Data;
     }
 ]);
 
@@ -102,11 +99,11 @@ Header.controller('HeaderController', [
         $scope.COACH = ROLES.COACH;
         $scope.ATHLETE = ROLES.ATHLETE;
 
+        $scope.auth = auth;
         $scope.config = config;
         $scope.$state = $state;
         $scope.session = session;
         $scope.account = account;
-        $scope.auth = auth;
 
         //TEMP - get sport id to show Analytics tab for FB only
         if (auth.isLoggedIn) {
@@ -116,12 +113,6 @@ Header.controller('HeaderController', [
                 $scope.SPORTS = SPORTS;
             }
         }
-
-        $scope.logout = function() {
-
-            auth.logoutUser();
-            $state.go('login');
-        };
 
         // This scope functionality limits a menu element to only one sub-menu
         $scope.subMenu = false;

@@ -340,14 +340,13 @@ Teams.controller('TeamController', [
             var teamId = $stateParams.id;
 
             if (teamId) {
-
-                team = teams.get(teamId);
-                $scope.team = team;
-                $scope.team.members = team.getMembers();
-
-                $scope.sportId = leagues.get(team.leagueId).sportId;
-
-                $scope.updateTeamAddress();
+                $scope.team = teams.create();
+                teams.fetch(teamId).then(function(team) {
+                    angular.extend($scope.team, team);
+                    $scope.team.members = $scope.team.getMembers();
+                    $scope.sportId = leagues.get(team.leagueId).sportId;
+                    $scope.updateTeamAddress();
+                });
             }
         }
 

@@ -1,0 +1,87 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Game Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "datePlayed": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "gameType": {
+            "type": "integer"
+        },
+        "isHomeGame": {
+            "type": "boolean"
+        },
+        "teamId": {
+            "type": "integer"
+        },
+        "opposingTeamId": {
+            "type": "integer"
+        },
+        "primaryJerseyColor": {
+            "type": "string"
+        },
+        "opposingPrimaryJerseyColor": {
+            "type": "string"
+        },
+        "opposingSecondaryJerseyColor": {
+            "type": "string"
+        },
+        "finalScore": {
+            "type": "integer"
+        },
+        "opposingFinalScore": {
+            "type": "integer"
+        },
+        "rosters": {
+            "type": "object",
+            "patternProperties": {
+                "[0-9]": {
+                    "type": "object",
+                    "items": { "$ref": "roster" }
+                }
+            }
+        },
+        "video": { "$ref": "video" },
+        "status": {
+            "type": "integer"
+        },
+        "indexerAssignments": {
+            "type": "array",
+            "items": { "$ref": "indexerAssignment" }
+        },
+        "isDeleted": {
+            "type": "boolean"
+        },
+        "uploaderUserId": {
+            "type": "integer"
+        },
+        "uploaderTeamId": {
+            "type": "integer"
+        },
+        "createdAt": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "isClone": {
+            "type": "boolean"
+        },
+        "notes": {
+            "patternProperties": {
+                "[12345]": {
+                    "type": "array",
+                    "items": { "$ref": "note" }
+                }
+            }
+        },
+        "shares": {
+            "type": "array",
+            "items": { "$ref": "share" }
+        }
+    },
+    "additionalProperties": false
+}

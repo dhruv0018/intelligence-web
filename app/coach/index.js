@@ -47,44 +47,62 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data.Dependencies', [
-    '$q', 'SessionService', 'TeamsFactory', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'PositionsetsFactory', 'Base.Data.Dependencies', 'ROLE_TYPE', 'ROLES',
-    function($q, session, teams, reels, games, players, users, leagues, tagsets, positionsets, data, ROLE_TYPE, ROLES) {
+    '$q', 'SessionService', 'TeamsFactory', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'ROLE_TYPE', 'ROLES',
+    function($q, session, teams, reels, games, players, users, leagues, tagsets, filtersets, positionsets, ROLE_TYPE, ROLES) {
 
-        var userId = session.currentUser.id;
         var teamId = session.currentUser.currentRole.teamId;
 
-        var gamesForUser = games.load({
-            uploaderTeamId: session.currentUser.currentRole.teamId
-        });
-
-        var gamesSharedWithUser = games.load({
-            sharedWithUserId: userId
-        });
-
         var Data = {
-            positionSets: positionsets.load(),
-            teams: teams.load({ relatedUserId: userId }),
-            users: users.load({ relatedUserId: userId }),
-            games: $q.all([gamesForUser, gamesSharedWithUser]),
-            reels: reels.load({ relatedUserId: userId }),
-            remainingBreakdowns:  teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
-                session.currentUser.remainingBreakdowns = breakdownData;
-                return breakdownData;
-            })
+
+            tagsets: tagsets.load(),
+            filtersets: filtersets.load(),
+            positionsets: positionsets.load(),
+
+            get users() {
+
+                var userId = session.currentUser.id;
+
+                return users.load({ relatedUserId: userId });
+            },
+
+            get teams() {
+
+                var userId = session.currentUser.id;
+
+                return teams.load({ relatedUserId: userId });
+            },
+
+            get games() {
+
+                var userId = session.currentUser.id;
+
+                return games.load({ relatedUserId: userId });
+            },
+
+            get reels() {
+
+                var userId = session.currentUser.id;
+
+                return reels.load({ relatedUserId: userId });
+            },
+
+            get playersList() {
+
+                return teams.load(teamId).then(function() {
+
+                    var team = teams.get(teamId);
+
+                    return players.load({ rosterId: team.roster.id });
+                });
+            },
+
+            get remainingBreakdowns() {
+                return teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
+                    session.currentUser.remainingBreakdowns = breakdownData;
+                    return breakdownData;
+                });
+            }
         };
-
-        Data.playersList = $q.all(data).then(function() {
-
-            var team = teams.get(teamId);
-
-            var playersFilter = { rosterId: team.roster.id };
-
-            return players.load(playersFilter).then(function() {
-                return players.getList(playersFilter);
-            });
-        });
-
-        angular.extend(Data, data);
 
         return Data;
     }
