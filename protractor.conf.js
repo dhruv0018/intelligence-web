@@ -1,17 +1,15 @@
 var environment = process.env.NODE_ENV;
 
-var baseUrl = 'http://localhost:8000/intelligence/';
+var baseUrl = 'http://localhost:9999/intelligence/';
 
 if (environment === 'development') {
 
-    baseUrl = 'http://localhost:8000/intelligence/';
-
+    baseUrl = 'http://localhost:9999/intelligence/';
 }
 
 else if (environment === 'qa') {
 
     baseUrl = 'http://v2-qa.krossover.com/intelligence/';
-
 }
 
 else if (environment === 'uat') {

@@ -572,7 +572,7 @@ module.exports = function(grunt) {
             res.sendFile('index.html', { root: __dirname + '/public/intelligence' });
         });
 
-        server = app.listen(8000);
+        server = app.listen(9999);
 
         grunt.task.run('protractor', 'close-server');
     });
