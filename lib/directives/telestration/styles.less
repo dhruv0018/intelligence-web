@@ -1,18 +1,21 @@
 @import (reference) "main.less";
 
-glyph {
-	display: none;
-}
-
-.telestrations-active > glyph {
-	display: block;
-}
-
 #videoSpot {
+
+	&.telestrations-active > glyph {
+		display: block;
+	}
+
+	glyph {
+		display: none;
+		z-index: 2;
+	}
+
 	svg {
 		position: absolute;
 		top: 0;
 		left: 0;
+		z-index: 1;
 	}
 }
 
