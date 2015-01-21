@@ -26,8 +26,8 @@ GamesDownAndDistance.config([
             },
             resolve: {
                 'Games.DownAndDistance.Data': [
-                    '$q', '$stateParams', 'UsersFactory', 'TeamsFactory', 'FiltersetsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'LeaguesFactory',
-                    function($q, $stateParams, users, teams, filtersets, games, players, plays, leagues) {
+                    '$q', '$stateParams', 'UsersFactory', 'TeamsFactory', 'FiltersetsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'LeaguesFactory', 'TagsetsFactory',
+                    function($q, $stateParams, users, teams, filtersets, games, players, plays, leagues, tagsets) {
 
                         var gameId = Number($stateParams.id);
                         return games.load(gameId).then(function() {
@@ -59,6 +59,10 @@ GamesDownAndDistance.config([
                                 var uploaderTeam = teams.get(game.uploaderTeamId);
                                 var uploaderLeague = leagues.get(uploaderTeam.leagueId);
                                 return filtersets.fetch(uploaderLeague.filterSetId);
+                            });
+
+                            Data.tagSet = Data.league.then(function(league) {
+                                return tagsets.load(league.tagSetId);
                             });
 
                             return $q.all(Data);
