@@ -60,7 +60,12 @@
         		<user-typeahead data-user="user" data-filter="filter"></user-typeahead>
         		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || film.isSharedWithUser(user) || user.id === currentUser.id" data-ng-click="shareSubmit(user); user = null">Add</button>
         	</form>
-        	<div class="how-to-search">Start typing the last name of the user you want to share with.</div>
+        	<div class="how-to-search">
+                <p>Start typing the last name of the user you want to share with.</p>
+                <p data-ng-show="isGame && currentUser.is(ROLES.COACH)" class="public-breakdown-information">
+                    Please note that if you share a breakdown with the public, the breakdown will automatically be available for all users you select below.
+                </p>
+            </div>
         	<div data-ng-show="film.getUserShares().length" class="shared-with-table">
         		<div class="shared-with-header">Name</div>
         		<div class="shared-with" data-ng-repeat="share in film.getUserShares()">
