@@ -133,11 +133,16 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.reel = reels.get(reelId);
 
         // Setup playlist
-
         var plays = $scope.reel.plays.map(function getPlays(playId) {
             return playsFactory.get(playId);
         });
         $scope.plays = plays;
+        $scope.sortOrder = $scope.reel.plays;
+
+        // Update the play order if the sortOrder changes based on play Ids
+        $scope.$watchCollection('sortOrder', function(newVals) {
+            $scope.plays.sort(function(a,b) {return (newVals.indexOf(a.id) < newVals.indexOf(b.id) ? -1 : 1);});
+        });
 
         $scope.playManager = playManager;
         // Refresh the playsManager
@@ -200,6 +205,7 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.$on('delete-reel-play', function($event, index) {
             if ($scope.editFlag && $scope.plays && angular.isArray($scope.plays)) {
                 $scope.plays.splice(index, 1);
+                $scope.sortOrder.splice(index, 1);
             }
         });
 
