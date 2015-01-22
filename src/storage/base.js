@@ -228,9 +228,7 @@ IntelligenceWebClient.factory('BaseStorage', [
                     if (filter && angular.isObject(filter) && angular.isDefined(filter.id) && filter.id === null) {
 
                         /* Reject the promise. */
-                        var promise = $q.defer();
-                        promise.reject();
-                        return promise.promise;
+                        return $q.reject();
                     }
 
                     /* If the ID filter is a number. */
