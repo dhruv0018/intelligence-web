@@ -1,0 +1,218 @@
+@import (reference) "main.less";
+
+.login {
+
+    position: relative;
+    color: @brand-blue;
+    letter-spacing: normal;
+    display: block;
+    overflow-y: auto;
+    height: 100%;
+
+    .icon-krossover-logo {
+
+        width: 447px;
+        height: 109px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        background-size: contain;
+        background-position: center center;
+        margin: auto;
+    }
+
+    .login-container {
+        margin: auto;
+        display: table;
+    }
+
+    h1 {
+        margin-top: 5px;
+        margin-bottom: 20px;
+        font-weight: 500;
+        font-size: 35px;
+        text-transform: uppercase;
+    }
+
+    .form-field-login {
+
+        .form-control;
+        width: 93%;
+        margin: auto;
+        box-sizing: content-box;
+        border-width: 2px;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+
+        &.ng-dirty {
+
+            &.ng-invalid-notfound:focus
+            &.ng-invalid-password:focus {
+
+                border-color: red;
+            }
+
+            &.ng-invalid-notfound:focus + .error,
+            &.ng-invalid-password:focus + .error {
+
+                .show;
+            }
+        }
+    }
+
+    .newLogin {
+
+        width: 49%;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        padding-right: 50px;
+        border-right: thin solid @gray-border;
+
+        .icon-volleyball {
+            font-size: 60px;
+        }
+        .icon-football {
+            font-size: 60px;
+            margin-right: 20px;
+        }
+    }
+
+    .oldLogin {
+
+        width: 49%;
+        display: table-cell;
+        padding-top: 30px;
+        padding-left: 50px;
+        text-align: center;
+
+        .icon {
+            font-size: 60px;
+
+            &.icon-basketball {
+                margin-right: 20px;
+            }
+        }
+    }
+
+    .app-links {
+        margin: auto;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .temp-warning {
+        background: @state-warning-bg;
+        border: 1px solid @state-warning-border;
+        color: @state-warning-text;
+        margin: auto;
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 350px;
+        display: none;
+
+        .icon {
+            font-size: 16px;
+        }
+    }
+}
+
+
+/**
+ * Responsive sizes.
+ */
+
+
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+
+    .login {
+
+        width: 100%;
+        flex-direction: column;
+        padding: 0;
+
+        .icon-krossover-logo {
+
+            width: 270px;
+        }
+
+        .login-container {
+            display: block;
+        }
+
+        .newLogin {
+
+            padding: 0;
+            border: none;
+            display: none;
+
+            .form-field-login {
+
+                width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
+            }
+        }
+
+        h1 {
+            font-size: 20px;
+        }
+
+        .oldLogin {
+
+            padding: 20px;
+            display: block;
+            width: 100%;
+
+            .form-field-login {
+
+                width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
+            }
+
+            .icon {
+                font-size: 30px;
+            }
+
+            .button-signin {
+
+                width: 100%;
+            }
+
+            .password-reset {
+
+                .text-center;
+            }
+        }
+
+        .app-links {
+            display: block;
+
+            .icon {
+                font-size: 30px;
+            }
+
+            .icon-football {
+                margin-right: 20px;
+            }
+
+            p {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+
+/* Screens over 480px */
+@media only screen
+and (min-width: 480px) {
+    
+    .login {
+        padding-top: 100px;
+    }
+
+    .app-links {
+        display: none;
+    }
+}
