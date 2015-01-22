@@ -26,6 +26,8 @@ IntelligenceWebClient.service('StorageManager', [
                 console.log('Database deleted');
 
                 deferred.resolve();
+
+                window.location.reload();
             };
 
             request.onerror = function() {
