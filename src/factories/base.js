@@ -309,6 +309,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+                var model = $injector.get(self.model);
+                var storage = $injector.get(self.storage);
                 var session = $injector.get('SessionService');
 
                 var view = session.serializeUserResourceQuery(self.description, filter);
@@ -346,9 +348,6 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     throw new Error('Could not load ' + self.description);
                 };
-
-                var model = $injector.get(self.model);
-                var storage = $injector.get(self.storage);
 
                 /* Make a GET request to the server for an array of resources. */
                 var query = model.query(filter, success, error);
