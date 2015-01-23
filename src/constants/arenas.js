@@ -55,6 +55,19 @@ var ARENA_TYPES = {
 
 IntelligenceWebClient.constant('ARENA_TYPES', ARENA_TYPES);
 
+var ARENA_IDS = {
+
+    1: 'BASKETBALL',
+    2: 'BASKETBALL',
+    3: 'BASKETBALL',
+    4: 'BASKETBALL',
+    5: 'LACROSSE',
+    6: 'LACROSSE',
+    7: 'FOOTBALL'
+};
+
+IntelligenceWebClient.constant('ARENA_IDS', ARENA_IDS);
+
 var ARENA_REGIONS = {
 
     BASKETBALL: {
