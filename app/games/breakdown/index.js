@@ -62,7 +62,7 @@ GamesBreakdown.service('Games.Data.Dependencies', [
                         players: players.load({ gameId: gameId })
                     };
 
-                    if (auth.isLoggedIn) {
+                    if (auth.isLoggedIn && userId && teamId) {
 
                         Data.reels = reels.load({
                             teamId: teamId,
