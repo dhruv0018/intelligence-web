@@ -201,8 +201,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
 
-                if (!userId) throw new Error('No userId');
-
                 return self.sharedWithUsers[userId];
             },
             isSharedWithUser: function(user) {
