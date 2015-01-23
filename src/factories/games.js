@@ -112,6 +112,53 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
             },
 
+            getBySharedWithUserId: function(userId) {
+
+                var self = this;
+
+                var games = self.getList();
+
+                return games.filter(function(game) {
+
+                    return game.isSharedWithUserId(userId);
+                });
+            },
+
+            getByRelatedRole: function(userId, teamId) {
+
+                var self = this;
+
+                userId = userId || session.currentUser.id;
+                teamId = teamId || session.currentUser.currentRole.teamId;
+
+                var gamesForTeam = self.getByUploaderTeamId(teamId);
+                var gamesSharedWithUser = self.getBySharedWithUserId(userId);
+
+                var gamesList = gamesForTeam
+
+                .concat(gamesSharedWithUser)
+
+                .map(function asId(game) {
+
+                    return game.id;
+                })
+
+                .reduce(function onlyUnique(previous, current) {
+
+                    if (!~previous.indexOf(current)) previous.push(current);
+
+                    return previous;
+
+                }, [])
+
+                .map(function asResource(id) {
+
+                    return self.get(id);
+                });
+
+                return gamesList;
+            },
+
             saveNotes: function() {
 
                 var deferred = $q.defer();
@@ -1016,6 +1063,15 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var userId = user.id;
 
+                return self.getShareByUserId(userId);
+            },
+            getShareByUserId: function(userId) {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
+                if (!userId) throw new Error('No userId');
+
                 return self.sharedWithUsers[userId];
             },
             isSharedWithUser: function(user) {
@@ -1026,6 +1082,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+            isSharedWithUserId: function(userId) {
+                var self = this;
+
+                if (!userId) return false;
+
+                if (!self.sharedWithUsers) return false;
+
+                return angular.isDefined(self.getShareByUserId(userId));
             },
             getUserShares: function() {
                 var self = this;
