@@ -84,13 +84,27 @@ Coach.service('Coach.Data.Dependencies', [
                 return reels.load({ relatedUserId: userId });
             },
 
-            get playersList() {
+            get players() {
 
-                return teams.load(teamId).then(function() {
+                var teamIds = session.currentUser.getTeamIds();
 
-                    var team = teams.get(teamId);
+                return this.teams.then(function(relatedTeams) {
 
-                    return players.load({ rosterId: team.roster.id });
+                    var rosters = [];
+
+                    relatedTeams
+
+                    .filter(function(team) {
+
+                        return ~teamIds.indexOf(team.id);
+                    })
+
+                    .forEach(function(team) {
+
+                        rosters.push(players.load({ rosterId: team.roster.id }));
+                    });
+
+                    return $q.all(rosters);
                 });
             },
 
