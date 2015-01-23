@@ -108,7 +108,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                         angular.forEach(user.roles, function(role) {
 
-                            if (role.teamId && teamIds.indexOf(role.teamId) < 0) {
+                            if (role.teamId) {
 
                                 teamIds.push(role.teamId);
                             }
