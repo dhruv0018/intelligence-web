@@ -53,7 +53,7 @@ IntelligenceWebClient.service('AuthorizationService', [
                 var route = routes[to.name];
 
                 /* Assert that the route is defined. */
-                if (!route) return false;
+                if (!route) throw new Error('No route configuration found for ' + to.name);
 
                 /* If the route is not openly accessible, then check if the
                  * current user has access... */
@@ -75,7 +75,7 @@ IntelligenceWebClient.service('AuthorizationService', [
 
                 /* Check if the route can be accessed by the currentRole... */
 
-                if (!role) return false;
+                if (!role) throw new Error('No role type constant for role type ' + currentRole.type.id);
 
                 /* Match the role name from the route file with the role name
                  * from the roles constant lookup. */
