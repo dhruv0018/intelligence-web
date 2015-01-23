@@ -50,8 +50,6 @@ Coach.service('Coach.Data.Dependencies', [
     '$q', 'SessionService', 'TeamsFactory', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'ROLE_TYPE', 'ROLES',
     function($q, session, teams, reels, games, players, users, leagues, tagsets, filtersets, positionsets, ROLE_TYPE, ROLES) {
 
-        var teamId = session.currentUser.currentRole.teamId;
-
         var Data = {
 
             tagsets: tagsets.load(),
@@ -97,6 +95,9 @@ Coach.service('Coach.Data.Dependencies', [
             },
 
             get remainingBreakdowns() {
+
+                var teamId = session.currentUser.currentRole.teamId;
+
                 return teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
                     session.currentUser.remainingBreakdowns = breakdownData;
                     return breakdownData;
