@@ -376,7 +376,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                         /* If not filtering by an array of IDs. */
                         if (!filter['id[]']) {
 
-                            var ids = self.getIds(resources);
+                            var ids = self.getIds(query);
 
                             storage.saveView(view, ids);
                         }
