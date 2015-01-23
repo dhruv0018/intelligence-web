@@ -4,6 +4,7 @@
         "menu-template.html"
     ],
     "scripts": [
+        "glyph-shapes.js",
         "glyph.js",
         "telestration-menu.js",
         "index.js"
