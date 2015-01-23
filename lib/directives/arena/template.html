@@ -4,9 +4,9 @@
     <krossover-arena-football-field data-ng-if="type === 'FOOTBALL'"></krossover-arena-football-field>
 
     <!-- Basketball -->
-    <basketball-arena data-ng-if="type.indexOf('BASKETBALL') >= 0"></basketball-arena>
+    <basketball-arena data-ng-if="type.indexOf('BASKETBALL') >= 0" data-ng-model="region"></basketball-arena>
 
     <!-- Lacrosse -->
-    <lacrosse-arena data-ng-if="type.indexOf('LACROSSE') >= 0"></lacrosse-arena>
+    <lacrosse-arena data-ng-if="type.indexOf('LACROSSE') >= 0" data-ng-model="region"></lacrosse-arena>
 
 </div>
