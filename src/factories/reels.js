@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'BaseFactory', 'SessionService',
-    function(BaseFactory, session) {
+    'ROLES', 'BaseFactory', 'SessionService',
+    function(ROLES, BaseFactory, session) {
 
         var ReelsFactory = {
 
@@ -51,7 +51,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return reels.filter(function(reel) {
 
-                    return reel.uploaderUserId == session.currentUser.id;
+                    return reel.uploaderUserId == userId;
                 });
             },
 
@@ -69,6 +69,36 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 });
             },
 
+            getByUploaderRole: function(userId, teamId) {
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                if (!userId) throw new Error('No userId');
+                if (!teamId) throw new Error('No teamId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderUserId == userId &&
+                           reel.uploaderTeamId == teamId;
+                });
+            },
+
+            getByUploaderTeamId: function(teamId) {
+
+                teamId = teamId || session.getCurrentTeamId();
+
+                if (!teamId) throw new Error('No teamId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderTeamId == teamId;
+                });
+            },
             getBySharedWithUser: function(user) {
 
                 var reels = this.getList();
@@ -105,16 +135,17 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 var self = this;
 
-                userId = userId || session.currentUser.id;
-                teamId = teamId || session.currentUser.currentRole.teamId;
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
 
-                var reelsForTeam = self.getByUploaderTeamId(teamId);
+                var reelsForRole = self.getByUploaderRole(userId, teamId);
+                var reelsForTeam = session.currentUser.is(ROLES.COACH) ? self.getByUploaderTeamId(teamId) : [];
                 var reelsSharedWithUser = self.getBySharedWithUserId(userId);
                 var reelsSharedWithTeam = self.getBySharedWithTeamId(teamId);
 
-                var reelsList = reelsForTeam
+                var reelsList = reelsForRole
 
-                .concat(reelsSharedWithUser, reelsSharedWithTeam)
+                .concat(reelsForTeam, reelsSharedWithUser, reelsSharedWithTeam)
 
                 .map(function asId(reel) {
 

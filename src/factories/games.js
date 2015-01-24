@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
-    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, players, $q) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, players, $q) {
 
         var GamesFactory = {
 
@@ -86,6 +86,20 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return game;
             },
 
+            getByUploaderUserId: function(userId) {
+
+                userId = userId || session.getCurrentUserId();
+
+                if (!userId) throw new Error('No userId');
+
+                var games = this.getList();
+
+                return games.filter(function(game) {
+
+                    return game.uploaderUserId == userId;
+                });
+            },
+
             getByUploaderTeamId: function(teamId) {
 
                 if (!teamId) throw new Error('No teamId');
@@ -97,6 +111,23 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return games.filter(function(game) {
 
                     return game.uploaderTeamId == teamId;
+                });
+            },
+
+            getByUploaderRole: function(userId, teamId) {
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                if (!userId) throw new Error('No userId');
+                if (!teamId) throw new Error('No teamId');
+
+                var games = this.getList();
+
+                return games.filter(function(game) {
+
+                    return game.uploaderUserId == userId &&
+                           game.uploaderTeamId == teamId;
                 });
             },
 
@@ -128,15 +159,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                userId = userId || session.currentUser.id;
-                teamId = teamId || session.currentUser.currentRole.teamId;
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
 
-                var gamesForTeam = self.getByUploaderTeamId(teamId);
+                var gamesForRole = self.getByUploaderRole(userId, teamId);
+                var gamesForTeam = session.currentUser.is(ROLES.COACH) ? self.getByUploaderTeamId(teamId) : [];
                 var gamesSharedWithUser = self.getBySharedWithUserId(userId);
 
-                var gamesList = gamesForTeam
+                var gamesList = gamesForRole
 
-                .concat(gamesSharedWithUser)
+                .concat(gamesForTeam, gamesSharedWithUser)
 
                 .map(function asId(game) {
 
