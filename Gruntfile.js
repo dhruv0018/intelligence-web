@@ -520,19 +520,19 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:eslint', 'newer:jscs', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:eslint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             unit: {
                 files: ['test/unit/**/*.js'],
-                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'karma']
+                tasks: ['newer:eslint', 'newer:jscs', 'karma']
             },
             integration: {
                 files: ['test/integration/**/*.js'],
-                tasks: ['newer:jshint', 'newer:eslint', 'newer:jscs', 'protractor']
+                tasks: ['newer:eslint', 'newer:jscs', 'protractor']
             }
         },
 
@@ -584,7 +584,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['build', 'karma', 'integration']);
-    grunt.registerTask('lint', ['htmlhint', 'jshint', 'eslint', 'jscs']);
+    grunt.registerTask('lint', ['htmlhint', 'eslint', 'jscs']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
