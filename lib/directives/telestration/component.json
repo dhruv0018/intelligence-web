@@ -1,7 +1,8 @@
 {
     "name": "telestration",
     "templates": [
-        "menu-template.html"
+        "menu-template.html",
+        "glyph-editor-template.html"
     ],
     "scripts": [
         "glyph-shapes.js",
