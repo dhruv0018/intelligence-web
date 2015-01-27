@@ -133,7 +133,11 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             var playsFilter = { gameId: $scope.game.id };
             $scope.totalPlays = plays.getList(playsFilter);
             $scope.plays = $scope.totalPlays;
-            /* Attaching playIds array to game object to mirror reels properties
+
+            /* TO-DO: Remove this object property assignment once playIds
+             * is a valid back-end property on the games object.
+             *
+             * Attaching playIds array to game object to mirror reels properties
              * This array is utilized on the clips page for clips navigation
              * BEWARE: It only contains viewable, i.e. has a clip, plays
              */
@@ -147,6 +151,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             .map(function(play) {
                 return play.id;
             });
+            $scope.game.save();
 
             $scope.filteredPlaysIds = [];
 
