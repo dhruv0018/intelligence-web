@@ -1,4 +1,4 @@
-<data-videogular 
+<data-videogular
     data-ng-class="{'mobile': isMobile}"
     data-vg-player-ready="onPlayerReady"
     data-vg-complete="onCompleteVideo"
@@ -18,7 +18,7 @@
 
         <div class="error-video" data-ng-hide="playManager.videoTitle === 'reelsPlayer' || sources.length"><h1>Could not load video</h1></div>
 
-        <video-spot 
+        <video-spot
             id="videoSpot"
             telestration glyph-editor>
             <div style="position:absolute;top:0;left:0;z-index:1;width:200px;height:50px;background:#000;color:#fff;">{{telestrationInterface.selectedGlyphType}}</div>
@@ -53,8 +53,10 @@
 
                 <span class="controls-space"></span>
 
-                <button 
+                <button
                     telestration-menu-button
+                    data-ng-show="currentUser.currentRole.teamId === film.uploaderTeamId"
+                    data-ng-hide="film.description === 'games' && !currentUser.is(ROLES.COACH)"
                     data-ng-click="toggleControlsMenu()">
                     Tel
                 </button>
