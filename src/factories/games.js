@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, players, $q) {
+    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
+    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, players, $q) {
 
         var GamesFactory = {
 
@@ -162,11 +162,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 userId = userId || session.getCurrentUserId();
                 teamId = teamId || session.getCurrentTeamId();
 
-                var gamesForRole = self.getByUploaderRole(userId, teamId);
-                var gamesForTeam = session.currentUser.is(ROLES.COACH) ? self.getByUploaderTeamId(teamId) : [];
+                var gamesForUser = self.getByUploaderUserId(userId);
+                var gamesForTeam = self.getByUploaderTeamId(teamId);
                 var gamesSharedWithUser = self.getBySharedWithUserId(userId);
 
-                var gamesList = gamesForRole
+                var gamesList = gamesForUser
 
                 .concat(gamesForTeam, gamesSharedWithUser)
 
