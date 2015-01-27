@@ -94,8 +94,8 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager',
-    function controller($rootScope, $scope, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager) {
+    '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager',
+    function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager) {
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
@@ -132,21 +132,30 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             // Plays
             var playsFilter = { gameId: $scope.game.id };
             $scope.totalPlays = plays.getList(playsFilter);
-            $scope.plays = $scope.totalPlays;
-            /* Attaching playIds array to game object to mirror reels properties
-             * This array is utilized on the clips page for clips navigation
+
+            /* TO-DO: Remove this sessionStorage once playIds
+             * is a valid back-end property on the games object.
+             *
+             * Storing playIds in session storage so Clips.Controller can
+             * attach playIds array to game object to mirror reels properties
              * BEWARE: It only contains viewable, i.e. has a clip, plays
              */
-            $scope.game.plays = $scope.plays
-            .filter(function(play) {
-                return play.clip !== null;
-            })
-            .sort(function(first, second) {
-                return first.startTime - second.startTime;
-            })
-            .map(function(play) {
-                return play.id;
-            });
+
+            var playIds = $scope.totalPlays
+                .filter(function(play) {
+                    return play.clip !== null;
+                })
+                .sort(function(first, second) {
+                    return first.startTime - second.startTime;
+                })
+                .map(function(play) {
+                    return play.id;
+                });
+            var jsonPlayIds = JSON.stringify(playIds);
+            $window.sessionStorage.setItem(
+                'game.plays',
+                jsonPlayIds
+            );
 
             $scope.filteredPlaysIds = [];
 
