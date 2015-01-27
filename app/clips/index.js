@@ -119,8 +119,8 @@ Clips.controller('Clips.controller', [
 
         /* Logic for clips navigation */
 
-        $scope.fromReel = ($stateParams.reel !== null);
-        $scope.fromGame = ($stateParams.game !== null);
+        $scope.fromReel = ($stateParams.reel !== null && $stateParams.reel !== undefined);
+        $scope.fromGame = ($stateParams.game !== null && $stateParams.game !== undefined);
 
         if ($scope.fromReel || $scope.fromGame) {
 
