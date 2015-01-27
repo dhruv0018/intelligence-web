@@ -157,7 +157,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
                 'game.plays',
                 jsonPlayIds
             );
-            $scope.game.save();
 
             $scope.filteredPlaysIds = [];
 
