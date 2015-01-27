@@ -1,0 +1,9 @@
+{
+    "name": "telestration-menu",
+    "templates": [
+        "menu-template.html"
+    ],
+    "scripts": [
+        "telestration-menu.js"
+    ]
+}

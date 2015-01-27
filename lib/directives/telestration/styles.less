@@ -6,9 +6,31 @@
 		display: block;
 	}
 
+	&.moving-shape > glyph-editor glyph-edit-button {
+		display: none;
+	}
+
+	glyph-edit-button {
+		height: 25px;
+		width: 25px;
+		background: #f00;
+		z-index: 4;
+		display: inline-block;
+		position: absolute;
+	}
+
 	glyph {
 		display: none;
 		z-index: 2;
+
+		textarea {
+			position: absolute;
+			display: inline-block;
+			padding: 8px;
+			line-height: 14px;
+			letter-spacing: 0px;
+			font-size: 16px;
+		}
 	}
 
 	svg {

@@ -1,14 +1,20 @@
 {
     "name": "telestration",
+    "paths": [
+        "."
+    ],
     "templates": [
-        "menu-template.html"
+        "glyph-editor-template.html"
     ],
     "scripts": [
         "glyph.js",
-        "telestration-menu.js",
         "index.js"
     ],
     "styles": [
         "styles.less"
+    ],
+    "locals": [
+        "glyph-shapes",
+        "telestration-menu"
     ]
 }

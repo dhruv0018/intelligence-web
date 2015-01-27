@@ -1,0 +1,13 @@
+{
+    "name": "glyph-shapes",
+    "scripts": [
+        "index.js",
+        "arrow.js",
+        "tbar.js",
+        "circle.js",
+        "shadow-circle.js",
+        "cone.js",
+        "freehand.js",
+        "textbox.js"
+    ]
+}
