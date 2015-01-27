@@ -132,7 +132,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             // Plays
             var playsFilter = { gameId: $scope.game.id };
             $scope.totalPlays = plays.getList(playsFilter);
-            $scope.plays = $scope.totalPlays;
 
             /* TO-DO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.
@@ -142,7 +141,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
              * BEWARE: It only contains viewable, i.e. has a clip, plays
              */
 
-            var playIds = $scope.plays
+            var playIds = $scope.totalPlays
                 .filter(function(play) {
                     return play.clip !== null;
                 })
