@@ -86,8 +86,14 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* Create a copy of the resource to break reference to original. */
                 var copy = angular.copy(user);
 
+                delete copy.PAGE_SIZE;
+                delete copy.description;
+                delete copy.model;
+                delete copy.storage;
+                delete copy.name;
                 delete copy.defaultRole;
                 delete copy.currentRole;
+                delete copy.roleTypes;
 
                 angular.forEach(copy.roles, function(role) {
                     role.type = (role.type.id) ? role.type.id : role.type;
@@ -108,7 +114,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                         angular.forEach(user.roles, function(role) {
 
-                            if (role.teamId && teamIds.indexOf(role.teamId) < 0) {
+                            if (role.teamId) {
 
                                 teamIds.push(role.teamId);
                             }

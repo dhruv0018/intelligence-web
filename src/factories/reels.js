@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'BaseFactory', 'SessionService',
-    function(BaseFactory, session) {
+    'ROLES', 'BaseFactory', 'SessionService',
+    function(ROLES, BaseFactory, session) {
 
         var ReelsFactory = {
 
@@ -51,7 +51,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return reels.filter(function(reel) {
 
-                    return reel.uploaderUserId == session.currentUser.id;
+                    return reel.uploaderUserId == userId;
                 });
             },
 
@@ -69,6 +69,23 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 });
             },
 
+            getByUploaderRole: function(userId, teamId) {
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                if (!userId) throw new Error('No userId');
+                if (!teamId) throw new Error('No teamId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderUserId == userId &&
+                           reel.uploaderTeamId == teamId;
+                });
+            },
+
             getBySharedWithUser: function(user) {
 
                 var reels = this.getList();
@@ -77,6 +94,65 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                     return reel.isSharedWithUser(user);
                 });
+            },
+
+            getBySharedWithUserId: function(userId) {
+
+                var self = this;
+
+                var games = self.getList();
+
+                return games.filter(function(game) {
+
+                    return game.isSharedWithUserId(userId);
+                });
+            },
+
+            getBySharedWithTeamId: function(teamId) {
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.isSharedWithTeamId(teamId);
+                });
+            },
+
+            getByRelatedRole:function(userId, teamId) {
+
+                var self = this;
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                var reelsForUser = self.getByUploaderUserId(userId);
+                var reelsForTeam = session.currentUser.is(ROLES.COACH) ? self.getByUploaderTeamId(teamId) : [];
+                var reelsSharedWithUser = self.getBySharedWithUserId(userId);
+                var reelsSharedWithTeam = self.getBySharedWithTeamId(teamId);
+
+                var reelsList = reelsForUser
+
+                .concat(reelsForTeam, reelsSharedWithUser, reelsSharedWithTeam)
+
+                .map(function asId(reel) {
+
+                    return reel.id;
+                })
+
+                .reduce(function onlyUnique(previous, current) {
+
+                    if (!~previous.indexOf(current)) previous.push(current);
+
+                    return previous;
+
+                }, [])
+
+                .map(function asResource(id) {
+
+                    return self.get(id);
+                });
+
+                return reelsList;
             },
 
             addPlay: function(play) {
@@ -136,6 +212,13 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 var userId = user.id;
 
+                return self.getShareByUserId(userId);
+            },
+            getShareByUserId: function(userId) {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
                 return self.sharedWithUsers[userId];
             },
             isSharedWithUser: function(user) {
@@ -146,6 +229,15 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+            isSharedWithUserId: function(userId) {
+                var self = this;
+
+                if (!userId) return false;
+
+                if (!self.sharedWithUsers) return false;
+
+                return angular.isDefined(self.getShareByUserId(userId));
             },
             getUserShares: function() {
                 var self = this;
@@ -227,6 +319,19 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     return share.sharedWithTeamId;
                 }).some(function(teamId) {
                     return teamId;
+                });
+            },
+            isSharedWithTeamId: function(teamId) {
+
+                var self = this;
+
+                if (!teamId) return false;
+                if (!self.shares) return false;
+
+                return self.shares.map(function(share) {
+                    return share.sharedWithTeamId;
+                }).some(function(teamId) {
+                    return teamId == teamId;
                 });
             },
             getTeamShare: function() {

@@ -35,13 +35,10 @@ FilmHome.controller('Coach.FilmHome.controller', [
         //Arrays of resources
         $scope.playersList = players.getList(playersFilter);
 
-        $scope.gamesForTeam = games.getByUploaderTeamId(teamId);
-        $scope.gamesSharedWithUser = games.getBySharedWithUser(currentUser);
-        $scope.gamesList = $scope.gamesForTeam.concat($scope.gamesSharedWithUser);
-        $scope.reelsForTeam = reels.getByUploaderTeamId(teamId);
-        $scope.reelsSharedWithUser = reels.getBySharedWithUser(currentUser);
-        $scope.reelsList = $scope.reelsForTeam.concat($scope.reelsSharedWithUser);
-        $scope.filmsList = $scope.gamesList.concat($scope.reelsList);
+        var gamesList = games.getByRelatedRole();
+        var reelsList = reels.getByRelatedRole();
+
+        $scope.filmsList = gamesList.concat(reelsList);
 
         //Collections of resources
         $scope.users = users.getCollection();

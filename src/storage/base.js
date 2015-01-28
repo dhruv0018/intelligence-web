@@ -228,9 +228,7 @@ IntelligenceWebClient.factory('BaseStorage', [
                     if (filter && angular.isObject(filter) && angular.isDefined(filter.id) && filter.id === null) {
 
                         /* Reject the promise. */
-                        var promise = $q.defer();
-                        promise.reject();
-                        return promise.promise;
+                        return $q.reject();
                     }
 
                     /* If the ID filter is a number. */
@@ -322,14 +320,21 @@ IntelligenceWebClient.factory('BaseStorage', [
                             /* Get the result of the request. */
                             var result = event.target.result;
 
-                            /* Use the relevant factory to create a resource. */
-                            var resource = self.factory.create(result);
+                            /* If there is a value in the result. */
+                            if (result) {
 
-                            /* Set the resource in memory. */
-                            self.ram(resource);
+                                /* Use the relevant factory to create a resource. */
+                                var resource = self.factory.create(result);
 
-                            /* Resolve the promise with the database resource. */
-                            promise.resolve(resource);
+                                /* Set the resource in memory. */
+                                self.ram(resource);
+
+                                /* Resolve the promise with the database resource. */
+                                promise.resolve(resource);
+                            }
+
+                            /* If there is no value in the result; reject the promise. */
+                            else promise.reject();
                         };
 
                         /* If there is an error with the request. */

@@ -92,7 +92,7 @@
         "grunt-protractor-webdriver": "0.2.0",
         "grunt-svgmin": "0.4.0",
         "grunt-ver": "0.5.1",
-        "karma": "0.12.16",
+        "karma": "0.12.31",
         "karma-chai": "0.1.0",
         "karma-chai-plugins": "0.2.1",
         "karma-coverage": "0.2.4",

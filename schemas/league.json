@@ -36,7 +36,7 @@
             "items": { "$ref": "season" }
         },
         "tagSetId": {
-            "type": "integer"
+            "type": ["null", "integer"]
         },
         "numberOfPeriods": {
             "type": "integer"
@@ -48,13 +48,13 @@
             "type": "string"
         },
         "positionSetId": {
-            "type": "integer"
+            "type": ["null", "integer"]
         },
         "flagRuleSetId": {
-            "type": "integer"
+            "type": ["null", "integer"]
         },
         "filterSetId": {
-            "type": "integer"
+            "type": ["null", "integer"]
         }
     },
     "additionalProperties": false
