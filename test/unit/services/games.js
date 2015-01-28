@@ -1147,8 +1147,8 @@ describe('GamesFactory', function() {
 
             expect(game.isSharedWithUser()).to.be.false;
 
-            expect(game.getShareByUser(2)).to.be.undefined;
-            expect(game.isSharedWithUser(2)).to.be.false;
+            expect(game.getShareByUserId(2)).to.be.undefined;
+            expect(game.isSharedWithUserId(2)).to.be.false;
         });
 
         it('should throw error if no sharedWithLookupTable', function() {

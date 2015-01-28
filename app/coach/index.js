@@ -50,8 +50,6 @@ Coach.service('Coach.Data.Dependencies', [
     '$q', 'SessionService', 'TeamsFactory', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'ROLE_TYPE', 'ROLES',
     function($q, session, teams, reels, games, players, users, leagues, tagsets, filtersets, positionsets, ROLE_TYPE, ROLES) {
 
-        var teamId = session.currentUser.currentRole.teamId;
-
         var Data = {
 
             tagsets: tagsets.load(),
@@ -86,17 +84,34 @@ Coach.service('Coach.Data.Dependencies', [
                 return reels.load({ relatedUserId: userId });
             },
 
-            get playersList() {
+            get players() {
 
-                return teams.load(teamId).then(function() {
+                var teamIds = session.currentUser.getTeamIds();
 
-                    var team = teams.get(teamId);
+                return this.teams.then(function(relatedTeams) {
 
-                    return players.load({ rosterId: team.roster.id });
+                    var rosters = [];
+
+                    relatedTeams
+
+                    .filter(function(team) {
+
+                        return ~teamIds.indexOf(team.id);
+                    })
+
+                    .forEach(function(team) {
+
+                        rosters.push(players.load({ rosterId: team.roster.id }));
+                    });
+
+                    return $q.all(rosters);
                 });
             },
 
             get remainingBreakdowns() {
+
+                var teamId = session.currentUser.currentRole.teamId;
+
                 return teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
                     session.currentUser.remainingBreakdowns = breakdownData;
                     return breakdownData;

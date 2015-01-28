@@ -8,7 +8,7 @@
 
     <div class="modal-body">
 
-        <x-krossover-role class="btn-role" data-user="currentUser" data-role="role" data-ng-click="setDefaultRole(role)" data-ng-repeat="role in roles"></x-krossover-role>
+        <x-krossover-role class="btn-role" data-user="session.currentUser" data-role="role" data-ng-click="setDefaultRole(role)" data-ng-repeat="role in roles"></x-krossover-role>
 
     </div>
 

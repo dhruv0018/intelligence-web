@@ -133,11 +133,16 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.reel = reels.get(reelId);
 
         // Setup playlist
-
         var plays = $scope.reel.plays.map(function getPlays(playId) {
             return playsFactory.get(playId);
         });
         $scope.plays = plays;
+        $scope.sortOrder = $scope.reel.plays;
+
+        // Update the play order if the sortOrder changes based on play Ids
+        $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
+            $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
+        });
 
         $scope.playManager = playManager;
         // Refresh the playsManager
@@ -172,7 +177,7 @@ ReelsArea.controller('ReelsArea.controller', [
 
         $scope.VIEWPORTS = VIEWPORTS;
 
-        $scope.toggleEditMode = function() {
+        $scope.toggleEditMode = function toggleEditMode() {
             //This method is for entering edit mode, or cancelling,
             //NOT for exiting from commiting changes
             if (!editAllowed) return;
@@ -197,13 +202,14 @@ ReelsArea.controller('ReelsArea.controller', [
             }
         };
 
-        $scope.$on('delete-reel-play', function($event, index) {
+        $scope.$on('delete-reel-play', function postReelPlayDeleteSetup($event, index) {
             if ($scope.editFlag && $scope.plays && angular.isArray($scope.plays)) {
                 $scope.plays.splice(index, 1);
+                $scope.sortOrder.splice(index, 1);
             }
         });
 
-        $scope.saveReels = function() {
+        $scope.saveReels = function saveReels() {
             //delete cached plays
             delete $scope.toggleEditMode.playsCache;
 
@@ -211,12 +217,12 @@ ReelsArea.controller('ReelsArea.controller', [
             editAllowed = false;
 
             // Update reel locally
-            var reelPlayIds = $scope.plays.map(function(play) {
+            var reelPlayIds = $scope.plays.map(function getPlayId(play) {
                 return play.id;
             });
             $scope.reel.plays = reelPlayIds;
 
-            $scope.reel.save().then(function() {
+            $scope.reel.save().then(function postReelSaveSetup() {
                 editAllowed = true;
 
                 // Refresh the playManager
@@ -224,14 +230,14 @@ ReelsArea.controller('ReelsArea.controller', [
             });
         };
 
-        $scope.deleteReel = function() {
+        $scope.deleteReel = function deleteReel() {
             var deleteReelModal = modals.openForConfirm({
                 title: 'Delete Reel',
                 bodyText: 'Are you sure you want to delete this reel?',
                 buttonText: 'Yes'
             });
 
-            deleteReelModal.result.then(function() {
+            deleteReelModal.result.then(function postReelModalResult() {
                 $scope.reel.remove();
                 account.gotoUsersHomeState();
             });

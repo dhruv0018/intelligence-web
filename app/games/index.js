@@ -96,9 +96,16 @@ Games.config([
                             var game = games.get(gameId);
 
                             var Data = {
-                                leagues: leagues.load(),
-                                users: users.load(game.uploaderUserId)
+                                leagues: leagues.load()
                             };
+
+                            var userIds = [];
+                            userIds.push(game.uploaderUserId);
+                            game.getUserShares().forEach(function(share) {
+
+                                userIds.push(share.sharedWithUserId);
+                            });
+                            if (userIds.length) Data.users = users.load(userIds);
 
                             var teamIds = [];
                             if (game.teamId) teamIds.push(game.teamId);

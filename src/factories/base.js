@@ -309,6 +309,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+                var model = $injector.get(self.model);
+                var storage = $injector.get(self.storage);
                 var session = $injector.get('SessionService');
 
                 var view = session.serializeUserResourceQuery(self.description, filter);
@@ -322,8 +324,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                     filter.start = null;
                     filter.count = null;
 
-                    /* Take the first set of IDs. */
-                    filter['id[]'] = util.unique(filter['id[]']).splice(0, 100);
+                    /* Store unique ids. */
+                    storage.ids = util.unique(filter['id[]']);
+
+                    /* Batch filter in sets of 100. */
+                    filter['id[]'] = storage.ids.splice(0, 100);
                 }
 
                 if (filter.start !== null) filter.start = filter.start || 0;
@@ -347,9 +352,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not load ' + self.description);
                 };
 
-                var model = $injector.get(self.model);
-                var storage = $injector.get(self.storage);
-
                 /* Make a GET request to the server for an array of resources. */
                 var query = model.query(filter, success, error);
 
@@ -369,18 +371,19 @@ IntelligenceWebClient.factory('BaseFactory', [
                     storage.query = storage.query.concat(resources);
 
                     /* If all of the server resources have been retrieved. */
-                    if ((filter['id[]'] && filter['id[]'].length < 100) || resources.length < filter.count) {
+                    if ((storage.ids && !storage.ids.length) || resources.length < filter.count) {
 
                         var query = storage.query.slice();
 
                         /* If not filtering by an array of IDs. */
                         if (!filter['id[]']) {
 
-                            var ids = self.getIds(resources);
+                            var ids = self.getIds(query);
 
                             storage.saveView(view, ids);
                         }
 
+                        delete storage.ids;
                         delete storage.query;
 
                         return query;
@@ -388,6 +391,13 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     /* If there are more resources on the server to retrieve. */
                     else {
+
+                        /* If there are pending IDs. */
+                        if (storage.ids && storage.ids.length) {
+
+                            /* Set filter to remaining IDs. */
+                            filter['id[]'] = storage.ids;
+                        }
 
                         /* If the start and count filters are both set. */
                         if (angular.isNumber(filter.start) && angular.isNumber(filter.count)) {
