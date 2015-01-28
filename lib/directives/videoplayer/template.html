@@ -55,8 +55,7 @@
 
                 <button
                     telestration-menu-button
-                    data-ng-show="currentUser.currentRole.teamId === film.uploaderTeamId"
-                    data-ng-hide="film.description === 'games' && !currentUser.is(ROLES.COACH)"
+                    data-ng-show="currentUser.id === film.uploaderUserId || currentUser.currentRole.teamId === film.uploaderTeamId && currentUser.is(ROLES.COACH)"
                     data-ng-click="toggleControlsMenu()">
                     Tel
                 </button>
