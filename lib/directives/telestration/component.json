@@ -4,7 +4,7 @@
         "."
     ],
     "templates": [
-        "glyph-editor-template.html"
+        "template.html"
     ],
     "scripts": [
         "glyph.js",
