@@ -25,6 +25,9 @@
         "primaryJerseyColor": {
             "type": "string"
         },
+        "secondaryJerseyColor": {
+            "type": "string"
+        },
         "opposingPrimaryJerseyColor": {
             "type": "string"
         },
@@ -35,6 +38,12 @@
             "type": "integer"
         },
         "opposingFinalScore": {
+            "type": "integer"
+        },
+        "indexedScore": {
+            "type": "integer"
+        },
+        "opposingIndexedScore": {
             "type": "integer"
         },
         "rosters": {
@@ -64,6 +73,10 @@
             "type": "integer"
         },
         "createdAt": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "submittedAt": {
             "type": "string",
             "format": "date-time"
         },
