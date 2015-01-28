@@ -86,6 +86,20 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return game;
             },
 
+            getByUploaderUserId: function(userId) {
+
+                userId = userId || session.getCurrentUserId();
+
+                if (!userId) throw new Error('No userId');
+
+                var games = this.getList();
+
+                return games.filter(function(game) {
+
+                    return game.uploaderUserId == userId;
+                });
+            },
+
             getByUploaderTeamId: function(teamId) {
 
                 if (!teamId) throw new Error('No teamId');
@@ -100,6 +114,23 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
             },
 
+            getByUploaderRole: function(userId, teamId) {
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                if (!userId) throw new Error('No userId');
+                if (!teamId) throw new Error('No teamId');
+
+                var games = this.getList();
+
+                return games.filter(function(game) {
+
+                    return game.uploaderUserId == userId &&
+                           game.uploaderTeamId == teamId;
+                });
+            },
+
             getBySharedWithUser: function(user) {
 
                 var self = this;
@@ -110,6 +141,54 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     return game.isSharedWithUser(user);
                 });
+            },
+
+            getBySharedWithUserId: function(userId) {
+
+                var self = this;
+
+                var games = self.getList();
+
+                return games.filter(function(game) {
+
+                    return game.isSharedWithUserId(userId);
+                });
+            },
+
+            getByRelatedRole: function(userId, teamId) {
+
+                var self = this;
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                var gamesForUser = self.getByUploaderUserId(userId);
+                var gamesForTeam = self.getByUploaderTeamId(teamId);
+                var gamesSharedWithUser = self.getBySharedWithUserId(userId);
+
+                var gamesList = gamesForUser
+
+                .concat(gamesForTeam, gamesSharedWithUser)
+
+                .map(function asId(game) {
+
+                    return game.id;
+                })
+
+                .reduce(function onlyUnique(previous, current) {
+
+                    if (!~previous.indexOf(current)) previous.push(current);
+
+                    return previous;
+
+                }, [])
+
+                .map(function asResource(id) {
+
+                    return self.get(id);
+                });
+
+                return gamesList;
             },
 
             saveNotes: function() {
@@ -1016,6 +1095,13 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var userId = user.id;
 
+                return self.getShareByUserId(userId);
+            },
+            getShareByUserId: function(userId) {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
                 return self.sharedWithUsers[userId];
             },
             isSharedWithUser: function(user) {
@@ -1026,6 +1112,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+            isSharedWithUserId: function(userId) {
+                var self = this;
+
+                if (!userId) return false;
+
+                if (!self.sharedWithUsers) return false;
+
+                return angular.isDefined(self.getShareByUserId(userId));
             },
             getUserShares: function() {
                 var self = this;

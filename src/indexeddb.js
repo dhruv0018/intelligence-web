@@ -109,13 +109,15 @@ function openDB(name, version) {
 
         request.onupgradeneeded = function(event) {
 
+            version = version || 1;
+
             /* Get the database. */
             db = event.target.result;
 
             console.info('Database needs to be upgraded');
 
             /* Find the appropriate migration to run. */
-            var migrationToRun = version ? version - 1 : 0;
+            var migrationToRun = version - 1;
 
             /* Lookup the migration. */
             var migration = migrations[migrationToRun];
