@@ -1,5 +1,9 @@
 <div class="telestration-menu-box">
 
+	<telestration-clear data-ng-show="glyphs.length" data-ng-click="clearGlyphs()">Clear</telestration-clear>
+
+	<telestration-undo data-ng-show="glyphs.length" data-ng-click="undoGlyph()">Undo({{glyphs.length}})</telestration-undo>
+
 	<telestration-menu-item
 		data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND}" 
 		type="{{TELESTRATION_TYPES.FREEHAND}}">
