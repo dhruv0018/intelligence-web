@@ -542,6 +542,13 @@ IntelligenceWebClient.factory('UsersFactory', [
             isActive: function(role) {
                 var self = this;
                 return self.activeRoles(role).length >= 1;
+            },
+            typeahead: function(filter) {
+                var self = this;
+
+                var model = $injector.get(self.model);
+
+                return model.typeahead(filter).$promise;
             }
         };
 
