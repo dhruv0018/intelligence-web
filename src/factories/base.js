@@ -107,21 +107,29 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var storage = $injector.get(self.storage);
 
-                if (filter) {
+                if (!filter) return storage.list;
+
+                var ids;
+
+                if (angular.isArray(filter)) {
+
+                    ids = filter;
+                }
+
+                else if (angular.isObject(filter)) {
 
                     var session = $injector.get('SessionService');
                     var key = '@' + session.serializeUserId() + '!' + self.description + '?' + encodeURIComponent(JSON.stringify(filter));
-                    var ids = JSON.parse(localStorage.getItem(key));
 
-                    if (ids) {
+                    ids = JSON.parse(localStorage.getItem(key));
+                }
 
-                        return storage.list.filter(function(resource) {
+                if (ids) {
 
-                            return ~ids.indexOf(resource.id);
-                        });
-                    }
+                    return storage.list.filter(function(resource) {
 
-                    else return storage.list;
+                        return ~ids.indexOf(resource.id);
+                    });
                 }
 
                 else return storage.list;
