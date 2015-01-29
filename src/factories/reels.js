@@ -88,6 +88,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
             getBySharedWithUser: function(user) {
 
+                user = user || session.currentUser;
+
                 var reels = this.getList();
 
                 return reels.filter(function(reel) {
@@ -100,15 +102,19 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 var self = this;
 
-                var games = self.getList();
+                userId = userId || session.getCurrentUserId();
 
-                return games.filter(function(game) {
+                var reels = self.getList();
 
-                    return game.isSharedWithUserId(userId);
+                return reels.filter(function(reel) {
+
+                    return reel.isSharedWithUserId(userId);
                 });
             },
 
             getBySharedWithTeamId: function(teamId) {
+
+                teamId = teamId || session.getCurrentTeamId();
 
                 var reels = this.getList();
 
