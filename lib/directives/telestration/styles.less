@@ -1,22 +1,12 @@
 @import (reference) "main.less";
 
-#videoSpot {
+.telestration-container {
+
+	display: flex;
+	flex-direction: column;
 
 	&.telestrations-active > glyph {
 		display: block;
-	}
-
-	&.moving-shape > glyph-editor glyph-edit-button {
-		display: none;
-	}
-
-	glyph-edit-button {
-		height: 25px;
-		width: 25px;
-		background: #f00;
-		z-index: 4;
-		display: inline-block;
-		position: absolute;
 	}
 
 	glyph {
@@ -53,7 +43,7 @@ telestration-menu {
 	background-color: #ccc;
 	z-index: 1000000;
 
-	telestration-menu-item {
+	telestration-menu-item, telestration-undo {
 		display: block;
 		width: 50px;
 		height: 50px;
