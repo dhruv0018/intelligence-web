@@ -90,8 +90,8 @@ Clips.config([
 ]);
 
 Clips.controller('Clips.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'ReelsFactory', 'TeamsFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory', 'PlayManager', 'PlaysManager',
-    function controller($scope, $state, $stateParams, games, reels, teams, plays, leagues, players, playManager, playsManager) {
+    '$scope', '$window', '$state', '$stateParams', 'GamesFactory', 'ReelsFactory', 'TeamsFactory', 'PlaysFactory', 'LeaguesFactory', 'PlayersFactory', 'PlayManager', 'PlaysManager',
+    function controller($scope, $window, $state, $stateParams, games, reels, teams, plays, leagues, players, playManager, playsManager) {
 
         var playId = $stateParams.id;
         $scope.play = plays.get(playId);
@@ -119,8 +119,8 @@ Clips.controller('Clips.controller', [
 
         /* Logic for clips navigation */
 
-        $scope.fromReel = ($stateParams.reel !== null);
-        $scope.fromGame = ($stateParams.game !== null);
+        $scope.fromReel = ($stateParams.reel !== null && $stateParams.reel !== undefined);
+        $scope.fromGame = ($stateParams.game !== null && $stateParams.game !== undefined);
 
         if ($scope.fromReel || $scope.fromGame) {
 
@@ -135,6 +135,8 @@ Clips.controller('Clips.controller', [
             } else if ($scope.fromGame) {
                 $scope.filmId = $stateParams.game;
                 film = games.get($scope.filmId);
+                var jsonPlays = $window.sessionStorage.getItem('game.plays');
+                film.plays = JSON.parse(jsonPlays);
                 $scope.filmName = teams.get(film.opposingTeamId).name + ' vs. ' + teams.get(film.teamId).name;
             }
 

@@ -125,12 +125,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 userId = userId || session.getCurrentUserId();
                 teamId = teamId || session.getCurrentTeamId();
 
-                var reelsForRole = self.getByUploaderRole(userId, teamId);
+                var reelsForUser = self.getByUploaderUserId(userId);
                 var reelsForTeam = session.currentUser.is(ROLES.COACH) ? self.getByUploaderTeamId(teamId) : [];
                 var reelsSharedWithUser = self.getBySharedWithUserId(userId);
                 var reelsSharedWithTeam = self.getBySharedWithTeamId(teamId);
 
-                var reelsList = reelsForRole
+                var reelsList = reelsForUser
 
                 .concat(reelsForTeam, reelsSharedWithUser, reelsSharedWithTeam)
 
