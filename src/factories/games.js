@@ -23,7 +23,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             storage: 'GamesStorage',
             unextend: function(game) {
-
                 var self = this;
 
                 game = game || self;
@@ -38,6 +37,10 @@ IntelligenceWebClient.factory('GamesFactory', [
                     copy.shares.push(copy.publicShare);
                     delete copy.publicShare;
                 }
+
+                copy.shares.forEach(function(share) {
+                    share.isBreakdownShared = JSON.parse(share.isBreakdownShared);
+                });
 
                 return copy;
             },
