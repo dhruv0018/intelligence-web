@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'ROLES', 'BaseFactory', 'SessionService',
-    function(ROLES, BaseFactory, session) {
+    'ROLES', 'Utilities', 'BaseFactory', 'SessionService',
+    function(ROLES, utilities, BaseFactory, session) {
 
         var ReelsFactory = {
 
@@ -125,34 +125,30 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 userId = userId || session.getCurrentUserId();
                 teamId = teamId || session.getCurrentTeamId();
 
-                var reelsForUser = self.getByUploaderUserId(userId);
-                var reelsForTeam = session.currentUser.is(ROLES.COACH) ? self.getByUploaderTeamId(teamId) : [];
-                var reelsSharedWithUser = self.getBySharedWithUserId(userId);
-                var reelsSharedWithTeam = self.getBySharedWithTeamId(teamId);
+                var reels = [];
 
-                var reelsList = reelsForUser
+                if (session.currentUser.is(ROLES.COACH)) {
 
-                .concat(reelsForTeam, reelsSharedWithUser, reelsSharedWithTeam)
+                    reels = reels.concat(self.getByUploaderRole(userId, teamId));
+                    reels = reels.concat(self.getByUploaderTeamId(teamId));
+                }
 
-                .map(function asId(reel) {
+                else if (session.currentUser.is(ROLES.ATHLETE)) {
 
-                    return reel.id;
-                })
+                    reels = reels.concat(self.getByUploaderUserId(userId));
 
-                .reduce(function onlyUnique(previous, current) {
+                    reels = reels.filter(function(reel) {
 
-                    if (!~previous.indexOf(current)) previous.push(current);
+                        return !reel.uploaderTeamId;
+                    });
+                }
 
-                    return previous;
+                reels = reels.concat(self.getBySharedWithUserId(userId));
+                reels = reels.concat(self.getBySharedWithTeamId(teamId));
 
-                }, [])
+                var reelIds = utilities.unique(self.getIds(reels));
 
-                .map(function asResource(id) {
-
-                    return self.get(id);
-                });
-
-                return reelsList;
+                return self.getList(reelIds);
             },
 
             addPlay: function(play) {
