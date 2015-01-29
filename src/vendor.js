@@ -1,4 +1,7 @@
 require('angular/angular');
+require('angular-material/angular-material');
+require('angular-animate/angular-animate');
+require('angular-aria/angular-aria');
 require('angular-sanitize/angular-sanitize');
 require('angular-resource/angular-resource');
 require('angular-bootstrap/dist/ui-bootstrap-tpls');
