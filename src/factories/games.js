@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
-    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, players, $q) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q) {
 
         var GamesFactory = {
 
@@ -165,33 +165,25 @@ IntelligenceWebClient.factory('GamesFactory', [
                 userId = userId || session.getCurrentUserId();
                 teamId = teamId || session.getCurrentTeamId();
 
-                var gamesForUser = self.getByUploaderUserId(userId);
-                var gamesForTeam = self.getByUploaderTeamId(teamId);
-                var gamesSharedWithUser = self.getBySharedWithUserId(userId);
+                var games = [];
 
-                var gamesList = gamesForUser
+                if (session.currentUser.is(ROLES.COACH)) {
 
-                .concat(gamesForTeam, gamesSharedWithUser)
+                    games = games.concat(self.getByUploaderRole(userId, teamId));
+                    games = games.concat(self.getByUploaderTeamId(teamId));
+                }
 
-                .map(function asId(game) {
+                else if (session.currentUser.is(ROLES.ATHLETE)) {
 
-                    return game.id;
-                })
+                    games = games.concat(self.getByUploaderUserId(userId));
+                    games = games.concat(self.getByUploaderTeamId(teamId));
+                }
 
-                .reduce(function onlyUnique(previous, current) {
+                games = games.concat(self.getBySharedWithUserId(userId));
 
-                    if (!~previous.indexOf(current)) previous.push(current);
+                var gameIds = utilities.unique(self.getIds(games));
 
-                    return previous;
-
-                }, [])
-
-                .map(function asResource(id) {
-
-                    return self.get(id);
-                });
-
-                return gamesList;
+                return self.getList(gameIds);
             },
 
             saveNotes: function() {
