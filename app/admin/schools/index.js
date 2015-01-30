@@ -62,11 +62,13 @@ Schools.config([
 
                             var schoolId = Number($stateParams.id);
 
-                            var Data = {
+                            var Data = {};
 
-                                school: schools.load(schoolId),
-                                teams: teams.load({ schoolId: schoolId })
-                            };
+                            if (schoolId) {
+
+                                Data.school = schools.load(schoolId);
+                                Data.teams = teams.load({ schoolId: schoolId });
+                            }
 
                             return $q.all(Data);
                         }
