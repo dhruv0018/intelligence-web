@@ -3,6 +3,7 @@
 'use strict';
 
 var less = require("component-builder-less");
+var es6ify = require('es6ify').configure(/^(?!.*node_modules)+.+\.js$/);
 
 module.exports = function(grunt) {
 
@@ -286,6 +287,7 @@ module.exports = function(grunt) {
         browserify: {
             dev: {
                 options: {
+                    transform: [es6ify],
                     bundleOptions: {
                         debug: true,
                     },
@@ -299,6 +301,7 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
+                    transform: [es6ify],
                     browserifyOptions: {
                         noParse: ['./build/build.js']
                     }

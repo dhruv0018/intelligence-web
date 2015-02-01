@@ -58,6 +58,7 @@
     "connect-modrewrite": "0.7.6",
     "cucumber": "0.4.8",
     "envify": "1.2.1",
+    "es6ify": "1.6.0",
     "express": "^4.11.0",
     "grunt": "0.4.5",
     "grunt-autoprefixer": "0.7.5",
@@ -109,7 +110,8 @@
     "napa": "0.4.1",
     "protractor": "1.6.1",
     "sequelize": "^2.0.0-rc8",
-    "time-grunt": "0.3.2"
+    "time-grunt": "0.3.2",
+    "traceur": "0.0.82"
   },
   "main": "./src/main.js",
   "scripts": {
