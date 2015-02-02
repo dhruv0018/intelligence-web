@@ -392,6 +392,11 @@
         "Athlete": true
     },
 
+    "Athlete.Profile.Stats": {
+
+        "Athlete": true
+    },
+
     "Athlete.GameArea": {
 
         "Athlete": true

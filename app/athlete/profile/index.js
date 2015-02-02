@@ -1,6 +1,7 @@
 /* Component dependencies */
 require('highlights');
 require('academics');
+require('stats');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -12,6 +13,7 @@ var angular = window.angular;
 var Profile = angular.module('Athlete.Profile', [
     'Athlete.Profile.Highlights',
     'Athlete.Profile.Academics',
+    'Athlete.Profile.Stats',
     'ui.router',
     'ui.bootstrap',
     'ngMaterial',
