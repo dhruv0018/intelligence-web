@@ -1,175 +1,153 @@
 @import (reference) "main.less";
 
+md-content {
+    height: calc(~"100% - 61px"); 
+}
+
 .athlete-profile {
-	
-	header {
-		background-color: @brand-blue;
-		color: white;
+    height: 100%;
+    
+    header {
+        background-color: @brand-blue;
+        color: white;
 
-		h2 {
-			margin: 0;
-			margin-bottom: 20px;
-			font-weight: 700;
-		}
+        h2 {
+            margin: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
 
-		.profile-picture {
-			display: inline-block;
-			text-align: center;
-			margin: 3 0px;
+        .athlete-info {
+            text-align: center;
+            flex: 1;
+        }
 
-			img {
-				height: 150px;
-				width: 150px;
-				border-radius: 75px;
-				border: 2px solid white;
-			}
-		}
+        .athlete-attributes {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
 
-		.athlete-info {
-			text-align: center;
-			flex: 1;
-		}
+            li {
+                margin: 10px 0;
 
-		.athlete-attributes {
-			margin: 0;
-			padding: 0;
-			list-style-type: none;
+                label {
+                    display: block;
+                    text-transform: uppercase;
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
 
-			li {
-				margin: 10px 0;
+    md-tabs {
+        box-shadow: 0px 1px 7px 0px @gray-light;
+        color: @gray;
 
-				label {
-					display: block;
-					text-transform: uppercase;
-					font-size: 1.2rem;
-				}
-			}
-		}
-	}
+        .md-header {
+            height: 60px;
+            background-color: white;
+        }
 
-	md-tabs {
-		box-shadow: 0px 1px 7px 0px @gray-light;
-		color: @gray;
+        md-tabs-ink-bar {
+            height: 3px;
+            color: @gray-light;
+            background-color: @brand-info;
+        }
 
-		.md-header {
-			height: 60px;
-			background-color: white;
-		}
+        md-tab {
+            padding: 20px 30px;
+            color: @gray-light;
 
-		md-tabs-ink-bar {
-			top: 2px;
-		}
+            i {
+                position: relative;
+                top: 2px;
+            }
+        }
 
-		md-tab {
-			padding: 20px 30px;
-			border-bottom: 3px solid white;
-			color: @gray-light;
+        md-tab[aria-selected="true"] {
+            color: @brand-info;
 
-			i {
-				position: relative;
-				top: 2px;
-			}
-		}
+            md-tab-label {
+                font-weight: 700;
+            }
+        }
+    }
 
-		md-tab[aria-selected="true"] {
-			border-bottom: 3px solid @brand-info;
-			color: @brand-info;
-	    	background: @content-bg;
+    .tabpanel-container {
+        display: block;
+        position: relative;
+        padding: 30px;
+        height: 100%;
+        background: @content-bg;
 
-	    	md-tab-label {
-	    		font-weight: 700;
-	    	}
-		}
-	}
+        .tabpanel {
+            color: black;
+            width: 100%;
+            height: 100%;
+            transition: all 0.5s;
+            position: absolute;
 
-	.tabpanel-container {
-	    display: block;
-	    position: relative;
-	    border: 0px solid black;
-	    padding: 20px;
-	    height: 300px;
-	    overflow: hidden;
+            // &.ng-leave.ng-leave-active,
+            // &.ng-enter {
+            //  left: -300px;
+            // }
 
-	    .tabpanel {
-	    	color: black;
-	    	width: 100%;
-	    	height: 100%;
-	    	// transition: all 0.5s;
-	    	// position: absolute;
+            // &.ng-leave,
+            // &.ng-enter.ng-enter-active {
+            //  left: 0;
+            // }
 
-	    	// &.ng-leave.ng-leave-active,
-	    	// &.ng-enter {
-	    	// 	left: -300px;
-	    	// }
-
-	    	// &.ng-leave,
-	    	// &.ng-enter.ng-enter-active {
-	    	// 	left: 0;
-	    	// }
-
-	    	// &.ng-leave {
-	    	// 	z-index: 100;
-	    	// }
-	    }
-	}
+            // &.ng-leave {
+            //  z-index: 100;
+            // }
+        }
+    }
 }
 
 @media only screen
 and (min-width: 600px) {
-	.athlete-profile {
+    .athlete-profile {
 
-		header { 
+        header { 
 
-			h2 {
-				margin-bottom: 0;
-			}
+            h2 {
+                margin-bottom: 0;
+            }
 
-			.profile-picture {
-				position: absolute;
-				margin: 30px 50px;
+            .athlete-info {
+                margin-top: 40px;
+                text-align: left; // Override
+                justify-content: space-around;
+                margin-left: 240px;
 
-				img {
-					height: 160px;
-					width: 160px;
-					border-radius: 80px;
-					border-width: 3px;
-				}
-			}
+                > * {
+                    margin-bottom: 15px;
+                }
+            }
 
-			.athlete-info {
-				margin-top: 40px;
-				text-align: left; // Override
-				justify-content: space-around;
-				margin-left: 240px;
+            .athlete-attributes {
+                align-items: center;
+                color: @gray-lighter;
 
-				> * {
-					margin-bottom: 15px;
-				}
-			}
+                li {
+                    padding: 5px 20px;
+                    margin: 0; // Override
+                    border-right: thin solid white;
 
-			.athlete-attributes {
-				align-items: center;
-				color: @gray-lighter;
+                    &:first-child {
+                        padding-left: 0;
+                    }
 
-				li {
-					padding: 5px 20px;
-					margin: 0; // Override
-					border-right: thin solid white;
+                    &:last-child {
+                        padding-right: 0;
+                        border-right: none;
+                    }
+                }
+            }
+        }
 
-					&:first-child {
-						padding-left: 0;
-					}
-
-					&:last-child {
-						padding-right: 0;
-						border-right: none;
-					}
-				}
-			}
-		}
-
-		md-tabs {
-			padding-left: 240px;
-		}
-	}
+        md-tabs {
+            padding-left: 240px;
+        }
+    }
 }
