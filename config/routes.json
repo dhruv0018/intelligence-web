@@ -382,6 +382,11 @@
         "Athlete": true
     },
 
+    "Athlete.Profile.Highlights": {
+
+        "Athlete": true
+    },
+
     "Athlete.GameArea": {
 
         "Athlete": true
