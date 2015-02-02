@@ -16,6 +16,7 @@ var Profile = angular.module('Athlete.Profile');
 Profile.controller('Athlete.Profile.controller', [
     '$scope', '$state',
     function controller($scope, $state) {
+        $state.go('Athlete.Profile.Highlights');
 
         $scope.athlete = {
             name: 'Alex Young',

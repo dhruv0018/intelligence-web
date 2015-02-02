@@ -23,7 +23,7 @@
             </md-tab>
             <md-tab id="academics" aria-controls="academics-content">
                 <i class="icon icon-file-text-o">&nbsp;</i>
-                Academics
+                <a data-ui-sref="Athlete.Profile.Academics">Academics</a>
             </md-tab>
             <md-tab id="stats" aria-controls="stats-content">
                 <i class="icon icon-bar-chart-o">&nbsp;</i>
@@ -47,7 +47,7 @@
                  ng-switch-when="1"
                  md-swipe-left="tabs.next()"
                  md-swipe-right="tabs.prev()">
-                Academics Content
+                <div data-ui-view="academics"></div>
             </div>
             <div role="tabpanel"
                  class="tabpanel"
