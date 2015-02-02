@@ -14,8 +14,9 @@ var Highlights = angular.module('Athlete.Profile.Highlights');
  * @type {controller}
  */
 Highlights.controller('Athlete.Profile.Highlights.controller', [
-    '$scope',
-    function controller($scope) {
+    '$scope', 'ReelsFactory',
+    function controller($scope, reels) {
 
+        $scope.reels = reels.getByUploaderUserId();
     }
 ]);
