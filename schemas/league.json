@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "League Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "sportId": {
+            "type": "integer"
+        },
+        "gender": {
+            "type": "string",
+            "options": [
+                "male",
+                "female"
+            ]
+        },
+        "seasonStartMonth": {
+            "type": "integer"
+        },
+        "seasonStartDay": {
+            "type": "integer"
+        },
+        "seasonEndMonth": {
+            "type": "integer"
+        },
+        "seasonEndDay": {
+            "type": "integer"
+        },
+        "seasons": {
+            "type": "array",
+            "items": { "$ref": "season" }
+        },
+        "tagSetId": {
+            "type": ["null", "integer"]
+        },
+        "numberOfPeriods": {
+            "type": "integer"
+        },
+        "periodLabel": {
+            "type": "string"
+        },
+        "periodAbbreviationLabel": {
+            "type": "string"
+        },
+        "positionSetId": {
+            "type": ["null", "integer"]
+        },
+        "flagRuleSetId": {
+            "type": ["null", "integer"]
+        },
+        "filterSetId": {
+            "type": ["null", "integer"]
+        }
+    },
+    "additionalProperties": false
+}

@@ -47,11 +47,11 @@
             </ul>
         </header>
 
-        <no-results ng-if="filmsList.length === 0"></no-results>
+        <no-results ng-if="filteredFilmsList.length === 0"></no-results>
         <!-- NG-REPEAT FILM DIRECTIVES -->
 
-        <div ng-show="filmsList.length > 0" class="films-area">
-            <krossover-film data-ng-repeat="film in filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate" data-film="film" data-teams="teams"></krossover-film>
+        <div ng-show="filteredFilmsList.length > 0 " class="films-area">
+            <krossover-film data-ng-repeat="film in filteredFilmsList = (filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate)" data-film="film" data-teams="teams"></krossover-film>
         </div>
     </main>
 

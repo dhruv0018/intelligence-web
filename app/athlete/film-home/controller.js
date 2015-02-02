@@ -20,18 +20,21 @@ FilmHome.controller('Athlete.FilmHome.controller', [
         var teamId = session.currentUser.currentRole.teamId;
 
         $scope.playersList = data.playersList;
-        $scope.games = games.getCollection();
-        $scope.gamesList = games.getList();
-        $scope.reels = reels.getCollection();
-        $scope.reelsList = reels.getList();
-        $scope.filmsList = $scope.gamesList.concat($scope.reelsList);
-        $scope.teams = teams.getCollection();
         $scope.team = teams.get(teamId);
+        $scope.teams = teams.getCollection();
+        $scope.games = games.getCollection();
+        $scope.reels = reels.getCollection();
+        var gamesList = games.getByRelatedRole();
+        var reelsList = reels.getByRelatedRole();
+        $scope.filmsList = gamesList.concat(reelsList);
         $scope.query = '';
         $scope.athlete = {
             user: users.get(session.currentUser.id),
             players: players.getList()
         };
+
+        //ui
+        $scope.filteredFilmsList = $scope.filmsList;
     }
 ]);
 

@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(package.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'BaseFactory', 'SessionService',
-    function(BaseFactory, session) {
+    'ROLES', 'Utilities', 'BaseFactory', 'SessionService',
+    function(ROLES, utilities, BaseFactory, session) {
 
         var ReelsFactory = {
 
@@ -25,8 +25,10 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 reel.plays = reel.plays || [];
                 reel.shares = reel.shares || [];
                 reel.sharedWithUsers = reel.sharedWithUsers || {};
+                reel.isDeleted = reel.isDeleted || false;
 
                 /* build lookup table of shares by userId shared with */
+                //TODO find out why this doesnt look for a public share
                 if (reel.shares && reel.shares.length) {
 
                     angular.forEach(reel.shares, function(share) {
@@ -39,7 +41,21 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reel;
             },
 
-            getByTeam: function(teamId) {
+            getByUploaderUserId: function(userId) {
+
+                userId = userId || session.getCurrentUserId();
+
+                if (!userId) throw new Error('No userId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderUserId == userId;
+                });
+            },
+
+            getByUploaderTeamId: function(teamId) {
 
                 teamId = teamId || session.getCurrentTeamId();
 
@@ -53,6 +69,94 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 });
             },
 
+            getByUploaderRole: function(userId, teamId) {
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                if (!userId) throw new Error('No userId');
+                if (!teamId) throw new Error('No teamId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderUserId == userId &&
+                           reel.uploaderTeamId == teamId;
+                });
+            },
+
+            getBySharedWithUser: function(user) {
+
+                user = user || session.currentUser;
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.isSharedWithUser(user);
+                });
+            },
+
+            getBySharedWithUserId: function(userId) {
+
+                var self = this;
+
+                userId = userId || session.getCurrentUserId();
+
+                var reels = self.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.isSharedWithUserId(userId);
+                });
+            },
+
+            getBySharedWithTeamId: function(teamId) {
+
+                teamId = teamId || session.getCurrentTeamId();
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.isSharedWithTeamId(teamId);
+                });
+            },
+
+            getByRelatedRole:function(userId, teamId) {
+
+                var self = this;
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                var reels = [];
+
+                if (session.currentUser.is(ROLES.COACH)) {
+
+                    reels = reels.concat(self.getByUploaderRole(userId, teamId));
+                    reels = reels.concat(self.getByUploaderTeamId(teamId));
+                }
+
+                else if (session.currentUser.is(ROLES.ATHLETE)) {
+
+                    reels = reels.concat(self.getByUploaderUserId(userId));
+
+                    reels = reels.filter(function(reel) {
+
+                        return !reel.uploaderTeamId;
+                    });
+                }
+
+                reels = reels.concat(self.getBySharedWithUserId(userId));
+                reels = reels.concat(self.getBySharedWithTeamId(teamId));
+
+                var reelIds = utilities.unique(self.getIds(reels));
+
+                return self.getList(reelIds);
+            },
+
             addPlay: function(play) {
                 if (this.plays.indexOf(play.id) === -1) {
                     this.plays.push(play.id);
@@ -61,16 +165,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
             updateDate: function() {
                 this.updatedAt = moment.utc().toDate();
-            },
-            getMyReels: function(reels) {
-                var self = this;
-
-                reels = reels || self.getList();
-
-                return reels.filter(function(reel) {
-
-                    return reel.uploaderUserId == session.currentUser.id;
-                });
             },
             shareWithUser: function(user) {
 
@@ -120,6 +214,13 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 var userId = user.id;
 
+                return self.getShareByUserId(userId);
+            },
+            getShareByUserId: function(userId) {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
                 return self.sharedWithUsers[userId];
             },
             isSharedWithUser: function(user) {
@@ -130,6 +231,15 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+            isSharedWithUserId: function(userId) {
+                var self = this;
+
+                if (!userId) return false;
+
+                if (!self.sharedWithUsers) return false;
+
+                return angular.isDefined(self.getShareByUserId(userId));
             },
             getUserShares: function() {
                 var self = this;
@@ -211,6 +321,19 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     return share.sharedWithTeamId;
                 }).some(function(teamId) {
                     return teamId;
+                });
+            },
+            isSharedWithTeamId: function(teamId) {
+
+                var self = this;
+
+                if (!teamId) return false;
+                if (!self.shares) return false;
+
+                return self.shares.map(function(share) {
+                    return share.sharedWithTeamId;
+                }).some(function(teamId) {
+                    return teamId == teamId;
                 });
             },
             getTeamShare: function() {

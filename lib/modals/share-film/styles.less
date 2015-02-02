@@ -94,29 +94,37 @@
 
 		.sharing-with-team-container {
 
-			.team-share-toggle {
-				margin: 25px 0px;
-				cursor: pointer;
-				color: @gray-darker;
-				text-align: center;
-				
-				p {
-					display: inline;
-					vertical-align: middle;
-					font-size: 18px;
+			.team-share-options {
+
+				a {
+					cursor: pointer;
+					margin-right: 10px;
+					line-height: 37px;
 				}
 
-				.icon-check-empty,
-				.icon-check-square-o {
-					display: inline;
-					vertical-align: middle;
-					font-size: 25px;
-					margin-right: 5px;
+				select {
+					.pull-right;
+					padding-right: 30px;
+				}
+			}
 
-					&::before {
-						width: 25px;
-						text-align: left;
+			.team-share-table {
+				margin: 10px 0;
+				
+				.team-share-player {
+					display: inline-flex;
+					width: 33%;
+					margin-bottom: 10px;
+
+					.icon {
+						margin-right: 5px;
+						font-size: 18px;
 					}
+				}
+
+				.player-selected {
+					color: @brand-blue;
+					font-weight: 500;
 				}
 			}
 		}
@@ -125,6 +133,10 @@
 
 			h3 {
 				margin-top: 0px;
+			}
+
+			a {
+				cursor: pointer;
 			}
 
 			.share-error-message {
@@ -155,6 +167,11 @@
 			.how-to-search {
 				color: black;
 				margin-bottom: 10px;
+				font-size: @font-size-base;
+
+				.public-breakdown-information {
+					font-size: @font-size-small;
+				}
 			}
 
 			.shared-with-table {
@@ -297,7 +314,7 @@
 			}
 
 			.activate-row {
-				
+
 				margin-bottom: 20px;
 				font-size: 18px;
 				font-weight: 500;
@@ -323,22 +340,13 @@
 			}
 		}
 
-		.share-successful {
-		color: @brand-success;
-		text-align: center;
-		font-size: 24px;
+		.button-row {
 
-		.icon {
-			display: block;
-			margin: auto;
-			font-size: 60px;
-			width: 100px;
-			height: 100px;
-			line-height: 95px;
-			border: 4px solid @brand-success;
-			border-radius: 50%;
+			.icon-chevron-left {
+				font-size: 12px;
+				margin-right: 3px;
+			}
 		}
-	}
 	}
 }
 

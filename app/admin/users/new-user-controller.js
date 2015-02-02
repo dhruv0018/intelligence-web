@@ -21,9 +21,12 @@ Users.controller('Users.User.New.Controller', [
 
         $scope.close = function() {
 
-            $state.go('user-info');
+            $scope.user.save().then(function(user) {
 
-            $modalInstance.close();
+                $state.go('user-info', { id: user.id });
+
+                $modalInstance.close();
+            });
         };
     }
 ]);

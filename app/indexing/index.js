@@ -40,17 +40,27 @@ Indexing.run([
  * @type {service}
  */
 Indexing.service('Indexing.Data.Dependencies', [
-    'Indexer.Games.Data.Dependencies', 'SessionService', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory',
-    function(data, session, leagues, tagsets, teams, games) {
-
-        var userId = session.currentUser.id;
+    'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'TagsetsFactory',
+    function(session, games, teams, leagues, tagsets) {
 
         var Data = {
 
             leagues: leagues.load(),
             tagsets: tagsets.load(),
-            teams: teams.load({ relatedUserId: userId }),
-            games: games.load({ assignedUserId: userId })
+
+            get teams() {
+
+                var userId = session.currentUser.id;
+
+                return teams.load({ relatedUserId: userId });
+            },
+
+            get games() {
+
+                var userId = session.currentUser.id;
+
+                return games.load({ assignedUserId: userId });
+            }
         };
 
         return Data;
@@ -109,10 +119,10 @@ Indexing.config([
                                 var gameData = {
 
                                     game: game,
-                                    plays: plays.query({ gameId: gameId }),
+                                    plays: plays.load({ gameId: gameId }),
                                     players: players,
-                                    teamPlayers: players.query({ rosterId: teamRoster.id }),
-                                    opposingTeamPlayers: players.query({ rosterId: opposingTeamRoster.id })
+                                    teamPlayers: players.load({ rosterId: teamRoster.id }),
+                                    opposingTeamPlayers: players.load({ rosterId: opposingTeamRoster.id })
                                 };
 
                                 return $q.all(angular.extend(data, gameData));
@@ -262,10 +272,7 @@ Indexing.config([
                 ],
 
                 onExit: [
-                    '$stateParams', 'GamesFactory', 'PlaysManager',
-                    function($stateParams, games, playsManager) {
-                        var gameId = $stateParams.id;
-                        var game = games.get(gameId);
+                    function() {
 
                         Mousetrap.unbind('space');
                         Mousetrap.unbind('left');
@@ -273,8 +280,6 @@ Indexing.config([
                         Mousetrap.unbind('enter');
                         Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
-
-                        game.save();
                     }
                 ]
             });

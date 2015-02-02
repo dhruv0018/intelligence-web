@@ -76,13 +76,25 @@ Athlete.service('Athlete.Data.Dependencies', [
             reels: $q.all([reelsForUser, reelsSharedWithTeam, reelsSharedWithUser])
         };
 
+        Data.players = Data.teams.then(function() {
+            //Get all players from user's teams TODO: use relatedUserId
+            var teamPlayers = [];
+            athleteRoles.forEach(function(role, index) {
+                var team = teams.get(role.teamId);
+
+                teamPlayers.push(players.load({
+                    rosterId: team.roster.id
+                }));
+            });
+
+            return $q.all(teamPlayers);
+        });
+
         Data.athlete = {
             players: players.load({
                 userId: userId
             })
         };
-
-
 
         return Data;
     }

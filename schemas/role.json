@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Role Schema",
+    "type": "object",
+    "properties": {
+        "userId": {
+            "type": "integer"
+        },
+        "teamId": {
+            "type": "integer"
+        },
+        "type": {
+            "type": "integer"
+        },
+        "isDefault": {
+            "type": "boolean"
+        },
+        "createdAt": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "tenureStart": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "tenureEnd": {
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "additionalProperties": false
+}

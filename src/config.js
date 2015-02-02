@@ -11,7 +11,12 @@ var config;
 
 var environment = process.env.NODE_ENV;
 
-if (environment === 'development') {
+if (environment === 'test') {
+
+    config = require('../config/test.json');
+}
+
+else if (environment === 'development') {
 
     config = require('../config/dev.json');
 }
@@ -21,13 +26,10 @@ else if (environment === 'qa') {
     config = require('../config/qa.json');
 }
 
-else if (environment === 'production') {
+else {
 
+    environment = 'production';
     config = require('../config/prod.json');
-} else {
-
-    environment = 'development';
-    config = require('../config/dev.json');
 }
 
 config.environment = environment;

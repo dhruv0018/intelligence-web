@@ -1,0 +1,100 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Game Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "datePlayed": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "gameType": {
+            "type": "integer"
+        },
+        "isHomeGame": {
+            "type": "boolean"
+        },
+        "teamId": {
+            "type": ["null", "integer"]
+        },
+        "opposingTeamId": {
+            "type": ["null", "integer"]
+        },
+        "primaryJerseyColor": {
+            "type": ["null", "string"]
+        },
+        "secondaryJerseyColor": {
+            "type": ["null", "string"]
+        },
+        "opposingPrimaryJerseyColor": {
+            "type": ["null", "string"]
+        },
+        "opposingSecondaryJerseyColor": {
+            "type": ["null", "string"]
+        },
+        "finalScore": {
+            "type": "integer"
+        },
+        "opposingFinalScore": {
+            "type": "integer"
+        },
+        "indexedScore": {
+            "type": ["null", "integer"]
+        },
+        "opposingIndexedScore": {
+            "type": ["null", "integer"]
+        },
+        "rosters": {
+            "type": "object",
+            "patternProperties": {
+                "[0-9]": {
+                    "type": "object",
+                    "items": { "$ref": "roster" }
+                }
+            }
+        },
+        "video": { "$ref": "video" },
+        "status": {
+            "type": "integer"
+        },
+        "indexerAssignments": {
+            "type": "array",
+            "items": { "$ref": "indexerAssignment" }
+        },
+        "isDeleted": {
+            "type": "boolean"
+        },
+        "uploaderUserId": {
+            "type": "integer"
+        },
+        "uploaderTeamId": {
+            "type": "integer"
+        },
+        "createdAt": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "submittedAt": {
+            "type": ["null", "string"],
+            "format": "date-time"
+        },
+        "isClone": {
+            "type": "boolean"
+        },
+        "notes": {
+            "patternProperties": {
+                "[12345]": {
+                    "type": "array",
+                    "items": { "$ref": "note" }
+                }
+            }
+        },
+        "shares": {
+            "type": "array",
+            "items": { "$ref": "share" }
+        }
+    },
+    "additionalProperties": false
+}

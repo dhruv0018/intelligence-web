@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Play Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "startTime": {
+            "type": "number"
+        },
+        "endTime": {
+            "type": "number"
+        },
+        "events": {
+            "type": "array",
+            "items": { "$ref": "event" }
+        },
+        "gameId": {
+            "type": "integer"
+        },
+        "flags": {
+            "type": "array"
+        },
+        "clip": {
+            "type": ["null", "object"],
+            "items": { "$ref": "video" }
+        },
+        "shares": {
+            "type": "array",
+            "items": { "$ref": "share" }
+        },
+    },
+    "additionalProperties": false
+}
