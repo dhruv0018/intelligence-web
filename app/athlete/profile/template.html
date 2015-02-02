@@ -27,7 +27,7 @@
             </md-tab>
             <md-tab id="stats" aria-controls="stats-content">
                 <i class="icon icon-bar-chart-o">&nbsp;</i>
-                Stats
+                <a data-ui-sref="Athlete.Profile.Stats">Stats</a>
             </md-tab>
         </md-tabs>
         <ng-switch on="tabs.index" class="tabpanel-container">
@@ -56,7 +56,7 @@
                  ng-switch-when="2"
                  md-swipe-left="tabs.next()"
                  md-swipe-right="tabs.prev()">
-                Stats Content
+                <div data-ui-view="stats"></div>
             </div>
         </ng-switch>
     </section>
