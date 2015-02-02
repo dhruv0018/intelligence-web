@@ -1,15 +1,11 @@
-/* Component dependencies */
-require('highlights');
-
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
 /**
- * Profile page module.
- * @module Profile
+ * Highlights page module.
+ * @module Highlights
  */
-var Profile = angular.module('Athlete.Profile', [
-    'Athlete.Profile.Highlights',
+var Highlights = angular.module('Athlete.Profile.Highlights', [
     'ui.router',
     'ui.bootstrap',
     'ngMaterial',
@@ -17,14 +13,15 @@ var Profile = angular.module('Athlete.Profile', [
 ]);
 
 /* Cache the template files */
-Profile.run([
+Highlights.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('athlete/profile/template.html', require('./template.html'));
+        $templateCache.put('athlete/profile/highlights/template.html', require('./template.html'));
     }
 ]);
 
+
 /* File dependencies */
-require('./config');
 require('./controller');
+require('./config');
