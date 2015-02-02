@@ -67,12 +67,12 @@
         		If the person you want to share with does not have a Krossover account, <a data-ng-click="withOtherUsers = false; withPublic = true">share a URL</a> with them.
         	</div>
         	<span data-ng-show="film.isSharedWithUser(user)" class="share-error-message"><i class="icon icon-warning"></i> That user is already being shared with.</span>
-            <span data-ng-show="!isGame && team.isMember(user.id)" class="share-error-message"><i class="icon icon-warning"></i> Add players on your team from the <a data-ng-click="withOtherUsers = false; withTeam = true">team sharing page</a>.</span>
+            <span data-ng-show="!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE)" class="share-error-message"><i class="icon icon-warning"></i> Add players on your team from the <a data-ng-click="withOtherUsers = false; withTeam = true">team sharing page</a>.</span>
         	<span data-ng-show="user.id === currentUser.id" class="share-error-message"><i class="icon icon-warning"></i> You cannot share with yourself.</span>
         	<h3>Sharing with:</h3>
         	<form>
         		<user-typeahead data-user="user" data-filter="filter"></user-typeahead>
-        		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || film.isSharedWithUser(user) || user.id === currentUser.id || (!isGame && team.isMember(user.id))" data-ng-click="shareSubmit(user); user = null">Add</button>
+        		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || film.isSharedWithUser(user) || user.id === currentUser.id || (!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE))" data-ng-click="shareSubmit(user); user = null">Add</button>
         	</form>
         	<div class="how-to-search">
                 <p>Start typing the last name of the user you want to share with.</p>
