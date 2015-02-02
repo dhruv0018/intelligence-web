@@ -1,5 +1,5 @@
 {
-    "name": "profile",
+    "name": "academics",
     "templates": [
         "template.html"
     ],
@@ -10,12 +10,5 @@
         "index.js",
         "config.js",
         "controller.js"
-    ],
-    "locals": [
-        "highlights",
-        "academics"
-    ],
-    "paths": [
-        "."
     ]
 }
