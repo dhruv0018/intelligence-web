@@ -1,5 +1,63 @@
 <md-content>
 	<section class="athlete-profile">
-
-	</section>
+		<header layout="column" layout-gt-sm="row">
+			<div class="profile-picture">
+				<img src="{{athlete.profilePicture}}" alt="Profile Picture" />
+			</div>
+			<div class="athlete-info" layout-gt-sm="column">
+				<h2>{{athlete.name}}</h2>
+				<ul class="athlete-attributes" 
+					layout="column" 
+					layout-gt-sm="row">
+					<li><label>Height/Weight</label>{{toInt(athlete.height / 12)}}'{{athlete.height % 12}}" / {{athlete.weight}} lbs</li>
+					<li><label>Position</label>{{athlete.position}}</li>
+					<li><label>School</label>{{athlete.school}}</li>
+					<li><label>Graduation</label>Class of {{athlete.graduationYear}}</li>
+				</ul>
+			</div>
+		</header>
+        <md-tabs md-selected="tabs.index">
+            <md-tab id="highlights" aria-controls="highlights-content">
+                <i class="icon icon-youtube-play">&nbsp;</i>
+                <a data-ui-sref="Athlete.Profile.Highlights">Highlights</a>
+            </md-tab>
+            <md-tab id="academics" aria-controls="academics-content">
+                <i class="icon icon-file-text-o">&nbsp;</i>
+                Academics
+            </md-tab>
+            <md-tab id="stats" aria-controls="stats-content">
+                <i class="icon icon-bar-chart-o">&nbsp;</i>
+                Stats
+            </md-tab>
+        </md-tabs>
+        <ng-switch on="tabs.index" class="tabpanel-container">
+            <div role="tabpanel"
+                 class="tabpanel"
+                 id="highlights-content"
+                 aria-labelledby="highlights"
+                 ng-switch-when="0"
+                 md-swipe-left="tabs.next()"
+                 md-swipe-right="tabs.prev()">
+                <div data-ui-view="highlights"></div>
+            </div>
+            <div role="tabpanel"
+                 class="tabpanel"
+                 id="academics-content"
+                 aria-labelledby="academics"
+                 ng-switch-when="1"
+                 md-swipe-left="tabs.next()"
+                 md-swipe-right="tabs.prev()">
+                Academics Content
+            </div>
+            <div role="tabpanel"
+                 class="tabpanel"
+                 id="stats-content"
+                 aria-labelledby="stats"
+                 ng-switch-when="2"
+                 md-swipe-left="tabs.next()"
+                 md-swipe-right="tabs.prev()">
+                Stats Content
+            </div>
+        </ng-switch>
+    </section>
 </md-content>

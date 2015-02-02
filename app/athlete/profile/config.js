@@ -25,7 +25,14 @@ Profile.config([
                     templateUrl: 'athlete/profile/template.html',
                     controller: 'Athlete.Profile.controller'
                 }
-            }
+            },
+            onEnter: [
+                '$state',
+                function($state) {
+
+                    $state.go('Athlete.Profile.Highlights');
+                }
+            ]
         });
     }
 ]);
