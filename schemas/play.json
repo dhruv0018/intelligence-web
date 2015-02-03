@@ -7,10 +7,10 @@
             "type": "integer"
         },
         "startTime": {
-            "type": "integer"
+            "type": "number"
         },
         "endTime": {
-            "type": "integer"
+            "type": "number"
         },
         "events": {
             "type": "array",
@@ -23,7 +23,8 @@
             "type": "array"
         },
         "clip": {
-            "type": ["null", { "$ref": "video" }]
+            "type": ["null", "object"],
+            "items": { "$ref": "video" }
         },
         "shares": {
             "type": "array",
