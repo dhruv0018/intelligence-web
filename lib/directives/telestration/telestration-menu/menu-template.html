@@ -5,7 +5,7 @@
 	<telestration-undo data-ng-show="glyphs.length" data-ng-click="undoGlyph()">Undo({{glyphs.length}})</telestration-undo>
 
 	<telestration-menu-item
-		data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND}" 
+		data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND}"
 		type="{{TELESTRATION_TYPES.FREEHAND}}">
 		Frhd
 	</telestration-menu-item>
@@ -13,7 +13,7 @@
 	<telestration-menu-item
 		data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW}"
 		type="{{TELESTRATION_TYPES.ARROW}}">
-		Arw
+		<i class="icon icon-arrow"></i>
 	</telestration-menu-item>
 
 	<telestration-menu-item
