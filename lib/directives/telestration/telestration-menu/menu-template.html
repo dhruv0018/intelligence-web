@@ -1,13 +1,9 @@
 <div class="telestration-menu-box">
 
-	<telestration-clear data-ng-show="glyphs.length" data-ng-click="clearGlyphs()">Clear</telestration-clear>
-
-	<telestration-undo data-ng-show="glyphs.length" data-ng-click="undoGlyph()">Undo({{glyphs.length}})</telestration-undo>
-
 	<telestration-menu-item
 		data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND}"
 		type="{{TELESTRATION_TYPES.FREEHAND}}">
-		Frhd
+        <i class="icon icon-draw"></i>
 	</telestration-menu-item>
 
 	<telestration-menu-item
@@ -19,30 +15,36 @@
 	<telestration-menu-item
 		data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR}"
 		type="{{TELESTRATION_TYPES.T_BAR}}">
-		T
+        <i class="icon icon-block"></i>
 	</telestration-menu-item>
 
 	<telestration-menu-item
 		data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.CIRCLE}"
 		type="{{TELESTRATION_TYPES.CIRCLE}}">
-		O
+        <i class="icon icon-open-circle"></i>
 	</telestration-menu-item>
 
 	<telestration-menu-item
 		data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.SHADOW_CIRCLE}"
 		type="{{TELESTRATION_TYPES.SHADOW_CIRCLE}}">
-		O(s)
+        <i class="icon icon-circle"></i>
 	</telestration-menu-item>
 
 	<telestration-menu-item
 		data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.CONE}"
 		type="{{TELESTRATION_TYPES.CONE}}">
-		Cone
+        <i class="icon icon-cone"></i>
 	</telestration-menu-item>
 
 	<telestration-menu-item
 		data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.TEXT_TOOL}"
 		type="{{TELESTRATION_TYPES.TEXT_TOOL}}">
-		Tt
+        <i class="icon icon-text-tool"></i>
 	</telestration-menu-item>
+
+    <telestration-undo data-ng-show="glyphs.length" data-ng-click="undoGlyph()">
+        <i class="icon icon-undo"></i>
+    </telestration-undo>
+
+    <telestration-clear data-ng-show="glyphs.length" data-ng-click="clearGlyphs()">Clear</telestration-clear>
 </div>
