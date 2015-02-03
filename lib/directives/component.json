@@ -66,6 +66,7 @@
         "draggable",
         "sidebar",
         "poster-image",
+        "profile-picture",
         "spinner"
     ],
     "scripts": [
