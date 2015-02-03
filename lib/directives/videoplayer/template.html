@@ -1,4 +1,4 @@
-<data-videogular 
+<data-videogular
     data-ng-class="{'mobile': isMobile}"
     data-vg-player-ready="onPlayerReady"
     data-vg-complete="onCompleteVideo"
@@ -50,8 +50,9 @@
 
                 <span class="controls-space"></span>
 
-                <button 
+                <button
                     telestration-menu-button
+                    data-ng-show="allowTelestrationEditing(film)"
                     data-ng-click="toggleControlsMenu()">
                     Tel
                 </button>
