@@ -29,6 +29,8 @@ IntelligenceWebClient.factory('UsersResource', [
                         return aggragateResources.map(function(resource) {
                             var key = 'user';
                             resource[key].teamName = resource['team'].name;
+                            resource[key].teamId = resource['team'].id;
+                            resource[key].leagueId = resource['team'].leagueId;
                             resource[key].schoolName = resource['school'].name;
                             resource[key].schoolId = resource['school'].id;
                             return resource[key];
