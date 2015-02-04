@@ -41,8 +41,6 @@ exports.config = {
         loggingPrefs: {
             "browser": "INFO"
         }
-    },
-
-    allScriptsTimeout: 60000
+    }
 }
 
