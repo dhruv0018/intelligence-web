@@ -52,22 +52,25 @@ module.exports = function() {
         callback();
     });
 
-    this.Given(/^I am a "([^"]*)"$/, function (User, callback) {
+    this.Given(/^I am a "([^"]*)"$/, function (userType, done) {
 
-        this.user = User;
-        var email = account.getEmail(User);
+        var email = account.getEmail(userType);
+
+        this.userType = userType;
+
         account.enterEmail(email);
 
-        callback();
+        done();
     });
 
-    this.When(/^I authenticate with valid credentials$/, function (callback) {
+    this.When(/^I authenticate with valid credentials$/, function (done) {
 
-        var password = account.getPassword(this.user)
+        var password = account.getPassword(this.userType)
+
         account.enterPassword(password);
         account.clickSignin();
 
-        callback();
+        done();
     });
 
     this.When(/^I authenticate with an invalid password$/, function (callback) {
