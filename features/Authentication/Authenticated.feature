@@ -1,9 +1,7 @@
 Feature: Authentication
 
     As a user, I should be able to sign-in and be redirected accordingly.
-
     However, if I do not provide adequate credentials, then I will not be redirected.
-
     Once signed-in, I should be able to sign-out and be redirected to the login page again.
 
     #Background:

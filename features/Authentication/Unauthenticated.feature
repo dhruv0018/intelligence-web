@@ -2,9 +2,7 @@
 Feature: Authentication with inadequate credentials
 
     As a user, I should be able to sign-in and be redirected accordingly.
-
     However, if I do not provide adequate credentials, then I will not be redirected.
-
     Once signed-in, I should be able to sign-out and be redirected to the login page again.
 
     Scenario: An unauthenticated Admin signing in with inadequate credentials
