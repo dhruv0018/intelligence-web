@@ -81,6 +81,10 @@ module.exports = function Account() {
         return signUpBtn.click();
     };
 
+    this.getUser = function(userType) {
+        return users[userType];
+    };
+
     this.getEmail = function(userType) {
         // if (users[userType].email
         return users[userType].email;
