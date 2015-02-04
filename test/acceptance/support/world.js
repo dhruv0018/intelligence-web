@@ -1,3 +1,7 @@
+require('clarify');
+require('hide-stack-frames-from')('cucumber');
+require('hide-stack-frames-from')('protractor');
+
 module.exports = function() {
 
     this.World = function World(callback) {

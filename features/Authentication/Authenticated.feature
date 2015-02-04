@@ -15,6 +15,7 @@ Feature: Authentication
         Only test the admin since all users should see the same result.
         If the Admin doesn't get the correct result, no user will.
 
+        Given There is a "ADMIN"
         Given I navigate to the "login" page
         Given I am a "ADMIN"
         When I authenticate with valid credentials
