@@ -1,19 +1,8 @@
 <md-content>
 	<section class="athlete-profile">
-		<header layout="column" layout-gt-sm="row">
-			<profile-picture data-user="athlete"></profile-picture>
-			<div class="athlete-info" layout-gt-sm="column">
-				<h2>{{athlete.name}}</h2>
-				<ul class="athlete-attributes" 
-					layout="column" 
-					layout-gt-sm="row">
-					<li><label>Height/Weight</label>{{toInt(athlete.height / 12)}}'{{athlete.height % 12}}" / {{athlete.weight}} lbs</li>
-					<li><label>Position</label>{{athlete.position}}</li>
-					<li><label>School</label>{{athlete.school}}</li>
-					<li><label>Graduation</label>Class of {{athlete.graduationYear}}</li>
-				</ul>
-			</div>
-		</header>
+
+        <athlete-profile-header data-athlete="athlete"></athlete-profile-header>
+
         <md-tabs md-selected="tabs.index">
             <md-tab id="highlights" aria-controls="highlights-content" data-ui-sref="Athlete.Profile.Highlights">
                 <i class="icon icon-youtube-play">&nbsp;</i>Highlights
@@ -33,7 +22,7 @@
                  ng-switch-when="0"
                  md-swipe-left="tabs.next()"
                  md-swipe-right="tabs.prev()"
-             >
+            >
                 <div data-ui-view="highlights"></div>
             </div>
             <div role="tabpanel"
@@ -43,7 +32,7 @@
                  ng-switch-when="1"
                  md-swipe-left="tabs.next()"
                  md-swipe-right="tabs.prev()"
-             >
+            >
                 <div data-ui-view="academics"></div>
             </div>
             <div role="tabpanel"
@@ -53,7 +42,7 @@
                  ng-switch-when="2"
                  md-swipe-left="tabs.next()"
                  md-swipe-right="tabs.prev()"
-             >
+            >
                 <div data-ui-view="stats"></div>
             </div>
         </ng-switch>
