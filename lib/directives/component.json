@@ -67,6 +67,7 @@
         "sidebar",
         "poster-image",
         "profile-picture",
+        "athlete-profile-header",
         "spinner"
     ],
     "scripts": [
