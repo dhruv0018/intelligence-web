@@ -1,5 +1,82 @@
 @import (reference) "main.less";
 
 .athlete-profile-header {
-	
+    background-color: @brand-blue;
+    color: white;
+
+    h2 {
+        margin: 0;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+
+    .athlete-info {
+        text-align: center;
+        flex: 1;
+    }
+
+    .athlete-attributes {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+
+        li {
+            margin: 10px 0;
+
+            label {
+                display: block;
+                text-transform: uppercase;
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .athlete-attrs-toggle {
+        position: absolute;
+        padding: 5px 15px;
+        right: 0;
+        margin-right: 10px;
+    }
+}
+
+@media only screen
+and (min-width: @screen-xs) {
+
+    .athlete-profile-header {
+
+    	h2 {
+            margin-bottom: 0;
+        }
+
+        .athlete-info {
+            margin-top: 40px;
+            text-align: left; // Override
+            justify-content: space-around;
+            margin-left: 240px;
+
+            > * {
+                margin-bottom: 15px;
+            }
+        }
+
+        .athlete-attributes {
+            align-items: center;
+            color: @gray-lighter;
+
+            li {
+                padding: 5px 20px;
+                margin: 0; // Override
+                border-right: thin solid white;
+
+                &:first-child {
+                    padding-left: 0;
+                }
+
+                &:last-child {
+                    padding-right: 0;
+                    border-right: none;
+                }
+            }
+        }
+    }
 }

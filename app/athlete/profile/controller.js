@@ -16,6 +16,7 @@ var Profile = angular.module('Athlete.Profile');
 Profile.controller('Athlete.Profile.controller', [
     '$scope', '$state',
     function controller($scope, $state) {
+        // TO-DO: Move this to somewhere more appropriate (state.onEnter?)
         $state.go('Athlete.Profile.Highlights');
 
         $scope.athlete = {
@@ -28,8 +29,6 @@ Profile.controller('Athlete.Profile.controller', [
             profilePicture: 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg'
         };
 
-        $scope.buttonText = 'Test Button';
-
         $scope.tabs = {
             index: 0,
             length: 3,
@@ -39,10 +38,6 @@ Profile.controller('Athlete.Profile.controller', [
             prev: function prev() {
                 this.index = Math.max(this.index - 1, 0);
             }
-        };
-
-        $scope.toInt = function toInt(num) {
-            return Math.floor(num);
         };
     }
 ]);
