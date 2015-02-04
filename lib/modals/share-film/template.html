@@ -66,7 +66,7 @@
         		<span data-ng-show="isGame">Games are automatically shared amongst team coaches and athletes on your active roster.<br/></span>
         		If the person you want to share with does not have a Krossover account, <a data-ng-click="withOtherUsers = false; withPublic = true">share a URL</a> with them.
         	</div>
-        	<span data-ng-show="film.isSharedWithUser(user)" class="share-error-message"><i class="icon icon-warning"></i> That user is already being shared with.</span>
+        	<span data-ng-show="film.isSharedWithUser(user) && (isGame || !team.isMember(user.id) || !user.is(ROLES.ATHLETE))" class="share-error-message"><i class="icon icon-warning"></i> That user is already being shared with.</span>
             <span data-ng-show="!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE)" class="share-error-message"><i class="icon icon-warning"></i> Add players on your team from the <a data-ng-click="withOtherUsers = false; withTeam = true">team sharing page</a>.</span>
         	<span data-ng-show="user.id === currentUser.id" class="share-error-message"><i class="icon icon-warning"></i> You cannot share with yourself.</span>
         	<h3>Sharing with:</h3>
