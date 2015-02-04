@@ -6,6 +6,11 @@ module.exports = function() {
 
     this.World = function World(callback) {
 
+        this.scrollIntoView = function(element) {
+
+            browser.executeScript('arguments[0].scrollIntoView()', element.getWebElement());
+        };
+
         this.visitRelativeUrl = function(relativeUrl) {
 
             return browser.get(relativeUrl);
