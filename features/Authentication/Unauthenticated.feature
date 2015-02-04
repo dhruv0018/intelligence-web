@@ -13,6 +13,7 @@ Feature: Authentication with inadequate credentials
         If the Admin doesn't get the correct result, no user will.
 
         Given I navigate to the "login" page
+        Given I am a "ADMIN"
         When I authenticate with an invalid password
         Then I should see the "login" page
 
