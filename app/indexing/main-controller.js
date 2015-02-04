@@ -36,9 +36,9 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.sources = $scope.game.getVideoSources();
         play.videoTitle = 'indexing'; //playManager.videoTitle
 
-        var plays = plays.getList({ gameId: gameId });
+        var playsList = plays.getList({ gameId: gameId });
 
-        indexing.reset($scope.tagset, $scope.game, plays);
+        indexing.reset($scope.tagset, $scope.game, playsList);
 
         /**
          * Listen for video player enter full screen event.
