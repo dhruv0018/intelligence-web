@@ -4,6 +4,8 @@ chai.use(chaiAsPromised);
 var expect = chai.expect;
 var bcrypt = require("../../helper/bcrypt");
 var Account = require("../../helper/account");
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize('intelligence', 'krossover', 'intelligence');
 
 module.exports = function() {
     var account = new Account();
@@ -18,6 +20,30 @@ module.exports = function() {
     //     });
     //     // callback();
     // });
+
+    this.Given(/^There is a "([^"]*)"$/, function(userType, done) {
+
+        var User = sequelize.define('User', {
+            email: Sequelize.STRING,
+            password: Sequelize.STRING
+        }, {
+            createdAt: false,
+            updatedAt: false
+        });
+
+        sequelize.sync().success(function() {
+
+            var user = account.getUser(userType);
+
+            User.upsert({
+                email: user.email,
+                password: bcrypt.hash_password(user.password)
+            })
+            .success(function() {
+                done();
+            });
+        })
+    });
 
     this.When(/^I visit a restricted page$/, function (callback) {
 
