@@ -2,6 +2,7 @@ var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 var expect = chai.expect;
+var view = require('./view');
 
 module.exports = function Account() {
 
@@ -78,6 +79,7 @@ module.exports = function Account() {
 
     this.clickSignin = function() {
         var signUpBtn = element(by.css(".button-signin"));
+        view.scrollIntoView(signUpBtn);
         return signUpBtn.click();
     };
 
