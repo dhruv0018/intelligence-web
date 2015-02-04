@@ -16,6 +16,19 @@ module.exports = function() {
             return browser.get(relativeUrl);
         };
 
+        this.waitForUrlChange = function(urlFragment, timeToWaitInMilliseconds) {
+
+            var self = this;
+
+            timeToWaitInMilliseconds = timeToWaitInMilliseconds || 10000;
+
+            return browser.wait(function() {
+
+                return self.urlContains(urlFragment);
+
+            }, timeToWaitInMilliseconds);
+        };
+
         this.urlContains = function(urlFragment) {
 
             var urlFragmentRegEx = new RegExp(urlFragment, 'i');
