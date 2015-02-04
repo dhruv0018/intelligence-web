@@ -19,6 +19,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 self.isReady = false;
 
+                game.currentPeriod = 0;
                 game.teamIndexedScore = 0;
                 game.opposingIndexedScore = 0;
 

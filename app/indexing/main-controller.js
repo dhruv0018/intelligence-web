@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory',
-    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, videoplayerInstance, leagues, tagsets, teams, games) {
+    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory',
+    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, videoplayerInstance, leagues, tagsets, teams, games, plays) {
 
         var gameId = Number($stateParams.id);
 
@@ -36,7 +36,9 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.sources = $scope.game.getVideoSources();
         play.videoTitle = 'indexing'; //playManager.videoTitle
 
-        indexing.reset($scope.tagset, $scope.game, data.plays);
+        var plays = plays.getList({ gameId: gameId });
+
+        indexing.reset($scope.tagset, $scope.game, plays);
 
         /**
          * Listen for video player enter full screen event.
