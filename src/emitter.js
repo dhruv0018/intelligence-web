@@ -1,5 +1,6 @@
 var pkg = require('../package.json');
-var emitter = require('events').EventEmitter;
+var EventEmitter = require('events').EventEmitter;
+var emitter = new EventEmitter();
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -12,12 +13,14 @@ IntelligenceWebClient.service('EventEmitter', [
         //maintains lists of subjects by custom event type
         var subscribers = {};
 
+
         //used by components to submit raw events to the emitter
         function register(e) {
             var parsedEvent = parseEvent(e);
             publish(parsedEvent);
         }
 
+        //turns raw events into events useful to our application
         function parseEvent(e) {
             var eventProperties = {};
 
@@ -35,11 +38,14 @@ IntelligenceWebClient.service('EventEmitter', [
 
         //used by the emitter to create custom events to emit to components
         function publish(e) {
-            document.dispatchEvent(e);
+            //document.dispatchEvent(e);
+            emitter.emit(e);
         }
 
-        function subscribe() {
-            console.log('subscribe');
+        //used by components to listen to events from emitter
+        function subscribe(eventName, element, handler) {
+            //element.addEventListener(eventName, handler)
+            emitter.addListener(eventName, handler);
         }
 
         return {
