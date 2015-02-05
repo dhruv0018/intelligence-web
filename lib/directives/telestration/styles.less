@@ -2,56 +2,73 @@
 
 .telestration-container {
 
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
-	&.telestrations-active > glyph {
-		display: block;
-	}
+    &.telestrations-active > glyph {
+        display: block;
+    }
 
-	glyph {
-		display: none;
-		z-index: 2;
+    glyph {
+        display: none;
+        z-index: 2;
 
-		textarea {
-			position: absolute;
-			display: inline-block;
-			padding: 8px;
-			line-height: 14px;
-			letter-spacing: 0px;
-			font-size: 16px;
-		}
-	}
+        textarea {
+            position: absolute;
+            display: inline-block;
+            padding: 8px;
+            line-height: 14px;
+            letter-spacing: 0px;
+            font-size: 16px;
+        }
+    }
 
-	svg {
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 1;
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
 
-		>.hover {
-			cursor: pointer;
-		}
-	}
+        >.hover {
+            cursor: pointer;
+        }
+    }
 }
 
 telestration-menu {
-	position: absolute;
-	right: 0;
-	bottom: 15%;
-	margin: 15px;
-	background-color: #ccc;
-	z-index: 1000000;
+    position: absolute;
+    right: 0;
+    bottom: 15%;
+    margin: 15px;
+    background-color: #ccc;
+    z-index: 1000000;
+    border-radius: @border-radius-small;
+    telestration-menu-item, telestration-undo {
+        display: inline-block;
+        @menu-item-size: 35px;
+        width: @menu-item-size;
+        height: @menu-item-size;
+        border-left: solid 1px #000;
+        margin-right: -5px;
+        cursor: pointer;
+        &.selected {
+            @highlight: #FFFF00;
+            background: @highlight;
+        }
 
-	telestration-menu-item, telestration-undo {
-		display: block;
-		width: 50px;
-		height: 50px;
-		border-bottom: solid 2px #000;
-		cursor: pointer;
+        @icon-size: 30px;
+        @icon-offset: 10px;
+        .icon {
+            position: relative;
+            top: @icon-offset;
+            left: @icon-offset;
+            width: @icon-size;
+            height: @icon-size/2;
+            display: inline-block;
+        }
+    }
 
-		&.selected {
-			background: #f00;
-		}
-	}
+    telestration-menu-item:first-child{
+        border-left: none;
+    }
 }
