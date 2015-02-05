@@ -68,6 +68,7 @@
         "poster-image",
         "profile-picture",
         "athlete-profile-header",
+        "role-class",
         "spinner"
     ],
     "scripts": [
