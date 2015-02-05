@@ -3,6 +3,9 @@
         "node": true,
         "browser": true
     },
+    "settings": {
+        "ecmascript": 6
+    },
     "rules": {
 
         "quotes": "single",
