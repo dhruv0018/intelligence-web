@@ -9,7 +9,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.service('EventEmitter', [
     'EVENT_MAP', 'EVENT_PARSER_MAP',
-    function(EVENT_MAP) {
+    function(EVENT_MAP, EVENT_PARSER_MAP) {
 
         //used by components to submit raw events to the emitter
         function register(e) {
@@ -33,11 +33,11 @@ IntelligenceWebClient.service('EventEmitter', [
             emitter.addListener(eventName, handler);
         }
 
+        //used by components to stop listening to an event
         function unsubscribe(eventName, handler) {
             emitter.removeListener(eventName, handler);
         }
 
-        //used by components to stop listening to an event
         return {
             register: register,
             subscribe: subscribe,
