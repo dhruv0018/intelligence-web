@@ -25,7 +25,7 @@ IntelligenceWebClient.service('EventEmitter', [
 
         //used by the emitter to create custom events to emit to components
         function publish(e) {
-            emitter.emit(e.type);
+            emitter.emit(e.type, e);
         }
 
         //used by components to listen to events from emitter
@@ -47,7 +47,9 @@ IntelligenceWebClient.service('EventEmitter', [
 ]);
 
 var EVENT_MAP = {
-    'timeupdate': 'VIDEO_TIME_EMISSION'
+    'timeupdate': 'VIDEO_TIME_EMISSION',
+    //custom event to custom event mapping
+    'stopvideo': 'VIDEO_STOP_COMMAND'
 };
 
 IntelligenceWebClient.constant('EVENT_MAP', EVENT_MAP);
@@ -67,8 +69,16 @@ function prepareVideoEvent(e) {
     };
 }
 
+function defaultEventProperties() {
+    return {
+        detail: {},
+        cancellable: true,
+        bubbles: true
+    };
+}
 var EVENT_PARSER_MAP = {
-    'VIDEO_TIME_EMISSION': prepareVideoEvent
+    'VIDEO_TIME_EMISSION': prepareVideoEvent,
+    'VIDEO_STOP_COMMAND': defaultEventProperties
 };
 
 IntelligenceWebClient.constant('EVENT_PARSER_MAP', EVENT_PARSER_MAP);
