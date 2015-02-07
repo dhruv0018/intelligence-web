@@ -2,22 +2,28 @@
 
 .athlete-profile-header {
     background-color: @brand-blue;
-    color: white;
+    color: white;    
 
-    h2 {
-        margin: 0;
-        margin-bottom: 20px;
-        font-weight: 700;
+    .athlete-primary-info {
+        margin: 0 20px;
+        border-bottom: thin solid white;
+        text-align: center;
     }
 
-    .athlete-info {
-        text-align: center;
-        flex: 1;
+    .profile-picture {
+        margin: 20px;
+    }
+
+    h2 {
+        margin-top: 0; // Overrride
+        margin-bottom: 20px;
+        font-weight: @profile-name-weight;
     }
 
     .athlete-attributes {
-        margin: 0;
         padding: 0;
+        margin: 10px 0;
+        text-align: center;
         list-style-type: none;
 
         li {
@@ -25,45 +31,45 @@
 
             label {
                 display: block;
+                font-size: @profile-attribute-header-font-size;
                 text-transform: uppercase;
-                font-size: 1.2rem;
             }
         }
     }
 
-    .athlete-attrs-toggle {
-        position: absolute;
-        padding: 5px 15px;
-        right: 0;
-        margin-right: 10px;
-    }
-}
+    @media only screen
+    and (min-width: @md-screen-sm) {
 
-@media only screen
-and (min-width: @screen-xs) {
+        .athlete-primary-info {
+            align-items: center;
+            margin: 0; // Override
+            border-bottom: none; // Overrride
+        }
 
-    .athlete-profile-header {
+        .profile-picture {
+            margin: 20px 30px;
 
-    	h2 {
+            img {
+                height: 120px;
+                width: 120px;
+                border-radius: 60px;
+                border-width: 2px;
+            }
+        }
+
+        h2 {
             margin-bottom: 0;
-        }
-
-        .athlete-info {
-            margin-top: 40px;
-            text-align: left; // Override
-            justify-content: space-around;
-            margin-left: 240px;
-
-            > * {
-                margin-bottom: 15px;
-            }
         }
 
         .athlete-attributes {
             align-items: center;
+            margin: 20px 30px;
+            margin-top: 0;
+            text-align: left; // Override
             color: @gray-lighter;
 
             li {
+                display: block;
                 padding: 5px 20px;
                 margin: 0; // Override
                 border-right: thin solid white;
@@ -77,6 +83,35 @@ and (min-width: @screen-xs) {
                     border-right: none;
                 }
             }
+        }
+    }
+
+    @media only screen 
+    and (min-width: @md-screen-md) {
+
+        .profile-picture {
+            position: absolute;
+            top: 0;
+            margin: 20px 40px;
+
+            img {
+                height: 160px;
+                width: 160px;
+                border-radius: 80px;
+                border-width: 3px;
+            }
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .athlete-secondary-info {
+            margin: 20px 0 20px 240px;
+        }
+
+        .athlete-attributes {
+            margin: 0;
         }
     }
 }
