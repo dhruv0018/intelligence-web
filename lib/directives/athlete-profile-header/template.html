@@ -1,26 +1,38 @@
-<header class="athlete-profile-header" layout="column" layout-gt-sm="row">
-	<profile-picture data-user="athlete"></profile-picture>
-	<div class="athlete-info" layout-gt-sm="column">
-		<h2>{{athlete.name}}</h2>
+<header class="athlete-profile-header" layout="column" layout-gt-md="row">
+	<section class="athlete-primary-info" layout="column" layout-gt-sm="row">
+
+		<profile-picture data-user="athlete"></profile-picture>
+
+		<h2 hide-gt-md>{{athlete.name}}</h2>
+
+	</section>
+
+	<section class="athlete-secondary-info">
+
+		<h2 hide show-gt-md>{{athlete.name}}</h2>
+
 		<ul class="athlete-attributes"
 			layout="column" 
 			layout-gt-sm="row"
-        >
+	    >
 			<li>
-                <label>Height/Weight</label>
-                {{toInt(athlete.height / 12)}}'{{athlete.height % 12}}" / {{athlete.weight}} lbs
-            </li>
+	            <label>Height/Weight</label>
+	            {{toInt(athlete.height / 12)}}'{{athlete.height % 12}}" / {{athlete.weight}} lbs
+	        </li>
 			<li>
-                <label>Position</label>
-                {{athlete.position}}
-            </li>
+	            <label>Position</label>
+	            {{athlete.position}}
+	        </li>
 			<li>
-                <label>School</label>
-                {{athlete.school}}</li>
+	            <label>School</label>
+	            {{athlete.school}}</li>
 			<li>
-                <label>Graduation</label>
-                Class of {{athlete.graduationYear}}
-            </li>
+	            <label>Graduation</label>
+	            Class of {{athlete.graduationYear}}
+	        </li>
+
 		</ul>
-	</div>
+
+	</section>
+
 </header>
