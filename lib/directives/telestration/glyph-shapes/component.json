@@ -2,10 +2,12 @@
     "name": "glyph-shapes",
     "scripts": [
         "index.js",
+        "Shape.js",
         "arrow.js",
         "tbar.js",
         "circle.js",
         "shadow-circle.js",
+        "ShadowShape.js",
         "cone.js",
         "freehand.js",
         "textbox.js"
