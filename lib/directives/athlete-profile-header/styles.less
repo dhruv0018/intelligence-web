@@ -5,9 +5,8 @@
     color: white;    
 
     .athlete-primary-info {
-        margin: 0 20px;
-        border-bottom: thin solid white;
         text-align: center;
+        position: relative;
     }
 
     .profile-picture {
@@ -18,6 +17,18 @@
         margin-top: 0; // Overrride
         margin-bottom: 20px;
         font-weight: @profile-name-weight;
+    }
+
+    .secondary-info-toggle {
+        position: absolute;
+        right: 20px;
+        bottom: 15px;
+        width: 30px;
+    }
+
+    .athlete-secondary-info {
+        margin: 0 20px;
+        border-top: thin solid white;
     }
 
     .athlete-attributes {
@@ -42,8 +53,6 @@
 
         .athlete-primary-info {
             align-items: center;
-            margin: 0; // Override
-            border-bottom: none; // Overrride
         }
 
         .profile-picture {
@@ -61,12 +70,16 @@
             margin-bottom: 0;
         }
 
+        .athlete-secondary-info {
+            margin: 0; // Override
+            border-top: none; // Overrride
+        }
+
         .athlete-attributes {
             align-items: center;
             margin: 20px 30px;
             margin-top: 0;
             text-align: left; // Override
-            color: @gray-lighter;
 
             li {
                 display: block;

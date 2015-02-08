@@ -5,9 +5,17 @@
 
 		<h2 hide-gt-md>{{athlete.name}}</h2>
 
+		<ng-md-icon icon="keyboard_arrow_up" 
+					style="fill: white" 
+					size="30"
+					class="secondary-info-toggle" 
+				    hide-gt-sm
+				    data-ng-click="toggleSecondaryInfo()"
+		></ng-md-icon>
+
 	</section>
 
-	<section class="athlete-secondary-info">
+	<section class="athlete-secondary-info" hide show-gt-sm>
 
 		<h2 hide show-gt-md>{{athlete.name}}</h2>
 
