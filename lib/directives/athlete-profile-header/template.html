@@ -5,6 +5,12 @@
 
 		<h2 hide-gt-md>{{athlete.name}}</h2>
 
+		<krossover-uploader 
+			hide
+			show-gt-md
+			data-on-upload="setProfileImage(files)"
+		></krossover-uploader>
+
 		<ng-md-icon icon="keyboard_arrow_up" 
 					style="fill: white" 
 					size="30"
@@ -12,7 +18,6 @@
 				    hide-gt-sm
 				    data-ng-click="toggleSecondaryInfo()"
 		></ng-md-icon>
-
 	</section>
 
 	<section class="athlete-secondary-info" hide show-gt-sm>
