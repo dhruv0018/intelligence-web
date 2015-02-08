@@ -8,5 +8,17 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-around;
+
+		.krossover-film {
+			width: auto;
+		    min-width: 280px;
+		    max-width: 430px;
+		    flex: 1;
+
+		    @media only screen
+		    and (min-width: @md-screen-sm) {
+		        min-width: 335px;
+		    }
+		}
 	}
 }
