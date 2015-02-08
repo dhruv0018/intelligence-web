@@ -4,13 +4,13 @@
     "description": "Krossover Intelligence Web Client",
     "author": "Jason Morganson <jason@krossover.com>",
     "repository": {
-    "type": "git",
+        "type": "git",
         "url": "git@bitbucket.org:krossoverintelligence/intelligence-web-client.git"
     },
     "browserify": {
         "transform": [
-          "envify",
-          "browserify-shim"
+            "envify",
+            "browserify-shim"
         ]
     },
     "browserify-shim": {
@@ -42,6 +42,7 @@
         "angular-aria": "^1.3.11",
         "angular-bootstrap": "0.12.0",
         "angular-material": "^0.7.1",
+        "angular-material-icons": "^0.4.0",
         "angular-mocks": "1.3.8",
         "angular-resource": "1.3.8",
         "angular-sanitize": "1.3.8",
