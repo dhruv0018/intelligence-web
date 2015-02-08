@@ -1,5 +1,15 @@
 <div class="krossover-uploader">
     <form>
-        <button class="btn-upload">{{uploadLabel}} <i class="icon icon-upload-alt"></i><input type="file" onchange="angular.element(this).scope().onUpload({files: this.files})"></button>
+    	<md-button class="md-raised">
+    		<ng-md-icon
+    			icon="mode_edit"
+    			style="fill: black"
+    			size="25"
+    		></ng-md-icon>
+        	<input 
+        		type="file" 
+        		onchange="angular.element(this).scope().onUpload({files: this.files})"
+        	>
+        </md-button>
     </form>
 </div>
