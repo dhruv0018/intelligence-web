@@ -1,5 +1,6 @@
 require('angular/angular');
 require('angular-material/angular-material');
+require('angular-material-icons/angular-material-icons');
 require('angular-animate/angular-animate');
 require('angular-aria/angular-aria');
 require('angular-sanitize/angular-sanitize');
