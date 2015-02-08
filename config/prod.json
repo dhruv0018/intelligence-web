@@ -95,5 +95,8 @@
             "speedlimit": 2
         }
     },
-    "defaultVideoId": 2
+    "defaultVideoId": 2,
+    "athleteProfile": {
+        "isEnabled": false
+    }
 }
