@@ -50,6 +50,7 @@ var EVENT_MAP = {
     'timeupdate': 'VIDEO_TIME_EMISSION',
     'play': 'VIDEO_PLAY_EMISSION',
     'seeking': 'VIDEO_SEEKING_EMISSION',
+    'pause': 'VIDEO_PAUSE_EMISSION',
     //custom event to custom event mapping
     'stopvideo': 'VIDEO_STOP_COMMAND'
 };
@@ -82,7 +83,8 @@ var EVENT_PARSER_MAP = {
     'VIDEO_TIME_EMISSION': prepareVideoEvent,
     'VIDEO_STOP_COMMAND': defaultEventProperties,
     'VIDEO_PLAY_EMISSION': defaultEventProperties,
-    'VIDEO_SEEKING_EMISSION': prepareVideoEvent
+    'VIDEO_SEEKING_EMISSION': prepareVideoEvent,
+    'VIDEO_PAUSE_EMISSION': defaultEventProperties
 };
 
 IntelligenceWebClient.constant('EVENT_PARSER_MAP', EVENT_PARSER_MAP);
