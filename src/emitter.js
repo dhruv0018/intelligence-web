@@ -48,6 +48,7 @@ IntelligenceWebClient.service('EventEmitter', [
 
 var EVENT_MAP = {
     'timeupdate': 'VIDEO_TIME_EMISSION',
+    'play': 'VIDEO_PLAY_EMISSION',
     //custom event to custom event mapping
     'stopvideo': 'VIDEO_STOP_COMMAND'
 };
@@ -78,7 +79,8 @@ function defaultEventProperties() {
 }
 var EVENT_PARSER_MAP = {
     'VIDEO_TIME_EMISSION': prepareVideoEvent,
-    'VIDEO_STOP_COMMAND': defaultEventProperties
+    'VIDEO_STOP_COMMAND': defaultEventProperties,
+    'VIDEO_PLAY_EMISSION': defaultEventProperties
 };
 
 IntelligenceWebClient.constant('EVENT_PARSER_MAP', EVENT_PARSER_MAP);
