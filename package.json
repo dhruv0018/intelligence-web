@@ -92,6 +92,7 @@
     "grunt-protractor-runner": "1.2.1",
     "grunt-protractor-webdriver": "0.2.0",
     "grunt-svgmin": "0.4.0",
+    "grunt-trimtrailingspaces": "1.1.0",
     "grunt-ver": "0.5.1",
     "hide-stack-frames-from": "^1.0.0",
     "karma": "0.12.31",

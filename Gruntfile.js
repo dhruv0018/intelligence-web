@@ -112,6 +112,15 @@ module.exports = function(grunt) {
 
         /* Pre-minification */
 
+        trimtrailingspaces: {
+            main: {
+                src: [
+                    'app/**/*.js',
+                    'lib/**/*.js',
+                    'src/**/*.js'
+                ]
+            }
+        },
 
         ngAnnotate: {
             options: {
@@ -521,19 +530,19 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:jshint', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             unit: {
                 files: ['test/unit/**/*.js'],
-                tasks: ['newer:jshint', 'karma']
+                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'karma']
             },
             integration: {
                 files: ['test/integration/**/*.js'],
-                tasks: ['newer:jshint', 'protractor']
+                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'protractor']
             }
         },
 
@@ -585,7 +594,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['build', 'karma', 'integration']);
-    grunt.registerTask('lint', ['htmlhint', 'jshint']);
+    grunt.registerTask('lint', ['trimtrailingspaces', 'htmlhint', 'jshint']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
