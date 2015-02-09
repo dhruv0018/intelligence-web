@@ -26,7 +26,12 @@
 
         <div class="controls-container-full" data-ng-if="!isMobile">
             <data-vg-scrubbar>
-                <data-vg-scrubbarcurrenttime></data-vg-scrubbarcurrenttime>
+                <data-vg-scrubbarcurrenttime>
+                </data-vg-scrubbarcurrenttime>
+                <data-ko-telestration-time-blip
+                                                data-ng-repeat="telestration in telestrations"
+                                                data-duration="filmDuration"
+                                                data-telestration="telestration" ></data-ko-telestration-time-blip>
             </data-vg-scrubbar>
 
             <data-vg-controls data-vg-autohide="false" style="height: 50px;">
