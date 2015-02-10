@@ -7,7 +7,6 @@
         "styles.less"
     ],
     "scripts": [
-        "index.js",
-        "link.js"
+        "index.js"
     ]
 }
