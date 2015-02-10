@@ -58,8 +58,9 @@
                 <button class="cta-telestrations btn-video"
                         telestration-menu-button
                         data-ng-show="allowTelestrationEditing(film)"
-                        data-ng-click="toggleControlsMenu()">
-                    <i class="icon icon-telestration"></i>
+                        data-ng-click="toggleControlsMenu(); showTelestrationMenu = !showTelestrationMenu">
+                    <i  data-ng-class="{activated: showTelestrationMenu}"
+                        class="icon icon-telestration"></i>
                 </button>
 
                 <data-vg-volume class="video-control">
