@@ -85,6 +85,9 @@ function openDB(name, version) {
         /* Handle an error connecting to the database. */
         request.onerror = function(event) {
 
+            /* Clear timeout. */
+            clearTimeout(openTimeout);
+
             /* Get the database. */
             var error = event.target.error;
 
@@ -105,6 +108,9 @@ function openDB(name, version) {
         /* Handle blocked connections to the database. */
         request.onblocked = function(event) {
 
+            /* Clear timeout. */
+            clearTimeout(openTimeout);
+
             /* Get the database. */
             db = event.target.result;
 
@@ -116,6 +122,9 @@ function openDB(name, version) {
         };
 
         request.onupgradeneeded = function(event) {
+
+            /* Clear timeout. */
+            clearTimeout(openTimeout);
 
             version = version || 1;
 
