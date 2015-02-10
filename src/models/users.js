@@ -26,8 +26,8 @@ IntelligenceWebClient.factory('UsersResource', [
                     //transforms the resource into an array of user objects with extra properties used by the user typeahead
                     transformResponse: function(data) {
                         if (data != 'No users found') {
-                            var aggragateResources = JSON.parse(data);
-                            return aggragateResources.map(function(resource) {
+                            var aggregateResources = JSON.parse(data);
+                            return aggregateResources.map(function(resource) {
                                 var key = 'user';
                                 resource[key].teamName = resource['team'].name;
                                 resource[key].teamId = resource['team'].id;
