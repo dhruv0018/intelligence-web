@@ -4,6 +4,6 @@
         "index.js"
     ],
     "dependencies": {
-        "moment/moment": "2.5.1"
+        "moment/moment": "2.9.0"
     }
 }

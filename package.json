@@ -1,6 +1,6 @@
 {
     "name": "intelligence-web-client",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "Krossover Intelligence Web Client",
     "author": "Jason Morganson <jason@krossover.com>",
     "repository": {
@@ -103,7 +103,7 @@
         "less": "1.7.0",
         "load-grunt-tasks": "0.5.0",
         "mocha": "1.20.1",
-        "moment": "2.7.0",
+        "moment": "2.9.0",
         "moment-timezone": "0.2.1",
         "mysql": "^2.5.4",
         "napa": "0.4.1",

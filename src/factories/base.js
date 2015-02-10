@@ -569,7 +569,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 resource.isSaving = true;
 
-                parameters = {};
+                var parameters = {};
 
                 success = success || function(resource) {
 
