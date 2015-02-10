@@ -25,16 +25,18 @@ IntelligenceWebClient.factory('UsersResource', [
                 typeahead: { method: 'GET', url: config.api.uri + 'service/user-typeahead', isArray: true,
                     //transforms the resource into an array of user objects with extra properties used by the user typeahead
                     transformResponse: function(data) {
-                        var aggragateResources = JSON.parse(data);
-                        return aggragateResources.map(function(resource) {
-                            var key = 'user';
-                            resource[key].teamName = resource['team'].name;
-                            resource[key].teamId = resource['team'].id;
-                            resource[key].leagueId = resource['team'].leagueId;
-                            resource[key].schoolName = resource['school'].name;
-                            resource[key].schoolId = resource['school'].id;
-                            return resource[key];
-                        });
+                        if (data != 'No users found') {
+                            var aggragateResources = JSON.parse(data);
+                            return aggragateResources.map(function(resource) {
+                                var key = 'user';
+                                resource[key].teamName = resource['team'].name;
+                                resource[key].teamId = resource['team'].id;
+                                resource[key].leagueId = resource['team'].leagueId;
+                                resource[key].schoolName = resource['school'].name;
+                                resource[key].schoolId = resource['school'].id;
+                                return resource[key];
+                            });
+                        }
                     }
                 }
             }
