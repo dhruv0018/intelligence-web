@@ -66,8 +66,6 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         //TODO remove some of this stuff later
         $scope.publiclyShared = true;
-        $scope.team = teams.get($scope.game.teamId);
-        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
         $scope.uploadedBy = users.get($scope.game.uploaderUserId);
 
