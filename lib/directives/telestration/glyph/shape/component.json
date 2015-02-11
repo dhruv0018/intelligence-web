@@ -1,0 +1,19 @@
+{
+    "name": "shape",
+    "paths": [
+        "."
+    ],
+    "scripts": [
+        "arrow.js",
+        "circle-spotlight.js",
+        "cone-spotlight.js",
+        "constants.js",
+        "circle.js",
+        "freehand.js",
+        "index.js",
+        "shape.js",
+        "spotlight.js",
+        "tbar.js",
+        "textbox.js"
+    ]
+}

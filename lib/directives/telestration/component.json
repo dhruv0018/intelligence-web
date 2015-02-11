@@ -7,14 +7,16 @@
         "template.html"
     ],
     "scripts": [
-        "glyph.js",
+        "directive.js",
+        "service.js",
+        "factory.js",
         "index.js"
     ],
     "styles": [
         "styles.less"
     ],
     "locals": [
-        "glyph-shapes",
+        "glyph",
         "telestration-menu"
     ]
 }
