@@ -23,5 +23,4 @@ require('Mousetrap/plugins/pause/mousetrap-pause');
 require('svg.js/dist/svg');
 require('svg.draggable.js/svg.draggable');
 require('svg.filter.js/svg.filter');
-require('node-event-emitter');
 
