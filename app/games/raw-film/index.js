@@ -57,16 +57,23 @@ GamesRawFilm.config([
 ]);
 
 GamesRawFilm.controller('Games.Rawfilm.controller', [
-    '$scope', '$stateParams', 'GamesFactory',
-    function controller($scope, $stateParams, games) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'PlayManager',
+    function controller($scope, $state, $stateParams, games, teams, users, playManager) {
+        var gameId = $stateParams.id;
 
-        var gameId = Number($stateParams.id);
-        var game = games.get(gameId);
-        $scope.posterImage = {
-            url: game.video.thumbnail
-        };
+        $scope.game = games.get(gameId);
+        $scope.publiclyShared = false;
 
-        $scope.sources = game.getVideoSources();
+        //TODO remove some of this stuff later
+        $scope.publiclyShared = true;
+
+        $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+
+        $scope.sources = $scope.game.getVideoSources();
+        $scope.filmTitle = $scope.game.description;
+        playManager.videoTitle = 'rawFilm';
+
     }
 ]);
+
 
