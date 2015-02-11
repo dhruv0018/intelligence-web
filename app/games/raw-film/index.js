@@ -29,15 +29,21 @@ GamesRawFilm.config([
                 'Games.Rawfilm.Data': [
                     '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
                     function($q, $stateParams, games, teams, users) {
+
                         var gameId = Number($stateParams.id);
+
                         return games.load(gameId).then(function() {
 
                             var game = games.get(gameId);
 
                             var Data = {
                                 user: users.load(game.uploaderUserId),
-                                team: teams.load([game.teamId, game.opposingTeamId])
                             };
+
+                            var teamIds = [];
+                            if (game.teamId) teamIds.push(game.teamId);
+                            if (game.opposingTeamId) teamIds.push(game.opposingTeamId);
+                            if (teamIds.length) Data.teams = teams.load(teamIds);
 
                             return $q.all(Data);
                         });
