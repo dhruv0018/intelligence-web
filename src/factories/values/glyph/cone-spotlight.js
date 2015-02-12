@@ -2,12 +2,12 @@
 /* Cone Spotlight - extends Spotlight */
 
 module.exports = [
-    'TelestrationInterface', 'SpotlightFactory', 'TELESTRATION_TYPES',
-    function(telestrationInterface, Spotlight, TELESTRATION_TYPES) {
+    'SpotlightValue',
+    function(Spotlight) {
 
-        function ConeSpotlight() {
+        function ConeSpotlight(type, SVGContext) {
 
-            Spotlight.call(this, TELESTRATION_TYPES.CONE_SPOTLIGHT, telestrationInterface.telestrationSVG.path(), telestrationInterface.telestrationSVG.path());
+            Spotlight.call(this, type, SVGContext, SVGContext.path(), SVGContext.path());
 
             this.currentShape.opacity(0);
 

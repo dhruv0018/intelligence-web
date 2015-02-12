@@ -6,10 +6,6 @@
     "scripts": [
         "directive.js",
         "glyph-editor-directive.js",
-        "service.js",
         "index.js"
-    ],
-    "locals": [
-        "shape"
     ]
 }

@@ -36,6 +36,7 @@ require('./http/interceptors/broadcast');
 require('./http/transforms/date');
 
 require('./http/interceptors/queue');
+require('./services');
 require('./services/authentication');
 require('./services/authorization');
 require('./services/tokens');
@@ -94,6 +95,7 @@ require('./storage/reels');
 require('./storage/positionsets');
 require('./storage/plans');
 
+require('./factories');
 require('./factories/base');
 require('./factories/users');
 require('./factories/teams');

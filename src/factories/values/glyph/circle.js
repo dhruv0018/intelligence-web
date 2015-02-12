@@ -1,16 +1,16 @@
 
-/* Circle Shape - extends Shape */
+/* Circle Glyph - extends Glyph */
 
 module.exports = [
-    'TelestrationInterface', 'ShapeFactory', 'TELESTRATION_TYPES',
-    function(telestrationInterface, Shape, TELESTRATION_TYPES) {
+    'GlyphValue',
+    function(Glyph) {
 
-        function Circle() {
+        function Circle(type, SVGContext) {
 
-            Shape.call(this, TELESTRATION_TYPES.CIRCLE, telestrationInterface.telestrationSVG.circle());
+            Glyph.call(this, type, SVGContext, SVGContext.circle());
 
         }
-        angular.inheritPrototype(Circle, Shape);
+        angular.inheritPrototype(Circle, Glyph);
 
         Circle.prototype.render = function renderCircle() {
 

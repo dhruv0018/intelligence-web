@@ -1,18 +1,18 @@
 
-/* tBar - extends Shape */
+/* tBar - extends Glyph */
 
 module.exports = [
-    'TelestrationInterface', 'ShapeFactory', 'TELESTRATION_TYPES', 'ShapeConstants',
-    function(telestrationInterface, Shape, TELESTRATION_TYPES, ShapeConstants) {
+    'GlyphValue', 'GlyphConstants',
+    function(Glyph, GlyphConstants) {
 
-        function TBar() {
+        function TBar(type, SVGContext) {
 
-            Shape.call(this, TELESTRATION_TYPES.T_BAR, telestrationInterface.telestrationSVG.path());
+            Glyph.call(this, type, SVGContext, SVGContext.path());
 
         }
-        angular.inheritPrototype(TBar, Shape);
+        angular.inheritPrototype(TBar, Glyph);
 
-        TBar.prototype.T_BAR_LENGTH = ShapeConstants.T_BAR_LENGTH;
+        TBar.prototype.T_BAR_LENGTH = GlyphConstants.T_BAR_LENGTH;
 
         TBar.prototype.render = function renderTBar() {
 
