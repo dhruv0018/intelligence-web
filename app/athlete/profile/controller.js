@@ -14,20 +14,13 @@ var Profile = angular.module('Athlete.Profile');
  * @type {controller}
  */
 Profile.controller('Athlete.Profile.controller', [
-    '$scope', '$state',
-    function controller($scope, $state) {
+    '$scope', '$state', 'SessionService',
+    function controller($scope, $state, $session) {
         // TO-DO: Move this to somewhere more appropriate (state.onEnter?)
         $state.go('Athlete.Profile.Highlights');
 
-        $scope.athlete = {
-            name: 'Alex Young',
-            height: 68,
-            weight: '150',
-            position: 'Quarterback (QB)',
-            school: 'Laguna Beach High School',
-            graduationYear: '2010',
-            profilePicture: 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg'
-        };
+        $scope.athlete = $session.currentUser;
+        $scope.athlete.profilePicture = 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg';
 
         $scope.tabs = {
             index: 0,
