@@ -9,6 +9,7 @@ require('angular-bootstrap/dist/ui-bootstrap-tpls');
 require('angular-ui-unique/unique');
 require('angular-ui-showhide/showhide');
 require('angular-ui-validate/validate');
+require('angular-ui-scrollfix/scrollfix');
 require('angular-ui-router/release/angular-ui-router');
 require('angular-multiselect/src/multiselect');
 require('angulartics/src/angulartics');
