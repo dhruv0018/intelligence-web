@@ -1,25 +1,42 @@
 <div class="telestration-menu-box">
     <ul class="toolbar">
         <li>
-            <telestration-menu-item
-                data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND}"
-                type="{{TELESTRATION_TYPES.FREEHAND}}">
-                <i class="icon icon-draw"></i>
-            </telestration-menu-item>
+            <div class="menu-item-state" data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND}">
+                <i class="icon icon-draw"></i> <i class="icon icon-expand-caret"></i>
+            </div>
+            <ul>
+                <li>
+                    <telestration-menu-item type="{{TELESTRATION_TYPES.FREEHAND}}">
+                        <i class="icon icon-draw"></i>
+                    </telestration-menu-item>
+                </li>
+            </ul>
         </li>
         <li>
-            <telestration-menu-item
-                data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW}"
-                type="{{TELESTRATION_TYPES.ARROW}}">
-                <i class="icon icon-arrow"></i>
-            </telestration-menu-item>
+            <div class="menu-item-state" data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW}">
+                <i class="icon icon-arrow"></i> <i class="icon icon-expand-caret"></i>
+            </div>
+            <ul>
+                <li>
+                    <telestration-menu-item
+                        type="{{TELESTRATION_TYPES.ARROW}}">
+                        <i class="icon icon-arrow"></i>
+                    </telestration-menu-item>
+                </li>
+            </ul>
         </li>
         <li>
-            <telestration-menu-item
-                data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR}"
-                type="{{TELESTRATION_TYPES.T_BAR}}">
-                <i class="icon icon-block"></i>
-            </telestration-menu-item>
+            <div class="menu-item-state" data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR}">
+                    <i class="icon icon-block"></i> <i class="icon icon-expand-caret"></i>
+            </div>
+            <ul>
+                <li>
+                    <telestration-menu-item
+                        type="{{TELESTRATION_TYPES.T_BAR}}">
+                        <i class="icon icon-block"></i>
+                    </telestration-menu-item>
+                </li>
+            </ul>
         </li>
         <li>
             <telestration-menu-item

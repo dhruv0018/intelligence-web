@@ -69,7 +69,8 @@
        }
     }
 
-    telestration-menu-item, telestration-undo {
+    .menu-item-state, telestration-menu-item, telestration-undo {
+        position:relative;
         background-color: #ccc;
         display: inline-block;
         @menu-item-size: 35px;
@@ -92,6 +93,14 @@
             width: @icon-size;
             height: @icon-size/2;
             display: inline-block;
+        }
+
+        .icon-expand-caret {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            height: 30px;
+            transform: rotate(90deg);
         }
     }
 }
