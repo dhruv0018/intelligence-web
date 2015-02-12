@@ -1,22 +1,23 @@
 
-/* Shape - Abstract Base Class */
+/* Glyph - Abstract Base Class */
 
 module.exports = [
-    'TelestrationInterface', 'ShapeConstants', 'TELESTRATION_TYPES',
-    function(telestrationInterface, ShapeConstants, TELESTRATION_TYPES) {
+    'GlyphConstants',
+    function(GlyphConstants) {
 
-        function Shape(type, shape) {
+        function Glyph(type, SVGContext, shape) {
 
             // required parameter
-            if (!type) throw new Error('Shape parameter \'type\' is required');
+            if (!type) throw new Error('Glyph parameter \'type\' is required');
 
             this.type = type;
             this.currentShape = shape || null;
+            this.SVGContext = SVGContext;
 
             // set default attributes
             this.vertices = [];
-            this.color = ShapeConstants.DEFAULT_COLOR;
-            this.strokeWidth = ShapeConstants.STROKE_WIDTH;
+            this.color = GlyphConstants.DEFAULT_COLOR;
+            this.strokeWidth = GlyphConstants.STROKE_WIDTH;
             this.constraintFn = null;
             this.text = null;
 
@@ -24,34 +25,29 @@ module.exports = [
             this.registerMoveListeners();
         }
 
-        Shape.prototype.editable = true;
-        Shape.prototype.moveable = true;
+        Glyph.prototype.editable = true;
+        Glyph.prototype.moveable = true;
 
-        Shape.prototype.updateGlyphFromPixels = function updateGlyphFromPixels(x, y) {
+        Glyph.prototype.getSVGBoxDimensions = function getSVGBoxDimensions() {
+            return {
+                width: this.SVGContext.width(),
+                height: this.SVGContext.height()
+            };
+        };
+
+        Glyph.prototype.updateGlyphFromPixels = function updateGlyphFromPixels(x, y) {
             // TODO: only call getBoundingClientRect on window Resize
-            var boundingBox = telestrationInterface.telestrationContainerElement[0].getBoundingClientRect();
+            var boundingBox = this.getSVGBoxDimensions();
             var relativeX = x / boundingBox.width;
             var relativeY = y / boundingBox.height;
             var newVertex = {x: relativeX, y: relativeY};
 
-            switch (this.type) {
-                case TELESTRATION_TYPES.ARROW:
-                case TELESTRATION_TYPES.T_BAR:
-                case TELESTRATION_TYPES.CIRCLE:
-                case TELESTRATION_TYPES.CIRCLE_SPOTLIGHT:
-                case TELESTRATION_TYPES.CONE_SPOTLIGHT:
-                case TELESTRATION_TYPES.TEXT_TOOL:
-                    this.vertices[1] = newVertex;
-                    break;
-                case TELESTRATION_TYPES.FREEHAND:
-                    this.vertices.push(newVertex);
-                    break;
-            }
+            this.vertices[1] = newVertex;
         };
 
-        Shape.prototype.getVerticesInPixels = function getVerticesInPixels() {
+        Glyph.prototype.getVerticesInPixels = function getVerticesInPixels() {
             // TODO: only call getBoundingClientRect on window Resize
-            var boundingBox = telestrationInterface.telestrationContainerElement[0].getBoundingClientRect();
+            var boundingBox = this.getSVGBoxDimensions();
             var verticesInPixels = this.vertices.map(function convertToPixels(vertex) {
                 var relativeX = vertex.x * boundingBox.width;
                 var relativeY = vertex.y * boundingBox.height;
@@ -60,29 +56,29 @@ module.exports = [
             return verticesInPixels;
         };
 
-        Shape.prototype.addVertexFromPixels = function addVertexFromPixels(x, y) {
+        Glyph.prototype.addVertexFromPixels = function addVertexFromPixels(x, y) {
             // TODO: only call getBoundingClientRect on window Resize
-            var boundingBox = telestrationInterface.telestrationContainerElement[0].getBoundingClientRect();
+            var boundingBox = this.getSVGBoxDimensions();
             var relativeX = x / boundingBox.width;
             var relativeY = y / boundingBox.height;
             this.vertices.push({x: relativeX, y: relativeY});
         };
 
-        Shape.prototype.updateVertexFromPixels = function updateVertexFromPixels(index, x, y) {
+        Glyph.prototype.updateVertexFromPixels = function updateVertexFromPixels(index, x, y) {
             // TODO: only call getBoundingClientRect on window Resize
-            var boundingBox = telestrationInterface.telestrationContainerElement[0].getBoundingClientRect();
+            var boundingBox = this.getSVGBoxDimensions();
             var relativeX = x / boundingBox.width;
             var relativeY = y / boundingBox.height;
             this.vertices[index] = {x: relativeX, y: relativeY};
         };
 
-        Shape.prototype.registerShapeContainerElement = function registerShapeContainerElement(elem) {
+        Glyph.prototype.registerShapeContainerElement = function registerShapeContainerElement(elem) {
             this.elem = elem || null;
         };
 
-        Shape.prototype.getVertexInPixels = function getVertexInPixels(index) {
+        Glyph.prototype.getVertexInPixels = function getVertexInPixels(index) {
 
-            var boundingBox = telestrationInterface.telestrationContainerElement[0].getBoundingClientRect();
+            var boundingBox = this.getSVGBoxDimensions();
 
             if (this.vertices && this.vertices.length > index) {
 
@@ -94,7 +90,7 @@ module.exports = [
             }
         };
 
-        Shape.prototype.registerEditListeners = function() {
+        Glyph.prototype.registerEditListeners = function() {
             var self = this;
             if (self.editable && self.currentShape) {
                 self.currentShape.on('click', function(mouseEvent) {
@@ -107,7 +103,7 @@ module.exports = [
             }
         };
 
-        Shape.prototype.registerMoveListeners = function() {
+        Glyph.prototype.registerMoveListeners = function() {
             var self = this;
             var top;
             var left;
@@ -163,7 +159,7 @@ module.exports = [
             }
         };
 
-        Shape.prototype.constrainDelta = function constrainDelta(delta) {
+        Glyph.prototype.constrainDelta = function constrainDelta(delta) {
             var self = this;
 
             if (self.constraintFn) {
@@ -176,17 +172,17 @@ module.exports = [
             return delta;
         };
 
-        Shape.prototype.bringToFront = function bringToFront() {
+        Glyph.prototype.bringToFront = function bringToFront() {
             if (this.currentShape) this.currentShape.front();
         };
 
-        Shape.prototype.getShapeContext = function getShapeContext() {
+        Glyph.prototype.getShapeContext = function getShapeContext() {
             if (this.currentShape) return this.currentShape;
         };
 
-        Shape.prototype.activeListenerRemovers = [];
+        Glyph.prototype.activeListenerRemovers = [];
 
-        Shape.prototype.destroy = function() {
+        Glyph.prototype.destroy = function() {
             if (this.moveable && this.currentShape) this.currentShape.fixed();
 
             this.activeListenerRemovers.forEach(function(listenerRemoverFunc) {
@@ -195,27 +191,27 @@ module.exports = [
             if (this.currentShape) this.currentShape.remove();
         };
 
-        Shape.prototype.onTextChanged = function(onTextChangedHandler) {
+        Glyph.prototype.onTextChanged = function(onTextChangedHandler) {
             this.onTextChangedHandler = onTextChangedHandler;
         };
 
-        Shape.prototype.onClick = function(onClickHandler) {
+        Glyph.prototype.onClick = function(onClickHandler) {
             this.onClickHandler = onClickHandler;
         };
 
-        Shape.prototype.onMoved = function(onMovedHandler) {
+        Glyph.prototype.onMoved = function(onMovedHandler) {
             this.onMovedHandler = onMovedHandler;
         };
 
-        Shape.prototype.onMoveStart = function(onMoveStartHandler) {
+        Glyph.prototype.onMoveStart = function(onMoveStartHandler) {
             this.onMoveStartHandler = onMoveStartHandler;
         };
 
-        /* Shape.prototype.setDraggableConstraintFn
+        /* Glyph.prototype.setDraggableConstraintFn
          * Updates the current bounding constraintFn for moving a shape.
          * @param constraintFn : function
          */
-        Shape.prototype.setDraggableConstraintFn = function setDraggableConstraintFn(constraintFn) {
+        Glyph.prototype.setDraggableConstraintFn = function setDraggableConstraintFn(constraintFn) {
             var self = this;
 
             if (self.moveable && self.currentShape && !self.constraintFn) {
@@ -227,10 +223,10 @@ module.exports = [
             }
         };
 
-        Shape.prototype.setText = function setText(text) {
+        Glyph.prototype.setText = function setText(text) {
             this.text = text || this.text;
         };
 
-        return Shape;
+        return Glyph;
     }
 ];
