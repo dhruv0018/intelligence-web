@@ -3,7 +3,7 @@
 
 		<profile-picture data-user="athlete"></profile-picture>
 
-		<h2 hide-gt-md>{{athlete.name}}</h2>
+		<h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
 		<krossover-uploader 
 			hide
@@ -22,7 +22,7 @@
 
 	<section class="athlete-secondary-info" hide show-gt-sm>
 
-		<h2 hide show-gt-md>{{athlete.name}}</h2>
+		<h2 hide show-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
 		<ul class="athlete-attributes"
 			layout="column" 
@@ -30,18 +30,19 @@
 	    >
 			<li>
 	            <label>Height/Weight</label>
-	            {{toInt(athlete.height / 12)}}'{{athlete.height % 12}}" / {{athlete.weight}} lbs
+	            {{toInt(athlete.profile.height / 12)}}'{{athlete.profile.height % 12}}" / {{athlete.profile.weight}} lbs
 	        </li>
 			<li>
 	            <label>Position</label>
-	            {{athlete.position}}
+	            Quarterback (QB)
 	        </li>
 			<li>
 	            <label>School</label>
-	            {{athlete.school}}</li>
+	            Laguna Beach Highschool
+	        </li>
 			<li>
 	            <label>Graduation</label>
-	            Class of {{athlete.graduationYear}}
+	            Class of {{athlete.profile.graduationYear}}
 	        </li>
 
 		</ul>
