@@ -27,32 +27,32 @@ module.exports = [
 
             switch (type) {
 
-                case TELESTRATION_TYPES.ARROW:
-                    glyph = new Arrow(TELESTRATION_TYPES.ARROW, SVGContext);
+                case TELESTRATION_TYPES.ARROW_SOLID:
+                    glyph = new Arrow(TELESTRATION_TYPES.ARROW_SOLID, SVGContext);
                     break;
 
-                case TELESTRATION_TYPES.T_BAR:
-                    glyph = new TBar(TELESTRATION_TYPES.T_BAR, SVGContext);
+                case TELESTRATION_TYPES.T_BAR_SOLID:
+                    glyph = new TBar(TELESTRATION_TYPES.T_BAR_SOLID, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.CONE_SPOTLIGHT:
                     glyph = new ConeSpotlight(TELESTRATION_TYPES.CONE_SPOTLIGHT, SVGContext);
                     break;
 
-                case TELESTRATION_TYPES.FREEHAND:
-                    glyph = new Freehand(TELESTRATION_TYPES.FREEHAND, SVGContext);
+                case TELESTRATION_TYPES.FREEHAND_SOLID:
+                    glyph = new Freehand(TELESTRATION_TYPES.FREEHAND_SOLID, SVGContext);
                     break;
 
-                case TELESTRATION_TYPES.CIRCLE:
-                    glyph = new Circle(TELESTRATION_TYPES.CIRCLE, SVGContext);
+                case TELESTRATION_TYPES.CIRCLE_SOLID:
+                    glyph = new Circle(TELESTRATION_TYPES.CIRCLE_SOLID, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.CIRCLE_SPOTLIGHT:
                     glyph = new CircleSpotlight(TELESTRATION_TYPES.CIRCLE_SPOTLIGHT, SVGContext);
                     break;
 
-                case TELESTRATION_TYPES.TEXT_TOOL:
-                    glyph = new TextBox(TELESTRATION_TYPES.TEXT_TOOL, SVGContext);
+                case TELESTRATION_TYPES.TEXT:
+                    glyph = new TextBox(TELESTRATION_TYPES.TEXT, SVGContext);
                     break;
             }
 

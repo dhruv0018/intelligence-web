@@ -1,57 +1,65 @@
 <div class="telestration-menu-box">
     <ul class="toolbar">
         <li>
-            <div class="menu-item-state" data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND}">
+            <div class="menu-item-state"
+                 data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_SOLID || telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_DASHED }">
                 <i class="icon icon-draw"></i> <i class="icon icon-expand-caret"></i>
             </div>
             <ul>
                 <li>
                     <telestration-menu-item
-                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND"
-                        type="{{TELESTRATION_TYPES.FREEHAND}}">
+                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_SOLID"
+                        type="{{TELESTRATION_TYPES.FREEHAND_SOLID}}">
                         <i class="icon icon-draw"></i>
                     </telestration-menu-item>
                 </li>
                 <li>
-                    <telestration-menu-item type="{{TELESTRATION_TYPES.FREEHAND}}">
+                    <telestration-menu-item
+                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_DASHED"
+                        type="{{TELESTRATION_TYPES.FREEHAND_DASHED}}">
                         <i class="icon icon-dashed-freehand"></i>
                     </telestration-menu-item>
                 </li>
             </ul>
         </li>
         <li>
-            <div class="menu-item-state" data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW}">
+            <div class="menu-item-state"
+                 data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW_SOLID || telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW_DASHED}">
                 <i class="icon icon-arrow"></i> <i class="icon icon-expand-caret"></i>
             </div>
             <ul>
                 <li>
                     <telestration-menu-item
-                        type="{{TELESTRATION_TYPES.ARROW}}">
+                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW_SOLID"
+                        type="{{TELESTRATION_TYPES.ARROW_SOLID}}">
                         <i class="icon icon-arrow"></i>
                     </telestration-menu-item>
                 </li>
                 <li>
                     <telestration-menu-item
-                        type="{{TELESTRATION_TYPES.ARROW}}">
+                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW_DASHED"
+                        type="{{TELESTRATION_TYPES.ARROW_DASHED}}">
                         <i class="icon icon-arrow-dashed"></i>
                     </telestration-menu-item>
                 </li>
             </ul>
         </li>
         <li>
-            <div class="menu-item-state" data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR}">
+            <div class="menu-item-state" data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR_SOLID || telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR_DASHED}">
                     <i class="icon icon-block"></i> <i class="icon icon-expand-caret"></i>
             </div>
             <ul>
                 <li>
                     <telestration-menu-item
-                        type="{{TELESTRATION_TYPES.T_BAR}}">
+                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR_SOLID"
+                        type="{{TELESTRATION_TYPES.T_BAR_SOLID}}">
                         <i class="icon icon-block"></i>
                     </telestration-menu-item>
                 </li>
                 <li>
                     <telestration-menu-item
-                        type="{{TELESTRATION_TYPES.T_BAR}}">
+                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR_DASHED"
+                        type="{{TELESTRATION_TYPES.T_BAR_DASHED}}">
                         <i class="icon icon-dashed-block"></i>
                     </telestration-menu-item>
                 </li>
@@ -59,8 +67,8 @@
         </li>
         <li>
             <telestration-menu-item
-                data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.CIRCLE}"
-                type="{{TELESTRATION_TYPES.CIRCLE}}">
+                data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.CIRCLE_SOLID}"
+                type="{{TELESTRATION_TYPES.CIRCLE_SOLID}}">
                 <i class="icon icon-open-circle"></i>
             </telestration-menu-item>
         </li>
@@ -97,8 +105,8 @@
         </li>
         <li>
             <telestration-menu-item
-                data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.TEXT_TOOL}"
-                type="{{TELESTRATION_TYPES.TEXT_TOOL}}">
+                data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.TEXT}"
+                type="{{TELESTRATION_TYPES.TEXT}}">
                 <i class="icon icon-text-tool"></i>
             </telestration-menu-item>
         </li>
