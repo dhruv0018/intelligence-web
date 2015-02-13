@@ -5,9 +5,9 @@ module.exports = [
     'GlyphValue', 'TELESTRATION_TYPES',
     function(Glyph, TELESTRATION_TYPES) {
 
-        function Freehand(type, SVGContext) {
+        function Freehand(type, SVGContext, color) {
 
-            Glyph.call(this, type, SVGContext, SVGContext.path());
+            Glyph.call(this, type, SVGContext, SVGContext.path(), color);
 
         }
         angular.inheritPrototype(Freehand, Glyph);

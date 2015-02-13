@@ -5,7 +5,7 @@ module.exports = [
     'GlyphConstants',
     function(GlyphConstants) {
 
-        function Glyph(type, SVGContext, shape) {
+        function Glyph(type, SVGContext, shape, color) {
 
             // required parameter
             if (!type) throw new Error('Glyph parameter \'type\' is required');
@@ -16,7 +16,7 @@ module.exports = [
 
             // set default attributes
             this.vertices = [];
-            this.color = GlyphConstants.DEFAULT_COLOR;
+            this.color = color;
             this.strokeWidth = GlyphConstants.STROKE_WIDTH;
             this.constraintFn = null;
             this.text = null;
