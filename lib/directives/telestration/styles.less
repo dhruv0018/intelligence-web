@@ -55,17 +55,15 @@
        padding: 0;
        margin: 0;
        li {
-           &:hover{
-                > ul {
-                    display: block;
-                }
-           }
            display: inline-block;
            ul {
                padding: 0;
                position: absolute;
                width: inherit;
                display: none;
+               &.active {
+                   display: block;
+               }
                li {
                    display: block;
                }

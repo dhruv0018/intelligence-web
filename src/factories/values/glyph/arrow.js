@@ -2,8 +2,8 @@
 /* Arrow Glyph - extends Glyph */
 
 module.exports = [
-    'GlyphValue', 'GlyphConstants',
-    function(Glyph, GlyphConstants) {
+    'GlyphValue', 'GlyphConstants', 'TELESTRATION_TYPES',
+    function(Glyph, GlyphConstants, TELESTRATION_TYPES) {
 
         function Arrow(type, SVGContext) {
 
@@ -50,12 +50,18 @@ module.exports = [
             arrowBase2[0] = endPoint.x + (this.ARROW_SIDE_LENGTH / 2) * dx;
             arrowBase2[1] = endPoint.y + (this.ARROW_SIDE_LENGTH / 2) * dy;
 
+            var attributes = {
+                fill: this.color,
+                stroke: this.color,
+                'stroke-width': this.strokeWidth
+            };
+
+            if (this.type === TELESTRATION_TYPES.ARROW_DASHED) {
+                attributes['stroke-dasharray'] = this.dashedArray;
+            }
+
             this.currentShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + endPoint.x + ' ' + endPoint.y + ' M ' + arrowBase1[0] + ' ' + arrowBase1[1] + ' L ' + arrowTip[0] + ' ' + arrowTip[1] + ' ' + arrowBase2[0] + ' ' + arrowBase2[1] + ' z')
-                .attr({
-                    fill: this.color,
-                    stroke: this.color,
-                    'stroke-width': this.strokeWidth
-                });
+                .attr(attributes);
         };
 
         return Arrow;
