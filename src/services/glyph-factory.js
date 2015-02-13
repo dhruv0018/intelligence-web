@@ -31,6 +31,7 @@ module.exports = [
 
                 case TELESTRATION_TYPES.ARROW_DASHED:
                     glyph = new Arrow(TELESTRATION_TYPES.ARROW_DASHED, SVGContext, color);
+                    glyph.setDashedArray();
                     break;
 
                 case TELESTRATION_TYPES.T_BAR_SOLID:
@@ -39,6 +40,7 @@ module.exports = [
 
                 case TELESTRATION_TYPES.T_BAR_DASHED:
                     glyph = new TBar(TELESTRATION_TYPES.T_BAR_DASHED, SVGContext, color);
+                    glyph.setDashedArray();
                     break;
 
                 case TELESTRATION_TYPES.CONE_SPOTLIGHT:
@@ -51,6 +53,7 @@ module.exports = [
 
                 case TELESTRATION_TYPES.FREEHAND_DASHED:
                     glyph = new Freehand(TELESTRATION_TYPES.FREEHAND_DASHED, SVGContext, color);
+                    glyph.setDashedArray();
                     break;
 
                 case TELESTRATION_TYPES.CIRCLE_SOLID:

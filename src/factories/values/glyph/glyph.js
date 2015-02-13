@@ -2,8 +2,8 @@
 /* Glyph - Abstract Base Class */
 
 module.exports = [
-    'GlyphConstants',
-    function(GlyphConstants) {
+    'GlyphConstants', 'TELESTRATION_TYPES',
+    function(GlyphConstants, TELESTRATION_TYPES) {
 
         function Glyph(type, SVGContext, shape, color) {
 
@@ -20,7 +20,7 @@ module.exports = [
             this.strokeWidth = GlyphConstants.STROKE_WIDTH;
             this.constraintFn = null;
             this.text = null;
-            this.dashedArray = GlyphConstants.DASHED_ARRAY;
+            this.dashedArray = null;
 
             this.registerEditListeners();
             this.registerMoveListeners();
@@ -230,6 +230,10 @@ module.exports = [
 
         Glyph.prototype.setColor = function setColor(color) {
             this.color = color || this.color;
+        };
+
+        Glyph.prototype.setDashedArray = function setDashedArray(dashedArray) {
+            this.dashedArray = dashedArray || GlyphConstants.DASHED_ARRAY;
         };
 
         return Glyph;
