@@ -6,9 +6,7 @@
         "krossover-fast-backward-button.html",
         "krossover-fast-forward-button.html",
         "krossover-jump-backward-button.html",
-        "krossover-jump-forward-button.html",
-        "krossover-full-screen-button.html",
-        "krossover-mute-button.html"
+        "krossover-jump-forward-button.html"
     ],
     "scripts": [
         "index.js"
