@@ -13,6 +13,7 @@ require('angular-ui-router/release/angular-ui-router');
 require('angular-multiselect/src/multiselect');
 require('angulartics/src/angulartics');
 require('angulartics/src/angulartics-segmentio');
+require('svg-morpheus/source/js/svg-morpheus');
 require('flow/src/angular-flow');
 require('flow/src/provider');
 require('flow/src/directives/btn');
@@ -24,4 +25,3 @@ require('flow/src/directives/transfers');
 require('flow/src/directives/img');
 require('Mousetrap');
 require('Mousetrap/plugins/pause/mousetrap-pause');
-
