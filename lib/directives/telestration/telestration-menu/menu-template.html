@@ -6,8 +6,15 @@
             </div>
             <ul>
                 <li>
-                    <telestration-menu-item type="{{TELESTRATION_TYPES.FREEHAND}}">
+                    <telestration-menu-item
+                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND"
+                        type="{{TELESTRATION_TYPES.FREEHAND}}">
                         <i class="icon icon-draw"></i>
+                    </telestration-menu-item>
+                </li>
+                <li>
+                    <telestration-menu-item type="{{TELESTRATION_TYPES.FREEHAND}}">
+                        <i class="icon icon-dashed-freehand"></i>
                     </telestration-menu-item>
                 </li>
             </ul>
@@ -23,6 +30,12 @@
                         <i class="icon icon-arrow"></i>
                     </telestration-menu-item>
                 </li>
+                <li>
+                    <telestration-menu-item
+                        type="{{TELESTRATION_TYPES.ARROW}}">
+                        <i class="icon icon-arrow-dashed"></i>
+                    </telestration-menu-item>
+                </li>
             </ul>
         </li>
         <li>
@@ -34,6 +47,12 @@
                     <telestration-menu-item
                         type="{{TELESTRATION_TYPES.T_BAR}}">
                         <i class="icon icon-block"></i>
+                    </telestration-menu-item>
+                </li>
+                <li>
+                    <telestration-menu-item
+                        type="{{TELESTRATION_TYPES.T_BAR}}">
+                        <i class="icon icon-dashed-block"></i>
                     </telestration-menu-item>
                 </li>
             </ul>
