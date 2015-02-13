@@ -1,7 +1,3 @@
-<button class="btn-video">
 
-    <i class="icon icon-play" data-ng-hide="playManager.playState === VG_STATES.PLAY"></i>
+<button class="icon icon-{{ playPauseIcon.play ? 'play' : 'pause' }}" ng-click="onClickPlayPause()" aria-label="Play/Pause" type="button"></button>
 
-    <i class="icon icon-pause" data-ng-show="playManager.playState === VG_STATES.PLAY"></i>
-
-</button>
