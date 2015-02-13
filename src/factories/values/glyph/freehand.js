@@ -2,8 +2,8 @@
 /* Freehand Glyph - extends Glyph */
 
 module.exports = [
-    'GlyphValue',
-    function(Glyph) {
+    'GlyphValue', 'TELESTRATION_TYPES',
+    function(Glyph, TELESTRATION_TYPES) {
 
         function Freehand(type, SVGContext) {
 
@@ -36,12 +36,18 @@ module.exports = [
                 pathData += ' ' + verticesInPixels[i].x + ' ' + verticesInPixels[i].y;
             }
 
-            this.currentShape.plot(pathData)
-                .attr({
-                    fill: 'none',
-                    stroke: this.color,
-                    'stroke-width': this.strokeWidth
-                });
+
+            var attributes = {
+                fill: 'none',
+                stroke: this.color,
+                'stroke-width': this.strokeWidth
+            };
+
+            if (this.type === TELESTRATION_TYPES.FREEHAND_DASHED) {
+                attributes['stroke-dasharray'] = this.dashedArray;
+            }
+
+            this.currentShape.plot(pathData).attr(attributes);
         };
 
         return Freehand;

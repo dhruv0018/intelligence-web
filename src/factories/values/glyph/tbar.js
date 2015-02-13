@@ -2,8 +2,8 @@
 /* tBar - extends Glyph */
 
 module.exports = [
-    'GlyphValue', 'GlyphConstants',
-    function(Glyph, GlyphConstants) {
+    'GlyphValue', 'GlyphConstants', 'TELESTRATION_TYPES',
+    function(Glyph, GlyphConstants, TELESTRATION_TYPES) {
 
         function TBar(type, SVGContext) {
 
@@ -37,12 +37,18 @@ module.exports = [
             tPoint2[0] = endPoint.x + (this.T_BAR_LENGTH / 2) * dx;
             tPoint2[1] = endPoint.y + (this.T_BAR_LENGTH / 2) * dy;
 
+            var attributes = {
+                fill: 'none',
+                stroke: this.color,
+                'stroke-width': this.strokeWidth
+            };
+
+            if (this.type === TELESTRATION_TYPES.T_BAR_DASHED) {
+                attributes['stroke-dasharray'] = this.dashedArray;
+            }
+
             this.currentShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + endPoint.x + ' ' + endPoint.y + ' M ' + tPoint1[0] + ' ' + tPoint1[1] + ' L ' + tPoint2[0] + ' ' + tPoint2[1])
-                .attr({
-                    fill: 'none',
-                    stroke: this.color,
-                    'stroke-width': this.strokeWidth
-                });
+                .attr(attributes);
         };
 
         return TBar;

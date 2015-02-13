@@ -31,8 +31,16 @@ module.exports = [
                     glyph = new Arrow(TELESTRATION_TYPES.ARROW_SOLID, SVGContext);
                     break;
 
+                case TELESTRATION_TYPES.ARROW_DASHED:
+                    glyph = new Arrow(TELESTRATION_TYPES.ARROW_DASHED, SVGContext);
+                    break;
+
                 case TELESTRATION_TYPES.T_BAR_SOLID:
                     glyph = new TBar(TELESTRATION_TYPES.T_BAR_SOLID, SVGContext);
+                    break;
+
+                case TELESTRATION_TYPES.T_BAR_DASHED:
+                    glyph = new TBar(TELESTRATION_TYPES.T_BAR_DASHED, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.CONE_SPOTLIGHT:
@@ -41,6 +49,10 @@ module.exports = [
 
                 case TELESTRATION_TYPES.FREEHAND_SOLID:
                     glyph = new Freehand(TELESTRATION_TYPES.FREEHAND_SOLID, SVGContext);
+                    break;
+
+                case TELESTRATION_TYPES.FREEHAND_DASHED:
+                    glyph = new Freehand(TELESTRATION_TYPES.FREEHAND_DASHED, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.CIRCLE_SOLID:

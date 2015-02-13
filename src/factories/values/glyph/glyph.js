@@ -20,6 +20,7 @@ module.exports = [
             this.strokeWidth = GlyphConstants.STROKE_WIDTH;
             this.constraintFn = null;
             this.text = null;
+            this.dashedArray = GlyphConstants.DASHED_ARRAY;
 
             this.registerEditListeners();
             this.registerMoveListeners();
