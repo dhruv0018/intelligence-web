@@ -8,11 +8,12 @@ module.exports = [
         function TextBox(type, SVGContext) {
 
             Glyph.call(this, type, SVGContext);
+            this.editMode = true;
 
         }
         angular.inheritPrototype(TextBox, Glyph);
 
-        TextBox.prototype.editable = true;
+        TextBox.prototype.editable = false;
         TextBox.prototype.movable = true;
         TextBox.prototype.hintText = GlyphConstants.TEXT_TOOL_HINT_TEXT;
 
@@ -30,39 +31,61 @@ module.exports = [
             var offsetY = endPoint.y - startPoint.y;
 
             function editMode() {
+
+                var textInputElement;
+                var textInputArea;
+
                 var submitText = function submitText(saveText) {
-                    var textToSave = (saveText) ? textInputElement.val() : self.text;
-                    if (typeof self.onTextChangedHandler === 'function') self.onTextChangedHandler(textToSave);
+                    self.editMode = false;
+
+                    var textToSave = (saveText) ? textInputArea.val() : self.text;
+
+                    var textChangeObj = {
+                        text: textToSave,
+                        fontSize: '80px',
+                        dimensions: textInputArea[0].getBoundingClientRect()
+                    };
+
+                    if (typeof self.onTextChangedHandler === 'function') self.onTextChangedHandler(textChangeObj);
 
                     //remove and clean up input element
-                    textInputElement.off('mousedown');
-                    textInputElement.off('keydown');
+                    textInputArea.off('mousedown');
+                    textInputArea.off('keydown');
+                    textInputArea.off('change keyup keydown paste cut');
                     textInputElement.remove();
                 };
 
                 self.elem.empty();
 
-                var textInputElement = angular.element('<textarea class="telestration-text" style="top:' + startPoint.y + 'px;left:' + startPoint.x + 'px;height:' + offsetY + 'px;width:' + offsetX + 'px;" autofocus="true">' +
-                '</textarea>');
-                self.elem.append(textInputElement);
-                textInputElement[0].focus();
+                textInputElement = angular.element('<div class="telestration-text-wrapper">' +
+                    '<textarea wrap="off" class="telestration-text" style="overflow-x:hidden;overflow-y:hidden;top:' + startPoint.y + 'px;left:' + startPoint.x + 'px;width:' + offsetX + 'px;color:' + self.color + '" autofocus="true">' +
+                    (self.text || '') +
+                    '</textarea>' +
+                '</div>');
 
-                textInputElement.one('keydown', function(mouseEvent) {
-                    if (textInputElement.text() === self.hintText) {
-                        textInputElement.text('');
-                    }
-                });
+                self.elem.append(textInputElement);
+
+                textInputArea = textInputElement.find('textarea');
+                textInputArea[0].focus();
+
+                function fitTextArea(event) {
+                    angular.element(this).css('width', '0px').css('width', this.scrollWidth + 'px');
+                    angular.element(this).css('height', '0px').css('height', this.scrollHeight + 'px');
+                }
+
+                textInputArea.on('change keyup keydown paste cut', fitTextArea);
+                fitTextArea.call(textInputArea);
 
                 //prevent drawing on top of text input box
-                textInputElement.on('mousedown', function(mouseEvent) {
+                textInputArea.on('mousedown', function(mouseEvent) {
                     mouseEvent.stopPropagation();
                 });
 
-                textInputElement.one('blur', function() {
-                    submitText(true);
+                textInputArea.one('blur', function() {
+                    //submitText(true);
                 });
 
-                textInputElement.on('keydown', function(mouseEvent) {
+                textInputArea.on('keydown', function(mouseEvent) {
                     if (mouseEvent.keyCode === 27) {
                         submitText(false);
                     }
