@@ -228,6 +228,10 @@ module.exports = [
             this.text = text || this.text;
         };
 
+        Glyph.prototype.setColor = function setColor(color) {
+            this.color = color || this.color;
+        };
+
         return Glyph;
     }
 ];
