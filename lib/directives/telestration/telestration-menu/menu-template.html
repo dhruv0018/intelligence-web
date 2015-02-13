@@ -3,20 +3,23 @@
         <li>
             <div class="menu-item-state"
                  data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_SOLID || telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_DASHED }">
-                <i class="icon icon-draw"></i> <i class="icon icon-expand-caret"></i>
+                <i  data-ng-class="{'icon-draw' : dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_SOLID, 'icon-dashed-freehand' : dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_DASHED}"
+                    class="icon"></i> <i class="icon icon-expand-caret"></i>
             </div>
             <ul>
                 <li>
                     <telestration-menu-item
-                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_SOLID"
-                        type="{{TELESTRATION_TYPES.FREEHAND_SOLID}}">
+                        data-ng-hide="dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_SOLID"
+                        data-dropdown-state="dropdownToolStates.FREEHAND"
+                        data-type="{{TELESTRATION_TYPES.FREEHAND_SOLID}}">
                         <i class="icon icon-draw"></i>
                     </telestration-menu-item>
                 </li>
                 <li>
                     <telestration-menu-item
-                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_DASHED"
-                        type="{{TELESTRATION_TYPES.FREEHAND_DASHED}}">
+                        data-ng-hide="dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_DASHED"
+                        data-dropdown-state="dropdownToolStates.FREEHAND"
+                        data-type="{{TELESTRATION_TYPES.FREEHAND_DASHED}}">
                         <i class="icon icon-dashed-freehand"></i>
                     </telestration-menu-item>
                 </li>
@@ -25,19 +28,22 @@
         <li>
             <div class="menu-item-state"
                  data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW_SOLID || telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW_DASHED}">
-                <i class="icon icon-arrow"></i> <i class="icon icon-expand-caret"></i>
+                <i  data-ng-class="{'icon-arrow' : dropdownToolStates.ARROW === TELESTRATION_TYPES.ARROW_SOLID, 'icon-arrow-dashed' : dropdownToolStates.ARROW === TELESTRATION_TYPES.ARROW_DASHED}"
+                    class="icon"></i> <i class="icon icon-expand-caret"></i>
             </div>
             <ul>
                 <li>
                     <telestration-menu-item
-                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW_SOLID"
+                        data-ng-hide="dropdownToolStates.ARROW === TELESTRATION_TYPES.ARROW_SOLID"
+                        data-dropdown-state="dropdownToolStates.ARROW"
                         type="{{TELESTRATION_TYPES.ARROW_SOLID}}">
                         <i class="icon icon-arrow"></i>
                     </telestration-menu-item>
                 </li>
                 <li>
                     <telestration-menu-item
-                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.ARROW_DASHED"
+                        data-ng-hide="dropdownToolStates.ARROW === TELESTRATION_TYPES.ARROW_DASHED"
+                        data-dropdown-state="dropdownToolStates.ARROW"
                         type="{{TELESTRATION_TYPES.ARROW_DASHED}}">
                         <i class="icon icon-arrow-dashed"></i>
                     </telestration-menu-item>
@@ -46,19 +52,23 @@
         </li>
         <li>
             <div class="menu-item-state" data-ng-class="{'selected': telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR_SOLID || telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR_DASHED}">
-                    <i class="icon icon-block"></i> <i class="icon icon-expand-caret"></i>
+                <i  data-ng-class="{'icon-block' : dropdownToolStates.T_BAR === TELESTRATION_TYPES.T_BAR_SOLID, 'icon-dashed-block' : dropdownToolStates.T_BAR === TELESTRATION_TYPES.T_BAR_DASHED}"
+                    class="icon"></i>
+                <i class="icon icon-expand-caret"></i>
             </div>
             <ul>
                 <li>
                     <telestration-menu-item
-                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR_SOLID"
-                        type="{{TELESTRATION_TYPES.T_BAR_SOLID}}">
+                        data-ng-hide="dropdownToolStates.T_BAR === TELESTRATION_TYPES.T_BAR_SOLID"
+                        data-dropdown-state="dropdownToolStates.T_BAR"
+                        data-type="{{TELESTRATION_TYPES.T_BAR_SOLID}}">
                         <i class="icon icon-block"></i>
                     </telestration-menu-item>
                 </li>
                 <li>
                     <telestration-menu-item
-                        data-ng-hide="telestrationInterface.selectedGlyphType === TELESTRATION_TYPES.T_BAR_DASHED"
+                        data-ng-hide="dropdownToolStates.T_BAR === TELESTRATION_TYPES.T_BAR_DASHED"
+                        data-dropdown-state="dropdownToolStates.T_BAR"
                         type="{{TELESTRATION_TYPES.T_BAR_DASHED}}">
                         <i class="icon icon-dashed-block"></i>
                     </telestration-menu-item>
