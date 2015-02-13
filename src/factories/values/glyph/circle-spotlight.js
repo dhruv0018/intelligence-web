@@ -2,12 +2,12 @@
 /* Circle Spotlight - extends Spotlight */
 
 module.exports = [
-    'TelestrationInterface', 'SpotlightFactory', 'TELESTRATION_TYPES',
-    function(telestrationInterface, Spotlight, TELESTRATION_TYPES) {
+    'SpotlightValue',
+    function(Spotlight) {
 
-        function CircleSpotlight() {
+        function CircleSpotlight(type, SVGContext) {
 
-            Spotlight.call(this, TELESTRATION_TYPES.CIRCLE_SPOTLIGHT, telestrationInterface.telestrationSVG.circle(), telestrationInterface.telestrationSVG.circle());
+            Spotlight.call(this, type, SVGContext, SVGContext.circle(), SVGContext.circle());
 
             this.currentShape.opacity(0);
 

@@ -1,9 +1,13 @@
+// Get window location
 
-/* Spotlight - Abstract class extends Shape */
+var location = window.location;
+
+
+/* Spotlight - Abstract class extends Glyph */
 
 module.exports = [
-    '$location', 'TelestrationInterface', 'ShapeFactory',
-    function($location, telestrationInterface, Shape) {
+    'GlyphValue',
+    function(Glyph) {
 
         var numShadowShapes = 0;
         var initialized = false;
@@ -16,17 +20,19 @@ module.exports = [
         var SVGMaskWhite;
 
 
-        function Spotlight(type, shape, spotlightShape) {
+        function Spotlight(type, SVGContext, shape, spotlightShape) {
 
             numShadowShapes++;
+
+            this.SVGContext = SVGContext;
 
             if (numShadowShapes == 1) addMaskLayers.call(this);
 
             this.addSpotlight(spotlightShape);
-            Shape.call(this, type, shape);
+            Glyph.call(this, type, SVGContext, shape);
 
         }
-        angular.inheritPrototype(Spotlight, Shape);
+        angular.inheritPrototype(Spotlight, Glyph);
 
         Spotlight.prototype.telestrationSVGMaskBlack = null;
         Spotlight.prototype.telestrationSVGMask = null;
@@ -36,7 +42,7 @@ module.exports = [
             var theMask = telestrationSVGMask.add(spotlightShape);
             var objWithMask = telestrationSVGMaskBlack.maskWith(theMask);
             var shortUrl = objWithMask.attr('mask');
-            var longUrl = 'url(' + $location.absUrl() + shortUrl.match(/#\w+/i)[0] + ')';
+            var longUrl = 'url(' + location.href + shortUrl.match(/#\w+/i)[0] + ')';
             objWithMask.attr({'mask': longUrl});
         };
 
@@ -45,7 +51,7 @@ module.exports = [
             var self = this;
 
             // call superclass
-            Shape.prototype.registerMoveListeners.call(self);
+            Glyph.prototype.registerMoveListeners.call(self);
 
             if (self.currentShape) {
                 var prevDragStart = self.currentShape.dragstart || angular.noop;
@@ -66,7 +72,7 @@ module.exports = [
 
         Spotlight.prototype.destroy = function destroyShadowShape() {
 
-            Shape.prototype.destroy.call(this);
+            Glyph.prototype.destroy.call(this);
             removeShape.call(this);
             this.spotlight.remove();
         };
@@ -76,11 +82,11 @@ module.exports = [
 
         function addMaskLayers() {
             // Semi-opaque layer
-            telestrationSVGMaskBlack = telestrationInterface.telestrationSVG.rect('100%', '100%').attr({ fill: '#000' }).opacity(0.4).back();
+            telestrationSVGMaskBlack = this.SVGContext.rect('100%', '100%').attr({ fill: '#000' }).opacity(0.4).back();
 
             // Mask layer
-            telestrationSVGMask = telestrationInterface.telestrationSVG.mask();
-            SVGMaskWhite = telestrationInterface.telestrationSVG.rect('100%', '100%').attr({ fill: '#fff' }).back().forward();
+            telestrationSVGMask = this.SVGContext.mask();
+            SVGMaskWhite = this.SVGContext.rect('100%', '100%').attr({ fill: '#fff' }).back().forward();
             telestrationSVGMask.add(SVGMaskWhite);
         }
 

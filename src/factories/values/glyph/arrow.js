@@ -1,19 +1,19 @@
 
-/* Arrow Shape - extends Shape */
+/* Arrow Glyph - extends Glyph */
 
 module.exports = [
-    'TelestrationInterface', 'ShapeFactory', 'TELESTRATION_TYPES', 'ShapeConstants',
-    function(telestrationInterface, Shape, TELESTRATION_TYPES, ShapeConstants) {
+    'GlyphValue', 'GlyphConstants',
+    function(Glyph, GlyphConstants) {
 
-        function Arrow() {
+        function Arrow(type, SVGContext) {
 
-            Shape.call(this, TELESTRATION_TYPES.ARROW, telestrationInterface.telestrationSVG.path());
+            Glyph.call(this, type, SVGContext, SVGContext.path());
 
         }
-        angular.inheritPrototype(Arrow, Shape);
+        angular.inheritPrototype(Arrow, Glyph);
 
-        Arrow.prototype.ARROW_SIDE_LENGTH = ShapeConstants.ARROW_SIDE_LENGTH;
-        Arrow.prototype.ARROW_HEIGHT = Math.sqrt(5 / 4 * ShapeConstants.ARROW_SIDE_LENGTH * ShapeConstants.ARROW_SIDE_LENGTH);
+        Arrow.prototype.ARROW_SIDE_LENGTH = GlyphConstants.ARROW_SIDE_LENGTH;
+        Arrow.prototype.ARROW_HEIGHT = Math.sqrt(5 / 4 * GlyphConstants.ARROW_SIDE_LENGTH * GlyphConstants.ARROW_SIDE_LENGTH);
 
         Arrow.prototype.render = function renderArrow() {
 

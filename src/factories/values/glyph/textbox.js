@@ -1,20 +1,20 @@
 
-/* Textbox - extends Shape */
+/* Textbox - extends Glyph */
 
 module.exports = [
-    'TelestrationInterface', 'ShapeFactory', 'ShapeConstants', 'TELESTRATION_TYPES',
-    function(telestrationInterface, Shape, ShapeConstants, TELESTRATION_TYPES) {
+    'GlyphValue', 'GlyphConstants',
+    function(Glyph, GlyphConstants) {
 
-        function TextBox() {
+        function TextBox(type, SVGContext) {
 
-            Shape.call(this, TELESTRATION_TYPES.TEXT_TOOL);
-            this.editMode = true;
+            Glyph.call(this, type, SVGContext);
+
         }
-        angular.inheritPrototype(TextBox, Shape);
+        angular.inheritPrototype(TextBox, Glyph);
 
         TextBox.prototype.editable = true;
         TextBox.prototype.movable = true;
-        TextBox.prototype.hintText = ShapeConstants.TEXT_TOOL_HINT_TEXT;
+        TextBox.prototype.hintText = GlyphConstants.TEXT_TOOL_HINT_TEXT;
 
         TextBox.prototype.render = function renderTextBox() {
 
@@ -137,7 +137,7 @@ module.exports = [
         TextBox.prototype.destroy = function() {
             this.elem.empty();
             if (this.elem) this.elem.off('click');
-            Shape.prototype.destroy.call(this);
+            Glyph.prototype.destroy.call(this);
             // TODO: Fill in rest of clean up for textbox below
         };
 

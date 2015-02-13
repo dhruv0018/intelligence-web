@@ -41,21 +41,43 @@
     }
 }
 
-telestration-menu {
+.telestration-menu-box {
     position: absolute;
     right: 0;
-    bottom: 15%;
     margin: 15px;
-    background-color: #ccc;
     z-index: 1000000;
     border-radius: @border-radius-small;
-    telestration-menu-item, telestration-undo {
+    .toolbar {
+       padding: 0;
+       margin: 0;
+       li {
+           &:hover{
+                > ul {
+                    display: block;
+                }
+           }
+           display: inline-block;
+           ul {
+               padding: 0;
+               position: absolute;
+               width: inherit;
+               display: none;
+               li {
+                   display: block;
+               }
+           }
+       }
+    }
+
+    .menu-item-state, telestration-menu-item, telestration-undo {
+        position:relative;
+        background-color: #ccc;
         display: inline-block;
         @menu-item-size: 35px;
         width: @menu-item-size;
         height: @menu-item-size;
-        border-left: solid 1px #000;
-        margin-right: -5px;
+        border: solid 1px #000;
+        margin-right: -6px;
         cursor: pointer;
         &.selected {
             @highlight: #FFFF00;
@@ -72,9 +94,13 @@ telestration-menu {
             height: @icon-size/2;
             display: inline-block;
         }
-    }
 
-    telestration-menu-item:first-child{
-        border-left: none;
+        .icon-expand-caret {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            height: 30px;
+            transform: rotate(90deg);
+        }
     }
 }
