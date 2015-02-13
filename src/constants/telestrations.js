@@ -22,4 +22,28 @@ var TELESTRATION_TYPES = {
     'EMOJI': 11
 };
 
+var TELESTRATION_COLORS = {
+    'PRIMARY':  {
+        hex: '#F3F313',
+        rgb: '243,243,21',
+        name: 'neon yellow'
+    },
+    'SECONDARY_FIRST': {
+        hex: '#0DD5FC',
+        rgb: '13,213,252',
+        name: 'neon blue'
+    },
+    'SECONDARY_SECOND': {
+        hex: '#FF0099',
+        rgb: '255,0,153',
+        name: 'neon pink'
+    },
+    'SECONDARY_THIRD': {
+        hex: '#83F52C',
+        rgb: '131,245,44',
+        name: 'neon green'
+    }
+};
+
 IntelligenceWebClient.value('TELESTRATION_TYPES', TELESTRATION_TYPES);
+IntelligenceWebClient.value('TELESTRATION_COLORS', TELESTRATION_COLORS);

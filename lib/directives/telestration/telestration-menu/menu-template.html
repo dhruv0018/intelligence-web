@@ -104,17 +104,19 @@
             </telestration-menu-item>
         </li>
         <li>
-            <telestration-menu-item>
-                <i class="icon icon-color-picker"></i>
-            </telestration-menu-item>
+            <menu-item-state
+                data-ng-style="{background: dropdownToolStates.COLOR_PICKER}"
+                data-dropdown-state="dropdownToolStates.COLOR_PICKER"
+                class="menu-item-state">
+                <i class="icon icon-color-picker"></i> <i class="icon icon-expand-caret"></i>
+            </menu-item-state>
             <ul>
-                <li>
-                    <telestration-menu-item>
-                        <i class="icon icon-color-picker"></i>
-                    </telestration-menu-item>
-                </li>
-                <li>
-                    <telestration-menu-item>
+                <li  data-ng-hide="dropdownToolStates.COLOR_PICKER === color.hex"
+                     data-ng-repeat="color in colors">
+                    <telestration-menu-item
+                        data-color="{{color.hex}}"
+                        data-dropdown-state="dropdownToolStates.COLOR_PICKER"
+                        data-ng-style="{background: color.hex}">
                         <i class="icon icon-color-picker"></i>
                     </telestration-menu-item>
                 </li>
