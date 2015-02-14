@@ -1,52 +1,53 @@
 <header class="athlete-profile-header" layout="column" layout-gt-md="row">
-	<section class="athlete-primary-info" layout="column" layout-gt-sm="row">
+    <section class="athlete-primary-info" layout="column" layout-gt-sm="row">
 
-		<profile-picture data-user="athlete"></profile-picture>
+        <profile-picture data-user="athlete"></profile-picture>
 
-		<h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
+        <h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-		<krossover-uploader 
-			hide
-			show-gt-md
-			data-on-upload="setProfileImage(files)"
-		></krossover-uploader>
+        <krossover-uploader
+            hide
+            show-gt-md
+            data-on-upload="setProfileImage(files)"
+        ></krossover-uploader>
 
-		<ng-md-icon icon="keyboard_arrow_down" 
-					style="fill: white" 
-					size="30"
-					class="secondary-info-toggle" 
-				    hide-gt-sm
-				    data-ng-click="toggleSecondaryInfo()"
-		></ng-md-icon>
-	</section>
+        <ng-md-icon
+            icon="{{toggle.icons.current}}"
+            style="fill: white"
+            size="30"
+            class="secondary-info-toggle"
+            hide-gt-sm
+            data-ng-click="toggle.callback()"
+        ></ng-md-icon>
+    </section>
 
-	<section class="athlete-secondary-info" hide show-gt-sm>
+    <section class="athlete-secondary-info" style="display: none">
 
-		<h2 hide show-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
+        <h2 hide show-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-		<ul class="athlete-attributes"
-			layout="column" 
-			layout-gt-sm="row"
-	    >
-			<li>
-	            <label>Height/Weight</label>
-	            {{toInt(athlete.profile.height / 12)}}'{{athlete.profile.height % 12}}" / {{athlete.profile.weight}} lbs
-	        </li>
-			<li>
-	            <label>Position</label>
-	            Quarterback (QB)
-	        </li>
-			<li>
-	            <label>School</label>
-	            Laguna Beach Highschool
-	        </li>
-			<li>
-	            <label>Graduation</label>
-	            Class of {{athlete.profile.graduationYear}}
-	        </li>
+        <ul class="athlete-attributes"
+            layout="column"
+            layout-gt-sm="row"
+        >
+            <li>
+                <label>Height/Weight</label>
+                {{toInt(athlete.profile.height / 12)}}'{{athlete.profile.height % 12}}" / {{athlete.profile.weight}} lbs
+            </li>
+            <li>
+                <label>Position</label>
+                Quarterback (QB)
+            </li>
+            <li>
+                <label>School</label>
+                Laguna Beach Highschool
+            </li>
+            <li>
+                <label>Graduation</label>
+                Class of {{athlete.profile.graduationYear}}
+            </li>
 
-		</ul>
+        </ul>
 
-	</section>
+    </section>
 
 </header>
