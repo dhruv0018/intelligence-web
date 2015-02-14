@@ -2,21 +2,22 @@
 /* Glyph - Abstract Base Class */
 
 module.exports = [
-    'GlyphConstants', 'TELESTRATION_TYPES',
-    function(GlyphConstants, TELESTRATION_TYPES) {
+    'GlyphConstants', 'GlyphModel',
+    function(GlyphConstants, GlyphModel) {
 
         function Glyph(type, SVGContext, shape, color) {
 
             // required parameter
             if (!type) throw new Error('Glyph parameter \'type\' is required');
 
+            // Glyph Model
             this.type = type;
+            this.color = color;
+            this.vertices = [];
+
+            // Set Default Model Values
             this.currentShape = shape || null;
             this.SVGContext = SVGContext;
-
-            // set default attributes
-            this.vertices = [];
-            this.color = color;
             this.strokeWidth = GlyphConstants.STROKE_WIDTH;
             this.constraintFn = null;
             this.text = null;
