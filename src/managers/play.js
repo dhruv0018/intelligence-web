@@ -36,16 +36,6 @@ IntelligenceWebClient.service('PlayManager', [
             this.playState = null;
         };
 
-        this.register = function register(playScope) {
-            playsManager = playsManager || $injector.get('PlaysManager');
-            playsManager.registerPlayScope(playScope);
-        };
-
-        this.getNextPlayScope = function getNextPlayScope() {
-            playsManager = playsManager || $injector.get('PlaysManager');
-            return playsManager.getNextPlayScope(this.current);
-        };
-
         /**
          * Resets the current play.
          */
