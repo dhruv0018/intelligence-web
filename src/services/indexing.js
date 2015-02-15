@@ -6,10 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayerInstance',
-    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayerInstance) {
-
-        var videoPlayer = videoPlayerInstance.promise;
+    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Videoplayer', 'VideoPlayerInstance',
+    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayer, videoPlayerInstance) {
 
         var IndexingService = {
 
@@ -29,9 +27,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.reset(tagset, game.id);
                 playManager.clear();
 
-                videoPlayerInstance.promise.then(function(player) {
+                videoPlayerInstance.promise.then(function() {
 
-                    videoPlayer = player;
                     self.isReady = true;
                 });
             },
@@ -65,7 +62,7 @@ IntelligenceWebClient.factory('IndexingService', [
             selectTag: function(tagId) {
 
                 /* Get current time from the video. */
-                var time = videoPlayer.getCurrentTime();
+                var time = videoPlayer.currentTime;
 
                 /* Create new event. */
                 eventManager.create(tagId, time);
@@ -309,7 +306,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 if (this.isReady) {
 
-                    var currentTime = videoPlayer.getCurrentTime();
+                    var currentTime = videoPlayer.currentTime;
                     var time = currentTime - config.indexing.video.jump;
                     videoPlayer.seekTime(time);
                 }
@@ -319,7 +316,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 if (this.isReady) {
 
-                    var currentTime = videoPlayer.getCurrentTime();
+                    var currentTime = videoPlayer.currentTime;
                     var time = currentTime + config.indexing.video.jump;
                     videoPlayer.seekTime(time);
                 }
