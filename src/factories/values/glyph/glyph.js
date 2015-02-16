@@ -2,8 +2,8 @@
 /* Glyph - Abstract Base Class */
 
 module.exports = [
-    'GlyphConstants', 'GlyphModel',
-    function(GlyphConstants, GlyphModel) {
+    'GlyphConstants',
+    function(GlyphConstants) {
 
         function Glyph(type, SVGContext, shape, color) {
 
