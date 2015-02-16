@@ -47,6 +47,7 @@
         "dynamic-table",
         "team-typeahead",
         "user-typeahead",
+        "role-typeahead",
         "verify-password",
         "videogular",
         "breakdown-text",
