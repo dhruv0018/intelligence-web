@@ -47,6 +47,14 @@ IntelligenceWebClient.service('PlayManager', [
         };
 
         /**
+         * Sets the current play.
+         */
+        this.setCurrent = function(play) {
+
+            this.current = play;
+        };
+
+        /**
          * Creates a play.
          */
         this.create = function() {
