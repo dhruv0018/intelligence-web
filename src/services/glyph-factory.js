@@ -1,3 +1,4 @@
+/* GlyphFactory */
 
 module.exports = [
     'TELESTRATION_TYPES',

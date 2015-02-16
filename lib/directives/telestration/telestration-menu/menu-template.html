@@ -132,12 +132,12 @@
             </telestration-menu-item>
         </li>
         <li>
-            <telestration-undo data-ng-show="glyphs.length" data-ng-click="undoGlyph()">
+            <telestration-undo data-ng-show="getGlyphs().length" data-ng-click="undoGlyph()">
                 <i class="icon icon-undo"></i>
             </telestration-undo>
         </li>
         <li>
-            <telestration-clear data-ng-show="glyphs.length" data-ng-click="clearGlyphs()">Clear</telestration-clear>
+            <telestration-clear data-ng-show="getGlyphs().length" data-ng-click="clearGlyphs()">Clear</telestration-clear>
         </li>
     </ul>
 </div>

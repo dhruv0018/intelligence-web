@@ -2,34 +2,41 @@
 
 /* GlyphEntity - Extends GlyphEntityModel */
 
-var GlyphEntity = function() {
+module.exports = [
+    function() {
 
-    this.getGlyphs = function getGlyphs() {
-        return this.map(function(glyph) { return glyph; });
-    };
+        var GlyphEntity = function() {
 
-    this.addGlyph = function addGlyph(glyph) {
-        if (glyph) this.push(glyph);
-    };
+            this.getGlyphs = function getGlyphs() {
+                return this;
+            };
 
-    this.popGlyph = function popGlyph() {
-        return this.pop();
-    };
+            this.addGlyph = function addGlyph(glyph) {
+                if (glyph) this.push(glyph);
+            };
 
-    this.removeGlyph = function removeGlyph(glyph) {
-        var glyphIndex = this.indexOf(glyph);
-        if (glyphIndex != -1) this.splice(glyphIndex, 1);
-    };
+            this.popGlyph = function popGlyph() {
+                return this.pop();
+            };
 
-    this.clearGlyphs = function clearGlyphs() {
-        this.length = 0;
-    };
+            this.removeGlyph = function removeGlyph(glyph) {
+                var glyphIndex = this.indexOf(glyph);
+                if (glyphIndex != -1) this.splice(glyphIndex, 1);
+            };
 
-};
+            this.clearGlyphs = function clearGlyphs() {
+                this.length = 0;
+            };
 
-var extendGlyphEntityModel = function extendGlyphEntityModel(GlyphEntityModel) {
+        };
 
-    GlyphEntity.call(GlyphEntityModel);
-};
+        var extendGlyphEntityModel = function extendGlyphEntityModel(GlyphEntityModel) {
 
-module.exports = extendGlyphEntityModel;
+            GlyphEntity.call(GlyphEntityModel);
+        };
+
+        return extendGlyphEntityModel;
+
+    }
+];
+

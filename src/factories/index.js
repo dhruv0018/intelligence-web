@@ -18,7 +18,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
 
 // Require Entities & Values
 
-// require('./entities');
+require('./entities');
 require('./values');
 
 

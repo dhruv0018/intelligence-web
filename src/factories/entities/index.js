@@ -16,11 +16,7 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
+/* Define Entities */
 
-/**
- * GlyphEntity factory
- * @module IntelligenceWebClient
- * @name GlyphEntity
- * @type {factory}
- */
 IntelligenceWebClient.factory('GlyphEntity', require('./glyph-entity'));
+IntelligenceWebClient.factory('TelestrationEntity', require('./telestration-entity'));
