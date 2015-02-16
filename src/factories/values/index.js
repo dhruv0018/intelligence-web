@@ -19,11 +19,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
 // Require Complex Values
 
 require('./glyph-value');
-
+require('./telestration-value');
 
 /* Define Values */
 
 // TODO: Define and require all other Values here
-
-// IntelligenceWebClient.factory('TelestrationValue', require('./telestration-value');
-// IntelligenceWebClient.factory('GlyphValue', require('./glyph-value');
