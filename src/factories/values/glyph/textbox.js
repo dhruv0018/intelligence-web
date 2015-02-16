@@ -59,7 +59,6 @@ module.exports = [
 
                 textInputElement = angular.element('<div class="telestration-text-wrapper">' +
                     '<textarea wrap="off" class="telestration-text" style="overflow-x:hidden;overflow-y:hidden;top:' + startPoint.y + 'px;left:' + startPoint.x + 'px;width:' + offsetX + 'px;color:' + self.color + '" autofocus="true">' +
-                    (self.text || '') +
                     '</textarea>' +
                 '</div>');
 
@@ -69,12 +68,25 @@ module.exports = [
                 textInputArea[0].focus();
 
                 function fitTextArea(event) {
-                    angular.element(this).css('width', '0px').css('width', this.scrollWidth + 'px');
-                    angular.element(this).css('height', '0px').css('height', this.scrollHeight + 'px');
+                    var thisElement = angular.element(this);
+                    thisElement.css('width', '0px');
+                    thisElement.css('height', '0px');
+                    if (typeof this.scrollWidth === 'undefined') {
+                        thisElement.css('width', offsetX + 'px');
+                    } else {
+                        thisElement.css('width', this.scrollWidth + 'px');
+                    }
+
+                    if (typeof this.scrollHeight === 'undefined') {
+                        thisElement.css('height', offsetY + 'px');
+                    } else {
+                        thisElement.css('height', this.scrollHeight + 'px');
+                    }
                 }
 
                 textInputArea.on('change keyup keydown paste cut', fitTextArea);
                 fitTextArea.call(textInputArea);
+                textInputArea.val('').val(self.text || '');
 
                 //prevent drawing on top of text input box
                 textInputArea.on('mousedown', function(mouseEvent) {
@@ -82,7 +94,7 @@ module.exports = [
                 });
 
                 textInputArea.one('blur', function() {
-                    //submitText(true);
+                    submitText(true);
                 });
 
                 textInputArea.on('keydown', function(mouseEvent) {
