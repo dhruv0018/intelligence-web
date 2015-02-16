@@ -8,6 +8,7 @@
         "profile"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "config.js"
     ]
 }

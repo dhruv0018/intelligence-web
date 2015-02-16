@@ -15,22 +15,5 @@ var Athlete = angular.module('Athlete', [
     'Athlete.Profile'
 ]);
 
-/**
- * Athlete state router.
- * @module Athlete
- * @type {UI-Router}
- */
-Athlete.config([
-    '$stateProvider', '$urlRouterProvider',
-    function config($stateProvider, $urlRouterProvider) {
-
-        var Athlete = {
-            name: 'Athlete',
-            url: '/athlete',
-            parent: 'base',
-            abstract: true
-        };
-
-        $stateProvider.state(Athlete);
-    }
-]);
+/* File dependencies */
+require('./config');
