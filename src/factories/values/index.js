@@ -18,7 +18,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
 
 // Require Complex Values
 
-require('./glyph');
+require('./glyph-value');
 
 
 /* Define Values */
