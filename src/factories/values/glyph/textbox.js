@@ -97,9 +97,11 @@ module.exports = [
                     submitText(true);
                 });
 
-                textInputArea.on('keydown', function(mouseEvent) {
-                    if (mouseEvent.keyCode === 27) {
+                textInputArea.on('keydown', function(keyEvent) {
+                    if (keyEvent.keyCode === 27) {
                         submitText(false);
+                    } else if (keyEvent.keyCode === 13) {
+                        submitText(true);
                     }
                 });
             }
