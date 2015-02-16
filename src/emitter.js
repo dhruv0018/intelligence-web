@@ -48,6 +48,7 @@ IntelligenceWebClient.service('EventEmitter', [
 
 var EVENT_MAP = {
     'timeupdate': 'VIDEO_TIME_EMISSION',
+    'canplay': 'VIDEO_CAN_PLAY_EMISSION',
     'play': 'VIDEO_PLAY_EMISSION',
     'seeking': 'VIDEO_SEEKING_EMISSION',
     'pause': 'VIDEO_PAUSE_EMISSION',
@@ -84,7 +85,8 @@ var EVENT_PARSER_MAP = {
     'VIDEO_STOP_COMMAND': defaultEventProperties,
     'VIDEO_PLAY_EMISSION': defaultEventProperties,
     'VIDEO_SEEKING_EMISSION': prepareVideoEvent,
-    'VIDEO_PAUSE_EMISSION': defaultEventProperties
+    'VIDEO_PAUSE_EMISSION': defaultEventProperties,
+    'VIDEO_CAN_PLAY_EMISSION': defaultEventProperties
 };
 
 IntelligenceWebClient.constant('EVENT_PARSER_MAP', EVENT_PARSER_MAP);
