@@ -108,7 +108,7 @@
     "napa": "0.4.1",
     "node-event-emitter": "0.0.1",
     "protractor": "1.6.1",
-    "svg.js": "git://github.com:wout/svg.js.git#1.0.1",
+    "svg.js": "https://github.com/wout/svg.js/tarball/4f209322b942003f0392e4e23f677c161ba59b81",
     "time-grunt": "0.3.2"
   },
   "main": "./src/main.js",
