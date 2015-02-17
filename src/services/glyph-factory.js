@@ -22,7 +22,7 @@ module.exports = [
 
         var createGlyph = function createGlyph(type, SVGContext, color) {
 
-            if (!type) throw new Error('createShape requires \'type\' parameter');
+            if (!type) throw new Error('createGlyph requires \'type\' parameter');
 
             var glyph;
             switch (type) {
@@ -77,7 +77,7 @@ module.exports = [
 
         var extendGlyph = function extendGlyph(glyph, SVGContext) {
 
-            if (!glyph.type) throw new Error('createShape requires \'type\' parameter');
+            if (!glyph.type) throw new Error('extendGlyph requires \'type\' parameter');
 
             var extendedGlyph;
 
