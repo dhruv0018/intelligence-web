@@ -12,8 +12,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * the given strategy, if no strategy is given it uses a standard array sort.
  * After sorting the pool it will notify the given colleague of the winner.
  * Where the winner is the first item in the pool.
- * @param colleague {Function} - a colleague to notify.
- * @param strategy {Function} - a strategy to employ when deciding on the
+ * @param {Function} colleague - a colleague to notify.
+ * @param {Function} strategy - a strategy to employ when deciding on the
  * winner. Should be a comparator function. Defaults to standard array sort.
  */
 function Mediator(colleague, strategy) {
@@ -30,13 +30,14 @@ function Mediator(colleague, strategy) {
 
 /**
  * Pushes an item into the pool of items to mediate.
- * @param item - can be anything that can be compared with the given strategy.
+ * @param {item} item - can be anything that can be compared with the given strategy.
  */
 Mediator.prototype.push = function(item) {
 
     /* Push the item into the pool. */
     this.pool.push(item);
-}
+};
+
 /**
  * Flushes the pool of items; sorting them first, then notifying the mediators
  * colleague. After flushing the pool is emptied.
@@ -54,7 +55,7 @@ Mediator.prototype.flush = function() {
 
     /* Empty the pool. */
     this.pool = [];
-}
+};
 
 /**
  * @module IntelligenceWebClient
