@@ -10,7 +10,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
 IntelligenceWebClient.service('EventEmitter', [
     'EVENT_MAP', 'EVENT_PARSER_MAP',
     function(EVENT_MAP, EVENT_PARSER_MAP) {
-        var MAX_LISTENERS = 1000;
+        var MAX_LISTENERS = 10000;
         emitter.setMaxListeners(MAX_LISTENERS);
 
         //used by components to submit raw events to the emitter
@@ -41,8 +41,6 @@ IntelligenceWebClient.service('EventEmitter', [
         }
 
         return {
-            on: emitter.on,
-            emit: emitter.emit,
             register: register,
             subscribe: subscribe,
             unsubscribe: unsubscribe
@@ -57,7 +55,8 @@ var EVENT_MAP = {
     'seeking': 'VIDEO_SEEKING_EMISSION',
     'pause': 'VIDEO_PAUSE_EMISSION',
     //custom event to custom event mapping
-    'stopvideo': 'VIDEO_STOP_COMMAND'
+    'stopvideo': 'VIDEO_STOP_COMMAND',
+    'clip-completion': 'PLAYLIST_SWITCH_CLIP_COMMAND'
 };
 
 IntelligenceWebClient.constant('EVENT_MAP', EVENT_MAP);
@@ -90,7 +89,8 @@ var EVENT_PARSER_MAP = {
     'VIDEO_PLAY_EMISSION': defaultEventProperties,
     'VIDEO_SEEKING_EMISSION': prepareVideoEvent,
     'VIDEO_PAUSE_EMISSION': defaultEventProperties,
-    'VIDEO_CAN_PLAY_EMISSION': defaultEventProperties
+    'VIDEO_CAN_PLAY_EMISSION': defaultEventProperties,
+    'PLAYLIST_SWITCH_CLIP_COMMAND': defaultEventProperties
 };
 
 IntelligenceWebClient.constant('EVENT_PARSER_MAP', EVENT_PARSER_MAP);
