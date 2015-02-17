@@ -60,7 +60,7 @@ FilmHome.config([
  */
 FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
     '$q', 'SessionService', 'PositionsetsFactory', 'UsersFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'ReelsFactory', 'ROLE_TYPE',
-    function($q, session, positionsets, users, teams, games, players, reels, ROLE_TYPE) {
+    function data($q, session, positionsets, users, teams, games, players, reels, ROLE_TYPE) {
 
         var userId = session.currentUser.id;
         var teamId = session.currentUser.currentRole.teamId;
