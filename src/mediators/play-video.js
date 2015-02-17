@@ -13,18 +13,18 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.factory('PlayVideoMediator', [
-    'EventEmitter', 'Mediator', 'Videoplayer', 'PlayManager',
-    function(emitter, Mediator, videoplayer, playManager) {
+    'EventEmitter', 'Mediator', 'Videoplayer', 'PlayManager', 'EVENT_MAP',
+    function(emitter, Mediator, videoplayer, playManager, EVENT_MAP) {
 
         /* Create a new mediator to mediate which play should be played next. */
-        var mediator = new Mediator(changePlay, compareStartTimes)
+        var mediator = new Mediator(changePlay, compareStartTimes);
 
         /* Listen for video player "video complete" events. */
-        emitter.on('VIDEO_COMPLETE_EMISSION', onCompleteVideo);
+        emitter.subscribe(EVENT_MAP['clip-completion'], onCompleteVideo);
 
         /**
          * A mediator colleague to change the play.
-         * @param play {Play} - the play to change to.
+         * @param {Play} play - the play to change to.
          */
         function changePlay(play) {
 
