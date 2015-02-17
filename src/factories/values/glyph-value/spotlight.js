@@ -37,6 +37,24 @@ module.exports = [
         Spotlight.prototype.telestrationSVGMaskBlack = null;
         Spotlight.prototype.telestrationSVGMask = null;
 
+        Spotlight.prototype.hide = function hideSpotlight(spotlightShape) {
+
+            Glyph.prototype.hide.call(this);
+            this.spotlight.hide();
+            SVGMaskWhite.hide();
+            telestrationSVGMaskBlack.hide();
+
+        };
+
+        Spotlight.prototype.show = function showSpotlight(spotlightShape) {
+
+            Glyph.prototype.show.call(this);
+            this.spotlight.show();
+            SVGMaskWhite.show();
+            telestrationSVGMaskBlack.show();
+
+        };
+
         Spotlight.prototype.addSpotlight = function ShadowShapeAddShadow(spotlightShape) {
             this.spotlight = spotlightShape;
             var theMask = telestrationSVGMask.add(spotlightShape);

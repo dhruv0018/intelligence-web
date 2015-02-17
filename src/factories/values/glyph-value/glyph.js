@@ -5,15 +5,15 @@ module.exports = [
     'GlyphConstants',
     function(GlyphConstants) {
 
-        function Glyph(type, SVGContext, shape, color) {
+        function Glyph(type, SVGContext, shape, color, vertices) {
 
             // required parameter
-            if (!type) throw new Error('Glyph parameter \'type\' is required');
+            if (!this.type && !type) throw new Error('Glyph parameter \'type\' is required');
 
             // Glyph Model
             this.type = type;
             this.color = color;
-            this.vertices = [];
+            this.vertices = vertices || [];
 
             // Set Default Model Values
             this.currentShape = shape || null;
@@ -176,6 +176,14 @@ module.exports = [
 
         Glyph.prototype.bringToFront = function bringToFront() {
             if (this.currentShape) this.currentShape.front();
+        };
+
+        Glyph.prototype.hide = function hide() {
+            if (this.currentShape) this.currentShape.hide();
+        };
+
+        Glyph.prototype.show = function show() {
+            if (this.currentShape) this.currentShape.show();
         };
 
         Glyph.prototype.getShapeContext = function getShapeContext() {

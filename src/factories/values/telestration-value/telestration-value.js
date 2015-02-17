@@ -2,8 +2,8 @@
 /* TelestrationValue Object */
 
 module.exports = [
-    'GlyphFactory', 'GlyphEntity',
-    function(GlyphFactory, GlyphEntity) {
+    'GlyphEntity',
+    function(GlyphEntity) {
 
         function TelestrationValue(time, gameId) {
 
@@ -19,16 +19,6 @@ module.exports = [
             GlyphEntity(this.glyphs);
 
         }
-
-        TelestrationValue.prototype.addGlyph = function addGlyph(type, SVGContext, color) {
-
-            var newGlyph = GlyphFactory.createGlyph(type, SVGContext, color);
-
-            this.glyphs.addGlyph(newGlyph);
-
-            return newGlyph;
-
-        };
 
         return TelestrationValue;
     }

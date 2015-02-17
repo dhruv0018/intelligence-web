@@ -20,8 +20,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
 
 /* Define Factories */
 
-IntelligenceWebClient.factory('TelestrationValue', require('./telestration'));
-IntelligenceWebClient.factory('RawTelestrationValue', require('./raw-telestration'));
+IntelligenceWebClient.factory('ExtendTelestrationValue', require('./extend-telestration-value'));
+IntelligenceWebClient.factory('TelestrationValue', require('./telestration-value'));
 IntelligenceWebClient.factory('PlayTelestrationValue', require('./play-telestration'));
 
 

@@ -1,9 +1,9 @@
 
-/* TelestrationEntity */
+/* TelestrationEntity - Abstract Class*/
 
 module.exports = [
-    'TelestrationValue',
-    function(TelestrationValue) {
+    'TelestrationValue', 'ExtendTelestrationValue',
+    function(TelestrationValue, ExtendTelestrationValue) {
 
         var TelestrationEntity = function TelestrationEntity() {
 
@@ -24,16 +24,20 @@ module.exports = [
 
             this.addNewTelestration = function addNewTelestration(time, gameId, playId) {
 
-                var newTelestration = new TelestrationValue(time, gameId); // TODO: Create & Return Proper Telestration Values Here using a Factory Service?
+                var newTelestration = new TelestrationValue(time, gameId);
+
+                // Extend the new Telestration
+                ExtendTelestrationValue(newTelestration);
 
                 this.push(newTelestration);
 
                 return newTelestration;
+
             };
 
         };
 
-        var extendTelestrationEntityModel = function telestrationEnity(telestrationEntityModel) {
+        var extendTelestrationEntityModel = function extendTelestrationEntityModel(telestrationEntityModel) {
 
             if (!telestrationEntityModel) throw Error('extendTelestrationEntityModel requires telestrationEntityModel <Array>');
 

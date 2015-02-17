@@ -16,7 +16,12 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
+
+/* Require Complex Entities */
+
+require('./telestration-entity');
+
+
 /* Define Entities */
 
 IntelligenceWebClient.factory('GlyphEntity', require('./glyph-entity'));
-IntelligenceWebClient.factory('TelestrationEntity', require('./telestration-entity'));

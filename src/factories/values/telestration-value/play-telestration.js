@@ -19,5 +19,6 @@ module.exports = [
         angular.inheritPrototype(PlayTelestrationValue, TelestrationValue);
 
         return PlayTelestrationValue;
+
     }
 ];
