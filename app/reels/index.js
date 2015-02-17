@@ -119,8 +119,8 @@ ReelsArea.service('Reels.Data.Dependencies', [
  * @type {Controller}
  */
 ReelsArea.controller('ReelsArea.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AuthenticationService', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES', 'VIEWPORTS',
-    function controller($rootScope, $scope, $state, $stateParams, $modal, modals, auth, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES, VIEWPORTS) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'Videoplayer', 'AuthenticationService', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES', 'VIEWPORTS',
+    function controller($rootScope, $scope, $state, $stateParams, $modal, modals, videoplayer, auth, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES, VIEWPORTS) {
 
         $scope.auth = auth;
 
@@ -147,6 +147,8 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.playManager = playManager;
         // Refresh the playsManager
         playsManager.reset($scope.plays);
+        var play = playsManager.plays[0];
+        $scope.sources = play.getVideoSources();
 
         $scope.expandAll = false;
 

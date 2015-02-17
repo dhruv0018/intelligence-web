@@ -43,7 +43,7 @@
             <div class="playHeadingContainer">
 
                 <div class="playHeading">
-                    <h4 class="title" data-ng-click="selectPlay()">
+                    <h4 class="title" data-ng-click="selectMobileClipPlay()">
 
                         <span class="team">{{teams[play.possessionTeamId].name}}</span>
 
@@ -57,7 +57,7 @@
 
             </div>
 
-            <ul class="playBody" data-ng-hide="play !== playManager.current" >
+            <ul class="playBody" data-ng-hide="play !== playManager.current || playIsInBreakdown" >
                 <krossover-event
                     data-plays="plays"
                     data-play="play"
@@ -95,7 +95,8 @@
                     
                 </div>
 
-                <span class="playplay" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY, invisible: editFlag}"><i class="icon icon-play-circle"></i></span>
+                <span class="playplay" data-ng-click="videoplayer.play()" data-ng-class="{playing: play === playManager.current && videoplayer.currentState === VG_STATES.PLAY, invisible: editFlag}"><i class="icon icon-play-circle"></i></span>
+
             </div>
             
             <ul class="playBody" data-ng-show="!editFlag && (expandAll || !play.summaries.length)" data-ng-hide="!expandAll && (editFlag || play !== playManager.current)" >
@@ -148,8 +149,8 @@
                     </h4>
 
                 </div>
-                
-                <span class="playplay" data-ng-click="playPlay()" data-ng-class="{playing: play === playManager.current && playManager.playState === VG_STATES.PLAY}"><i class="icon icon-play-circle"></i></span>
+
+                <span class="playplay" data-ng-click="videoplayer.play()" data-ng-class="{playing: play === playManager.current && videoplayer.currentState === VG_STATES.PLAY, invisible: editFlag }"><i class="icon icon-play-circle"></i></span>
 
             </div>
 

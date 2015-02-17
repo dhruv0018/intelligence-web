@@ -29,6 +29,7 @@ require('./viewports');
 require('./logs');
 require('./device');
 require('./emitter');
+require('./mediator');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
@@ -116,6 +117,8 @@ require('./managers/play');
 require('./managers/plays');
 require('./managers/event');
 require('./managers/storage');
+
+require('./mediators/play-video');
 
 require('./directives/alert');
 require('./directives/match');

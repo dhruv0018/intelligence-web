@@ -94,8 +94,8 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager',
-    function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager) {
+    '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'PlaysManager',
+    function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, playsManager) {
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
@@ -116,7 +116,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
         $scope.uploadedBy = users.get($scope.game.uploaderUserId);
 
-        $scope.sources = $scope.game.getVideoSources();
         $scope.filmTitle = $scope.game.description;
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
@@ -133,6 +132,9 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             var playsFilter = { gameId: $scope.game.id };
             $scope.totalPlays = plays.getList(playsFilter);
             $scope.plays = $scope.totalPlays;
+            playsManager.reset($scope.plays);
+            var play = playsManager.plays[0];
+            $scope.sources = play.getVideoSources();
 
             /* TO-DO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.
@@ -162,8 +164,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             $scope.expandAll = false;
         }
-
     }
 ]);
-
 
