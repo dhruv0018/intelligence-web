@@ -41,6 +41,8 @@ IntelligenceWebClient.service('EventEmitter', [
         }
 
         return {
+            on: emitter.on,
+            emit: emitter.emit,
             register: register,
             subscribe: subscribe,
             unsubscribe: unsubscribe
