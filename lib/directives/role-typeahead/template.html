@@ -6,6 +6,6 @@
            data-typeahead-loading="loading"
            data-typeahead-template-url="role-typeahead-dropdown.html"
            data-typeahead-min-length="2"
-           data-typeahead="user as user.firstName + ' ' + user.lastName for user in findUsers() | filter: {name: $viewValue}">
-        <krossover-spinner data-ng-if="usersLoading"></krossover-spinner>
+           data-typeahead="user as user.firstName + ' ' + user.lastName for user in searchUsers() | filter: {name: $viewValue}">
+        <krossover-spinner data-ng-if="loading"></krossover-spinner>
 </div>
