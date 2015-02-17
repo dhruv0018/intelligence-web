@@ -67,7 +67,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 var profiles = self.clip.videoTranscodeProfiles;
 
                 /* Map the video transcode profiles to video sources. */
-                return profiles.map(profileToSource(profile));
+                return profiles.map(profileToSource);
 
                 function profileToSource(profile) {
 
