@@ -29,6 +29,7 @@ require('./viewports');
 require('./logs');
 require('./device');
 require('./emitter');
+require('./mediator');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
