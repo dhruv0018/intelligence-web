@@ -87,8 +87,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 // Extend Telestration Entities
-                if (game.rawTelestrations) RawTelestrationEntity(game.rawTelestrations);
-                if (game.playTelestrations) PlayTelestrationEntity(game.playTelestrations);
+                if (game.rawTelestrations) RawTelestrationEntity(game.rawTelestrations, game.id);
+                if (game.playTelestrations) PlayTelestrationEntity(game.playTelestrations, game.id);
 
                 return game;
             },

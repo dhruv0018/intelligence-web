@@ -7,7 +7,7 @@ module.exports = [
 
         var TelestrationEntity = function TelestrationEntity() {
 
-            this.getTelestration = function getTelestration(time, gameId, playId) {
+            this.getTelestration = function getTelestration(time, playId) {
 
                 if (!time && parseInt(time) !== time) throw new Error('getTelestration missing required \'time\' parameter or time parameter is not an integer.');
 
@@ -16,22 +16,9 @@ module.exports = [
                 });
 
                 // telestration at 'time' does not exist
-                if (!filteredTelestrations.length) return this.addNewTelestration(time, gameId, playId);
+                if (!filteredTelestrations.length) return this.addNewTelestration(time, playId);
                 // return the existing telestration at 'time'
                 else return filteredTelestrations[0];
-
-            };
-
-            this.addNewTelestration = function addNewTelestration(time, gameId, playId) {
-
-                var newTelestration = new TelestrationValue(time, gameId);
-
-                // Extend the new Telestration
-                ExtendTelestrationValue(newTelestration);
-
-                this.push(newTelestration);
-
-                return newTelestration;
 
             };
 

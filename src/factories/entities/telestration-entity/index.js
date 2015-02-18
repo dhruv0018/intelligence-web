@@ -21,3 +21,4 @@ var IntelligenceWebClient = angular.module(pkg.name);
 IntelligenceWebClient.factory('TelestrationEntity', require('./telestration-entity'));
 IntelligenceWebClient.factory('RawTelestrationEntity', require('./raw-telestration-entity'));
 IntelligenceWebClient.factory('PlayTelestrationEntity', require('./play-telestration-entity'));
+IntelligenceWebClient.factory('ReelTelestrationEntity', require('./reel-telestration-entity'));

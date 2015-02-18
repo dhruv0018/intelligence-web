@@ -65,7 +65,7 @@
         "sidebar",
         "poster-image",
         "spinner",
-        "telestration"
+        "telestrations"
     ],
     "scripts": [
         "index.js"

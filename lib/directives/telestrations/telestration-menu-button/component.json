@@ -1,0 +1,14 @@
+{
+    "name": "telestration-menu-button",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js",
+        "directive.js",
+        "controller.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

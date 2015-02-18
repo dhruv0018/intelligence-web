@@ -1,5 +1,5 @@
 {
-    "name": "telestration",
+    "name": "telestrations",
     "paths": [
         "."
     ],
@@ -9,7 +9,6 @@
     "scripts": [
         "directive.js",
         "service.js",
-        "factory.js",
         "index.js"
     ],
     "styles": [
@@ -17,6 +16,7 @@
     ],
     "locals": [
         "glyph",
-        "telestration-menu"
+        "telestration-menu",
+        "telestration-menu-button"
     ]
 }

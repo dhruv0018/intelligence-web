@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'ROLES', 'Utilities', 'BaseFactory', 'SessionService',
-    function(ROLES, utilities, BaseFactory, session) {
+    'ROLES', 'Utilities', 'BaseFactory', 'SessionService', 'PlayTelestrationEntity',
+    function(ROLES, utilities, BaseFactory, session, PlayTelestrationEntity) {
 
         var ReelsFactory = {
 
@@ -37,6 +37,9 @@ IntelligenceWebClient.factory('ReelsFactory', [
                         }
                     });
                 }
+
+                // Extend Telestration Entities
+                if (reel.telestrations) RawTelestrationEntity(reel.rawTelestrations, reel.id);
 
                 return reel;
             },
