@@ -115,6 +115,7 @@ require('./managers/plays');
 require('./managers/event');
 require('./managers/storage');
 
+require('./mediators/event');
 require('./mediators/play-video');
 
 require('./directives/alert');
