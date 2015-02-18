@@ -6,7 +6,8 @@
         "krossover-fast-backward-button.html",
         "krossover-fast-forward-button.html",
         "krossover-jump-backward-button.html",
-        "krossover-jump-forward-button.html"
+        "krossover-jump-forward-button.html",
+        "krossover-overlay-play.html"
     ],
     "scripts": [
         "index.js"
