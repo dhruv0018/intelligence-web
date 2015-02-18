@@ -12,6 +12,11 @@
         "index.js"
     ],
     "styles": [
+        "ads.less",
+        "buffering.less",
+        "controls.less",
+        "overlay.less",
+        "poster.less",
         "styles.less"
     ]
 }
