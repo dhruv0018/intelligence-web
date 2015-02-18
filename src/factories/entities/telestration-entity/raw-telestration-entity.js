@@ -2,8 +2,8 @@
 /* RawTelestrationEntity */
 
 module.exports = [
-    'TelestrationEntity', 'ExtendTelestrationValue',
-    function(TelestrationEntity, ExtendTelestrationValue) {
+    'TelestrationEntity', 'ExtendTelestrationValue', 'RawTelestrationValue',
+    function(TelestrationEntity, ExtendTelestrationValue, RawTelestrationValue) {
 
         var RawTelestrationEntity = function RawTelestrationEntity(telestrationEntityModel, parentId) {
 
