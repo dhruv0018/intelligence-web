@@ -70,10 +70,7 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         playManager.videoTitle = 'rawFilm';
 
         // Set telestrations
-        var isGame = ($scope.filmTitle === 'games');
-        var isBreakdown = (isGame && $state.current.name === 'Games.Breakdown');
-        var telestrationsDataKey = (!isGame) ? 'telestrations' : (isBreakdown) ? 'playTelestrations' : 'rawTelestrations';
-        $scope.telestrations = $scope.game[telestrationsDataKey];
+        $scope.telestrations = $scope.game.rawTelestrations;
     }
 ]);
 

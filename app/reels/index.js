@@ -151,6 +151,9 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.sources = play.getVideoSources();
 
         $scope.expandAll = false;
+        $scope.filmTitle = $scope.game.description;
+
+        $scope.telestrations = $scope.reel.telestrations;
 
         // Editing config
 

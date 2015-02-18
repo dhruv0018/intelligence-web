@@ -119,10 +119,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.filmTitle = $scope.game.description;
 
         // Set telestrations
-        var isGame = ($scope.filmTitle === 'games');
-        var isBreakdown = (isGame && $state.current.name === 'Games.Breakdown');
-        var telestrationsDataKey = (!isGame) ? 'telestrations' : (isBreakdown) ? 'playTelestrations' : 'rawTelestrations';
-        $scope.telestrations = $scope.game[telestrationsDataKey];
+        $scope.telestrations = $scope.game.playTelestrations;
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
         if ($scope.game.isDelivered()) {
