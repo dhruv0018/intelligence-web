@@ -10,9 +10,7 @@
  vg-autoplay="config.autoPlay"
  is-mobile="isMobile"
 >
-    <!--data-ng-hide="played || !isMobile"-->
-    <poster-image data-ng-if="!isMobile && !state" class="posterImage"></poster-image>
-
+    <vg-poster data-ng-if="!isMobile && !state" vg-url="testUrl"></vg-poster>
     <vg-media vg-src="sources"></vg-media>
 
     <vg-controls vg-autohide="config.autohide" vg-autohide-time="config.autohideTime">
