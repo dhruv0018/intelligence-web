@@ -245,6 +245,22 @@ module.exports = [
             this.dashedArray = dashedArray || GlyphConstants.DASHED_ARRAY;
         };
 
+        Glyph.prototype.unextend = function unextendGlyph() {
+
+            var self = this;
+
+            var modelAttributes = ['vertices', 'type', 'color', 'zIndex', 'text'];
+
+            for (var attr in self) {
+
+                var isMember = (modelAttributes.indexOf(attr) == -1) ? false : true;
+
+                if (!isMember) delete self[attr];
+
+            }
+
+        };
+
         return Glyph;
     }
 ];

@@ -166,6 +166,17 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             $scope.filteredPlaysIds = [];
 
             $scope.expandAll = false;
+
+            /* Listen To Event */
+
+            $scope.$on('telestrations:save', function(event, callbackFn) {
+
+                // Save Game
+                $scope.game.save().then(function onSaved() {
+                    callbackFn();
+                });
+
+            });
         }
     }
 ]);

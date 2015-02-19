@@ -62,6 +62,18 @@ module.exports = [
 
             };
 
+            this.unextend = function unextendGlyphEntity() {
+
+                /* Unextend everything else */
+
+                this.forEach(function unextendGlyphValues(glyph, index) {
+
+                    if (glyph.unextend) glyph.unextend();
+
+                });
+
+            };
+
         };
 
         var extendGlyphEntityModel = function extendGlyphEntityModel(GlyphEntityModel) {

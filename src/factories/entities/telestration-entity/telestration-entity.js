@@ -22,6 +22,23 @@ module.exports = [
 
             };
 
+            this.unextend = function unextendTelestrationEntity() {
+
+                /* Unextend Contained  */
+
+                this.forEach(function unextendTelestrationValues(telestrationValue) {
+
+                    telestrationValue.unextend();
+
+                });
+
+                /* Delete Functions */
+
+                delete this.getTelestration;
+                delete this.addNewTelestration;
+                delete this.unextend;
+            };
+
         };
 
         var extendTelestrationEntityModel = function extendTelestrationEntityModel(telestrationEntityModel) {

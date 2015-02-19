@@ -2,8 +2,7 @@
 /* TelestrationValue Object */
 
 module.exports = [
-    'GlyphEntity',
-    function(GlyphEntity) {
+    function() {
 
         function TelestrationValue(time) {
 
@@ -12,9 +11,6 @@ module.exports = [
             // Telestration Model
             this.time = time;
             this.glyphs = [];
-
-            // Extend Glyphs with GlyphEntity
-            GlyphEntity(this.glyphs);
 
         }
 

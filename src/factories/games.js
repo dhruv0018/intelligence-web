@@ -27,7 +27,14 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 game = game || self;
 
+                /* Unextend telestrations */
+
+                if (game.playTelestrations && game.playTelestrations.unextend) game.playTelestrations.unextend();
+                if (game.rawTelestrations && game.rawTelestrations.unextend) game.rawTelestrations.unextend();
+
+
                 /* Create a copy of the resource to break reference to orginal. */
+
                 var copy = angular.copy(game);
                 delete copy.flow;
 
