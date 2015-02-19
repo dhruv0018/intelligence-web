@@ -75,7 +75,7 @@
         		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || film.isSharedWithUser(user) || user.id === currentUser.id || (!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE))" data-ng-click="shareSubmit(user); user = null">Add</button>
         	</form>
         	<div class="how-to-search">
-                <p>Start typing the last name of the user you want to share with.</p>
+                <p>Start typing the name of the user you want to share with.</p>
                 <p data-ng-show="isGame && currentUser.is(ROLES.COACH)" class="public-breakdown-information">
                     Please note that if you share a breakdown with the public, the breakdown will automatically be available for all users you select below.
                 </p>

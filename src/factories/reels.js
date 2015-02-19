@@ -1,4 +1,5 @@
 var pkg = require('../../package.json');
+var moment = require('moment');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
