@@ -188,7 +188,6 @@ IntelligenceWebClient.service('EventManager', [
             this.tagset = tagset || this.tagset;
 
             this.current = angular.copy(model);
-            this.highlighted = null;
         };
 
         /**

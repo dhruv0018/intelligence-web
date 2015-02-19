@@ -52,6 +52,7 @@ IntelligenceWebClient.service('PlayManager', [
         this.setCurrent = function(play) {
 
             this.current = play;
+            eventManager.current = play.events[0];
         };
 
         /**
