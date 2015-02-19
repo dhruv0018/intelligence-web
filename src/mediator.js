@@ -45,13 +45,13 @@ Mediator.prototype.push = function(item) {
 Mediator.prototype.flush = function() {
 
     /* Sort the pool with the given strategy. */
-    this.pool.sort(this.strategy);
+    if (this.pool.length) this.pool.sort(this.strategy);
 
     /* Determine the winner, the item that placed first in the pool after sort. */
     var winner = this.pool[0];
 
     /* Notify the given colleague of the winner. */
-    this.colleague(winner);
+    if (winner) this.colleague(winner);
 
     /* Empty the pool. */
     this.pool = [];
