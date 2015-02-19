@@ -38,12 +38,6 @@ ReelsArea.config([
                     var reelId = parseInt($stateParams.id, 36);
                     $state.go('ReelsArea', {id: reelId});
                 }
-            ],
-            onExit: [
-                'PlayManager',
-                function(playManager) {
-                    playManager.clear();
-                }
             ]
         };
 
@@ -76,6 +70,12 @@ ReelsArea.config([
                     if (reel.isDeleted) {
                         account.gotoUsersHomeState();
                     }
+                }
+            ],
+            onExit: [
+                'PlayManager',
+                function(playManager) {
+                    playManager.clear();
                 }
             ]
         };
