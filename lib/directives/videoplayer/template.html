@@ -10,8 +10,8 @@
  vg-autoplay="config.autoPlay"
  is-mobile="isMobile"
 >
-
-    <!--<poster-image krossover-play-pause-button class="posterImage" data-ng-hide="played || !isMobile" data-ng-click="played = true"></poster-image>-->
+    <!--data-ng-hide="played || !isMobile"-->
+    <poster-image data-ng-if="!isMobile && !state" class="posterImage"></poster-image>
 
     <vg-media vg-src="sources"></vg-media>
 
