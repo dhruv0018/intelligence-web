@@ -154,6 +154,12 @@ ReelsArea.controller('ReelsArea.controller', [
         // Refresh the playsManager
         playsManager.reset($scope.plays);
         var play = playsManager.plays[0];
+        var playRelatedGame = gamesFactory.get(play.gameId);
+
+        $scope.posterImage = {
+            url: playRelatedGame.video.thumbnail
+        };
+
         $scope.sources = play.getVideoSources();
 
         $scope.expandAll = false;
