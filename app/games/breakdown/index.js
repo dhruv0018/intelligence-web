@@ -99,6 +99,11 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
+
+        $scope.posterImage = {
+            url: $scope.game.video.thumbnail
+        };
+
         $scope.publiclyShared = false;
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
