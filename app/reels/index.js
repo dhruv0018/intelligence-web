@@ -38,6 +38,12 @@ ReelsArea.config([
                     var reelId = parseInt($stateParams.id, 36);
                     $state.go('ReelsArea', {id: reelId});
                 }
+            ],
+            onExit: [
+                'PlayManager',
+                function(playManager) {
+                    playManager.clear();
+                }
             ]
         };
 
