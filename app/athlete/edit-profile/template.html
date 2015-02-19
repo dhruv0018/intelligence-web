@@ -1,0 +1,32 @@
+<section class="athlete-edit-profile">
+
+    <aside class="sidebar">
+
+        <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
+
+        <nav role="navigation">
+
+            <ul class="nav nav-pills nav-stacked">
+
+                <li ui-sref-active="active"><a href data-ui-sref="EditProfile.BasicInfo"><i class="icon icon-info-circle"></i> Basic Info</a></li>
+                <li ui-sref-active="active"><a href data-ui-sref="EditProfile.Achievements"><i class="icon icon-info-circle"></i> Achievements</a></li>
+                <li ui-sref-active="active"><a href data-ui-sref="EditProfile.Physical"><i class="icon icon-info-circle"></i> Physical</a></li>
+                <li ui-sref-active="active"><a href data-ui-sref="EditProfile.Academics"><i class="icon icon-info-circle"></i> Academics</a></li>
+                <li ui-sref-active="active"><a href data-ui-sref="EditProfile.Contact"><i class="icon icon-info-circle"></i> Contact</a></li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <main class="content">
+
+        <div class="basic-info" data-ui-view="basic-info"></div>
+        <div class="achievements" data-ui-view="achievements"></div>
+        <div class="physical" data-ui-view="physical"></div>
+        <div class="academics" data-ui-view="academics"></div>
+        <div class="contact" data-ui-view="contact"></div>
+
+    </main>
+</section>
