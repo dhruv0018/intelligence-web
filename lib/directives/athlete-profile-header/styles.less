@@ -41,6 +41,14 @@
         transition-property: all;
         transition-duration: 1s;
         transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+        &.collapsed {
+            max-height: 0px;
+        }
+
+        &.expanded {
+            max-height: 273px;
+        }
     }
 
     .athlete-attributes {
