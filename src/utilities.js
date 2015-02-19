@@ -6,7 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.service('Utilities', [
-    function service() {
+    '$window',
+    function service($window) {
 
         /**
          * Builds a unique array of numbers.
@@ -38,6 +39,38 @@ IntelligenceWebClient.service('Utilities', [
 
         this.floor = function floor(num) {
             return Math.floor(num);
+        };
+
+        this.matchMedia = function matchMedia(query, success, fail) {
+
+            var mql = $window.matchMedia(query);
+
+            var callback = function callback(mql) {
+
+                if (mql.matches) {
+
+                    if (!success) {
+                        throw new Error('Tried to invoke an undefined success callback in Utilities.matchMedia');
+                    } else {
+                        success();
+                    }
+                } else {
+
+                    if (!fail) {
+                        throw new Error('Tried to invoke an undefined fail callback in Utilities.matchMedia');
+                    } else {
+                        fail();
+                    }
+                }
+            };
+
+            mql.addListener(callback);
+
+            /* The listener only fires when the state of the window changes
+             * so the callback must be invoked manually to ensure execution
+             * on page-load.
+             */
+            callback(mql);
         };
     }
 ]);
