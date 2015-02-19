@@ -15,15 +15,17 @@
 
     <vg-media vg-src="sources"></vg-media>
 
-    <vg-scrub-bar>
-        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-    </vg-scrub-bar>
+    <vg-controls vg-autohide="config.autohide" vg-autohide-time="config.autohideTime">
 
-    <vg-controls>
+        <vg-scrub-bar>
+            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+        </vg-scrub-bar>
 
         <vg-play-pause-button></vg-play-pause-button>
 
-        <vg-time-display>{{ currentTime | date:'mm:ss' }} / {{ totalTime | date:'mm:ss' }}</vg-time-display>
+        <vg-time-display>
+            <strong>{{ currentTime | date:'mm:ss' }}</strong> / {{ totalTime | date:'mm:ss' }}
+        </vg-time-display>
 
         <span class="direction-controls">
             <button class="btn-video jump-button" ng-click="onClickFastBackward()"><i class="icon icon-fast-backward"></i></button>
@@ -41,5 +43,7 @@
         <vg-fullscreen-button></vg-fullscreen-button>
 
     </vg-controls>
+
+    <vg-overlay-play></vg-overlay-play>
 
 </videogular>

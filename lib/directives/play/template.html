@@ -1,5 +1,5 @@
 <div ng-if="$root.viewport.name === VIEWPORTS.MOBILE.name">
-    
+
     <div data-ng-switch data-on="isReelsPlay" data-ng-hide="!play.hasVisibleEvents && !isIndexer">
         <!-- MOBILE REEL PLAY -->
         <div data-ng-switch-when="true" class="play play__reel" data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }">
@@ -7,7 +7,7 @@
             <div class="playHeadingContainer">
 
                 <div class="playHeading" data-ng-click="selectMobileClipPlay()">
-        
+
                     <h4 class="title title-reel">
                         <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
                             <krossover-item data-item="item" data-event="summary.event" data-ng-repeat="item in summary.items track by $index"></krossover-item>
@@ -21,7 +21,7 @@
                 </div>
 
                 <a class="playplay" data-ng-click="selectMobileClipPlay()"><i class="icon icon-play-circle"></i></a>
-                
+
                 <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
                 WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
                 <ul ng-hide="true">
@@ -30,6 +30,7 @@
                         data-play="play"
                         data-event="event"
                         data-league="league"
+                        data-highlighted-event-id="highlightedEventId"
                         data-ng-repeat="event in play.events">
                     </krossover-event>
                 </ul>
@@ -63,6 +64,7 @@
                     data-play="play"
                     data-event="event"
                     data-league="league"
+                    data-highlighted-event-id="highlightedEventId"
                     data-ng-repeat="event in play.events">
                 </krossover-event>
             </ul>
@@ -92,15 +94,15 @@
                     </h5>
 
                     <span data-ng-show="editFlag" class="delete-reel-play" data-ng-click="deleteReelPlay(index)"><i class="icon icon-remove"></i></span>
-                    
+
                 </div>
 
                 <span class="playplay" data-ng-click="videoplayer.play()" data-ng-class="{playing: play === playManager.current && videoplayer.currentState === VG_STATES.PLAY, invisible: editFlag}"><i class="icon icon-play-circle"></i></span>
 
             </div>
-            
+
             <ul class="playBody" data-ng-show="!editFlag && (expandAll || !play.summaries.length)" data-ng-hide="!expandAll && (editFlag || play !== playManager.current)" >
-            
+
 
                 <krossover-event
                     data-auto-advance="autoAdvance"
@@ -108,6 +110,7 @@
                     data-play="play"
                     data-event="event"
                     data-league="league"
+                    data-highlighted-event-id="highlightedEventId"
                     data-ng-repeat="event in play.events">
                 </krossover-event>
 
@@ -118,7 +121,7 @@
         <div data-ng-switch-default data-ng-hide="!play.hasVisibleEvents && !isIndexer" class="play" data-ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll }" data-ng-click="selectPlay()">
 
             <div class="playHeadingContainer">
-        
+
                 <div class="playHeading">
 
                     <h4 data-ng-if="isIndexer">
@@ -162,6 +165,7 @@
                     data-play="play"
                     data-event="event"
                     data-league="league"
+                    data-highlighted-event-id="highlightedEventId"
                     data-ng-repeat="event in play.events">
                 </krossover-event>
 
@@ -170,17 +174,17 @@
             <hr class="summaryBodyDivider">
 
             <div class="playFooter">
-            
+
                 <button class="btn-delete-play" data-ng-if="isIndexer" data-ng-disabled="play.isSaving" data-ng-click="deletePlay()">Delete Play</button>
-                
+
                 <div class="save-indicator" data-ng-if="isIndexer">
                     <i class="icon icon-refresh active" data-ng-show="play.isSaving"></i>
                     <i class="icon icon-ok success" data-ng-show="play.id" data-ng-hide="!play.id || play.isSaving || play.error"></i>
                     <i class="icon icon-remove error" data-ng-show="play.error"></i>
                 </div>
-                
+
                 <button class="play-link" data-ng-if="reelsActive && isTeamMember" data-open-modal="AddReel.Modal" data-modal-options="options"><i class="icon icon-plus"></i> Add to reel</button>
-                
+
                 <button class="play-link pull-right disabled ng-hide" data-ng-if="!isIndexer"><i class="icon icon-tag"></i> Label Play</button>
 
             </div>
