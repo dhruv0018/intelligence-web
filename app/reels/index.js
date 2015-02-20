@@ -71,6 +71,12 @@ ReelsArea.config([
                         account.gotoUsersHomeState();
                     }
                 }
+            ],
+            onExit: [
+                'PlayManager',
+                function(playManager) {
+                    playManager.clear();
+                }
             ]
         };
 
