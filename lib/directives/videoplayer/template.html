@@ -1,47 +1,51 @@
-<videogular
- ng-class="{'mobile': isMobile}"
- vg-player-ready="onPlayerReady($API)"
- vg-complete="onCompleteVideo()"
- vg-update-time="onUpdateTime($currentTime, $duration)"
- vg-update-size="onUpdateSize"
- vg-update-volume="onUpdateVolume($volume)"
- vg-update-state="onUpdateState($state)"
- vg-change-source="onChangeSource($source)"
- vg-autoplay="config.autoPlay"
- is-mobile="isMobile"
->
-    <vg-poster data-ng-if="!isMobile && !state" vg-url="posterImage.url"></vg-poster>
-    <vg-media vg-src="sources"></vg-media>
+<div class="video-player">
 
-    <vg-controls vg-autohide="config.autohide" vg-autohide-time="config.autohideTime">
+    <videogular
+    ng-class="{'mobile': isMobile}"
+    vg-player-ready="onPlayerReady($API)"
+    vg-complete="onCompleteVideo()"
+    vg-update-time="onUpdateTime($currentTime, $duration)"
+    vg-update-size="onUpdateSize"
+    vg-update-volume="onUpdateVolume($volume)"
+    vg-update-state="onUpdateState($state)"
+    vg-change-source="onChangeSource($source)"
+    vg-autoplay="config.autoPlay"
+    is-mobile="isMobile"
+    >
+        <vg-poster data-ng-if="!isMobile && !state" vg-url="posterImage.url"></vg-poster>
+        <vg-media vg-src="sources"></vg-media>
 
-        <vg-scrub-bar>
-            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-        </vg-scrub-bar>
+        <vg-controls vg-autohide="config.autohide" vg-autohide-time="config.autohideTime">
 
-        <vg-play-pause-button></vg-play-pause-button>
+            <vg-scrub-bar>
+                <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+            </vg-scrub-bar>
 
-        <vg-time-display>
-            <strong>{{ currentTime | date:'mm:ss' }}</strong> / {{ totalTime | date:'mm:ss' }}
-        </vg-time-display>
+            <vg-play-pause-button></vg-play-pause-button>
 
-        <span class="direction-controls">
-            <button class="btn-video jump-button" ng-click="onClickFastBackward()"><i class="icon icon-fast-backward"></i></button>
-            <button class="btn-video jump-button" ng-class="{active: mediaElement.playbackRate === 3.0}" ng-click="onClickFastForward()"><i class="icon icon-fast-forward"></i></button>
+            <vg-time-display>
+                <strong>{{ currentTime | date:'mm:ss' }}</strong> / {{ totalTime | date:'mm:ss' }}
+            </vg-time-display>
 
-            <button class="btn-video jump-button" ng-click="onClickJumpBackward()"><i class="icon icon-step-backward"></i></button>
-            <button class="btn-video jump-button" ng-class="{active: mediaElement.playbackRate === 0.25}" ng-click="onClickJumpForward()"><i class="icon icon-step-forward"></i></button>
-        </span>
+            <span class="direction-controls">
+                <button class="btn-video jump-button" ng-click="onClickFastBackward()"><i class="icon icon-fast-backward"></i></button>
+                <button class="btn-video jump-button" ng-class="{active: mediaElement.playbackRate === 3.0}" ng-click="onClickFastForward()"><i class="icon icon-fast-forward"></i></button>
 
-        <vg-volume>
-            <vg-mute-button></vg-mute-button>
-            <vg-volume-bar></vg-volume-bar>
-        </vg-volume>
+                <button class="btn-video jump-button" ng-click="onClickJumpBackward()"><i class="icon icon-step-backward"></i></button>
+                <button class="btn-video jump-button" ng-class="{active: mediaElement.playbackRate === 0.25}" ng-click="onClickJumpForward()"><i class="icon icon-step-forward"></i></button>
+            </span>
 
-        <vg-fullscreen-button></vg-fullscreen-button>
+            <vg-volume>
+                <vg-mute-button></vg-mute-button>
+                <vg-volume-bar></vg-volume-bar>
+            </vg-volume>
 
-    </vg-controls>
+            <vg-fullscreen-button></vg-fullscreen-button>
 
-    <vg-overlay-play data-ng-if="!state"></vg-overlay-play>
+        </vg-controls>
 
-</videogular>
+        <vg-overlay-play data-ng-if="!state"></vg-overlay-play>
+
+    </videogular>
+
+</div>
