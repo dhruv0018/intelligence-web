@@ -251,13 +251,16 @@ module.exports = [
 
             var modelAttributes = ['vertices', 'type', 'color', 'zIndex', 'text'];
 
-            for (var attr in self) {
+            var copy = {};
 
-                var isMember = (modelAttributes.indexOf(attr) == -1) ? false : true;
+            Object.keys(self).forEach(function copyAttributes(attribute) {
 
-                if (!isMember) delete self[attr];
+                var isMember = (modelAttributes.indexOf(attribute) == -1) ? false : true;
+                if (isMember) copy[attribute] = self[attribute];
 
-            }
+            });
+
+            return copy;
 
         };
 

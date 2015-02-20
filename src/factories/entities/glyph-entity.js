@@ -3,9 +3,15 @@
 /* GlyphEntity - Extends GlyphEntityModel */
 
 module.exports = [
-    function() {
+    'BaseEntity',
+    function(BaseEntity) {
 
         var GlyphEntity = function() {
+
+            /* Extend BaseEntity */
+
+            BaseEntity(this);
+
 
             this.getGlyphs = function getGlyphs() {
 
@@ -58,18 +64,6 @@ module.exports = [
 
                 this.forEach(function showGlyph(glyph) {
                     glyph.show();
-                });
-
-            };
-
-            this.unextend = function unextendGlyphEntity() {
-
-                /* Unextend everything else */
-
-                this.forEach(function unextendGlyphValues(glyph, index) {
-
-                    if (glyph.unextend) glyph.unextend();
-
                 });
 
             };

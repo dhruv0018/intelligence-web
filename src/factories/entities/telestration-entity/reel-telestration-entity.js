@@ -19,6 +19,8 @@ module.exports = [
 
                 var newTelestration = new ReelTelestrationValue(time, parentId, playId);
 
+                if (!newTelestration) return null;
+
                 // Extend the new Telestration
                 ExtendTelestrationValue(newTelestration);
 

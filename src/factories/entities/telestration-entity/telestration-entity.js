@@ -2,10 +2,15 @@
 /* TelestrationEntity - Abstract Class*/
 
 module.exports = [
-    'TelestrationValue', 'ExtendTelestrationValue',
-    function(TelestrationValue, ExtendTelestrationValue) {
+    'BaseEntity', 'TelestrationValue', 'ExtendTelestrationValue',
+    function(BaseEntity, TelestrationValue, ExtendTelestrationValue) {
 
         var TelestrationEntity = function TelestrationEntity() {
+
+            /* Extend BaseEntity */
+
+            BaseEntity(this);
+
 
             this.getTelestration = function getTelestration(time, playId) {
 
@@ -20,23 +25,6 @@ module.exports = [
                 // return the existing telestration at 'time'
                 else return filteredTelestrations[0];
 
-            };
-
-            this.unextend = function unextendTelestrationEntity() {
-
-                /* Unextend Contained  */
-
-                this.forEach(function unextendTelestrationValues(telestrationValue) {
-
-                    telestrationValue.unextend();
-
-                });
-
-                /* Delete Functions */
-
-                delete this.getTelestration;
-                delete this.addNewTelestration;
-                delete this.unextend;
             };
 
         };
