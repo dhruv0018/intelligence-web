@@ -1,4 +1,4 @@
-<div class="telestration-container" id="svg-context-area">
+<div class="telestration-container">
 
     <telestration-menu-button>
         <telestration-menu class="telestration-menu"></telestration-menu>
@@ -6,6 +6,6 @@
 
     <glyph data-ng-repeat="glyph in telestrationInterface.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
 
-    <ng-transclude></ng-transclude>
+    <ng-transclude id="svg-context-area" class="transcluded-content"></ng-transclude>
 
 </div>
