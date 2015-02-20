@@ -1,5 +1,3 @@
-var MEDIATION_TIMEOUT = 300;
-
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -13,8 +11,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.factory('PlayVideoMediator', [
-    'EventEmitter', 'Mediator', 'Videoplayer', 'PlayManager', 'EVENT_MAP',
-    function(emitter, Mediator, videoplayer, playManager, EVENT_MAP) {
+    'EventEmitter', 'Mediator', 'Videoplayer', 'PlayManager', 'EventManager', 'EVENT_MAP',
+    function(emitter, Mediator, videoplayer, playManager, eventManager, EVENT_MAP) {
 
         /* Create a new mediator to mediate which play should be played next. */
         var mediator = new Mediator(changePlay, compareStartTimes);
@@ -30,6 +28,7 @@ IntelligenceWebClient.factory('PlayVideoMediator', [
 
             /* Set the current play. */
             playManager.current = play;
+            eventManager.current = play.events[0];
 
             /* Get the video sources from the play. */
             var sources = play.getVideoSources();
@@ -53,8 +52,8 @@ IntelligenceWebClient.factory('PlayVideoMediator', [
          */
         function onCompleteVideo() {
 
-            /* Set a timeout to mediate after the video is complete. */
-            setTimeout(mediate, MEDIATION_TIMEOUT);
+            /* Wait for next frame to mediate after the video is complete. */
+            requestAnimationFrame(mediate);
 
             /* Mediate the plays. */
             function mediate() {

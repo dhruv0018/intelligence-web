@@ -56,6 +56,9 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         var gameId = $stateParams.id;
 
         $scope.game = games.get(gameId);
+        $scope.posterImage = {
+            url: $scope.game.video.thumbnail
+        };
         $scope.publiclyShared = false;
 
         //TODO remove some of this stuff later
