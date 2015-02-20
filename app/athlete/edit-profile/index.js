@@ -12,7 +12,7 @@ var angular = window.angular;
  * Edit Profile page module.
  * @module Edit Profile
  */
-var EditProfile = angular.module('Athlete.Profile', [
+var EditProfile = angular.module('Athlete.EditProfile', [
     'Athlete.EditProfile.BasicInfo',
     'Athlete.EditProfile.Academics',
     'Athlete.EditProfile.Achievements',

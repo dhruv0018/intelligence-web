@@ -5,7 +5,7 @@ var angular = window.angular;
  * Edit Profile page module.
  * @module Profile
  */
-var EditProfile = angular.module('Athlete.Profile');
+var EditProfile = angular.module('Athlete.EditProfile');
 
 /**
  * Edit Profile page state router.
@@ -18,12 +18,12 @@ EditProfile.config([
 
         $stateProvider
 
-        .state('Athlete.Profile', {
+        .state('Athlete.EditProfile', {
             url: '/profile',
             views: {
                 'main@root': {
-                    templateUrl: 'athlete/profile/template.html',
-                    controller: 'Athlete.Profile.controller'
+                    templateUrl: 'athlete/edit-profile/template.html',
+                    controller: 'Athlete.EditProfile.controller'
                 }
             }
         });

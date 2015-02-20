@@ -2,10 +2,10 @@
 var angular = window.angular;
 
 /**
- * BasicInfo page module.
- * @module BasicInfo
+ * Academics page module.
+ * @module Academics
  */
-var BasicInfo = angular.module('Athlete.EditProfile.BasicInfo', [
+var Academics = angular.module('Athlete.EditProfile.Academics', [
     'ui.router',
     'ui.bootstrap',
     'ngMaterial',
@@ -13,11 +13,11 @@ var BasicInfo = angular.module('Athlete.EditProfile.BasicInfo', [
 ]);
 
 /* Cache the template files */
-BasicInfo.run([
+Academics.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('athlete/edit-profile/basic-info/template.html', require('./template.html'));
+        $templateCache.put('athlete/edit-profile/academics/template.html', require('./template.html'));
     }
 ]);
 

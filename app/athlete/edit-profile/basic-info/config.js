@@ -24,33 +24,7 @@ BasicInfo.config([
                     templateUrl: 'athlete/edit-profile/basic-info/template.html',
                     controller: 'Athlete.EditProfile.BasicInfo.controller'
                 }
-            },
-
-            resolve: {
-                'Athlete.EditProfile.BasicInfo.Data': [
-                    '$q', 'Athlete.EditProfile.BasicInfo.Data.Dependencies',
-                    function($q, data) {
-
-                        return $q.all(data);
-                    }
-                ]
             }
         });
     }
-]);
-
-BasicInfo.service('Athlete.EditProfile.BasicInfo.Data.Dependencies', [
-    'SessionService', 'ReelsFactory', 'UsersFactory',
-    function(session, reels, users) {
-
-        var userId = session.currentUser.id;
-
-        var Data = {
-            users: users.load({relatedUserId: userId}), //TO-DO: Change to users by teamId if possible
-            reels: reels.load({userId: userId})
-        };
-
-        return Data;
-    }
-
 ]);

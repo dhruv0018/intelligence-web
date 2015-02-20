@@ -397,6 +397,35 @@
         "Athlete": true
     },
 
+    "Athlete.EditProfile": {
+
+        "Athlete": true
+    },
+
+    "Athlete.EditProfile.Academics": {
+
+        "Athlete": true
+    },
+
+    "Athlete.EditProfile.Achievements": {
+
+        "Athlete": true
+    },
+    "Athlete.EditProfile.BasicInfo": {
+
+        "Athlete": true
+    },
+
+    "Athlete.EditProfile.Contact": {
+
+        "Athlete": true
+    },
+
+    "Athlete.EditProfile.Physical": {
+
+        "Athlete": true
+    },
+
     "Athlete.GameArea": {
 
         "Athlete": true

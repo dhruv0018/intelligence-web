@@ -5,11 +5,15 @@
 
         <h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-        <krossover-uploader
-            hide
-            show-gt-md
-            data-on-upload="setProfileImage(files)"
-        ></krossover-uploader>
+        <a data-ui-sref="Athlete.EditProfile">
+            <md-button class="md-raised edit-profile-button">
+                <ng-md-icon
+                    icon="mode_edit"
+                    style="fill: black"
+                    size="15"
+                ></ng-md-icon>
+            </md-button>
+        </a>
 
         <ng-md-icon
             icon="{{toggle.icons.current}}"

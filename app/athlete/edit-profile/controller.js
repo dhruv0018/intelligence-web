@@ -13,7 +13,7 @@ var EditProfile = angular.module('Athlete.EditProfile');
  * @name EditProfile.controller
  * @type {controller}
  */
-EditProfile.controller('Athlete.Profile.controller', [
+EditProfile.controller('Athlete.EditProfile.controller', [
     '$scope', '$state', 'SessionService',
     function controller($scope, $state, $session) {
         // TO-DO: Move this to somewhere more appropriate (state.onEnter?)

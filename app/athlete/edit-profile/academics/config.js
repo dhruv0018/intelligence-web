@@ -24,33 +24,7 @@ Academics.config([
                     templateUrl: 'athlete/edit-profile/academics/template.html',
                     controller: 'Athlete.EditProfile.Academics.controller'
                 }
-            },
-
-            resolve: {
-                'Athlete.EditProfile.Academics.Data': [
-                    '$q', 'Athlete.EditProfile.Academics.Data.Dependencies',
-                    function($q, data) {
-
-                        return $q.all(data);
-                    }
-                ]
             }
         });
     }
-]);
-
-Academics.service('Athlete.EditProfile.Academics.Data.Dependencies', [
-    'SessionService', 'ReelsFactory', 'UsersFactory',
-    function(session, reels, users) {
-
-        var userId = session.currentUser.id;
-
-        var Data = {
-            users: users.load({relatedUserId: userId}), //TO-DO: Change to users by teamId if possible
-            reels: reels.load({userId: userId})
-        };
-
-        return Data;
-    }
-
 ]);
