@@ -24,4 +24,5 @@ require('./telestration-entity');
 
 /* Define Entities */
 
+IntelligenceWebClient.value('BaseEntity', require('./base-entity'));
 IntelligenceWebClient.factory('GlyphEntity', require('./glyph-entity'));

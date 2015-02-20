@@ -19,6 +19,8 @@ module.exports = [
 
                 var newTelestration = new RawTelestrationValue(time, parentId);
 
+                if (!newTelestration) return null;
+
                 // Extend the new Telestration
                 ExtendTelestrationValue(newTelestration);
 

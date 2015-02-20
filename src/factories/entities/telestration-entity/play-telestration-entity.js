@@ -20,6 +20,8 @@ module.exports = [
 
                 var newTelestration = new PlayTelestrationValue(time, parentId, playId);
 
+                if (!newTelestration) return null;
+
                 // Extend the new Telestration
                 ExtendTelestrationValue(newTelestration);
 

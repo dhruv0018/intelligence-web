@@ -18,7 +18,8 @@
                         {{athlete.firstName}}
                         {{athlete.lastName[0]}}.
                     </span>
-                    <a href> (View Stats) </a>
+                    <!-- Temporarily hide view stats
+                    <a href> (View Stats) </a>-->
                 </p>
                 <div class="pull-right">
                     <span data-ng-if="users[athlete.userId].lastAccessed">{{usersFactory.getLastAccessed(users[athlete.userId]) | date: 'mediumDate'}}</span>

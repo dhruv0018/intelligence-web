@@ -11,6 +11,8 @@ module.exports = [
 
                 var newGlyph = GlyphFactory.createGlyph(type, SVGContext, color);
 
+                if (!newGlyph) return null;
+
                 this.glyphs.addGlyph(newGlyph);
 
                 return newGlyph;
@@ -21,21 +23,17 @@ module.exports = [
 
                 var self = this;
 
-                var modelAttributes = ['playId', 'reelId', 'gameId', 'time', 'glyphs'];
+                var copy = {};
 
-                /* Remove properties not in the model */
+                // TODO: Call Super()
+                Object.keys(self).forEach(function assignCopies(key) {
 
-                for (var attr in self) {
+                    if (self[key].unextend) copy[key] = self[key].unextend();
+                    else copy[key] = angular.copy(self[key]);
 
-                    var isMember = (modelAttributes.indexOf(attr) == -1) ? false : true;
+                });
 
-                    if (!isMember) delete self[attr];
-
-                }
-
-                /* Unextend everything else */
-
-                this.glyphs.unextend();
+                return copy;
 
             };
 

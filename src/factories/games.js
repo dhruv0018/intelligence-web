@@ -23,19 +23,21 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             storage: 'GamesStorage',
             unextend: function(game) {
+
                 var self = this;
 
                 game = game || self;
 
-                /* Unextend telestrations */
+                var copy = {};
 
-                if (game.playTelestrations && game.playTelestrations.unextend) game.playTelestrations.unextend();
-                if (game.rawTelestrations && game.rawTelestrations.unextend) game.rawTelestrations.unextend();
+                // TODO: Use Super()
+                Object.keys(game).forEach(function assignCopies(key) {
 
+                    if (game[key].unextend) copy[key] = game[key].unextend();
+                    else copy[key] = angular.copy(game[key]);
 
-                /* Create a copy of the resource to break reference to orginal. */
+                });
 
-                var copy = angular.copy(game);
                 delete copy.flow;
 
                 copy.shares = copy.shares || [];
@@ -50,6 +52,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
 
                 return copy;
+
             },
             extend: function(game) {
 
@@ -94,8 +97,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 // Extend Telestration Entities
-                if (game.rawTelestrations) RawTelestrationEntity(game.rawTelestrations, game.id);
-                if (game.playTelestrations) PlayTelestrationEntity(game.playTelestrations, game.id);
+                game.rawTelestrations = game.rawTelestrations || [];
+                game.playTelestrations = game.playTelestrations || [];
+
+                RawTelestrationEntity(game.rawTelestrations, game.id);
+                PlayTelestrationEntity(game.playTelestrations, game.id);
 
                 return game;
             },
