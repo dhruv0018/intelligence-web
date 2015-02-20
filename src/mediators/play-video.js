@@ -1,5 +1,3 @@
-var MEDIATION_TIMEOUT = 300;
-
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -54,8 +52,8 @@ IntelligenceWebClient.factory('PlayVideoMediator', [
          */
         function onCompleteVideo() {
 
-            /* Set a timeout to mediate after the video is complete. */
-            setTimeout(mediate, MEDIATION_TIMEOUT);
+            /* Wait for next frame to mediate after the video is complete. */
+            requestAnimationFrame(mediate);
 
             /* Mediate the plays. */
             function mediate() {
