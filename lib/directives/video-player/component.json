@@ -1,5 +1,5 @@
 {
-    "name": "videoplayer",
+    "name": "video-player",
     "templates": [
         "template.html",
         "krossover-play-pause-button.html",
