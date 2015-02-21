@@ -1,12 +1,16 @@
 <div class="public-clip">
-	<film-header
-		data-film="game"
-        data-play="play">
-	</film-header>
-    
-    <div class="clip-body" data-ng-if="publiclyShared">
 
-        <x-krossover-videoplayer data-sources="sources" data-video-title="videoTitle"></x-krossover-videoplayer>
+    <film-header
+     film="game"
+     play="play">
+    </film-header>
+
+    <div class="clip-body">
+
+        <krossover-videoplayer
+         sources="sources"
+        >
+        </krossover-videoplayer>
 
         <krossover-sidebar>
 
@@ -38,13 +42,5 @@
         </footer>
     </div>
 
-    <!-- TODO: This should be taken of by the controller for games, and the locked-game should be a
-    directive (check restricted.html) as this is duplicated -->
-    <!-- <div data-ng-if="!publiclyShared">
-        <div class="locked-game">
-            <i class="icon icon-lock"></i>
-            <h3>You do not have permission to access this game</h3>
-        </div>
-    </div> -->
-
 </div>
+
