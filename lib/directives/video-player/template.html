@@ -3,12 +3,10 @@
     <videogular
      vg-player-ready="onPlayerReady($API)"
      vg-complete="onCompleteVideo()"
-     vg-update-time="onUpdateTime($currentTime, $duration)"
-     vg-update-size="onUpdateSize"
      vg-update-volume="onUpdateVolume($volume)"
      vg-update-state="onUpdateState($state)"
      vg-change-source="onChangeSource($source)"
-     vg-autoplay="config.autoPlay"
+     vg-autoplay="config.autoplay"
     >
         <vg-poster data-ng-if="!isMobile && !state" vg-url="posterImage.url"></vg-poster>
         <vg-media vg-src="sources"></vg-media>
