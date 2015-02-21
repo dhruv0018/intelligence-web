@@ -8,7 +8,9 @@
      vg-change-source="onChangeSource($source)"
      vg-autoplay="config.autoplay"
     >
-        <vg-poster data-ng-if="!isMobile && !state" vg-url="posterImage.url"></vg-poster>
+
+        <vg-poster ng-if="!state" vg-url="posterImage.url"></vg-poster>
+
         <vg-media vg-src="sources"></vg-media>
 
         <vg-controls vg-autohide="config.autohide" vg-autohide-time="config.autohideTime">
