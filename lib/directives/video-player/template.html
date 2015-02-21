@@ -1,16 +1,15 @@
 <div class="video-player">
 
     <videogular
-    ng-class="{'mobile': isMobile}"
-    vg-player-ready="onPlayerReady($API)"
-    vg-complete="onCompleteVideo()"
-    vg-update-time="onUpdateTime($currentTime, $duration)"
-    vg-update-size="onUpdateSize"
-    vg-update-volume="onUpdateVolume($volume)"
-    vg-update-state="onUpdateState($state)"
-    vg-change-source="onChangeSource($source)"
-    vg-autoplay="config.autoPlay"
-    is-mobile="isMobile"
+     ng-class="{'mobile': isMobile}"
+     vg-player-ready="onPlayerReady($API)"
+     vg-complete="onCompleteVideo()"
+     vg-update-time="onUpdateTime($currentTime, $duration)"
+     vg-update-size="onUpdateSize"
+     vg-update-volume="onUpdateVolume($volume)"
+     vg-update-state="onUpdateState($state)"
+     vg-change-source="onChangeSource($source)"
+     vg-autoplay="config.autoPlay"
     >
         <vg-poster data-ng-if="!isMobile && !state" vg-url="posterImage.url"></vg-poster>
         <vg-media vg-src="sources"></vg-media>
@@ -26,14 +25,6 @@
             <vg-time-display>
                 <strong>{{ currentTime | date:'mm:ss' }}</strong> / {{ totalTime | date:'mm:ss' }}
             </vg-time-display>
-
-            <span class="direction-controls">
-                <button class="btn-video jump-button" ng-click="onClickFastBackward()"><i class="icon icon-fast-backward"></i></button>
-                <button class="btn-video jump-button" ng-class="{active: mediaElement.playbackRate === 3.0}" ng-click="onClickFastForward()"><i class="icon icon-fast-forward"></i></button>
-
-                <button class="btn-video jump-button" ng-click="onClickJumpBackward()"><i class="icon icon-step-backward"></i></button>
-                <button class="btn-video jump-button" ng-class="{active: mediaElement.playbackRate === 0.25}" ng-click="onClickJumpForward()"><i class="icon icon-step-forward"></i></button>
-            </span>
 
             <vg-volume>
                 <vg-mute-button></vg-mute-button>
