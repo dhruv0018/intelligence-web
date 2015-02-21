@@ -115,13 +115,10 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
 
         //Todo remove some of this later
-        $scope.publiclyShared = true;
         $scope.team = teams.get($scope.game.teamId);
         $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
         $scope.uploadedBy = users.get($scope.game.uploaderUserId);
-
-        $scope.filmTitle = $scope.game.description;
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
         if ($scope.game.isDelivered()) {
