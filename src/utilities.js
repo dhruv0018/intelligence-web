@@ -49,17 +49,17 @@ IntelligenceWebClient.service('Utilities', [
 
                 if (mql.matches) {
 
-                    if (!success) {
-                        throw new Error('Tried to invoke an undefined success callback in Utilities.matchMedia');
-                    } else {
+                    if (success) {
                         success();
+                    } else {
+                        throw new Error('Tried to invoke an undefined success callback in Utilities.matchMedia');
                     }
                 } else {
 
-                    if (!fail) {
-                        throw new Error('Tried to invoke an undefined fail callback in Utilities.matchMedia');
-                    } else {
+                    if (fail) {
                         fail();
+                    } else {
+                        throw new Error('Tried to invoke an undefined fail callback in Utilities.matchMedia');
                     }
                 }
             };
