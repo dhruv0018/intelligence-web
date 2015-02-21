@@ -10,7 +10,8 @@
         "krossover-overlay-play.html"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "controller.js"
     ],
     "styles": [
         "ads.less",
