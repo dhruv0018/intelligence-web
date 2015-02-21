@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory',
-    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets, teams, games, plays) {
+    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'vgFullscreen',
+    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets, teams, games, plays, vgFullscreen) {
 
         var gameId = Number($stateParams.id);
 
@@ -39,23 +39,27 @@ Indexing.controller('Indexing.Main.Controller', [
 
         indexing.reset($scope.tagset, $scope.game, playsList);
 
-        /**
-         * Listen for video player enter full screen event.
-         */
-        $rootScope.$on(VG_EVENTS.ON_ENTER_FULLSCREEN, function() {
+        var element = document.getElementsByClassName('indexing-block')[0];
 
-            var element = document.getElementsByClassName('indexing-block')[0];
-            element.classList.add('fullscreen');
-        });
+        document.addEventListener(vgFullscreen.onchange, onFullScreenChange);
 
         /**
-         * Listen for video player exit full screen event.
+         * Videogular on fullscreen change event listener.
          */
-        $rootScope.$on(VG_EVENTS.ON_EXIT_FULLSCREEN, function() {
+        function onFullScreenChange() {
 
-            var element = document.getElementsByClassName('indexing-block')[0];
-            element.classList.remove('fullscreen');
-        });
+            /* If the video is in fullscreen. */
+            if (vgFullscreen.isFullScreen()) {
+
+                element.classList.add('fullscreen');
+            }
+
+            /* If the video is not in fullscreen. */
+            else {
+
+                element.classList.remove('fullscreen');
+            }
+        }
     }
 ]);
 
