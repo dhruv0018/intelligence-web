@@ -1,7 +1,6 @@
-<div class="video-player">
+<div class="video-player" ng-class="{'mobile': isMobile}">
 
     <videogular
-     ng-class="{'mobile': isMobile}"
      vg-player-ready="onPlayerReady($API)"
      vg-complete="onCompleteVideo()"
      vg-update-time="onUpdateTime($currentTime, $duration)"
