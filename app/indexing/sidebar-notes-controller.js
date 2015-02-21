@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Notes.Controller', [
-    '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS', 'GamesFactory', 'VideoPlayerInstance',
-    function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games, videoPlayerInstance) {
+    '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'GamesFactory', 'VideoPlayerInstance',
+    function controller($scope, $rootScope, GAME_NOTE_TYPES, games, videoPlayerInstance) {
 
         var Mousetrap = window.Mousetrap;
         var videoPlayer = videoPlayerInstance.promise;
