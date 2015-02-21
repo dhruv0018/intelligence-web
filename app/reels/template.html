@@ -25,9 +25,14 @@
             </krossover-sidebar>
 
             <div class="player reels-player" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
-                <x-krossover-videoplayer class="reels-video-container"
-                                         data-poster-image="posterImage"
-                                         data-sources="sources"></x-krossover-videoplayer>
+
+                <video-player
+                 class="reels-video-container"
+                 poster-image="posterImage"
+                 sources="sources"
+                >
+                </video-player>
+
             </div>
 
         </div>
