@@ -10,8 +10,6 @@
      vg-plays-inline="videoPlayer.config.playsInline"
     >
 
-        <vg-poster ng-if="!videoPlayer.state" vg-url="videoPlayer.posterImage.url"></vg-poster>
-
         <vg-media
          vg-loop="videoPlayer.config.loop"
          vg-preload="videoPlayer.config.preload"
@@ -40,7 +38,9 @@
 
         </vg-controls>
 
-        <vg-overlay-play ng-if="!videoPlayer.state"></vg-overlay-play>
+        <vg-poster ng-hide="videoPlayer.state" vg-url="videoPlayer.posterImage.url"></vg-poster>
+
+        <vg-overlay-play ng-hide="videoPlayer.state"></vg-overlay-play>
 
     </videogular>
 
