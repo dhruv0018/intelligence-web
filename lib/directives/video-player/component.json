@@ -2,10 +2,6 @@
     "name": "video-player",
     "templates": [
         "template.html",
-        "krossover-fast-backward-button.html",
-        "krossover-fast-forward-button.html",
-        "krossover-jump-backward-button.html",
-        "krossover-jump-forward-button.html",
         "overlay-play.html",
         "play-pause-button.html"
     ],
