@@ -1,11 +1,11 @@
 <div class="video-player" ng-class="{'mobile': videoPlayer.isMobile}">
 
     <videogular
-     vg-complete="onCompleteVideo()"
-     vg-player-ready="onPlayerReady($API)"
-     vg-update-state="onUpdateState($state)"
-     vg-change-source="onChangeSource($source)"
-     vg-update-volume="onUpdateVolume($volume)"
+     vg-complete="videoPlayer.onCompleteVideo()"
+     vg-player-ready="videoPlayer.onPlayerReady($API)"
+     vg-update-state="videoPlayer.onUpdateState($state)"
+     vg-change-source="videoPlayer.onChangeSource($source)"
+     vg-update-volume="videoPlayer.onUpdateVolume($volume)"
      vg-autoplay="videoPlayer.config.autoplay"
      vg-plays-inline="videoPlayer.config.playsInline"
     >
