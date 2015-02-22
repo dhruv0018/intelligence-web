@@ -18,7 +18,6 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
     function controller($scope, $rootScope, GAME_NOTE_TYPES, games, videoPlayer) {
 
         var Mousetrap = window.Mousetrap;
-        var videoPlayer = videoPlayerInstance.promise;
 
         $scope.noteValues = ['Camera did not follow play', 'Jersey not visible', 'Gap in film', 'Scoreboard shot', 'Other'];
 
