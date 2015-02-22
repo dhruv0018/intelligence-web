@@ -33,11 +33,19 @@
         padding: 0 50px;
     }
 
-    .indexing-block.fullscreen {
+    &.fullscreen {
 
-        width: ~"calc(100% - 20px)";
-        position: fixed;
-        z-index: 2147483647;
+        .indexing-block {
+
+            display: block;
+            width: 100%;
+            top: 20px;
+            margin: 0 auto;
+            position: fixed;
+            z-index: 2;
+            color: white;
+            text-align: center;
+        }
     }
 
     .indexing-form {
