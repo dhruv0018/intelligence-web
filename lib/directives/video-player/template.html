@@ -1,17 +1,23 @@
 <div class="video-player" ng-class="{'mobile': videoPlayer.isMobile}">
 
     <videogular
-     vg-player-ready="onPlayerReady($API)"
      vg-complete="onCompleteVideo()"
-     vg-update-volume="onUpdateVolume($volume)"
+     vg-player-ready="onPlayerReady($API)"
      vg-update-state="onUpdateState($state)"
      vg-change-source="onChangeSource($source)"
+     vg-update-volume="onUpdateVolume($volume)"
      vg-autoplay="videoPlayer.config.autoplay"
+     vg-plays-inline="videoPlayer.config.playsInline"
     >
 
         <vg-poster ng-if="!videoPlayer.state" vg-url="videoPlayer.posterImage.url"></vg-poster>
 
-        <vg-media vg-src="videoPlayer.sources"></vg-media>
+        <vg-media
+         vg-loop="videoPlayer.config.loop"
+         vg-preload="videoPlayer.config.preload"
+         vg-src="videoPlayer.sources"
+        >
+        </vg-media>
 
         <vg-controls vg-autohide="videoPlayer.config.autohide" vg-autohide-time="videoPlayer.config.autohideTime">
 
@@ -22,7 +28,7 @@
             <vg-play-pause-button></vg-play-pause-button>
 
             <vg-time-display>
-                <strong>{{ currentTime | date:'mm:ss' }}</strong> / {{ totalTime - currentTime | date:'mm:ss' }}
+                <strong>{{ currentTime | date:'mm:ss' }}</strong> / {{ totalTime | date:'mm:ss' }}
             </vg-time-display>
 
             <vg-volume>
