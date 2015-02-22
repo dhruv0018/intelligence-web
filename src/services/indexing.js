@@ -287,11 +287,6 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.clear();
             },
 
-            playPause: function() {
-
-                videoPlayer.playPause();
-            },
-
             jumpBack: function() {
 
                 var currentTime = videoPlayer.currentTime;
