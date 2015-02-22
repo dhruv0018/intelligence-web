@@ -43,25 +43,19 @@ videogular vg-controls .controls-container {
     color: white;
     background-color: black;
     position: absolute;
-    display: table;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-vg-play-pause-button {
-    display: table-cell;
-    width: 50px;
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
-}
+videogular vg-controls .controls-container .controls-left,
+videogular vg-controls .controls-container .controls-center,
+videogular vg-controls .controls-container .controls-right {
 
-videogular vg-time-display {
-    display: table-cell;
-    font-size: @font-size-small;
-    letter-spacing: -0.01em;
-    width: 100px;
-    vertical-align: middle;
-    text-align: center;
-    cursor: default;
+    display:flex;
+    height: 100%;
+    line-height: 50px;
+    opacity: 1;
 }
 
 videogular vg-scrub-bar {
@@ -69,7 +63,6 @@ videogular vg-scrub-bar {
     bottom: 50px;
     height: 10px;
     width: 100%;
-    display: table-cell;
     cursor: pointer;
     background-color: rgb(24,121,181);
 }
@@ -86,8 +79,19 @@ videogular vg-scrub-bar-current-time {
     cursor: pointer;
 }
 
+videogular vg-time-display {
+    font-size: @font-size-small;
+    letter-spacing: -0.01em;
+    margin-left: 10px;
+}
+
+vg-play-pause-button {
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
 videogular vg-volume {
-    display: table-cell;
     width: 50px;
     vertical-align: middle;
     text-align: center;
@@ -139,7 +143,6 @@ videogular vg-volume-bar .volumeClickArea {
 }
 
 videogular vg-fullscreen-button {
-    display: table-cell;
     width: 50px;
     vertical-align: middle;
     text-align: center;
