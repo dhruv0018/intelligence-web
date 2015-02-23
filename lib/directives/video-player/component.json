@@ -1,5 +1,12 @@
 {
     "name": "video-player",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "button-video-forward",
+        "button-video-backward"
+    ],
     "templates": [
         "template.html",
         "overlay-play.html",
