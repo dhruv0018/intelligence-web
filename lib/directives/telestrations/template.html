@@ -1,10 +1,10 @@
-<div class="telestration-container">
+<div class="telestration-container" glyph-editor>
 
     <telestration-controls>
         <telestration-menu class="telestration-menu"></telestration-menu>
     </telestration-controls>
 
-    <glyph data-ng-repeat="glyph in telestrationInterface.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
+    <glyph data-ng-repeat="glyph in telestrationsController.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
 
     <ng-transclude id="svg-context-area" class="transcluded-content"></ng-transclude>
 
