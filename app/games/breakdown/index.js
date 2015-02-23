@@ -104,6 +104,8 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             url: $scope.game.video.thumbnail
         };
 
+        $scope.cuePoints = [];
+
         $scope.publiclyShared = false;
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
