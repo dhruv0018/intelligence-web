@@ -1,5 +1,5 @@
 {
-    "name": "telestration-menu-button",
+    "name": "telestration-controls",
     "templates": [
         "template.html"
     ],
