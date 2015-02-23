@@ -19,5 +19,11 @@
         "overlay.less",
         "poster.less",
         "styles.less"
+    ],
+    "locals": [
+        "cuepoints"
+    ],
+    "paths": [
+        "."
     ]
 }
