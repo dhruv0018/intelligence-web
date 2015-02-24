@@ -78,6 +78,19 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         $scope.telestrations = $scope.game.rawTelestrations;
         $scope.sources = game.getVideoSources();
+
+        /* Listen To Event */
+
+        $scope.$on('telestrations:save', function(event, callbackFn) {
+
+            callbackFn = callbackFn || angular.noop;
+
+            // Save Game
+            $scope.game.save().then(function onSaved() {
+                callbackFn();
+            });
+
+        });
     }
 ]);
 

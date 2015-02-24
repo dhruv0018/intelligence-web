@@ -265,11 +265,23 @@ ReelsArea.controller('ReelsArea.controller', [
             });
         };
 
+
         $scope.$watchCollection('playManager.current', function(currentPlay) {
             if (currentPlay && currentPlay.cuePoints) {
                 angular.extend($scope.cuePoints, currentPlay.cuePoints);
             }
         });
+
+        $scope.$on('telestrations:save', function(event, callbackFn) {
+
+            callbackFn = callbackFn || angular.noop;
+
+            // Save Game
+            $scope.game.save().then(function onSaved() {
+                callbackFn();
+            });
+        });
+
     }
 ]);
 
