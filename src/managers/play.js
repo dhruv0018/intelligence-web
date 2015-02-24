@@ -34,6 +34,11 @@ IntelligenceWebClient.service('PlayManager', [
             this.current = null;
         };
 
+        this.getCurrentPlayId = function getCurrentPlayId() {
+
+            if (this.current) return this.current.id;
+        };
+
         /**
          * Resets the current play.
          */
