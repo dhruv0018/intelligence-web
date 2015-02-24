@@ -41,7 +41,9 @@ GamesBreakdown.config([
                     var gameId = $stateParams.id;
 
                     plays.forEach(function(play) {
-                        play.cuePoints = play.getTelestrationCuePoints(games.get(gameId));
+                        var telestrationCuePoints = play.getTelestrationCuePoints(games.get(gameId));
+                        var eventCuePoints = play.getEventCuePoints();
+                        play.cuePoints = telestrationCuePoints.concat(eventCuePoints);
                     });
                 }
             ]
