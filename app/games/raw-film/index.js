@@ -65,6 +65,8 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         $scope.posterImage = {
             url: $scope.game.video.thumbnail
         };
+
+        $scope.cuePoints = $scope.game.getRawTelestrationCuePoints();
         $scope.publiclyShared = false;
 
         //TODO remove some of this stuff later
