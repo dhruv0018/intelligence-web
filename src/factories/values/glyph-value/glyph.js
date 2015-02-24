@@ -211,12 +211,21 @@ module.exports = [
 
         Glyph.prototype.activeListenerRemovers = [];
 
-        Glyph.prototype.destroy = function() {
+        Glyph.prototype.removeListeners = function removeListeners() {
+
             if (this.moveable && this.currentShape) this.currentShape.fixed();
 
             this.activeListenerRemovers.forEach(function(listenerRemoverFunc) {
                 listenerRemoverFunc();
             });
+        };
+
+        Glyph.prototype.destroy = function() {
+
+            // remove listeners first
+            this.removeListeners();
+
+            // remove the svg
             if (this.currentShape) this.currentShape.remove();
         };
 

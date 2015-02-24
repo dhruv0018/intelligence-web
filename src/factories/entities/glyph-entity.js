@@ -29,7 +29,10 @@ module.exports = [
 
             self.popGlyph = function popGlyph() {
 
-                return self.pop();
+                var glyph = self.pop();
+                glyph.destroy();
+
+                return glyph;
 
             };
 
@@ -38,10 +41,15 @@ module.exports = [
                 var glyphIndex = self.indexOf(glyph);
                 if (glyphIndex != -1) self.splice(glyphIndex, 1);
 
+                glyph.destroy();
+
             };
 
             self.clearGlyphs = function clearGlyphs() {
 
+                self.forEach(function renderGlyph(glyph) {
+                    glyph.destroy();
+                });
                 self.length = 0;
 
             };
