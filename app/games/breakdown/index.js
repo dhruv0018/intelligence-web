@@ -33,7 +33,18 @@ GamesBreakdown.config([
                         return data($stateParams).load();
                     }
                 ]
-            }
+            },
+            onEnter: [
+                'Games.Breakdown.Data', '$stateParams', 'GamesFactory',
+                function(data, $stateParams, games) {
+                    var plays = data.plays;
+                    var gameId = $stateParams.id;
+
+                    plays.forEach(function(play) {
+                        play.cuePoints = play.getTelestrationCuePoints(games.get(gameId));
+                    });
+                }
+            ]
         };
 
         $stateProvider.state(GamesBreakdown);
