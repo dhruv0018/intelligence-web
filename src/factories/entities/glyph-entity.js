@@ -8,61 +8,63 @@ module.exports = [
 
         var GlyphEntity = function() {
 
+            var self = this;
+
             /* Extend BaseEntity */
 
-            BaseEntity(this);
+            BaseEntity(self);
 
 
-            this.getGlyphs = function getGlyphs() {
+            self.getGlyphs = function getGlyphs() {
 
-                return this;
-
-            };
-
-            this.addGlyph = function addGlyph(glyph) {
-
-                if (glyph) this.push(glyph);
+                return self;
 
             };
 
-            this.popGlyph = function popGlyph() {
+            self.addGlyph = function addGlyph(glyph) {
 
-                return this.pop();
-
-            };
-
-            this.removeGlyph = function removeGlyph(glyph) {
-
-                var glyphIndex = this.indexOf(glyph);
-                if (glyphIndex != -1) this.splice(glyphIndex, 1);
+                if (glyph) self.push(glyph);
 
             };
 
-            this.clearGlyphs = function clearGlyphs() {
+            self.popGlyph = function popGlyph() {
 
-                this.length = 0;
+                return self.pop();
 
             };
 
-            this.render = function render() {
+            self.removeGlyph = function removeGlyph(glyph) {
 
-                this.forEach(function renderGlyph(glyph) {
+                var glyphIndex = self.indexOf(glyph);
+                if (glyphIndex != -1) self.splice(glyphIndex, 1);
+
+            };
+
+            self.clearGlyphs = function clearGlyphs() {
+
+                self.length = 0;
+
+            };
+
+            self.render = function render() {
+
+                self.forEach(function renderGlyph(glyph) {
                     glyph.render();
                 });
 
             };
 
-            this.hide = function hide() {
+            self.hide = function hide() {
 
-                this.forEach(function hideGlyph(glyph) {
+                self.forEach(function hideGlyph(glyph) {
                     glyph.hide();
                 });
 
             };
 
-            this.show = function show() {
+            self.show = function show() {
 
-                this.forEach(function showGlyph(glyph) {
+                self.forEach(function showGlyph(glyph) {
                     glyph.show();
                 });
 

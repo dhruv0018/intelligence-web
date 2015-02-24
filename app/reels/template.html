@@ -24,14 +24,20 @@
 
             </krossover-sidebar>
 
-            <telestrations telestrations-entity="telestrations" class="telestration-container" id="videoTelestration" glyph-editor data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
+            <div class="player reels-player" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
+    
+                <telestrations telestrations-entity="telestrations" class="telestration-container" id="videoTelestration" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
 
-                    <x-krossover-videoplayer class="screen-lg-min"
-                                             class="reels-video-container"
-                                             data-poster-image="posterImage"
-                                             data-sources="sources"></x-krossover-videoplayer>
+                    <video-player
+                     class="reels-video-container"
+                     poster-image="posterImage"
+                     sources="sources"
+                    >
+                    </video-player>
 
-            </telestrations>
+                </telestrations>
+
+            </div>
 
         </div>
 

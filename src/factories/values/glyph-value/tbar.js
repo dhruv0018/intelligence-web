@@ -5,9 +5,9 @@ module.exports = [
     'GlyphValue', 'GlyphConstants',
     function(Glyph, GlyphConstants) {
 
-        function TBar(type, SVGContext, color) {
+        function TBar(type, options, SVGContext) {
 
-            Glyph.call(this, type, SVGContext, SVGContext.path(), color);
+            Glyph.call(this, type, options, SVGContext, SVGContext.path());
 
         }
         angular.inheritPrototype(TBar, Glyph);

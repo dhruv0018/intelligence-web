@@ -8,8 +8,9 @@
     ],
     "scripts": [
         "directive.js",
-        "service.js",
-        "index.js"
+        "index.js",
+        "constants.js",
+        "controller.js"
     ],
     "styles": [
         "styles.less"
@@ -17,6 +18,6 @@
     "locals": [
         "glyph",
         "telestration-menu",
-        "telestration-menu-button"
+        "telestration-controls"
     ]
 }

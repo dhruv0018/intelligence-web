@@ -5,15 +5,17 @@ module.exports = [
     'GlyphConstants',
     function(GlyphConstants) {
 
-        function Glyph(type, SVGContext, shape, color, vertices) {
+        function Glyph(type, options, SVGContext, shape) {
 
             // required parameter
             if (!this.type && !type) throw new Error('Glyph parameter \'type\' is required');
+            if (!options) throw new Error('Glyph parameter \'options\' is required');
+            if (!options.color) throw new Error('Glyph parameter \'options.color\' is required');
 
             // Glyph Model
             this.type = type;
-            this.color = color;
-            this.vertices = vertices || [];
+            this.color = options.color;
+            this.vertices = options.vertices || [];
 
             // Set Default Model Values
             this.currentShape = shape || null;
@@ -38,40 +40,57 @@ module.exports = [
         };
 
         Glyph.prototype.updateGlyphFromPixels = function updateGlyphFromPixels(x, y) {
-            // TODO: only call getBoundingClientRect on window Resize
+
+            x = lowerBoundVertex(x);
+            y = lowerBoundVertex(y);
+
             var boundingBox = this.getSVGBoxDimensions();
             var relativeX = x / boundingBox.width;
             var relativeY = y / boundingBox.height;
             var newVertex = {x: relativeX, y: relativeY};
 
             this.vertices[1] = newVertex;
+
         };
 
         Glyph.prototype.getVerticesInPixels = function getVerticesInPixels() {
-            // TODO: only call getBoundingClientRect on window Resize
+
             var boundingBox = this.getSVGBoxDimensions();
+
             var verticesInPixels = this.vertices.map(function convertToPixels(vertex) {
                 var relativeX = vertex.x * boundingBox.width;
                 var relativeY = vertex.y * boundingBox.height;
                 return {x: relativeX, y: relativeY};
             });
+
             return verticesInPixels;
+
         };
 
         Glyph.prototype.addVertexFromPixels = function addVertexFromPixels(x, y) {
-            // TODO: only call getBoundingClientRect on window Resize
+
+            x = lowerBoundVertex(x);
+            y = lowerBoundVertex(y);
+
             var boundingBox = this.getSVGBoxDimensions();
             var relativeX = x / boundingBox.width;
             var relativeY = y / boundingBox.height;
+
             this.vertices.push({x: relativeX, y: relativeY});
+
         };
 
         Glyph.prototype.updateVertexFromPixels = function updateVertexFromPixels(index, x, y) {
-            // TODO: only call getBoundingClientRect on window Resize
+
+            x = lowerBoundVertex(x);
+            y = lowerBoundVertex(y);
+
             var boundingBox = this.getSVGBoxDimensions();
             var relativeX = x / boundingBox.width;
             var relativeY = y / boundingBox.height;
+
             this.vertices[index] = {x: relativeX, y: relativeY};
+
         };
 
         Glyph.prototype.registerShapeContainerElement = function registerShapeContainerElement(elem) {
@@ -263,6 +282,8 @@ module.exports = [
             return copy;
 
         };
+
+        function lowerBoundVertex(val) { return (val >= 0) ? val : 0; }
 
         return Glyph;
     }

@@ -57,13 +57,14 @@ GamesRawFilm.config([
 ]);
 
 GamesRawFilm.controller('Games.Rawfilm.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory',
-    function controller($scope, $state, $stateParams, games, teams) {
-        var gameId = $stateParams.id;
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'PlayManager',
+    function controller($scope, $state, $stateParams, games, teams, users, playManager) {
 
-        $scope.game = games.get(gameId);
+        var gameId = $stateParams.id;
+        var game = games.get(gameId);
+
         $scope.posterImage = {
-            url: $scope.game.video.thumbnail
+            url: game.video.thumbnail
         };
 
         $scope.cuePoints = $scope.game.getRawTelestrationCuePoints();
@@ -74,11 +75,9 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         $scope.team = teams.get($scope.game.teamId);
         $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
-        // Set telestrations
+
         $scope.telestrations = $scope.game.rawTelestrations;
-
-        $scope.sources = $scope.game.getVideoSources();
-
+        $scope.sources = game.getVideoSources();
     }
 ]);
 

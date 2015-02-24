@@ -100,8 +100,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.rawTelestrations = game.rawTelestrations || [];
                 game.playTelestrations = game.playTelestrations || [];
 
-                RawTelestrationEntity(game.rawTelestrations, game.id);
-                PlayTelestrationEntity(game.playTelestrations, game.id);
+                if (!game.rawTelestrations.unextend) RawTelestrationEntity(game.rawTelestrations, game.id);
+                if (!game.playTelestrations.unextend) PlayTelestrationEntity(game.playTelestrations, game.id);
 
                 return game;
             },

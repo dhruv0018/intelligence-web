@@ -1,6 +1,6 @@
 <div class="games-breakdown">
 
-    <div class="filter-container screen-lg-min" data-ng-if="publiclyShared">
+    <div class="filter-container screen-lg-min">
 
         <plays-filter
                 data-game="game"
@@ -9,7 +9,7 @@
 
     </div>
 
-    <div class="main-highlight" data-ng-if="publiclyShared">
+    <div class="main-highlight">
 
         <krossover-sidebar>
 
@@ -17,15 +17,20 @@
 
         </krossover-sidebar>
 
-        <telestrations telestrations-entity="telestrations" glyph-editor>
+        <telestrations telestrations-entity="telestrations">
 
-            <x-krossover-videoplayer class="screen-lg-min"
-                                     data-sources="sources"
-                                     cue-points="cuePoints"
-                                     data-poster-image="posterImage"></x-krossover-videoplayer>
+
+            <video-player
+             class="screen-lg-min"
+             poster-image="posterImage"
+             cue-points="cuePoints"
+             sources="sources">
+            </video-player>
+
 
         </telestrations>
 
     </div>
+
 </div>
 

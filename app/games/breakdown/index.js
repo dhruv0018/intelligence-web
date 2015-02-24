@@ -118,20 +118,19 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.cuePoints = [];
 
         $scope.publiclyShared = false;
+
+        /* TODO: figure out if this stuff is used */
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
 
         $scope.reels = auth.isLoggedIn ? reels.getList() : [];
         $scope.playManager = playManager;
-        $scope.videoTitle = 'filmBreakdown';
         $scope.VIEWPORTS = VIEWPORTS;
         $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
 
-        //Todo remove some of this later
-        $scope.publiclyShared = true;
+        // TODO: remove some of this later
         $scope.team = teams.get($scope.game.teamId);
         $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-
         $scope.uploadedBy = users.get($scope.game.uploaderUserId);
 
         $scope.filmTitle = $scope.game.description;
@@ -150,7 +149,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             var play = playsManager.plays[0];
             $scope.sources = play.getVideoSources();
 
-            /* TO-DO: Remove this sessionStorage once playIds
+            /* TODO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.
              *
              * Storing playIds in session storage so Clips.Controller can

@@ -5,9 +5,9 @@ module.exports = [
     'GlyphValue', 'GlyphConstants',
     function(Glyph, GlyphConstants) {
 
-        function Arrow(type, SVGContext, color, vertices) {
+        function Arrow(type, options, SVGContext) {
 
-            Glyph.call(this, type, SVGContext, SVGContext.path(), color, vertices);
+            Glyph.call(this, type, options, SVGContext, SVGContext.path());
 
         }
         angular.inheritPrototype(Arrow, Glyph);

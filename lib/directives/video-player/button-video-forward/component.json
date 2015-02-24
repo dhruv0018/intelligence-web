@@ -1,12 +1,10 @@
 {
-    "name": "telestration-menu-button",
+    "name": "button-video-forward",
     "templates": [
         "template.html"
     ],
     "scripts": [
-        "index.js",
-        "directive.js",
-        "controller.js"
+        "index.js"
     ],
     "styles": [
         "styles.less"
