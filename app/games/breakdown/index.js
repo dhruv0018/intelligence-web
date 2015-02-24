@@ -191,6 +191,14 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
                 });
 
             });
+
+            $scope.$watchCollection('playManager.current', function(currentPlay) {
+                if (currentPlay && currentPlay.cuePoints) {
+                    angular.extend($scope.cuePoints, currentPlay.cuePoints);
+                }
+            });
+
+
         }
     }
 ]);
