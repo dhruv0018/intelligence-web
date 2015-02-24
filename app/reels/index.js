@@ -263,6 +263,17 @@ ReelsArea.controller('ReelsArea.controller', [
                 account.gotoUsersHomeState();
             });
         };
+
+        $scope.$on('telestrations:save', function(event, callbackFn) {
+
+            callbackFn = callbackFn || angular.noop;
+
+            // Save Game
+            $scope.game.save().then(function onSaved() {
+                callbackFn();
+            });
+
+        });
     }
 ]);
 
