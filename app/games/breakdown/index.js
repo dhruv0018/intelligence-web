@@ -117,16 +117,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             url: $scope.game.video.thumbnail
         };
 
-        $scope.cuePoints = [
-            {
-                time: 10,
-                type: 2
-            },
-            {
-                time: 13,
-                type: 1
-            }
-        ];
+        $scope.cuePoints = [];
 
         $scope.publiclyShared = false;
 
