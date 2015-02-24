@@ -45,6 +45,14 @@ module.exports = [
 
             };
 
+            self.removeListeners = function removeListeners() {
+
+                self.forEach(function removeGlyphListeners(glyph) {
+                    glyph.removeListeners();
+                });
+
+            };
+
             self.clearGlyphs = function clearGlyphs() {
 
                 self.forEach(function renderGlyph(glyph) {
