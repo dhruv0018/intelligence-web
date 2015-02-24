@@ -1,3 +1,19 @@
 <div class="basic-info">
+    <h1>Basic Info</h1>
 
+    <form>
+        <div class="name-box">
+            <h3>First Name</h3>
+            <input type="text" class="form-control" placeholder="Enter First Name"/>
+        </div>
+
+        <div class="name-box">
+            <h3>Last Name</h3>
+            <input type="text" class="form-control" placeholder="Enter Last Name"/>
+        </div>
+
+        <h3>About Me</h3>
+        <textarea cols="100" rows="5" maxlength="200" placeholder="Talk about your club team experience, stats, achievements, anything." ng-model="test" ng-trim="false"></textarea>
+        <span>{{200 - test.length}} left</span>
+    </form>
 </div>

@@ -20,7 +20,7 @@ Profile.controller('Athlete.Profile.controller', [
         $state.go('Athlete.Profile.Highlights');
 
         $scope.athlete = $session.currentUser;
-        $scope.athlete.profilePicture = 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg';
+        //$scope.athlete.profilePicture = 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg';
 
         $scope.tabs = {
             index: 0,

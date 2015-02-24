@@ -20,7 +20,7 @@ Academics.config([
 
         .state('Athlete.EditProfile.Academics', {
             views: {
-                'academics@Athlete.EditProfile': {
+                'content@Athlete.EditProfile': {
                     templateUrl: 'athlete/edit-profile/academics/template.html',
                     controller: 'Athlete.EditProfile.Academics.controller'
                 }

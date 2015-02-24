@@ -20,7 +20,7 @@ Achievements.config([
 
         .state('Athlete.EditProfile.Achievements', {
             views: {
-                'achievements@Athlete.EditProfile': {
+                'content@Athlete.EditProfile': {
                     templateUrl: 'athlete/edit-profile/achievements/template.html',
                     controller: 'Athlete.EditProfile.Achievements.controller'
                 }

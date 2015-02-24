@@ -20,17 +20,19 @@ EditProfile.controller('Athlete.EditProfile.controller', [
         $state.go('Athlete.EditProfile.BasicInfo');
 
         $scope.athlete = $session.currentUser;
-        $scope.athlete.profilePicture = 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg';
+        //$scope.athlete.profilePicture = 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg';
 
-        $scope.tabs = {
-            index: 0,
-            length: 3,
-            next: function next() {
-                this.index = Math.min(this.index + 1, this.length - 1);
-            },
-            prev: function prev() {
-                this.index = Math.max(this.index - 1, 0);
-            }
+        var reader = new FileReader();
+
+        $scope.setProfileImage = function setProfileImage(files) {
+            $scope.athlete.fileImage = files[0]; // resolve $scope.athlete
+
+            reader.readAsDataURL(files[0]);
+
+            reader.onload = function onload() {
+                $scope.athlete.profilePicture = reader.result;
+                $scope.$apply();
+            };
         };
     }
 ]);

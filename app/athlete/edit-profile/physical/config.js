@@ -20,7 +20,7 @@ Physical.config([
 
         .state('Athlete.EditProfile.Physical', {
             views: {
-                'physical@Athlete.EditProfile': {
+                'content@Athlete.EditProfile': {
                     templateUrl: 'athlete/edit-profile/physical/template.html',
                     controller: 'Athlete.EditProfile.Physical.controller'
                 }

@@ -20,7 +20,7 @@ BasicInfo.config([
 
         .state('Athlete.EditProfile.BasicInfo', {
             views: {
-                'basic-info@Athlete.EditProfile': {
+                'content@Athlete.EditProfile': {
                     templateUrl: 'athlete/edit-profile/basic-info/template.html',
                     controller: 'Athlete.EditProfile.BasicInfo.controller'
                 }

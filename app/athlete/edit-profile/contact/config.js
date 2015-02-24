@@ -20,7 +20,7 @@ Contact.config([
 
         .state('Athlete.EditProfile.Contact', {
             views: {
-                'contact@Athlete.EditProfile': {
+                'content@Athlete.EditProfile': {
                     templateUrl: 'athlete/edit-profile/contact/template.html',
                     controller: 'Athlete.EditProfile.Contact.controller'
                 }

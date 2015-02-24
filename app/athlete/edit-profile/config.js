@@ -19,7 +19,7 @@ EditProfile.config([
         $stateProvider
 
         .state('Athlete.EditProfile', {
-            url: '/profile',
+            url: '/edit-profile',
             views: {
                 'main@root': {
                     templateUrl: 'athlete/edit-profile/template.html',
