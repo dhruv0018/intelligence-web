@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory',
-    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory) {
+    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'CUEPOINT_TYPES',
+    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, CUEPOINT_TYPES) {
 
         var PlaysFactory = {
 
@@ -83,6 +83,44 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         return source;
                     }
                 }
+            },
+            getEventCuePoints: function() {
+                var cuePoints = [];
+
+                if (!this.events) return cuePoints;
+
+                cuePoints = this.events.map(function(event) {
+                    return {
+                        time: event.time,
+                        type: CUEPOINT_TYPES.EVENT
+                    };
+                });
+
+                return cuePoints;
+            },
+            getTelestrationCuePoints: function(film) {
+                var self = this;
+                var cuePoints = [];
+                var telestrationKey = null;
+
+                switch (film.description) {
+                    case 'games':
+                        telestrationKey = 'playTelestrations';
+                        break;
+                    case 'reels':
+                        telestrationKey = 'telestrations';
+                        break;
+                }
+
+                if (film[telestrationKey] && film[telestrationKey].length > 0) {
+                    film[telestrationKey].forEach(function(telestration) {
+                        if (telestration.playId === self.id) {
+                            cuePoints.push({ time: telestration.time, type: CUEPOINT_TYPES.TELESTRATION });
+                        }
+                    });
+                }
+
+                return cuePoints;
             }
         };
 
