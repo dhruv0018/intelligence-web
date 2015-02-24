@@ -13,8 +13,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.factory('CurrentEventMediator', [
-    'EventEmitter', 'Mediator', 'Videoplayer', 'EventManager', 'EVENT_MAP',
-    function(emitter, Mediator, videoplayer, eventManager, EVENT_MAP) {
+    'Mediator', 'EventManager',
+    function(Mediator, eventManager) {
 
         /* Create a new mediator to mediate what the current event should be. */
         var mediator = new Mediator(changeCurrentEvent, compareTimes);

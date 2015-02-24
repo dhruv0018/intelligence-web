@@ -98,7 +98,6 @@ Clips.controller('Clips.controller', [
         $scope.plays = [$scope.play];
 
         // Film Header data-attributes
-        $scope.publiclyShared = true;
         $scope.game = games.get($scope.play.gameId);
         $scope.team = teams.get($scope.game.teamId);
         $scope.opposingTeam = teams.get($scope.game.opposingTeamId);

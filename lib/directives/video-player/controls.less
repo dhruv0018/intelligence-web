@@ -1,11 +1,32 @@
 @import (reference) "main.less";
 
-@video-controls-bg: black;
-@video-controls-border: rgb(200, 200, 200);
-
 /*********************/
 /* Controlbar plugin */
 /*********************/
+
+videogular button {
+    cursor: pointer;
+}
+
+videogular .iconButton {
+    font-family: 'Krossover-Icons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+
+    background: none;
+    padding: 6px;
+    border: none;
+    outline: none;
+}
+
+videogular .iconButton:focus {
+}
+
 videogular vg-controls {
     width: 100%;
     height: 50px;
@@ -19,28 +40,22 @@ videogular vg-controls .controls-container {
     width: 100%;
     height: 50px;
     bottom: 0;
-    color: @gray-dark;
-    background-color: @video-controls-bg;
+    color: white;
+    background-color: black;
     position: absolute;
-    display: table;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-vg-play-pause-button {
-    display: table-cell;
-    width: 50px;
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
-}
+videogular vg-controls .controls-container .controls-left,
+videogular vg-controls .controls-container .controls-center,
+videogular vg-controls .controls-container .controls-right {
 
-videogular vg-time-display {
-    display: table-cell;
-    font-size: @font-size-small;
-    letter-spacing: -0.01em;
-    width: 100px;
-    vertical-align: middle;
-    text-align: center;
-    cursor: default;
+    display:flex;
+    height: 100%;
+    line-height: 50px;
+    opacity: 1;
 }
 
 videogular vg-scrub-bar {
@@ -48,7 +63,6 @@ videogular vg-scrub-bar {
     bottom: 50px;
     height: 10px;
     width: 100%;
-    display: table-cell;
     cursor: pointer;
     background-color: rgb(24,121,181);
 }
@@ -65,8 +79,19 @@ videogular vg-scrub-bar-current-time {
     cursor: pointer;
 }
 
+videogular vg-time-display {
+    font-size: @font-size-small;
+    letter-spacing: -0.01em;
+    margin-left: 10px;
+}
+
+vg-play-pause-button {
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
 videogular vg-volume {
-    display: table-cell;
     width: 50px;
     vertical-align: middle;
     text-align: center;
@@ -88,8 +113,6 @@ videogular vg-volume-bar .verticalVolumeBar {
     width: 50px;
     height: 100px;
     position: absolute;
-    border: 1px solid @video-controls-border;
-    background-color: @video-controls-bg;
 }
 
 videogular vg-volume-bar .volumeBackground {
@@ -120,7 +143,6 @@ videogular vg-volume-bar .volumeClickArea {
 }
 
 videogular vg-fullscreen-button {
-    display: table-cell;
     width: 50px;
     vertical-align: middle;
     text-align: center;
@@ -130,38 +152,26 @@ videogular vg-fullscreen-button {
 videogular vg-controls .hide-animation {
     animation: hideControlsAnimationFrames ease-out 0.5s;
     animation-iteration-count: 1;
-    animation-fill-mode: forwards; /*when the spec is finished*/
-    -webkit-animation: hideControlsAnimationFrames ease-out 0.5s;
-    -webkit-animation-iteration-count: 1;
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation: hideControlsAnimationFrames ease-out 0.5s;
-    -moz-animation-iteration-count: 1;
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation: hideControlsAnimationFrames ease-out 0.5s;
-    -o-animation-iteration-count: 1;
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation: hideControlsAnimationFrames ease-out 0.5s;
-    -ms-animation-iteration-count: 1;
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards;
 }
 
 @keyframes hideControlsAnimationFrames {
     0% {
-        opacity: 0.5;
+        opacity: 0.7;
     }
     100% {
         opacity: 0;
     }
 }
 
-videogular vg-controls .hide-animation:hover {
+videogular:hover vg-controls .hide-animation {
 
     animation: none;
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 videogular vg-controls .show-animation {
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 /* Controlbar icons */

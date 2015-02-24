@@ -6,16 +6,14 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Videoplayer', 'VideoPlayerInstance',
-    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayer, videoPlayerInstance) {
+    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer',
+    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayer) {
 
         var IndexingService = {
 
             reset: function(tagset, game, plays) {
 
                 var self = this;
-
-                self.isReady = false;
 
                 game.currentPeriod = 0;
                 game.teamIndexedScore = 0;
@@ -26,11 +24,6 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.reset(tagset);
                 playManager.reset(tagset, game.id);
                 playManager.clear();
-
-                videoPlayerInstance.promise.then(function() {
-
-                    self.isReady = true;
-                });
             },
 
             /**
@@ -45,7 +38,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     else this.step();
                 }
 
-                else if (this.isReady) {
+                else if (videoPlayer.isReady) {
 
                     this.isIndexing = true;
                     this.showTags = true;
@@ -294,32 +287,18 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.clear();
             },
 
-            playPause: function() {
-
-                if (this.isReady) {
-
-                    videoPlayer.playPause();
-                }
-            },
-
             jumpBack: function() {
 
-                if (this.isReady) {
-
-                    var currentTime = videoPlayer.currentTime;
-                    var time = currentTime - config.indexing.video.jump;
-                    videoPlayer.seekTime(time);
-                }
+                var currentTime = videoPlayer.currentTime;
+                var time = currentTime - config.indexing.video.jump;
+                videoPlayer.seekTime(time);
             },
 
             jumpForward: function() {
 
-                if (this.isReady) {
-
-                    var currentTime = videoPlayer.currentTime;
-                    var time = currentTime + config.indexing.video.jump;
-                    videoPlayer.seekTime(time);
-                }
+                var currentTime = videoPlayer.currentTime;
+                var time = currentTime + config.indexing.video.jump;
+                videoPlayer.seekTime(time);
             }
         };
 

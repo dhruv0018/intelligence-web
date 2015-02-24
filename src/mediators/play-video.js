@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.factory('PlayVideoMediator', [
-    'EventEmitter', 'Mediator', 'Videoplayer', 'PlayManager', 'EventManager', 'EVENT_MAP',
-    function(emitter, Mediator, videoplayer, playManager, eventManager, EVENT_MAP) {
+    'EventEmitter', 'Mediator', 'VideoPlayer', 'PlayManager', 'EventManager', 'EVENT_MAP',
+    function(emitter, Mediator, videoPlayer, playManager, eventManager, EVENT_MAP) {
 
         /* Create a new mediator to mediate which play should be played next. */
         var mediator = new Mediator(changePlay, compareStartTimes);
@@ -34,7 +34,7 @@ IntelligenceWebClient.factory('PlayVideoMediator', [
             var sources = play.getVideoSources();
 
             /* Change the video player source. */
-            videoplayer.changeSource(sources);
+            videoPlayer.changeSource(sources);
         }
 
         /**
@@ -59,7 +59,7 @@ IntelligenceWebClient.factory('PlayVideoMediator', [
             function mediate() {
 
                 mediator.flush();
-                videoplayer.play();
+                videoPlayer.play();
             }
         }
 
