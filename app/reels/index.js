@@ -61,8 +61,8 @@ ReelsArea.config([
                 ]
             },
             onEnter: [
-                '$state', '$stateParams', 'AccountService', 'ReelsFactory',
-                function($state, $stateParams, account, reels) {
+                '$state', '$stateParams', 'AccountService', 'ReelsFactory', 'Reels.Data',
+                function($state, $stateParams, account, reels, data) {
 
                     var reelId = Number($stateParams.id);
                     var reel = reels.get(reelId);
@@ -70,6 +70,13 @@ ReelsArea.config([
                     if (reel.isDeleted) {
                         account.gotoUsersHomeState();
                     }
+
+                    var plays = data.plays;
+                    plays.forEach(function(play) {
+                        var telestrationCuePoints = play.getTelestrationCuePoints(reel);
+                        var eventCuePoints = play.getEventCuePoints();
+                        play.cuePoints = telestrationCuePoints.concat(eventCuePoints);
+                    });
                 }
             ],
             onExit: [
@@ -161,7 +168,6 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.sources = play.getVideoSources();
 
         $scope.expandAll = false;
-        $scope.filmTitle = $scope.game.description;
 
         $scope.telestrations = $scope.reel.telestrations;
 
