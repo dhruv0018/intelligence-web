@@ -155,6 +155,7 @@ ReelsArea.controller('ReelsArea.controller', [
             $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
         });
 
+        $scope.cuePoints = [];
         $scope.playManager = playManager;
         // Refresh the playsManager
         playsManager.reset($scope.plays);
@@ -263,6 +264,12 @@ ReelsArea.controller('ReelsArea.controller', [
                 account.gotoUsersHomeState();
             });
         };
+
+        $scope.$watchCollection('playManager.current', function(currentPlay) {
+            if (currentPlay && currentPlay.cuePoints) {
+                angular.extend($scope.cuePoints, currentPlay.cuePoints);
+            }
+        });
     }
 ]);
 
