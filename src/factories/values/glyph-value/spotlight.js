@@ -20,7 +20,7 @@ module.exports = [
         var SVGMaskWhite;
 
 
-        function Spotlight(type, SVGContext, shape, spotlightShape) {
+        function Spotlight(type, options, SVGContext, shape, spotlightShape) {
 
             numShadowShapes++;
 
@@ -29,7 +29,7 @@ module.exports = [
             if (numShadowShapes == 1) addMaskLayers.call(this);
 
             this.addSpotlight(spotlightShape);
-            Glyph.call(this, type, SVGContext, shape);
+            Glyph.call(this, type, options, SVGContext, shape);
 
         }
         angular.inheritPrototype(Spotlight, Glyph);

@@ -5,9 +5,9 @@ module.exports = [
     'GlyphValue', 'GlyphConstants',
     function(Glyph, GlyphConstants) {
 
-        function TextBox(type, SVGContext) {
+        function TextBox(type, options, SVGContext) {
 
-            Glyph.call(this, type, SVGContext);
+            Glyph.call(this, type, options, SVGContext);
             this.editMode = true;
 
         }

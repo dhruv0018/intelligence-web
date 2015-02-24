@@ -5,9 +5,9 @@ module.exports = [
     'GlyphValue',
     function(Glyph) {
 
-        function Freehand(type, SVGContext, color) {
+        function Freehand(type, options, SVGContext) {
 
-            Glyph.call(this, type, SVGContext, SVGContext.path(), color);
+            Glyph.call(this, type, options, SVGContext, SVGContext.path());
 
         }
         angular.inheritPrototype(Freehand, Glyph);

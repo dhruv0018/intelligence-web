@@ -5,9 +5,9 @@ module.exports = [
     'SpotlightValue',
     function(Spotlight) {
 
-        function CircleSpotlight(type, SVGContext) {
+        function CircleSpotlight(type, options, SVGContext) {
 
-            Spotlight.call(this, type, SVGContext, SVGContext.circle(), SVGContext.circle());
+            Spotlight.call(this, type, options, SVGContext, SVGContext.circle(), SVGContext.circle());
 
             this.currentShape.opacity(0);
 

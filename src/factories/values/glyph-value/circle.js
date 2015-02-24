@@ -5,9 +5,9 @@ module.exports = [
     'GlyphValue',
     function(Glyph) {
 
-        function Circle(type, SVGContext, color) {
+        function Circle(type, options, SVGContext) {
 
-            Glyph.call(this, type, SVGContext, SVGContext.circle(), color);
+            Glyph.call(this, type, options, SVGContext, SVGContext.circle());
 
         }
         angular.inheritPrototype(Circle, Glyph);

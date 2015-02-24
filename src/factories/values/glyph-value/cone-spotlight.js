@@ -5,9 +5,9 @@ module.exports = [
     'SpotlightValue',
     function(Spotlight) {
 
-        function ConeSpotlight(type, SVGContext) {
+        function ConeSpotlight(type, options, SVGContext) {
 
-            Spotlight.call(this, type, SVGContext, SVGContext.path(), SVGContext.path());
+            Spotlight.call(this, type, options, SVGContext, SVGContext.path(), SVGContext.path());
 
             this.currentShape.opacity(0);
 

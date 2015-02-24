@@ -24,49 +24,53 @@ module.exports = [
 
             if (!type) throw new Error('createGlyph requires \'type\' parameter');
 
+            var options = {
+                color: color
+            };
+
             var glyph;
             switch (type) {
                 case TELESTRATION_TYPES.ARROW_SOLID:
-                    glyph = new Arrow(TELESTRATION_TYPES.ARROW_SOLID, SVGContext, color);
+                    glyph = new Arrow(TELESTRATION_TYPES.ARROW_SOLID, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.ARROW_DASHED:
-                    glyph = new Arrow(TELESTRATION_TYPES.ARROW_DASHED, SVGContext, color);
+                    glyph = new Arrow(TELESTRATION_TYPES.ARROW_DASHED, options, SVGContext);
                     glyph.setDashedArray();
                     break;
 
                 case TELESTRATION_TYPES.T_BAR_SOLID:
-                    glyph = new TBar(TELESTRATION_TYPES.T_BAR_SOLID, SVGContext, color);
+                    glyph = new TBar(TELESTRATION_TYPES.T_BAR_SOLID, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.T_BAR_DASHED:
-                    glyph = new TBar(TELESTRATION_TYPES.T_BAR_DASHED, SVGContext, color);
+                    glyph = new TBar(TELESTRATION_TYPES.T_BAR_DASHED, options, SVGContext);
                     glyph.setDashedArray();
                     break;
 
                 case TELESTRATION_TYPES.CONE_SPOTLIGHT:
-                    glyph = new ConeSpotlight(TELESTRATION_TYPES.CONE_SPOTLIGHT, SVGContext, color);
+                    glyph = new ConeSpotlight(TELESTRATION_TYPES.CONE_SPOTLIGHT, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.FREEHAND_SOLID:
-                    glyph = new Freehand(TELESTRATION_TYPES.FREEHAND_SOLID, SVGContext, color);
+                    glyph = new Freehand(TELESTRATION_TYPES.FREEHAND_SOLID, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.FREEHAND_DASHED:
-                    glyph = new Freehand(TELESTRATION_TYPES.FREEHAND_DASHED, SVGContext, color);
+                    glyph = new Freehand(TELESTRATION_TYPES.FREEHAND_DASHED, options, SVGContext);
                     glyph.setDashedArray();
                     break;
 
                 case TELESTRATION_TYPES.CIRCLE_SOLID:
-                    glyph = new Circle(TELESTRATION_TYPES.CIRCLE_SOLID, SVGContext, color);
+                    glyph = new Circle(TELESTRATION_TYPES.CIRCLE_SOLID, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.CIRCLE_SPOTLIGHT:
-                    glyph = new CircleSpotlight(TELESTRATION_TYPES.CIRCLE_SPOTLIGHT, SVGContext, color);
+                    glyph = new CircleSpotlight(TELESTRATION_TYPES.CIRCLE_SPOTLIGHT, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.TEXT:
-                    glyph = new TextBox(TELESTRATION_TYPES.TEXT, SVGContext, color);
+                    glyph = new TextBox(TELESTRATION_TYPES.TEXT, options, SVGContext);
                     break;
                 default:
                     break;
@@ -81,48 +85,53 @@ module.exports = [
 
             var extendedGlyph;
 
+            var options = {
+                color: glyph.color,
+                vertices: glyph.vertices
+            };
+
             switch (glyph.type) {
                 case TELESTRATION_TYPES.ARROW_SOLID:
-                    extendedGlyph = new Arrow(TELESTRATION_TYPES.ARROW_SOLID, SVGContext, glyph.color, glyph.vertices);
+                    extendedGlyph = new Arrow(TELESTRATION_TYPES.ARROW_SOLID, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.ARROW_DASHED:
-                    extendedGlyph = new Arrow(TELESTRATION_TYPES.ARROW_DASHED, SVGContext, glyph.color, glyph.vertices);
+                    extendedGlyph = new Arrow(TELESTRATION_TYPES.ARROW_DASHED, options, SVGContext);
                     extendedGlyph.setDashedArray();
                     break;
 
                 case TELESTRATION_TYPES.T_BAR_SOLID:
-                    extendedGlyph = new TBar(TELESTRATION_TYPES.T_BAR_SOLID, SVGContext, glyph.color, glyph.vertices);
+                    extendedGlyph = new TBar(TELESTRATION_TYPES.T_BAR_SOLID, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.T_BAR_DASHED:
-                    extendedGlyph = new TBar(TELESTRATION_TYPES.T_BAR_DASHED, SVGContext, glyph.color, glyph.vertices);
+                    extendedGlyph = new TBar(TELESTRATION_TYPES.T_BAR_DASHED, options, SVGContext);
                     extendedGlyph.setDashedArray();
                     break;
 
                 case TELESTRATION_TYPES.CONE_SPOTLIGHT:
-                    extendedGlyph = new ConeSpotlight(TELESTRATION_TYPES.CONE_SPOTLIGHT, SVGContext, glyph.color, glyph.vertices);
+                    extendedGlyph = new ConeSpotlight(TELESTRATION_TYPES.CONE_SPOTLIGHT, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.FREEHAND_SOLID:
-                    extendedGlyph = new Freehand(TELESTRATION_TYPES.FREEHAND_SOLID, SVGContext, glyph.color, glyph.vertices);
+                    extendedGlyph = new Freehand(TELESTRATION_TYPES.FREEHAND_SOLID, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.FREEHAND_DASHED:
-                    extendedGlyph = new Freehand(TELESTRATION_TYPES.FREEHAND_DASHED, SVGContext, glyph.color, glyph.vertices);
+                    extendedGlyph = new Freehand(TELESTRATION_TYPES.FREEHAND_DASHED, options, SVGContext);
                     extendedGlyph.setDashedArray();
                     break;
 
                 case TELESTRATION_TYPES.CIRCLE_SOLID:
-                    extendedGlyph = new Circle(TELESTRATION_TYPES.CIRCLE_SOLID, SVGContext, glyph.color, glyph.vertices);
+                    extendedGlyph = new Circle(TELESTRATION_TYPES.CIRCLE_SOLID, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.CIRCLE_SPOTLIGHT:
-                    extendedGlyph = new CircleSpotlight(TELESTRATION_TYPES.CIRCLE_SPOTLIGHT, SVGContext, glyph.color, glyph.vertices);
+                    extendedGlyph = new CircleSpotlight(TELESTRATION_TYPES.CIRCLE_SPOTLIGHT, options, SVGContext);
                     break;
 
                 case TELESTRATION_TYPES.TEXT:
-                    extendedGlyph = new TextBox(TELESTRATION_TYPES.TEXT, SVGContext, glyph.color, glyph.vertices);
+                    extendedGlyph = new TextBox(TELESTRATION_TYPES.TEXT, options, SVGContext);
                     break;
                 default:
                     break;
