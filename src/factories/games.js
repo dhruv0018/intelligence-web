@@ -1172,6 +1172,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return !!self.publicShare;
             },
+            // TODO: move to a parent class can call super() on.
             getTelestrationCuePoints: function getTelestrationCuePoints(telestrations, playId) {
 
                 if (!telestrations || !telestrations.length) return [];
@@ -1198,6 +1199,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
 
                 return cuePoints;
+            },
+            // TODO: move to a parent class can call super() on.
+            getTelestrationsWithPlayId: function getTelestrationsWithPlayId(telestrations, playId) {
+
+                var filteredTelestrations = telestrations.filter(function filterTelestrations(telestration) {
+
+                    if (telestration.playId === playId) return true;
+                });
+                return filteredTelestrations;
             }
         };
 

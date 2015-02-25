@@ -405,6 +405,15 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 });
 
                 return cuePoints;
+            },
+            // TODO: Almost same function in the games factory, move to a parent class can call super() on.
+            getTelestrationsWithPlayId: function getTelestrationsWithPlayId(telestrations, playId) {
+
+                var filteredTelestrations = telestrations.filter(function filterTelestrations(telestration) {
+
+                    if (telestration.playId === playId) return true;
+                });
+                return filteredTelestrations;
             }
         };
 
