@@ -21,7 +21,6 @@ BasicInfo.run([
     }
 ]);
 
-
 /* File dependencies */
 require('./controller');
 require('./config');

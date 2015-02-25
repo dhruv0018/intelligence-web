@@ -69,7 +69,8 @@
         "profile-picture",
         "athlete-profile-header",
         "role-class",
-        "spinner"
+        "spinner",
+        "check-box"
     ],
     "scripts": [
         "index.js"

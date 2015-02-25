@@ -33,6 +33,25 @@ EditProfile.run([
     }
 ]);
 
+/**
+ * Athlete Edit Profile Data service.
+ * @module Athlete.EditProfile
+ * @type {service}
+ */
+EditProfile.service('Athlete.EditProfile.Data.Dependencies', [
+    'SportsFactory',
+    function(sports) {
+
+        var Data = {
+
+            sports: sports.load()
+        };
+
+        return Data;
+
+    }
+]);
+
 /* File dependencies */
 require('./config');
 require('./controller');

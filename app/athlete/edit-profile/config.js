@@ -25,6 +25,14 @@ EditProfile.config([
                     templateUrl: 'athlete/edit-profile/template.html',
                     controller: 'Athlete.EditProfile.controller'
                 }
+            },
+            resolve: {
+                'Athlete.EditProfile.Data': [
+                    '$q', 'Athlete.EditProfile.Data.Dependencies',
+                    function($q, data) {
+                        return $q.all(data);
+                    }
+                ]
             }
         });
     }
