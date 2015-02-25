@@ -2,18 +2,40 @@
     <h1>Basic Info</h1>
 
     <form>
-        <div class="name-box">
-            <h3>First Name</h3>
-            <input type="text" class="form-control" placeholder="Enter First Name"/>
+        <div class="form-block-full">
+            <div class="form-block-half">
+                <h3>First Name</h3>
+                <input type="text" class="form-control" placeholder="Enter First Name"/>
+            </div>
+
+            <div class="form-block-half">
+                <h3>Last Name</h3>
+                <input type="text" class="form-control" placeholder="Enter Last Name"/>
+            </div>
         </div>
 
-        <div class="name-box">
-            <h3>Last Name</h3>
-            <input type="text" class="form-control" placeholder="Enter Last Name"/>
+        <div class="form-block-full">
+            <h3>About Me <span class="header-description">Write a short description about yourself. What makes you stand out?</span></h3>
+            <textarea rows="5" maxlength="200" placeholder="Talk about your club team experience, stats, achievements, anything." ng-model="test" ng-trim="false"></textarea>
+            <p>{{200 - test.length}} characters left.</p>
         </div>
 
-        <h3>About Me</h3>
-        <textarea cols="100" rows="5" maxlength="200" placeholder="Talk about your club team experience, stats, achievements, anything." ng-model="test" ng-trim="false"></textarea>
-        <span>{{200 - test.length}} left</span>
+        <div class="form-block-full">
+            <h3>My Teams</h3>
+            <div class="team-row-header team-row">
+                <div class="team-cell-radio">Main sport & team</div>
+                <div>Team</div>
+                <div>Sport</div>
+                <div>Position</div>
+                <div class="team-cell-options">Hide</div>
+            </div>
+            <div class="team-row">
+                <div class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="false" ng-model="" ng-change="" required></button></div>
+                <div>John Jay Indians</div>
+                <div>Football</div>
+                <div>Wide Receiver</div>
+                <div class="team-cell-options"></div>
+            </div>
+        </div>
     </form>
 </div>

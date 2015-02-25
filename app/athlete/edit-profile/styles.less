@@ -23,12 +23,67 @@ md-content {
         }
     }
 
-    form {
+    .content {
 
-        .name-box {
-            width: 300px;
-            display: inline-block;
-            margin-right: 20px;
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+
+            .form-block-half {
+                flex: 1;
+                width: 49%;
+                display: inline-block;
+
+                &:last-child {
+                    float: right;
+                }
+            }
+
+            .form-block-full {
+                flex: 1;
+                flex-direction: row;
+                width: 100%;
+
+                textarea {
+                    width: 100%;
+                }
+            }
+
+            .header-description {
+                font-size: 14px;
+                font-style: italic;
+                font-weight: 400;
+                margin-left: 5px;
+            }
+
+            .team-row-header {
+                font-weight: 500;
+            }
+
+            .team-row {
+                flex: 1;
+                flex-direction: row;
+
+                div {
+                    display: table-cell;
+                    vertical-align: middle;
+                    width: 25%;
+                    padding: 3px;
+                }
+
+                .team-cell-radio {
+                    width: 11%;
+                    text-align: center;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+
+                .team-cell-options {
+                    width: 12%;
+                    text-align: center;
+                }
+            }
         }
     }
 }
