@@ -285,20 +285,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* Clear the current play. */
                 playManager.clear();
-            },
-
-            jumpBack: function() {
-
-                var currentTime = videoPlayer.currentTime;
-                var time = currentTime - config.indexing.video.jump;
-                videoPlayer.seekTime(time);
-            },
-
-            jumpForward: function() {
-
-                var currentTime = videoPlayer.currentTime;
-                var time = currentTime + config.indexing.video.jump;
-                videoPlayer.seekTime(time);
             }
         };
 
