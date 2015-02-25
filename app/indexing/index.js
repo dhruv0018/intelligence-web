@@ -203,28 +203,6 @@ Indexing.config([
                             }, 0);
                         };
 
-                        Mousetrap.bind('left', function() {
-
-                            $timeout(function() {
-
-                                indexing.jumpBack();
-
-                            }, 0);
-
-                            return false;
-                        });
-
-                        Mousetrap.bind('right', function() {
-
-                            $timeout(function() {
-
-                                indexing.jumpForward();
-
-                            }, 0);
-
-                            return false;
-                        });
-
                         Mousetrap.bind('enter', function() {
 
                             $timeout(function() {

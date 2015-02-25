@@ -57,8 +57,8 @@ GamesRawFilm.config([
 ]);
 
 GamesRawFilm.controller('Games.Rawfilm.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'PlayManager',
-    function controller($scope, $state, $stateParams, games, teams, users, playManager) {
+    '$scope', '$stateParams', 'GamesFactory',
+    function controller($scope, $stateParams, games) {
 
         var gameId = $stateParams.id;
         var game = games.get(gameId);
@@ -67,25 +67,14 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
             url: game.video.thumbnail
         };
 
-        $scope.cuePoints = $scope.game.getTelestrationCuePoints($scope.game.rawTelestrations);
-        $scope.publiclyShared = false;
-
-        //TODO remove some of this stuff later
-        $scope.publiclyShared = true;
-        $scope.team = teams.get($scope.game.teamId);
-        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-
-
-        $scope.telestrations = $scope.game.rawTelestrations;
         $scope.sources = game.getVideoSources();
-
-        /* Listen To Event */
+        $scope.telestrations = game.rawTelestrations;
+        $scope.cuePoints = game.getTelestrationCuePoints(game.rawTelestrations);
 
         $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
-            $scope.cuePoints = $scope.game.getTelestrationCuePoints($scope.game.rawTelestrations);
+            $scope.cuePoints = game.getTelestrationCuePoints(game.rawTelestrations);
         });
-
     }
 ]);
 
