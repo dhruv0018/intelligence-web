@@ -81,7 +81,12 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         /* Listen To Event */
 
-        $scope.$on('telestrations:save', function(event, callbackFn) {
+        $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+
+            $scope.cuePoints = $scope.game.getRawTelestrationCuePoints();
+        });
+
+        $scope.$on('telestrations:save', function handleTelestrationsSave(event, callbackFn) {
 
             callbackFn = callbackFn || angular.noop;
 

@@ -20,11 +20,10 @@ module.exports = [
                     if (telestration.time === time) return telestration;
                 });
 
-                // telestration at 'time' does not exist
-                if (!filteredTelestrations.length) return this.addNewTelestration(time, playId);
                 // return the existing telestration at 'time'
-                else return filteredTelestrations[0];
-
+                if (filteredTelestrations.length) return filteredTelestrations[0];
+                // telestration at 'time' does not exist
+                else return null;
             };
 
         };

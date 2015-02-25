@@ -1172,17 +1172,27 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return !!self.publicShare;
             },
-            getRawTelestrationCuePoints: function() {
+            getRawTelestrationCuePoints: function getRawTelestrationCuePoints() {
+
                 var hasRawTelestrations = this.rawTelestrations && this.rawTelestrations.length > 0;
                 var cuePoints = [];
+
                 if (hasRawTelestrations) {
-                    cuePoints = this.rawTelestrations.map(function(telestration) {
+
+                    var telestrations = this.rawTelestrations.filter(function getTelestrationsWithGlyphs(telestration) {
+
+                        if (telestration.glyphs && telestration.glyphs.length > 0) return true;
+                    });
+
+                    cuePoints = telestrations.map(function(telestration) {
+
                         return {
                             time: telestration.time,
                             type: CUEPOINT_TYPES.TELESTRATION
                         };
                     });
                 }
+
                 return cuePoints;
             }
         };

@@ -1,5 +1,5 @@
 <div class="cuepoints">
-    <div ng-repeat="cuepoint in cuePoints"
+    <div ng-repeat="cuepoint in points"
          ng-class="{'telestration': cuepoint.type === CUEPOINT_TYPES.TELESTRATION, 'event': cuepoint.type === CUEPOINT_TYPES.EVENT}"
          class="cuepoint"
          style="{{'left:' + calcLeft(cuepoint) + '%'}}"></div>
