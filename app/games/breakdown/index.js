@@ -33,20 +33,7 @@ GamesBreakdown.config([
                         return data($stateParams).load();
                     }
                 ]
-            },
-            onEnter: [
-                'Games.Breakdown.Data', '$stateParams', 'GamesFactory',
-                function(data, $stateParams, games) {
-                    var plays = data.plays;
-                    var gameId = $stateParams.id;
-
-                    plays.forEach(function(play) {
-                        var telestrationCuePoints = play.getTelestrationCuePoints(games.get(gameId));
-                        var eventCuePoints = play.getEventCuePoints();
-                        play.cuePoints = telestrationCuePoints.concat(eventCuePoints);
-                    });
-                }
-            ]
+            }
         };
 
         $stateProvider.state(GamesBreakdown);
@@ -181,24 +168,21 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             /* Listen To Event */
 
-            $scope.$on('telestrations:save', function(event, callbackFn) {
-
-                callbackFn = callbackFn || angular.noop;
-
-                // Save Game
-                $scope.game.save().then(function onSaved() {
-                    callbackFn();
-                });
-
-            });
-
             $scope.$watchCollection('playManager.current', function(currentPlay) {
-                if (currentPlay && currentPlay.cuePoints) {
-                    angular.extend($scope.cuePoints, currentPlay.cuePoints);
+
+                if (currentPlay && currentPlay.id) {
+
+                    $scope.cuePoints = $scope.game.getTelestrationCuePoints($scope.game.playTelestrations, currentPlay.id);
+                    // TODO: add back event cuepoint an concat with play cuepoints
+                    // var eventCuePoints = play.getEventCuePoints();
+                    // $scope.cuePoints = $scope.cuepoints.concat(eventCuePoints);
                 }
             });
 
+            $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
+                $scope.cuePoints = $scope.game.getTelestrationCuePoints($scope.game.playTelestrations, playManager.getCurrentPlayId());
+            });
         }
     }
 ]);

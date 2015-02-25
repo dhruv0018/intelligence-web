@@ -196,6 +196,17 @@ Games.controller('Games.controller', [
             }
         }
 
+        $scope.$on('telestrations:save', function(event, callbackFn) {
+
+            callbackFn = callbackFn || angular.noop;
+
+            // Save Game
+            $scope.game.save().then(function onSaved() {
+                callbackFn();
+            });
+
+        });
+
     }
 ]);
 

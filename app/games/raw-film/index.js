@@ -67,7 +67,7 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
             url: game.video.thumbnail
         };
 
-        $scope.cuePoints = $scope.game.getRawTelestrationCuePoints();
+        $scope.cuePoints = $scope.game.getTelestrationCuePoints($scope.game.rawTelestrations);
         $scope.publiclyShared = false;
 
         //TODO remove some of this stuff later
@@ -83,19 +83,9 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
-            $scope.cuePoints = $scope.game.getRawTelestrationCuePoints();
+            $scope.cuePoints = $scope.game.getTelestrationCuePoints($scope.game.rawTelestrations);
         });
 
-        $scope.$on('telestrations:save', function handleTelestrationsSave(event, callbackFn) {
-
-            callbackFn = callbackFn || angular.noop;
-
-            // Save Game
-            $scope.game.save().then(function onSaved() {
-                callbackFn();
-            });
-
-        });
     }
 ]);
 

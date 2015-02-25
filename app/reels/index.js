@@ -70,13 +70,6 @@ ReelsArea.config([
                     if (reel.isDeleted) {
                         account.gotoUsersHomeState();
                     }
-
-                    var plays = data.plays;
-                    plays.forEach(function(play) {
-                        var telestrationCuePoints = play.getTelestrationCuePoints(reel);
-                        var eventCuePoints = play.getEventCuePoints();
-                        play.cuePoints = telestrationCuePoints.concat(eventCuePoints);
-                    });
                 }
             ],
             onExit: [
@@ -160,6 +153,7 @@ ReelsArea.controller('ReelsArea.controller', [
         // Refresh the playsManager
         playsManager.reset($scope.plays);
         var play = playsManager.plays[0];
+        // playManager.current = play;
         var playRelatedGame = gamesFactory.get(play.gameId);
 
         $scope.posterImage = {
@@ -265,19 +259,28 @@ ReelsArea.controller('ReelsArea.controller', [
             });
         };
 
-
         $scope.$watchCollection('playManager.current', function(currentPlay) {
-            if (currentPlay && currentPlay.cuePoints) {
-                angular.extend($scope.cuePoints, currentPlay.cuePoints);
+
+            if (currentPlay && currentPlay.id) {
+
+                $scope.cuePoints = $scope.reel.getTelestrationCuePoints($scope.reel.telestrations, currentPlay.id);
+                // TODO: add back event cuepoint an concat with play cuepoints
+                // var eventCuePoints = play.getEventCuePoints();
+                // $scope.cuePoints = $scope.cuepoints.concat(eventCuePoints);
             }
         });
 
-        $scope.$on('telestrations:save', function(event, callbackFn) {
+        $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+
+            $scope.cuePoints = $scope.reel.getTelestrationCuePoints($scope.reel.telestrations, playManager.getCurrentPlayId());
+        });
+
+        $scope.$on('telestrations:save', function handleTelestrationSave(event, callbackFn) {
 
             callbackFn = callbackFn || angular.noop;
 
             // Save Game
-            $scope.game.save().then(function onSaved() {
+            $scope.reel.save().then(function onSaved() {
                 callbackFn();
             });
         });

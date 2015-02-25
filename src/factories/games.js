@@ -34,7 +34,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 Object.keys(game).forEach(function assignCopies(key) {
 
                     if (game[key].unextend) copy[key] = game[key].unextend();
-                    else copy[key] = angular.copy(game[key]);
+                    else if (typeof copy[key] !== 'function') copy[key] = angular.copy(game[key]);
 
                 });
 
@@ -1172,26 +1172,30 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return !!self.publicShare;
             },
-            getRawTelestrationCuePoints: function getRawTelestrationCuePoints() {
+            getTelestrationCuePoints: function getTelestrationCuePoints(telestrations, playId) {
 
-                var hasRawTelestrations = this.rawTelestrations && this.rawTelestrations.length > 0;
+                if (!telestrations || !telestrations.length) return [];
+
                 var cuePoints = [];
 
-                if (hasRawTelestrations) {
+                var filteredTelestrations = telestrations.filter(function getTelestrationsWithGlyphs(telestration) {
+                    if (telestration.glyphs && telestration.glyphs.length > 0) {
+                        if (playId) {
+                            if (telestration.playId === playId) return true;
+                            else return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                });
 
-                    var telestrations = this.rawTelestrations.filter(function getTelestrationsWithGlyphs(telestration) {
+                cuePoints = filteredTelestrations.map(function(telestration) {
 
-                        if (telestration.glyphs && telestration.glyphs.length > 0) return true;
-                    });
-
-                    cuePoints = telestrations.map(function(telestration) {
-
-                        return {
-                            time: telestration.time,
-                            type: CUEPOINT_TYPES.TELESTRATION
-                        };
-                    });
-                }
+                    return {
+                        time: telestration.time,
+                        type: CUEPOINT_TYPES.TELESTRATION
+                    };
+                });
 
                 return cuePoints;
             }

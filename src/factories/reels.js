@@ -7,8 +7,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'ROLES', 'Utilities', 'BaseFactory', 'SessionService', 'PlayTelestrationEntity',
-    function(ROLES, utilities, BaseFactory, session, PlayTelestrationEntity) {
+    'ROLES', 'Utilities', 'BaseFactory', 'SessionService', 'ReelTelestrationEntity', 'CUEPOINT_TYPES',
+    function(ROLES, utilities, BaseFactory, session, ReelTelestrationEntity, CUEPOINT_TYPES) {
 
         var ReelsFactory = {
 
@@ -40,9 +40,30 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
 
                 // Extend Telestration Entities
-                if (reel.telestrations) RawTelestrationEntity(reel.rawTelestrations, reel.id);
+                reel.telestrations = reel.telestrations || [];
+
+                if (!reel.telestrations.unextend) ReelTelestrationEntity(reel.telestrations, reel.id);
 
                 return reel;
+            },
+
+            unextend: function(reel) {
+
+                var self = this;
+
+                reel = reel || self;
+
+                var copy = {};
+
+                // TODO: Use Super()
+                Object.keys(reel).forEach(function assignCopies(key) {
+
+                    if (reel[key].unextend) copy[key] = reel[key].unextend();
+                    else if (typeof copy[key] !== 'function') copy[key] = angular.copy(reel[key]);
+
+                });
+
+                return copy;
             },
 
             getByUploaderUserId: function(userId) {
@@ -356,6 +377,34 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
 
                 return teamShare;
+            },
+            // TODO: this is EXACTLY the same as in the GamesFactory, ideally would extend from a base film Factory
+            getTelestrationCuePoints: function getTelestrationCuePoints(telestrations, playId) {
+
+                if (!telestrations || !telestrations.length) return [];
+
+                var cuePoints = [];
+
+                var filteredTelestrations = telestrations.filter(function getTelestrationsWithGlyphs(telestration) {
+                    if (telestration.glyphs && telestration.glyphs.length > 0) {
+                        if (playId) {
+                            if (telestration.playId === playId) return true;
+                            else return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                });
+
+                cuePoints = filteredTelestrations.map(function(telestration) {
+
+                    return {
+                        time: telestration.time,
+                        type: CUEPOINT_TYPES.TELESTRATION
+                    };
+                });
+
+                return cuePoints;
             }
         };
 
