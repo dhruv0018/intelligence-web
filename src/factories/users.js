@@ -61,20 +61,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                  * "user" object. */
                 angular.extend(user, self);
 
-                /* If the user only has one role, then use it for
-                 * their current one. */
-                if (user.roles && user.roles.length === 1)
-                    user.currentRole = user.roles[0];
-
-                /* Get the users default role, in any. */
-                var defaultRole = user.getDefaultRole();
-
-                /* If the user has a default role defined, then use it
-                 * for their default and current one. */
-                if (defaultRole) {
-                    user.defaultRole = defaultRole;
-                    user.currentRole = defaultRole;
-                }
+                user.defaultRole = self.getDefaultRole(user);
+                user.currentRole = self.getCurrentRole(user);
 
                 return user;
             },
@@ -222,13 +210,57 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
             * @class User
             * @method
+            * @returns {Object} the current role object for the user. If user
+            * is inactive, it will return `undefined`.
+            * Gets the users current role.
+            */
+            getCurrentRole: function(user) {
+
+                var self = this;
+                user = user || self;
+                var currentRole;
+
+                /* If the user only has one role, then use it for
+                 * their current one. */
+                if (user.roles && user.roles.length === 1)
+                    currentRole = user.roles[0];
+
+                /* Get the users default role, in any. */
+                var defaultRole = user.getDefaultRole();
+
+                /* If the user has a default role defined, then use it
+                 * for their default and current one. */
+                if (defaultRole) {
+                    currentRole = defaultRole;
+                }
+
+                return currentRole;
+            },
+
+            /**
+            * @class User
+            * @method
+            * Sets the current role object for the user.
+            */
+            setCurrentRole: function(user) {
+
+                var self = this;
+                user = user || self;
+
+                user.currentRole = user.getCurrentRole();
+            },
+
+            /**
+            * @class User
+            * @method
             * @returns {Object} the default role object for the user. If no
             * default is defined, it will return `undefined`.
             * Gets the users default role.
             */
-            getDefaultRole: function() {
+            getDefaultRole: function(user) {
 
-                var roles = this.roles;
+                user = user || this;
+                var roles = user.roles;
 
                 if (!roles) return undefined;
 
@@ -299,10 +331,10 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!match) {
 
                     match = role;
-                    role = this.currentRole;
+                    role = this.getCurrentRole();
                 }
 
-                role = role || this.currentRole;
+                role = role || this.getCurrentRole();
 
                 if (!role) return false;
                 if (!match) throw new Error('No role to match specified');
@@ -542,6 +574,17 @@ IntelligenceWebClient.factory('UsersFactory', [
             isActive: function(role) {
                 var self = this;
                 return self.activeRoles(role).length >= 1;
+            },
+            typeahead: function(filter) {
+                var self = this;
+
+                var model = $injector.get(self.model);
+
+                return model.typeahead(filter).$promise.then(function(users) {
+                    return users.map(function(user) {
+                        return self.extend(user);
+                    });
+                });
             }
         };
 
