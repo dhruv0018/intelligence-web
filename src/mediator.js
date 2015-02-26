@@ -29,7 +29,7 @@ function Mediator(colleague, strategy, criteria) {
     this.strategy = strategy || Array.sort;
 
     /* The criteria used to determine if an item should enter mediation. */
-    this.criteria = criteria || function () { return true; };
+    this.criteria = criteria || function() { return true; };
 }
 
 /**
