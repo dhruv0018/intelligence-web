@@ -10,7 +10,7 @@
     <krossover-item-yard data-ng-if="item.type === 'YARD'" data-league="league" data-game="game" data-item="item" data-plays="plays" data-play="play" data-event="event" data-auto-advance="autoAdvance" data-is-editable="isEditable"></krossover-item-yard>
 
     <!-- Static item -->
-    <krossover-item-static data-ng-if="isString(item)" data-item="item"></krossover-item-static>
+    <krossover-item-static data-ng-if="isString(item)"></krossover-item-static>
 
     <!-- Dropdown variable -->
     <krossover-item-dropdown data-ng-if="item.type === 'DROPDOWN'" data-league="league" data-game="game" data-item="item" data-plays="plays" data-play="play" data-event="event" data-auto-advance="autoAdvance" data-is-editable="isEditable"></krossover-item-dropdown>
