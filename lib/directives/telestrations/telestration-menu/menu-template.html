@@ -1,33 +1,13 @@
 <div class="telestration-menu-box">
     <ul class="toolbar">
         <li>
-            <menu-item-state class="menu-item-state"
-                data-dropdown-state="dropdownToolStates.FREEHAND"
-                data-selected-glyph-type="telestrationsController.selectedGlyphType"
-                data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_SOLID || telestrationsController.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_DASHED }">
-                <i  data-ng-class="{'icon-draw' : dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_SOLID, 'icon-dashed-freehand' : dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_DASHED}"
-                    class="icon"></i> <i class="icon icon-expand-caret"></i>
-            </menu-item-state>
-            <ul>
-                <li>
-                    <telestration-menu-item
-                        data-ng-hide="dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_SOLID"
-                        data-dropdown-state="dropdownToolStates.FREEHAND"
-                        data-type="{{TELESTRATION_TYPES.FREEHAND_SOLID}}">
-                        <i class="icon icon-draw"></i>
-                    </telestration-menu-item>
-                </li>
-                <li>
-                    <telestration-menu-item
-                        data-ng-hide="dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_DASHED"
-                        data-dropdown-state="dropdownToolStates.FREEHAND"
-                        data-type="{{TELESTRATION_TYPES.FREEHAND_DASHED}}">
-                        <i class="icon icon-dashed-freehand"></i>
-                    </telestration-menu-item>
-                </li>
-            </ul>
+            <telestration-menu-item
+                data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.ARROW_SOLID}"
+                type="{{TELESTRATION_TYPES.ARROW_SOLID}}">
+                <i class="icon icon-arrow"></i>
+            </telestration-menu-item>
         </li>
-        <li>
+        <!-- <li>
             <menu-item-state class="menu-item-state"
                 data-dropdown-state="dropdownToolStates.ARROW"
                 data-selected-glyph-type="telestrationsController.selectedGlyphType"
@@ -53,8 +33,15 @@
                     </telestration-menu-item>
                 </li>
             </ul>
-        </li>
+        </li> -->
         <li>
+            <telestration-menu-item
+                data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.T_BAR_SOLID}"
+                data-type="{{TELESTRATION_TYPES.T_BAR_SOLID}}">
+                <i class="icon icon-block"></i>
+            </telestration-menu-item>
+        </li>
+       <!--  <li>
             <menu-item-state class="menu-item-state"
                              data-dropdown-state="dropdownToolStates.T_BAR"
                              data-selected-glyph-type="telestrationsController.selectedGlyphType"
@@ -81,7 +68,41 @@
                     </telestration-menu-item>
                 </li>
             </ul>
+        </li> -->
+        <li>
+            <telestration-menu-item
+                data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_SOLID}"
+                type="{{TELESTRATION_TYPES.FREEHAND_SOLID}}">
+                <i class="icon icon-draw"></i>
+            </telestration-menu-item>
         </li>
+        <!-- <li>
+            <menu-item-state class="menu-item-state"
+                data-dropdown-state="dropdownToolStates.FREEHAND"
+                data-selected-glyph-type="telestrationsController.selectedGlyphType"
+                data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_SOLID || telestrationsController.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_DASHED }">
+                <i  data-ng-class="{'icon-draw' : dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_SOLID, 'icon-dashed-freehand' : dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_DASHED}"
+                    class="icon"></i> <i class="icon icon-expand-caret"></i>
+            </menu-item-state>
+            <ul>
+                <li>
+                    <telestration-menu-item
+                        data-ng-hide="dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_SOLID"
+                        data-dropdown-state="dropdownToolStates.FREEHAND"
+                        data-type="{{TELESTRATION_TYPES.FREEHAND_SOLID}}">
+                        <i class="icon icon-draw"></i>
+                    </telestration-menu-item>
+                </li>
+                <li>
+                    <telestration-menu-item
+                        data-ng-hide="dropdownToolStates.FREEHAND === TELESTRATION_TYPES.FREEHAND_DASHED"
+                        data-dropdown-state="dropdownToolStates.FREEHAND"
+                        data-type="{{TELESTRATION_TYPES.FREEHAND_DASHED}}">
+                        <i class="icon icon-dashed-freehand"></i>
+                    </telestration-menu-item>
+                </li>
+            </ul>
+        </li> -->
         <li>
             <telestration-menu-item
                 data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.CIRCLE_SOLID}"
@@ -89,7 +110,7 @@
                 <i class="icon icon-open-circle"></i>
             </telestration-menu-item>
         </li>
-        <li>
+        <!-- <li>
             <telestration-menu-item
                 data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.CIRCLE_SPOTLIGHT}"
                 type="{{TELESTRATION_TYPES.CIRCLE_SPOTLIGHT}}">
@@ -102,7 +123,7 @@
                 type="{{TELESTRATION_TYPES.CONE_SPOTLIGHT}}">
                 <i class="icon icon-cone"></i>
             </telestration-menu-item>
-        </li>
+        </li> -->
         <li>
             <menu-item-state
                 data-ng-style="{background: dropdownToolStates.COLOR_PICKER}"
@@ -124,13 +145,13 @@
                 </li>
             </ul>
         </li>
-        <li>
+        <!-- <li>
             <telestration-menu-item
                 data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.TEXT}"
                 type="{{TELESTRATION_TYPES.TEXT}}">
                 <i class="icon icon-text-tool"></i>
             </telestration-menu-item>
-        </li>
+        </li> -->
         <li>
             <telestration-undo data-ng-show="getGlyphs().length" data-ng-click="undoGlyph()">
                 <i class="icon icon-undo"></i>
