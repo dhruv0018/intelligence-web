@@ -1,13 +1,44 @@
-<div class="telestration-menu-box">
+<ul class="telestration-toolbar">
+     <!-- data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.ARROW_SOLID}" -->
+    <telestration-tool>
+        <arrow-glyph-tool ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.ARROW_SOLID}">
+        </arrow-glyph-tool>
+    </telestration-tool>
+
+    <!-- data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.T_BAR_SOLID}"
+    -->
+    <telestration-tool>
+        <tbar-glyph-tool ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.T_BAR_SOLID}">
+        </tbar-glyph-tool>
+    </telestration-tool>
+
+    <!-- data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_SOLID}"
+    -->
+    <telestration-tool>
+        <freehand-glyph-tool ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_SOLID}">
+        </freehand-glyph-tool>
+    </telestration-tool>
+
+    <!-- data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.CIRCLE_SOLID}" -->
+    <telestration-tool>
+        <circle-glyph-tool ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.CIRCLE_SOLID}">
+        </circle-glyph-tool>
+    </telestration-tool>
+
+    <!-- <telestration-tool>
+        <color-picker-tool></color-picker-tool>
+    </telestration-tool> -->
+
+    <telestration-tool>
+        <undo-tool></undo-tool>
+    </telestration-tool>
+
+</ul>
+
+<!-- <div class="telestration-menu-box">
     <ul class="toolbar">
+
         <li>
-            <telestration-menu-item
-                data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.ARROW_SOLID}"
-                type="{{TELESTRATION_TYPES.ARROW_SOLID}}">
-                <i class="icon icon-arrow"></i>
-            </telestration-menu-item>
-        </li>
-        <!-- <li>
             <menu-item-state class="menu-item-state"
                 data-dropdown-state="dropdownToolStates.ARROW"
                 data-selected-glyph-type="telestrationsController.selectedGlyphType"
@@ -33,15 +64,9 @@
                     </telestration-menu-item>
                 </li>
             </ul>
-        </li> -->
-        <li>
-            <telestration-menu-item
-                data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.T_BAR_SOLID}"
-                data-type="{{TELESTRATION_TYPES.T_BAR_SOLID}}">
-                <i class="icon icon-block"></i>
-            </telestration-menu-item>
         </li>
-       <!--  <li>
+
+        <li>
             <menu-item-state class="menu-item-state"
                              data-dropdown-state="dropdownToolStates.T_BAR"
                              data-selected-glyph-type="telestrationsController.selectedGlyphType"
@@ -68,15 +93,9 @@
                     </telestration-menu-item>
                 </li>
             </ul>
-        </li> -->
-        <li>
-            <telestration-menu-item
-                data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.FREEHAND_SOLID}"
-                type="{{TELESTRATION_TYPES.FREEHAND_SOLID}}">
-                <i class="icon icon-draw"></i>
-            </telestration-menu-item>
         </li>
-        <!-- <li>
+       
+        <li>
             <menu-item-state class="menu-item-state"
                 data-dropdown-state="dropdownToolStates.FREEHAND"
                 data-selected-glyph-type="telestrationsController.selectedGlyphType"
@@ -102,15 +121,9 @@
                     </telestration-menu-item>
                 </li>
             </ul>
-        </li> -->
-        <li>
-            <telestration-menu-item
-                data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.CIRCLE_SOLID}"
-                type="{{TELESTRATION_TYPES.CIRCLE_SOLID}}">
-                <i class="icon icon-open_circle"></i>
-            </telestration-menu-item>
         </li>
-        <!-- <li>
+        
+        <li>
             <telestration-menu-item
                 data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.CIRCLE_SPOTLIGHT}"
                 type="{{TELESTRATION_TYPES.CIRCLE_SPOTLIGHT}}">
@@ -123,42 +136,16 @@
                 type="{{TELESTRATION_TYPES.CONE_SPOTLIGHT}}">
                 <i class="icon icon-cone"></i>
             </telestration-menu-item>
-        </li> -->
-        <li>
-            <menu-item-state
-                data-ng-style="{background: dropdownToolStates.COLOR_PICKER}"
-                data-dropdown-state="dropdownToolStates.COLOR_PICKER"
-                data-selected-glyph-color="telestrationsController.selectedGlyphColor"
-                data-dropdown-type="color-picker"
-                class="menu-item-state">
-                <i class="icon icon-color_picker"></i> <i class="icon icon-expand_arrow"></i>
-            </menu-item-state>
-            <ul>
-                <li  data-ng-hide="dropdownToolStates.COLOR_PICKER === color.hex"
-                     data-ng-repeat="color in colors">
-                    <telestration-menu-item
-                        data-color="{{color.hex}}"
-                        data-dropdown-state="dropdownToolStates.COLOR_PICKER"
-                        data-ng-style="{background: color.hex}">
-                        <i class="icon icon-color-picker"></i>
-                    </telestration-menu-item>
-                </li>
-            </ul>
         </li>
-        <!-- <li>
+        
+        <li>
             <telestration-menu-item
                 data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.TEXT}"
                 type="{{TELESTRATION_TYPES.TEXT}}">
                 <i class="icon icon-text-tool"></i>
             </telestration-menu-item>
-        </li> -->
-        <li>
-            <telestration-undo data-ng-show="getGlyphs().length" data-ng-click="undoGlyph()">
-                <i class="icon icon-rotate-left"></i>
-            </telestration-undo>
         </li>
-        <li>
-            <telestration-clear data-ng-show="getGlyphs().length" data-ng-click="clearGlyphs()">Clear</telestration-clear>
-        </li>
+        
+
     </ul>
-</div>
+</div> -->

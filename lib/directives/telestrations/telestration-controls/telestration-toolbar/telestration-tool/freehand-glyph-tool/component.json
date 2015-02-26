@@ -1,0 +1,9 @@
+{
+    "name": "freehand-glyph-tool",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

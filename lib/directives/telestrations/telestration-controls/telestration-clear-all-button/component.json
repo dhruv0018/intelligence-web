@@ -1,10 +1,10 @@
 {
-    "name": "telestration-menu",
+    "name": "telestration-clear-all-button",
     "templates": [
-        "menu-template.html"
+        "template.html"
     ],
     "scripts": [
-        "telestration-menu.js"
+        "index.js"
     ],
     "styles": [
         "styles.less"

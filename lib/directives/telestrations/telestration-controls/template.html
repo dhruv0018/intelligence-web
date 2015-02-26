@@ -1,9 +1,15 @@
-<button class="telestration-menu-button"
-    data-ng-click="toggleControls($event); showTelestrationMenu = !showTelestrationMenu">
+<div class="telestration-controls">
 
-    <i  data-ng-class="{activated: showTelestrationMenu}"
-        class="icon icon-telestration">
-    </i>
-</button>
+    <ul class="primary-controls">
 
-<ng-transclude></ng-transclude>
+        <telestration-activate-button ng-click="controls.toggleControls()">
+        </telestration-activate-button>
+
+        <telestration-toolbar ng-show="controls.enabled"></telestration-toolbar>
+
+    </ul>
+
+    <telestration-clear-all-button data-ng-show="controls.areGlyphsPresent()">
+    </telestration-clear-all-button>
+
+</div>

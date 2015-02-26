@@ -1,0 +1,17 @@
+{
+    "name": "telestration-tool",
+    "paths": [
+        "."
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "locals": [
+        "arrow-glyph-tool",
+        "circle-glyph-tool",
+        "color-picker-tool",
+        "freehand-glyph-tool",
+        "tbar-glyph-tool",
+        "undo-tool"
+    ]
+}

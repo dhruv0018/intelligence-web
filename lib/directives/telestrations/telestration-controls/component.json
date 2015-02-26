@@ -1,14 +1,21 @@
 {
     "name": "telestration-controls",
+    "paths": [
+        "."
+    ],
     "templates": [
         "template.html"
     ],
     "scripts": [
         "index.js",
-        "directive.js",
         "controller.js"
     ],
     "styles": [
         "styles.less"
+    ],
+    "locals": [
+        "telestration-activate-button",
+        "telestration-clear-all-button",
+        "telestration-toolbar"
     ]
 }

@@ -1,0 +1,21 @@
+<li ng-click="selectTool()">
+    <menu-item-state
+        data-ng-style="{background: dropdownToolStates.COLOR_PICKER}"
+        data-dropdown-state="dropdownToolStates.COLOR_PICKER"
+        data-selected-glyph-color="telestrationsController.selectedGlyphColor"
+        data-dropdown-type="color-picker"
+        class="menu-item-state">
+        <i class="icon icon-color_picker"></i> <i class="icon icon-expand_arrow"></i>
+    </menu-item-state>
+    <ul>
+        <li  data-ng-hide="dropdownToolStates.COLOR_PICKER === color.hex"
+             data-ng-repeat="color in colors">
+            <telestration-menu-item
+                data-color="{{color.hex}}"
+                data-dropdown-state="dropdownToolStates.COLOR_PICKER"
+                data-ng-style="{background: color.hex}">
+                <i class="icon icon-color-picker"></i>
+            </telestration-menu-item>
+        </li>
+    </ul>
+</li>

@@ -1,18 +1,99 @@
 @import (reference) "main.less";
 
-.telestration-menu-button {
-    .btn; // TODO: Override the active, focus, hover states
-    z-index: 2;
-    position: absolute;
-    border: 0px solid @gray-dark;
-    background: @brand-primary;
-    box-shadow: 0px 0px 8px @gray-light;
-    height: 50px;
-    width: 50px;
-    top: 10px;
-    left: 10px;
-    border-radius: 3px;
-    color: white;
-    font-size: 26px;
+.telestration-controls {
+    @radius: 2px;
+    @margin: 15px;
+    @font-size: 32px;
+    @tool-size: 50px;
+    @active-grey: rgba(49, 49, 49, 0.9);
+    @clear-all-red: rgba(213, 43, 43, 0.9);
 
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 3;
+    margin-top: @margin;
+    margin-left: @margin;
+    margin-right: @margin;
+    color: white;
+
+    ul, li {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        opacity: 0.9;
+        font-size: @font-size;
+        cursor: pointer;
+        display: inline-block;
+        user-select: none;
+    }
+
+    .primary-controls {
+        display: flex;
+
+        .selected li {
+            color: @icon-highlight-blue;
+            background-color: @active-grey;
+        }
+    }
+
+    .primary-controls {
+
+        telestration-activate-button li {
+            border-top-left-radius: @radius;
+            border-bottom-left-radius: @radius;
+        }
+
+        telestration-tool {
+
+            &:last-child li {
+                border-top-right-radius: @radius;
+                border-bottom-right-radius: @radius;
+            }
+        }
+
+        li {
+            background-color: black;
+            padding: 8px;
+            width: @tool-size;
+            height: @tool-size;
+            border: none;
+            margin-right: 1px;
+
+            &:active, &:hover {
+                color: @icon-highlight-blue;
+                background-color: @active-grey;
+            }
+
+            &:active {
+                border: 1px solid @icon-highlight-blue;
+            }
+
+            &.disabled {
+                opacity: 0.5;
+            }
+        }
+    }
+
+    telestration-clear-all-button {
+
+        li {
+            background-color: @clear-all-red;
+            display: flex;
+            align-items: center;
+            height: 40px;
+            border-radius: @radius;
+            padding: 0px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 14px;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
 }
