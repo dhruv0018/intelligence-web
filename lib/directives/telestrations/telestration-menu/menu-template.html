@@ -107,7 +107,7 @@
             <telestration-menu-item
                 data-ng-class="{'selected': telestrationsController.selectedGlyphType === TELESTRATION_TYPES.CIRCLE_SOLID}"
                 type="{{TELESTRATION_TYPES.CIRCLE_SOLID}}">
-                <i class="icon icon-open-circle"></i>
+                <i class="icon icon-open_circle"></i>
             </telestration-menu-item>
         </li>
         <!-- <li>
@@ -131,7 +131,7 @@
                 data-selected-glyph-color="telestrationsController.selectedGlyphColor"
                 data-dropdown-type="color-picker"
                 class="menu-item-state">
-                <i class="icon icon-color-picker"></i> <i class="icon icon-expand-caret"></i>
+                <i class="icon icon-color_picker"></i> <i class="icon icon-expand_arrow"></i>
             </menu-item-state>
             <ul>
                 <li  data-ng-hide="dropdownToolStates.COLOR_PICKER === color.hex"
@@ -154,7 +154,7 @@
         </li> -->
         <li>
             <telestration-undo data-ng-show="getGlyphs().length" data-ng-click="undoGlyph()">
-                <i class="icon icon-undo"></i>
+                <i class="icon icon-rotate-left"></i>
             </telestration-undo>
         </li>
         <li>
