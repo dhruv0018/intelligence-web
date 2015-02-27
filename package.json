@@ -51,6 +51,7 @@
     "clarify": "1.0.5",
     "component": "1.0.0-rc5",
     "component-builder-less": "0.0.1",
+    "connect-modrewrite": "0.7.6",
     "cucumber": "0.4.8",
     "envify": "1.2.1",
     "grunt": "0.4.5",
