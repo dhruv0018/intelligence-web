@@ -81,7 +81,7 @@
     "grunt-karma": "0.10.1",
     "grunt-newer": "1.1.0",
     "grunt-ng-annotate": "0.10.0",
-    "grunt-notify": "4.1.0",
+    "grunt-notify": "0.4.1",
     "grunt-plato": "1.2.1",
     "grunt-protractor-runner": "1.2.1",
     "grunt-protractor-webdriver": "0.2.0",
