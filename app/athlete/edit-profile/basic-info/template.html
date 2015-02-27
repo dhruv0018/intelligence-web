@@ -1,65 +1,70 @@
 <div class="basic-info">
-    <h1>Basic Info</h1>
-
     <form>
         <div class="form-block-full">
             <div class="form-block-half">
-                <h3>First Name</h3>
-                <input type="text" class="form-control" placeholder="Enter First Name"/>
+                <h4>First Name</h4>
+                <input type="text" ng-model="athlete.firstName" class="form-control" placeholder="Enter First Name"/>
             </div>
 
             <div class="form-block-half">
-                <h3>Last Name</h3>
-                <input type="text" class="form-control" placeholder="Enter Last Name"/>
+                <h4>Last Name</h4>
+                <input type="text" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
             </div>
         </div>
 
         <div class="form-block-full">
-            <h3>About Me <span class="header-description">Write a short description about yourself. What makes you stand out?</span></h3>
-            <textarea rows="5" maxlength="200" placeholder="Talk about your club team experience, stats, achievements, anything." ng-model="test" ng-trim="false"></textarea>
+            <h4>About Me <span class="header-description">Write a short description about yourself. What makes you stand out?</span></h4>
+            <textarea class="form-control" rows="5" maxlength="200" placeholder="Talk about your club team experience, stats, achievements, anything." ng-model="test" ng-trim="false"></textarea>
             <p>{{200 - test.length}} characters left.</p>
         </div>
 
         <div class="form-block-full">
-            <h3>My Teams</h3>
-            <div class="team-row-header team-row">
-                <div class="team-cell-radio">Main sport & team</div>
-                <div>Team</div>
-                <div>Sport</div>
-                <div>Position</div>
-                <div class="team-cell-options">Hide</div>
+            <h4>My Teams <a href class="add-team" ng-click="addingTeam = true"><i class="icon icon-plus"></i> Add Team</a></h4>
+            <div class="box-body">
+                <table class="table team-table">
+                    <thead>
+                        <tr class="team-row-header team-row">
+                            <th class="team-cell-radio">Main sport & team</th>
+                            <th>Team</th>
+                            <th>Sport</th>
+                            <th class="team-cell-positions">Position</th>
+                            <th class="team-cell-options">Hide</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="team-row">
+                            <td class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="false" ng-model="" ng-change="" required></button></td>
+                            <td>John Jay Indians</td>
+                            <td>Football</td>
+                            <td class="team-cell-positions">Wide Receiver</td>
+                            <td class="team-cell-options">
+                                <check-box ng-click="hideTeam = !hideteam" checked="hideTeam"></check-box>
+                                <i class="icon icon-remove"></i>
+                            </td>
+                        </tr>
+                        <tr class="team-row" ng-show="addingTeam">
+                            <td class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="false" ng-model="" ng-change="" required></button></td>
+                            <td><team-typeahead team="selectedTeam"></team-typeahead></td>
+                            <td>
+                                <select class="form-control" name="sport" ng-model="mySport" ng-options="sport.id as sport.name for sport in sports">
+                                    <option value="">Pick a Sport</option>
+                                </select>
+                            </td>
+                            <td class="team-cell-positions">
+                                <positions-dropdown ng-model="playerInfo.positionIds" player="athlete" positionset="positionset"></positions-dropdown>
+                            </td>
+                            <td class="team-cell-options">
+                                <i class="icon icon-remove" ng-click="addingTeam = false"></i>
+                                <check-box ng-click="hideTeam = !hideteam" checked="hideTeam"></check-box>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="team-row">
-                <div class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="false" ng-model="" ng-change="" required></button></div>
-                <div>John Jay Indians</div>
-                <div>Football</div>
-                <div>Wide Receiver</div>
-                <div class="team-cell-options">
-                    <check-box ng-click="hideTeam = !hideteam" checked="hideTeam"></check-box>
-                    <i class="icon icon-remove"></i>
-                </div>
-            </div>
-            <div class="team-row">
-                <div class="team-cell-radio"></div>
-                <div><team-typeahead team="selectedTeam"></team-typeahead></div>
-                <div>
-                    <select class="form-control" name="sport" ng-model="mySport" ng-options="sport.id as sport.name for sport in sports">
-                        <option value="">Pick a Sport</option>
-                    </select>
-                </div>
-                <div>
-                    <positions-dropdown ng-model="playerInfo.positionIds" player="athlete" positionset="positionset"></positions-dropdown>
-                </div>
-                <div class="team-cell-options">
-                    <check-box ng-click="hideTeam = !hideteam" checked="hideTeam"></check-box>
-                    <i class="icon icon-remove"></i>
-                </div>
-            </div>
-            <button class="btn"><i class="icon icon-plus"></i> Add Team</button>
         </div>
         <div class="button-row">
             <button class="btn btn-primary">Save</button>
-            <a href class="btn-simple-cancel pull-right">Cancel</a>
+            <a href class="btn btn-default pull-right">Cancel</a>
         </div>
     </form>
 </div>

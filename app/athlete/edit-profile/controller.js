@@ -14,13 +14,12 @@ var EditProfile = angular.module('Athlete.EditProfile');
  * @type {controller}
  */
 EditProfile.controller('Athlete.EditProfile.controller', [
-    '$scope', '$state', 'SessionService',
-    function controller($scope, $state, $session) {
+    '$scope', '$state', 'SessionService', 'Athlete.EditProfile.Data',
+    function controller($scope, $state, $session, data) {
         // TO-DO: Move this to somewhere more appropriate (state.onEnter?)
         $state.go('Athlete.EditProfile.BasicInfo');
 
-        $scope.athlete = $session.currentUser;
-        //$scope.athlete.profilePicture = 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg';
+        $scope.athlete = data.athlete;
 
         var reader = new FileReader();
 
@@ -30,7 +29,7 @@ EditProfile.controller('Athlete.EditProfile.controller', [
             reader.readAsDataURL(files[0]);
 
             reader.onload = function onload() {
-                $scope.athlete.profilePicture = reader.result;
+                $scope.athlete.imageUrl = reader.result;
                 $scope.$apply();
             };
         };

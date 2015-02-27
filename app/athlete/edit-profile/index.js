@@ -39,12 +39,13 @@ EditProfile.run([
  * @type {service}
  */
 EditProfile.service('Athlete.EditProfile.Data.Dependencies', [
-    'SportsFactory',
-    function(sports) {
+    'SportsFactory', 'SessionService',
+    function(sports, session) {
 
         var Data = {
 
-            sports: sports.load()
+            sports: sports.load(),
+            athlete: session.currentUser
         };
 
         return Data;

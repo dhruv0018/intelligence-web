@@ -24,6 +24,14 @@ Physical.config([
                     templateUrl: 'athlete/edit-profile/physical/template.html',
                     controller: 'Athlete.EditProfile.Physical.controller'
                 }
+            },
+            resolve: {
+                'Athlete.EditProfile.Physical.Data': [
+                    '$q', 'Athlete.EditProfile.Data.Dependencies',
+                    function($q, data) {
+                        return $q.all(data);
+                    }
+                ]
             }
         });
     }

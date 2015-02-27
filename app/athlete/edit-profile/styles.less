@@ -40,6 +40,13 @@ md-content {
                 }
             }
 
+            .form-block-third {
+                flex: 1;
+                width: 30%;
+                margin-right: 1%;
+                display: inline-block;
+            }
+
             .form-block-full {
                 flex: 1;
                 flex-direction: row;
@@ -50,6 +57,11 @@ md-content {
                 }
             }
 
+            .small-text-field {
+                display: inline-block;
+                width: 50px;
+            }
+
             .header-description {
                 font-size: 14px;
                 font-style: italic;
@@ -57,31 +69,52 @@ md-content {
                 margin-left: 5px;
             }
 
-            .team-row-header {
-                font-weight: 500;
+            .add-team {
+                font-size: 16px;
+                margin-left: 20px;
+                text-decoration: none;
             }
 
-            .team-row {
-                flex: 1;
-                flex-direction: row;
+            .team-table {
 
-                div {
-                    display: inline-block;
-                    vertical-align: middle;
-                    width: 25%;
-                    padding: 3px;
+                background-color: white;
+
+                .team-row-header {
+                    font-weight: 500;
                 }
 
-                .team-cell-radio {
-                    width: 11%;
-                    text-align: center;
-                    padding-left: 10px;
-                    padding-right: 10px;
-                }
+                .team-row {
+                    flex: 1;
+                    flex-direction: row;
 
-                .team-cell-options {
-                    width: 12%;
-                    text-align: center;
+                    td, th {
+                        vertical-align: middle;
+                        text-align: left;
+                        width: 25%;
+                        padding: 10px;
+                        height: auto;
+                        line-height: normal;
+                    }
+
+                    .team-cell-radio {
+                        text-align: center;
+                        width: 20%;
+                    }
+
+                    .team-cell-positions {
+                        width: 20%;
+                    }
+
+                    .team-cell-options {
+                        text-align: center;
+                        width: 10%;
+
+                        .icon-remove {
+                            .pull-right;
+                            color: @brand-danger;
+                            cursor: pointer;
+                        }
+                    }
                 }
             }
 
