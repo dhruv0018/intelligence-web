@@ -379,22 +379,22 @@
 
     "Athlete.Profile": {
 
-        "Athlete": true
+        "*": true
     },
 
     "Athlete.Profile.Highlights": {
 
-        "Athlete": true
+        "*": true
     },
 
     "Athlete.Profile.Academics": {
 
-        "Athlete": true
+        "*": true
     },
 
     "Athlete.Profile.Stats": {
 
-        "Athlete": true
+        "*": true
     },
 
     "Athlete.GameArea": {
