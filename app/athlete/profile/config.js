@@ -19,7 +19,7 @@ Profile.config([
         $stateProvider
 
         .state('Athlete.Profile', {
-            url: '/profile',
+            url: '/:id/profile',
             views: {
                 'main@root': {
                     templateUrl: 'athlete/profile/template.html',

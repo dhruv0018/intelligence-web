@@ -47,7 +47,7 @@
             <li 
                 data-ng-if="config.athleteProfile.isEnabled" 
                 data-ui-sref-active="active"
-            ><a data-ui-sref="Athlete.Profile">Profile</a></li>
+            ><a data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
         </menu>
 
     </div>
@@ -112,7 +112,7 @@
         <li 
             data-ng-if="config.athleteProfile.isEnabled"
             data-ui-sref-active="active"
-        ><a data-ui-sref="Athlete.Profile">Profile</a></li>
+        ><a data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
     </menu>
 
     <!-- Role Dropdown -->
