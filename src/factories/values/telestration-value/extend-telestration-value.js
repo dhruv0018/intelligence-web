@@ -19,6 +19,10 @@ module.exports = [
 
             };
 
+            this.hasGlyphs = function hasGlyphs() {
+                return (this.glyphs) ? this.glyphs.length : false;
+            };
+
             this.unextend = function unextendTelestrationValue() {
 
                 var self = this;

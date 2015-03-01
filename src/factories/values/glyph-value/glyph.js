@@ -273,6 +273,11 @@ module.exports = [
             this.dashedArray = dashedArray || GlyphConstants.DASHED_ARRAY;
         };
 
+        Glyph.prototype.hasVertices = function hasVertices() {
+
+            return this.vertices.length >= 2;
+        };
+
         Glyph.prototype.unextend = function unextendGlyph() {
 
             var self = this;

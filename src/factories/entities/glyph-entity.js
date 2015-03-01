@@ -3,16 +3,16 @@
 /* GlyphEntity - Extends GlyphEntityModel */
 
 module.exports = [
-    'BaseEntity',
-    function(BaseEntity) {
+    'ArrayEntity',
+    function(ArrayEntity) {
 
         var GlyphEntity = function() {
 
             var self = this;
 
-            /* Extend BaseEntity */
+            /* Extend ArrayEntity */
 
-            BaseEntity(self);
+            ArrayEntity(self);
 
 
             self.getGlyphs = function getGlyphs() {
@@ -27,19 +27,26 @@ module.exports = [
 
             };
 
-            self.popGlyph = function popGlyph() {
+            self.removeLast = function removeLast() {
 
-                var glyph = self.pop();
-                glyph.destroy();
+                // TODO: Use super and inherit properly here.
+                // var lastGlyph = ArrayEntity.prototype.removeLast.call();
 
-                return glyph;
+                var lastGlyph = self.pop();
+
+                lastGlyph.destroy();
+
+                return lastGlyph;
 
             };
 
-            self.removeGlyph = function removeGlyph(glyph) {
+            self.remove = function remove(glyph) {
 
-                var glyphIndex = self.indexOf(glyph);
-                if (glyphIndex != -1) self.splice(glyphIndex, 1);
+                // TODO: Use super and inherit properly here.
+                // ArrayEntity.prototype.remove.call(glyph);
+
+                var index = this.indexOf(glyph);
+                if (index != -1) this.splice(index, 1);
 
                 glyph.destroy();
 

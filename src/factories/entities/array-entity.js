@@ -1,7 +1,7 @@
 
-/* Base Entity Class */
+/* Array Entity Class */
 
-function BaseEntity() {
+function ArrayEntity() {
 
     this.unextend = function unextend(entity) {
 
@@ -21,11 +21,29 @@ function BaseEntity() {
         return copy;
     };
 
+    this.remove = function remove(item) {
+
+        var index = this.indexOf(item);
+        if (index != -1) this.splice(index, 1);
+
+    };
+
+    this.removeLast = function removeLast() {
+
+        return this.pop();
+
+    };
+
+    this.getLast = function getLast() {
+
+        if (this.length) return this[this.length - 1];
+    };
+
 }
 
 module.exports = function extendEntity(entity) {
 
     if (!entity) throw Error('extendEntity requires \'entity\' parameter');
 
-    BaseEntity.call(entity);
+    ArrayEntity.call(entity);
 };

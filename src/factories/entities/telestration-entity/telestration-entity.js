@@ -2,14 +2,14 @@
 /* TelestrationEntity - Abstract Class*/
 
 module.exports = [
-    'BaseEntity', 'TelestrationValue', 'ExtendTelestrationValue',
-    function(BaseEntity, TelestrationValue, ExtendTelestrationValue) {
+    'ArrayEntity', 'TelestrationValue', 'ExtendTelestrationValue',
+    function(ArrayEntity, TelestrationValue, ExtendTelestrationValue) {
 
         var TelestrationEntity = function TelestrationEntity() {
 
-            /* Extend BaseEntity */
+            /* Extend ArrayEntity */
 
-            BaseEntity(this);
+            ArrayEntity(this);
 
 
             this.getTelestration = function getTelestration(time, playId) {
