@@ -1,6 +1,6 @@
 <div class="telestration-container" glyph-editor>
 
-    <telestration-controls></telestration-controls>
+    <telestration-controls ng-if="isEditable"></telestration-controls>
 
     <glyph data-ng-repeat="glyph in telestrationsController.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
 

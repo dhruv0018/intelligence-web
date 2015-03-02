@@ -94,8 +94,8 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'PlaysManager',
-    function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, playsManager) {
+    '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'PlaysManager', 'ROLES', 'SessionService',
+    function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, playsManager, ROLES, session) {
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
@@ -133,10 +133,15 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             $scope.plays = plays.getList(playsFilter);
             playsManager.reset($scope.plays);
             var play = playsManager.plays[0];
+
             // Set telestrations
             $scope.telestrationsEntity = $scope.game.playTelestrations;
             $scope.currentTelestrations = $scope.telestrationsEntity.getTelestrationsWithPlayId(play.id);
             $scope.sources = play.getVideoSources();
+
+            // Telestrations Permissions
+            var currentUser = session.getCurrentUser();
+            $scope.telestrationsEditable = currentUser.id === $scope.game.uploaderUserId || (currentUser.currentRole.teamId === $scope.game.uploaderTeamId && currentUser.is(ROLES.COACH));
 
             /* TODO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.
