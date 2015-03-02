@@ -69,11 +69,11 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         $scope.sources = game.getVideoSources();
         $scope.telestrations = game.rawTelestrations;
-        $scope.cuePoints = game.getTelestrationCuePoints(game.rawTelestrations);
+        $scope.cuePoints = $scope.telestrations.getTelestrationCuePoints();
 
         $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
-            $scope.cuePoints = game.getTelestrationCuePoints(game.rawTelestrations);
+            $scope.cuePoints = $scope.telestrations.getTelestrationCuePoints();
         });
     }
 ]);

@@ -2,8 +2,8 @@
 /* TelestrationEntity - Abstract Class*/
 
 module.exports = [
-    'ArrayEntity', 'TelestrationValue', 'ExtendTelestrationValue',
-    function(ArrayEntity, TelestrationValue, ExtendTelestrationValue) {
+    'ArrayEntity', 'TelestrationValue', 'ExtendTelestrationValue', 'CUEPOINT_TYPES',
+    function(ArrayEntity, TelestrationValue, ExtendTelestrationValue, CUEPOINT_TYPES) {
 
         var TelestrationEntity = function TelestrationEntity() {
 
@@ -24,6 +24,50 @@ module.exports = [
                 if (filteredTelestrations.length) return filteredTelestrations[0];
                 // telestration at 'time' does not exist
                 else return null;
+            };
+
+            /*
+            * getTelestrationCuePoints
+            * @param playId (optional)
+            */
+            this.getTelestrationCuePoints = function getTelestrationCuePoints(playId) {
+
+                if (!this.length) return [];
+
+                var cuePoints = [];
+
+                var filteredTelestrations = this.filter(function getTelestrationsWithGlyphs(telestration) {
+                    if (telestration.hasGlyphs()) {
+                        if (playId) {
+                            if (telestration.playId === playId) return true;
+                            else return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                });
+
+                cuePoints = filteredTelestrations.map(function(telestration) {
+
+                    return {
+                        time: telestration.time,
+                        type: CUEPOINT_TYPES.TELESTRATION
+                    };
+                });
+
+                return cuePoints;
+            };
+
+            this.getTelestrationsWithPlayId = function getTelestrationsWithPlayId(playId) {
+
+                if (!playId) throw new Error('getTelestrationsWithPlayId missing required parameter \'playId\'.');
+
+                var filteredTelestrations = this.filter(function filterTelestrations(telestration) {
+
+                    if (telestration.playId === playId) return true;
+                });
+
+                return filteredTelestrations;
             };
 
         };

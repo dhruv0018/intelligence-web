@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity', 'CUEPOINT_TYPES',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q, PlayTelestrationEntity, RawTelestrationEntity, CUEPOINT_TYPES) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q, PlayTelestrationEntity, RawTelestrationEntity) {
 
         var GamesFactory = {
 
@@ -1171,43 +1171,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 return !!self.publicShare;
-            },
-            // TODO: move to a parent class can call super() on.
-            getTelestrationCuePoints: function getTelestrationCuePoints(telestrations, playId) {
-
-                if (!telestrations || !telestrations.length) return [];
-
-                var cuePoints = [];
-
-                var filteredTelestrations = telestrations.filter(function getTelestrationsWithGlyphs(telestration) {
-                    if (telestration.glyphs && telestration.glyphs.length > 0) {
-                        if (playId) {
-                            if (telestration.playId === playId) return true;
-                            else return false;
-                        } else {
-                            return true;
-                        }
-                    }
-                });
-
-                cuePoints = filteredTelestrations.map(function(telestration) {
-
-                    return {
-                        time: telestration.time,
-                        type: CUEPOINT_TYPES.TELESTRATION
-                    };
-                });
-
-                return cuePoints;
-            },
-            // TODO: move to a parent class can call super() on.
-            getTelestrationsWithPlayId: function getTelestrationsWithPlayId(telestrations, playId) {
-
-                var filteredTelestrations = telestrations.filter(function filterTelestrations(telestration) {
-
-                    if (telestration.playId === playId) return true;
-                });
-                return filteredTelestrations;
             }
         };
 

@@ -135,7 +135,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             var play = playsManager.plays[0];
             // Set telestrations
             $scope.telestrationsEntity = $scope.game.playTelestrations;
-            $scope.currentTelestrations = $scope.game.getTelestrationsWithPlayId($scope.game.playTelestrations, play.id);
+            $scope.currentTelestrations = $scope.telestrationsEntity.getTelestrationsWithPlayId(play.id);
             $scope.sources = play.getVideoSources();
 
             /* TODO: Remove this sessionStorage once playIds
@@ -172,8 +172,8 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
                 if (currentPlay && currentPlay.id) {
 
-                    $scope.currentTelestrations = $scope.game.getTelestrationsWithPlayId($scope.game.playTelestrations, playManager.getCurrentPlayId());
-                    $scope.cuePoints = $scope.game.getTelestrationCuePoints($scope.game.playTelestrations, currentPlay.id);
+                    $scope.currentTelestrations = $scope.telestrationsEntity.getTelestrationsWithPlayId(currentPlay.id);
+                    $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
                     // TODO: add back event cuepoint an concat with play cuepoints
                     // var eventCuePoints = play.getEventCuePoints();
                     // $scope.cuePoints = $scope.cuepoints.concat(eventCuePoints);
@@ -182,7 +182,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
-                $scope.cuePoints = $scope.game.getTelestrationCuePoints($scope.game.playTelestrations, playManager.getCurrentPlayId());
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.getCurrentPlayId());
             });
         }
     }

@@ -170,7 +170,7 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.expandAll = false;
 
         $scope.telestrationsEntity = $scope.reel.telestrations;
-        $scope.currentTelestrations = $scope.reel.getTelestrationsWithPlayId($scope.reel.telestrations, play.id);
+        $scope.currentTelestrations = $scope.telestrationsEntity.getTelestrationsWithPlayId(play.id);
         // Editing config
 
         $scope.editFlag = false;
@@ -268,8 +268,8 @@ ReelsArea.controller('ReelsArea.controller', [
 
             if (currentPlay && currentPlay.id) {
 
-                $scope.currentTelestrations = $scope.reel.getTelestrationsWithPlayId($scope.reel.telestrations, currentPlay.id);
-                $scope.cuePoints = $scope.reel.getTelestrationCuePoints($scope.reel.telestrations, currentPlay.id);
+                $scope.currentTelestrations = $scope.telestrationsEntity.getTelestrationsWithPlayId(currentPlay.id);
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
                 // TODO: add back event cuepoint an concat with play cuepoints
                 // var eventCuePoints = play.getEventCuePoints();
                 // $scope.cuePoints = $scope.cuepoints.concat(eventCuePoints);
@@ -278,7 +278,7 @@ ReelsArea.controller('ReelsArea.controller', [
 
         $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
-            $scope.cuePoints = $scope.reel.getTelestrationCuePoints($scope.reel.telestrations, playManager.getCurrentPlayId());
+            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.getCurrentPlayId());
         });
 
         $scope.$on('telestrations:save', function handleTelestrationSave(event, callbackFn) {
