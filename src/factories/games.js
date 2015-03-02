@@ -33,7 +33,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 // TODO: Use Super()
                 Object.keys(game).forEach(function assignCopies(key) {
 
-                    if (game[key].unextend) copy[key] = game[key].unextend();
+                    if (game[key] && game[key].unextend) copy[key] = game[key].unextend();
                     else if (typeof copy[key] !== 'function') copy[key] = angular.copy(game[key]);
 
                 });
