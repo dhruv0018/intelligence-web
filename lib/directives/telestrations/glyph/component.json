@@ -5,7 +5,6 @@
     ],
     "scripts": [
         "directive.js",
-        "glyph-editor-directive.js",
         "index.js"
     ]
 }

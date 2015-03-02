@@ -1,8 +1,10 @@
-<div class="telestration-container" glyph-editor>
+<div class="telestration-container">
 
     <telestration-controls ng-if="isEditable"></telestration-controls>
 
-    <glyph data-ng-repeat="glyph in telestrationsController.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
+    <glyph-editor>
+        <glyph data-ng-repeat="glyph in telestrationsController.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
+    </glyph-editor>
 
     <ng-transclude id="svg-context-area" class="transcluded-content"></ng-transclude>
 
