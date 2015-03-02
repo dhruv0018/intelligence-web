@@ -137,8 +137,10 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.reel = reels.get(reelId);
 
         // Setup playlist
-        var plays = $scope.reel.plays.map(function getPlays(playId) {
-            return playsFactory.get(playId);
+        var plays = $scope.reel.plays.map(function getPlays(playId, index) {
+            var play = playsFactory.get(playId);
+            play.index = index;
+            return play;
         });
         $scope.plays = plays;
         $scope.sortOrder = $scope.reel.plays;
@@ -146,6 +148,9 @@ ReelsArea.controller('ReelsArea.controller', [
         // Update the play order if the sortOrder changes based on play Ids
         $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
             $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
+            $scope.plays.forEach(function indexPlays(play, index) {
+                play.index = index;
+            });
         });
 
         $scope.cuePoints = [];
