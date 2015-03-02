@@ -14,8 +14,8 @@ var BasicInfo = angular.module('Athlete.EditProfile.BasicInfo');
  * @type {controller}
  */
 BasicInfo.controller('Athlete.EditProfile.BasicInfo.controller', [
-    '$scope', 'SportsFactory', 'PositionsetsFactory', 'Athlete.EditProfile.Data',
-    function controller($scope, sports, positionsets, data) {
+    '$scope', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'PositionsetsFactory', 'Athlete.EditProfile.Data',
+    function controller($scope, teams, leagues, sports, positionsets, data) {
         $scope.athlete = data.athlete;
         $scope.sports = sports.getList();
         //$scope.positionset = positionsets.get($scope.league.positionSetId);

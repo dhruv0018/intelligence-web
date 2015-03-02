@@ -20,9 +20,9 @@ Physical.controller('Athlete.EditProfile.Physical.controller', [
         $scope.athlete = data.athlete;
 
         //display height as temporary feet and inches variables
-        //$scope.athleteHeightFeet = utilities.floor($scope.athlete.profile.height / 12);
-        //$scope.athleteHeightInches = $scope.athlete.profile.height % 12;
-        $scope.athleteHeightFeet = 6;
-        $scope.athleteHeightInches = 4;
+        $scope.athleteHeightFeet = utilities.floor($scope.athlete.profile.height / 12);
+        $scope.athleteHeightInches = $scope.athlete.profile.height % 12;
+        //$scope.athleteHeightFeet = 6;
+        //$scope.athleteHeightInches = 4;
     }
 ]);
