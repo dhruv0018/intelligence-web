@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'VideoPlayer',
-    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets, teams, games, plays, videoPlayer) {
+    'config', 'EVENT_MAP', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'EventEmmitter', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'VideoPlayer',
+    function controller(config, EVENT_MAP, $rootScope, $scope, $modal, basicModal, $stateParams, emitter, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets, teams, games, plays, videoPlayer) {
 
         var gameId = Number($stateParams.id);
 
@@ -41,19 +41,10 @@ Indexing.controller('Indexing.Main.Controller', [
         indexing.reset($scope.tagset, $scope.game, playsList);
 
         var indexingElement = document.getElementsByClassName('indexing')[0];
-        var videoPlayerElement = document.getElementsByTagName('videogular')[0];
+
+        emitter.subscribe(EVENT_MAP['fullscreen'], onFullScreenChange);
 
         $scope.$on('$destroy', onDestroy);
-
-        var removeVideoPlayerFullScreenWatch = $scope.$watch(videoPlayerFullScreenWatch, onFullScreenChange);
-
-        /**
-         * Watch for video player full screen changes.
-         */
-        function videoPlayerFullScreenWatch () {
-
-            return videoPlayerElement.classList.contains('fullscreen');
-        }
 
         /**
          * Change handler for video player fill screen changes.
@@ -65,7 +56,7 @@ Indexing.controller('Indexing.Main.Controller', [
 
         function onDestroy () {
 
-            removeVideoPlayerFullScreenWatch();
+            emitter.unsubscribe(EVENT_MAP['fullscreen'], onFullScreenChange);
         }
     }
 ]);
