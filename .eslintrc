@@ -36,6 +36,13 @@
         "no-nested-ternary": true,
         "no-lonely-if": true,
 
-        "no-alert": false
+        "no-alert": false,
+
+        "new-cap": false,
+        "eol-last": false,
+        "no-shadow": false,
+        "key-spacing": false,
+        "comma-spacing": false,
+        "no-multi-spaces": false
     }
 }
