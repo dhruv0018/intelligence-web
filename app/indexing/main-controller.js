@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', 'EVENT_MAP', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'EventEmitter', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'VideoPlayer',
-    function controller(config, EVENT_MAP, $rootScope, $scope, $modal, basicModal, $stateParams, emitter, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets, teams, games, plays, videoPlayer) {
+    'config', 'EVENT_MAP', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VideoPlayerEventEmitter', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'VideoPlayer',
+    function controller(config, EVENT_MAP, $rootScope, $scope, $modal, basicModal, $stateParams, videoPlayerEventEmitter, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets, teams, games, plays, videoPlayer) {
 
         var gameId = Number($stateParams.id);
 
@@ -42,21 +42,21 @@ Indexing.controller('Indexing.Main.Controller', [
 
         var indexingElement = document.getElementsByClassName('indexing')[0];
 
-        emitter.subscribe(EVENT_MAP['fullscreen'], onFullScreenChange);
+        videoPlayerEventEmitter.on('fullscreen', onFullScreen);
 
         $scope.$on('$destroy', onDestroy);
 
         /**
          * Change handler for video player fill screen changes.
          */
-        function onFullScreenChange (isFullScreen) {
+        function onFullScreen (isFullScreen) {
 
             indexingElement.classList.toggle('fullscreen', isFullScreen);
         }
 
         function onDestroy () {
 
-            emitter.unsubscribe(EVENT_MAP['fullscreen'], onFullScreenChange);
+            videoPlayerEventEmitter.removeListener('fullscreen', onFullScreen);
         }
     }
 ]);
