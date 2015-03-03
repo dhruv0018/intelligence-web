@@ -14,7 +14,7 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', 'EVENT_MAP', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'EventEmmitter', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'VideoPlayer',
+    'config', 'EVENT_MAP', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'EventEmitter', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'VideoPlayer',
     function controller(config, EVENT_MAP, $rootScope, $scope, $modal, basicModal, $stateParams, emitter, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets, teams, games, plays, videoPlayer) {
 
         var gameId = Number($stateParams.id);
