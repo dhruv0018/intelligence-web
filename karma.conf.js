@@ -20,11 +20,6 @@ module.exports = function(config) {
 
         ],
 
-        preprocessors: {
-            'src/**/*.js': ['coverage'],
-            'lib/**/*.js': ['coverage']
-        },
-
         frameworks: ['mocha', 'chai', 'chai-as-promised', 'sinon-chai'],
 
         browsers: ['PhantomJS'],
