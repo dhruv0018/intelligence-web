@@ -2,6 +2,8 @@ var pkg = require('../package.json');
 
 require('./appcache');
 
+require('traceur/bin/traceur-runtime');
+
 /* Vendor dependencies */
 require('./vendor');
 
