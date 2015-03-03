@@ -56,7 +56,8 @@ var EVENT_MAP = {
     'pause': 'VIDEO_PAUSE_EMISSION',
     //custom event to custom event mapping
     'stopvideo': 'VIDEO_STOP_COMMAND',
-    'clip-completion': 'PLAYLIST_SWITCH_CLIP_COMMAND'
+    'clip-completion': 'PLAYLIST_SWITCH_CLIP_COMMAND',
+    'fullscreen': 'FULLSCREEN'
 };
 
 IntelligenceWebClient.constant('EVENT_MAP', EVENT_MAP);
@@ -90,7 +91,8 @@ var EVENT_PARSER_MAP = {
     'VIDEO_SEEKING_EMISSION': prepareVideoEvent,
     'VIDEO_PAUSE_EMISSION': defaultEventProperties,
     'VIDEO_CAN_PLAY_EMISSION': defaultEventProperties,
-    'PLAYLIST_SWITCH_CLIP_COMMAND': defaultEventProperties
+    'PLAYLIST_SWITCH_CLIP_COMMAND': defaultEventProperties,
+    'FULLSCREEN': defaultEventProperties
 };
 
 IntelligenceWebClient.constant('EVENT_PARSER_MAP', EVENT_PARSER_MAP);
