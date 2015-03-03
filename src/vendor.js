@@ -20,4 +20,8 @@ require('flow/src/directives/transfers');
 require('flow/src/directives/img');
 require('Mousetrap');
 require('Mousetrap/plugins/pause/mousetrap-pause');
-
+require('videogular/videogular');
+require('videogular-controls/vg-controls');
+require('videogular-buffering/vg-buffering');
+require('videogular-overlay-play/vg-overlay-play');
+require('videogular-poster/vg-poster');

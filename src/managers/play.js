@@ -24,7 +24,6 @@ IntelligenceWebClient.service('PlayManager', [
         this.tagset = null;
         this.gameId = null;
         this.current = null;
-        this.playState = null; //current play playing/paused in video?. probably a better place for this, but this is convenient
         this.playAllPlays = true;
 
         /**
@@ -33,17 +32,6 @@ IntelligenceWebClient.service('PlayManager', [
         this.clear = function() {
 
             this.current = null;
-            this.playState = null;
-        };
-
-        this.register = function register(playScope) {
-            playsManager = playsManager || $injector.get('PlaysManager');
-            playsManager.registerPlayScope(playScope);
-        };
-
-        this.getNextPlayScope = function getNextPlayScope() {
-            playsManager = playsManager || $injector.get('PlaysManager');
-            return playsManager.getNextPlayScope(this.current);
         };
 
         /**
@@ -56,6 +44,15 @@ IntelligenceWebClient.service('PlayManager', [
             this.gameId = gameId || this.gameId;
             this.current = angular.copy(model);
             this.current.gameId = this.gameId;
+        };
+
+        /**
+         * Sets the current play.
+         */
+        this.setCurrent = function(play) {
+
+            this.current = play;
+            eventManager.current = play.events[0];
         };
 
         /**

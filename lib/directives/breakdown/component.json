@@ -1,12 +1,12 @@
 {
-    "name": "poster-image",
+    "name": "breakdown",
     "templates": [
         "template.html"
     ],
-    "scripts": [
-        "index.js"
-    ],
     "styles": [
         "styles.less"
+    ],
+    "scripts": [
+        "index.js"
     ]
 }

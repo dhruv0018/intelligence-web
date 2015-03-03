@@ -1,0 +1,12 @@
+{
+    "name": "button-video-backward",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

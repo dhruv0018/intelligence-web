@@ -89,11 +89,5 @@
         "speedTest": "http://support.krossover.com/customer/portal/articles/1642636-testing-your-upload-speed",
         "finalCutPro": " http://vimeo.com/41165826"
     },
-    "indexing": {
-        "video": {
-            "jump": 3,
-            "speedlimit": 2
-        }
-    },
     "defaultVideoId": 2
 }

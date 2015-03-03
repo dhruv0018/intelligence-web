@@ -24,7 +24,7 @@ IntelligenceWebClient.service('EventManager', [
 
         this.tagset = null;
 
-        this.current = angular.copy(model);
+        this.current = null;
 
         /**
          * Checks whether the event is a floating event.
@@ -188,7 +188,6 @@ IntelligenceWebClient.service('EventManager', [
             this.tagset = tagset || this.tagset;
 
             this.current = angular.copy(model);
-            this.highlighted = null;
         };
 
         /**
