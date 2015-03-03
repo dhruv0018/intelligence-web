@@ -672,7 +672,7 @@ module.exports = function(grunt) {
         'copy:polyfills',
         'copy:htaccess',
         'manifests',
-        'ver:polyfills'
+        'ver:polyfills',
         'ver:prod'
     ]);
 
@@ -719,7 +719,7 @@ module.exports = function(grunt) {
         'copy:polyfills',
         'copy:htaccess',
         'manifests',
-        'ver:polyfills'
+        'ver:polyfills',
         'ver:prod'
     ]);
 };
