@@ -198,6 +198,9 @@ ReelsArea.controller('ReelsArea.controller', [
 
         $scope.VIEWPORTS = VIEWPORTS;
 
+        // Telestrations Permissions
+        $scope.telestrationsEditable = isOwner || isACoachOfThisTeam;
+
         $scope.toggleEditMode = function toggleEditMode() {
             //This method is for entering edit mode, or cancelling,
             //NOT for exiting from commiting changes

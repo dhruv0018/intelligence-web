@@ -26,7 +26,7 @@
 
             <div class="player reels-player" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
     
-                <telestrations telestrations-entity="telestrationsEntity" current-telestrations="currentTelestrations" class="telestration-container" id="videoTelestration" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
+                <telestrations telestrations-entity="telestrationsEntity" current-telestrations="currentTelestrations" class="telestration-container" id="videoTelestration" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name" is-editable="telestrationsEditable">
 
                     <video-player
                      class="reels-video-container"

@@ -57,8 +57,8 @@ GamesRawFilm.config([
 ]);
 
 GamesRawFilm.controller('Games.Rawfilm.controller', [
-    '$scope', '$stateParams', 'GamesFactory',
-    function controller($scope, $stateParams, games) {
+    '$scope', '$stateParams', 'GamesFactory', 'ROLES', 'SessionService',
+    function controller($scope, $stateParams, games, ROLES, session) {
 
         var gameId = $stateParams.id;
         var game = games.get(gameId);
@@ -70,6 +70,11 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         $scope.sources = game.getVideoSources();
         $scope.telestrations = game.rawTelestrations;
         $scope.cuePoints = $scope.telestrations.getTelestrationCuePoints();
+
+        // Telestrations Permissions
+        var currentUser = session.getCurrentUser();
+        $scope.telestrationsEditable = currentUser.id === game.uploaderUserId || (currentUser.currentRole.teamId === game.uploaderTeamId && currentUser.is(ROLES.COACH));
+
 
         $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
