@@ -4,8 +4,6 @@
 
 var less = require("component-builder-less");
 
-var htmlminifier = require('builder-html-minifier')
-
 module.exports = function(grunt) {
 
     require('time-grunt')(grunt);

@@ -71,7 +71,7 @@
         	<span data-ng-show="user.id === currentUser.id" class="share-error-message"><i class="icon icon-warning"></i> You cannot share with yourself.</span>
         	<h3>Sharing with:</h3>
         	<form>
-        		<user-typeahead data-user="user" data-filter="filter"></user-typeahead>
+        		<role-typeahead data-ng-model="user" data-filter="filter"></role-typeahead>
         		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || film.isSharedWithUser(user) || user.id === currentUser.id || (!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE))" data-ng-click="shareSubmit(user); user = null">Add</button>
         	</form>
         	<div class="how-to-search">
