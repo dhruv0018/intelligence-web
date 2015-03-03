@@ -22,7 +22,7 @@ module.exports = function(config) {
 
         frameworks: ['mocha', 'chai', 'chai-as-promised', 'sinon-chai'],
 
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome'],
 
         reporters: ['progress', 'coverage', 'osx'],
 
