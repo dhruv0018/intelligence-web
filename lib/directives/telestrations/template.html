@@ -2,7 +2,7 @@
 
     <telestration-controls ng-if="isEditable"></telestration-controls>
 
-    <div id="svg-context-area">
+    <svg-context-area id="svg-context-area">
 
         <glyph-editor>
             <glyph data-ng-repeat="glyph in telestrationsController.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
@@ -10,6 +10,6 @@
 
         <ng-transclude class="transcluded-content"></ng-transclude>
 
-    </div>
+    </svg-context-area>
 
 </div>
