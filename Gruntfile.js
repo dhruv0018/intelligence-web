@@ -356,6 +356,11 @@ module.exports = function(grunt) {
                     'build/scripts.js': 'build/bundle.js'
                 }
             },
+            polyfills: {
+                files: {
+                    'public/intelligence/webcomponents.js': 'node_modules/webcomponents.js/webcomponents.min.js'
+                }
+            },
             htaccess: {
                 files: {
                     'public/intelligence/.htaccess': 'src/.htaccess'
@@ -610,6 +615,7 @@ module.exports = function(grunt) {
         'uglify',
         'htmlmin',
         'copy:build',
+        'copy:polyfills',
         'manifests'
     ]);
 
@@ -628,6 +634,7 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:dev',
         'copy:build',
+        'copy:polyfills',
         'manifests'
     ]);
 
@@ -648,6 +655,7 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:dev',
         'copy:build',
+        'copy:polyfills',
         'copy:htaccess',
         'manifests',
         'ver:prod'
@@ -693,6 +701,7 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:assets',
         'copy:build',
+        'copy:polyfills',
         'copy:htaccess',
         'manifests',
         'ver:prod'
