@@ -23,22 +23,18 @@
                 <krossover-playlist></krossover-playlist>
 
             </krossover-sidebar>
-
-            <div class="player reels-player" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
     
-                <telestrations telestrations-entity="telestrationsEntity" current-telestrations="currentTelestrations" class="telestration-container" id="videoTelestration" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name" is-editable="telestrationsEditable">
+            <telestrations telestrations-entity="telestrationsEntity" current-telestrations="currentTelestrations" is-editable="telestrationsEditable" ng-show="$root.viewport.name === VIEWPORTS.DESKTOP.name">
 
-                    <video-player
-                     class="reels-video-container"
-                     poster-image="posterImage"
-                     sources="sources"
-                     cue-points="cuePoints"
-                    >
-                    </video-player>
+                <video-player
+                 class="reels-video-container"
+                 poster-image="posterImage"
+                 sources="sources"
+                 cue-points="cuePoints"
+                >
+                </video-player>
 
-                </telestrations>
-
-            </div>
+            </telestrations>
 
         </div>
 

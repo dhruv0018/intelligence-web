@@ -2,10 +2,14 @@
 
     <telestration-controls ng-if="isEditable"></telestration-controls>
 
-    <glyph-editor>
-        <glyph data-ng-repeat="glyph in telestrationsController.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
-    </glyph-editor>
+    <div id="svg-context-area">
 
-    <ng-transclude id="svg-context-area" class="transcluded-content"></ng-transclude>
+        <glyph-editor>
+            <glyph data-ng-repeat="glyph in telestrationsController.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
+        </glyph-editor>
+
+        <ng-transclude class="transcluded-content"></ng-transclude>
+
+    </div>
 
 </div>

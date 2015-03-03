@@ -8,14 +8,17 @@
     telestration-controls {
         position: absolute;
         width: 100%;
+        left: 0;
+        top: 0;
+    }
+
+    #svg-context-area {
+        position: relative;
     }
 
     .transcluded-content {
         display: table;
-    }
-
-    &.telestrations-active > glyph {
-        display: block;
+        position: relative;
     }
 
     glyph {
@@ -53,4 +56,23 @@
         }
     }
 
+    &.telestrations-active > glyph {
+        display: block;
+    }
+
+    &.fullscreen {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+
+        .transcluded-content, #svg-context-area {
+            width: 100%;
+        }
+    }
 }
