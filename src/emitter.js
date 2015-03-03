@@ -7,6 +7,8 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
+IntelligenceWebClient.service('VideoPlayerEventEmitter', EventEmitter);
+
 IntelligenceWebClient.service('EventEmitter', [
     'EVENT_MAP', 'EVENT_PARSER_MAP',
     function(EVENT_MAP, EVENT_PARSER_MAP) {
