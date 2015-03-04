@@ -41,6 +41,7 @@ module.exports = [
                 fill: 'none',
                 stroke: this.color,
                 'stroke-width': this.strokeWidth,
+                'stroke-linecap': 'round',
                 'stroke-dasharray': this.dashedArray
             };
 
