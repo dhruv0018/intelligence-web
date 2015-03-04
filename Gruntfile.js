@@ -390,6 +390,20 @@ module.exports = function(grunt) {
         },
 
         ver: {
+            polyfills: {
+                baseDir: 'public/intelligence',
+                versionFile: 'build/version.json',
+                forceVersion: '<%= pkg.dependencies["webcomponents.js"] %>',
+                phases: [{
+                    files: [
+                        'public/intelligence/webcomponents.js',
+                    ],
+                    references: [
+                        'public/intelligence/index.html',
+                        'public/intelligence/manifest.appcache'
+                    ]
+                }]
+            },
             prod: {
                 baseDir: 'public/intelligence',
                 versionFile: 'build/version.json',
@@ -658,6 +672,7 @@ module.exports = function(grunt) {
         'copy:polyfills',
         'copy:htaccess',
         'manifests',
+        'ver:polyfills',
         'ver:prod'
     ]);
 
@@ -704,6 +719,7 @@ module.exports = function(grunt) {
         'copy:polyfills',
         'copy:htaccess',
         'manifests',
+        'ver:polyfills',
         'ver:prod'
     ]);
 };

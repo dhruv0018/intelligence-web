@@ -62,6 +62,7 @@
         "eol-last": false,
         "no-shadow": false,
         "key-spacing": false,
+        "semi-spacing": false,
         "comma-spacing": false,
         "no-multi-spaces": false
     }
