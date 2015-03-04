@@ -3,6 +3,7 @@
   "version": "2.1.0",
   "description": "Krossover Intelligence Web Client",
   "author": "Jason Morganson <jason@krossover.com>",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git@bitbucket.org:krossoverintelligence/intelligence-web-client.git"
@@ -120,7 +121,7 @@
     "traceur": "0.0.82"
   },
   "config": {
-      "unsafe-perm": true
+    "unsafe-perm": true
   },
   "main": "./src/main.js",
   "scripts": {
