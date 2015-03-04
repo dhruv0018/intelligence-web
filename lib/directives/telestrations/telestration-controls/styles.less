@@ -53,6 +53,10 @@
                 border-top-right-radius: @radius;
                 border-bottom-right-radius: @radius;
             }
+
+            .disabled li {
+                opacity: 0.5;
+            }
         }
 
         li {
@@ -69,10 +73,6 @@
 
             &:active {
                 border: 1px solid @icon-highlight-blue;
-            }
-
-            &.disabled {
-                opacity: 0.5;
             }
         }
     }

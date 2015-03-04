@@ -35,7 +35,7 @@
     </telestration-tool> -->
 
     <telestration-tool>
-        <undo-tool></undo-tool>
+        <undo-tool ng-class="{'disabled': !telestrationsController.$areGlyphsPresent()}"></undo-tool>
     </telestration-tool>
 
 </ul>
