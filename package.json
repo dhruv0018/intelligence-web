@@ -120,9 +120,6 @@
     "time-grunt": "0.3.2",
     "traceur": "0.0.82"
   },
-  "config": {
-    "unsafe-perm": true
-  },
   "main": "./src/main.js",
   "scripts": {
     "install": "napa; component install",
