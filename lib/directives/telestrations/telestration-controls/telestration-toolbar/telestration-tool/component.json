@@ -9,6 +9,7 @@
     "locals": [
         "arrow-glyph-tool",
         "circle-glyph-tool",
+        "circle-spotlight-glyph-tool",
         "color-picker-tool",
         "freehand-glyph-tool",
         "tbar-glyph-tool",

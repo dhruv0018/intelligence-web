@@ -1,6 +1,8 @@
 
 /* Array Entity Class */
 
+module.exports = ArrayEntity;
+
 function ArrayEntity() {
 
     this.unextend = function unextend(entity) {
@@ -40,10 +42,3 @@ function ArrayEntity() {
     };
 
 }
-
-module.exports = function extendEntity(entity) {
-
-    if (!entity) throw Error('extendEntity requires \'entity\' parameter');
-
-    ArrayEntity.call(entity);
-};

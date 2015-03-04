@@ -12,7 +12,7 @@ module.exports = [
 
             /* Extend ArrayEntity */
 
-            arrayEntity(self);
+            arrayEntity.call(self);
 
 
             self.getGlyphs = function getGlyphs() {

@@ -42,7 +42,7 @@ module.exports = [
             };
 
             // Extend Existing Glyphs
-            glyphEntity(this.glyphs);
+            if (this.glyphs) glyphEntity(this.glyphs);
 
         }
 

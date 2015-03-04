@@ -9,7 +9,7 @@ module.exports = [
 
             /* Extend ArrayEntity */
 
-            arrayEntity(this);
+            arrayEntity.call(this);
 
 
             this.getTelestration = function getTelestration(time, playId) {

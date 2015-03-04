@@ -22,7 +22,7 @@ module.exports = [
 
             var offsetX = endPoint.x - startPoint.x;
             var offsetY = endPoint.y - startPoint.y;
-            pointDistance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
+            var pointDistance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
 
             this.spotlight.radius(pointDistance / 2)
                 .cx((startPoint.x + endPoint.x) / 2)
@@ -36,8 +36,6 @@ module.exports = [
                     stroke: this.color,
                     'stroke-width': this.strokeWidth
                 });
-
-            this.show();
         };
 
         return CircleSpotlight;

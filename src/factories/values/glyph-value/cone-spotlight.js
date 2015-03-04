@@ -75,8 +75,6 @@ module.exports = [
                     stroke: this.color,
                     'stroke-width': this.strokeWidth
                 });
-
-            this.show();
         };
 
         return ConeSpotlight;

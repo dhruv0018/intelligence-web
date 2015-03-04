@@ -23,7 +23,7 @@ module.exports = [
 
             var offsetX = endPoint.x - startPoint.x;
             var offsetY = endPoint.y - startPoint.y;
-            pointDistance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
+            var pointDistance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
 
             if (offsetY === 0) offsetX = 0; //fix for .radius(offsetX, 0) creating a circle with radius offsetX
 

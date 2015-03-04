@@ -5,7 +5,8 @@ module.exports = [
     'GlyphValue',
     function(Glyph) {
 
-        var numShadowShapes = 0;
+        var numSpotlights = 0;
+        var visibleSpotlightShapes = [];
         var initialized = false;
 
         // Semi-opaque layer
@@ -18,41 +19,54 @@ module.exports = [
 
         function Spotlight(type, options, SVGContext, shape, spotlightShape) {
 
-            numShadowShapes++;
-
             this.SVGContext = SVGContext;
 
-            if (numShadowShapes == 1) addMaskLayers.call(this);
+            numSpotlights++;
+            if (numSpotlights === 1) addMaskLayers.call(this);
 
             this.addSpotlight(spotlightShape);
             Glyph.call(this, type, options, SVGContext, shape);
 
+            this.show();
         }
         angular.inheritPrototype(Spotlight, Glyph);
 
         Spotlight.prototype.telestrationSVGMaskBlack = null;
         Spotlight.prototype.telestrationSVGMask = null;
 
-        Spotlight.prototype.hide = function hideSpotlight(spotlightShape) {
+        Spotlight.prototype.hide = function hideSpotlight() {
 
             Glyph.prototype.hide.call(this);
             this.spotlight.hide();
-            SVGMaskWhite.hide();
-            telestrationSVGMaskBlack.hide();
+            visibleSpotlightShapes.pop();
 
+            console.log('hide visibleSpotlightShapes', visibleSpotlightShapes);
+
+            if (!visibleSpotlightShapes.length) {
+                SVGMaskWhite.hide();
+                telestrationSVGMaskBlack.hide();
+            }
         };
 
-        Spotlight.prototype.show = function showSpotlight(spotlightShape) {
+        Spotlight.prototype.show = function showSpotlight() {
+
+            console.log('preshow visibleSpotlightShapes', visibleSpotlightShapes);
 
             Glyph.prototype.show.call(this);
             this.spotlight.show();
-            SVGMaskWhite.show();
-            telestrationSVGMaskBlack.show();
+            visibleSpotlightShapes.push(this.spotlight);
+            console.log('show visibleSpotlightShapes', visibleSpotlightShapes);
 
+            if (visibleSpotlightShapes.length) {
+                SVGMaskWhite.show();
+                telestrationSVGMaskBlack.show();
+            }
         };
 
         Spotlight.prototype.addSpotlight = function ShadowShapeAddShadow(spotlightShape) {
+
             this.spotlight = spotlightShape;
+
             var theMask = telestrationSVGMask.add(spotlightShape);
             var objWithMask = telestrationSVGMaskBlack.maskWith(theMask);
             var shortUrl = objWithMask.attr('mask');
@@ -110,9 +124,16 @@ module.exports = [
         }
 
         function removeShape() {
-            numShadowShapes--;
+            console.log('pre: removeShape visibleSpotlightShapes', visibleSpotlightShapes);
+            var index = visibleSpotlightShapes.indexOf(this.spotlight);
+            visibleSpotlightShapes.splice(index, 1);
+            console.log('removeShape visibleSpotlightShapes', visibleSpotlightShapes);
+            if (!visibleSpotlightShapes.length) {
+                SVGMaskWhite.hide();
+                telestrationSVGMaskBlack.hide();
+            }
 
-            if (numShadowShapes === 0) removeMaskLayers.call(this);
+            if (numSpotlights === 0) removeMaskLayers.call(this);
         }
 
         return Spotlight;
