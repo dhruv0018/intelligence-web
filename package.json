@@ -114,7 +114,7 @@
     "moment": "2.9.0",
     "moment-timezone": "0.2.1",
     "mysql": "^2.5.4",
-    "napa": "0.4.1",
+    "napa": "1.2.0",
     "protractor": "1.8.0",
     "sequelize": "^2.0.0-rc8",
     "time-grunt": "0.3.2",
