@@ -170,7 +170,7 @@ ReelsArea.controller('ReelsArea.controller', [
         $scope.expandAll = false;
 
         $scope.telestrationsEntity = $scope.reel.telestrations;
-        $scope.currentTelestrations = $scope.telestrationsEntity.getTelestrationsWithPlayId(play.id);
+        $scope.currentPlayId = play.id;
         // Editing config
 
         $scope.editFlag = false;
@@ -271,7 +271,7 @@ ReelsArea.controller('ReelsArea.controller', [
 
             if (currentPlay && currentPlay.id) {
 
-                $scope.currentTelestrations = $scope.telestrationsEntity.getTelestrationsWithPlayId(currentPlay.id);
+                $scope.currentPlayId = currentPlay.id;
                 $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
                 // TODO: add back event cuepoint an concat with play cuepoints
                 // var eventCuePoints = play.getEventCuePoints();

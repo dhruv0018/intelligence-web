@@ -136,7 +136,8 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             // Set telestrations
             $scope.telestrationsEntity = $scope.game.playTelestrations;
-            $scope.currentTelestrations = $scope.telestrationsEntity.getTelestrationsWithPlayId(play.id);
+            $scope.currentPlayId = play.id;
+
             $scope.sources = play.getVideoSources();
 
             // Telestrations Permissions
@@ -177,8 +178,8 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
                 if (currentPlay && currentPlay.id) {
 
-                    $scope.currentTelestrations = $scope.telestrationsEntity.getTelestrationsWithPlayId(currentPlay.id);
                     $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
+                    $scope.currentPlayId = currentPlay.id;
                     // TODO: add back event cuepoint an concat with play cuepoints
                     // var eventCuePoints = play.getEventCuePoints();
                     // $scope.cuePoints = $scope.cuepoints.concat(eventCuePoints);

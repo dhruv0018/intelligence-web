@@ -58,18 +58,6 @@ module.exports = [
                 return cuePoints;
             };
 
-            this.getTelestrationsWithPlayId = function getTelestrationsWithPlayId(playId) {
-
-                if (!playId) throw new Error('getTelestrationsWithPlayId missing required parameter \'playId\'.');
-
-                var filteredTelestrations = this.filter(function filterTelestrations(telestration) {
-
-                    if (telestration.playId === playId) return true;
-                });
-
-                return filteredTelestrations;
-            };
-
         };
 
         var extendTelestrationEntityModel = function extendTelestrationEntityModel(telestrationEntityModel) {
