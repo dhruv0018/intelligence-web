@@ -47,14 +47,14 @@
             border-bottom-left-radius: @radius;
         }
 
-        telestration-tool {
+        ul.telestration-toolbar >:last-child {
 
-            &:last-child li {
+            li {
                 border-top-right-radius: @radius;
                 border-bottom-right-radius: @radius;
             }
 
-            .disabled li {
+            &.disabled {
                 opacity: 0.5;
             }
         }
