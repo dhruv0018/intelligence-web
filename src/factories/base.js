@@ -5,10 +5,6 @@ var pkg = require('../../package.json');
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-class Test {
-
-}
-
 var IntelligenceWebClient = angular.module(pkg.name);
 
 /**
