@@ -42,9 +42,19 @@
 
     .primary-controls {
 
-        telestration-activate-button li {
-            border-top-left-radius: @radius;
-            border-bottom-left-radius: @radius;
+        telestration-activate-button {
+            margin-right: 1px;
+            
+
+            .telestration-activate-button.active {
+                border-radius: @radius;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+             .telestration-activate-button.inactive {
+                border-radius: @radius;
+            }
         }
 
         ul.telestration-toolbar >:last-child {
@@ -62,9 +72,9 @@
         li {
             background-color: black;
             padding: 8px;
-            width: @tool-size;
-            height: @tool-size;
             border: none;
+            height: @tool-size;  
+            width: @tool-size;          
 
             &:active, &:hover {
                 color: @icon-highlight-blue;
