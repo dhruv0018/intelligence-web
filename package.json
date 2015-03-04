@@ -124,7 +124,7 @@
     "install": "napa; component install",
     "postinstall": "node_modules/protractor/bin/webdriver-manager update",
     "serve": "node server.js",
-    "start": "grunt",
+    "start": ":",
     "test": "grunt test"
   }
 }
