@@ -1,7 +1,3 @@
-// Get window location
-
-var location = window.location;
-
 
 /* Spotlight - Abstract class extends Glyph */
 
@@ -60,7 +56,7 @@ module.exports = [
             var theMask = telestrationSVGMask.add(spotlightShape);
             var objWithMask = telestrationSVGMaskBlack.maskWith(theMask);
             var shortUrl = objWithMask.attr('mask');
-            var longUrl = 'url(' + location.href + shortUrl.match(/#\w+/i)[0] + ')';
+            var longUrl = 'url(' + window.location.href + shortUrl.match(/#\w+/i)[0] + ')';
             objWithMask.attr({'mask': longUrl});
         };
 
@@ -116,7 +112,7 @@ module.exports = [
         function removeShape() {
             numShadowShapes--;
 
-            if (numShadowShapes == 0) removeMaskLayers.call(this);
+            if (numShadowShapes === 0) removeMaskLayers.call(this);
         }
 
         return Spotlight;

@@ -3,7 +3,7 @@
 
 module.exports = [
     'GlyphFactory', 'GlyphEntity',
-    function(GlyphFactory, GlyphEntity) {
+    function(GlyphFactory, glyphEntity) {
 
         function ExtendTelestrationValue() {
 
@@ -42,7 +42,7 @@ module.exports = [
             };
 
             // Extend Existing Glyphs
-            GlyphEntity(this.glyphs);
+            glyphEntity(this.glyphs);
 
         }
 

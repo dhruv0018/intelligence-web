@@ -3,13 +3,13 @@
 
 module.exports = [
     'ArrayEntity', 'TelestrationValue', 'ExtendTelestrationValue', 'CUEPOINT_TYPES',
-    function(ArrayEntity, TelestrationValue, ExtendTelestrationValue, CUEPOINT_TYPES) {
+    function(arrayEntity, TelestrationValue, ExtendTelestrationValue, CUEPOINT_TYPES) {
 
         var TelestrationEntity = function TelestrationEntity() {
 
             /* Extend ArrayEntity */
 
-            ArrayEntity(this);
+            arrayEntity(this);
 
 
             this.getTelestration = function getTelestration(time, playId) {

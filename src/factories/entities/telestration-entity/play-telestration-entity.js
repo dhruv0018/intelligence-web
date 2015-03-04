@@ -3,16 +3,16 @@
 
 module.exports = [
     'TelestrationEntity', 'PlayTelestrationValue', 'ExtendTelestrationValue',
-    function(TelestrationEntity, PlayTelestrationValue, ExtendTelestrationValue) {
+    function(telestrationEntity, PlayTelestrationValue, extendTelestrationValue) {
 
         var PlayTelestrationEntity = function PlayTelestrationEntity(telestrationEntityModel, parentId) {
 
             // Extend existing telestration objects
-            TelestrationEntity(telestrationEntityModel);
+            telestrationEntity(telestrationEntityModel);
 
             // Extend play telestrations
             telestrationEntityModel.forEach(function extendTelestrationValues(telestration) {
-                ExtendTelestrationValue(telestration);
+                extendTelestrationValue(telestration);
             });
 
             // Override Base addNewTelestration
@@ -23,7 +23,7 @@ module.exports = [
                 if (!newTelestration) return null;
 
                 // Extend the new Telestration
-                ExtendTelestrationValue(newTelestration);
+                extendTelestrationValue(newTelestration);
 
                 this.push(newTelestration);
 
@@ -32,7 +32,7 @@ module.exports = [
             };
 
         };
-        angular.inheritPrototype(PlayTelestrationEntity, TelestrationEntity);
+        angular.inheritPrototype(PlayTelestrationEntity, telestrationEntity);
 
         return PlayTelestrationEntity;
     }

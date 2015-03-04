@@ -11,7 +11,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
     'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q, PlayTelestrationEntity, RawTelestrationEntity) {
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q, playTelestrationEntity, rawTelestrationEntity) {
 
         var GamesFactory = {
 
@@ -100,8 +100,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.rawTelestrations = game.rawTelestrations || [];
                 game.playTelestrations = game.playTelestrations || [];
 
-                if (!game.rawTelestrations.unextend) RawTelestrationEntity(game.rawTelestrations, game.id);
-                if (!game.playTelestrations.unextend) PlayTelestrationEntity(game.playTelestrations, game.id);
+                if (!game.rawTelestrations.unextend) rawTelestrationEntity(game.rawTelestrations, game.id);
+                if (!game.playTelestrations.unextend) playTelestrationEntity(game.playTelestrations, game.id);
 
                 return game;
             },
@@ -466,6 +466,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
+                deadline = deadline || new Date();
+
                 /* Ensure the game can be assigned. */
                 if (self.canBeAssignedToIndexer()) {
 
@@ -509,6 +511,8 @@ IntelligenceWebClient.factory('GamesFactory', [
             assignToQa: function(userId, deadline) {
 
                 var self = this;
+
+                deadline = deadline || new Date();
 
                 /* Ensure the game can be assigned. */
                 if (self.canBeAssignedToQa()) {

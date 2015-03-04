@@ -4,7 +4,7 @@
 
 module.exports = [
     'ArrayEntity',
-    function(ArrayEntity) {
+    function(arrayEntity) {
 
         var GlyphEntity = function() {
 
@@ -12,7 +12,7 @@ module.exports = [
 
             /* Extend ArrayEntity */
 
-            ArrayEntity(self);
+            arrayEntity(self);
 
 
             self.getGlyphs = function getGlyphs() {

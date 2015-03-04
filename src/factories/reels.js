@@ -8,7 +8,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
     'ROLES', 'Utilities', 'BaseFactory', 'SessionService', 'ReelTelestrationEntity', 'CUEPOINT_TYPES',
-    function(ROLES, utilities, BaseFactory, session, ReelTelestrationEntity, CUEPOINT_TYPES) {
+    function(ROLES, utilities, BaseFactory, session, reelTelestrationEntity, CUEPOINT_TYPES) {
 
         var ReelsFactory = {
 
@@ -42,7 +42,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 // Extend Telestration Entities
                 reel.telestrations = reel.telestrations || [];
 
-                if (!reel.telestrations.unextend) ReelTelestrationEntity(reel.telestrations, reel.id);
+                if (!reel.telestrations.unextend) reelTelestrationEntity(reel.telestrations, reel.id);
 
                 return reel;
             },
