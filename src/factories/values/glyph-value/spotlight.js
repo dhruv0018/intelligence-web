@@ -40,8 +40,6 @@ module.exports = [
             this.spotlight.hide();
             visibleSpotlightShapes.pop();
 
-            console.log('hide visibleSpotlightShapes', visibleSpotlightShapes);
-
             if (!visibleSpotlightShapes.length) {
                 SVGMaskWhite.hide();
                 telestrationSVGMaskBlack.hide();
@@ -50,12 +48,9 @@ module.exports = [
 
         Spotlight.prototype.show = function showSpotlight() {
 
-            console.log('preshow visibleSpotlightShapes', visibleSpotlightShapes);
-
             Glyph.prototype.show.call(this);
             this.spotlight.show();
             visibleSpotlightShapes.push(this.spotlight);
-            console.log('show visibleSpotlightShapes', visibleSpotlightShapes);
 
             if (visibleSpotlightShapes.length) {
                 SVGMaskWhite.show();
@@ -124,10 +119,10 @@ module.exports = [
         }
 
         function removeShape() {
-            console.log('pre: removeShape visibleSpotlightShapes', visibleSpotlightShapes);
+
             var index = visibleSpotlightShapes.indexOf(this.spotlight);
             visibleSpotlightShapes.splice(index, 1);
-            console.log('removeShape visibleSpotlightShapes', visibleSpotlightShapes);
+
             if (!visibleSpotlightShapes.length) {
                 SVGMaskWhite.hide();
                 telestrationSVGMaskBlack.hide();
