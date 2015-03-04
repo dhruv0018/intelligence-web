@@ -39,7 +39,7 @@
     "spdy": "^1.29.1",
     "spdy-keys": "0.0.0",
     "spdy-push": "^1.0.0",
-    "webcomponents.js": "0.5.4-1"
+    "webcomponents.js": "0.5.5-1"
   },
   "devDependencies": {
     "angular": "1.3.8",
