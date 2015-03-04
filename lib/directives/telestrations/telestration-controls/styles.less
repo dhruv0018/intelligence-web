@@ -32,49 +32,16 @@
     }
 
     .primary-controls {
+
         display: flex;
-
-        .selected li {
-            color: @icon-highlight-blue;
-            background-color: @active-grey;
-        }
-    }
-
-    .primary-controls {
-
-        telestration-activate-button {
-            margin-right: 1px;
-            
-
-            .telestration-activate-button.active {
-                border-radius: @radius;
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-            }
-
-             .telestration-activate-button.inactive {
-                border-radius: @radius;
-            }
-        }
-
-        ul.telestration-toolbar >:last-child {
-
-            li {
-                border-top-right-radius: @radius;
-                border-bottom-right-radius: @radius;
-            }
-
-            &.disabled {
-                opacity: 0.5;
-            }
-        }
 
         li {
             background-color: black;
+            margin-right: -3px;
             padding: 8px;
             border: none;
             height: @tool-size;  
-            width: @tool-size;          
+            width: @tool-size;     
 
             &:active, &:hover {
                 color: @icon-highlight-blue;
@@ -85,6 +52,38 @@
                 border: 1px solid @icon-highlight-blue;
             }
         }
+
+        .selected li {
+            color: @icon-highlight-blue;
+            background-color: @active-grey;
+        }
+
+        .disabled {
+            opacity: 0.5;
+        }
+
+        telestration-activate-button li{
+            margin-right: 1px;
+
+            &.telestration-activate-button.active {
+                border-radius: @radius;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            &.telestration-activate-button.inactive {
+                border-radius: @radius;
+            }
+        }
+
+        ul.telestration-toolbar >:last-child {
+
+            li {
+                border-top-right-radius: @radius;
+                border-bottom-right-radius: @radius;
+            }
+        }
+
     }
 
     telestration-clear-all-button {
