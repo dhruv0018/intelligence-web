@@ -10,16 +10,29 @@
     </div>
 
     <span class="film-options">
-      <a class="share-game" 
-         data-ng-click="ShareFilmModal.open(film)"
-         data-ng-if="(isUploader || isCoachOnUploaderTeam) && validVideo">
-          <i class="icon icon-share"></i>Share
-      </a>
+        <span class="publish-to-profile" ng-if="userIsLoggedIn && isReel && isUploader">
+            <span class="publish" ng-show="!film.publishedToProfile && !publishing" ng-click="toggleReelPublishing()">
+                <i class="icon icon-plus"></i>Publish to Profile
+            </span>
+            <span class="publishing" ng-show="publishing">
+                <i class="icon icon-spinner" ng-show="!confirmPublish"></i>
+                <i class="icon icon-ok" ng-show="confirmPublish"></i>
+            </span>
+            <span class="unpublish" ng-show="film.publishedToProfile && !publishing" ng-click="toggleReelPublishing()">
+                <i class="icon icon-minus"></i>Remove from Profile
+            </span>
+        </span>
 
-      <span class="delete-reel" 
+        <a class="share-game"
+            data-ng-click="ShareFilmModal.open(film)"
+            data-ng-if="(isUploader || isCoachOnUploaderTeam) && validVideo">
+            <i class="icon icon-share"></i>Share
+        </a>
+
+        <span class="delete-reel" 
             data-ng-if="userIsLoggedIn && isReel && isUploader" 
             data-ng-click="deleteReel()">
-          <i class="icon icon-remove"></i>Delete Reel
-      </span>
+            <i class="icon icon-remove"></i>Delete Reel
+        </span>
     </span>
 </div>

@@ -65,7 +65,8 @@
         }
     }
 
-    .delete-reel {
+    .delete-reel,
+    .publish-to-profile {
         margin-right: 20px;
         color: @gray;
         cursor: pointer;
@@ -75,7 +76,25 @@
         }
 
         .icon {
-            margin-right: 2px;
+            margin-right: 5px;
+        }
+
+        .publishing {
+
+            margin-right: 40px;
+
+            .icon-ok {
+                color: @brand-success;
+            }
+
+            .icon-spinner {
+
+                color: @gray;
+
+                &::before {
+                    animation: spin 1s linear infinite;
+                }
+            }
         }
     }
 }

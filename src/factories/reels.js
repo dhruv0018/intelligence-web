@@ -353,6 +353,24 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
 
                 return teamShare;
+            },
+            publishToProfile: function() {
+                var self = this;
+
+                if (!self.isSharedWithPublic()) {
+                    self.togglePublicSharing();
+                }
+
+                self.publishedToProfile = true;
+            },
+            unpublishFromProfile: function() {
+                var self = this;
+
+                if (self.isSharedWithPublic()) {
+                    self.togglePublicSharing();
+                }
+
+                self.publishedToProfile = false;
             }
         };
 
