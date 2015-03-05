@@ -5,11 +5,11 @@ FROM node:onbuild
 ENV GITHUB_USERNAME krossoverbuild
 ENV GITHUB_PASSWORD Popcorn23
 
-# Install components
-RUN node_modules/.bin/component install
-
 # Install third party packages outside npm
 RUN node_modules/.bin/napa
+
+# Install components
+RUN node_modules/.bin/component install
 
 # Expose port
 EXPOSE 8000
