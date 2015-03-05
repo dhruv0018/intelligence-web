@@ -5,44 +5,41 @@ module.exports = [
     'GlyphValue',
     function(Glyph) {
 
-        var numSpotlights = 0;
         var visibleSpotlightShapes = [];
         var initialized = false;
 
         // Semi-opaque layer
-        var telestrationSVGMaskBlack;
+        var blackBackdropLayer;
 
         // Mask layer
-        var telestrationSVGMask;
-        var SVGMaskWhite;
-
+        var maskLayer;
 
         function Spotlight(type, options, SVGContext, shape, spotlightShape) {
 
             this.SVGContext = SVGContext;
+            this.spotlight = spotlightShape;
 
-            numSpotlights++;
-            if (numSpotlights === 1) addMaskLayers.call(this);
+            if (!blackBackdropLayer) addBlackMask.call(this);
+            if (!maskLayer) addMask.call(this);
 
-            this.addSpotlight(spotlightShape);
             Glyph.call(this, type, options, SVGContext, shape);
 
             this.show();
         }
         angular.inheritPrototype(Spotlight, Glyph);
 
-        Spotlight.prototype.telestrationSVGMaskBlack = null;
-        Spotlight.prototype.telestrationSVGMask = null;
-
         Spotlight.prototype.hide = function hideSpotlight() {
 
             Glyph.prototype.hide.call(this);
             this.spotlight.hide();
-            visibleSpotlightShapes.pop();
+
+            var index = visibleSpotlightShapes.indexOf(this.spotlight);
+            // If found in visibleSpotlightShapes, remove it
+            if (index !== -1) visibleSpotlightShapes.splice(index, 1);
 
             if (!visibleSpotlightShapes.length) {
-                SVGMaskWhite.hide();
-                telestrationSVGMaskBlack.hide();
+
+                hideMaskLayers();
             }
         };
 
@@ -50,26 +47,27 @@ module.exports = [
 
             Glyph.prototype.show.call(this);
             this.spotlight.show();
-            visibleSpotlightShapes.push(this.spotlight);
+
+            var index = visibleSpotlightShapes.indexOf(this.spotlight);
+
+            // If not in visibleSpotlightShapes yet, add it
+            if (index === -1) {
+
+                visibleSpotlightShapes.push(this.spotlight);
+                var theMask = maskLayer.add(this.spotlight);
+                var objWithMask = blackBackdropLayer.maskWith(theMask);
+                var shortUrl = objWithMask.attr('mask');
+                var longUrl = 'url(' + window.location.href + shortUrl.match(/#\w+/i)[0] + ')';
+                objWithMask.attr({'mask': longUrl});
+            }
 
             if (visibleSpotlightShapes.length) {
-                SVGMaskWhite.show();
-                telestrationSVGMaskBlack.show();
+
+                showMaskLayers();
             }
         };
 
-        Spotlight.prototype.addSpotlight = function ShadowShapeAddShadow(spotlightShape) {
-
-            this.spotlight = spotlightShape;
-
-            var theMask = telestrationSVGMask.add(spotlightShape);
-            var objWithMask = telestrationSVGMaskBlack.maskWith(theMask);
-            var shortUrl = objWithMask.attr('mask');
-            var longUrl = 'url(' + window.location.href + shortUrl.match(/#\w+/i)[0] + ')';
-            objWithMask.attr({'mask': longUrl});
-        };
-
-        Spotlight.prototype.registerMoveListeners = function ShadowShapeRegisterMoveListeners() {
+        Spotlight.prototype.registerMoveListeners = function SpotlightShapeRegisterMoveListeners() {
 
             var self = this;
 
@@ -77,15 +75,18 @@ module.exports = [
             Glyph.prototype.registerMoveListeners.call(self);
 
             if (self.currentShape) {
+
                 var prevDragStart = self.currentShape.dragstart || angular.noop;
-                self.currentShape.dragstart = function ShadowShapeDragStart() {
+                self.currentShape.dragstart = function SpotlightShapeDragStart() {
+
                     prevDragStart();
                     self.spotlight.xStart = self.spotlight.x();
                     self.spotlight.yStart = self.spotlight.y();
                 };
 
                 var prevDragMove = self.currentShape.dragmove || angular.noop;
-                self.currentShape.dragmove = function ShadowShapeDragMove(delta, event) {
+                self.currentShape.dragmove = function SpotlightShapeDragMove(delta, event) {
+
                     prevDragMove(delta, event);
                     self.spotlight.x(self.spotlight.xStart + delta.x);
                     self.spotlight.y(self.spotlight.yStart + delta.y);
@@ -93,42 +94,83 @@ module.exports = [
             }
         };
 
-        Spotlight.prototype.destroy = function destroyShadowShape() {
+        Spotlight.prototype.destroy = function destroySpotlightShape() {
 
             Glyph.prototype.destroy.call(this);
             removeShape.call(this);
             this.spotlight.remove();
         };
 
+        // HACK: Remove listeners 'cleans' up this object without destroying the model, thus, remove Mask layer here.
+        Spotlight.prototype.removeListeners = function removeSpotlightListeners() {
+
+            Glyph.prototype.removeListeners.call(this);
+
+            removeShape.call(this);
+        };
 
         // PRIVATE METHODS
 
-        function addMaskLayers() {
+        function addBlackMask() {
+
             // Semi-opaque layer
-            telestrationSVGMaskBlack = this.SVGContext.rect('100%', '100%').attr({ fill: '#000' }).opacity(0.4).back();
+            blackBackdropLayer = this.SVGContext.rect('100%', '100%').attr({ fill: '#000' }).opacity(0.4).back();
+        }
+
+        function addMask() {
 
             // Mask layer
-            telestrationSVGMask = this.SVGContext.mask();
-            SVGMaskWhite = this.SVGContext.rect('100%', '100%').attr({ fill: '#fff' }).back().forward();
-            telestrationSVGMask.add(SVGMaskWhite);
+            maskLayer = this.SVGContext.mask();
+            var SVGMaskWhite = this.SVGContext.rect('100%', '100%').attr({ fill: '#fff' }).back().forward();
+            maskLayer.add(SVGMaskWhite);
         }
 
         function removeMaskLayers() {
-            telestrationSVGMaskBlack.remove();
-            SVGMaskWhite.remove();
+
+            if (blackBackdropLayer) {
+
+                blackBackdropLayer.remove();
+                blackBackdropLayer = null;
+            }
+
+            if (maskLayer) {
+
+                maskLayer.remove();
+                maskLayer = null;
+            }
+        }
+
+        function showMaskLayers() {
+
+            if (blackBackdropLayer) blackBackdropLayer.show();
+            if (maskLayer) maskLayer.show();
+        }
+
+        function hideMaskLayers() {
+
+            if (blackBackdropLayer) {
+
+                blackBackdropLayer.unmask();
+                blackBackdropLayer.hide();
+            }
+
+            if (maskLayer) {
+
+                maskLayer.unmask();
+                maskLayer.hide();
+            }
         }
 
         function removeShape() {
 
             var index = visibleSpotlightShapes.indexOf(this.spotlight);
-            visibleSpotlightShapes.splice(index, 1);
+            // If found in visibleSpotlightShapes, remove it
+            if (index !== -1) visibleSpotlightShapes.splice(index, 1);
 
             if (!visibleSpotlightShapes.length) {
-                SVGMaskWhite.hide();
-                telestrationSVGMaskBlack.hide();
-            }
 
-            if (numSpotlights === 0) removeMaskLayers.call(this);
+                removeMaskLayers();
+            }
         }
 
         return Spotlight;
