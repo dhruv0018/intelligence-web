@@ -2,8 +2,8 @@
 /* Textbox - extends Glyph */
 
 module.exports = [
-    'GlyphValue', 'GlyphConstants',
-    function(Glyph, GlyphConstants) {
+    'GlyphValue',
+    function(Glyph) {
 
         function TextBox(type, options, SVGContext) {
 
@@ -13,9 +13,9 @@ module.exports = [
         }
         angular.inheritPrototype(TextBox, Glyph);
 
-        TextBox.prototype.editable = false;
-        TextBox.prototype.movable = true;
-        TextBox.prototype.hintText = GlyphConstants.TEXT_TOOL_HINT_TEXT;
+        TextBox.prototype.EDITABLE = false;
+        TextBox.prototype.MOVEABLE = true;
+        TextBox.prototype.TEXT_TOOL_HINT_TEXT = 'Enter text here';
 
         TextBox.prototype.render = function renderTextBox() {
 

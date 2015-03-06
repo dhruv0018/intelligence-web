@@ -12,8 +12,8 @@ module.exports = [
         }
         angular.inheritPrototype(Freehand, Glyph);
 
-        Freehand.prototype.editable = false;
-        Freehand.prototype.moveable = false;
+        Freehand.prototype.EDITABLE = false;
+        Freehand.prototype.MOVEABLE = false;
         Freehand.prototype.MIN_VERTICES = 1;
 
         Freehand.prototype.updateGlyphFromPixels = function updateGlyphFromPixels(x, y) {
@@ -41,7 +41,8 @@ module.exports = [
             var attributes = {
                 fill: 'none',
                 stroke: this.color,
-                'stroke-width': this.strokeWidth,
+                'stroke-width': this.STROKE_WIDTH,
+                'stroke-linejoin':'round',
                 'stroke-linecap': 'round',
                 'stroke-dasharray': this.dashedArray
             };

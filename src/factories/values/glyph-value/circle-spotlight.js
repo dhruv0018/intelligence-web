@@ -34,7 +34,7 @@ module.exports = [
                 .attr({
                     fill: this.color,
                     stroke: this.color,
-                    'stroke-width': this.strokeWidth
+                    'stroke-width': this.STROKE_WIDTH
                 });
         };
 

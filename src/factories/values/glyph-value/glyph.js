@@ -2,8 +2,7 @@
 /* Glyph - Abstract Base Class */
 
 module.exports = [
-    'GlyphConstants',
-    function(GlyphConstants) {
+    function() {
 
         function Glyph(type, options, SVGContext, shape) {
 
@@ -20,7 +19,6 @@ module.exports = [
             // Set Default Model Values
             this.currentShape = shape || null;
             this.SVGContext = SVGContext;
-            this.strokeWidth = GlyphConstants.STROKE_WIDTH;
             this.constraintFn = null;
             this.text = null;
             this.dashedArray = null;
@@ -29,9 +27,17 @@ module.exports = [
             this.registerMoveListeners();
         }
 
-        Glyph.prototype.editable = true;
-        Glyph.prototype.moveable = true;
-        Glyph.prototype.MIN_VERTICES = GlyphConstants.DEFAULT_MIN_VERTICES;
+
+        /* Default Values */
+
+        Glyph.prototype.EDITABLE = true;
+        Glyph.prototype.MOVEABLE = true;
+        Glyph.prototype.STROKE_WIDTH = 8;
+        Glyph.prototype.DASHED_ARRAY = '2,2';
+        Glyph.prototype.MIN_VERTICES = 2;
+
+
+        /* Class Functions */
 
         Glyph.prototype.getSVGBoxDimensions = function getSVGBoxDimensions() {
             return {
@@ -114,7 +120,7 @@ module.exports = [
 
         Glyph.prototype.registerEditListeners = function() {
             var self = this;
-            if (self.editable && self.currentShape) {
+            if (self.EDITABLE && self.currentShape) {
                 self.currentShape.on('click', function(mouseEvent) {
                     if (typeof self.onClickHandler === 'function') self.onClickHandler(mouseEvent);
                 });
@@ -133,7 +139,7 @@ module.exports = [
             var bottom;
             var shapeRect;
 
-            if (self.moveable && self.currentShape) {
+            if (self.MOVEABLE && self.currentShape) {
                 self.currentShape.draggable();
                 self.currentShape.startPosition = null;
 
@@ -214,7 +220,7 @@ module.exports = [
 
         Glyph.prototype.removeListeners = function removeListeners() {
 
-            if (this.moveable && this.currentShape) this.currentShape.fixed();
+            if (this.MOVEABLE && this.currentShape) this.currentShape.fixed();
 
             this.activeListenerRemovers.forEach(function(listenerRemoverFunc) {
                 listenerRemoverFunc();
@@ -253,7 +259,7 @@ module.exports = [
         Glyph.prototype.setDraggableConstraintFn = function setDraggableConstraintFn(constraintFn) {
             var self = this;
 
-            if (self.moveable && self.currentShape && !self.constraintFn) {
+            if (self.MOVEABLE && self.currentShape && !self.constraintFn) {
 
                 // if (self.constraints) self.currentShape.fixed(); // reset the draggable plugin
 
@@ -271,7 +277,7 @@ module.exports = [
         };
 
         Glyph.prototype.setDashedArray = function setDashedArray(dashedArray) {
-            this.dashedArray = dashedArray || GlyphConstants.DASHED_ARRAY;
+            this.dashedArray = dashedArray || this.DASHED_ARRAY;
         };
 
         Glyph.prototype.hasMinimumVertices = function hasMinimumVertices() {

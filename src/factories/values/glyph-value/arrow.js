@@ -2,8 +2,8 @@
 /* Arrow Glyph - extends Glyph */
 
 module.exports = [
-    'GlyphValue', 'GlyphConstants',
-    function(Glyph, GlyphConstants) {
+    'GlyphValue',
+    function(Glyph) {
 
         function Arrow(type, options, SVGContext) {
 
@@ -12,8 +12,8 @@ module.exports = [
         }
         angular.inheritPrototype(Arrow, Glyph);
 
-        Arrow.prototype.ARROW_SIDE_LENGTH = GlyphConstants.ARROW_SIDE_LENGTH;
-        Arrow.prototype.ARROW_HEIGHT = Math.sqrt(5 / 4 * GlyphConstants.ARROW_SIDE_LENGTH * GlyphConstants.ARROW_SIDE_LENGTH);
+        Arrow.prototype.ARROW_SIDE_LENGTH = 10;
+        Arrow.prototype.ARROW_HEIGHT = Math.sqrt(5 / 4 * Math.pow(Arrow.prototype.ARROW_SIDE_LENGTH, 2));
 
         Arrow.prototype.render = function renderArrow() {
 
@@ -53,7 +53,7 @@ module.exports = [
             var attributes = {
                 fill: this.color,
                 stroke: this.color,
-                'stroke-width': this.strokeWidth,
+                'stroke-width': this.STROKE_WIDTH,
                 'stroke-dasharray': this.dashedArray
             };
 

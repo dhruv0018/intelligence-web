@@ -30,9 +30,3 @@ IntelligenceWebClient.factory('FreehandValue', require('./freehand'));
 IntelligenceWebClient.factory('CircleSpotlightValue', require('./circle-spotlight'));
 IntelligenceWebClient.factory('TBarValue', require('./tbar'));
 IntelligenceWebClient.factory('TextBoxValue', require('./textbox'));
-
-
-/* Constants */
-
-IntelligenceWebClient.value('GlyphConstants', require('./constants'));
-
