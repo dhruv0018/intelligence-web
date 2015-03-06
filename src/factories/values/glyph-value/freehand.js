@@ -14,6 +14,7 @@ module.exports = [
 
         Freehand.prototype.editable = false;
         Freehand.prototype.moveable = false;
+        Freehand.prototype.MIN_VERTICES = 1;
 
         Freehand.prototype.updateGlyphFromPixels = function updateGlyphFromPixels(x, y) {
             // TODO: only call getBoundingClientRect on window Resize
@@ -50,7 +51,7 @@ module.exports = [
 
         Freehand.prototype.hasMinimumVertices = function hasMinimumVertices() {
 
-            if (this.vertices && this.vertices.length >= 1) return true;
+            if (this.vertices && this.vertices.length >= this.MIN_VERTICES) return true;
         };
 
         return Freehand;

@@ -31,6 +31,7 @@ module.exports = [
 
         Glyph.prototype.editable = true;
         Glyph.prototype.moveable = true;
+        Glyph.prototype.MIN_VERTICES = GlyphConstants.DEFAULT_MIN_VERTICES;
 
         Glyph.prototype.getSVGBoxDimensions = function getSVGBoxDimensions() {
             return {
@@ -275,7 +276,7 @@ module.exports = [
 
         Glyph.prototype.hasMinimumVertices = function hasMinimumVertices() {
 
-            if (this.vertices && this.vertices.length >= 2) return true;
+            if (this.vertices && this.vertices.length >= this.MIN_VERTICES) return true;
         };
 
         Glyph.prototype.unextend = function unextendGlyph() {

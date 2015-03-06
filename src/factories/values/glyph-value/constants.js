@@ -6,5 +6,6 @@ module.exports = {
     'DASHED_ARRAY': '2,2',
     'T_BAR_LENGTH': 100,
     'TEXT_TOOL_HINT_TEXT': 'Enter text here',
-    'ARROW_SIDE_LENGTH': 10
+    'ARROW_SIDE_LENGTH': 10,
+    'DEFAULT_MIN_VERTICES': 2
 };
