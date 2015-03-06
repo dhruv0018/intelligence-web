@@ -48,6 +48,11 @@ module.exports = [
             this.currentShape.plot(pathData).attr(attributes);
         };
 
+        Freehand.prototype.hasVertices = function hasVertices() {
+
+            if (this.vertices && this.vertices.length >= 1) return true;
+        };
+
         return Freehand;
     }
 ];
