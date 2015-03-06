@@ -619,7 +619,7 @@ module.exports = function(grunt) {
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['browserSync:dev']);
     grunt.registerTask('manifests', ['copy:manifests', 'date-manifests']);
-    grunt.registerTask('default', ['githooks', 'install', 'dev', 'notify:build', 'serve', 'watch']);
+    grunt.registerTask('default', ['githooks', 'dev', 'notify:build', 'serve', 'watch']);
 
     grunt.registerTask('build', [
         'env:test',
