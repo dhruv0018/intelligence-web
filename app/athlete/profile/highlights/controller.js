@@ -17,6 +17,6 @@ Highlights.controller('Athlete.Profile.Highlights.controller', [
     '$scope', 'ReelsFactory',
     function controller($scope, reels) {
 
-        $scope.reels = reels.getByUploaderUserId();
+        $scope.reels = reels.getPublishedReels();
     }
 ]);

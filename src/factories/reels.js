@@ -371,6 +371,19 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
 
                 self.publishedToProfile = false;
+            },
+            getPublishedReels: function(userId) {
+                userId = userId || session.getCurrentUserId();
+
+                if (!userId) throw new Error('No userId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderUserId == userId &&
+                           reel.publishedToProfile == true;
+                });
             }
         };
 
