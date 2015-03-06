@@ -273,9 +273,9 @@ module.exports = [
             this.dashedArray = dashedArray || GlyphConstants.DASHED_ARRAY;
         };
 
-        Glyph.prototype.hasVertices = function hasVertices() {
+        Glyph.prototype.hasMinimumVertices = function hasMinimumVertices() {
 
-            return this.vertices.length >= 2;
+            if (this.vertices && this.vertices.length >= 2) return true;
         };
 
         Glyph.prototype.unextend = function unextendGlyph() {

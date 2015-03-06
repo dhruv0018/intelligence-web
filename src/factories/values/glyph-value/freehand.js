@@ -48,7 +48,7 @@ module.exports = [
             this.currentShape.plot(pathData).attr(attributes);
         };
 
-        Freehand.prototype.hasVertices = function hasVertices() {
+        Freehand.prototype.hasMinimumVertices = function hasMinimumVertices() {
 
             if (this.vertices && this.vertices.length >= 1) return true;
         };
