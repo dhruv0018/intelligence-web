@@ -72,7 +72,11 @@ module.exports = [
             self.render = function render() {
 
                 self.forEach(function renderGlyph(glyph) {
-                    glyph.render();
+
+                    if (glyph.hasVertices()) glyph.render();
+                    else {
+                        console.log('Error: Glyph is missing required vertices to render'); // TODO: Log this externally instead.
+                    }
                 });
 
             };
