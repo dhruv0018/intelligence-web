@@ -64,7 +64,7 @@
     "cucumber": "0.4.8",
     "envify": "1.2.1",
     "es6ify": "1.6.0",
-    "eslint": "git://github.com/eslint/eslint",
+    "eslint": "0.16.1",
     "grunt": "0.4.5",
     "grunt-autoprefixer": "2.2.0",
     "grunt-browser-sync": "0.9.1",
