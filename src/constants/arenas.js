@@ -100,31 +100,31 @@ var ARENA_REGIONS = {
     LACROSSE: {
 
         'HOLE': {
-            id: 1,
+            id: 5,
             name: 'Hole',
             description: 'from the hole'
         },
 
         'SLOT': {
-            id: 2,
+            id: 6,
             name: 'Slot',
             description: 'from the slot'
         },
 
         'PORCH': {
-            id: 3,
+            id: 7,
             name: 'Porch',
             description: 'from the porch'
         },
 
         'FLANKS': {
-            id: 4,
+            id: 8,
             name: 'Flanks',
             description: 'from the flanks'
         },
 
         'PERIMETER': {
-            id: 5,
+            id: 9,
             name: 'PERIMETER',
             description: 'from the perimeter'
         }
@@ -132,3 +132,53 @@ var ARENA_REGIONS = {
 };
 
 IntelligenceWebClient.constant('ARENA_REGIONS', ARENA_REGIONS);
+
+var ARENA_REGIONS_BY_ID = {
+    1: {
+        id: 1,
+        name: 'Around the Rim',
+        description: 'around the rim'
+    },
+    2: {
+        id: 2,
+        name: 'Inside the Paint',
+        description: 'from inside the paint'
+    },
+    3: {
+        id: 3,
+        name: 'Mid-Range',
+        description: 'at mid-range'
+    },
+    4: {
+        id: 4,
+        name: 'Behind the Arc',
+        description: 'from behind the arc'
+    },
+    5: {
+        id: 5,
+        name: 'Hole',
+        description: 'from the hole'
+    },
+    6: {
+        id: 6,
+        name: 'Slot',
+        description: 'from the slot'
+    },
+    7: {
+        id: 7,
+        name: 'Porch',
+        description: 'from the porch'
+    },
+    8: {
+        id: 8,
+        name: 'Flanks',
+        description: 'from the flanks'
+    },
+    9: {
+        id: 9,
+        name: 'PERIMETER',
+        description: 'from the perimeter'
+    }
+};
+
+IntelligenceWebClient.constant('ARENA_REGIONS_BY_ID', ARENA_REGIONS_BY_ID);
