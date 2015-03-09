@@ -5,7 +5,7 @@
         data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
         data-ng-disabled="!isIndexer || !isEditable"
 		data-ng-click="resetAndOpenModal()"
-        >{{description}}
+        >{{ARENA_REGIONS_BY_ID[event.variableValues[item.id].value.region].description}}
     </button>
 
 	<input
