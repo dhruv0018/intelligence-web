@@ -7,15 +7,11 @@ function inherit(parent, extra) {
 }
 
 function inheritPrototype(childObject, parentObject) {
-    // Copy the properties and methods from the parentObject onto the childObject​
-    // so the copyOfParent object now has everything the parentObject has ​
+
     var copyOfParent = Object.create(parentObject.prototype);
 
-    // Then we set the constructor of this new object to point to the childObject.​
     copyOfParent.constructor = childObject;
 
-    // Then we set the childObject prototype to copyOfParent,
-    // so that the childObject can in turn inherit everything from copyOfParent (from parentObject)​
     childObject.prototype = copyOfParent;
 }
 
