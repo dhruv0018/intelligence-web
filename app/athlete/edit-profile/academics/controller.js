@@ -14,8 +14,8 @@ var Academics = angular.module('Athlete.EditProfile.Academics');
  * @type {controller}
  */
 Academics.controller('Athlete.EditProfile.Academics.controller', [
-    '$scope', 'Athlete.EditProfile.Data',
-    function controller($scope, data) {
-        $scope.athlete = data.athlete;
+    '$scope', 'SessionService', 'Athlete.EditProfile.Data',
+    function controller($scope, session, data) {
+        $scope.athlete = session.currentUser;
     }
 ]);

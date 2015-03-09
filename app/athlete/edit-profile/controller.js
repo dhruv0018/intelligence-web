@@ -15,11 +15,11 @@ var EditProfile = angular.module('Athlete.EditProfile');
  */
 EditProfile.controller('Athlete.EditProfile.controller', [
     '$scope', '$state', 'SessionService', 'Athlete.EditProfile.Data',
-    function controller($scope, $state, $session, data) {
+    function controller($scope, $state, session, data) {
         // TO-DO: Move this to somewhere more appropriate (state.onEnter?)
         $state.go('Athlete.EditProfile.BasicInfo');
 
-        $scope.athlete = data.athlete;
+        $scope.athlete = session.currentUser;
 
         var reader = new FileReader();
 

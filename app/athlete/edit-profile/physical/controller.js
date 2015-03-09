@@ -14,10 +14,10 @@ var Physical = angular.module('Athlete.EditProfile.Physical');
  * @type {controller}
  */
 Physical.controller('Athlete.EditProfile.Physical.controller', [
-    '$scope', 'Utilities', 'Athlete.EditProfile.Data',
-    function controller($scope, utilities, data) {
+    '$scope', 'Utilities', 'SessionService', 'Athlete.EditProfile.Data',
+    function controller($scope, utilities, session, data) {
         $scope.utilities = utilities;
-        $scope.athlete = data.athlete;
+        $scope.athlete = session.currentUser;
 
         //display height as temporary feet and inches variables
         $scope.athleteHeightFeet = utilities.floor($scope.athlete.profile.height / 12);
