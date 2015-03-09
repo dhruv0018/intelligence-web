@@ -170,6 +170,14 @@ module.exports = {
 
     /*
      |--------------------------------------------------------------------------
+     | Reload each browser when BrowserSync is restarted.
+     |--------------------------------------------------------------------------
+     | https://github.com/shakyShane/browser-sync/wiki/options#wiki-excludedfiletypes
+     */
+    reloadOnRestart: true,
+
+    /*
+     |--------------------------------------------------------------------------
      | Reload Delay
      |--------------------------------------------------------------------------
      | https://github.com/shakyShane/browser-sync/wiki/options#wiki-reloadDelay
