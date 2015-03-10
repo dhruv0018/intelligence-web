@@ -57,29 +57,60 @@ GamesRawFilm.config([
 ]);
 
 GamesRawFilm.controller('Games.Rawfilm.controller', [
-    '$scope', '$stateParams', 'GamesFactory', 'ROLES', 'SessionService',
-    function controller($scope, $stateParams, games, ROLES, session) {
+    '$scope', '$stateParams', 'GamesFactory', 'ROLES', 'SessionService', 'UsersFactory', 'TELESTRATION_PERMISSIONS',
+    function controller($scope, $stateParams, games, ROLES, session, users, TELESTRATION_PERMISSIONS) {
 
         var gameId = $stateParams.id;
         var game = games.get(gameId);
+        var uploader = users.get($scope.game.uploaderUserId);
+        var currentUser = session.getCurrentUser();
+        var isUploader = game.isUploader(currentUser.id);
+        var uploaderIsCoach = uploader.is(ROLES.COACH);
+        var isTeamUploadersTeam = game.isTeamUploadersTeam(currentUser.currentRole.teamId);
+        var isCoach = currentUser.is(ROLES.COACH);
+
+        /* Scope */
+
+        // telestrations
+
+        $scope.telestrations = game.rawTelestrations;
+
+        if (isUploader) {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+        }
+        else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+        }
+        else {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
+        }
+
+        // video player
 
         $scope.posterImage = {
             url: game.video.thumbnail
         };
-
         $scope.sources = game.getVideoSources();
-        $scope.telestrations = game.rawTelestrations;
-        $scope.cuePoints = $scope.telestrations.getTelestrationCuePoints();
+        $scope.cuePoints = [];
 
-        // Telestrations Permissions
-        var currentUser = session.getCurrentUser();
-        $scope.telestrationsEditable = currentUser.id === game.uploaderUserId || (currentUser.currentRole.teamId === game.uploaderTeamId && currentUser.is(ROLES.COACH));
-
-
-        $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+        if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
             $scope.cuePoints = $scope.telestrations.getTelestrationCuePoints();
-        });
+        }
+
+
+        /* Listeners */
+
+        if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+            $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+
+                $scope.cuePoints = $scope.telestrations.getTelestrationCuePoints();
+            });
+        }
     }
 ]);
 

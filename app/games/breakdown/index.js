@@ -146,19 +146,21 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             /* Telestrations Permissions */
 
             var currentUser = session.getCurrentUser();
-
             var isUploader = $scope.game.isUploader(currentUser.id);
             var uploaderIsCoach = uploader.is(ROLES.COACH);
             var isTeamUploadersTeam = $scope.game.isTeamUploadersTeam(currentUser.currentRole.teamId);
             var isCoach = currentUser.is(ROLES.COACH);
 
             if (isUploader) {
+
                 $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
             }
             else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
+
                 $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
             }
             else {
+
                 $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
             }
 
@@ -196,7 +198,11 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
                 if (currentPlay && currentPlay.id) {
 
-                    $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
+                    if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+                        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
+                    }
+
                     $scope.currentPlayId = currentPlay.id;
                     // TODO: add back event cuepoint an concat with play cuepoints
                     // var eventCuePoints = play.getEventCuePoints();
@@ -204,10 +210,13 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
                 }
             });
 
-            $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+            if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
-                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.getCurrentPlayId());
-            });
+                $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+
+                    $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.getCurrentPlayId());
+                });
+            }
         }
     }
 ]);
