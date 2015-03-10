@@ -94,8 +94,8 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 ]);
 
 GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'PlaysManager', 'ROLES', 'SessionService',
-    function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, playsManager, ROLES, session) {
+    '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'PlaysManager', 'ROLES', 'SessionService', 'TELESTRATION_PERMISSIONS',
+    function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, playsManager, ROLES, session, TELESTRATION_PERMISSIONS) {
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
@@ -120,7 +120,9 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         // TODO: remove some of this later
         $scope.team = teams.get($scope.game.teamId);
         $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-        $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+
+        var uploader = users.get($scope.game.uploaderUserId);
+        $scope.uploadedBy = uploader;
 
         $scope.filmTitle = $scope.game.description;
 
@@ -140,9 +142,25 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             $scope.sources = play.getVideoSources();
 
-            // Telestrations Permissions
+
+            /* Telestrations Permissions */
+
             var currentUser = session.getCurrentUser();
-            $scope.telestrationsEditable = currentUser.id === $scope.game.uploaderUserId || (currentUser.currentRole.teamId === $scope.game.uploaderTeamId && currentUser.is(ROLES.COACH));
+
+            var isUploader = $scope.game.isUploader(currentUser.id);
+            var uploaderIsCoach = uploader.is(ROLES.COACH);
+            var isTeamUploadersTeam = $scope.game.isTeamUploadersTeam(currentUser.currentRole.teamId);
+            var isCoach = currentUser.is(ROLES.COACH);
+
+            if (isUploader) {
+                $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+            }
+            else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
+                $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+            }
+            else {
+                $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
+            }
 
             /* TODO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.

@@ -1175,6 +1175,26 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 return !!self.publicShare;
+            },
+            /*
+             * Determines if the user is the uploader (owner) of this game
+             * @param - userId
+             * @returns {boolean}
+             */
+            isUploader: function isUploader(userId) {
+                var self = this;
+
+                return userId === self.uploaderUserId;
+            },
+            /*
+             * Determines if the team given is the same as the uploader's (owner) team
+             * @param - teamId
+             * @returns {boolean}
+             */
+            isTeamUploadersTeam: function isTeamUploadersTeam(teamId) {
+                var self = this;
+
+                return teamId === self.uploaderTeamId;
             }
         };
 
