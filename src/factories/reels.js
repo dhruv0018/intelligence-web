@@ -378,43 +378,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return teamShare;
             },
-            // TODO: this is EXACTLY the same as in the GamesFactory, ideally would extend from a base film Factory
-            getTelestrationCuePoints: function getTelestrationCuePoints(telestrations, playId) {
-
-                if (!telestrations || !telestrations.length) return [];
-
-                var cuePoints = [];
-
-                var filteredTelestrations = telestrations.filter(function getTelestrationsWithGlyphs(telestration) {
-                    if (telestration.glyphs && telestration.glyphs.length > 0) {
-                        if (playId) {
-                            if (telestration.playId === playId) return true;
-                            else return false;
-                        } else {
-                            return true;
-                        }
-                    }
-                });
-
-                cuePoints = filteredTelestrations.map(function(telestration) {
-
-                    return {
-                        time: telestration.time,
-                        type: CUEPOINT_TYPES.TELESTRATION
-                    };
-                });
-
-                return cuePoints;
-            },
-            // TODO: Almost same function in the games factory, move to a parent class can call super() on.
-            getTelestrationsWithPlayId: function getTelestrationsWithPlayId(telestrations, playId) {
-
-                var filteredTelestrations = telestrations.filter(function filterTelestrations(telestration) {
-
-                    if (telestration.playId === playId) return true;
-                });
-                return filteredTelestrations;
-            },
             /*
              * Determines if the user is the uploader (owner) of this game
              * @param - userId
