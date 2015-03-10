@@ -474,6 +474,9 @@ module.exports = function(grunt) {
         browserSync: {
             options: require('./bs-config.js'),
             dev: {
+                options: {
+                    watchTask: true
+                },
                 bsFiles: [
                     'public/intelligence/index.html',
                     'public/intelligence/styles.css',
@@ -482,16 +485,16 @@ module.exports = function(grunt) {
                 ]
             },
             prod: {
+                options: {
+                    open: false,
+                    watchTask: false
+                },
                 bsFiles: [
                     'public/intelligence/index.html',
                     'public/intelligence/styles.css',
                     'public/intelligence/scripts.js',
                     'public/intelligence/assets/**/*.png'
-                ],
-                options: {
-                    open: false,
-                    watchTask: false
-                }
+                ]
             }
         },
 
