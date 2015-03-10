@@ -414,6 +414,26 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     if (telestration.playId === playId) return true;
                 });
                 return filteredTelestrations;
+            },
+            /*
+             * Determines if the user is the uploader (owner) of this game
+             * @param - userId
+             * @returns {boolean}
+             */
+            isUploader: function isUploader(userId) {
+                var self = this;
+
+                return userId === self.uploaderUserId;
+            },
+            /*
+             * Determines if the team given is the same as the uploader's (owner) team
+             * @param - teamId
+             * @returns {boolean}
+             */
+            isTeamUploadersTeam: function isTeamUploadersTeam(teamId) {
+                var self = this;
+
+                return teamId === self.uploaderTeamId;
             }
         };
 

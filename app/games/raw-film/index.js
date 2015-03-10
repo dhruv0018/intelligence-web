@@ -60,6 +60,8 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
     '$scope', '$stateParams', 'GamesFactory', 'ROLES', 'SessionService', 'UsersFactory', 'TELESTRATION_PERMISSIONS',
     function controller($scope, $stateParams, games, ROLES, session, users, TELESTRATION_PERMISSIONS) {
 
+        /* Variables */
+
         var gameId = $stateParams.id;
         var game = games.get(gameId);
         var uploader = users.get($scope.game.uploaderUserId);
@@ -68,6 +70,7 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         var uploaderIsCoach = uploader.is(ROLES.COACH);
         var isTeamUploadersTeam = game.isTeamUploadersTeam(currentUser.currentRole.teamId);
         var isCoach = currentUser.is(ROLES.COACH);
+
 
         /* Scope */
 
@@ -78,23 +81,23 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         if (isUploader) {
 
             $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
-        }
-        else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
+
+        } else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
 
             $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
-        }
-        else {
+
+        } else {
 
             $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
         }
 
         // video player
 
+        $scope.sources = game.getVideoSources();
+        $scope.cuePoints = [];
         $scope.posterImage = {
             url: game.video.thumbnail
         };
-        $scope.sources = game.getVideoSources();
-        $scope.cuePoints = [];
 
         if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 

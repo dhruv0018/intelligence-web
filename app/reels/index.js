@@ -86,8 +86,8 @@ ReelsArea.config([
 ]);
 
 ReelsArea.service('Reels.Data.Dependencies', [
-    'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory',
-    function dataService(games, plays, teams, reels, leagues, tagsets, players) {
+    'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'UsersFactory',
+    function dataService(games, plays, teams, reels, leagues, tagsets, players, users) {
 
         var service = function(stateParams) {
 
@@ -107,7 +107,30 @@ ReelsArea.service('Reels.Data.Dependencies', [
                         leagues: leagues.load()
                     };
 
-                    return data;
+                    data.reel.then(function() {
+
+                        var reel = reels.get(reelId);
+
+                        if (reel.shares && reel.shares.length > 0) {
+
+                            var usersToLoad = {};
+
+                            reel.shares.forEach(function(share) {
+
+                                usersToLoad[share.userId] = true;
+                            });
+
+                            usersToLoad = Object.keys(usersToLoad).map(function keyToInteger(key) {
+
+                                return parseInt(key);
+                            });
+
+                            data.users = users.load(usersToLoad);
+                        }
+
+                        return data;
+                    });
+
                 }
             };
 
@@ -125,81 +148,110 @@ ReelsArea.service('Reels.Data.Dependencies', [
  * @type {Controller}
  */
 ReelsArea.controller('ReelsArea.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AuthenticationService', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES', 'VIEWPORTS',
-    function controller($rootScope, $scope, $state, $stateParams, $modal, modals, auth, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES, VIEWPORTS) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AuthenticationService', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES', 'VIEWPORTS', 'UsersFactory', 'TELESTRATION_PERMISSIONS',
+    function controller($rootScope, $scope, $state, $stateParams, $modal, modals, auth, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES, VIEWPORTS, users, TELESTRATION_PERMISSIONS) {
 
-        $scope.auth = auth;
+        /* Variables */
 
-        $scope.isReelsPlay = true;
-
-        // Get reel
         var reelId = Number($stateParams.id);
-        $scope.reel = reels.get(reelId);
-
-        // Setup playlist
-        var plays = $scope.reel.plays.map(function getPlays(playId, index) {
-            var play = playsFactory.get(playId);
-            play.index = index;
-            return play;
-        });
-        $scope.plays = plays;
-        $scope.sortOrder = $scope.reel.plays;
-
-        // Update the play order if the sortOrder changes based on play Ids
-        $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
-            $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
-            $scope.plays.forEach(function indexPlays(play, index) {
-                play.index = index;
-            });
-        });
-
-        $scope.cuePoints = [];
-        $scope.playManager = playManager;
-        // Refresh the playsManager
-        playsManager.reset($scope.plays);
-        var play = playsManager.plays[0];
-        // playManager.current = play;
-        var playRelatedGame = gamesFactory.get(play.gameId);
-
-        $scope.posterImage = {
-            url: playRelatedGame.video.thumbnail
-        };
-
-        $scope.sources = play.getVideoSources();
-
-        $scope.expandAll = false;
-
-        $scope.telestrationsEntity = $scope.reel.telestrations;
-        $scope.currentPlayId = play.id;
-        // Editing config
-
-        $scope.editFlag = false;
+        var reel = reels.get(reelId);
+        var currentUser = session.getCurrentUser();
+        var uploader = users.get(reel.uploaderUserId);
+        var isUploader = reel.isUploader(currentUser.id);
+        var uploaderIsCoach = uploader.is(ROLES.COACH);
+        var isTeamUploadersTeam = reel.isTeamUploadersTeam(currentUser.currentRole.teamId);
+        var isCoach = currentUser.is(ROLES.COACH);
         var editAllowed = true;
 
-        var editModeRestrictions = {
+        // TODO: Get 'sharedBy' user, determine if they are coach or athlete, set telestrations permissions below accordingly
+
+        var REELS_PERMISSIONS = {
             DELETABLE: 'DELETABLE',
             EDITABLE: 'EDITABLE',
             VIEWABLE: 'VIEWABLE'
         };
+        var reelsPermissions = REELS_PERMISSIONS.VIEWABLE; // DEFAULT PERMISSION
 
-        /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
-        // DEFAULT RESTRICTION
-        $scope.restrictionLevel = editModeRestrictions.VIEWABLE;
+        var plays = reel.plays.map(function getPlays(playId, index) {
 
-        var isCoach = session.currentUser.is(ROLES.COACH);
-        var isACoachOfThisTeam = isCoach && session.currentUser.currentRole.teamId === $scope.reel.uploaderTeamId;
-        var isOwner = session.currentUser.id === $scope.reel.uploaderUserId;
+            var play = playsFactory.get(playId);
+            play.index = index;
 
-        if (isACoachOfThisTeam) $scope.restrictionLevel = editModeRestrictions.EDITABLE;
-        if (isOwner) $scope.restrictionLevel = editModeRestrictions.DELETABLE;
+            return play;
+        });
+        var play = plays[0];
+        var playRelatedGame = gamesFactory.get(play.gameId);
 
-        $scope.canUserDelete = $scope.restrictionLevel === editModeRestrictions.DELETABLE;
-        $scope.canUserEdit = $scope.restrictionLevel === editModeRestrictions.DELETABLE || $scope.restrictionLevel === editModeRestrictions.EDITABLE;
 
+        /* Initialization */
+
+        // Refresh the playsManager
+
+        playsManager.reset(plays);
+
+
+        /* Scope */
+
+        // services
+
+        $scope.auth = auth;
+        $scope.playManager = playManager;
         $scope.VIEWPORTS = VIEWPORTS;
 
-        // Telestrations Permissions
-        $scope.telestrationsEditable = isOwner || isACoachOfThisTeam;
+        // film header
+
+        $scope.reel = reel;
+
+        // playlist - 'hidden' (dependended upon by directive but not via isolate scope)
+
+        $scope.expandAll = false;
+        $scope.isReelsPlay = true;
+        $scope.plays = plays;
+        $scope.sortOrder = reel.plays;
+
+        // reel editing and permissions
+
+        $scope.editFlag = false;
+
+        if (isUploader) {
+
+            reelsPermissions = REELS_PERMISSIONS.DELETABLE;
+
+        } else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
+
+             reelsPermissions = REELS_PERMISSIONS.EDITABLE;
+        }
+
+        $scope.canUserDelete = reelsPermissions === REELS_PERMISSIONS.DELETABLE;
+        $scope.canUserEdit = reelsPermissions === REELS_PERMISSIONS.DELETABLE || reelsPermissions === REELS_PERMISSIONS.EDITABLE;
+
+        // telestrations
+
+        $scope.telestrationsEntity = reel.telestrations;
+
+        if (isUploader) {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+
+        } else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+
+        } else {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
+        }
+
+        // video player
+
+        $scope.cuePoints = [];
+        $scope.sources = play.getVideoSources();
+        $scope.currentPlayId = play.id;
+        $scope.posterImage = {
+            url: playRelatedGame.video.thumbnail
+        };
+
+        // functions
 
         $scope.toggleEditMode = function toggleEditMode() {
             //This method is for entering edit mode, or cancelling,
@@ -226,13 +278,6 @@ ReelsArea.controller('ReelsArea.controller', [
             }
         };
 
-        $scope.$on('delete-reel-play', function postReelPlayDeleteSetup($event, index) {
-            if ($scope.editFlag && $scope.plays && angular.isArray($scope.plays)) {
-                $scope.plays.splice(index, 1);
-                $scope.sortOrder.splice(index, 1);
-            }
-        });
-
         $scope.saveReels = function saveReels() {
             //delete cached plays
             delete $scope.toggleEditMode.playsCache;
@@ -244,9 +289,9 @@ ReelsArea.controller('ReelsArea.controller', [
             var reelPlayIds = $scope.plays.map(function getPlayId(play) {
                 return play.id;
             });
-            $scope.reel.plays = reelPlayIds;
+            reel.plays = reelPlayIds;
 
-            $scope.reel.save().then(function postReelSaveSetup() {
+            reel.save().then(function postReelSaveSetup() {
                 editAllowed = true;
 
                 // Refresh the playManager
@@ -262,10 +307,13 @@ ReelsArea.controller('ReelsArea.controller', [
             });
 
             deleteReelModal.result.then(function postReelModalResult() {
-                $scope.reel.remove();
+                reel.remove();
                 account.gotoUsersHomeState();
             });
         };
+
+
+        /* Listeners and Watches */
 
         $scope.$watchCollection('playManager.current', function(currentPlay) {
 
@@ -279,6 +327,25 @@ ReelsArea.controller('ReelsArea.controller', [
             }
         });
 
+        // Update the play order if the sortOrder changes based on play Ids
+        $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
+
+            $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
+
+            $scope.plays.forEach(function indexPlays(play, index) {
+                play.index = index;
+            });
+        });
+
+        $scope.$on('delete-reel-play', function postReelPlayDeleteSetup($event, index) {
+
+            if ($scope.editFlag && $scope.plays && angular.isArray($scope.plays)) {
+
+                $scope.plays.splice(index, 1);
+                $scope.sortOrder.splice(index, 1);
+            }
+        });
+
         $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
             $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.getCurrentPlayId());
@@ -289,11 +356,10 @@ ReelsArea.controller('ReelsArea.controller', [
             callbackFn = callbackFn || angular.noop;
 
             // Save Game
-            $scope.reel.save().then(function onSaved() {
+            reel.save().then(function onSaved() {
                 callbackFn();
             });
         });
-
     }
 ]);
 

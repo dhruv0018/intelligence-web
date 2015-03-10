@@ -154,12 +154,12 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             if (isUploader) {
 
                 $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
-            }
-            else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
+
+            } else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
 
                 $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
-            }
-            else {
+
+            } else {
 
                 $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
             }
