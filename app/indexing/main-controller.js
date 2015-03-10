@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory',
-    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, videoplayerInstance, leagues, tagsets, teams, games, plays) {
+    'config', 'EVENT_MAP', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VideoPlayerEventEmitter', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'VideoPlayer',
+    function controller(config, EVENT_MAP, $rootScope, $scope, $modal, basicModal, $stateParams, videoPlayerEventEmitter, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets, teams, games, plays, videoPlayer) {
 
         var gameId = Number($stateParams.id);
 
@@ -34,29 +34,30 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.tagset = tagsets.get($scope.league.tagSetId);
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
-        play.videoTitle = 'indexing'; //playManager.videoTitle
+        $scope.videoPlayer = videoPlayer;
 
         var playsList = plays.getList({ gameId: gameId });
 
         indexing.reset($scope.tagset, $scope.game, playsList);
 
-        /**
-         * Listen for video player enter full screen event.
-         */
-        $rootScope.$on(VG_EVENTS.ON_ENTER_FULLSCREEN, function() {
+        var indexingElement = document.getElementsByClassName('indexing')[0];
 
-            var element = document.getElementsByClassName('indexing-block')[0];
-            element.classList.add('fullscreen');
-        });
+        videoPlayerEventEmitter.on('fullscreen', onFullScreen);
+
+        $scope.$on('$destroy', onDestroy);
 
         /**
-         * Listen for video player exit full screen event.
+         * Change handler for video player fill screen changes.
          */
-        $rootScope.$on(VG_EVENTS.ON_EXIT_FULLSCREEN, function() {
+        function onFullScreen (isFullScreen) {
 
-            var element = document.getElementsByClassName('indexing-block')[0];
-            element.classList.remove('fullscreen');
-        });
+            indexingElement.classList.toggle('fullscreen', isFullScreen);
+        }
+
+        function onDestroy () {
+
+            videoPlayerEventEmitter.removeListener('fullscreen', onFullScreen);
+        }
     }
 ]);
 

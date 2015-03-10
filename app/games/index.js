@@ -78,6 +78,12 @@ Games.config([
                     }
                 }
             ],
+            onExit: [
+                'PlayManager',
+                function(playManager) {
+                    playManager.clear();
+                }
+            ],
             views: {
                 'main@root': {
                     templateUrl: 'games/template.html',

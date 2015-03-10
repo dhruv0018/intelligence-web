@@ -29,15 +29,21 @@ GamesRawFilm.config([
                 'Games.Rawfilm.Data': [
                     '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory',
                     function($q, $stateParams, games, teams, users) {
+
                         var gameId = Number($stateParams.id);
+
                         return games.load(gameId).then(function() {
 
                             var game = games.get(gameId);
 
                             var Data = {
                                 user: users.load(game.uploaderUserId),
-                                team: teams.load([game.teamId, game.opposingTeamId])
                             };
+
+                            var teamIds = [];
+                            if (game.teamId) teamIds.push(game.teamId);
+                            if (game.opposingTeamId) teamIds.push(game.opposingTeamId);
+                            if (teamIds.length) Data.teams = teams.load(teamIds);
 
                             return $q.all(Data);
                         });
@@ -51,25 +57,16 @@ GamesRawFilm.config([
 ]);
 
 GamesRawFilm.controller('Games.Rawfilm.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'PlayManager',
-    function controller($scope, $state, $stateParams, games, teams, users, playManager) {
-        var gameId = $stateParams.id;
+    '$scope', '$stateParams', 'GamesFactory',
+    function controller($scope, $stateParams, games) {
 
-        $scope.game = games.get(gameId);
-        $scope.publiclyShared = false;
+        var gameId = Number($stateParams.id);
+        var game = games.get(gameId);
+        $scope.posterImage = {
+            url: game.video.thumbnail
+        };
 
-        //TODO remove some of this stuff later
-        $scope.publiclyShared = true;
-        $scope.team = teams.get($scope.game.teamId);
-        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-
-        $scope.uploadedBy = users.get($scope.game.uploaderUserId);
-
-        $scope.sources = $scope.game.getVideoSources();
-        $scope.filmTitle = $scope.game.description;
-        playManager.videoTitle = 'rawFilm';
-
+        $scope.sources = game.getVideoSources();
     }
 ]);
-
 

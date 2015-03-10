@@ -156,9 +156,18 @@ module.exports = {
      */
     host: null,
     ports: {
-        min: 7998,
+        min: 8000,
         max: 8100
     },
+
+    /*
+     |--------------------------------------------------------------------------
+     | Tunnel
+     |--------------------------------------------------------------------------
+     | Tunnel the BrowserSync server through a random Public URL
+     | -> http://randomstring23232.localtunnel.me
+     */
+    tunnel: true,
 
     /*
      |--------------------------------------------------------------------------
@@ -167,6 +176,14 @@ module.exports = {
      | https://github.com/shakyShane/browser-sync/wiki/options#wiki-excludedfiletypes
      */
     excludedFileTypes: [],
+
+    /*
+     |--------------------------------------------------------------------------
+     | Reload each browser when BrowserSync is restarted.
+     |--------------------------------------------------------------------------
+     | https://github.com/shakyShane/browser-sync/wiki/options#wiki-excludedfiletypes
+     */
+    reloadOnRestart: true,
 
     /*
      |--------------------------------------------------------------------------

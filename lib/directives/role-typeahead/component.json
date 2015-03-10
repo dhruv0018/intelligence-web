@@ -1,0 +1,13 @@
+{
+    "name": "role-typeahead",
+    "templates": [
+        "template.html",
+        "role-typeahead-dropdown.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

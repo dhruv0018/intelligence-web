@@ -3,8 +3,7 @@
 'use strict';
 
 var less = require("component-builder-less");
-
-var htmlminifier = require('builder-html-minifier')
+var es6ify = require('es6ify').configure(/^(?!.*node_modules)+.+\.js$/);
 
 module.exports = function(grunt) {
 
@@ -113,6 +112,15 @@ module.exports = function(grunt) {
 
         /* Pre-minification */
 
+        trimtrailingspaces: {
+            main: {
+                src: [
+                    'app/**/*.js',
+                    'lib/**/*.js',
+                    'src/**/*.js'
+                ]
+            }
+        },
 
         ngAnnotate: {
             options: {
@@ -288,6 +296,7 @@ module.exports = function(grunt) {
         browserify: {
             dev: {
                 options: {
+                    transform: [es6ify],
                     bundleOptions: {
                         debug: true,
                     },
@@ -301,6 +310,7 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
+                    transform: [es6ify],
                     browserifyOptions: {
                         noParse: ['./build/build.js']
                     }
@@ -346,6 +356,11 @@ module.exports = function(grunt) {
                     'build/scripts.js': 'build/bundle.js'
                 }
             },
+            polyfills: {
+                files: {
+                    'public/intelligence/webcomponents.js': 'node_modules/webcomponents.js/webcomponents.min.js'
+                }
+            },
             htaccess: {
                 files: {
                     'public/intelligence/.htaccess': 'src/.htaccess'
@@ -375,6 +390,20 @@ module.exports = function(grunt) {
         },
 
         ver: {
+            polyfills: {
+                baseDir: 'public/intelligence',
+                versionFile: 'build/version.json',
+                forceVersion: '<%= pkg.dependencies["webcomponents.js"] %>',
+                phases: [{
+                    files: [
+                        'public/intelligence/webcomponents.js',
+                    ],
+                    references: [
+                        'public/intelligence/index.html',
+                        'public/intelligence/manifest.appcache'
+                    ]
+                }]
+            },
             prod: {
                 baseDir: 'public/intelligence',
                 versionFile: 'build/version.json',
@@ -445,6 +474,9 @@ module.exports = function(grunt) {
         browserSync: {
             options: require('./bs-config.js'),
             dev: {
+                options: {
+                    watchTask: true
+                },
                 bsFiles: [
                     'public/intelligence/index.html',
                     'public/intelligence/styles.css',
@@ -453,16 +485,16 @@ module.exports = function(grunt) {
                 ]
             },
             prod: {
+                options: {
+                    open: false,
+                    watchTask: false
+                },
                 bsFiles: [
                     'public/intelligence/index.html',
                     'public/intelligence/styles.css',
                     'public/intelligence/scripts.js',
                     'public/intelligence/assets/**/*.png'
-                ],
-                options: {
-                    open: false,
-                    watchTask: false
-                }
+                ]
             }
         },
 
@@ -520,19 +552,19 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:eslint', 'newer:jscs', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:eslint', 'newer:jscs', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             unit: {
                 files: ['test/unit/**/*.js'],
-                tasks: ['newer:eslint', 'newer:jscs', 'karma']
+                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'karma']
             },
             integration: {
                 files: ['test/integration/**/*.js'],
-                tasks: ['newer:eslint', 'newer:jscs', 'protractor']
+                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'protractor']
             }
         },
 
@@ -584,13 +616,13 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['build', 'karma', 'integration']);
-    grunt.registerTask('lint', ['htmlhint', 'eslint', 'jscs']);
+    grunt.registerTask('lint', ['trimtrailingspaces', 'htmlhint', 'jshint', 'eslint']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
     grunt.registerTask('serve', ['browserSync:dev']);
     grunt.registerTask('manifests', ['copy:manifests', 'date-manifests']);
-    grunt.registerTask('default', ['githooks', 'install', 'dev', 'notify:build', 'serve', 'watch']);
+    grunt.registerTask('default', ['githooks', 'dev', 'notify:build', 'serve', 'watch']);
 
     grunt.registerTask('build', [
         'env:test',
@@ -600,6 +632,7 @@ module.exports = function(grunt) {
         'uglify',
         'htmlmin',
         'copy:build',
+        'copy:polyfills',
         'manifests'
     ]);
 
@@ -618,6 +651,7 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:dev',
         'copy:build',
+        'copy:polyfills',
         'manifests'
     ]);
 
@@ -638,8 +672,10 @@ module.exports = function(grunt) {
         'copy:assets',
         'copy:dev',
         'copy:build',
+        'copy:polyfills',
         'copy:htaccess',
         'manifests',
+        'ver:polyfills',
         'ver:prod'
     ]);
 
@@ -683,8 +719,10 @@ module.exports = function(grunt) {
         'copy:theme-assets',
         'copy:assets',
         'copy:build',
+        'copy:polyfills',
         'copy:htaccess',
         'manifests',
+        'ver:polyfills',
         'ver:prod'
     ]);
 };

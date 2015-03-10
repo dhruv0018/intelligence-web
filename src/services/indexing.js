@@ -6,18 +6,14 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayerInstance',
-    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayerInstance) {
-
-        var videoPlayer = videoPlayerInstance.promise;
+    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer',
+    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayer) {
 
         var IndexingService = {
 
             reset: function(tagset, game, plays) {
 
                 var self = this;
-
-                self.isReady = false;
 
                 game.currentPeriod = 0;
                 game.teamIndexedScore = 0;
@@ -28,12 +24,6 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.reset(tagset);
                 playManager.reset(tagset, game.id);
                 playManager.clear();
-
-                videoPlayerInstance.promise.then(function(player) {
-
-                    videoPlayer = player;
-                    self.isReady = true;
-                });
             },
 
             /**
@@ -48,7 +38,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     else this.step();
                 }
 
-                else if (this.isReady) {
+                else if (videoPlayer.isReady) {
 
                     this.isIndexing = true;
                     this.showTags = true;
@@ -65,7 +55,7 @@ IntelligenceWebClient.factory('IndexingService', [
             selectTag: function(tagId) {
 
                 /* Get current time from the video. */
-                var time = videoPlayer.getCurrentTime();
+                var time = videoPlayer.currentTime;
 
                 /* Create new event. */
                 eventManager.create(tagId, time);
@@ -295,34 +285,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* Clear the current play. */
                 playManager.clear();
-            },
-
-            playPause: function() {
-
-                if (this.isReady) {
-
-                    videoPlayer.playPause();
-                }
-            },
-
-            jumpBack: function() {
-
-                if (this.isReady) {
-
-                    var currentTime = videoPlayer.getCurrentTime();
-                    var time = currentTime - config.indexing.video.jump;
-                    videoPlayer.seekTime(time);
-                }
-            },
-
-            jumpForward: function() {
-
-                if (this.isReady) {
-
-                    var currentTime = videoPlayer.getCurrentTime();
-                    var time = currentTime + config.indexing.video.jump;
-                    videoPlayer.seekTime(time);
-                }
             }
         };
 

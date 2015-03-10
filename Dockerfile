@@ -1,37 +1,18 @@
 # Base image
-FROM ubuntu:precise
+FROM node:onbuild
 
-# Update image
-RUN echo "deb http://us.archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list
-RUN apt-get update -y
+# Set environment variables
+ENV GITHUB_USERNAME krossoverbuild
+ENV GITHUB_PASSWORD Popcorn23
 
-# Install git
-RUN apt-get -y install git-core
+# Install third party packages outside npm
+RUN node_modules/.bin/napa
 
-# Install NodeJS
-RUN apt-get install -y python-software-properties python g++ make
-RUN apt-add-repository ppa:chris-lea/node.js
-RUN apt-get update -y
-RUN apt-get install -y nodejs
+# Install components
+RUN node_modules/.bin/component install
 
-# Install GruntJS
-RUN npm install -g grunt-cli
-
-# Create working directory in the container
-RUN mkdir -p /intelligence-web-client
-WORKDIR /intelligence-web-client
-
-# Add package.json to working directory
-ADD package.json /intelligence-web-client/package.json
-
-# Install dependencies
-RUN npm install
-
-# Add rest of the project to the working directory
-ADD . /intelligence-web-client
-
-# Expose ports
+# Expose port
 EXPOSE 8000
 
-# Run Grunt
-CMD ["grunt"]
+# Run grunt
+CMD node_modules/.bin/grunt

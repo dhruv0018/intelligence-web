@@ -3,6 +3,29 @@
         "node": true,
         "browser": true
     },
+    "settings": {
+        "ecmascript": 6
+    },
+    "ecmaFeatures": {
+        "forOf": true,
+        "classes": true,
+        "generators": true,
+        "templateStrings": true,
+        "blockBindings": true,
+        "globalReturn": true,
+        "superInFunctions": true,
+        "arrowFunctions": true,
+        "defaultParams": true,
+        "octalLiterals": true,
+        "binaryLiterals": true,
+        "objectLiteralComputedProperties": true,
+        "objectLiteralDuplicateProperties": true,
+        "objectLiteralShorthandMethods": true,
+        "objectLiteralShorthandProperties": true,
+        "regexUFlag": true,
+        "regexYFlag": true,
+        "unicodeCodePointEscapes": true
+    },
     "rules": {
 
         "quotes": "single",
@@ -33,6 +56,14 @@
         "no-nested-ternary": true,
         "no-lonely-if": true,
 
-        "no-alert": false
+        "no-alert": false,
+
+        "new-cap": false,
+        "eol-last": false,
+        "no-shadow": false,
+        "key-spacing": false,
+        "semi-spacing": false,
+        "comma-spacing": false,
+        "no-multi-spaces": false
     }
 }

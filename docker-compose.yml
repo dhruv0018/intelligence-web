@@ -1,0 +1,27 @@
+web:
+  build: .
+  links:
+    - api
+  ports:
+    - "8000:8000"
+api:
+  image: krossover/intelligence-api
+  links:
+    - redis
+    - mysql
+  ports:
+    - "4436:4436"
+redis:
+  image: redis
+  ports:
+    - "6379:6379"
+mysql:
+  image: mysql
+  ports:
+    - "3306:3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_USER: krossover
+    MYSQL_PASSWORD: intelligence
+    MYSQL_DATABASE: intelligence
+
