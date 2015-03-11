@@ -362,8 +362,10 @@ IntelligenceWebClient.factory('TeamsFactory', [
              */
             hasActiveSubscription: function(team) {
 
+                var self = this;
+
                 if (!team) {
-                    throw new Error('Invoked TeamsFactory.hasActiveSubscription without a team argument');
+                    team = self;
                 }
 
                 if (typeof team.subscriptions === 'undefined') {
@@ -386,8 +388,10 @@ IntelligenceWebClient.factory('TeamsFactory', [
              */
             getActiveSubscription: function(team) {
 
+                var self = this;
+
                 if (!team) {
-                    throw new Error('Invoked TeamsFactory.getActiveSubscription without a team argument');
+                    team = self;
                 }
 
                 var today = new Date();

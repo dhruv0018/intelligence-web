@@ -331,8 +331,10 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             hasActiveSubscription: function(user) {
 
+                var self = this;
+
                 if (!user) {
-                    throw new Error('Invoked UsersFactory.hasActiveSubscription without a user argument');
+                    user = self;
                 }
 
                 if (typeof user.subscriptions === 'undefined') {
@@ -355,8 +357,10 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             getActiveSubscription: function(user) {
 
+                var self = this;
+
                 if (!user) {
-                    throw new Error('Invoked UsersFactory.getActiveSubscription without a user argument');
+                    user = self;
                 }
 
                 var today = new Date();
