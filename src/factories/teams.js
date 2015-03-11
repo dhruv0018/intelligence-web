@@ -335,8 +335,16 @@ IntelligenceWebClient.factory('TeamsFactory', [
              */
             addSubscription: function(team, subscription) {
 
-                if (!team || !subscription) {
-                    throw new Error('Invoked TeamsFactory.addSubscription without team or subscription argument(s)');
+                var self = this;
+
+                if (!team) {
+                    throw new Error('Invoked TeamsFactory.addSubscription without any argument(s)');
+                }
+
+                if (!subscription) {
+                    // Only one argument is passed in, assumed to be a subscription
+                    subscription = team;
+                    team = self;
                 }
 
                 team.subscriptions = team.subscriptions || [];

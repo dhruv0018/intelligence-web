@@ -304,8 +304,16 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             addSubscription: function(user, subscription) {
 
-                if (!user || !subscription) {
-                    throw new Error('Invoked UsersFactory.addSubscription without user or subscription argument(s)');
+                var self = this;
+
+                if (!user) {
+                    throw new Error('Invoked UsersFactory.addSubscription without any argument(s)');
+                }
+
+                if (!subscription) {
+                    // Only one argument is passed in, assumed to be a subscription
+                    subscription = user;
+                    user = self;
                 }
 
                 user.subscriptions = user.subscriptions || [];
