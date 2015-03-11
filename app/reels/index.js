@@ -161,9 +161,20 @@ ReelsArea.controller('ReelsArea.controller', [
         var uploaderIsCoach = uploader.is(ROLES.COACH);
         var isTeamUploadersTeam = reel.isTeamUploadersTeam(currentUser.currentRole.teamId);
         var isCoach = currentUser.is(ROLES.COACH);
+        var isAthlete = currentUser.is(ROLES.ATHLETE);
         var editAllowed = true;
+        var sharedBy;
+        var sharedByIsCoach;
+        var sharedByIsAthlete;
+        var isSharedWithPublic;
 
-        // TODO: Get 'sharedBy' user, determine if they are coach or athlete, set telestrations permissions below accordingly
+        if (reel.shares && reel.shares.length > 0) {
+
+            sharedBy = users.get(reel.shares[0].userId);
+            sharedByIsCoach = sharedBy.is(ROLES.COACH);
+            sharedByIsAthlete = sharedBy.is(ROLES.ATHLETE);
+            isSharedWithPublic = reel.isSharedWithPublic();
+        }
 
         var REELS_PERMISSIONS = {
             DELETABLE: 'DELETABLE',
@@ -233,9 +244,21 @@ ReelsArea.controller('ReelsArea.controller', [
 
             $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
 
-        } else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
+        } else if (uploaderIsCoach && isTeamUploadersTeam && isCoach) {
 
             $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+
+        } else if ((sharedByIsCoach || sharedByIsAthlete) && isTeamUploadersTeam && isAthlete) {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
+
+        } else if (sharedByIsAthlete && isSharedWithPublic) {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
+
+        } else if (sharedByIsCoach && isSharedWithPublic && !isTeamUploadersTeam) {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
 
         } else {
 
