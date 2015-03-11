@@ -14,8 +14,8 @@
 
         <div class="form-block-full">
             <h4>About Me <span class="header-description">Write a short description about yourself. What makes you stand out?</span></h4>
-            <textarea class="form-control" rows="5" maxlength="200" placeholder="Talk about your club team experience, stats, achievements, anything." ng-model="test" ng-trim="false"></textarea>
-            <p>{{200 - test.length}} characters left.</p>
+            <textarea class="form-control" rows="5" maxlength="200" placeholder="Talk about your club team experience, stats, achievements, anything." ng-model="athlete.profile.about" ng-trim="false"></textarea>
+            <p>{{200 - athlete.profile.about.length}} characters left.</p>
         </div>
 
         <div class="form-block-full">
@@ -32,30 +32,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="team-row">
-                            <td class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="false" ng-model="" ng-change="" required></button></td>
-                            <td>John Jay Indians</td>
-                            <td>Football</td>
-                            <td class="team-cell-positions">Wide Receiver</td>
+                        <tr class="team-row" ng-repeat="team in athlete.profile.teams">
+                            <td class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="team.teamId" ng-model="athlete.profile.defaultTeamId" ng-change="athlete.profile.defaultTeamId = team.teamId" required></button></td>
+                            <td>{{teams[team.teamId].name}}</td>
+                            <td>{{sports[leagues[teams[team.teamId].leagueId].sportId].name}}</td>
+                            <td class="team-cell-positions">
+                                <positions-dropdown ng-model="team.positionIds" player="athlete" positionset="getPositionSet(team.teamId)"></positions-dropdown>
+                            </td>
                             <td class="team-cell-options">
-                                <check-box ng-click="hideTeam = !hideteam" checked="hideTeam"></check-box>
+                                <check-box ng-click="team.isHidden = !team.isHidden" checked="team.isHidden"></check-box>
                                 <i class="icon icon-remove"></i>
                             </td>
                         </tr>
                         <tr class="team-row" ng-show="addingTeam">
-                            <td class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="false" ng-model="" ng-change="" required></button></td>
-                            <td><team-typeahead team="selectedTeam"></team-typeahead></td>
-                            <td>
-                                <select class="form-control" name="sport" ng-model="mySport" ng-options="sport.id as sport.name for sport in sports">
-                                    <option value="">Pick a Sport</option>
-                                </select>
-                            </td>
+                            <td class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="newTeam.teamId" ng-model="athlete.profile.defaultTeamId" ng-change="athlete.profile.defaultTeamId = team.teamId" required></button></td>
+                            <td><team-typeahead team="selectedTeam" ng-model="teamFromTypeahead"></team-typeahead></td>
+                            <td>{{sports[leagues[teamFromTypeahead.leagueId].sportId].name}}</td>
                             <td class="team-cell-positions">
-                                <positions-dropdown ng-model="playerInfo.positionIds" player="athlete" positionset="positionset"></positions-dropdown>
+                                <positions-dropdown ng-model="newTeam.positionIds" player="athlete" positionset="positionsets.get(leagues[teamFromTypeahead.leagueId].positionSetId)"></positions-dropdown>
                             </td>
                             <td class="team-cell-options">
-                                <i class="icon icon-remove" ng-click="addingTeam = false"></i>
-                                <check-box ng-click="hideTeam = !hideteam" checked="hideTeam"></check-box>
+                                <i class="icon icon-remove" ng-click="clearNewTeam()"></i>
+                                <check-box ng-click="newTeam.isHidden = !newTeam.isHidden" checked="newTeam.isHidden"></check-box>
                             </td>
                         </tr>
                     </tbody>

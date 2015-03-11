@@ -39,12 +39,21 @@ EditProfile.run([
  * @type {service}
  */
 EditProfile.service('Athlete.EditProfile.Data.Dependencies', [
-    'SportsFactory',
-    function(sports) {
+    'SportsFactory', 'TeamsFactory', 'SessionService',
+    function(sports, teams, session) {
+
+        //TODO: getTeamsByProfileId?
+        var profileTeams = [];
+        var currentUser = session.currentUser;
+
+        currentUser.profile.teams.forEach(function(team, index) {
+            profileTeams[index] = teams.load(team.teamId);
+        });
 
         var Data = {
 
-            sports: sports.load()
+            sports: sports.load(),
+            teams: profileTeams
         };
 
         return Data;
