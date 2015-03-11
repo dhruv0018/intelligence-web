@@ -40,6 +40,11 @@ IntelligenceWebClient.factory('BaseFactory', [
              */
             validate: function(resource) {
 
+                resource = resource || this;
+
+                if (!resource) throw new Error('No resource to validate');
+                if (!this.schema) throw new Error('No schema for resource');
+
                 let schema = $injector.get(this.schema);
 
                 let result = tv4.validateMultiple(resource, schema, true);
