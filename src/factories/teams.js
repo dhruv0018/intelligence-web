@@ -394,7 +394,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     team = self;
                 }
 
-                var today = new Date();
+                var today = Date.now();
                 var i = 0;
                 while (team.subscriptions[i].activatesAt > today) {
                     // Subscription has not activated yet
