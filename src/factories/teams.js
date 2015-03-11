@@ -322,6 +322,73 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 var activePlayerInfo = self.getActivePlayerInfo();
 
                 return Object.keys(activePlayerInfo).length > 0;
+            },
+
+            /**
+             * @class Team
+             * @method addSubscription
+             *
+             * @param {Object} team - Team to add the subscription to
+             * @param {Object} subscription - Subscription object to add
+             *
+             * Adds the given subscription to the given team
+             */
+            addSubscription: function(team, subscription) {
+
+                if (!team || !subscription) {
+                    throw 'Invoked TeamsFactory.addSubscription without team or subscription argument(s)';
+                }
+
+                team.subscriptions = team.subscriptions || [];
+                team.subscriptions.push(subscription);
+            },
+
+            /**
+             * @class Team
+             * @method hasActiveSubscription
+             *
+             * @param {Object} team - Team being queried
+             * @returns {Boolean} - True if the team has an active subscription else False
+             *
+             * Indicates if a team has an active subscription
+             */
+            hasActiveSubscription: function(team) {
+
+                if (!team) {
+                    throw 'Invoked TeamsFactory.hasActiveSubscription without a team argument';
+                }
+
+                if (typeof team.subscriptions === 'undefined') {
+                    return false;
+                } else if (team.subscriptions.length === 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+
+            /**
+             * @class Team
+             * @method hasActiveSubscription
+             *
+             * @param {Object} team - Team being queried
+             * @returns {Object} - Most recently added active subscription
+             *
+             * Provides the most recently active subscription that is active today
+             */
+            getActiveSubscription: function(team) {
+
+                if (!team) {
+                    throw 'Invoked TeamsFactory.getActiveSubscription without a team argument';
+                }
+
+                var today = new Date();
+                var i = 0;
+                while (team.subscriptions[i].activatesAt > today) {
+                    // Subscription has not activated yet
+                    i++;
+                }
+                return team.subscriptions[i];
             }
         };
 

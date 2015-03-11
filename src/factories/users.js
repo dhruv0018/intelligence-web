@@ -294,6 +294,73 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
+             * @class User
+             * @method addSubscription
+             *
+             * @param {Object} user - User to add the subscription to
+             * @param {Object} subscription - Subscription object to add
+             *
+             * Adds the given subscription to the given user
+             */
+            addSubscription: function(user, subscription) {
+
+                if (!user || !subscription) {
+                    throw 'Invoked UsersFactory.addSubscription without user or subscription argument(s)';
+                }
+
+                user.subscriptions = user.subscriptions || [];
+                user.subscriptions.push(subscription);
+            },
+
+            /**
+             * @class User
+             * @method hasActiveSubscription
+             *
+             * @param {Object} user - User being queried
+             * @returns {Boolean} - True if the user has an active subscription else False
+             *
+             * Indicates if a user has an active subscription
+             */
+            hasActiveSubscription: function(user) {
+
+                if (!user) {
+                    throw 'Invoked UsersFactory.hasActiveSubscription without a user argument';
+                }
+
+                if (typeof user.subscriptions === 'undefined') {
+                    return false;
+                } else if (user.subscriptions.length === 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+
+            /**
+             * @class User
+             * @method hasActiveSubscription
+             *
+             * @param {Object} user - User being queried
+             * @returns {Object} - Most recently added active subscription
+             *
+             * Provides the most recently active subscription that is active toda
+             */
+            getActiveSubscription: function(user) {
+
+                if (!user) {
+                    throw 'Invoked UsersFactory.getActiveSubscription without a user argument';
+                }
+
+                var today = new Date();
+                var i = 0;
+                while (user.subscriptions[i].activatesAt > today) {
+                    // Subscription has not activated yet
+                    i++;
+                }
+                return user.subscriptions[i];
+            },
+
+            /**
             * @class User
             * @method
             * @returns {Array} an array on team ISs associated with the
