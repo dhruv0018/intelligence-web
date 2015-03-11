@@ -305,7 +305,7 @@ IntelligenceWebClient.factory('UsersFactory', [
             addSubscription: function(user, subscription) {
 
                 if (!user || !subscription) {
-                    throw 'Invoked UsersFactory.addSubscription without user or subscription argument(s)';
+                    throw new Error('Invoked UsersFactory.addSubscription without user or subscription argument(s)');
                 }
 
                 user.subscriptions = user.subscriptions || [];
@@ -324,7 +324,7 @@ IntelligenceWebClient.factory('UsersFactory', [
             hasActiveSubscription: function(user) {
 
                 if (!user) {
-                    throw 'Invoked UsersFactory.hasActiveSubscription without a user argument';
+                    throw new Error('Invoked UsersFactory.hasActiveSubscription without a user argument');
                 }
 
                 if (typeof user.subscriptions === 'undefined') {
@@ -348,7 +348,7 @@ IntelligenceWebClient.factory('UsersFactory', [
             getActiveSubscription: function(user) {
 
                 if (!user) {
-                    throw 'Invoked UsersFactory.getActiveSubscription without a user argument';
+                    throw new Error('Invoked UsersFactory.getActiveSubscription without a user argument');
                 }
 
                 var today = new Date();

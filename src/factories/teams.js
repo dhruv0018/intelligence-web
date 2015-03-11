@@ -336,7 +336,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
             addSubscription: function(team, subscription) {
 
                 if (!team || !subscription) {
-                    throw 'Invoked TeamsFactory.addSubscription without team or subscription argument(s)';
+                    throw new Error('Invoked TeamsFactory.addSubscription without team or subscription argument(s)');
                 }
 
                 team.subscriptions = team.subscriptions || [];
@@ -355,7 +355,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
             hasActiveSubscription: function(team) {
 
                 if (!team) {
-                    throw 'Invoked TeamsFactory.hasActiveSubscription without a team argument';
+                    throw new Error('Invoked TeamsFactory.hasActiveSubscription without a team argument');
                 }
 
                 if (typeof team.subscriptions === 'undefined') {
@@ -379,7 +379,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
             getActiveSubscription: function(team) {
 
                 if (!team) {
-                    throw 'Invoked TeamsFactory.getActiveSubscription without a team argument';
+                    throw new Error('Invoked TeamsFactory.getActiveSubscription without a team argument');
                 }
 
                 var today = new Date();
