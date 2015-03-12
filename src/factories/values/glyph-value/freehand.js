@@ -16,7 +16,7 @@ module.exports = [
         Freehand.prototype.MOVEABLE = false;
         Freehand.prototype.MIN_VERTICES = 1;
 
-        Freehand.prototype.updateGlyphFromPixels = function updateGlyphFromPixels(x, y) {
+        Freehand.prototype.updateEndpointFromPixels = function updateEndpointFromPixels(x, y) {
             // TODO: only call getBoundingClientRect on window Resize
             var boundingBox = this.getSVGBoxDimensions();
             var relativeX = x / boundingBox.width;

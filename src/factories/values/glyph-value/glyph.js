@@ -46,17 +46,9 @@ module.exports = [
             };
         };
 
-        Glyph.prototype.updateGlyphFromPixels = function updateGlyphFromPixels(x, y) {
+        Glyph.prototype.updateEndpointFromPixels = function updateEndpointFromPixels(x, y) {
 
-            x = lowerBoundVertex(x);
-            y = lowerBoundVertex(y);
-
-            var boundingBox = this.getSVGBoxDimensions();
-            var relativeX = x / boundingBox.width;
-            var relativeY = y / boundingBox.height;
-            var newVertex = {x: relativeX, y: relativeY};
-
-            this.vertices[1] = newVertex;
+            this.updateVertexFromPixels(1, x, y);
 
         };
 
