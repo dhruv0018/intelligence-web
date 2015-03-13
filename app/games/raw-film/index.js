@@ -64,12 +64,6 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         var gameId = $stateParams.id;
         var game = games.get(gameId);
-        var uploader = users.get($scope.game.uploaderUserId);
-        var currentUser = session.getCurrentUser();
-        var isUploader = game.isUploader(currentUser.id);
-        var uploaderIsCoach = uploader.is(ROLES.COACH);
-        var isTeamUploadersTeam = game.isTeamUploadersTeam(currentUser.currentRole.teamId);
-        var isCoach = currentUser.is(ROLES.COACH);
 
 
         /* Scope */
@@ -77,19 +71,6 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         // telestrations
 
         $scope.telestrations = game.rawTelestrations;
-
-        if (isUploader) {
-
-            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
-
-        } else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
-
-            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
-
-        } else {
-
-            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
-        }
 
         // video player
 

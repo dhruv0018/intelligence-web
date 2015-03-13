@@ -107,29 +107,7 @@ ReelsArea.service('Reels.Data.Dependencies', [
                         leagues: leagues.load()
                     };
 
-                    data.reel.then(function() {
-
-                        var reel = reels.get(reelId);
-
-                        if (reel.shares && reel.shares.length > 0) {
-
-                            var usersToLoad = {};
-
-                            reel.shares.forEach(function(share) {
-
-                                usersToLoad[share.userId] = true;
-                            });
-
-                            usersToLoad = Object.keys(usersToLoad).map(function keyToInteger(key) {
-
-                                return parseInt(key);
-                            });
-
-                            data.users = users.load(usersToLoad);
-                        }
-
-                        return data;
-                    });
+                    return data;
 
                 }
             };
@@ -156,25 +134,12 @@ ReelsArea.controller('ReelsArea.controller', [
         var reelId = Number($stateParams.id);
         var reel = reels.get(reelId);
         var currentUser = session.getCurrentUser();
-        var uploader = users.get(reel.uploaderUserId);
         var isUploader = reel.isUploader(currentUser.id);
-        var uploaderIsCoach = uploader.is(ROLES.COACH);
         var isTeamUploadersTeam = reel.isTeamUploadersTeam(currentUser.currentRole.teamId);
         var isCoach = currentUser.is(ROLES.COACH);
-        var isAthlete = currentUser.is(ROLES.ATHLETE);
         var editAllowed = true;
-        var sharedBy;
-        var sharedByIsCoach;
-        var sharedByIsAthlete;
-        var isSharedWithPublic;
-
-        if (reel.shares && reel.shares.length > 0) {
-
-            sharedBy = users.get(reel.shares[0].userId);
-            sharedByIsCoach = sharedBy.is(ROLES.COACH);
-            sharedByIsAthlete = sharedBy.is(ROLES.ATHLETE);
-            isSharedWithPublic = reel.isSharedWithPublic();
-        }
+        var isTelestrationsSharedWithCurrentUser = reel.isTelestrationsSharedWithUser(currentUser);
+        var isTelestrationsSharedPublicly = reel.isTelestrationsSharedPublicly();
 
         var REELS_PERMISSIONS = {
             DELETABLE: 'DELETABLE',
@@ -228,7 +193,7 @@ ReelsArea.controller('ReelsArea.controller', [
 
             reelsPermissions = REELS_PERMISSIONS.DELETABLE;
 
-        } else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
+        } else if (isTeamUploadersTeam && isCoach) {
 
              reelsPermissions = REELS_PERMISSIONS.EDITABLE;
         }
@@ -240,25 +205,20 @@ ReelsArea.controller('ReelsArea.controller', [
 
         $scope.telestrationsEntity = reel.telestrations;
 
+        // uploader could be a coach or an athlete (they have permissions to edit by default)
         if (isUploader) {
 
             $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
 
-        } else if (uploaderIsCoach && isTeamUploadersTeam && isCoach) {
+        }
+        // Coaches on the same team as the uploader can edit
+        else if (isTeamUploadersTeam && isCoach) {
 
             $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
 
-        } else if ((sharedByIsCoach || sharedByIsAthlete) && isTeamUploadersTeam && isAthlete) {
+        } else if (isTelestrationsSharedWithCurrentUser || isTelestrationsSharedPublicly) {
 
             $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
-
-        } else if (sharedByIsAthlete && isSharedWithPublic) {
-
-            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
-
-        } else if (sharedByIsCoach && isSharedWithPublic && !isTeamUploadersTeam) {
-
-            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
 
         } else {
 
@@ -343,7 +303,11 @@ ReelsArea.controller('ReelsArea.controller', [
             if (currentPlay && currentPlay.id) {
 
                 $scope.currentPlayId = currentPlay.id;
-                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
+
+                if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+                    $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
+                }
                 // TODO: add back event cuepoint an concat with play cuepoints
                 // var eventCuePoints = play.getEventCuePoints();
                 // $scope.cuePoints = $scope.cuepoints.concat(eventCuePoints);
@@ -369,20 +333,25 @@ ReelsArea.controller('ReelsArea.controller', [
             }
         });
 
-        $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+        if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
-            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.getCurrentPlayId());
-        });
+            $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
-        $scope.$on('telestrations:save', function handleTelestrationSave(event, callbackFn) {
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.getCurrentPlayId());
 
-            callbackFn = callbackFn || angular.noop;
-
-            // Save Game
-            reel.save().then(function onSaved() {
-                callbackFn();
             });
-        });
+
+            $scope.$on('telestrations:save', function handleTelestrationSave(event, callbackFn) {
+
+                callbackFn = callbackFn || angular.noop;
+
+                // Save Game
+                reel.save().then(function onSaved() {
+                    callbackFn();
+                });
+            });
+        }
+
     }
 ]);
 

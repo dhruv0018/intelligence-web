@@ -133,39 +133,76 @@ Games.config([
 ]);
 
 Games.controller('Games.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'AuthenticationService', 'SessionService', 'ROLES', 'ARENA_TYPES_IDS',
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'AuthenticationService', 'SessionService', 'ROLES', 'ARENA_TYPES_IDS', 'TELESTRATION_PERMISSIONS',
     'ARENA_TYPES',
-    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, auth, session, ROLES, ARENA_TYPES_IDS, ARENA_TYPES) {
-        $scope.game = games.get($stateParams.id);
+    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, auth, session, ROLES, ARENA_TYPES_IDS, ARENA_TYPES, TELESTRATION_PERMISSIONS) {
 
+        /* Variables */
+
+        var gameId = $stateParams.id;
+        var game = games.get(gameId);
+        var team = teams.get(game.uploaderTeamId);
+        var league = leagues.get(team.leagueId);
+        var currentUser = session.getCurrentUser();
+        var sport = SPORTS[SPORT_IDS[league.sportId]];
+        var transcodeCompleted = game.isVideoTranscodeComplete();
+        var breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isSharedWithUser(currentUser) && game.getShareByUser(currentUser).isBreakdownShared;
+        var uploader = users.get(game.uploaderUserId);
+        var uploaderIsCoach = uploader.is(ROLES.COACH);
+        var isUploader = game.isUploader(currentUser.id);
+        var isTeamUploadersTeam = game.isTeamUploadersTeam(currentUser.currentRole.teamId);
+        var isCoach = currentUser.is(ROLES.COACH);
+        var isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
+        var isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
+
+
+        /* Scope */
+
+        $scope.game = game;
         $scope.teams = teams.getCollection();
-        $scope.team = $scope.teams[$scope.game.teamId];
-        $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
+        $scope.team = $scope.teams[game.teamId];
+        $scope.opposingTeam = $scope.teams[game.opposingTeamId];
+        $scope.league = league;
 
-        //todo alex -- remove this when it is not needed for header
+        // TODO: alex -- remove this when it is not needed for header
         $scope.isPublic = true;
 
-        $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
-        $scope.league = leagues.get($scope.uploaderTeam.leagueId);
-        $scope.auth = auth;
-        var currentUser = session.currentUser;
-
         //define states for view selector
+
         $scope.gameStates = [];
 
-        var sport = SPORTS[SPORT_IDS[$scope.league.sportId]];
-        var transcodeCompleted = $scope.game.isVideoTranscodeComplete();
-        var gameDelivered = $scope.game.isDelivered();
-        var gameBelongsToUserTeam = $scope.game.uploaderTeamId === currentUser.currentRole.teamId;
-        var sharedWithCurrentUser = $scope.game.isSharedWithUser(currentUser);
-        var breakdownShared = $scope.game.publicShare && $scope.game.publicShare.isBreakdownShared || sharedWithCurrentUser && $scope.game.getShareByUser(currentUser).isBreakdownShared;
+        // services
+        $scope.auth = auth;
 
-        if (gameBelongsToUserTeam && currentUser.is(ROLES.COACH)) {
+        // Telestrations Permissions
+
+        // uploader could be a coach or an athlete (they have permissions to edit by default)
+        if (isUploader) {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+
+        }
+        // Coaches on the same team as the uploader can edit
+        else if (isTeamUploadersTeam && isCoach) {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+
+        } else if (isTelestrationsSharedWithCurrentUser || isTelestrationsSharedPublicly) {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
+
+        } else {
+
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
+        }
+
+        // Enable features for the game for coaches that are on the uploaders team
+        if (isTeamUploadersTeam && isCoach) {
             //game information
             $scope.gameStates.push({name: 'Games.Info'});
 
             //statistics related states
-            if (gameDelivered) {
+            if (game.isDelivered()) {
                 if (sport.hasStatistics) {
                     $scope.gameStates.push({name: 'Games.Stats'});
                 }
@@ -186,26 +223,29 @@ Games.controller('Games.controller', [
 
             $scope.gameStates.unshift({name: 'Games.RawFilm'});
 
-            if (gameDelivered) {
+            if (game.isDelivered()) {
                 $scope.gameStates.unshift({name: 'Games.Breakdown'});
 
                 //handles public sharing
-                if (!breakdownShared && !gameBelongsToUserTeam) {
+                if (!breakdownShared && !isTeamUploadersTeam) {
                     $scope.gameStates.shift();
                 }
             }
         }
 
-        $scope.$on('telestrations:save', function(event, callbackFn) {
+        if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.EDIT) {
 
-            callbackFn = callbackFn || angular.noop;
+            $scope.$on('telestrations:save', function(event, callbackFn) {
 
-            // Save Game
-            $scope.game.save().then(function onSaved() {
-                callbackFn();
+                callbackFn = callbackFn || angular.noop;
+
+                // Save Game
+                game.save().then(function onSaved() {
+                    callbackFn();
+                });
+
             });
-
-        });
+        }
 
     }
 ]);

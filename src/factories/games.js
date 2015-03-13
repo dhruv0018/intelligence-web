@@ -1165,7 +1165,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                         gameId: self.id,
                         sharedWithUserId: null,
                         createdAt: moment.utc().toDate(),
-                        isBreakdownShared: false
+                        isBreakdownShared: false,
+                        isTelestrationsShared: false
                     };
 
                     self.publicShare = share;
@@ -1175,6 +1176,41 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 return !!self.publicShare;
+            },
+            getPublicShare: function() {
+                var self = this;
+
+                return self.publicShare;
+            },
+            isFeatureSharedPublicly: function(featureAttribute) {
+                var self = this;
+
+                if (!featureAttribute) throw new Error('Missing \'featureAttribute\' parameter');
+                if (typeof featureAttribute !== 'string') throw new Error('featureAttribute parameter must be a string');
+
+                var publicShare = self.getPublicShare();
+
+                if (angular.isDefined(publicShare) && publicShare[featureAttribute] === true) return true;
+            },
+            isFeatureSharedWithUser: function(featureAttribute, user) {
+                var self = this;
+
+                if (!featureAttribute) throw new Error('Missing \'featureAttribute\' parameter');
+                if (typeof featureAttribute !== 'string') throw new Error('featureAttribute parameter must be a string');
+
+                var userShare = self.getShareByUser(user);
+
+                if (angular.isDefined(userShare) && userShare[featureAttribute] === true) return true;
+            },
+            isTelestrationsSharedWithUser: function(user) {
+                var self = this;
+
+                return self.isFeatureSharedWithUser('isTelestrationsShared', user);
+            },
+            isTelestrationsSharedPublicly: function() {
+                var self = this;
+
+                return self.isFeatureSharedPublicly('isTelestrationsShared');
             },
             /*
              * Determines if the user is the uploader (owner) of this game

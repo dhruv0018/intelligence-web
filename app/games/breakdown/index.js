@@ -98,7 +98,10 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
     function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, playsManager, ROLES, session, TELESTRATION_PERMISSIONS) {
 
         var gameId = $stateParams.id;
-        $scope.game = games.get(gameId);
+        var game = games.get(gameId);
+        var uploader = users.get($scope.game.uploaderUserId);
+
+        $scope.game = game;
 
         $scope.posterImage = {
             url: $scope.game.video.thumbnail
@@ -121,9 +124,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.team = teams.get($scope.game.teamId);
         $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
-        var uploader = users.get($scope.game.uploaderUserId);
-        $scope.uploadedBy = uploader;
-
         $scope.filmTitle = $scope.game.description;
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
@@ -131,6 +131,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             // Plays
             var playsFilter = { gameId: $scope.game.id };
+
             $scope.totalPlays = plays.getList(playsFilter);
             $scope.plays = plays.getList(playsFilter);
             playsManager.reset($scope.plays);
@@ -141,28 +142,6 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             $scope.currentPlayId = play.id;
 
             $scope.sources = play.getVideoSources();
-
-
-            /* Telestrations Permissions */
-
-            var currentUser = session.getCurrentUser();
-            var isUploader = $scope.game.isUploader(currentUser.id);
-            var uploaderIsCoach = uploader.is(ROLES.COACH);
-            var isTeamUploadersTeam = $scope.game.isTeamUploadersTeam(currentUser.currentRole.teamId);
-            var isCoach = currentUser.is(ROLES.COACH);
-
-            if (isUploader) {
-
-                $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
-
-            } else if (isTeamUploadersTeam && isCoach && uploaderIsCoach) {
-
-                $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
-
-            } else {
-
-                $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
-            }
 
             /* TODO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.
@@ -192,25 +171,22 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             $scope.expandAll = false;
 
-            /* Listen To Event */
 
-            $scope.$watchCollection('playManager.current', function(currentPlay) {
-
-                if (currentPlay && currentPlay.id) {
-
-                    if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
-
-                        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
-                    }
-
-                    $scope.currentPlayId = currentPlay.id;
-                    // TODO: add back event cuepoint an concat with play cuepoints
-                    // var eventCuePoints = play.getEventCuePoints();
-                    // $scope.cuePoints = $scope.cuepoints.concat(eventCuePoints);
-                }
-            });
+            /* Listeners & Watches */
 
             if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+                $scope.$watchCollection('playManager.current', function(currentPlay) {
+
+                    if (currentPlay && currentPlay.id) {
+
+                        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
+                        $scope.currentPlayId = currentPlay.id;
+                        // TODO: add back event cuepoint an concat with play cuepoints
+                        // var eventCuePoints = play.getEventCuePoints();
+                        // $scope.cuePoints = $scope.cuepoints.concat(eventCuePoints);
+                    }
+                });
 
                 $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 

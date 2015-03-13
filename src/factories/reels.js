@@ -266,6 +266,16 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return angular.isDefined(self.getShareByUserId(userId));
             },
+            isTelestrationsSharedWithUser: function(user) {
+                var self = this;
+
+                return self.isFeatureSharedWithUser('isTelestrationsShared', user);
+            },
+            isTelestrationsSharedPublicly: function() {
+                var self = this;
+
+                return self.isFeatureSharedPublicly('isTelestrationsShared');
+            },
             getUserShares: function() {
                 var self = this;
 
@@ -301,16 +311,45 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     self.shares.push(share);
                 }
             },
+            getPublicShare: function() {
+                var self = this;
+
+                if (!self.shares) return false;
+
+                var publicShare = self.shares.filter(function(share) {
+                    if (!share.sharedWithUserId && !share.sharedWithTeamId) return true;
+                });
+
+                if (publicShare.length) return publicShare;
+            },
             isSharedWithPublic: function() {
                 var self = this;
 
                 if (!self.shares) return false;
 
-                return self.shares.map(function(share) {
-                    return share.sharedWithUserId;
-                }).some(function(userId) {
-                    return !userId;
-                });
+                var publicShare = self.getPublicShare();
+
+                if (angular.isDefined(publicShare)) return true;
+            },
+            isFeatureSharedPublicly: function(featureAttribute) {
+                var self = this;
+
+                if (!featureAttribute) throw new Error('Missing \'featureAttribute\' parameter');
+                if (typeof featureAttribute !== 'string') throw new Error('featureAttribute parameter must be a string');
+
+                var publicShare = self.getPublicShare();
+
+                if (angular.isDefined(publicShare) && publicShare[featureAttribute] === true) return true;
+            },
+            isFeatureSharedWithUser: function(featureAttribute, user) {
+                var self = this;
+
+                if (!featureAttribute) throw new Error('Missing \'featureAttribute\' parameter');
+                if (typeof featureAttribute !== 'string') throw new Error('featureAttribute parameter must be a string');
+
+                var userShare = self.getShareByUser(user);
+
+                if (angular.isDefined(userShare) && userShare[featureAttribute] === true) return true;
             },
             toggleTeamShare: function(teamId) {
                 var self = this;
