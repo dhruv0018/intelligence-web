@@ -14,7 +14,7 @@ IntelligenceWebClient.service('Utilities', [
          * @param {Array.<Number>} [array] - an array of numbers.
          * @returns {Array.<Number>} - an array of unique numbers.
          */
-        this.unique = function unique(array) {
+        this.unique = function (array) {
 
             var numbers = array.map(function map(id) {
 
@@ -37,15 +37,15 @@ IntelligenceWebClient.service('Utilities', [
             return unique;
         };
 
-        this.floor = function floor(num) {
+        this.floor = function (num) {
             return Math.floor(num);
         };
 
-        this.matchMedia = function matchMedia(query, success, fail) {
+        this.matchMedia = function (query, success, fail) {
 
             var mql = $window.matchMedia(query);
 
-            var callback = function callback(mql) {
+            var callback = function (mql) {
 
                 if (mql.matches) {
 
