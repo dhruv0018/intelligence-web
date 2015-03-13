@@ -449,6 +449,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
+                deadline = deadline || new Date();
+
                 /* Ensure the game can be assigned. */
                 if (self.canBeAssignedToIndexer()) {
 
@@ -492,6 +494,8 @@ IntelligenceWebClient.factory('GamesFactory', [
             assignToQa: function(userId, deadline) {
 
                 var self = this;
+
+                deadline = deadline || new Date();
 
                 /* Ensure the game can be assigned. */
                 if (self.canBeAssignedToQa()) {

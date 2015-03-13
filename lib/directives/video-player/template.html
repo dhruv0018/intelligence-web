@@ -1,0 +1,64 @@
+<div class="video-player" ng-class="{'mobile': videoPlayer.isMobile}">
+
+    <videogular
+     vg-complete="videoPlayer.onCompleteVideo()"
+     vg-player-ready="videoPlayer.onPlayerReady($API)"
+     vg-update-state="videoPlayer.onUpdateState($state)"
+     vg-change-source="videoPlayer.onChangeSource($source)"
+     vg-update-volume="videoPlayer.onUpdateVolume($volume)"
+     vg-autoplay="videoPlayer.config.autoplay"
+     vg-plays-inline="videoPlayer.config.playsInline"
+    >
+
+        <vg-media
+         vg-loop="videoPlayer.config.loop"
+         vg-preload="videoPlayer.config.preload"
+         vg-src="videoPlayer.sources"
+        >
+        </vg-media>
+
+        <vg-controls ng-show="videoPlayer.state && videoPlayer.canPlay" vg-autohide="videoPlayer.config.autohide" vg-autohide-time="videoPlayer.config.autohideTime">
+
+            <vg-scrub-bar>
+                <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+            </vg-scrub-bar>
+
+            <div class="controls-left">
+
+                <vg-time-display>
+                    <strong>{{ currentTime | millisecondsAsHoursMinutesSeconds }}</strong> / {{ totalTime | millisecondsAsHoursMinutesSeconds }}
+                </vg-time-display>
+
+            </div>
+
+            <div class="controls-center">
+
+                <button-video-backward></button-video-backward>
+                <vg-play-pause-button></vg-play-pause-button>
+                <button-video-forward></button-video-forward>
+
+            </div>
+
+            <div class="controls-right">
+
+                <vg-volume>
+                    <vg-mute-button></vg-mute-button>
+                    <vg-volume-bar></vg-volume-bar>
+                </vg-volume>
+
+                <vg-fullscreen-button></vg-fullscreen-button>
+
+            </div>
+
+        </vg-controls>
+
+        <vg-buffering></vg-buffering>
+
+        <vg-poster ng-hide="videoPlayer.state" vg-url="videoPlayer.posterImage.url"></vg-poster>
+
+        <vg-overlay-play ng-hide="videoPlayer.state"></vg-overlay-play>
+
+    </videogular>
+
+</div>
+

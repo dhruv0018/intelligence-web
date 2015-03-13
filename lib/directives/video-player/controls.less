@@ -1,0 +1,218 @@
+@import (reference) "main.less";
+
+/*********************/
+/* Controlbar plugin */
+/*********************/
+
+videogular button {
+    cursor: pointer;
+}
+
+videogular .iconButton {
+    font-family: 'Krossover-Icons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+
+    background: none;
+    padding: 6px;
+    border: none;
+    outline: none;
+}
+
+videogular .iconButton:focus {
+}
+
+videogular vg-controls {
+    width: 100%;
+    height: 50px;
+    display: block;
+    position: absolute;
+    z-index: 3;
+    bottom: 0;
+}
+
+videogular vg-controls .controls-container {
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+    color: white;
+    background-color: black;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+videogular vg-controls .controls-container .controls-left,
+videogular vg-controls .controls-container .controls-center,
+videogular vg-controls .controls-container .controls-right {
+
+    display:flex;
+    height: 100%;
+    line-height: 50px;
+    opacity: 1;
+}
+
+videogular vg-scrub-bar {
+    position: absolute;
+    bottom: 50px;
+    height: 10px;
+    width: 100%;
+    cursor: pointer;
+    background-color: rgb(24,121,181);
+}
+
+videogular vg-scrub-bar :focus vg-scrub-bar-current-time {
+    border-right: 6px black groove;
+}
+
+videogular vg-scrub-bar-current-time {
+    border-right: 7px solid red;
+    width: 100%;
+    height: 10px;
+    display: block;
+    cursor: pointer;
+}
+
+videogular vg-time-display {
+    font-size: @font-size-small;
+    letter-spacing: -0.01em;
+    margin-left: 10px;
+}
+
+vg-play-pause-button {
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+videogular vg-volume {
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+videogular vg-volume-bar {
+    width: 50px;
+    height: 100px;
+    top: -100px;
+    margin-left: -25px;
+    vertical-align: middle;
+    text-align: center;
+    position: absolute;
+    cursor: pointer;
+}
+
+videogular vg-volume-bar .verticalVolumeBar {
+    width: 50px;
+    height: 100px;
+    position: absolute;
+}
+
+videogular vg-volume-bar .volumeBackground {
+    width: 10px;
+    height: 70px;
+    left: 20px;
+    top: 15px;
+    background-color: rgb(201, 201, 201);
+    position: absolute;
+    border-radius: 5px;
+}
+
+videogular vg-volume-bar .volumeValue {
+    width: 10px;
+    height: 100%;
+    background-color: @brand-blue;
+    position: absolute;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+videogular vg-volume-bar .volumeClickArea {
+    width: 20px;
+    height: 100%;
+    position: absolute;
+}
+
+videogular vg-fullscreen-button {
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+videogular vg-controls .hide-animation {
+    animation: hideControlsAnimationFrames ease-out 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes hideControlsAnimationFrames {
+    0% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+videogular:hover vg-controls .hide-animation {
+
+    animation: none;
+    opacity: 0.7;
+}
+
+videogular vg-controls .show-animation {
+    opacity: 0.7;
+}
+
+/* Controlbar icons */
+videogular vg-play-pause-button .play:before {
+    content: "\f04b";
+}
+
+videogular vg-play-pause-button .pause:before {
+    content: "\f04c";
+}
+
+videogular vg-mute-button {
+    width: 50px;
+    display: block;
+}
+
+videogular vg-mute-button .level3:before {
+    content: "\f028";
+}
+
+videogular vg-mute-button .level2:before {
+    content: "\f027";
+}
+
+videogular vg-mute-button .level1:before {
+    content: "\f027";
+}
+
+videogular vg-mute-button .level0:before {
+    content: "\f027";
+}
+
+videogular vg-mute-button .mute:before {
+    content: "\f026";
+}
+
+videogular vg-fullscreen-button .enter:before {
+    content: "\f065";
+}
+
+videogular vg-fullscreen-button .exit:before {
+    content: "\f066";
+}
+

@@ -62,6 +62,9 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         var gameId = Number($stateParams.id);
         var game = games.get(gameId);
+        $scope.posterImage = {
+            url: game.video.thumbnail
+        };
 
         $scope.sources = game.getVideoSources();
     }

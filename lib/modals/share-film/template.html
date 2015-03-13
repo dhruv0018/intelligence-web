@@ -71,7 +71,7 @@
         	<span data-ng-show="user.id === currentUser.id" class="share-error-message"><i class="icon icon-warning"></i> You cannot share with yourself.</span>
         	<h3>Sharing with:</h3>
         	<form>
-        		<user-typeahead data-user="user" data-filter="filter"></user-typeahead>
+        		<role-typeahead data-ng-model="user" data-filter="filter"></role-typeahead>
         		<button type="submit" class="btn btn-primary" data-ng-disabled="!user.id || film.isSharedWithUser(user) || user.id === currentUser.id || (!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE))" data-ng-click="shareSubmit(user); user = null">Add</button>
         	</form>
         	<div class="how-to-search">
@@ -118,7 +118,7 @@
                 <button type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="false" data-ng-change="film.save()" required>Share Raw Film Only</button>
                 <button type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="true" data-ng-change="film.save()" required>Share Breakdown and Raw Film</button>
             </div>
-            <p class="public-share-option-title" data-ng-show="linkActive">How would you like to share?</p>
+            <!--<p class="public-share-option-title" data-ng-show="linkActive">How would you like to share?</p>-->
             <div class="public-share-methods" data-ng-show="linkActive">
                 <div class="method-row">
                     <span class="link-label">Share link with anyone</span>
@@ -127,6 +127,7 @@
                         <a data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/r/{{shortId}}</a>
                     </div>
                 </div>
+                <!-- Hide embed until Safari bug is fixed
                 <div class="method-row">
                     <div class="public-link-box pull-right" data-ng-show="linkActive">
                         <code data-ng-show="isGame">&lt;iframe src="{{config.links.intelligence.uri}}/g/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
@@ -140,7 +141,7 @@
                             <option value="width:720px;height:750px;">720x750</option>
                         </select>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="button-row">
                 <button class="btn btn-default" data-ng-click="withPublic = false"><i class="icon icon-chevron-left"></i> Back</button>

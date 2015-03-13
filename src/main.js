@@ -2,6 +2,8 @@ var pkg = require('../package.json');
 
 require('./appcache');
 
+require('traceur/bin/traceur-runtime');
+
 /* Vendor dependencies */
 require('./vendor');
 
@@ -28,6 +30,8 @@ require('./errors');
 require('./viewports');
 require('./logs');
 require('./device');
+require('./emitter');
+require('./mediator');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
@@ -114,6 +118,8 @@ require('./managers/plays');
 require('./managers/event');
 require('./managers/storage');
 
+require('./mediators/event');
+
 require('./directives/alert');
 require('./directives/match');
 require('./directives/form');
@@ -125,4 +131,11 @@ require('./directives/keyboard');
 require('./directives/focus');
 require('./directives/autofocus');
 require('./directives/autotab');
+
+require('./aggregates');
+
+require('./values');
+
+require('./entities');
+
 

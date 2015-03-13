@@ -1,6 +1,7 @@
 {
     "node": true,
     "browser": true,
+    "esnext": true,
     "indent"        : 4,
     "newcap"        : true,
     "camelcase"     : true,

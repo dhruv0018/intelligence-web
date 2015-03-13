@@ -1,11 +1,11 @@
 <div class="user-typeahead">
     <input class="form-control"
            type="text"
-           placeholder="Name" data-ng-model="user"
+           placeholder="Name" data-ng-model="filter.fullName"
            data-typeahead-wait-ms="200"
            data-typeahead-loading="loading"
            data-typeahead-template-url="user-typeahead-dropdown.html"
            data-typeahead-min-length="2"
-           data-typeahead="user as user.firstName + ' ' + user.lastName for user in findUsers() | filter: {name: $viewValue}">
-        <krossover-spinner data-ng-if="usersLoading"></krossover-spinner>
+           data-typeahead-on-select="selectUser($item)"
+           data-typeahead="user as user.firstName + ' ' + user.lastName for user in searchUsers() | filter: {name: $viewValue}">
 </div>
