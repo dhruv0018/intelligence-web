@@ -210,6 +210,14 @@ module.exports = [
 
         Glyph.prototype.activeListenerRemovers = [];
 
+        /*
+         * decommission hides listeners, but sub-classes may override to
+         * cleanup any additional extraneous objects
+         */
+        Glyph.prototype.decommission = function decommissionGlyph() {
+            this.removeListeners();
+        };
+
         Glyph.prototype.removeListeners = function removeListeners() {
 
             if (this.MOVEABLE && this.currentShape) this.currentShape.fixed();

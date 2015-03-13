@@ -52,10 +52,10 @@ module.exports = [
 
             };
 
-            self.removeListeners = function removeListeners() {
+            self.decommission = function decommission() {
 
                 self.forEach(function removeGlyphListeners(glyph) {
-                    glyph.removeListeners();
+                    glyph.decommission();
                 });
 
             };

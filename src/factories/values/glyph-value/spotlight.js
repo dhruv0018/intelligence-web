@@ -14,6 +14,8 @@ module.exports = [
         // Mask layer
         var maskLayer;
 
+        var BLACK_BACKDROP_OPACITY = 0.4;
+
         function Spotlight(type, options, SVGContext, shape, spotlightShape) {
 
             this.SVGContext = SVGContext;
@@ -101,10 +103,9 @@ module.exports = [
             this.spotlight.remove();
         };
 
-        // HACK: Remove listeners 'cleans' up this object without destroying the model, thus, remove Mask layer here.
-        Spotlight.prototype.removeListeners = function removeSpotlightListeners() {
+        Spotlight.prototype.decommission = function decommissionSpotlight() {
 
-            Glyph.prototype.removeListeners.call(this);
+            Glyph.prototype.decommission.call(this);
 
             removeShape.call(this);
         };
@@ -114,7 +115,7 @@ module.exports = [
         function addBlackMask() {
 
             // Semi-opaque layer
-            blackBackdropLayer = this.SVGContext.rect('100%', '100%').attr({ fill: '#000' }).opacity(0.4).back();
+            blackBackdropLayer = this.SVGContext.rect('100%', '100%').attr({ fill: '#000' }).opacity(BLACK_BACKDROP_OPACITY).back();
         }
 
         function addMask() {
