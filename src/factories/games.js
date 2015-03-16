@@ -1062,7 +1062,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return isBeingBrokenDown;
             },
-            shareWithUser: function(user) {
+            shareWithUser: function(user, isTelestrationsShared = false) {
 
                 var self = this;
 
@@ -1079,7 +1079,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                     gameId: self.id,
                     sharedWithUserId: user.id,
                     createdAt: moment.utc().toDate(),
-                    isBreakdownShared: false
+                    isBreakdownShared: false,
+                    isTelestrationsShared: isTelestrationsShared
                 };
 
                 self.sharedWithUsers[user.id] = share;
@@ -1151,7 +1152,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return sharesArray;
             },
-            togglePublicSharing: function() {
+            togglePublicSharing: function(isTelestrationsShared = false) {
                 var self = this;
 
                 self.shares = self.shares || [];
@@ -1166,7 +1167,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                         sharedWithUserId: null,
                         createdAt: moment.utc().toDate(),
                         isBreakdownShared: false,
-                        isTelestrationsShared: false
+                        isTelestrationsShared: isTelestrationsShared
                     };
 
                     self.publicShare = share;

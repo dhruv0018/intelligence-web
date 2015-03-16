@@ -191,7 +191,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
             updateDate: function() {
                 this.updatedAt = moment.utc().toDate();
             },
-            shareWithUser: function(user) {
+            shareWithUser: function(user, isTelestrationsShared = false) {
 
                 var self = this;
 
@@ -207,7 +207,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     userId: session.currentUser.id,
                     reelId: self.id,
                     sharedWithUserId: user.id,
-                    createdAt: moment.utc().toDate()
+                    createdAt: moment.utc().toDate(),
+                    isTelestrationsShared: isTelestrationsShared
                 };
 
                 self.sharedWithUsers[user.id] = share;
