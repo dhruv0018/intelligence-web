@@ -29,21 +29,43 @@
             layout="column"
             layout-gt-sm="row"
         >
-            <li>
+            <li class="athlete-attribute">
                 <label>Height/Weight</label>
-                {{utilities.floor(athlete.profile.height / 12)}}'{{athlete.profile.height % 12}}" / {{athlete.profile.weight}} lbs
+                <span data-ng-if="athlete.profile.height && athlete.profile.weight">
+                    {{utilities.floor(athlete.profile.height / 12)}}&#39;{{athlete.profile.height % 12}}&quot;
+                    &nbsp;&#47;&nbsp;
+                    {{athlete.profile.weight}}&nbsp;lbs&#46;
+                </span>
+                <span data-ng-if="!athlete.profile.height || !athlete.profile.weight">
+                    <a data-ui-sref="Athlete.EditProfile.Physical">Add height/weight</a>
+                </span>
             </li>
-            <li>
+            <li class="athlete-attribute">
                 <label>Position</label>
-                Quarterback (QB)
+                <span data-ng-if="athlete.profile.teams.length !== 0">
+                    Quarterback (QB)
+                </span>
+                <span data-ng-if="athlete.profile.teams.length === 0">
+                    <a data-ui-sref="Athlete.EditProfile.BasicInfo">Add position</a>
+                </span>
             </li>
-            <li>
+            <li class="athlete-attribute">
                 <label>School</label>
-                Laguna Beach Highschool
+                <span data-ng-if="athlete.profile.school">
+                    {{athlete.profile.school}}
+                </span>
+                <span data-ng-if="!athlete.profile.school">
+                    <a data-ui-sref="Athlete.EditProfile.Academics">Add school</a>
+                </span>
             </li>
-            <li>
+            <li class="athlete-attribute">
                 <label>Graduation</label>
-                Class of {{athlete.profile.graduationYear}}
+                <span data-ng-if="athlete.profile.graduationYear">
+                    Class of {{athlete.profile.graduationYear}}
+                </span>
+                <span data-ng-if="!athlete.profile.graduationYear">
+                    <a data-ui-sref="Athlete.EditProfile.Academics">Add year</a>
+                </span>
             </li>
 
         </ul>
