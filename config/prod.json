@@ -28,7 +28,7 @@
             "uri": "http://www.krossover.com/get-started/"
         },
         "intelligence": {
-            "uri": "http://new.krossover.com"
+            "uri": "https://new.krossover.com"
         },
         "support": {
             "uri": "http://support.krossover.com"
@@ -88,12 +88,6 @@
         },
         "speedTest": "http://support.krossover.com/customer/portal/articles/1642636-testing-your-upload-speed",
         "finalCutPro": " http://vimeo.com/41165826"
-    },
-    "indexing": {
-        "video": {
-            "jump": 3,
-            "speedlimit": 2
-        }
     },
     "defaultVideoId": 2,
     "athleteProfile": {

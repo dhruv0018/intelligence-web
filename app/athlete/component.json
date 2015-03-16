@@ -5,8 +5,12 @@
     ],
     "local": [
         "film-home",
+<<<<<<< HEAD
         "profile",
         "edit-profile"
+=======
+        "profile"
+>>>>>>> athleteProfile
     ],
     "scripts": [
         "index.js",

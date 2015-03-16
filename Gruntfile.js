@@ -220,7 +220,7 @@ module.exports = function(grunt) {
 
         concat: {
             unprefixed: {
-                src: ['fonts.css', 'icons.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'build/build.css', 'build/theme.css'],
+                src: ['fonts.css', 'icons.css', 'vendor/css/animate.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'node_modules/angular-material/angular-material.css', 'build/build.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
             }
         },
@@ -615,7 +615,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['build', 'karma', 'integration']);
+    grunt.registerTask('test', ['build', 'karma']);
     grunt.registerTask('lint', ['trimtrailingspaces', 'htmlhint', 'jshint', 'eslint']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
