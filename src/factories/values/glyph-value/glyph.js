@@ -92,8 +92,8 @@ module.exports = [
 
         };
 
-        Glyph.prototype.registerShapeContainerElement = function registerShapeContainerElement(elem) {
-            this.elem = elem || null;
+        Glyph.prototype.registerGlyphContainerElement = function registerGlyphContainerElement(containerElement) {
+            this.containerElement = containerElement || null;
         };
 
         Glyph.prototype.getVertexInPixels = function getVertexInPixels(index) {
