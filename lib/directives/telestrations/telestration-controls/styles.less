@@ -17,6 +17,7 @@
     margin-left: @margin;
     margin-right: @margin;
     color: white;
+    overflow: hidden;
 
     ul, li {
         margin: 0;
@@ -34,6 +35,23 @@
     .primary-controls {
 
         display: flex;
+
+        telestration-activate-button li {
+            border-top-left-radius: @radius;
+            border-bottom-left-radius: @radius;
+        }
+
+        telestration-toolbar {
+            position: absolute;
+        }
+
+        telestration-tool {
+
+            &:last-child li {
+                border-top-right-radius: @radius;
+                border-bottom-right-radius: @radius;
+            }
+        }
 
         li {
             background-color: black;
