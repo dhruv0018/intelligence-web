@@ -6,27 +6,26 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.service('Utilities', [
-    '$window',
-    function service($window) {
+    function() {
 
         /**
          * Builds a unique array of numbers.
          * @param {Array.<Number>} [array] - an array of numbers.
          * @returns {Array.<Number>} - an array of unique numbers.
          */
-        this.unique = function unique(array) {
+        this.unique = function(array) {
 
-            var numbers = array.map(function map(id) {
+            var numbers = array.map(function(id) {
 
                 return Number(id);
             });
 
-            var valid = numbers.filter(function filter(id) {
+            var valid = numbers.filter(function(id) {
 
                 return id > 0 && !isNaN(id);
             });
 
-            var unique = valid.reduce(function reduce(previous, current) {
+            var unique = valid.reduce(function(previous, current) {
 
                 if (!~previous.indexOf(current)) previous.push(current);
 
@@ -36,42 +35,5 @@ IntelligenceWebClient.service('Utilities', [
 
             return unique;
         };
-
-        this.floor = function floor(num) {
-            return Math.floor(num);
-        };
-
-        this.matchMedia = function matchMedia(query, success, fail) {
-
-            var mql = $window.matchMedia(query);
-
-            var callback = function callback(mql) {
-
-                if (mql.matches) {
-
-                    if (success) {
-                        success();
-                    } else {
-                        throw new Error('Tried to invoke an undefined success callback in Utilities.matchMedia');
-                    }
-                } else {
-
-                    if (fail) {
-                        fail();
-                    } else {
-                        throw new Error('Tried to invoke an undefined fail callback in Utilities.matchMedia');
-                    }
-                }
-            };
-
-            mql.addListener(callback);
-
-            /* The listener only fires when the state of the window changes
-             * so the callback must be invoked manually to ensure execution
-             * on page-load.
-             */
-            callback(mql);
-        };
     }
 ]);
-
