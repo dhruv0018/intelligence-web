@@ -21,7 +21,7 @@ EditProfile.controller('Athlete.EditProfile.controller', [
 
         $scope.athlete = session.currentUser;
 
-        var reader = new FileReader();
+        let reader = new FileReader();
 
         $scope.setProfileImage = function setProfileImage(files) {
             $scope.athlete.fileImage = files[0]; // resolve $scope.athlete

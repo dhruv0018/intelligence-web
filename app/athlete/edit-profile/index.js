@@ -39,21 +39,21 @@ EditProfile.run([
  * @type {service}
  */
 EditProfile.service('Athlete.EditProfile.Data.Dependencies', [
-    'SportsFactory', 'TeamsFactory', 'SessionService',
-    function(sports, teams, session) {
+    '$q', 'SportsFactory', 'TeamsFactory', 'PositionsetsFactory', 'SessionService',
+    function($q, sports, teams, positionsets, session) {
 
         //TODO: getTeamsByProfileId?
-        var profileTeams = [];
-        var currentUser = session.currentUser;
+        let currentUser = session.currentUser;
 
-        currentUser.profile.teams.forEach(function(team, index) {
-            profileTeams[index] = teams.load(team.teamId);
+        let teamIds = currentUser.profile.teams.map(function(team) {
+            return team.teamId;
         });
 
-        var Data = {
+        let Data = {
 
             sports: sports.load(),
-            teams: profileTeams
+            teams: teams.load(teamIds),
+            positionsets: positionsets.load()
         };
 
         return Data;

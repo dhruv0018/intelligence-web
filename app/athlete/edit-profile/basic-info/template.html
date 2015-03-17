@@ -41,15 +41,15 @@
                             </td>
                             <td class="team-cell-options">
                                 <check-box ng-click="team.isHidden = !team.isHidden" checked="team.isHidden"></check-box>
-                                <i class="icon icon-remove"></i>
+                                <i class="icon icon-remove" ng-click="removeTeam(team.teamId)"></i>
                             </td>
                         </tr>
                         <tr class="team-row" ng-show="addingTeam">
                             <td class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="newTeam.teamId" ng-model="athlete.profile.defaultTeamId" ng-change="athlete.profile.defaultTeamId = team.teamId" required></button></td>
                             <td><team-typeahead team="selectedTeam" ng-model="teamFromTypeahead"></team-typeahead></td>
-                            <td>{{sports[leagues[teamFromTypeahead.leagueId].sportId].name}}</td>
+                            <td></td>
                             <td class="team-cell-positions">
-                                <positions-dropdown ng-model="newTeam.positionIds" player="athlete" positionset="positionsets.get(leagues[teamFromTypeahead.leagueId].positionSetId)"></positions-dropdown>
+                                <positions-dropdown ng-if="teamFromTypeahead" ng-model="newTeam.positionIds" player="athlete" positionset="positionsets.get(leagues[teamFromTypeahead.leagueId].positionSetId)"></positions-dropdown>
                             </td>
                             <td class="team-cell-options">
                                 <i class="icon icon-remove" ng-click="clearNewTeam()"></i>

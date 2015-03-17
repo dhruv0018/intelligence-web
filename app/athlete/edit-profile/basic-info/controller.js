@@ -18,22 +18,29 @@ BasicInfo.controller('Athlete.EditProfile.BasicInfo.controller', [
     function controller($scope, teams, leagues, sports, positionsets, session, data) {
         $scope.athlete = session.currentUser;
         $scope.teams = teams.getMap();
-        $scope.leagues = leagues.getList();
-        $scope.sports = sports.getList();
+        $scope.leagues = leagues.getMap();
+        $scope.sports = sports.getMap();
         $scope.positionsets = positionsets;
         $scope.addingTeam = false;
         $scope.newTeam = {};
 
         $scope.addTeam = function() {
-            $scope.newTeam.teamId = teamFromTypeahead.id;
+            $scope.newTeam.teamId = $scope.teamFromTypeahead.id;
             $scope.athlete.profile.teams.push($scope.newTeam);
         };
 
+        $scope.removeTeam = function(teamId) {
+            for (var index = 0; index < $scope.athlete.profile.teams.length; index++) {
+                if ($scope.athlete.profile.teams[index].teamId == teamId) {
+                    $scope.athlete.profile.teams.splice(index, 1);
+                }
+            }
+        };
+
         $scope.getPositionSet = function(teamId) {
-            var team = $scope.teams[teamId];
-            var league = leagues.get(team.leagueId);
-            console.log(positionsets.get(league.positionSetId));
-            var positionset = positionsets.get(league.positionSetId);
+            let team = teams.get(teamId);
+            let league = leagues.get(team.leagueId);
+            let positionset = positionsets.get(league.positionSetId);
             return positionset;
         };
     }
