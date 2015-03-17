@@ -19,7 +19,9 @@
         </div>
 
         <div class="form-block-full">
-            <h4>My Teams <a href class="add-team" ng-click="addingTeam = true"><i class="icon icon-plus"></i> Add Team</a></h4>
+            <h4>My Teams
+                <!--<a href class="add-team" ng-click="addingTeam = true"><i class="icon icon-plus"></i> Add Team</a>-->
+            </h4>
             <div class="box-body">
                 <table class="table team-table">
                     <thead>
@@ -42,18 +44,6 @@
                             <td class="team-cell-options">
                                 <check-box ng-click="team.isHidden = !team.isHidden" checked="team.isHidden"></check-box>
                                 <i class="icon icon-remove" ng-click="removeTeam(team.teamId)"></i>
-                            </td>
-                        </tr>
-                        <tr class="team-row" ng-show="addingTeam">
-                            <td class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="newTeam.teamId" ng-model="athlete.profile.defaultTeamId" ng-change="athlete.profile.defaultTeamId = team.teamId" required></button></td>
-                            <td><team-typeahead team="selectedTeam" ng-model="teamFromTypeahead"></team-typeahead></td>
-                            <td></td>
-                            <td class="team-cell-positions">
-                                <positions-dropdown ng-if="teamFromTypeahead" ng-model="newTeam.positionIds" player="athlete" positionset="positionsets.get(leagues[teamFromTypeahead.leagueId].positionSetId)"></positions-dropdown>
-                            </td>
-                            <td class="team-cell-options">
-                                <i class="icon icon-remove" ng-click="clearNewTeam()"></i>
-                                <check-box ng-click="newTeam.isHidden = !newTeam.isHidden" checked="newTeam.isHidden"></check-box>
                             </td>
                         </tr>
                     </tbody>
