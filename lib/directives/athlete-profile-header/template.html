@@ -25,6 +25,13 @@
 
         <h2 hide show-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
+        <p data-ng-if="athlete.profile.about">{{athlete.profile.about}}</p>
+        <p data-ng-if="!athlete.profile.about">
+            <a
+             class="empty-attribute"
+             data-ui-sref="Athlete.EditProfile.BasicInfo"
+            >Add about me</a></p>
+
         <ul class="athlete-attributes"
             layout="column"
             layout-gt-sm="row"
@@ -37,7 +44,10 @@
                     {{athlete.profile.weight}}&nbsp;lbs&#46;
                 </span>
                 <span data-ng-if="!athlete.profile.height || !athlete.profile.weight">
-                    <a data-ui-sref="Athlete.EditProfile.Physical">Add height/weight</a>
+                    <a
+                     class="empty-attribute"
+                     data-ui-sref="Athlete.EditProfile.Physical"
+                    >Add height/weight</a>
                 </span>
             </li>
             <li class="athlete-attribute">
@@ -46,7 +56,10 @@
                     Quarterback (QB)
                 </span>
                 <span data-ng-if="athlete.profile.teams.length === 0">
-                    <a data-ui-sref="Athlete.EditProfile.BasicInfo">Add position</a>
+                    <a
+                     class="empty-attribute"
+                     data-ui-sref="Athlete.EditProfile.BasicInfo"
+                    >Add position</a>
                 </span>
             </li>
             <li class="athlete-attribute">
@@ -55,7 +68,10 @@
                     {{athlete.profile.school}}
                 </span>
                 <span data-ng-if="!athlete.profile.school">
-                    <a data-ui-sref="Athlete.EditProfile.Academics">Add school</a>
+                    <a
+                     class="empty-attribute"
+                     data-ui-sref="Athlete.EditProfile.Academics"
+                    >Add school</a>
                 </span>
             </li>
             <li class="athlete-attribute">
@@ -64,7 +80,10 @@
                     Class of {{athlete.profile.graduationYear}}
                 </span>
                 <span data-ng-if="!athlete.profile.graduationYear">
-                    <a data-ui-sref="Athlete.EditProfile.Academics">Add year</a>
+                    <a
+                     class="empty-attribute"
+                     data-ui-sref="Athlete.EditProfile.Academics"
+                    >Add year</a>
                 </span>
             </li>
 
