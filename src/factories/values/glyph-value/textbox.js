@@ -18,13 +18,10 @@ module.exports = [
 
         /* Getters and Setters */
 
-        TextBox.prototype.getDimensions = function getDimensions() {
+        TextBox.prototype.getShapeContext = function getShapeContext() {
 
             // TODO: Return Text Element height/width
-            return {
-                width: 0,
-                height: 0
-            };
+            return null;
         };
 
         TextBox.prototype.render = function renderTextBox() {

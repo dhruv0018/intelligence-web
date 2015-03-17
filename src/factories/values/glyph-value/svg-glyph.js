@@ -22,15 +22,9 @@ module.exports = [
 
         /* Getters and Setters */
 
-        SVGGlyph.prototype.getDimensions = function getDimensions() {
+        SVGGlyph.prototype.getShapeContext = function getShapeContext() {
 
-            if (this.primarySVGShape) {
-
-                return {
-                    width: this.primarySVGShape.width(),
-                    height: this.primarySVGShape.height()
-                };
-            }
+            if (this.primarySVGShape) return this.primarySVGShape;
         };
 
 
