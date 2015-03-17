@@ -1,16 +1,18 @@
 
-/* Arrow Glyph - extends Glyph */
+/* Arrow SVGGlyph - extends SVGGlyph */
 
 module.exports = [
-    'GlyphValue',
-    function(Glyph) {
+    'SVGGlyphValue',
+    function(SVGGlyph) {
 
-        function Arrow(type, options, SVGContext) {
+        function Arrow(type, options, containerElement, SVGContext) {
 
-            Glyph.call(this, type, options, SVGContext, SVGContext.path());
+            SVGGlyph.call(this, type, options, containerElement, SVGContext, SVGContext.path());
 
+            if (this.EDITABLE) this.addEditHandlers(); // optional hook
+            if (this.MOVEABLE) this.addMoveHandlers(); // optional hook
         }
-        angular.inheritPrototype(Arrow, Glyph);
+        angular.inheritPrototype(Arrow, SVGGlyph);
 
         Arrow.prototype.ARROW_SIDE_LENGTH = 10;
         Arrow.prototype.ARROW_HEIGHT = Math.sqrt(5 / 4 * Math.pow(Arrow.prototype.ARROW_SIDE_LENGTH, 2));
@@ -57,7 +59,7 @@ module.exports = [
                 'stroke-dasharray': this.dashedArray
             };
 
-            this.currentShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + endPoint.x + ' ' + endPoint.y + ' M ' + arrowBase1[0] + ' ' + arrowBase1[1] + ' L ' + arrowTip[0] + ' ' + arrowTip[1] + ' ' + arrowBase2[0] + ' ' + arrowBase2[1] + ' z')
+            this.primarySVGShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + endPoint.x + ' ' + endPoint.y + ' M ' + arrowBase1[0] + ' ' + arrowBase1[1] + ' L ' + arrowTip[0] + ' ' + arrowTip[1] + ' ' + arrowBase2[0] + ' ' + arrowBase2[1] + ' z')
                 .attr(attributes);
         };
 
