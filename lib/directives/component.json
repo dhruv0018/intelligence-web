@@ -65,6 +65,9 @@
         "plays-filters",
         "draggable",
         "sidebar",
+        "profile-picture",
+        "athlete-profile-header",
+        "role-class",
         "spinner"
     ],
     "scripts": [

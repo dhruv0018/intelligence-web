@@ -44,6 +44,10 @@
         <!-- Athlete Menu -->
         <menu class="dropdown-menu" data-ng-if="currentUser.is(ATHLETE)">
             <li data-ui-sref-active="active"><a data-ui-sref="Athlete.FilmHome">Film Home</a></li>
+            <li 
+                data-ng-if="config.athleteProfile.isEnabled" 
+                data-ui-sref-active="active"
+            ><a data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
         </menu>
 
     </div>
@@ -104,9 +108,11 @@
 
     <!-- Athlete menu -->
     <menu class="nav navbar-nav" data-ng-if="currentUser.is(ATHLETE)">
-
         <li data-ui-sref-active="active"><a data-ui-sref="Athlete.FilmHome">Film Home</a></li>
-
+        <li 
+            data-ng-if="config.athleteProfile.isEnabled"
+            data-ui-sref-active="active"
+        ><a data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
     </menu>
 
     <!-- Role Dropdown -->
