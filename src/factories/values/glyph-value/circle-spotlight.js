@@ -5,12 +5,14 @@ module.exports = [
     'SpotlightValue',
     function(Spotlight) {
 
-        function CircleSpotlight(type, options, SVGContext) {
+        function CircleSpotlight(type, options, containerElement, SVGContext) {
 
-            Spotlight.call(this, type, options, SVGContext, SVGContext.circle(), SVGContext.circle());
+            Spotlight.call(this, type, options, containerElement, SVGContext, SVGContext.circle(), SVGContext.circle());
 
-            this.currentShape.opacity(0);
+            this.primarySVGShape.opacity(0);
 
+            if (this.EDITABLE) this.addEditHandlers(); // optional hook
+            if (this.MOVEABLE) this.addMoveHandlers(); // optional hook
         }
         angular.inheritPrototype(CircleSpotlight, Spotlight);
 
@@ -28,7 +30,7 @@ module.exports = [
                 .cx((startPoint.x + endPoint.x) / 2)
                 .cy((startPoint.y + endPoint.y) / 2);
 
-            this.currentShape.radius(pointDistance / 2)
+            this.primarySVGShape.radius(pointDistance / 2)
                 .cx((startPoint.x + endPoint.x) / 2)
                 .cy((startPoint.y + endPoint.y) / 2)
                 .attr({

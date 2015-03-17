@@ -1,16 +1,18 @@
 
-/* Freehand Glyph - extends Glyph */
+/* Freehand SVGGlyph - extends SVGGlyph */
 
 module.exports = [
-    'GlyphValue',
-    function(Glyph) {
+    'SVGGlyphValue',
+    function(SVGGlyph) {
 
-        function Freehand(type, options, SVGContext) {
+        function Freehand(type, options, containerElement, SVGContext) {
 
-            Glyph.call(this, type, options, SVGContext, SVGContext.path());
+            SVGGlyph.call(this, type, options, containerElement, SVGContext, SVGContext.path());
 
+            if (this.EDITABLE) this.addEditHandlers(); // optional hook
+            if (this.MOVEABLE) this.addMoveHandlers(); // optional hook
         }
-        angular.inheritPrototype(Freehand, Glyph);
+        angular.inheritPrototype(Freehand, SVGGlyph);
 
         Freehand.prototype.EDITABLE = false;
         Freehand.prototype.MOVEABLE = false;
@@ -18,7 +20,7 @@ module.exports = [
 
         Freehand.prototype.updateEndpointFromPixels = function updateEndpointFromPixels(x, y) {
             // TODO: only call getBoundingClientRect on window Resize
-            var boundingBox = this.getSVGBoxDimensions();
+            var boundingBox = this.getContainerDimensions();
             var relativeX = x / boundingBox.width;
             var relativeY = y / boundingBox.height;
             var newVertex = {x: relativeX, y: relativeY};
@@ -34,9 +36,9 @@ module.exports = [
 
             var pathData = 'M ' + startPoint.x + ' ' + startPoint.y + ' L';
             for (var i = 1; i < verticesInPixels.length; i++) {
+
                 pathData += ' ' + verticesInPixels[i].x + ' ' + verticesInPixels[i].y;
             }
-
 
             var attributes = {
                 fill: 'none',
@@ -47,7 +49,7 @@ module.exports = [
                 'stroke-dasharray': this.dashedArray
             };
 
-            this.currentShape.plot(pathData).attr(attributes);
+            this.primarySVGShape.plot(pathData).attr(attributes);
         };
 
         Freehand.prototype.hasMinimumVertices = function hasMinimumVertices() {

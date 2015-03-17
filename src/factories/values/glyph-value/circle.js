@@ -1,16 +1,18 @@
 
-/* Circle Glyph - extends Glyph */
+/* Circle SVGGlyph - extends SVGGlyph */
 
 module.exports = [
-    'GlyphValue',
-    function(Glyph) {
+    'SVGGlyphValue',
+    function(SVGGlyph) {
 
-        function Circle(type, options, SVGContext) {
+        function Circle(type, options, container, SVGContext) {
 
-            Glyph.call(this, type, options, SVGContext, SVGContext.circle());
+            SVGGlyph.call(this, type, options, container, SVGContext, SVGContext.circle());
 
+            if (this.EDITABLE) this.addEditHandlers(); // optional hook
+            if (this.MOVEABLE) this.addMoveHandlers(); // optional hook
         }
-        angular.inheritPrototype(Circle, Glyph);
+        angular.inheritPrototype(Circle, SVGGlyph);
 
         Circle.prototype.render = function renderCircle() {
 
@@ -27,7 +29,7 @@ module.exports = [
 
             if (offsetY === 0) offsetX = 0; //fix for .radius(offsetX, 0) creating a circle with radius offsetX
 
-            this.currentShape.radius(Math.abs(offsetX) / 2, Math.abs(offsetY) / 2)
+            this.primarySVGShape.radius(Math.abs(offsetX) / 2, Math.abs(offsetY) / 2)
                 .cx((startPoint.x + endPoint.x) / 2)
                 .cy((startPoint.y + endPoint.y) / 2)
                 .attr({

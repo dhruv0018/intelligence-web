@@ -22,6 +22,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
 /* Define Factories */
 
 IntelligenceWebClient.factory('GlyphValue', require('./glyph'));
+IntelligenceWebClient.factory('SVGGlyphValue', require('./svg-glyph'));
 IntelligenceWebClient.factory('SpotlightValue', require('./spotlight'));
 IntelligenceWebClient.factory('ArrowValue', require('./arrow'));
 IntelligenceWebClient.factory('ConeSpotlightValue', require('./cone-spotlight'));

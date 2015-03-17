@@ -1,9 +1,9 @@
 
-/* Spotlight - Abstract class extends Glyph */
+/* Spotlight - Abstract class extends SVGGlyph */
 
 module.exports = [
-    'GlyphValue',
-    function(Glyph) {
+    'SVGGlyphValue',
+    function(SVGGlyph) {
 
         var visibleSpotlightShapes = [];
         var initialized = false;
@@ -16,7 +16,7 @@ module.exports = [
 
         var BLACK_BACKDROP_OPACITY = 0.4;
 
-        function Spotlight(type, options, SVGContext, shape, spotlightShape) {
+        function Spotlight(type, options, containerElement, SVGContext, shape, spotlightShape) {
 
             this.SVGContext = SVGContext;
             this.spotlight = spotlightShape;
@@ -24,15 +24,15 @@ module.exports = [
             if (!blackBackdropLayer) addBlackMask.call(this);
             if (!maskLayer) addMask.call(this);
 
-            Glyph.call(this, type, options, SVGContext, shape);
+            SVGGlyph.call(this, type, options, containerElement, SVGContext, shape);
 
             this.show();
         }
-        angular.inheritPrototype(Spotlight, Glyph);
+        angular.inheritPrototype(Spotlight, SVGGlyph);
 
         Spotlight.prototype.hide = function hideSpotlight() {
 
-            Glyph.prototype.hide.call(this);
+            SVGGlyph.prototype.hide.call(this);
             this.spotlight.hide();
 
             var index = visibleSpotlightShapes.indexOf(this.spotlight);
@@ -47,7 +47,7 @@ module.exports = [
 
         Spotlight.prototype.show = function showSpotlight() {
 
-            Glyph.prototype.show.call(this);
+            SVGGlyph.prototype.show.call(this);
             this.spotlight.show();
 
             var index = visibleSpotlightShapes.indexOf(this.spotlight);
@@ -69,43 +69,50 @@ module.exports = [
             }
         };
 
-        Spotlight.prototype.registerMoveListeners = function SpotlightShapeRegisterMoveListeners() {
+        Spotlight.prototype.addMoveHandlers = function SpotlightShapeaddMoveHandlers() {
 
             var self = this;
 
             // call superclass
-            Glyph.prototype.registerMoveListeners.call(self);
+            SVGGlyph.prototype.addMoveHandlers.call(self);
 
-            if (self.currentShape) {
+            if (self.primarySVGShape) {
 
-                var prevDragStart = self.currentShape.dragstart || angular.noop;
-                self.currentShape.dragstart = function SpotlightShapeDragStart() {
+                var prevDragStart = self.primarySVGShape.dragstart || angular.noop;
+                self.primarySVGShape.dragstart = function SpotlightShapeDragStart() {
 
                     prevDragStart();
                     self.spotlight.xStart = self.spotlight.x();
                     self.spotlight.yStart = self.spotlight.y();
                 };
 
-                var prevDragMove = self.currentShape.dragmove || angular.noop;
-                self.currentShape.dragmove = function SpotlightShapeDragMove(delta, event) {
+                var prevDragMove = self.primarySVGShape.dragmove || angular.noop;
+                self.primarySVGShape.dragmove = function SpotlightShapeDragMove(delta, event) {
 
                     prevDragMove(delta, event);
                     self.spotlight.x(self.spotlight.xStart + delta.x);
                     self.spotlight.y(self.spotlight.yStart + delta.y);
+                };
+
+                var prevDragEnd = self.primarySVGShape.dragend || angular.noop;
+                self.primarySVGShape.dragend = function SpotlightShapeDragEnd(delta, event) {
+
+                    prevDragEnd(delta, event);
+                    self.render();
                 };
             }
         };
 
         Spotlight.prototype.destroy = function destroySpotlightShape() {
 
-            Glyph.prototype.destroy.call(this);
+            SVGGlyph.prototype.destroy.call(this);
             removeShape.call(this);
             this.spotlight.remove();
         };
 
         Spotlight.prototype.decommission = function decommissionSpotlight() {
 
-            Glyph.prototype.decommission.call(this);
+            SVGGlyph.prototype.decommission.call(this);
 
             removeShape.call(this);
         };

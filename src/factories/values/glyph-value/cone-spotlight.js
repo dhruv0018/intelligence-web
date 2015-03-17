@@ -5,12 +5,14 @@ module.exports = [
     'SpotlightValue',
     function(Spotlight) {
 
-        function ConeSpotlight(type, options, SVGContext) {
+        function ConeSpotlight(type, options, containerElement, SVGContext) {
 
-            Spotlight.call(this, type, options, SVGContext, SVGContext.path(), SVGContext.path());
+            Spotlight.call(this, type, options, containerElement, SVGContext, SVGContext.path(), SVGContext.path());
 
-            this.currentShape.opacity(0);
+            this.primarySVGShape.opacity(0);
 
+            if (this.EDITABLE) this.addEditHandlers(); // optional hook
+            if (this.MOVEABLE) this.addMoveHandlers(); // optional hook
         }
         angular.inheritPrototype(ConeSpotlight, Spotlight);
 
@@ -69,7 +71,7 @@ module.exports = [
 
             this.spotlight.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + conePoint1[0] + ' ' + conePoint1[1] + ' C' + curveReferencePoint1[0] + ' ' + curveReferencePoint1[1] + ' ' + curveReferencePoint2[0] + ' ' + curveReferencePoint2[1] + ' ' + conePoint2[0] + ' ' + conePoint2[1] + ' z');
 
-            this.currentShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + conePoint1[0] + ' ' + conePoint1[1] + ' C' + curveReferencePoint1[0] + ' ' + curveReferencePoint1[1] + ' ' + curveReferencePoint2[0] + ' ' + curveReferencePoint2[1] + ' ' + conePoint2[0] + ' ' + conePoint2[1] + ' z')
+            this.primarySVGShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + conePoint1[0] + ' ' + conePoint1[1] + ' C' + curveReferencePoint1[0] + ' ' + curveReferencePoint1[1] + ' ' + curveReferencePoint2[0] + ' ' + curveReferencePoint2[1] + ' ' + conePoint2[0] + ' ' + conePoint2[1] + ' z')
                 .attr({
                     fill: this.color,
                     stroke: this.color,

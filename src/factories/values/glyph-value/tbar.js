@@ -1,16 +1,18 @@
 
-/* tBar - extends Glyph */
+/* tBar - extends SVGGlyph */
 
 module.exports = [
-    'GlyphValue',
-    function(Glyph) {
+    'SVGGlyphValue',
+    function(SVGGlyph) {
 
-        function TBar(type, options, SVGContext) {
+        function TBar(type, options, containerElement, SVGContext) {
 
-            Glyph.call(this, type, options, SVGContext, SVGContext.path());
+            SVGGlyph.call(this, type, options, containerElement, SVGContext, SVGContext.path());
 
+            if (this.EDITABLE) this.addEditHandlers(); // optional hook
+            if (this.MOVEABLE) this.addMoveHandlers(); // optional hook
         }
-        angular.inheritPrototype(TBar, Glyph);
+        angular.inheritPrototype(TBar, SVGGlyph);
 
         TBar.prototype.T_BAR_LENGTH = 100;
 
@@ -47,7 +49,7 @@ module.exports = [
                 'stroke-dasharray': this.dashedArray
             };
 
-            this.currentShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + endPoint.x + ' ' + endPoint.y + ' M ' + tPoint1[0] + ' ' + tPoint1[1] + ' L ' + tPoint2[0] + ' ' + tPoint2[1])
+            this.primarySVGShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + endPoint.x + ' ' + endPoint.y + ' M ' + tPoint1[0] + ' ' + tPoint1[1] + ' L ' + tPoint2[0] + ' ' + tPoint2[1])
                 .attr(attributes);
         };
 

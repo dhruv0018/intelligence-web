@@ -7,9 +7,9 @@ module.exports = [
 
         function ExtendTelestrationValue() {
 
-            this.addGlyph = function addGlyph(type, SVGContext, color) {
+            this.addGlyph = function addGlyph(type, containerElement, SVGContext, color) {
 
-                var newGlyph = GlyphFactory.createGlyph(type, SVGContext, color);
+                var newGlyph = GlyphFactory.createGlyph(type, containerElement, SVGContext, color);
 
                 if (!newGlyph) return null;
 
