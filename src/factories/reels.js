@@ -365,6 +365,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 myReels.forEach(function(reel, index) {
                     if (reel.isPublishedToProfile === true) {
                         reel.isPublishedToProfile = false;
+                        reel.save();
                     }
                 });
 
