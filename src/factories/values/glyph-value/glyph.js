@@ -32,7 +32,7 @@ module.exports = [
         Glyph.prototype.MIN_VERTICES = 2;
 
 
-        /* Setters */
+        /* Getters & Setters */
 
         Glyph.prototype.setText = function setText(text) {
 
@@ -49,6 +49,10 @@ module.exports = [
             this.dashedArray = dashedArray || this.DASHED_ARRAY;
         };
 
+        Glyph.prototype.getMaxWidth = function getMaxWidth() {
+
+            return this.getContainerDimensions().width;
+        };
 
         /* Vertices Helper Functions */
 
