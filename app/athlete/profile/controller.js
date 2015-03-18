@@ -15,11 +15,11 @@ var Profile = angular.module('Athlete.Profile');
  */
 Profile.controller('Athlete.Profile.controller', [
     '$scope', '$state', 'SessionService',
-    function controller($scope, $state, $session) {
+    function controller($scope, $state, session) {
         // TO-DO: Move this to somewhere more appropriate (state.onEnter?)
         $state.go('Athlete.Profile.Highlights');
 
-        $scope.athlete = $session.currentUser;
+        $scope.athlete = session.currentUser;
         $scope.athlete.profilePicture = 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg';
 
         $scope.tabs = {
