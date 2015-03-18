@@ -65,35 +65,13 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
         var userId = session.currentUser.id;
         var teamId = session.currentUser.currentRole.teamId;
 
-        //Get reels created by user
-        var reelsForUser = reels.load({
-            userId: userId
-        });
-
-        //Get reels shared with athlete
-        var athleteRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
-        var reelsSharedWithTeam = [];
-        var reelsSharedWithUser = [];
-
-        //TODO - use relatedUserId
-        athleteRoles.forEach(function(role, index) {
-
-            reelsSharedWithTeam[index] = reels.load({
-                sharedWithTeamId: athleteRoles[index].teamId
-            });
-
-            reelsSharedWithUser[index] = reels.load({
-                sharedWithUserId: userId
-            });
-        });
-
         var Data = {
 
             positionsets: positionsets.load(),
             users: users.load({ relatedUserId: userId }),
             teams: teams.load({ relatedUserId: userId }),
             games: games.load({ relatedUserId: userId }),
-            reels: $q.all([reelsForUser, reelsSharedWithTeam, reelsSharedWithUser])
+            reels: reels.load({ relatedUserId: userId})
         };
 
         Data.players = Data.teams.then(function() {
