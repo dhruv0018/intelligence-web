@@ -1,0 +1,151 @@
+@import (reference) "main.less";
+
+.athlete-profile-header {
+    background-color: @brand-blue;
+    color: white;    
+
+    .athlete-primary-info {
+        text-align: center;
+        position: relative;
+    }
+
+    .profile-picture {
+        margin: 20px;
+    }
+
+    h2 {
+        margin-top: 0; // Overrride
+        margin-bottom: 20px;
+        font-weight: @profile-name-weight;
+    }
+
+    .krossover-uploader {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .secondary-info-toggle {
+        position: absolute;
+        right: 20px;
+        bottom: 15px;
+        width: 30px;
+    }
+
+    .athlete-secondary-info {
+        margin: 0 20px;
+        border-top: thin solid white;
+        transition-property: all;
+        transition-duration: 1s;
+        transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+        &.collapsed {
+            max-height: 0px;
+        }
+
+        &.expanded {
+            max-height: 273px;
+        }
+    }
+
+    .athlete-attributes {
+        padding: 0;
+        margin: 10px 0;
+        text-align: center;
+        list-style-type: none;
+
+        li {
+            margin: 10px 0;
+
+            label {
+                display: block;
+                font-size: @profile-attribute-header-font-size;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    @media only screen
+    and (min-width: @md-screen-sm) {
+
+        .athlete-primary-info {
+            align-items: center;
+        }
+
+        .profile-picture {
+            margin: 20px 30px;
+
+            img {
+                height: 120px;
+                width: 120px;
+                border-radius: 60px;
+                border-width: 2px;
+            }
+        }
+
+        h2 {
+            margin-bottom: 0;
+        }
+
+        .athlete-secondary-info {
+            margin: 0; // Override
+            border-top: none; // Overrride
+        }
+
+        .athlete-attributes {
+            align-items: center;
+            margin: 20px 30px;
+            margin-top: 0;
+            text-align: left; // Override
+
+            li {
+                display: block;
+                padding: 5px 20px;
+                margin: 0; // Override
+                border-right: thin solid white;
+
+                &:first-child {
+                    padding-left: 0;
+                }
+
+                &:last-child {
+                    padding-right: 0;
+                    border-right: none;
+                }
+            }
+        }
+    }
+
+    @media only screen 
+    and (min-width: @md-screen-md) {
+
+        .athlete-primary-info {
+            position: static;
+        }
+
+        .profile-picture {
+            position: absolute;
+            top: 0;
+            margin: 20px 40px;
+
+            img {
+                height: 160px;
+                width: 160px;
+                border-radius: 80px;
+                border-width: 3px;
+            }
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .athlete-secondary-info {
+            margin: 20px 0 20px 240px;
+        }
+
+        .athlete-attributes {
+            margin: 0;
+        }
+    }
+}

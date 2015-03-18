@@ -1,0 +1,53 @@
+<header class="athlete-profile-header" layout="column" layout-gt-md="row">
+    <section class="athlete-primary-info" layout="column" layout-gt-sm="row">
+
+        <profile-picture data-user="athlete"></profile-picture>
+
+        <h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
+
+        <krossover-uploader
+            hide
+            show-gt-md
+            data-on-upload="setProfileImage(files)"
+        ></krossover-uploader>
+
+        <ng-md-icon
+            icon="{{toggle.icons.current}}"
+            style="fill: white"
+            size="30"
+            class="secondary-info-toggle"
+            hide-gt-sm
+            data-ng-click="toggle.visibility()"
+        ></ng-md-icon>
+    </section>
+
+    <section class="athlete-secondary-info animated fadeOut collapsed">
+
+        <h2 hide show-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
+
+        <ul class="athlete-attributes"
+            layout="column"
+            layout-gt-sm="row"
+        >
+            <li>
+                <label>Height/Weight</label>
+                {{utilities.floor(athlete.profile.height / 12)}}'{{athlete.profile.height % 12}}" / {{athlete.profile.weight}} lbs
+            </li>
+            <li>
+                <label>Position</label>
+                Quarterback (QB)
+            </li>
+            <li>
+                <label>School</label>
+                Laguna Beach Highschool
+            </li>
+            <li>
+                <label>Graduation</label>
+                Class of {{athlete.profile.graduationYear}}
+            </li>
+
+        </ul>
+
+    </section>
+
+</header>
