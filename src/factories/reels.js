@@ -16,6 +16,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
             model: 'ReelsResource',
 
+            schema: 'REEL_SCHEMA',
+
             storage: 'ReelsStorage',
 
             extend: function(reel) {
@@ -53,15 +55,37 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 reel = reel || self;
 
-                var copy = {};
+                /* Create a copy of the resource to break reference to original. */
 
-                // TODO: Use Super()
+                let copy = {};
+
+                delete reel.$promise; // cannot stringify a circular object, thus remove
+
+                // Unextend any children objects, and copy other attributes. TODO: Add validation to children
                 Object.keys(reel).forEach(function assignCopies(key) {
 
-                    if (reel[key].unextend) copy[key] = reel[key].unextend();
-                    else if (typeof copy[key] !== 'function') copy[key] = angular.copy(reel[key]);
-
+                    if (reel[key] && reel[key].unextend) copy[key] = reel[key].unextend();
+                    else if (reel[key] && typeof reel[key] !== 'function') copy[key] = JSON.parse(JSON.stringify(reel[key]));
                 });
+
+                /* Remove any invalid properties. */
+                self.validate(copy).errors.forEach(deleteInvalidProperty);
+
+                /**
+                 * Deletes a single property from the copy object.
+                 * @param error {ValidationError} - the validation error.
+                 */
+                function deleteInvalidProperty (error) {
+
+                    if (!error) return;
+
+                    /* Get the property from the error. */
+                    let properties = error.dataPath.split('/');
+                    let property = properties[1];
+
+                    /* Delete given property from copy. */
+                    delete copy[property];
+                }
 
                 return copy;
             },
@@ -290,7 +314,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return sharesArray;
             },
-            togglePublicSharing: function() {
+            togglePublicSharing: function(isTelestrationsShared = false) {
                 var self = this;
 
                 self.shares = self.shares || [];
@@ -306,7 +330,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
                         userId: session.currentUser.id,
                         reelId: self.id,
                         sharedWithUserId: null,
-                        createdAt: moment.utc().toDate()
+                        createdAt: moment.utc().toDate(),
+                        isTelestrationsShared: isTelestrationsShared
                     };
 
                     self.shares.push(share);
@@ -352,7 +377,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (angular.isDefined(userShare) && userShare[featureAttribute] === true) return true;
             },
-            toggleTeamShare: function(teamId) {
+            toggleTeamShare: function(teamId, isTelestrationsShared = false) {
                 var self = this;
 
                 if (!teamId) throw new Error('No team id');
@@ -371,7 +396,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
                         userId: session.currentUser.id,
                         reelId: self.id,
                         sharedWithTeamId: teamId,
-                        createdAt: moment.utc().toDate()
+                        createdAt: moment.utc().toDate(),
+                        isTelestrationsShared: isTelestrationsShared
                     };
 
                     self.shares.push(share);

@@ -94,6 +94,16 @@
         "shares": {
             "type": "array",
             "items": { "$ref": "share" }
+        },
+        "rawTelestrations": {
+            "type": "array",
+            // TODO: Add telestration schema
+            // "items": { "$ref": "telestration" }
+        },
+        "playTelestrations": {
+            "type": "array",
+            // TODO: Add telestration schema
+            // "items": { "$ref": "telestration" }
         }
     },
     "additionalProperties": false
