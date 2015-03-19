@@ -2,6 +2,8 @@ var PAGE_SIZE = 100;
 
 var pkg = require('../../package.json');
 
+var tv4 = require('tv4');
+
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -33,24 +35,52 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
+             * Validates resource with its schema.
+             * @param {Resource} resource - a user resource object.
+             */
+            validate: function(resource) {
+
+                resource = resource || this;
+
+                if (!resource) throw new Error('No resource to validate');
+                if (!this.schema) throw new Error('No schema for resource');
+
+                let schema = $injector.get(this.schema);
+
+                let result = tv4.validateMultiple(resource, schema, true);
+
+                return result;
+            },
+
+            /**
              * Removes extended properties of the resource.
              * @param {Resource} resource - a user resource object.
              */
             unextend: function(resource) {
 
-                var self = this;
+                resource = resource || this;
 
-                resource = resource || self;
+                /* Create a copy of the resource to break reference to original. */
+                let copy = JSON.parse(JSON.stringify(resource));
 
-                /* Create a copy of the resource to break reference to orginal. */
-                var copy = angular.copy(resource);
+                /* Remove any invalid properties. */
+                this.validate(copy).errors.forEach(deleteInvalidProperty);
 
-                delete copy.PAGE_SIZE;
-                delete copy.description;
-                delete copy.model;
-                delete copy.storage;
+                /**
+                 * Deletes a single property from the copy object.
+                 * @param error {ValidationError} - the validation error.
+                 */
+                function deleteInvalidProperty (error) {
 
-                /* TODO: Remove any properties that should not exist. */
+                    if (!error) return;
+
+                    /* Get the property from the error. */
+                    let properties = error.dataPath.split('/');
+                    let property = properties[1];
+
+                    /* Delete given property from copy. */
+                    delete copy[property];
+                }
 
                 return copy;
             },
