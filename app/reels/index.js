@@ -333,7 +333,7 @@ ReelsArea.controller('ReelsArea.controller', [
             }
         });
 
-        if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+        if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
 
             $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 

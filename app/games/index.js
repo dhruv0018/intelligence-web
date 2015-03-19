@@ -232,9 +232,9 @@ Games.controller('Games.controller', [
             }
         }
 
-        if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.EDIT) {
+        if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
 
-            $scope.$on('telestrations:save', function(event, callbackFn) {
+            $scope.$on('telestrations:save', function saveTelestrations(event, callbackFn) {
 
                 callbackFn = callbackFn || angular.noop;
 

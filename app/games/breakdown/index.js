@@ -187,6 +187,9 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
                         // $scope.cuePoints = $scope.cuepoints.concat(eventCuePoints);
                     }
                 });
+            }
+
+            if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
 
                 $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
