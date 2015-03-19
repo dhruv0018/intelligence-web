@@ -76,6 +76,7 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
 
         Data.players = Data.teams.then(function() {
             //Get all players from user's teams TODO: use relatedUserId
+            var athleteRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
             var teamPlayers = [];
             athleteRoles.forEach(function(role, index) {
                 var team = teams.get(role.teamId);
