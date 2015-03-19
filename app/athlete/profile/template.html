@@ -1,20 +1,20 @@
 <md-content>
 	<section class="athlete-profile">
 
-        <athlete-profile-header data-athlete="athlete"></athlete-profile-header>
+        <athlete-profile-header athlete="athlete"></athlete-profile-header>
 
         <md-tabs md-selected="tabs.index">
             <md-tab
                 id="highlights"
                 aria-controls="highlights-content"
-                data-ui-sref="Athlete.Profile.Highlights"
+                ui-sref="Athlete.Profile.Highlights"
             >
                 <i class="icon icon-youtube-play">&nbsp;</i>Highlights
             </md-tab>
             <md-tab
                 id="academics"
                 aria-controls="academics-content"
-                data-ui-sref="Athlete.Profile.Academics"
+                ui-sref="Athlete.Profile.Academics"
                 disabled
             >
                 <i class="icon icon-file-text-o">&nbsp;</i>Academics
@@ -22,7 +22,7 @@
             <md-tab
                 id="stats"
                 aria-controls="stats-content"
-                data-ui-sref="Athlete.Profile.Stats"
+                ui-sref="Athlete.Profile.Stats"
                 disabled
             >
                 <i class="icon icon-bar-chart-o">&nbsp;</i>Stats
@@ -37,7 +37,7 @@
                  md-swipe-left="tabs.next()"
                  md-swipe-right="tabs.prev()"
             >
-                <div data-ui-view="highlights"></div>
+                <div ui-view="highlights"></div>
             </div>
             <div role="tabpanel"
                  class="tabpanel"
@@ -47,7 +47,7 @@
                  md-swipe-left="tabs.next()"
                  md-swipe-right="tabs.prev()"
             >
-                <div data-ui-view="academics"></div>
+                <div ui-view="academics"></div>
             </div>
             <div role="tabpanel"
                  class="tabpanel"
@@ -57,7 +57,7 @@
                  md-swipe-left="tabs.next()"
                  md-swipe-right="tabs.prev()"
             >
-                <div data-ui-view="stats"></div>
+                <div ui-view="stats"></div>
             </div>
         </ng-switch>
     </section>

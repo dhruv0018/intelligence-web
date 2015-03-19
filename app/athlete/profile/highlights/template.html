@@ -1,6 +1,6 @@
 <div class="highlights">
-    <ul class="reels" data-ng-if="reels.length > 0">
-        <krossover-film data-ng-repeat="reel in reels" data-film="reel"></krossover-film>
+    <ul class="reels" ng-if="reels.length > 0">
+        <krossover-film ng-repeat="reel in reels" film="reel"></krossover-film>
     </ul>
-    <no-profile-reels data-ng-if="reels.length <= 0"></no-profile-reels>
+    <no-profile-reels ng-if="reels.length <= 0"></no-profile-reels>
 </div>
