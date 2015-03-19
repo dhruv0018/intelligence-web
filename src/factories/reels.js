@@ -354,14 +354,22 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return teamShare;
             },
-            publishToProfile: function() {
+            publishToProfile: function(myReels) {
                 var self = this;
 
                 if (!self.isSharedWithPublic()) {
                     self.togglePublicSharing();
                 }
 
-                self.publishedToProfile = true;
+                //Only allow user to publish one reel to their profile
+                myReels.forEach(function(reel, index) {
+                    if (reel.isPublishedToProfile === true) {
+                        reel.isPublishedToProfile = false;
+                        reel.save();
+                    }
+                });
+
+                self.isPublishedToProfile = true;
             },
             unpublishFromProfile: function() {
                 var self = this;
@@ -370,7 +378,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     self.togglePublicSharing();
                 }
 
-                self.publishedToProfile = false;
+                self.isPublishedToProfile = false;
             },
             getPublishedReels: function(userId) {
                 userId = userId || session.getCurrentUserId();
@@ -382,7 +390,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reels.filter(function(reel) {
 
                     return reel.uploaderUserId == userId &&
-                           reel.publishedToProfile === true;
+                           reel.isPublishedToProfile === true;
                 });
             }
         };
