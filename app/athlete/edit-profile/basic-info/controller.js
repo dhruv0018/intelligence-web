@@ -16,18 +16,12 @@ var BasicInfo = angular.module('Athlete.EditProfile.BasicInfo');
 BasicInfo.controller('Athlete.EditProfile.BasicInfo.controller', [
     '$scope', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'PositionsetsFactory', 'SessionService', 'Athlete.EditProfile.Data',
     function controller($scope, teams, leagues, sports, positionsets, session, data) {
-        $scope.athlete = session.currentUser;
+        $scope.athlete = session.getCurrentUser();
         $scope.teams = teams.getMap();
         $scope.leagues = leagues.getMap();
         $scope.sports = sports.getMap();
         $scope.positionsets = positionsets;
         $scope.addingTeam = false;
-        $scope.newTeam = {};
-
-        $scope.addTeam = function() {
-            $scope.newTeam.teamId = $scope.teamFromTypeahead.id;
-            $scope.athlete.profile.teams.push($scope.newTeam);
-        };
 
         $scope.removeTeam = function(teamId) {
             for (var index = 0; index < $scope.athlete.profile.teams.length; index++) {
