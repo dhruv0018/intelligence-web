@@ -62,30 +62,8 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
     '$q', 'SessionService', 'PositionsetsFactory', 'UsersFactory', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'ReelsFactory', 'ROLE_TYPE',
     function data($q, session, positionsets, users, teams, games, players, reels, ROLE_TYPE) {
 
-        var userId = session.currentUser.id;
-        var teamId = session.currentUser.currentRole.teamId;
-
-        //Get reels created by user
-        var reelsForUser = reels.load({
-            userId: userId
-        });
-
-        //Get reels shared with athlete
-        var athleteRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
-        var reelsSharedWithTeam = [];
-        var reelsSharedWithUser = [];
-
-        //TODO - use relatedUserId
-        athleteRoles.forEach(function(role, index) {
-
-            reelsSharedWithTeam[index] = reels.load({
-                sharedWithTeamId: athleteRoles[index].teamId
-            });
-
-            reelsSharedWithUser[index] = reels.load({
-                sharedWithUserId: userId
-            });
-        });
+        var userId = session.getCurrentUserId();
+        var teamId = session.getCurrentTeamId();
 
         var Data = {
 
@@ -93,11 +71,12 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
             users: users.load({ relatedUserId: userId }),
             teams: teams.load({ relatedUserId: userId }),
             games: games.load({ relatedUserId: userId }),
-            reels: $q.all([reelsForUser, reelsSharedWithTeam, reelsSharedWithUser])
+            reels: reels.load({ relatedUserId: userId})
         };
 
         Data.players = Data.teams.then(function() {
             //Get all players from user's teams TODO: use relatedUserId
+            var athleteRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
             var teamPlayers = [];
             athleteRoles.forEach(function(role, index) {
                 var team = teams.get(role.teamId);
