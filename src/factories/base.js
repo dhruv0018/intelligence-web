@@ -53,29 +53,19 @@ IntelligenceWebClient.factory('BaseFactory', [
              */
             unextend: function(resource) {
 
-                resource = resource || this;
+                var self = this;
 
-                /* Create a copy of the resource to break reference to original. */
-                let copy = JSON.parse(JSON.stringify(resource));
+                resource = resource || self;
 
-                /* Remove any invalid properties. */
-                this.validate(copy).errors.forEach(deleteInvalidProperty);
+                /* Create a copy of the resource to break reference to orginal. */
+                var copy = angular.copy(resource);
 
-                /**
-                 * Deletes a single property from the copy object.
-                 * @param error {ValidationError} - the validation error.
-                 */
-                function deleteInvalidProperty (error) {
+                delete copy.PAGE_SIZE;
+                delete copy.description;
+                delete copy.model;
+                delete copy.storage;
 
-                    if (!error) return;
-
-                    /* Get the property from the error. */
-                    let properties = error.dataPath.split('/');
-                    let property = properties[1];
-
-                    /* Delete given property from copy. */
-                    delete copy[property];
-                }
+                /* TODO: Remove any properties that should not exist. */
 
                 return copy;
             },
