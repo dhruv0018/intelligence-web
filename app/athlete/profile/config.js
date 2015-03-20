@@ -44,8 +44,8 @@ Profile.config([
  * @type {service}
  */
 Profile.service('Athlete.Profile.Data.Dependencies',[
-    '$stateParams', 'UsersFactory',
-    function data($stateParams, users) {
+    '$stateParams', 'UsersFactory', 'ReelsFactory',
+    function data($stateParams, users, reels) {
 
         var userId = $stateParams.id;
 
