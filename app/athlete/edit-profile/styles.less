@@ -6,22 +6,6 @@ md-content {
 
 .athlete-edit-profile {
     height: 100%;
-    
-    .sidebar {
-        .profile-picture {
-            text-align: center;
-
-            img,
-            .placeholder-picture {
-                border-color: @gray-border;
-            }
-        }
-
-        .krossover-uploader {
-            text-align: center;
-            margin-top: 10px;
-        }
-    }
 
     .content {
 
@@ -29,6 +13,26 @@ md-content {
             display: flex;
             flex-direction: column;
             justify-content: space-around;
+
+            .edit-profile-picture-container {
+
+                .profile-picture {
+                    margin-top: 50px;
+                    text-align: center;
+
+                    img,
+                    .placeholder-picture {
+                        border-color: @gray-border;
+                    }
+                }
+
+                .krossover-uploader {
+                    text-align: center;
+                    margin: auto;
+                    margin-top: 10px;
+                    width: 130px;
+                }
+            }
 
             .form-block-half {
                 flex: 1;
@@ -45,6 +49,16 @@ md-content {
                 width: 30%;
                 margin-right: 1%;
                 display: inline-block;
+            }
+
+            .form-block-two-thirds {
+                flex: 1;
+                width: 65%;
+                display: inline-block;
+
+                &:last-child {
+                    float: right;
+                }
             }
 
             .form-block-full {

@@ -1,21 +1,28 @@
 <div class="basic-info">
     <form>
         <div class="form-block-full">
-            <div class="form-block-half">
-                <h4>First Name</h4>
-                <input type="text" ng-model="athlete.firstName" class="form-control" placeholder="Enter First Name"/>
-            </div>
+            <div class="form-block-third edit-profile-picture-container">
+                <h4>Profile Picture</h4>
+                <profile-picture data-user="athlete"></profile-picture>
 
-            <div class="form-block-half">
-                <h4>Last Name</h4>
-                <input type="text" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
+                <krossover-uploader data-upload-label="Change Image" data-on-upload="setProfileImage(files)"></krossover-uploader>
             </div>
-        </div>
+            <div class="form-block-two-thirds">
+                <div>
+                    <h4>First Name</h4>
+                    <input type="text" ng-model="athlete.firstName" class="form-control" placeholder="Enter First Name"/>
+                </div>
 
-        <div class="form-block-full">
-            <h4>About Me <span class="header-description">Write a short description about yourself. What makes you stand out?</span></h4>
-            <textarea class="form-control" rows="5" maxlength="200" placeholder="Talk about your club team experience, stats, achievements, anything." ng-model="athlete.profile.about" ng-trim="false"></textarea>
-            <p>{{200 - athlete.profile.about.length}} characters left.</p>
+                <div>
+                    <h4>Last Name</h4>
+                    <input type="text" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
+                </div>
+                <div>
+                    <h4>About Me <span class="header-description">Write a short description about yourself. What makes you stand out?</span></h4>
+                    <textarea class="form-control" rows="5" maxlength="200" placeholder="Talk about your club team experience, stats, achievements, anything." ng-model="athlete.profile.about" ng-trim="false"></textarea>
+                    <p>{{200 - athlete.profile.about.length}} characters left.</p>
+                </div>
+            </div>
         </div>
 
         <div class="form-block-full">
@@ -52,7 +59,7 @@
         </div>
         <div class="button-row">
             <button class="btn btn-primary" ng-click="saveBasicInfo()">Save</button>
-            <a href class="btn btn-default pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
+            <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
         </div>
     </form>
 </div>
