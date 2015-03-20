@@ -40,6 +40,12 @@ Profile.config([
 
                         return $q.all(Data);
                     }
+                ],
+                userId: [
+                    '$stateParams',
+                    function($stateParams){
+                          return $stateParams.id;
+                    }
                 ]
             }
         });

@@ -14,12 +14,12 @@ var Profile = angular.module('Athlete.Profile');
  * @type {controller}
  */
 Profile.controller('Athlete.Profile.controller', [
-    '$scope', '$state', '$stateParams', 'UsersFactory',
-    function controller($scope, $state, $stateParams, users) {
+    '$scope', '$state', 'userId', 'UsersFactory',
+    function controller($scope, $state, userId, users) {
         // TO-DO: Move this to somewhere more appropriate (state.onEnter?)
         $state.go('Athlete.Profile.Highlights');
 
-        $scope.athlete = users.get($stateParams.id);
+        $scope.athlete = users.get(userId);
         $scope.athlete.profilePicture = 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg';
 
         $scope.tabs = {
