@@ -44,13 +44,14 @@ Profile.config([
  * @type {service}
  */
 Profile.service('Athlete.Profile.Data.Dependencies',[
-    'SessionService', 'UsersFactory',
-    function data(session, users) {
+    '$stateParams', 'UsersFactory', 'ReelsFactory',
+    function data($stateParams, users, reels) {
 
-        var userId = session.getCurrentUserId();
+        var userId = $stateParams.id;
 
         var Data = {
-            users: users.load({userId: userId})
+            users: users.load({relatedUserId: userId}),
+            reels: reels.load({userId: userId}) // For Athlete.Profile.Highlights, no access to userId
         };
 
         return Data;
