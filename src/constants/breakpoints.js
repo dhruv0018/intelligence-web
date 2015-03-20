@@ -1,12 +1,11 @@
 // CommonJS module to share constant values
 // across Angular resources
-var breakpoints = {
+module.exports = {
     mobile: 1024,
     mdScreenSm: 600,
     mdScreenMd: 960,
     mdScreenLg: 1200
 };
-module.exports = breakpoints;
 
 var pkg = require('../../package.json');
 
@@ -18,10 +17,10 @@ var IntelligenceWebClient = angular.module(pkg.name);
 // Values in px
 var BREAKPOINTS = {
 
-    MOBILE: breakpoints.mobile,
-    MD_SCREEN_SM: breakpoints.mdScreenSm,
-    MD_SCREEN_MD: breakpoints.mdScreenMd,
-    MD_SCREEN_LG: breakpoints.mdScreenLg
+    MOBILE: module.exports.mobile,
+    MD_SCREEN_SM: module.exports.mdScreenSm,
+    MD_SCREEN_MD: module.exports.mdScreenMd,
+    MD_SCREEN_LG: module.exports.mdScreenLg
 };
 
 IntelligenceWebClient.constant('BREAKPOINTS', BREAKPOINTS);

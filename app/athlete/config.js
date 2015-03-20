@@ -16,13 +16,12 @@ Athlete.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var Athlete = {
-            name: 'Athlete',
+        $stateProvider
+
+        .state('Athlete', {
             url: '/athlete',
             parent: 'base',
             abstract: true
-        };
-
-        $stateProvider.state(Athlete);
+        });
     }
 ]);

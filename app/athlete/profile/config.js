@@ -25,7 +25,35 @@ Profile.config([
                     templateUrl: 'athlete/profile/template.html',
                     controller: 'Athlete.Profile.controller'
                 }
+            },
+            resolve: {
+                'Athlete.Profile.Data': [
+                    '$q', 'Athlete.Profile.Data.Dependencies',
+                    function($q, data) {
+                        return $q.all(data);
+                    }
+                ]
             }
         });
+    }
+]);
+
+/**
+ * Athlete Profile Data Service
+ * @module Athlete.Profile
+ * @type {service}
+ */
+Profile.service('Athlete.Profile.Data.Dependencies',[
+    '$stateParams', 'UsersFactory',
+    function data($stateParams, users) {
+
+        var userId = $stateParams.id;
+
+        var Data = {
+            users: users.load({relatedUserId: userId}),
+            reels: reels.load({userId: userId}) // For Athlete.Profile.Highlights, no access to userId
+        };
+
+        return Data;
     }
 ]);
