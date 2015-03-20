@@ -99,12 +99,12 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
         var gameId = $stateParams.id;
         var game = games.get(gameId);
-        var uploader = users.get($scope.game.uploaderUserId);
+        var uploader = users.get(game.uploaderUserId);
 
         $scope.game = game;
 
         $scope.posterImage = {
-            url: $scope.game.video.thumbnail
+            url: game.video.thumbnail
         };
 
         $scope.cuePoints = [];
@@ -112,7 +112,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.publiclyShared = false;
 
         /* TODO: figure out if this stuff is used */
-        $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
+        $scope.uploaderTeam = teams.get(game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
 
         $scope.reels = auth.isLoggedIn ? reels.getList() : [];
@@ -121,16 +121,16 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
 
         // TODO: remove some of this later
-        $scope.team = teams.get($scope.game.teamId);
-        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+        $scope.team = teams.get(game.teamId);
+        $scope.opposingTeam = teams.get(game.opposingTeamId);
 
-        $scope.filmTitle = $scope.game.description;
+        $scope.filmTitle = game.description;
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
-        if ($scope.game.isDelivered()) {
+        if (game.isDelivered()) {
 
             // Plays
-            var playsFilter = { gameId: $scope.game.id };
+            var playsFilter = { gameId: game.id };
 
             $scope.totalPlays = plays.getList(playsFilter);
             $scope.plays = plays.getList(playsFilter);
@@ -138,7 +138,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             var play = playsManager.plays[0];
 
             // Set telestrations
-            $scope.telestrationsEntity = $scope.game.playTelestrations;
+            $scope.telestrationsEntity = game.playTelestrations;
             $scope.currentPlayId = play.id;
 
             $scope.sources = play.getVideoSources();
