@@ -163,13 +163,6 @@ Games.controller('Games.controller', [
         $scope.opposingTeam = $scope.teams[game.opposingTeamId];
         $scope.league = league;
 
-        // TODO: alex -- remove this when it is not needed for header
-        $scope.isPublic = true;
-
-        //define states for view selector
-
-        $scope.gameStates = [];
-
         // services
         $scope.auth = auth;
 
@@ -195,17 +188,25 @@ Games.controller('Games.controller', [
             $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
         }
 
+        /* Define view selector states */
+
+        $scope.gameStates = [];
+
         // Enable features for the game for coaches that are on the uploaders team
         if (isTeamUploadersTeam && isCoach) {
-            //game information
+
+            // game information
             $scope.gameStates.push({name: 'Games.Info'});
 
-            //statistics related states
+            // statistics related states
             if (game.isDelivered()) {
+
                 if (sport.hasStatistics) {
+
                     $scope.gameStates.push({name: 'Games.Stats'});
                 }
-                //sport specific states
+
+                // sport specific states
                 switch (sport.id) {
                     case SPORTS.BASKETBALL.id:
                         $scope.gameStates.push({name: 'Games.ShotChart'});
@@ -217,20 +218,25 @@ Games.controller('Games.controller', [
             }
         }
 
-        //video related states
+        // video related states
         if (transcodeCompleted) {
 
             $scope.gameStates.unshift({name: 'Games.RawFilm'});
 
             if (game.isDelivered()) {
+
                 $scope.gameStates.unshift({name: 'Games.Breakdown'});
 
                 //handles public sharing
                 if (!breakdownShared && !isTeamUploadersTeam) {
+
                     $scope.gameStates.shift();
                 }
             }
         }
+
+
+        /* Listeners & Watches */
 
         if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
 
