@@ -39,8 +39,8 @@ EditProfile.run([
  * @type {service}
  */
 EditProfile.service('Athlete.EditProfile.Data.Dependencies', [
-    '$q', 'SportsFactory', 'TeamsFactory', 'PositionsetsFactory', 'SessionService',
-    function($q, sports, teams, positionsets, session) {
+    '$q', 'SportsFactory', 'TeamsFactory', 'PositionsetsFactory', 'UsersFactory', 'SessionService',
+    function($q, sports, teams, positionsets, users, session) {
 
         //TODO: getTeamsByProfileId?
         let currentUser = session.getCurrentUser();
@@ -51,6 +51,7 @@ EditProfile.service('Athlete.EditProfile.Data.Dependencies', [
 
         let Data = {
 
+            user: users.load(session.getCurrentUserId()),
             sports: sports.load(),
             teams: teams.load(teamIds),
             positionsets: positionsets.load()
