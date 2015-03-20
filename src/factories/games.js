@@ -21,10 +21,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             model: 'GamesResource',
 
-            schema: 'GAME_SCHEMA',
-
             storage: 'GamesStorage',
-
             unextend: function(game) {
 
                 var self = this;
