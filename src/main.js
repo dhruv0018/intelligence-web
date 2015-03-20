@@ -68,7 +68,6 @@ require('./constants/arenas');
 require('./constants/device');
 require('./constants/states');
 require('./constants/telestrations');
-require('./constants/schemas');
 
 require('./models/users');
 require('./models/sports');
