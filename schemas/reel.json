@@ -33,6 +33,11 @@
         "shares": {
             "type": "array",
             "items": { "$ref": "share" }
+        },
+        "telestrations": {
+            "type": "array",
+            // TODO: Add telestration schema
+            // "items": { "$ref": "telestration" }
         }
     },
     "additionalProperties": false
