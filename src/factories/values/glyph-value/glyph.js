@@ -58,10 +58,7 @@ module.exports = [
 
         Glyph.prototype.getContainerDimensions = function getContainerDimensions() {
 
-            return {
-                width: this.containerElement[0].getBoundingClientRect().width,
-                height: this.containerElement[0].getBoundingClientRect().height
-            };
+            return this.containerElement[0].getBoundingClientRect();
         };
 
         Glyph.prototype.updateEndpointFromPixels = function updateEndpointFromPixels(x, y) {
@@ -84,7 +81,7 @@ module.exports = [
             return verticesInPixels;
         };
 
-        Glyph.prototype.getVertexInPixels = function getVertexInPixels(index) {
+        Glyph.prototype.getVertexInPixelsAtIndex = function getVertexInPixelsAtIndex(index) {
 
             var boundingBox = this.getContainerDimensions();
 
