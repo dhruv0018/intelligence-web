@@ -10,7 +10,7 @@
     </div>
 
     <span class="film-options">
-        <span class="publish-to-profile" ng-if="userIsLoggedIn && isReel && isUploader">
+        <span class="publish-to-profile" ng-if="config.athleteProfile.isEnabled && userIsLoggedIn && isReel && isUploader">
             <span class="publish" ng-show="!film.isPublishedToProfile && !publishing" ng-click="toggleReelPublishing()">
                 <i class="icon icon-plus"></i>Post to Profile
             </span>
