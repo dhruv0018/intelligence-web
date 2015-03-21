@@ -33,9 +33,11 @@ Profile.config([
 
                         let userId = $stateParams.id;
 
+                        /* Load data for Athlete.Profile.<sub-state> upfront
+                         */
                         let Data = {
                             users: users.load({relatedUserId: userId}),
-                            reels: reels.load({userId: userId}) // For Athlete.Profile.Highlights, no access to userId
+                            reels: reels.load({relatedUserId: userId})
                         };
 
                         return $q.all(Data);
