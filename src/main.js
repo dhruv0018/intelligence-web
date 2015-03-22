@@ -115,6 +115,8 @@ require('./factories/reels');
 require('./factories/positionsets');
 require('./factories/plans');
 
+require('./emitters/playlist');
+
 require('./managers/tags');
 require('./managers/play');
 require('./managers/plays');
