@@ -14,6 +14,8 @@ IntelligenceWebClient.service('EventManager', [
     '$injector',
     function service($injector) {
 
+        var current;
+
         var playManager;
 
         var model = {
@@ -24,7 +26,18 @@ IntelligenceWebClient.service('EventManager', [
 
         this.tagset = null;
 
-        this.current = null;
+        Object.defineProperty(this, 'current', {
+
+            get: function() {
+
+                return current;
+            },
+
+            set: function(value) {
+
+                current = value;
+            }
+        });
 
         /**
          * Checks whether the event is a floating event.
