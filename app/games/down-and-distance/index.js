@@ -62,7 +62,7 @@ GamesDownAndDistance.config([
                             });
 
                             Data.tagSet = Data.league.then(function(league) {
-                                return tagsets.load(league.tagSetId);
+                                return tagsets.load();
                             });
 
                             return $q.all(Data);
