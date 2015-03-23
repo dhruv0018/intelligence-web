@@ -19,6 +19,15 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             storage: 'PlaysStorage',
 
+            extend: function(play) {
+
+                var self = this;
+
+                angular.extend(play, self);
+
+                return play;
+            },
+
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
                 var playIds = [];
