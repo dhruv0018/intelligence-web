@@ -14,8 +14,33 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', 'EVENT_MAP', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VideoPlayerEventEmitter', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'VideoPlayer',
-    function controller(config, EVENT_MAP, $rootScope, $scope, $modal, basicModal, $stateParams, videoPlayerEventEmitter, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets, teams, games, plays, videoPlayer) {
+    'config',
+    'EVENT_MAP',
+    '$rootScope',
+    '$scope',
+    '$modal',
+    'BasicModals',
+    '$stateParams',
+    'VideoPlayerEventEmitter',
+    'SessionService',
+    'IndexingService',
+    'ScriptsService',
+    'TagsManager',
+    'PlaysManager',
+    'PlayManager',
+    'EventManager',
+    'Indexing.Sidebar',
+    'Indexing.Data',
+    'LeaguesFactory',
+    'TagsetsFactory',
+    'TeamsFactory',
+    'GamesFactory',
+    'PlaysFactory',
+    'VideoPlayer',
+    'PlayersFactory',
+    function controller(config, EVENT_MAP, $rootScope, $scope, $modal, basicModal, $stateParams, videoPlayerEventEmitter,
+                        session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets,
+                        teams, games, plays, videoPlayer, players) {
 
         var gameId = Number($stateParams.id);
 
@@ -35,6 +60,18 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
+
+        $scope.playerList = angular.extend({}, $scope.game.rosters[$scope.game.teamId].playerInfo, $scope.game.rosters[$scope.game.opposingTeamId].playerInfo);
+        //parsing player dropdown ui
+        Object.keys($scope.playerList).forEach(function(playerId) {
+            var player = players.get(playerId);
+            var playerInfo = $scope.playerList[playerId];
+            playerInfo.playerId = parseInt(playerId);
+            playerInfo.jerseyNumber = (playerInfo.jerseyNumber.length === 0) ? 'UN' : parseInt(playerInfo.jerseyNumber, 10);
+            playerInfo.primaryJerseyColor = $scope.game.rosters[$scope.game.teamId].playerInfo[playerId] ? $scope.game.primaryJerseyColor : $scope.game.opposingPrimaryJerseyColor;
+            playerInfo.firstName = player.firstName;
+            playerInfo.lastName = player.lastName;
+        });
 
         var playsList = plays.getList({ gameId: gameId });
 
