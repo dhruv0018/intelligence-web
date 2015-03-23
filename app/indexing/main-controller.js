@@ -61,11 +61,11 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
 
-        $scope.playerList = angular.extend({}, $scope.game.rosters[$scope.game.teamId].playerInfo, $scope.game.rosters[$scope.game.opposingTeamId].playerInfo);
+        $scope.playersList = angular.extend({}, $scope.game.rosters[$scope.game.teamId].playerInfo, $scope.game.rosters[$scope.game.opposingTeamId].playerInfo);
         //parsing player dropdown ui
-        Object.keys($scope.playerList).forEach(function(playerId) {
+        Object.keys($scope.playersList).forEach(function(playerId) {
             var player = players.get(playerId);
-            var playerInfo = $scope.playerList[playerId];
+            var playerInfo = $scope.playersList[playerId];
             playerInfo.playerId = parseInt(playerId);
             playerInfo.jerseyNumber = (playerInfo.jerseyNumber.length === 0) ? 'UN' : parseInt(playerInfo.jerseyNumber, 10);
             playerInfo.primaryJerseyColor = $scope.game.rosters[$scope.game.teamId].playerInfo[playerId] ? $scope.game.primaryJerseyColor : $scope.game.opposingPrimaryJerseyColor;
