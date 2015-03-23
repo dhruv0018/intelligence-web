@@ -133,8 +133,8 @@ Games.config([
 ]);
 
 Games.controller('Games.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'AuthenticationService', 'SessionService', 'ROLES', 'ARENA_TYPES_IDS', 'ARENA_TYPES', 'TELESTRATION_PERMISSIONS',
-    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, auth, session, ROLES, ARENA_TYPES_IDS, ARENA_TYPES, TELESTRATION_PERMISSIONS) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'AuthenticationService', 'SessionService', 'ROLES', 'TELESTRATION_PERMISSIONS',
+    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, auth, session, ROLES, TELESTRATION_PERMISSIONS) {
 
         /* Variables */
 

@@ -17,8 +17,6 @@ IntelligenceWebClient.factory('LeaguesFactory', [
 
             model: 'LeaguesResource',
 
-            schema: 'LEAGUE_SCHEMA',
-
             storage: 'LeaguesStorage'
         };
 

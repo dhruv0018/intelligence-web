@@ -68,25 +68,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     else if (reel[key] && typeof reel[key] !== 'function') copy[key] = JSON.parse(JSON.stringify(reel[key]));
                 });
 
-                /* Remove any invalid properties. */
-                self.validate(copy).errors.forEach(deleteInvalidProperty);
-
-                /**
-                 * Deletes a single property from the copy object.
-                 * @param error {ValidationError} - the validation error.
-                 */
-                function deleteInvalidProperty (error) {
-
-                    if (!error) return;
-
-                    /* Get the property from the error. */
-                    let properties = error.dataPath.split('/');
-                    let property = properties[1];
-
-                    /* Delete given property from copy. */
-                    delete copy[property];
-                }
-
                 return copy;
             },
 
