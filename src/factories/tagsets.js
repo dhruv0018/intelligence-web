@@ -9,6 +9,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
     'BaseFactory', '$filter',
     function(BaseFactory, $filter) {
 
+        var indexedTags = {};
+
         var TagsetsFactory = {
 
             description: 'tagsets',
@@ -23,7 +25,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                 angular.extend(tagset, self);
 
-                var indexedTags = {};
+                var tags = {};
 
                 tagset.tags.forEach(function(tag) {
 
@@ -48,10 +50,11 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                         tag.tagVariables = indexedVariables;
                     }
 
+                    tags[tag.id] = tag;
                     indexedTags[tag.id] = tag;
                 });
 
-                tagset.tags = indexedTags;
+                tagset.tags = tags;
 
                 return tagset;
             },
