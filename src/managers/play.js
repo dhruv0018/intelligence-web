@@ -16,11 +16,6 @@ IntelligenceWebClient.service('PlayManager', [
 
         var playsManager;
 
-        var model = {
-
-            events: []
-        };
-
         this.tagset = null;
         this.gameId = null;
         this.current = null;
@@ -42,7 +37,7 @@ IntelligenceWebClient.service('PlayManager', [
             this.tagset = tagset || this.tagset;
 
             this.gameId = gameId || this.gameId;
-            this.current = angular.copy(model);
+            this.current = plays.create();
             this.current.gameId = this.gameId;
         };
 
