@@ -103,6 +103,20 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 return copy;
             },
 
+            getTag: function(tagId) {
+
+                let tag = indexedTags[tagId];
+
+                if (!tag) throw new Error('Tag ' + tagId + ' not found');
+
+                return tag;
+            },
+
+            getTagMap: function() {
+
+                return indexedTags;
+            },
+
             getStartTags: function() {
 
                 var self = this;
