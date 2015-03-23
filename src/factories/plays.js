@@ -25,6 +25,12 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 angular.extend(play, self);
 
+                play.events = play.events || [];
+
+                /* Set default play summary and priority. */
+                play.summary = play.summary || {};
+                play.summary.priority = play.summary.priority || 0;
+
                 return play;
             },
 
