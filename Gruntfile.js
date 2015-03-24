@@ -122,6 +122,33 @@ module.exports = function(grunt) {
             }
         },
 
+        lintspaces: {
+            js: {
+                src: [
+                    'app/**/*.js',
+                    'lib/**/*.js',
+                    'src/**/*.js'
+                ],
+                options: {
+                    newline: true,
+                    indentation: 'spaces',
+                    ignores: ['js-comments']
+                }
+            },
+            less: {
+                src: [
+                    'app/**/*.less',
+                    'lib/**/*.less',
+                    'theme/**/*.less'
+                ],
+                options: {
+                    newline: true,
+                    indentation: 'spaces',
+                    ignores: ['js-comments']
+                }
+            }
+        },
+
         ngAnnotate: {
             options: {
                 singleQuotes: true,
@@ -552,19 +579,19 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             unit: {
                 files: ['test/unit/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'karma']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'karma']
             },
             integration: {
                 files: ['test/integration/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'protractor']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'protractor']
             }
         },
 
@@ -616,7 +643,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['build', 'karma']);
-    grunt.registerTask('lint', ['trimtrailingspaces', 'htmlhint', 'jshint', 'eslint']);
+    grunt.registerTask('lint', ['trimtrailingspaces', 'lintspaces', 'htmlhint', 'jshint', 'eslint']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);
