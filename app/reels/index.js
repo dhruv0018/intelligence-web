@@ -272,9 +272,9 @@ ReelsArea.controller('ReelsArea.controller', [
             var reelPlayIds = $scope.plays.map(function getPlayId(play) {
                 return play.id;
             });
-            reel.plays = reelPlayIds;
+            $scope.reel.plays = reelPlayIds;
 
-            reel.save().then(function postReelSaveSetup() {
+            $scope.reel.save().then(function postReelSaveSetup() {
                 editAllowed = true;
 
                 // Refresh the playManager
@@ -290,7 +290,7 @@ ReelsArea.controller('ReelsArea.controller', [
             });
 
             deleteReelModal.result.then(function postReelModalResult() {
-                reel.remove();
+                $scope.reel.remove();
                 account.gotoUsersHomeState();
             });
         };
@@ -346,7 +346,7 @@ ReelsArea.controller('ReelsArea.controller', [
                 callbackFn = callbackFn || angular.noop;
 
                 // Save Game
-                reel.save().then(function onSaved() {
+                $scope.reel.save().then(function onSaved() {
                     callbackFn();
                 });
             });

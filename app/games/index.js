@@ -245,7 +245,7 @@ Games.controller('Games.controller', [
                 callbackFn = callbackFn || angular.noop;
 
                 // Save Game
-                game.save().then(function onSaved() {
+                $scope.game.save().then(function onSaved() {
                     callbackFn();
                 });
 
