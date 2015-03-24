@@ -68,5 +68,15 @@ IntelligenceWebClient.service('Utilities', [
              */
             callback(mql);
         };
+
+        this.compareTimes = function (a, b) {
+
+            return a.time - b.time;
+        };
+
+        this.compareStartTimes = function (a, b) {
+
+            return a.startTime - b.startTime;
+        };
     }
 ]);
