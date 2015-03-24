@@ -133,13 +133,13 @@ Indexing.config([
                 },
 
                 onEnter: [
-                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'GamesFactory',
-                    function($state, $timeout, $stateParams, session, modals, data, indexing, games) {
+                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'GamesFactory', 'PlayerlistManager',
+                    function($state, $timeout, $stateParams, session, modals, data, indexing, games, playerlist) {
 
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
                         var game = games.get(gameId);
-
+                        playerlist.fill(game);
                         if (!game.isAssignedToUser(userId)) {
 
                             $state.go('indexer-games');
