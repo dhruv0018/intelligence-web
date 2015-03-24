@@ -183,7 +183,7 @@ module.exports = [
             body.append(testTextArea);
 
             // add generic styles and attributes
-            testTextArea.css(self.TEXT_AREA_DISPLAY_CSS);
+            testTextArea.css(self.TEXT_AREA_EDIT_CSS);
 
             // add custom styles and attributes
             testTextArea.css({'top': '-9999px'});
