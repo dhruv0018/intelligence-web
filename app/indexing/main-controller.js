@@ -37,10 +37,9 @@ Indexing.controller('Indexing.Main.Controller', [
     'GamesFactory',
     'PlaysFactory',
     'VideoPlayer',
-    'PlayersFactory',
     function controller(config, EVENT_MAP, $rootScope, $scope, $modal, basicModal, $stateParams, videoPlayerEventEmitter,
                         session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets,
-                        teams, games, plays, videoPlayer, players) {
+                        teams, games, plays, videoPlayer) {
 
         var gameId = Number($stateParams.id);
 
@@ -60,18 +59,6 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
-
-        $scope.playersList = angular.extend({}, $scope.game.rosters[$scope.game.teamId].playerInfo, $scope.game.rosters[$scope.game.opposingTeamId].playerInfo);
-        //parsing player dropdown ui
-        Object.keys($scope.playersList).forEach(function(playerId) {
-            var player = players.get(playerId);
-            var playerInfo = $scope.playersList[playerId];
-            playerInfo.playerId = parseInt(playerId);
-            playerInfo.jerseyNumber = (playerInfo.jerseyNumber.length === 0) ? 'UN' : parseInt(playerInfo.jerseyNumber, 10);
-            playerInfo.primaryJerseyColor = $scope.game.rosters[$scope.game.teamId].playerInfo[playerId] ? $scope.game.primaryJerseyColor : $scope.game.opposingPrimaryJerseyColor;
-            playerInfo.firstName = player.firstName;
-            playerInfo.lastName = player.lastName;
-        });
 
         var playsList = plays.getList({ gameId: gameId });
 
