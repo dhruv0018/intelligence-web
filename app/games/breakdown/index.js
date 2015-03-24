@@ -40,7 +40,6 @@ GamesBreakdown.config([
                     var gameId = $stateParams.id;
                     var game = games.get(gameId);
                     playerlist.fill(game);
-                    console.log(playerlist.get());
                 }
             ],
             onExit: [
