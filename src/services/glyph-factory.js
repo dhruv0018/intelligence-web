@@ -8,7 +8,7 @@ module.exports = [
     'FreehandValue',
     'CircleSpotlightValue',
     'TBarValue',
-    'TextBoxValue',
+    'TextValue',
     function(
         TELESTRATION_TYPES,
         Arrow,
@@ -17,7 +17,7 @@ module.exports = [
         Freehand,
         CircleSpotlight,
         TBar,
-        TextBox
+        Text
     ) {
 
         var createGlyph = function createGlyph(type, containerElement, SVGContext, color) {
@@ -70,7 +70,7 @@ module.exports = [
                     break;
 
                 case TELESTRATION_TYPES.TEXT:
-                    glyph = new TextBox(TELESTRATION_TYPES.TEXT, options, containerElement);
+                    glyph = new Text(TELESTRATION_TYPES.TEXT, options, containerElement);
                     break;
                 default:
                     break;
@@ -131,7 +131,7 @@ module.exports = [
                     break;
 
                 case TELESTRATION_TYPES.TEXT:
-                    extendedGlyph = new TextBox(TELESTRATION_TYPES.TEXT, options, containerElement);
+                    extendedGlyph = new Text(TELESTRATION_TYPES.TEXT, options, containerElement);
                     break;
                 default:
                     break;

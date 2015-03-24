@@ -1,36 +1,39 @@
 
-/* Textbox - extends Glyph */
+/* Text - extends Glyph */
 
 module.exports = [
     'GlyphValue', '$window',
     function(Glyph, $window) {
 
-        var body = angular.element(document.getElementsByTagName('body'));
+        var body;
         var testTextArea; // Singleton object used for all text tools
         var TEXT_TOOL_HINT_TEXT = 'Enter text here';
 
-        function TextBox(type, options, containerElement) {
+        var KEY_CODE_TO_HTML_ENTITY = {
+            ' ': '&nbsp;',
+        };
+
+        function Text(type, options, containerElement) {
 
             Glyph.call(this, type, options, containerElement);
+
+            body = angular.element(document.getElementsByTagName('body'));
 
             createPrimaryTextarea.call(this);
             if (!testTextArea) createTestTextarea.call(this);
 
             // enter default start-state
-            enterTextareaEditMode.call(this);
+            enterEditMode.call(this);
         }
-        angular.inheritPrototype(TextBox, Glyph);
+        angular.inheritPrototype(Text, Glyph);
 
-        TextBox.prototype.EDITABLE = false;
-        TextBox.prototype.MOVEABLE = true;
-
-        TextBox.prototype.TEXT_AREA_EDIT_CSS = {
+        Text.prototype.TEXT_AREA_EDIT_CSS = {
             'margin': '0px',
-            'padding': '1vw 1vw 0 1vw',
+            'padding': '14px 4px',
             'letter-spacing': '0.5px',
             'font-family': 'Helvetica',
-            'font-size': '2vw',
-            'line-height': '1vw',
+            'font-size': '22px',
+            'line-height': '0px',
             'color': '#F3F313',
             'overflow': 'hidden',
             'opacity': '1',
@@ -40,7 +43,7 @@ module.exports = [
             'autofocus': true,
             'position': 'absolute',
             'background': 'transparent',
-            'max-length': '140',
+            'max-length': '70',
             // remove inherent styles
             '-webkit-box-shadow':'none',
             '-moz-box-shadow': 'none',
@@ -50,13 +53,13 @@ module.exports = [
             'box-sizing': 'border-box'
         };
 
-        TextBox.prototype.TEXT_AREA_DISPLAY_CSS = {
+        Text.prototype.TEXT_AREA_DISPLAY_CSS = {
             'margin': '0px',
-            'padding': '1vw 1vw 0 1vw',
+            'padding': '14px 4px',
             'letter-spacing': '0.5px',
             'font-family': 'Helvetica',
-            'font-size': '2vw',
-            'line-height': '1vw',
+            'font-size': '22px',
+            'line-height': '0px',
             'color': '#F3F313',
             'overflow': 'none',
             'opacity': '1',
@@ -64,7 +67,7 @@ module.exports = [
             'border': 'none',
             'position': 'absolute',
             'background': 'transparent',
-            'max-length': '140',
+            'max-length': '70',
             // remove inherent styles
             '-webkit-box-shadow':'none',
             '-moz-box-shadow': 'none',
@@ -74,45 +77,57 @@ module.exports = [
             'box-sizing': 'border-box'
         };
 
-        TextBox.prototype.TEXT_AREA_EDIT_ATTR = {
+        Text.prototype.TEXT_AREA_EDIT_ATTR = {
             'placeholder': TEXT_TOOL_HINT_TEXT,
             'autofocus': true
         };
 
-        TextBox.prototype.KEY_MAP = {
+        Text.prototype.KEY_MAP = {
             'DELETE': 8,
             'ENTER': 13
         };
 
-        var KEY_CODE_TO_HTML_ENTITY = {
-            ' ': '&nbsp;',
-        };
 
         /* Getters and Setters */
 
-        TextBox.prototype.getShapeContext = function getShapeContext() {
+        // TODO: Is this function needed?
+        Text.prototype.getShapeContext = function getShapeContext() {
 
             // TODO: Return Text Element height/width
             return null;
         };
 
-        TextBox.prototype.render = function renderTextBox() {
+        /*
+         * Used set the start position and reset the width and position of the text position based on start/end points.
+         */
+        Text.prototype.render = function renderText() {
 
             var self = this;
-            var verticesInPixels = self.getVerticesInPixels();
 
-            if (verticesInPixels.length !== 1) throw new Error('TextBox render function requires 2 vertices and ' + verticesInPixels.length + ' given');
+            if (!self.primaryTextarea) throw new Error('Text render function requires a primaryTextarea');
 
-            var startPoint = verticesInPixels[0];
-            var endPoint = verticesInPixels[1];
+            var startPoint = self.getVertexInPixelsAtIndex(0);
+            console.log('startPoint', startPoint);
+            if (startPoint) self.primaryTextarea.css({'left': startPoint.x + 'px', 'top': startPoint.y + 'px'});
 
             // update textarea position
-            self.primaryTextarea.css({'left': startPoint + 'px', 'top': endPoint + 'px'});
-
+            recalculatePrimaryTextareaWidth.call(self);
+            recalculatePrimaryTextareaStartPosition.call(self);
         };
 
-        TextBox.prototype.destroy = function() {
+        // TODO: Cleanup
+        Text.prototype.destroy = function() {
             Glyph.prototype.destroy.call(this);
+        };
+
+        Text.prototype.show = function show() {
+
+            this.primaryTextarea.css('display', 'block');
+        };
+
+        Text.prototype.hide = function hide() {
+
+            this.primaryTextarea.css('display', 'none');
         };
 
 
@@ -128,6 +143,9 @@ module.exports = [
             // create elements
             self.primaryTextarea = angular.element('<textarea></textarea>');
 
+            // set text
+            self.primaryTextarea[0].value = self.text;
+
             // add generic styles and attributes
             self.primaryTextarea.css(self.TEXT_AREA_EDIT_CSS);
             self.primaryTextarea.attr(self.TEXT_AREA_EDIT_ATTR);
@@ -138,6 +156,10 @@ module.exports = [
             // add to dom
             self.containerElement.append(self.primaryTextarea);
 
+            // set the starting position if it exists
+            var startPoint = self.getVertexInPixelsAtIndex(0);
+            if (startPoint) self.primaryTextarea.css({'left': startPoint.x + 'px', 'top': startPoint.y + 'px'});
+
             // add edit handlers
             // TODO: Leave binds for now, remove later if possible
             self.primaryTextarea.on('paste', handleTextareaInput.bind(self));
@@ -145,11 +167,9 @@ module.exports = [
             self.primaryTextarea.on('keyup', handleTextareaDeleteText.bind(self));
             self.primaryTextarea.on('cut', handleTextareaDeleteText.bind(self));
 
-            recalculateTextareaPosition.call(self);
-
             // TODO: Use window resize to recalc textarea width/position.
             // window.on('resize', function() {
-            //     recalculateTextareaWidth.call(primaryTextarea, primaryTextarea[0].value);
+            //     recalculatePrimaryTextareaWidth.call(primaryTextarea, primaryTextarea[0].value);
             // });
         };
 
@@ -167,14 +187,16 @@ module.exports = [
 
             // add custom styles and attributes
             testTextArea.css({'top': '-9999px'});
+
+            console.log('testTextArea', testTextArea);
         };
 
 
         /* State Switching (edit-text and display modes) */
 
-        var boundGlyphBlurred;
-        var boundEnterTextareaDisplayMode;
-        var boundEnterTextareaEditMode;
+        var boundOnEditModeBlur;
+        var boundEnterDisplayMode;
+        var boundEnterEditMode;
         var boundAddDraggable;
         var boundDragmove;
 
@@ -182,33 +204,33 @@ module.exports = [
          * Changes styles and handlers for edit-text mode.
          * Text Input Handlers are already set.
          */
-        var enterTextareaEditMode = function enterTextareaEditMode(event) {
+        var enterEditMode = function enterEditMode(event) {
 
             var self = this;
 
             var primaryTextarea = self.primaryTextarea;
 
-            //console.log('enterTextareaDisplayMode', primaryTextarea, event);
+            //console.log('enterDisplayMode', primaryTextarea, event);
             if (event) event.stopPropagation();
 
             // bring focus to the textarea
             primaryTextarea[0].focus();
 
             // bind event handlers to the primaryTextArea
-            boundEnterTextareaDisplayMode = enterTextareaDisplayMode.bind(primaryTextarea);
-            boundGlyphBlurred = glyphBlurred.bind(primaryTextarea);
+            boundEnterDisplayMode = enterDisplayMode.bind(self);
+            boundOnEditModeBlur = onEditModeBlur.bind(self);
 
             // remove this handler as primaryTextArea is already in this state
-            primaryTextarea.off('dblclick', boundEnterTextareaEditMode);
+            primaryTextarea.off('dblclick', boundEnterEditMode);
 
             // remove any other handlers
             primaryTextarea.off('click', stopEventPropagation);
 
             // add blur event (to handle exiting this state)
-            primaryTextarea.on('blur', boundGlyphBlurred);
+            primaryTextarea.on('blur', boundOnEditModeBlur);
 
             // add style & properties
-            primaryTextarea.css(self.TEXT_AREA_DISPLAY_CSS);
+            primaryTextarea.css(self.TEXT_AREA_EDIT_CSS);
             primaryTextarea.attr('readonly', false);
         };
 
@@ -216,22 +238,24 @@ module.exports = [
          * Changes styles and handlers for display-text mode.
          * Text Input Handlers are already set.
          */
-        var enterTextareaDisplayMode = function enterTextareaDisplayMode(event) {
+        var enterDisplayMode = function enterDisplayMode(event) {
+
+            var self = this;
 
             var primaryTextarea = self.primaryTextarea;
 
-            console.log('enterTextareaDisplayMode', primaryTextarea, event);
+            console.log('enterDisplayMode', primaryTextarea, event);
             if (event) {
                 event.stopImmediatePropagation();
             }
 
             // bind event handlers to the primaryTextArea
-            boundEnterTextareaEditMode = enterTextareaEditMode.bind(primaryTextarea);
-            boundAddDraggable = addDraggable.bind(primaryTextarea);
+            boundEnterEditMode = enterEditMode.bind(self);
+            // boundAddDraggable = addDraggable.bind(self);
 
             // add textarea display-mode event handlers
             primaryTextarea.on('click', stopEventPropagation);
-            primaryTextarea.on('dblclick', boundEnterTextareaEditMode);
+            primaryTextarea.on('dblclick', boundEnterEditMode);
 
             // TODO: add dragging functionality
             // primaryTextarea.on('mousedown', boundAddDraggable);
@@ -249,17 +273,42 @@ module.exports = [
         /*
          * Handles exiting edit-state and entering display-state
          */
-        var glyphBlurred = function glyphBlurred(event) {
+        var onEditModeBlur = function onEditModeBlur(event) {
+            console.log('onEditModeBlur', event, this);
+            var self = this;
 
             var primaryTextarea = self.primaryTextarea;
 
-            primaryTextarea.off('blur', boundGlyphBlurred);
+            primaryTextarea.off('blur', boundOnEditModeBlur);
             primaryTextarea.off('mousedown', boundAddDraggable);
             primaryTextarea.off('mousemove', boundDragmove);
 
-            boundEnterTextareaDisplayMode(event);
+            boundEnterDisplayMode(event);
 
-            primaryTextarea[0].dispatchEvent(telestrationGlyphBlurredEvent);
+            // TODO: check if text changed and fire an onTextChanged event
+
+            // save text area properties
+            storeTextAreaProperties.call(self);
+
+            primaryTextarea[0].dispatchEvent(telestrationOnEditModeBlurEvent);
+        };
+
+        var storeTextAreaProperties = function storeTextAreaProperties() {
+
+            var self = this;
+
+            var boundingBox = self.primaryTextarea[0].getBoundingClientRect();
+
+            self.updateStartPointFromPixels(boundingBox.left, boundingBox.top);
+            self.updateEndPointFromPixels(boundingBox.right, boundingBox.bottom);
+
+            var newText = self.primaryTextarea[0].value;
+
+            if (newText !== self.text) {
+
+                self.text = newText;
+                // TODO: Dispatch text change event (so it can be saved)
+            }
         };
 
         var stopEventPropagation = function stopEventPropagation(event) {
@@ -268,12 +317,12 @@ module.exports = [
         };
 
         // TODO: Use node emitter
-        var telestrationGlyphBlurredEventInfo = {
+        var telestrationOnEditModeBlurEventInfo = {
             detail: {},
             bubbles: true,
             cancelable: true
         };
-        var telestrationGlyphBlurredEvent = new CustomEvent('telestration:glyphBlurred', telestrationGlyphBlurredEventInfo);
+        var telestrationOnEditModeBlurEvent = new CustomEvent('telestration:onEditModeBlur', telestrationOnEditModeBlurEventInfo);
 
         // TODO: Finish implementing draggable.
         // var addDraggable = function addDraggable(event) {
@@ -352,7 +401,7 @@ module.exports = [
                 // when there is any entered text
                 if (nextString.length) primaryTextarea.removeAttr('placeholder');
 
-                recalculateTextareaWidth.call(self, htmlEncodedString);
+                recalculatePrimaryTextareaWidth.call(self, htmlEncodedString);
             }
         }
 
@@ -375,72 +424,82 @@ module.exports = [
             var keyCode = event.keyCode || event.which;
             var nextString = primaryTextarea[0].value;
             var htmlEncodedString = htmlEntityEncode(nextString);
-            recalculateTextareaWidth.call(self, htmlEncodedString);
-            recalculateTextareaPosition.call(self);
+            recalculatePrimaryTextareaWidth.call(self, htmlEncodedString);
+            recalculatePrimaryTextareaStartPosition.call(self);
 
             // NOTE: Add placeholder when there's no text
             if (!nextString.length) primaryTextarea.attr('placeholder', TEXT_TOOL_HINT_TEXT);
         }
 
-        function recalculateTextareaWidth(text) {
-
-            console.log('recalculateTextareaWidth', text, text.length);
-
-            if (!text.length) {
-
-                this.css('width', 'auto');
-
-            } else {
-
-                var newTextWidth = calculateTextWidth(text);
-
-                setTextareaWidth.call(this, newTextWidth);
-            }
-        }
-
-        function recalculateTextareaPosition() {
+        function recalculatePrimaryTextareaWidth(text) {
 
             var self = this;
 
             var primaryTextarea = self.primaryTextarea;
 
+            console.log('recalculatePrimaryTextareaWidth', text);
+
+            if (!text) {
+
+                primaryTextarea.css('width', 'auto');
+
+            } else {
+
+                var newTextWidth = calculateTextWidth(text);
+
+                setTextareaWidth.call(self, newTextWidth);
+            }
+        }
+
+        function recalculatePrimaryTextareaStartPosition() {
+
+            var self = this;
+            var newLeft;
+            var newTop;
+
+            var primaryTextarea = self.primaryTextarea;
+
             var textareaClientRect = primaryTextarea[0].getBoundingClientRect();
 
-            var containerElementClientRect = containerElement[0].getBoundingClientRect();
+            var containerElementClientRect = self.containerElement[0].getBoundingClientRect();
 
-            // console.log('textareaClientRect', textareaClientRect);
-            // console.log('containerElementWidth', containerElementClientRect.width);
-            var overlapDeltaX = textareaClientRect.right - containerElementClientRect.width;
-            var overlapDeltaY = textareaClientRect.bottom - containerElementClientRect.height;
-            // console.log('overlapDelta', overlapDeltaX, overlapDeltaY);
+            //console.log('textareaClientRect', textareaClientRect);
+            //console.log('containerElementWidth', containerElementClientRect.width);
+            var overlapDeltaX = textareaClientRect.right - containerElementClientRect.right;
+            var overlapDeltaY = textareaClientRect.bottom - containerElementClientRect.bottom;
+            //console.log('overlapDelta', overlapDeltaX, overlapDeltaY);
 
             if (overlapDeltaX > 0) {
 
-                var newLeft = textareaClientRect.left - overlapDeltaX;
-                // console.log('newLeft', newLeft, newLeft+textareaClientRect.width, containerElementClientRect.width);
+                newLeft = textareaClientRect.left - overlapDeltaX - containerElementClientRect.left;
+                //console.log('newLeft', newLeft, newLeft+textareaClientRect.width, containerElementClientRect.width);
                 primaryTextarea.css('left', newLeft + 'px');
             }
 
             if (overlapDeltaY > 0) {
 
-                var newTop = textareaClientRect.top - overlapDeltaY;
-                // console.log('newTop', newTop);
+                newTop = textareaClientRect.top - overlapDeltaY - containerElementClientRect.top;
+                //console.log('newTop', newTop);
                 primaryTextarea.css('top', newTop + 'px');
             }
         }
 
         function setTextareaWidth(width) {
-
             console.log('setTextareaWidth', width);
 
-            this.css('width', width + 'px');
+            var self = this;
+
+            self.primaryTextarea.css('width', width + 'px');
         }
 
         function calculateTextWidth(newString) {
-
+            console.log('calculateTextWidth', newString);
             testTextArea.html(newString);
+
+            var boundingBox = testTextArea[0].getBoundingClientRect();
+            console.log('calculateTextWidth boundingBox', boundingBox);
             //console.log('Pre-calculated Width', testTextArea[0].getBoundingClientRect().width);
-            return testTextArea[0].getBoundingClientRect().width;
+            return boundingBox.width;
         }
 
         function htmlEntityEncode(value){
@@ -450,37 +509,12 @@ module.exports = [
             for (var index in value) {
 
                 var char = value[index];
-                htmlEntityEncoded += self.KEY_CODE_TO_HTML_ENTITY[char] || char;
+                htmlEntityEncoded += KEY_CODE_TO_HTML_ENTITY[char] || char;
             }
 
             return htmlEntityEncoded;
         }
 
-        return TextBox;
+        return Text;
     }
 ];
-
-
-
-
-// Going to be the telestration context area.
-self.containerElement.on('mouseout', function(event) {
-    // console.log('containerElement mouseout. Remove click handler', event);
-    self.containerElement.off('click', handleClick);
-});
-
-self.containerElement.on('mouseenter', addClickHandler);
-
-function addClickHandler() {
-    // console.log('add click handler');
-    self.containerElement.off('mousemove', addClickHandler);
-    self.containerElement.off('click', handleClick);
-    self.containerElement.on('click', handleClick);
-}
-
-self.containerElement.on('telestration:glyphBlurred', function(event) {
-
-    self.console.log('containerElement received telestration:glyphBlurred event');
-    self.containerElement.on('click', addClickHandler);
-});
-

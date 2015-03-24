@@ -30,4 +30,4 @@ IntelligenceWebClient.factory('CircleValue', require('./circle'));
 IntelligenceWebClient.factory('FreehandValue', require('./freehand'));
 IntelligenceWebClient.factory('CircleSpotlightValue', require('./circle-spotlight'));
 IntelligenceWebClient.factory('TBarValue', require('./tbar'));
-IntelligenceWebClient.factory('TextBoxValue', require('./textbox'));
+IntelligenceWebClient.factory('TextValue', require('./text'));

@@ -16,7 +16,7 @@ module.exports = [
             this.type = type;
             this.color = options.color;
             this.vertices = options.vertices || [];
-            this.text = '';
+            this.text = options.text || '';
 
             // Set additional non-member attributes
             this.containerElement = containerElement;
@@ -61,11 +61,6 @@ module.exports = [
             return this.containerElement[0].getBoundingClientRect();
         };
 
-        Glyph.prototype.updateEndpointFromPixels = function updateEndpointFromPixels(x, y) {
-
-            this.updateVertexFromPixels(1, x, y);
-        };
-
         Glyph.prototype.getVerticesInPixels = function getVerticesInPixels() {
 
             var boundingBox = this.getContainerDimensions();
@@ -95,14 +90,19 @@ module.exports = [
             }
         };
 
-        Glyph.prototype.addVertexFromPixels = function addVertexFromPixels(x, y) {
+        Glyph.prototype.updateStartPointFromPixels = function updateStartPointFromPixels(x, y) {
 
-            this.vertices.push(createVertexFromPixels.call(this, x, y));
+            this.updateVertexFromPixels(0, x, y);
+        };
+
+        Glyph.prototype.updateEndPointFromPixels = function updateEndpointFromPixels(x, y) {
+
+            this.updateVertexFromPixels(1, x, y);
         };
 
         Glyph.prototype.updateVertexFromPixels = function updateVertexFromPixels(index, x, y) {
 
-            this.vertices[index] = createVertexFromPixels.call(this, x, y);
+            this.vertices[index] = this.createVertexFromPixels(x, y);
         };
 
         Glyph.prototype.hasMinimumVertices = function hasMinimumVertices() {
@@ -110,7 +110,7 @@ module.exports = [
             if (this.vertices && this.vertices.length >= this.MIN_VERTICES) return true;
         };
 
-        function createVertexFromPixels(x, y) {
+        Glyph.prototype.createVertexFromPixels = function createVertexFromPixels(x, y) {
 
             x = lowerBoundVertex(x);
             y = lowerBoundVertex(y);
@@ -120,7 +120,7 @@ module.exports = [
             var relativeY = y / boundingBox.height;
 
             return {x: relativeX, y: relativeY};
-        }
+        };
 
         function lowerBoundVertex(val) { return (val >= 0) ? val : 0; }
 
