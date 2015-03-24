@@ -13,10 +13,13 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlaysManager', [
-    '$injector', 'AlertsService', 'TagsManager', 'PlayManager', 'EventManager', 'PlaysFactory',
-    function service($injector, alerts, tagsManager, playManager, eventManager, plays) {
+    '$injector', 'Utilities', 'FIELD_TYPE', 'AlertsService', 'TagsManager', 'PlayManager', 'EventManager', 'PlaysFactory', 'GamesFactory', 'TagsetsFactory',
+    function service($injector, utilities, FIELD_TYPE, alerts, tagsManager, playManager, eventManager, plays, games, tagsets) {
 
+        var period;
         var indexing;
+        var indexedScore;
+        var opposingIndexedScore;
 
         this.plays = [];
 
@@ -104,5 +107,118 @@ IntelligenceWebClient.service('PlaysManager', [
                 eventManager.current = new KrossoverEvent();
             }
         };
+
+        /**
+         * Calculate the details for each play.
+         */
+        this.calculatePlays = function() {
+
+            console.time('Calculating plays...');
+
+            period = 0;
+            indexedScore = 0;
+            opposingIndexedScore = 0;
+
+            this.plays.sort(utilities.compareStartTimes);
+            this.plays.forEach(calculatePlay);
+
+            console.timeEnd('Calculating plays...');
+            console.log(this.plays);
+
+        };
+
+        function calculatePlay (play, index) {
+
+            /* Record the order of the play in the playlist. */
+            play.number = index;
+
+            /* Sort the events by time. */
+            play.events.sort(utilities.compareTimes);
+
+            play.events.forEach(calculateEvent);
+        }
+
+        function calculateEvent (event, index) {
+
+            let teamId;
+            let play = plays.get(event.playId);
+            let game = games.get(play.gameId);
+
+            let tagId = event.tagId;
+            let tag = tagsets.getTag(tagId);
+            let tagVariables = tag.tagVariables;
+
+            /* TODO: extend all events? */
+            //angular.extend(event, tag);
+
+            /* If the event is a period event, then advance the period. */
+            if (tag.isPeriodTag) play.period = period++;
+
+            /* If at least one event has a user script, the play is visible. */
+            //if (tag.userScript !== null) play.hasUserScripts = true;
+
+            if (!tagVariables[1]) return;
+
+            let fields = event.variableValues;
+
+            /* Look at the first position script field. */
+            let field = fields[tagVariables[1].id];
+
+            /* If its a team field. */
+            if (field.type === FIELD_TYPE.TEAM) {
+
+                /* The field value is a teamId. */
+                teamId = field.value;
+            }
+
+            /* If its a player field. */
+            else if (field.type === FIELD_TYPE.PLAYER) {
+
+                teamId = game.isPlayerOnTeam(field.value) ? game.teamId : game.opposingTeamId;
+            }
+
+            /* If one the first event, define possession. */
+            if (index === 0) play.possessionTeamId = teamId;
+
+            /* If the tag has points to assign. */
+            if (tag.pointsAssigned) {
+
+                /* If this team is the team. */
+                if (game.teamId == teamId) {
+
+                    /* If the points should be assigned to the variable team. */
+                    if (tag.assignThisTeam) {
+
+                        /* Assign the points to this team. */
+                        play.indexedScore = indexedScore = indexedScore + tag.pointsAssigned;
+                    }
+
+                    /* If the points should be assigned to the other team. */
+                    else {
+
+                        /* Assign the points to the other team. */
+                        play.opposingIndexedScore = opposingIndexedScore = opposingIndexedScore + tag.pointsAssigned;
+                    }
+                }
+
+                /* If this team is the opposing team.*/
+                else if (game.opposingTeamId == teamId) {
+
+                    /* If the points should be assigned to the variable team. */
+                    if (tag.assignThisTeam) {
+
+                        /* Assign the points to this team. */
+                        play.opposingIndexedScore = opposingIndexedScore = opposingIndexedScore + tag.pointsAssigned;
+                    }
+
+                    /* If the points should be assigned to the other team. */
+                    else {
+
+                        /* Assign the points to the other team. */
+                        play.indexedScore = indexedScore = indexedScore + tag.pointsAssigned;
+                    }
+                }
+            }
+        }
     }
 ]);
