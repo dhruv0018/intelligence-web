@@ -22,4 +22,3 @@ IntelligenceWebClient.factory('FiltersetsResource', [
         return $resource(url, paramDefaults);
     }
 ]);
-

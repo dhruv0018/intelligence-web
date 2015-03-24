@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('TeamsStorage', [
         return TeamsStorage;
     }
 ]);
-

@@ -330,4 +330,3 @@ IntelligenceWebClient.factory('TeamsFactory', [
         return TeamsFactory;
     }
 ]);
-

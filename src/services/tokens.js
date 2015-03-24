@@ -513,4 +513,3 @@ IntelligenceWebClient.factory('TokensService', [
         return TokenService;
     }
 ]);
-

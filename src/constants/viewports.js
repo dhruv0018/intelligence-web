@@ -20,4 +20,3 @@ var VIEWPORTS = {
 };
 
 IntelligenceWebClient.constant('VIEWPORTS', VIEWPORTS);
-

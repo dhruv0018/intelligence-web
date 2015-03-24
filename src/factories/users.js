@@ -593,4 +593,3 @@ IntelligenceWebClient.factory('UsersFactory', [
         return UsersFactory;
     }
 ]);
-

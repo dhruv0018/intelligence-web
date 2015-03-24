@@ -160,4 +160,3 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         }
     }
 ]);
-

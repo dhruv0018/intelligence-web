@@ -36,4 +36,3 @@ IntelligenceWebClient.directive('form', [
         return directive;
     }
 ]);
-

@@ -33,4 +33,3 @@ TeamInfo.controller('Coach.Team.Plans.controller', [
         $scope.activePackage = team.getActivePackage();
     }
 ]);
-

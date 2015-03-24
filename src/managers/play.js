@@ -252,4 +252,3 @@ IntelligenceWebClient.service('PlayManager', [
         };
     }
 ]);
-

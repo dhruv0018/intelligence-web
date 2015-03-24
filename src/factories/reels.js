@@ -361,4 +361,3 @@ IntelligenceWebClient.factory('ReelsFactory', [
         return ReelsFactory;
     }
 ]);
-

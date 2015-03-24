@@ -1166,4 +1166,3 @@ IntelligenceWebClient.factory('GamesFactory', [
         return GamesFactory;
     }
 ]);
-

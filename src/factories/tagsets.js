@@ -190,4 +190,3 @@ IntelligenceWebClient.factory('TagsetsFactory', [
         return TagsetsFactory;
     }
 ]);
-

@@ -261,4 +261,3 @@ ReelsArea.controller('ReelsArea.controller', [
         };
     }
 ]);
-

@@ -469,4 +469,3 @@ Teams.controller('TeamsController', [
         };
     }
 ]);
-
