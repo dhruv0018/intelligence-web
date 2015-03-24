@@ -52,6 +52,7 @@ require('./services/detectDevice');
 
 require('./constants/users');
 require('./constants/games');
+require('./constants/events');
 require('./constants/schools');
 require('./constants/videos');
 require('./constants/tagsets');
