@@ -1,11 +1,5 @@
 import Entity from './entity.js';
 
-const model = {
-
-    variableValues: {},
-    activeEventVariableIndex: 1
-};
-
 class Event extends Entity {
 
     constructor (event, tag, time) {
@@ -14,12 +8,28 @@ class Event extends Entity {
 
             time = tag;
             tag = event;
-            event = model;
+            event = null;
         }
+
+        event = event || {};
+        tag = JSON.parse(JSON.stringify(tag));
 
         delete tag.id;
 
+        /* FIXME: Remove when code is updated. */
+        event.activeEventVariableIndex = event.activeEventVariableIndex || 1;
+
         Object.assign(this, event, tag, { time });
+
+        /* FIXME: Remove when API is updated. */
+        Object.keys(this.tagVariables).forEach(key => {
+
+            let tagVariable = this.tagVariables[key];
+            tagVariable.inputType = tagVariable.type;
+            delete tagVariable.type;
+
+            Object.assign(this.variableValues[tagVariable.id], tagVariable);
+        });
     }
 
     /**
