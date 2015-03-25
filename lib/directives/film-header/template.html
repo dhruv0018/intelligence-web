@@ -15,7 +15,7 @@
                 <i class="icon icon-plus"></i>Post to Profile
             </span>
             <span class="publishing" ng-show="publishing">
-                <krossover-spinner ng-show="!confirmPublish" size="'15px'" color="'gray'"></krossover-spinner>
+                <krossover-spinner ng-show="!confirmPublish" size="'15px'"></krossover-spinner>
                 <i class="icon icon-ok" ng-show="confirmPublish"></i>
             </span>
             <span class="unpublish" ng-show="film.isFeatured(user) && !publishing" ng-click="toggleReelPublishing()">
