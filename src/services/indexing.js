@@ -270,17 +270,20 @@ IntelligenceWebClient.factory('IndexingService', [
 
             /**
             * Deletes an event.
-            * @param {Object} selectedEvent - the event to delete.
+            * @param {Object} event - the event to delete.
             */
-            deleteEvent: function(selectedEvent) {
+            deleteEvent: function(event) {
 
                 this.showTags = true;
                 this.showScript = false;
                 this.eventSelected = false;
                 this.isIndexing = false;
 
-                /* Delete the selected event. */
-                eventManager.delete(selectedEvent);
+                /* Remove the event from the current play. */
+                playManager.removeEvent(event);
+
+                /* Reset the current event. */
+                eventManager.reset();
 
                 /* Save play. */
                 playManager.save();

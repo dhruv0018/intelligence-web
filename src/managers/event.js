@@ -192,22 +192,6 @@ IntelligenceWebClient.service('EventManager', [
             /* Add event to the current play. */
             playManager.addEvent(this.current);
         };
-
-        /**
-         * Deletes the current event.
-         */
-        this.delete = function(event) {
-
-            playManager = playManager || $injector.get('PlayManager');
-
-            event = event || this.current;
-
-            /* Remove the event from the current play. */
-            playManager.removeEvent(event);
-
-            /* Reset the current event. */
-            this.reset();
-        };
     }
 ]);
 
