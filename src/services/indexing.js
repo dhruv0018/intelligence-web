@@ -57,6 +57,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Get current time from the video. */
                 var time = videoPlayer.currentTime;
 
+                /* TODO: After event entity construct new event here */
                 /* Create new event. */
                 eventManager.create(tagId, time);
 

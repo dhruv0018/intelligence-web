@@ -171,6 +171,7 @@ IntelligenceWebClient.service('EventManager', [
         };
 
         /**
+         * TODO: Remove after event entity
          * Creates a new event.
          * Creates an event with a tag specified by the tagId and time.
          * @param {Number} tagId - the ID of a tag.
