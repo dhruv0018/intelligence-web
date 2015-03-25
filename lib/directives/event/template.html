@@ -2,15 +2,7 @@
 
     <button data-ng-class="{active: highlightedEventId === event.id}"
             class="btn-select-event" data-ng-click="selectEvent()">
-        <krossover-item
-            data-auto-advance="autoAdvance"
-            data-league="league"
-            data-item="item"
-            data-plays="plays"
-            data-play="play"
-            data-event="event"
-            data-ng-repeat="item in items track by $index">
-        </krossover-item>
+        <krossover-item data-ng-repeat="item in items track by $index"></krossover-item>
 
     </button>
 
