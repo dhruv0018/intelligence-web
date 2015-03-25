@@ -102,28 +102,6 @@ IntelligenceWebClient.service('PlaysManager', [
                 eventManager.reset();
             }
         };
-
-        /**
-         * Delete all plays.
-         */
-        this.deleteAllPlays = function() {
-
-            this.plays.forEach(function(play) {
-
-                play.delete();
-            });
-        };
-
-        /**
-         * Saves all plays.
-         */
-        this.save = function() {
-
-            this.plays.forEach(function(play) {
-
-                play.save();
-            });
-        };
     }
 ]);
 
