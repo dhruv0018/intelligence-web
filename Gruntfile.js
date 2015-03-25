@@ -113,11 +113,18 @@ module.exports = function(grunt) {
         /* Pre-minification */
 
         trimtrailingspaces: {
-            main: {
+            js: {
                 src: [
                     'app/**/*.js',
                     'lib/**/*.js',
                     'src/**/*.js'
+                ]
+            },
+            less: {
+                src: [
+                    'app/**/*.less',
+                    'lib/**/*.less',
+                    'theme/**/*.less'
                 ]
             }
         },
