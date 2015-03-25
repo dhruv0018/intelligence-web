@@ -1,3 +1,5 @@
+import KrossoverEvent from '../entities/event.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -11,16 +13,10 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    '$injector',
-    function service($injector) {
+    '$injector', 'TagsetsFactory',
+    function service($injector, tagsets) {
 
         var playManager;
-
-        var model = {
-
-            variableValues: {},
-            activeEventVariableIndex: 1
-        };
 
         this.tagset = null;
 
@@ -167,7 +163,7 @@ IntelligenceWebClient.service('EventManager', [
 
             this.tagset = tagset || this.tagset;
 
-            this.current = angular.copy(model);
+            this.current = new KrossoverEvent();
         };
 
         /**
@@ -181,14 +177,9 @@ IntelligenceWebClient.service('EventManager', [
 
             playManager = playManager || $injector.get('PlayManager');
 
-            /* Reset the current event. */
-            this.reset();
+            let tag = tagsets.getTag(tagId);
 
-            /* Set the tag from the indexing tags. */
-            this.current.tagId = tagId;
-
-            /* Set the time from the indexing video time. */
-            this.current.time = time;
+            this.current = new KrossoverEvent(tag, time);
 
             /* Add event to the current play. */
             playManager.addEvent(this.current);
