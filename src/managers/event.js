@@ -161,26 +161,6 @@ IntelligenceWebClient.service('EventManager', [
         };
 
         /**
-         * Gets the previous event.
-         * @returns {Object} the previous event, if there is one; null if not.
-         */
-        this.previousEvent = function(event) {
-
-            event = event || this.current;
-
-            playManager = playManager || $injector.get('PlayManager');
-
-            if (!playManager.current) return null;
-
-            /* Get the index of the current event in the current play. */
-            var index = playManager.current.events.indexOf(event);
-
-            if (index < 1) return null;
-
-            return playManager.current.events[index - 1];
-        };
-
-        /**
          * Resets the current play to the original model.
          */
         this.reset = function(tagset) {

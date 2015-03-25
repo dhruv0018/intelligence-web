@@ -117,6 +117,22 @@ IntelligenceWebClient.service('PlayManager', [
         };
 
         /**
+         * Gets the previous event.
+         * @returns {Object} the previous event, if there is one; null if not.
+         */
+        this.previousEvent = function(event) {
+
+            if (!this.current) return null;
+
+            /* Get the index of the current event in the current play. */
+            var index = this.current.events.indexOf(event);
+
+            if (index < 1) return null;
+
+            return this.current.events[index - 1];
+        };
+
+        /**
          * Remove an event from the play.
          * @param {Object} event - event to be removed.
          */

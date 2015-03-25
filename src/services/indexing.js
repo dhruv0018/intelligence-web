@@ -174,14 +174,16 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* If the event is a floating event. */
                 if (eventManager.isFloatingEvent()) {
 
+                    let currentEvent = eventManager.current;
+
                     /* Get the previous event. */
-                    var previousEvent = eventManager.previousEvent();
+                    let previousEvent = playManager.previousEvent(currentEvent);
 
                     /* While the previous event is a float. */
                     while (eventManager.isFloatingEvent(previousEvent)) {
 
                         /* Get the previous event. */
-                        previousEvent = eventManager.previousEvent(previousEvent);
+                        previousEvent = playManager.previousEvent(previousEvent);
                     }
 
                     /* Get the tagId of the previous event. */
