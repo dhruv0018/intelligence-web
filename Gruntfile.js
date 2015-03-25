@@ -139,6 +139,7 @@ module.exports = function(grunt) {
                 options: {
                     newline: true,
                     indentation: 'spaces',
+                    trailingspaces: true,
                     ignores: ['js-comments']
                 }
             },
@@ -151,6 +152,7 @@ module.exports = function(grunt) {
                 options: {
                     newline: true,
                     indentation: 'spaces',
+                    trailingspaces: true,
                     ignores: ['js-comments']
                 }
             }
