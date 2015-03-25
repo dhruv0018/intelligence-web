@@ -29,15 +29,16 @@ module.exports = [
 
         Text.prototype.TEXT_AREA_EDIT_CSS = {
             'margin': '0px',
-            'padding': '14px 4px',
+            'padding': '20px',
             'letter-spacing': '0.5px',
             'font-family': 'Helvetica',
             'font-size': '22px',
             'line-height': '0px',
             'color': '#F3F313',
             'overflow': 'hidden',
+            'min-width': '60px',
             'opacity': '1',
-            'z-index': '1',
+            'z-index': '5',
             'border': '1px solid #5394ec',
             'border-radius': '2px',
             'autofocus': true,
@@ -55,7 +56,7 @@ module.exports = [
 
         Text.prototype.TEXT_AREA_DISPLAY_CSS = {
             'margin': '0px',
-            'padding': '14px 4px',
+            'padding': '20px',
             'letter-spacing': '0.5px',
             'font-family': 'Helvetica',
             'font-size': '22px',
@@ -63,7 +64,7 @@ module.exports = [
             'color': '#F3F313',
             'overflow': 'none',
             'opacity': '1',
-            'z-index': '1',
+            'z-index': '5',
             'border': 'none',
             'position': 'absolute',
             'background': 'transparent',
@@ -138,6 +139,8 @@ module.exports = [
 
         var createPrimaryTextarea = function createPrimaryTextarea() {
 
+            console.log('createPrimaryTextarea');
+
             var self = this;
 
             // create elements
@@ -151,7 +154,7 @@ module.exports = [
             self.primaryTextarea.attr(self.TEXT_AREA_EDIT_ATTR);
 
             // add custom styles and attributes
-            self.primaryTextarea.attr('readonly', false);
+            self.primaryTextarea.attr('readOnly', false);
 
             // add to dom
             self.containerElement.append(self.primaryTextarea);
@@ -175,6 +178,8 @@ module.exports = [
 
         var createTestTextarea = function createTestTextarea() {
 
+            console.log('createTestTextarea');
+
             var self = this;
 
             testTextArea = angular.element('<div></div>');
@@ -187,8 +192,6 @@ module.exports = [
 
             // add custom styles and attributes
             testTextArea.css({'top': '-9999px'});
-
-            console.log('testTextArea', testTextArea);
         };
 
 
@@ -210,7 +213,7 @@ module.exports = [
 
             var primaryTextarea = self.primaryTextarea;
 
-            //console.log('enterDisplayMode', primaryTextarea, event);
+            console.log('enterEditMode', primaryTextarea);
             if (event) event.stopPropagation();
 
             // bring focus to the textarea
@@ -225,13 +228,15 @@ module.exports = [
 
             // remove any other handlers
             primaryTextarea.off('click', stopEventPropagation);
+            primaryTextarea.on('click', stopEventPropagation);
 
             // add blur event (to handle exiting this state)
+            primaryTextarea.off('blur', boundOnEditModeBlur);
             primaryTextarea.on('blur', boundOnEditModeBlur);
 
             // add style & properties
             primaryTextarea.css(self.TEXT_AREA_EDIT_CSS);
-            primaryTextarea.attr('readonly', false);
+            primaryTextarea.attr('readOnly', false);
         };
 
         /*
@@ -244,8 +249,10 @@ module.exports = [
 
             var primaryTextarea = self.primaryTextarea;
 
-            console.log('enterDisplayMode', primaryTextarea, event);
+            console.log('enterDisplayMode', primaryTextarea);
             if (event) {
+                // TODO: remove cancel bubble
+                event.cancelBubble = true;
                 event.stopImmediatePropagation();
             }
 
@@ -254,7 +261,9 @@ module.exports = [
             // boundAddDraggable = addDraggable.bind(self);
 
             // add textarea display-mode event handlers
+            primaryTextarea.off('click', stopEventPropagation);
             primaryTextarea.on('click', stopEventPropagation);
+            primaryTextarea.off('dblclick', boundEnterEditMode);
             primaryTextarea.on('dblclick', boundEnterEditMode);
 
             // TODO: add dragging functionality
@@ -267,20 +276,20 @@ module.exports = [
 
             // add style & properties
             primaryTextarea.css(self.TEXT_AREA_DISPLAY_CSS);
-            primaryTextarea.attr('readonly', true);
+            primaryTextarea.attr('readOnly', true);
         };
 
         /*
          * Handles exiting edit-state and entering display-state
          */
         var onEditModeBlur = function onEditModeBlur(event) {
-            console.log('onEditModeBlur', event, this);
+            console.log('onEditModeBlur');
             var self = this;
 
             var primaryTextarea = self.primaryTextarea;
 
             primaryTextarea.off('blur', boundOnEditModeBlur);
-            primaryTextarea.off('mousedown', boundAddDraggable);
+            // primaryTextarea.off('mousedown', boundAddDraggable);
             primaryTextarea.off('mousemove', boundDragmove);
 
             boundEnterDisplayMode(event);
@@ -294,6 +303,7 @@ module.exports = [
         };
 
         var storeTextAreaProperties = function storeTextAreaProperties() {
+            console.log('storeTextAreaProperties');
 
             var self = this;
 
@@ -312,6 +322,7 @@ module.exports = [
         };
 
         var stopEventPropagation = function stopEventPropagation(event) {
+            console.log('stopEventPropagation');
 
             event.stopPropagation();
         };
@@ -354,13 +365,17 @@ module.exports = [
          * Handles new entered text, and resizing/positioning the textarea pre-emptively
          */
         function handleTextareaInput(event) {
-
+            console.log('handleTextareaInput');
             var self = this;
 
-            var primaryTextarea = self.primaryTextarea;
+            event.preventDefault();
+            event.stopPropagation();
 
+            var primaryTextarea = self.primaryTextarea;
+            console.log('handleTextareaInput primaryTextarea[0].value', primaryTextarea[0].value, 'keyCode', event.keyCode, 'keyChar', String.fromCharCode(event.keyCode));
             //console.log('handleTextareaInput', primaryTextarea, event);
-            if (primaryTextarea[0].readonly) {
+            if (primaryTextarea[0].readOnly) {
+                console.log('handleTextareaInput readOnly');
                 event.preventDefault();
                 return;
             }
@@ -371,8 +386,8 @@ module.exports = [
 
             // TODO: Prevent Enter until text-box height expansion is allowed.
             if (keyCode === self.KEY_MAP.ENTER) {
-
-               event.preventDefault();
+                console.log('handleTextareaInput prevent enter default');
+                event.preventDefault();
 
             } else {
 
@@ -391,9 +406,10 @@ module.exports = [
                 var htmlEncodedString = htmlEntityEncode(nextString);
                 var nextWidth = calculateTextWidth.call(primaryTextarea, htmlEncodedString);
 
+                console.log('htmlEncodedString', htmlEncodedString);
                 // prevent input if next width would be too wide for container
                 if (Math.ceil(nextWidth) > self.getMaxWidth()) {
-
+                    console.log('handleTextareaInput preventDefault');
                     event.preventDefault();
                 }
 
@@ -402,6 +418,8 @@ module.exports = [
                 if (nextString.length) primaryTextarea.removeAttr('placeholder');
 
                 recalculatePrimaryTextareaWidth.call(self, htmlEncodedString);
+
+                primaryTextarea[0].value = nextString;
             }
         }
 
@@ -409,13 +427,15 @@ module.exports = [
          * Handle cut/delete events primarily.
          */
         function handleTextareaDeleteText(event) {
-
+            console.log('handleTextareaDeleteText');
             var self = this;
 
             var primaryTextarea = self.primaryTextarea;
+            event.stopPropagation();
 
-            if (primaryTextarea[0].readonly) {
-
+            console.log('handleTextareaDeleteText');
+            if (primaryTextarea[0].readOnly) {
+                console.log('handleTextareaDeleteText readOnly');
                 event.preventDefault();
                 return;
             }
@@ -427,6 +447,7 @@ module.exports = [
             recalculatePrimaryTextareaWidth.call(self, htmlEncodedString);
             recalculatePrimaryTextareaStartPosition.call(self);
 
+            console.log('handleTextareaDeleteText htmlEncodedString', htmlEncodedString);
             // NOTE: Add placeholder when there's no text
             if (!nextString.length) primaryTextarea.attr('placeholder', TEXT_TOOL_HINT_TEXT);
         }
@@ -437,7 +458,7 @@ module.exports = [
 
             var primaryTextarea = self.primaryTextarea;
 
-            console.log('recalculatePrimaryTextareaWidth', text);
+            // console.log('recalculatePrimaryTextareaWidth', text);
 
             if (!text) {
 
@@ -485,7 +506,7 @@ module.exports = [
         }
 
         function setTextareaWidth(width) {
-            console.log('setTextareaWidth', width);
+            //console.log('setTextareaWidth', width);
 
             var self = this;
 
@@ -493,11 +514,11 @@ module.exports = [
         }
 
         function calculateTextWidth(newString) {
-            console.log('calculateTextWidth', newString);
+            //console.log('calculateTextWidth', newString);
             testTextArea.html(newString);
 
             var boundingBox = testTextArea[0].getBoundingClientRect();
-            console.log('calculateTextWidth boundingBox', boundingBox);
+            // console.log('calculateTextWidth boundingBox', boundingBox);
             //console.log('Pre-calculated Width', testTextArea[0].getBoundingClientRect().width);
             return boundingBox.width;
         }
