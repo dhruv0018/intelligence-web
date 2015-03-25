@@ -585,6 +585,21 @@ IntelligenceWebClient.factory('UsersFactory', [
                         return self.extend(user);
                     });
                 });
+            },
+            setFeaturedReelId: function(reelId) {
+                var self = this;
+
+                self.profile.featuredReelId = reelId;
+            },
+            removeFeaturedReelId: function() {
+                var self = this;
+
+                self.profile.featuredReelId = null;
+            },
+            getFeaturedReelId: function() {
+                var self = this;
+
+                return self.profile.featuredReelId;
             }
         };
 
