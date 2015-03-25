@@ -350,6 +350,7 @@ module.exports = [
 
             removeDraggable();
             recalculatePrimaryTextareaStartPosition.call(self);
+            storeTextAreaProperties.call(self);
         };
 
         // TODO: Finish implementing draggable.
