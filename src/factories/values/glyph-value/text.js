@@ -51,7 +51,8 @@ module.exports = [
             'box-shadow': 'none',
             'outline': 'none',
             'resize': 'none',
-            'box-sizing': 'border-box'
+            'box-sizing': 'border-box',
+            'cursor': 'text'
         };
 
         Text.prototype.TEXT_AREA_DISPLAY_CSS = {
@@ -75,7 +76,8 @@ module.exports = [
             'box-shadow': 'none',
             'outline': 'none',
             'resize': 'none',
-            'box-sizing': 'border-box'
+            'box-sizing': 'border-box',
+            'cursor': 'pointer'
         };
 
         Text.prototype.TEXT_AREA_EDIT_ATTR = {
@@ -363,35 +365,32 @@ module.exports = [
 
         /*
          * Handles new entered text, and resizing/positioning the textarea pre-emptively
+         * Handles text input MANUALLY so that we can pre-emptively grow the textarea's
+         * width before the text is entered. In order to know the width before-hand, we
+         * use a secondary div element (testTextarea) off-screen with the same style to
+         * get the nextWidth of the primaryTextarea.
          */
         function handleTextareaInput(event) {
-            console.log('handleTextareaInput');
+
             var self = this;
 
             event.preventDefault();
             event.stopPropagation();
 
             var primaryTextarea = self.primaryTextarea;
-            console.log('handleTextareaInput primaryTextarea[0].value', primaryTextarea[0].value, 'keyCode', event.keyCode, 'keyChar', String.fromCharCode(event.keyCode));
-            //console.log('handleTextareaInput', primaryTextarea, event);
-            if (primaryTextarea[0].readOnly) {
-                console.log('handleTextareaInput readOnly');
-                event.preventDefault();
-                return;
-            }
 
-            var numChars = primaryTextarea[0].textLength;
             var keyCode = event.keyCode || event.which;
             var keyCodeString = String.fromCharCode(keyCode);
 
+            if (primaryTextarea[0].readOnly) return;
+
             // TODO: Prevent Enter until text-box height expansion is allowed.
             if (keyCode === self.KEY_MAP.ENTER) {
-                console.log('handleTextareaInput prevent enter default');
-                event.preventDefault();
-
+                // TODO: HANDLE THIS CASE WHEN GROWING VERTICALLY
+                return;
             } else {
 
-                var newestValue = '';
+                let newestValue = '';
 
                 if (event.type === 'paste') {
 
@@ -402,24 +401,32 @@ module.exports = [
                     newestValue = keyCodeString;
                 }
 
-                var nextString = primaryTextarea[0].value + newestValue;
-                var htmlEncodedString = htmlEntityEncode(nextString);
-                var nextWidth = calculateTextWidth.call(primaryTextarea, htmlEncodedString);
+                let selectionStart = primaryTextarea[0].selectionStart;
+                let selectionEnd = primaryTextarea[0].selectionEnd;
 
-                console.log('htmlEncodedString', htmlEncodedString);
+                // nextString is the actual text to be set in the primaryTextArea
+                let nextString = primaryTextarea[0].value.split('');
+                nextString.splice(selectionStart, selectionEnd - selectionStart, newestValue);
+                nextString = nextString.join('');
+
+                let htmlEncodedString = htmlEntityEncode(nextString);
+                let nextWidth = calculateTextWidth.call(primaryTextarea, htmlEncodedString);
+
                 // prevent input if next width would be too wide for container
-                if (Math.ceil(nextWidth) > self.getMaxWidth()) {
-                    console.log('handleTextareaInput preventDefault');
-                    event.preventDefault();
-                }
+                if (Math.ceil(nextWidth) > self.getMaxWidth()) return;
 
                 // NOTE: placeholder affects text-area inner size, thus remove it
                 // when there is any entered text
                 if (nextString.length) primaryTextarea.removeAttr('placeholder');
 
+                // IMPORTANT: set the width to the proper width first before setting the textarea's value
                 recalculatePrimaryTextareaWidth.call(self, htmlEncodedString);
 
+                // set the textarea's value
                 primaryTextarea[0].value = nextString;
+
+                // set the selected range up by 1 from where it started
+                primaryTextarea[0].setSelectionRange(selectionStart + 1, selectionStart + 1);
             }
         }
 
@@ -427,27 +434,23 @@ module.exports = [
          * Handle cut/delete events primarily.
          */
         function handleTextareaDeleteText(event) {
-            console.log('handleTextareaDeleteText');
+
             var self = this;
 
             var primaryTextarea = self.primaryTextarea;
             event.stopPropagation();
 
-            console.log('handleTextareaDeleteText');
             if (primaryTextarea[0].readOnly) {
-                console.log('handleTextareaDeleteText readOnly');
                 event.preventDefault();
                 return;
             }
 
-            //console.log('handleTextareaDeleteText', primaryTextarea, event);
             var keyCode = event.keyCode || event.which;
             var nextString = primaryTextarea[0].value;
             var htmlEncodedString = htmlEntityEncode(nextString);
             recalculatePrimaryTextareaWidth.call(self, htmlEncodedString);
             recalculatePrimaryTextareaStartPosition.call(self);
 
-            console.log('handleTextareaDeleteText htmlEncodedString', htmlEncodedString);
             // NOTE: Add placeholder when there's no text
             if (!nextString.length) primaryTextarea.attr('placeholder', TEXT_TOOL_HINT_TEXT);
         }
@@ -457,8 +460,6 @@ module.exports = [
             var self = this;
 
             var primaryTextarea = self.primaryTextarea;
-
-            // console.log('recalculatePrimaryTextareaWidth', text);
 
             if (!text) {
 
@@ -484,23 +485,18 @@ module.exports = [
 
             var containerElementClientRect = self.containerElement[0].getBoundingClientRect();
 
-            //console.log('textareaClientRect', textareaClientRect);
-            //console.log('containerElementWidth', containerElementClientRect.width);
             var overlapDeltaX = textareaClientRect.right - containerElementClientRect.right;
             var overlapDeltaY = textareaClientRect.bottom - containerElementClientRect.bottom;
-            //console.log('overlapDelta', overlapDeltaX, overlapDeltaY);
 
             if (overlapDeltaX > 0) {
 
                 newLeft = textareaClientRect.left - overlapDeltaX - containerElementClientRect.left;
-                //console.log('newLeft', newLeft, newLeft+textareaClientRect.width, containerElementClientRect.width);
                 primaryTextarea.css('left', newLeft + 'px');
             }
 
             if (overlapDeltaY > 0) {
 
                 newTop = textareaClientRect.top - overlapDeltaY - containerElementClientRect.top;
-                //console.log('newTop', newTop);
                 primaryTextarea.css('top', newTop + 'px');
             }
         }
@@ -514,12 +510,11 @@ module.exports = [
         }
 
         function calculateTextWidth(newString) {
-            //console.log('calculateTextWidth', newString);
+
             testTextArea.html(newString);
 
             var boundingBox = testTextArea[0].getBoundingClientRect();
-            // console.log('calculateTextWidth boundingBox', boundingBox);
-            //console.log('Pre-calculated Width', testTextArea[0].getBoundingClientRect().width);
+
             return boundingBox.width;
         }
 
