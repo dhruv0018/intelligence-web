@@ -423,9 +423,10 @@ IntelligenceWebClient.factory('TokensService', [
              */
             getAccessToken: function() {
 
-                var accessToken = this.tokens.accessToken ||
-                                  sessionStorage.getItem(ACCESS_TOKEN) ||
-                                  localStorage.getItem(ACCESS_TOKEN);
+                var accessToken =
+                    this.tokens.accessToken ||
+                    sessionStorage.getItem(ACCESS_TOKEN) ||
+                    localStorage.getItem(ACCESS_TOKEN);
 
                 return accessToken;
             },
@@ -436,9 +437,10 @@ IntelligenceWebClient.factory('TokensService', [
              */
             getRefreshToken: function() {
 
-                var refreshToken = this.tokens.refreshToken ||
-                                   sessionStorage.getItem(REFRESH_TOKEN) ||
-                                   localStorage.getItem(REFRESH_TOKEN);
+                var refreshToken =
+                    this.tokens.refreshToken ||
+                    sessionStorage.getItem(REFRESH_TOKEN) ||
+                    localStorage.getItem(REFRESH_TOKEN);
 
                 return refreshToken;
             },

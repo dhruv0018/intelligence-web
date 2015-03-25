@@ -172,8 +172,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 var tag = tags[tagId];
 
                 return tag.isStart === false &&
-                       tag.isEnd === false &&
-                       tag.children.length === 0;
+                    tag.isEnd === false &&
+                    tag.children.length === 0;
             },
 
             isEndTag: function(tagId) {

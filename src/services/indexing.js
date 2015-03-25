@@ -250,8 +250,9 @@ IntelligenceWebClient.factory('IndexingService', [
                 else if (!eventManager.activeEventVariableValue()) {
 
                     /* While the active variable is empty. */
-                    while (eventManager.current.activeEventVariableIndex > 1 &&
-                          !eventManager.activeEventVariableValue()) {
+                    while (
+                        eventManager.current.activeEventVariableIndex > 1 &&
+                !eventManager.activeEventVariableValue()) {
 
                         /* Move back one variable. */
                         eventManager.current.activeEventVariableIndex--;
