@@ -4,7 +4,7 @@
         data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
         data-ng-disabled="!isCoach && !isIndexer || !isEditable"
         data-ng-click="reset()"
-        >{{ event.variableValues[item.id].value || 'Optional' }}</button>
+        >{{ resetButton.text }}</button>
     <!-- Gap variable -->
     <krossover-item-gap data-ng-if="item.type === 'GAP'" data-league="league" data-game="game" data-item="item" data-plays="plays" data-play="play" data-event="event" data-auto-advance="autoAdvance" data-is-editable="isEditable"></krossover-item-gap>
 
