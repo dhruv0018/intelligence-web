@@ -7,6 +7,7 @@ module.exports = [
 
         var body;
         var testTextArea; // Singleton object used for all text tools
+        var containerBoundingBox;
 
         function Text(type, options, containerElement) {
 
@@ -174,7 +175,7 @@ module.exports = [
             self.primaryTextarea.on('cut', handleTextareaDeleteText.bind(self));
 
             // TODO: Use window resize to recalc textarea width/position.
-            // window.on('resize', function() {
+            // $window.on('resize', function() {
             //     recalculatePrimaryTextareaWidth.call(primaryTextarea, primaryTextarea[0].value);
             // });
         };
@@ -204,7 +205,8 @@ module.exports = [
         var boundEnterDisplayMode;
         var boundEnterEditMode;
         var boundAddDraggable;
-        var boundDragmove;
+        var boundDragMove;
+        var boundDragEnd;
 
         /*
          * Changes styles and handlers for edit-text mode.
@@ -261,7 +263,7 @@ module.exports = [
 
             // bind event handlers to the primaryTextArea
             boundEnterEditMode = enterEditMode.bind(self);
-            // boundAddDraggable = addDraggable.bind(self);
+            boundAddDraggable = addDraggable.bind(self);
 
             // add textarea display-mode event handlers
             primaryTextarea.off('click', stopEventPropagation);
@@ -270,11 +272,11 @@ module.exports = [
             primaryTextarea.on('dblclick', boundEnterEditMode);
 
             // TODO: add dragging functionality
-            // primaryTextarea.on('mousedown', boundAddDraggable);
+            primaryTextarea.on('mousedown', boundAddDraggable);
 
             // TODO: remove this handler elsewhere
             // self.containerElement.on('mouseup', function() {
-            //     self.containerElement.off('mousemove', boundDragmove);
+            //     self.containerElement.off('mousemove', boundDragMove);
             // });
 
             // add style & properties
@@ -292,8 +294,8 @@ module.exports = [
             var primaryTextarea = self.primaryTextarea;
 
             primaryTextarea.off('blur', boundOnEditModeBlur);
-            // primaryTextarea.off('mousedown', boundAddDraggable);
-            primaryTextarea.off('mousemove', boundDragmove);
+            primaryTextarea.off('mousedown', boundAddDraggable);
+            removeDraggable();
 
             boundEnterDisplayMode(event);
 
@@ -326,7 +328,6 @@ module.exports = [
 
         var stopEventPropagation = function stopEventPropagation(event) {
             console.log('stopEventPropagation');
-
             event.stopPropagation();
         };
 
@@ -338,27 +339,52 @@ module.exports = [
         };
         var telestrationOnEditModeBlurEvent = new CustomEvent('telestration:onEditModeBlur', telestrationOnEditModeBlurEventInfo);
 
+        var removeDraggable = function removeDraggable(event) {
+            console.log('mouseup');
+            $window.removeEventListener('mousemove', boundDragMove);
+        };
+
+        var dragEnd = function dragEnd(event) {
+
+            var self = this;
+
+            removeDraggable();
+            recalculatePrimaryTextareaStartPosition.call(self);
+        };
+
         // TODO: Finish implementing draggable.
-        // var addDraggable = function addDraggable(event) {
+        var addDraggable = function addDraggable(event) {
+            console.log('addDraggable', event);
+            var self = this;
+            var primaryTextarea = self.primaryTextarea;
 
-        //     var primaryTextarea = self.primaryTextarea;
+            containerBoundingBox = self.getContainerDimensions();
+            primaryTextarea.startPosition = {x: event.offsetX, y: event.offsetY};
 
-        //     console.log('addDraggable', event);
-        //     boundDragmove = dragmove.bind(primaryTextarea);
+            boundDragMove = dragMove.bind(self);
+            boundDragEnd = dragEnd.bind(self);
 
-        //     self.containerElement.on('mousemove', boundDragmove);
-        // };
+            $window.removeEventListener('mousemove', boundDragMove);
+            $window.addEventListener('mousemove', boundDragMove);
 
-        // var dragmove = function dragmove(event) {
+            // listen to turn off dragging
+            primaryTextarea.off('mouseup',boundDragEnd);
+            primaryTextarea.on('mouseup', boundDragEnd);
+        };
 
-        //     var primaryTextarea = self.primaryTextarea;
+        var dragMove = function dragMove(event) {
 
-        //     console.log('dragmove', event);
-        //     primaryTextarea.css({
-        //         'left': event.offsetX + 'px',
-        //         'top': event.offsetY + 'px'
-        //     });
-        // };
+            var primaryTextarea = this.primaryTextarea;
+
+            var left = event.clientX - containerBoundingBox.left - primaryTextarea.startPosition.x;
+            var top = event.clientY - containerBoundingBox.top - primaryTextarea.startPosition.y;
+
+            console.log('dragMove', event);
+            primaryTextarea.css({
+                'left': left + 'px',
+                'top': top + 'px'
+            });
+        };
 
         /******************************************************************
          * Text input (while in edit-state) and textarea size/positiong functions *
@@ -480,27 +506,35 @@ module.exports = [
         function recalculatePrimaryTextareaStartPosition() {
 
             var self = this;
-            var newLeft;
-            var newTop;
-
             var primaryTextarea = self.primaryTextarea;
 
             var textareaClientRect = primaryTextarea[0].getBoundingClientRect();
-
             var containerElementClientRect = self.containerElement[0].getBoundingClientRect();
 
-            var overlapDeltaX = textareaClientRect.right - containerElementClientRect.right;
-            var overlapDeltaY = textareaClientRect.bottom - containerElementClientRect.bottom;
+            var overlapDeltaRight = textareaClientRect.right - containerElementClientRect.right;
+            var overlapDeltaLeft = textareaClientRect.left - containerElementClientRect.left;
+            var overlapDeltaBottom = textareaClientRect.bottom - containerElementClientRect.bottom;
+            var overlapDeltaTop = textareaClientRect.top - containerElementClientRect.top;
 
-            if (overlapDeltaX > 0) {
+            if (overlapDeltaLeft < 0) {
 
-                newLeft = textareaClientRect.left - overlapDeltaX - containerElementClientRect.left;
+                let newLeft = textareaClientRect.left - containerElementClientRect.left + Math.abs(overlapDeltaLeft);
+                primaryTextarea.css('left', newLeft + 'px');
+
+            } else if (overlapDeltaRight > 0) {
+
+                let newLeft = textareaClientRect.left - containerElementClientRect.left - Math.abs(overlapDeltaRight);
                 primaryTextarea.css('left', newLeft + 'px');
             }
 
-            if (overlapDeltaY > 0) {
+            if (overlapDeltaTop < 0) {
 
-                newTop = textareaClientRect.top - overlapDeltaY - containerElementClientRect.top;
+                let newTop = textareaClientRect.top - containerElementClientRect.top + Math.abs(overlapDeltaTop);
+                primaryTextarea.css('top', newTop + 'px');
+
+            } else if (overlapDeltaBottom > 0) {
+
+                let newTop = textareaClientRect.top - containerElementClientRect.top - Math.abs(overlapDeltaBottom);
                 primaryTextarea.css('top', newTop + 'px');
             }
         }
