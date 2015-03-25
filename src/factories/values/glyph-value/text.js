@@ -7,11 +7,6 @@ module.exports = [
 
         var body;
         var testTextArea; // Singleton object used for all text tools
-        var TEXT_TOOL_HINT_TEXT = 'Enter text here';
-
-        var KEY_CODE_TO_HTML_ENTITY = {
-            ' ': '&nbsp;',
-        };
 
         function Text(type, options, containerElement) {
 
@@ -26,6 +21,12 @@ module.exports = [
             enterEditMode.call(this);
         }
         angular.inheritPrototype(Text, Glyph);
+
+        Text.prototype.KEY_CODE_TO_HTML_ENTITY = {
+            ' ': '&nbsp;',
+        };
+
+        Text.prototype.TEXT_TOOL_HINT_TEXT = 'Enter text here';
 
         Text.prototype.TEXT_AREA_EDIT_CSS = {
             'margin': '0px',
@@ -44,7 +45,6 @@ module.exports = [
             'autofocus': true,
             'position': 'absolute',
             'background': 'transparent',
-            'max-length': '70',
             // remove inherent styles
             '-webkit-box-shadow':'none',
             '-moz-box-shadow': 'none',
@@ -69,7 +69,6 @@ module.exports = [
             'border': 'none',
             'position': 'absolute',
             'background': 'transparent',
-            'max-length': '70',
             // remove inherent styles
             '-webkit-box-shadow':'none',
             '-moz-box-shadow': 'none',
@@ -81,7 +80,7 @@ module.exports = [
         };
 
         Text.prototype.TEXT_AREA_EDIT_ATTR = {
-            'placeholder': TEXT_TOOL_HINT_TEXT,
+            'placeholder': Text.prototype.TEXT_TOOL_HINT_TEXT,
             'autofocus': true
         };
 
@@ -89,6 +88,8 @@ module.exports = [
             'DELETE': 8,
             'ENTER': 13
         };
+
+        Text.prototype.MAX_LENGTH = 70;
 
 
         /* Getters and Setters */
@@ -409,7 +410,10 @@ module.exports = [
                 nextString.splice(selectionStart, selectionEnd - selectionStart, newestValue);
                 nextString = nextString.join('');
 
-                let htmlEncodedString = htmlEntityEncode(nextString);
+                // Limit textarea string length
+                if (nextString.length >= self.MAX_LENGTH) return;
+
+                let htmlEncodedString = htmlEntityEncode.call(self, nextString);
                 let nextWidth = calculateTextWidth.call(primaryTextarea, htmlEncodedString);
 
                 // prevent input if next width would be too wide for container
@@ -447,12 +451,12 @@ module.exports = [
 
             var keyCode = event.keyCode || event.which;
             var nextString = primaryTextarea[0].value;
-            var htmlEncodedString = htmlEntityEncode(nextString);
+            var htmlEncodedString = htmlEntityEncode.call(self, nextString);
             recalculatePrimaryTextareaWidth.call(self, htmlEncodedString);
             recalculatePrimaryTextareaStartPosition.call(self);
 
             // NOTE: Add placeholder when there's no text
-            if (!nextString.length) primaryTextarea.attr('placeholder', TEXT_TOOL_HINT_TEXT);
+            if (!nextString.length) primaryTextarea.attr('placeholder', self.TEXT_TOOL_HINT_TEXT);
         }
 
         function recalculatePrimaryTextareaWidth(text) {
@@ -525,7 +529,7 @@ module.exports = [
             for (var index in value) {
 
                 var char = value[index];
-                htmlEntityEncoded += KEY_CODE_TO_HTML_ENTITY[char] || char;
+                htmlEntityEncoded += this.KEY_CODE_TO_HTML_ENTITY[char] || char;
             }
 
             return htmlEntityEncoded;
