@@ -1,14 +1,20 @@
 import Entity from './entity.js';
 
+const model = {
+
+    variableValues: {},
+    activeEventVariableIndex: 1
+};
+
 class Event extends Entity {
 
-    constructor(event, tag, time) {
+    constructor (event, tag, time) {
 
         if (!time) {
 
             time = tag;
             tag = event;
-            event = {};
+            event = model;
         }
 
         delete tag.id;

@@ -52,7 +52,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play.events = play.events.map(constructEvent);
 
-                function constructEvent(event) {
+                function constructEvent (event) {
 
                     let tag = tagsets.getTag(event.tagId);
 
