@@ -89,7 +89,7 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             savable: function() {
 
-                return this.nextable() && eventManager.isEndEvent();
+                return this.nextable() && eventManager.current.isEnd;
             },
 
             /**
@@ -109,7 +109,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.reset();
 
                 /* If the event is an end-and-start event. */
-                if (eventManager.isEndAndStartEvent(event)) {
+                if (eventManager.current.isEndAndStart) {
 
                     /* Get the tagId of the event. */
                     var tagId = event.tagId;
@@ -151,7 +151,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 if (!this.isIndexing || this.showTags) return false;
 
                 /* If there are variables in the current event. */
-                else if (eventManager.hasVariables()) {
+                else if (eventManager.current.hasVariables) {
 
                     /* Make sure all of the variables have values. */
                     return eventManager.allEventVariablesHaveValues();
@@ -173,7 +173,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 /* If the event is a floating event. */
-                if (eventManager.isFloatingEvent()) {
+                if (eventManager.current.isFloat) {
 
                     let currentEvent = eventManager.current;
 
@@ -181,7 +181,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     let previousEvent = playManager.previousEvent(currentEvent);
 
                     /* While the previous event is a float. */
-                    while (eventManager.isFloatingEvent(previousEvent)) {
+                    while (previousEvent.isFloat) {
 
                         /* Get the previous event. */
                         previousEvent = playManager.previousEvent(previousEvent);
@@ -234,7 +234,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
 
                 /* If the event doesn't have variables of If the first variable is empty. */
-                else if (!eventManager.hasVariables() ||
+                else if (!eventManager.current.hasVariables ||
                         (eventManager.current.activeEventVariableIndex === 1 &&
                         !eventManager.activeEventVariableValue())) {
 
