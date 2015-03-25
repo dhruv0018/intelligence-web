@@ -246,19 +246,6 @@ ReelsArea.controller('ReelsArea.controller', [
                 playsManager.reset($scope.plays);
             });
         };
-
-        $scope.deleteReel = function deleteReel() {
-            var deleteReelModal = modals.openForConfirm({
-                title: 'Delete Reel',
-                bodyText: 'Are you sure you want to delete this reel?',
-                buttonText: 'Yes'
-            });
-
-            deleteReelModal.result.then(function postReelModalResult() {
-                $scope.reel.remove();
-                account.gotoUsersHomeState();
-            });
-        };
     }
 ]);
 

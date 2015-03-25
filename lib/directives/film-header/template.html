@@ -11,14 +11,14 @@
 
     <span class="film-options">
         <span class="publish-to-profile" ng-if="config.athleteProfile.isEnabled && userIsLoggedIn && isReel && isUploader">
-            <span class="publish" ng-show="!film.isPublishedToProfile && !publishing" ng-click="toggleReelPublishing()">
+            <span class="publish" ng-show="!film.isFeatured(user) && !publishing" ng-click="toggleReelPublishing()">
                 <i class="icon icon-plus"></i>Post to Profile
             </span>
             <span class="publishing" ng-show="publishing">
                 <krossover-spinner ng-show="!confirmPublish" size="'15px'" color="'gray'"></krossover-spinner>
                 <i class="icon icon-ok" ng-show="confirmPublish"></i>
             </span>
-            <span class="unpublish" ng-show="film.isPublishedToProfile && !publishing" ng-click="toggleReelPublishing()">
+            <span class="unpublish" ng-show="film.isFeatured(user) && !publishing" ng-click="toggleReelPublishing()">
                 <i class="icon icon-minus"></i>Remove from Profile
             </span>
         </span>
