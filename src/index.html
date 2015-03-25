@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html data-ng-app="intelligence-web-client" lang="en" manifest="/intelligence/manifest.appcache">
+<html lang="en" manifest="/intelligence/manifest.appcache" ng-app="intelligence-web-client" ng-strict-di>
 
     <head>
 
@@ -30,7 +30,7 @@
 
     </head>
 
-    <body data-ui-view="root" data-flow-prevent-drop>
+    <body ui-view="root" flow-prevent-drop>
 
         <div class="loading-overlay">
             <div class="loading">
