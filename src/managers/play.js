@@ -114,10 +114,22 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* Insert the event into the appropriate index. */
             this.current.events.splice(index, 0, event);
+        };
 
-            //Keep the current play element at the top of the playlist
-            var playScopeEventIsBeingAddedTo = playsManager.playScopes[this.current.$$hashKey];
-            if (playScopeEventIsBeingAddedTo && typeof playScopeEventIsBeingAddedTo.selectPlay === 'function') playScopeEventIsBeingAddedTo.selectPlay();
+        /**
+         * Gets the previous event.
+         * @returns {Object} the previous event, if there is one; null if not.
+         */
+        this.previousEvent = function(event) {
+
+            if (!this.current) return null;
+
+            /* Get the index of the current event in the current play. */
+            var index = this.current.events.indexOf(event);
+
+            if (index < 1) return null;
+
+            return this.current.events[index - 1];
         };
 
         /**

@@ -57,6 +57,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Get current time from the video. */
                 var time = videoPlayer.currentTime;
 
+                /* TODO: After event entity construct new event here */
                 /* Create new event. */
                 eventManager.create(tagId, time);
 
@@ -174,14 +175,16 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* If the event is a floating event. */
                 if (eventManager.isFloatingEvent()) {
 
+                    let currentEvent = eventManager.current;
+
                     /* Get the previous event. */
-                    var previousEvent = eventManager.previousEvent();
+                    let previousEvent = playManager.previousEvent(currentEvent);
 
                     /* While the previous event is a float. */
                     while (eventManager.isFloatingEvent(previousEvent)) {
 
                         /* Get the previous event. */
-                        previousEvent = eventManager.previousEvent(previousEvent);
+                        previousEvent = playManager.previousEvent(previousEvent);
                     }
 
                     /* Get the tagId of the previous event. */
@@ -268,17 +271,20 @@ IntelligenceWebClient.factory('IndexingService', [
 
             /**
             * Deletes an event.
-            * @param {Object} selectedEvent - the event to delete.
+            * @param {Object} event - the event to delete.
             */
-            deleteEvent: function(selectedEvent) {
+            deleteEvent: function(event) {
 
                 this.showTags = true;
                 this.showScript = false;
                 this.eventSelected = false;
                 this.isIndexing = false;
 
-                /* Delete the selected event. */
-                eventManager.delete(selectedEvent);
+                /* Remove the event from the current play. */
+                playManager.removeEvent(event);
+
+                /* Reset the current event. */
+                eventManager.reset();
 
                 /* Save play. */
                 playManager.save();
