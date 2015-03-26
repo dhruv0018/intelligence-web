@@ -13,9 +13,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    function service() {
-
-        this.tagset = null;
+    'TagsetsFactory',
+    function service(tagsets) {
 
         this.current = null;
 
@@ -31,7 +30,7 @@ IntelligenceWebClient.service('EventManager', [
 
             var index = this.current.activeEventVariableIndex;
             var tagId = this.current.tagId;
-            var tag = this.tagset.tags[tagId];
+            var tag = tagsets.getTag(tagId);
             var tagVariables = tag.tagVariables;
             var tagVariable = tagVariables[index];
 
@@ -47,7 +46,7 @@ IntelligenceWebClient.service('EventManager', [
 
             var index = this.current.activeEventVariableIndex;
             var tagId = this.current.tagId;
-            var tag = this.tagset.tags[tagId];
+            var tag = tagsets.getTag(tagId);
             var tagVariables = tag.tagVariables;
             var tagVariable = tagVariables[index];
 
@@ -57,9 +56,7 @@ IntelligenceWebClient.service('EventManager', [
         /**
          * Resets the current play to the original model.
          */
-        this.reset = function(tagset) {
-
-            this.tagset = tagset || this.tagset;
+        this.reset = function() {
 
             this.current = new KrossoverEvent();
         };
