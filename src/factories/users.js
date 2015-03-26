@@ -586,20 +586,28 @@ IntelligenceWebClient.factory('UsersFactory', [
                     });
                 });
             },
-            setFeaturedReelId: function(reelId) {
-                var self = this;
 
-                self.profile.featuredReelId = reelId;
-            },
-            removeFeaturedReelId: function() {
-                var self = this;
+            /**
+            * @class User
+            * @method
+            * @returns {Integer} returns the user's featuredReelId
+            * Gets the users user's featuredReelId
+            */
+            get featuredReelId() {
 
-                self.profile.featuredReelId = null;
-            },
-            getFeaturedReelId: function() {
                 var self = this;
-
                 return self.profile.featuredReelId;
+            },
+
+            /**
+            * @class User
+            * @method
+            * Sets the users user's featuredReelId
+            */
+            set featuredReelId(reelIdValue) {
+
+                var self = this;
+                self.profile.featuredReelId = reelIdValue;
             }
         };
 
