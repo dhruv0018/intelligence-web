@@ -16,11 +16,6 @@ IntelligenceWebClient.service('PlayManager', [
 
         var playsManager;
 
-        var model = {
-
-            events: []
-        };
-
         this.tagset = null;
         this.gameId = null;
         this.current = null;
@@ -42,7 +37,7 @@ IntelligenceWebClient.service('PlayManager', [
             this.tagset = tagset || this.tagset;
 
             this.gameId = gameId || this.gameId;
-            this.current = angular.copy(model);
+            this.current = plays.create();
             this.current.gameId = this.gameId;
         };
 
@@ -114,15 +109,31 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* Advance index as long as it is still inside the events and
              * the time of the event is after the event at the index. */
-            while (index < this.current.events.length &&
-                   event.time > this.current.events[index].time) { index++; }
+            while (
+                index < this.current.events.length &&
+                event.time > this.current.events[index].time) {
+
+                index++;
+            }
 
             /* Insert the event into the appropriate index. */
             this.current.events.splice(index, 0, event);
+        };
 
-            //Keep the current play element at the top of the playlist
-            var playScopeEventIsBeingAddedTo = playsManager.playScopes[this.current.$$hashKey];
-            if (playScopeEventIsBeingAddedTo && typeof playScopeEventIsBeingAddedTo.selectPlay === 'function') playScopeEventIsBeingAddedTo.selectPlay();
+        /**
+         * Gets the previous event.
+         * @returns {Object} the previous event, if there is one; null if not.
+         */
+        this.previousEvent = function(event) {
+
+            if (!this.current) return null;
+
+            /* Get the index of the current event in the current play. */
+            var index = this.current.events.indexOf(event);
+
+            if (index < 1) return null;
+
+            return this.current.events[index - 1];
         };
 
         /**
@@ -245,4 +256,3 @@ IntelligenceWebClient.service('PlayManager', [
         };
     }
 ]);
-

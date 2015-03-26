@@ -312,4 +312,3 @@ IntelligenceWebClient.service('SessionService', [
         };
     }
 ]);
-

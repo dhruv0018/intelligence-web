@@ -3,12 +3,12 @@
 // MIXINS
 
 .form-control-focus(@color: @input-border-focus) {
-  @color-rgba: rgba(red(@color), green(@color), blue(@color), .6);
-  &:focus {
-    border-color: @color;
-    outline: 0;
-    .box-shadow(none);
-  }
+    @color-rgba: rgba(red(@color), green(@color), blue(@color), .6);
+    &:focus {
+        border-color: @color;
+        outline: 0;
+        .box-shadow(none);
+    }
 }
 
 .light-box-shadow() {
@@ -64,4 +64,3 @@
         display: none !important;
     }
 }
-

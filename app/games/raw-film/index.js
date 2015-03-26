@@ -69,4 +69,3 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         $scope.sources = game.getVideoSources();
     }
 ]);
-

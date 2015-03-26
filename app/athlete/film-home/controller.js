@@ -37,4 +37,3 @@ FilmHome.controller('Athlete.FilmHome.controller', [
         $scope.filteredFilmsList = $scope.filmsList;
     }
 ]);
-

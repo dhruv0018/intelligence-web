@@ -131,3 +131,8 @@ require('./directives/focus');
 require('./directives/autofocus');
 require('./directives/autotab');
 
+require('./aggregates');
+
+require('./values');
+
+require('./entities');

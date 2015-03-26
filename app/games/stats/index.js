@@ -99,4 +99,3 @@ GamesStats.controller('GamesStats.controller', [
         $scope.statsSelector = stats.gameLog ? 'ga-log' : '';
     }
 ]);
-

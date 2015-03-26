@@ -48,4 +48,3 @@ IntelligenceWebClient.directive('a', [
         return directive;
     }
 ]);
-

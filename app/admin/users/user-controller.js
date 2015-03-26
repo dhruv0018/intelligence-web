@@ -52,4 +52,3 @@ Users.controller('Users.User.Controller', [
         };
     }
 ]);
-
