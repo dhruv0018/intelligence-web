@@ -35,4 +35,3 @@ IntelligenceWebClient.factory('PlaysResource', [
         return $resource(url, paramDefaults, actions);
     }
 ]);
-

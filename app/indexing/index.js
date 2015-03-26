@@ -272,4 +272,3 @@ require('./sidebar-playlist-controller');
 require('./modal-delete-play-controller');
 require('./modal-send-to-team-controller');
 require('./modal-add-indexer-note-controller');
-

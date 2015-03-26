@@ -38,4 +38,3 @@ Admin.config([
         $stateProvider.state(admin);
     }
 ]);
-

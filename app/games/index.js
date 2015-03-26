@@ -197,4 +197,3 @@ Games.controller('Games.controller', [
 
     }
 ]);
-

@@ -1,102 +1,101 @@
 @import (reference) "main.less";
 .player-information {
 
-  .player-profile-container {
+    .player-profile-container {
 
-    border-bottom: 1px solid @gray-border;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    letter-spacing: normal;
+        border-bottom: 1px solid @gray-border;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        letter-spacing: normal;
 
-    .placeholder-picture,
-    .profile-picture {
-      display: inline-block;
-      width: 50px;
-      height: 50px;
-      line-height: 50px;
-      margin-right: 10px;
-      font-size: 35px;
+        .placeholder-picture,
+        .profile-picture {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            margin-right: 10px;
+            font-size: 35px;
+        }
+
+        .profile-picture {
+            border: thin solid @gray-border;
+        }
+
+        h3 {
+            margin: 0px;
+            display: inline;
+        }
+
+        a {
+            .pull-right;
+        }
+
     }
-
-    .profile-picture {
-      border: thin solid @gray-border;
-    }
-
-    h3 {
-      margin: 0px;
-      display: inline;
-    }
-
-    a {
-      .pull-right;
-    }
-
-  }
 
     .profile {
 
-      button{
-        margin: 10px;
-      }
-      border-bottom: 1px solid @gray-border;
-      height: 300px;
+        button{
+            margin: 10px;
+        }
+        border-bottom: 1px solid @gray-border;
+        height: 300px;
 
-      p{
-        margin-top: 50px;
-        text-align: center;
-        font-size: 24px;
-      }
+        p{
+            margin-top: 50px;
+            text-align: center;
+            font-size: 24px;
+        }
 
-      .placeholder-picture{
-        border-radius: 50%;
-        display:block;
-        margin: 0px auto;
-      }
+        .placeholder-picture{
+            border-radius: 50%;
+            display:block;
+            margin: 0px auto;
+        }
 
-      .profile-picture{
-        border-radius: 50%;
-        width: 110px;
-        height: 110px;
-        border:1px solid @gray-border;
-        display:block;
-        margin: 0px auto;
-      }
+        .profile-picture{
+            border-radius: 50%;
+            width: 110px;
+            height: 110px;
+            border:1px solid @gray-border;
+            display:block;
+            margin: 0px auto;
+        }
 
     }
 
-  .player-roles-info {
-    letter-spacing: normal;
-    display: table-row;
-    font-weight: 500;
-    font-size: 18px;
+    .player-roles-info {
+        letter-spacing: normal;
+        display: table-row;
+        font-weight: 500;
+        font-size: 18px;
 
-    sport-placeholder {
-      display: table-cell;
-      vertical-align: middle;
+        sport-placeholder {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .player-info-text {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 10px;
+        }
+
+        .comma {
+            display: none;
+        }
+
+        .team-name {
+            display: block;
+            font-weight: 400;
+            font-size: 16px;
+        }
+
+        &.last {
+
+            .comma {
+                display: inline;
+            }
+        }
     }
-
-    .player-info-text {
-      display: table-cell;
-      vertical-align: middle;
-      padding: 10px;
-    }
-
-    .comma {
-      display: none;
-    }
-
-    .team-name {
-      display: block;
-      font-weight: 400;
-      font-size: 16px;
-    }
-
-    &.last {
-
-      .comma {
-        display: inline;
-      }
-    }
-  }
-
 }

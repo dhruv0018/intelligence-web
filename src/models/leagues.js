@@ -25,4 +25,3 @@ IntelligenceWebClient.factory('LeaguesResource', [
         return LeaguesResource;
     }
 ]);
-

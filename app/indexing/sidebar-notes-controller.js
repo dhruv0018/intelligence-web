@@ -66,4 +66,3 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
         };
     }
 ]);
-

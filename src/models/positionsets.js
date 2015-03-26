@@ -25,4 +25,3 @@ IntelligenceWebClient.factory('PositionsetsResource', [
         return PositionsetsResource;
     }
 ]);
-

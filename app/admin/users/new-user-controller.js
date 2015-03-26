@@ -30,4 +30,3 @@ Users.controller('Users.User.New.Controller', [
         };
     }
 ]);
-

@@ -73,4 +73,3 @@ TeamInfo.config([
 
 require('./controller');
 require('./information-controller');
-

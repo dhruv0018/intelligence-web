@@ -47,4 +47,3 @@ IntelligenceWebClient.factory('GamesResource', [
         return $resource(url, paramDefaults, actions);
     }
 ]);
-

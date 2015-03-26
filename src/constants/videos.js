@@ -39,4 +39,3 @@ var VIDEO_STATUSES = {
 };
 
 IntelligenceWebClient.constant('VIDEO_STATUSES', VIDEO_STATUSES);
-

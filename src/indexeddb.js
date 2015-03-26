@@ -165,4 +165,3 @@ function openDB(name, version) {
 }
 
 IntelligenceWebClient.value('IndexedDB', IndexedDB.promise);
-

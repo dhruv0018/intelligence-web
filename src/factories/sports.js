@@ -25,4 +25,3 @@ IntelligenceWebClient.factory('SportsFactory', [
         return SportsFactory;
     }
 ]);
-

@@ -123,4 +123,3 @@ GamesFormations.controller('GamesFormations.controller', [
         });
     }
 ]);
-

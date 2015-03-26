@@ -62,4 +62,3 @@ Users.controller('Users.User.Info.Controller', [
         });
     }
 ]);
-
