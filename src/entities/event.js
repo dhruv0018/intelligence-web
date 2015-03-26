@@ -49,7 +49,7 @@ class Event extends Entity {
      */
     get isValid () {
 
-        var self = this;
+        const self = this;
 
         function variableFromKey (tagVariableId) {
 
