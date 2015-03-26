@@ -30,15 +30,22 @@ GamesDownAndDistance.config([
                     function($q, $stateParams, users, teams, filtersets, games, players, plays, leagues, tagsets) {
 
                         var gameId = Number($stateParams.id);
-                        return games.load(gameId).then(function() {
 
-                            var game = games.get(gameId);
+                        let gamePromise = games.load(gameId);
 
-                            var Data = {
+                        let Data = {
+                            game: gamePromise,
+                            tagsets: tagsets.load(),
+                            filtersets: filtersets.load()
+                        };
+
+                        gamePromise.then(function() {
+
+                            let game = games.get(gameId);
+
+                            let Data = {
                                 game: game,
                                 user: users.load(game.uploaderUserId),
-                                tagsets: tagsets.load(),
-                                filtersets: filtersets.load(),
                                 plays: plays.load({
                                     gameId: game.id
                                 }),
@@ -57,6 +64,8 @@ GamesDownAndDistance.config([
 
                             return $q.all(Data);
                         });
+
+                        return $q.all(Data);
                     }
                 ]
             }
