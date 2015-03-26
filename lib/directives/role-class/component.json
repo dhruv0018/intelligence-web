@@ -1,9 +1,7 @@
 {
 	"name": "role-class",
-	"styles": [
-		"styles.less"
-	],
 	"scripts": [
-		"index.js"
+		"index.js",
+        "controller.js"
 	]
 }
