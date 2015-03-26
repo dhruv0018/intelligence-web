@@ -2,90 +2,89 @@
 
 .user-info {
 
-  table{
-    td, th {
-      padding: 5px;
-    }
-  }
-
-  .status {
-
-    a {
-      cursor: pointer;
+    table{
+        td, th {
+            padding: 5px;
+        }
     }
 
-    .active{
-      background: @state-success-bg;
-      border: 1px solid @state-success-border;
-      color: @state-success-text;
-      padding: 20px;
+    .status {
+
+        a {
+            cursor: pointer;
+        }
+
+        .active{
+            background: @state-success-bg;
+            border: 1px solid @state-success-border;
+            color: @state-success-text;
+            padding: 20px;
+        }
+
+        .inactive{
+            padding: 20px;
+            background: @state-warning-bg;
+            border: 1px solid @state-warning-border;
+            color: @state-warning-text;
+        }
+
+        .resending-invite {
+            background-color: @state-success-bg;
+            border: 1px solid @state-success-border;
+            color: @state-success-text;
+            text-align: center;
+            padding: 40px;
+
+            .icon-refresh::before {
+                animation: spin 1s linear infinite;
+            }
+        }
+
     }
 
-    .inactive{
-      padding: 20px;
-      background: @state-warning-bg;
-      border: 1px solid @state-warning-border;
-      color: @state-warning-text;
+    .profile-image{
+        margin: 15px;
+        width: 110px;
+
+        img{
+            width: 100%;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        .pull-left;
     }
 
-    .resending-invite {
-      background-color: @state-success-bg;
-      border: 1px solid @state-success-border;
-      color: @state-success-text;
-      text-align: center;
-      padding: 40px;
-
-      .icon-refresh::before {
-        animation: spin 1s linear infinite;
-      }
+    .invitation-information{
+        margin-top: 10px;
     }
 
-  }
-
-  .profile-image{
-    margin: 15px;
-    width: 110px;
-
-    img{
-      width: 100%;
+    input[type=submit] {
+        margin: 10px;
     }
 
-    button {
-      margin-top: 10px;
+    input[type="text"] {
+        border-radius: @border-radius-base;
+        border: 1px solid @gray-border;
+        padding: 5px;
     }
 
-    .pull-left;
-  }
-
-  .invitation-information{
-    margin-top: 10px;
-  }
-
-  input[type=submit] {
-    margin: 10px;
-  }
-
-  input[type="text"] {
-    border-radius: @border-radius-base;
-    border: 1px solid @gray-border;
-    padding: 5px;
-  }
-
-  input:disabled {
-    cursor:not-allowed;
-  }
-
-  .remove{
-    margin-top:10px;
-  }
-
-  .modal-title{
-    margin-bottom:10px;
-
-    .icon {
-      cursor: pointer;
+    input:disabled {
+        cursor:not-allowed;
     }
-  }
+
+    .remove{
+        margin-top:10px;
+    }
+
+    .modal-title{
+        margin-bottom:10px;
+
+        .icon {
+            cursor: pointer;
+        }
+    }
 
 }
-

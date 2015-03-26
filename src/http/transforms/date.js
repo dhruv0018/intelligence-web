@@ -76,4 +76,3 @@ IntelligenceWebClient.config([
         $httpProvider.defaults.transformResponse.push(transformToDates);
     }
 ]);
-

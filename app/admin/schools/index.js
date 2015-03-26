@@ -152,4 +152,3 @@ Schools.controller('SchoolsController', [
         };
     }
 ]);
-

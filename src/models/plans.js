@@ -35,4 +35,3 @@ IntelligenceWebClient.factory('PlansResource', [
         return PlansResource;
     }
 ]);
-

@@ -31,4 +31,3 @@ IntelligenceWebClient.directive('autofocusWhen', [
         return directive;
     }
 ]);
-

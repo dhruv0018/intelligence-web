@@ -166,4 +166,3 @@ Clips.controller('Clips.controller', [
         }
     }
 ]);
-

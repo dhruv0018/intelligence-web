@@ -163,4 +163,3 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
         };
     }
 ]);
-

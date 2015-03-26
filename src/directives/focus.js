@@ -41,4 +41,3 @@ IntelligenceWebClient.directive('focusOn', [
         return directive;
     }
 ]);
-

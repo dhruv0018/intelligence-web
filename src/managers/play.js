@@ -109,8 +109,12 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* Advance index as long as it is still inside the events and
              * the time of the event is after the event at the index. */
-            while (index < this.current.events.length &&
-                   event.time > this.current.events[index].time) { index++; }
+            while (
+                index < this.current.events.length &&
+                event.time > this.current.events[index].time) {
+
+                index++;
+            }
 
             /* Insert the event into the appropriate index. */
             this.current.events.splice(index, 0, event);
@@ -252,4 +256,3 @@ IntelligenceWebClient.service('PlayManager', [
         };
     }
 ]);
-
