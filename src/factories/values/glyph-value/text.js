@@ -151,7 +151,7 @@ module.exports = [
              * Changes styles and handlers for edit-text mode.
              * Text Input Handlers are already set.
              */
-            let enterEditMode = function enterEditMode(event) {
+            function enterEditMode(event) {
 
                 console.log('enterEditMode', self.element);
                 self.element[0].focus();
@@ -165,6 +165,8 @@ module.exports = [
                 self.element.off('dblclick', enterEditMode);
 
                 // remove any other handlers
+                self.element.off('mousedown', addDraggable);
+
                 self.element.off('mousedown', stopEventPropagation);
                 self.element.on('mousedown', stopEventPropagation);
 
@@ -175,13 +177,13 @@ module.exports = [
                 // add style & properties
                 self.element.css(parentGlyph.TEXT_AREA_EDIT_CSS);
                 self.element.attr('readOnly', false);
-            };
+            }
 
             /*
              * Changes styles and handlers for display-text mode.
              * Text Input Handlers are already set.
              */
-            let enterDisplayMode = function enterDisplayMode(event) {
+            function enterDisplayMode(event) {
 
                 console.log('enterDisplayMode', self.element);
                 // if (event) {
@@ -198,8 +200,8 @@ module.exports = [
                 self.element.on('dblclick', enterEditMode);
 
                 // TODO: add dragging functionality
-                // self.element.off('mousedown', addDraggable);
-                // self.element.on('mousedown', addDraggable);
+                self.element.off('mousedown', addDraggable);
+                self.element.on('mousedown', addDraggable);
 
                 // TODO: remove this handler elsewhere
                 // self.containerElement.on('mouseup', function() {
@@ -210,16 +212,15 @@ module.exports = [
                 console.log('set display css and readonly');
                 self.element.css(parentGlyph.TEXT_AREA_DISPLAY_CSS);
                 self.element.attr('readOnly', true);
-            };
+            }
 
             /*
              * Handles exiting edit-state and entering display-state
              */
-            let onEditModeBlur = function onEditModeBlur(event) {
+            function onEditModeBlur(event) {
                 console.log('onEditModeBlur');
 
                 self.element.off('blur', onEditModeBlur);
-                self.element.off('mousedown', addDraggable);
 
                 enterDisplayMode(event);
 
@@ -229,9 +230,9 @@ module.exports = [
                 storeTextAreaProperties();
 
                 self.element[0].dispatchEvent(telestrationOnEditModeBlurEvent);
-            };
+            }
 
-            let storeTextAreaProperties = function storeTextAreaProperties() {
+            function storeTextAreaProperties() {
                 console.log('storeTextAreaProperties');
                 var boundingBox = self.element[0].getBoundingClientRect();
 
@@ -245,12 +246,12 @@ module.exports = [
                     parentGlyph.text = newText;
                     // TODO: Dispatch text change event (so it can be saved)
                 }
-            };
+            }
 
-            let stopEventPropagation = function stopEventPropagation(event) {
+            function stopEventPropagation(event) {
                 console.log('stopEventPropagation');
                 event.stopPropagation();
-            };
+            }
 
             // TODO: Use node emitter
             var telestrationOnEditModeBlurEventInfo = {
@@ -260,18 +261,21 @@ module.exports = [
             };
             var telestrationOnEditModeBlurEvent = new CustomEvent('telestration:onEditModeBlur', telestrationOnEditModeBlurEventInfo);
 
-            let dragEnd = function dragEnd(event) {
+            function dragEnd(event) {
+
+                event.preventDefault();
                 console.log('dragEnd');
                 self.recalculatePrimaryTextareaStartPosition();
                 storeTextAreaProperties();
 
                 $window.removeEventListener('mousemove', dragMove);
-                $window.off('mouseup', dragEnd);
-            };
+                $window.removeEventListener('mouseup', dragEnd);
+            }
 
             // TODO: Finish implementing draggable.
-            let addDraggable = function addDraggable(event) {
+            function addDraggable(event) {
                 console.log('addDraggable', event);
+                event.preventDefault();
 
                 containerBoundingBox = parentGlyph.getContainerDimensions();
                 self.element.startPosition = {x: event.offsetX, y: event.offsetY};
@@ -283,11 +287,13 @@ module.exports = [
                 $window.addEventListener('mousemove', dragMove);
 
                 // listen to turn off dragging
-                $window.off('mouseup', dragEnd);
-                $window.on('mouseup', dragEnd);
-            };
+                $window.removeEventListener('mouseup', dragEnd);
+                $window.addEventListener('mouseup', dragEnd);
+            }
 
-            let dragMove = function dragMove(event) {
+            function dragMove(event) {
+
+                event.preventDefault();
 
                 var left = event.clientX - containerBoundingBox.left - self.element.startPosition.x;
                 var top = event.clientY - containerBoundingBox.top - self.element.startPosition.y;
@@ -297,7 +303,7 @@ module.exports = [
                     'left': left + 'px',
                     'top': top + 'px'
                 });
-            };
+            }
 
             /******************************************************************
              * Text input (while in edit-state) and textarea size/positiong functions *
@@ -310,7 +316,7 @@ module.exports = [
              * use a secondary div element (testTextarea) off-screen with the same style to
              * get the nextWidth of the primaryTextarea.
              */
-            let handleTextareaInput = function handleTextareaInput(event) {
+            function handleTextareaInput(event) {
 
                 event.preventDefault();
                 event.stopPropagation();
@@ -367,12 +373,12 @@ module.exports = [
                     // set the selected range up by 1 from where it started
                     self.element[0].setSelectionRange(selectionStart + 1, selectionStart + 1);
                 }
-            };
+            }
 
             /*
              * Handle cut/delete events primarily.
              */
-            let handleTextareaDeleteText = function handleTextareaDeleteText(event) {
+            function handleTextareaDeleteText(event) {
 
                 event.stopPropagation();
 
@@ -389,7 +395,7 @@ module.exports = [
 
                 // NOTE: Add placeholder when there's no text
                 if (!nextString.length) self.element.attr('placeholder', parentGlyph.TEXT_TOOL_HINT_TEXT);
-            };
+            }
 
             self.recalculatePrimaryTextareaWidth = function recalculatePrimaryTextareaWidth(text) {
 
@@ -438,22 +444,22 @@ module.exports = [
                 }
             };
 
-            let setTextareaWidth = function setTextareaWidth(width) {
+            function setTextareaWidth(width) {
                 //console.log('setTextareaWidth', width);
 
                 self.element.css('width', width + 'px');
-            };
+            }
 
-            let calculateTextWidth = function calculateTextWidth(newString) {
+            function calculateTextWidth(newString) {
 
                 testTextArea.html(newString);
 
                 var boundingBox = testTextArea[0].getBoundingClientRect();
 
                 return boundingBox.width;
-            };
+            }
 
-            let htmlEntityEncode = function htmlEntityEncode(value){
+            function htmlEntityEncode(value){
 
                 var htmlEntityEncoded = '';
 
@@ -464,7 +470,7 @@ module.exports = [
                 }
 
                 return htmlEntityEncoded;
-            };
+            }
 
             // create element
             self.element = angular.element('<textarea></textarea>');
