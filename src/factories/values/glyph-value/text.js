@@ -38,7 +38,7 @@ module.exports = [
             'overflow': 'hidden',
             'min-width': '60px',
             'opacity': '1',
-            'z-index': '5',
+            'z-index': '1',
             'border': '1px solid #5394ec',
             'border-radius': '2px',
             'position': 'absolute',
@@ -63,7 +63,7 @@ module.exports = [
             'background-color': 'rgba(49, 49, 49, 0.7)',
             'overflow': 'none',
             'opacity': '1',
-            'z-index': '5',
+            'z-index': '1',
             'border': 'none',
             'position': 'absolute',
             // remove inherent styles
@@ -107,14 +107,16 @@ module.exports = [
             // set the starting position if it exists
             var startPoint = self.getVertexInPixelsAtIndex(0);
             if (startPoint) self.primaryTextarea.element.css({'left': startPoint.x + 'px', 'top': startPoint.y + 'px'});
+
             // update textarea position
-            self.primaryTextarea.recalculatePrimaryTextareaWidth();
+            self.primaryTextarea.recalculatePrimaryTextareaWidth(self.text);
             self.primaryTextarea.recalculatePrimaryTextareaStartPosition();
         };
 
-        // TODO: Cleanup
         Text.prototype.destroy = function() {
 
+            this.primaryTextarea.removeListeners();
+            this.primaryTextarea.element.remove();
             Glyph.prototype.destroy.call(this);
         };
 
@@ -201,12 +203,18 @@ module.exports = [
 
             function storeTextAreaProperties() {
 
-                var boundingBox = self.element[0].getBoundingClientRect();
+                containerBoundingBox = parentGlyph.getContainerDimensions();
+                let boundingBox = self.element[0].getBoundingClientRect();
 
-                parentGlyph.updateStartPointFromPixels(boundingBox.left, boundingBox.top);
-                parentGlyph.updateEndPointFromPixels(boundingBox.right, boundingBox.bottom);
+                let newLeft = boundingBox.left - containerBoundingBox.left;
+                let newTop = boundingBox.top - containerBoundingBox.top;
+                let newRight = boundingBox.right - containerBoundingBox.right;
+                let newBottom = boundingBox.bottom - containerBoundingBox.bottom;
 
-                var newText = self.element[0].value;
+                parentGlyph.updateStartPointFromPixels(newLeft, newTop);
+                parentGlyph.updateEndPointFromPixels(newRight, newBottom);
+
+                let newText = self.element[0].value;
 
                 if (newText !== parentGlyph.text) {
 
@@ -433,6 +441,12 @@ module.exports = [
 
                 return htmlEntityEncoded;
             }
+
+            self.removeListeners = function removeListeners() {
+
+                $window.removeEventListener('mousemove', dragMove);
+                $window.removeEventListener('mouseup', dragEnd);
+            };
 
             // create element
             self.element = angular.element('<textarea></textarea>');
