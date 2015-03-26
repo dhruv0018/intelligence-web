@@ -395,11 +395,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (!user) throw new Error('No user');
 
-                var reels = this.getList();
-
-                return reels.filter(function(reel) {
-                    return reel.id == user.profile.featuredReelId;
-                });
+                return this.get(user.profile.featuredReelId);
             }
         };
 
