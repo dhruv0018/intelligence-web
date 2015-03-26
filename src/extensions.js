@@ -26,4 +26,3 @@ angular.extend(angular, {
     'inherit': inherit,
     'augment': augment
 });
-

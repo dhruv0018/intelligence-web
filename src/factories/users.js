@@ -126,6 +126,23 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
             * @class User
             * @method
+            * Saves user and updates currentUser in session
+            */
+            save: function() {
+                var self = this;
+                var session = $injector.get('SessionService');
+
+                if (self.id === session.getCurrentUserId()) {
+                    session.storeCurrentUser();
+                }
+
+                //TODO use normal save()
+                self.baseSave();
+            },
+
+            /**
+            * @class User
+            * @method
             * @returns {String} returns the users first and last name as a
             * concatenated string.
             * Gets the users full name.
@@ -167,7 +184,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 user.roles.unshift(role);
 
                 if (!user.roleTypes) {
-                     user.roleTypes = {};
+                    user.roleTypes = {};
                 }
 
                 user.roleTypes[role.type.id].push(role);
@@ -440,7 +457,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     /* A Head Coach can access Assistant Coaches and Athletes. */
                     return this.is(verify, ROLES.ASSISTANT_COACH) ||
-                           this.is(verify, ROLES.ATHLETE) ? true : false;
+                        this.is(verify, ROLES.ATHLETE) ? true : false;
                 }
 
                 /* TODO: These rules are meant to be updated when new
@@ -495,13 +512,13 @@ IntelligenceWebClient.factory('UsersFactory', [
                 });
 
                 if (team) {
-                   vettedUsers = vettedUsers.filter(function(user) {
-                       var vettedRoles = user.roleTypes[role.type.id].filter(function(role) {
-                         return role.teamId === team.id;
-                       });
+                    vettedUsers = vettedUsers.filter(function(user) {
+                        var vettedRoles = user.roleTypes[role.type.id].filter(function(role) {
+                            return role.teamId === team.id;
+                        });
 
-                       return vettedRoles.length > 0;
-                   });
+                        return vettedRoles.length > 0;
+                    });
                 }
 
                 return vettedUsers;
@@ -593,4 +610,3 @@ IntelligenceWebClient.factory('UsersFactory', [
         return UsersFactory;
     }
 ]);
-

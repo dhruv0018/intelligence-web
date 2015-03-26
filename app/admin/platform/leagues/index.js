@@ -181,4 +181,3 @@ Leagues.controller('LeaguesController', [
         };
     }
 ]);
-

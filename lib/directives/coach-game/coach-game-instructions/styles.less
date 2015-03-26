@@ -36,195 +36,192 @@
 
     .select-boxes{
 
-      padding: 0;
-      border-left: 1px solid @gray-lighter;
-      border-right: 1px solid @gray-lighter;
-      border-bottom: 1px solid @gray-lighter;
-
-      h1 {
-
-        color: @brand-blue;
-        font-size: 24px;
-        margin-top: 0;
-      }
-
-      &:hover > button:enabled {
-
-        background-color: rgb(246, 249, 253);
-
-        .icon-bar-chart-o,
-        .icon-share-square-o {
-
-          color: @brand-primary;
-          border-color: @brand-primary;
-        }
-      }
-
-      button.breakdown-game {
+        padding: 0;
+        border-left: 1px solid @gray-lighter;
+        border-right: 1px solid @gray-lighter;
+        border-bottom: 1px solid @gray-lighter;
 
         h1 {
-          margin-top: 35px;
-        }
 
-        &:disabled {
-            h1 {
-              color: @text-muted;
-              text-decoration: line-through;
-            }
-
-            .icon-check-empty {
-              display: none;
-            }
-        }
-
-        &:no-roster {
-          h1 {
+            color: @brand-blue;
+            font-size: 24px;
             margin-top: 0;
-          }
-        }
-      }
-
-      button {
-
-        .btn-blank;
-        width: 100%;
-        text-align: left;
-        display: flex;
-        align-items: center;
-        padding-top: 50px;
-        padding-left: 25px;
-        padding-right: 25px;
-        padding-bottom: 50px;
-
-        p,
-        b {
-          color: black;
         }
 
-        p {
+        &:hover > button:enabled {
 
-          margin: 0;
+            background-color: rgb(246, 249, 253);
+
+            .icon-bar-chart-o,
+            .icon-share-square-o {
+
+                color: @brand-primary;
+                border-color: @brand-primary;
+            }
         }
 
-        &.active > .icon-check-empty::after {
-          content: '\f00f';
-          color: @brand-secondary;
-          font-size: 40px;
-          position: absolute;
-          top: -5px;
-          left: 2px;
-          line-height: 100px;
+        button.breakdown-game {
+
+            h1 {
+                margin-top: 35px;
+            }
+
+            &:disabled {
+                h1 {
+                    color: @text-muted;
+                    text-decoration: line-through;
+                }
+
+                .icon-check-empty {
+                    display: none;
+                }
+            }
+
+            &:no-roster {
+                h1 {
+                    margin-top: 0;
+                }
+            }
         }
-      }
+
+        button {
+
+            .btn-blank;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            padding-top: 50px;
+            padding-left: 25px;
+            padding-right: 25px;
+            padding-bottom: 50px;
+
+            p,
+            b {
+                color: black;
+            }
+
+            p {
+
+                margin: 0;
+            }
+
+            &.active > .icon-check-empty::after {
+                content: '\f00f';
+                color: @brand-secondary;
+                font-size: 40px;
+                position: absolute;
+                top: -5px;
+                left: 2px;
+                line-height: 100px;
+            }
+        }
     }
 
 
     .confirmation-boxes {
 
-      border: 1px solid @gray-lighter;
+        border: 1px solid @gray-lighter;
 
-      .confirmation-text{
-        .breakdowns{
-          color: @brand-blue;
-          font-weight: bold;
+        .confirmation-text{
+            .breakdowns{
+                color: @brand-blue;
+                font-weight: bold;
 
-          .remaining-breakdowns{
-            border-radius:50%;
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            padding:10px;
-            border: 3px solid @gray-lighter;
-          }
+                .remaining-breakdowns{
+                    border-radius:50%;
+                    display: inline-block;
+                    width: 50px;
+                    height: 50px;
+                    text-align: center;
+                    padding:10px;
+                    border: 3px solid @gray-lighter;
+                }
+            }
+
+            .breakdown-information{
+                margin-left: 30px;
+                position:relative;
+
+                .switch-choice{
+                    .btn;
+                    .btn-default;
+
+                    position:relative;
+                    left: 25%;
+                    top: 20px;
+                }
+            }
+
+            h3 {
+                color: @brand-success;
+            }
+
+            .icon-bar-chart-o, .icon-share-square-o {
+                position:relative;
+                border: none;
+
+                &::before{
+                    color: @brand-success;
+                    border: 5px solid @brand-success;
+                    border-radius: 50%;
+                }
+
+                &::after{
+                    content: '\f00f';
+                    position:absolute;
+                    top: 10px;
+                    left: 70px;
+                    font-size:15px;
+                    color: white;
+                    border-radius: 50%;
+                    background:@brand-success;
+                    padding:2px;
+                }
+            }
+
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            padding-top: 50px;
+            padding-left: 25px;
+            padding-right: 25px;
+            padding-bottom: 50px;
         }
-
-        .breakdown-information{
-          margin-left: 30px;
-          position:relative;
-
-          .switch-choice{
-            .btn;
-            .btn-default;
-
-            position:relative;
-            left: 25%;
-            top: 20px;
-          }
-        }
-
-        h3 {
-          color: @brand-success;
-        }
-
-        .icon-bar-chart-o, .icon-share-square-o {
-          position:relative;
-          border: none;
-
-          &::before{
-            color: @brand-success;
-            border: 5px solid @brand-success;
-            border-radius: 50%;
-          }
-
-          &::after{
-            content: '\f00f';
-            position:absolute;
-            top: 10px;
-            left: 70px;
-            font-size:15px;
-            color: white;
-            border-radius: 50%;
-            background:@brand-success;
-            padding:2px;
-          }
-        }
-
-        width: 100%;
-        text-align: left;
-        display: flex;
-        align-items: center;
-        padding-top: 50px;
-        padding-left: 25px;
-        padding-right: 25px;
-        padding-bottom: 50px;
-      }
     }
 
     .icon-bar-chart-o,
     .icon-share-square-o {
 
-      width: 100px;
-      height: 100px;
-      color: @gray-lighter;
-      border: 5px solid @gray-lighter;
-      border-radius: 50%;
-      font-size: 50px;
-      margin-right: 25px;
+        width: 100px;
+        height: 100px;
+        color: @gray-lighter;
+        border: 5px solid @gray-lighter;
+        border-radius: 50%;
+        font-size: 50px;
+        margin-right: 25px;
 
-      &::before {
+        &::before {
 
-        width: 90px;
-        line-height: 90px;
-        text-align: center;
-      }
+            width: 90px;
+            line-height: 90px;
+            text-align: center;
+        }
     }
 
     .icon-share-square-o::before {
 
-      margin-top: 3px;
-      margin-left: 3px;
+        margin-top: 3px;
+        margin-left: 3px;
     }
 
     .icon-check-empty {
 
-      color: @gray-dark;
-      font-size: 40px;
-      position: absolute;
-      right: 75px;
-      line-height: 100px;
+        color: @gray-dark;
+        font-size: 40px;
+        position: absolute;
+        right: 75px;
+        line-height: 100px;
     }
-
-
-
 }

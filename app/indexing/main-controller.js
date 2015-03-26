@@ -84,4 +84,3 @@ Indexing.controller('Indexing.Main.Controller', [
         }
     }
 ]);
-

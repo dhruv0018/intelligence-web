@@ -25,4 +25,3 @@ IntelligenceWebClient.factory('SportsResource', [
         return SportsResource;
     }
 ]);
-

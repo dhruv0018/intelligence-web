@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('PlansStorage', [
         return PlansStorage;
     }
 ]);
-

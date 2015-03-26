@@ -23,4 +23,3 @@ IntelligenceWebClient.factory('FiltersetsFactory', [
         return FiltersetsFactory;
     }
 ]);
-

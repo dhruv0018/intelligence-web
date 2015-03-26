@@ -45,4 +45,3 @@ IntelligenceWebClient.factory('UsersResource', [
         return UsersResource;
     }
 ]);
-

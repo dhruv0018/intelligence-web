@@ -161,26 +161,6 @@ IntelligenceWebClient.service('EventManager', [
         };
 
         /**
-         * Gets the previous event.
-         * @returns {Object} the previous event, if there is one; null if not.
-         */
-        this.previousEvent = function(event) {
-
-            event = event || this.current;
-
-            playManager = playManager || $injector.get('PlayManager');
-
-            if (!playManager.current) return null;
-
-            /* Get the index of the current event in the current play. */
-            var index = playManager.current.events.indexOf(event);
-
-            if (index < 1) return null;
-
-            return playManager.current.events[index - 1];
-        };
-
-        /**
          * Resets the current play to the original model.
          */
         this.reset = function(tagset) {
@@ -191,6 +171,7 @@ IntelligenceWebClient.service('EventManager', [
         };
 
         /**
+         * TODO: Remove after event entity
          * Creates a new event.
          * Creates an event with a tag specified by the tagId and time.
          * @param {Number} tagId - the ID of a tag.
@@ -212,22 +193,5 @@ IntelligenceWebClient.service('EventManager', [
             /* Add event to the current play. */
             playManager.addEvent(this.current);
         };
-
-        /**
-         * Deletes the current event.
-         */
-        this.delete = function(event) {
-
-            playManager = playManager || $injector.get('PlayManager');
-
-            event = event || this.current;
-
-            /* Remove the event from the current play. */
-            playManager.removeEvent(event);
-
-            /* Reset the current event. */
-            this.reset();
-        };
     }
 ]);
-

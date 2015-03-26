@@ -119,7 +119,7 @@ Indexing.config([
                                 var gameData = {
 
                                     game: game,
-                                    plays: plays.load({ gameId: gameId }),
+                                    plays: plays.retrieve({ gameId: gameId }),
                                     players: players,
                                     teamPlayers: players.load({ rosterId: teamRoster.id }),
                                     opposingTeamPlayers: players.load({ rosterId: opposingTeamRoster.id })
@@ -272,4 +272,3 @@ require('./sidebar-playlist-controller');
 require('./modal-delete-play-controller');
 require('./modal-send-to-team-controller');
 require('./modal-add-indexer-note-controller');
-

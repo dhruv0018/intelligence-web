@@ -59,4 +59,3 @@ IntelligenceWebClient.factory('SchoolsFactory', [
         return SchoolsFactory;
     }
 ]);
-

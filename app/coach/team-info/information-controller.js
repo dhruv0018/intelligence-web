@@ -55,5 +55,3 @@ TeamInfo.controller('Coach.Team.Info.Information.controller', [
     }
 
 ]);
-
-
