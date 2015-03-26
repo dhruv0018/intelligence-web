@@ -42,4 +42,3 @@ IntelligenceWebClient.directive('autotab', [
         return directive;
     }
 ]);
-

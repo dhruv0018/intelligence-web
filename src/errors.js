@@ -154,4 +154,3 @@ IntelligenceWebClient.run([
         });
     }
 ]);
-

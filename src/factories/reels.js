@@ -83,7 +83,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reels.filter(function(reel) {
 
                     return reel.uploaderUserId == userId &&
-                           reel.uploaderTeamId == teamId;
+                        reel.uploaderTeamId == teamId;
                 });
             },
 
@@ -361,4 +361,3 @@ IntelligenceWebClient.factory('ReelsFactory', [
         return ReelsFactory;
     }
 ]);
-

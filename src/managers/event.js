@@ -195,4 +195,3 @@ IntelligenceWebClient.service('EventManager', [
         };
     }
 ]);
-

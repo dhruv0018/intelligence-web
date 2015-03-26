@@ -84,4 +84,3 @@ Account.controller('Account.controller', [
 /* File dependencies. */
 require('./contact-info');
 require('./roles-list');
-

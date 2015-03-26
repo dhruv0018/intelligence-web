@@ -28,4 +28,3 @@ Indexing.controller('Indexing.Modal.DeletePlay.Controller', [
         };
     }
 ]);
-

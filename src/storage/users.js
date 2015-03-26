@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('UsersStorage', [
         return UsersStorage;
     }
 ]);
-
