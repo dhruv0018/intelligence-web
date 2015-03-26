@@ -1,3 +1,5 @@
+import KrossoverEvent from '../entities/event.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -99,7 +101,7 @@ IntelligenceWebClient.service('PlaysManager', [
 
                 playManager.clear();
                 tagsManager.reset();
-                eventManager.reset();
+                eventManager.current = new KrossoverEvent();
             }
         };
     }

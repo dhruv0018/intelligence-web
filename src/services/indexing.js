@@ -23,7 +23,7 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 playsManager.reset(plays);
                 tagsManager.reset(tagset);
-                eventManager.reset(tagset);
+                eventManager.current = new KrossoverEvent();
                 playManager.reset(tagset, game.id);
                 playManager.clear();
             },
@@ -110,7 +110,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.save();
                 playManager.clear();
                 tagsManager.reset();
-                eventManager.reset();
+                eventManager.current = new KrossoverEvent();
 
                 /* If the event is an end-and-start event. */
                 if (eventManager.current.isEndAndStart) {
@@ -289,7 +289,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.removeEvent(event);
 
                 /* Reset the current event. */
-                eventManager.reset();
+                eventManager.current = new KrossoverEvent();
 
                 /* Save play. */
                 playManager.save();

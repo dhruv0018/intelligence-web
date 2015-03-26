@@ -52,13 +52,5 @@ IntelligenceWebClient.service('EventManager', [
 
             this.current.variableValues[tagVariable.id].value = undefined;
         };
-
-        /**
-         * Resets the current play to the original model.
-         */
-        this.reset = function() {
-
-            this.current = new KrossoverEvent();
-        };
     }
 ]);
