@@ -379,7 +379,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 var reels = this.getList();
 
-                return reels.filter(function(reel) {
+                return reels.filter(function publishedReels(reel) {
 
                     return reel.uploaderUserId == userId &&
                            reel.isPublishedToProfile === true;
