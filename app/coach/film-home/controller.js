@@ -61,4 +61,3 @@ FilmHome.controller('Coach.FilmHome.controller', [
         $scope.filteredFilmsList = $scope.filmsList;
     }
 ]);
-

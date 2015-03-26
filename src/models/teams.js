@@ -36,4 +36,3 @@ IntelligenceWebClient.factory('TeamsResource', [
         return $resource(url, paramDefaults, actions);
     }
 ]);
-

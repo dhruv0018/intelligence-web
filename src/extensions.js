@@ -36,4 +36,3 @@ angular.extend(angular, {
     'augment': augment,
     'inheritPrototype': inheritPrototype
 });
-

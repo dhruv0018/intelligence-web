@@ -254,4 +254,3 @@ Games.controller('Games.controller', [
 
     }
 ]);
-
