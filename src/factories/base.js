@@ -558,7 +558,11 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @param {Function} error - called on error.
              * @return {Promise.<Resource>} - a promise of a resources.
              */
-            save: function(resource, success, error) {
+             save: function() {
+                //TODO: find a less hacky way to do this
+                this.baseSave();
+            },
+            baseSave: function(resource, success, error) {
 
                 var self = this;
 

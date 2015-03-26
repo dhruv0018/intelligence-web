@@ -136,7 +136,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                     session.storeCurrentUser();
                 }
 
-                BaseFactory.save();
+                //TODO use normal save()
+                self.baseSave();
             },
 
             /**
