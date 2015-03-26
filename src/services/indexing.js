@@ -1,3 +1,5 @@
+import KrossoverEvent from '../entities/event.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -6,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer',
-    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayer) {
+    'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer',
+    function(config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer) {
 
         var IndexingService = {
 
@@ -57,9 +59,11 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Get current time from the video. */
                 var time = videoPlayer.currentTime;
 
-                /* TODO: After event entity construct new event here */
+                /* Get tag. */
+                let tag = tagsets.getTag(tagId);
+
                 /* Create new event. */
-                eventManager.create(tagId, time);
+                eventManager.current = new KrossoverEvent(tag, time);
 
                 this.showTags = false;
                 this.showScript = true;

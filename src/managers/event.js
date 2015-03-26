@@ -13,10 +13,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    '$injector', 'TagsetsFactory',
-    function service($injector, tagsets) {
-
-        var playManager;
+    function service() {
 
         this.tagset = null;
 
@@ -65,25 +62,6 @@ IntelligenceWebClient.service('EventManager', [
             this.tagset = tagset || this.tagset;
 
             this.current = new KrossoverEvent();
-        };
-
-        /**
-         * TODO: Remove after event entity
-         * Creates a new event.
-         * Creates an event with a tag specified by the tagId and time.
-         * @param {Number} tagId - the ID of a tag.
-         * @param {Number} time - the time the event took place.
-         */
-        this.create = function(tagId, time) {
-
-            playManager = playManager || $injector.get('PlayManager');
-
-            let tag = tagsets.getTag(tagId);
-
-            this.current = new KrossoverEvent(tag, time);
-
-            /* Add event to the current play. */
-            playManager.addEvent(this.current);
         };
     }
 ]);
