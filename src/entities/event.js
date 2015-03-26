@@ -17,6 +17,7 @@ class Event extends Entity {
 
         tag = Object.assign({}, tag);
 
+        tag.tagId = tag.id;
         delete tag.id;
 
         Object.assign(this, event, tag, { time });
