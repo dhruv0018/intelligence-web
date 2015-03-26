@@ -37,9 +37,29 @@ Indexing.controller('Indexing.Main.Controller', [
     'GamesFactory',
     'PlaysFactory',
     'VideoPlayer',
-    function controller(config, EVENT_MAP, $rootScope, $scope, $modal, basicModal, $stateParams, videoPlayerEventEmitter,
-                        session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets,
-                        teams, games, plays, videoPlayer) {
+    function controller(config,
+                        EVENT_MAP,
+                        $rootScope,
+                        $scope,
+                        $modal,
+                        basicModal,
+                        $stateParams,
+                        videoPlayerEventEmitter,
+                        session,
+                        indexing,
+                        scripts,
+                        tags,
+                        playsManager,
+                        play,
+                        event,
+                        sidebar,
+                        data,
+                        leagues,
+                        tagsets,
+                        teams,
+                        games,
+                        plays,
+                        videoPlayer) {
 
         var gameId = Number($stateParams.id);
 
