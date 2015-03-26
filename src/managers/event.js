@@ -14,7 +14,7 @@ IntelligenceWebClient.service('EventManager', [
     '$injector', 'PlaylistEventEmitter',
     function service($injector, playlistEventEmitter) {
 
-        var current;
+        let current;
 
         var playManager;
 
