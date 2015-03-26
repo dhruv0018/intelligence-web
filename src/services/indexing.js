@@ -287,8 +287,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Remove the event from the current play. */
                 playManager.removeEvent(event);
 
-                /* Reset the current event. */
-                eventManager.current = new KrossoverEvent();
+                /* Clear the current event. */
+                eventManager.current = null;
 
                 /* Save play. */
                 playManager.save();
