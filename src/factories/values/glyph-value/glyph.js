@@ -95,7 +95,7 @@ module.exports = [
             this.updateVertexFromPixels(0, x, y);
         };
 
-        Glyph.prototype.updateEndPointFromPixels = function updateEndpointFromPixels(x, y) {
+        Glyph.prototype.updateEndPointFromPixels = function updateEndPointFromPixels(x, y) {
 
             this.updateVertexFromPixels(1, x, y);
         };

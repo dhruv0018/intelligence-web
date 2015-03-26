@@ -18,7 +18,7 @@ module.exports = [
         Freehand.prototype.MOVEABLE = false;
         Freehand.prototype.MIN_VERTICES = 1;
 
-        Freehand.prototype.updateEndpointFromPixels = function updateEndpointFromPixels(x, y) {
+        Freehand.prototype.updateEndPointFromPixels = function updateEndPointFromPixels(x, y) {
             // TODO: only call getBoundingClientRect on window Resize
             var boundingBox = this.getContainerDimensions();
             var relativeX = x / boundingBox.width;
