@@ -16,10 +16,10 @@ Profile.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var AthleteProfile = {
-            name: 'Athlete.Profile',
+        $stateProvider
+
+        .state('Athlete.Profile', {
             url: '/:id/profile',
-            parent: 'Athlete',
             views: {
                 'main@root': {
                     templateUrl: 'athlete/profile/template.html',
@@ -49,15 +49,7 @@ Profile.config([
                           return $stateParams.id;
                     }
                 ]
-            },
-            onEnter: [
-                '$state',
-                function onEnter($state) {
-                    $state.go('Athlete.Profile.Highlights');
-                }
-            ]
-        };
-
-        $stateProvider.state(AthleteProfile);
+            }
+        });
     }
 ]);

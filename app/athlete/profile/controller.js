@@ -16,6 +16,8 @@ var Profile = angular.module('Athlete.Profile');
 Profile.controller('Athlete.Profile.controller', [
     '$scope', '$state', 'userId', 'UsersFactory',
     function controller($scope, $state, userId, users) {
+        // TO-DO: Move this to somewhere more appropriate (state.onEnter?)
+        $state.go('Athlete.Profile.Highlights');
 
         $scope.athlete = users.get(userId);
         $scope.athlete.profilePicture = 'http://cocopebble.com/wp-content/uploads/2013/06/krossover-symbol-white-bg.jpg';
