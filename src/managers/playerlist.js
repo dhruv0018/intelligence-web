@@ -19,7 +19,7 @@ IntelligenceWebClient.service('PlayerlistManager', [
                 var mergedRosters = angular.extend({},
                     game.getRoster(game.teamId).playerInfo,
                     game.getRoster(game.opposingTeamId).playerInfo);
-                Object.keys(mergedRosters).forEach(function(playerId) {
+                Object.keys(mergedRosters).forEach(function generatePlayerDropdownObject(playerId) {
                     var playerInfo = mergedRosters[playerId];
                     var player = angular.extend({}, players.get(playerId), playerInfo);
                     player.jerseyNumber = (playerInfo.jerseyNumber.length === 0) ? 'UN' : parseInt(playerInfo.jerseyNumber, 10);
