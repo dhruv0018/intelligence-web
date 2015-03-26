@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$injector', '$rootScope', 'BaseFactory', 'SessionService', 'ROLE_ID', 'ROLE_TYPE', 'ROLES',
-    function($injector, $rootScope, BaseFactory, session, ROLE_ID, ROLE_TYPE, ROLES) {
+    '$injector', '$rootScope', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES',
+    function($injector, $rootScope, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES) {
 
         var UsersFactory = {
 
@@ -130,6 +130,7 @@ IntelligenceWebClient.factory('UsersFactory', [
             */
             save: function() {
                 var self = this;
+                var session = $injector.get('SessionService');
 
                 if (self.id === session.getCurrentUserId()) {
                     session.storeCurrentUser();
