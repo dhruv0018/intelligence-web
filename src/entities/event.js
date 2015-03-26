@@ -49,10 +49,12 @@ class Event extends Entity {
      */
     get isValid () {
 
+        var self = this;
+
         function variableFromKey (tagVariableId) {
 
             /* Lookup the tag variable. */
-            return this.variableValues[tagVariableId];
+            return self.variableValues[tagVariableId];
         }
 
         function variableIsValid (variable) {
