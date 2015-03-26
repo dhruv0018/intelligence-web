@@ -12,22 +12,22 @@ class Event extends Entity {
         }
 
         event = event || {};
-        tag = JSON.parse(JSON.stringify(tag));
+        event.variableValues = event.variableValues || {};
+        event.activeEventVariableIndex = event.activeEventVariableIndex || 1;
+
+        tag = Object.assign({}, tag);
 
         delete tag.id;
-
-        /* FIXME: Remove when code is updated. */
-        event.activeEventVariableIndex = event.activeEventVariableIndex || 1;
 
         Object.assign(this, event, tag, { time });
 
         /* FIXME: Remove when API is updated. */
-        Object.keys(this.tagVariables).forEach(key => {
+        if (this.tagVariables) Object.keys(this.tagVariables).forEach(key => {
 
-            let tagVariable = this.tagVariables[key];
-            tagVariable.inputType = tagVariable.type;
+            let tagVariable = Object.assign({}, this.tagVariables[key]);
+            tagVariable.inputType = this.tagVariables[key].type;
             delete tagVariable.type;
-
+            this.variableValues[tagVariable.id] = this.variableValues[tagVariable.id] || {};
             Object.assign(this.variableValues[tagVariable.id], tagVariable);
         });
     }
