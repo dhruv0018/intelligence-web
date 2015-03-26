@@ -37,7 +37,7 @@ GamesRawFilm.config([
                             var game = games.get(gameId);
 
                             var Data = {
-                                user: users.load(game.uploaderUserId),
+                                user: users.load(game.uploaderUserId)
                             };
 
                             var teamIds = [];
@@ -60,24 +60,18 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
     '$scope', '$stateParams', 'GamesFactory', 'ROLES', 'SessionService', 'UsersFactory', 'TELESTRATION_PERMISSIONS',
     function controller($scope, $stateParams, games, ROLES, session, users, TELESTRATION_PERMISSIONS) {
 
-        /* Variables */
-
-        var gameId = $stateParams.id;
-        var game = games.get(gameId);
-
-
         /* Scope */
 
         // telestrations
 
-        $scope.telestrations = game.rawTelestrations;
+        $scope.telestrations = $scope.game.rawTelestrations;
 
         // video player
 
-        $scope.sources = game.getVideoSources();
+        $scope.sources = $scope.game.getVideoSources();
         $scope.cuePoints = [];
         $scope.posterImage = {
-            url: game.video.thumbnail
+            url: $scope.game.video.thumbnail
         };
 
         if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {

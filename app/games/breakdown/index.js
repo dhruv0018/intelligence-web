@@ -97,14 +97,10 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
     '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'PlaysManager', 'ROLES', 'SessionService', 'TELESTRATION_PERMISSIONS',
     function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, playsManager, ROLES, session, TELESTRATION_PERMISSIONS) {
 
-        var gameId = $stateParams.id;
-        var game = games.get(gameId);
-        var uploader = users.get(game.uploaderUserId);
-
-        $scope.game = game;
+        var uploader = users.get($scope.game.uploaderUserId);
 
         $scope.posterImage = {
-            url: game.video.thumbnail
+            url: $scope.game.video.thumbnail
         };
 
         $scope.cuePoints = [];
@@ -112,7 +108,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.publiclyShared = false;
 
         /* TODO: figure out if this stuff is used */
-        $scope.uploaderTeam = teams.get(game.uploaderTeamId);
+        $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
 
         $scope.reels = auth.isLoggedIn ? reels.getList() : [];
@@ -121,16 +117,16 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
 
         // TODO: remove some of this later
-        $scope.team = teams.get(game.teamId);
-        $scope.opposingTeam = teams.get(game.opposingTeamId);
+        $scope.team = teams.get($scope.game.teamId);
+        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
-        $scope.filmTitle = game.description;
+        $scope.filmTitle = $scope.game.description;
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
-        if (game.isDelivered()) {
+        if ($scope.game.isDelivered()) {
 
             // Plays
-            var playsFilter = { gameId: game.id };
+            var playsFilter = { gameId: $scope.game.id };
 
             $scope.totalPlays = plays.getList(playsFilter);
             $scope.plays = plays.getList(playsFilter);
@@ -138,7 +134,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             var play = playsManager.plays[0];
 
             // Set telestrations
-            $scope.telestrationsEntity = game.playTelestrations;
+            $scope.telestrationsEntity = $scope.game.playTelestrations;
             $scope.currentPlayId = play.id;
 
             $scope.sources = play.getVideoSources();
