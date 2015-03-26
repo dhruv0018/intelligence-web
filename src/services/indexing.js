@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer',
-    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayer) {
+    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter',
+    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter) {
 
         var IndexingService = {
 
@@ -293,6 +293,16 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.clear();
             }
         };
+
+        function onEventSelect () {
+
+            this.eventSelected = true;
+            this.isIndexing = true;
+            this.showTags = false;
+            this.showScript = true;
+        }
+
+        playlistEventEmitter.on('EVENT_SELECT', onEventSelect);
 
         return IndexingService;
     }
