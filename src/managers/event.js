@@ -11,8 +11,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    '$injector',
-    function service($injector) {
+    '$injector', 'PlaylistEventEmitter',
+    function service($injector, playlistEventEmitter) {
 
         var current;
 
@@ -36,6 +36,8 @@ IntelligenceWebClient.service('EventManager', [
             set: function(value) {
 
                 current = value;
+
+                playlistEventEmitter.emit('EVENT_CURRENT_CHANGE', current);
             }
         });
 
