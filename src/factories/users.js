@@ -593,7 +593,7 @@ IntelligenceWebClient.factory('UsersFactory', [
             * @returns {Integer} returns the user's featuredReelId
             * Gets the users user's featuredReelId
             */
-            get featuredReelId() {
+            getFeaturedReelId: function() {
 
                 var self = this;
                 return self.profile.featuredReelId;
@@ -604,7 +604,7 @@ IntelligenceWebClient.factory('UsersFactory', [
             * @method
             * Sets the users user's featuredReelId
             */
-            set featuredReelId(reelIdValue) {
+            setFeaturedReelId: function(reelIdValue) {
 
                 var self = this;
                 self.profile.featuredReelId = reelIdValue;
