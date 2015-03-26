@@ -75,7 +75,7 @@ module.exports = [
 
                     if (glyph.hasMinimumVertices()) glyph.render();
                     else {
-                        console.log('Error: Glyph is missing required vertices to render'); // TODO: Log this externally instead.
+                        console.log('Error: Glyph is missing required vertices to render', glyph); // TODO: Log this externally instead.
                     }
                 });
 

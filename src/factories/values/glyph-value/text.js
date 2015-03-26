@@ -157,7 +157,7 @@ module.exports = [
                 self.element.off('dblclick', enterEditMode);
 
                 // remove any other handlers
-                self.element.off('mousedown', addDraggable);
+                self.element.off('mousedown', dragStart);
 
                 self.element.off('mousedown', stopEventPropagation);
                 self.element.on('mousedown', stopEventPropagation);
@@ -181,8 +181,8 @@ module.exports = [
                 self.element.off('dblclick', enterEditMode);
                 self.element.on('dblclick', enterEditMode);
 
-                self.element.off('mousedown', addDraggable);
-                self.element.on('mousedown', addDraggable);
+                self.element.off('mousedown', dragStart);
+                self.element.on('mousedown', dragStart);
 
                 // add style & properties
                 self.element.css(parentGlyph.TEXT_AREA_DISPLAY_CSS);
@@ -239,13 +239,12 @@ module.exports = [
             };
             var telestrationOnEditModeBlurEvent = new CustomEvent('telestration:onEditModeBlur', telestrationOnEditModeBlurEventInfo);
 
-            // TODO: Finish implementing draggable.
-            function addDraggable(event) {
+            function dragStart(event) {
 
                 event.preventDefault();
 
-                $window.removeEventListener('mousedown', dragStart);
-                $window.addEventListener('mousedown', dragStart);
+                containerBoundingBox = parentGlyph.getContainerDimensions();
+                self.element.startPosition = {x: event.offsetX, y: event.offsetY};
 
                 $window.removeEventListener('mousemove', dragMove);
                 $window.addEventListener('mousemove', dragMove);
@@ -253,14 +252,6 @@ module.exports = [
                 // listen to turn off dragging
                 $window.removeEventListener('mouseup', dragEnd);
                 $window.addEventListener('mouseup', dragEnd);
-            }
-
-            function dragStart(event) {
-
-                event.preventDefault();
-
-                containerBoundingBox = parentGlyph.getContainerDimensions();
-                self.element.startPosition = {x: event.offsetX, y: event.offsetY};
 
                 parentGlyph.onDragStartHandler();
             }

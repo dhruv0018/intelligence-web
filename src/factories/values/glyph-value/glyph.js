@@ -154,7 +154,7 @@ module.exports = [
         /*
          * Sets the onTextChanged callback function
          */
-        Glyph.prototype.onTextChanged = function onTextChanged(onDragEndHandler) {
+        Glyph.prototype.onTextChanged = function onTextChanged(onTextChangedHandler) {
 
             this.onTextChangedHandler = onTextChangedHandler;
         };
