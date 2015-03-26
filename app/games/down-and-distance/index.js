@@ -43,17 +43,19 @@ GamesDownAndDistance.config([
 
                             let game = games.get(gameId);
 
+                            let teamsPromise = teams.load([
+                                game.uploaderTeamId,
+                                game.teamId,
+                                game.opposingTeamId
+                            ]);
+
                             let Data = {
                                 game: game,
                                 user: users.load(game.uploaderUserId),
+                                teams: teamsPromise,
                                 plays: plays.load({
                                     gameId: game.id
                                 }),
-                                team: teams.load([
-                                    game.uploaderTeamId,
-                                    game.teamId,
-                                    game.opposingTeamId
-                                ]),
                                 players: players.load({
                                     'rosterId[]': [
                                         game.getRoster(game.teamId).id,
@@ -61,6 +63,11 @@ GamesDownAndDistance.config([
                                     ]
                                 })
                             };
+
+                            Data.league = teamsPromise.then(function() {
+                                let uploaderTeam = teams.get(game.uploaderTeamId);
+                                return leagues.load(uploaderTeam.leagueId);
+                            });
 
                             return $q.all(Data);
                         });
