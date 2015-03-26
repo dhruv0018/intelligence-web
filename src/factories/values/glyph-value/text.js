@@ -136,16 +136,9 @@ module.exports = [
 
         function PrimaryTextarea(parentGlyph) {
 
-            console.log('PrimaryTextarea');
-
             var self = this;
 
             /* State Switching (edit-text and display modes) */
-
-            // TODO: Use window resize to recalc textarea width/position.
-            // $window.on('resize', function() {
-            //     recalculatePrimaryTextareaWidth.call(primaryTextarea, primaryTextarea[0].value);
-            // });
 
             /*
              * Changes styles and handlers for edit-text mode.
@@ -153,13 +146,7 @@ module.exports = [
              */
             function enterEditMode(event) {
 
-                console.log('enterEditMode', self.element);
                 self.element[0].focus();
-                // if (event) event.stopPropagation();
-
-                // bind event handlers to the primaryTextArea
-                // boundEnterDisplayMode = enterDisplayMode.bind(self);
-                // boundOnEditModeBlur = onEditModeBlur.bind(self);
 
                 // remove this handler as primaryTextArea is already in this state
                 self.element.off('dblclick', enterEditMode);
@@ -185,31 +172,14 @@ module.exports = [
              */
             function enterDisplayMode(event) {
 
-                console.log('enterDisplayMode', self.element);
-                // if (event) {
-                //     // TODO: remove cancel bubble
-                //     event.stopPropagation();
-                // }
-
-                // bind event handlers to the primaryTextArea
-                // boundEnterEditMode = enterEditMode.bind(self);
-                // boundAddDraggable = addDraggable.bind(self);
-
                 // add textarea display-mode event handlers
                 self.element.off('dblclick', enterEditMode);
                 self.element.on('dblclick', enterEditMode);
 
-                // TODO: add dragging functionality
                 self.element.off('mousedown', addDraggable);
                 self.element.on('mousedown', addDraggable);
 
-                // TODO: remove this handler elsewhere
-                // self.containerElement.on('mouseup', function() {
-                //     self.containerElement.off('mousemove', boundDragMove);
-                // });
-
                 // add style & properties
-                console.log('set display css and readonly');
                 self.element.css(parentGlyph.TEXT_AREA_DISPLAY_CSS);
                 self.element.attr('readOnly', true);
             }
@@ -218,13 +188,10 @@ module.exports = [
              * Handles exiting edit-state and entering display-state
              */
             function onEditModeBlur(event) {
-                console.log('onEditModeBlur');
 
                 self.element.off('blur', onEditModeBlur);
 
                 enterDisplayMode(event);
-
-                // TODO: check if text changed and fire an onTextChanged event
 
                 // save text area properties
                 storeTextAreaProperties();
@@ -233,7 +200,7 @@ module.exports = [
             }
 
             function storeTextAreaProperties() {
-                console.log('storeTextAreaProperties');
+
                 var boundingBox = self.element[0].getBoundingClientRect();
 
                 parentGlyph.updateStartPointFromPixels(boundingBox.left, boundingBox.top);
@@ -244,12 +211,12 @@ module.exports = [
                 if (newText !== parentGlyph.text) {
 
                     parentGlyph.text = newText;
-                    // TODO: Dispatch text change event (so it can be saved)
+                    // parentGlyph.onTextChanged();
                 }
             }
 
             function stopEventPropagation(event) {
-                console.log('stopEventPropagation');
+
                 event.stopPropagation();
             }
 
@@ -264,7 +231,7 @@ module.exports = [
             function dragEnd(event) {
 
                 event.preventDefault();
-                console.log('dragEnd');
+
                 self.recalculatePrimaryTextareaStartPosition();
                 storeTextAreaProperties();
 
@@ -274,14 +241,11 @@ module.exports = [
 
             // TODO: Finish implementing draggable.
             function addDraggable(event) {
-                console.log('addDraggable', event);
+
                 event.preventDefault();
 
                 containerBoundingBox = parentGlyph.getContainerDimensions();
                 self.element.startPosition = {x: event.offsetX, y: event.offsetY};
-
-                // boundDragMove = dragMove.bind(self);
-                // boundDragEnd = dragEnd.bind(self);
 
                 $window.removeEventListener('mousemove', dragMove);
                 $window.addEventListener('mousemove', dragMove);
@@ -298,7 +262,6 @@ module.exports = [
                 var left = event.clientX - containerBoundingBox.left - self.element.startPosition.x;
                 var top = event.clientY - containerBoundingBox.top - self.element.startPosition.y;
 
-                console.log('dragMove', event);
                 self.element.css({
                     'left': left + 'px',
                     'top': top + 'px'
@@ -445,7 +408,6 @@ module.exports = [
             };
 
             function setTextareaWidth(width) {
-                //console.log('setTextareaWidth', width);
 
                 self.element.css('width', width + 'px');
             }
@@ -489,7 +451,6 @@ module.exports = [
             parentGlyph.containerElement.append(self.element);
 
             // add edit handlers
-            // TODO: Leave binds for now, remove later if possible
             self.element.on('paste', handleTextareaInput);
             self.element.on('keypress', handleTextareaInput);
             self.element.on('keyup', handleTextareaDeleteText);
@@ -502,8 +463,6 @@ module.exports = [
         }
 
         var createTestTextarea = function createTestTextarea() {
-
-            console.log('createTestTextarea');
 
             var self = this;
 
