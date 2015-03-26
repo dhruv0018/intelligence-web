@@ -160,6 +160,9 @@ module.exports = [
             // add custom styles and attributes
             self.primaryTextarea.attr('readOnly', false);
 
+            // bring focus to the textarea
+            self.primaryTextarea[0].focus();
+
             // add to dom
             self.containerElement.append(self.primaryTextarea);
 
@@ -218,11 +221,15 @@ module.exports = [
 
             var primaryTextarea = self.primaryTextarea;
 
-            console.log('enterEditMode', primaryTextarea);
-            if (event) event.stopPropagation();
+            // add style & properties
+            primaryTextarea.css(self.TEXT_AREA_EDIT_CSS);
+            primaryTextarea.attr('readOnly', false);
 
             // bring focus to the textarea
-            primaryTextarea[0].focus();
+            self.primaryTextarea[0].focus();
+
+            console.log('enterEditMode', primaryTextarea);
+            if (event) event.stopPropagation();
 
             // bind event handlers to the primaryTextArea
             boundEnterDisplayMode = enterDisplayMode.bind(self);
@@ -232,16 +239,14 @@ module.exports = [
             primaryTextarea.off('dblclick', boundEnterEditMode);
 
             // remove any other handlers
+            primaryTextarea.off('mousedown', stopEventPropagation);
+            primaryTextarea.on('mousedown', stopEventPropagation);
             primaryTextarea.off('click', stopEventPropagation);
             primaryTextarea.on('click', stopEventPropagation);
 
             // add blur event (to handle exiting this state)
             primaryTextarea.off('blur', boundOnEditModeBlur);
             primaryTextarea.on('blur', boundOnEditModeBlur);
-
-            // add style & properties
-            primaryTextarea.css(self.TEXT_AREA_EDIT_CSS);
-            primaryTextarea.attr('readOnly', false);
         };
 
         /*
@@ -261,27 +266,30 @@ module.exports = [
                 event.stopImmediatePropagation();
             }
 
+            // add style & properties
+            primaryTextarea.css(self.TEXT_AREA_DISPLAY_CSS);
+            primaryTextarea.attr('readOnly', true);
+
             // bind event handlers to the primaryTextArea
             boundEnterEditMode = enterEditMode.bind(self);
             boundAddDraggable = addDraggable.bind(self);
 
             // add textarea display-mode event handlers
+            primaryTextarea.off('mousedown', stopEventPropagation);
+            primaryTextarea.on('mousedown', stopEventPropagation);
             primaryTextarea.off('click', stopEventPropagation);
             primaryTextarea.on('click', stopEventPropagation);
             primaryTextarea.off('dblclick', boundEnterEditMode);
             primaryTextarea.on('dblclick', boundEnterEditMode);
 
             // TODO: add dragging functionality
+            primaryTextarea.off('mousedown', boundAddDraggable);
             primaryTextarea.on('mousedown', boundAddDraggable);
 
             // TODO: remove this handler elsewhere
             // self.containerElement.on('mouseup', function() {
             //     self.containerElement.off('mousemove', boundDragMove);
             // });
-
-            // add style & properties
-            primaryTextarea.css(self.TEXT_AREA_DISPLAY_CSS);
-            primaryTextarea.attr('readOnly', true);
         };
 
         /*
@@ -295,7 +303,6 @@ module.exports = [
 
             primaryTextarea.off('blur', boundOnEditModeBlur);
             primaryTextarea.off('mousedown', boundAddDraggable);
-            removeDraggable();
 
             boundEnterDisplayMode(event);
 
@@ -339,18 +346,15 @@ module.exports = [
         };
         var telestrationOnEditModeBlurEvent = new CustomEvent('telestration:onEditModeBlur', telestrationOnEditModeBlurEventInfo);
 
-        var removeDraggable = function removeDraggable(event) {
-            console.log('mouseup');
-            $window.removeEventListener('mousemove', boundDragMove);
-        };
-
         var dragEnd = function dragEnd(event) {
-
+            console.log('dragEnd');
             var self = this;
 
-            removeDraggable();
             recalculatePrimaryTextareaStartPosition.call(self);
             storeTextAreaProperties.call(self);
+
+            $window.removeEventListener('mousemove', boundDragMove);
+            self.primaryTextarea.off('mouseup', boundDragEnd);
         };
 
         // TODO: Finish implementing draggable.
