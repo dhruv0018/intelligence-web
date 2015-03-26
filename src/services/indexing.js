@@ -158,7 +158,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 else if (eventManager.current.hasVariables) {
 
                     /* Make sure all of the variables have values. */
-                    return eventManager.allEventVariablesHaveValues();
+                    return eventManager.current.isValid;
                 }
 
                 else return true;
