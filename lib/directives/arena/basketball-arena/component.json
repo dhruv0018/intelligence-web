@@ -1,5 +1,5 @@
 {
-    "name": "arena",
+    "name": "basketball-arena",
     "templates": [
         "template.html"
     ],
@@ -13,8 +13,9 @@
         "."
     ],
     "locals": [
-        "football-arena",
-        "basketball-arena",
-        "lacrosse-arena"
+        "basketball-hs-arena",
+        "basketball-ncaa-arena",
+        "basketball-nba-arena",
+        "basketball-fiba-arena"
     ]
 }

@@ -1,5 +1,5 @@
 {
-    "name": "arena",
+    "name": "football-arena",
     "templates": [
         "template.html"
     ],
@@ -12,9 +12,9 @@
     "paths": [
         "."
     ],
-    "locals": [
-        "football-arena",
-        "basketball-arena",
-        "lacrosse-arena"
+    "local": [
+        "football-field-section",
+        "football-field-line-of-scrimmage",
+        "football-field-formation"
     ]
 }
