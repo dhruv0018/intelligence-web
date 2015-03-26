@@ -97,11 +97,9 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
     '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'PlaysManager', 'ROLES', 'SessionService', 'TELESTRATION_PERMISSIONS',
     function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, playsManager, ROLES, session, TELESTRATION_PERMISSIONS) {
 
-        var gameId = $stateParams.id;
-        var game = games.get(gameId);
-        var uploader = users.get(game.uploaderUserId);
 
-        $scope.game = game;
+        var game = $scope.game;
+        var uploader = users.get(game.uploaderUserId);
 
         $scope.posterImage = {
             url: game.video.thumbnail

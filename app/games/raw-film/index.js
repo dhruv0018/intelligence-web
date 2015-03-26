@@ -62,8 +62,7 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         /* Variables */
 
-        var gameId = $stateParams.id;
-        var game = games.get(gameId);
+        var game = $scope.game;
 
 
         /* Scope */
