@@ -63,7 +63,7 @@ module.exports = [
 
             self.primarySVGShape.on('mouseover', function addHoverClass(mouseEvent) {
 
-               self.primarySVGShape.addClass('hover');
+                self.primarySVGShape.addClass('hover');
             });
 
             self.primarySVGShape.on('mouseout', function removeHoverClass(mouseEvent) {

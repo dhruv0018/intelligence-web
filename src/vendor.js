@@ -29,4 +29,3 @@ require('videogular-buffering/vg-buffering');
 require('videogular-overlay-play/vg-overlay-play');
 require('videogular-poster/vg-poster');
 require('fullscreen-api-polyfill/fullscreen-api-polyfill');
-
