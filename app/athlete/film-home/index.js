@@ -75,18 +75,22 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
         };
 
         Data.players = Data.teams.then(function() {
-            //Get all players from user's teams TODO: use relatedUserId
-            var athleteRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
-            var teamPlayers = [];
-            athleteRoles.forEach(function(role, index) {
-                var team = teams.get(role.teamId);
 
-                teamPlayers.push(players.load({
-                    rosterId: team.roster.id
-                }));
+            let athleteRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
+            let rosterIds = [];
+
+            athleteRoles.forEach(function(role, index) {
+                let team = teams.get(role.teamId);
+                rosterIds.push(team.roster.id);
             });
 
-            return $q.all(teamPlayers);
+            let rosters = {
+                'rosterId[]': rosterIds
+            };
+
+            return $q.all({
+                rosters: players.load(rosters)
+            });
         });
 
         Data.athlete = {
