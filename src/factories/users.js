@@ -126,6 +126,21 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
             * @class User
             * @method
+            * Saves user and updates currentUser in session
+            */
+            save: function() {
+                var self = this;
+
+                if (self.id === session.getCurrentUserId()) {
+                    session.storeCurrentUser();
+                }
+
+                BaseFactory.save();
+            },
+
+            /**
+            * @class User
+            * @method
             * @returns {String} returns the users first and last name as a
             * concatenated string.
             * Gets the users full name.
