@@ -37,10 +37,6 @@ IntelligenceWebClient.service('Utilities', [
             return unique;
         };
 
-        this.floor = function (num) {
-            return Math.floor(num);
-        };
-
         this.matchMedia = function (query, success, fail) {
 
             var mql = $window.matchMedia(query);

@@ -39,9 +39,9 @@
             <li class="athlete-attribute">
                 <label>Height/Weight</label>
                 <span ng-if="athlete.profile.height && athlete.profile.weight">
-                    {{utilities.floor(athlete.profile.height / 12)}}&#39;{{athlete.profile.height % 12}}&quot;
+                    {{ athlete.profile.height | height }}
                     &nbsp;&#47;&nbsp;
-                    {{athlete.profile.weight}}&nbsp;lbs&#46;
+                    {{ athlete.profile.weight | weight }}
                 </span>
                 <span ng-if="!athlete.profile.height || !athlete.profile.weight">
                     <a
