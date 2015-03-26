@@ -33,9 +33,14 @@ IntelligenceWebClient.service('SessionService', [
 
         this.getCurrentRole = function() {
 
-            var currentUser = this.getCurrentUser();
+            if (this.currentUser) {
 
-            return currentUser.currentRole;
+                var currentUser = this.getCurrentUser();
+
+                return currentUser.currentRole;
+            } else {
+                throw new Exception('Could not get currentRole because session.currentUser does not exist');
+            }
         };
 
         this.getCurrentUserId = function() {
