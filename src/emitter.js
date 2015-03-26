@@ -98,10 +98,3 @@ var EVENT_PARSER_MAP = {
 };
 
 IntelligenceWebClient.constant('EVENT_PARSER_MAP', EVENT_PARSER_MAP);
-
-
-
-
-
-
-

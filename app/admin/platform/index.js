@@ -151,4 +151,3 @@ Platform.controller('PlatformController', [
         };
     }
 ]);
-

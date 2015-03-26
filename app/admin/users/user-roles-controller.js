@@ -35,4 +35,3 @@ Users.controller('Users.User.Roles.Controller', [
         };
     }
 ]);
-

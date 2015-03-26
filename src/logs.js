@@ -50,4 +50,3 @@ IntelligenceWebClient.config([
         ]);
     }
 ]);
-

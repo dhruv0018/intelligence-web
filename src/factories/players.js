@@ -68,4 +68,3 @@ IntelligenceWebClient.factory('PlayersFactory', [
         return PlayersFactory;
     }
 ]);
-

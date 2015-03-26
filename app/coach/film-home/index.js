@@ -56,4 +56,3 @@ FilmHome.config([
 
 /* File dependencies */
 require('./controller');
-

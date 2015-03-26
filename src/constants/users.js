@@ -162,4 +162,3 @@ IntelligenceWebClient.factory('ANONYMOUS_USER', [
         return ANONYMOUS_USER;
     }
 ]);
-

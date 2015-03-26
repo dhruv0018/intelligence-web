@@ -32,4 +32,3 @@ var App = angular.module('App', [
     'Clips',
     'ReelsArea'
 ]);
-

@@ -70,4 +70,3 @@ IntelligenceWebClient.service('Utilities', [
         };
     }
 ]);
-

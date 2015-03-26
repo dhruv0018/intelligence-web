@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('LeaguesStorage', [
         return LeaguesStorage;
     }
 ]);
-

@@ -24,7 +24,7 @@ Profile.config([
                 'main@root': {
                     templateUrl: 'athlete/profile/template.html',
                     controller: 'Athlete.Profile.controller'
-                }
+            }
             },
             resolve: {
                 'Athlete.Profile.Data': [
@@ -46,7 +46,7 @@ Profile.config([
                 userId: [
                     '$stateParams',
                     function($stateParams){
-                          return $stateParams.id;
+                        return $stateParams.id;
                     }
                 ]
             }

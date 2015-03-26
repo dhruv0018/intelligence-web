@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('SchoolsStorage', [
         return SchoolsStorage;
     }
 ]);
-

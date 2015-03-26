@@ -105,4 +105,3 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
 
 /* File dependencies */
 require('./controller');
-

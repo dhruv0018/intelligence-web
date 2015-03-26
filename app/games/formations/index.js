@@ -133,4 +133,3 @@ GamesFormations.controller('GamesFormations.controller', [
         });
     }
 ]);
-

@@ -83,7 +83,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reels.filter(function(reel) {
 
                     return reel.uploaderUserId == userId &&
-                           reel.uploaderTeamId == teamId;
+                        reel.uploaderTeamId == teamId;
                 });
             },
 
@@ -382,7 +382,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reels.filter(function publishedReels(reel) {
 
                     return reel.uploaderUserId == userId &&
-                           reel.isPublishedToProfile === true;
+                        reel.isPublishedToProfile === true;
                 });
             },
             isFeatured: function(user) {
@@ -405,4 +405,3 @@ IntelligenceWebClient.factory('ReelsFactory', [
         return ReelsFactory;
     }
 ]);
-
