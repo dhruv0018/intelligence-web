@@ -387,6 +387,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
             },
             isFeatured: function(user) {
                 var self = this;
+                user = user || session.getCurrentUser();
 
                 return self.id == user.profile.featuredReelId;
             },
