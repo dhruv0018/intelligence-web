@@ -43,8 +43,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 play.opposingIndexedScore = play.opposingIndexedScore || 0;
 
                 /* Indicates if the play has visible events; set by the events. */
-                $scope.play.hasVisibleEvents = false;
-
+                play.hasVisibleEvents = false;
 
                 /* Play possesion; filled in by the events. */
                 play.possessionTeamId = play.possessionTeamId || null;
