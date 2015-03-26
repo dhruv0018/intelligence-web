@@ -23,7 +23,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 playsManager.reset(plays);
                 tagsManager.reset(tagset);
-                eventManager.current = new KrossoverEvent();
                 playManager.reset(tagset, game.id);
                 playManager.clear();
             },
