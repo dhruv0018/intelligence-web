@@ -152,6 +152,14 @@ module.exports = [
         };
 
         /*
+         * Sets the onTextChanged callback function
+         */
+        Glyph.prototype.onTextChanged = function onTextChanged(onDragEndHandler) {
+
+            this.onTextChangedHandler = onTextChangedHandler;
+        };
+
+        /*
          * Optional click-handler with no operation by default
          */
         Glyph.prototype.onClickHandler = function onClickHandler() {
@@ -171,6 +179,14 @@ module.exports = [
          * Optional click-handler with no operation by default
          */
         Glyph.prototype.onDragEndHandler = function onDragEndHandler() {
+
+            noop();
+        };
+
+        /*
+         * Optional textChanged-handler with no operation by default
+         */
+        Glyph.prototype.onTextChangedHandler = function onTextChangedHandler() {
 
             noop();
         };

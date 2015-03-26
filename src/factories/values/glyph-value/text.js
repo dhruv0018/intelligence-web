@@ -88,13 +88,16 @@ module.exports = [
         Text.prototype.MAX_LENGTH = 70;
 
 
-        /* Getters and Setters */
+        Text.prototype.addEditHandlers = function addEditHandlers() {
 
-        // TODO: Is this function needed?
-        Text.prototype.getShapeContext = function getShapeContext() {
+            var self = this;
 
-            // TODO: Return Text Element height/width
-            return null;
+            if (!self.primaryTextarea) return;
+
+            self.primarySVGShape.element.on('click', function handleClick(event) {
+
+                self.onClickHandler(event);
+            });
         };
 
         /*
@@ -219,7 +222,7 @@ module.exports = [
                 if (newText !== parentGlyph.text) {
 
                     parentGlyph.text = newText;
-                    // parentGlyph.onTextChanged();
+                    parentGlyph.onTextChangedHandler();
                 }
             }
 
@@ -236,24 +239,13 @@ module.exports = [
             };
             var telestrationOnEditModeBlurEvent = new CustomEvent('telestration:onEditModeBlur', telestrationOnEditModeBlurEventInfo);
 
-            function dragEnd(event) {
-
-                event.preventDefault();
-
-                self.recalculatePrimaryTextareaStartPosition();
-                storeTextAreaProperties();
-
-                $window.removeEventListener('mousemove', dragMove);
-                $window.removeEventListener('mouseup', dragEnd);
-            }
-
             // TODO: Finish implementing draggable.
             function addDraggable(event) {
 
                 event.preventDefault();
 
-                containerBoundingBox = parentGlyph.getContainerDimensions();
-                self.element.startPosition = {x: event.offsetX, y: event.offsetY};
+                $window.removeEventListener('mousedown', dragStart);
+                $window.addEventListener('mousedown', dragStart);
 
                 $window.removeEventListener('mousemove', dragMove);
                 $window.addEventListener('mousemove', dragMove);
@@ -261,6 +253,16 @@ module.exports = [
                 // listen to turn off dragging
                 $window.removeEventListener('mouseup', dragEnd);
                 $window.addEventListener('mouseup', dragEnd);
+            }
+
+            function dragStart(event) {
+
+                event.preventDefault();
+
+                containerBoundingBox = parentGlyph.getContainerDimensions();
+                self.element.startPosition = {x: event.offsetX, y: event.offsetY};
+
+                parentGlyph.onDragStartHandler();
             }
 
             function dragMove(event) {
@@ -274,6 +276,23 @@ module.exports = [
                     'left': left + 'px',
                     'top': top + 'px'
                 });
+            }
+
+            function dragEnd(event) {
+
+                event.preventDefault();
+
+                // ensure text is within constraints
+                self.recalculatePrimaryTextareaStartPosition();
+
+                // save text area properties
+                storeTextAreaProperties();
+
+                $window.removeEventListener('mousedown', dragStart);
+                $window.removeEventListener('mousemove', dragMove);
+                $window.removeEventListener('mouseup', dragEnd);
+
+                parentGlyph.onDragEndHandler();
             }
 
             /******************************************************************
