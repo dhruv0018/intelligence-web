@@ -35,35 +35,25 @@ GamesDownAndDistance.config([
                             var game = games.get(gameId);
 
                             var Data = {
+                                game: game,
                                 user: users.load(game.uploaderUserId),
-                                team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId]),
-                                game: game
+                                tagsets: tagsets.load(),
+                                filtersets: filtersets.load(),
+                                plays: plays.load({
+                                    gameId: game.id
+                                }),
+                                team: teams.load([
+                                    game.uploaderTeamId,
+                                    game.teamId,
+                                    game.opposingTeamId
+                                ]),
+                                players: players.load({
+                                    'rosterId[]': [
+                                        game.getRoster(game.teamId).id,
+                                        game.getRoster(game.opposingTeamId).id
+                                    ]
+                                })
                             };
-
-                            var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
-                            Data.loadTeamPlayers = players.load(teamPlayersFilter);
-
-                            var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
-                            Data.loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
-
-                            var playsFilter = { gameId: game.id };
-                            Data.loadPlays = plays.load(playsFilter);
-
-                            //todo -- deal with this, real slow because of nesting
-                            Data.league = Data.team.then(function() {
-                                var uploaderTeam = teams.get(game.uploaderTeamId);
-                                return leagues.fetch(uploaderTeam.leagueId);
-                            });
-
-                            Data.filterSet = Data.league.then(function() {
-                                var uploaderTeam = teams.get(game.uploaderTeamId);
-                                var uploaderLeague = leagues.get(uploaderTeam.leagueId);
-                                return filtersets.fetch(uploaderLeague.filterSetId);
-                            });
-
-                            Data.tagSet = Data.league.then(function(league) {
-                                return tagsets.load();
-                            });
 
                             return $q.all(Data);
                         });
