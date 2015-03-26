@@ -41,6 +41,9 @@ IntelligenceWebClient.service('EventManager', [
             }
         });
 
+        /* On event select; set the current event to match the selected event. */
+        playlistEventEmitter.on('EVENT_SELECT', event => this.current = event);
+
         /**
          * Checks whether the event is a floating event.
          * @returns - true if the event is floating event; false otherwise.
