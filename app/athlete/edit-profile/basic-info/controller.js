@@ -16,7 +16,7 @@ var BasicInfo = angular.module('Athlete.EditProfile.BasicInfo');
 BasicInfo.controller('Athlete.EditProfile.BasicInfo.controller', [
     '$scope', '$http', 'config', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'PositionsetsFactory', 'UsersFactory', 'SessionService', 'AlertsService', 'Athlete.EditProfile.Data',
     function controller($scope, $http, config, teams, leagues, sports, positionsets, users, session, alerts, data) {
-        $scope.athlete = users.get(session.getCurrentUserId());
+        $scope.athlete = session.getCurrentUser();
         $scope.teams = teams.getMap();
         $scope.leagues = leagues.getMap();
         $scope.sports = sports.getMap();
@@ -49,7 +49,7 @@ BasicInfo.controller('Athlete.EditProfile.BasicInfo.controller', [
                 })
                     .success(function(responseUser) {
                         $scope.athlete.imageUrl = responseUser.imageUrl;
-                        users.save($scope.athlete).then(function() {
+                        $scope.athlete.save().then(function() {
                             alerts.add({
                                 type: 'success',
                                 message: 'Your profile has been saved.'
@@ -65,7 +65,7 @@ BasicInfo.controller('Athlete.EditProfile.BasicInfo.controller', [
                         });
                     });
             } else {
-                users.save($scope.athlete).then(function() {
+                $scope.athlete.save().then(function() {
                     alerts.add({
                         type: 'success',
                         message: 'Your profile has been saved.'

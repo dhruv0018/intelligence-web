@@ -19,7 +19,7 @@ EditProfile.controller('Athlete.EditProfile.controller', [
         // TO-DO: Move this to somewhere more appropriate (state.onEnter?)
         $state.go('Athlete.EditProfile.BasicInfo');
 
-        $scope.athlete = users.get(session.getCurrentUserId());
+        $scope.athlete = session.getCurrentUser();
 
         let reader = new FileReader();
 
