@@ -123,7 +123,6 @@ IntelligenceWebClient.service('PlaysManager', [
             this.plays.forEach(calculatePlay);
 
             console.timeEnd('Calculating plays...');
-            console.log(this.plays);
 
         };
 
