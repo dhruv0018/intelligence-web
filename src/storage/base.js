@@ -484,4 +484,3 @@ IntelligenceWebClient.factory('BaseStorage', [
         return BaseStorage;
     }
 ]);
-

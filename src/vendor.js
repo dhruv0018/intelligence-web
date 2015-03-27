@@ -1,6 +1,10 @@
 require('angular/angular');
 require('angular-sanitize/angular-sanitize');
 require('angular-resource/angular-resource');
+require('angular-material/angular-material');
+require('angular-aria/angular-aria');
+require('angular-animate/angular-animate');
+require('angular-material-icons/angular-material-icons');
 require('angular-bootstrap/dist/ui-bootstrap-tpls');
 require('angular-ui-unique/unique');
 require('angular-ui-showhide/showhide');
@@ -29,4 +33,3 @@ require('videogular-buffering/vg-buffering');
 require('videogular-overlay-play/vg-overlay-play');
 require('videogular-poster/vg-poster');
 require('fullscreen-api-polyfill/fullscreen-api-polyfill');
-

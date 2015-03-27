@@ -40,4 +40,3 @@ IntelligenceWebClient.factory('CurrentEventMediator', [
         return mediator;
     }
 ]);
-

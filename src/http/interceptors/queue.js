@@ -34,4 +34,3 @@ IntelligenceWebClient.config([
         $httpProvider.interceptors.push('QueueInterceptor');
     }
 ]);
-

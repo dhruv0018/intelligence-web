@@ -147,7 +147,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return games.filter(function(game) {
 
                     return game.uploaderUserId == userId &&
-                           game.uploaderTeamId == teamId;
+                        game.uploaderTeamId == teamId;
                 });
             },
 
@@ -1240,4 +1240,3 @@ IntelligenceWebClient.factory('GamesFactory', [
         return GamesFactory;
     }
 ]);
-

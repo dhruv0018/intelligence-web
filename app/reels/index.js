@@ -195,7 +195,7 @@ ReelsArea.controller('ReelsArea.controller', [
 
         } else if (isTeamUploadersTeam && isCoach) {
 
-             reelsPermissions = REELS_PERMISSIONS.EDITABLE;
+            reelsPermissions = REELS_PERMISSIONS.EDITABLE;
         }
 
         $scope.canUserDelete = reelsPermissions === REELS_PERMISSIONS.DELETABLE;
@@ -351,7 +351,5 @@ ReelsArea.controller('ReelsArea.controller', [
                 });
             });
         }
-
     }
 ]);
-

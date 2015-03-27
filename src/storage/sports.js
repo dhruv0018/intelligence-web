@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('SportsStorage', [
         return SportsStorage;
     }
 ]);
-

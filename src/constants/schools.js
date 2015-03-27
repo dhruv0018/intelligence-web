@@ -34,4 +34,3 @@ var SCHOOL_TYPES = [
 ];
 
 IntelligenceWebClient.constant('SCHOOL_TYPES', SCHOOL_TYPES);
-

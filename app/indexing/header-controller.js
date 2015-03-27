@@ -93,4 +93,3 @@ Indexing.controller('Indexing.Header.Controller', [
         };
     }
 ]);
-

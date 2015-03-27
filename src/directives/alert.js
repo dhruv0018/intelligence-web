@@ -29,4 +29,3 @@ IntelligenceWebClient.directive('alertMessage', [
         };
     }
 ]);
-

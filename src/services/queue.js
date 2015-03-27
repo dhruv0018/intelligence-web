@@ -246,4 +246,3 @@ IntelligenceWebClient.service('HTTPQueueService', [
         window.addEventListener('offline', goOffline.bind(this));
     }
 ]);
-
