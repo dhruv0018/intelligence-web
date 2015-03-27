@@ -79,9 +79,7 @@ class Event extends Entity {
      */
     get isFloat () {
 
-        return this.isStart === false &&
-               this.isEnd === false &&
-               this.children.length === 0;
+        return this.isStart === false && this.isEnd === false && this.children.length === 0;
     }
 
     /**
@@ -96,4 +94,3 @@ class Event extends Entity {
 }
 
 export default Event;
-
