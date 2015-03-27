@@ -480,6 +480,12 @@ module.exports = [
             return self;
         }
 
+        /*
+         * This is a div that is used a width 'calculation' area. It has the same styles
+         * as the primaryTextarea edit-mode, so that the width will be completely accurate.
+         * The reason a div is used as because there is no way of getting the width of lines of text
+         * from the textarea. The div is hidden off screen so it's not visible to the user.
+         */
         var createTestTextarea = function createTestTextarea() {
 
             var self = this;
