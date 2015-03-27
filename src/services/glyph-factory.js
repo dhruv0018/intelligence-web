@@ -87,7 +87,8 @@ module.exports = [
 
             var options = {
                 color: glyph.color,
-                vertices: glyph.vertices
+                vertices: glyph.vertices,
+                text: glyph.text
             };
 
             switch (glyph.type) {
@@ -131,7 +132,7 @@ module.exports = [
                     break;
 
                 case TELESTRATION_TYPES.TEXT:
-                    extendedGlyph = new Text(TELESTRATION_TYPES.TEXT, options, containerElement);
+                    extendedGlyph = new Text(TELESTRATION_TYPES.TEXT, options, containerElement, 'display');
                     break;
                 default:
                     break;

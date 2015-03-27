@@ -9,13 +9,13 @@ module.exports = [
         var testTextArea; // Singleton object used for all text tools
         var containerBoundingBox;
 
-        function Text(type, options, containerElement) {
+        function Text(type, options, containerElement, mode) {
 
             Glyph.call(this, type, options, containerElement);
 
             body = angular.element(document.getElementsByTagName('body'));
 
-            this.primaryTextarea = new PrimaryTextarea(this);
+            this.primaryTextarea = new PrimaryTextarea(this, mode);
             if (!testTextArea) createTestTextarea.call(this);
         }
         angular.inheritPrototype(Text, Glyph);
@@ -139,7 +139,7 @@ module.exports = [
 
         // creation
 
-        function PrimaryTextarea(parentGlyph) {
+        function PrimaryTextarea(parentGlyph, mode) {
 
             var self = this;
 
@@ -241,7 +241,7 @@ module.exports = [
 
             function dragStart(event) {
 
-                event.preventDefault();
+                event.stopPropagation();
 
                 containerBoundingBox = parentGlyph.getContainerDimensions();
                 self.element.startPosition = {x: event.offsetX, y: event.offsetY};
@@ -481,7 +481,8 @@ module.exports = [
             self.element.on('cut', handleTextareaDeleteText);
 
             // enter default start-state
-            enterEditMode();
+            if (mode !== 'display') enterEditMode();
+            else enterDisplayMode();
 
             return self;
         }
