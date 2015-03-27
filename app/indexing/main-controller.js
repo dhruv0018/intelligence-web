@@ -24,7 +24,6 @@ Indexing.controller('Indexing.Main.Controller', [
     'VideoPlayerEventEmitter',
     'SessionService',
     'IndexingService',
-    'ScriptsService',
     'TagsManager',
     'PlaysManager',
     'PlayManager',
@@ -47,7 +46,6 @@ Indexing.controller('Indexing.Main.Controller', [
                         videoPlayerEventEmitter,
                         session,
                         indexing,
-                        scripts,
                         tags,
                         playsManager,
                         play,
@@ -76,7 +74,6 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.opposingTeamPlayers = data.opposingTeamPlayers;
         $scope.league = leagues.get($scope.team.leagueId);
         $scope.tagset = tagsets.get($scope.league.tagSetId);
-        $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
 
@@ -89,6 +86,16 @@ Indexing.controller('Indexing.Main.Controller', [
         videoPlayerEventEmitter.on('fullscreen', onFullScreen);
 
         $scope.$on('$destroy', onDestroy);
+
+        /* TODO: Just temp until event entity has tag in it. */
+        $scope.indexerScript = function(event) {
+
+            var tagId = event.tagId;
+            var tags = $scope.tagset.tags;
+            var tag = tags[tagId];
+
+            return tag.indexerScript;
+        };
 
         /**
          * Change handler for video player fill screen changes.
