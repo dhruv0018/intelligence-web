@@ -1,10 +1,10 @@
 <div class="no-profile-results">
-    <div data-ng-if="userIsLoggedIn">
+    <div ng-show="userIsLoggedIn" class="ng-hide">
         <h3>You haven't added a reel yet</h3>
         <p>Put together your best plays and post it to your profile</p>
-        <button class="btn btn-default" data-ui-sref="Athlete.FilmHome"><i class="icon icon-plus"></i>Add a new reel</button>
+        <button class="btn btn-default" ui-sref="Athlete.FilmHome"><i class="icon icon-plus"></i>Add a new reel</button>
     </div>
-    <div data-ng-if="!userIsLoggedIn">
+    <div ng-show="!userIsLoggedIn" ng-hide="userIsLoggedIn">
         <h3>No reels have been added here yet</h3>
     </div>
 </div>

@@ -37,8 +37,3 @@ var STATE_NAMES = {
 };
 
 IntelligenceWebClient.constant('STATE_NAMES', STATE_NAMES);
-
-
-
-
-

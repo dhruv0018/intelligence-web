@@ -65,4 +65,3 @@ Users.directive('krossoverNewRole', [
         return role;
     }
 ]);
-

@@ -24,4 +24,3 @@ IntelligenceWebClient.factory('SchoolsResource', [
         return SchoolsResource;
     }
 ]);
-

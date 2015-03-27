@@ -77,4 +77,3 @@ Users.filter('rolesFilter', [
 
         };
     }]);
-

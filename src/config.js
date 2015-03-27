@@ -35,4 +35,3 @@ else {
 config.environment = environment;
 
 Config.constant('config', config);
-

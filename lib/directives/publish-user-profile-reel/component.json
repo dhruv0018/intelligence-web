@@ -1,0 +1,13 @@
+{
+    "name": "publish-user-profile-reel",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ]
+}

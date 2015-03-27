@@ -68,6 +68,3 @@ var FILTER_CATEGORY_TYPES = {
 };
 
 IntelligenceWebClient.constant('FILTERSET_CATEGORY_TYPES', FILTER_CATEGORY_TYPES);
-
-
-

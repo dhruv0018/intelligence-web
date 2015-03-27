@@ -1,7 +1,5 @@
 var pkg = require('../../package.json');
 
-var breakpoints = require('./breakpoints');
-
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -12,7 +10,7 @@ var VIEWPORTS = {
     MOBILE: {
         id: 2,
         name: 'Mobile',
-        width: breakpoints.mobile
+        width: require('./breakpoints').MOBILE
     },
 
     DESKTOP: {
