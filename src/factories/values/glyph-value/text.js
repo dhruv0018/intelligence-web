@@ -2,8 +2,8 @@
 /* Text - extends Glyph */
 
 module.exports = [
-    'GlyphValue', '$window',
-    function(Glyph, $window) {
+    'GlyphValue', '$window', 'TelestrationEventEmitter',
+    function(Glyph, $window, TelestrationEventEmitter) {
 
         var body;
         var testTextArea; // Singleton object used for all text tools
@@ -158,6 +158,7 @@ module.exports = [
 
                 // remove any other handlers
                 self.element.off('mousedown', dragStart);
+                TelestrationEventEmitter.emit('disableDraw');
 
                 self.element.off('mousedown', stopEventPropagation);
                 self.element.on('mousedown', stopEventPropagation);
@@ -201,7 +202,7 @@ module.exports = [
                 // save text area properties
                 storeTextAreaProperties();
 
-                self.element[0].dispatchEvent(telestrationOnEditModeBlurEvent);
+                TelestrationEventEmitter.emit('enableDraw');
             }
 
             function storeTextAreaProperties() {
@@ -230,14 +231,6 @@ module.exports = [
 
                 event.stopPropagation();
             }
-
-            // TODO: Use node emitter
-            var telestrationOnEditModeBlurEventInfo = {
-                detail: {},
-                bubbles: true,
-                cancelable: true
-            };
-            var telestrationOnEditModeBlurEvent = new CustomEvent('telestration:onEditModeBlur', telestrationOnEditModeBlurEventInfo);
 
             function dragStart(event) {
 
