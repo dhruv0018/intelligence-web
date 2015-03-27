@@ -87,16 +87,6 @@ Indexing.controller('Indexing.Main.Controller', [
 
         $scope.$on('$destroy', onDestroy);
 
-        /* TODO: Just temp until event entity has tag in it. */
-        $scope.indexerScript = function(event) {
-
-            var tagId = event.tagId;
-            var tags = $scope.tagset.tags;
-            var tag = tags[tagId];
-
-            return tag.indexerScript;
-        };
-
         /**
          * Change handler for video player fill screen changes.
          */
