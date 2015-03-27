@@ -2,10 +2,10 @@
 
     <ul class="primary-controls">
 
-        <telestration-activate-button ng-click="controls.toggleControls($event)">
-        </telestration-activate-button>
+        <telestration-enable-button ng-click="controls.toggleControls($event)">
+        </telestration-enable-button>
 
-        <telestration-toolbar ng-show="controls.enabled" class="slide"></telestration-toolbar>
+        <telestration-toolbar ng-show="controls.telestrationsController.isEnabled" class="slide"></telestration-toolbar>
 
     </ul>
 

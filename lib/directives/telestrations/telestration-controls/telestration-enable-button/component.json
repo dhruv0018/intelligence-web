@@ -1,5 +1,5 @@
 {
-    "name": "telestration-activate-button",
+    "name": "telestration-enable-button",
     "templates": [
         "template.html"
     ],

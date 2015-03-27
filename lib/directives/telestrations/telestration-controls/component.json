@@ -14,7 +14,7 @@
         "styles.less"
     ],
     "locals": [
-        "telestration-activate-button",
+        "telestration-enable-button",
         "telestration-clear-all-button",
         "telestration-toolbar"
     ]
