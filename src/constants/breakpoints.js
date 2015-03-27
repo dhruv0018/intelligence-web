@@ -2,10 +2,10 @@
 // across Angular resources
 module.exports = {
 
-    MOBILE: module.exports.mobile,
-    MD_SCREEN_SM: module.exports.mdScreenSm,
-    MD_SCREEN_MD: module.exports.mdScreenMd,
-    MD_SCREEN_LG: module.exports.mdScreenLg
+    MOBILE: 1024,
+    MD_SCREEN_SM: 600,
+    MD_SCREEN_MD: 960,
+    MD_SCREEN_LG: 1200
 };
 
 var pkg = require('../../package.json');
