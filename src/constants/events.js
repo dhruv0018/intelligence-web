@@ -13,4 +13,3 @@ var FIELD_TYPE = {
 };
 
 IntelligenceWebClient.constant('FIELD_TYPE', FIELD_TYPE);
-
