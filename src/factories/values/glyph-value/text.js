@@ -28,7 +28,7 @@ module.exports = [
 
         Text.prototype.TEXT_AREA_EDIT_CSS = {
             'margin': '0px',
-            'padding': '20px',
+            'padding': '20px 10px',
             'letter-spacing': '0.5px',
             'font-family': 'Helvetica',
             'font-size': '22px',
@@ -54,7 +54,7 @@ module.exports = [
 
         Text.prototype.TEXT_AREA_DISPLAY_CSS = {
             'margin': '0px',
-            'padding': '20px',
+            'padding': '20px 10px',
             'letter-spacing': '0.5px',
             'font-family': 'Helvetica',
             'font-size': '22px',
