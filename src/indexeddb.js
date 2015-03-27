@@ -28,7 +28,12 @@ var migrations = [
 ];
 
 /* Set a timeout for opening the database. */
-var openTimeout = setTimeout(IndexedDB.reject('IndexedDB timeout'), INDEXEDDB_OPEN_TIMEOUT);
+var openTimeout = setTimeout(onOpenTimeout, INDEXEDDB_OPEN_TIMEOUT);
+
+function onOpenTimeout () {
+
+    IndexedDB.reject('IndexedDB timeout');
+}
 
 openDB(pkg.name);
 

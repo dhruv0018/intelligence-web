@@ -351,6 +351,5 @@ ReelsArea.controller('ReelsArea.controller', [
                 });
             });
         }
-
     }
 ]);

@@ -430,20 +430,65 @@ IntelligenceWebClient.factory('ReelsFactory', [
              * @param - userId
              * @returns {boolean}
              */
-            isUploader: function isUploader(userId) {
-                var self = this;
+            isUploader: function (userId) {
 
-                return userId === self.uploaderUserId;
+                return userId === this.uploaderUserId;
             },
             /*
              * Determines if the team given is the same as the uploader's (owner) team
              * @param - teamId
              * @returns {boolean}
              */
-            isTeamUploadersTeam: function isTeamUploadersTeam(teamId) {
+            isTeamUploadersTeam: function (teamId) {
+
+                return teamId === this.uploaderTeamId;
+            },
+            publishToProfile: function() {
                 var self = this;
 
-                return teamId === self.uploaderTeamId;
+                if (!self.isSharedWithPublic()) {
+                    self.togglePublicSharing();
+                }
+
+                self.isPublishedToProfile = true;
+            },
+            unpublishFromProfile: function() {
+                var self = this;
+
+                if (self.isSharedWithPublic()) {
+                    self.togglePublicSharing();
+                }
+
+                self.isPublishedToProfile = false;
+            },
+            getPublishedReels: function(userId) {
+                userId = userId || session.getCurrentUserId();
+
+                if (!userId) throw new Error('No userId');
+
+                var reels = this.getList();
+
+                return reels.filter(function publishedReels(reel) {
+
+                    return reel.uploaderUserId == userId &&
+                        reel.isPublishedToProfile === true;
+                });
+            },
+            isFeatured: function(user) {
+                var self = this;
+                user = user || session.getCurrentUser();
+
+                return self.id == user.profile.featuredReelId;
+            },
+            getFeaturedReel: function(user) {
+
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
+
+                let featuredReelId = user.profile.featuredReelId;
+
+                return featuredReelId ? this.get(featuredReelId) : undefined;
             }
         };
 

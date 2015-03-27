@@ -1,0 +1,22 @@
+{
+    "name": "profile",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js",
+        "config.js",
+        "controller.js"
+    ],
+    "locals": [
+        "highlights",
+        "academics",
+        "stats"
+    ],
+    "paths": [
+        "."
+    ]
+}
