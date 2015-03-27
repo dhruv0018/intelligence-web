@@ -602,6 +602,29 @@ IntelligenceWebClient.factory('UsersFactory', [
                         return self.extend(user);
                     });
                 });
+            },
+
+            /**
+            * @class User
+            * @method
+            * @returns {Integer} returns the user's featuredReelId
+            * Gets the users user's featuredReelId
+            */
+            getFeaturedReelId: function() {
+
+                var self = this;
+                return self.profile.featuredReelId;
+            },
+
+            /**
+            * @class User
+            * @method
+            * Sets the users user's featuredReelId
+            */
+            setFeaturedReelId: function(reelIdValue) {
+
+                var self = this;
+                self.profile.featuredReelId = reelIdValue;
             }
         };
 
