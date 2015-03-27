@@ -46,7 +46,6 @@ require('./services/session');
 require('./services/account');
 require('./services/queue');
 require('./services/alerts');
-require('./services/scripts');
 require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
