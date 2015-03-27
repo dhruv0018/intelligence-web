@@ -45,17 +45,17 @@
                 <span class="field-info-title">Down and Distance:</span>
                 <span data-ng-if="dndReport.down">{{dndReport.down}}</span>
                 <span data-ng-if="!dndReport.down">Any down</span>
-                and 
+                and
                 <span data-ng-if="dndReport.distance">{{dndReport.distance}}</span>
                 <span data-ng-if="!dndReport.distance">any distance</span>
             </span>
             <span class="field-info">
-                <span class="field-info-title">Hash:</span> 
+                <span class="field-info-title">Hash:</span>
                 <span data-ng-if="dndReport.hash">{{dndReport.hash}}</span>
                 <span data-ng-if="!dndReport.hash">Any</span>
             </span>
             <span class="field-info">
-                <span class="field-info-title">Weight:</span> 
+                <span class="field-info-title">Weight:</span>
                 <span data-ng-if="dndReport.strength">{{dndReport.strength}}</span>
                 <span data-ng-if="!dndReport.strength">Any</span>
             </span>
@@ -66,7 +66,7 @@
             <span class="print-formation"><i class="icon icon-print"></i> Print</span>
         </div>-->
         <div class="field">
-            <krossover-arena data-game="game" data-plays="plays" data-team-id="teamId" data-opposing-team-id="opposingTeamId" data-league="league" data-chart="game.dndReport" data-redzone="dndReport.redZone"></krossover-arena>
+            <krossover-arena data-league="league"></krossover-arena>
         </div>
     </div>
 </div>

@@ -126,6 +126,12 @@ module.exports = function(grunt) {
                     'lib/**/*.less',
                     'theme/**/*.less'
                 ]
+            },
+            html: {
+                src: [
+                    'app/**/*.html',
+                    'lib/**/*.html'
+                ]
             }
         },
 

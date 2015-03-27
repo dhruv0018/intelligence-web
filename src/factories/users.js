@@ -126,6 +126,23 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
             * @class User
             * @method
+            * Saves user and updates currentUser in session
+            */
+            save: function() {
+                var self = this;
+                var session = $injector.get('SessionService');
+
+                if (self.id === session.getCurrentUserId()) {
+                    session.storeCurrentUser();
+                }
+
+                //TODO use normal save()
+                self.baseSave();
+            },
+
+            /**
+            * @class User
+            * @method
             * @returns {String} returns the users first and last name as a
             * concatenated string.
             * Gets the users full name.
