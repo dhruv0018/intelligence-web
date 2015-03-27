@@ -121,6 +121,22 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                     var tag = copy.tags[tagKey];
 
+                    ['userScript', 'indexerScript', 'summaryScript'].forEach(function(scriptType) {
+
+                        var script = tag[scriptType];
+
+                        if (script) {
+
+                            tag[scriptType] = script
+                            .map(function(item) {
+
+                                if (angular.isString(item)) return item;
+                                else return '__' + item.index + '__';
+                            })
+                            .join('');
+                        }
+                    });
+
                     var tagVariables = [];
 
                     Object.keys(tag.tagVariables).forEach(function(tagVariableKey) {
