@@ -392,11 +392,14 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return self.id == user.profile.featuredReelId;
             },
             getFeaturedReel: function(user) {
+
                 user = user || session.getCurrentUser();
 
                 if (!user) throw new Error('No user');
 
-                return this.get(user.profile.featuredReelId);
+                let featuredReelId = user.profile.featuredReelId;
+
+                return featuredReelId ? this.get(featuredReelId) : undefined;
             }
         };
 

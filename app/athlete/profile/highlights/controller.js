@@ -17,6 +17,6 @@ Highlights.controller('Athlete.Profile.Highlights.controller', [
     '$scope', '$stateParams', 'ReelsFactory', 'UsersFactory',
     function controller($scope, $stateParams, reels, users) {
         let user = users.get($stateParams.id);
-        $scope.reels = reels.getFeaturedReel(user);
+        $scope.reel = reels.getFeaturedReel(user);
     }
 ]);
