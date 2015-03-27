@@ -1,3 +1,6 @@
+var VARIABLE_PATTERN = /(__\d__)/;
+var VARIABLE_INDEX_PATTERN = /\d/;
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -20,6 +23,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
             storage: 'TagsetsStorage',
 
             extend: function(tagset) {
+
+                console.time('Extending tagset...');
 
                 var self = this;
 
@@ -50,11 +55,54 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                         tag.tagVariables = indexedVariables;
                     }
 
+                    ['userScript', 'indexerScript', 'summaryScript'].forEach(function(scriptType) {
+
+                        var script = tag[scriptType];
+
+                        if (script) {
+
+                            /* Split up script into array items and replace variables
+                            * with the actual tag variable object. */
+                            tag[scriptType] = script.split(VARIABLE_PATTERN)
+
+                            /* Filter script items. */
+                            .filter(function(item) {
+
+                                /* Filter out empty items. */
+                                return item.length;
+                            })
+
+                            /* Map script items. */
+                            .map(function(item) {
+
+                                /* If the item is a variable. */
+                                if (VARIABLE_PATTERN.test(item)) {
+
+                                    /* Find the index of the variable in the script. */
+                                    var index = Number(VARIABLE_INDEX_PATTERN.exec(item).pop());
+
+                                    /* Find the tag variable by script index. */
+                                    var tagVariable = tag.tagVariables[index];
+
+                                    /* Store the index position of the tag variable. */
+                                    tagVariable.index = index;
+
+                                    return tagVariable;
+                                }
+
+                                /* If the item is not a variable return it as is. */
+                                else return item;
+                            });
+                        }
+                    });
+
                     tags[tag.id] = tag;
                     indexedTags[tag.id] = tag;
                 });
 
                 tagset.tags = tags;
+
+                console.timeEnd('Extending tagset...');
 
                 return tagset;
             },
