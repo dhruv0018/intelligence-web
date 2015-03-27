@@ -26,7 +26,7 @@
         <!-- NG-REPEAT FILM DIRECTIVES -->
 
         <div ng-show="filteredFilmsList.length > 0 " class="films-area">
-            <krossover-film data-ng-repeat="film in filteredFilmsList = (filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate)" data-film="film" data-teams="teams"></krossover-film>
+            <krossover-film data-ng-repeat="film in filteredFilmsList = (filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate)" data-film="film"></krossover-film>
         </div>
     </main>
 

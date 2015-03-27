@@ -377,6 +377,26 @@
         "Athlete": true
     },
 
+    "Athlete.Profile": {
+
+        "*": true
+    },
+
+    "Athlete.Profile.Highlights": {
+
+        "*": true
+    },
+
+    "Athlete.Profile.Academics": {
+
+        "*": true
+    },
+
+    "Athlete.Profile.Stats": {
+
+        "*": true
+    },
+
     "Athlete.GameArea": {
 
         "Athlete": true
