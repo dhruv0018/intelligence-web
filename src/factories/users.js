@@ -126,6 +126,23 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
             * @class User
             * @method
+            * Saves user and updates currentUser in session
+            */
+            save: function() {
+                var self = this;
+                var session = $injector.get('SessionService');
+
+                if (self.id === session.getCurrentUserId()) {
+                    session.storeCurrentUser();
+                }
+
+                //TODO use normal save()
+                return self.baseSave();
+            },
+
+            /**
+            * @class User
+            * @method
             * @returns {String} returns the users first and last name as a
             * concatenated string.
             * Gets the users full name.
@@ -585,6 +602,29 @@ IntelligenceWebClient.factory('UsersFactory', [
                         return self.extend(user);
                     });
                 });
+            },
+
+            /**
+            * @class User
+            * @method
+            * @returns {Integer} returns the user's featuredReelId
+            * Gets the users user's featuredReelId
+            */
+            getFeaturedReelId: function() {
+
+                var self = this;
+                return self.profile.featuredReelId;
+            },
+
+            /**
+            * @class User
+            * @method
+            * Sets the users user's featuredReelId
+            */
+            setFeaturedReelId: function(reelIdValue) {
+
+                var self = this;
+                self.profile.featuredReelId = reelIdValue;
             }
         };
 

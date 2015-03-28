@@ -26,43 +26,53 @@ GamesDownAndDistance.config([
             },
             resolve: {
                 'Games.DownAndDistance.Data': [
-                    '$q', '$stateParams', 'UsersFactory', 'TeamsFactory', 'FiltersetsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'LeaguesFactory',
-                    function($q, $stateParams, users, teams, filtersets, games, players, plays, leagues) {
+                    '$q', '$stateParams', 'UsersFactory', 'TeamsFactory', 'FiltersetsFactory', 'GamesFactory', 'PlayersFactory', 'PlaysFactory', 'LeaguesFactory', 'TagsetsFactory',
+                    function($q, $stateParams, users, teams, filtersets, games, players, plays, leagues, tagsets) {
 
                         var gameId = Number($stateParams.id);
-                        return games.load(gameId).then(function() {
 
-                            var game = games.get(gameId);
+                        let gamePromise = games.load(gameId);
 
-                            var Data = {
+                        let Data = {
+                            game: gamePromise,
+                            tagsets: tagsets.load(),
+                            filtersets: filtersets.load()
+                        };
+
+                        gamePromise.then(function() {
+
+                            let game = games.get(gameId);
+
+                            let teamsPromise = teams.load([
+                                game.uploaderTeamId,
+                                game.teamId,
+                                game.opposingTeamId
+                            ]);
+
+                            let Data = {
+                                game: game,
                                 user: users.load(game.uploaderUserId),
-                                team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId]),
-                                game: game
+                                teams: teamsPromise,
+                                plays: plays.load({
+                                    gameId: game.id
+                                }),
+                                players: players.load({
+                                    'rosterId[]': [
+                                        game.getRoster(game.teamId).id,
+                                        game.getRoster(game.opposingTeamId).id
+                                    ]
+                                })
                             };
 
-                            var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
-                            Data.loadTeamPlayers = players.load(teamPlayersFilter);
-
-                            var opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
-                            Data.loadOpposingTeamPlayers = players.load(opposingTeamPlayersFilter);
-
-                            var playsFilter = { gameId: game.id };
-                            Data.loadPlays = plays.load(playsFilter);
-
-                            //todo -- deal with this, real slow because of nesting
-                            Data.league = Data.team.then(function() {
-                                var uploaderTeam = teams.get(game.uploaderTeamId);
-                                return leagues.fetch(uploaderTeam.leagueId);
-                            });
-
-                            Data.filterSet = Data.league.then(function() {
-                                var uploaderTeam = teams.get(game.uploaderTeamId);
-                                var uploaderLeague = leagues.get(uploaderTeam.leagueId);
-                                return filtersets.fetch(uploaderLeague.filterSetId);
+                            Data.league = teamsPromise.then(function() {
+                                let uploaderTeam = teams.get(game.uploaderTeamId);
+                                return leagues.load(uploaderTeam.leagueId);
                             });
 
                             return $q.all(Data);
                         });
+
+                        return $q.all(Data);
                     }
                 ]
             }
@@ -74,8 +84,8 @@ GamesDownAndDistance.config([
 ]);
 
 GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
-    '$stateParams', '$scope', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'LeaguesFactory',
-    function controller($stateParams, $scope, teams, games, plays,  leagues) {
+    '$stateParams', '$scope', 'TeamsFactory', 'GamesFactory', 'LeaguesFactory',
+    function controller($stateParams, $scope, teams, games, leagues) {
 
         //Collections
         $scope.teams = teams.getCollection();
@@ -89,14 +99,10 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
         $scope.opposingTeamId = $scope.game.opposingTeamId;
         var team = teams.get($scope.teamId);
 
-        //Play Related
-        var playsFilter = { gameId: gameId };
-        $scope.plays = plays.getList(playsFilter);
+        var teamOnOffense = true;
 
         //League Related
         $scope.league = leagues.get(team.leagueId);
-
-        var teamOnOffense = true;
 
         //Used to render the view for the
         $scope.options = {
@@ -145,8 +151,10 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
             //TODO This casting seems very awkward -- perhaps the generation method should handle the casting
             if ($scope.dndReport.redZone === 'true') {
                 $scope.dndReport.redZone = true;
+                $scope.redzone = true;
             } else {
                 $scope.dndReport.redZone = false;
+                $scope.redzone = false;
             }
 
             //TODO this doesn't seem to be doing anything at all, it is basically setting the variable back to itself
@@ -158,6 +166,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
 
             games.getDownAndDistanceReport($scope.dndReport).then(function(dndReport) {
                 $scope.game.dndReport = dndReport;
+                $scope.chart = $scope.game.dndReport;
             });
 
         };

@@ -14,8 +14,50 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', 'EVENT_MAP', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VideoPlayerEventEmitter', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory', 'VideoPlayer',
-    function controller(config, EVENT_MAP, $rootScope, $scope, $modal, basicModal, $stateParams, videoPlayerEventEmitter, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, leagues, tagsets, teams, games, plays, videoPlayer) {
+    'config',
+    'EVENT_MAP',
+    '$rootScope',
+    '$scope',
+    '$modal',
+    'BasicModals',
+    '$stateParams',
+    'VideoPlayerEventEmitter',
+    'SessionService',
+    'IndexingService',
+    'TagsManager',
+    'PlaysManager',
+    'PlayManager',
+    'EventManager',
+    'Indexing.Sidebar',
+    'Indexing.Data',
+    'LeaguesFactory',
+    'TagsetsFactory',
+    'TeamsFactory',
+    'GamesFactory',
+    'PlaysFactory',
+    'VideoPlayer',
+    function controller(config,
+                        EVENT_MAP,
+                        $rootScope,
+                        $scope,
+                        $modal,
+                        basicModal,
+                        $stateParams,
+                        videoPlayerEventEmitter,
+                        session,
+                        indexing,
+                        tags,
+                        playsManager,
+                        play,
+                        event,
+                        sidebar,
+                        data,
+                        leagues,
+                        tagsets,
+                        teams,
+                        games,
+                        plays,
+                        videoPlayer) {
 
         var gameId = Number($stateParams.id);
 
@@ -32,7 +74,6 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.opposingTeamPlayers = data.opposingTeamPlayers;
         $scope.league = leagues.get($scope.team.leagueId);
         $scope.tagset = tagsets.get($scope.league.tagSetId);
-        $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
 

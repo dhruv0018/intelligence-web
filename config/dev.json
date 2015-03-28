@@ -89,5 +89,8 @@
         "speedTest": "http://support.krossover.com/customer/portal/articles/1642636-testing-your-upload-speed",
         "finalCutPro": " http://vimeo.com/41165826"
     },
-    "defaultVideoId": 2
+    "defaultVideoId": 2,
+    "athleteProfile": {
+        "isEnabled": true
+    }
 }

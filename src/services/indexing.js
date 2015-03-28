@@ -1,3 +1,5 @@
+import KrossoverEvent from '../entities/event.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -6,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer',
-    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayer) {
+    'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter',
+    function(config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter) {
 
         var IndexingService = {
 
@@ -21,7 +23,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 playsManager.reset(plays);
                 tagsManager.reset(tagset);
-                eventManager.reset(tagset);
                 playManager.reset(tagset, game.id);
                 playManager.clear();
             },
@@ -57,9 +58,11 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Get current time from the video. */
                 var time = videoPlayer.currentTime;
 
-                /* TODO: After event entity construct new event here */
+                /* Get tag. */
+                let tag = tagsets.getTag(tagId);
+
                 /* Create new event. */
-                eventManager.create(tagId, time);
+                eventManager.current = new KrossoverEvent(tag, time);
 
                 this.showTags = false;
                 this.showScript = true;
@@ -89,7 +92,7 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             savable: function() {
 
-                return this.nextable() && eventManager.isEndEvent();
+                return this.nextable() && eventManager.current.isEnd;
             },
 
             /**
@@ -106,10 +109,10 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.save();
                 playManager.clear();
                 tagsManager.reset();
-                eventManager.reset();
+                eventManager.current = new KrossoverEvent();
 
                 /* If the event is an end-and-start event. */
-                if (eventManager.isEndAndStartEvent(event)) {
+                if (eventManager.current.isEndAndStart) {
 
                     /* Get the tagId of the event. */
                     var tagId = event.tagId;
@@ -151,10 +154,10 @@ IntelligenceWebClient.factory('IndexingService', [
                 if (!this.isIndexing || this.showTags) return false;
 
                 /* If there are variables in the current event. */
-                else if (eventManager.hasVariables()) {
+                else if (eventManager.current.hasVariables) {
 
                     /* Make sure all of the variables have values. */
-                    return eventManager.allEventVariablesHaveValues();
+                    return eventManager.current.isValid;
                 }
 
                 else return true;
@@ -173,7 +176,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 /* If the event is a floating event. */
-                if (eventManager.isFloatingEvent()) {
+                if (eventManager.current.isFloat) {
 
                     let currentEvent = eventManager.current;
 
@@ -181,7 +184,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     let previousEvent = playManager.previousEvent(currentEvent);
 
                     /* While the previous event is a float. */
-                    while (eventManager.isFloatingEvent(previousEvent)) {
+                    while (previousEvent.isFloat) {
 
                         /* Get the previous event. */
                         previousEvent = playManager.previousEvent(previousEvent);
@@ -234,7 +237,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
 
                 /* If the event doesn't have variables of If the first variable is empty. */
-                else if (!eventManager.hasVariables() ||
+                else if (!eventManager.current.hasVariables ||
                         (eventManager.current.activeEventVariableIndex === 1 &&
                         !eventManager.activeEventVariableValue())) {
 
@@ -284,8 +287,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Remove the event from the current play. */
                 playManager.removeEvent(event);
 
-                /* Reset the current event. */
-                eventManager.reset();
+                /* Clear the current event. */
+                eventManager.current = null;
 
                 /* Save play. */
                 playManager.save();
@@ -294,6 +297,14 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.clear();
             }
         };
+
+        playlistEventEmitter.on('EVENT_SELECT', () => {
+
+            this.eventSelected = true;
+            this.isIndexing = true;
+            this.showTags = false;
+            this.showScript = true;
+        });
 
         return IndexingService;
     }

@@ -1,12 +1,12 @@
 <div class="role-typeahead">
     <input class="form-control"
            type="text"
-           placeholder="Name" data-ng-model="filter.fullName"
-           data-typeahead-wait-ms="200"
-           data-typeahead-loading="loading"
-           data-typeahead-template-url="role-typeahead-dropdown.html"
-           data-typeahead-min-length="2"
-           data-typeahead-on-select="selectUser($item)"
-           data-typeahead="user as user.firstName + ' ' + user.lastName for user in searchUsers() | filter: {name: $viewValue}">
-        <krossover-spinner data-ng-if="loading"></krossover-spinner>
+           placeholder="Name" ng-model="filter.fullName"
+           typeahead-wait-ms="200"
+           typeahead-loading="loading"
+           typeahead-template-url="role-typeahead-dropdown.html"
+           typeahead-min-length="2"
+           typeahead-on-select="selectUser($item)"
+           typeahead="user as user.firstName + ' ' + user.lastName for user in searchUsers() | filter: {name: $viewValue}">
+        <krossover-spinner ng-if="loading" size="'25px'"></krossover-spinner>
 </div>
