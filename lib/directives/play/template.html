@@ -255,8 +255,15 @@
 
             </div>
 
-            <ul class="playBody" data-ng-if="isIndexer || expandAll || play === playManager.current || !play.summaries.length" data-ng-class="{'playHide': (!expandAll && play != playManager.current) }">
-
+            <ul
+                class="playBody"
+                data-ng-if="
+                    isIndexer ||
+                    expandAll ||
+                    play === playManager.current ||
+                    !play.summaries.length"
+                data-ng-class="{'playHide': (!expandAll && play != playManager.current) }"
+            >
                 <krossover-event
                     data-auto-advance="autoAdvance"
                     data-plays="plays"
