@@ -1,3 +1,5 @@
+import Subscription from '../entities/subscription.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -54,6 +56,14 @@ IntelligenceWebClient.factory('UsersFactory', [
                         if (!role.tenureEnd) {
                             user.roleTypes[role.type.id].push(role);
                         }
+                    });
+                }
+
+                if (user.subscriptions) {
+
+                    user.subscriptions.map(function constructSubscription(subscription) {
+
+                        return new Subscription(subscription);
                     });
                 }
 
