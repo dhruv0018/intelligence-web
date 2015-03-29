@@ -115,4 +115,3 @@ IntelligenceWebClient.service('AccountService', [
         };
     }
 ]);
-

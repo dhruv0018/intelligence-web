@@ -1,5 +1,7 @@
 var pkg = require('../package.json');
 
+var INDEXEDDB_OPEN_TIMEOUT = 1000;
+
 /* Default options for migrations. */
 var OPTIONS = { keyPath: 'id' };
 
@@ -25,6 +27,14 @@ var migrations = [
     require('../migrations/2')
 ];
 
+/* Set a timeout for opening the database. */
+var openTimeout = setTimeout(onOpenTimeout, INDEXEDDB_OPEN_TIMEOUT);
+
+function onOpenTimeout () {
+
+    IndexedDB.reject('IndexedDB timeout');
+}
+
 openDB(pkg.name);
 
 function openDB(name, version) {
@@ -44,6 +54,9 @@ function openDB(name, version) {
 
         /* Handle a successful connection to the database. */
         request.onsuccess = function(event) {
+
+            /* Clear timeout. */
+            clearTimeout(openTimeout);
 
             /* Get the database. */
             db = event.target.result;
@@ -77,6 +90,9 @@ function openDB(name, version) {
         /* Handle an error connecting to the database. */
         request.onerror = function(event) {
 
+            /* Clear timeout. */
+            clearTimeout(openTimeout);
+
             /* Get the database. */
             var error = event.target.error;
 
@@ -97,6 +113,9 @@ function openDB(name, version) {
         /* Handle blocked connections to the database. */
         request.onblocked = function(event) {
 
+            /* Clear timeout. */
+            clearTimeout(openTimeout);
+
             /* Get the database. */
             db = event.target.result;
 
@@ -108,6 +127,9 @@ function openDB(name, version) {
         };
 
         request.onupgradeneeded = function(event) {
+
+            /* Clear timeout. */
+            clearTimeout(openTimeout);
 
             version = version || 1;
 
@@ -148,4 +170,3 @@ function openDB(name, version) {
 }
 
 IntelligenceWebClient.value('IndexedDB', IndexedDB.promise);
-

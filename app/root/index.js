@@ -55,6 +55,3 @@ Root.controller('RootController', [
         });
     }
 ]);
-
-
-

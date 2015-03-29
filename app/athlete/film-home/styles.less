@@ -1,43 +1,43 @@
 @import (reference) "main.less";
 
 .film-home {
-	
-	.filter-bar {
 
-		width: 100%;
-		border-bottom: 1px solid @gray-border;
-		background-color: @gray-lightest;
-		padding: 20px;
-		line-height: normal;
+    .filter-bar {
 
-		ul {
-			border: none;
-		}
+        width: 100%;
+        border-bottom: 1px solid @gray-border;
+        background-color: @gray-lightest;
+        padding: 20px;
+        line-height: normal;
 
-		h3 {
-			color: @brand-blue;
-			font-size: 16px;
-			margin-top: 8px;
-			margin-bottom: 8px;
-		}
+        ul {
+            border: none;
+        }
 
-		.btn-filter {
-			.btn;
-			background-color: @gray-lighter;
-			font-weight: 400;
-			margin-left: 5px;
-			margin-right: 5px;
-			border-radius: 4px;
-			padding-top: 4px;
-			padding-bottom: 4px;
-			font-size: 16px;
-			text-transform: capitalize;
-			&.active,
+        h3 {
+            color: @brand-blue;
+            font-size: 16px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .btn-filter {
+            .btn;
+            background-color: @gray-lighter;
+            font-weight: 400;
+            margin-left: 5px;
+            margin-right: 5px;
+            border-radius: 4px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            font-size: 16px;
+            text-transform: capitalize;
+            &.active,
             &:active,
-			&:hover {
-				background-color: @brand-primary;
-				color: white;
-			}
+            &:hover {
+                background-color: @brand-primary;
+                color: white;
+            }
 
             &.active:focus {
 
@@ -45,53 +45,52 @@
                 outline-offset: 0;
                 box-shadow: none;
             }
-		}
+        }
 
         .film-home-tabs {
 
             .pull-left;
         }
 
-		.film-search {
-			
+        .film-search {
 
-			.pull-right;
 
-			.film-search-input {
-				.form-control;
-				.pull-left;
-				display: inline;
-				width: 250px;
-				margin-left: 5px;
-				margin-right: 5px;
-			}
+            .pull-right;
 
-			.btn-film-search {
-				.btn-filter;
-				.pull-right;
-				display: inline;
-				padding-top: 6px;
-				padding-bottom: 6px;
-				padding-left: 20px;
-				padding-right: 20px;
-				border: 1px solid rgb(221,221,221);
-			}
-		}
-	}
+            .film-search-input {
+                .form-control;
+                .pull-left;
+                display: inline;
+                width: 250px;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
 
-	.films-area {
-		margin: auto;
-		padding: 30px;
-	}
+            .btn-film-search {
+                .btn-filter;
+                .pull-right;
+                display: inline;
+                padding-top: 6px;
+                padding-bottom: 6px;
+                padding-left: 20px;
+                padding-right: 20px;
+                border: 1px solid rgb(221,221,221);
+            }
+        }
+    }
 
-	.sidebar {
-		text-transform: capitalize;
-		overflow-y: auto;
+    .films-area {
+        margin: auto;
+        padding: 30px;
+    }
 
-		.krossover-athlete {
-			padding-left: 10px;
-		}
-	}
+    .sidebar {
+        text-transform: capitalize;
+        overflow-y: auto;
+
+        .krossover-athlete {
+            padding-left: 10px;
+        }
+    }
 
 }
-

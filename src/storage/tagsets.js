@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('TagsetsStorage', [
         return TagsetsStorage;
     }
 ]);
-

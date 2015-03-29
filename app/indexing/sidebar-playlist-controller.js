@@ -52,4 +52,3 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
         });
     }
 ]);
-

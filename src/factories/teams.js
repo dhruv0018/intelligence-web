@@ -209,7 +209,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     if (matchIsCurrent === true) {
 
                         return match.type.id == role.type.id &&
-                               role.tenureEnd === null;
+                            role.tenureEnd === null;
 
                     } else {
 
@@ -409,4 +409,3 @@ IntelligenceWebClient.factory('TeamsFactory', [
         return TeamsFactory;
     }
 ]);
-

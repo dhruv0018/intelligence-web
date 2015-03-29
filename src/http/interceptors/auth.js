@@ -52,4 +52,3 @@ IntelligenceWebClient.config([
         $httpProvider.interceptors.push('Auth.Interceptor');
     }
 ]);
-

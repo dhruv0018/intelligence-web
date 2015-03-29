@@ -33,7 +33,21 @@ GamesBreakdown.config([
                         return data($stateParams).load();
                     }
                 ]
-            }
+            },
+            onEnter: [
+                '$stateParams', 'PlayerlistManager', 'GamesFactory',
+                function($stateParams, playerlist, games) {
+                    var gameId = $stateParams.id;
+                    var game = games.get(gameId);
+                    playerlist.fill(game);
+                }
+            ],
+            onExit: [
+                'PlayerlistManager',
+                function(playerlist) {
+                    playerlist.clear();
+                }
+            ]
         };
 
         $stateProvider.state(GamesBreakdown);
@@ -160,4 +174,3 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         }
     }
 ]);
-

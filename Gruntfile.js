@@ -113,12 +113,54 @@ module.exports = function(grunt) {
         /* Pre-minification */
 
         trimtrailingspaces: {
-            main: {
+            js: {
                 src: [
                     'app/**/*.js',
                     'lib/**/*.js',
                     'src/**/*.js'
                 ]
+            },
+            less: {
+                src: [
+                    'app/**/*.less',
+                    'lib/**/*.less',
+                    'theme/**/*.less'
+                ]
+            },
+            html: {
+                src: [
+                    'app/**/*.html',
+                    'lib/**/*.html'
+                ]
+            }
+        },
+
+        lintspaces: {
+            js: {
+                src: [
+                    'app/**/*.js',
+                    'lib/**/*.js',
+                    'src/**/*.js'
+                ],
+                options: {
+                    newline: true,
+                    indentation: 'spaces',
+                    trailingspaces: true,
+                    ignores: ['js-comments']
+                }
+            },
+            less: {
+                src: [
+                    'app/**/*.less',
+                    'lib/**/*.less',
+                    'theme/**/*.less'
+                ],
+                options: {
+                    newline: true,
+                    indentation: 'spaces',
+                    trailingspaces: true,
+                    ignores: ['js-comments']
+                }
             }
         },
 
@@ -220,7 +262,7 @@ module.exports = function(grunt) {
 
         concat: {
             unprefixed: {
-                src: ['fonts.css', 'icons.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'build/build.css', 'build/theme.css'],
+                src: ['fonts.css', 'icons.css', 'vendor/css/animate.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'node_modules/angular-material/angular-material.css', 'build/build.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
             }
         },
@@ -552,19 +594,19 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             unit: {
                 files: ['test/unit/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'karma']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'karma']
             },
             integration: {
                 files: ['test/integration/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:jshint', 'newer:eslint', 'protractor']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'protractor']
             }
         },
 
@@ -615,8 +657,8 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('install', ['install-dependencies']);
-    grunt.registerTask('test', ['build', 'karma', 'integration']);
-    grunt.registerTask('lint', ['trimtrailingspaces', 'htmlhint', 'jshint', 'eslint']);
+    grunt.registerTask('test', ['build', 'karma']);
+    grunt.registerTask('lint', ['trimtrailingspaces', 'lintspaces', 'htmlhint', 'jshint', 'eslint']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);

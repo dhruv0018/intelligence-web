@@ -51,4 +51,3 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
         return PositionsetsFactory;
     }
 ]);
-

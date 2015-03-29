@@ -32,4 +32,3 @@ Indexer.config([
             });
     }
 ]);
-

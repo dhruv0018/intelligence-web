@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('PlaysStorage', [
         return PlaysStorage;
     }
 ]);
-

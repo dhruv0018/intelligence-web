@@ -1,3 +1,5 @@
+import KrossoverEvent from '../entities/event.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -11,17 +13,15 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlaysManager', [
-    '$injector', 'AlertsService', 'TagsManager', 'PlayManager', 'EventManager', 'PlaysFactory',
-    function service($injector, alerts, tagsManager, playManager, eventManager, plays) {
+    '$injector', 'Utilities', 'FIELD_TYPE', 'AlertsService', 'TagsManager', 'PlayManager', 'EventManager', 'PlaysFactory', 'GamesFactory', 'TagsetsFactory',
+    function service($injector, utilities, FIELD_TYPE, alerts, tagsManager, playManager, eventManager, plays, games, tagsets) {
 
+        var period;
         var indexing;
+        var indexedScore;
+        var opposingIndexedScore;
 
         this.plays = [];
-
-        //Index of scopes assosicated with the plays
-        //indexed by 'id' for game breakdown playlist, and
-        //by '$$hashkey' for indexing playlist
-        this.playScopes = {};
 
         /**
          * Resets the plays.
@@ -68,34 +68,6 @@ IntelligenceWebClient.service('PlaysManager', [
             return (++index < this.plays.length) ? this.plays[index] : null;
         };
 
-        this.registerPlayScope = function registerPlayScope(playScope) {
-            //create hash of play scopes indexed by the scopes play's id
-            var registeredId;
-            if (playScope.play.id) {
-                registeredId = playScope.play.id;
-            } else {
-                //Special case for indexing. Automatically selects play
-                //to keep the current play at the top of the playlist
-                registeredId = playScope.play.$$hashKey;
-                if (typeof playScope.selectPlay === 'function') playScope.selectPlay();
-            }
-            this.playScopes[registeredId] = playScope;
-        };
-
-        this.getNextPlayScope = function getNextPlayScope(currentPlay) {
-            var currentPlayIndex = this.plays.indexOf(currentPlay);
-            var nextPlay = this.plays[(currentPlayIndex + 1) % this.plays.length];
-            if (nextPlay) {
-
-                if (angular.isUndefined(nextPlay.isFiltered) || nextPlay.isFiltered) {
-                    //Find the next visible play
-                    return this.playScopes[nextPlay.id];
-                } else {
-                    return this.getNextPlayScope(nextPlay);
-                }
-            }
-        };
-
         /**
          * Adds a play.
          * @param {Object} play - play to be added.
@@ -132,31 +104,120 @@ IntelligenceWebClient.service('PlaysManager', [
 
                 playManager.clear();
                 tagsManager.reset();
-                eventManager.reset();
+                eventManager.current = new KrossoverEvent();
             }
         };
 
         /**
-         * Delete all plays.
+         * Calculate the details for each play.
          */
-        this.deleteAllPlays = function() {
+        this.calculatePlays = function() {
 
-            this.plays.forEach(function(play) {
+            console.time('Calculating plays...');
 
-                play.delete();
-            });
+            period = 0;
+            indexedScore = 0;
+            opposingIndexedScore = 0;
+
+            this.plays.sort(utilities.compareStartTimes);
+            this.plays.forEach(calculatePlay);
+
+            console.timeEnd('Calculating plays...');
+
         };
 
-        /**
-         * Saves all plays.
-         */
-        this.save = function() {
+        function calculatePlay (play, index) {
 
-            this.plays.forEach(function(play) {
+            /* Record the order of the play in the playlist. */
+            play.number = index;
 
-                play.save();
-            });
-        };
+            /* Sort the events by time. */
+            play.events.sort(utilities.compareTimes);
+
+            play.events.forEach(calculateEvent);
+        }
+
+        function calculateEvent (event, index) {
+
+            let teamId;
+            let play = plays.get(event.playId);
+            let game = games.get(play.gameId);
+
+            let tagId = event.tagId;
+            let tag = tagsets.getTag(tagId);
+            let tagVariables = tag.tagVariables;
+
+            /* TODO: extend all events? */
+            //angular.extend(event, tag);
+
+            /* If the event is a period event, then advance the period. */
+            if (tag.isPeriodTag) play.period = period++;
+
+            /* If at least one event has a user script, the play is visible. */
+            //if (tag.userScript !== null) play.hasUserScripts = true;
+
+            if (!tagVariables[1]) return;
+
+            let fields = event.variableValues;
+
+            /* Look at the first position script field. */
+            let field = fields[tagVariables[1].id];
+
+            /* If its a team field. */
+            if (field.type === FIELD_TYPE.TEAM) {
+
+                /* The field value is a teamId. */
+                teamId = field.value;
+            }
+
+            /* If its a player field. */
+            else if (field.type === FIELD_TYPE.PLAYER) {
+
+                teamId = game.isPlayerOnTeam(field.value) ? game.teamId : game.opposingTeamId;
+            }
+
+            /* If one the first event, define possession. */
+            if (index === 0) play.possessionTeamId = teamId;
+
+            /* If the tag has points to assign. */
+            if (tag.pointsAssigned) {
+
+                /* If this team is the team. */
+                if (game.teamId == teamId) {
+
+                    /* If the points should be assigned to the variable team. */
+                    if (tag.assignThisTeam) {
+
+                        /* Assign the points to this team. */
+                        play.indexedScore = indexedScore = indexedScore + tag.pointsAssigned;
+                    }
+
+                    /* If the points should be assigned to the other team. */
+                    else {
+
+                        /* Assign the points to the other team. */
+                        play.opposingIndexedScore = opposingIndexedScore = opposingIndexedScore + tag.pointsAssigned;
+                    }
+                }
+
+                /* If this team is the opposing team.*/
+                else if (game.opposingTeamId == teamId) {
+
+                    /* If the points should be assigned to the variable team. */
+                    if (tag.assignThisTeam) {
+
+                        /* Assign the points to this team. */
+                        play.opposingIndexedScore = opposingIndexedScore = opposingIndexedScore + tag.pointsAssigned;
+                    }
+
+                    /* If the points should be assigned to the other team. */
+                    else {
+
+                        /* Assign the points to the other team. */
+                        play.indexedScore = indexedScore = indexedScore + tag.pointsAssigned;
+                    }
+                }
+            }
+        }
     }
 ]);
-
