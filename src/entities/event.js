@@ -4,7 +4,7 @@ class Event extends Entity {
 
     constructor (event, tag, time) {
 
-        if (!time) {
+        if (arguments.length === 2) {
 
             time = tag;
             tag = event;
