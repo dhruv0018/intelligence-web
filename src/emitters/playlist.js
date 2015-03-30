@@ -17,4 +17,3 @@ class PlaylistEventEmitter extends EventEmitter {
 IntelligenceWebClient.service('PlaylistEventEmitter', PlaylistEventEmitter);
 
 export default PlaylistEventEmitter;
-
