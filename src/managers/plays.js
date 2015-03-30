@@ -154,7 +154,7 @@ IntelligenceWebClient.service('PlaysManager', [
             if (tag.isPeriodTag) play.period = period++;
 
             /* If at least one event has a user script, the play is visible. */
-            //if (tag.userScript !== null) play.hasUserScripts = true;
+            if (tag.userScript !== null) play.hasVisibleEvents = true;
 
             if (!tagVariables[1]) return;
 
