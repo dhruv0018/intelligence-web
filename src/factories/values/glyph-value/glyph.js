@@ -5,6 +5,7 @@ module.exports = [
     function() {
 
         function Glyph(type, options, containerElement) {
+            /*jshint sub:true*/
 
             // required parameter
             if (!type) throw new Error('Glyph parameter \'type\' is required');
@@ -17,6 +18,7 @@ module.exports = [
             this.color = options.color;
             this.vertices = options.vertices || [];
             this.text = options.text || '';
+            this['z_index'] = options['z_index'] || 0;
 
             // Set additional non-member attributes
             this.containerElement = containerElement;
