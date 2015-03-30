@@ -61,12 +61,12 @@ class List extends Collection {
     }
 
     /**
-     * Method:top
+     * Method:first
      * Return first entry
      *
      * @return: {Object} First entry
      */
-    top() {
+    first() {
 
         let self = this;
 
@@ -74,12 +74,12 @@ class List extends Collection {
     }
 
     /**
-     * Method:bottom
+     * Method:last
      * Return lst entry
      *
      * @return: {Object} Last entry
      */
-    bottom() {
+    last() {
 
         let self = this;
 
