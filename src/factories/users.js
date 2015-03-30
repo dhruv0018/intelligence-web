@@ -1,3 +1,4 @@
+import List from '../collections/list.js';
 import Subscription from '../entities/subscription.js';
 
 var pkg = require('../../package.json');
@@ -65,6 +66,8 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                         return new Subscription(subscription);
                     });
+
+                    user.subscriptions = new List(user.subscriptions);
                 }
 
                 /* Copy all of the properties from the retrieved $resource
