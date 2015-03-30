@@ -16,6 +16,6 @@ var Achievements = angular.module('Athlete.EditProfile.Achievements');
 Achievements.controller('Athlete.EditProfile.Achievements.controller', [
     '$scope',
     function controller($scope) {
-
+        //TODO: remove controller if unused
     }
 ]);

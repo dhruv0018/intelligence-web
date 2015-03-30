@@ -18,8 +18,20 @@
                     <input type="text" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
                 </div>
                 <div>
-                    <h4>About Me <span class="header-description">Write a short description about yourself. What makes you stand out?</span></h4>
-                    <textarea class="form-control" rows="5" maxlength="200" placeholder="Talk about your club team experience, stats, achievements, anything." ng-model="athlete.profile.about" ng-trim="false"></textarea>
+                    <h4>
+                        About Me&nbsp;
+                        <span class="header-description">
+                            Write a short description about yourself. What makes you stand out?
+                        </span>
+                    </h4>
+                    <textarea
+                        class="form-control"
+                        rows="5"
+                        maxlength="200"
+                        placeholder="Talk about your club team experience, stats, achievements, anything."
+                        ng-model="athlete.profile.about"
+                        ng-trim="false"
+                    ></textarea>
                     <p>{{200 - athlete.profile.about.length}} characters left.</p>
                 </div>
             </div>
@@ -44,7 +56,7 @@
                         <tr class="team-row" ng-repeat="team in athlete.profile.teams">
                             <td class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="team.teamId" ng-model="athlete.profile.defaultTeamId" ng-change="athlete.profile.defaultTeamId = team.teamId" required></button></td>
                             <td>{{teams[team.teamId].name}}</td>
-                            <td>{{sports[leagues[teams[team.teamId].leagueId].sportId].name}}</td>
+                            <td>{{getTeamSportName(team.teamId)}}</td>
                             <td class="team-cell-positions">
                                 <positions-dropdown ng-model="team.positionIds" player="athlete" positionset="getPositionSet(team.teamId)"></positions-dropdown>
                             </td>

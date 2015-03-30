@@ -18,14 +18,11 @@ BasicInfo.controller('Athlete.EditProfile.BasicInfo.controller', [
     function controller($scope, $http, config, teams, leagues, sports, positionsets, users, session, alerts, data) {
         $scope.athlete = session.getCurrentUser();
         $scope.teams = teams.getMap();
-        $scope.leagues = leagues.getMap();
-        $scope.sports = sports.getMap();
-        $scope.positionsets = positionsets;
         $scope.addingTeam = false;
 
         $scope.removeTeam = function removeTeam(teamId) {
             for (var index = 0; index < $scope.athlete.profile.teams.length; index++) {
-                if ($scope.athlete.profile.teams[index].teamId == teamId) {
+                if ($scope.athlete.profile.teams[index].teamId === teamId) {
                     $scope.athlete.profile.teams.splice(index, 1);
                 }
             }
@@ -38,9 +35,16 @@ BasicInfo.controller('Athlete.EditProfile.BasicInfo.controller', [
             return positionset;
         };
 
+        $scope.getTeamSportName = function getTeamSportName(teamId) {
+            let team = teams.get(teamId);
+            let league = leagues.get(team.leagueId);
+            let sport = sports.get(league.sportId);
+            return sport.name;
+        };
+
         $scope.saveBasicInfo = function saveBasicInfo() {
             if ($scope.athlete.fileImage) {
-                var data = new FormData();
+                let data = new FormData();
                 data.append('imageFile', $scope.athlete.fileImage);
 
                 $http.post(config.api.uri + 'users/' + $scope.athlete.id + '/image/file', data, {

@@ -21,7 +21,6 @@ Contact.run([
     }
 ]);
 
-
 /* File dependencies */
 require('./controller');
 require('./config');
