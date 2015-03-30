@@ -1,11 +1,12 @@
 <div class="user-typeahead">
     <input class="form-control"
            type="text"
-           placeholder="Name" ng-model="user"
+           placeholder="Name" ng-model="filter.fullName"
            typeahead-wait-ms="200"
            typeahead-loading="loading"
            typeahead-template-url="user-typeahead-dropdown.html"
            typeahead-min-length="2"
+           typeahead-on-select="selectUser($item)"
            typeahead="user as user.firstName + ' ' + user.lastName for user in searchUsers() | filter: {name: $viewValue}">
     <krossover-spinner ng-if="loading" size="'25px'"></krossover-spinner>
 </div>
