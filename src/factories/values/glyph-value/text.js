@@ -452,7 +452,6 @@ module.exports = [
 
             self.removeListeners = function removeListeners() {
 
-                console.log('removeListeners');
                 $window.removeEventListener('mousedown', dragStart);
                 $window.removeEventListener('mousemove', dragMove);
                 $window.removeEventListener('mouseup', dragEnd);
