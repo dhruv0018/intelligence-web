@@ -13,8 +13,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    'PlaylistEventEmitter',
-    function service(playlistEventEmitter) {
+    'PlaylistEventEmitter', 'TagsetsFactory',
+    function service(playlistEventEmitter, tagsets) {
 
         let current;
 

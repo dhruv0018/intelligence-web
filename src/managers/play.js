@@ -144,6 +144,8 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.removeEvent = function(event) {
 
+            if (!this.current) return;
+
             /* Find the index of the event. */
             var eventIndex = this.current.events.indexOf(event);
 
