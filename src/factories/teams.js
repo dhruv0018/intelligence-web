@@ -1,3 +1,6 @@
+import List from '../collections/list.js';
+import Subscription from '../entities/subscription.js';
+
 var PAGE_SIZE = 1000;
 
 var pkg = require('../../package.json');
@@ -62,6 +65,16 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     } else {
                         team.roster.playerInfo = {};
                     }
+                }
+
+                if (team.subscriptions) {
+
+                    team.subscriptions.map(function constructSubscription(subscription) {
+
+                        return new Subscription(subscription);
+                    });
+
+                    team.subscriptions = new List(team.subscriptions);
                 }
 
                 angular.extend(team, self);
@@ -347,39 +360,13 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     team = self;
                 }
 
-                team.subscriptions = team.subscriptions || [];
-                team.subscriptions.push(subscription);
+                team.subscriptions = team.subscriptions || new List();
+                team.subscriptions.add(subscription);
             },
 
             /**
              * @class Team
-             * @method hasActiveSubscription
-             *
-             * @param {Object} team - Team being queried
-             * @returns {Boolean} - True if the team has an active subscription else False
-             *
-             * Indicates if a team has an active subscription
-             */
-            hasActiveSubscription: function(team) {
-
-                var self = this;
-
-                if (!team) {
-                    team = self;
-                }
-
-                if (typeof team.subscriptions === 'undefined') {
-                    return false;
-                } else if (team.subscriptions.length === 0) {
-                    return false;
-                } else {
-                    return true;
-                }
-            },
-
-            /**
-             * @class Team
-             * @method hasActiveSubscription
+             * @method getActiveSubscription
              *
              * @param {Object} team - Team being queried
              * @returns {Object} - Most recently added active subscription
@@ -394,13 +381,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     team = self;
                 }
 
-                var today = Date.now();
-                var i = 0;
-                while (team.subscriptions[i].activatesAt > today) {
-                    // Subscription has not activated yet
-                    i++;
-                }
-                return team.subscriptions[i];
+                let mostRecent = team.subscriptions.top();
+
+                return (mostRecent.active ? mostRecent : undefined);
             }
         };
 
