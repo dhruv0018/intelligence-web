@@ -4,7 +4,7 @@ class Collection {
      * Constructor:
      * Enforce interface by throwing error on new
      *
-     * @return {Error} Cannot instantiate
+     * @return: {Error} Cannot instantiate
      */
     constructor() {
 

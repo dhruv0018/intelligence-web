@@ -9,7 +9,7 @@ class List extends Collection {
      * @param: {Array} (opt) List to copy
      * @return: {List} New list
      */
-    construction(array) {
+    constructor(array) {
 
         let self = this;
 
@@ -37,7 +37,7 @@ class List extends Collection {
      * Method:clear
      * Removes all entries in the list
      *
-     * @return {List} Empty list
+     * @return: {List} Empty list
      */
     clear() {
 

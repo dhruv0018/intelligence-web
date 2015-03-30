@@ -9,7 +9,7 @@ class Set extends Collection {
      * @param: {Map} (opt) Set to copy
      * @return: {Set} New set
      */
-    construction(map) {
+    constructor(map) {
 
         let self = this;
 
@@ -37,7 +37,7 @@ class Set extends Collection {
      * Method:clear
      * Removes all entries in the set
      *
-     * @return {Set} Empty set
+     * @return: {Set} Empty set
      */
     clear() {
 
