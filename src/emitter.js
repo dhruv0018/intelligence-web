@@ -7,7 +7,6 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('TelestrationEventEmitter', EventEmitter);
 IntelligenceWebClient.service('VideoPlayerEventEmitter', EventEmitter);
 
 IntelligenceWebClient.service('EventEmitter', [
