@@ -6,6 +6,6 @@
            typeahead-loading="loading"
            typeahead-template-url="user-typeahead-dropdown.html"
            typeahead-min-length="2"
-           typeahead="user as user.firstName + ' ' + user.lastName for user in findUsers() | filter: {name: $viewValue}">
-        <krossover-spinner ng-if="usersLoading" size="'25px'"></krossover-spinner>
+           typeahead="user as user.firstName + ' ' + user.lastName for user in searchUsers() | filter: {name: $viewValue}">
+    <krossover-spinner ng-if="loading" size="'25px'"></krossover-spinner>
 </div>
