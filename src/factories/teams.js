@@ -381,7 +381,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     team = self;
                 }
 
-                let mostRecent = team.subscriptions.top();
+                let mostRecent = team.subscriptions.first();
 
                 return (mostRecent.active ? mostRecent : undefined);
             }
