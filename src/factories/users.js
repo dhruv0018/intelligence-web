@@ -334,7 +334,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             addSubscription: function(user, subscription) {
 
-                var self = this;
+                let self = this;
 
                 if (!user) {
                     throw new Error('Invoked UsersFactory.addSubscription without any argument(s)');
@@ -346,34 +346,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user = self;
                 }
 
-                user.subscriptions = user.subscriptions || [];
-                user.subscriptions.push(subscription);
-            },
-
-            /**
-             * @class User
-             * @method hasActiveSubscription
-             *
-             * @param {Object} user - User being queried
-             * @returns {Boolean} - True if the user has an active subscription else False
-             *
-             * Indicates if a user has an active subscription
-             */
-            hasActiveSubscription: function(user) {
-
-                var self = this;
-
-                if (!user) {
-                    user = self;
-                }
-
-                if (typeof user.subscriptions === 'undefined') {
-                    return false;
-                } else if (user.subscriptions.length === 0) {
-                    return false;
-                } else {
-                    return true;
-                }
+                user.subscriptions = user.subscriptions || new List();
+                user.subscriptions.add(subscription);
             },
 
             /**
@@ -387,19 +361,15 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             getActiveSubscription: function(user) {
 
-                var self = this;
+                let self = this;
 
                 if (!user) {
                     user = self;
                 }
 
-                var today = Date.now();
-                var i = 0;
-                while (user.subscriptions[i].activatesAt > today) {
-                    // Subscription has not activated yet
-                    i++;
-                }
-                return user.subscriptions[i];
+                let mostRecent = user.subscriptions.top();
+
+                return (mostRecent.active ? mostRecent : undefined);
             },
 
             /**
