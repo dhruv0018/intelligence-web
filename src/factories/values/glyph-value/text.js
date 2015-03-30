@@ -118,7 +118,7 @@ module.exports = [
 
         Text.prototype.destroy = function() {
 
-            this.primaryTextarea.removeListeners();
+            this.removeListeners();
             this.primaryTextarea.element.remove();
             Glyph.prototype.destroy.call(this);
         };
@@ -131,6 +131,11 @@ module.exports = [
         Text.prototype.hide = function hide() {
 
             if (this.primaryTextarea) this.primaryTextarea.element.css('display', 'none');
+        };
+
+        Text.prototype.removeListeners = function removeListeners() {
+
+            this.primaryTextarea.removeListeners();
         };
 
 
@@ -447,8 +452,12 @@ module.exports = [
 
             self.removeListeners = function removeListeners() {
 
+                console.log('removeListeners');
+                $window.removeEventListener('mousedown', dragStart);
                 $window.removeEventListener('mousemove', dragMove);
                 $window.removeEventListener('mouseup', dragEnd);
+                self.element.off('dblclick', enterEditMode);
+                self.element.off('mousedown', dragStart);
             };
 
             // create element
