@@ -47,6 +47,20 @@ class List extends Collection {
     }
 
     /**
+     * Method:get
+     * Return entry at index
+     *
+     * @param: {Integer} Index of entry
+     * @return: {Object} Entry at index
+     */
+    get(index) {
+
+        let self = this;
+
+        return self[index];
+    }
+
+    /**
      * Method:add
      * Adds a new entry to the list
      *

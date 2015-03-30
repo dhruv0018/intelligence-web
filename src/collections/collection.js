@@ -29,6 +29,8 @@ class Collection {
 
     clear() {}
 
+    get() {}
+
     add(item) {}
 
     remove(item) {}
