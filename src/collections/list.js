@@ -61,6 +61,32 @@ class List extends Collection {
     }
 
     /**
+     * Method:top
+     * Return first entry
+     *
+     * @return: {Object} First entry
+     */
+    top() {
+
+        let self = this;
+
+        return self[0];
+    }
+
+    /**
+     * Method:bottom
+     * Return lst entry
+     *
+     * @return: {Object} Last entry
+     */
+    bottom() {
+
+        let self = this;
+
+        return self[(self.length - 1)];
+    }
+
+    /**
      * Method:add
      * Adds a new entry to the list
      *
