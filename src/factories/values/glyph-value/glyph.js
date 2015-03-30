@@ -250,7 +250,7 @@ module.exports = [
 
             var self = this;
 
-            var modelAttributes = ['vertices', 'type', 'color', 'zIndex', 'text'];
+            var modelAttributes = ['vertices', 'type', 'color', 'z_index', 'text'];
 
             var copy = {};
 
