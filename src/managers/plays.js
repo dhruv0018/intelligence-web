@@ -142,15 +142,10 @@ IntelligenceWebClient.service('PlaysManager', [
             let teamId;
             let play = plays.get(event.playId);
             let game = games.get(play.gameId);
-
-            let tagId = event.tagId;
-            let tag = tagsets.getTag(tagId);
-
-            /* TODO: extend all events? */
-            //angular.extend(event, tag);
+            let tagVariables = event.tagVariables;
 
             /* If the event is a period event, then advance the period. */
-            if (tag.isPeriodTag) play.period = period++;
+            if (event.isPeriodTag) play.period = period++;
 
             /* If at least one event has a user script, the play is visible. */
             if (tag.userScript !== null) play.hasVisibleEvents = true;
@@ -183,23 +178,23 @@ IntelligenceWebClient.service('PlaysManager', [
             if (index === 0) play.possessionTeamId = teamId;
 
             /* If the tag has points to assign. */
-            if (tag.pointsAssigned) {
+            if (event.pointsAssigned) {
 
                 /* If this team is the team. */
                 if (game.teamId == teamId) {
 
                     /* If the points should be assigned to the variable team. */
-                    if (tag.assignThisTeam) {
+                    if (event.assignThisTeam) {
 
                         /* Assign the points to this team. */
-                        play.indexedScore = indexedScore = indexedScore + tag.pointsAssigned;
+                        play.indexedScore = indexedScore = indexedScore + event.pointsAssigned;
                     }
 
                     /* If the points should be assigned to the other team. */
                     else {
 
                         /* Assign the points to the other team. */
-                        play.opposingIndexedScore = opposingIndexedScore = opposingIndexedScore + tag.pointsAssigned;
+                        play.opposingIndexedScore = opposingIndexedScore = opposingIndexedScore + event.pointsAssigned;
                     }
                 }
 
@@ -207,17 +202,17 @@ IntelligenceWebClient.service('PlaysManager', [
                 else if (game.opposingTeamId == teamId) {
 
                     /* If the points should be assigned to the variable team. */
-                    if (tag.assignThisTeam) {
+                    if (event.assignThisTeam) {
 
                         /* Assign the points to this team. */
-                        play.opposingIndexedScore = opposingIndexedScore = opposingIndexedScore + tag.pointsAssigned;
+                        play.opposingIndexedScore = opposingIndexedScore = opposingIndexedScore + event.pointsAssigned;
                     }
 
                     /* If the points should be assigned to the other team. */
                     else {
 
                         /* Assign the points to the other team. */
-                        play.indexedScore = indexedScore = indexedScore + tag.pointsAssigned;
+                        play.indexedScore = indexedScore = indexedScore + event.pointsAssigned;
                     }
                 }
             }
