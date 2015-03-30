@@ -9,7 +9,7 @@ class List extends Collection {
      * @param: {Array} (opt) List to copy
      * @return: {List} New list
      */
-    construction(array) {
+    constructor(array) {
 
         let self = this;
 
@@ -37,7 +37,7 @@ class List extends Collection {
      * Method:clear
      * Removes all entries in the list
      *
-     * @return {List} Empty list
+     * @return: {List} Empty list
      */
     clear() {
 
@@ -61,12 +61,12 @@ class List extends Collection {
     }
 
     /**
-     * Method:top
+     * Method:first
      * Return first entry
      *
      * @return: {Object} First entry
      */
-    top() {
+    first() {
 
         let self = this;
 
@@ -74,12 +74,12 @@ class List extends Collection {
     }
 
     /**
-     * Method:bottom
+     * Method:last
      * Return lst entry
      *
      * @return: {Object} Last entry
      */
-    bottom() {
+    last() {
 
         let self = this;
 

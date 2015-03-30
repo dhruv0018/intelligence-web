@@ -1,15 +1,15 @@
 import Collection from './collection.js';
 
-class Set extends Collection {
+class Dictionary extends Collection {
 
     /**
      * Constructor:
-     * Instantaties Set with a new map
+     * Instantaties Dictionary with a new map
      *
-     * @param: {Map} (opt) Set to copy
-     * @return: {Set} New set
+     * @param: {Map} (opt) Dictionary to copy
+     * @return: {Dictionary} New dictionary
      */
-    construction(map) {
+    constructor(map) {
 
         let self = this;
 
@@ -22,7 +22,7 @@ class Set extends Collection {
 
     /**
      * Getter:length
-     * Returns length of set
+     * Returns length of dictionary
      *
      * @return: {Integer} length
      */
@@ -35,9 +35,9 @@ class Set extends Collection {
 
     /**
      * Method:clear
-     * Removes all entries in the set
+     * Removes all entries in the dictionary
      *
-     * @return {Set} Empty set
+     * @return: {Dictionary} Empty dictionary
      */
     clear() {
 
@@ -62,12 +62,12 @@ class Set extends Collection {
 
     /**
      * Method:add
-     * Adds a new entry to the set
+     * Adds a new entry to the dictionary
      *
      * @param: {Object} (req) Key of entry to
-     *         add to the set
+     *         add to the dictionary
      * @param: {Object} (req) Value of entry
-     *         to add to the set
+     *         to add to the dictionary
      * @return: {Object} Entry added
      */
     add(key, value) {
@@ -76,21 +76,21 @@ class Set extends Collection {
 
         if (!key) {
 
-            throw new Error('Invoked Set.add without passing a key');
+            throw new Error('Invoked Dictionary.add without passing a key');
         } else if (!value) {
 
-            throw new Error('Invoked Set.add without passing a value');
+            throw new Error('Invoked Dictionary.add without passing a value');
         }
 
-        return self.set(key, value);
+        return self.dictionary(key, value);
     }
 
     /**
      * Method:remove
-     * Removes an entry from the set
+     * Removes an entry from the dictionary
      *
      * @param: {Object} (req) Key of entry
-     *         to remove from the set
+     *         to remove from the dictionary
      * @return: {Boolean} Success
      */
     remove(key) {
@@ -101,4 +101,4 @@ class Set extends Collection {
     }
 }
 
-export default Set;
+export default Dictionary;
