@@ -47,6 +47,20 @@ class Set extends Collection {
     }
 
     /**
+     * Method:get
+     * Return value of key
+     *
+     * @param: {Integer} Key of value
+     * @return: {Object} Value of key
+     */
+    get(key) {
+
+        let self = this;
+
+        return self.get(key);
+    }
+
+    /**
      * Method:add
      * Adds a new entry to the set
      *
