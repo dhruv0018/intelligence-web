@@ -134,13 +134,15 @@ IntelligenceWebClient.service('PlaysManager', [
             /* Sort the events by time. */
             play.events.sort(utilities.compareTimes);
 
-            play.events.forEach(calculateEvent);
+            for (let event of play.events) {
+
+                calculateEvent(play, event);
+            }
         }
 
-        function calculateEvent (event, index) {
+        function calculateEvent (play, event) {
 
             let teamId;
-            let play = plays.get(event.playId);
             let game = games.get(play.gameId);
             let tagVariables = event.tagVariables;
 
@@ -177,8 +179,8 @@ IntelligenceWebClient.service('PlaysManager', [
                 teamId = game.isPlayerOnTeam(field.value) ? game.teamId : game.opposingTeamId;
             }
 
-            /* If one the first event, define possession. */
-            if (index === 0) play.possessionTeamId = teamId;
+            /* If event is the first one in the play, define possession. */
+            if (event === play.events[0]) play.possessionTeamId = teamId;
 
             /* If the tag has points to assign. */
             if (event.pointsAssigned) {
