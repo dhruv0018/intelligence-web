@@ -42,14 +42,17 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                             indexedVariables[++index] = variable;
 
-                            var indexedFormations = {};
+                            if (variable.formations) {
 
-                            variable.formations.forEach(function(formation) {
+                                let indexedFormations = {};
 
-                                indexedFormations[formation.id] = formation;
-                            });
+                                variable.formations.forEach(formation => {
 
-                            variable.formations = indexedFormations;
+                                    indexedFormations[formation.id] = formation;
+                                });
+
+                                variable.formations = indexedFormations;
+                            }
                         });
 
                         tag.tagVariables = indexedVariables;
@@ -143,16 +146,19 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                         var tagVariable = tag.tagVariables[tagVariableKey];
 
-                        var formations = [];
+                        if (tagVariable.formations) {
 
-                        Object.keys(tagVariable.formations).forEach(function(tagVariableFormationsKey) {
+                            let formations = [];
 
-                            var formation = tagVariable.formations[tagVariableFormationsKey];
+                            Object.keys(tagVariable.formations).forEach(tagVariableFormationsKey => {
 
-                            formations.push(formation);
-                        });
+                                let formation = tagVariable.formations[tagVariableFormationsKey];
 
-                        tagVariable.formations = formations;
+                                formations.push(formation);
+                            });
+
+                            tagVariable.formations = formations;
+                        }
 
                         tagVariables[--tagVariableKey] = tagVariable;
                     });
