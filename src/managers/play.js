@@ -1,3 +1,5 @@
+import KrossoverEvent from '../entities/event.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -142,6 +144,8 @@ IntelligenceWebClient.service('PlayManager', [
          */
         this.removeEvent = function(event) {
 
+            if (!this.current) return;
+
             /* Find the index of the event. */
             var eventIndex = this.current.events.indexOf(event);
 
@@ -197,7 +201,7 @@ IntelligenceWebClient.service('PlayManager', [
             else {
 
                 /* Reset the current event. */
-                eventManager.reset();
+                eventManager.current = new KrossoverEvent();
 
                 /* Remove the current play. */
                 this.remove();
