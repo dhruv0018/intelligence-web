@@ -116,6 +116,9 @@ require('./factories/positionsets');
 require('./factories/plans');
 
 require('./emitters/playlist');
+require('./emitters/telestrations');
+
+require('./brokers/telestrationsVideoPlayerBroker');
 
 require('./managers/tags');
 require('./managers/play');

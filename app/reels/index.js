@@ -86,8 +86,8 @@ ReelsArea.config([
 ]);
 
 ReelsArea.service('Reels.Data.Dependencies', [
-    'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'UsersFactory',
-    function dataService(games, plays, teams, reels, leagues, tagsets, players, users) {
+    'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'UsersFactory', 'TelestrationsVideoPlayerBroker',
+    function dataService(games, plays, teams, reels, leagues, tagsets, players, users, TelestrationsVideoPlayerBroker) {
 
         var service = function(stateParams) {
 

@@ -2,8 +2,8 @@
 /* Text - extends Glyph */
 
 module.exports = [
-    'GlyphValue', '$window', 'TelestrationEventEmitter',
-    function(Glyph, $window, TelestrationEventEmitter) {
+    'GlyphValue', '$window', 'TelestrationsEventEmitter',
+    function(Glyph, $window, TelestrationsEventEmitter) {
 
         var body;
         var testTextArea; // Singleton object used for all text tools
@@ -163,7 +163,7 @@ module.exports = [
 
                 // remove any other handlers
                 self.element.off('mousedown', dragStart);
-                TelestrationEventEmitter.emit('disableDraw');
+                TelestrationsEventEmitter.emit('disableDraw');
 
                 self.element.off('mousedown', stopEventPropagation);
                 self.element.on('mousedown', stopEventPropagation);
@@ -207,7 +207,7 @@ module.exports = [
                 // save text area properties
                 storeTextAreaProperties();
 
-                TelestrationEventEmitter.emit('enableDraw');
+                TelestrationsEventEmitter.emit('enableDraw');
             }
 
             function storeTextAreaProperties() {

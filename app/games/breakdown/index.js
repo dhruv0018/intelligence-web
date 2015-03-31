@@ -55,8 +55,8 @@ GamesBreakdown.config([
 ]);
 
 GamesBreakdown.service('Games.Data.Dependencies', [
-    '$q', 'AuthenticationService', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory', 'SessionService',
-    function dataService($q, auth, games, plays, teams, reels, leagues, tagsets, players, filtersets, users, session) {
+    '$q', 'AuthenticationService', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory', 'SessionService', 'TelestrationsVideoPlayerBroker',
+    function dataService($q, auth, games, plays, teams, reels, leagues, tagsets, players, filtersets, users, session, TelestrationsVideoPlayerBroker) {
 
         var service = function(stateParams) {
 

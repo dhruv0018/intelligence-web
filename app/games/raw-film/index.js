@@ -57,8 +57,8 @@ GamesRawFilm.config([
 ]);
 
 GamesRawFilm.controller('Games.Rawfilm.controller', [
-    '$scope', '$stateParams', 'GamesFactory', 'ROLES', 'SessionService', 'UsersFactory', 'TELESTRATION_PERMISSIONS',
-    function controller($scope, $stateParams, games, ROLES, session, users, TELESTRATION_PERMISSIONS) {
+    '$scope', '$stateParams', 'GamesFactory', 'ROLES', 'SessionService', 'UsersFactory', 'TELESTRATION_PERMISSIONS', 'TelestrationsVideoPlayerBroker',
+    function controller($scope, $stateParams, games, ROLES, session, users, TELESTRATION_PERMISSIONS, TelestrationsVideoPlayerBroker) {
 
         /* Scope */
 
