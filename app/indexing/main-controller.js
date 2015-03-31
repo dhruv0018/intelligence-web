@@ -24,7 +24,6 @@ Indexing.controller('Indexing.Main.Controller', [
     'VideoPlayerEventEmitter',
     'SessionService',
     'IndexingService',
-    'ScriptsService',
     'TagsManager',
     'PlaysManager',
     'PlayManager',
@@ -47,7 +46,6 @@ Indexing.controller('Indexing.Main.Controller', [
                         videoPlayerEventEmitter,
                         session,
                         indexing,
-                        scripts,
                         tags,
                         playsManager,
                         play,
@@ -76,7 +74,6 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.opposingTeamPlayers = data.opposingTeamPlayers;
         $scope.league = leagues.get($scope.team.leagueId);
         $scope.tagset = tagsets.get($scope.league.tagSetId);
-        $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
 

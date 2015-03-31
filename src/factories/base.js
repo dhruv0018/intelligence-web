@@ -560,7 +560,7 @@ IntelligenceWebClient.factory('BaseFactory', [
              */
             save: function(resource, success, error) {
                 //TODO: find a less hacky way to do this
-                this.baseSave(resource, success, error);
+                return this.baseSave(resource, success, error);
             },
             baseSave: function(resource, success, error) {
 

@@ -47,13 +47,13 @@ require('./services/session');
 require('./services/account');
 require('./services/queue');
 require('./services/alerts');
-require('./services/scripts');
 require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
 
 require('./constants/users');
 require('./constants/games');
+require('./constants/events');
 require('./constants/schools');
 require('./constants/videos');
 require('./constants/tagsets');
