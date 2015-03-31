@@ -2,29 +2,29 @@
 <div ng-if="$root.viewport.name === VIEWPORTS.MOBILE.name">
 
     <div
-        data-ng-switch
-        data-on="isReelsPlay"
-        data-ng-hide="!play.hasVisibleEvents && !isIndexer"
+        ng-switch
+        on="isReelsPlay"
+        ng-hide="!play.hasVisibleEvents && !isIndexer"
     >
         <!-- - - - - - - - - REEL PLAY - - - - - - - - -->
         <div
-            data-ng-switch-when="true"
+            ng-switch-when="true"
             class="play play__reel"
-            data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }"
+            ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }"
         >
             <div class="playHeadingContainer">
 
-                <div class="playHeading" data-ng-click="selectMobileClipPlay()">
+                <div class="playHeading" ng-click="selectMobileClipPlay()">
 
                     <h4 class="title title-reel">
                         <div
                             class="summaries"
-                            data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
+                            ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
                         >
                             <krossover-summary-item
-                                data-item="item"
-                                data-event="summary.event"
-                                data-ng-repeat="item in summary.items track by $index"
+                                item="item"
+                                event="summary.event"
+                                ng-repeat="item in summary.items track by $index"
                             ></krossover-summary-item>
                         </div>
 
@@ -38,7 +38,7 @@
 
                 <a
                     class="playplay"
-                    data-ng-click="selectMobileClipPlay()"
+                    ng-click="selectMobileClipPlay()"
                 >
                     <i class="icon icon-play-circle"></i>
                 </a>
@@ -50,12 +50,12 @@
                     and also updated when events are added or removed -->
                 <ul ng-hide="true">
                     <krossover-event
-                        data-plays="plays"
-                        data-play="play"
-                        data-event="event"
-                        data-league="league"
-                        data-highlighted-event-id="highlightedEventId"
-                        data-ng-repeat="event in play.events"
+                        plays="plays"
+                        play="play"
+                        event="event"
+                        league="league"
+                        highlighted-event-id="highlightedEventId"
+                        ng-repeat="event in play.events"
                     >
                     </krossover-event>
                 </ul>
@@ -65,27 +65,28 @@
         <!-- - - - - - - - - DEFAULT PLAY - - - - - - - - -->
         <!-- Default to 'active' since this is currently only used for public clips -->
         <div
-            data-ng-switch-default
+            ng-switch-default
             class="active play play__reel"
-            data-ng-class="{ active: play.id == playManager.current.id}"
+            ng-class="{ active: play.id == playManager.current.id}"
         >
             <div class="playHeadingContainer">
 
                 <div class="playHeading">
                     <h4
                         class="title"
-                        data-ng-click="selectMobileClipPlay()"
+                        ng-click="selectMobileClipPlay()"
                     >
 
                         <span class="team">{{teams[play.possessionTeamId].name}}</span>
+
                         <div
                             class="summaries"
-                            data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
+                            ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
                         >
                             <krossover-summary-item
-                                data-item="item"
-                                data-event="summary.event"
-                                data-ng-repeat="item in summary.items track by $index"
+                                item="item"
+                                event="summary.event"
+                                ng-repeat="item in summary.items track by $index"
                             ></krossover-summary-item>
                         </div>
                     </h4>
@@ -93,7 +94,7 @@
 
                 <a
                     class="playplay"
-                    data-ng-click="selectMobileClipPlay()"
+                    ng-click="selectMobileClipPlay()"
                 >
                     <i class="icon icon-play-circle"></i>
                 </a>
@@ -102,15 +103,15 @@
 
             <ul
                 class="playBody"
-                data-ng-hide="play !== playManager.current || playIsInBreakdown"
+                ng-hide="play !== playManager.current || playIsInBreakdown"
             >
                 <krossover-event
-                    data-plays="plays"
-                    data-play="play"
-                    data-event="event"
-                    data-league="league"
-                    data-highlighted-event-id="highlightedEventId"
-                    data-ng-repeat="event in play.events">
+                    plays="plays"
+                    play="play"
+                    event="event"
+                    league="league"
+                    highlighted-event-id="highlightedEventId"
+                    ng-repeat="event in play.events">
                 </krossover-event>
             </ul>
         </div>
@@ -121,31 +122,31 @@
 <div ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
 
     <div
-        data-ng-switch
-        data-on="isReelsPlay"
-        data-ng-hide="!play.hasVisibleEvents && !isIndexer"
+        ng-switch
+        on="isReelsPlay"
+        ng-hide="!play.hasVisibleEvents && !isIndexer"
     >
         <!-- - - - - - - - - REEL PLAY - - - - - - - - -->
         <div
-            data-ng-switch-when="true"
+            ng-switch-when="true"
             class="play play__reel"
-            data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }"
+            ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }"
         >
             <div class="playHeadingContainer">
                 <div
                     class="playHeading"
-                    data-ng-click="selectPlay()"
+                    ng-click="selectPlay()"
                 >
                     <h4 class="title">
                         <span ng-show="editFlag">{{index + 1}}.&nbsp;</span>
                         <div
                             class="summaries"
-                            data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
+                            ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
                         >
                             <krossover-summary-item
-                                data-item="item"
-                                data-event="summary.event"
-                                data-ng-repeat="item in summary.items track by $index"
+                                item="item"
+                                event="summary.event"
+                                ng-repeat="item in summary.items track by $index"
                             ></krossover-summary-item>
                         </div>
                         <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
@@ -156,9 +157,9 @@
                     </h5>
 
                     <span
-                        data-ng-show="editFlag"
+                        ng-show="editFlag"
                         class="delete-reel-play"
-                        data-ng-click="deleteReelPlay(index)"
+                        ng-click="deleteReelPlay(index)"
                     >
                         <i class="icon icon-remove"></i>
                     </span>
@@ -167,8 +168,8 @@
 
                 <span
                     class="playplay"
-                    data-ng-click="videoPlayer.play()"
-                    data-ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag}"
+                    ng-click="videoPlayer.play()"
+                    ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag}"
                 >
                     <i class="icon icon-play-circle"></i>
                 </span>
@@ -177,17 +178,17 @@
 
             <ul
                 class="playBody"
-                data-ng-show="!editFlag && (expandAll || !play.summaries.length)"
-                data-ng-hide="!expandAll && (editFlag || play !== playManager.current)"
+                ng-show="!editFlag && (expandAll || !play.summaries.length)"
+                ng-hide="!expandAll && (editFlag || play !== playManager.current)"
             >
                 <krossover-event
-                    data-auto-advance="autoAdvance"
-                    data-plays="plays"
-                    data-play="play"
-                    data-event="event"
-                    data-league="league"
-                    data-highlighted-event-id="highlightedEventId"
-                    data-ng-repeat="event in play.events">
+                    auto-advance="autoAdvance"
+                    plays="plays"
+                    play="play"
+                    event="event"
+                    league="league"
+                    highlighted-event-id="highlightedEventId"
+                    ng-repeat="event in play.events">
                 </krossover-event>
 
             </ul>
@@ -195,17 +196,17 @@
 
         <!-- - - - - - - - - DEFAULT PLAY - - - - - - - - -->
         <div
-            data-ng-switch-default
-            data-ng-hide="!play.hasVisibleEvents && !isIndexer"
+            ng-switch-default
+            ng-hide="!play.hasVisibleEvents && !isIndexer"
             class="play"
-            data-ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll }"
-            data-ng-click="selectPlay()"
+            ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll }"
+            ng-click="selectPlay()"
         >
             <div class="playHeadingContainer">
 
                 <div class="playHeading">
 
-                    <h4 data-ng-if="isIndexer">
+                    <h4 ng-if="isIndexer">
                         <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
                         <span class="dash"> — </span>
                         <time>
@@ -215,7 +216,7 @@
                         </time>
                     </h4>
 
-                    <h4 data-ng-if="isIndexer">
+                    <h4 ng-if="isIndexer">
                         <span class="team">{{ team.name }}</span>
                         <span class="score">{{ play.teamIndexedScore }}</span>
                         <span class="vs">&nbsp;vs&nbsp;</span>
@@ -223,7 +224,7 @@
                         <span class="team">{{ opposingTeam.name }}</span>
                     </h4>
 
-                    <h4 class="column" data-ng-if="!isIndexer">
+                    <h4 class="column" ng-if="!isIndexer">
 
                         <span class="team">{{teams[play.possessionTeamId].name}}</span>
 
@@ -231,12 +232,12 @@
 
                             <div
                                 class="summaries"
-                                data-ng-repeat="summary in play.summaries | orderBy:'-priority'"
+                                ng-repeat="summary in play.summaries | orderBy:'-priority'"
                             >
                                 <krossover-summary-item
-                                    data-item="item"
-                                    data-event="summary.event"
-                                    data-ng-repeat="item in summary.items track by $index"
+                                    item="item"
+                                    event="summary.event"
+                                    ng-repeat="item in summary.items track by $index"
                                 ></krossover-summary-item>
                             </div>
 
@@ -247,8 +248,8 @@
 
                 <span
                     class="playplay"
-                    data-ng-click="videoPlayer.play()"
-                    data-ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
+                    ng-click="videoPlayer.play()"
+                    ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
                 >
                     <i class="icon icon-play-circle"></i>
                 </span>
@@ -257,21 +258,21 @@
 
             <ul
                 class="playBody"
-                data-ng-if="
+                ng-if="
                     isIndexer ||
                     expandAll ||
                     play === playManager.current ||
                     !play.summaries.length"
-                data-ng-class="{'playHide': (!expandAll && play != playManager.current) }"
+                ng-class="{'playHide': (!expandAll && play != playManager.current) }"
             >
                 <krossover-event
-                    data-auto-advance="autoAdvance"
-                    data-plays="plays"
-                    data-play="play"
-                    data-event="event"
-                    data-league="league"
-                    data-highlighted-event-id="highlightedEventId"
-                    data-ng-repeat="event in play.events">
+                    auto-advance="autoAdvance"
+                    plays="plays"
+                    play="play"
+                    event="event"
+                    league="league"
+                    highlighted-event-id="highlightedEventId"
+                    ng-repeat="event in play.events">
                 </krossover-event>
 
             </ul>
@@ -282,41 +283,41 @@
 
                 <button
                     class="btn-delete-play"
-                    data-ng-if="isIndexer"
-                    data-ng-disabled="play.isSaving"
-                    data-ng-click="deletePlay()"
+                    ng-if="isIndexer"
+                    ng-disabled="play.isSaving"
+                    ng-click="deletePlay()"
                 >
                     Delete Play
                 </button>
 
-                <div class="save-indicator" data-ng-if="isIndexer">
+                <div class="save-indicator" ng-if="isIndexer">
                     <i
                         class="icon icon-refresh active"
-                        data-ng-show="play.isSaving"
+                        ng-show="play.isSaving"
                     ></i>
                     <i
                         class="icon icon-ok success"
-                        data-ng-show="play.id"
-                        data-ng-hide="!play.id || play.isSaving || play.error"
+                        ng-show="play.id"
+                        ng-hide="!play.id || play.isSaving || play.error"
                     ></i>
                     <i
                         class="icon icon-remove error"
-                        data-ng-show="play.error"
+                        ng-show="play.error"
                     ></i>
                 </div>
 
                 <button
                     class="play-link"
-                    data-ng-if="reelsActive && isTeamMember"
-                    data-open-modal="AddReel.Modal"
-                    data-modal-options="options"
+                    ng-if="reelsActive && isTeamMember"
+                    open-modal="AddReel.Modal"
+                    modal-options="options"
                 >
                     <i class="icon icon-plus"></i> Add to reel
                 </button>
 
                 <button
                     class="play-link pull-right disabled ng-hide"
-                    data-ng-if="!isIndexer"
+                    ng-if="!isIndexer"
                 >
                     <i class="icon icon-tag"></i> Label Play
                 </button>
