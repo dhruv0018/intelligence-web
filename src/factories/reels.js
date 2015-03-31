@@ -327,7 +327,9 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     if (!share.sharedWithUserId && !share.sharedWithTeamId) return true;
                 });
 
-                if (publicShare.length) return publicShare;
+                if (publicShare.length) publicShare = publicShare[0];
+
+                if (angular.isDefined(publicShare)) return publicShare;
             },
             isSharedWithPublic: function() {
                 var self = this;
