@@ -18,7 +18,7 @@ module.exports = [
             this.color = options.color;
             this.vertices = options.vertices || [];
             this.text = options.text || '';
-            this['z_index'] = options['z_index'] || 0;
+            this.zIndex = options.zIndex || 0;
 
             // Set additional non-member attributes
             this.containerElement = containerElement;
@@ -250,7 +250,7 @@ module.exports = [
 
             var self = this;
 
-            var modelAttributes = ['vertices', 'type', 'color', 'z_index', 'text'];
+            var modelAttributes = ['vertices', 'type', 'color', 'zIndex', 'text'];
 
             var copy = {};
 
