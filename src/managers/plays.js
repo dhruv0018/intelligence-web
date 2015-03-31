@@ -190,14 +190,14 @@ IntelligenceWebClient.service('PlaysManager', [
                     if (event.assignThisTeam) {
 
                         /* Assign the points to this team. */
-                        play.indexedScore = indexedScore = indexedScore + event.pointsAssigned;
+                        indexedScore += event.pointsAssigned;
                     }
 
                     /* If the points should be assigned to the other team. */
                     else {
 
                         /* Assign the points to the other team. */
-                        play.opposingIndexedScore = opposingIndexedScore = opposingIndexedScore + event.pointsAssigned;
+                        opposingIndexedScore += event.pointsAssigned;
                     }
                 }
 
@@ -208,17 +208,21 @@ IntelligenceWebClient.service('PlaysManager', [
                     if (event.assignThisTeam) {
 
                         /* Assign the points to this team. */
-                        play.opposingIndexedScore = opposingIndexedScore = opposingIndexedScore + event.pointsAssigned;
+                        opposingIndexedScore += event.pointsAssigned;
                     }
 
                     /* If the points should be assigned to the other team. */
                     else {
 
                         /* Assign the points to the other team. */
-                        play.indexedScore = indexedScore = indexedScore + event.pointsAssigned;
+                        indexedScore += event.pointsAssigned;
                     }
                 }
             }
+
+            /* Set scores on the play. */
+            play.indexedScore = indexedScore;
+            play.opposingIndexedScore = opposingIndexedScore;
         }
     }
 ]);
