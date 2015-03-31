@@ -16,6 +16,7 @@
     "locals": [
         "telestration-enable-button",
         "telestration-clear-all-button",
+        "telestration-delete-button",
         "telestration-toolbar"
     ]
 }

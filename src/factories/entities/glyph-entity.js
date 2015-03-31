@@ -46,9 +46,12 @@ module.exports = [
                 // ArrayEntity.prototype.remove.call(glyph);
 
                 var index = this.indexOf(glyph);
-                if (index != -1) this.splice(index, 1);
 
-                glyph.destroy();
+                if (index != -1) {
+
+                    this.splice(index, 1);
+                    glyph.destroy();
+                }
 
             };
 

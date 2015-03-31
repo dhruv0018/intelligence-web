@@ -104,7 +104,11 @@
 
     }
 
-    telestration-clear-all-button {
+    .delete-tools {
+        display: flex;
+    }
+
+    telestration-clear-all-button, telestration-delete-button {
 
         li {
             background-color: @clear-all-red;
@@ -120,6 +124,15 @@
             &:hover {
                 opacity: 1;
             }
+        }
+    }
+
+    telestration-delete-button {
+
+        li {
+            padding: 12px;
+            margin-right: 6px;
+            font-size: 22px;
         }
     }
 }
