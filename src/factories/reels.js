@@ -319,15 +319,15 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
             },
             getPublicShare: function() {
-                var self = this;
 
-                if (!self.shares) return false;
+                if (!this.shares) return undefined;
 
-                var publicShare = self.shares.filter(function(share) {
+                let publicShare = this.shares.find(share => {
+
                     if (!share.sharedWithUserId && !share.sharedWithTeamId) return true;
                 });
 
-                if (publicShare.length) return publicShare;
+                return publicShare;
             },
             isSharedWithPublic: function() {
                 var self = this;
