@@ -1,7 +1,7 @@
 <header class="athlete-profile-header" layout="column" layout-gt-md="row">
     <section class="athlete-primary-info" layout="column" layout-gt-sm="row">
 
-        <profile-picture data-user="athlete"></profile-picture>
+        <profile-picture user="athlete"></profile-picture>
 
         <h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
@@ -15,7 +15,7 @@
             size="30"
             class="secondary-info-toggle"
             hide-gt-sm
-            data-ng-click="toggle.visibility()"
+            ng-click="toggle.visibility()"
         ></ng-md-icon>
     </section>
 
@@ -23,11 +23,11 @@
 
         <h2 hide show-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-        <p data-ng-if="athlete.profile.about">{{athlete.profile.about}}</p>
-        <p data-ng-if="!athlete.profile.about">
+        <p ng-if="athlete.profile.about">{{athlete.profile.about}}</p>
+        <p ng-if="!athlete.profile.about">
             <a
              class="empty-attribute"
-             data-ui-sref="Athlete.EditProfile.BasicInfo"
+             ui-sref="Athlete.EditProfile.BasicInfo"
             >Add about me</a></p>
 
         <ul class="athlete-attributes"
@@ -36,51 +36,51 @@
         >
             <li class="athlete-attribute">
                 <label>Height/Weight</label>
-                <span data-ng-if="athlete.profile.height && athlete.profile.weight">
-                    {{utilities.floor(athlete.profile.height / 12)}}&#39;{{athlete.profile.height % 12}}&quot;
+                <span ng-if="athlete.profile.height && athlete.profile.weight">
+                    {{ athlete.profile.height | height }}
                     &nbsp;&#47;&nbsp;
-                    {{athlete.profile.weight}}&nbsp;lbs&#46;
+                    {{ athlete.profile.weight | weight }}
                 </span>
-                <span data-ng-if="!athlete.profile.height || !athlete.profile.weight">
+                <span ng-if="!athlete.profile.height || !athlete.profile.weight">
                     <a
                      class="empty-attribute"
-                     data-ui-sref="Athlete.EditProfile.Physical"
+                     ui-sref="Athlete.EditProfile.Physical"
                     >Add height/weight</a>
                 </span>
             </li>
             <li class="athlete-attribute">
                 <label>Position</label>
-                <span data-ng-if="athlete.profile.teams.length !== 0">
+                <span ng-if="athlete.profile.teams.length !== 0">
                     Quarterback (QB)
                 </span>
-                <span data-ng-if="athlete.profile.teams.length === 0">
+                <span ng-if="athlete.profile.teams.length === 0">
                     <a
                      class="empty-attribute"
-                     data-ui-sref="Athlete.EditProfile.BasicInfo"
+                     ui-sref="Athlete.EditProfile.BasicInfo"
                     >Add position</a>
                 </span>
             </li>
             <li class="athlete-attribute">
                 <label>School</label>
-                <span data-ng-if="athlete.profile.school">
+                <span ng-if="athlete.profile.school">
                     {{athlete.profile.school}}
                 </span>
-                <span data-ng-if="!athlete.profile.school">
+                <span ng-if="!athlete.profile.school">
                     <a
                      class="empty-attribute"
-                     data-ui-sref="Athlete.EditProfile.Academics"
+                     ui-sref="Athlete.EditProfile.Academics"
                     >Add school</a>
                 </span>
             </li>
             <li class="athlete-attribute">
                 <label>Graduation</label>
-                <span data-ng-if="athlete.profile.graduationYear">
+                <span ng-if="athlete.profile.graduationYear">
                     Class of {{athlete.profile.graduationYear}}
                 </span>
-                <span data-ng-if="!athlete.profile.graduationYear">
+                <span ng-if="!athlete.profile.graduationYear">
                     <a
                      class="empty-attribute"
-                     data-ui-sref="Athlete.EditProfile.Academics"
+                     ui-sref="Athlete.EditProfile.Academics"
                     >Add year</a>
                 </span>
             </li>
