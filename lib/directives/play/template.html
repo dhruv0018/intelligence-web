@@ -1,19 +1,33 @@
+<!-- =============== MOBILE PLAYS =============== -->
 <div ng-if="$root.viewport.name === VIEWPORTS.MOBILE.name">
 
-    <div data-ng-switch data-on="isReelsPlay" data-ng-hide="!play.hasVisibleEvents && !isIndexer">
-        <!-- MOBILE REEL PLAY -->
-        <div data-ng-switch-when="true" class="play play__reel" data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }">
-
+    <div
+        data-ng-switch
+        data-on="isReelsPlay"
+        data-ng-hide="!play.hasVisibleEvents && !isIndexer"
+    >
+        <!-- - - - - - - - - REEL PLAY - - - - - - - - -->
+        <div
+            data-ng-switch-when="true"
+            class="play play__reel"
+            data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }"
+        >
             <div class="playHeadingContainer">
 
                 <div class="playHeading" data-ng-click="selectMobileClipPlay()">
 
                     <h4 class="title title-reel">
-                        <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
-                            <krossover-summary-item data-item="item"
-                                                    data-event="summary.event"
-                                                    data-ng-repeat="item in summary.items track by $index"></krossover-summary-item>
+                        <div
+                            class="summaries"
+                            data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
+                        >
+                            <krossover-summary-item
+                                data-item="item"
+                                data-event="summary.event"
+                                data-ng-repeat="item in summary.items track by $index"
+                            ></krossover-summary-item>
                         </div>
+
                         <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                     </h4>
 
@@ -22,10 +36,18 @@
                     </h5>
                 </div>
 
-                <a class="playplay" data-ng-click="selectMobileClipPlay()"><i class="icon icon-play-circle"></i></a>
+                <a
+                    class="playplay"
+                    data-ng-click="selectMobileClipPlay()"
+                >
+                    <i class="icon icon-play-circle"></i>
+                </a>
 
-                <!-- TODO: THIS IS A HACK TO CALCULATE PLAY SPECIFIC ATTRIBUTES LIKE THE SUMMARIES BUT WE DON'T
-                WANT TO SHOW THE EVENTS ON MOBILE. HIDE THE EVENTS BUT ONLY INCLUDE THEM SINCE THEY DETERMINE IF A PLAY SHOULD BE VISIBLE. DETERMINING A PLAY IS VISIBLE SHOULD PROBABLY BE MOVED TO THE PLAYSMANAGER AND ALSO UPDATED WHEN EVENTS ARE ADDED OR REMOVED -->
+                <!-- TODO: This is a hack to calculate play specific attributes like the
+                    summaries but we don't want to show the events on mobile. Hide the events
+                    but only include them since they determine if a play should be visible.
+                    Determining a play is visible should probably be moved to the PlaysManager
+                    and also updated when events are added or removed -->
                 <ul ng-hide="true">
                     <krossover-event
                         data-plays="plays"
@@ -33,38 +55,55 @@
                         data-event="event"
                         data-league="league"
                         data-highlighted-event-id="highlightedEventId"
-                        data-ng-repeat="event in play.events">
+                        data-ng-repeat="event in play.events"
+                    >
                     </krossover-event>
                 </ul>
             </div>
         </div>
 
-        <!-- MOBILE DEFAULT PLAY -->
+        <!-- - - - - - - - - DEFAULT PLAY - - - - - - - - -->
         <!-- Default to 'active' since this is currently only used for public clips -->
-        <div data-ng-switch-default class="active play play__reel" data-ng-class="{ active: play.id == playManager.current.id}">
-
+        <div
+            data-ng-switch-default
+            class="active play play__reel"
+            data-ng-class="{ active: play.id == playManager.current.id}"
+        >
             <div class="playHeadingContainer">
 
                 <div class="playHeading">
-                    <h4 class="title" data-ng-click="selectMobileClipPlay()">
+                    <h4
+                        class="title"
+                        data-ng-click="selectMobileClipPlay()"
+                    >
 
                         <span class="team">{{teams[play.possessionTeamId].name}}</span>
-
-                        <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
-                            <krossover-summary-item data-item="item"
-                                                    data-event="summary.event"
-                                                    data-ng-repeat="item in summary.items track by $index">
-
-                            </krossover-summary-item>
+                        <div
+                            class="summaries"
+                            data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
+                        >
+                            <krossover-summary-item
+                                data-item="item"
+                                data-event="summary.event"
+                                data-ng-repeat="item in summary.items track by $index"
+                            ></krossover-summary-item>
                         </div>
                     </h4>
                 </div>
 
-                <a class="playplay" data-ng-click="selectMobileClipPlay()"><i class="icon icon-play-circle"></i></a>
+                <a
+                    class="playplay"
+                    data-ng-click="selectMobileClipPlay()"
+                >
+                    <i class="icon icon-play-circle"></i>
+                </a>
 
             </div>
 
-            <ul class="playBody" data-ng-hide="play !== playManager.current || playIsInBreakdown" >
+            <ul
+                class="playBody"
+                data-ng-hide="play !== playManager.current || playIsInBreakdown"
+            >
                 <krossover-event
                     data-plays="plays"
                     data-play="play"
@@ -78,21 +117,36 @@
     </div>
 </div>
 
+<!-- =============== DESKTOP PLAYS =============== -->
 <div ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
 
-    <div data-ng-switch data-on="isReelsPlay" data-ng-hide="!play.hasVisibleEvents && !isIndexer">
-        <!-- REEL PLAY -->
-        <div data-ng-switch-when="true" class="play play__reel" data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }">
-
+    <div
+        data-ng-switch
+        data-on="isReelsPlay"
+        data-ng-hide="!play.hasVisibleEvents && !isIndexer"
+    >
+        <!-- - - - - - - - - REEL PLAY - - - - - - - - -->
+        <div
+            data-ng-switch-when="true"
+            class="play play__reel"
+            data-ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }"
+        >
             <div class="playHeadingContainer">
-                <div class="playHeading" data-ng-click="selectPlay()">
-
+                <div
+                    class="playHeading"
+                    data-ng-click="selectPlay()"
+                >
                     <h4 class="title">
                         <span ng-show="editFlag">{{index + 1}}.&nbsp;</span>
-                        <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1">
-                            <krossover-summary-item data-item="item"
-                                                    data-event="summary.event"
-                                                    data-ng-repeat="item in summary.items track by $index"></krossover-summary-item>
+                        <div
+                            class="summaries"
+                            data-ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
+                        >
+                            <krossover-summary-item
+                                data-item="item"
+                                data-event="summary.event"
+                                data-ng-repeat="item in summary.items track by $index"
+                            ></krossover-summary-item>
                         </div>
                         <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                     </h4>
@@ -101,17 +155,31 @@
                         <span class="teams">{{team.name}} vs {{opposingTeam.name}}</span>
                     </h5>
 
-                    <span data-ng-show="editFlag" class="delete-reel-play" data-ng-click="deleteReelPlay(index)"><i class="icon icon-remove"></i></span>
+                    <span
+                        data-ng-show="editFlag"
+                        class="delete-reel-play"
+                        data-ng-click="deleteReelPlay(index)"
+                    >
+                        <i class="icon icon-remove"></i>
+                    </span>
 
                 </div>
 
-                <span class="playplay" data-ng-click="videoPlayer.play()" data-ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag}"><i class="icon icon-play-circle"></i></span>
+                <span
+                    class="playplay"
+                    data-ng-click="videoPlayer.play()"
+                    data-ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag}"
+                >
+                    <i class="icon icon-play-circle"></i>
+                </span>
 
             </div>
 
-            <ul class="playBody" data-ng-show="!editFlag && (expandAll || !play.summaries.length)" data-ng-hide="!expandAll && (editFlag || play !== playManager.current)" >
-
-
+            <ul
+                class="playBody"
+                data-ng-show="!editFlag && (expandAll || !play.summaries.length)"
+                data-ng-hide="!expandAll && (editFlag || play !== playManager.current)"
+            >
                 <krossover-event
                     data-auto-advance="autoAdvance"
                     data-plays="plays"
@@ -125,9 +193,14 @@
             </ul>
         </div>
 
-        <!-- DEFAULT PLAY -->
-        <div data-ng-switch-default data-ng-hide="!play.hasVisibleEvents && !isIndexer" class="play" data-ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll }" data-ng-click="selectPlay()">
-
+        <!-- - - - - - - - - DEFAULT PLAY - - - - - - - - -->
+        <div
+            data-ng-switch-default
+            data-ng-hide="!play.hasVisibleEvents && !isIndexer"
+            class="play"
+            data-ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll }"
+            data-ng-click="selectPlay()"
+        >
             <div class="playHeadingContainer">
 
                 <div class="playHeading">
@@ -135,7 +208,11 @@
                     <h4 data-ng-if="isIndexer">
                         <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
                         <span class="dash"> — </span>
-                        <time>{{ play.startTime | time }}<span class="dash"> — </span>{{ play.endTime | time }}</time>
+                        <time>
+                            {{ play.startTime | time }}
+                            <span class="dash"> — </span>
+                            {{ play.endTime | time }}
+                        </time>
                     </h4>
 
                     <h4 data-ng-if="isIndexer">
@@ -152,10 +229,15 @@
 
                         <div class="summariesContainer">
 
-                            <div class="summaries" data-ng-repeat="summary in play.summaries | orderBy:'-priority'">
-                                <krossover-summary-item data-item="item"
-                                                        data-event="summary.event"
-                                                        data-ng-repeat="item in summary.items track by $index"></krossover-summary-item>
+                            <div
+                                class="summaries"
+                                data-ng-repeat="summary in play.summaries | orderBy:'-priority'"
+                            >
+                                <krossover-summary-item
+                                    data-item="item"
+                                    data-event="summary.event"
+                                    data-ng-repeat="item in summary.items track by $index"
+                                ></krossover-summary-item>
                             </div>
 
                         </div>
@@ -163,7 +245,13 @@
 
                 </div>
 
-                <span class="playplay" data-ng-click="videoPlayer.play()" data-ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"><i class="icon icon-play-circle"></i></span>
+                <span
+                    class="playplay"
+                    data-ng-click="videoPlayer.play()"
+                    data-ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
+                >
+                    <i class="icon icon-play-circle"></i>
+                </span>
 
             </div>
 
@@ -185,17 +273,46 @@
 
             <div class="playFooter">
 
-                <button class="btn-delete-play" data-ng-if="isIndexer" data-ng-disabled="play.isSaving" data-ng-click="deletePlay()">Delete Play</button>
+                <button
+                    class="btn-delete-play"
+                    data-ng-if="isIndexer"
+                    data-ng-disabled="play.isSaving"
+                    data-ng-click="deletePlay()"
+                >
+                    Delete Play
+                </button>
 
                 <div class="save-indicator" data-ng-if="isIndexer">
-                    <i class="icon icon-refresh active" data-ng-show="play.isSaving"></i>
-                    <i class="icon icon-ok success" data-ng-show="play.id" data-ng-hide="!play.id || play.isSaving || play.error"></i>
-                    <i class="icon icon-remove error" data-ng-show="play.error"></i>
+                    <i
+                        class="icon icon-refresh active"
+                        data-ng-show="play.isSaving"
+                    ></i>
+                    <i
+                        class="icon icon-ok success"
+                        data-ng-show="play.id"
+                        data-ng-hide="!play.id || play.isSaving || play.error"
+                    ></i>
+                    <i
+                        class="icon icon-remove error"
+                        data-ng-show="play.error"
+                    ></i>
                 </div>
 
-                <button class="play-link" data-ng-if="reelsActive && isTeamMember" data-open-modal="AddReel.Modal" data-modal-options="options"><i class="icon icon-plus"></i> Add to reel</button>
+                <button
+                    class="play-link"
+                    data-ng-if="reelsActive && isTeamMember"
+                    data-open-modal="AddReel.Modal"
+                    data-modal-options="options"
+                >
+                    <i class="icon icon-plus"></i> Add to reel
+                </button>
 
-                <button class="play-link pull-right disabled ng-hide" data-ng-if="!isIndexer"><i class="icon icon-tag"></i> Label Play</button>
+                <button
+                    class="play-link pull-right disabled ng-hide"
+                    data-ng-if="!isIndexer"
+                >
+                    <i class="icon icon-tag"></i> Label Play
+                </button>
 
             </div>
 
