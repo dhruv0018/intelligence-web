@@ -21,11 +21,13 @@ BasicInfo.controller('Athlete.EditProfile.BasicInfo.controller', [
         $scope.addingTeam = false;
 
         $scope.removeTeam = function removeTeam(teamId) {
-            for (var index = 0; index < $scope.athlete.profile.teams.length; index++) {
-                if ($scope.athlete.profile.teams[index].teamId === teamId) {
-                    $scope.athlete.profile.teams.splice(index, 1);
+            let profileTeams = $scope.athlete.profile.teams;
+
+            profileTeams.forEach((team, index, teams) => {
+                if (team.teamId === teamId) {
+                    teams.splice(index, 1);
                 }
-            }
+            });
         };
 
         $scope.getPositionSet = function getPositionSet(teamId) {
