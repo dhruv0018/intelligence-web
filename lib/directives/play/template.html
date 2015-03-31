@@ -49,15 +49,7 @@
                     Determining a play is visible should probably be moved to the PlaysManager
                     and also updated when events are added or removed -->
                 <ul ng-hide="true">
-                    <krossover-event
-                        plays="plays"
-                        play="play"
-                        event="event"
-                        league="league"
-                        highlighted-event-id="highlightedEventId"
-                        ng-repeat="event in play.events"
-                    >
-                    </krossover-event>
+                    <krossover-event ng-repeat="event in play.events"></krossover-event>
                 </ul>
             </div>
         </div>
@@ -105,14 +97,7 @@
                 class="playBody"
                 ng-hide="play !== playManager.current || playIsInBreakdown"
             >
-                <krossover-event
-                    plays="plays"
-                    play="play"
-                    event="event"
-                    league="league"
-                    highlighted-event-id="highlightedEventId"
-                    ng-repeat="event in play.events">
-                </krossover-event>
+                <krossover-event ng-repeat="event in play.events"></krossover-event>
             </ul>
         </div>
     </div>
@@ -181,15 +166,7 @@
                 ng-show="!editFlag && (expandAll || !play.summaries.length)"
                 ng-hide="!expandAll && (editFlag || play !== playManager.current)"
             >
-                <krossover-event
-                    auto-advance="autoAdvance"
-                    plays="plays"
-                    play="play"
-                    event="event"
-                    league="league"
-                    highlighted-event-id="highlightedEventId"
-                    ng-repeat="event in play.events">
-                </krossover-event>
+                <krossover-event ng-repeat="event in play.events"></krossover-event>
 
             </ul>
         </div>
@@ -265,16 +242,7 @@
                     !play.summaries.length"
                 ng-class="{'playHide': (!expandAll && play != playManager.current) }"
             >
-                <krossover-event
-                    auto-advance="autoAdvance"
-                    plays="plays"
-                    play="play"
-                    event="event"
-                    league="league"
-                    highlighted-event-id="highlightedEventId"
-                    ng-repeat="event in play.events">
-                </krossover-event>
-
+                <krossover-event ng-repeat="event in play.events"></krossover-event>
             </ul>
 
             <hr class="summaryBodyDivider">
