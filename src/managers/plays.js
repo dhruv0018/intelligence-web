@@ -145,7 +145,10 @@ IntelligenceWebClient.service('PlaysManager', [
             let tagVariables = event.tagVariables;
 
             /* If the event is a period event, then advance the period. */
-            if (event.isPeriodTag) play.period = period++;
+            if (event.isPeriodTag) period++;
+
+            /* Set the period of the play. */
+            play.period = period;
 
             /* If at least one event has a user script, the play is visible. */
             if (tag.userScript !== null) play.hasVisibleEvents = true;
