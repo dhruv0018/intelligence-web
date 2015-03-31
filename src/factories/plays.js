@@ -1,3 +1,5 @@
+import KrossoverEvent from '../entities/event.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -6,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'CUEPOINT_TYPES',
-    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, CUEPOINT_TYPES) {
+    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_TYPES',
+    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_TYPES) {
 
         var PlaysFactory = {
 
@@ -47,6 +49,15 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 /* Play possesion; filled in by the events. */
                 play.possessionTeamId = play.possessionTeamId || null;
+
+                play.events = play.events.map(constructEvent);
+
+                function constructEvent (event) {
+
+                    let tag = tagsets.getTag(event.tagId);
+
+                    return new KrossoverEvent(event, tag, event.time);
+                }
 
                 return play;
             },

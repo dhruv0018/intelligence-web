@@ -1,3 +1,6 @@
+var VARIABLE_PATTERN = /(__\d__)/;
+var VARIABLE_INDEX_PATTERN = /\d/;
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -9,6 +12,8 @@ IntelligenceWebClient.factory('TagsetsFactory', [
     'BaseFactory', '$filter',
     function(BaseFactory, $filter) {
 
+        var indexedTags = {};
+
         var TagsetsFactory = {
 
             description: 'tagsets',
@@ -19,11 +24,13 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             extend: function(tagset) {
 
+                console.time('Extending tagset...');
+
                 var self = this;
 
                 angular.extend(tagset, self);
 
-                var indexedTags = {};
+                var tags = {};
 
                 tagset.tags.forEach(function(tag) {
 
@@ -48,10 +55,54 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                         tag.tagVariables = indexedVariables;
                     }
 
+                    ['userScript', 'indexerScript', 'summaryScript'].forEach(function(scriptType) {
+
+                        var script = tag[scriptType];
+
+                        if (script) {
+
+                            /* Split up script into array items and replace variables
+                            * with the actual tag variable object. */
+                            tag[scriptType] = script.split(VARIABLE_PATTERN)
+
+                            /* Filter script items. */
+                            .filter(function(item) {
+
+                                /* Filter out empty items. */
+                                return item.length;
+                            })
+
+                            /* Map script items. */
+                            .map(function(item) {
+
+                                /* If the item is a variable. */
+                                if (VARIABLE_PATTERN.test(item)) {
+
+                                    /* Find the index of the variable in the script. */
+                                    var index = Number(VARIABLE_INDEX_PATTERN.exec(item).pop());
+
+                                    /* Find the tag variable by script index. */
+                                    var tagVariable = tag.tagVariables[index];
+
+                                    /* Store the index position of the tag variable. */
+                                    tagVariable.index = index;
+
+                                    return tagVariable;
+                                }
+
+                                /* If the item is not a variable return it as is. */
+                                else return item;
+                            });
+                        }
+                    });
+
+                    tags[tag.id] = tag;
                     indexedTags[tag.id] = tag;
                 });
 
-                tagset.tags = indexedTags;
+                tagset.tags = tags;
+
+                console.timeEnd('Extending tagset...');
 
                 return tagset;
             },
@@ -69,6 +120,22 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 Object.keys(copy.tags).forEach(function(tagKey) {
 
                     var tag = copy.tags[tagKey];
+
+                    ['userScript', 'indexerScript', 'summaryScript'].forEach(function(scriptType) {
+
+                        var script = tag[scriptType];
+
+                        if (script) {
+
+                            tag[scriptType] = script
+                            .map(function(item) {
+
+                                if (angular.isString(item)) return item;
+                                else return '__' + item.index + '__';
+                            })
+                            .join('');
+                        }
+                    });
 
                     var tagVariables = [];
 
@@ -98,6 +165,20 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 copy.tags = tags;
 
                 return copy;
+            },
+
+            getTag: function(tagId) {
+
+                let tag = indexedTags[tagId];
+
+                if (!tag) throw new Error('Tag ' + tagId + ' not found');
+
+                return tag;
+            },
+
+            getTagMap: function() {
+
+                return indexedTags;
             },
 
             getStartTags: function() {
