@@ -204,6 +204,7 @@ ReelsArea.controller('ReelsArea.controller', [
         // telestrations
 
         $scope.telestrationsEntity = reel.telestrations;
+        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id);
 
         // uploader could be a coach or an athlete (they have permissions to edit by default)
         if (isUploader) {
@@ -227,7 +228,6 @@ ReelsArea.controller('ReelsArea.controller', [
 
         // video player
 
-        $scope.cuePoints = [];
         $scope.sources = play.getVideoSources();
         $scope.currentPlayId = play.id;
         $scope.posterImage = {

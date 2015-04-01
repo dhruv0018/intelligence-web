@@ -150,6 +150,7 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             // Set telestrations
             $scope.telestrationsEntity = $scope.game.playTelestrations;
             $scope.currentPlayId = play.id;
+            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId);
 
             $scope.sources = play.getVideoSources();
 
