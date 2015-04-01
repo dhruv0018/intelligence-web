@@ -6,6 +6,14 @@ class Subscription extends Entity {
 
         let self = this;
 
+        if (self.validate(subscription)) {
+
+            return self.extend(subscription);
+        }
+    }
+
+    validate (subscription) {
+
         // TODO: Validate with JSON schema instead
         /* Validate JSON constructor object */
         if (!subscription.id) {
@@ -28,7 +36,7 @@ class Subscription extends Entity {
             throw new Error('Instantiating a Subscription Entity requires mutually exclusive :userId and :teamId');
         }
 
-        Object.assign(self, subscription);
+        return true;
     }
 
     is(subscription, match) {
