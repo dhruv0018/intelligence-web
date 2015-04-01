@@ -35,15 +35,8 @@
                     <i class="icon icon-play-circle"></i>
                 </a>
 
-                <!-- TODO: This is a hack to calculate play specific attributes like the
-                    summaries but we don't want to show the events on mobile. Hide the events
-                    but only include them since they determine if a play should be visible.
-                    Determining a play is visible should probably be moved to the PlaysManager
-                    and also updated when events are added or removed -->
-                <ul ng-hide="true">
-                    <krossover-event ng-repeat="event in play.events"></krossover-event>
-                </ul>
             </div>
+
         </div>
 
         <!-- - - - - - - - - DEFAULT PLAY - - - - - - - - -->
