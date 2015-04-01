@@ -44,10 +44,15 @@ class List extends Collection {
      * Method:get
      * Return entry at index
      *
-     * @param: {Integer} Index of entry
+     * @param: {Integer} (req) Index of entry
      * @return: {Object} Entry at index
      */
     get(index) {
+
+        if (!index) {
+
+            throw new Error('Invoked List.get without passing a index');
+        }
 
         return this[index];
     }
