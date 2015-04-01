@@ -32,9 +32,8 @@ module.exports = [
                 // TODO: Call Super()
                 Object.keys(self).forEach(function assignCopies(key) {
 
-                    if (self[key].unextend) copy[key] = self[key].unextend();
-                    else copy[key] = angular.copy(self[key]);
-
+                    if (self[key] && self[key].unextend) copy[key] = self[key].unextend();
+                    else if (self[key] && typeof self[key] !== 'function') copy[key] = angular.copy(self[key]);
                 });
 
                 return copy;
