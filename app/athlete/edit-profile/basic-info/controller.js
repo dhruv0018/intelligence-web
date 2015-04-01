@@ -44,15 +44,22 @@ BasicInfo.controller('Athlete.EditProfile.BasicInfo.controller', [
             return sport.name;
         };
 
+        $scope.setProfilePicture = function setProfilePicture(files) {
+            let reader = new FileReader();
+
+            $scope.athlete.fileImage = files[0]; // resolve user
+
+            reader.readAsDataURL(files[0]);
+
+            reader.onload = function onload() {
+                $scope.athlete.imageUrl = this.result;
+                $scope.$apply();
+            };
+        };
+
         $scope.saveBasicInfo = function saveBasicInfo() {
             if ($scope.athlete.fileImage) {
-                let data = new FormData();
-                data.append('imageFile', $scope.athlete.fileImage);
-
-                $http.post(config.api.uri + 'users/' + $scope.athlete.id + '/image/file', data, {
-                    headers: { 'Content-Type': undefined },
-                    transformRequest: angular.identity
-                })
+                $scope.athlete.uploadProfilePicture()
                     .success(function(responseUser) {
                         $scope.athlete.imageUrl = responseUser.imageUrl;
                         $scope.athlete.save().then(function() {

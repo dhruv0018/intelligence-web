@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$injector', '$rootScope', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES',
-    function($injector, $rootScope, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES) {
+    '$injector', '$rootScope', '$http', 'config', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES',
+    function($injector, $rootScope, $http, config, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES) {
 
         var UsersFactory = {
 
@@ -606,9 +606,9 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
             * @class User
-            * @method
+            * @method getFeaturedReelId
             * @returns {Integer} returns the user's featuredReelId
-            * Gets the users user's featuredReelId
+            * Gets the user's featuredReelId
             */
             getFeaturedReelId: function() {
 
@@ -618,13 +618,29 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
             * @class User
-            * @method
-            * Sets the users user's featuredReelId
+            * @method setFeaturedReelId
+            * Sets the user's featuredReelId
             */
             setFeaturedReelId: function(reelIdValue) {
 
                 var self = this;
                 self.profile.featuredReelId = reelIdValue;
+            },
+            /**
+            * @class User
+            * @method uploadProfilePicture
+            * Uploads the user's profile picture to the database
+            */
+            uploadProfilePicture: function() {
+                let self = this;
+
+                let data = new FormData();
+                data.append('imageFile', self.fileImage);
+
+                return $http.post(config.api.uri + 'users/' + self.id + '/image/file', data, {
+                    headers: { 'Content-Type': undefined },
+                    transformRequest: angular.identity
+                });
             }
         };
 

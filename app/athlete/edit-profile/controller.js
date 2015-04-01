@@ -20,18 +20,5 @@ EditProfile.controller('Athlete.EditProfile.controller', [
         $state.go('Athlete.EditProfile.BasicInfo');
 
         $scope.athlete = session.getCurrentUser();
-
-        let reader = new FileReader();
-
-        $scope.setProfileImage = function setProfileImage(files) {
-            $scope.athlete.fileImage = files[0]; // resolve $scope.athlete
-
-            reader.readAsDataURL(files[0]);
-
-            reader.onload = function onload() {
-                $scope.athlete.imageUrl = reader.result;
-                $scope.$apply();
-            };
-        };
     }
 ]);
