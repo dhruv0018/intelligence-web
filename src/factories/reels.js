@@ -322,12 +322,10 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (!this.shares) return undefined;
 
-                let publicShare = this.shares.find(share => {
+                return this.shares.find(share => {
 
-                    if (!share.sharedWithUserId && !share.sharedWithTeamId) return true;
+                    return !share.sharedWithUserId && !share.sharedWithTeamId;
                 });
-
-                return publicShare;
             },
             isSharedWithPublic: function() {
                 var self = this;
