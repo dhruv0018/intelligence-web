@@ -79,7 +79,7 @@ class Event extends Entity {
      */
     get isFloat () {
 
-        return this.isStart === false && this.isEnd === false && this.children.length === 0;
+        return this.isStart === false && this.isEnd === false && this.children && this.children.length === 0;
     }
 
     /**
@@ -89,7 +89,7 @@ class Event extends Entity {
     get isEndAndStart () {
 
         /* Check if the given event is an end tag and only has one child. */
-        return this.isEnd && this.children.length === 1;
+        return this.isEnd && this.children && this.children.length === 1;
     }
 }
 
