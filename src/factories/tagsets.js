@@ -233,7 +233,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 var tags = this.tags;
                 var tag = tags[tagId];
 
-                if (tag.children.length) {
+                if (tag.children && tag.children.length) {
 
                     return tag.children.map(function(childId) {
 
@@ -261,9 +261,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 var tags = this.tags;
                 var tag = tags[tagId];
 
-                return tag.isStart === false &&
-                    tag.isEnd === false &&
-                    tag.children.length === 0;
+                return tag.isStart === false && tag.isEnd === false && tag.children && tag.children.length === 0;
             },
 
             isEndTag: function(tagId) {

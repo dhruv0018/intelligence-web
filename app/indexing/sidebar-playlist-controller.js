@@ -25,30 +25,31 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
         $scope.teamPlayers = data.teamPlayers;
         $scope.opposingTeamPlayers = data.opposingTeamPlayers;
 
-        $scope.$watch(function() {
+        /* TODO: Think of a better way to do this? */
 
-            var lastPlay = playsManager.getLastPlay();
+        const removeLastPlayWatch = $scope.$watchCollection(watchLastPlay, onLastPlayChange);
 
-            if (!lastPlay) return 0;
+        function watchLastPlay() {
 
-            return lastPlay.teamIndexedScore;
+            let lastPlay = playsManager.getLastPlay();
 
-        }, function(teamIndexedScore) {
+            let playData = {
 
-            $scope.game.indexedScore = teamIndexedScore;
-        });
+                period: lastPlay.period,
+                indexedScore: lastPlay.indexedScore,
+                opposingIndexedScore: lastPlay.opposingIndexedScore
+            };
 
-        $scope.$watch(function() {
+            return playData;
+        }
 
-            var lastPlay = playsManager.getLastPlay();
+        function onLastPlayChange (playData) {
 
-            if (!lastPlay) return 0;
+            $scope.game.currentPeriod = playData.period;
+            $scope.game.indexedScore = playData.indexedScore;
+            $scope.game.opposingIndexedScore = playData.opposingIndexedScore;
+        }
 
-            return lastPlay.opposingIndexedScore;
-
-        }, function(opposingIndexedScore) {
-
-            $scope.game.opposingIndexedScore = opposingIndexedScore;
-        });
+        $scope.$on('$destroy', () => removeLastPlayWatch());
     }
 ]);
