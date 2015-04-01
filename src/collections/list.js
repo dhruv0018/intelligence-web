@@ -76,7 +76,7 @@ class List extends Collection {
      */
     last() {
 
-        return this.empty() ? undefined : this[(this.length - 1)];
+        return this.empty() ? undefined : this[this.length - 1];
     }
 
     /**
@@ -100,7 +100,7 @@ class List extends Collection {
             location = location || false;
         }
 
-        return (location ? this.unshift(item) : this.push(item));
+        return location ? this.unshift(item) : this.push(item);
     }
 
     /**
@@ -159,7 +159,7 @@ class List extends Collection {
      */
     empty() {
 
-        return (this.length <= 0);
+        return this.length <= 0;
     }
 }
 
