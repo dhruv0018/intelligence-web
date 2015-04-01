@@ -11,13 +11,11 @@ class List extends Collection {
      */
     constructor(array) {
 
-        let self = this;
-
         array = array || [];
 
-        self.extend(array);
+        this.extend(array);
 
-        return self;
+        return this;
     }
 
     /**
@@ -28,9 +26,7 @@ class List extends Collection {
      */
     get length() {
 
-        let self = this;
-
-        return self.length;
+        return this.length;
     }
 
     /**
@@ -41,9 +37,7 @@ class List extends Collection {
      */
     clear() {
 
-        let self = this;
-
-        return self.slice();
+        return this.slice();
     }
 
     /**
@@ -55,9 +49,7 @@ class List extends Collection {
      */
     get(index) {
 
-        let self = this;
-
-        return self[index];
+        return this[index];
     }
 
     /**
@@ -68,9 +60,7 @@ class List extends Collection {
      */
     first() {
 
-        let self = this;
-
-        return self[0];
+        return this[0];
     }
 
     /**
@@ -81,9 +71,7 @@ class List extends Collection {
      */
     last() {
 
-        let self = this;
-
-        return self[(self.length - 1)];
+        return this[(this.length - 1)];
     }
 
     /**
@@ -99,8 +87,6 @@ class List extends Collection {
      */
     add(item, location) {
 
-        let self = this;
-
         if (!item) {
 
             throw new Error('Invoked List.add without passing an Object to add');
@@ -109,7 +95,7 @@ class List extends Collection {
             location = location || false;
         }
 
-        return (location ? self.unshift(item) : self.push(item));
+        return (location ? this.unshift(item) : this.push(item));
     }
 
     /**
@@ -122,15 +108,14 @@ class List extends Collection {
      */
     remove(item) {
 
-        let self = this;
-        let index = self.indexOf(item);
+        let index = this.indexOf(item);
 
         if (index < 0) {
 
             return -1;
         } else {
 
-            return self.splice(index, 1);
+            return this.splice(index, 1);
         }
     }
 
@@ -146,8 +131,6 @@ class List extends Collection {
      */
     sort(property, order) {
 
-        let self = this;
-
         if (!property) {
 
             throw new Error('Invoked List.sort without passing a String property to sort by');
@@ -156,7 +139,7 @@ class List extends Collection {
             order = order || false;
         }
 
-        return self.sort((a, b) => {
+        return this.sort((a, b) => {
 
             if (order) {
 
