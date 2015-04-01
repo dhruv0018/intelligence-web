@@ -29,13 +29,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play.events = play.events || [];
 
-                /* All of the play summaries; filled in by the events. */
-                play.summaries = play.summaries || [];
-
-                /* Set default play summary and priority. */
-                play.summary = play.summary || {};
-                play.summary.priority = play.summary.priority || 0;
-
                 play.period = play.period || 0;
 
                 play.teamPointsAssigned = play.teamPointsAssigned || 0;
