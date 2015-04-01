@@ -5,7 +5,7 @@
 
         <h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-        <a ui-sref="Athlete.EditProfile">
+        <a ui-sref="Athlete.Profile.EditProfile">
             <md-button class="md-raised edit-profile-button">Edit Profile</md-button>
         </a>
 
@@ -27,7 +27,7 @@
         <p ng-if="!athlete.profile.about">
             <a
              class="empty-attribute"
-             ui-sref="Athlete.EditProfile.BasicInfo"
+             ui-sref="Athlete.Profile.EditProfile.BasicInfo"
             >Add about me</a></p>
 
         <ul class="athlete-attributes"
@@ -44,7 +44,7 @@
                 <span ng-if="!athlete.profile.height || !athlete.profile.weight">
                     <a
                      class="empty-attribute"
-                     ui-sref="Athlete.EditProfile.Physical"
+                     ui-sref="Athlete.Profile.EditProfile.Physical"
                     >Add height/weight</a>
                 </span>
             </li>
@@ -56,7 +56,7 @@
                 <span ng-if="athlete.profile.teams.length === 0">
                     <a
                      class="empty-attribute"
-                     ui-sref="Athlete.EditProfile.BasicInfo"
+                     ui-sref="Athlete.Profile.EditProfile.BasicInfo"
                     >Add position</a>
                 </span>
             </li>
@@ -68,7 +68,7 @@
                 <span ng-if="!athlete.profile.school">
                     <a
                      class="empty-attribute"
-                     ui-sref="Athlete.EditProfile.Academics"
+                     ui-sref="Athlete.Profile.EditProfile.Academics"
                     >Add school</a>
                 </span>
             </li>
@@ -80,7 +80,7 @@
                 <span ng-if="!athlete.profile.graduationYear">
                     <a
                      class="empty-attribute"
-                     ui-sref="Athlete.EditProfile.Academics"
+                     ui-sref="Athlete.Profile.EditProfile.Academics"
                     >Add year</a>
                 </span>
             </li>

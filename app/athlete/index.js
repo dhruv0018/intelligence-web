@@ -1,7 +1,6 @@
 /* Component dependencies */
 require('film-home');
 require('profile');
-require('edit-profile');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -13,8 +12,7 @@ var angular = window.angular;
 
 var Athlete = angular.module('Athlete', [
     'Athlete.FilmHome',
-    'Athlete.Profile',
-    'Athlete.EditProfile'
+    'Athlete.Profile'
 ]);
 
 /* File dependencies */

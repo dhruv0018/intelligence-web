@@ -5,8 +5,7 @@
     ],
     "local": [
         "film-home",
-        "profile",
-        "edit-profile"
+        "profile"
     ],
     "scripts": [
         "index.js",

@@ -397,31 +397,31 @@
         "*": true
     },
 
-    "Athlete.EditProfile": {
+    "Athlete.Profile.EditProfile": {
 
         "Athlete": true
     },
 
-    "Athlete.EditProfile.Academics": {
+    "Athlete.Profile.EditProfile.Academics": {
 
         "Athlete": true
     },
 
-    "Athlete.EditProfile.Achievements": {
+    "Athlete.Profile.EditProfile.Achievements": {
 
         "Athlete": true
     },
-    "Athlete.EditProfile.BasicInfo": {
-
-        "Athlete": true
-    },
-
-    "Athlete.EditProfile.Contact": {
+    "Athlete.Profile.EditProfile.BasicInfo": {
 
         "Athlete": true
     },
 
-    "Athlete.EditProfile.Physical": {
+    "Athlete.Profile.EditProfile.Contact": {
+
+        "Athlete": true
+    },
+
+    "Athlete.Profile.EditProfile.Physical": {
 
         "Athlete": true
     },
