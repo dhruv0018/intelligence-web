@@ -11,13 +11,11 @@ class Dictionary extends Collection {
      */
     constructor(map) {
 
-        let self = this;
-
         map = map || new Map();
 
-        self.extend(map);
+        this.extend(map);
 
-        return self;
+        return this;
     }
 
     /**
@@ -28,9 +26,7 @@ class Dictionary extends Collection {
      */
     get length() {
 
-        let self = this;
-
-        return self.size;
+        return this.size;
     }
 
     /**
@@ -41,9 +37,7 @@ class Dictionary extends Collection {
      */
     clear() {
 
-        let self = this;
-
-        return self.clear();
+        return this.clear();
     }
 
     /**
@@ -55,9 +49,7 @@ class Dictionary extends Collection {
      */
     get(key) {
 
-        let self = this;
-
-        return self.get(key);
+        return this.get(key);
     }
 
     /**
@@ -72,8 +64,6 @@ class Dictionary extends Collection {
      */
     add(key, value) {
 
-        let self = this;
-
         if (!key) {
 
             throw new Error('Invoked Dictionary.add without passing a key');
@@ -82,7 +72,7 @@ class Dictionary extends Collection {
             throw new Error('Invoked Dictionary.add without passing a value');
         }
 
-        return self.dictionary(key, value);
+        return this.dictionary(key, value);
     }
 
     /**
@@ -95,9 +85,7 @@ class Dictionary extends Collection {
      */
     remove(key) {
 
-        let self = this;
-
-        return self.delete(key);
+        return this.delete(key);
     }
 }
 

@@ -42,14 +42,17 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
                             indexedVariables[++index] = variable;
 
-                            var indexedFormations = {};
+                            if (variable.formations) {
 
-                            variable.formations.forEach(function(formation) {
+                                let indexedFormations = {};
 
-                                indexedFormations[formation.id] = formation;
-                            });
+                                variable.formations.forEach(formation => {
 
-                            variable.formations = indexedFormations;
+                                    indexedFormations[formation.id] = formation;
+                                });
+
+                                variable.formations = indexedFormations;
+                            }
                         });
 
                         tag.tagVariables = indexedVariables;
@@ -137,27 +140,33 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                         }
                     });
 
-                    var tagVariables = [];
+                    if (tag.tagVariables) {
 
-                    Object.keys(tag.tagVariables).forEach(function(tagVariableKey) {
+                        var tagVariables = [];
 
-                        var tagVariable = tag.tagVariables[tagVariableKey];
+                        Object.keys(tag.tagVariables).forEach(function(tagVariableKey) {
 
-                        var formations = [];
+                            var tagVariable = tag.tagVariables[tagVariableKey];
 
-                        Object.keys(tagVariable.formations).forEach(function(tagVariableFormationsKey) {
+                            if (tagVariable.formations) {
 
-                            var formation = tagVariable.formations[tagVariableFormationsKey];
+                                let formations = [];
 
-                            formations.push(formation);
+                                Object.keys(tagVariable.formations).forEach(tagVariableFormationsKey => {
+
+                                    let formation = tagVariable.formations[tagVariableFormationsKey];
+
+                                    formations.push(formation);
+                                });
+
+                                tagVariable.formations = formations;
+                            }
+
+                            tagVariables[--tagVariableKey] = tagVariable;
                         });
 
-                        tagVariable.formations = formations;
-
-                        tagVariables[--tagVariableKey] = tagVariable;
-                    });
-
-                    tag.tagVariables = tagVariables;
+                        tag.tagVariables = tagVariables;
+                    }
 
                     tags.push(tag);
                 });
