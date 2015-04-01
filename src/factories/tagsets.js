@@ -140,30 +140,33 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                         }
                     });
 
-                    var tagVariables = [];
+                    if (tag.tagVariables) {
 
-                    Object.keys(tag.tagVariables).forEach(function(tagVariableKey) {
+                        var tagVariables = [];
 
-                        var tagVariable = tag.tagVariables[tagVariableKey];
+                        Object.keys(tag.tagVariables).forEach(function(tagVariableKey) {
 
-                        if (tagVariable.formations) {
+                            var tagVariable = tag.tagVariables[tagVariableKey];
 
-                            let formations = [];
+                            if (tagVariable.formations) {
 
-                            Object.keys(tagVariable.formations).forEach(tagVariableFormationsKey => {
+                                let formations = [];
 
-                                let formation = tagVariable.formations[tagVariableFormationsKey];
+                                Object.keys(tagVariable.formations).forEach(tagVariableFormationsKey => {
 
-                                formations.push(formation);
-                            });
+                                    let formation = tagVariable.formations[tagVariableFormationsKey];
 
-                            tagVariable.formations = formations;
-                        }
+                                    formations.push(formation);
+                                });
 
-                        tagVariables[--tagVariableKey] = tagVariable;
-                    });
+                                tagVariable.formations = formations;
+                            }
 
-                    tag.tagVariables = tagVariables;
+                            tagVariables[--tagVariableKey] = tagVariable;
+                        });
+
+                        tag.tagVariables = tagVariables;
+                    }
 
                     tags.push(tag);
                 });
