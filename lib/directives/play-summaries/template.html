@@ -1,6 +1,6 @@
 <div
  class="summaries"
- ng-repeat="event in events | orderBy:'-summaryPriority' | limitTo:2"
+ ng-repeat="event in events | filter:{summaryScript:'!null'} | orderBy:'-summaryPriority' | limitTo:2"
 >
     <krossover-summary-item
      item="item"
