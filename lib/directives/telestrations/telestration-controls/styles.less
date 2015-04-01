@@ -47,13 +47,16 @@
 
         display: flex;
 
-        telestration-activate-button li {
-            border-top-left-radius: @radius;
-            border-bottom-left-radius: @radius;
-        }
-
         telestration-toolbar {
+
             position: absolute;
+            transition: left 0.5s ease-out;
+            left: 60px;
+
+            &.ng-hide {
+
+                left: -354px;
+            }
         }
 
         telestration-tool {
@@ -91,17 +94,28 @@
             opacity: 0.5;
         }
 
-        telestration-activate-button li{
-            margin-right: 1px;
+        telestration-enable-button {
 
-            &.telestration-activate-button.active {
-                border-radius: @radius;
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-            }
+            opacity: 1;
+            z-index: 2;
 
-            &.telestration-activate-button.inactive {
-                border-radius: @radius;
+            li {
+
+                border-top-left-radius: @radius;
+                border-bottom-left-radius: @radius;
+                margin-right: 1px;
+
+                &.telestration-enable-button.active {
+
+                    border-radius: @radius;
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+
+                &.telestration-enable-button.inactive {
+
+                    border-radius: @radius;
+                }
             }
         }
 
@@ -112,7 +126,6 @@
                 border-bottom-right-radius: @radius;
             }
         }
-
     }
 
     .delete-tools {
