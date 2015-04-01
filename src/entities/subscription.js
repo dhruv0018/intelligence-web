@@ -4,11 +4,9 @@ class Subscription extends Entity {
 
     constructor (subscription) {
 
-        let self = this;
+        if (this.validate(subscription)) {
 
-        if (self.validate(subscription)) {
-
-            return self.extend(subscription);
+            return this.extend(subscription);
         }
     }
 
@@ -41,9 +39,9 @@ class Subscription extends Entity {
 
     is(subscription, match) {
 
-        let self = this;
-
         if (!match) {
+
+            let self = this;
 
             match = subscription;
             subscription = self;
@@ -57,11 +55,10 @@ class Subscription extends Entity {
 
     get active() {
 
-        let self = this;
         let today = Date.now();
 
-        let hasActivated = self.activatesAt > today;
-        let hasNotExpired = self.expiresAt < today;
+        let hasActivated = this.activatesAt > today;
+        let hasNotExpired = this.expiresAt < today;
 
         return (hasActivated && hasNotExpired);
     }
