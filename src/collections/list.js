@@ -104,7 +104,7 @@ class List extends Collection {
      *
      * @param: {Object} (req) Item to
      *         remove (arrays not accepted)
-     * @return: {Integer} Length
+     * @return: {Integer} Length, OR undefined
      */
     remove(item) {
 

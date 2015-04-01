@@ -93,6 +93,11 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 return newPlayList.$filter({filterId: filterId.filterId}, callback, error);
             },
 
+            load (filter) {
+
+                return tagsets.load().then(() => { this.baseLoad(filter); });
+            },
+
             /**
              * Gets the video sources for a play.
              * If a play has a clip the clips video transcode profiles are

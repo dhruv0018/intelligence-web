@@ -64,6 +64,9 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Create new event. */
                 eventManager.current = new KrossoverEvent(tag, time);
 
+                /* Add event to the current play. */
+                playManager.addEvent(eventManager.current);
+
                 this.showTags = false;
                 this.showScript = true;
             },
