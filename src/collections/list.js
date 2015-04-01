@@ -49,9 +49,11 @@ class List extends Collection {
      */
     get(index) {
 
-        if (!index) {
+        switch (arguments.length) {
 
-            throw new Error('Invoked List.get without passing a index');
+            case 0:
+
+                throw new Error('Invoked List.get without passing a index');
         }
 
         return this[index];
@@ -90,14 +92,13 @@ class List extends Collection {
      *         List, default is [false]
      * @return: {Integer} Length
      */
-    add(item, location) {
+    add(item, location = false) {
 
-        if (!item) {
+        switch (arguments.length) {
 
-            throw new Error('Invoked List.add without passing an Object to add');
-        } else {
+            case 0:
 
-            location = location || false;
+                throw new Error('Invoked List.add without passing an Object to add');
         }
 
         return location ? this.unshift(item) : this.push(item);
@@ -113,10 +114,16 @@ class List extends Collection {
      */
     remove(item) {
 
+        switch (arguments.length) {
+
+            case 0:
+
+                throw new Error('Invoked List.remove without passing an Object to remove');
+        }
+
         let index = this.indexOf(item);
 
         return (index < 0) ? this.splice(index, 1) : undefined;
-
     }
 
     /**
@@ -129,25 +136,18 @@ class List extends Collection {
      *         default is [false]
      * @return: {Array} Sorted List
      */
-    sort(property, order) {
+    sort(property, order = false) {
 
-        if (!property) {
+        switch (arguments.length) {
 
-            throw new Error('Invoked List.sort without passing a String property to sort by');
-        } else {
+            case 0:
 
-            order = order || false;
+                throw new Error('Invoked List.sort without passing a String property to sort by');
         }
 
         return this.sort((a, b) => {
 
-            if (order) {
-
-                return (a[property] > b[property]) ? 1 : -1;
-            } else {
-
-                return (a[property] < b[property]) ? 1 : -1;
-            }
+            return order ? (a.property - b.property) : (b.property - a.property);
         });
     }
 
