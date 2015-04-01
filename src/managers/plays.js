@@ -153,7 +153,7 @@ IntelligenceWebClient.service('PlaysManager', [
             play.period = period;
 
             /* If at least one event has a user script, the play is visible. */
-            if (tag.userScript !== null) play.hasVisibleEvents = true;
+            if (event.userScript !== null) play.hasVisibleEvents = true;
 
             /* Look at the first position script field. */
             /* TODO: Clear up once fields are indexed by position and not the
