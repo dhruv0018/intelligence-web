@@ -30,6 +30,10 @@ class Event extends Entity {
             delete tagVariable.type;
             this.variableValues[tagVariable.id] = this.variableValues[tagVariable.id] || {};
             Object.assign(this.variableValues[tagVariable.id], tagVariable);
+            this.variableValues[tagVariable.id].type = this.variableValues[tagVariable.id].type || null;
+            if (!this.isRequired && this.variableValues[tagVariable.id].value === undefined) {
+                this.variableValues[tagVariable.id].value = null;
+            }
         });
     }
 
@@ -79,7 +83,7 @@ class Event extends Entity {
      */
     get isFloat () {
 
-        return this.isStart === false && this.isEnd === false && this.children.length === 0;
+        return this.isStart === false && this.isEnd === false && this.children && this.children.length === 0;
     }
 
     /**
@@ -89,7 +93,7 @@ class Event extends Entity {
     get isEndAndStart () {
 
         /* Check if the given event is an end tag and only has one child. */
-        return this.isEnd && this.children.length === 1;
+        return this.isEnd && this.children && this.children.length === 1;
     }
 }
 

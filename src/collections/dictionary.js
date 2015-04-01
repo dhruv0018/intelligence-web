@@ -44,10 +44,15 @@ class Dictionary extends Collection {
      * Method:get
      * Return value of key
      *
-     * @param: {Integer} Key of value
+     * @param: {Integer} (req) Key of value
      * @return: {Object} Value of key
      */
     get(key) {
+
+        if (!key) {
+
+            throw new Error('Invoked Dictionary.get without passing a key');
+        }
 
         return this.get(key);
     }
@@ -72,7 +77,7 @@ class Dictionary extends Collection {
             throw new Error('Invoked Dictionary.add without passing a value');
         }
 
-        return this.dictionary(key, value);
+        return this.set(key, value);
     }
 
     /**

@@ -17,16 +17,8 @@
                 <div class="playHeading" ng-click="selectMobileClipPlay()">
 
                     <h4 class="title title-reel">
-                        <div
-                            class="summaries"
-                            ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
-                        >
-                            <krossover-summary-item
-                                item="item"
-                                event="summary.event"
-                                ng-repeat="item in summary.items track by $index"
-                            ></krossover-summary-item>
-                        </div>
+
+                        <krossover-play-summaries events="play.events"></krossover-play-summaries>
 
                         <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                     </h4>
@@ -43,15 +35,8 @@
                     <i class="icon icon-play-circle"></i>
                 </a>
 
-                <!-- TODO: This is a hack to calculate play specific attributes like the
-                    summaries but we don't want to show the events on mobile. Hide the events
-                    but only include them since they determine if a play should be visible.
-                    Determining a play is visible should probably be moved to the PlaysManager
-                    and also updated when events are added or removed -->
-                <ul ng-hide="true">
-                    <krossover-event ng-repeat="event in play.events"></krossover-event>
-                </ul>
             </div>
+
         </div>
 
         <!-- - - - - - - - - DEFAULT PLAY - - - - - - - - -->
@@ -71,16 +56,8 @@
 
                         <span class="team">{{teams[play.possessionTeamId].name}}</span>
 
-                        <div
-                            class="summaries"
-                            ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
-                        >
-                            <krossover-summary-item
-                                item="item"
-                                event="summary.event"
-                                ng-repeat="item in summary.items track by $index"
-                            ></krossover-summary-item>
-                        </div>
+                        <krossover-play-summaries events="play.events"></krossover-play-summaries>
+
                     </h4>
                 </div>
 
@@ -124,16 +101,7 @@
                 >
                     <h4 class="title">
                         <span ng-show="editFlag">{{index + 1}}.&nbsp;</span>
-                        <div
-                            class="summaries"
-                            ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
-                        >
-                            <krossover-summary-item
-                                item="item"
-                                event="summary.event"
-                                ng-repeat="item in summary.items track by $index"
-                            ></krossover-summary-item>
-                        </div>
+                        <krossover-play-summaries events="play.events"></krossover-play-summaries>
                         <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                     </h4>
 
@@ -163,7 +131,7 @@
 
             <ul
                 class="playBody"
-                ng-show="!editFlag && (expandAll || !play.summaries.length)"
+                ng-show="!editFlag && expandAll"
                 ng-hide="!expandAll && (editFlag || play !== playManager.current)"
             >
                 <krossover-event ng-repeat="event in play.events"></krossover-event>
@@ -195,7 +163,7 @@
 
                     <h4 ng-if="isIndexer">
                         <span class="team">{{ team.name }}</span>
-                        <span class="score">{{ play.teamIndexedScore }}</span>
+                        <span class="score">{{ play.indexedScore }}</span>
                         <span class="vs">&nbsp;vs&nbsp;</span>
                         <span class="score">{{ play.opposingIndexedScore }}</span>
                         <span class="team">{{ opposingTeam.name }}</span>
@@ -207,18 +175,10 @@
 
                         <div class="summariesContainer">
 
-                            <div
-                                class="summaries"
-                                ng-repeat="summary in play.summaries | orderBy:'-priority'"
-                            >
-                                <krossover-summary-item
-                                    item="item"
-                                    event="summary.event"
-                                    ng-repeat="item in summary.items track by $index"
-                                ></krossover-summary-item>
-                            </div>
+                            <krossover-play-summaries events="play.events"></krossover-play-summaries>
 
                         </div>
+
                     </h4>
 
                 </div>
@@ -238,8 +198,7 @@
                 ng-if="
                     isIndexer ||
                     expandAll ||
-                    play === playManager.current ||
-                    !play.summaries.length"
+                    play === playManager.current"
                 ng-class="{'playHide': (!expandAll && play != playManager.current) }"
             >
                 <krossover-event ng-repeat="event in play.events"></krossover-event>

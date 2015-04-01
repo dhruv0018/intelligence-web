@@ -44,10 +44,15 @@ class List extends Collection {
      * Method:get
      * Return entry at index
      *
-     * @param: {Integer} Index of entry
+     * @param: {Integer} (req) Index of entry
      * @return: {Object} Entry at index
      */
     get(index) {
+
+        if (!index) {
+
+            throw new Error('Invoked List.get without passing a index');
+        }
 
         return this[index];
     }
@@ -56,22 +61,22 @@ class List extends Collection {
      * Method:first
      * Return first entry
      *
-     * @return: {Object} First entry
+     * @return: {Object} First entry, OR undefined
      */
     first() {
 
-        return this[0];
+        return this.empty() ? undefined : this[0];
     }
 
     /**
      * Method:last
      * Return lst entry
      *
-     * @return: {Object} Last entry
+     * @return: {Object} Last entry, OR undefined
      */
     last() {
 
-        return this[(this.length - 1)];
+        return this.empty() ? undefined : this[this.length - 1];
     }
 
     /**
@@ -95,7 +100,7 @@ class List extends Collection {
             location = location || false;
         }
 
-        return (location ? this.unshift(item) : this.push(item));
+        return location ? this.unshift(item) : this.push(item);
     }
 
     /**
@@ -144,6 +149,17 @@ class List extends Collection {
                 return (a[property] < b[property]) ? 1 : -1;
             }
         });
+    }
+
+    /**
+     * Method:empty
+     * Returns empty List status
+     *
+     * @return: {Boolean} [true] if empty, else [false]
+     */
+    empty() {
+
+        return this.length <= 0;
     }
 }
 
