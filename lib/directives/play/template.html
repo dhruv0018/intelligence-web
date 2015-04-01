@@ -17,16 +17,8 @@
                 <div class="playHeading" ng-click="selectMobileClipPlay()">
 
                     <h4 class="title title-reel">
-                        <div
-                            class="summaries"
-                            ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
-                        >
-                            <krossover-summary-item
-                                item="item"
-                                event="summary.event"
-                                ng-repeat="item in summary.items track by $index"
-                            ></krossover-summary-item>
-                        </div>
+
+                        <krossover-play-summaries events="play.events"></krossover-play-summaries>
 
                         <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                     </h4>
@@ -71,16 +63,8 @@
 
                         <span class="team">{{teams[play.possessionTeamId].name}}</span>
 
-                        <div
-                            class="summaries"
-                            ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
-                        >
-                            <krossover-summary-item
-                                item="item"
-                                event="summary.event"
-                                ng-repeat="item in summary.items track by $index"
-                            ></krossover-summary-item>
-                        </div>
+                        <krossover-play-summaries events="play.events"></krossover-play-summaries>
+
                     </h4>
                 </div>
 
@@ -124,16 +108,7 @@
                 >
                     <h4 class="title">
                         <span ng-show="editFlag">{{index + 1}}.&nbsp;</span>
-                        <div
-                            class="summaries"
-                            ng-repeat="summary in play.summaries | orderBy:'-priority' | limitTo:1"
-                        >
-                            <krossover-summary-item
-                                item="item"
-                                event="summary.event"
-                                ng-repeat="item in summary.items track by $index"
-                            ></krossover-summary-item>
-                        </div>
+                        <krossover-play-summaries events="play.events"></krossover-play-summaries>
                         <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                     </h4>
 
@@ -207,18 +182,10 @@
 
                         <div class="summariesContainer">
 
-                            <div
-                                class="summaries"
-                                ng-repeat="summary in play.summaries | orderBy:'-priority'"
-                            >
-                                <krossover-summary-item
-                                    item="item"
-                                    event="summary.event"
-                                    ng-repeat="item in summary.items track by $index"
-                                ></krossover-summary-item>
-                            </div>
+                            <krossover-play-summaries events="play.events"></krossover-play-summaries>
 
                         </div>
+
                     </h4>
 
                 </div>
