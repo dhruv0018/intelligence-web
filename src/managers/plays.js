@@ -144,7 +144,6 @@ IntelligenceWebClient.service('PlaysManager', [
 
             let teamId;
             let game = games.get(play.gameId);
-            let tagVariables = event.tagVariables;
 
             /* If the event is a period event, then advance the period. */
             if (event.isPeriodTag) period++;
