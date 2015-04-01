@@ -31,10 +31,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play.period = play.period || 0;
 
-                play.teamPointsAssigned = play.teamPointsAssigned || 0;
-                play.opposingPointsAssigned = play.opposingPointsAssigned || 0;
-
-                play.teamIndexedScore = play.teamIndexedScore || 0;
+                play.indexedScore = play.indexedScore || 0;
                 play.opposingIndexedScore = play.opposingIndexedScore || 0;
 
                 /* Indicates if the play has visible events; set by the events. */
