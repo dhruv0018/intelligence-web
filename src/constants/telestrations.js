@@ -23,25 +23,42 @@ var TELESTRATION_TYPES = {
 };
 
 var TELESTRATION_COLORS = {
-    'PRIMARY':  {
-        hex: '#F3F313',
-        rgb: '243,243,21',
-        name: 'neon yellow'
+    GLYPHS: {
+        'PRIMARY':  {
+            hex: '#F3F313',
+            rgb: '243,243,21',
+            name: 'neon yellow'
+        },
+        'SECONDARY_FIRST': {
+            hex: '#0DD5FC',
+            rgb: '13,213,252',
+            name: 'neon blue'
+        },
+        'SECONDARY_SECOND': {
+            hex: '#FF0099',
+            rgb: '255,0,153',
+            name: 'neon pink'
+        },
+        'SECONDARY_THIRD': {
+            hex: '#83F52C',
+            rgb: '131,245,44',
+            name: 'neon green'
+        }
     },
-    'SECONDARY_FIRST': {
-        hex: '#0DD5FC',
-        rgb: '13,213,252',
-        name: 'neon blue'
+    HIGHLIGHT_BLUE: function(a=1.0) {
+        return `rgba(83, 148, 236, ${a})`;
     },
-    'SECONDARY_SECOND': {
-        hex: '#FF0099',
-        rgb: '255,0,153',
-        name: 'neon pink'
+    DELETE_RED: function(a=1.0) {
+        return `rgba(213, 43, 43, ${a})`;
     },
-    'SECONDARY_THIRD': {
-        hex: '#83F52C',
-        rgb: '131,245,44',
-        name: 'neon green'
+    ACTIVE_GRAY: function(a=1.0) {
+        return `rgba(49, 49, 49, ${a})`;
+    },
+    BORDER_GRAY: function(a=1.0) {
+        return `rgba(85, 85, 85, ${a})`;
+    },
+    WHITE: function(a=1.0) {
+        return `rgba(255, 255, 255, ${a})`;
     }
 };
 

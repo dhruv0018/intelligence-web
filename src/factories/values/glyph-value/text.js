@@ -2,8 +2,8 @@
 /* Text - extends Glyph */
 
 module.exports = [
-    'GlyphValue', '$window', 'TelestrationsEventEmitter',
-    function(Glyph, $window, TelestrationsEventEmitter) {
+    'GlyphValue', '$window', 'TelestrationsEventEmitter', 'TELESTRATION_COLORS',
+    function(Glyph, $window, TelestrationsEventEmitter, TELESTRATION_COLORS) {
 
         var body;
         var testTextArea; // Singleton object used for all text tools
@@ -33,13 +33,13 @@ module.exports = [
             'font-family': 'Helvetica',
             'font-size': '22px',
             'line-height': '0px',
-            'color': '#F3F313',
-            'background-color': 'rgba(49, 49, 49, 0.9)',
+            'color': TELESTRATION_COLORS.GLYPHS.PRIMARY.hex,
+            'background-color': TELESTRATION_COLORS.ACTIVE_GRAY(0.9),
             'overflow': 'hidden',
             'min-width': '60px',
             'opacity': '1',
             'z-index': '1',
-            'border': '1px solid #5394ec',
+            'border': '1px solid ' + TELESTRATION_COLORS.HIGHLIGHT_BLUE(),
             'border-radius': '2px',
             'position': 'absolute',
             // remove inherent styles
@@ -59,8 +59,8 @@ module.exports = [
             'font-family': 'Helvetica',
             'font-size': '22px',
             'line-height': '0px',
-            'color': '#F3F313',
-            'background-color': 'rgba(49, 49, 49, 0.7)',
+            'color': TELESTRATION_COLORS.GLYPHS.PRIMARY.hex,
+            'background-color': TELESTRATION_COLORS.ACTIVE_GRAY(0.7),
             'overflow': 'none',
             'opacity': '1',
             'z-index': '1',
