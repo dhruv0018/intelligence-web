@@ -150,6 +150,17 @@ class List extends Collection {
             }
         });
     }
+
+    /**
+     * Method:empty
+     * Returns empty List status
+     *
+     * @return: {Boolean} [true] if empty, else [false]
+     */
+    empty() {
+
+        return (this.length <= 0);
+    }
 }
 
 export default List;
