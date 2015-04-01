@@ -72,7 +72,7 @@ class Dictionary extends Collection {
             throw new Error('Invoked Dictionary.add without passing a value');
         }
 
-        return this.dictionary(key, value);
+        return this.set(key, value);
     }
 
     /**
