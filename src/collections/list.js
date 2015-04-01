@@ -49,9 +49,11 @@ class List extends Collection {
      */
     get(index) {
 
-        if (!index) {
+        switch (arguments.length) {
 
-            throw new Error('Invoked List.get without passing a index');
+            case 0:
+
+                throw new Error('Invoked List.get without passing a index');
         }
 
         return this[index];
@@ -92,9 +94,11 @@ class List extends Collection {
      */
     add(item, location = false) {
 
-        if (!item) {
+        switch (arguments.length) {
 
-            throw new Error('Invoked List.add without passing an Object to add');
+            case 0:
+
+                throw new Error('Invoked List.add without passing an Object to add');
         }
 
         return location ? this.unshift(item) : this.push(item);
@@ -109,6 +113,13 @@ class List extends Collection {
      * @return: {Integer} Length, OR undefined
      */
     remove(item) {
+
+        switch (arguments.length) {
+
+            case 0:
+
+                throw new Error('Invoked List.remove without passing an Object to remove');
+        }
 
         let index = this.indexOf(item);
 
@@ -127,9 +138,11 @@ class List extends Collection {
      */
     sort(property, order = false) {
 
-        if (!property) {
+        switch (arguments.length) {
 
-            throw new Error('Invoked List.sort without passing a String property to sort by');
+            case 0:
+
+                throw new Error('Invoked List.sort without passing a String property to sort by');
         }
 
         return this.sort((a, b) => {

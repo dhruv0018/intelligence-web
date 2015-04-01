@@ -49,9 +49,11 @@ class Dictionary extends Collection {
      */
     get(key) {
 
-        if (!key) {
+        switch (arguments.length) {
 
-            throw new Error('Invoked Dictionary.get without passing a key');
+            case 0:
+
+                throw new Error('Invoked Dictionary.get without passing a key');
         }
 
         return this.get(key);
@@ -69,12 +71,15 @@ class Dictionary extends Collection {
      */
     add(key, value) {
 
-        if (!key) {
+        switch (arguments.length) {
 
-            throw new Error('Invoked Dictionary.add without passing a key');
-        } else if (!value) {
+            case 0:
 
-            throw new Error('Invoked Dictionary.add without passing a value');
+                throw new Error('Invoked Dictionary.add without passing a key');
+
+            case 1:
+
+                throw new Error('Invoked Dictionary.add without passing a value');
         }
 
         return this.set(key, value);
@@ -89,6 +94,13 @@ class Dictionary extends Collection {
      * @return: {Boolean} Success
      */
     remove(key) {
+
+        switch (arguments.length) {
+
+            case 0:
+
+                throw new Error('Invoked Dictionary.remove without passing a key');
+        }
 
         return this.delete(key);
     }

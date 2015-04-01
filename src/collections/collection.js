@@ -20,6 +20,13 @@ class Collection {
      */
     extend(collection) {
 
+        switch (arguments.length) {
+
+            case 0:
+
+                throw new Error('Invoked Collection.extend without passing a Collection to extend');
+        }
+
         Object.assign(this, collection);
 
         return this;
