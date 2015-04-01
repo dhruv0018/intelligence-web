@@ -61,22 +61,22 @@ class List extends Collection {
      * Method:first
      * Return first entry
      *
-     * @return: {Object} First entry
+     * @return: {Object} First entry, OR undefined
      */
     first() {
 
-        return this[0];
+        return this.empty() ? undefined : this[0];
     }
 
     /**
      * Method:last
      * Return lst entry
      *
-     * @return: {Object} Last entry
+     * @return: {Object} Last entry, OR undefined
      */
     last() {
 
-        return this[(this.length - 1)];
+        return this.empty() ? undefined : this[(this.length - 1)];
     }
 
     /**
