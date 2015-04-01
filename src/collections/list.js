@@ -90,14 +90,11 @@ class List extends Collection {
      *         List, default is [false]
      * @return: {Integer} Length
      */
-    add(item, location) {
+    add(item, location = false) {
 
         if (!item) {
 
             throw new Error('Invoked List.add without passing an Object to add');
-        } else {
-
-            location = location || false;
         }
 
         return location ? this.unshift(item) : this.push(item);
@@ -128,14 +125,11 @@ class List extends Collection {
      *         default is [false]
      * @return: {Array} Sorted List
      */
-    sort(property, order) {
+    sort(property, order = false) {
 
         if (!property) {
 
             throw new Error('Invoked List.sort without passing a String property to sort by');
-        } else {
-
-            order = order || false;
         }
 
         return this.sort((a, b) => {
