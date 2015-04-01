@@ -141,13 +141,7 @@ class List extends Collection {
 
         return this.sort((a, b) => {
 
-            if (order) {
-
-                return (a[property] > b[property]) ? 1 : -1;
-            } else {
-
-                return (a[property] < b[property]) ? 1 : -1;
-            }
+            return order ? (a.property - b.property) : (b.property - a.property);
         });
     }
 
