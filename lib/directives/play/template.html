@@ -163,7 +163,7 @@
 
             <ul
                 class="playBody"
-                ng-show="!editFlag && (expandAll || !play.summaries.length)"
+                ng-show="!editFlag && expandAll"
                 ng-hide="!expandAll && (editFlag || play !== playManager.current)"
             >
                 <krossover-event ng-repeat="event in play.events"></krossover-event>
@@ -238,8 +238,7 @@
                 ng-if="
                     isIndexer ||
                     expandAll ||
-                    play === playManager.current ||
-                    !play.summaries.length"
+                    play === playManager.current"
                 ng-class="{'playHide': (!expandAll && play != playManager.current) }"
             >
                 <krossover-event ng-repeat="event in play.events"></krossover-event>
