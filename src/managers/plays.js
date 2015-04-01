@@ -162,6 +162,7 @@ IntelligenceWebClient.service('PlaysManager', [
             if (!tagVariables) return;
             let fields = event.variableValues;
             let firstTagVariable = tagVariables[1];
+            if (!firstTagVariable) return;
             let firstTagVariableId = firstTagVariable.id;
             let field = fields[firstTagVariableId];
 
