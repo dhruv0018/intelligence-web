@@ -145,7 +145,6 @@ IntelligenceWebClient.service('PlaysManager', [
 
             let tagId = event.tagId;
             let tag = tagsets.getTag(tagId);
-            let tagVariables = tag.tagVariables;
 
             /* TODO: extend all events? */
             //angular.extend(event, tag);
@@ -156,12 +155,16 @@ IntelligenceWebClient.service('PlaysManager', [
             /* If at least one event has a user script, the play is visible. */
             if (tag.userScript !== null) play.hasVisibleEvents = true;
 
-            if (!tagVariables[1]) return;
-
-            let fields = event.variableValues;
-
             /* Look at the first position script field. */
-            let field = fields[tagVariables[1].id];
+            /* TODO: Clear up once fields are indexed by position and not the
+             * tag variable ID. */
+            let tagVariables = event.tagVariables;
+            if (!tagVariables) return;
+            let fields = event.variableValues;
+            let firstTagVariable = tagVariables[1];
+            if (!firstTagVariable) return;
+            let firstTagVariableId = firstTagVariable.id;
+            let field = fields[firstTagVariableId];
 
             /* If its a team field. */
             if (field.type === FIELD_TYPE.TEAM) {

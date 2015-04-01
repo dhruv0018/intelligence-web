@@ -425,7 +425,12 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @param {Object} [filter] - an object hash of filter parameters.
              * @return {Promise.<Array>} - a promise of the resource query.
              */
-            load: function(filter) {
+            load (filter) {
+
+                //TODO: find a less hacky way to do this
+                return this.baseLoad(filter);
+            },
+            baseLoad (filter) {
 
                 var self = this;
 
