@@ -133,11 +133,11 @@ class List extends Collection {
      *
      * @param: {String} (req) Property to sort by
      * @param: {Boolean} (opt) Sort by ASCENDING
-     *         [true] or DESCENDING [false],
-     *         default is [false]
+     *         [false] or DESCENDING [true],
+     *         default is [true]
      * @return: {Array} Sorted List
      */
-    sort(property, order = false) {
+    sort(property, descending = true) {
 
         switch (arguments.length) {
 
@@ -148,7 +148,7 @@ class List extends Collection {
 
         return this.sort((a, b) => {
 
-            return order ? (a.property - b.property) : (b.property - a.property);
+            return descending ? (b.property - a.property) : (a.property - b.property);
         });
     }
 
