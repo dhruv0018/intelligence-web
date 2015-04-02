@@ -100,6 +100,17 @@ class Dictionary extends Collection {
 
         return this.delete(key);
     }
+
+    /**
+     * Method:isEmpty
+     * Returns empty Dictionary status
+     *
+     * @return: {Boolean} [true] if empty, else [false]
+     */
+    isEmpty() {
+
+        return !!this.size;
+    }
 }
 
 export default Dictionary;
