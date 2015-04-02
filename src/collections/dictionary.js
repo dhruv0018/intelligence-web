@@ -9,13 +9,9 @@ class Dictionary extends Collection {
      * @param: {Map} (opt) Dictionary to copy
      * @return: {Dictionary} New dictionary
      */
-    constructor(map) {
-
-        map = map || new Map();
+    constructor(map = new Map()) {
 
         this.extend(map);
-
-        return this;
     }
 
     /**
@@ -103,6 +99,17 @@ class Dictionary extends Collection {
         }
 
         return this.delete(key);
+    }
+
+    /**
+     * Method:isEmpty
+     * Returns empty Dictionary status
+     *
+     * @return: {Boolean} [true] if empty, else [false]
+     */
+    isEmpty() {
+
+        return !!this.size;
     }
 }
 

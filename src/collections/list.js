@@ -9,13 +9,9 @@ class List extends Collection {
      * @param: {Array} (opt) List to copy
      * @return: {List} New list
      */
-    constructor(array) {
-
-        array = array || [];
+    constructor(array = []) {
 
         this.extend(array);
-
-        return this;
     }
 
     /**
@@ -67,7 +63,7 @@ class List extends Collection {
      */
     first() {
 
-        return this.empty() ? undefined : this[0];
+        return this[0];
     }
 
     /**
@@ -78,7 +74,7 @@ class List extends Collection {
      */
     last() {
 
-        return this.empty() ? undefined : this[this.length - 1];
+        return this[this.length - 1];
     }
 
     /**
@@ -87,12 +83,12 @@ class List extends Collection {
      *
      * @param: {Object} (req) Item(s) to add,
      *         (arrays accepted)
-     * @param: {Boolean} (opt) Add to FRONT
-     *         [true] or BACK [false] of
-     *         List, default is [false]
+     * @param: {Boolean} (opt) Add to FIRST
+     *         [false] or LAST [true] of
+     *         List, default is [true]
      * @return: {Integer} Length
      */
-    add(item, location = false) {
+    add(item, toLast = true) {
 
         switch (arguments.length) {
 
@@ -101,7 +97,7 @@ class List extends Collection {
                 throw new Error('Invoked List.add without passing an Object to add');
         }
 
-        return location ? this.unshift(item) : this.push(item);
+        return toLast ? this.push(item) : this.unshift(item);
     }
 
     /**
@@ -123,7 +119,12 @@ class List extends Collection {
 
         let index = this.indexOf(item);
 
-        return (index < 0) ? this.splice(index, 1) : undefined;
+        if (!~index) {
+
+            return undefined;
+        }
+
+        return this.splice(index, 1);
     }
 
     /**
@@ -132,11 +133,11 @@ class List extends Collection {
      *
      * @param: {String} (req) Property to sort by
      * @param: {Boolean} (opt) Sort by ASCENDING
-     *         [true] or DESCENDING [false],
-     *         default is [false]
+     *         [false] or DESCENDING [true],
+     *         default is [true]
      * @return: {Array} Sorted List
      */
-    sort(property, order = false) {
+    sort(property, descending = true) {
 
         switch (arguments.length) {
 
@@ -147,19 +148,19 @@ class List extends Collection {
 
         return this.sort((a, b) => {
 
-            return order ? (a.property - b.property) : (b.property - a.property);
+            return descending ? (b.property - a.property) : (a.property - b.property);
         });
     }
 
     /**
-     * Method:empty
+     * Method:isEmpty
      * Returns empty List status
      *
      * @return: {Boolean} [true] if empty, else [false]
      */
-    empty() {
+    isEmpty() {
 
-        return this.length <= 0;
+        return !!this.length;
     }
 }
 

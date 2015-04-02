@@ -41,6 +41,8 @@ class Collection {
     add(item) {}
 
     remove(item) {}
+
+    isEmpty() {}
 }
 
 export default Collection;
