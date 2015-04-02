@@ -9,9 +9,6 @@
     "scripts": [
         "index.js"
     ],
-    "styles": [
-        "styles.less"
-    ],
     "locals": [
         "telestration-tool"
     ]

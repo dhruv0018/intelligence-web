@@ -19,6 +19,10 @@
     color: white;
     overflow: hidden;
 
+    &.visible-overflow {
+        overflow: visible;
+    }
+
     .animate-hide-show {
 
         .ng-hide-add, .ng-hide-remove {
@@ -39,7 +43,7 @@
         opacity: 0.9;
         font-size: @font-size;
         cursor: pointer;
-        display: inline-block;
+        display: inline-flex;
         user-select: none;
     }
 
@@ -59,30 +63,60 @@
             }
         }
 
-        telestration-tool {
-
-            &:last-child li {
-                border-top-right-radius: @radius;
-                border-bottom-right-radius: @radius;
-            }
-        }
-
         li {
             background-color: black;
-            margin-right: -3px;
             padding: 8px;
             border: none;
             height: @tool-size;
             width: @tool-size;
 
-            &:active, &:hover {
-                color: @icon-highlight-blue;
-                background-color: @active-grey;
-            }
-
             &:active {
                 border: 1px solid @icon-highlight-blue;
             }
+
+            &:active, &:hover {
+                background-color: @active-grey;
+            }
+        }
+
+        ul.telestration-toolbar >:last-child li[telestration-tool] {
+
+            border-top-right-radius: @radius;
+            border-bottom-right-radius: @radius;
+        }
+
+        li[telestration-tool] {
+            margin-right: -3px;
+
+            &:active, &:hover {
+                color: @icon-highlight-blue;
+            }
+        }
+
+        .dropdown {
+
+            .icon-expand_arrow {
+                position: absolute;
+                font-size: 60px;
+                height: inherit;
+                left: 14px;
+                top: 16px;
+                transform: rotate(90deg);
+            }
+        }
+
+        .dropdown-container {
+            position: absolute;
+            top: @tool-size;
+            left: 0px;
+
+            li {
+                margin: 1px 0px;
+            }
+        }
+
+        color-picker-tool .dropdown-container li {
+            padding-left: 10px;
         }
 
         .selected li {
@@ -116,14 +150,6 @@
 
                     border-radius: @radius;
                 }
-            }
-        }
-
-        ul.telestration-toolbar >:last-child {
-
-            li {
-                border-top-right-radius: @radius;
-                border-bottom-right-radius: @radius;
             }
         }
     }

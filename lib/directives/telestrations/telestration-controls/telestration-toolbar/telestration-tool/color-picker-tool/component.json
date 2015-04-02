@@ -4,6 +4,7 @@
         "template.html"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "controller.js"
     ]
 }

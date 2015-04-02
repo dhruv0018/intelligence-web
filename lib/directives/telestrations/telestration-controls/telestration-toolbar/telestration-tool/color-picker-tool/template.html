@@ -1,21 +1,14 @@
-<li ng-click="selectTool()">
-    <menu-item-state
-        data-ng-style="{background: dropdownToolStates.COLOR_PICKER}"
-        data-dropdown-state="dropdownToolStates.COLOR_PICKER"
-        data-selected-glyph-color="telestrationsController.selectedGlyphColor"
-        data-dropdown-type="color-picker"
-        class="menu-item-state">
-        <i class="icon icon-color_picker"></i> <i class="icon icon-expand_arrow"></i>
-    </menu-item-state>
-    <ul>
-        <li  data-ng-hide="dropdownToolStates.COLOR_PICKER === color.hex"
-             data-ng-repeat="color in colors">
-            <telestration-menu-item
-                data-color="{{color.hex}}"
-                data-dropdown-state="dropdownToolStates.COLOR_PICKER"
-                data-ng-style="{background: color.hex}">
-                <i class="icon icon-color-picker"></i>
-            </telestration-menu-item>
+<li class="color-picker dropdown" telestration-tool ng-click="colorPicker.telestrationControls.dropdownToggled = !colorPicker.telestrationControls.dropdownToggled">
+
+    <i class="icon icon-color_picker" ng-style="colorPicker.getColorStyle(colorPicker.telestrationsController.selectedGlyphColor)"></i>
+    <i class="icon icon-expand_arrow"></i>
+
+    <ul class="dropdown-container" ng-show="colorPicker.telestrationControls.dropdownToggled">
+
+        <li ng-repeat="color in colorPicker.TELESTRATION_COLORS.GLYPHS" ng-click="colorPicker.changeColor(color)">
+
+            <i class="icon icon-stop" ng-style="colorPicker.getColorStyle(color)"></i>
+
         </li>
     </ul>
 </li>
