@@ -46,6 +46,7 @@ function basicInfoController (
     $scope.athlete = session.getCurrentUser();
     $scope.teams = teams.getMap();
     $scope.addingTeam = false;
+    $scope.maxAboutMeLength = 200;
 
     $scope.removeTeam = function removeTeam(teamId) {
         let profileTeams = $scope.athlete.profile.teams;

@@ -27,12 +27,12 @@
                     <textarea
                         class="form-control"
                         rows="5"
-                        maxlength="200"
+                        maxlength="{{maxAboutMeLength}}"
                         placeholder="Talk about your club team experience, stats, achievements, anything."
                         ng-model="athlete.profile.about"
                         ng-trim="false"
                     ></textarea>
-                    <p>{{200 - athlete.profile.about.length}} characters left.</p>
+                    <p>{{maxAboutMeLength - athlete.profile.about.length}} characters left.</p>
                 </div>
             </div>
         </div>
