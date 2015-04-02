@@ -48,16 +48,6 @@ function basicInfoController (
     $scope.addingTeam = false;
     $scope.maxAboutMeLength = 200;
 
-    $scope.removeTeam = function removeTeam(teamId) {
-        let profileTeams = $scope.athlete.profile.teams;
-
-        profileTeams.forEach((team, index, teams) => {
-            if (team.teamId === teamId) {
-                teams.splice(index, 1);
-            }
-        });
-    };
-
     $scope.getPositionSet = function getPositionSet(teamId) {
         let team = teams.get(teamId);
         let league = leagues.get(team.leagueId);

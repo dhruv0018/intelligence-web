@@ -641,6 +641,17 @@ IntelligenceWebClient.factory('UsersFactory', [
                     headers: { 'Content-Type': undefined },
                     transformRequest: angular.identity
                 });
+            },
+            removeTeamFromProfile: function(teamId) {
+                let self = this;
+
+                let profileTeams = self.profile.teams;
+
+                profileTeams.forEach((team, index, teams) => {
+                    if (team.teamId === teamId) {
+                        teams.splice(index, 1);
+                    }
+                });
             }
         };
 
