@@ -604,6 +604,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     .then(function() {
 
+                        delete resource.error;
+
                         /* Store the resource locally in its storage collection. */
                         storage.set(resource);
 
@@ -633,6 +635,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                         /* Update local resource with server resource. */
                         angular.extend(resource, self.extend(created));
+
+                        delete resource.error;
 
                         /* Store the resource locally in its storage collection. */
                         storage.set(resource);
