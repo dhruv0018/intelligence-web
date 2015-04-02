@@ -153,14 +153,14 @@ class List extends Collection {
     }
 
     /**
-     * Method:empty
+     * Method:isEmpty
      * Returns empty List status
      *
      * @return: {Boolean} [true] if empty, else [false]
      */
-    empty() {
+    isEmpty() {
 
-        return this.length <= 0;
+        return !!this.length;
     }
 }
 
