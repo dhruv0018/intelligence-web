@@ -82,7 +82,7 @@ class Subscription extends Entity {
                 throw new Error('Invoking Subscription.is without passing a SUBSCRIPTION to match');
         }
 
-        return (subscription.type === match.type.id);
+        return subscription.type === match.type.id;
     }
 
     /**
@@ -98,7 +98,7 @@ class Subscription extends Entity {
         let hasActivated = this.activatesAt > today;
         let hasNotExpired = this.expiresAt < today;
 
-        return (hasActivated && hasNotExpired);
+        return hasActivated && hasNotExpired;
     }
 }
 
