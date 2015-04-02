@@ -69,29 +69,17 @@ class Subscription extends Entity {
      * Method:is
      * Determine type of given subscription
      *
-     * @param: {Subscription} (opt) Subscription object to check type of
      * @param: {SUBSCRIPTION} (req) Subscription constant to check against
+     * @param: {Subscription} (opt) Subscription object to check type of
      * @return: {Boolean} [true] if given subscription matches given type, else [false]
      */
-    is(subscription, match) {
+    is(match, subscription = this) {
 
         switch (arguments.length) {
 
             case 0:
 
                 throw new Error('Invoking Subscription.is without passing a SUBSCRIPTION to match');
-        }
-
-        if (!match) {
-
-            let self = this;
-
-            match = subscription;
-            subscription = self;
-        }
-        else if (!subscription) {
-
-            throw new Error('Subscription.is() requires 1 argument');
         }
 
         return (subscription.type === match.type.id);
