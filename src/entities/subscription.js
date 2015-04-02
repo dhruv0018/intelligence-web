@@ -73,7 +73,7 @@ class Subscription extends Entity {
      * @param: {Subscription} (opt) Subscription object to check type of
      * @return: {Boolean} [true] if given subscription matches given type, else [false]
      */
-    is(match, subscription = this) {
+    is (match, subscription = this) {
 
         switch (arguments.length) {
 
