@@ -12,8 +12,6 @@ class List extends Collection {
     constructor(array = []) {
 
         this.extend(array);
-
-        return this;
     }
 
     /**

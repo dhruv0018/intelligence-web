@@ -12,8 +12,6 @@ class Dictionary extends Collection {
     constructor(map = new Map()) {
 
         this.extend(map);
-
-        return this;
     }
 
     /**
