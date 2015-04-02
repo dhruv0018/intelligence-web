@@ -9,9 +9,7 @@ class Dictionary extends Collection {
      * @param: {Map} (opt) Dictionary to copy
      * @return: {Dictionary} New dictionary
      */
-    constructor(map) {
-
-        map = map || new Map();
+    constructor(map = new Map()) {
 
         this.extend(map);
 

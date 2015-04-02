@@ -9,9 +9,7 @@ class List extends Collection {
      * @param: {Array} (opt) List to copy
      * @return: {List} New list
      */
-    constructor(array) {
-
-        array = array || [];
+    constructor(array = []) {
 
         this.extend(array);
 
