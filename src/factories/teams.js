@@ -69,12 +69,16 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 if (team.subscriptions) {
 
-                    team.subscriptions.map(function constructSubscription(subscription) {
+                    let subscriptions = team.subscriptions.map(function constructSubscription(subscription) {
 
                         return new Subscription(subscription);
                     });
 
-                    team.subscriptions = new List(team.subscriptions);
+                    team.subscriptions = new List(subscriptions);
+                }
+                else {
+
+                    team.subscriptions = new List();
                 }
 
                 angular.extend(team, self);
@@ -341,26 +345,20 @@ IntelligenceWebClient.factory('TeamsFactory', [
              * @class Team
              * @method addSubscription
              *
-             * @param {Object} team - Team to add the subscription to
              * @param {Object} subscription - Subscription object to add
+             * @param {Object} team - Team to add the subscription to
              *
              * Adds the given subscription to the given team
              */
-            addSubscription: function(team, subscription) {
+            addSubscription: function(subscription, team = this) {
 
-                var self = this;
+                switch (arguments.length) {
 
-                if (!team) {
-                    throw new Error('Invoked TeamsFactory.addSubscription without any argument(s)');
+                    case 0:
+
+                        throw new Error('Invoked TeamsFactory.addSubscription without any argument(s)');
                 }
 
-                if (!subscription) {
-                    // Only one argument is passed in, assumed to be a subscription
-                    subscription = team;
-                    team = self;
-                }
-
-                team.subscriptions = team.subscriptions || new List();
                 team.subscriptions.add(subscription);
             },
 
@@ -373,13 +371,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
              *
              * Provides the most recently active subscription that is active today
              */
-            getActiveSubscription: function(team) {
-
-                var self = this;
-
-                if (!team) {
-                    team = self;
-                }
+            getActiveSubscription: function(team = this) {
 
                 let mostRecent = team.subscriptions.first();
 
