@@ -36,4 +36,3 @@ IntelligenceWebClient.factory('ReelsResource', [
         return $resource(url, paramDefaults, actions);
     }
 ]);
-

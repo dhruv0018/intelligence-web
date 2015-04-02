@@ -1,0 +1,27 @@
+<span class="publish-user-profile-reel" >
+    <span
+        class="publish"
+        ng-show="!reel.isFeatured(user) && !publishing"
+        ng-click="toggleReelPublishing()"
+    >
+        <i class="icon icon-plus"></i>
+        Post to Profile
+    </span>
+
+    <span
+        class="publishing"
+        ng-show="publishing"
+    >
+        <krossover-spinner ng-show="!confirmPublish" size="'15px'"></krossover-spinner>
+        <i class="icon icon-ok" ng-show="confirmPublish"></i>
+    </span>
+
+    <span
+        class="unpublish"
+        ng-show="reel.isFeatured(user) && !publishing"
+        ng-click="toggleReelPublishing()"
+    >
+        <i class="icon icon-minus"></i>
+        Remove from Profile
+    </span>
+</span>

@@ -33,9 +33,9 @@ IntelligenceWebClient.service('SessionService', [
 
         this.getCurrentRole = function() {
 
-            var currentUser = this.getCurrentUser();
+            let currentUser = this.getCurrentUser();
 
-            return currentUser.currentRole;
+            return currentUser ? currentUser.getCurrentRole() : undefined;
         };
 
         this.getCurrentUserId = function() {
@@ -312,4 +312,3 @@ IntelligenceWebClient.service('SessionService', [
         };
     }
 ]);
-

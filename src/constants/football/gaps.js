@@ -64,4 +64,3 @@ var GAPS = {
 };
 
 IntelligenceWebClient.constant('GAPS', GAPS);
-

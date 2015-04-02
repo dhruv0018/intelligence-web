@@ -15,7 +15,7 @@
                 data-expand-all="expandAll"
                 data-filtered-plays-ids="filteredPlaysIds"
                 data-ng-show="play.isFiltered"
-                data-ng-repeat="play in plays | orderBy:orderBy">
+                data-ng-repeat="play in plays | orderBy:'startTime'">
             </krossover-play>
 
             <no-results data-ng-hide="plays.length"></no-results>

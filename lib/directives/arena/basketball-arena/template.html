@@ -1,0 +1,14 @@
+<div class="basketball-arena">
+
+	<!-- High School Basketball -->
+	<basketball-hs-arena data-ng-if="$parent.type === 'BASKETBALL_HS'"></basketball-hs-arena>
+
+	<!-- NCAA Basketball -->
+	<basketball-ncaa-arena data-ng-if="$parent.type === 'BASKETBALL_NCAA'"></basketball-ncaa-arena>
+
+	<!-- NBA Basketball -->
+	<basketball-nba-arena data-ng-if="$parent.type === 'BASKETBALL_NBA'"></basketball-nba-arena>
+
+	<!-- FIBA Basketball -->
+	<basketball-fiba-arena data-ng-if="$parent.type === 'BASKETBALL_FIBA'"></basketball-fiba-arena>
+</div>

@@ -12,6 +12,7 @@
         "event",
         "events",
         "play",
+        "play-summaries",
         "plays",
         "playlist",
         "playlist-control",
@@ -65,6 +66,11 @@
         "plays-filters",
         "draggable",
         "sidebar",
+        "profile-picture",
+        "athlete-profile-header",
+        "no-profile-reels",
+        "publish-user-profile-reel",
+        "role-class",
         "spinner"
     ],
     "scripts": [

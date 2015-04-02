@@ -56,4 +56,3 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
         });
     }
 ]);
-

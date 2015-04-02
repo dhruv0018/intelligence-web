@@ -10,7 +10,7 @@ var VIEWPORTS = {
     MOBILE: {
         id: 2,
         name: 'Mobile',
-        width: 1024
+        width: require('./breakpoints').MOBILE
     },
 
     DESKTOP: {
@@ -20,4 +20,3 @@ var VIEWPORTS = {
 };
 
 IntelligenceWebClient.constant('VIEWPORTS', VIEWPORTS);
-

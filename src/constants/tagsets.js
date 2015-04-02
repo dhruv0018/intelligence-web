@@ -18,4 +18,3 @@ var TAG_VARIABLE_TYPE = {
 };
 
 IntelligenceWebClient.constant('TAG_VARIABLE_TYPE', TAG_VARIABLE_TYPE);
-

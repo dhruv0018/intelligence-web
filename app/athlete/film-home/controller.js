@@ -14,7 +14,7 @@ var FilmHome = angular.module('Athlete.FilmHome');
  * @type {controller}
  */
 FilmHome.controller('Athlete.FilmHome.controller', [
-    '$scope', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'Athlete.Data', 'ReelsFactory',
+    '$scope', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'Athlete.FilmHome.Data', 'ReelsFactory',
     function controller($scope, session, teams, games, players, users, data, reels) {
 
         var teamId = session.currentUser.currentRole.teamId;
@@ -37,4 +37,3 @@ FilmHome.controller('Athlete.FilmHome.controller', [
         $scope.filteredFilmsList = $scope.filmsList;
     }
 ]);
-

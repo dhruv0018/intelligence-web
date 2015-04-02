@@ -455,7 +455,12 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @param {Object} [filter] - an object hash of filter parameters.
              * @return {Promise.<Array>} - a promise of the resource query.
              */
-            load: function(filter) {
+            load (filter) {
+
+                //TODO: find a less hacky way to do this
+                return this.baseLoad(filter);
+            },
+            baseLoad (filter) {
 
                 var self = this;
 
@@ -589,6 +594,10 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @return {Promise.<Resource>} - a promise of a resources.
              */
             save: function(resource, success, error) {
+                //TODO: find a less hacky way to do this
+                return this.baseSave(resource, success, error);
+            },
+            baseSave: function(resource, success, error) {
 
                 var self = this;
 
@@ -625,10 +634,17 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     .then(function() {
 
+                        delete resource.error;
+
                         /* Store the resource locally in its storage collection. */
                         storage.set(resource);
 
                         return resource;
+                    })
+
+                    .catch(function() {
+
+                        resource.error = true;
                     })
 
                     .finally(function() {
@@ -650,10 +666,17 @@ IntelligenceWebClient.factory('BaseFactory', [
                         /* Update local resource with server resource. */
                         angular.extend(resource, self.extend(created));
 
+                        delete resource.error;
+
                         /* Store the resource locally in its storage collection. */
                         storage.set(resource);
 
                         return resource;
+                    })
+
+                    .catch(function() {
+
+                        resource.error = true;
                     })
 
                     .finally(function() {

@@ -71,4 +71,3 @@ Mediator.prototype.flush = function() {
  * @type {value}
  */
 IntelligenceWebClient.value('Mediator', Mediator);
-
