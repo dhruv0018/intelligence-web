@@ -369,7 +369,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 let mostRecent = user.subscriptions.first();
 
-                return (mostRecent.active ? mostRecent : undefined);
+                return (mostRecent.isActive ? mostRecent : undefined);
             },
 
             /**

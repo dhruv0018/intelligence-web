@@ -76,12 +76,12 @@ class Subscription extends Entity {
     }
 
     /**
-     * Method:active
+     * Method:isActive
      * Determine if given subscription is active
      *
      * @return: {Boolean} [true] if active, else [false]
      */
-    get active() {
+    get isActive() {
 
         let today = Date.now();
 

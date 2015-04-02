@@ -383,7 +383,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 let mostRecent = team.subscriptions.first();
 
-                return (mostRecent.active ? mostRecent : undefined);
+                return (mostRecent.isActive ? mostRecent : undefined);
             }
         };
 
