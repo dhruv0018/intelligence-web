@@ -46,13 +46,13 @@ require('./services/session');
 require('./services/account');
 require('./services/queue');
 require('./services/alerts');
-require('./services/scripts');
 require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
 
 require('./constants/users');
 require('./constants/games');
+require('./constants/events');
 require('./constants/schools');
 require('./constants/videos');
 require('./constants/tagsets');
@@ -63,6 +63,7 @@ require('./constants/football/gaps');
 require('./constants/football/zones');
 require('./constants/sports');
 require('./constants/viewports');
+require('./constants/breakpoints');
 require('./constants/arenas');
 require('./constants/device');
 require('./constants/states');
@@ -111,12 +112,14 @@ require('./factories/reels');
 require('./factories/positionsets');
 require('./factories/plans');
 
+require('./emitters/playlist');
+
 require('./managers/tags');
 require('./managers/play');
 require('./managers/plays');
 require('./managers/event');
 require('./managers/storage');
-
+require('./managers/playerlist');
 require('./mediators/event');
 
 require('./directives/alert');
@@ -136,5 +139,3 @@ require('./aggregates');
 require('./values');
 
 require('./entities');
-
-

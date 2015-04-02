@@ -27,4 +27,3 @@ IntelligenceWebClient.run([
         }
     }
 ]);
-

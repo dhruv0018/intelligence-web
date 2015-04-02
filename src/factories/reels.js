@@ -83,7 +83,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return reels.filter(function(reel) {
 
                     return reel.uploaderUserId == userId &&
-                           reel.uploaderTeamId == teamId;
+                        reel.uploaderTeamId == teamId;
                 });
             },
 
@@ -353,6 +353,53 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
 
                 return teamShare;
+            },
+            publishToProfile: function() {
+                var self = this;
+
+                if (!self.isSharedWithPublic()) {
+                    self.togglePublicSharing();
+                }
+
+                self.isPublishedToProfile = true;
+            },
+            unpublishFromProfile: function() {
+                var self = this;
+
+                if (self.isSharedWithPublic()) {
+                    self.togglePublicSharing();
+                }
+
+                self.isPublishedToProfile = false;
+            },
+            getPublishedReels: function(userId) {
+                userId = userId || session.getCurrentUserId();
+
+                if (!userId) throw new Error('No userId');
+
+                var reels = this.getList();
+
+                return reels.filter(function publishedReels(reel) {
+
+                    return reel.uploaderUserId == userId &&
+                        reel.isPublishedToProfile === true;
+                });
+            },
+            isFeatured: function(user) {
+                var self = this;
+                user = user || session.getCurrentUser();
+
+                return self.id == user.profile.featuredReelId;
+            },
+            getFeaturedReel: function(user) {
+
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
+
+                let featuredReelId = user.profile.featuredReelId;
+
+                return featuredReelId ? this.get(featuredReelId) : undefined;
             }
         };
 
@@ -361,4 +408,3 @@ IntelligenceWebClient.factory('ReelsFactory', [
         return ReelsFactory;
     }
 ]);
-

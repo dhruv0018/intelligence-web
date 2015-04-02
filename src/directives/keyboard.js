@@ -51,4 +51,3 @@ IntelligenceWebClient.directive('keybinding', [
         return directive;
     }
 ]);
-

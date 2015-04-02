@@ -1,24 +1,12 @@
 <div class="arena">
 
     <!-- Football -->
-    <krossover-arena-football-field data-ng-if="type === 'FOOTBALL'" data-game="game" data-plays="plays" data-team-id="teamId" data-opposing-team-id="opposingTeamId" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-league="league" data-chart="chart" data-redzone="redzone"></krossover-arena-football-field>
+    <krossover-arena-football-field data-ng-if="type === 'FOOTBALL'" data-chart="chart" data-redzone="redzone"></krossover-arena-football-field>
 
-    <!-- High School Basketball -->
-    <basketball-hs-arena data-ng-if="type === 'BASKETBALL_HS'"></basketball-hs-arena>
+    <!-- Basketball -->
+    <basketball-arena data-ng-if="type.indexOf('BASKETBALL') >= 0" data-ng-model="region"></basketball-arena>
 
-    <!-- NCAA Basketball -->
-    <basketball-ncaa-arena data-ng-if="type === 'BASKETBALL_NCAA'"></basketball-ncaa-arena>
-
-    <!-- NBA Basketball -->
-    <basketball-nba-arena data-ng-if="type === 'BASKETBALL_NBA'"></basketball-nba-arena>
-
-    <!-- FIBA Basketball -->
-    <basketball-fiba-arena data-ng-if="type === 'BASKETBALL_FIBA'"></basketball-fiba-arena>
-
-    <!-- Men's Outdoor Lacrosse -->
-    <lacrosse-mens-outdoor-arena data-ng-if="type === 'LACROSSE_MENS_OUTDOOR'"></lacrosse-mens-outdoor-arena>
-
-    <!-- Women's Outdoor Lacrosse -->
-    <lacrosse-womens-outdoor-arena data-ng-if="type === 'LACROSSE_WOMENS_OUTDOOR'"></lacrosse-womens-outdoor-arena>
+    <!-- Lacrosse -->
+    <lacrosse-arena data-ng-if="type.indexOf('LACROSSE') >= 0" data-ng-model="region"></lacrosse-arena>
 
 </div>
