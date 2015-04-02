@@ -1,11 +1,11 @@
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
-var SUBSCRIPTION_ID = {
+const SUBSCRIPTION_ID = {
 
     0: 'ATHLETE_PLUS',
     1: 'ATHLETE_RECRUIT'
@@ -13,7 +13,7 @@ var SUBSCRIPTION_ID = {
 
 IntelligenceWebClient.constant('SUBSCRIPTION_ID', SUBSCRIPTION_ID);
 
-var SUBSCRIPTION_TYPE = {
+const SUBSCRIPTION_TYPE = {
 
     ATHLETE_PLUS: 0,
     ATHLETE_RECRUIT: 1
@@ -21,7 +21,7 @@ var SUBSCRIPTION_TYPE = {
 
 IntelligenceWebClient.constant('SUBSCRIPTION_TYPE', SUBSCRIPTION_TYPE);
 
-var SUBSCRIPTIONS = {
+const SUBSCRIPTIONS = {
 
     ATHLETE_PLUS: {
 
