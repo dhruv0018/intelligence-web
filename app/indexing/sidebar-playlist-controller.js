@@ -33,6 +33,8 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
 
             let lastPlay = playsManager.getLastPlay();
 
+            if (!lastPlay) return undefined;
+
             let playData = {
 
                 period: lastPlay.period,
