@@ -83,12 +83,12 @@ class List extends Collection {
      *
      * @param: {Object} (req) Item(s) to add,
      *         (arrays accepted)
-     * @param: {Boolean} (opt) Add to FRONT
-     *         [true] or BACK [false] of
-     *         List, default is [false]
+     * @param: {Boolean} (opt) Add to FIRST
+     *         [false] or LAST [true] of
+     *         List, default is [true]
      * @return: {Integer} Length
      */
-    add(item, location = false) {
+    add(item, toLast = true) {
 
         switch (arguments.length) {
 
@@ -97,7 +97,7 @@ class List extends Collection {
                 throw new Error('Invoked List.add without passing an Object to add');
         }
 
-        return location ? this.unshift(item) : this.push(item);
+        return toLast ? this.push(item) : this.unshift(item);
     }
 
     /**
