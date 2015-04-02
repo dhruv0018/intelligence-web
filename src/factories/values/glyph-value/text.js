@@ -13,7 +13,7 @@ module.exports = [
 
             Glyph.call(this, type, options, containerElement);
 
-            body = angular.element(document.getElementsByTagName('body'));
+            body = angular.element(document.getElementsByTagName('body')[0]);
 
             this.TEXT_AREA_EDIT_CSS.color = this.color;
             this.TEXT_AREA_DISPLAY_CSS.color = this.color;
@@ -29,22 +29,21 @@ module.exports = [
             ' ': '&nbsp;'
         };
 
-        Text.prototype.TEXT_TOOL_HINT_TEXT = 'Enter text here';
+        Text.prototype.HINT_TEXT = 'Enter text here';
+        Text.prototype.HELPER_TEXT = 'Double-click to edit text';
 
-        Text.prototype.TEXT_AREA_EDIT_CSS = {
+        Text.prototype.TEXT_AREA_BASE_CSS = {
             'margin': '0px',
             'padding': '20px 10px',
             'letter-spacing': '0.5px',
             'font-family': 'Helvetica',
             'font-size': '22px',
+            'font-weight': '500',
             'line-height': '0px',
-            'color': TELESTRATION_COLORS.GLYPHS.PRIMARY.hex,
-            'background-color': TELESTRATION_COLORS.ACTIVE_GRAY(0.9),
             'overflow': 'hidden',
             'min-width': '60px',
             'opacity': '1',
             'z-index': '1',
-            'border': '1px solid ' + TELESTRATION_COLORS.HIGHLIGHT_BLUE(),
             'border-radius': '2px',
             'position': 'absolute',
             // remove inherent styles
@@ -53,36 +52,38 @@ module.exports = [
             'box-shadow': 'none',
             'outline': 'none',
             'resize': 'none',
-            'box-sizing': 'border-box',
+            'box-sizing': 'border-box'
+        };
+
+        Text.prototype.TEXT_AREA_EDIT_CSS = {
+            'background-color': TELESTRATION_COLORS.ACTIVE_GRAY(0.9),
+            'border': '1px solid ' + TELESTRATION_COLORS.HIGHLIGHT_BLUE(),
             'cursor': 'text'
         };
 
         Text.prototype.TEXT_AREA_DISPLAY_CSS = {
-            'margin': '0px',
-            'padding': '20px 10px',
-            'letter-spacing': '0.5px',
-            'font-family': 'Helvetica',
-            'font-size': '22px',
-            'line-height': '0px',
-            'color': TELESTRATION_COLORS.GLYPHS.PRIMARY.hex,
             'background-color': TELESTRATION_COLORS.ACTIVE_GRAY(0.7),
-            'overflow': 'none',
-            'opacity': '1',
-            'z-index': '1',
             'border': 'none',
-            'position': 'absolute',
-            // remove inherent styles
-            '-webkit-box-shadow':'none',
-            '-moz-box-shadow': 'none',
-            'box-shadow': 'none',
-            'outline': 'none',
-            'resize': 'none',
-            'box-sizing': 'border-box',
             'cursor': 'pointer'
         };
 
+        Text.prototype.TEXT_AREA_DISPLAY_SELECTED_CSS = {
+            'border': '1px solid ' + TELESTRATION_COLORS.HIGHLIGHT_BLUE()
+        };
+
         Text.prototype.TEXT_AREA_EDIT_ATTR = {
-            'placeholder': Text.prototype.TEXT_TOOL_HINT_TEXT
+            'placeholder': Text.prototype.HINT_TEXT,
+            'title': ''
+        };
+
+        Text.prototype.TEXT_AREA_DISPLAY_ATTR = {
+            'placeholder': Text.prototype.HINT_TEXT,
+            'title': Text.prototype.HELPER_TEXT
+        };
+
+        Text.prototype.TEXT_AREA_DISPLAY_SELECTED_ATTR = {
+            'placeholder': Text.prototype.HINT_TEXT,
+            'title': Text.prototype.HELPER_TEXT
         };
 
         Text.prototype.KEY_MAP = {
@@ -161,6 +162,7 @@ module.exports = [
 
                 // remove this handler as primaryTextArea is already in this state
                 self.element.off('dblclick', enterEditMode);
+                $window.removeEventListener('click', onDisplaySelectedModeBlur);
 
                 // remove any other handlers
                 self.element.off('mousedown', dragStart);
@@ -184,16 +186,46 @@ module.exports = [
              */
             function enterDisplayMode(event) {
 
-                // add textarea display-mode event handlers
-                self.element.off('dblclick', enterEditMode);
-                self.element.on('dblclick', enterEditMode);
+                self.element.off('mousedown', enterDisplaySelectedMode);
+                self.element.on('mousedown', enterDisplaySelectedMode);
 
                 self.element.off('mousedown', dragStart);
                 self.element.on('mousedown', dragStart);
 
                 // add style & properties
                 self.element.css(parentGlyph.TEXT_AREA_DISPLAY_CSS);
+                self.element.attr(parentGlyph.TEXT_AREA_DISPLAY_ATTR);
                 self.element.attr('readOnly', true);
+            }
+
+
+            function enterDisplaySelectedMode() {
+
+                TelestrationsEventEmitter.emit('disableDraw');
+
+                self.element.off('mousedown', enterDisplaySelectedMode);
+
+                $window.removeEventListener('click', onDisplaySelectedModeBlur);
+                $window.addEventListener('click', onDisplaySelectedModeBlur);
+
+                self.element.off('mousedown', dragStart);
+                self.element.on('mousedown', dragStart);
+
+                // add textarea display-mode event handlers
+                self.element.off('dblclick', enterEditMode);
+                self.element.on('dblclick', enterEditMode);
+
+                self.element.css(parentGlyph.TEXT_AREA_DISPLAY_SELECTED_CSS);
+                self.element.attr(parentGlyph.TEXT_AREA_DISPLAY_SELECTED_ATTR);
+            }
+
+            function onDisplaySelectedModeBlur(event) {
+
+                $window.removeEventListener('click', onDisplaySelectedModeBlur);
+
+                enterDisplayMode(event);
+
+                TelestrationsEventEmitter.emit('enableDraw');
             }
 
             /*
@@ -285,6 +317,7 @@ module.exports = [
                 parentGlyph.onDragEndHandler();
             }
 
+
             /******************************************************************
              * Text input (while in edit-state) and textarea size/positiong functions *
              ******************************************************************/
@@ -374,7 +407,7 @@ module.exports = [
                 self.recalculatePrimaryTextareaStartPosition();
 
                 // NOTE: Add placeholder when there's no text
-                if (!nextString.length) self.element.attr('placeholder', parentGlyph.TEXT_TOOL_HINT_TEXT);
+                if (!nextString.length) self.element.attr('placeholder', parentGlyph.HINT_TEXT);
             }
 
             self.recalculatePrimaryTextareaWidth = function recalculatePrimaryTextareaWidth(text) {
@@ -467,6 +500,7 @@ module.exports = [
             self.element[0].value = parentGlyph.text;
 
             // add generic styles and attributes
+            self.element.css(parentGlyph.TEXT_AREA_BASE_CSS);
             self.element.css(parentGlyph.TEXT_AREA_EDIT_CSS);
             self.element.attr(parentGlyph.TEXT_AREA_EDIT_ATTR);
 
@@ -502,12 +536,13 @@ module.exports = [
 
             var self = this;
 
-            testTextArea = angular.element('<div></div>');
+            testTextArea = angular.element('<div class="telestrations testTextArea"></div>');
 
             // add to dom
             body.append(testTextArea);
 
             // add generic styles and attributes
+            testTextArea.css(self.TEXT_AREA_BASE_CSS);
             testTextArea.css(self.TEXT_AREA_EDIT_CSS);
 
             // add custom styles and attributes
