@@ -119,7 +119,12 @@ class List extends Collection {
 
         let index = this.indexOf(item);
 
-        return (index < 0) ? this.splice(index, 1) : undefined;
+        if (!~index) {
+
+            return undefined;
+        }
+
+        return this.splice(index, 1);
     }
 
     /**
