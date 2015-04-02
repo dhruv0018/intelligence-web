@@ -15,6 +15,9 @@ module.exports = [
 
             body = angular.element(document.getElementsByTagName('body'));
 
+            this.TEXT_AREA_EDIT_CSS.color = this.color;
+            this.TEXT_AREA_DISPLAY_CSS.color = this.color;
+
             this.primaryTextarea = new PrimaryTextarea(this, mode);
             if (!testTextArea) createTestTextarea.call(this);
         }
@@ -468,6 +471,9 @@ module.exports = [
             // add generic styles and attributes
             self.element.css(parentGlyph.TEXT_AREA_EDIT_CSS);
             self.element.attr(parentGlyph.TEXT_AREA_EDIT_ATTR);
+
+            // set color
+            self.element.css('color', parentGlyph.color);
 
             // add custom styles and attributes
             self.element.attr('readOnly', false);
