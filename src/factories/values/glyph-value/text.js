@@ -20,6 +20,8 @@ module.exports = [
 
             this.primaryTextarea = new PrimaryTextarea(this, mode);
             if (!testTextArea) createTestTextarea.call(this);
+
+            this.addEditHandlers();
         }
         angular.inheritPrototype(Text, Glyph);
 
@@ -93,13 +95,9 @@ module.exports = [
 
         Text.prototype.addEditHandlers = function addEditHandlers() {
 
-            var self = this;
+            this.primaryTextarea.element.on('click', (event) => {
 
-            if (!self.primaryTextarea) return;
-
-            self.primarySVGShape.element.on('click', function handleClick(event) {
-
-                self.onClickHandler(event);
+                this.onClickHandler(event);
             });
         };
 
