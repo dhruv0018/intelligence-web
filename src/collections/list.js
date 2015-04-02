@@ -67,7 +67,7 @@ class List extends Collection {
      */
     first() {
 
-        return this.empty() ? undefined : this[0];
+        return this[0];
     }
 
     /**
@@ -78,7 +78,7 @@ class List extends Collection {
      */
     last() {
 
-        return this.empty() ? undefined : this[this.length - 1];
+        return this[this.length - 1];
     }
 
     /**
