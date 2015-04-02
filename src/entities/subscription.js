@@ -2,6 +2,13 @@ import Entity from './entity.js';
 
 class Subscription extends Entity {
 
+    /**
+     * Constructor:
+     * Instantaties new Subscription entity
+     *
+     * @param: {Object} (req) JSON object to copy/instantiate
+     * @return: {Subscription} New subscription
+     */
     constructor (subscription) {
 
         if (this.validate(subscription)) {
@@ -10,6 +17,13 @@ class Subscription extends Entity {
         }
     }
 
+    /**
+     * Method:validate
+     * Checks a JSON subscription object for valid properties
+     *
+     * @param: {Object} (req) JSON object to validate
+     * @return: {Boolean} [true] if valid object
+     */
     validate (subscription) {
 
         // TODO: Validate with JSON schema instead
@@ -37,6 +51,14 @@ class Subscription extends Entity {
         return true;
     }
 
+    /**
+     * Method:is
+     * Determine type of given subscription
+     *
+     * @param: {Subscription} (opt) Subscription object to check type of
+     * @param: {SUBSCRIPTION} (req) Subscription constant to check against
+     * @return: {Boolean} [true] if given subscription matches given type, else [false]
+     */
     is(subscription, match) {
 
         if (!match) {
@@ -53,6 +75,12 @@ class Subscription extends Entity {
         return (subscription.type === match.type.id);
     }
 
+    /**
+     * Method:active
+     * Determine if given subscription is active
+     *
+     * @return: {Boolean} [true] if active, else [false]
+     */
     get active() {
 
         let today = Date.now();
