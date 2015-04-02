@@ -44,7 +44,7 @@ class Event extends Entity {
     get hasVariables () {
 
         /* Check if the event has tag variables. */
-        return !!Object.keys(this.tagVariables).length;
+        return this.tagVariables && !!Object.keys(this.tagVariables).length;
     }
 
     /**
