@@ -4,7 +4,21 @@
         data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
         data-ng-disabled="!isCoach && !isIndexer || !isEditable"
         data-ng-click="reset()"
-        >{{ resetButton.text }}</button>
+        >
+        <span>
+            <span>{{ resetButton.text }}</span>
+            <span data-ng-if="item.type === 'PLAYER_DROPDOWN'">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+                    <rect data-ng-attr-fill="{{ resetButton.meta.jerseyColor }}" x="0" y="0" width="16px" height="16px" />
+                </svg>
+
+                <span class="jersey-number">
+                    {{ resetButton.meta.jerseyNumber}}
+                </span>
+
+            </span>
+        </span>
+    </button>
     <!-- Gap variable -->
     <krossover-item-gap data-ng-if="item.type === 'GAP'"></krossover-item-gap>
 
