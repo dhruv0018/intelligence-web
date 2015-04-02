@@ -11,6 +11,13 @@ class Subscription extends Entity {
      */
     constructor (subscription) {
 
+        switch (arguments.length) {
+
+            case 0:
+
+                throw new Error('Invoking Subscription.constructor without passing a JSON object');
+        }
+
         if (this.validate(subscription)) {
 
             return this.extend(subscription);
@@ -25,6 +32,13 @@ class Subscription extends Entity {
      * @return: {Boolean} [true] if valid object
      */
     validate (subscription) {
+
+        switch (arguments.length) {
+
+            case 0:
+
+                throw new Error('Invoking Subscription.validate without passing a JSON object');
+        }
 
         // TODO: Validate with JSON schema instead
         /* Validate JSON constructor object */
@@ -61,13 +75,21 @@ class Subscription extends Entity {
      */
     is(subscription, match) {
 
+        switch (arguments.length) {
+
+            case 0:
+
+                throw new Error('Invoking Subscription.is without passing a SUBSCRIPTION to match');
+        }
+
         if (!match) {
 
             let self = this;
 
             match = subscription;
             subscription = self;
-        } else if (!subscription) {
+        }
+        else if (!subscription) {
 
             throw new Error('Subscription.is() requires 1 argument');
         }
