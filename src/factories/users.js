@@ -62,12 +62,16 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 if (user.subscriptions) {
 
-                    user.subscriptions.map(function constructSubscription(subscription) {
+                    let subscriptions = user.subscriptions.map(function constructSubscription(subscription) {
 
                         return new Subscription(subscription);
                     });
 
-                    user.subscriptions = new List(user.subscriptions);
+                    user.subscriptions = new List(subscriptions);
+                }
+                else {
+
+                    user.subscriptions = new List();
                 }
 
                 /* Copy all of the properties from the retrieved $resource
@@ -332,21 +336,15 @@ IntelligenceWebClient.factory('UsersFactory', [
              *
              * Adds the given subscription to the given user
              */
-            addSubscription: function(user, subscription) {
+            addSubscription: function(subscription, user = this) {
 
-                let self = this;
+                switch (arguments.length) {
 
-                if (!user) {
+                    case 0:
+
                     throw new Error('Invoked UsersFactory.addSubscription without any argument(s)');
                 }
 
-                if (!subscription) {
-                    // Only one argument is passed in, assumed to be a subscription
-                    subscription = user;
-                    user = self;
-                }
-
-                user.subscriptions = user.subscriptions || new List();
                 user.subscriptions.add(subscription);
             },
 
@@ -359,13 +357,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              *
              * Provides the most recently active subscription that is active toda
              */
-            getActiveSubscription: function(user) {
-
-                let self = this;
-
-                if (!user) {
-                    user = self;
-                }
+            getActiveSubscription: function(user = this) {
 
                 let mostRecent = user.subscriptions.first();
 
