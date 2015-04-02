@@ -610,6 +610,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                         return resource;
                     })
 
+                    .catch(function() {
+
+                        resource.error = true;
+                    })
+
                     .finally(function() {
 
                         delete resource.isSaving;
@@ -633,6 +638,11 @@ IntelligenceWebClient.factory('BaseFactory', [
                         storage.set(resource);
 
                         return resource;
+                    })
+
+                    .catch(function() {
+
+                        resource.error = true;
                     })
 
                     .finally(function() {
