@@ -107,9 +107,53 @@ GamesBreakdown.service('Games.Data.Dependencies', [
     }
 ]);
 
-GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'PlaysManager',
-    function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, playsManager) {
+GamesBreakdown.controller('Games.Breakdown.controller', GamesBreakdownController);
+
+GamesBreakdownController.$inject = [
+    '$rootScope',
+    '$scope',
+    '$window',
+    '$state',
+    '$stateParams',
+    'ROLES',
+    'SessionService',
+    'AuthenticationService',
+    'GamesFactory',
+    'TeamsFactory',
+    'LeaguesFactory',
+    'UsersFactory',
+    'PlayersFactory',
+    'PlaysFactory',
+    'FiltersetsFactory',
+    'ReelsFactory',
+    'VIEWPORTS',
+    'PlayManager',
+    'PlaysManager',
+    'PlaylistManager'
+];
+
+function GamesBreakdownController (
+    $rootScope,
+    $scope,
+    $window,
+    $state,
+    $stateParams,
+    ROLES,
+    session,
+    auth,
+    games,
+    teams,
+    leagues,
+    users,
+    players,
+    plays,
+    filtersets,
+    reels,
+    VIEWPORTS,
+    playManager,
+    playsManager,
+    playlistManager
+) {
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
@@ -117,6 +161,12 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
         $scope.posterImage = {
             url: $scope.game.video.thumbnail
         };
+
+        var isUploader = session.getCurrentUserId() === $scope.game.uploaderUserId;
+        var isTeamMember = session.getCurrentTeamId() === $scope.game.uploaderTeamId;
+        var isACoachOfUploadersTeam = session.currentUser.is(ROLES.COACH) && isTeamMember;
+
+        playlistManager.isEditable = isUploader || isACoachOfUploadersTeam;
 
         /* TODO: figure out if this stuff is used */
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
@@ -172,5 +222,4 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             $scope.expandAll = false;
         }
-    }
-]);
+}

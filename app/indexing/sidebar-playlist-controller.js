@@ -33,6 +33,8 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
 
             let lastPlay = playsManager.getLastPlay();
 
+            if (!lastPlay) return undefined;
+
             let playData = {
 
                 period: lastPlay.period,
@@ -44,6 +46,8 @@ Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
         }
 
         function onLastPlayChange (playData) {
+
+            if (!playData) return;
 
             $scope.game.currentPeriod = playData.period;
             $scope.game.indexedScore = playData.indexedScore;
