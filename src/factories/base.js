@@ -2,6 +2,8 @@ var PAGE_SIZE = 100;
 
 var pkg = require('../../package.json');
 
+var tv4 = require('tv4');
+
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -30,6 +32,24 @@ IntelligenceWebClient.factory('BaseFactory', [
                 angular.extend(resource, self);
 
                 return resource;
+            },
+
+            /**
+             * Validates resource with its schema.
+             * @param {Resource} resource - a user resource object.
+             */
+            validate: function(resource) {
+
+                resource = resource || this;
+
+                if (!resource) throw new Error('No resource to validate');
+                if (!this.schema) throw new Error('No schema for resource');
+
+                let schema = $injector.get(this.schema);
+
+                let result = tv4.validateMultiple(resource, schema, true);
+
+                return result;
             },
 
             /**
