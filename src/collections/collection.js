@@ -36,7 +36,7 @@ class Collection {
 
     clear() {}
 
-    get() {}
+    get(identifier) {}
 
     add(item) {}
 

@@ -33,7 +33,9 @@ class List extends Collection {
      */
     clear() {
 
-        return this.slice();
+        this.length = 0;
+
+        return this;
     }
 
     /**
