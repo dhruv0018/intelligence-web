@@ -32,5 +32,6 @@
             "format": "date-time"
         }
     },
+    "required": ["userId", "teamId"], // Mutually exclusive
     "additionalProperties": false
 }
