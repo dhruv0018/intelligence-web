@@ -1,9 +1,9 @@
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.constant('USER_SCHEMA', require('../../schemas/user.json'));
 IntelligenceWebClient.constant('TEAM_SCHEMA', require('../../schemas/team.json'));
