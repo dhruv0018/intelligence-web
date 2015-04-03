@@ -20,6 +20,8 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             model: 'UsersResource',
 
+            schema: 'USER_SCHEMA',
+
             storage: 'UsersStorage',
 
             extend: function(user) {
