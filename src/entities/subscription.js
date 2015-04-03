@@ -2,7 +2,7 @@ import Entity from './entity.js';
 
 const tv4 = require('tv4');
 const SCHEMAS_PATH = '../../schemas/';
-const SCHEMA_PATH = SCHEMAS_PATH + 'subscription.json';
+const schema = require(SCHEMAS_PATH + 'subscription.json');
 
 class Subscription extends Entity {
 
@@ -48,9 +48,8 @@ class Subscription extends Entity {
                 throw new Error('Invoking Subscription.validate without passing a JSON object');
         }
 
-        let schema = require(SCHEMA_PATH);
-        let validation = tv4.validateMultiple(subscription, schema, true);
-        // Third arg is checkRecursive
+        let recursion = true;
+        let validation =  tv4.validateMultiple(subscription, schema, recursion);
 
         return validation;
     }
