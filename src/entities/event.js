@@ -31,7 +31,7 @@ class Event extends Entity {
             this.variableValues[tagVariable.id] = this.variableValues[tagVariable.id] || {};
             Object.assign(this.variableValues[tagVariable.id], tagVariable);
             this.variableValues[tagVariable.id].type = this.variableValues[tagVariable.id].type || null;
-            if (!this.isRequired && this.variableValues[tagVariable.id].value === undefined) {
+            if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
                 this.variableValues[tagVariable.id].value = null;
             }
         });

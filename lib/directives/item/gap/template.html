@@ -1,11 +1,4 @@
 <span class="gap">
-
-    <button
-        class="gap"
-        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
-        data-ng-click="reset()"
-    >{{ GAPS[GAP_IDS[event.variableValues[item.id].value]].name || 'Optional' }}</button>
-
     <select
         class="gap"
         tabindex="{{ item.index }}"
