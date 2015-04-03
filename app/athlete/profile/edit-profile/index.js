@@ -1,7 +1,7 @@
 /* Component dependencies */
 require('basic-info');
 require('academics');
-require('achievements');
+require('experience');
 require('physical');
 require('contact');
 
@@ -15,7 +15,7 @@ var angular = window.angular;
 var EditProfile = angular.module('Athlete.Profile.EditProfile', [
     'Athlete.Profile.EditProfile.BasicInfo',
     'Athlete.Profile.EditProfile.Academics',
-    'Athlete.Profile.EditProfile.Achievements',
+    'Athlete.Profile.EditProfile.Experience',
     'Athlete.Profile.EditProfile.Physical',
     'Athlete.Profile.EditProfile.Contact',
     'ui.router',
