@@ -59,10 +59,9 @@ class Subscription extends Entity {
      * Determine type of given subscription
      *
      * @param: {SUBSCRIPTION} (req) Subscription constant to check against
-     * @param: {Subscription} (opt) Subscription object to check type of
      * @return: {Boolean} [true] if given subscription matches given type, else [false]
      */
-    is (match, subscription = this) {
+    is (match) {
 
         switch (arguments.length) {
 
@@ -71,7 +70,7 @@ class Subscription extends Entity {
                 throw new Error('Invoking Subscription.is without passing a SUBSCRIPTION to match');
         }
 
-        return subscription.type === match.type.id;
+        return this.type === match.type.id;
     }
 
     /**
