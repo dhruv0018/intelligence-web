@@ -107,9 +107,55 @@ GamesBreakdown.service('Games.Data.Dependencies', [
     }
 ]);
 
-GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager', 'PlaysManager', 'ROLES', 'SessionService', 'TELESTRATION_PERMISSIONS',
-    function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager, playsManager, ROLES, session, TELESTRATION_PERMISSIONS) {
+GamesBreakdown.controller('Games.Breakdown.controller', GamesBreakdownController);
+
+GamesBreakdownController.$inject = [
+    '$rootScope',
+    '$scope',
+    '$window',
+    '$state',
+    '$stateParams',
+    'ROLES',
+    'SessionService',
+    'AuthenticationService',
+    'GamesFactory',
+    'TeamsFactory',
+    'LeaguesFactory',
+    'UsersFactory',
+    'PlayersFactory',
+    'PlaysFactory',
+    'FiltersetsFactory',
+    'ReelsFactory',
+    'VIEWPORTS',
+    'PlayManager',
+    'PlaysManager',
+    'PlaylistManager',
+    'TELESTRATION_PERMISSIONS',
+];
+
+function GamesBreakdownController (
+    $rootScope,
+    $scope,
+    $window,
+    $state,
+    $stateParams,
+    ROLES,
+    session,
+    auth,
+    games,
+    teams,
+    leagues,
+    users,
+    players,
+    plays,
+    filtersets,
+    reels,
+    VIEWPORTS,
+    playManager,
+    playsManager,
+    playlistManager,
+    TELESTRATION_PERMISSIONS
+) {
 
         var uploader = users.get($scope.game.uploaderUserId);
 
@@ -117,9 +163,11 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
             url: $scope.game.video.thumbnail
         };
 
-        $scope.cuePoints = [];
+        var isUploader = session.getCurrentUserId() === $scope.game.uploaderUserId;
+        var isTeamMember = session.getCurrentTeamId() === $scope.game.uploaderTeamId;
+        var isACoachOfUploadersTeam = session.currentUser.is(ROLES.COACH) && isTeamMember;
 
-        $scope.publiclyShared = false;
+        playlistManager.isEditable = isUploader || isACoachOfUploadersTeam;
 
         /* TODO: figure out if this stuff is used */
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
@@ -208,5 +256,4 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
                 });
             }
         }
-    }
-]);
+}

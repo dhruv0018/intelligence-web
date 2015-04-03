@@ -1,12 +1,4 @@
 <span class="dropdown">
-
-    <button
-        class="dropdown"
-        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
-        data-ng-disabled="!isCoach && !isIndexer || !isEditable"
-        data-ng-click="reset()"
-    >{{ event.variableValues[item.id].value || 'Optional' }}</button>
-
     <select
         class="dropdown"
         tabindex="{{ item.index }}"

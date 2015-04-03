@@ -126,6 +126,7 @@ require('./managers/plays');
 require('./managers/event');
 require('./managers/storage');
 require('./managers/playerlist');
+require('./managers/playlist');
 require('./mediators/event');
 
 require('./directives/alert');

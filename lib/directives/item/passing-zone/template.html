@@ -1,12 +1,5 @@
 <span class="zone">
 
-    <button
-        class="zone"
-        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
-        data-ng-disabled="!isCoach && !isIndexer || !isEditable"
-        data-ng-click="reset()"
-    >{{ ZONES[ZONE_IDS[event.variableValues[item.id].value]].name || 'Optional' }}</button>
-
     <select
         class="zone"
         tabindex="{{ item.index }}"
