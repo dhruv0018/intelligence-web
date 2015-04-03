@@ -43,14 +43,20 @@ EditProfile.service('Athlete.Profile.EditProfile.Data.Dependencies', [
     function($q, sports, teams, positionsets, users, session) {
 
         //TODO: getTeamsByProfileId?
-        let teamIds = session.currentUser.profile.teams.map(function(team) {
-            return team.teamId;
-        });
+        let profileTeams = [];
+
+        if (session.currentUser.profile.teams) {
+            let teamIds = session.currentUser.profile.teams.map(function(team) {
+                return team.teamId;
+            });
+
+            profileTeams = teams.load(teamIds);
+        }
 
         let Data = {
 
             sports: sports.load(),
-            teams: teams.load(teamIds),
+            teams: profileTeams,
             positionsets: positionsets.load()
         };
 
