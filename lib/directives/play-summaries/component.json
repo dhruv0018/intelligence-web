@@ -1,5 +1,5 @@
 {
-    "name": "play",
+    "name": "play-summaries",
     "templates": [
         "template.html"
     ],
@@ -7,7 +7,6 @@
         "styles.less"
     ],
     "scripts": [
-        "index.js",
-        "controller.js"
+        "index.js"
     ]
 }

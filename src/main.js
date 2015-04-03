@@ -67,6 +67,7 @@ require('./constants/breakpoints');
 require('./constants/arenas');
 require('./constants/device');
 require('./constants/states');
+require('./constants/schemas');
 
 require('./models/users');
 require('./models/sports');
@@ -120,6 +121,7 @@ require('./managers/plays');
 require('./managers/event');
 require('./managers/storage');
 require('./managers/playerlist');
+require('./managers/playlist');
 require('./mediators/event');
 
 require('./directives/alert');

@@ -1,12 +1,5 @@
 <span class="formation">
 
-    <button
-        class="dropdown"
-        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
-        data-ng-disabled="!isCoach && !isIndexer || !isEditable"
-        data-ng-click="reset()"
-    >{{ item.formations[event.variableValues[item.id].value].name || 'Optional' }}</button>
-
     <select
         class="dropdown"
         tabindex="{{ item.index }}"

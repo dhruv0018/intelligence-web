@@ -25,6 +25,7 @@ Indexing.controller('Indexing.Main.Controller', [
     'SessionService',
     'IndexingService',
     'TagsManager',
+    'PlaylistManager',
     'PlaysManager',
     'PlayManager',
     'EventManager',
@@ -47,6 +48,7 @@ Indexing.controller('Indexing.Main.Controller', [
                         session,
                         indexing,
                         tags,
+                        playlistManager,
                         playsManager,
                         play,
                         event,
@@ -80,6 +82,8 @@ Indexing.controller('Indexing.Main.Controller', [
         var playsList = plays.getList({ gameId: gameId });
 
         indexing.reset($scope.tagset, $scope.game, playsList);
+
+        playlistManager.isEditable = true;
 
         var indexingElement = document.getElementsByClassName('indexing')[0];
 
