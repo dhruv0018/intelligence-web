@@ -158,38 +158,13 @@
         display: flex;
     }
 
+
     telestration-clear-all-button, telestration-delete-button {
 
         transition: opacity 0.5s linear;
-        opacity: 0.9;
-
-        li {
-            background-color: @clear-all-red;
-            display: flex;
-            align-items: center;
-            height: 40px;
-            border-radius: @radius;
-            padding: 0px 16px;
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 14px;
-        }
 
         &.ng-hide {
             opacity: 0;
-        }
-
-        &:hover {
-            opacity: 1;
-        }
-    }
-
-    telestration-delete-button {
-
-        li {
-            padding: 12px;
-            margin-right: 6px;
-            font-size: 22px;
         }
     }
 }
