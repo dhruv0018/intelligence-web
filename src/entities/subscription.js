@@ -1,5 +1,9 @@
 import Entity from './entity.js';
 
+const tv4 = require('tv4');
+const SCHEMAS_PATH = '../../schemas/';
+const SCHEMA_PATH = SCHEMAS_PATH + 'subscription.json';
+
 class Subscription extends Entity {
 
     /**
@@ -18,10 +22,14 @@ class Subscription extends Entity {
                 throw new Error('Invoking Subscription.constructor without passing a JSON object');
         }
 
-        if (this.validate(subscription)) {
+        let validation = this.validate(subscription);
 
-            return this.extend(subscription);
+        if (validation.errors.length) {
+
+            throw new Error(validation.errors.shift());
         }
+
+        return this.extend(subscription);
     }
 
     /**
@@ -40,29 +48,11 @@ class Subscription extends Entity {
                 throw new Error('Invoking Subscription.validate without passing a JSON object');
         }
 
-        // TODO: Validate with JSON schema instead
-        /* Validate JSON constructor object */
-        if (!subscription.id) {
+        let schema = require(SCHEMA_PATH);
+        let validation = tv4.validateMultiple(subscription, schema, true);
+        // Third arg is checkRecursive
 
-            throw new Error('Instantiating a Subscription Entity requires :id');
-        } else if (!subscription.type) {
-
-            throw new Error('Instantiating a Subscription Entity requires :type');
-        } else if (!subscription.activatesAt) {
-
-            throw new Error('Instantiating a Subscription Entity requires :activatesAt');
-        } else if (!subscription.expiresAt) {
-
-            throw new Error('Instantiating a Subscription Entity requires :expiresAt');
-        } else if (
-            (subscription.userId && subscription.teamId) ||
-            (!subscription.userId && !subscription.teamId)
-        ) {
-
-            throw new Error('Instantiating a Subscription Entity requires mutually exclusive :userId and :teamId');
-        }
-
-        return true;
+        return validation;
     }
 
     /**
