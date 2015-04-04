@@ -9,8 +9,8 @@ module.exports = [
 
             SVGGlyph.call(this, type, options, containerElement, SVGContext, SVGContext.path());
 
-            if (this.EDITABLE) this.addEditHandlers(); // optional hook
-            if (this.MOVEABLE) this.addMoveHandlers(); // optional hook
+            this.addEditHandlers();
+            this.addMoveHandlers();
         }
         angular.inheritPrototype(Arrow, SVGGlyph);
 

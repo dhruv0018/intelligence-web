@@ -9,13 +9,11 @@ module.exports = [
 
             SVGGlyph.call(this, type, options, containerElement, SVGContext, SVGContext.path());
 
-            if (this.EDITABLE) this.addEditHandlers(); // optional hook
-            if (this.MOVEABLE) this.addMoveHandlers(); // optional hook
+            // this.addEditHandlers(); // TODO: Add custom edit behaviour
+            this.addMoveHandlers();
         }
         angular.inheritPrototype(Freehand, SVGGlyph);
 
-        Freehand.prototype.EDITABLE = false;
-        Freehand.prototype.MOVEABLE = false;
         Freehand.prototype.MIN_VERTICES = 1;
         Freehand.prototype.MAX_VERTICES = 1200;
 

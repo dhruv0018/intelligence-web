@@ -11,8 +11,8 @@ module.exports = [
 
             this.primarySVGShape.opacity(0);
 
-            if (this.EDITABLE) this.addEditHandlers(); // optional hook
-            if (this.MOVEABLE) this.addMoveHandlers(); // optional hook
+            this.addEditHandlers();
+            this.addMoveHandlers();
         }
         angular.inheritPrototype(CircleSpotlight, Spotlight);
 

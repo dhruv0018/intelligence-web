@@ -127,7 +127,7 @@ module.exports = [
          */
         SVGGlyph.prototype.setDraggableConstraintFn = function setDraggableConstraintFn(constraintFn) {
 
-            if (this.MOVEABLE && this.primarySVGShape && !this.constraintFn) {
+            if (this.primarySVGShape && !this.constraintFn) {
 
                 this.constraintFn = constraintFn;
                 this.primarySVGShape.draggable(constraintFn);
@@ -157,7 +157,7 @@ module.exports = [
 
         SVGGlyph.prototype.removeListeners = function removeListeners() {
 
-            if (this.MOVEABLE && this.primarySVGShape) this.primarySVGShape.fixed();
+            if (this.primarySVGShape) this.primarySVGShape.fixed();
         };
 
         SVGGlyph.prototype.destroy = function() {

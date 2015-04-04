@@ -29,8 +29,6 @@ module.exports = [
 
         /* Default Values */
 
-        Glyph.prototype.EDITABLE = true;
-        Glyph.prototype.MOVEABLE = true;
         Glyph.prototype.MIN_VERTICES = 2;
 
 

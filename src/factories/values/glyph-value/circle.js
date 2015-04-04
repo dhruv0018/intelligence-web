@@ -9,8 +9,8 @@ module.exports = [
 
             SVGGlyph.call(this, type, options, container, SVGContext, SVGContext.circle());
 
-            if (this.EDITABLE) this.addEditHandlers(); // optional hook
-            if (this.MOVEABLE) this.addMoveHandlers(); // optional hook
+            this.addEditHandlers();
+            this.addMoveHandlers();
         }
         angular.inheritPrototype(Circle, SVGGlyph);
 
