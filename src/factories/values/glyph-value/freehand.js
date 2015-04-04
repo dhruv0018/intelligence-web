@@ -17,15 +17,20 @@ module.exports = [
         Freehand.prototype.EDITABLE = false;
         Freehand.prototype.MOVEABLE = false;
         Freehand.prototype.MIN_VERTICES = 1;
+        Freehand.prototype.MAX_VERTICES = 1200;
 
         Freehand.prototype.updateEndPointFromPixels = function updateEndPointFromPixels(x, y) {
             // TODO: only call getBoundingClientRect on window Resize
-            var boundingBox = this.getContainerDimensions();
-            var relativeX = x / boundingBox.width;
-            var relativeY = y / boundingBox.height;
-            var newVertex = {x: relativeX, y: relativeY};
 
-            this.vertices.push(newVertex);
+            if (this.vertices.length <= this.MAX_VERTICES) {
+
+                var boundingBox = this.getContainerDimensions();
+                var relativeX = x / boundingBox.width;
+                var relativeY = y / boundingBox.height;
+                var newVertex = {x: relativeX, y: relativeY};
+
+                this.vertices.push(newVertex);
+            }
         };
 
         Freehand.prototype.render = function renderFreehand() {
