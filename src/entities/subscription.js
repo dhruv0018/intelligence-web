@@ -82,8 +82,8 @@ class Subscription extends Entity {
     get isActive() {
 
         let today = moment.utc();
-        let activation = moment(this.activatesAt).utc();
-        let expiration = moment(this.expiresAt).utc();
+        let activation = moment.utc(this.activatesAt);
+        let expiration = moment.utc(this.expiresAt);
 
         return today.isAfter(activation) && today.isBefore(expiration);
     }
