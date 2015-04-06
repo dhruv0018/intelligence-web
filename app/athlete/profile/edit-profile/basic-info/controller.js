@@ -10,7 +10,7 @@ var BasicInfo = angular.module('Athlete.Profile.EditProfile.BasicInfo');
 /*
 * EditProfile.BasicInfo dependencies
 */
-basicInfoController.$inject = [
+BasicInfoController.$inject = [
     '$scope',
     '$http',
     'config',
@@ -26,7 +26,7 @@ basicInfoController.$inject = [
  * @name EditProfile.BasicInfo.controller
  * @type {controller}
  */
-function basicInfoController (
+function BasicInfoController (
     $scope,
     $http,
     config,
@@ -82,6 +82,6 @@ function basicInfoController (
     };
 }
 
-BasicInfo.controller('Athlete.Profile.EditProfile.BasicInfo.controller', basicInfoController);
+BasicInfo.controller('Athlete.Profile.EditProfile.BasicInfo.controller', BasicInfoController);
 
-export default basicInfoController;
+export default BasicInfoController;

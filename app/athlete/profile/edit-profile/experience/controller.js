@@ -10,7 +10,7 @@ var Experience = angular.module('Athlete.Profile.EditProfile.Experience');
 /*
 * EditProfile.Experience dependencies
 */
-experienceController.$inject = [
+ExperienceController.$inject = [
     '$scope',
     'TeamsFactory',
     'LeaguesFactory',
@@ -26,7 +26,7 @@ experienceController.$inject = [
  * @name EditProfile.Experience.controller
  * @type {controller}
  */
-function experienceController (
+function ExperienceController (
     $scope,
     teams,
     leagues,
@@ -54,6 +54,6 @@ function experienceController (
     };
 }
 
-Experience.controller('Athlete.Profile.EditProfile.Experience.controller', experienceController);
+Experience.controller('Athlete.Profile.EditProfile.Experience.controller', ExperienceController);
 
-export default experienceController;
+export default ExperienceController;
