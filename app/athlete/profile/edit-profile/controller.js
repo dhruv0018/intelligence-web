@@ -31,9 +31,6 @@ function editProfileController (
     session,
     data
 ) {
-    // TO-DO: Move this to somewhere more appropriate (state.onEnter?)
-    $state.go('Athlete.Profile.EditProfile.BasicInfo');
-
     $scope.athlete = session.getCurrentUser();
 }
 

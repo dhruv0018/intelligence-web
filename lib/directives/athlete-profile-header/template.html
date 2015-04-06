@@ -5,7 +5,7 @@
 
         <h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-        <a ng-if="auth.isLoggedIn && session.getCurrentUserId() === athlete.profile.userId" ui-sref="Athlete.Profile.EditProfile">
+        <a ng-if="auth.isLoggedIn && session.getCurrentUserId() === athlete.profile.userId" ui-sref="Athlete.Profile.EditProfile.BasicInfo">
             <md-button class="md-raised edit-profile-button">Edit Profile</md-button>
         </a>
 

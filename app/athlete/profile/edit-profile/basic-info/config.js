@@ -19,6 +19,7 @@ BasicInfo.config([
         $stateProvider
 
         .state('Athlete.Profile.EditProfile.BasicInfo', {
+            url: '',
             views: {
                 'content@Athlete.Profile.EditProfile': {
                     templateUrl: 'athlete/edit-profile/basic-info/template.html',

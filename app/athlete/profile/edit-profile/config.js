@@ -20,6 +20,7 @@ EditProfile.config([
 
         .state('Athlete.Profile.EditProfile', {
             url: '/edit-profile',
+            abstract: true,
             views: {
                 'main@root': {
                     templateUrl: 'athlete/edit-profile/template.html',
