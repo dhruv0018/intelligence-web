@@ -10,14 +10,10 @@ var BasicInfo = angular.module('Athlete.Profile.EditProfile.BasicInfo');
 /*
 * EditProfile.BasicInfo dependencies
 */
-basicInfoController.$inject = [
+BasicInfoController.$inject = [
     '$scope',
     '$http',
     'config',
-    'TeamsFactory',
-    'LeaguesFactory',
-    'SportsFactory',
-    'PositionsetsFactory',
     'UsersFactory',
     'SessionService',
     'AlertsService',
@@ -30,37 +26,17 @@ basicInfoController.$inject = [
  * @name EditProfile.BasicInfo.controller
  * @type {controller}
  */
-function basicInfoController (
+function BasicInfoController (
     $scope,
     $http,
     config,
-    teams,
-    leagues,
-    sports,
-    positionsets,
     users,
     session,
     alerts,
     data
 ) {
     $scope.athlete = session.getCurrentUser();
-    $scope.teams = teams.getMap();
-    $scope.addingTeam = false;
     $scope.maxAboutMeLength = 200;
-
-    $scope.getPositionSet = function getPositionSet(teamId) {
-        let team = teams.get(teamId);
-        let league = leagues.get(team.leagueId);
-        let positionset = positionsets.get(league.positionSetId);
-        return positionset;
-    };
-
-    $scope.getTeamSportName = function getTeamSportName(teamId) {
-        let team = teams.get(teamId);
-        let league = leagues.get(team.leagueId);
-        let sport = sports.get(league.sportId);
-        return sport.name;
-    };
 
     $scope.setProfilePicture = function setProfilePicture(files) {
         let reader = new FileReader();
@@ -106,6 +82,6 @@ function basicInfoController (
     };
 }
 
-BasicInfo.controller('Athlete.Profile.EditProfile.BasicInfo.controller', basicInfoController);
+BasicInfo.controller('Athlete.Profile.EditProfile.BasicInfo.controller', BasicInfoController);
 
-export default basicInfoController;
+export default BasicInfoController;

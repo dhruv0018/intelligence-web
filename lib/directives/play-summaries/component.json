@@ -1,5 +1,5 @@
 {
-    "name": "achievements",
+    "name": "play-summaries",
     "templates": [
         "template.html"
     ],
@@ -7,8 +7,6 @@
         "styles.less"
     ],
     "scripts": [
-        "index.js",
-        "config.js",
-        "controller.js"
+        "index.js"
     ]
 }

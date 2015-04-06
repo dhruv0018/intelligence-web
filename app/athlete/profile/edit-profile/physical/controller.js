@@ -10,7 +10,7 @@ var Physical = angular.module('Athlete.Profile.EditProfile.Physical');
 /*
 * EditProfile.Physical dependencies
 */
-physicalController.$inject = [
+PhysicalController.$inject = [
     '$scope',
     'UsersFactory',
     'SessionService',
@@ -23,7 +23,7 @@ physicalController.$inject = [
  * @name EditProfile.Physical.controller
  * @type {controller}
  */
-function physicalController (
+function PhysicalController (
     $scope,
     users,
     session,
@@ -42,6 +42,6 @@ function physicalController (
     };
 }
 
-Physical.controller('Athlete.Profile.EditProfile.Physical.controller', physicalController);
+Physical.controller('Athlete.Profile.EditProfile.Physical.controller', PhysicalController);
 
-export default physicalController;
+export default PhysicalController;

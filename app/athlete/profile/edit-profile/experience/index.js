@@ -2,10 +2,10 @@
 var angular = window.angular;
 
 /**
- * Achievements page module.
- * @module Achievements
+ * Experience page module.
+ * @module Experience
  */
-var Achievements = angular.module('Athlete.Profile.EditProfile.Achievements', [
+var Experience = angular.module('Athlete.Profile.EditProfile.Experience', [
     'ui.router',
     'ui.bootstrap',
     'ngMaterial',
@@ -13,11 +13,11 @@ var Achievements = angular.module('Athlete.Profile.EditProfile.Achievements', [
 ]);
 
 /* Cache the template files */
-Achievements.run([
+Experience.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('athlete/edit-profile/achievements/template.html', require('./template.html'));
+        $templateCache.put('athlete/edit-profile/experience/template.html', require('./template.html'));
     }
 ]);
 

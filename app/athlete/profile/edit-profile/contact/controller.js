@@ -10,7 +10,7 @@ var Contact = angular.module('Athlete.Profile.EditProfile.Contact');
 /*
 * EditProfile.Contact dependencies
 */
-contactController.$inject = [
+ContactController.$inject = [
     '$scope'
 ];
 
@@ -20,12 +20,12 @@ contactController.$inject = [
  * @name EditProfile.Contact.controller
  * @type {controller}
  */
-function contactController (
+function ContactController (
     $scope
 ) {
     //TODO: remove controller if unused
 }
 
-Contact.controller('Athlete.Profile.EditProfile.Contact.controller', contactController);
+Contact.controller('Athlete.Profile.EditProfile.Contact.controller', ContactController);
 
-export default contactController;
+export default ContactController;

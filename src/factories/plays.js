@@ -29,19 +29,9 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play.events = play.events || [];
 
-                /* All of the play summaries; filled in by the events. */
-                play.summaries = play.summaries || [];
-
-                /* Set default play summary and priority. */
-                play.summary = play.summary || {};
-                play.summary.priority = play.summary.priority || 0;
-
                 play.period = play.period || 0;
 
-                play.teamPointsAssigned = play.teamPointsAssigned || 0;
-                play.opposingPointsAssigned = play.opposingPointsAssigned || 0;
-
-                play.teamIndexedScore = play.teamIndexedScore || 0;
+                play.indexedScore = play.indexedScore || 0;
                 play.opposingIndexedScore = play.opposingIndexedScore || 0;
 
                 /* Indicates if the play has visible events; set by the events. */
@@ -91,6 +81,11 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 };
 
                 return newPlayList.$filter({filterId: filterId.filterId}, callback, error);
+            },
+
+            load (filter) {
+
+                return tagsets.load().then(() => { this.baseLoad(filter); });
             },
 
             /**
