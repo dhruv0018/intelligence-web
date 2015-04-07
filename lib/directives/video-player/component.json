@@ -5,7 +5,9 @@
     ],
     "locals": [
         "button-video-fast-forward",
-        "button-video-fast-backward"
+        "button-video-fast-backward",
+        "button-video-slow-forward",
+        "button-video-slow-backward"
     ],
     "templates": [
         "template.html",
