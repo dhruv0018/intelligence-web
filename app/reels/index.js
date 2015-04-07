@@ -129,6 +129,8 @@ ReelsArea.controller('ReelsArea.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AuthenticationService', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES', 'VIEWPORTS', 'UsersFactory', 'TELESTRATION_PERMISSIONS',
     function controller($rootScope, $scope, $state, $stateParams, $modal, modals, auth, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES, VIEWPORTS, users, TELESTRATION_PERMISSIONS) {
 
+        const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
+
         /* Variables */
 
         var reelId = Number($stateParams.id);
@@ -351,5 +353,10 @@ ReelsArea.controller('ReelsArea.controller', [
                 });
             });
         }
+
+        $scope.$on('$destroy', function onDestroy() {
+
+            telestrationsVideoPlayerBroker.cleanup();
+        });
     }
 ]);

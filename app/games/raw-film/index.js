@@ -62,6 +62,8 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         /* Scope */
 
+        const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
+
         // telestrations
 
         $scope.telestrations = $scope.game.rawTelestrations;
@@ -89,5 +91,10 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
                 $scope.cuePoints = $scope.telestrations.getTelestrationCuePoints();
             });
         }
+
+        $scope.$on('$destroy', function onDestroy() {
+
+            telestrationsVideoPlayerBroker.cleanup();
+        });
     }
 ]);

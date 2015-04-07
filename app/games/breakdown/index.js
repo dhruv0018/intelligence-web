@@ -55,8 +55,8 @@ GamesBreakdown.config([
 ]);
 
 GamesBreakdown.service('Games.Data.Dependencies', [
-    '$q', 'AuthenticationService', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory', 'SessionService', 'TelestrationsVideoPlayerBroker',
-    function dataService($q, auth, games, plays, teams, reels, leagues, tagsets, players, filtersets, users, session, TelestrationsVideoPlayerBroker) {
+    '$q', 'AuthenticationService', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory', 'SessionService',
+    function dataService($q, auth, games, plays, teams, reels, leagues, tagsets, players, filtersets, users, session) {
 
         var service = function(stateParams) {
 
@@ -131,6 +131,7 @@ GamesBreakdownController.$inject = [
     'PlaysManager',
     'PlaylistManager',
     'TELESTRATION_PERMISSIONS',
+    'TelestrationsVideoPlayerBroker',
 ];
 
 function GamesBreakdownController (
@@ -154,7 +155,8 @@ function GamesBreakdownController (
     playManager,
     playsManager,
     playlistManager,
-    TELESTRATION_PERMISSIONS
+    TELESTRATION_PERMISSIONS,
+    TelestrationsVideoPlayerBroker
 ) {
 
         var uploader = users.get($scope.game.uploaderUserId);
@@ -162,6 +164,8 @@ function GamesBreakdownController (
         $scope.posterImage = {
             url: $scope.game.video.thumbnail
         };
+
+        const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
 
         var isUploader = session.getCurrentUserId() === $scope.game.uploaderUserId;
         var isTeamMember = session.getCurrentTeamId() === $scope.game.uploaderTeamId;
@@ -256,4 +260,9 @@ function GamesBreakdownController (
                 });
             }
         }
+
+        $scope.$on('$destroy', function onDestroy() {
+
+            telestrationsVideoPlayerBroker.cleanup();
+        });
 }

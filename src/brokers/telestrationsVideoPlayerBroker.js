@@ -4,7 +4,7 @@ const EventEmitter = require('events').EventEmitter;
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
-TelestrationsVideoPlayerBrokerService.$inject = [
+TelestrationsVideoPlayerBrokerFactory.$inject = [
     'VideoPlayer',
     'VideoPlayerEventEmitter',
     'VIDEO_PLAYER_EVENTS',
@@ -13,7 +13,7 @@ TelestrationsVideoPlayerBrokerService.$inject = [
     'TELESTRATION_EVENTS'
 ];
 
-function TelestrationsVideoPlayerBrokerService(
+function TelestrationsVideoPlayerBrokerFactory(
     VideoPlayer,
     VideoPlayerEventEmitter,
     VIDEO_PLAYER_EVENTS,
@@ -38,8 +38,8 @@ function TelestrationsVideoPlayerBrokerService(
 
         cleanup () {
 
-            TelestrationsEventEmitter.removeListeners(TELESTRATION_EVENTS.ON_GLYPHS_VISIBLE, onGlyphsVisible);
-            VideoPlayerEventEmitter.removeListeners(VIDEO_PLAYER_EVENTS.FULLSCREEN, onFullScreen);
+            TelestrationsEventEmitter.removeListener(TELESTRATION_EVENTS.ON_GLYPHS_VISIBLE, onGlyphsVisible);
+            VideoPlayerEventEmitter.removeListener(VIDEO_PLAYER_EVENTS.FULLSCREEN, onFullScreen);
         }
     }
 
@@ -77,7 +77,7 @@ function TelestrationsVideoPlayerBrokerService(
         }
     }
 
-    return new TelestrationsVideoPlayerBroker();
+    return TelestrationsVideoPlayerBroker;
 }
 
-IntelligenceWebClient.service('TelestrationsVideoPlayerBroker', TelestrationsVideoPlayerBrokerService);
+IntelligenceWebClient.factory('TelestrationsVideoPlayerBroker', TelestrationsVideoPlayerBrokerFactory);
