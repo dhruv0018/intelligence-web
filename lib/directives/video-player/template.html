@@ -17,7 +17,7 @@
         >
         </vg-media>
 
-        <vg-controls ng-show="videoPlayer.state && videoPlayer.canPlay" vg-autohide="videoPlayer.config.autohide" vg-autohide-time="videoPlayer.config.autohideTime">
+        <vg-controls vg-autohide="videoPlayer.config.autohide" vg-autohide-time="videoPlayer.config.autohideTime">
 
             <vg-scrub-bar>
                 <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
@@ -56,8 +56,6 @@
         <vg-buffering></vg-buffering>
 
         <vg-poster ng-hide="videoPlayer.state" vg-url="videoPlayer.posterImage.url"></vg-poster>
-
-        <vg-overlay-play ng-hide="videoPlayer.state"></vg-overlay-play>
 
     </videogular>
 
