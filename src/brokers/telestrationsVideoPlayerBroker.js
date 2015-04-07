@@ -30,16 +30,23 @@ function TelestrationsVideoPlayerBrokerService(
             setupHandlers.bind(this);
             handleInitialStateChange.bind(this);
             onGlyphsVisible.bind(this);
+            onFullScreen.bind(this);
 
             setupHandlers();
+            handleInitialStateChange();
+        }
+
+        cleanup () {
+
+            TelestrationsEventEmitter.removeListeners(TELESTRATION_EVENTS.ON_GLYPHS_VISIBLE, onGlyphsVisible);
+            VideoPlayerEventEmitter.removeListeners(VIDEO_PLAYER_EVENTS.FULLSCREEN, onFullScreen);
         }
     }
 
     function setupHandlers () {
 
         TelestrationsEventEmitter.on(TELESTRATION_EVENTS.ON_GLYPHS_VISIBLE, onGlyphsVisible);
-
-        handleInitialStateChange();
+        VideoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.FULLSCREEN, onFullScreen);
     }
 
     function handleInitialStateChange () {
@@ -56,6 +63,18 @@ function TelestrationsVideoPlayerBrokerService(
     function onGlyphsVisible() {
 
         VideoPlayer.pause();
+    }
+
+    function onFullScreen(event) {
+
+        if (event.isFullScreen) {
+
+            Telestrations.requestFullScreen();
+
+        } else {
+
+            Telestrations.exitFullScreen();
+        }
     }
 
     return new TelestrationsVideoPlayerBroker();

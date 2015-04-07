@@ -1,7 +1,7 @@
 const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-const angular = window.angular;
+const angular = require('angular');
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
@@ -69,7 +69,9 @@ const TELESTRATION_PERMISSIONS = {
 };
 
 const TELESTRATION_EVENTS = {
-    ON_GLYPHS_VISIBLE: 1
+    ON_GLYPHS_VISIBLE: 0,
+    ENABLE_DRAW: 1,
+    DISABLE_DRAW: 2
 };
 
 IntelligenceWebClient.value('TELESTRATION_TYPES', TELESTRATION_TYPES);
