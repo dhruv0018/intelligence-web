@@ -1,9 +1,21 @@
 
 /* Text - extends Glyph */
 
-TextValue.$inject = ['GlyphValue', '$window', 'TelestrationsEventEmitter', 'TELESTRATION_COLORS', 'TELESTRATION_EVENTS'];
+TextValue.$inject = [
+    'GlyphValue',
+    '$window',
+    'TelestrationsEventEmitter',
+    'TELESTRATION_COLORS',
+    'TELESTRATION_EVENTS'
+];
 
-function TextValue(Glyph, $window, TelestrationsEventEmitter, TELESTRATION_COLORS, TELESTRATION_EVENTS) {
+function TextValue(
+    Glyph,
+    $window,
+    TelestrationsEventEmitter,
+    TELESTRATION_COLORS,
+    TELESTRATION_EVENTS
+) {
 
     var body;
     var testTextArea; // Singleton object used for all text tools
