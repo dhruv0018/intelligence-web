@@ -11,8 +11,8 @@ const VIDEO_PLAYER_EVENTS = {
     'ON_PLAY': 2,
     'ON_SEEKING': 3,
     'ON_PAUSE': 4,
-    'ON_CLIP_COMPLETE': 6,
-    'STOP': 5,
+    'ON_CLIP_COMPLETE': 5,
+    'PLAY': 6,
     'FULLSCREEN': 7
 };
 

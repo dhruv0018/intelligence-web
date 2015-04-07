@@ -1,14 +1,14 @@
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
 
 /* Telestration Constants */
 
-var TELESTRATION_TYPES = {
+const TELESTRATION_TYPES = {
     'ARROW_SOLID': 1,
     'ARROW_DASHED': 2,
     'FREEHAND_SOLID': 3,
@@ -22,7 +22,7 @@ var TELESTRATION_TYPES = {
     'EMOJI': 11
 };
 
-var TELESTRATION_COLORS = {
+const TELESTRATION_COLORS = {
     GLYPHS: {
         'PRIMARY':  {
             hex: '#F3F313',
@@ -62,12 +62,17 @@ var TELESTRATION_COLORS = {
     }
 };
 
-var TELESTRATION_PERMISSIONS = {
+const TELESTRATION_PERMISSIONS = {
     EDIT: 2,
     VIEW: 1,
     NO_ACCESS: 0
 };
 
+const TELESTRATION_EVENTS = {
+    ON_GLYPHS_VISIBLE: 1
+};
+
 IntelligenceWebClient.value('TELESTRATION_TYPES', TELESTRATION_TYPES);
 IntelligenceWebClient.value('TELESTRATION_COLORS', TELESTRATION_COLORS);
 IntelligenceWebClient.value('TELESTRATION_PERMISSIONS', TELESTRATION_PERMISSIONS);
+IntelligenceWebClient.value('TELESTRATION_EVENTS', TELESTRATION_EVENTS);

@@ -4,29 +4,61 @@ const EventEmitter = require('events').EventEmitter;
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
-class TelestrationsVideoPlayerBroker {
+TelestrationsVideoPlayerBrokerService.$inject = [
+    'VideoPlayer',
+    'VideoPlayerEventEmitter',
+    'VIDEO_PLAYER_EVENTS',
+    'TelestrationsEventEmitter',
+    'Telestrations',
+    'TELESTRATION_EVENTS'
+];
 
-    constructor (VideoPlayer, TelestrationsEventEmitter) {
+function TelestrationsVideoPlayerBrokerService(
+    VideoPlayer,
+    VideoPlayerEventEmitter,
+    VIDEO_PLAYER_EVENTS,
+    TelestrationsEventEmitter,
+    Telestrations,
+    TELESTRATION_EVENTS
+) {
 
-        this.VideoPlayer = VideoPlayer;
-        this.TelestrationsEventEmitter = TelestrationsEventEmitter;
+    class TelestrationsVideoPlayerBroker {
 
-        this.setupHandlers();
+        constructor () {
+
+            // Bind Private functions
+            setupHandlers.bind(this);
+            handleInitialStateChange.bind(this);
+            onGlyphsVisible.bind(this);
+
+            setupHandlers();
+        }
     }
 
-    setupHandlers () {
+    function setupHandlers () {
 
-        var self = this;
+        TelestrationsEventEmitter.on(TELESTRATION_EVENTS.ON_GLYPHS_VISIBLE, onGlyphsVisible);
 
-        this.TelestrationsEventEmitter.on('showingTelestrations', function onShowingTelestrations() {
-
-            self.VideoPlayer.pause();
-        });
+        handleInitialStateChange();
     }
+
+    function handleInitialStateChange () {
+
+        VideoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.ON_PLAY, onVideoPlayerInitialPlay);
+
+        function onVideoPlayerInitialPlay() {
+
+            Telestrations.show();
+            VideoPlayerEventEmitter.removeListener(VIDEO_PLAYER_EVENTS.ON_PLAY, onVideoPlayerInitialPlay);
+        }
+    }
+
+    function onGlyphsVisible() {
+
+        VideoPlayer.pause();
+    }
+
+    return new TelestrationsVideoPlayerBroker();
 }
 
-TelestrationsVideoPlayerBroker.$inject = ['VideoPlayer', 'TelestrationsEventEmitter'];
-
-IntelligenceWebClient.service('TelestrationsVideoPlayerBroker', TelestrationsVideoPlayerBroker);
-
-export default TelestrationsVideoPlayerBroker;
+IntelligenceWebClient.service('TelestrationsVideoPlayerBroker', TelestrationsVideoPlayerBrokerService);
