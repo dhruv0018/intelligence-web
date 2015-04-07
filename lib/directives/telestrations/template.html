@@ -1,29 +1,32 @@
+<div class="telestrations">
 
-<!-- HAS TELESTRATION ACCESS -->
+    <!-- HAS TELESTRATION ACCESS -->
 
-<div class="telestration-container" ng-hide="NO_ACCESS">
+    <div class="telestration-container" ng-hide="NO_ACCESS">
 
-    <telestration-controls ng-if="EDIT" ng-class="{hidden: telestrations.hide}"></telestration-controls>
+        <telestration-controls ng-if="EDIT" ng-class="{hidden: telestrations.hide}"></telestration-controls>
 
-    <svg-context-area id="svg-context-area">
+        <svg-context-area id="svg-context-area">
 
-        <glyph-editor ng-class="{hidden: telestrations.hide}">
+            <glyph-editor ng-class="{hidden: telestrations.hide}">
 
-            <glyph data-ng-repeat="glyph in telestrations.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
+                <glyph data-ng-repeat="glyph in telestrations.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
 
-        </glyph-editor>
+            </glyph-editor>
+
+            <ng-transclude class="transcluded-content"></ng-transclude>
+
+        </svg-context-area>
+
+    </div>
+
+
+    <!-- NO TELESTRATION ACCESS -->
+
+    <div class="telestration-container" ng-if="NO_ACCESS">
 
         <ng-transclude class="transcluded-content"></ng-transclude>
 
-    </svg-context-area>
-
-</div>
-
-
-<!-- NO TELESTRATION ACCESS -->
-
-<div class="telestration-container" ng-if="NO_ACCESS">
-
-    <ng-transclude class="transcluded-content"></ng-transclude>
+    </div>
 
 </div>
