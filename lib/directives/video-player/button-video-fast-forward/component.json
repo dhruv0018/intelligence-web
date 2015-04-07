@@ -1,5 +1,5 @@
 {
-    "name": "button-video-forward",
+    "name": "button-video-fast-forward",
     "templates": [
         "template.html"
     ],
