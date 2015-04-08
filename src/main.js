@@ -30,7 +30,6 @@ require('./errors');
 require('./viewports');
 require('./logs');
 require('./device');
-require('./emitter');
 require('./mediator');
 
 require('./http/interceptors/error');
@@ -68,6 +67,7 @@ require('./constants/arenas');
 require('./constants/device');
 require('./constants/states');
 require('./constants/schemas');
+require('./constants/video-player');
 
 require('./models/users');
 require('./models/sports');
@@ -114,6 +114,7 @@ require('./factories/positionsets');
 require('./factories/plans');
 
 require('./emitters/playlist');
+require('./emitters/video-player');
 
 require('./managers/tags');
 require('./managers/play');
