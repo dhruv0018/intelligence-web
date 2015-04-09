@@ -3,8 +3,8 @@
 .highlights {
 
     .featured-reel-container {
-        border: thin solid @gray-border;
-        width: 70%;
+        border: none;
+        width: 100%;
         margin: auto;
 
         .featured-reel-header {
@@ -16,6 +16,12 @@
                 margin: 0;
                 line-height: 60px;
             }
+        }
+
+        @media only screen
+        and (min-width: @md-screen-sm) {
+            width: 70%;
+            border: thin solid @gray-border;
         }
     }
 
