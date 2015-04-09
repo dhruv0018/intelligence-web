@@ -40,6 +40,6 @@ function HighlightsController (
         $scope.highlightReels = [];
 }
 
-Highlights.controller('Athlete.Highlights.controller', HighlightsController);
+Highlights.controller('Athlete.Profile.Highlights.controller', HighlightsController);
 
 export default HighlightsController;
