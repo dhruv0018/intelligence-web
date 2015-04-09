@@ -25,6 +25,20 @@ videogular .control-button {
     outline: none;
 }
 
+.iconButton,
+.control-button {
+
+    transition: color 0.3s;
+
+    &:hover {
+        color: @brand-secondary;
+    }
+
+    &:active {
+        color: @brand-primary;
+    }
+}
+
 videogular vg-controls {
     width: 100%;
     height: 50px;
