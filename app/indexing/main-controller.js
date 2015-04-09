@@ -15,7 +15,6 @@ var Indexing = angular.module('Indexing');
  */
 Indexing.controller('Indexing.Main.Controller', [
     'config',
-    'EVENT_MAP',
     '$rootScope',
     '$scope',
     '$modal',
@@ -38,7 +37,6 @@ Indexing.controller('Indexing.Main.Controller', [
     'PlaysFactory',
     'VideoPlayer',
     function controller(config,
-                        EVENT_MAP,
                         $rootScope,
                         $scope,
                         $modal,
