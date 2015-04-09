@@ -1,6 +1,16 @@
 <div class="highlights">
-    <ul class="reels" ng-hide="!reel">
-        <krossover-film ng-if="reel" film="reel"></krossover-film>
-    </ul>
-    <no-profile-reels class="ng-hide" ng-show="!reel"></no-profile-reels>
+
+    <div class="featured-reel-container">
+        <div class="featured-reel-header">
+            <h3>{{featuredReel.name}}</h3>
+        </div>
+        <video-player sources="sources"></video-player>
+    </div>
+
+    <div>
+        <ul class="reels" ng-hide="!highlightReels">
+            <krossover-film ng-repeat="reel in highlightReels" film="reel"></krossover-film>
+        </ul>
+        <no-profile-reels class="ng-hide" ng-show="!highlightReels"></no-profile-reels>
+    </div>
 </div>

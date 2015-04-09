@@ -8,15 +8,38 @@ var angular = window.angular;
 var Highlights = angular.module('Athlete.Profile.Highlights');
 
 /**
+ * Profile.Highlights dependencies
+ */
+HighlightsController.$inject = [
+    '$scope',
+    '$stateParams',
+    'ReelsFactory',
+    'UsersFactory',
+    'PlaysFactory'
+];
+
+/**
  * Profile.Highlights controller.
  * @module Profile.Highlights
  * @name Profile.Highlights.controller
  * @type {controller}
  */
-Highlights.controller('Athlete.Profile.Highlights.controller', [
-    '$scope', '$stateParams', 'ReelsFactory', 'UsersFactory',
-    function controller($scope, $stateParams, reels, users) {
+function HighlightsController (
+    $scope,
+    $stateParams,
+    reels,
+    users,
+    plays
+)   {
         let user = users.get($stateParams.id);
-        $scope.reel = reels.getFeaturedReel(user);
-    }
-]);
+        $scope.featuredReel = reels.getFeaturedReel(user);
+
+        let play = plays.get($scope.featuredReel.plays[0]);
+        $scope.sources = play.getVideoSources();
+
+        $scope.highlightReels = [];
+}
+
+Highlights.controller('Athlete.Highlights.controller', HighlightsController);
+
+export default HighlightsController;
