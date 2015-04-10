@@ -39,11 +39,8 @@ function onOpenTimeout () {
    In some cases, such as when a user is looking at
    a publicly shared video, the database is not required.
 */
-try{
-    openDB(pkg.name);
-} catch(e) {
-    console.info(e);
-}
+
+openDB(pkg.name);
 
 function openDB(name, version) {
 
@@ -56,9 +53,14 @@ function openDB(name, version) {
     /* If indexedDB is available. */
     else {
 
-        /* If given a version, open the database with the given version. */
-        /* Otherwise; if no version is given, open the current version of the database. */
-        var request = version ? window.indexedDB.open(name, version) : window.indexedDB.open(name);
+        try {
+            /* If given a version, open the database with the given version. */
+            /* Otherwise; if no version is given, open the current version of the database. */
+            request = version ? window.indexedDB.open(name, version) : window.indexedDB.open(name);
+        } catch (error) {
+            IndexedDB.reject('IndexedDB could not be opened');
+            return;
+        }
 
         /* Handle a successful connection to the database. */
         request.onsuccess = function(event) {
