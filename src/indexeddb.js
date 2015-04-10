@@ -35,7 +35,15 @@ function onOpenTimeout () {
     IndexedDB.reject('IndexedDB timeout');
 }
 
-openDB(pkg.name);
+/*
+   In some cases, such as when a user is looking at
+   a publicly shared video, the database is not required.
+*/
+try{
+    openDB(pkg.name);
+} catch(e) {
+    console.info(e);
+}
 
 function openDB(name, version) {
 
