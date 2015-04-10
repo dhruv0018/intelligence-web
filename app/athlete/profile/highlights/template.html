@@ -8,9 +8,9 @@
     </div>
 
     <div>
-        <ul class="reels" ng-hide="!highlightReels">
+        <ul class="reels" ng-show="highlightReels.length">
             <krossover-film ng-repeat="reel in highlightReels" film="reel"></krossover-film>
         </ul>
-        <no-profile-reels class="ng-hide" ng-show="!highlightReels"></no-profile-reels>
+        <no-profile-reels ng-hide="highlightReels.length"></no-profile-reels>
     </div>
 </div>
