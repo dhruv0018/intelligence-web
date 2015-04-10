@@ -41,7 +41,7 @@ function BasicInfoController (
     $scope.setProfilePicture = function setProfilePicture(files) {
         let reader = new FileReader();
 
-        $scope.athlete.fileImage = files[0]; // resolve user
+        $scope.athlete.fileImage = files[0];
 
         reader.readAsDataURL(files[0]);
 
