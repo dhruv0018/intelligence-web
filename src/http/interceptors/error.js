@@ -111,4 +111,3 @@ IntelligenceWebClient.config([
         $httpProvider.interceptors.push('Error.Interceptor');
     }
 ]);
-

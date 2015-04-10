@@ -33,7 +33,21 @@ GamesBreakdown.config([
                         return data($stateParams).load();
                     }
                 ]
-            }
+            },
+            onEnter: [
+                '$stateParams', 'PlayerlistManager', 'GamesFactory',
+                function($stateParams, playerlist, games) {
+                    var gameId = $stateParams.id;
+                    var game = games.get(gameId);
+                    playerlist.fill(game);
+                }
+            ],
+            onExit: [
+                'PlayerlistManager',
+                function(playerlist) {
+                    playerlist.clear();
+                }
+            ]
         };
 
         $stateProvider.state(GamesBreakdown);
@@ -93,40 +107,94 @@ GamesBreakdown.service('Games.Data.Dependencies', [
     }
 ]);
 
-GamesBreakdown.controller('Games.Breakdown.controller', [
-    '$rootScope', '$scope', '$window', '$state', '$stateParams', 'AuthenticationService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'PlayersFactory', 'PlaysFactory', 'FiltersetsFactory', 'ReelsFactory', 'VIEWPORTS', 'PlayManager',
-    function controller($rootScope, $scope, $window, $state, $stateParams, auth, games, teams, leagues, users, players, plays, filtersets, reels, VIEWPORTS, playManager) {
+GamesBreakdown.controller('Games.Breakdown.controller', GamesBreakdownController);
+
+GamesBreakdownController.$inject = [
+    '$rootScope',
+    '$scope',
+    '$window',
+    '$state',
+    '$stateParams',
+    'ROLES',
+    'SessionService',
+    'AuthenticationService',
+    'GamesFactory',
+    'TeamsFactory',
+    'LeaguesFactory',
+    'UsersFactory',
+    'PlayersFactory',
+    'PlaysFactory',
+    'FiltersetsFactory',
+    'ReelsFactory',
+    'VIEWPORTS',
+    'PlayManager',
+    'PlaysManager',
+    'PlaylistManager'
+];
+
+function GamesBreakdownController (
+    $rootScope,
+    $scope,
+    $window,
+    $state,
+    $stateParams,
+    ROLES,
+    session,
+    auth,
+    games,
+    teams,
+    leagues,
+    users,
+    players,
+    plays,
+    filtersets,
+    reels,
+    VIEWPORTS,
+    playManager,
+    playsManager,
+    playlistManager
+) {
 
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
-        $scope.publiclyShared = false;
+
+        $scope.posterImage = {
+            url: $scope.game.video.thumbnail
+        };
+
+        var isUploader = session.getCurrentUserId() === $scope.game.uploaderUserId;
+        var isTeamMember = session.getCurrentTeamId() === $scope.game.uploaderTeamId;
+        var isACoachOfUploadersTeam = session.currentUser.is(ROLES.COACH) && isTeamMember;
+
+        playlistManager.isEditable = isUploader || isACoachOfUploadersTeam;
+
+        /* TODO: figure out if this stuff is used */
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
 
         $scope.reels = auth.isLoggedIn ? reels.getList() : [];
         $scope.playManager = playManager;
-        $scope.videoTitle = 'filmBreakdown';
         $scope.VIEWPORTS = VIEWPORTS;
         $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
 
-        //Todo remove some of this later
-        $scope.publiclyShared = true;
+        // TODO: remove some of this later
         $scope.team = teams.get($scope.game.teamId);
         $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-
         $scope.uploadedBy = users.get($scope.game.uploaderUserId);
-
-        $scope.sources = $scope.game.getVideoSources();
-        $scope.filmTitle = $scope.game.description;
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
         if ($scope.game.isDelivered()) {
 
             // Plays
             var playsFilter = { gameId: $scope.game.id };
+            $scope.totalPlays = plays.getList(playsFilter);
             $scope.plays = plays.getList(playsFilter);
+            playsManager.reset($scope.plays);
+            var play = playsManager.plays[0];
+            $scope.sources = play.getVideoSources();
 
-            /* TO-DO: Remove this sessionStorage once playIds
+
+            /* TODO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.
              *
              * Storing playIds in session storage so Clips.Controller can
@@ -154,8 +222,4 @@ GamesBreakdown.controller('Games.Breakdown.controller', [
 
             $scope.expandAll = false;
         }
-
-    }
-]);
-
-
+}

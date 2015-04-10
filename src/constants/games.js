@@ -138,4 +138,3 @@ var GAME_NOTE_TYPES = {
 };
 
 IntelligenceWebClient.constant('GAME_NOTE_TYPES', GAME_NOTE_TYPES);
-

@@ -2,6 +2,8 @@ var PAGE_SIZE = 100;
 
 var pkg = require('../../package.json');
 
+var tv4 = require('tv4');
+
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -30,6 +32,24 @@ IntelligenceWebClient.factory('BaseFactory', [
                 angular.extend(resource, self);
 
                 return resource;
+            },
+
+            /**
+             * Validates resource with its schema.
+             * @param {Resource} resource - a user resource object.
+             */
+            validate: function(resource) {
+
+                resource = resource || this;
+
+                if (!resource) throw new Error('No resource to validate');
+                if (!this.schema) throw new Error('No schema for resource');
+
+                let schema = $injector.get(this.schema);
+
+                let result = tv4.validateMultiple(resource, schema, true);
+
+                return result;
             },
 
             /**
@@ -425,7 +445,12 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @param {Object} [filter] - an object hash of filter parameters.
              * @return {Promise.<Array>} - a promise of the resource query.
              */
-            load: function(filter) {
+            load (filter) {
+
+                //TODO: find a less hacky way to do this
+                return this.baseLoad(filter);
+            },
+            baseLoad (filter) {
 
                 var self = this;
 
@@ -559,6 +584,10 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @return {Promise.<Resource>} - a promise of a resources.
              */
             save: function(resource, success, error) {
+                //TODO: find a less hacky way to do this
+                return this.baseSave(resource, success, error);
+            },
+            baseSave: function(resource, success, error) {
 
                 var self = this;
 
@@ -595,10 +624,17 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     .then(function() {
 
+                        delete resource.error;
+
                         /* Store the resource locally in its storage collection. */
                         storage.set(resource);
 
                         return resource;
+                    })
+
+                    .catch(function() {
+
+                        resource.error = true;
                     })
 
                     .finally(function() {
@@ -620,10 +656,17 @@ IntelligenceWebClient.factory('BaseFactory', [
                         /* Update local resource with server resource. */
                         angular.extend(resource, self.extend(created));
 
+                        delete resource.error;
+
                         /* Store the resource locally in its storage collection. */
                         storage.set(resource);
 
                         return resource;
+                    })
+
+                    .catch(function() {
+
+                        resource.error = true;
                     })
 
                     .finally(function() {

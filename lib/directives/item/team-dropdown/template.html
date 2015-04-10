@@ -1,18 +1,5 @@
 <span class="team-dropdown">
 
-    <button
-        class="team-dropdown"
-        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
-        data-ng-disabled="!isCoach && !isIndexer || !isEditable"
-        data-ng-click="reset()"
-    >
-
-        <span data-ng-if="event.variableValues[item.id].value == null">Optional</span>
-        <span data-ng-if="event.variableValues[item.id].value == team.id">{{ team.name }}</span>
-        <span data-ng-if="event.variableValues[item.id].value == opposingTeam.id">{{ opposingTeam.name }}</span>
-
-    </button>
-
     <select
         class="team-dropdown"
         tabindex="{{ item.index }}"

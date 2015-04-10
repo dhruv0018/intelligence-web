@@ -1,3 +1,5 @@
+import KrossoverEvent from '../entities/event.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -6,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory',
-    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory) {
+    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities',
+    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils) {
 
         var PlaysFactory = {
 
@@ -18,6 +20,37 @@ IntelligenceWebClient.factory('PlaysFactory', [
             model: 'PlaysResource',
 
             storage: 'PlaysStorage',
+
+            extend: function(play) {
+
+                var self = this;
+
+                angular.extend(play, self);
+
+                play.events = play.events || [];
+
+                play.period = play.period || 0;
+
+                play.indexedScore = play.indexedScore || 0;
+                play.opposingIndexedScore = play.opposingIndexedScore || 0;
+
+                /* Indicates if the play has visible events; set by the events. */
+                play.hasVisibleEvents = false;
+
+                /* Play possesion; filled in by the events. */
+                play.possessionTeamId = play.possessionTeamId || null;
+
+                play.events = play.events.map(constructEvent);
+
+                function constructEvent (event) {
+
+                    let tag = tagsets.getTag(event.tagId);
+
+                    return new KrossoverEvent(event, tag, event.time);
+                }
+
+                return play;
+            },
 
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
@@ -49,26 +82,45 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 return newPlayList.$filter({filterId: filterId.filterId}, callback, error);
             },
-            getVideoSources: function getVideoSources() {
+
+            load (filter) {
+
+                return tagsets.load().then(() => { this.baseLoad(filter); });
+            },
+
+            /**
+             * Gets the video sources for a play.
+             * If a play has a clip the clips video transcode profiles are
+             * mapped to video sources that can be used in videogular.
+             * @returns Array - an array of video sources.
+             */
+            getVideoSources: function() {
 
                 var self = this;
-                var profiles = (self.clip) ? self.clip.videoTranscodeProfiles : [];
-                var profile;
-                var sources = [];
 
-                for (profile in profiles) {
-                    if (profiles[profile].videoUrl) {
+                /* If there is no clip for the play, return an empty array. */
+                if (!self.clip) return [];
 
+                /* Get the video transcode profiles. */
+                var profiles = self.clip.videoTranscodeProfiles;
+
+                /* Map the video transcode profiles to video sources. */
+                return profiles.map(profileToSource);
+
+                function profileToSource(profile) {
+
+                    /* If the transcode profile is complete. */
+                    if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                        /* Create a video source. */
                         var source = {
                             type: 'video/mp4',
-                            src: $sce.trustAsResourceUrl(profiles[profile].videoUrl)
+                            src: $sce.trustAsResourceUrl(profile.videoUrl)
                         };
 
-                        sources.push(source);
+                        return source;
                     }
                 }
-
-                return sources;
             }
         };
 

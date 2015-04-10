@@ -35,4 +35,3 @@ IntelligenceWebClient.service('TagsManager', [
         };
     }
 ]);
-

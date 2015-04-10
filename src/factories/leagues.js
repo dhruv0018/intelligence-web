@@ -17,6 +17,8 @@ IntelligenceWebClient.factory('LeaguesFactory', [
 
             model: 'LeaguesResource',
 
+            schema: 'LEAGUE_SCHEMA',
+
             storage: 'LeaguesStorage'
         };
 
@@ -25,4 +27,3 @@ IntelligenceWebClient.factory('LeaguesFactory', [
         return LeaguesFactory;
     }
 ]);
-

@@ -14,11 +14,10 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Notes.Controller', [
-    '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'VG_EVENTS', 'GamesFactory', 'VideoPlayerInstance',
-    function controller($scope, $rootScope, GAME_NOTE_TYPES, VG_EVENTS, games, videoPlayerInstance) {
+    '$scope', '$rootScope', 'GAME_NOTE_TYPES', 'GamesFactory', 'VideoPlayer',
+    function controller($scope, $rootScope, GAME_NOTE_TYPES, games, videoPlayer) {
 
         var Mousetrap = window.Mousetrap;
-        var videoPlayer = videoPlayerInstance.promise;
 
         $scope.noteValues = ['Camera did not follow play', 'Jersey not visible', 'Gap in film', 'Scoreboard shot', 'Other'];
 
@@ -35,37 +34,35 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
 
         $scope.saveIndexingNote = function() {
 
-            videoPlayer.then(function(vp) {
-                vp.pause();
-                $scope.currentTimestamp = window.Math.floor(vp.videoElement[0].currentTime);
+            videoPlayer.pause();
 
-                var noteValueToSave = $scope.selectedNoteText;
+            $scope.currentTimestamp = window.Math.floor(videoPlayer.mediaElement[0].currentTime);
 
-                if ($scope.selectedNoteText === $scope.noteValues[$scope.noteValues.length - 1]) {
-                    noteValueToSave = $scope.otherNoteValue;
-                    $scope.otherNoteValue = '';
-                }
+            var noteValueToSave = $scope.selectedNoteText;
 
-                var newIndexingNote = {
-                    content: noteValueToSave,
-                    gameId: $scope.game.id,
-                    noteTypeId: GAME_NOTE_TYPES.INDEXER_NOTE,
-                    gameTime: $scope.currentTimestamp
-                };
+            if ($scope.selectedNoteText === $scope.noteValues[$scope.noteValues.length - 1]) {
+                noteValueToSave = $scope.otherNoteValue;
+                $scope.otherNoteValue = '';
+            }
 
-                $scope.game.notes = $scope.game.notes || {};
-                $scope.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] = $scope.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] || [];
-                $scope.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE].push(newIndexingNote);
+            var newIndexingNote = {
+                content: noteValueToSave,
+                gameId: $scope.game.id,
+                noteTypeId: GAME_NOTE_TYPES.INDEXER_NOTE,
+                gameTime: $scope.currentTimestamp
+            };
 
-                //there is still a race condition bug here that if the user clicks send to qa
-                //or back button the game will be saved to the server again with
-                //the notes still not having id's and the notes will be created twice
-                //the following code would need to be atomic to prevent that from happening
-                $scope.game.saveNotes().then(function(updatedNotes) {
-                    $scope.game.notes = updatedNotes;
-                });
+            $scope.game.notes = $scope.game.notes || {};
+            $scope.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] = $scope.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] || [];
+            $scope.game.notes[GAME_NOTE_TYPES.INDEXER_NOTE].push(newIndexingNote);
+
+            //there is still a race condition bug here that if the user clicks send to qa
+            //or back button the game will be saved to the server again with
+            //the notes still not having id's and the notes will be created twice
+            //the following code would need to be atomic to prevent that from happening
+            $scope.game.saveNotes().then(function(updatedNotes) {
+                $scope.game.notes = updatedNotes;
             });
         };
     }
 ]);
-

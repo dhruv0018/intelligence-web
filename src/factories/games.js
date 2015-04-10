@@ -21,7 +21,10 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             model: 'GamesResource',
 
+            schema: 'GAME_SCHEMA',
+
             storage: 'GamesStorage',
+
             unextend: function(game) {
                 var self = this;
 
@@ -130,7 +133,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return games.filter(function(game) {
 
                     return game.uploaderUserId == userId &&
-                           game.uploaderTeamId == teamId;
+                        game.uploaderTeamId == teamId;
                 });
             },
 
@@ -449,6 +452,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
+                deadline = deadline || new Date();
+
                 /* Ensure the game can be assigned. */
                 if (self.canBeAssignedToIndexer()) {
 
@@ -492,6 +497,8 @@ IntelligenceWebClient.factory('GamesFactory', [
             assignToQa: function(userId, deadline) {
 
                 var self = this;
+
+                deadline = deadline || new Date();
 
                 /* Ensure the game can be assigned. */
                 if (self.canBeAssignedToQa()) {
@@ -1162,4 +1169,3 @@ IntelligenceWebClient.factory('GamesFactory', [
         return GamesFactory;
     }
 ]);
-

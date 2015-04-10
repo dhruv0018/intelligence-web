@@ -137,4 +137,3 @@ IntelligenceWebClient.service('AuthenticationService', [
         return AuthenticationService;
     }
 ]);
-

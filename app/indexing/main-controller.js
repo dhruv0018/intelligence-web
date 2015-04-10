@@ -14,8 +14,50 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Main.Controller', [
-    'config', '$rootScope', '$scope', '$modal', 'BasicModals', '$stateParams', 'VG_EVENTS', 'SessionService', 'IndexingService', 'ScriptsService', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'Indexing.Sidebar', 'Indexing.Data', 'VideoPlayerInstance', 'LeaguesFactory', 'TagsetsFactory', 'TeamsFactory', 'GamesFactory', 'PlaysFactory',
-    function controller(config, $rootScope, $scope, $modal, basicModal, $stateParams, VG_EVENTS, session, indexing, scripts, tags, playsManager, play, event, sidebar, data, videoplayerInstance, leagues, tagsets, teams, games, plays) {
+    'config',
+    '$rootScope',
+    '$scope',
+    '$modal',
+    'BasicModals',
+    '$stateParams',
+    'VideoPlayerEventEmitter',
+    'SessionService',
+    'IndexingService',
+    'TagsManager',
+    'PlaylistManager',
+    'PlaysManager',
+    'PlayManager',
+    'EventManager',
+    'Indexing.Sidebar',
+    'Indexing.Data',
+    'LeaguesFactory',
+    'TagsetsFactory',
+    'TeamsFactory',
+    'GamesFactory',
+    'PlaysFactory',
+    'VideoPlayer',
+    function controller(config,
+                        $rootScope,
+                        $scope,
+                        $modal,
+                        basicModal,
+                        $stateParams,
+                        videoPlayerEventEmitter,
+                        session,
+                        indexing,
+                        tags,
+                        playlistManager,
+                        playsManager,
+                        play,
+                        event,
+                        sidebar,
+                        data,
+                        leagues,
+                        tagsets,
+                        teams,
+                        games,
+                        plays,
+                        videoPlayer) {
 
         var gameId = Number($stateParams.id);
 
@@ -32,31 +74,32 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.opposingTeamPlayers = data.opposingTeamPlayers;
         $scope.league = leagues.get($scope.team.leagueId);
         $scope.tagset = tagsets.get($scope.league.tagSetId);
-        $scope.indexerScript = scripts.indexerScript.bind(scripts);
         $scope.sources = $scope.game.getVideoSources();
-        play.videoTitle = 'indexing'; //playManager.videoTitle
+        $scope.videoPlayer = videoPlayer;
 
         var playsList = plays.getList({ gameId: gameId });
 
         indexing.reset($scope.tagset, $scope.game, playsList);
 
+        playlistManager.isEditable = true;
+
+        var indexingElement = document.getElementsByClassName('indexing')[0];
+
+        videoPlayerEventEmitter.on('fullscreen', onFullScreen);
+
+        $scope.$on('$destroy', onDestroy);
+
         /**
-         * Listen for video player enter full screen event.
+         * Change handler for video player fill screen changes.
          */
-        $rootScope.$on(VG_EVENTS.ON_ENTER_FULLSCREEN, function() {
+        function onFullScreen (isFullScreen) {
 
-            var element = document.getElementsByClassName('indexing-block')[0];
-            element.classList.add('fullscreen');
-        });
+            indexingElement.classList.toggle('fullscreen', isFullScreen);
+        }
 
-        /**
-         * Listen for video player exit full screen event.
-         */
-        $rootScope.$on(VG_EVENTS.ON_EXIT_FULLSCREEN, function() {
+        function onDestroy () {
 
-            var element = document.getElementsByClassName('indexing-block')[0];
-            element.classList.remove('fullscreen');
-        });
+            videoPlayerEventEmitter.removeListener('fullscreen', onFullScreen);
+        }
     }
 ]);
-

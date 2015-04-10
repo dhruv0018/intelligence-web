@@ -85,4 +85,3 @@ Analytics.controller('AnalyticsController', [
         };
     }
 ]);
-

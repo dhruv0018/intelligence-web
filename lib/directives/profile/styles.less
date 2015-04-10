@@ -2,57 +2,57 @@
 
 .profile {
 
-  height: 100%;
-  padding-bottom: 60px;
-  overflow-y: auto;
+    height: 100%;
+    padding-bottom: 60px;
+    overflow-y: auto;
 
-  .table-manager {
+    .table-manager {
 
-    .table-responsive {
-      margin-bottom: 10px;
+        .table-responsive {
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-right: 20px;
+        }
     }
 
-    button {
-      margin-right: 20px;
+    .manageable-resource {
+
+        text-align: center;
+        margin-top: 20px;
+        height: 200px;
+        letter-spacing: normal;
+
+        .manageable-picture {
+            margin-bottom: 5px;
+
+            img{
+                width: 110px;
+            }
+
+            .placeholder-picture {
+                display: inline-block;
+                margin-bottom: 5px;
+            }
+        }
+
+        .resending {
+            color: @brand-success;
+
+            .icon-refresh::before {
+                animation: spin 1s linear infinite;
+            }
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .positions {
+            font-weight: 500;
+            color: black;
+        }
+
     }
-  }
-
-  .manageable-resource {
-
-    text-align: center;
-    margin-top: 20px;
-    height: 200px;
-    letter-spacing: normal;
-
-    .manageable-picture {
-      margin-bottom: 5px;
-
-      img{
-        width: 110px;
-      }
-
-      .placeholder-picture {
-        display: inline-block;
-        margin-bottom: 5px;
-      }
-    }
-
-    .resending {
-      color: @brand-success;
-
-      .icon-refresh::before {
-        animation: spin 1s linear infinite;
-      }
-    }
-
-    p {
-      margin: 0;
-    }
-
-    .positions {
-      font-weight: 500;
-      color: black;
-    }
-
-  }
 }

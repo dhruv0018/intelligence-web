@@ -48,4 +48,3 @@ IntelligenceWebClient.config([
         $httpProvider.interceptors.push('Broadcast.Interceptor');
     }
 ]);
-

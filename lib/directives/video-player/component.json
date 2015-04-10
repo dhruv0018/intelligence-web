@@ -1,0 +1,27 @@
+{
+    "name": "video-player",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "button-video-forward",
+        "button-video-backward"
+    ],
+    "templates": [
+        "template.html",
+        "overlay-play.html",
+        "play-pause-button.html"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ],
+    "styles": [
+        "ads.less",
+        "buffering.less",
+        "controls.less",
+        "overlay.less",
+        "poster.less",
+        "styles.less"
+    ]
+}

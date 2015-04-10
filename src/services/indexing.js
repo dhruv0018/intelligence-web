@@ -1,3 +1,5 @@
+import KrossoverEvent from '../entities/event.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -6,10 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'config', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayerInstance',
-    function(config, tagsManager, playsManager, playManager, eventManager, videoPlayerInstance) {
-
-        var videoPlayer = videoPlayerInstance.promise;
+    'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter',
+    function(config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter) {
 
         var IndexingService = {
 
@@ -17,23 +17,14 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 var self = this;
 
-                self.isReady = false;
-
                 game.currentPeriod = 0;
                 game.teamIndexedScore = 0;
                 game.opposingIndexedScore = 0;
 
                 playsManager.reset(plays);
                 tagsManager.reset(tagset);
-                eventManager.reset(tagset);
                 playManager.reset(tagset, game.id);
                 playManager.clear();
-
-                videoPlayerInstance.promise.then(function(player) {
-
-                    videoPlayer = player;
-                    self.isReady = true;
-                });
             },
 
             /**
@@ -48,7 +39,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     else this.step();
                 }
 
-                else if (this.isReady) {
+                else if (videoPlayer.isReady) {
 
                     this.isIndexing = true;
                     this.showTags = true;
@@ -65,10 +56,16 @@ IntelligenceWebClient.factory('IndexingService', [
             selectTag: function(tagId) {
 
                 /* Get current time from the video. */
-                var time = videoPlayer.getCurrentTime();
+                var time = videoPlayer.currentTime;
+
+                /* Get tag. */
+                let tag = tagsets.getTag(tagId);
 
                 /* Create new event. */
-                eventManager.create(tagId, time);
+                eventManager.current = new KrossoverEvent(tag, time);
+
+                /* Add event to the current play. */
+                playManager.addEvent(eventManager.current);
 
                 this.showTags = false;
                 this.showScript = true;
@@ -98,7 +95,7 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             savable: function() {
 
-                return this.nextable() && eventManager.isEndEvent();
+                return this.nextable() && eventManager.current.isEnd;
             },
 
             /**
@@ -115,10 +112,10 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.save();
                 playManager.clear();
                 tagsManager.reset();
-                eventManager.reset();
+                eventManager.current = new KrossoverEvent();
 
                 /* If the event is an end-and-start event. */
-                if (eventManager.isEndAndStartEvent(event)) {
+                if (eventManager.current.isEndAndStart) {
 
                     /* Get the tagId of the event. */
                     var tagId = event.tagId;
@@ -160,10 +157,10 @@ IntelligenceWebClient.factory('IndexingService', [
                 if (!this.isIndexing || this.showTags) return false;
 
                 /* If there are variables in the current event. */
-                else if (eventManager.hasVariables()) {
+                else if (eventManager.current.hasVariables) {
 
                     /* Make sure all of the variables have values. */
-                    return eventManager.allEventVariablesHaveValues();
+                    return eventManager.current.isValid;
                 }
 
                 else return true;
@@ -182,16 +179,18 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 /* If the event is a floating event. */
-                if (eventManager.isFloatingEvent()) {
+                if (eventManager.current.isFloat) {
+
+                    let currentEvent = eventManager.current;
 
                     /* Get the previous event. */
-                    var previousEvent = eventManager.previousEvent();
+                    let previousEvent = playManager.previousEvent(currentEvent);
 
                     /* While the previous event is a float. */
-                    while (eventManager.isFloatingEvent(previousEvent)) {
+                    while (previousEvent.isFloat) {
 
                         /* Get the previous event. */
-                        previousEvent = eventManager.previousEvent(previousEvent);
+                        previousEvent = playManager.previousEvent(previousEvent);
                     }
 
                     /* Get the tagId of the previous event. */
@@ -241,7 +240,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
 
                 /* If the event doesn't have variables of If the first variable is empty. */
-                else if (!eventManager.hasVariables() ||
+                else if (!eventManager.current.hasVariables ||
                         (eventManager.current.activeEventVariableIndex === 1 &&
                         !eventManager.activeEventVariableValue())) {
 
@@ -257,8 +256,9 @@ IntelligenceWebClient.factory('IndexingService', [
                 else if (!eventManager.activeEventVariableValue()) {
 
                     /* While the active variable is empty. */
-                    while (eventManager.current.activeEventVariableIndex > 1 &&
-                          !eventManager.activeEventVariableValue()) {
+                    while (
+                        eventManager.current.activeEventVariableIndex > 1 &&
+                !eventManager.activeEventVariableValue()) {
 
                         /* Move back one variable. */
                         eventManager.current.activeEventVariableIndex--;
@@ -278,53 +278,36 @@ IntelligenceWebClient.factory('IndexingService', [
 
             /**
             * Deletes an event.
-            * @param {Object} selectedEvent - the event to delete.
+            * @param {Object} event - the event to delete.
             */
-            deleteEvent: function(selectedEvent) {
+            deleteEvent: function(event) {
 
                 this.showTags = true;
                 this.showScript = false;
                 this.eventSelected = false;
                 this.isIndexing = false;
 
-                /* Delete the selected event. */
-                eventManager.delete(selectedEvent);
+                /* Remove the event from the current play. */
+                playManager.removeEvent(event);
+
+                /* Clear the current event. */
+                eventManager.current = null;
 
                 /* Save play. */
                 playManager.save();
 
                 /* Clear the current play. */
                 playManager.clear();
-            },
-
-            playPause: function() {
-
-                if (this.isReady) {
-
-                    videoPlayer.playPause();
-                }
-            },
-
-            jumpBack: function() {
-
-                if (this.isReady) {
-
-                    var currentTime = videoPlayer.getCurrentTime();
-                    var time = currentTime - config.indexing.video.jump;
-                    videoPlayer.seekTime(time);
-                }
-            },
-
-            jumpForward: function() {
-
-                if (this.isReady) {
-
-                    var currentTime = videoPlayer.getCurrentTime();
-                    var time = currentTime + config.indexing.video.jump;
-                    videoPlayer.seekTime(time);
-                }
             }
         };
+
+        playlistEventEmitter.on('EVENT_SELECT', () => {
+
+            this.eventSelected = true;
+            this.isIndexing = true;
+            this.showTags = false;
+            this.showScript = true;
+        });
 
         return IndexingService;
     }

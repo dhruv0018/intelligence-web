@@ -38,4 +38,3 @@ IntelligenceWebClient.directive('button', [
         return directive;
     }
 ]);
-

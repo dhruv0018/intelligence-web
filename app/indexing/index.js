@@ -119,7 +119,7 @@ Indexing.config([
                                 var gameData = {
 
                                     game: game,
-                                    plays: plays.load({ gameId: gameId }),
+                                    plays: plays.retrieve({ gameId: gameId }),
                                     players: players,
                                     teamPlayers: players.load({ rosterId: teamRoster.id }),
                                     opposingTeamPlayers: players.load({ rosterId: opposingTeamRoster.id })
@@ -133,13 +133,13 @@ Indexing.config([
                 },
 
                 onEnter: [
-                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'GamesFactory',
-                    function($state, $timeout, $stateParams, session, modals, data, indexing, games) {
+                    '$state', '$timeout', '$stateParams', 'SessionService', 'BasicModals', 'Indexing.Data', 'IndexingService', 'GamesFactory', 'PlayerlistManager',
+                    function($state, $timeout, $stateParams, session, modals, data, indexing, games, playerlist) {
 
                         var userId = session.currentUser.id;
                         var gameId = $stateParams.id;
                         var game = games.get(gameId);
-
+                        playerlist.fill(game);
                         if (!game.isAssignedToUser(userId)) {
 
                             $state.go('indexer-games');
@@ -203,39 +203,6 @@ Indexing.config([
                             }, 0);
                         };
 
-                        Mousetrap.bind('space', function() {
-
-                            $timeout(function() {
-
-                                indexing.playPause();
-
-                            }, 0);
-
-                            return false;
-                        });
-
-                        Mousetrap.bind('left', function() {
-
-                            $timeout(function() {
-
-                                indexing.jumpBack();
-
-                            }, 0);
-
-                            return false;
-                        });
-
-                        Mousetrap.bind('right', function() {
-
-                            $timeout(function() {
-
-                                indexing.jumpForward();
-
-                            }, 0);
-
-                            return false;
-                        });
-
                         Mousetrap.bind('enter', function() {
 
                             $timeout(function() {
@@ -274,7 +241,6 @@ Indexing.config([
                 onExit: [
                     function() {
 
-                        Mousetrap.unbind('space');
                         Mousetrap.unbind('left');
                         Mousetrap.unbind('right');
                         Mousetrap.unbind('enter');
@@ -306,4 +272,3 @@ require('./sidebar-playlist-controller');
 require('./modal-delete-play-controller');
 require('./modal-send-to-team-controller');
 require('./modal-add-indexer-note-controller');
-

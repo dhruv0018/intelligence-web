@@ -75,7 +75,7 @@
         text-align: center;
         padding-top: 55px;
         width: 100%;
-        height: 199px;
+        height: @film-card-thumbnail-height;
 
         .film-status {
             height: 40px;
@@ -110,5 +110,18 @@
     .temp-thumbnail {
         background-color: @brand-blue;
         color: white;
+    }
+
+    .reel-thumbnail {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: @film-card-thumbnail-height;
+        background-color: @gray-lighter;
+
+        .icon-krossover-symbol-circle {
+            height: @film-card-logo-size;
+            width: @film-card-logo-size;
+        }
     }
 }

@@ -57,4 +57,3 @@ IntelligenceWebClient.service('AlertsService', [
         };
     }
 ]);
-
