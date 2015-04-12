@@ -1,6 +1,10 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+import template from './template.html.js';
+
+const templateUrl = 'reel/template.html';
+
 /**
  * Reels Area page module.
  * @module ReelsArea
@@ -15,7 +19,7 @@ ReelsArea.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('reels/template.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 
@@ -47,7 +51,7 @@ ReelsArea.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: 'reels/template.html',
+                    templateUrl: 'reel/template.html',
                     controller: 'ReelsArea.controller'
                 }
             },
