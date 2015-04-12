@@ -62,7 +62,6 @@ function ReelController(
     $scope.expandAll = false;
     $scope.isReelsPlay = true;
     $scope.plays = plays;
-    $scope.sortOrder = plays;
     $scope.playManager = playManager;
     $scope.sources = plays[0].getVideoSources();
 
@@ -75,12 +74,20 @@ function ReelController(
     function mapPlays (playId, index) {
 
         let play = playsFactory.get(playId);
-        play.index = index;
+
+        /* Record the position of the play in the reel. */
+        play.index = index + 1;
+
+        /* Assume all plays in a reel have visible events, this should hold true
+         * because they are all added from visible plays on a breakdown. */
+        play.hasVisibleEvents = true;
+
         return play;
     }
 
     /* TODO: Rename sortOrder? */
     // Update the play order if the sortOrder changes based on play Ids
+    $scope.sortOrder = $scope.reel.plays;
     $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
         $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
         $scope.plays.forEach(function indexPlays(play, index) {
