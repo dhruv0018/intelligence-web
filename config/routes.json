@@ -412,12 +412,12 @@
         "Athlete": true
     },
 
-    "ReelsArea": {
+    "Reel": {
 
         "*": true
     },
 
-    "ShortReels": {
+    "ShortReel": {
 
         "*": true
     },
