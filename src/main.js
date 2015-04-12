@@ -16,7 +16,7 @@ require('./extensions');
 /* Components */
 require('../build/build');
 
-import Reel from '../app/reels/index.js';
+import Reel from '../app/reel/index.js';
 
 /* App dependencies */
 require('./config');
