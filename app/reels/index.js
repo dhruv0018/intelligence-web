@@ -248,3 +248,5 @@ ReelsArea.controller('ReelsArea.controller', [
         };
     }
 ]);
+
+export default ReelsArea;
