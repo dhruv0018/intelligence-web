@@ -51,13 +51,13 @@ function ReelController(
     VIEWPORTS
 ) {
 
-    $scope.auth = auth;
-
-    $scope.isReelsPlay = true;
-
-    // Get reel
-    var reelId = Number($stateParams.id);
+    let reelId = Number($stateParams.id);
     $scope.reel = reels.get(reelId);
+    $scope.auth = auth;
+    $scope.expandAll = false;
+    $scope.isReelsPlay = true;
+    $scope.playManager = playManager;
+    $scope.VIEWPORTS = VIEWPORTS;
 
     // Setup playlist
     var plays = $scope.reel.plays.map(function getPlays(playId, index) {
@@ -66,17 +66,7 @@ function ReelController(
         return play;
     });
     $scope.plays = plays;
-    $scope.sortOrder = $scope.reel.plays;
 
-    // Update the play order if the sortOrder changes based on play Ids
-    $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
-        $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
-        $scope.plays.forEach(function indexPlays(play, index) {
-            play.index = index;
-        });
-    });
-
-    $scope.playManager = playManager;
     // Refresh the playsManager
     playsManager.reset($scope.plays);
     var play = playsManager.plays[0];
@@ -88,8 +78,17 @@ function ReelController(
 
     $scope.sources = play.getVideoSources();
 
-    $scope.expandAll = false;
+    /* TODO: Rename sortOrder? */
+    $scope.sortOrder = $scope.reel.plays;
+    // Update the play order if the sortOrder changes based on play Ids
+    $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
+        $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
+        $scope.plays.forEach(function indexPlays(play, index) {
+            play.index = index;
+        });
+    });
 
+    /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
     // Editing config
 
     $scope.editFlag = false;
@@ -101,7 +100,6 @@ function ReelController(
         VIEWABLE: 'VIEWABLE'
     };
 
-    /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
     // DEFAULT RESTRICTION
     $scope.restrictionLevel = editModeRestrictions.VIEWABLE;
 
@@ -115,8 +113,7 @@ function ReelController(
     $scope.canUserDelete = $scope.restrictionLevel === editModeRestrictions.DELETABLE;
     $scope.canUserEdit = $scope.restrictionLevel === editModeRestrictions.DELETABLE || $scope.restrictionLevel === editModeRestrictions.EDITABLE;
 
-    $scope.VIEWPORTS = VIEWPORTS;
-
+    /* TODO: Edit "mode"? */
     $scope.toggleEditMode = function toggleEditMode() {
         //This method is for entering edit mode, or cancelling,
         //NOT for exiting from commiting changes
@@ -142,6 +139,7 @@ function ReelController(
         }
     };
 
+    /* TODO: What is this doing? */
     $scope.$on('delete-reel-play', function postReelPlayDeleteSetup($event, index) {
         if ($scope.editFlag && $scope.plays && angular.isArray($scope.plays)) {
             $scope.plays.splice(index, 1);
@@ -149,6 +147,7 @@ function ReelController(
         }
     });
 
+    /* TODO: Why not just reel.save()? */
     $scope.saveReels = function saveReels() {
         //delete cached plays
         delete $scope.toggleEditMode.playsCache;

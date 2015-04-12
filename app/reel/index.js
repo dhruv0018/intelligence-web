@@ -9,7 +9,7 @@ import template from './template.html.js';
 const templateUrl = 'reel/template.html';
 
 /**
- * Reel Area page module.
+ * Reel module.
  * @module Reel
  */
 const Reel = angular.module('Reel', [
@@ -27,7 +27,7 @@ Reel.run([
 ]);
 
 /**
- * Reel page state router.
+ * Reel state router.
  * @module Reel
  * @type {UI-Router}
  */
