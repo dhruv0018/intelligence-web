@@ -52,34 +52,34 @@ function ReelController(
 ) {
 
     let reelId = Number($stateParams.id);
-    $scope.reel = reels.get(reelId);
+    let reel = reels.get(reelId);
+    let plays = reel.plays.map(mapPlays);
+    let game = gamesFactory.get(plays[0].gameId);
+
+    $scope.VIEWPORTS = VIEWPORTS;
+    $scope.reel = reel;
     $scope.auth = auth;
     $scope.expandAll = false;
     $scope.isReelsPlay = true;
-    $scope.playManager = playManager;
-    $scope.VIEWPORTS = VIEWPORTS;
-
-    // Setup playlist
-    var plays = $scope.reel.plays.map(function getPlays(playId, index) {
-        var play = playsFactory.get(playId);
-        play.index = index;
-        return play;
-    });
     $scope.plays = plays;
+    $scope.sortOrder = plays;
+    $scope.playManager = playManager;
+    $scope.sources = plays[0].getVideoSources();
 
-    // Refresh the playsManager
-    playsManager.reset($scope.plays);
-    var play = playsManager.plays[0];
-    var playRelatedGame = gamesFactory.get(play.gameId);
-
+    /* TODO: game.getPosterImage() */
     $scope.posterImage = {
-        url: playRelatedGame.video.thumbnail
+        url: game.video.thumbnail
     };
 
-    $scope.sources = play.getVideoSources();
+    /* TODO: reel.getPlays() */
+    function mapPlays (playId, index) {
+
+        let play = playsFactory.get(playId);
+        play.index = index;
+        return play;
+    }
 
     /* TODO: Rename sortOrder? */
-    $scope.sortOrder = $scope.reel.plays;
     // Update the play order if the sortOrder changes based on play Ids
     $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
         $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
