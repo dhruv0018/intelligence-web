@@ -6,16 +6,16 @@ import template from './template.html.js';
 const templateUrl = 'reel/template.html';
 
 /**
- * Reels Area page module.
- * @module ReelsArea
+ * Reel Area page module.
+ * @module Reel
  */
-var ReelsArea = angular.module('ReelsArea', [
+var Reel = angular.module('Reel', [
     'ui.router',
     'ui.bootstrap'
 ]);
 
 /* Cache the template file */
-ReelsArea.run([
+Reel.run([
     '$templateCache',
     function run($templateCache) {
 
@@ -24,7 +24,7 @@ ReelsArea.run([
 ]);
 
 
-class ReelsData {
+class ReelData {
 
     constructor (reelId) {
 
@@ -52,44 +52,44 @@ class ReelsData {
 }
 
 /**
- * ReelsArea page state router.
- * @module ReelsArea
+ * Reel page state router.
+ * @module Reel
  * @type {UI-Router}
  */
-ReelsArea.config([
+Reel.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var shortReelsState = {
-            name: 'ShortReels',
+        var shortReelState = {
+            name: 'ShortReel',
             url: '/r/:id',
             parent: 'base',
             onEnter: [
                 '$state', '$stateParams',
                 function($state, $stateParams) {
                     var reelId = parseInt($stateParams.id, 36);
-                    $state.go('ReelsArea', {id: reelId});
+                    $state.go('Reel', {id: reelId});
                 }
             ]
         };
 
         var reelsState = {
-            name: 'ReelsArea',
+            name: 'Reel',
             url: '/reel/:id',
             parent: 'base',
             views: {
                 'main@root': {
                     templateUrl: 'reel/template.html',
-                    controller: 'ReelsArea.controller'
+                    controller: 'Reel.controller'
                 }
             },
             resolve: {
-                'Reels.Data': [
+                'Reel.Data': [
                     '$q', '$stateParams',
                     function dataService($q, $stateParams) {
 
                         let reelId = Number($stateParams.id);
-                        let data = new ReelsData(reelId);
+                        let data = new ReelData(reelId);
                         console.log(data);
                         return $q.all(data);
                     }
@@ -115,12 +115,12 @@ ReelsArea.config([
             ]
         };
 
-        $stateProvider.state(shortReelsState);
+        $stateProvider.state(shortReelState);
         $stateProvider.state(reelsState);
     }
 ]);
 
-ReelsArea.service('Reels.Data.Dependencies', [
+Reel.service('Reels.Data.Dependencies', [
     'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory',
     function dataService(games, plays, teams, reels, leagues, tagsets, players) {
 
@@ -154,12 +154,12 @@ ReelsArea.service('Reels.Data.Dependencies', [
 ]);
 
 /**
- * ReelsArea controller.
- * @module ReelsArea
- * @name ReelsAreaController
+ * Reel controller.
+ * @module Reel
+ * @name ReelController
  * @type {Controller}
  */
-ReelsArea.controller('ReelsArea.controller', [
+Reel.controller('Reel.controller', [
     '$rootScope', '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AuthenticationService', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES', 'VIEWPORTS',
     function controller($rootScope, $scope, $state, $stateParams, $modal, modals, auth, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES, VIEWPORTS) {
 
@@ -284,4 +284,4 @@ ReelsArea.controller('ReelsArea.controller', [
     }
 ]);
 
-export default ReelsArea;
+export default Reel;

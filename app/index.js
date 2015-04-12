@@ -29,5 +29,5 @@ var App = angular.module('App', [
     'Athlete',
     'Games',
     'Clips',
-    'ReelsArea'
+    'Reel'
 ]);
