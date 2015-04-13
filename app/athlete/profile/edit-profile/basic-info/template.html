@@ -1,0 +1,44 @@
+<div class="basic-info">
+    <form>
+        <div class="form-block-full">
+            <div class="form-block-third edit-profile-picture-container">
+                <h4>Profile Picture</h4>
+                <profile-picture user="athlete"></profile-picture>
+
+                <krossover-uploader upload-label="Change Image" on-upload="setProfilePicture(files)"></krossover-uploader>
+            </div>
+            <div class="form-block-two-thirds">
+                <div>
+                    <h4>First Name</h4>
+                    <input type="text" ng-model="athlete.firstName" class="form-control" placeholder="Enter First Name"/>
+                </div>
+
+                <div>
+                    <h4>Last Name</h4>
+                    <input type="text" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
+                </div>
+                <div>
+                    <h4>
+                        About Me&nbsp;
+                        <span class="header-description">
+                            Write a short description about yourself. What makes you stand out?
+                        </span>
+                    </h4>
+                    <textarea
+                        class="form-control"
+                        rows="5"
+                        maxlength="{{maxAboutMeLength}}"
+                        placeholder="Talk about your club team experience, stats, achievements, anything."
+                        ng-model="athlete.profile.about"
+                        ng-trim="false"
+                    ></textarea>
+                    <p>{{maxAboutMeLength - athlete.profile.about.length}} characters left.</p>
+                </div>
+            </div>
+        </div>
+        <div class="button-row">
+            <button class="btn btn-primary" ng-click="saveBasicInfo()">Save</button>
+            <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
+        </div>
+    </form>
+</div>

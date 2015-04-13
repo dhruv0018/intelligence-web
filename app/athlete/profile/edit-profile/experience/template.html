@@ -1,0 +1,40 @@
+<div class="experience">
+    <form>
+        <div class="form-block-full">
+            <h4>My Teams
+                <a href class="add-team" ng-click="addingTeam = true"><i class="icon icon-plus"></i> Add Team</a>
+            </h4>
+            <div class="box-body" ng-show="athlete.profile.teams">
+                <table class="table team-table">
+                    <thead>
+                        <tr class="team-row-header team-row">
+                            <th class="team-cell-radio">Main sport & team</th>
+                            <th>Team</th>
+                            <th>Sport</th>
+                            <th class="team-cell-positions">Position</th>
+                            <th class="team-cell-options">Hide</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="team-row" ng-repeat="team in athlete.profile.teams">
+                            <td class="team-cell-radio"><button type="button" class="btn-radio" btn-radio="team.teamId" ng-model="athlete.profile.defaultTeamId" ng-change="athlete.profile.defaultTeamId = team.teamId" required></button></td>
+                            <td>{{teams[team.teamId].name}}</td>
+                            <td>{{getTeamSportName(team.teamId)}}</td>
+                            <td class="team-cell-positions">
+                                <positions-dropdown ng-model="team.positionIds" player="athlete" positionset="getPositionSet(team.teamId)"></positions-dropdown>
+                            </td>
+                            <td class="team-cell-options">
+                                <check-box ng-click="team.isHidden = !team.isHidden" checked="team.isHidden"></check-box>
+                                <i class="icon icon-remove" ng-click="athlete.removeTeamFromProfile(team.teamId)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="button-row">
+            <button class="btn btn-primary" ng-click="saveBasicInfo()">Save</button>
+            <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
+        </div>
+    </form>
+</div>
