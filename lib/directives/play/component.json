@@ -9,5 +9,11 @@
     "scripts": [
         "index.js",
         "controller.js"
+    ],
+    "paths": [
+        "."
+    ],
+    "local": [
+        "play-header"
     ]
 }
