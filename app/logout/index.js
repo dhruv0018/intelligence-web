@@ -45,6 +45,10 @@ Logout.config([
                         auth.logoutUser().then(function() {
 
                             $state.go('login');
+                        }, function (err) {
+
+                            /* Logout was not successful. */
+                            throw new Error(err);
                         });
                     }
                 ]
