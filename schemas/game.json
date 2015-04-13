@@ -17,25 +17,34 @@
             "type": "boolean"
         },
         "teamId": {
-            "type": "integer"
+            "type": ["null", "integer"]
         },
         "opposingTeamId": {
-            "type": "integer"
+            "type": ["null", "integer"]
         },
         "primaryJerseyColor": {
-            "type": "string"
+            "type": ["null", "string"]
+        },
+        "secondaryJerseyColor": {
+            "type": ["null", "string"]
         },
         "opposingPrimaryJerseyColor": {
-            "type": "string"
+            "type": ["null", "string"]
         },
         "opposingSecondaryJerseyColor": {
-            "type": "string"
+            "type": ["null", "string"]
         },
         "finalScore": {
             "type": "integer"
         },
         "opposingFinalScore": {
             "type": "integer"
+        },
+        "indexedScore": {
+            "type": ["null", "integer"]
+        },
+        "opposingIndexedScore": {
+            "type": ["null", "integer"]
         },
         "rosters": {
             "type": "object",
@@ -65,6 +74,10 @@
         },
         "createdAt": {
             "type": "string",
+            "format": "date-time"
+        },
+        "submittedAt": {
+            "type": ["null", "string"],
             "format": "date-time"
         },
         "isClone": {

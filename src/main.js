@@ -2,6 +2,8 @@ var pkg = require('../package.json');
 
 require('./appcache');
 
+require('traceur/bin/traceur-runtime');
+
 /* Vendor dependencies */
 require('./vendor');
 
@@ -28,6 +30,7 @@ require('./errors');
 require('./viewports');
 require('./logs');
 require('./device');
+require('./mediator');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
@@ -42,13 +45,13 @@ require('./services/session');
 require('./services/account');
 require('./services/queue');
 require('./services/alerts');
-require('./services/scripts');
 require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
 
 require('./constants/users');
 require('./constants/games');
+require('./constants/events');
 require('./constants/schools');
 require('./constants/videos');
 require('./constants/tagsets');
@@ -59,9 +62,12 @@ require('./constants/football/gaps');
 require('./constants/football/zones');
 require('./constants/sports');
 require('./constants/viewports');
+require('./constants/breakpoints');
 require('./constants/arenas');
 require('./constants/device');
 require('./constants/states');
+require('./constants/schemas');
+require('./constants/video-player');
 
 require('./models/users');
 require('./models/sports');
@@ -107,11 +113,17 @@ require('./factories/reels');
 require('./factories/positionsets');
 require('./factories/plans');
 
+require('./emitters/playlist');
+require('./emitters/video-player');
+
 require('./managers/tags');
 require('./managers/play');
 require('./managers/plays');
 require('./managers/event');
 require('./managers/storage');
+require('./managers/playerlist');
+require('./managers/playlist');
+require('./mediators/event');
 
 require('./directives/alert');
 require('./directives/match');
@@ -125,3 +137,8 @@ require('./directives/focus');
 require('./directives/autofocus');
 require('./directives/autotab');
 
+require('./aggregates');
+
+require('./values');
+
+require('./entities');

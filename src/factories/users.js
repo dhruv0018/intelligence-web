@@ -17,6 +17,8 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             model: 'UsersResource',
 
+            schema: 'USER_SCHEMA',
+
             storage: 'UsersStorage',
 
             extend: function(user) {
@@ -61,20 +63,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                  * "user" object. */
                 angular.extend(user, self);
 
-                /* If the user only has one role, then use it for
-                 * their current one. */
-                if (user.roles && user.roles.length === 1)
-                    user.currentRole = user.roles[0];
-
-                /* Get the users default role, in any. */
-                var defaultRole = user.getDefaultRole();
-
-                /* If the user has a default role defined, then use it
-                 * for their default and current one. */
-                if (defaultRole) {
-                    user.defaultRole = defaultRole;
-                    user.currentRole = defaultRole;
-                }
+                user.defaultRole = self.getDefaultRole(user);
+                user.currentRole = self.getCurrentRole(user);
 
                 return user;
             },
@@ -86,8 +76,14 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* Create a copy of the resource to break reference to original. */
                 var copy = angular.copy(user);
 
+                delete copy.PAGE_SIZE;
+                delete copy.description;
+                delete copy.model;
+                delete copy.storage;
+                delete copy.name;
                 delete copy.defaultRole;
                 delete copy.currentRole;
+                delete copy.roleTypes;
 
                 angular.forEach(copy.roles, function(role) {
                     role.type = (role.type.id) ? role.type.id : role.type;
@@ -108,7 +104,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                         angular.forEach(user.roles, function(role) {
 
-                            if (role.teamId && teamIds.indexOf(role.teamId) < 0) {
+                            if (role.teamId) {
 
                                 teamIds.push(role.teamId);
                             }
@@ -127,6 +123,23 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     else return users;
                 });
+            },
+
+            /**
+            * @class User
+            * @method
+            * Saves user and updates currentUser in session
+            */
+            save: function() {
+                var self = this;
+                var session = $injector.get('SessionService');
+
+                if (self.id === session.getCurrentUserId()) {
+                    session.storeCurrentUser();
+                }
+
+                //TODO use normal save()
+                return self.baseSave();
             },
 
             /**
@@ -173,7 +186,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 user.roles.unshift(role);
 
                 if (!user.roleTypes) {
-                     user.roleTypes = {};
+                    user.roleTypes = {};
                 }
 
                 user.roleTypes[role.type.id].push(role);
@@ -216,13 +229,57 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
             * @class User
             * @method
+            * @returns {Object} the current role object for the user. If user
+            * is inactive, it will return `undefined`.
+            * Gets the users current role.
+            */
+            getCurrentRole: function(user) {
+
+                var self = this;
+                user = user || self;
+                var currentRole;
+
+                /* If the user only has one role, then use it for
+                 * their current one. */
+                if (user.roles && user.roles.length === 1)
+                    currentRole = user.roles[0];
+
+                /* Get the users default role, in any. */
+                var defaultRole = user.getDefaultRole();
+
+                /* If the user has a default role defined, then use it
+                 * for their default and current one. */
+                if (defaultRole) {
+                    currentRole = defaultRole;
+                }
+
+                return currentRole;
+            },
+
+            /**
+            * @class User
+            * @method
+            * Sets the current role object for the user.
+            */
+            setCurrentRole: function(user) {
+
+                var self = this;
+                user = user || self;
+
+                user.currentRole = user.getCurrentRole();
+            },
+
+            /**
+            * @class User
+            * @method
             * @returns {Object} the default role object for the user. If no
             * default is defined, it will return `undefined`.
             * Gets the users default role.
             */
-            getDefaultRole: function() {
+            getDefaultRole: function(user) {
 
-                var roles = this.roles;
+                user = user || this;
+                var roles = user.roles;
 
                 if (!roles) return undefined;
 
@@ -293,10 +350,10 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!match) {
 
                     match = role;
-                    role = this.currentRole;
+                    role = this.getCurrentRole();
                 }
 
-                role = role || this.currentRole;
+                role = role || this.getCurrentRole();
 
                 if (!role) return false;
                 if (!match) throw new Error('No role to match specified');
@@ -402,7 +459,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     /* A Head Coach can access Assistant Coaches and Athletes. */
                     return this.is(verify, ROLES.ASSISTANT_COACH) ||
-                           this.is(verify, ROLES.ATHLETE) ? true : false;
+                        this.is(verify, ROLES.ATHLETE) ? true : false;
                 }
 
                 /* TODO: These rules are meant to be updated when new
@@ -457,13 +514,13 @@ IntelligenceWebClient.factory('UsersFactory', [
                 });
 
                 if (team) {
-                   vettedUsers = vettedUsers.filter(function(user) {
-                       var vettedRoles = user.roleTypes[role.type.id].filter(function(role) {
-                         return role.teamId === team.id;
-                       });
+                    vettedUsers = vettedUsers.filter(function(user) {
+                        var vettedRoles = user.roleTypes[role.type.id].filter(function(role) {
+                            return role.teamId === team.id;
+                        });
 
-                       return vettedRoles.length > 0;
-                   });
+                        return vettedRoles.length > 0;
+                    });
                 }
 
                 return vettedUsers;
@@ -536,6 +593,40 @@ IntelligenceWebClient.factory('UsersFactory', [
             isActive: function(role) {
                 var self = this;
                 return self.activeRoles(role).length >= 1;
+            },
+            typeahead: function(filter) {
+                var self = this;
+
+                var model = $injector.get(self.model);
+
+                return model.typeahead(filter).$promise.then(function(users) {
+                    return users.map(function(user) {
+                        return self.extend(user);
+                    });
+                });
+            },
+
+            /**
+            * @class User
+            * @method
+            * @returns {Integer} returns the user's featuredReelId
+            * Gets the users user's featuredReelId
+            */
+            getFeaturedReelId: function() {
+
+                var self = this;
+                return self.profile.featuredReelId;
+            },
+
+            /**
+            * @class User
+            * @method
+            * Sets the users user's featuredReelId
+            */
+            setFeaturedReelId: function(reelIdValue) {
+
+                var self = this;
+                self.profile.featuredReelId = reelIdValue;
             }
         };
 
@@ -544,4 +635,3 @@ IntelligenceWebClient.factory('UsersFactory', [
         return UsersFactory;
     }
 ]);
-

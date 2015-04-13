@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
-    function(config, $injector, $sce, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, session, BaseFactory, GamesResource, players, $q) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q) {
 
         var GamesFactory = {
 
@@ -21,9 +21,11 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             model: 'GamesResource',
 
-            storage: 'GamesStorage',
-            unextend: function(game) {
+            schema: 'GAME_SCHEMA',
 
+            storage: 'GamesStorage',
+
+            unextend: function(game) {
                 var self = this;
 
                 game = game || self;
@@ -38,6 +40,10 @@ IntelligenceWebClient.factory('GamesFactory', [
                     copy.shares.push(copy.publicShare);
                     delete copy.publicShare;
                 }
+
+                copy.shares.forEach(function(share) {
+                    share.isBreakdownShared = JSON.parse(share.isBreakdownShared);
+                });
 
                 return copy;
             },
@@ -86,6 +92,20 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return game;
             },
 
+            getByUploaderUserId: function(userId) {
+
+                userId = userId || session.getCurrentUserId();
+
+                if (!userId) throw new Error('No userId');
+
+                var games = this.getList();
+
+                return games.filter(function(game) {
+
+                    return game.uploaderUserId == userId;
+                });
+            },
+
             getByUploaderTeamId: function(teamId) {
 
                 if (!teamId) throw new Error('No teamId');
@@ -100,6 +120,23 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
             },
 
+            getByUploaderRole: function(userId, teamId) {
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                if (!userId) throw new Error('No userId');
+                if (!teamId) throw new Error('No teamId');
+
+                var games = this.getList();
+
+                return games.filter(function(game) {
+
+                    return game.uploaderUserId == userId &&
+                        game.uploaderTeamId == teamId;
+                });
+            },
+
             getBySharedWithUser: function(user) {
 
                 var self = this;
@@ -110,6 +147,46 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     return game.isSharedWithUser(user);
                 });
+            },
+
+            getBySharedWithUserId: function(userId) {
+
+                var self = this;
+
+                var games = self.getList();
+
+                return games.filter(function(game) {
+
+                    return game.isSharedWithUserId(userId);
+                });
+            },
+
+            getByRelatedRole: function(userId, teamId) {
+
+                var self = this;
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                var games = [];
+
+                if (session.currentUser.is(ROLES.COACH)) {
+
+                    games = games.concat(self.getByUploaderRole(userId, teamId));
+                    games = games.concat(self.getByUploaderTeamId(teamId));
+                }
+
+                else if (session.currentUser.is(ROLES.ATHLETE)) {
+
+                    games = games.concat(self.getByUploaderUserId(userId));
+                    games = games.concat(self.getByUploaderTeamId(teamId));
+                }
+
+                games = games.concat(self.getBySharedWithUserId(userId));
+
+                var gameIds = utilities.unique(self.getIds(games));
+
+                return self.getList(gameIds);
             },
 
             saveNotes: function() {
@@ -375,6 +452,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
+                deadline = deadline || new Date();
+
                 /* Ensure the game can be assigned. */
                 if (self.canBeAssignedToIndexer()) {
 
@@ -418,6 +497,8 @@ IntelligenceWebClient.factory('GamesFactory', [
             assignToQa: function(userId, deadline) {
 
                 var self = this;
+
+                deadline = deadline || new Date();
 
                 /* Ensure the game can be assigned. */
                 if (self.canBeAssignedToQa()) {
@@ -1016,6 +1097,13 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var userId = user.id;
 
+                return self.getShareByUserId(userId);
+            },
+            getShareByUserId: function(userId) {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
                 return self.sharedWithUsers[userId];
             },
             isSharedWithUser: function(user) {
@@ -1026,6 +1114,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+            isSharedWithUserId: function(userId) {
+                var self = this;
+
+                if (!userId) return false;
+
+                if (!self.sharedWithUsers) return false;
+
+                return angular.isDefined(self.getShareByUserId(userId));
             },
             getUserShares: function() {
                 var self = this;
@@ -1072,4 +1169,3 @@ IntelligenceWebClient.factory('GamesFactory', [
         return GamesFactory;
     }
 ]);
-

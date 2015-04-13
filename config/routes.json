@@ -61,6 +61,7 @@
 
     "Account": {
 
+        "!": true,
         "Super Admin": true,
         "Admin": true,
         "Indexer": true,
@@ -71,6 +72,7 @@
 
     "Account.ContactInfo": {
 
+        "!": true,
         "Super Admin": true,
         "Admin": true,
         "Indexer": true,
@@ -81,6 +83,7 @@
 
     "Account.RolesList": {
 
+        "!": true,
         "Super Admin": true,
         "Admin": true,
         "Indexer": true,
@@ -377,6 +380,26 @@
     "Athlete.FilmHome": {
 
         "Athlete": true
+    },
+
+    "Athlete.Profile": {
+
+        "*": true
+    },
+
+    "Athlete.Profile.Highlights": {
+
+        "*": true
+    },
+
+    "Athlete.Profile.Academics": {
+
+        "*": true
+    },
+
+    "Athlete.Profile.Stats": {
+
+        "*": true
     },
 
     "Athlete.GameArea": {

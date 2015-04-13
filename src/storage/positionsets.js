@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('PositionsetsStorage', [
         return PositionsetsStorage;
     }
 ]);
-

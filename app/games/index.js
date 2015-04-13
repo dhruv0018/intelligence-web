@@ -78,6 +78,12 @@ Games.config([
                     }
                 }
             ],
+            onExit: [
+                'PlayManager',
+                function(playManager) {
+                    playManager.clear();
+                }
+            ],
             views: {
                 'main@root': {
                     templateUrl: 'games/template.html',
@@ -96,9 +102,16 @@ Games.config([
                             var game = games.get(gameId);
 
                             var Data = {
-                                leagues: leagues.load(),
-                                users: users.load(game.uploaderUserId)
+                                leagues: leagues.load()
                             };
+
+                            var userIds = [];
+                            userIds.push(game.uploaderUserId);
+                            game.getUserShares().forEach(function(share) {
+
+                                userIds.push(share.sharedWithUserId);
+                            });
+                            if (userIds.length) Data.users = users.load(userIds);
 
                             var teamIds = [];
                             if (game.teamId) teamIds.push(game.teamId);
@@ -120,9 +133,8 @@ Games.config([
 ]);
 
 Games.controller('Games.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'AuthenticationService', 'SessionService', 'ROLES', 'ARENA_TYPES_IDS',
-    'ARENA_TYPES',
-    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, auth, session, ROLES, ARENA_TYPES_IDS, ARENA_TYPES) {
+    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'AuthenticationService', 'SessionService', 'ROLES',
+    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, auth, session, ROLES) {
         $scope.game = games.get($stateParams.id);
 
         $scope.teams = teams.getCollection();
@@ -185,4 +197,3 @@ Games.controller('Games.controller', [
 
     }
 ]);
-

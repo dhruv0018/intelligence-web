@@ -1,28 +1,30 @@
 <div class="games-breakdown">
 
-    <div class="filter-container screen-lg-min" data-ng-if="publiclyShared">
+    <div class="filter-container screen-lg-min">
 
         <plays-filter
-                data-total-plays="totalPlays"
                 data-game="game"
-                data-team-player-list="teamPlayers"
-                data-opposing-player-list="opposingTeamPlayers"
-                data-filterset="filterset"
                 data-ng-model="filteredPlaysIds">
         </plays-filter>
 
     </div>
 
-    <div class="main-highlight" data-ng-if="publiclyShared">
+    <div class="main-highlight">
 
         <krossover-sidebar>
 
-            <krossover-playlist></krossover-playlist>
+            <breakdown></breakdown>
 
         </krossover-sidebar>
 
-        <x-krossover-videoplayer class="screen-lg-min" data-sources="sources" data-video-title="filmTitle" data-play-start-time="playManager.current.startTime" data-play-end-time="playManager.current.endTime"></x-krossover-videoplayer>
+        <video-player
+         class="screen-lg-min"
+         poster-image="posterImage"
+         sources="sources"
+        >
+        </video-player>
 
     </div>
+
 </div>
 

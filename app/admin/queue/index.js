@@ -290,4 +290,3 @@ Queue.controller('QueueController', [
         };
     }
 ]);
-

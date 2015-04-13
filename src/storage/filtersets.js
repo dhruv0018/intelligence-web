@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('FiltersetsStorage', [
         return FiltersetsStorage;
     }
 ]);
-

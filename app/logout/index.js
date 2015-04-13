@@ -63,4 +63,3 @@ Logout.controller('LogoutController', [
 
     }
 ]);
-

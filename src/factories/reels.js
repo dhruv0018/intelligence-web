@@ -1,13 +1,14 @@
-var package = require('../../package.json');
+var pkg = require('../../package.json');
+var moment = require('moment');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var IntelligenceWebClient = angular.module(package.name);
+var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'BaseFactory', 'SessionService',
-    function(BaseFactory, session) {
+    'ROLES', 'Utilities', 'BaseFactory', 'SessionService',
+    function(ROLES, utilities, BaseFactory, session) {
 
         var ReelsFactory = {
 
@@ -51,7 +52,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return reels.filter(function(reel) {
 
-                    return reel.uploaderUserId == session.currentUser.id;
+                    return reel.uploaderUserId == userId;
                 });
             },
 
@@ -69,7 +70,26 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 });
             },
 
+            getByUploaderRole: function(userId, teamId) {
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                if (!userId) throw new Error('No userId');
+                if (!teamId) throw new Error('No teamId');
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.uploaderUserId == userId &&
+                        reel.uploaderTeamId == teamId;
+                });
+            },
+
             getBySharedWithUser: function(user) {
+
+                user = user || session.currentUser;
 
                 var reels = this.getList();
 
@@ -77,6 +97,65 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                     return reel.isSharedWithUser(user);
                 });
+            },
+
+            getBySharedWithUserId: function(userId) {
+
+                var self = this;
+
+                userId = userId || session.getCurrentUserId();
+
+                var reels = self.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.isSharedWithUserId(userId);
+                });
+            },
+
+            getBySharedWithTeamId: function(teamId) {
+
+                teamId = teamId || session.getCurrentTeamId();
+
+                var reels = this.getList();
+
+                return reels.filter(function(reel) {
+
+                    return reel.isSharedWithTeamId(teamId);
+                });
+            },
+
+            getByRelatedRole:function(userId, teamId) {
+
+                var self = this;
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                var reels = [];
+
+                if (session.currentUser.is(ROLES.COACH)) {
+
+                    reels = reels.concat(self.getByUploaderRole(userId, teamId));
+                    reels = reels.concat(self.getByUploaderTeamId(teamId));
+                }
+
+                else if (session.currentUser.is(ROLES.ATHLETE)) {
+
+                    reels = reels.concat(self.getByUploaderUserId(userId));
+
+                    reels = reels.filter(function(reel) {
+
+                        return !reel.uploaderTeamId;
+                    });
+                }
+
+                reels = reels.concat(self.getBySharedWithUserId(userId));
+                reels = reels.concat(self.getBySharedWithTeamId(teamId));
+
+                var reelIds = utilities.unique(self.getIds(reels));
+
+                return self.getList(reelIds);
             },
 
             addPlay: function(play) {
@@ -136,6 +215,13 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 var userId = user.id;
 
+                return self.getShareByUserId(userId);
+            },
+            getShareByUserId: function(userId) {
+                var self = this;
+
+                if (!self.sharedWithUsers) throw new Error('sharedWithUsers not defined');
+
                 return self.sharedWithUsers[userId];
             },
             isSharedWithUser: function(user) {
@@ -146,6 +232,15 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+            isSharedWithUserId: function(userId) {
+                var self = this;
+
+                if (!userId) return false;
+
+                if (!self.sharedWithUsers) return false;
+
+                return angular.isDefined(self.getShareByUserId(userId));
             },
             getUserShares: function() {
                 var self = this;
@@ -229,6 +324,19 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     return teamId;
                 });
             },
+            isSharedWithTeamId: function(teamId) {
+
+                var self = this;
+
+                if (!teamId) return false;
+                if (!self.shares) return false;
+
+                return self.shares.map(function(share) {
+                    return share.sharedWithTeamId;
+                }).some(function(teamId) {
+                    return teamId == teamId;
+                });
+            },
             getTeamShare: function() {
                 var self = this;
 
@@ -245,6 +353,53 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
 
                 return teamShare;
+            },
+            publishToProfile: function() {
+                var self = this;
+
+                if (!self.isSharedWithPublic()) {
+                    self.togglePublicSharing();
+                }
+
+                self.isPublishedToProfile = true;
+            },
+            unpublishFromProfile: function() {
+                var self = this;
+
+                if (self.isSharedWithPublic()) {
+                    self.togglePublicSharing();
+                }
+
+                self.isPublishedToProfile = false;
+            },
+            getPublishedReels: function(userId) {
+                userId = userId || session.getCurrentUserId();
+
+                if (!userId) throw new Error('No userId');
+
+                var reels = this.getList();
+
+                return reels.filter(function publishedReels(reel) {
+
+                    return reel.uploaderUserId == userId &&
+                        reel.isPublishedToProfile === true;
+                });
+            },
+            isFeatured: function(user) {
+                var self = this;
+                user = user || session.getCurrentUser();
+
+                return self.id == user.profile.featuredReelId;
+            },
+            getFeaturedReel: function(user) {
+
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
+
+                let featuredReelId = user.profile.featuredReelId;
+
+                return featuredReelId ? this.get(featuredReelId) : undefined;
             }
         };
 
@@ -253,4 +408,3 @@ IntelligenceWebClient.factory('ReelsFactory', [
         return ReelsFactory;
     }
 ]);
-

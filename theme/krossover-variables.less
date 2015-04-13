@@ -31,9 +31,10 @@
 
 @body-bg:               #fff;
 @content-bg:            rgb(247, 248, 248);
+@active-bg:             #f6f9fd;
 @text-color:            @gray-dark;
-@gray-border:			rgb(221, 221, 221);
-@play-selected-bg:		rgb(246, 249, 253);
+@gray-border:           rgb(221, 221, 221);
+@play-selected-bg:      rgb(246, 249, 253);
 
 // Links
 // -------------------------
@@ -207,7 +208,17 @@
 @zindex-modal-background:  1040;
 @zindex-modal:             1050;
 
-// Media queries breakpoints
+
+// Angular Material Design Breakpoints
+// --------------------------------------------------
+@md-screen-sm: 600px;
+@md-screen-md: 960px;
+@md-screen-lg: 1200px;
+
+@md-screen-sm-max: (@md-screen-md - 1);
+@md-screen-md-max: (@md-screen-lg - 1);
+
+// Bootstrap Media queries breakpoints
 // --------------------------------------------------
 
 // Extra small screen / phone
@@ -500,8 +511,8 @@
 // Panels
 // -------------------------
 @panel-bg:                    #fff;
-@panel-body-padding:		  0;
-@panel-heading-padding:		  0;
+@panel-body-padding:          0;
+@panel-heading-padding:       0;
 @panel-inner-border:          #ddd;
 @panel-border-radius:         0;
 @panel-footer-bg:             #f5f5f5;
@@ -632,6 +643,17 @@
 // Large screen / wide desktop
 @container-lg-desktop:        ((1140px + @grid-gutter-width));
 
+
 // Social Media Colors
+// --------------------------------------------------
 @twitter-blue: #4099FF;
 @facebook-blue: #3B5998;
+
+// Athlete Profile Variables
+// --------------------------------------------------
+@profile-name-weight: 700;
+@profile-attribute-header-font-size: 1.2rem;
+
+// Film Home Variables
+@film-card-thumbnail-height: 200px;
+@film-card-logo-size: 70px;

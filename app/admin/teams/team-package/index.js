@@ -70,4 +70,3 @@ TeamPackage.controller('TeamPackageController', [
         };
     }
 ]);
-

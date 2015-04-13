@@ -17,4 +17,3 @@ IntelligenceWebClient.factory('ReelsStorage', [
         return ReelsStorage;
     }
 ]);
-

@@ -1,0 +1,87 @@
+@import (reference) "main.less";
+
+.breakdown {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .playlist-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        border: 0;
+
+        .playlist {
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0px;
+            background-color: #ffffff;
+            flex: 1;
+            border: none;
+            width: auto;
+            -webkit-transform: translateZ(0);
+            position: static;
+            float: none;
+            letter-spacing: normal;
+
+            &.edit-mode {
+                display: flex;
+                flex-direction: column;
+            }
+
+            krossover-play.edit-mode {
+                flex: 0 0 60px;
+            }
+        }
+    }
+
+    .playlist-footer {
+        border-top: thin solid @gray-border;
+        background-color: white;
+        width: 100%;
+        flex: 0 0 50px;
+        padding: 0 15px;
+        display: flex;
+
+        button {
+            .btn;
+            .btn-link;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            padding-top: 10px;
+            padding-left: 0;
+            padding-right: 0;
+            padding-bottom: 10px;
+            border-left-width: 0;
+            outline: none;
+
+            &:focus,
+            &:hover {
+
+                text-decoration: none;
+            }
+        }
+    }
+
+    @media only screen
+    and (max-width: @screen-md-max) {
+        .mobile .krossover-playlist {
+            border: none
+        }
+    }
+}
+
+// MOBILE
+@media only screen
+and (max-width: @screen-md-max) {
+
+.krossover-playlist {
+
+    krossover-play {
+        flex: 0 0 60px;
+    }
+
+}
+
+}

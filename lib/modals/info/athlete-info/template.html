@@ -18,7 +18,8 @@
                         {{athlete.firstName}}
                         {{athlete.lastName[0]}}.
                     </span>
-                    <a href> (View Stats) </a>
+                    <!-- Temporarily hide view stats
+                    <a href> (View Stats) </a>-->
                 </p>
                 <div class="pull-right">
                     <span data-ng-if="users[athlete.userId].lastAccessed">{{usersFactory.getLastAccessed(users[athlete.userId]) | date: 'mediumDate'}}</span>
@@ -42,7 +43,7 @@
                     <a data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-click="resendInvite(athlete.userId, team.id)">Resend Invitation</a>
                 </div>
                 <div class="resending-invite" data-ng-show="sendingEmail">
-                    <i class="icon icon-refresh" data-ng-show="!confirmSent"></i>
+                    <krossover-spinner ng-show="!confirmSent" size="'15px'"></krossover-spinner>
                     <span data-ng-show="confirmSent"><i class="icon icon-ok"></i> The invitation has been resent.</span>
                 </div>
                 <div class="active" data-ng-if="athlete.userId && users[athlete.userId].lastAccessed">

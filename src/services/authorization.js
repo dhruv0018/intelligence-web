@@ -1,3 +1,4 @@
+var INACTIVE = '!';
 var WILDCARD = '*';
 
 var pkg = require('../../package.json');
@@ -53,7 +54,7 @@ IntelligenceWebClient.service('AuthorizationService', [
                 var route = routes[to.name];
 
                 /* Assert that the route is defined. */
-                if (!route) return false;
+                if (!route) throw new Error('No route configuration found for ' + to.name);
 
                 /* If the route is not openly accessible, then check if the
                  * current user has access... */
@@ -68,20 +69,24 @@ IntelligenceWebClient.service('AuthorizationService', [
                 var currentRole = currentUser.currentRole;
 
                 /* Ensure the current role is set for the current user. */
-                if (!currentRole || !currentRole.type) return false;
+                if (currentRole && currentRole.type) {
 
-                /* Match the current role based on ID from the server. */
-                var role = ROLES[ROLE_ID[currentRole.type.id]];
+                    /* Match the current role based on ID from the server. */
+                    var role = ROLES[ROLE_ID[currentRole.type.id]];
 
-                /* Check if the route can be accessed by the currentRole... */
+                    /* Check if the route can be accessed by the currentRole... */
 
-                if (!role) return false;
+                    if (!role) throw new Error('No role type constant for role type ' + currentRole.type.id);
 
-                /* Match the role name from the route file with the role name
-                 * from the roles constant lookup. */
-                return route[role.type.name];
+                    /* Match the role name from the route file with the role name
+                     * from the roles constant lookup. */
+                    return route[role.type.name];
+                }
+
+                /* If the user has no roles they are inactive; check if the
+                 * route is accessible by inactive users. */
+                else return route[INACTIVE];
             }
         };
     }
 ]);
-

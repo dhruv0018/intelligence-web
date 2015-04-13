@@ -40,4 +40,3 @@ Indexing.controller('Indexing.Modal.AddIndexerNote.Controller', [
         };
     }
 ]);
-

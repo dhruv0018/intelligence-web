@@ -93,7 +93,6 @@ IntelligenceWebClient.service('AuthenticationService', [
                 sessionStorage.clear();
                 localStorage.clear();
                 storage.clear();
-                indexedDB.deleteDatabase(pkg.name);
             },
 
             /**
@@ -138,4 +137,3 @@ IntelligenceWebClient.service('AuthenticationService', [
         return AuthenticationService;
     }
 ]);
-
