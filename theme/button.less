@@ -50,6 +50,39 @@
     margin-top: 30px;
 }
 
+.btn-radio {
+    .btn;
+    background-color: inherit;
+    border: none;
+
+    &::before {
+        content: "";
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-color: @gray-lighter;
+        border: 1px solid @gray-darker;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    &.active {
+
+        color: @gray-darker;
+        box-shadow: none;
+
+        &::before {
+
+            background-color: @brand-primary;
+            border-color: @gray-darker;
+        }
+    }
+
+    &:focus {
+        outline: none !important;
+    }
+}
+
 .btn-group-vertical {
 
     width: 100%;
@@ -58,34 +91,6 @@
 
         .btn;
         width: 100%;
-
-        &::before {
-            content: "";
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border: 1px solid @gray-lighter;
-            border-radius: 50%;
-            background-color: @gray-lighter;
-            margin-right: 10px;
-
-        }
-
-        &.active {
-
-            color: rgb(54, 54, 54);
-            box-shadow: none;
-
-            &::before {
-
-                background-color: @brand-primary;
-                border-color: @brand-primary;
-            }
-        }
-
-        &:focus {
-            outline: none !important;
-        }
 
         &:first-child {
 
@@ -147,9 +152,11 @@
     color: @brand-success;
     letter-spacing: normal;
     text-transform: uppercase;
+    text-decoration: none;
 
     &:hover {
         color: darken(@brand-success, 10%);
+        text-decoration: none;
     }
 }
 
@@ -157,8 +164,10 @@
     color: @brand-danger;
     letter-spacing: normal;
     text-transform: uppercase;
+    text-decoration: none;
 
     &:hover {
         color: darken(@brand-danger, 10%);
+        text-decoration: none;
     }
 }
