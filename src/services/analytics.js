@@ -29,8 +29,14 @@ IntelligenceWebClient.service('AnalyticsService', [
 
                 let user     = session.retrieveCurrentUser();
                 let teamId   = session.getCurrentTeamId() || '';
-                let leagueId = teams.get(teamId).leagueId || '';
-                let sportId  = leagues.get(leagueId).sportId || '';
+                let leagueId = '';
+                let sportId  = '';
+
+                if (teamId) {
+
+                    leagueId = teams.get(teamId).leagueId || '';
+                    sportId  = leagues.get(leagueId).sportId || '';
+                }
 
                 $analytics.setUserProperties(user.id, {
                     Email          : user.email,
