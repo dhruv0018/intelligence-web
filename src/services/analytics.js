@@ -18,7 +18,6 @@ IntelligenceWebClient.service('AnalyticsService', [
     'SessionService', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', '$analytics',
     function (session, teams, sports, leagues, $analytics) {
 
-        console.log('$analytics', $analytics);
         return {
 
             /**
@@ -44,7 +43,7 @@ IntelligenceWebClient.service('AnalyticsService', [
                     Email          : user.email,
                     UserID         : user.id,
                     WebVersion     : pkg.version,
-                    AccountCreated : '', // TODO: need this!
+                    AccountCreated : moment(user.createdAt).format('MM/YY'),
                     RoleName       : user.currentRole.type.name,
                     RoleTeam       : teamId,
                     LeagueID       : leagueId,
