@@ -35,6 +35,10 @@ IntelligenceWebClient.service('AnalyticsService', [
                 if (teamId) {
 
                     leagueId = teams.get(teamId).leagueId || '';
+                }
+
+                if (leagueId) {
+
                     sportId  = leagues.get(leagueId).sportId || '';
                 }
 
