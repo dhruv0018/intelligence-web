@@ -17,21 +17,22 @@ IntelligenceWebClient.service('StorageManager', [
 
             root = Object.create(null);
 
-            return $q(function (resolve, reject) {
+            function requestDatabaseDelete (resolve, reject) {
 
-                let request = indexedDB.deleteDatabase(pkg.name);
+                const request = indexedDB.deleteDatabase(pkg.name);
 
-                request.onsuccess = function() {
+                request.onsuccess = function databaseDeleteSuccess () {
 
                     resolve('Database deleted');
                 };
 
-                request.onerror = function() {
+                request.onerror = function databaseDeleteError () {
 
-                    reject('Database could not be deleted');
-                    throw new Error('Database could not be deleted');
+                    reject(new Error('Database could not be deleted'));
                 };
-            });
+            }
+
+            return $q(requestDatabaseDelete);
         };
     }
 ]);
