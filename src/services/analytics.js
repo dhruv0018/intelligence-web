@@ -28,26 +28,20 @@ IntelligenceWebClient.service('AnalyticsService', [
             identify: function () {
 
                 let user     = session.retrieveCurrentUser();
-                let teamId   = user.currentRole.teamId || '';
-                let leagueId = '';
-                let sport    = '';
-
-                try {
-                    leagueId = teams.get(teamId).leagueId;
-                    sport    = leagues.get(leagueId).sportId;
-                } catch (e) {
-                    console.log(e.message);
-                }
+                let teamId   = session.getCurrentTeamId() || '';
+                let leagueId = teams.get(teamId).leagueId || '';
+                let sportId  = leagues.get(leagueId).sportId || '';
 
                 $analytics.setUserProperties(user.id, {
                     Email          : user.email,
                     UserID         : user.id,
                     WebVersion     : pkg.version,
-                    AccountCreated : moment(user.createdAt).format('MM/YY'),
+                    AccountCreated : moment.utc(user.createdAt).format('MM/YY'),
+                    RoleCreated    : moment.utc(user.currentRole.createdAt).format('MM/YY'),
                     RoleName       : user.currentRole.type.name,
                     RoleTeam       : teamId,
                     LeagueID       : leagueId,
-                    Sport          : sport,
+                    Sport          : sportId,
                     CurrentSeason  : '' // TODO: need this!
                 });
             },
@@ -60,7 +54,7 @@ IntelligenceWebClient.service('AnalyticsService', [
              * @param {String} label     - The item or target of the event action.
              * @param {String} pageInfo  - Info about the page.
              * @param {String} property1 - Extra property.
-             * @param {String} property2 - Extra propert.
+             * @param {String} property2 - Extra property.
              * @return undefined
              */
             track: function (category, action, label, pageInfo, property1, property2) {
