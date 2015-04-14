@@ -198,18 +198,23 @@ function LoginController(
         auth.loginUser(email, password, persist).then(function(user) {
             if (user) {
 
-                /* Indentify the user for MixPanel */
-                analytics.identify();
-
                 /* Track the event for MixPanel */
                 analytics.track('Login', 'Selected', 'SignIn');
 
                 /* If the user has more than one role, but has not selected
                  * a default one yet. */
                 if (user.isActive() && !user.defaultRole) {
-                    $state.go('roles', false);
+                    $state.go('roles', false).then(function () {
+
+                        /* Indentify the user for MixPanel */
+                        analytics.identify();
+                    });
                 } else {
-                    account.gotoUsersHomeState(user);
+                    account.gotoUsersHomeState(user).then(function () {
+
+                        /* Indentify the user for MixPanel */
+                        analytics.identify();
+                    });
                 }
 
                 user.lastAccessed = new Date().toISOString();
