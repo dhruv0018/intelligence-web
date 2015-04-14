@@ -42,14 +42,17 @@ Logout.config([
                     '$state', 'AuthenticationService',
                     function($state, auth) {
 
-                        auth.logoutUser().then(function() {
+                        function logoutSuccess () {
 
                             $state.go('login');
-                        }, function (err) {
+                        }
 
-                            /* Logout was not successful. */
+                        function logoutError (err) {
+
                             throw new Error(err);
-                        });
+                        }
+
+                        auth.logoutUser().then(logoutSuccess, logoutError);
                     }
                 ]
             });
