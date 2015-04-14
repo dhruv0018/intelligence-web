@@ -16,7 +16,6 @@
         "plays",
         "playlist",
         "playlist-control",
-        "breakdown",
         "results",
         "no-results",
         "video-player",
@@ -49,8 +48,8 @@
         "dynamic-table",
         "team-typeahead",
         "user-typeahead",
-        "role-typeahead",
         "verify-password",
+        "breakdown",
         "breakdown-text",
         "player-information",
         "film-home-tabs",
@@ -71,7 +70,8 @@
         "no-profile-reels",
         "publish-user-profile-reel",
         "role-class",
-        "spinner"
+        "spinner",
+        "check-box"
     ],
     "scripts": [
         "index.js"

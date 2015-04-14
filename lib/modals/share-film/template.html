@@ -49,8 +49,7 @@
 
             <div class="team-share-table">
                 <div class="team-share-player" data-ng-repeat="player in playersWithAccounts" data-ng-click="shareReelWithPlayerToggle(player)" data-ng-class="{'player-selected': film.isSharedWithUser(usersMap[player.userId])}">
-                    <i class="icon icon-check-empty" data-ng-show="!film.isSharedWithUser(usersMap[player.userId])"></i>
-                    <i class="icon icon-check-square-o" data-ng-show="film.isSharedWithUser(usersMap[player.userId])"></i>
+                    <check-box checked="film.isSharedWithUser(usersMap[player.userId])"></check-box>
                     <span data-ng-show="team.roster.playerInfo[player.id].jerseyNumber">#{{team.roster.playerInfo[player.id].jerseyNumber}}&nbsp;</span> {{player.firstName}} {{player.lastName}}
                 </div>
             </div>

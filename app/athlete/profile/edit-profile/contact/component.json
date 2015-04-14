@@ -1,5 +1,5 @@
 {
-    "name": "profile",
+    "name": "contact",
     "templates": [
         "template.html"
     ],
@@ -10,14 +10,5 @@
         "index.js",
         "config.js",
         "controller.js"
-    ],
-    "locals": [
-        "highlights",
-        "academics",
-        "stats",
-        "edit-profile"
-    ],
-    "paths": [
-        "."
     ]
 }
