@@ -2,6 +2,7 @@
 require('highlights');
 require('academics');
 require('stats');
+require('edit-profile');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -14,6 +15,7 @@ var Profile = angular.module('Athlete.Profile', [
     'Athlete.Profile.Highlights',
     'Athlete.Profile.Academics',
     'Athlete.Profile.Stats',
+    'Athlete.Profile.EditProfile',
     'ui.router',
     'ui.bootstrap',
     'ngMaterial',
