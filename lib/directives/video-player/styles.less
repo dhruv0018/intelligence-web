@@ -30,6 +30,43 @@ videogular {
     user-select: none;
 
     .light-box-shadow;
+
+    @keyframes fadein {
+
+        0%,
+        100% {
+
+            opacity: 0;
+        }
+
+        35% {
+
+            opacity: 0.8;
+        }
+
+    }
+
+    .seeking-indicators {
+
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: white;
+        z-index: 5;
+        font-weight: bold;
+        font-size: 40px;
+        text-transform: uppercase;
+        background: rgba(0,0,0,0.5);
+        padding: 0 20px;
+
+        .seeking-speed {
+
+            display: block;
+            opacity: 0;
+            color: white;
+            animation: fadein 3s ease 0s 1;
+        }
+    }
 }
 
 videogular.fullscreen {
