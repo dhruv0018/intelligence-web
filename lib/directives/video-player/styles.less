@@ -48,23 +48,45 @@ videogular {
 
     .seeking-indicators {
 
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        color: white;
-        z-index: 5;
-        font-weight: bold;
-        font-size: 40px;
-        text-transform: uppercase;
-        background: rgba(0,0,0,0.5);
-        padding: 0 20px;
+        .seeking-indicator {
+
+            position: absolute;
+            top: calc(~"50% - 25px");
+            color: white;
+            z-index: 5;
+            font-size: 36px;
+            text-transform: capitalize;
+            background: rgba(0,0,0,0.5);
+            padding: 0 15px;
+            border-radius: 4px;
+        }
 
         .seeking-speed {
+
+            &.fbkwd {
+
+                left: calc(~"50% - 90px");
+            }
+
+            &.sbkwd {
+
+                left: calc(~"50% - 104px");
+            }
+
+            &.sfwd {
+
+                left: calc(~"50% - 95px");
+            }
+
+            &.ffwd {
+
+                left: calc(~"50% - 81px");
+            }
 
             display: block;
             opacity: 0;
             color: white;
-            animation: fadein 3s ease 0s 1;
+            animation: fadein 1.5s ease 0s 1;
         }
     }
 }
