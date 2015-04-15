@@ -1,0 +1,10 @@
+{
+    "name": "logout",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [],
+    "scripts": [
+        "index.js"
+    ]
+}

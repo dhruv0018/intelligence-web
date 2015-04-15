@@ -1,0 +1,9 @@
+{
+    "name": "button-video-fast-backward",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

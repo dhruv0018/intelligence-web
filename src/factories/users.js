@@ -1,3 +1,6 @@
+import List from '../collections/list.js';
+import Subscription from '../entities/subscription.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -58,6 +61,24 @@ IntelligenceWebClient.factory('UsersFactory', [
                         }
                     });
                 }
+
+                /*
+                 * FIXME: This fails unit tests in user extend
+
+                if (user.subscriptions) {
+
+                    let subscriptions = user.subscriptions.map(function constructSubscription(subscription) {
+
+                        return new Subscription(subscription);
+                    });
+
+                    user.subscriptions = new List(subscriptions);
+                }
+                else {
+
+                    user.subscriptions = new List();
+                }
+                */
 
                 /* Copy all of the properties from the retrieved $resource
                  * "user" object. */
@@ -310,6 +331,43 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     roles[i].isDefault = angular.equals(roles[i], newDefaultRole);
                 }
+            },
+
+            /**
+             * @class User
+             * @method addSubscription
+             *
+             * @param {Object} user - User to add the subscription to
+             * @param {Object} subscription - Subscription object to add
+             *
+             * Adds the given subscription to the given user
+             */
+            addSubscription: function(subscription, user = this) {
+
+                switch (arguments.length) {
+
+                    case 0:
+
+                    throw new Error('Invoked UsersFactory.addSubscription without any argument(s)');
+                }
+
+                user.subscriptions.add(subscription);
+            },
+
+            /**
+             * @class User
+             * @method hasActiveSubscription
+             *
+             * @param {Object} user - User being queried
+             * @returns {Object} - Most recently added active subscription
+             *
+             * Provides the most recently active subscription that is active toda
+             */
+            getActiveSubscription: function(user = this) {
+
+                let mostRecent = user.subscriptions.first();
+
+                return (mostRecent.isActive ? mostRecent : undefined);
             },
 
             /**

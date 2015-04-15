@@ -90,10 +90,9 @@ function openDB(name, version) {
                 console.info('Database changed to version ' + version);
 
                 /* Close the database. */
-                db.close();
-
-                /* Reload the window. */
-                window.location.reload();
+                if (!event.version) {
+                    db.close();
+                }
             };
         };
 
