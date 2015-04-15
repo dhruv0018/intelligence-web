@@ -31,25 +31,15 @@ Queue.run([
  * @type {service}
  */
 Queue.service('Admin.Queue.Data.Dependencies', [
-    'GAME_STATUSES', 'VIDEO_STATUSES', 'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function(GAME_STATUSES, VIDEO_STATUSES, ROLE_TYPE, sports, leagues, teams, games, users) {
-
-        var statuses = [
-            GAME_STATUSES.READY_FOR_INDEXING.id,
-            GAME_STATUSES.INDEXING.id,
-            GAME_STATUSES.READY_FOR_QA.id,
-            GAME_STATUSES.QAING.id,
-            GAME_STATUSES.SET_ASIDE.id
-        ];
-
+    'VIEWS', 'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
+    function(VIEWS, ROLE_TYPE, sports, leagues, teams, games, users) {
         var Data = {
-            statuses: statuses,
             sports: sports.load(),
             leagues: leagues.load(),
             //TODO should be able to use load, but causes wierd caching issues
-            users: users.retrieve({ 'relatedGameStatus[]': statuses }),
-            teams: teams.retrieve({ 'relatedGameStatus[]': statuses }),
-            games: games.retrieve({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
+            users: users.retrieve(VIEWS.QUEUE.USERS),
+            teams: teams.retrieve(VIEWS.QUEUE.TEAMS),
+            games: games.retrieve(VIEWS.QUEUE.GAME)
         };
 
         return Data;
@@ -117,8 +107,8 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$interval', '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
-    function controller($interval, $rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, users, sports, leagues, teams, games, data, SelectIndexerModal) {
+    '$interval', '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIEWS', 'GAME_TYPES', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
+    function controller($interval, $rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIEWS, GAME_TYPES, users, sports, leagues, teams, games, data, SelectIndexerModal) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -135,7 +125,7 @@ Queue.controller('QueueController', [
         $scope.sportsList = sports.getList();
         $scope.teamsList = teams.getList();
         $scope.usersList = users.getList();
-        $scope.games = games.getList({ 'status[]': data.statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id });
+        $scope.games = games.getList(VIEWS.QUEUE.GAME);
 
         //initially show everything
         $scope.queue = $scope.games;

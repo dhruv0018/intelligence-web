@@ -48,7 +48,6 @@ require('./services/alerts');
 require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
-require('./services/analytics');
 
 require('./constants/users');
 require('./constants/games');
@@ -69,6 +68,7 @@ require('./constants/device');
 require('./constants/states');
 require('./constants/schemas');
 require('./constants/video-player');
+require('./constants/views');
 
 require('./models/users');
 require('./models/sports');
