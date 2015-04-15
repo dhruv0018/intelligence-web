@@ -10,28 +10,29 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('StorageManager', [
-    '$log', 'RootStorage',
-    function service($log, root) {
+    '$log', '$q', 'RootStorage',
+    function service($log, $q, root) {
 
         this.clear = function() {
 
             root = Object.create(null);
 
-            var request = indexedDB.deleteDatabase(pkg.name);
+            function requestDatabaseDelete (resolve, reject) {
 
-            request.onsuccess = function() {
+                const request = indexedDB.deleteDatabase(pkg.name);
 
-                $log.info('Database deleted');
+                request.onsuccess = function databaseDeleteSuccess () {
 
-                window.location.reload();
-            };
+                    resolve('Database deleted');
+                };
 
-            request.onerror = function() {
+                request.onerror = function databaseDeleteError () {
 
-                $log.error('Database could not be deleted');
+                    reject(new Error('Database could not be deleted'));
+                };
+            }
 
-                throw new Error('Database could not be deleted');
-            };
+            return $q(requestDatabaseDelete);
         };
     }
 ]);
