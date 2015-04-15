@@ -15,7 +15,9 @@ HighlightsController.$inject = [
     '$stateParams',
     'ReelsFactory',
     'UsersFactory',
-    'PlaysFactory'
+    'PlaysFactory',
+    'PlaysManager',
+    'VideoPlayer'
 ];
 
 /**
@@ -29,13 +31,34 @@ function HighlightsController (
     $stateParams,
     reels,
     users,
-    plays
+    plays,
+    playsManager,
+    videoPlayer
 )   {
-        let user = users.get($stateParams.id);
-        $scope.featuredReel = reels.getFeaturedReel(user);
+        $scope.athlete = users.get($stateParams.id);
+        $scope.featuredReel = reels.getFeaturedReel($scope.athlete);
 
-        let play = plays.get($scope.featuredReel.plays[0]);
-        $scope.sources = play.getVideoSources();
+        let playsArray = [];
+
+        // Populate the array with play objects from playIds
+        for (let i = 0; i < $scope.featuredReel.plays.length; i++) {
+            let play = plays.get($scope.featuredReel.plays[i]);
+            playsArray.push(play);
+        }
+
+        // Load the plays in the plays manager
+        playsManager.reset(playsArray);
+        $scope.currentPlay = playsArray[0];
+        $scope.clipTotal = $scope.featuredReel.plays.length;
+
+        $scope.$watch('currentPlay', function updatePlayInfo() {
+            $scope.sources = $scope.currentPlay.getVideoSources();
+            videoPlayer.changeSource($scope.sources);
+            //Featured reel clip information
+            $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
+            $scope.previousPlay = playsManager.getPreviousPlay($scope.currentPlay);
+            $scope.nextPlay = playsManager.getNextPlay($scope.currentPlay);
+        });
 
         $scope.highlightReels = [];
 }
