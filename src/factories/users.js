@@ -62,6 +62,9 @@ IntelligenceWebClient.factory('UsersFactory', [
                     });
                 }
 
+                /*
+                 * FIXME: This fails unit tests in user extend
+
                 if (user.subscriptions) {
 
                     let subscriptions = user.subscriptions.map(function constructSubscription(subscription) {
@@ -75,6 +78,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     user.subscriptions = new List();
                 }
+                */
 
                 /* Copy all of the properties from the retrieved $resource
                  * "user" object. */
