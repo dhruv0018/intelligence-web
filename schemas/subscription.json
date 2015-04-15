@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/krossover/subscription",
+    "title": "Subscription Schema",
+    "type": "Object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "type": {
+            "type": "integer"
+        },
+        "userId": {
+            "type": ["null", "integer"]
+        },
+        "teamId": {
+            "type": ["null", "integer"]
+        },
+        "activatesAt": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "createdAt": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "required": ["userId", "teamId"],
+    "additionalProperties": false
+}
