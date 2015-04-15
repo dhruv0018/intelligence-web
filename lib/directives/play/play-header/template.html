@@ -20,7 +20,7 @@
                 <span class="team">{{ opposingTeam.name }}</span>
             </h4>
 
-            <h4 class="column" ng-if="!isIndexer">
+            <h4 class="column" ng-if="!isIndexer && !isReelsPlay">
 
                 <span class="team">{{teams[play.possessionTeamId].name}}</span>
 
@@ -31,16 +31,34 @@
                 </div>
 
             </h4>
+            <div ng-if="!isIndexer && isReelsPlay">
+                <h4 class="title">
+                    <span ng-show="editFlag">{{index + 1}}.&nbsp;</span>
+                    <krossover-play-summaries events="play.events"></krossover-play-summaries>
+                    <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
+                </h4>
 
-        </div>
+                <h5 class="subtitle">
+                    <span class="teams">{{team.name}} vs {{opposingTeam.name}}</span>
+                </h5>
 
                 <span
-                    class="playplay"
-                    ng-click="videoPlayer.play()"
-                    ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
+                    ng-show="editFlag"
+                    class="delete-reel-play"
+                    ng-click="deleteReelPlay(index)"
                     >
-                    <i class="icon icon-play-circle"></i>
+                    <i class="icon icon-remove"></i>
                 </span>
+            </div>
+        </div>
+
+        <span
+            class="playplay"
+            ng-click="videoPlayer.play()"
+            ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
+            >
+            <i class="icon icon-play-circle"></i>
+        </span>
 
     </div>
 </div>
