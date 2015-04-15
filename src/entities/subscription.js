@@ -2,8 +2,7 @@
 import Entity from './entity.js';
 
 const tv4 = require('tv4');
-const SCHEMAS_PATH = '../../schemas/';
-const schema = require(SCHEMAS_PATH + 'subscription.json');
+const schema = require('../../schemas/subscription.json');
 
 class Subscription extends Entity {
 
