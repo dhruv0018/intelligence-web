@@ -15,17 +15,6 @@ class List extends Collection {
     }
 
     /**
-     * Getter:length
-     * Returns length of list
-     *
-     * @return: {Integer} length
-     */
-    get length() {
-
-        return this.length;
-    }
-
-    /**
      * Method:clear
      * Removes all entries in the list
      *
