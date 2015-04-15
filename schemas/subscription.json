@@ -32,6 +32,6 @@
             "format": "date-time"
         }
     },
-    "required": ["userId", "teamId"], // Mutually exclusive
+    "required": ["userId", "teamId"],
     "additionalProperties": false
 }
