@@ -92,7 +92,9 @@ IntelligenceWebClient.service('AuthenticationService', [
                 session.clearCurrentUser();
                 sessionStorage.clear();
                 localStorage.clear();
-                storage.clear();
+
+                /* Database deletion is wrapped in a promise. */
+                return storage.clear(); // StorageManger: managers/storage.js
             },
 
             /**

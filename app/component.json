@@ -6,6 +6,7 @@
     "locals": [
         "root",
         "login",
+        "logout",
         "header",
         "account",
         "admin",
