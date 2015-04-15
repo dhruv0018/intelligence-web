@@ -1,32 +1,7 @@
-
 <div
-    ng-switch
-    on="isReelsPlay"
-    ng-hide="!play.hasVisibleEvents && !isIndexer"
->
-    <!-- - - - - - - - - REEL PLAY - - - - - - - - -->
-    <div
-        ng-switch-when="true"
-        class="play play__reel"
-        ng-class="{ active: play.id == playManager.current.id, 'edit-mode': editFlag }"
-    >
-        <play-header></play-header>
-        <ul
-            class="playBody"
-            ng-show="!editFlag && expandAll"
-            ng-hide="!expandAll && (editFlag || play !== playManager.current)"
-        >
-            <krossover-event ng-repeat="event in play.events"></krossover-event>
-
-        </ul>
-    </div>
-
-    <!-- - - - - - - - - DEFAULT PLAY - - - - - - - - -->
-    <div
-        ng-switch-default
         ng-hide="!play.hasVisibleEvents && !isIndexer"
         class="play"
-        ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll }"
+        ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll, 'edit-mode': editFlag }"
         ng-click="selectPlay()"
     >
         <play-header></play-header>
@@ -36,8 +11,9 @@
             ng-if="
                 isIndexer ||
                 expandAll ||
-                play === playManager.current"
-            ng-class="{'playHide': (!expandAll && play != playManager.current) }"
+                play === playManager.current ||
+                isReelsPlay && !editFlag && expandAll"
+            ng-class="{'playHide': (!expandAll && (play != playManager.current || isReelsPlay && editFlag )), 'play__reel': isReelsPlay }"
         >
             <krossover-event ng-repeat="event in play.events"></krossover-event>
         </ul>
@@ -91,4 +67,4 @@
 
     </div>
 
-</div>
+
