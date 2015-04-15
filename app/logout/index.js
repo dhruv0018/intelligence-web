@@ -10,12 +10,15 @@ var Logout = angular.module('logout', [
     'ui.bootstrap'
 ]);
 
+var templateUrl = 'logout.html';
+var template    = require('./template.html');
+
 /* Cache the template file */
 Logout.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('logout.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 
@@ -34,7 +37,7 @@ Logout.config([
                 url: '/logout',
                 views: {
                     'root': {
-                        templateUrl: 'logout.html',
+                        templateUrl: templateUrl,
                         controller: 'LogoutController'
                     }
                 },
