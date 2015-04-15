@@ -54,7 +54,7 @@
 
         <span
             class="playplay"
-            ng-click="videoPlayer.play()"
+            ng-click="viewAssociatedPlayContent(); videoPlayer.play()"
             ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
             >
             <i class="icon icon-play-circle"></i>
