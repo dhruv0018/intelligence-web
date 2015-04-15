@@ -122,13 +122,15 @@ Login.config([
                     }
                 },
 
-                onEnter: function($state, $stateParams) {
+                onEnter: ['$state', '$stateParams',
+                    function($state, $stateParams) {
 
-                    if (!$stateParams.token) {
+                        if (!$stateParams.token) {
 
-                        throw new Error('No password reset token!');
+                            throw new Error('No password reset token!');
+                        }
                     }
-                }
+                ]
             });
     }
 ]);

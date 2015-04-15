@@ -1,3 +1,6 @@
+import List from '../collections/list.js';
+import Subscription from '../entities/subscription.js';
+
 var PAGE_SIZE = 1000;
 
 var pkg = require('../../package.json');
@@ -62,6 +65,20 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     } else {
                         team.roster.playerInfo = {};
                     }
+                }
+
+                if (team.subscriptions) {
+
+                    let subscriptions = team.subscriptions.map(function constructSubscription(subscription) {
+
+                        return new Subscription(subscription);
+                    });
+
+                    team.subscriptions = new List(subscriptions);
+                }
+                else {
+
+                    team.subscriptions = new List();
                 }
 
                 angular.extend(team, self);
@@ -322,6 +339,43 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 var activePlayerInfo = self.getActivePlayerInfo();
 
                 return Object.keys(activePlayerInfo).length > 0;
+            },
+
+            /**
+             * @class Team
+             * @method addSubscription
+             *
+             * @param {Object} subscription - Subscription object to add
+             * @param {Object} team - Team to add the subscription to
+             *
+             * Adds the given subscription to the given team
+             */
+            addSubscription: function(subscription, team = this) {
+
+                switch (arguments.length) {
+
+                    case 0:
+
+                        throw new Error('Invoked TeamsFactory.addSubscription without any argument(s)');
+                }
+
+                team.subscriptions.add(subscription);
+            },
+
+            /**
+             * @class Team
+             * @method getActiveSubscription
+             *
+             * @param {Object} team - Team being queried
+             * @returns {Object} - Most recently added active subscription
+             *
+             * Provides the most recently active subscription that is active today
+             */
+            getActiveSubscription: function(team = this) {
+
+                let mostRecent = team.subscriptions.first();
+
+                return (mostRecent.isActive ? mostRecent : undefined);
             }
         };
 
