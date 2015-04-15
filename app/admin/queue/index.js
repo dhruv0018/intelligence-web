@@ -43,7 +43,7 @@ Queue.service('Admin.Queue.Data.Dependencies', [
         ];
 
         var Data = {
-
+            statuses: statuses,
             sports: sports.load(),
             leagues: leagues.load(),
             //TODO should be able to use load, but causes wierd caching issues
@@ -135,9 +135,7 @@ Queue.controller('QueueController', [
         $scope.sportsList = sports.getList();
         $scope.teamsList = teams.getList();
         $scope.usersList = users.getList();
-        $scope.games = games.getList().filter(function(game) {
-            return !game.isDeleted && game.status !== GAME_STATUSES.NOT_INDEXED.id;
-        });
+        $scope.games = games.getList({ 'status[]': data.statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id });
 
         //initially show everything
         $scope.queue = $scope.games;
