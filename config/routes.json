@@ -29,6 +29,11 @@
         "*": true
     },
 
+    "logout": {
+
+        "*": true
+    },
+
     "locked": {
 
         "*": true
