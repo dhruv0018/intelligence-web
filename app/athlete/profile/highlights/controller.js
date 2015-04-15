@@ -48,17 +48,29 @@ function HighlightsController (
 
         // Load the plays in the plays manager
         playsManager.reset(playsArray);
-        $scope.currentPlay = playsArray[0];
-        $scope.clipTotal = $scope.featuredReel.plays.length;
 
-        $scope.$watch('currentPlay', function updatePlayInfo() {
-            $scope.sources = $scope.currentPlay.getVideoSources();
-            videoPlayer.changeSource($scope.sources);
-            //Featured reel clip information
-            $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
+        // Start with first play
+        $scope.currentPlay = playsArray[0];
+        $scope.sources = $scope.currentPlay.getVideoSources();
+        $scope.clipTotal = $scope.featuredReel.plays.length;
+        $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
+
+        $scope.$watch('clipIndex', function updatePlayInfo() {
+            // When clip index is changed, change that oh
             $scope.previousPlay = playsManager.getPreviousPlay($scope.currentPlay);
             $scope.nextPlay = playsManager.getNextPlay($scope.currentPlay);
         });
+
+        $scope.goToPlay = function goToPlay(play) {
+            $scope.currentPlay = play;
+
+            // Replace video sources
+            $scope.sources = $scope.currentPlay.getVideoSources();
+            videoPlayer.changeSource($scope.sources);
+
+            // Change clip index to reflect current play
+            $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
+        };
 
         $scope.highlightReels = [];
 }

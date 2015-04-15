@@ -18,6 +18,41 @@
             }
         }
 
+        .clips-navigation {
+            height: 60px;
+            border: thin solid @gray-border;
+            margin-top: 10px;
+
+            div {
+                display: inline-block;
+                padding: 5px;
+                line-height: 60px;
+            }
+
+            .clip-previous {
+                border-right: thin solid @gray-border;
+                text-transform: capitalize;
+            }
+
+            .clip-info {
+
+                .clip-athlete-info {
+                    border-right: thin solid @gray-border;
+                    color: @brand-blue;
+                }
+
+                .clip-count {
+
+                }
+            }
+
+            .clip-next {
+                .pull-right;
+                border-left: thin solid @gray-border;
+                text-transform: capitalize;
+            }
+        }
+
         @media only screen
         and (min-width: @md-screen-sm) {
             width: 70%;

@@ -5,24 +5,24 @@
             <h3>{{featuredReel.name}}</h3>
         </div>
         <video-player sources="sources"></video-player>
-        <div class="clips-navigation">
+    </div>
 
-            <div ng-class="{disabled: !previousPlay}"
-                 class="clip-previous"
-                 ng-click="currentPlay = previousPlay">
-                <i class="icon icon-chevron-left"></i>Prev
-            </div>
+    <div class="clips-navigation">
+        <div ng-class="{disabled: !previousPlay}"
+             class="clip-previous"
+             ng-click="goToPlay(previousPlay)">
+            <i class="icon icon-chevron-left"></i>&nbsp;Prev
+        </div>
 
-            <div class="clip-info">
-                <div>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</div>
-                <div class="clip-count">Clip&nbsp;{{clipIndex}}/{{clipTotal}}</div>
-            </div>
+        <div class="clip-info">
+            <div class="clip-athlete-info">{{athlete.firstName}}&nbsp;{{athlete.lastName}}</div>
+            <div class="clip-count">Clip&nbsp;{{clipIndex}}/{{clipTotal}}</div>
+        </div>
 
-            <div ng-class="{disabled: !nextPlay}"
-                 class="clip-next"
-                 ng-click="currentPlay = nextPlay">
-                Next<i class="icon icon-chevron-right"></i>
-            </div>
+        <div ng-class="{disabled: !nextPlay}"
+             class="clip-next"
+             ng-click="goToPlay(nextPlay)">
+            Next&nbsp;<i class="icon icon-chevron-right"></i>
         </div>
     </div>
 
