@@ -5,7 +5,11 @@
     ],
     "locals": [
         "button-video-forward",
-        "button-video-backward"
+        "button-video-backward",
+        "button-video-step-forward",
+        "button-video-step-backward"
+
+
     ],
     "templates": [
         "template.html",
