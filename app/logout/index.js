@@ -10,8 +10,8 @@ var Logout = angular.module('logout', [
     'ui.bootstrap'
 ]);
 
-var templateUrl = 'logout.html';
-var template    = require('./template.html');
+const templateUrl = 'logout.html';
+const template    = require('./template.html');
 
 /* Cache the template file */
 Logout.run([
