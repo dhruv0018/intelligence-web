@@ -49,8 +49,13 @@ var ARENA_TYPES = {
         id: 7,
         name: 'Football',
         type: 'FOOTBALL'
-    }
+    },
 
+    8: {
+        id: 8,
+        name: 'Volleyball',
+        type: 'VOLLEYBALL'
+    }
 };
 
 IntelligenceWebClient.constant('ARENA_TYPES', ARENA_TYPES);
@@ -63,7 +68,8 @@ var ARENA_IDS = {
     4: 'BASKETBALL',
     5: 'LACROSSE',
     6: 'LACROSSE',
-    7: 'FOOTBALL'
+    7: 'FOOTBALL',
+    8: 'VOLLEYBALL'
 };
 
 IntelligenceWebClient.constant('ARENA_IDS', ARENA_IDS);
