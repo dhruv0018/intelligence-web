@@ -30,20 +30,37 @@ Queue.run([
  * @module Queue
  * @type {service}
  */
-Queue.service('Admin.Queue.Data.Dependencies', [
-    'VIEWS', 'ROLE_TYPE', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function(VIEWS, ROLE_TYPE, sports, leagues, teams, games, users) {
-        var Data = {
-            sports: sports.load(),
-            leagues: leagues.load(),
-            //TODO should be able to use load, but causes wierd caching issues
-            users: users.load(VIEWS.QUEUE.USERS),
-            teams: teams.load(VIEWS.QUEUE.TEAMS),
-            games: games.load(VIEWS.QUEUE.GAME)
-        };
-        return Data;
-    }
-]);
+Queue.service('Admin.Queue.Data.Dependencies', AdminQueueDataDependencies);
+
+AdminQueueDataDependencies.$inject = [
+    'VIEWS',
+    'ROLE_TYPE',
+    'SportsFactory',
+    'LeaguesFactory',
+    'TeamsFactory',
+    'GamesFactory',
+    'UsersFactory'
+];
+
+function AdminQueueDataDependencies (
+    VIEWS,
+    ROLE_TYPE,
+    sports,
+    leagues,
+    teams,
+    games,
+    users
+) {
+    var Data = {
+        sports: sports.load(),
+        leagues: leagues.load(),
+        //TODO should be able to use load, but causes wierd caching issues
+        users: users.load(VIEWS.QUEUE.USERS),
+        teams: teams.load(VIEWS.QUEUE.TEAMS),
+        games: games.load(VIEWS.QUEUE.GAME)
+    };
+    return Data;
+}
 
 /**
  * Queue page state router.
