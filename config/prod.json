@@ -92,5 +92,16 @@
     "defaultVideoId": 2,
     "athleteProfile": {
         "isEnabled": false
+    },
+    "videoplayer": {
+        "playbackRate": {
+            "slow": 0.5,
+            "normal": 1.0,
+            "fast": 2.0
+        },
+        "stepTime": {
+            "slow": 0.08,
+            "fast": 0.3
+        }
     }
 }
