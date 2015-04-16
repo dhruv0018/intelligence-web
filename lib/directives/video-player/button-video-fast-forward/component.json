@@ -1,12 +1,9 @@
 {
-    "name": "button-video-forward",
+    "name": "button-video-fast-forward",
     "templates": [
         "template.html"
     ],
     "scripts": [
         "index.js"
-    ],
-    "styles": [
-        "styles.less"
     ]
 }

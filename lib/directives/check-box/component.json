@@ -1,12 +1,12 @@
 {
-    "name": "button-video-backward",
+    "name": "check-box",
     "templates": [
         "template.html"
     ],
-    "scripts": [
-        "index.js"
-    ],
     "styles": [
         "styles.less"
+    ],
+    "scripts": [
+        "index.js"
     ]
 }

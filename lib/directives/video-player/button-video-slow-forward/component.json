@@ -1,0 +1,9 @@
+{
+    "name": "button-video-slow-forward",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

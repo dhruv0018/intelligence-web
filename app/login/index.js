@@ -122,13 +122,15 @@ Login.config([
                     }
                 },
 
-                onEnter: function($state, $stateParams) {
+                onEnter: ['$state', '$stateParams',
+                    function($state, $stateParams) {
 
-                    if (!$stateParams.token) {
+                        if (!$stateParams.token) {
 
-                        throw new Error('No password reset token!');
+                            throw new Error('No password reset token!');
+                        }
                     }
-                }
+                ]
             });
     }
 ]);
@@ -139,159 +141,202 @@ Login.config([
  * @name LoginController
  * @type {Controller}
  */
-Login.controller('LoginController', [
-    'config', '$rootScope', '$scope', '$state', '$stateParams', '$window', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService', 'AlertsService', 'UsersFactory', 'EMAIL_REQUEST_TYPES',
-    function controller(config, $rootScope, $scope, $state, $stateParams, $window, ROLES, auth, session, account, alerts, users, EMAIL_REQUEST_TYPES) {
+Login.controller('LoginController', LoginController);
 
-        $scope.config = config;
+LoginController.$inject = [
+    'config',
+    '$rootScope',
+    '$scope',
+    '$state',
+    '$stateParams',
+    '$window',
+    'ROLES',
+    'AuthenticationService',
+    'SessionService',
+    'AccountService',
+    'AlertsService',
+    'UsersFactory',
+    'AnalyticsService',
+    'EMAIL_REQUEST_TYPES',
+];
 
-        var currentUser = session.retrieveCurrentUser();
+function LoginController(
+    config,
+    $rootScope,
+    $scope,
+    $state,
+    $stateParams,
+    $window,
+    ROLES,
+    auth,
+    session,
+    account,
+    alerts,
+    users,
+    analytics,
+    EMAIL_REQUEST_TYPES
+) {
 
-        if (currentUser && currentUser.persist) {
+    $scope.config = config;
 
-            $scope.login = {};
-            $scope.login.email = currentUser.email;
-            $scope.login.remember = currentUser.persist;
-        }
+    var currentUser = session.retrieveCurrentUser();
 
-        $scope.submitLogin = function() {
+    if (currentUser && currentUser.persist) {
 
-            $scope.login.submitted = true;
+        $scope.login = {};
+        $scope.login.email = currentUser.email;
+        $scope.login.remember = currentUser.persist;
+    }
 
-            var email = $scope.login.email;
-            var password = $scope.login.password;
-            var persist = $scope.login.remember;
+    $scope.submitLogin = function() {
 
-            /* Login the user. */
-            auth.loginUser(email, password, persist).then(function(user) {
-                if (user) {
-                    /* If the user has more than one role, but has not selected
-                     * a default one yet. */
-                    if (user.isActive() && !user.defaultRole) {
-                        $state.go('roles', false);
-                    } else {
-                        account.gotoUsersHomeState(user);
-                    }
+        $scope.login.submitted = true;
 
-                    user.lastAccessed = new Date().toISOString();
-                    user.save();
-                }
+        var email = $scope.login.email;
+        var password = $scope.login.password;
+        var persist = $scope.login.remember;
 
-            }, function(error) {
+        /* Login the user. */
+        auth.loginUser(email, password, persist).then(function(user) {
+            if (user) {
 
-                if (error) {
+                /* Track the event for MixPanel */
+                analytics.track('Login', 'Selected', 'SignIn');
 
-                    $scope.login.submitted = false;
+                /* If the user has more than one role, but has not selected
+                 * a default one yet. */
+                if (user.isActive() && !user.defaultRole) {
+                    $state.go('roles', false).then(function () {
 
-                    /* Handle case where the API returns an error because the
-                     * user is forbidden from logging in. */
-                    if (error.name === 'ForbiddenError') {
-
-                        $state.go('locked');
-                    }
-
-                    /* Handle case where the API returns an error because the
-                     * user was not found in the system. */
-                    else if (error.name === 'NotFoundError') {
-
-                        $window.form.email.focus();
-                        $scope.form.email.$setValidity('notfound', false);
-                    }
-
-                    /* Handle case where the API returns an error because the
-                     * user is not authorized. */
-                    else if (error.name === 'NotAuthorizedError') {
-
-                        $scope.login.password = '';
-                        $window.form.password.focus();
-                        $scope.form.password.$setValidity('password', false);
-                    }
-
-                    else throw error;
-                }
-            });
-        };
-
-        $scope.submitForgotPassword = function() {
-
-            $scope.login.submitted = true;
-
-            var email = $scope.$parent.login.email;
-
-            users.resendEmail(EMAIL_REQUEST_TYPES.FORGOTTEN_PASSWORD, null, email).then(
-
-                function success() {
-
-                    $scope.$parent.login = {};
-                    $scope.$parent.login.submitted = false;
-
-                    $state.go('login', {}, {
-
-                        location: 'replace'
-
-                    }).then(function() {
-
-                        alerts.add({
-                            type: 'info',
-                            message: 'An email has been sent to ' + email + ' with further instructions'
-                        });
+                        /* Indentify the user for MixPanel */
+                        analytics.identify();
                     });
+                } else {
+                    account.gotoUsersHomeState(user).then(function () {
+
+                        /* Indentify the user for MixPanel */
+                        analytics.identify();
+                    });
+                }
+
+                user.lastAccessed = new Date().toISOString();
+                user.save();
+            }
+
+        }, function(error) {
+
+            if (error) {
+
+                $scope.login.submitted = false;
+
+                /* Handle case where the API returns an error because the
+                 * user is forbidden from logging in. */
+                if (error.name === 'ForbiddenError') {
+
+                    $state.go('locked');
+                }
+
+                /* Handle case where the API returns an error because the
+                 * user was not found in the system. */
+                else if (error.name === 'NotFoundError') {
+
+                    $window.form.email.focus();
+                    $scope.form.email.$setValidity('notfound', false);
+                }
+
+                /* Handle case where the API returns an error because the
+                 * user is not authorized. */
+                else if (error.name === 'NotAuthorizedError') {
+
+                    $scope.login.password = '';
+                    $window.form.password.focus();
+                    $scope.form.password.$setValidity('password', false);
+                }
+
+                else throw error;
+            }
+        });
+    };
+
+    $scope.submitForgotPassword = function() {
+
+        $scope.login.submitted = true;
+
+        var email = $scope.$parent.login.email;
+
+        users.resendEmail(EMAIL_REQUEST_TYPES.FORGOTTEN_PASSWORD, null, email).then(
+
+            function success() {
+
+                $scope.$parent.login = {};
+                $scope.$parent.login.submitted = false;
+
+                $state.go('login', {}, {
+
+                    location: 'replace'
+
+                }).then(function() {
+
+                    alerts.add({
+                        type: 'info',
+                        message: 'An email has been sent to ' + email + ' with further instructions'
+                    });
+                });
+            },
+
+            function error(data, status) {
+
+                $scope.login.submitted = false;
+
+                /* Handle case where the API returns an error because the
+                 * user was not found in the system. */
+                if (status === 404) {
+
+                    $scope.login.email = '';
+                    $window.form.email.focus();
+                    $scope.form.email.$setValidity('notfound', false);
+                }
+
+                else {
+
+                    alerts.add({
+                        type: 'danger',
+                        message: 'Error requesting password reset for ' + email
+                    });
+                }
+            }
+
+        );
+    };
+
+    $scope.submitResetPassword = function() {
+
+        if ($stateParams.token) {
+
+            users.passwordReset($stateParams.token, $scope.reset.password).then(
+
+
+                function success(data, status) {
+
+                    $scope.reset.submitted = false;
+
+                    $scope.login = {};
+                    $scope.login.email = data.email;
+                    $scope.login.password = $scope.reset.password;
+
+                    $scope.submitLogin();
                 },
 
                 function error(data, status) {
 
-                    $scope.login.submitted = false;
+                    alerts.add({
+                        type: 'danger',
+                        message: 'There was a problem resetting your password'
+                    });
 
-                    /* Handle case where the API returns an error because the
-                     * user was not found in the system. */
-                    if (status === 404) {
-
-                        $scope.login.email = '';
-                        $window.form.email.focus();
-                        $scope.form.email.$setValidity('notfound', false);
-                    }
-
-                    else {
-
-                        alerts.add({
-                            type: 'danger',
-                            message: 'Error requesting password reset for ' + email
-                        });
-                    }
+                    throw new Error('Could not reset password');
                 }
-
             );
-        };
-
-        $scope.submitResetPassword = function() {
-
-            if ($stateParams.token) {
-
-                users.passwordReset($stateParams.token, $scope.reset.password).then(
-
-
-                    function success(data, status) {
-
-                        $scope.reset.submitted = false;
-
-                        $scope.login = {};
-                        $scope.login.email = data.email;
-                        $scope.login.password = $scope.reset.password;
-
-                        $scope.submitLogin();
-                    },
-
-                    function error(data, status) {
-
-                        alerts.add({
-                            type: 'danger',
-                            message: 'There was a problem resetting your password'
-                        });
-
-                        throw new Error('Could not reset password');
-                    }
-                );
-            }
-        };
-    }
-]);
+        }
+    };
+}

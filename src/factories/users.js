@@ -1,3 +1,6 @@
+import List from '../collections/list.js';
+import Subscription from '../entities/subscription.js';
+
 var pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -6,8 +9,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$injector', '$rootScope', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES',
-    function($injector, $rootScope, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES) {
+    '$injector', '$rootScope', '$http', 'config', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES',
+    function($injector, $rootScope, $http, config, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES) {
 
         var UsersFactory = {
 
@@ -56,6 +59,24 @@ IntelligenceWebClient.factory('UsersFactory', [
                         }
                     });
                 }
+
+                /*
+                 * FIXME: This fails unit tests in user extend
+
+                if (user.subscriptions) {
+
+                    let subscriptions = user.subscriptions.map(function constructSubscription(subscription) {
+
+                        return new Subscription(subscription);
+                    });
+
+                    user.subscriptions = new List(subscriptions);
+                }
+                else {
+
+                    user.subscriptions = new List();
+                }
+                */
 
                 /* Copy all of the properties from the retrieved $resource
                  * "user" object. */
@@ -308,6 +329,43 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                     roles[i].isDefault = angular.equals(roles[i], newDefaultRole);
                 }
+            },
+
+            /**
+             * @class User
+             * @method addSubscription
+             *
+             * @param {Object} user - User to add the subscription to
+             * @param {Object} subscription - Subscription object to add
+             *
+             * Adds the given subscription to the given user
+             */
+            addSubscription: function(subscription, user = this) {
+
+                switch (arguments.length) {
+
+                    case 0:
+
+                    throw new Error('Invoked UsersFactory.addSubscription without any argument(s)');
+                }
+
+                user.subscriptions.add(subscription);
+            },
+
+            /**
+             * @class User
+             * @method hasActiveSubscription
+             *
+             * @param {Object} user - User being queried
+             * @returns {Object} - Most recently added active subscription
+             *
+             * Provides the most recently active subscription that is active toda
+             */
+            getActiveSubscription: function(user = this) {
+
+                let mostRecent = user.subscriptions.first();
+
+                return (mostRecent.isActive ? mostRecent : undefined);
             },
 
             /**
@@ -606,9 +664,9 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
             * @class User
-            * @method
+            * @method getFeaturedReelId
             * @returns {Integer} returns the user's featuredReelId
-            * Gets the users user's featuredReelId
+            * Gets the user's featuredReelId
             */
             getFeaturedReelId: function() {
 
@@ -618,13 +676,40 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
             * @class User
-            * @method
-            * Sets the users user's featuredReelId
+            * @method setFeaturedReelId
+            * Sets the user's featuredReelId
             */
             setFeaturedReelId: function(reelIdValue) {
 
                 var self = this;
                 self.profile.featuredReelId = reelIdValue;
+            },
+            /**
+            * @class User
+            * @method uploadProfilePicture
+            * Uploads the user's profile picture to the database
+            */
+            uploadProfilePicture: function() {
+                let self = this;
+
+                let data = new FormData();
+                data.append('imageFile', self.fileImage);
+
+                return $http.post(config.api.uri + 'users/' + self.id + '/image/file', data, {
+                    headers: { 'Content-Type': undefined },
+                    transformRequest: angular.identity
+                });
+            },
+            removeTeamFromProfile: function(teamId) {
+                let self = this;
+
+                let profileTeams = self.profile.teams;
+
+                profileTeams.forEach((team, index, teams) => {
+                    if (team.teamId === teamId) {
+                        teams.splice(index, 1);
+                    }
+                });
             }
         };
 

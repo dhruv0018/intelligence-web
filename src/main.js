@@ -49,6 +49,7 @@ require('./services/alerts');
 require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
+require('./services/analytics');
 
 require('./constants/users');
 require('./constants/games');

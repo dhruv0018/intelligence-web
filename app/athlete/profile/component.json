@@ -14,7 +14,8 @@
     "locals": [
         "highlights",
         "academics",
-        "stats"
+        "stats",
+        "edit-profile"
     ],
     "paths": [
         "."

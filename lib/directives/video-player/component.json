@@ -4,8 +4,10 @@
         "."
     ],
     "locals": [
-        "button-video-forward",
-        "button-video-backward",
+        "button-video-fast-forward",
+        "button-video-fast-backward",
+        "button-video-slow-forward",
+        "button-video-slow-backward",
         "cuepoints"
     ],
     "templates": [

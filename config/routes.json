@@ -29,6 +29,11 @@
         "*": true
     },
 
+    "logout": {
+
+        "*": true
+    },
+
     "locked": {
 
         "*": true
@@ -395,6 +400,35 @@
     "Athlete.Profile.Stats": {
 
         "*": true
+    },
+
+    "Athlete.Profile.EditProfile": {
+
+        "Athlete": true
+    },
+
+    "Athlete.Profile.EditProfile.Academics": {
+
+        "Athlete": true
+    },
+
+    "Athlete.Profile.EditProfile.Experience": {
+
+        "Athlete": true
+    },
+    "Athlete.Profile.EditProfile.BasicInfo": {
+
+        "Athlete": true
+    },
+
+    "Athlete.Profile.EditProfile.Contact": {
+
+        "Athlete": true
+    },
+
+    "Athlete.Profile.EditProfile.Physical": {
+
+        "Athlete": true
     },
 
     "Athlete.GameArea": {

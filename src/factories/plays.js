@@ -85,7 +85,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             load (filter) {
 
-                return tagsets.load().then(() => { this.baseLoad(filter); });
+                return tagsets.load().then(() => { return this.baseLoad(filter); });
             },
 
             /**
