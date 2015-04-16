@@ -49,7 +49,7 @@ Profile.config([
                             return reels.load({relatedUserId: userId}).then(function() {
                                 let user = users.get(userId);
                                 let featuredReel = reels.getFeaturedReel(user);
-                                return plays.load(featuredReel.plays);
+                                if (featuredReel) return plays.load(featuredReel.plays);
                             });
                         });
                     }

@@ -38,28 +38,31 @@ function HighlightsController (
         $scope.athlete = users.get($stateParams.id);
         $scope.featuredReel = reels.getFeaturedReel($scope.athlete);
 
-        let playsArray = [];
+        if ($scope.featuredReel) {
 
-        // Populate the array with play objects from playIds
-        for (let i = 0; i < $scope.featuredReel.plays.length; i++) {
-            let play = plays.get($scope.featuredReel.plays[i]);
-            playsArray.push(play);
+            let playsArray = [];
+
+            // Populate the array with play objects from playIds
+            for (let i = 0; i < $scope.featuredReel.plays.length; i++) {
+                let play = plays.get($scope.featuredReel.plays[i]);
+                playsArray.push(play);
+            }
+
+            // Load the plays in the plays manager
+            playsManager.reset(playsArray);
+
+            // Start with first play
+            $scope.currentPlay = playsArray[0];
+            $scope.sources = $scope.currentPlay.getVideoSources();
+            $scope.clipTotal = $scope.featuredReel.plays.length;
+            $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
+
+            $scope.$watch('clipIndex', function updatePlayInfo() {
+                // When clip index is changed, change that oh
+                $scope.previousPlay = playsManager.getPreviousPlay($scope.currentPlay);
+                $scope.nextPlay = playsManager.getNextPlay($scope.currentPlay);
+            });
         }
-
-        // Load the plays in the plays manager
-        playsManager.reset(playsArray);
-
-        // Start with first play
-        $scope.currentPlay = playsArray[0];
-        $scope.sources = $scope.currentPlay.getVideoSources();
-        $scope.clipTotal = $scope.featuredReel.plays.length;
-        $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
-
-        $scope.$watch('clipIndex', function updatePlayInfo() {
-            // When clip index is changed, change that oh
-            $scope.previousPlay = playsManager.getPreviousPlay($scope.currentPlay);
-            $scope.nextPlay = playsManager.getNextPlay($scope.currentPlay);
-        });
 
         $scope.goToPlay = function goToPlay(play) {
             $scope.currentPlay = play;

@@ -1,13 +1,13 @@
 <div class="highlights">
 
-    <div class="featured-reel-container">
+    <div class="featured-reel-container" ng-show="featuredReel">
         <div class="featured-reel-header">
             <h3>{{featuredReel.name}}</h3>
         </div>
         <video-player sources="sources"></video-player>
     </div>
 
-    <div class="clips-navigation">
+    <div class="clips-navigation" ng-show="featuredReel">
         <div ng-class="{disabled: !previousPlay}"
              class="clip-previous"
              ng-click="goToPlay(previousPlay)">
@@ -15,8 +15,7 @@
         </div>
 
         <div class="clip-info">
-            <div class="clip-athlete-info">{{athlete.firstName}}&nbsp;{{athlete.lastName}}</div>
-            <div class="clip-count">Clip&nbsp;{{clipIndex}}/{{clipTotal}}</div>
+            Clip&nbsp;{{clipIndex}}/{{clipTotal}}
         </div>
 
         <div ng-class="{disabled: !nextPlay}"

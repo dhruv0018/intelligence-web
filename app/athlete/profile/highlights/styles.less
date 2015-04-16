@@ -15,41 +15,8 @@
             h3 {
                 margin: 0;
                 line-height: 60px;
-            }
-        }
-
-        .clips-navigation {
-            height: 60px;
-            border: thin solid @gray-border;
-            margin-top: 10px;
-
-            div {
-                display: inline-block;
-                padding: 5px;
-                line-height: 60px;
-            }
-
-            .clip-previous {
-                border-right: thin solid @gray-border;
-                text-transform: capitalize;
-            }
-
-            .clip-info {
-
-                .clip-athlete-info {
-                    border-right: thin solid @gray-border;
-                    color: @brand-blue;
-                }
-
-                .clip-count {
-
-                }
-            }
-
-            .clip-next {
-                .pull-right;
-                border-left: thin solid @gray-border;
-                text-transform: capitalize;
+                font-weight: 400;
+                color: @gray-darker;
             }
         }
 
@@ -57,6 +24,45 @@
         and (min-width: @md-screen-sm) {
             width: 70%;
             border: thin solid @gray-border;
+        }
+    }
+
+    .clips-navigation {
+        height: 60px;
+        width: 100%;
+        border: thin solid @gray-border;
+        margin: auto;
+        margin-top: 0;
+        background-color: white;
+        color: @gray-darker;
+
+        .clip-previous {
+            display: inline-block;
+            padding: 0 15px;
+            border-right: thin solid @gray-border;
+            line-height: 60px;
+            text-transform: uppercase;
+        }
+
+        .clip-info {
+            padding: 0 5px;
+            line-height: 60px;
+            display: inline-block;
+        }
+
+        .clip-next {
+            .pull-right;
+            display: inline-block;
+            padding: 0 15px;
+            border-left: thin solid @gray-border;
+            line-height: 60px;
+            text-transform: uppercase;
+        }
+
+        @media only screen
+        and (min-width: @md-screen-sm) {
+            width: 70%;
+            margin-top: 10px;
         }
     }
 
