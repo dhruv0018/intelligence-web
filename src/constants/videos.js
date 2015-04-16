@@ -40,6 +40,15 @@ const VIDEO_STATUSES = {
 
 IntelligenceWebClient.constant('VIDEO_STATUSES', VIDEO_STATUSES);
 
+const TRANSCODE_PROFILES_IDS = {
+
+    1: 'SD_LOW',
+    2: 'SD_HIGH',
+    3: 'HD'
+};
+
+IntelligenceWebClient.constant('TRANSCODE_PROFILES_IDS', TRANSCODE_PROFILES_IDS);
+
 const TRANSCODE_PROFILES = {
 
     SD_LOW: {
