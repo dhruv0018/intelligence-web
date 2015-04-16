@@ -256,13 +256,16 @@ Queue.controller('QueueController', [
                         $scope.queue = [];
                         $scope.queue[0] = game;
                         $scope.noResults = false;
-                        $scope.searching = false;
                     },
 
                     function error() {
 
                         $scope.queue = [];
                         $scope.noResults = true;
+                    },
+
+                    function final () {
+
                         $scope.searching = false;
                     }
                 );
@@ -276,13 +279,16 @@ Queue.controller('QueueController', [
 
                         $scope.queue = games;
                         $scope.noResults = false;
-                        $scope.searching = false;
                     },
 
                     function error() {
 
                         $scope.queue = [];
                         $scope.noResults = true;
+                    },
+
+                    function final () {
+
                         $scope.searching = false;
                     }
                 );
