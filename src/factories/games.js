@@ -32,7 +32,9 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 let copy = {};
 
-                delete game.$promise; // cannot stringify a circular object, thus remove
+                /* remove non-stringifiable circular objects */
+                delete game.$promise;
+                delete game.flow;
 
                 // copy share attributes that rely on game functions.
                 // TODO: This sharing copying should not have to be done. It should model reels implementation.
