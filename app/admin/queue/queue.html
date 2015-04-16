@@ -123,7 +123,7 @@
             </table>
         </div>
 
-        <div class="list" data-ng-hide="noResults">
+        <div class="list" data-ng-hide="noResults || searching">
 
 
             <div class="table-responsive">
@@ -191,7 +191,13 @@
 
         </div>
 
-        <div class="noresults" data-ng-show="noResults">
+        <div class="results" data-ng-show="searching">
+            <h1>Searching...</h1>
+
+            <krossover-spinner ng-if="searching" size="'80px'"></krossover-spinner>
+        </div>
+
+        <div class="results noresults" data-ng-show="noResults">
 
             <i class="icon icon-search"></i>
             <h1>No Results Found</h1>
