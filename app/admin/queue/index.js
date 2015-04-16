@@ -37,11 +37,10 @@ Queue.service('Admin.Queue.Data.Dependencies', [
             sports: sports.load(),
             leagues: leagues.load(),
             //TODO should be able to use load, but causes wierd caching issues
-            users: users.retrieve(VIEWS.QUEUE.USERS),
-            teams: teams.retrieve(VIEWS.QUEUE.TEAMS),
-            games: games.retrieve(VIEWS.QUEUE.GAME)
+            users: users.load(VIEWS.QUEUE.USERS),
+            teams: teams.load(VIEWS.QUEUE.TEAMS),
+            games: games.load(VIEWS.QUEUE.GAME)
         };
-
         return Data;
     }
 ]);
