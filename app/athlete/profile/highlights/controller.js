@@ -40,13 +40,10 @@ function HighlightsController (
 
         if ($scope.featuredReel) {
 
-            let playsArray = [];
-
             // Populate the array with play objects from playIds
-            for (let i = 0; i < $scope.featuredReel.plays.length; i++) {
-                let play = plays.get($scope.featuredReel.plays[i]);
-                playsArray.push(play);
-            }
+            let playsArray = $scope.featuredReel.plays.map(function(playId) {
+                return plays.get(playId);
+            });
 
             // Load the plays in the plays manager
             playsManager.reset(playsArray);
