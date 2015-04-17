@@ -326,8 +326,8 @@ function QueueController (
                 function success(games) {
                     let teamIds = [];
                     /* Get the team names */
-                    for (let i = 0; i < games.length; i++) {
-                        teamIds.push(games[i].teamId, games[i].opposingTeamId);
+                    for (let game of games) {
+                        teamIds.push(game.teamId, game.opposingTeamId);
                     }
                     /* Get the unique teams */
                     teams.load(utilities.unique(teamIds)).then(
