@@ -15,6 +15,7 @@
     "locals": [
         "football-arena",
         "basketball-arena",
-        "lacrosse-arena"
+        "lacrosse-arena",
+        "volleyball-arena"
     ]
 }

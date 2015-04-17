@@ -6,9 +6,7 @@
 
             <div data-ng-if="!athlete.firstName">
                 <p class="pull-left">Add a new player to your roster</p>
-                <a class="pull-right" data-ng-click="cancel()">
-                    <i class="icon icon-remove"></i>
-                </a>
+                <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i>
             </div>
 
             <div data-ng-if="athlete.firstName">
@@ -24,9 +22,7 @@
                 <div class="pull-right">
                     <span data-ng-if="users[athlete.userId].lastAccessed">{{usersFactory.getLastAccessed(users[athlete.userId]) | date: 'mediumDate'}}</span>
 
-                    <a data-ng-click="cancel()">
-                        <i class="icon icon-remove"></i>
-                    </a>
+                    <i class="icon icon-remove" data-ng-click="$dismiss()"></i>
                 </div>
 
             </div>

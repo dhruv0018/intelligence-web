@@ -62,30 +62,30 @@ IntelligenceWebClient.service('AccountService', [
                 /* If the user is a super admin or an admin. */
                 if (user.is(ROLES.SUPER_ADMIN) || user.is(ROLES.ADMIN)) {
 
-                    $state.go('users', null, { reload: reload });
+                    return $state.go('users', null, { reload: reload });
                 }
 
                 /* If the user is an indexer. */
                 else if (user.is(ROLES.INDEXER)) {
 
-                    $state.go('indexer-games', null, { reload: reload });
+                    return $state.go('indexer-games', null, { reload: reload });
                 }
 
                 /* If the user is a coach. */
                 else if (user.is(ROLES.COACH)) {
 
-                    $state.go('Coach.FilmHome', null, { reload: reload });
+                    return $state.go('Coach.FilmHome', null, { reload: reload });
                 }
 
                 /* If the user is an athlete. */
                 else if (user.is(ROLES.ATHLETE)) {
 
-                    $state.go('Athlete.FilmHome', null, { reload: reload });
+                    return $state.go('Athlete.FilmHome', null, { reload: reload });
                 }
 
                 else {
 
-                    $state.go('Account.ContactInfo', null, { reload: reload });
+                    return $state.go('Account.ContactInfo', null, { reload: reload });
                 }
             },
 
