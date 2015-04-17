@@ -300,11 +300,14 @@ function QueueController (
 
                 function success(game) {
                     /* Get the team names */
-                    teams.load([game.teamId, game.opposingTeamId]);
-                    $scope.queue = [];
-                    $scope.queue[0] = game;
-                    $scope.noResults = false;
-                    $scope.searching = false;
+                    teams.load([game.teamId, game.opposingTeamId]).then(
+                        function updateQueue() {
+                            $scope.queue = [];
+                            $scope.queue[0] = game;
+                            $scope.noResults = false;
+                            $scope.searching = false;
+                    });
+
                 },
 
                 function error() {
@@ -323,14 +326,17 @@ function QueueController (
                 function success(games) {
                     let teamIds = [];
                     /* Get the team names */
-                    for (let i=0; i<games.length; i++) {
+                    for (let i = 0; i < games.length; i++) {
                         teamIds.push(games[i].teamId, games[i].opposingTeamId);
                     }
                     /* Get the unique teams */
-                    teams.load(utilities.unique(teamIds));
-                    $scope.queue = games;
-                    $scope.noResults = false;
-                    $scope.searching = false;
+                    teams.load(utilities.unique(teamIds)).then(
+                        function updateQueue() {
+                            $scope.queue = games;
+                            $scope.noResults = false;
+                            $scope.searching = false;
+                    });
+
                 },
 
                 function error() {
