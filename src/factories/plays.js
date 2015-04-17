@@ -121,6 +121,10 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         return source;
                     }
                 }
+            },
+
+            getVideoProfiles: function() {
+
             }
         };
 
