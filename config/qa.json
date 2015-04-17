@@ -101,7 +101,8 @@
         },
         "stepTime": {
             "slow": 0.08,
-            "fast": 0.3
+            "fast": 0.3,
+            "increment": 3
         }
     }
 }

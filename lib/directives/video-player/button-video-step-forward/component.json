@@ -1,0 +1,9 @@
+{
+    "name": "button-video-step-forward",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
