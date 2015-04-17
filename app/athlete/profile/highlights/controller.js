@@ -45,7 +45,9 @@ function HighlightsController (
                 return plays.get(playId);
             });
 
-            // Load the plays in the plays manager
+            /* Load the plays in the plays manager
+             * TODO: accomplish this without playsManager
+             */
             playsManager.reset(playsArray);
 
             // Start with first play
@@ -55,7 +57,7 @@ function HighlightsController (
             $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
 
             $scope.$watch('clipIndex', function updatePlayInfo() {
-                // When clip index is changed, change that oh
+                // When clip index is changed, adjust adjacent plays accordingly
                 $scope.previousPlay = playsManager.getPreviousPlay($scope.currentPlay);
                 $scope.nextPlay = playsManager.getNextPlay($scope.currentPlay);
             });
