@@ -363,7 +363,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                                 var source = {
                                     type: 'video/mp4',
-                                    src: $sce.trustAsResourceUrl(profile.videoUrl)
+                                    src: $sce.trustAsResourceUrl(profile.videoUrl),
+                                    transcodeProfile: profile.transcodeProfile.id
                                 };
 
                                 if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {

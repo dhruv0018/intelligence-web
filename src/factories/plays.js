@@ -115,7 +115,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         /* Create a video source. */
                         var source = {
                             type: 'video/mp4',
-                            src: $sce.trustAsResourceUrl(profile.videoUrl)
+                            src: $sce.trustAsResourceUrl(profile.videoUrl),
+                            transcodeProfile: profile.transcodeProfile.id
                         };
 
                         return source;
