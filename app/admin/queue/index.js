@@ -330,7 +330,7 @@ function QueueController (
                         teamIds.push(game.teamId, game.opposingTeamId);
                     }
                     /* Get the unique teams */
-                    teams.load(utilities.unique(teamIds)).then(
+                    teams.load(teamIds).then(
                         function updateQueue() {
                             $scope.queue = games;
                             $scope.noResults = false;
