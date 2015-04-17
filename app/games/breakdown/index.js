@@ -193,12 +193,15 @@ function GamesBreakdownController (
             $scope.plays = plays.getList(playsFilter);
             playsManager.reset($scope.plays);
             playsManager.calculatePlays();
-            $scope.plays
+            $scope.plays = $scope.plays
             .sort(utilities.compareStartTimes)
             .filter(play => play.hasVisibleEvents);
             $scope.totalPlays = $scope.plays;
             let play = $scope.plays[0];
-            if (play) $scope.sources = play.getVideoSources();
+            if (play) {
+                $scope.sources = play.getVideoSources();
+                playManager.current = play;
+            }
 
 
             /* TODO: Remove this sessionStorage once playIds
