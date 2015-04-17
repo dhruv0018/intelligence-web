@@ -1,11 +1,11 @@
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
-var VIDEO_STATUS_IDS = {
+const VIDEO_STATUS_IDS = {
 
     1: 'INCOMPLETE',
     2: 'UPLOADED',
@@ -15,7 +15,7 @@ var VIDEO_STATUS_IDS = {
 
 IntelligenceWebClient.constant('VIDEO_STATUS_IDS', VIDEO_STATUS_IDS);
 
-var VIDEO_STATUSES = {
+const VIDEO_STATUSES = {
 
     INCOMPLETE: {
         id: 1,
@@ -39,3 +39,4 @@ var VIDEO_STATUSES = {
 };
 
 IntelligenceWebClient.constant('VIDEO_STATUSES', VIDEO_STATUSES);
+export {VIDEO_STATUS_IDS, VIDEO_STATUSES};
