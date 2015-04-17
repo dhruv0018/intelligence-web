@@ -117,8 +117,8 @@ Queue.controller('ModalController', [
  * @type {Controller}
  */
 Queue.controller('QueueController', [
-    '$interval', '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal',
-    function controller($interval, $rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, users, sports, leagues, teams, games, data, SelectIndexerModal) {
+    '$interval', '$rootScope', '$scope', '$state', '$modal', '$filter', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'VIDEO_STATUSES', 'GAME_TYPES', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'Admin.Queue.Data', 'SelectIndexer.Modal', 'Utilities',
+    function controller($interval, $rootScope, $scope, $state, $modal, $filter, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, VIDEO_STATUSES, GAME_TYPES, users, sports, leagues, teams, games, data, SelectIndexerModal, utilities) {
 
         $scope.ROLE_TYPE = ROLE_TYPE;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -252,8 +252,8 @@ Queue.controller('QueueController', [
                 games.fetch(filter.gameId,
 
                     function success(game) {
-                        let teamIds = [game.teamId, game.opposingTeamId];
-                        teams.load(teamsId);
+                        /* Get the team names */
+                        teams.load([game.teamId, game.opposingTeamId]);
                         $scope.queue = [];
                         $scope.queue[0] = game;
                         $scope.noResults = false;
@@ -275,10 +275,12 @@ Queue.controller('QueueController', [
 
                     function success(games) {
                         let teamIds = [];
-                        for ( let game in games) {
-                            teamIds.push([game.teamId, game.opposingTeamId]);
+                        /* Get the team names */
+                        for (let i=0; i<games.length; i++) {
+                            teamIds.push(games[i].teamId, games[i].opposingTeamId);
                         }
-                        teams.load(teamsId);
+                        /* Get the unique teams */
+                        teams.load(utilities.unique(teamIds));
                         $scope.queue = games;
                         $scope.noResults = false;
                         $scope.searching = false;
