@@ -17,7 +17,10 @@ HighlightsController.$inject = [
     'UsersFactory',
     'PlaysFactory',
     'PlaysManager',
-    'VideoPlayer'
+    'PlayManager',
+    'VideoPlayer',
+    'VideoPlayerEventEmitter',
+    'VIDEO_PLAYER_EVENTS'
 ];
 
 /**
@@ -33,7 +36,10 @@ function HighlightsController (
     users,
     plays,
     playsManager,
-    videoPlayer
+    playManager,
+    videoPlayer,
+    VideoPlayerEventEmitter,
+    VIDEO_PLAYER_EVENTS
 )   {
         $scope.athlete = users.get($stateParams.id);
         $scope.featuredReel = reels.getFeaturedReel($scope.athlete);
@@ -73,6 +79,22 @@ function HighlightsController (
             // Change clip index to reflect current play
             $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
         };
+
+        // When clip finishes playing, go to next play if continuous play is on
+        VideoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.ON_CLIP_COMPLETE, onCompleteVideo);
+
+        function onCompleteVideo() {
+
+            /* If continuous play is on. */
+            if (playManager.playAllPlays) {
+                $scope.goToPlay($scope.nextPlay);
+
+                VideoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.ON_CAN_PLAY, function playVideo() {
+                    videoPlayer.play();
+                    VideoPlayerEventEmitter.removeListener(VIDEO_PLAYER_EVENTS.ON_CAN_PLAY, playVideo);
+                });
+            }
+        }
 
         $scope.highlightReels = [];
 }
