@@ -1,3 +1,45 @@
 <div>
-   This is a test
+    <div class="playFooter">
+
+        <button
+            class="btn-delete-play"
+            ng-if="isIndexer"
+            ng-disabled="play.isSaving"
+            ng-click="deletePlay()"
+            >
+            Delete Play
+        </button>
+
+        <div class="save-indicator" ng-if="isIndexer">
+            <i
+                class="icon icon-refresh active"
+                ng-show="play.isSaving"
+                ></i>
+            <i
+                class="icon icon-ok success"
+                ng-show="play.id"
+                ng-hide="!play.id || play.isSaving || play.error"
+                ></i>
+            <i
+                class="icon icon-remove error"
+                ng-show="play.error"
+                ></i>
+        </div>
+
+        <button
+            class="play-link"
+            ng-if="reelsActive && isTeamMember"
+            open-modal="AddReel.Modal"
+            modal-options="options"
+            >
+            <i class="icon icon-plus"></i> Add to reel
+        </button>
+
+        <button
+            class="play-link pull-right disabled ng-hide"
+            ng-if="!isIndexer"
+            >
+            <i class="icon icon-tag"></i> Label Play
+        </button>
+    </div>
 </div>
