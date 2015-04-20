@@ -10,12 +10,16 @@
                 <h4>Weight</h4>
                 <input type="number" class="form-control small-text-field" ng-model="athlete.profile.weight"/> lbs
             </div>
+            <div class="form-block-third">
+                <h4>Dominant Hand</h4>
+                <select ng-model="athlete.profile.dominantHandType">
+                    <option value="1">Right Hand</option>
+                    <option value="2">Left Hand</option>
+                    <option value="3">Ambidextrous</option>
+                </select>
+            </div>
         </div>
         <div class="form-block-full">
-            <div class="form-block-third">
-                <h4>40 Yard Dash</h4>
-                <input type="number" step="any" class="form-control small-text-field" ng-model="athlete.profile.fortyYardDash"/> seconds
-            </div>
             <div class="form-block-third">
                 <h4>1 Mile Time</h4>
                 <input type="number" class="form-control small-text-field" ng-model="athleteOneMileTimeMinutes"/> min
@@ -26,6 +30,10 @@
                 <input type="number" class="form-control small-text-field" ng-model="athleteThreeMileTimeMinutes"/> min
                 <input type="number" class="form-control small-text-field" ng-model="athleteThreeMileTimeSeconds"/> sec
             </div>
+            <div class="form-block-third">
+                <h4>40 Yard Dash</h4>
+                <input type="number" step="any" class="form-control small-text-field" ng-model="athlete.profile.fortyYardDash"/> seconds
+            </div>
         </div>
         <div class="form-block-full">
             <div class="form-block-third">
@@ -33,8 +41,8 @@
                 <input type="number" class="form-control small-text-field" ng-model="athlete.profile.benchPress"/> lbs
             </div>
             <div class="form-block-third">
-                <h4>Squat</h4>
-                <input type="number" class="form-control small-text-field" ng-model="athlete.profile.squat"/> lbs
+                <h4>Clean</h4>
+                <input type="number" class="form-control small-text-field" ng-model="athlete.profile.clean"/> lbs
             </div>
             <div class="form-block-third">
                 <h4>Deadlift</h4>
@@ -43,8 +51,8 @@
         </div>
         <div class="form-block-full">
             <div class="form-block-third">
-                <h4>Clean</h4>
-                <input type="number" class="form-control small-text-field" ng-model="athlete.profile.clean"/> lbs
+                <h4>Squat</h4>
+                <input type="number" class="form-control small-text-field" ng-model="athlete.profile.squat"/> lbs
             </div>
             <div class="form-block-third">
                 <h4>Vertical Leap</h4>
@@ -54,16 +62,6 @@
                 <h4>Wingspan</h4>
                 <input type="number" class="form-control small-text-field" ng-model="athleteWingFeet"/> ft
                 <input type="number" class="form-control small-text-field" ng-model="athleteWingInches"/> in
-            </div>
-        </div>
-        <div class="form-block-full">
-            <div class="form-block-third">
-                <h4>Dominant Hand</h4>
-                <select ng-model="athlete.profile.dominantHandType">
-                    <option value="1">Right Hand</option>
-                    <option value="2">Left Hand</option>
-                    <option value="3">Ambidextrous</option>
-                </select>
             </div>
         </div>
         <div class="button-row">
