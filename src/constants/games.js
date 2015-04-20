@@ -1,11 +1,11 @@
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
-var GAME_STATUS_IDS = {
+const GAME_STATUS_IDS = {
 
     0: 'NOT_INDEXED',
     1: 'READY_FOR_INDEXING',
@@ -19,7 +19,7 @@ var GAME_STATUS_IDS = {
 
 IntelligenceWebClient.constant('GAME_STATUS_IDS', GAME_STATUS_IDS);
 
-var GAME_STATUSES = {
+const GAME_STATUSES = {
 
     NOT_INDEXED: {
         id: 0,
@@ -72,7 +72,7 @@ var GAME_STATUSES = {
 
 IntelligenceWebClient.constant('GAME_STATUSES', GAME_STATUSES);
 
-var GAME_TYPES_IDS = {
+const GAME_TYPES_IDS = {
 
     1: 'CONFERENCE',
     2: 'NON_CONFERENCE',
@@ -83,7 +83,7 @@ var GAME_TYPES_IDS = {
 
 IntelligenceWebClient.constant('GAME_TYPES_IDS', GAME_TYPES_IDS);
 
-var GAME_TYPES = {
+const GAME_TYPES = {
 
     CONFERENCE: {
 
@@ -128,7 +128,7 @@ var GAME_TYPES = {
 
 IntelligenceWebClient.constant('GAME_TYPES', GAME_TYPES);
 
-var GAME_NOTE_TYPES = {
+const GAME_NOTE_TYPES = {
 
     COACH_NOTE: 1,
     INDEXER_NOTE: 2,
@@ -138,3 +138,4 @@ var GAME_NOTE_TYPES = {
 };
 
 IntelligenceWebClient.constant('GAME_NOTE_TYPES', GAME_NOTE_TYPES);
+export {GAME_STATUS_IDS, GAME_STATUSES,GAME_TYPES_IDS, GAME_TYPES, GAME_NOTE_TYPES};
