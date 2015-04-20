@@ -25,7 +25,7 @@
             by {{uploaderName}}
         </div>
 
-        <a ng-attr-id="{{'video-share-cta-' + $parent.$parent.$index}}"
+        <a ng-attr-id="{{'film-share-' + (isGame ? 'game-' : 'reel-') + film.id + '-cta'}}"
            data-ng-if="!film.isVideoTranscodeFailed() &&
                        (isUploader || isCoachOnUploaderTeam)"
            data-ng-click="ShareFilmModal.open(film)"
