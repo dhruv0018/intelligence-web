@@ -347,29 +347,29 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             getVideoSources: function() {
 
-                var self = this;
+                let sources = [];
+                let defaultVideo;
+                let DEFAULT_VIDEO_ID = config.defaultVideoId;
 
-                var sources = [];
-                var defaultVideo;
-                var DEFAULT_VIDEO_ID = config.defaultVideoId;
+                if (this.video && this.video.status) {
 
-                if (self.video && self.video.status) {
+                    if (this.video.status === VIDEO_STATUSES.COMPLETE.id) {
 
-                    if (self.video.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                        self.video.videoTranscodeProfiles.forEach(function(profile) {
+                        this.video.videoTranscodeProfiles.forEach(function(profile) {
 
                             if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
 
-                                var source = {
+                                let source = {
                                     type: 'video/mp4',
                                     src: $sce.trustAsResourceUrl(profile.videoUrl),
                                     transcodeProfile: profile.transcodeProfile.id
                                 };
 
                                 if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
+
                                     defaultVideo = source;
                                 } else {
+
                                     sources.push(source);
                                 }
                             }

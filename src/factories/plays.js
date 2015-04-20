@@ -29,6 +29,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play.events = play.events || [];
 
+
                 play.period = play.period || 0;
 
                 play.indexedScore = play.indexedScore || 0;
@@ -96,13 +97,11 @@ IntelligenceWebClient.factory('PlaysFactory', [
              */
             getVideoSources: function() {
 
-                var self = this;
-
                 /* If there is no clip for the play, return an empty array. */
-                if (!self.clip) return [];
+                if (!this.clip) return [];
 
                 /* Get the video transcode profiles. */
-                var profiles = self.clip.videoTranscodeProfiles;
+                let profiles = this.clip.videoTranscodeProfiles;
 
                 /* Map the video transcode profiles to video sources. */
                 return profiles.map(profileToSource);
@@ -113,7 +112,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
 
                         /* Create a video source. */
-                        var source = {
+                        let source = {
                             type: 'video/mp4',
                             src: $sce.trustAsResourceUrl(profile.videoUrl),
                             transcodeProfile: profile.transcodeProfile.id
@@ -122,10 +121,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         return source;
                     }
                 }
-            },
-
-            getVideoProfiles: function() {
-
             }
         };
 
