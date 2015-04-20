@@ -196,7 +196,7 @@ function GamesBreakdownController (
             $scope.plays = $scope.plays
             .sort(utilities.compareStartTimes)
             .filter(play => play.hasVisibleEvents);
-            $scope.totalPlays = $scope.plays;
+            $scope.totalPlays = $scope.plays; // TODO: Unnecessary variable?
             let play = $scope.plays[0];
             if (play) {
                 $scope.sources = play.getVideoSources();
