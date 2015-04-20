@@ -13,7 +13,7 @@
         <vg-media
          vg-loop="videoPlayer.config.loop"
          vg-preload="videoPlayer.config.preload"
-         vg-src="videoPlayer.sources"
+         vg-src="vgSources"
         >
         </vg-media>
 
@@ -57,6 +57,20 @@
             </div>
 
             <div class="controls-right">
+
+                <select
+                    class="select-video-quality"
+                    ng-init="transcodeProfile = videoPlayer.sources.length"
+                    ng-model="transcodeProfile"
+                    ng-change="onVideoQualitySelect(transcodeProfile)"
+                >
+                    <option
+                        ng-repeat="source in videoPlayer.sources | orderBy: '-source.transcodeProfile'"
+                        value="{{source.transcodeProfile}}"
+                    >
+                        {{TRANSCODE_PROFILES[TRANSCODE_PROFILES_IDS[source.transcodeProfile]].quality}}
+                    </option>
+                </select>
 
                 <vg-volume title="Adjust Volume">
                     <vg-mute-button></vg-mute-button>
