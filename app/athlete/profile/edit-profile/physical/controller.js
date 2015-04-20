@@ -12,6 +12,7 @@ var Physical = angular.module('Athlete.Profile.EditProfile.Physical');
 */
 PhysicalController.$inject = [
     '$scope',
+    '$timeout',
     'UsersFactory',
     'SessionService',
     'Athlete.Profile.EditProfile.Data'
@@ -25,11 +26,15 @@ PhysicalController.$inject = [
  */
 function PhysicalController (
     $scope,
+    $timeout,
     users,
     session,
     data
 ) {
     $scope.athlete = session.getCurrentUser();
+
+    $scope.isSaving = false;
+    $scope.confirmSave = false;
 
     //display height and wingspan as temporary feet and inches variables
     $scope.athleteHeightFeet = getFeet($scope.athlete.profile.height);
@@ -60,13 +65,24 @@ function PhysicalController (
     }
 
     $scope.savePhysical = function savePhysical() {
+        $scope.isSaving = true;
+
         //recombine feet and inches before saving
         $scope.athlete.profile.height = Number($scope.athleteHeightFeet * 12) + Number($scope.athleteHeightInches);
         $scope.athlete.profile.wingspan = Number($scope.athleteWingFeet * 12) + Number($scope.athleteWingInches);
         //recombine minutes and seconds before saving
         $scope.athlete.profile.oneMileTime = Number($scope.athleteOneMileTimeMinutes * 60) + Number($scope.athleteOneMileTimeSeconds);
         $scope.athlete.profile.threeMileTime = Number($scope.athleteThreeMileTimeMinutes * 60) + Number($scope.athleteThreeMileTimeSeconds);
-        $scope.athlete.save();
+
+        $scope.athlete.save().then(function saveConfirmation() {
+            $timeout(function() {
+                $scope.confirmSave = true;
+            }, 1000);
+            $timeout(function() {
+                $scope.isSaving = false;
+                $scope.confirmSave = false;
+            }, 2000);
+        });
     };
 }
 

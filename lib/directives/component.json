@@ -71,7 +71,8 @@
         "publish-user-profile-reel",
         "role-class",
         "spinner",
-        "check-box"
+        "check-box",
+        "save-button"
     ],
     "scripts": [
         "index.js"

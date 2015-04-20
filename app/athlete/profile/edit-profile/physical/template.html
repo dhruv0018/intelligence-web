@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="button-row">
-            <button class="btn btn-primary" ng-click="savePhysical()">Save</button>
+            <save-button is-saving="isSaving" confirm-save="confirmSave" ng-click="savePhysical()"></save-button>
             <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
         </div>
     </form>

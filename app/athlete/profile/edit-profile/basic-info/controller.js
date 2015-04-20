@@ -13,6 +13,7 @@ var BasicInfo = angular.module('Athlete.Profile.EditProfile.BasicInfo');
 BasicInfoController.$inject = [
     '$scope',
     '$http',
+    '$timeout',
     'config',
     'UsersFactory',
     'SessionService',
@@ -29,6 +30,7 @@ BasicInfoController.$inject = [
 function BasicInfoController (
     $scope,
     $http,
+    $timeout,
     config,
     users,
     session,
@@ -51,16 +53,24 @@ function BasicInfoController (
         };
     };
 
+    $scope.isSaving = false;
+    $scope.confirmSave = false;
+
     $scope.saveBasicInfo = function saveBasicInfo() {
         if ($scope.athlete.fileImage) {
             $scope.athlete.uploadProfilePicture()
                 .success(function(responseUser) {
                     $scope.athlete.imageUrl = responseUser.imageUrl;
-                    $scope.athlete.save().then(function() {
-                        alerts.add({
-                            type: 'success',
-                            message: 'Your profile has been saved.'
-                        });
+                    $scope.isSaving = true;
+                    $scope.athlete.save().then(function saveConfirmation() {
+                        // Add 2 seconds so user gets feedback even if save happens quickly
+                        $timeout(function() {
+                            $scope.confirmSave = true;
+                        }, 1000);
+                        $timeout(function() {
+                            $scope.isSaving = false;
+                            $scope.confirmSave = false;
+                        }, 2000);
                     });
                     delete $scope.athlete.fileImage;
                 })
@@ -72,11 +82,16 @@ function BasicInfoController (
                     });
                 });
         } else {
+            $scope.isSaving = true;
             $scope.athlete.save().then(function() {
-                alerts.add({
-                    type: 'success',
-                    message: 'Your profile has been saved.'
-                });
+                // Add 2 seconds so user gets feedback even if save happens quickly
+                $timeout(function() {
+                    $scope.confirmSave = true;
+                }, 1000);
+                $timeout(function() {
+                    $scope.isSaving = false;
+                    $scope.confirmSave = false;
+                }, 2000);
             });
         }
     };
