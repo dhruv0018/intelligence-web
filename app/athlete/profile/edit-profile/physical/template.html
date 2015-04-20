@@ -18,11 +18,13 @@
             </div>
             <div class="form-block-third">
                 <h4>1 Mile Time</h4>
-                <input type="number" class="form-control small-text-field" ng-model="athlete.profile.oneMileTime"/> seconds
+                <input type="number" class="form-control small-text-field" ng-model="athleteOneMileTimeMinutes"/> min
+                <input type="number" class="form-control small-text-field" ng-model="athleteOneMileTimeSeconds"/> sec
             </div>
             <div class="form-block-third">
                 <h4>3 Mile Time</h4>
-                <input type="number" class="form-control small-text-field" ng-model="athlete.profile.threeMileTime"/> seconds
+                <input type="number" class="form-control small-text-field" ng-model="athleteThreeMileTimeMinutes"/> min
+                <input type="number" class="form-control small-text-field" ng-model="athleteThreeMileTimeSeconds"/> sec
             </div>
         </div>
         <div class="form-block-full">
@@ -43,6 +45,10 @@
             <div class="form-block-third">
                 <h4>Clean</h4>
                 <input type="number" class="form-control small-text-field" ng-model="athlete.profile.clean"/> lbs
+            </div>
+            <div class="form-block-third">
+                <h4>Vertical Leap</h4>
+                <input type="number" class="form-control small-text-field" ng-model="athlete.profile.verticalLeap"/> in
             </div>
             <div class="form-block-third">
                 <h4>Wingspan</h4>
