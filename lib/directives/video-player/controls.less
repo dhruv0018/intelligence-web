@@ -53,39 +53,42 @@ videogular .select-video-quality {
 }
 
 videogular vg-controls {
-    width: 100%;
-    height: 50px;
     display: block;
     position: absolute;
     z-index: 3;
+    left: 0;
     bottom: 0;
-}
-
-videogular vg-controls .controls-container {
     width: 100%;
-    height: 50px;
-    bottom: 0;
-    color: white;
-    background-color: black;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
 
-videogular vg-controls .controls-container .controls-left,
-videogular vg-controls .controls-container .controls-center,
-videogular vg-controls .controls-container .controls-right {
+    .controls-container {
+        display: block;
+        width: 100%;
+        height: 100%;
+        color: white;
 
-    display:flex;
-    height: 100%;
-    line-height: 50px;
-    opacity: 1;
+        .controls-bottom {
+            display: flex;
+            height: 50px;
+            width: 100%;
+            position: relative;
+            justify-content: space-between;
+            align-content: center;
+            background-color: black;
+        }
+
+        .controls-left,
+        .controls-center,
+        .controls-right {
+            display: flex;
+            height: 100%;
+            line-height: 50px;
+            opacity: 1;
+        }
+    }
 }
 
 videogular vg-scrub-bar {
-    position: absolute;
-    bottom: 50px;
+    display: block;
     height: 10px;
     width: 100%;
     cursor: pointer;
@@ -110,13 +113,15 @@ videogular vg-time-display {
     margin-left: 15px;
 }
 
-vg-play-pause-button {
+videogular vg-play-pause-button {
+    display: inline-block;
     width: 50px;
     vertical-align: middle;
     text-align: center;
     cursor: pointer;
 }
 videogular vg-volume {
+    display: inline-block;
     width: 50px;
     vertical-align: middle;
     text-align: center;
@@ -132,42 +137,48 @@ videogular vg-volume-bar {
     text-align: center;
     position: absolute;
     cursor: pointer;
+
+    .verticalVolumeBar {
+        width: 50px;
+        height: 100px;
+        position: absolute;
+    }
+
+    .volumeBackground {
+        width: 10px;
+        height: 70px;
+        left: 20px;
+        top: 15px;
+        background-color: rgb(201, 201, 201);
+        position: absolute;
+        border-radius: 5px;
+    }
+
+    .volumeValue {
+        width: 10px;
+        height: 100%;
+        background-color: @brand-blue;
+        position: absolute;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .volumeClickArea {
+        width: 20px;
+        height: 100%;
+        position: absolute;
+    }
 }
 
-videogular vg-volume-bar .verticalVolumeBar {
-    width: 50px;
-    height: 100px;
-    position: absolute;
-}
-
-videogular vg-volume-bar .volumeBackground {
-    width: 10px;
-    height: 70px;
-    left: 20px;
-    top: 15px;
-    background-color: rgb(201, 201, 201);
-    position: absolute;
-    border-radius: 5px;
-}
-
-videogular vg-volume-bar .volumeValue {
-    width: 10px;
+videogular.fullscreen {
+    width: 100%;
     height: 100%;
-    background-color: @brand-blue;
-    position: absolute;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
-
-videogular vg-volume-bar .volumeClickArea {
-    width: 20px;
-    height: 100%;
-    position: absolute;
 }
 
 videogular vg-fullscreen-button {
+    display: inline-block;
     width: 50px;
     vertical-align: middle;
     text-align: center;
