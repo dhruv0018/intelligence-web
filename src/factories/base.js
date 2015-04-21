@@ -244,7 +244,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var view = session.serializeUserResourceQuery(self.description, filter);
 
-                filter = filter || {};
+                /* Making a copy of the filter here so that the start and count
+                 * properties don't get added to the filter if not passed in as a literal.  */
+                filter = angular.copy(filter) || {};
 
                 /* If filtering by an array of IDs. */
                 if (filter['id[]']) {
@@ -323,7 +325,9 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var view = session.serializeUserResourceQuery(self.description, filter);
 
-                filter = filter || {};
+                /* Making a copy of the filter here so that the start and count
+                 * properties don't get added to the filter if not passed in as a literal.  */
+                filter = angular.copy(filter) || {};
 
                 /* If filtering by an array of IDs. */
                 if (filter['id[]']) {

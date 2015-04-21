@@ -116,6 +116,7 @@ GamesBreakdownController.$inject = [
     '$state',
     '$stateParams',
     'ROLES',
+    'Utilities',
     'SessionService',
     'AuthenticationService',
     'GamesFactory',
@@ -141,6 +142,7 @@ function GamesBreakdownController (
     $state,
     $stateParams,
     ROLES,
+    utilities,
     session,
     auth,
     games,
@@ -191,13 +193,21 @@ function GamesBreakdownController (
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
         if ($scope.game.isDelivered()) {
 
+            /* TODO: Make this all better */
             // Plays
-            var playsFilter = { gameId: $scope.game.id };
-
-            $scope.totalPlays = plays.getList(playsFilter);
+            let playsFilter = { gameId: $scope.game.id };
             $scope.plays = plays.getList(playsFilter);
             playsManager.reset($scope.plays);
-            var play = playsManager.plays[0];
+            playsManager.calculatePlays();
+            $scope.plays = $scope.plays
+            .sort(utilities.compareStartTimes)
+            .filter(play => play.hasVisibleEvents);
+            $scope.totalPlays = $scope.plays; // TODO: Unnecessary variable?
+            let play = $scope.plays[0];
+            if (play) {
+                $scope.sources = play.getVideoSources();
+                playManager.current = play;
+            }
 
             // Set telestrations
             $scope.telestrationsEntity = $scope.game.playTelestrations;

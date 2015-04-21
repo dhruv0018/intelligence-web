@@ -69,6 +69,7 @@ require('./constants/arenas');
 require('./constants/device');
 require('./constants/states');
 require('./constants/video-player');
+require('./constants/views');
 require('./constants/telestrations');
 
 require('./models/users');
