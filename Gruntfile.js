@@ -750,6 +750,7 @@ module.exports = function(grunt) {
         'manifests'
     ]);
 
+    grunt.registerTask('master', ['prod']); // alias for prod
     grunt.registerTask('prod', [
         'clean',
         'env:prod',
