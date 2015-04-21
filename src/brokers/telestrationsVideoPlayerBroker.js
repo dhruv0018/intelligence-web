@@ -67,14 +67,7 @@ function TelestrationsVideoPlayerBrokerFactory(
 
     function onFullScreen(event) {
 
-        if (event.isFullScreen) {
-
-            Telestrations.requestFullScreen();
-
-        } else {
-
-            Telestrations.exitFullScreen();
-        }
+        Telestrations.resizeTelestrationContext();
     }
 
     return TelestrationsVideoPlayerBroker;

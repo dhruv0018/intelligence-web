@@ -2,21 +2,12 @@
 
 .telestrations {
 
-    display: table;
-
-    &.fullscreen {
-
-        width: 100%;
-
-        .transcluded-content, #svg-context-area, .telestration-container {
-            width: 100%;
-        }
-    }
+    display: block;
 
     .telestration-container {
 
         position: relative;
-        display: table;
+        display: block;
 
         telestration-controls {
             position: absolute;
@@ -31,7 +22,7 @@
         }
 
         .transcluded-content {
-            display: table;
+            display: block;
             position: relative;
         }
 
@@ -73,5 +64,14 @@
         &.telestrations-active > glyph {
             display: block;
         }
+    }
+}
+
+.fullscreen .telestrations {
+
+    width: 100%;
+
+    .transcluded-content, #svg-context-area, .telestration-container {
+        width: 100%;
     }
 }

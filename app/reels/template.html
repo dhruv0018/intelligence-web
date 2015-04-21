@@ -24,17 +24,17 @@
 
             </krossover-sidebar>
 
-            <telestrations telestrations-entity="telestrationsEntity" play-id="currentPlayId" permissions="telestrationsPermissions" ng-show="$root.viewport.name === VIEWPORTS.DESKTOP.name">
-
-                <video-player
-                 class="reels-video-container"
-                 poster-image="posterImage"
-                 sources="sources"
-                 cue-points="cuePoints"
-                >
-                </video-player>
-
-            </telestrations>
+            <video-player
+             class="reels-video-container"
+             poster-image="posterImage"
+             sources="sources"
+             cue-points="cuePoints"
+             telestrations="telestrationsEntity"
+             telestrations-permissions="telestrationsPermissions"
+             play-id="currentPlayId"
+             ng-show="$root.viewport.name === VIEWPORTS.DESKTOP.name"
+            >
+            </video-player>
 
         </div>
 

@@ -11,12 +11,16 @@
      ng-class="{'fullscreen': videoPlayer.fullScreenEnabled}"
     >
 
-        <vg-media
-         vg-loop="videoPlayer.config.loop"
-         vg-preload="videoPlayer.config.preload"
-         vg-src="videoPlayer.sources"
-        >
-        </vg-media>
+        <telestrations telestrations-entity="videoPlayer.telestrations" play-id="videoPlayer.playId" permissions="videoPlayer.telestrationsPermissions" class="vg-media-container">
+
+            <vg-media
+             vg-loop="videoPlayer.config.loop"
+             vg-preload="videoPlayer.config.preload"
+             vg-src="videoPlayer.sources"
+            >
+            </vg-media>
+
+        </telestrations>
 
         <div class="seeking-indicators">
             <span class="seeking-indicator ng-hide fbkwd">&#8211;2x speed</span>
