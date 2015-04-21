@@ -239,12 +239,20 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
+                    'theme',
                     'node_modules/bootstrap/less'
                 ]
             },
             theme: {
                 files: {
                     'build/theme.css': ['theme/**/*.less']
+                }
+            },
+            components: {
+                files: {
+                    'build/components.css': [
+                        'app/reel/styles.less'
+                    ]
                 }
             }
         },
@@ -262,7 +270,7 @@ module.exports = function(grunt) {
 
         concat: {
             unprefixed: {
-                src: ['fonts.css', 'icons.css', 'vendor/css/animate.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'node_modules/angular-material/angular-material.css', 'build/build.css', 'build/theme.css'],
+                src: ['fonts.css', 'icons.css', 'vendor/css/animate.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'node_modules/angular-material/angular-material.css', 'build/build.css', 'build/components.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
             }
         },
