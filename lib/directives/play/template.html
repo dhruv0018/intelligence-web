@@ -5,19 +5,19 @@
         ng-click="selectPlay()"
     >
         <play-header></play-header>
-
-        <ul
-            class="playBody"
-            ng-if="
+        <div ng-hide="isReelsPlay && editFlag">
+            <ul
+                class="playBody"
+                ng-if="
                 isIndexer ||
                 expandAll ||
                 play === playManager.current ||
                 isReelsPlay && !editFlag && expandAll"
-            ng-class="{'playHide': (!expandAll && (play != playManager.current || isReelsPlay && editFlag )), 'play__reel': isReelsPlay }"
-        >
-            <krossover-event ng-repeat="event in play.events"></krossover-event>
-        </ul>
-        <hr class="summaryBodyDivider">
-        <play-footer></play-footer>
-
+                ng-class="{'playHide': (!expandAll && (play != playManager.current)), 'play__reel': isReelsPlay }"
+                >
+                <krossover-event ng-repeat="event in play.events"></krossover-event>
+            </ul>
+            <hr class="summaryBodyDivider">
+            <play-footer></play-footer>
+        </div>
     </div>
