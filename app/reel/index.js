@@ -1,7 +1,7 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-import ReelData from './data.js';
+import ReelDataDependencies from './data.js';
 import ReelController from './controller.js';
 
 import template from './template.html.js';
@@ -16,6 +16,8 @@ const Reel = angular.module('Reel', [
     'ui.router',
     'ui.bootstrap'
 ]);
+
+Reel.factory('ReelDataDependencies', ReelDataDependencies);
 
 /* Cache the template file */
 Reel.run([
@@ -62,8 +64,8 @@ Reel.config([
             },
             resolve: {
                 'Reel.Data': [
-                    '$q', '$stateParams',
-                    function resolveReelState ($q, $stateParams) {
+                    '$q', '$stateParams', 'ReelDataDependencies',
+                    function resolveReelState ($q, $stateParams, ReelData) {
 
                         let reelId = Number($stateParams.id);
                         let data = new ReelData(reelId);
