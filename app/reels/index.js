@@ -86,8 +86,8 @@ ReelsArea.config([
 ]);
 
 ReelsArea.service('Reels.Data.Dependencies', [
-    'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'UsersFactory', 'TelestrationsVideoPlayerBroker',
-    function dataService(games, plays, teams, reels, leagues, tagsets, players, users, TelestrationsVideoPlayerBroker) {
+    'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'UsersFactory',
+    function dataService(games, plays, teams, reels, leagues, tagsets, players, users) {
 
         var service = function(stateParams) {
 
@@ -126,8 +126,8 @@ ReelsArea.service('Reels.Data.Dependencies', [
  * @type {Controller}
  */
 ReelsArea.controller('ReelsArea.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AuthenticationService', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES', 'VIEWPORTS', 'UsersFactory', 'TELESTRATION_PERMISSIONS',
-    function controller($rootScope, $scope, $state, $stateParams, $modal, modals, auth, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES, VIEWPORTS, users, TELESTRATION_PERMISSIONS) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$modal', 'BasicModals', 'AuthenticationService', 'AccountService', 'AlertsService', 'ReelsFactory', 'PlayManager', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'LeaguesFactory', 'PlaysManager', 'SessionService', 'ROLES', 'VIEWPORTS', 'UsersFactory', 'TELESTRATION_PERMISSIONS', 'TelestrationsVideoPlayerBroker',
+    function controller($rootScope, $scope, $state, $stateParams, $modal, modals, auth, account, alerts, reels, playManager, gamesFactory, playsFactory, teamsFactory, leaguesFactory, playsManager, session, ROLES, VIEWPORTS, users, TELESTRATION_PERMISSIONS, TelestrationsVideoPlayerBroker) {
 
         const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
 
