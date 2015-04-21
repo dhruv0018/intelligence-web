@@ -5,18 +5,14 @@
 
         <h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-        <a ng-if="auth.isLoggedIn && session.getCurrentUserId() === athlete.profile.userId" ui-sref="Athlete.Profile.EditProfile.BasicInfo">
+        <a ng-if="auth.isLoggedIn && session.getCurrentUserId() === athlete.profile.userId"
+           ui-sref="Athlete.Profile.EditProfile.BasicInfo"
+           hide
+           show-gt-md>
             <md-button class="md-raised edit-profile-button">Edit Profile</md-button>
         </a>
 
-        <ng-md-icon
-            icon="{{toggle.icons.current}}"
-            style="fill: white"
-            size="30"
-            class="secondary-info-toggle"
-            hide-gt-sm
-            ng-click="toggle.visibility()"
-        ></ng-md-icon>
+        <dropdown-toggle-button toggled-element="secondaryInfoElem" hide-gt-sm></dropdown-toggle-button>
     </section>
 
     <section class="athlete-secondary-info animated fadeOut collapsed">
