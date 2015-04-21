@@ -1,31 +1,42 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-class ReelData {
+ReelDataDependencies.$inject = [
+    'ReelsFactory',
+    'GamesFactory',
+    'TeamsFactory',
+    'PlaysFactory',
+    'PlayersFactory',
+    'LeaguesFactory',
+    'TagsetsFactory'
+];
 
-    constructor (reelId) {
+function ReelDataDependencies (
+    reels,
+    games,
+    teams,
+    plays,
+    players,
+    leagues,
+    tagsets
+) {
 
-        /* Get the angular injector for the document. */
-        const $injector = angular.element(document).injector();
+    class ReelData {
 
-        /* Get dependencies. */
-        const reels = $injector.get('ReelsFactory');
-        const games = $injector.get('GamesFactory');
-        const teams = $injector.get('TeamsFactory');
-        const plays = $injector.get('PlaysFactory');
-        const players = $injector.get('PlayersFactory');
-        const leagues = $injector.get('LeaguesFactory');
-        const tagsets = $injector.get('TagsetsFactory');
+        constructor (reelId) {
 
-        /* Load data. */
-        this.tagset = tagsets.load();
-        this.leagues = leagues.load();
-        this.reel = reels.load(reelId);
-        this.games = games.load({reelId: reelId});
-        this.teams = teams.load({reelId: reelId});
-        this.plays = plays.load({reelId: reelId});
-        this.players = players.load({reelId: reelId});
+            /* Load data. */
+            this.tagset = tagsets.load();
+            this.leagues = leagues.load();
+            this.reel = reels.load(reelId);
+            this.games = games.load({reelId: reelId});
+            this.teams = teams.load({reelId: reelId});
+            this.plays = plays.load({reelId: reelId});
+            this.players = players.load({reelId: reelId});
+        }
     }
+
+    return ReelData;
 }
 
-export default ReelData;
+export default ReelDataDependencies;
