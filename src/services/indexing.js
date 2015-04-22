@@ -309,13 +309,7 @@ IntelligenceWebClient.factory('IndexingService', [
             }
         };
 
-        playlistEventEmitter.on('EVENT_SELECT', () => {
-
-            this.eventSelected = true;
-            this.isIndexing = true;
-            this.showTags = false;
-            this.showScript = true;
-        });
+        playlistEventEmitter.on('EVENT_SELECT', IndexingService.onEventSelect.bind(IndexingService));
 
         return IndexingService;
     }
