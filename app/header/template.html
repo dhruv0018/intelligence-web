@@ -132,7 +132,7 @@
                 <div data-ng-repeat="roleType in currentUser.roleTypes track by $index">
                     <li data-ng-if="roleType[0].type.id !== ATHLETE.type.id" data-ng-repeat="role in roleType">
 
-                        <a ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href data-ng-click="account.changeCurrentUserRole(role)">
+                        <a data-ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href data-ng-click="account.changeCurrentUserRole(role)">
 
                             <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
