@@ -123,13 +123,14 @@ IntelligenceWebClient.factory('BaseFactory', [
              */
             getList: function(filter) {
 
-                var self = this;
+                let self = this;
 
-                var storage = $injector.get(self.storage);
+                let storage = $injector.get(self.storage);
+                let session = $injector.get('SessionService');
 
                 if (!filter) return storage.list;
 
-                var ids;
+                let ids;
 
                 if (angular.isArray(filter)) {
 
@@ -138,10 +139,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 else if (angular.isObject(filter)) {
 
-                    var session = $injector.get('SessionService');
-                    var key = '@' + session.serializeUserId() + '!' + self.description + '?' + encodeURIComponent(JSON.stringify(filter));
+                    /* Get the view key based on the filter. */
+                    let view = session.serializeUserResourceQuery(self.description, filter);
 
-                    ids = JSON.parse(localStorage.getItem(key));
+                    ids = storage.loadCachedView(view);
                 }
 
                 if (ids) {
@@ -152,7 +153,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 }
 
-                else return storage.list;
+                else return [];
             },
 
             /**
