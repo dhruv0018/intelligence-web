@@ -122,6 +122,7 @@ Queue.controller('ModalController', [
  * @name QueueController
  * @type {Controller}
  */
+
 Queue.controller('QueueController', QueueController);
 
 QueueController.$inject = [
@@ -142,7 +143,8 @@ QueueController.$inject = [
     'TeamsFactory',
     'GamesFactory',
     'Admin.Queue.Data',
-    'SelectIndexer.Modal'
+    'SelectIndexer.Modal',
+    'Utilities'
 ];
 
 function QueueController (
@@ -163,7 +165,8 @@ function QueueController (
     teams,
     games,
     data,
-    SelectIndexerModal
+    SelectIndexerModal,
+    utilities
 ) {
 
     $scope.ROLE_TYPE = ROLE_TYPE;
@@ -296,11 +299,15 @@ function QueueController (
             games.fetch(filter.gameId,
 
                 function success(game) {
+                    /* Get the team names */
+                    teams.load([game.teamId, game.opposingTeamId]).then(
+                        function updateQueue() {
+                            $scope.queue = [];
+                            $scope.queue[0] = game;
+                            $scope.noResults = false;
+                            $scope.searching = false;
+                    });
 
-                    $scope.queue = [];
-                    $scope.queue[0] = game;
-                    $scope.noResults = false;
-                    $scope.searching = false;
                 },
 
                 function error() {
@@ -317,10 +324,19 @@ function QueueController (
             games.query(filter,
 
                 function success(games) {
+                    let teamIds = [];
+                    /* Get the team names */
+                    for (let game of games) {
+                        teamIds.push(game.teamId, game.opposingTeamId);
+                    }
+                    /* Get the unique teams */
+                    teams.load(teamIds).then(
+                        function updateQueue() {
+                            $scope.queue = games;
+                            $scope.noResults = false;
+                            $scope.searching = false;
+                    });
 
-                    $scope.queue = games;
-                    $scope.noResults = false;
-                    $scope.searching = false;
                 },
 
                 function error() {

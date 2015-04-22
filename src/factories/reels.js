@@ -313,6 +313,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     self.shares.push(share);
                 }
             },
+
+            /* FIXME: Should this be checking for a specific teamId? */
             isSharedWithTeam: function() {
                 var self = this;
 
@@ -320,8 +322,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return self.shares.map(function(share) {
                     return share.sharedWithTeamId;
-                }).some(function(teamId) {
-                    return teamId;
+                }).some(function(sharedWithTeamId) {
+                    return sharedWithTeamId;
                 });
             },
             isSharedWithTeamId: function(teamId) {
@@ -333,8 +335,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return self.shares.map(function(share) {
                     return share.sharedWithTeamId;
-                }).some(function(teamId) {
-                    return teamId == teamId;
+                }).some(function(sharedWithTeamId) {
+                    return teamId == sharedWithTeamId;
                 });
             },
             getTeamShare: function() {
