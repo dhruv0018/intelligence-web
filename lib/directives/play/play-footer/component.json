@@ -1,5 +1,5 @@
 {
-    "name": "play",
+    "name": "play-footer",
     "templates": [
         "template.html"
     ],
@@ -9,12 +9,5 @@
     "scripts": [
         "index.js",
         "controller.js"
-    ],
-    "paths": [
-        "."
-    ],
-    "local": [
-        "play-header",
-        "play-footer"
     ]
 }
