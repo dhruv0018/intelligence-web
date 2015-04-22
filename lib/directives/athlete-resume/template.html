@@ -1,0 +1,59 @@
+<div class="athlete-resume">
+    <div class="resume-header">
+        <dropdown-toggle-button toggled-element="toggleExperience" text="'Experience'"></dropdown-toggle-button>
+    </div>
+    <div id="toggle-experience" class="resume-body animated fadeOut collapsed">
+        <h4>Teams</h4>
+        <div class="experience-teams" ng-repeat="team in athlete.profile.teams">
+            <p>{{teams[team.teamId].name}} <span class="pull-right">{{team.startYear}} - {{team.endYear}}</span></p>
+            <ul>
+                <li class="team-position" ng-repeat="positionId in team.positionIds">
+                    {{getPositionsForProfileTeam(team)[positionId].description}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="resume-header">
+        <dropdown-toggle-button toggled-element="toggleAcademics" text="'Academics'"></dropdown-toggle-button>
+    </div>
+    <div id="toggle-academics" class="resume-body animated fadeOut collapsed">
+        <h4>High School</h4>
+        <ul>
+            <li ng-show="athlete.profile.highSchool">{{athlete.profile.highSchool}}</li>
+            <li ng-show="athlete.profile.highSchoolGraduationYear">Class of {{athlete.profile.highSchoolGraduationYear}}</li>
+            <li ng-show="athlete.profile.highSchoolGpa">GPA: {{athlete.profile.highSchoolGpa}}</li>
+            <li ng-show="athlete.profile.satScore">SAT Score: {{athlete.profile.satScore}}</li>
+            <li ng-show="athlete.profile.actScore">ACT Score: {{athlete.profile.actScore}}</li>
+        </ul>
+        <h4>College</h4>
+        <ul>
+            <li ng-show="athlete.profile.college">{{athlete.profile.college}}</li>
+            <li ng-show="athlete.profile.collegeGraduationYear">Class of {{athlete.profile.collegeGraduationYear}}</li>
+            <li ng-show="athlete.profile.intendedMajor">Intended Major: {{athlete.profile.intendedMajor}}</li>
+        </ul>
+    </div>
+
+    <div class="resume-header">
+        <dropdown-toggle-button toggled-element="togglePhysical" text="'Physical'"></dropdown-toggle-button>
+    </div>
+    <div id="toggle-physical" class="resume-body animated fadeOut collapsed">
+        <ul>
+            <li ng-show="athlete.profile.height">Height: {{athlete.profile.height | height}}</li>
+            <li ng-show="athlete.profile.weight">Weight: {{athlete.profile.weight}} lbs.</li>
+            <li ng-show="athlete.profile.dominantHandType">
+                    Dominant Hand:&nbsp;
+                    {{ATHLETE_DOMINANT_HAND_TYPES[ATHLETE_DOMINANT_HAND_TYPES_ID[athlete.profile.dominantHandType]].description}}
+            </li>
+            <li ng-show="athlete.profile.oneMileTime">1 Mile Time: {{athlete.profile.oneMileTime}}</li>
+            <li ng-show="athlete.profile.threeMileTime">3 Mile Time: {{athlete.profile.threeMileTime}}</li>
+            <li ng-show="athlete.profile.fortyYardDash">40 Yard Dash: {{athlete.profile.fortyYardDash}} seconds</li>
+            <li ng-show="athlete.profile.benchPress">Bench Press: {{athlete.profile.benchPress}} lbs.</li>
+            <li ng-show="athlete.profile.clean">Clean: {{athlete.profile.clean}} lbs.</li>
+            <li ng-show="athlete.profile.deadlift">Deadlift: {{athlete.profile.deadlift}} lbs.</li>
+            <li ng-show="athlete.profile.squat">Squat: {{athlete.profile.squat}} lbs.</li>
+            <li ng-show="athlete.profile.verticalLeap">Vertical Leap: {{athlete.profile.verticalLeap}} inches</li>
+            <li ng-show="athlete.profile.wingspan">Wingspan: {{athlete.profile.wingspan | height}}</li>
+        </ul>
+    </div>
+</div>

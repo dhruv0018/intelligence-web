@@ -1,0 +1,48 @@
+@import (reference) "main.less";
+
+.athlete-resume {
+
+    border: thin solid @gray-border;
+    background-color: white;
+    width: 400px;
+
+    .resume-header {
+
+        height: 60px;
+        line-height: 60px;
+        padding-left: 10px;
+        border-bottom: thin solid @gray-border;
+        text-transform: uppercase;
+        cursor: pointer;
+
+        .dropdown-toggle-button {
+            display: block;
+        }
+    }
+
+    .resume-body {
+        border-bottom: thin solid @gray-border;
+        padding: 10px;
+        background-color: @active-bg;
+        -webkit-transition: max-height 1s;
+        -moz-transition: max-height 1s;
+        transition: max-height 1s;
+
+        ul {
+            list-style-type: none;
+        }
+    }
+
+    .collapsed {
+        max-height: 0px;
+        padding: 0;
+        border: none;
+        display: none;
+    }
+
+    .expanded {
+        max-height: 4000px;
+        display: block;
+    }
+
+}
