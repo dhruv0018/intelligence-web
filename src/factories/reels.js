@@ -333,8 +333,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return self.shares.map(function(share) {
                     return share.sharedWithTeamId;
-                }).some(function(teamId) {
-                    return teamId == teamId;
+                }).some(function(sharedWithTeamId) {
+                    return teamId == sharedWithTeamId;
                 });
             },
             getTeamShare: function() {
