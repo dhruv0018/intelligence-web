@@ -56,7 +56,7 @@ Reel.config([
 
         const reelRestricted = {
             name: 'Reel.Restricted',
-            url: 'reel/:id/restricted',
+            url: 'reel/',
             parent: 'base',
             views: {
                 'main@root': {
@@ -91,7 +91,7 @@ Reel.config([
                 '$state', '$stateParams', 'AccountService', 'ReelsFactory', 'SessionService',
                 function onEnterReelState ($state, $stateParams, account, reels, session) {
 
-                    let currentUser = session.currentUser;
+                    let currentUser = session.getCurrentUser();
                     let reelId = Number($stateParams.id);
                     let reel = reels.get(reelId);
 
@@ -100,7 +100,15 @@ Reel.config([
                         account.gotoUsersHomeState();
                     }
 
-                    if (!reel.isSharedWithPublic() && reel.uploaderTeamId !== currentUser.currentRole.teamId && !reel.isSharedWithUser(currentUser)) {
+                    /*
+                        Check if the reel is public,
+                        if the uploader team id matches the current user's role team id,
+                        and if the reel is shared with the user
+                    */
+                    if (!reel.isSharedWithPublic() &&
+                        reel.uploaderTeamId !== currentUser.currentRole.teamId &&
+                        !reel.isSharedWithUser(currentUser))
+                    {
                         $state.go('Reel.Restricted', { id: reelId });
                     }
                 }
