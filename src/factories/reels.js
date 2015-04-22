@@ -320,8 +320,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return self.shares.map(function(share) {
                     return share.sharedWithTeamId;
-                }).some(function(teamId) {
-                    return teamId;
+                }).some(function(sharedWithTeamId) {
+                    return sharedWithTeamId;
                 });
             },
             isSharedWithTeamId: function(teamId) {
