@@ -8,6 +8,12 @@
 @icon-font-size-sm: 16px;
 @text-font-size: 14px;
 
+@control-bar-bg: #1a1a1a;
+@control-bar-color: #e4e4e4;
+@scrubber-bg: #808080;
+@scrubber-buffered-color: #bfbfbf;
+@scrubber-elapsed-color: @brand-primary;
+
 videogular button {
     cursor: pointer;
 }
@@ -76,7 +82,8 @@ videogular vg-controls {
             position: relative;
             justify-content: space-between;
             align-content: center;
-            background-color: black;
+            background-color: @control-bar-bg;
+            color: @control-bar-color;
         }
 
         .controls-left,
@@ -95,7 +102,7 @@ videogular vg-scrub-bar {
     height: 10px;
     width: 100%;
     cursor: pointer;
-    background-color: rgb(24,121,181);
+    background-color: @scrubber-bg;
 }
 
 videogular vg-scrub-bar :focus vg-scrub-bar-current-time {
@@ -103,11 +110,12 @@ videogular vg-scrub-bar :focus vg-scrub-bar-current-time {
 }
 
 videogular vg-scrub-bar-current-time {
-    border-right: 7px solid red;
+    border-right: 7px solid @brand-light-blue;
     width: 100%;
     height: 10px;
     display: block;
     cursor: pointer;
+    background-color: @scrubber-elapsed-color;
 }
 
 videogular vg-time-display {
