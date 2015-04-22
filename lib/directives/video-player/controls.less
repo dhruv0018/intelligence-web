@@ -4,6 +4,10 @@
 /* Controlbar plugin */
 /*********************/
 
+@icon-font-size-lg: 25px;
+@icon-font-size-sm: 16px;
+@text-font-size: 14px;
+
 videogular button {
     cursor: pointer;
 }
@@ -12,7 +16,7 @@ videogular .iconButton,
 videogular .control-button {
     font-family: 'Krossover-Icons';
     speak: none;
-    font-size: 20px;
+    font-size: @icon-font-size-sm;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
@@ -24,6 +28,12 @@ videogular .control-button {
     padding: 6px;
     border: none;
     outline: none;
+}
+
+videogular vg-play-pause-button .icon {
+    position: relative;
+    top: 4px;
+    font-size: @icon-font-size-lg;
 }
 
 .iconButton,
@@ -96,7 +106,7 @@ videogular vg-scrub-bar-current-time {
 }
 
 videogular vg-time-display {
-    font-size: 17px;
+    font-size: @text-font-size;
     letter-spacing: -0.01em;
     margin-left: 15px;
 }
