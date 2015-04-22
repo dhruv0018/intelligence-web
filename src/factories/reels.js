@@ -313,6 +313,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     self.shares.push(share);
                 }
             },
+
+            /* FIXME: Should this be checking for a specific teamId? */
             isSharedWithTeam: function() {
                 var self = this;
 
