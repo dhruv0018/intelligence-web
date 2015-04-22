@@ -298,6 +298,14 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* Clear the current play. */
                 playManager.clear();
+            },
+
+            onEventSelect: function () {
+
+                this.eventSelected = true;
+                this.isIndexing = true;
+                this.showTags = false;
+                this.showScript = true;
             }
         };
 
