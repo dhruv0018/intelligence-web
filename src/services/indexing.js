@@ -110,7 +110,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Snap video back to time of current event. */
                 videoPlayer.seekTime(event.time);
 
-                playManager.save();
+                playManager.current.save();
                 playManager.clear();
                 tagsManager.reset();
                 eventManager.current = new KrossoverEvent();
@@ -295,7 +295,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = null;
 
                 /* Save play. */
-                playManager.save();
+                playManager.current.save();
 
                 /* Clear the current play. */
                 playManager.clear();
