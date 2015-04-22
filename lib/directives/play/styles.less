@@ -37,108 +37,6 @@
         margin-bottom: 10px;
     }
 
-    .playHeadingContainer {
-
-        display: flex;
-        cursor: pointer;
-
-        .playHeading {
-
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            color: black;
-
-            h4 {
-                font-size: 16px;
-                font-weight: 200;
-                letter-spacing: -0.01em;
-                margin-top: 5px;
-                margin-bottom: 5px;
-                text-decoration: none;
-
-                .dash,
-                .period,
-                .time,
-                .team,
-                .vs,
-                .score {
-
-                    display: inline-block;
-                }
-
-                .team {
-
-                    position: relative;
-                    top: 3px;
-                    max-width: 12ex;
-                    .text-overflow();
-                }
-
-                .summaries {
-                    button {
-                        color: black;
-                        pointer-events: none;
-                        text-decoration: none;
-                    }
-                }
-
-                &.vs {
-                    font-weight:500;
-                    padding-bottom: 10px;
-                }
-
-                &.title {
-                    flex-direction: row;
-                    display: flex;
-                    align-items: baseline;
-                }
-
-                @media only screen
-                and (max-width: @screen-md-max) {
-                    &.title:not(.title-reel){
-                        flex-direction: column;
-                    }
-                }
-
-                &.column {
-                    display: flex;
-                    flex-direction: column;
-                }
-            }
-
-            .subtitle {
-                display: flex;
-            }
-
-            .summariesContainer {
-                margin-top: 10px;
-                margin-left: 10px;
-            }
-        }
-
-        .playplay {
-            font-size: 36px;
-            width: 36px;
-            color: @gray-light;
-            cursor: pointer;
-            display: flex;
-
-            &:active,
-            &:focus,
-            &:hover {
-                color: @brand-primary;
-            }
-
-            &.playing {
-                color: rgb(89, 159, 253);
-            }
-
-            &.invisible {
-                visibility: hidden;
-            }
-        }
-    }
 
     hr {
         margin: 0;
@@ -156,70 +54,9 @@
         }
     }
 
-    .playFooter {
-
-        position: relative;
-        padding-top: 10px;
-        padding-bottom: 10px;
-
-        .btn-delete-play {
-
-            .btn;
-            .btn-xs;
-            .btn-danger;
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 0.01em;
-        }
-
-        .play-link {
-            .btn;
-            .btn-link;
-            font-size: 14px;
-            font-weight: 400;
-            letter-spacing: 0.01em;
-            padding-top: 10px;
-            padding-left: 0;
-            padding-right: 0;
-            padding-bottom: 10px;
-            border-left-width: 0;
-
-            &:focus,
-            &:hover {
-
-                text-decoration: none;
-            }
-        }
-
-        .save-indicator {
-
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            margin: 10px;
-            height: 25px;
-            line-height: 25px;
-
-            .icon {
-
-                color: @gray-light;
-                font-size: 14px;
-            }
-
-            .active {
-
-                animation: spin 1s linear infinite;
-            }
-
-            .success {
-
-                color: @brand-success;
-            }
-
-            .error {
-
-                color: @brand-danger;
-            }
+    @media all and (max-width: 1024px) {
+        .playBody{
+            display: none;
         }
     }
 }
@@ -228,31 +65,7 @@
     .clearfix;
 
     letter-spacing: normal;
-    background: #fff;
     color: #000;
-
-    .playHeadingContainer {
-
-        .playHeading {
-            margin-bottom: 10px;
-            color: black;
-
-            h4 {
-                position: relative;
-                letter-spacing: normal;
-                font-size: large;
-                font-weight: 200;
-                margin: 0;
-            }
-
-            h5 {
-                font-weight: 100;
-                font-size: small;
-                letter-spacing: 0.03em;
-                margin: 0;
-            }
-        }
-    }
 
     &.edit-mode {
         cursor: move;
