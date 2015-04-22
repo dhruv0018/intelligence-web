@@ -25,6 +25,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 tagsManager.reset(tagset);
                 playManager.reset(tagset, game.id);
                 playManager.clear();
+                playsManager.calculatePlays();
             },
 
             /**
