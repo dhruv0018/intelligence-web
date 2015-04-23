@@ -38,6 +38,10 @@ function PhysicalController (
     $scope.isSaving = false;
     $scope.confirmSave = false;
 
+    if ($scope.athlete.profile.dominantHandType === null) {
+        $scope.athlete.profile.dominantHandType = '';
+    }
+
     //display height and wingspan as temporary feet and inches variables
     $scope.athleteHeightFeet = $filter('inchesAsFeet')($scope.athlete.profile.height);
     $scope.athleteHeightInches = $filter('remainingInchesFromFeetConversion')($scope.athlete.profile.height);
@@ -52,6 +56,10 @@ function PhysicalController (
 
     $scope.savePhysical = function savePhysical() {
         $scope.isSaving = true;
+
+        if ($scope.athlete.profile.dominantHandType === '') {
+            $scope.athlete.profile.dominantHandType = null;
+        }
 
         //recombine feet and inches before saving
         $scope.athlete.profile.height = Number($scope.athleteHeightFeet * 12) + Number($scope.athleteHeightInches);
