@@ -5,7 +5,7 @@
     <!-- Mobile Menu Begin -->
     <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-left dropdown mobile-nav navbar-fixed-top" dropdown>
 
-        <button class="dropdown-toggle" dropdown-toggle><i class="icon icon-bars">&nbsp;</i>Menu</button>
+        <button id="mobile-menu-dropdown-toggle" class="dropdown-toggle" dropdown-toggle><i class="icon icon-bars">&nbsp;</i>Menu</button>
 
         <!-- Admin Menu -->
         <menu class="dropdown-menu" data-ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
@@ -50,7 +50,7 @@
             ><a id="mobile-menu-athlete-profile-cta" data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
         </menu>
 
-    </div>
+    </div> + roleType[0].type.id + '-' + $index
 
     <!-- Logo -->
     <header class="navbar-header" data-ng-class="{public: !auth.isLoggedIn}">
@@ -120,7 +120,7 @@
 
         <div class="role-dropdown" data-dropdown data-is-open="status.isopen">
 
-            <button class="dropdown-toggle" dropdown-toggle>
+            <button id="menu-dropdown-toggle" class="dropdown-toggle" dropdown-toggle>
 
                 <i class="icon" data-ng-class="{'icon-chevron-up': status.isopen, 'icon-chevron-down': !status.isopen}"></i>
                 <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
@@ -141,7 +141,7 @@
                     </li>
                     <li data-ng-if="roleType[0].type.id === ATHLETE.type.id">
 
-                        <a href data-ng-click="account.changeCurrentUserRole(roleType[0])">
+                        <a data-ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href data-ng-click="account.changeCurrentUserRole(roleType[0])">
 
                             <x-krossover-role user="currentUser" role="roleType[0]"></x-krossover-role>
 
