@@ -26,6 +26,9 @@ module.exports = function(grunt) {
             qa: {
                 NODE_ENV: 'qa'
             },
+            uat: {
+                NODE_ENV: 'uat'
+            },
             prod: {
                 NODE_ENV: 'production'
             }
