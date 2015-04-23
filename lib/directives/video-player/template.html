@@ -8,6 +8,7 @@
      vg-update-volume="videoPlayer.onUpdateVolume($volume)"
      vg-autoplay="videoPlayer.config.autoplay"
      vg-plays-inline="videoPlayer.config.playsInline"
+     ng-class="{'fullscreen': videoPlayer.fullScreenEnabled}"
     >
 
         <vg-media
@@ -37,6 +38,11 @@
                     <vg-time-display>
                         <strong>{{ currentTime | millisecondsAsHoursMinutesSeconds }}</strong> / {{ totalTime | millisecondsAsHoursMinutesSeconds }}
                     </vg-time-display>
+
+                    <vg-volume title="Adjust Volume">
+                        <vg-mute-button></vg-mute-button>
+                        <vg-volume-bar></vg-volume-bar>
+                    </vg-volume>
 
                 </div>
 
@@ -73,11 +79,6 @@
                             {{TRANSCODE_PROFILES[TRANSCODE_PROFILES_IDS[source.transcodeProfile]].quality}}
                         </option>
                     </select>
-
-                    <vg-volume title="Adjust Volume">
-                        <vg-mute-button></vg-mute-button>
-                        <vg-volume-bar></vg-volume-bar>
-                    </vg-volume>
 
                     <vg-fullscreen-button title="Toggle Fullscreen"></vg-fullscreen-button>
 
