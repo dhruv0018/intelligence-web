@@ -26,6 +26,9 @@ module.exports = function(grunt) {
             qa: {
                 NODE_ENV: 'qa'
             },
+            uat: {
+                NODE_ENV: 'uat'
+            },
             prod: {
                 NODE_ENV: 'production'
             }
@@ -729,25 +732,28 @@ module.exports = function(grunt) {
         'ver:prod'
     ]);
 
-    grunt.registerTask('new-qa', [
-        'gitinfo',
+    grunt.registerTask('uat', [
         'clean',
-        'env:qa',
+        'env:uat',
         'componentbuild:prod',
         'browserify:prod',
         'ngAnnotate',
         'componentbuild:styles',
         'less',
-        'copy:svg',
+        'svgmin',
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
         'componentbuild:files',
         'copy:theme-assets',
-        'copy:qaassets',
+        'copy:assets',
         'copy:dev',
-        'copy:qa',
-        'manifests'
+        'copy:build',
+        'copy:polyfills',
+        'copy:htaccess',
+        'manifests',
+        'ver:polyfills',
+        'ver:prod'
     ]);
 
     grunt.registerTask('master', ['prod']); // alias for prod

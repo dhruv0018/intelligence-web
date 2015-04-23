@@ -5,9 +5,10 @@ import ReelDataDependencies from './data.js';
 import ReelController from './controller.js';
 
 import template from './template.html.js';
+import restricted from './restricted.html.js';
 
-const templateUrl = 'reel/template.html';
-
+const templateUrl = './template.html';
+const restrictedUrl = './restricted.html';
 /**
  * Reel module.
  * @module Reel
@@ -25,6 +26,7 @@ Reel.run([
     function run ($templateCache) {
 
         $templateCache.put(templateUrl, template);
+        $templateCache.put(restrictedUrl, restricted);
     }
 ]);
 
@@ -52,6 +54,17 @@ Reel.config([
             ]
         };
 
+        const reelRestricted = {
+            name: 'Reel.Restricted',
+            url: 'reel/',
+            parent: 'base',
+            views: {
+                'main@root': {
+                    templateUrl: './restricted.html'
+                }
+            }
+        };
+
         const reelState = {
             name: 'Reel',
             url: '/reel/:id',
@@ -75,15 +88,28 @@ Reel.config([
                 ]
             },
             onEnter: [
-                '$state', '$stateParams', 'AccountService', 'ReelsFactory',
-                function onEnterReelState ($state, $stateParams, account, reels) {
+                '$state', '$stateParams', 'AccountService', 'ReelsFactory', 'SessionService',
+                function onEnterReelState ($state, $stateParams, account, reels, session) {
 
-                    var reelId = Number($stateParams.id);
-                    var reel = reels.get(reelId);
+                    let currentUser = session.getCurrentUser();
+                    let reelId = Number($stateParams.id);
+                    let reel = reels.get(reelId);
 
                     if (reel.isDeleted) {
 
                         account.gotoUsersHomeState();
+                    }
+
+                    /*
+                        Check if the reel is public,
+                        if the uploader team id matches the current user's role team id,
+                        and if the reel is shared with the user
+                    */
+                    if (!reel.isSharedWithPublic() &&
+                        reel.uploaderTeamId !== currentUser.currentRole.teamId &&
+                        !reel.isSharedWithUser(currentUser))
+                    {
+                        $state.go('Reel.Restricted', { id: reelId });
                     }
                 }
             ],
@@ -97,6 +123,7 @@ Reel.config([
         };
 
         $stateProvider.state(shortReelState);
+        $stateProvider.state(reelRestricted);
         $stateProvider.state(reelState);
     }
 ]);
