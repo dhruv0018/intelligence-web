@@ -102,14 +102,6 @@
                 visibility: hidden;
             }
         }
-
-        .delete-reel-play {
-            position:absolute;
-            right: 0;
-            top: 0;
-            padding: 10px;
-            color: @brand-primary;
-        }
     }
 }
 
@@ -133,6 +125,18 @@
                 font-size: small;
                 letter-spacing: 0.03em;
                 margin: 0;
+            }
+        }
+
+        .delete-reel-play {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 10px;
+
+            .icon {
+                color: @brand-danger;
+                cursor: pointer;
             }
         }
     }
