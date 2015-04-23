@@ -451,6 +451,10 @@
         "*": true
     },
 
+    "Reel.Restricted": {
+        "*": true
+    },
+
     "ShortReel": {
 
         "*": true
