@@ -175,6 +175,11 @@ function ReelController(
             playsManager.reset($scope.plays);
         });
     };
+
+    $scope.$watch('plays', function playsWatch(newVals, oldVals) {
+
+        $scope.filteredPlaysIds = newVals;
+    });
 }
 
 export default ReelController;
