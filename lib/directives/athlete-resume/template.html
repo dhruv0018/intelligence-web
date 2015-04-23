@@ -20,16 +20,20 @@
     <div id="toggle-academics" class="resume-body animated fadeOut collapsed">
         <h4>High School</h4>
         <ul>
-            <li ng-show="athlete.profile.highSchool">{{athlete.profile.highSchool}}</li>
-            <li ng-show="athlete.profile.highSchoolGraduationYear">Class of {{athlete.profile.highSchoolGraduationYear}}</li>
+            <li ng-show="athlete.profile.highSchool">
+                {{athlete.profile.highSchool}}
+                <span class="pull-right" ng-show="athlete.profile.highSchoolGraduationYear">Class of {{athlete.profile.highSchoolGraduationYear}}</span>
+            </li>
             <li ng-show="athlete.profile.highSchoolGpa">GPA: {{athlete.profile.highSchoolGpa}}</li>
             <li ng-show="athlete.profile.satScore">SAT Score: {{athlete.profile.satScore}}</li>
             <li ng-show="athlete.profile.actScore">ACT Score: {{athlete.profile.actScore}}</li>
         </ul>
         <h4>College</h4>
         <ul>
-            <li ng-show="athlete.profile.college">{{athlete.profile.college}}</li>
-            <li ng-show="athlete.profile.collegeGraduationYear">Class of {{athlete.profile.collegeGraduationYear}}</li>
+            <li ng-show="athlete.profile.college">
+                {{athlete.profile.college}}
+                <span class="pull-right" ng-show="athlete.profile.collegeGraduationYear">Class of {{athlete.profile.collegeGraduationYear}}</span>
+            </li>
             <li ng-show="athlete.profile.intendedMajor">Intended Major: {{athlete.profile.intendedMajor}}</li>
         </ul>
     </div>
@@ -39,21 +43,56 @@
     </div>
     <div id="toggle-physical" class="resume-body animated fadeOut collapsed">
         <ul>
-            <li ng-show="athlete.profile.height">Height: {{athlete.profile.height | height}}</li>
-            <li ng-show="athlete.profile.weight">Weight: {{athlete.profile.weight}} lbs.</li>
-            <li ng-show="athlete.profile.dominantHandType">
-                    Dominant Hand:&nbsp;
-                    {{ATHLETE_DOMINANT_HAND_TYPES[ATHLETE_DOMINANT_HAND_TYPES_ID[athlete.profile.dominantHandType]].description}}
+            <li ng-show="athlete.profile.height">
+                Height:
+                <span class="pull-right">{{athlete.profile.height | height}}</span>
             </li>
-            <li ng-show="athlete.profile.oneMileTime">1 Mile Time: {{athlete.profile.oneMileTime}}</li>
-            <li ng-show="athlete.profile.threeMileTime">3 Mile Time: {{athlete.profile.threeMileTime}}</li>
-            <li ng-show="athlete.profile.fortyYardDash">40 Yard Dash: {{athlete.profile.fortyYardDash}} seconds</li>
-            <li ng-show="athlete.profile.benchPress">Bench Press: {{athlete.profile.benchPress}} lbs.</li>
-            <li ng-show="athlete.profile.clean">Clean: {{athlete.profile.clean}} lbs.</li>
-            <li ng-show="athlete.profile.deadlift">Deadlift: {{athlete.profile.deadlift}} lbs.</li>
-            <li ng-show="athlete.profile.squat">Squat: {{athlete.profile.squat}} lbs.</li>
-            <li ng-show="athlete.profile.verticalLeap">Vertical Leap: {{athlete.profile.verticalLeap}} inches</li>
-            <li ng-show="athlete.profile.wingspan">Wingspan: {{athlete.profile.wingspan | height}}</li>
+            <li ng-show="athlete.profile.weight">
+                Weight:
+                <span class="pull-right">{{athlete.profile.weight}} lbs.</span>
+            </li>
+            <li ng-show="athlete.profile.dominantHandType">
+                    Dominant Hand:
+                    <span class="pull-right">
+                        {{ATHLETE_DOMINANT_HAND_TYPES[ATHLETE_DOMINANT_HAND_TYPES_ID[athlete.profile.dominantHandType]].description}}
+                    </span>
+            </li>
+            <li ng-show="athlete.profile.oneMileTime">
+                1 Mile Time:
+                <span class="pull-right">{{athlete.profile.oneMileTime}}</span>
+            </li>
+            <li ng-show="athlete.profile.threeMileTime">
+                3 Mile Time:
+                <span class="pull-right">{{athlete.profile.threeMileTime}}</span>
+            </li>
+            <li ng-show="athlete.profile.fortyYardDash">
+                40 Yard Dash:
+                <span class="pull-right">{{athlete.profile.fortyYardDash}} seconds</span>
+            </li>
+            <li ng-show="athlete.profile.benchPress">
+                Bench Press:
+                <span class="pull-right">{{athlete.profile.benchPress}} lbs.</span>
+            </li>
+            <li ng-show="athlete.profile.clean">
+                Clean:
+                <span class="pull-right">{{athlete.profile.clean}} lbs.</span>
+            </li>
+            <li ng-show="athlete.profile.deadlift">
+                Deadlift:
+                <span class="pull-right">{{athlete.profile.deadlift}} lbs.</span>
+            </li>
+            <li ng-show="athlete.profile.squat">
+                Squat:
+                <span class="pull-right">{{athlete.profile.squat}} lbs.</span>
+            </li>
+            <li ng-show="athlete.profile.verticalLeap">
+                Vertical Leap:
+                <span class="pull-right">{{athlete.profile.verticalLeap}} inches</span>
+            </li>
+            <li ng-show="athlete.profile.wingspan">
+                Wingspan:
+                <span class="pull-right">{{athlete.profile.wingspan | height}}</span>
+            </li>
         </ul>
     </div>
 </div>
