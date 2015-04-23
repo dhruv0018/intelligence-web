@@ -732,6 +732,30 @@ module.exports = function(grunt) {
         'ver:prod'
     ]);
 
+    grunt.registerTask('uat', [
+        'clean',
+        'env:uat',
+        'componentbuild:prod',
+        'browserify:prod',
+        'ngAnnotate',
+        'componentbuild:styles',
+        'less',
+        'svgmin',
+        'grunticon',
+        'concat:unprefixed',
+        'autoprefixer',
+        'componentbuild:files',
+        'copy:theme-assets',
+        'copy:assets',
+        'copy:dev',
+        'copy:build',
+        'copy:polyfills',
+        'copy:htaccess',
+        'manifests',
+        'ver:polyfills',
+        'ver:prod'
+    ]);
+
     grunt.registerTask('master', ['prod']); // alias for prod
     grunt.registerTask('prod', [
         'clean',
