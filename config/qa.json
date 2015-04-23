@@ -1,6 +1,6 @@
 {
     "oauth": {
-        "uri": "/intelligence-api/oauth/",
+        "uri": "https://v2-qa.krossover.com/intelligence-api/oauth/",
         "user": {
             "id": "cid",
             "secret": "csecret",
@@ -16,7 +16,7 @@
         "state": "xyz"
     },
     "api": {
-        "uri": "/intelligence-api/v1/"
+        "uri": "https://v2-qa.krossover.com/intelligence-api/v1/"
     },
     "kvs": {
     },

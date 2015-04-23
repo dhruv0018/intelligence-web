@@ -20,7 +20,6 @@ Indexing.controller('Indexing.Main.Controller', [
     '$modal',
     'BasicModals',
     '$stateParams',
-    'VideoPlayerEventEmitter',
     'SessionService',
     'IndexingService',
     'TagsManager',
@@ -42,7 +41,6 @@ Indexing.controller('Indexing.Main.Controller', [
                         $modal,
                         basicModal,
                         $stateParams,
-                        videoPlayerEventEmitter,
                         session,
                         indexing,
                         tags,
@@ -84,22 +82,5 @@ Indexing.controller('Indexing.Main.Controller', [
         playlistManager.isEditable = true;
 
         var indexingElement = document.getElementsByClassName('indexing')[0];
-
-        videoPlayerEventEmitter.on('fullscreen', onFullScreen);
-
-        $scope.$on('$destroy', onDestroy);
-
-        /**
-         * Change handler for video player fill screen changes.
-         */
-        function onFullScreen (isFullScreen) {
-
-            indexingElement.classList.toggle('fullscreen', isFullScreen);
-        }
-
-        function onDestroy () {
-
-            videoPlayerEventEmitter.removeListener('fullscreen', onFullScreen);
-        }
     }
 ]);
