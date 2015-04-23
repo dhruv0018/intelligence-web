@@ -3,14 +3,25 @@
         <dropdown-toggle-button toggled-element="toggleExperience" text="'Experience'"></dropdown-toggle-button>
     </div>
     <div id="toggle-experience" class="resume-body animated fadeOut collapsed">
-        <h4>Teams</h4>
-        <div class="experience-teams" ng-repeat="team in athlete.profile.teams">
-            <p>{{teams[team.teamId].name}} <span class="pull-right">{{team.startYear}} - {{team.endYear}}</span></p>
+        <h4 ng-show="athlete.profile.teams.length">Teams</h4>
+        <div class="experience-teams" ng-show="athlete.profile.teams.length" ng-repeat="team in athlete.profile.teams">
+            <p>
+                {{teams[team.teamId].name}}
+                <span class="pull-right">
+                    {{team.startYear}}
+                    <span ng-hide="team.endYear === team.startYear">&nbsp;-&nbsp;</span>
+                    <span ng-show="team.endYear && team.endYear !== team.startYear">{{team.endYear}}</span>
+                    <span ng-hide="team.endYear">Present</span>
+                </span>
+            </p>
             <ul>
                 <li class="team-position" ng-repeat="positionId in team.positionIds">
                     {{getPositionsForProfileTeam(team)[positionId].description}}
                 </li>
             </ul>
+        </div>
+        <div ng-show="!athlete.profile.teams.length">
+            <p>{{athlete.firstName}} has not added any teams.</p>
         </div>
     </div>
 
@@ -18,8 +29,8 @@
         <dropdown-toggle-button toggled-element="toggleAcademics" text="'Academics'"></dropdown-toggle-button>
     </div>
     <div id="toggle-academics" class="resume-body animated fadeOut collapsed">
-        <h4>High School</h4>
-        <ul>
+        <h4 ng-show="hasHighSchoolInfo">High School</h4>
+        <ul ng-show="hasHighSchoolInfo">
             <li ng-show="athlete.profile.highSchool">
                 {{athlete.profile.highSchool}}
                 <span class="pull-right" ng-show="athlete.profile.highSchoolGraduationYear">Class of {{athlete.profile.highSchoolGraduationYear}}</span>
@@ -28,21 +39,24 @@
             <li ng-show="athlete.profile.satScore">SAT Score: {{athlete.profile.satScore}}</li>
             <li ng-show="athlete.profile.actScore">ACT Score: {{athlete.profile.actScore}}</li>
         </ul>
-        <h4>College</h4>
-        <ul>
+        <h4 ng-show="hasCollegeInfo">College</h4>
+        <ul ng-show="hasCollegeInfo">
             <li ng-show="athlete.profile.college">
                 {{athlete.profile.college}}
                 <span class="pull-right" ng-show="athlete.profile.collegeGraduationYear">Class of {{athlete.profile.collegeGraduationYear}}</span>
             </li>
             <li ng-show="athlete.profile.intendedMajor">Intended Major: {{athlete.profile.intendedMajor}}</li>
         </ul>
+        <div ng-hide="hasHighSchoolInfo && hasCollegeInfo">
+            <p>{{athlete.firstName}} has not added any academic information.</p>
+        </div>
     </div>
 
     <div class="resume-header">
         <dropdown-toggle-button toggled-element="togglePhysical" text="'Physical'"></dropdown-toggle-button>
     </div>
     <div id="toggle-physical" class="resume-body animated fadeOut collapsed">
-        <ul>
+        <ul ng-show="hasPhysicalInfo">
             <li ng-show="athlete.profile.height">
                 Height:
                 <span class="pull-right">{{athlete.profile.height | height}}</span>
@@ -94,5 +108,8 @@
                 <span class="pull-right">{{athlete.profile.wingspan | height}}</span>
             </li>
         </ul>
+        <div ng-hide="hasPhysicalInfo">
+            <p>{{athlete.firstName}} has not added any physical information.</p>
+        </div>
     </div>
 </div>
