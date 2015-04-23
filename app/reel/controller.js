@@ -129,20 +129,20 @@ function ReelController(
         $scope.editFlag = !$scope.editFlag;
 
         if ($scope.editFlag) {
+
             //entering edit mode, cache plays array
             if ($scope.plays && angular.isArray($scope.plays)) {
+
                 $scope.toggleEditMode.playsCache = angular.copy($scope.plays);
             }
-        } else {
-            //cancelling edit mode
 
-            if ($scope.toggleEditMode.playsCache) {
-                //get rid of dirty plays array
-                delete $scope.plays;
+        } else if ($scope.toggleEditMode.playsCache) {
 
-                //in with clean
-                $scope.plays = $scope.toggleEditMode.playsCache;
-            }
+            //get rid of dirty plays array
+            delete $scope.plays;
+
+            //in with clean
+            $scope.plays = $scope.toggleEditMode.playsCache;
         }
     };
 
