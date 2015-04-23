@@ -90,7 +90,9 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 
                         var GameData = {
                             users: users.load(game.uploaderUserId),
-                            teams: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
+                            teams: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId]),
+                            roster: players.load({ rosterId: game.getRoster(game.teamId).id }),
+                            opposingRoster: players.load({ rosterId: game.getRoster(game.opposingTeamId).id })
                         };
 
                         return $q.all(GameData);
