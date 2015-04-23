@@ -35,7 +35,7 @@ Indexing.controller('Indexing.Header.Controller', [
 
         const watchLastPlayIndexedScore = $scope.$watch('playsManager.plays[playsManager.plays.length-1].indexedScore', function onLastPlayIndexedScoreChange (indexedScore) {
 
-            if (indexedScore) {
+            if (angular.isDefined(indexedScore)) {
 
                 $scope.game.indexedScore = indexedScore;
             }
@@ -43,7 +43,7 @@ Indexing.controller('Indexing.Header.Controller', [
 
         const watchLastPlayOpposingIndexedScore = $scope.$watch('playsManager.plays[playsManager.plays.length-1].opposingIndexedScore', function onLastPlayOpposingIndexedScoreChange (opposingIndexedScore) {
 
-            if (opposingIndexedScore) {
+            if (angular.isDefined(opposingIndexedScore)) {
 
                 $scope.game.opposingIndexedScore = opposingIndexedScore;
             }
