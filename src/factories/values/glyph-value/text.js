@@ -47,11 +47,10 @@ function TextValue(
     Text.prototype.TEXT_AREA_BASE_CSS = {
         'margin': '0px',
         'padding': '20px 10px',
-        'letter-spacing': '0.5px',
         'font-family': 'Helvetica',
         'font-size': '22px',
         'font-weight': '500',
-        'line-height': '0px',
+        'line-height': '1px',
         'overflow': 'hidden',
         'min-width': '60px',
         'opacity': '1',
@@ -63,8 +62,7 @@ function TextValue(
         '-moz-box-shadow': 'none',
         'box-shadow': 'none',
         'outline': 'none',
-        'resize': 'none',
-        'box-sizing': 'border-box'
+        'resize': 'none'
     };
 
     Text.prototype.TEXT_AREA_EDIT_CSS = {
@@ -85,12 +83,14 @@ function TextValue(
 
     Text.prototype.TEXT_AREA_EDIT_ATTR = {
         'placeholder': Text.prototype.HINT_TEXT,
+        'autofocus': true,
         'title': ''
     };
 
     Text.prototype.TEXT_AREA_DISPLAY_ATTR = {
         'placeholder': Text.prototype.HINT_TEXT,
-        'title': Text.prototype.HELPER_TEXT
+        'title': Text.prototype.HELPER_TEXT,
+        'autofocus': true
     };
 
     Text.prototype.TEXT_AREA_DISPLAY_SELECTED_ATTR = {
@@ -559,6 +559,9 @@ function TextValue(
 
         // add custom styles and attributes
         testTextArea.css({'top': '-9999px'});
+
+        // important: adding additional padding to fit the text one-line
+        testTextArea.css({'padding': '20px 15px 20px 10px'});
     };
 
     return Text;
