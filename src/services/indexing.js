@@ -18,7 +18,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 var self = this;
 
                 game.currentPeriod = 0;
-                game.teamIndexedScore = 0;
+                game.indexedScore = 0;
                 game.opposingIndexedScore = 0;
 
                 playsManager.reset(plays);
