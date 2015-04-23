@@ -2,6 +2,21 @@
 
 @controls-height: 60px;
 
+.video-player-size(@width, @media-height) {
+
+    videogular, vg-media {
+        width: @width;
+    }
+
+    vg-media {
+        height: @media-height;
+    }
+
+    videogular {
+        height: calc(@media-height + @controls-height);
+    }
+}
+
 video-player {
     display: inline-block;
     margin: 0 auto;
@@ -19,6 +34,19 @@ video {
 
 videogular vg-media {
     display: block;
+}
+
+videogular.fullscreen {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    vg-media {
+        width: 100%;
+        height: calc(100% ~"-" @controls-height);
+    }
 }
 
 /**
@@ -98,42 +126,24 @@ videogular {
     }
 }
 
-@media (min-width: 640px) {
+.video-player-size(320px, 180px);
 
-    videogular {
-        width: 426px;
-        height: calc(240px + @controls-height);
-    }
+@media (min-width: 640px) {
+    .video-player-size(426px, 240px);
 }
 
 @media (min-width: 800px) {
-
-    videogular {
-        width: 550px;
-        height: calc(310px + @controls-height);
-    }
+    .video-player-size(550px, 310px);
 }
 
 @media (min-width: 1105px) {
-
-    videogular {
-        width: 640px;
-        height: calc(360px + @controls-height);
-    }
+    .video-player-size(640px, 360px);
 }
 
 @media (min-width: 1320px) {
-
-    videogular {
-        width: 854px;
-        height: calc(480px + @controls-height);
-    }
+    .video-player-size(854px, 480px);
 }
 
 @media (min-width: 1745px) {
-
-    videogular {
-        width: 1280px;
-        height: calc(720px + @controls-height);
-    }
+    .video-player-size(1280px, 720px);
 }
