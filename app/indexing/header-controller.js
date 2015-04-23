@@ -35,12 +35,18 @@ Indexing.controller('Indexing.Header.Controller', [
 
         const watchLastPlayIndexedScore = $scope.$watch('playsManager.plays[playsManager.plays.length-1].indexedScore', function onLastPlayIndexedScoreChange (indexedScore) {
 
-            $scope.game.indexedScore = indexedScore;
+            if (indexedScore) {
+
+                $scope.game.indexedScore = indexedScore;
+            }
         });
 
         const watchLastPlayOpposingIndexedScore = $scope.$watch('playsManager.plays[playsManager.plays.length-1].opposingIndexedScore', function onLastPlayOpposingIndexedScoreChange (opposingIndexedScore) {
 
-            $scope.game.opposingIndexedScore = opposingIndexedScore;
+            if (opposingIndexedScore) {
+
+                $scope.game.opposingIndexedScore = opposingIndexedScore;
+            }
         });
 
         $scope.$on('$destroy', onDestroy);
