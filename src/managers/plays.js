@@ -88,6 +88,8 @@ IntelligenceWebClient.service('PlaysManager', [
 
             /* Insert the play into the appropriate index. */
             this.plays.splice(index, 0, play);
+
+            this.calculatePlays();
         };
 
         /**
@@ -119,6 +121,8 @@ IntelligenceWebClient.service('PlaysManager', [
                 tagsManager.reset();
                 eventManager.current = new KrossoverEvent();
             }
+
+            this.calculatePlays();
         };
 
         /**
