@@ -39,6 +39,9 @@ IntelligenceWebClient.service('PlaysManager', [
          */
         this.getLastPlay = function() {
 
+            /* Sort the events by time. */
+            this.plays.sort(utilities.compareStartTimes);
+
             return this.plays[this.plays.length - 1];
         };
 
