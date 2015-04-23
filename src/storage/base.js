@@ -470,6 +470,23 @@ IntelligenceWebClient.factory('BaseStorage', [
             },
 
             /**
+             * Loads a cached view.
+             * Loads a view (a list of IDs) which corresponds to the given key,
+             * but throws if the key was not stored before.
+             * @param {Number|String} key - a key, used to lookup the view.
+             * @returns {Array.<Number|String>} a list of resource keys.
+             */
+            loadCachedView: function(key) {
+
+                let ids = this.loadView(key);
+
+                if (ids === null) throw new Error(`View '${key}' not cached yet in local Storage.`);
+
+                /* Return array of IDs. */
+                return ids;
+            },
+
+            /**
              * Drops a view.
              * Drops a view (a list of IDs) which corresponds to the given key
              * @param {Number|String} key - a key, used to identify the view.
