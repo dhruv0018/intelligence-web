@@ -26,6 +26,9 @@ module.exports = function(grunt) {
             qa: {
                 NODE_ENV: 'qa'
             },
+            uat: {
+                NODE_ENV: 'uat'
+            },
             prod: {
                 NODE_ENV: 'production'
             }
@@ -239,12 +242,20 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
+                    'theme',
                     'node_modules/bootstrap/less'
                 ]
             },
             theme: {
                 files: {
                     'build/theme.css': ['theme/**/*.less']
+                }
+            },
+            components: {
+                files: {
+                    'build/components.css': [
+                        'app/reel/styles.less'
+                    ]
                 }
             }
         },
@@ -262,7 +273,7 @@ module.exports = function(grunt) {
 
         concat: {
             unprefixed: {
-                src: ['fonts.css', 'icons.css', 'vendor/css/animate.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'node_modules/angular-material/angular-material.css', 'build/build.css', 'build/theme.css'],
+                src: ['fonts.css', 'icons.css', 'vendor/css/animate.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'node_modules/angular-material/angular-material.css', 'build/build.css', 'build/components.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
             }
         },
@@ -721,25 +732,28 @@ module.exports = function(grunt) {
         'ver:prod'
     ]);
 
-    grunt.registerTask('new-qa', [
-        'gitinfo',
+    grunt.registerTask('uat', [
         'clean',
-        'env:qa',
+        'env:uat',
         'componentbuild:prod',
         'browserify:prod',
         'ngAnnotate',
         'componentbuild:styles',
         'less',
-        'copy:svg',
+        'svgmin',
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
         'componentbuild:files',
         'copy:theme-assets',
-        'copy:qaassets',
+        'copy:assets',
         'copy:dev',
-        'copy:qa',
-        'manifests'
+        'copy:build',
+        'copy:polyfills',
+        'copy:htaccess',
+        'manifests',
+        'ver:polyfills',
+        'ver:prod'
     ]);
 
     grunt.registerTask('master', ['prod']); // alias for prod

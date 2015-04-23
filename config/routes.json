@@ -446,12 +446,16 @@
         "Athlete": true
     },
 
-    "ReelsArea": {
+    "Reel": {
 
         "*": true
     },
 
-    "ShortReels": {
+    "Reel.Restricted": {
+        "*": true
+    },
+
+    "ShortReel": {
 
         "*": true
     },
