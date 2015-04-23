@@ -729,27 +729,6 @@ module.exports = function(grunt) {
         'ver:prod'
     ]);
 
-    grunt.registerTask('new-qa', [
-        'gitinfo',
-        'clean',
-        'env:qa',
-        'componentbuild:prod',
-        'browserify:prod',
-        'ngAnnotate',
-        'componentbuild:styles',
-        'less',
-        'copy:svg',
-        'grunticon',
-        'concat:unprefixed',
-        'autoprefixer',
-        'componentbuild:files',
-        'copy:theme-assets',
-        'copy:qaassets',
-        'copy:dev',
-        'copy:qa',
-        'manifests'
-    ]);
-
     grunt.registerTask('master', ['prod']); // alias for prod
     grunt.registerTask('prod', [
         'clean',
