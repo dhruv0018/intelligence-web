@@ -77,7 +77,17 @@ IntelligenceWebClient.service('PlaysManager', [
          */
         this.addPlay = function(play) {
 
-            this.plays.push(play);
+            var index = 0;
+
+            while (
+                index < this.plays.length &&
+                play.startTime > this.plays[index].startTime) {
+
+                index++;
+            }
+
+            /* Insert the play into the appropriate index. */
+            this.plays.splice(index, 0, play);
         };
 
         /**
