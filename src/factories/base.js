@@ -103,13 +103,14 @@ IntelligenceWebClient.factory('BaseFactory', [
              */
             getList: function(filter) {
 
-                var self = this;
+                let self = this;
 
-                var storage = $injector.get(self.storage);
+                let storage = $injector.get(self.storage);
+                let session = $injector.get('SessionService');
 
                 if (!filter) return storage.list;
 
-                var ids;
+                let ids;
 
                 if (angular.isArray(filter)) {
 
@@ -118,10 +119,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 else if (angular.isObject(filter)) {
 
-                    var session = $injector.get('SessionService');
-                    var key = '@' + session.serializeUserId() + '!' + self.description + '?' + encodeURIComponent(JSON.stringify(filter));
+                    /* Get the view key based on the filter. */
+                    let view = session.serializeUserResourceQuery(self.description, filter);
 
-                    ids = JSON.parse(localStorage.getItem(key));
+                    ids = storage.loadCachedView(view);
                 }
 
                 if (ids) {
@@ -132,7 +133,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 }
 
-                else return storage.list;
+                else return [];
             },
 
             /**
@@ -189,9 +190,9 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @param {Function} error - called on error.
              * @return {Promise.<Resource>} - a promise of a resource.
              */
-            fetch: function(id, success, error) {
+            fetch: function(id, success, error, final) {
 
-                var self = this;
+                let self = this;
 
                 success = success || function(resource) {
 
@@ -203,14 +204,14 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not fetch ' + self.description.slice(0, -1) + ' ' + id);
                 };
 
-                var model = $injector.get(self.model);
-                var storage = $injector.get(self.storage);
+                let model = $injector.get(self.model);
+                let storage = $injector.get(self.storage);
 
                 /* Make a GET request to the server the resource. */
-                var get = model.get({ id: id }, success, error);
+                let get = model.get({ id: id }, success, error);
 
                 /* Once the get request finishes. */
-                return get.$promise.then(function(resource) {
+                let request = get.$promise.then(function(resource) {
 
                     /* Extend the server resource. */
                     resource = self.extend(resource);
@@ -220,6 +221,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return resource;
                 });
+
+                if (final) request.finally(final);
+
+                return request;
             },
 
             /**
@@ -229,9 +234,9 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @param {Function} error - called on error.
              * @return {Promise.<Array.Resource>} - a promise of an array of resources.
              */
-            query: function(filter, success, error) {
+            query: function(filter, success, error, final) {
 
-                var self = this;
+                let self = this;
 
                 if (angular.isFunction(filter)) {
 
@@ -240,9 +245,9 @@ IntelligenceWebClient.factory('BaseFactory', [
                     filter = null;
                 }
 
-                var session = $injector.get('SessionService');
+                let session = $injector.get('SessionService');
 
-                var view = session.serializeUserResourceQuery(self.description, filter);
+                let view = session.serializeUserResourceQuery(self.description, filter);
 
                 /* Making a copy of the filter here so that the start and count
                  * properties don't get added to the filter if not passed in as a literal.  */
@@ -260,7 +265,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 if (filter.start !== null) filter.start = filter.start || 0;
                 if (filter.count !== null) filter.count = filter.count || self.PAGE_SIZE || PAGE_SIZE;
 
-                var aFilterIsUndefined = Object.keys(filter).some(function(key) {
+                let aFilterIsUndefined = Object.keys(filter).some(function(key) {
 
                     if (angular.isArray(filter[key])) return !filter[key].length;
                     else return angular.isUndefined(filter[key]);
@@ -278,14 +283,14 @@ IntelligenceWebClient.factory('BaseFactory', [
                     throw new Error('Could not load ' + self.description + ' list');
                 };
 
-                var model = $injector.get(self.model);
-                var storage = $injector.get(self.storage);
+                let model = $injector.get(self.model);
+                let storage = $injector.get(self.storage);
 
                 /* Make a GET request to the server for an array of resources. */
-                var query = model.query(filter, success, error);
+                let query = model.query(filter, success, error);
 
                 /* Once the query request finishes. */
-                return query.$promise.then(function(resources) {
+                let request = query.$promise.then(function(resources) {
 
                     resources.forEach(function(resource) {
 
@@ -306,6 +311,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     return resources;
                 });
+
+                if (final) request.finally(final);
+
+                return request;
             },
 
             /**
