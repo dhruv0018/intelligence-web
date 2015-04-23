@@ -107,7 +107,7 @@ Indexing.config([
 
                             return $q.all(data).then(function(data) {
 
-                                var gameId = $stateParams.id;
+                                var gameId = Number($stateParams.id);
                                 var game = games.get(gameId);
 
                                 var team = teams.get(game.teamId);
