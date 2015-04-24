@@ -55,6 +55,8 @@ Indexing.controller('Indexing.Header.Controller', [
 
             watchLastPlayIndexedScore();
             watchLastPlayOpposingIndexedScore();
+
+            $scope.game.save();
         }
 
         $scope.sendToQa = function() {
