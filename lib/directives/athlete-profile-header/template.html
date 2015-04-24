@@ -24,7 +24,7 @@
         <h2 hide show-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
         <p ng-if="athlete.profile.about">{{athlete.profile.about}}</p>
-        <p ng-if="!athlete.profile.about">
+        <p ng-if="!athlete.profile.about && isCurrentUser">
             <a
              class="empty-attribute"
              ui-sref="Athlete.Profile.EditProfile.BasicInfo"
@@ -34,7 +34,7 @@
             layout="column"
             layout-gt-sm="row"
         >
-            <li class="athlete-attribute">
+            <li class="athlete-attribute" ng-if="athlete.profile.primarySport || isCurrentUser">
                 <label>Sport</label>
                 <span ng-if="athlete.profile.primarySport">
                     {{athlete.profile.primarySport}}
@@ -46,7 +46,7 @@
                     ><i class="icon icon-plus"></i> Add Sport</a>
                 </span>
             </li>
-            <li class="athlete-attribute">
+            <li class="athlete-attribute" ng-if="athlete.profile.primaryPosition || isCurrentUser">
                 <label>Position</label>
                 <span ng-if="athlete.profile.primaryPosition">
                     {{athlete.profile.primaryPosition}}
@@ -58,7 +58,7 @@
                     ><i class="icon icon-plus"></i> Add Position</a>
                 </span>
             </li>
-            <li class="athlete-attribute">
+            <li class="athlete-attribute" ng-if="athlete.profile.hometown || isCurrentUser">
                 <label>Hometown</label>
                 <span ng-if="athlete.profile.hometown">
                     {{athlete.profile.hometown}}
@@ -70,7 +70,7 @@
                     ><i class="icon icon-plus"></i> Add Hometown</a>
                 </span>
             </li>
-            <li class="athlete-attribute">
+            <li class="athlete-attribute" ng-if="athlete.profile.highSchoolGraduationYear || isCurrentUser">
                 <label>HS Class</label>
                 <span ng-if="athlete.profile.highSchoolGraduationYear">
                     Class of {{athlete.profile.highSchoolGraduationYear}}
