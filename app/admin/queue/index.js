@@ -299,21 +299,24 @@ function QueueController (
             games.fetch(filter.gameId,
 
                 function success(game) {
+
                     /* Get the team names */
                     teams.load([game.teamId, game.opposingTeamId]).then(
                         function updateQueue() {
                             $scope.queue = [];
                             $scope.queue[0] = game;
                             $scope.noResults = false;
-                            $scope.searching = false;
                     });
-
                 },
 
                 function error() {
 
                     $scope.queue = [];
                     $scope.noResults = true;
+                },
+
+                function final () {
+
                     $scope.searching = false;
                 }
             );
@@ -324,6 +327,7 @@ function QueueController (
             games.query(filter,
 
                 function success(games) {
+
                     let teamIds = [];
                     /* Get the team names */
                     for (let game of games) {
@@ -334,15 +338,17 @@ function QueueController (
                         function updateQueue() {
                             $scope.queue = games;
                             $scope.noResults = false;
-                            $scope.searching = false;
                     });
-
                 },
 
                 function error() {
 
                     $scope.queue = [];
                     $scope.noResults = true;
+                },
+
+                function final () {
+
                     $scope.searching = false;
                 }
             );
