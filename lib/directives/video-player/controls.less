@@ -4,6 +4,16 @@
 /* Controlbar plugin */
 /*********************/
 
+@icon-font-size-lg: 25px;
+@icon-font-size-sm: 16px;
+@text-font-size: 14px;
+
+@control-bar-bg: #1a1a1a;
+@control-bar-color: #e4e4e4;
+@scrubber-bg: #808080;
+@scrubber-buffered-color: #bfbfbf;
+@scrubber-elapsed-color: @brand-primary;
+
 videogular button {
     cursor: pointer;
 }
@@ -12,7 +22,7 @@ videogular .iconButton,
 videogular .control-button {
     font-family: 'Krossover-Icons';
     speak: none;
-    font-size: 20px;
+    font-size: @icon-font-size-sm;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
@@ -24,6 +34,12 @@ videogular .control-button {
     padding: 6px;
     border: none;
     outline: none;
+}
+
+videogular vg-play-pause-button .icon {
+    position: relative;
+    top: 4px;
+    font-size: @icon-font-size-lg;
 }
 
 .iconButton,
@@ -38,6 +54,11 @@ videogular .control-button {
     &:active,
     &.active {
         color: @brand-primary;
+    }
+
+    .icon {
+
+        margin-right: 15px;
     }
 }
 
@@ -62,7 +83,8 @@ videogular vg-controls {
             position: relative;
             justify-content: space-between;
             align-content: center;
-            background-color: black;
+            background-color: @control-bar-bg;
+            color: @control-bar-color;
         }
 
         .controls-left,
@@ -81,23 +103,20 @@ videogular vg-scrub-bar {
     height: 10px;
     width: 100%;
     cursor: pointer;
-    background-color: rgb(24,121,181);
-}
-
-videogular vg-scrub-bar :focus vg-scrub-bar-current-time {
-    border-right: 6px black groove;
+    background-color: @scrubber-bg;
 }
 
 videogular vg-scrub-bar-current-time {
-    border-right: 7px solid red;
+    border-right: 7px solid @brand-light-blue;
     width: 100%;
     height: 10px;
     display: block;
     cursor: pointer;
+    background-color: @scrubber-elapsed-color;
 }
 
 videogular vg-time-display {
-    font-size: 17px;
+    font-size: @text-font-size;
     letter-spacing: -0.01em;
     margin-left: 15px;
 }
