@@ -254,7 +254,8 @@ module.exports = function(grunt) {
             components: {
                 files: {
                     'build/components.css': [
-                        'app/reel/styles.less'
+                        'app/reel/styles.less',
+                        'lib/directives/video-player/select-media-src/styles.less'
                     ]
                 }
             }
