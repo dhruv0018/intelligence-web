@@ -1100,6 +1100,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return self.getShareByUserId(userId);
             },
+
+            getShareByCurrentUser: function() {
+
+                return this.getShareByUser(session.getCurrentUser());
+            },
+
             getShareByUserId: function(userId) {
                 var self = this;
 
@@ -1115,6 +1121,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUser(user));
+            },
+
+            isSharedWithCurrentUser: function() {
+
+                return this.isSharedWithUser(session.getCurrentUser());
             },
             isSharedWithUserId: function(userId) {
                 var self = this;
