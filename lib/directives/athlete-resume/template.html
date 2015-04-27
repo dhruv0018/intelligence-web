@@ -124,7 +124,7 @@
             <li ng-show="athlete.profile.oneMileTime || isCurrentUser">
                 <span ng-show="athlete.profile.oneMileTime">
                     1 Mile Time:
-                    <span class="pull-right">{{athlete.profile.oneMileTime}}</span>
+                    <span class="pull-right">{{athlete.profile.oneMileTime | secondsAsMinutes}}:{{athlete.profile.oneMileTime | remainingSecondsFromMinuteConversion}}</span>
                 </span>
                 <span class="add-field" ng-show="!athlete.profile.oneMileTime && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
                     <i class="icon icon-plus"></i> Add 1 Mile Time
@@ -133,7 +133,7 @@
             <li ng-show="athlete.profile.threeMileTime || isCurrentUser">
                 <span ng-show="athlete.profile.threeMileTime">
                     3 Mile Time:
-                    <span class="pull-right">{{athlete.profile.threeMileTime}}</span>
+                    <span class="pull-right">{{athlete.profile.threeMileTime | secondsAsMinutes}}:{{athlete.profile.threeMileTime | remainingSecondsFromMinuteConversion}}</span>
                 </span>
                 <span class="add-field" ng-show="!athlete.profile.threeMileTime && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
                     <i class="icon icon-plus"></i> Add 3 Mile Time
