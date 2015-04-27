@@ -4,7 +4,8 @@
         "."
     ],
     "locals": [
-        "dropdown-toggle-button"
+        "dropdown-toggle-button",
+        "save-button"
     ],
     "scripts": [
         "index.js"
