@@ -21,6 +21,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 game.teamIndexedScore = 0;
                 game.opposingIndexedScore = 0;
 
+                eventManager.current = new KrossoverEvent();
                 playsManager.reset(plays);
                 tagsManager.reset(tagset);
                 playManager.reset(tagset, game.id);
