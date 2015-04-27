@@ -26,6 +26,11 @@ else if (environment === 'qa') {
     config = require('../config/qa.json');
 }
 
+else if (environment === 'uat') {
+
+    config = require('../config/uat.json');
+}
+
 else {
 
     environment = 'production';

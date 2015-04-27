@@ -33,7 +33,8 @@
     "videogular-controls": "2fdevs/bower-videogular-controls",
     "videogular-buffering": "2fdevs/bower-videogular-buffering",
     "videogular-overlay-play": "2fdevs/bower-videogular-overlay-play",
-    "videogular-poster": "2fdevs/bower-videogular-poster"
+    "videogular-poster": "2fdevs/bower-videogular-poster",
+    "fullscreen-api-polyfill": "https://github.com/neovov/Fullscreen-API-Polyfill.git"
   },
   "dependencies": {
     "express": "^4.11.0",
