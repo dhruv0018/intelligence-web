@@ -1,0 +1,13 @@
+{
+    "name": "dropdown-toggle-button",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ]
+}

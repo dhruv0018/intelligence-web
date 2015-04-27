@@ -68,12 +68,13 @@
         "sidebar",
         "profile-picture",
         "athlete-profile-header",
+        "athlete-resume",
         "no-profile-reels",
         "publish-user-profile-reel",
         "role-class",
         "spinner",
         "check-box",
-        "save-button"
+        "buttons"
     ],
     "scripts": [
         "index.js"
