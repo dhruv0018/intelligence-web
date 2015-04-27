@@ -9,12 +9,13 @@ module.exports = [
 
             SVGGlyph.call(this, type, options, container, SVGContext, SVGContext.circle());
 
-            this.addEditHandlers();
             this.addMoveHandlers();
         }
         angular.inheritPrototype(Circle, SVGGlyph);
 
-        Circle.prototype.render = function renderCircle() {
+        Circle.prototype.RESIZABLE = true;
+
+        Circle.prototype.renderShape = function renderShape() {
 
             var verticesInPixels = this.getVerticesInPixels();
 
@@ -31,12 +32,24 @@ module.exports = [
 
             this.primarySVGShape.radius(Math.abs(offsetX) / 2, Math.abs(offsetY) / 2)
                 .cx((startPoint.x + endPoint.x) / 2)
-                .cy((startPoint.y + endPoint.y) / 2)
-                .attr({
-                    fill: 'none',
-                    stroke: this.color,
-                    'stroke-width': this.STROKE_WIDTH
-                });
+                .cy((startPoint.y + endPoint.y) / 2);
+        };
+
+        Circle.prototype.renderAttributes = function renderAttributes() {
+
+            let attributes = {
+                fill: 'none',
+                stroke: this.color,
+                'stroke-width': this.STROKE_WIDTH
+            };
+
+            this.primarySVGShape.attr(attributes);
+        };
+
+        Circle.prototype.render = function renderCircle() {
+
+            this.renderShape();
+            this.renderAttributes();
         };
 
         return Circle;

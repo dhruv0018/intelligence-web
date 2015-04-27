@@ -33,9 +33,11 @@ function TextValue(
         this.primaryTextarea = new PrimaryTextarea(this, mode);
         if (!testTextArea) createTestTextarea.call(this);
 
-        this.addEditHandlers();
+        this.addClickHandler();
     }
     angular.inheritPrototype(Text, Glyph);
+
+    Text.prototype.RESIZABLE = false;
 
     Text.prototype.KEY_CODE_TO_HTML_ENTITY = {
         ' ': '&nbsp;'
@@ -106,7 +108,7 @@ function TextValue(
     Text.prototype.MAX_LENGTH = 70;
 
 
-    Text.prototype.addEditHandlers = function addEditHandlers() {
+    Text.prototype.addClickHandler = function addClickHandler() {
 
         this.primaryTextarea.element.on('click', (event) => {
 
@@ -284,7 +286,7 @@ function TextValue(
 
         function dragStart(event) {
 
-            event.stopPropagation();
+            // event.stopPropagation();
 
             containerBoundingBox = parentGlyph.getContainerDimensions();
             self.element.startPosition = {x: event.offsetX, y: event.offsetY};
@@ -301,7 +303,7 @@ function TextValue(
 
         function dragMove(event) {
 
-            event.preventDefault();
+            // event.preventDefault();
 
             var left = event.clientX - containerBoundingBox.left - self.element.startPosition.x;
             var top = event.clientY - containerBoundingBox.top - self.element.startPosition.y;
@@ -314,7 +316,7 @@ function TextValue(
 
         function dragEnd(event) {
 
-            event.preventDefault();
+            // event.preventDefault();
 
             // ensure text is within constraints
             self.recalculatePrimaryTextareaStartPosition();

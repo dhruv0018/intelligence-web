@@ -9,11 +9,11 @@ module.exports = [
 
             SVGGlyph.call(this, type, options, containerElement, SVGContext, SVGContext.path());
 
-            // this.addEditHandlers(); // TODO: Add custom edit behaviour
             this.addMoveHandlers();
         }
         angular.inheritPrototype(Freehand, SVGGlyph);
 
+        Freehand.prototype.RESIZABLE = false;
         Freehand.prototype.MIN_VERTICES = 1;
         Freehand.prototype.MAX_VERTICES = 1200;
 
@@ -31,7 +31,7 @@ module.exports = [
             }
         };
 
-        Freehand.prototype.render = function renderFreehand() {
+        Freehand.prototype.renderShape = function renderShape() {
 
             var verticesInPixels = this.getVerticesInPixels();
 
@@ -43,7 +43,12 @@ module.exports = [
                 pathData += ' ' + verticesInPixels[i].x + ' ' + verticesInPixels[i].y;
             }
 
-            var attributes = {
+            this.primarySVGShape.plot(pathData);
+        };
+
+        Freehand.prototype.renderAttributes = function renderAttributes() {
+
+            let attributes = {
                 fill: 'none',
                 stroke: this.color,
                 'stroke-width': this.STROKE_WIDTH,
@@ -52,7 +57,13 @@ module.exports = [
                 'stroke-dasharray': this.dashedArray
             };
 
-            this.primarySVGShape.plot(pathData).attr(attributes);
+            this.primarySVGShape.attr(attributes);
+        };
+
+        Freehand.prototype.render = function renderFreehand() {
+
+            this.renderShape();
+            this.renderAttributes();
         };
 
         Freehand.prototype.hasMinimumVertices = function hasMinimumVertices() {

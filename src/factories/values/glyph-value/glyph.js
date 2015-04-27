@@ -24,12 +24,14 @@ module.exports = [
             this.containerElement = containerElement;
             this.dashedArray = null;
             this.constraintFn = null;
+            this.resizeNodes = [];
         }
 
 
         /* Default Values */
 
         Glyph.prototype.MIN_VERTICES = 2;
+        Glyph.prototype.RESIZABLE = false;
 
 
         /* Getters & Setters */
@@ -52,6 +54,16 @@ module.exports = [
         Glyph.prototype.getMaxWidth = function getMaxWidth() {
 
             return this.getContainerDimensions().width;
+        };
+
+        Glyph.prototype.registerResizeNodes = function registerResizeNodes(resizeNodes) {
+
+            this.resizeNodes = resizeNodes;
+        };
+
+        Glyph.prototype.isResizable = function isResizable() {
+
+            return this.RESIZABLE;
         };
 
         /* Vertices Helper Functions */
