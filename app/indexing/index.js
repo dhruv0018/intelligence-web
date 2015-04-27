@@ -107,7 +107,7 @@ Indexing.config([
 
                             return $q.all(data).then(function(data) {
 
-                                var gameId = $stateParams.id;
+                                var gameId = Number($stateParams.id);
                                 var game = games.get(gameId);
 
                                 var team = teams.get(game.teamId);
@@ -119,7 +119,7 @@ Indexing.config([
                                 var gameData = {
 
                                     game: game,
-                                    plays: plays.retrieve({ gameId: gameId }),
+                                    plays: plays.load({ gameId: gameId }),
                                     players: players,
                                     teamPlayers: players.load({ rosterId: teamRoster.id }),
                                     opposingTeamPlayers: players.load({ rosterId: opposingTeamRoster.id })

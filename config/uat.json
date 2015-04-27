@@ -1,6 +1,6 @@
 {
     "oauth": {
-        "uri": "http://localhost:4436/intelligence-api/oauth/",
+        "uri": "https://v2-uat.krossover.com/intelligence-api/oauth/",
         "user": {
             "id": "cid",
             "secret": "csecret",
@@ -16,7 +16,7 @@
         "state": "xyz"
     },
     "api": {
-        "uri": "http://localhost:4436/intelligence-api/v1/"
+        "uri": "https://v2-uat.krossover.com/intelligence-api/v1/"
     },
     "kvs": {
     },
@@ -25,10 +25,10 @@
     },
     "links": {
         "signup": {
-            "uri": "http://krossover.com/sign-up.php"
+            "uri": "/get-started/"
         },
         "intelligence": {
-            "uri": "localhost:8000"
+            "uri": "https://v2-qa.krossover.com"
         },
         "support": {
             "uri": "http://support.krossover.com"
