@@ -15,12 +15,16 @@ IntelligenceWebClient.factory('IndexingService', [
 
             reset: function(tagset, game, plays) {
 
-                var self = this;
+                this.showTags = false;
+                this.showScript = false;
+                this.isIndexing = false;
+                this.eventSelected = false;
 
                 game.currentPeriod = 0;
                 game.teamIndexedScore = 0;
                 game.opposingIndexedScore = 0;
 
+                eventManager.current = new KrossoverEvent();
                 playsManager.reset(plays);
                 tagsManager.reset(tagset);
                 playManager.reset(tagset, game.id);
