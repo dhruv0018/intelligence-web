@@ -24,23 +24,34 @@ Profile.config([
                 'main@root': {
                     templateUrl: 'athlete/profile/template.html',
                     controller: 'Athlete.Profile.controller'
-            }
+                }
             },
             resolve: {
                 'Athlete.Profile.Data': [
-                    '$q', '$stateParams', 'UsersFactory', 'ReelsFactory',
-                    function data($q, $stateParams, users, reels) {
+                    '$q',
+                    '$stateParams',
+                    'UsersFactory',
+                    'ReelsFactory',
+                    'PlaysFactory',
+                    function data(
+                                $q,
+                                $stateParams,
+                                users,
+                                reels,
+                                plays) {
 
                         let userId = $stateParams.id;
 
                         /* Load data for Athlete.Profile.<sub-state> upfront
                          */
-                        let Data = {
-                            users: users.load({relatedUserId: userId}),
-                            reels: reels.load({relatedUserId: userId})
-                        };
 
-                        return $q.all(Data);
+                        return users.load({relatedUserId: userId}).then(function() {
+                            return reels.load({relatedUserId: userId}).then(function() {
+                                let user = users.get(userId);
+                                let featuredReel = reels.getFeaturedReel(user);
+                                if (featuredReel) return plays.load(featuredReel.plays);
+                            });
+                        });
                     }
                 ],
                 userId: [

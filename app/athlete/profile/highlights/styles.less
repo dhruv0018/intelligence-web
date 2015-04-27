@@ -2,6 +2,84 @@
 
 .highlights {
 
+    .featured-reel-container {
+        border: none;
+        width: 100%;
+        margin: auto;
+
+        .featured-reel-header {
+            height: 60px;
+            background-color: white;
+            text-align: center;
+
+            h3 {
+                margin: 0;
+                line-height: 60px;
+                font-weight: 400;
+                color: @gray-darker;
+            }
+        }
+
+        @media only screen
+        and (min-width: @md-screen-sm) {
+            width: 70%;
+            border: thin solid @gray-border;
+        }
+    }
+
+    .clips-navigation {
+        height: 60px;
+        width: 100%;
+        border: thin solid @gray-border;
+        margin: auto;
+        margin-top: 0;
+        background-color: white;
+        color: @gray-darker;
+
+        .clip-previous {
+            display: inline-block;
+            padding: 0 15px;
+            border-right: thin solid @gray-border;
+            line-height: 60px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .clip-info {
+            padding: 0 5px;
+            line-height: 60px;
+            display: inline-block;
+        }
+
+        .krossover-playlist-control {
+            .pull-right;
+            display: inline-block;
+            border: none;
+            margin-top: 14px;
+        }
+
+        .clip-next {
+            .pull-right;
+            display: inline-block;
+            padding: 0 15px;
+            border-left: thin solid @gray-border;
+            line-height: 60px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .disabled {
+            color: @gray-light;
+            pointer-events: none;
+        }
+
+        @media only screen
+        and (min-width: @md-screen-sm) {
+            width: 70%;
+            margin-top: 10px;
+        }
+    }
+
     .reels {
         margin: 0;
         padding: 0;

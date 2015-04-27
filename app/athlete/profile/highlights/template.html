@@ -1,6 +1,36 @@
 <div class="highlights">
-    <ul class="reels" ng-hide="!reel">
-        <krossover-film ng-if="reel" film="reel"></krossover-film>
-    </ul>
-    <no-profile-reels class="ng-hide" ng-show="!reel"></no-profile-reels>
+
+    <div class="featured-reel-container" ng-show="featuredReel">
+        <div class="featured-reel-header">
+            <h3>{{featuredReel.name}}</h3>
+        </div>
+        <video-player sources="sources"></video-player>
+    </div>
+
+    <div class="clips-navigation" ng-show="featuredReel">
+        <div ng-class="{disabled: !previousPlay}"
+             class="clip-previous"
+             ng-click="goToPlay(previousPlay)">
+            <i class="icon icon-chevron-left"></i>&nbsp;Prev
+        </div>
+
+        <div class="clip-info">
+            Clip&nbsp;{{clipIndex}}/{{clipTotal}}
+        </div>
+
+        <div ng-class="{disabled: !nextPlay}"
+             class="clip-next"
+             ng-click="goToPlay(nextPlay)">
+            Next&nbsp;<i class="icon icon-chevron-right"></i>
+        </div>
+
+        <krossover-playlist-control play-count="clipTotal" hide-play-count="true"></krossover-playlist-control>
+    </div>
+
+    <div>
+        <ul class="reels" ng-show="highlightReels.length">
+            <krossover-film ng-repeat="reel in highlightReels" film="reel"></krossover-film>
+        </ul>
+        <no-profile-reels ng-hide="highlightReels.length || featuredReel"></no-profile-reels>
+    </div>
 </div>
