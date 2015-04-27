@@ -1,5 +1,5 @@
 <div class="physical">
-    <form>
+    <form ng-submit="savePhysical()">
         <div class="form-block-full">
             <div class="form-block-third">
                 <h4>Height</h4>
@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="button-row">
-            <save-button is-saving="isSaving" confirm-save="confirmSave" ng-click="savePhysical()"></save-button>
+            <save-button is-saving="isSaving" confirm-save="confirmSave"></save-button>
             <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
         </div>
     </form>

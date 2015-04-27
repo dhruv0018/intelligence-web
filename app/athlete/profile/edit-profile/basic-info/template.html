@@ -1,5 +1,5 @@
 <div class="basic-info">
-    <form>
+    <form ng-submit="saveBasicInfo()">
         <div class="form-block-full">
             <div class="form-block-third edit-profile-picture-container">
                 <h4>Profile Picture</h4>
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="button-row">
-            <save-button is-saving="isSaving" confirm-save="confirmSave" ng-click="saveBasicInfo()"></save-button>
+            <save-button is-saving="isSaving" confirm-save="confirmSave"></save-button>
             <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
         </div>
     </form>
