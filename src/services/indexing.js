@@ -298,16 +298,18 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* Clear the current play. */
                 playManager.clear();
+            },
+
+            onEventSelect: function () {
+
+                this.eventSelected = true;
+                this.isIndexing = true;
+                this.showTags = false;
+                this.showScript = true;
             }
         };
 
-        playlistEventEmitter.on('EVENT_SELECT', () => {
-
-            this.eventSelected = true;
-            this.isIndexing = true;
-            this.showTags = false;
-            this.showScript = true;
-        });
+        playlistEventEmitter.on('EVENT_SELECT', IndexingService.onEventSelect.bind(IndexingService));
 
         return IndexingService;
     }
