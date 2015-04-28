@@ -60,6 +60,12 @@
             }
         }
 
+        button.breakdown-choice {
+            &:before {
+                display:none;
+            }
+        }
+
         button.breakdown-game {
 
             h1 {
@@ -107,7 +113,7 @@
             }
 
             &.active > .icon-check-empty::after {
-                content: '\f00f';
+                content: '\f010';
                 color: @brand-secondary;
                 font-size: 40px;
                 position: absolute;
@@ -168,7 +174,7 @@
                 }
 
                 &::after{
-                    content: '\f00f';
+                    content: '\f010';
                     position:absolute;
                     top: 10px;
                     left: 70px;
