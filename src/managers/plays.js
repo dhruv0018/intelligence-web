@@ -39,6 +39,9 @@ IntelligenceWebClient.service('PlaysManager', [
          */
         this.getLastPlay = function() {
 
+            /* Sort the events by time. */
+            this.plays.sort(utilities.compareStartTimes);
+
             return this.plays[this.plays.length - 1];
         };
 
@@ -74,7 +77,19 @@ IntelligenceWebClient.service('PlaysManager', [
          */
         this.addPlay = function(play) {
 
-            this.plays.push(play);
+            var index = 0;
+
+            while (
+                index < this.plays.length &&
+                play.startTime > this.plays[index].startTime) {
+
+                index++;
+            }
+
+            /* Insert the play into the appropriate index. */
+            this.plays.splice(index, 0, play);
+
+            this.calculatePlays();
         };
 
         /**
@@ -106,6 +121,8 @@ IntelligenceWebClient.service('PlaysManager', [
                 tagsManager.reset();
                 eventManager.current = new KrossoverEvent();
             }
+
+            this.calculatePlays();
         };
 
         /**
@@ -165,58 +182,62 @@ IntelligenceWebClient.service('PlaysManager', [
             let firstTagVariableId = firstTagVariable.id;
             let field = fields[firstTagVariableId];
 
-            /* If its a team field. */
-            if (field.type === FIELD_TYPE.TEAM) {
+            /* If the field value is defined. */
+            if (angular.isDefined(field.value)) {
 
-                /* The field value is a teamId. */
-                teamId = field.value;
-            }
+                /* If its a team field. */
+                if (field.type === FIELD_TYPE.TEAM) {
 
-            /* If its a player field. */
-            else if (field.type === FIELD_TYPE.PLAYER) {
-
-                teamId = game.isPlayerOnTeam(field.value) ? game.teamId : game.opposingTeamId;
-            }
-
-            /* If event is the first one in the play, define possession. */
-            if (event === play.events[0]) play.possessionTeamId = teamId;
-
-            /* If the tag has points to assign. */
-            if (event.pointsAssigned) {
-
-                /* If this team is the team. */
-                if (game.teamId == teamId) {
-
-                    /* If the points should be assigned to the variable team. */
-                    if (event.assignThisTeam) {
-
-                        /* Assign the points to this team. */
-                        indexedScore += event.pointsAssigned;
-                    }
-
-                    /* If the points should be assigned to the other team. */
-                    else {
-
-                        /* Assign the points to the other team. */
-                        opposingIndexedScore += event.pointsAssigned;
-                    }
+                    /* The field value is a teamId. */
+                    teamId = field.value;
                 }
 
-                /* If this team is the opposing team.*/
-                else if (game.opposingTeamId == teamId) {
+                /* If its a player field. */
+                else if (field.type === FIELD_TYPE.PLAYER) {
 
-                    /* If the points should be assigned to the variable team. */
-                    if (event.assignThisTeam) {
+                    teamId = game.isPlayerOnTeam(field.value) ? game.teamId : game.opposingTeamId;
+                }
 
-                        /* Assign the points to this team. */
-                        opposingIndexedScore += event.pointsAssigned;
+                /* If event is the first one in the play, define possession. */
+                if (event === play.events[0]) play.possessionTeamId = teamId;
+
+                /* If the tag has points to assign. */
+                if (event.pointsAssigned) {
+
+                    /* If this team is the team. */
+                    if (game.teamId == teamId) {
+
+                        /* If the points should be assigned to the variable team. */
+                        if (event.assignThisTeam) {
+
+                            /* Assign the points to this team. */
+                            indexedScore += event.pointsAssigned;
+                        }
+
+                        /* If the points should be assigned to the other team. */
+                        else {
+
+                            /* Assign the points to the other team. */
+                            opposingIndexedScore += event.pointsAssigned;
+                        }
                     }
 
-                    /* If the points should be assigned to the other team. */
-                    else {
+                    /* If this team is the opposing team.*/
+                    else if (game.opposingTeamId == teamId) {
 
-                        /* Assign the points to the other team. */
-                        indexedScore += event.pointsAssigned;
+                        /* If the points should be assigned to the variable team. */
+                        if (event.assignThisTeam) {
+
+                            /* Assign the points to this team. */
+                            opposingIndexedScore += event.pointsAssigned;
+                        }
+
+                        /* If the points should be assigned to the other team. */
+                        else {
+
+                            /* Assign the points to the other team. */
+                            indexedScore += event.pointsAssigned;
+                        }
                     }
                 }
             }
