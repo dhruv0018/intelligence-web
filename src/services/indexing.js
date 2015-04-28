@@ -21,7 +21,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 game.currentPeriod = 0;
-                game.teamIndexedScore = 0;
+                game.indexedScore = 0;
                 game.opposingIndexedScore = 0;
 
                 eventManager.current = new KrossoverEvent();
@@ -29,6 +29,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 tagsManager.reset(tagset);
                 playManager.reset(tagset, game.id);
                 playManager.clear();
+                playsManager.calculatePlays();
             },
 
             /**
@@ -113,7 +114,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Snap video back to time of current event. */
                 videoPlayer.seekTime(event.time);
 
-                playManager.save();
+                playManager.current.save();
                 playManager.clear();
                 tagsManager.reset();
                 eventManager.current = new KrossoverEvent();
@@ -298,7 +299,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = null;
 
                 /* Save play. */
-                playManager.save();
+                playManager.current.save();
 
                 /* Clear the current play. */
                 playManager.clear();
