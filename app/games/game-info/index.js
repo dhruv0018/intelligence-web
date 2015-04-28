@@ -96,8 +96,8 @@ GamesInfo.controller('GamesInfo.controller', [
         $scope.remainingBreakdowns = Data.remainingBreakdowns;
 
         //Player List
-        $scope.teamPlayerList = ($scope.game.rosters && $scope.game.teamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.teamId] }) : [];
-        $scope.opposingPlayerList = ($scope.game.rosters && $scope.game.opposingTeamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.opposingTeamId] }) : [];
+        $scope.teamPlayerList = ($scope.game.rosters && $scope.game.teamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.teamId].id }) : [];
+        $scope.opposingPlayerList = ($scope.game.rosters && $scope.game.opposingTeamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.opposingTeamId].id }) : [];
 
         if ($scope.game.isProcessing()) {
             alerts.add({
