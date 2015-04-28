@@ -310,6 +310,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.isIndexing = true;
                 this.showTags = false;
                 this.showScript = true;
+
+                videoPlayer.seekTime(eventManager.current.time);
             }
         };
 
