@@ -32,11 +32,12 @@
         </div>
     </div>
 
+    <no-profile-reels ng-hide="highlightReels.length || featuredReel"></no-profile-reels>
+
     <div>
         <ul class="reels" ng-show="highlightReels.length">
             <krossover-film ng-repeat="reel in highlightReels" film="reel"></krossover-film>
         </ul>
-        <no-profile-reels ng-hide="highlightReels.length || featuredReel"></no-profile-reels>
     </div>
 
 </div>
