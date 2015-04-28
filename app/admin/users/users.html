@@ -78,6 +78,10 @@
                         </td>
 
                         <td>
+                            <div>{{ user.lastAccessed | date:'short' }}</div>
+                        </td>
+
+                        <td>
 
                             <div class="active" data-ng-if="!user.hasNoRoles() && !user.isLocked">Active</div>
                             <div class="inactive" data-ng-if="user.hasNoRoles() && !user.isLocked">Inactive</div>
