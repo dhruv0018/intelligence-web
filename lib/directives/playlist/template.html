@@ -1,6 +1,6 @@
 <div class="krossover-playlist">
 
-    <krossover-playlist-control data-ng-if="showHeader" data-play-count="getPlayCount()" ng-hide="editFlag" class="screen-lg-min">
+    <krossover-playlist-control data-ng-if="showHeader" ng-hide="editFlag" class="screen-lg-min">
     </krossover-playlist-control>
 
     <div class="playlist-container">
@@ -9,11 +9,6 @@
             <!-- Game Play -->
             <krossover-play
                 data-ng-if="!isReelsPlay"
-                data-play="play"
-                data-plays="plays"
-                data-reels="reels"
-                data-expand-all="expandAll"
-                data-filtered-plays-ids="filteredPlaysIds"
                 data-ng-show="play.isFiltered"
                 data-ng-repeat="play in plays | orderBy:orderBy">
             </krossover-play>
@@ -21,16 +16,9 @@
             <!-- Reel Play -->
             <krossover-play
                 data-ng-if="isReelsPlay"
-                data-play="play"
-                data-plays="plays"
-                data-reels="reels"
-                data-is-reels-play="isReelsPlay"
-                data-expand-all="expandAll"
-                data-edit-flag="editFlag"
-                data-index="$index"
                 data-draggable="editFlag"
                 data-ng-class="{'edit-mode': editFlag}"
-                data-ng-repeat="play in plays | orderBy:orderBy">
+                data-ng-repeat="play in plays">
             </krossover-play>
 
             <no-results data-ng-hide="plays.length"></no-results>
