@@ -43,16 +43,26 @@ function PhysicalController (
     }
 
     //display height and wingspan as temporary feet and inches variables
-    $scope.athleteHeightFeet = $filter('inchesAsFeet')($scope.athlete.profile.height);
-    $scope.athleteHeightInches = $filter('remainingInchesFromFeetConversion')($scope.athlete.profile.height);
-    $scope.athleteWingFeet = $filter('inchesAsFeet')($scope.athlete.profile.wingspan);
-    $scope.athleteWingInches = $filter('remainingInchesFromFeetConversion')($scope.athlete.profile.wingspan);
+    if ($scope.athlete.profile.height) {
+        $scope.athleteHeightFeet = $filter('inchesAsFeet')($scope.athlete.profile.height);
+        $scope.athleteHeightInches = $filter('remainingInchesFromFeetConversion')($scope.athlete.profile.height);
+    }
+
+    if ($scope.athlete.profile.wingspan) {
+        $scope.athleteWingFeet = $filter('inchesAsFeet')($scope.athlete.profile.wingspan);
+        $scope.athleteWingInches = $filter('remainingInchesFromFeetConversion')($scope.athlete.profile.wingspan);
+    }
 
     //display mile times as temporary minutes and seconds variables
-    $scope.athleteOneMileTimeMinutes = $filter('secondsAsMinutes')($scope.athlete.profile.oneMileTime);
-    $scope.athleteOneMileTimeSeconds = $filter('remainingSecondsFromMinuteConversion')($scope.athlete.profile.oneMileTime);
-    $scope.athleteThreeMileTimeMinutes = $filter('secondsAsMinutes')($scope.athlete.profile.oneMileTime);
-    $scope.athleteThreeMileTimeSeconds = $filter('remainingSecondsFromMinuteConversion')($scope.athlete.profile.threeMileTime);
+    if ($scope.athlete.profile.oneMileTime) {
+        $scope.athleteOneMileTimeMinutes = $filter('secondsAsMinutes')($scope.athlete.profile.oneMileTime);
+        $scope.athleteOneMileTimeSeconds = $filter('remainingSecondsFromMinuteConversion')($scope.athlete.profile.oneMileTime);
+    }
+
+    if ($scope.athlete.profile.threeMileTime) {
+        $scope.athleteThreeMileTimeMinutes = $filter('secondsAsMinutes')($scope.athlete.profile.oneMileTime);
+        $scope.athleteThreeMileTimeSeconds = $filter('remainingSecondsFromMinuteConversion')($scope.athlete.profile.threeMileTime);
+    }
 
     $scope.savePhysical = function savePhysical() {
         $scope.isSaving = true;
@@ -67,6 +77,12 @@ function PhysicalController (
         //recombine minutes and seconds before saving
         $scope.athlete.profile.oneMileTime = Number($scope.athleteOneMileTimeMinutes * 60) + Number($scope.athleteOneMileTimeSeconds);
         $scope.athlete.profile.threeMileTime = Number($scope.athleteThreeMileTimeMinutes * 60) + Number($scope.athleteThreeMileTimeSeconds);
+
+        // Check to make sure no 0 values get passed
+        if ($scope.athlete.profile.height === 0) $scope.athlete.profile.height = null;
+        if ($scope.athlete.profile.wingspan === 0) $scope.athlete.profile.wingspan = null;
+        if ($scope.athlete.profile.oneMileTime === 0) $scope.athlete.profile.oneMileTime = null;
+        if ($scope.athlete.profile.threeMileTime === 0) $scope.athlete.profile.threeMileTime = null;
 
         $scope.athlete.save().then(function saveConfirmation() {
             $timeout(function() {
