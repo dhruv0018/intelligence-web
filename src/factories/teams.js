@@ -67,19 +67,24 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     }
                 }
 
-                if (team.subscriptions) {
+                // TODO: Temporarily removed because Object.assign doesn't
+                // copy Array prototype to List (Collection) classes so
+                // the map method below will not work. List and Class need
+                // to be refactored as Set perhaps.
 
-                    let subscriptions = team.subscriptions.map(function constructSubscription(subscription) {
+                // if (team.subscriptions) {
 
-                        return new Subscription(subscription);
-                    });
+                //     let subscriptions = team.subscriptions.map(function constructSubscription(subscription) {
 
-                    team.subscriptions = new List(subscriptions);
-                }
-                else {
+                //         return new Subscription(subscription);
+                //     });
 
-                    team.subscriptions = new List();
-                }
+                //     team.subscriptions = new List(subscriptions);
+                // }
+                // else {
+
+                //     team.subscriptions = new List();
+                // }
 
                 angular.extend(team, self);
 
