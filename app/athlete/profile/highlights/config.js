@@ -24,6 +24,22 @@ Highlights.config([
                     templateUrl: 'athlete/profile/highlights/template.html',
                     controller: 'Athlete.Profile.Highlights.controller'
                 }
+            },
+            resolve: {
+                'Athlete.Profile.Highlights.Data': [
+                    '$q',
+                    'PositionsetsFactory',
+                    function data(
+                                $q,
+                                positionsets) {
+
+                        let Data = {
+                            positionsets: positionsets.load()
+                        };
+
+                        return $q.all(Data);
+                    }
+                ]
             }
         });
     }
