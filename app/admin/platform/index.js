@@ -133,11 +133,13 @@ Platform.controller('PlatformController', [
             });
 
             modalInstance.result.then(function closed(savedPlan) {
-                data.plans.save(savedPlan).then(function saved(returnedPlan) {
 
+                plans.save(savedPlan).then(function saved(returnedPlan) {
                     if (!returnedPlan) return;
 
+                    //TODO: returnedPlan.sportId might not be needed
                     returnedPlan.sportId = leagues.get(returnedPlan.leagueIds[0]).sportId;
+                    $scope.plans.push(returnedPlan);
                 });
             });
         };
