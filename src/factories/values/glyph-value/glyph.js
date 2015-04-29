@@ -66,6 +66,7 @@ module.exports = [
             return this.RESIZABLE;
         };
 
+
         /* Vertices Helper Functions */
 
         Glyph.prototype.getContainerDimensions = function getContainerDimensions() {
@@ -142,15 +143,23 @@ module.exports = [
         /*
          * Sets the onClickHandler callback function
          */
-        Glyph.prototype.onClick = function onClick(onClickHandler) {
+        Glyph.prototype.onSelectedMouseup = function onSelectedMouseup(onSelectedMouseupHandler = function() {}) {
 
-            this.onClickHandler = onClickHandler;
+            this.onSelectedMouseupHandler = onSelectedMouseupHandler;
+        };
+
+        /*
+         * Sets the onBlurHandler callback function
+         */
+        Glyph.prototype.onBlur = function onBlur(onBlurHandler = function() {}) {
+
+            this.onBlurHandler = onBlurHandler;
         };
 
         /*
          * Sets the onDragStart callback function
          */
-        Glyph.prototype.onDragStart = function onDragStart(onDragStartHandler) {
+        Glyph.prototype.onDragStart = function onDragStart(onDragStartHandler = function() {}) {
 
             this.onDragStartHandler = onDragStartHandler;
         };
@@ -158,7 +167,7 @@ module.exports = [
         /*
          * Sets the onDragEnd callback function
          */
-        Glyph.prototype.onDragEnd = function onDragEnd(onDragEndHandler) {
+        Glyph.prototype.onDragEnd = function onDragEnd(onDragEndHandler = function() {}) {
 
             this.onDragEndHandler = onDragEndHandler;
         };
@@ -166,41 +175,9 @@ module.exports = [
         /*
          * Sets the onTextChanged callback function
          */
-        Glyph.prototype.onTextChanged = function onTextChanged(onTextChangedHandler) {
+        Glyph.prototype.onTextChanged = function onTextChanged(onTextChangedHandler = function() {}) {
 
             this.onTextChangedHandler = onTextChangedHandler;
-        };
-
-        /*
-         * Optional click-handler with no operation by default
-         */
-        Glyph.prototype.onClickHandler = function onClickHandler() {
-
-            noop();
-        };
-
-        /*
-         * Optional click-handler with no operation by default
-         */
-        Glyph.prototype.onDragStartHandler = function onDragStartHandler() {
-
-            noop();
-        };
-
-        /*
-         * Optional click-handler with no operation by default
-         */
-        Glyph.prototype.onDragEndHandler = function onDragEndHandler() {
-
-            noop();
-        };
-
-        /*
-         * Optional textChanged-handler with no operation by default
-         */
-        Glyph.prototype.onTextChangedHandler = function onTextChangedHandler() {
-
-            noop();
         };
 
 
@@ -209,10 +186,7 @@ module.exports = [
         /*
          * Optional hook to constrain glyph
          */
-        Glyph.prototype.setDraggableConstraintFn = function setDraggableConstraintFn() {
-
-            noop();
-        };
+        Glyph.prototype.setDraggableConstraintFn = function setDraggableConstraintFn() {};
 
         /*
          * To be called after glyph has moved
@@ -272,13 +246,6 @@ module.exports = [
 
             return copy;
         };
-
-        /* Misc. helper functions */
-
-        function noop() {
-
-            return void (0);
-        }
 
         return Glyph;
     }

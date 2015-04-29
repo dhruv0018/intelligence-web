@@ -25,7 +25,6 @@ export function SVGGlyphValue(
 
         Glyph.call(this, type, options, containerElement);
 
-        this.addClickHandler();
         this.addSelectStateListeners();
     }
     angular.inheritPrototype(SVGGlyph, Glyph);
@@ -47,79 +46,71 @@ export function SVGGlyphValue(
 
     /* Event listeners and handlers */
 
-    SVGGlyph.prototype.addClickHandler = function addClickHandler() {
-
-        var self = this;
-
-        if (!self.primarySVGShape) return;
-
-        self.primarySVGShape.on('click', function handleClick(event) {
-
-            self.onClickHandler(event);
-        });
-
-        self.addRemoveListenerFunction('click');
-
-    };
-
     SVGGlyph.prototype.enterSelectState = function() {
 
-        this.primarySVGShape.stroke({'color': TELESTRATION_COLORS.HIGHLIGHT_BLUE()});
         TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.DISABLE_DRAW);
+        this.primarySVGShape.stroke({'color': TELESTRATION_COLORS.HIGHLIGHT_BLUE()});
     };
 
     SVGGlyph.prototype.removeSelectState = function() {
 
-        this.primarySVGShape.stroke({'color': this.color});
+        console.log('removeSelectState');
         TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+        this.primarySVGShape.stroke({'color': this.color});
+        this.onBlurHandler();
     };
 
     SVGGlyph.prototype.addSelectStateListeners = function addSelectStateListeners() {
 
         let self = this;
 
-        self.primarySVGShape.on('mousedown', onMousedownOnPrimarySVGShape);
+        self.primarySVGShape.on('mousedown', onSelectedMousedown);
 
-        function onMousedownOnPrimarySVGShape (event) {
+        function onSelectedMousedown (event) {
 
             if (self.selected) return;
+
+            console.log('onSelectedMousedown');
 
             // change to select state color
             self.enterSelectState();
             self.selected = true;
 
-            $window.removeEventListener('mouseup', onMouseupOnWindow);
-            $window.addEventListener('mouseup', onMouseupOnWindow);
+            $window.removeEventListener('mouseup', onSelectedMouseup);
+            $window.addEventListener('mouseup', onSelectedMouseup);
         }
 
-        function onMouseupOnWindow(event) {
+        function onSelectedMouseup(event) {
+
+            console.log('onSelectedMouseup', event);
+            TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.DISABLE_DRAW);
 
             addSelectStateRemovalListeners();
-            $window.removeEventListener('mouseup', onMouseupOnWindow);
+            $window.removeEventListener('mouseup', onSelectedMouseup);
+
+            self.onSelectedMouseupHandler();
         }
 
         function selectStateRemovalListener(event) {
 
+            console.log('remove selectStateRemovalListener', event);
             // exit select state if the mouse event did not originate from the primary svg shape
-            if(exitSelectStateTest(event)) $window.removeEventListener('mouseup', selectStateRemovalListener);
-
-        }
-
-        function exitSelectStateTest(event) {
-
             if (event.target !== self.primarySVGShape.node && self.resizeNodes.indexOf(event.target) === -1) {
+
+                TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
 
                 self.removeSelectState();
                 self.selected = false;
 
-                return true;
+                $window.removeEventListener('mousedown', selectStateRemovalListener);
             }
         }
 
         function addSelectStateRemovalListeners() {
 
-            $window.removeEventListener('mouseup', selectStateRemovalListener);
-            $window.addEventListener('mouseup', selectStateRemovalListener);
+            console.log('addSelectStateRemovalListeners');
+            $window.removeEventListener('mousedown', selectStateRemovalListener);
+            $window.addEventListener('mousedown', selectStateRemovalListener);
         }
     };
 
@@ -162,6 +153,7 @@ export function SVGGlyphValue(
             self.startPosition = null;
 
             self.updateVerticesPositions(delta);
+            self.onSelectedMouseupHandler();
             self.onDragEndHandler(delta);
         };
     };

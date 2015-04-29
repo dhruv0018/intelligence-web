@@ -32,8 +32,6 @@ function TextValue(
 
         this.primaryTextarea = new PrimaryTextarea(this, mode);
         if (!testTextArea) createTestTextarea.call(this);
-
-        this.addClickHandler();
     }
     angular.inheritPrototype(Text, Glyph);
 
@@ -107,14 +105,6 @@ function TextValue(
 
     Text.prototype.MAX_LENGTH = 70;
 
-
-    Text.prototype.addClickHandler = function addClickHandler() {
-
-        this.primaryTextarea.element.on('click', (event) => {
-
-            this.onClickHandler(event);
-        });
-    };
 
     /*
      * Used set the start position and reset the width and position of the text position based on start/end points.
@@ -200,6 +190,8 @@ function TextValue(
          */
         function enterDisplayMode(event) {
 
+            console.log('enterDisplayMode');
+
             self.element.off('mousedown', enterDisplaySelectedMode);
             self.element.on('mousedown', enterDisplaySelectedMode);
 
@@ -213,14 +205,16 @@ function TextValue(
         }
 
 
-        function enterDisplaySelectedMode() {
+        function enterDisplaySelectedMode(event) {
+
+            console.log('enterDisplaySelectedMode');
 
             TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.DISABLE_DRAW);
 
             self.element.off('mousedown', enterDisplaySelectedMode);
 
-            $window.removeEventListener('click', onDisplaySelectedModeBlur);
-            $window.addEventListener('click', onDisplaySelectedModeBlur);
+            $window.removeEventListener('click', onDisplaySelectedModeBlurTest);
+            $window.addEventListener('click', onDisplaySelectedModeBlurTest);
 
             self.element.off('mousedown', dragStart);
             self.element.on('mousedown', dragStart);
@@ -233,13 +227,25 @@ function TextValue(
             self.element.attr(parentGlyph.TEXT_AREA_DISPLAY_SELECTED_ATTR);
         }
 
+        function onDisplaySelectedModeBlurTest(event) {
+
+            console.log('onDisplaySelectedModeBlurTest');
+            if (event.target !== self.element[0]) {
+
+                onDisplaySelectedModeBlur(event);
+                $window.removeEventListener('click', onDisplaySelectedModeBlur);
+            }
+        }
+
         function onDisplaySelectedModeBlur(event) {
 
-            $window.removeEventListener('click', onDisplaySelectedModeBlur);
+            console.log('onDisplaySelectedModeBlur', event);
 
             enterDisplayMode(event);
 
             TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+
+            parentGlyph.onBlurHandler();
         }
 
         /*
@@ -255,6 +261,8 @@ function TextValue(
             storeTextAreaProperties();
 
             TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+
+            parentGlyph.onBlurHandler();
         }
 
         function storeTextAreaProperties() {
@@ -286,8 +294,6 @@ function TextValue(
 
         function dragStart(event) {
 
-            // event.stopPropagation();
-
             containerBoundingBox = parentGlyph.getContainerDimensions();
             self.element.startPosition = {x: event.offsetX, y: event.offsetY};
 
@@ -303,8 +309,6 @@ function TextValue(
 
         function dragMove(event) {
 
-            // event.preventDefault();
-
             var left = event.clientX - containerBoundingBox.left - self.element.startPosition.x;
             var top = event.clientY - containerBoundingBox.top - self.element.startPosition.y;
 
@@ -315,8 +319,6 @@ function TextValue(
         }
 
         function dragEnd(event) {
-
-            // event.preventDefault();
 
             // ensure text is within constraints
             self.recalculatePrimaryTextareaStartPosition();
