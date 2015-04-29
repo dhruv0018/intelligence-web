@@ -25,7 +25,9 @@ export function SVGGlyphValue(
 
         Glyph.call(this, type, options, containerElement);
 
-        this.addSelectStateListeners();
+        this.primarySVGShape.node.setAttribute('class', 'Glyph');
+
+        this.addStateChangeListeners();
     }
     angular.inheritPrototype(SVGGlyph, Glyph);
 
@@ -43,74 +45,121 @@ export function SVGGlyphValue(
         if (this.primarySVGShape) return this.primarySVGShape;
     };
 
-
     /* Event listeners and handlers */
 
-    SVGGlyph.prototype.enterSelectState = function() {
-
-        TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.DISABLE_DRAW);
-        this.primarySVGShape.stroke({'color': TELESTRATION_COLORS.HIGHLIGHT_BLUE()});
-    };
-
-    SVGGlyph.prototype.removeSelectState = function() {
-
-        console.log('removeSelectState');
-        TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
-        this.primarySVGShape.stroke({'color': this.color});
-        this.onBlurHandler();
-    };
-
-    SVGGlyph.prototype.addSelectStateListeners = function addSelectStateListeners() {
+    SVGGlyph.prototype.addStateChangeListeners = function addStateChangeListeners() {
 
         let self = this;
 
-        self.primarySVGShape.on('mousedown', onSelectedMousedown);
+        enterDisplayMode();
 
-        function onSelectedMousedown (event) {
+        /*
+         * Changes styles and handlers for display-text mode.
+         * Text Input Handlers are already set.
+         */
+        function enterDisplayMode(event) {
 
-            if (self.selected) return;
+            // enable draw if the target is not of type textareaGlyph
+            let targetClass;
 
-            console.log('onSelectedMousedown');
+            if (event) targetClass = event.target.getAttribute('class');
 
-            // change to select state color
-            self.enterSelectState();
-            self.selected = true;
-
-            $window.removeEventListener('mouseup', onSelectedMouseup);
-            $window.addEventListener('mouseup', onSelectedMouseup);
-        }
-
-        function onSelectedMouseup(event) {
-
-            console.log('onSelectedMouseup', event);
-            TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.DISABLE_DRAW);
-
-            addSelectStateRemovalListeners();
-            $window.removeEventListener('mouseup', onSelectedMouseup);
-
-            self.onSelectedMouseupHandler();
-        }
-
-        function selectStateRemovalListener(event) {
-
-            console.log('remove selectStateRemovalListener', event);
-            // exit select state if the mouse event did not originate from the primary svg shape
-            if (event.target !== self.primarySVGShape.node && self.resizeNodes.indexOf(event.target) === -1) {
+            if (!event || !targetClass) {
 
                 TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+                self.onBlurHandler();
 
-                self.removeSelectState();
-                self.selected = false;
+            } else if (targetClass && targetClass.split(' ').indexOf('Glyph') === -1) {
 
-                $window.removeEventListener('mousedown', selectStateRemovalListener);
+                TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+                self.onBlurHandler();
+            }
+
+            self.primarySVGShape.on('mousedown', handleDisplayModeToDisplaySelectedModeTransition);
+
+            self.primarySVGShape.stroke({'color': self.color});
+        }
+
+
+        function enterDisplaySelectedMode(event) {
+
+            TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.DISABLE_DRAW);
+
+            $window.addEventListener('mousedown', handleDisplaySelectedModeToDisplayModeTransitionTest);
+
+            self.primarySVGShape.on('mouseup', self.onSelectedMouseupHandler);
+
+            self.primarySVGShape.on('mousedown', handleDisplaySelectedModeToDisplaySelectedModeTransition);
+
+            self.primarySVGShape.stroke({'color': TELESTRATION_COLORS.HIGHLIGHT_BLUE()});
+        }
+
+        function handleDisplaySelectedModeToDisplayModeTransitionTest(event) {
+
+            if (event.target !== self.primarySVGShape.node && self.resizeNodes.indexOf(event.target) === -1) {
+
+                handleDisplaySelectedModeToDisplayModeTransition(event);
             }
         }
 
-        function addSelectStateRemovalListeners() {
+        function handleDisplaySelectedModeToDisplaySelectedModeTransition(event) {
 
-            console.log('addSelectStateRemovalListeners');
-            $window.removeEventListener('mousedown', selectStateRemovalListener);
-            $window.addEventListener('mousedown', selectStateRemovalListener);
+            /* handle exiting current state */
+            exitDisplaySelectedMode();
+
+
+            /* handle transition */
+            // NOTHING TO DO
+
+
+            /* go to to next state */
+            enterDisplaySelectedMode(event);
+        }
+
+        function handleDisplayModeToDisplaySelectedModeTransition(event) {
+
+            /* handle exiting current state */
+            exitDisplayMode();
+
+
+            /* handle transition */
+            // NOTHING TO DO
+
+
+            /* go to to next state */
+            enterDisplaySelectedMode(event);
+        }
+
+        function handleDisplaySelectedModeToDisplayModeTransition(event) {
+
+            /* handle exiting current state */
+            exitDisplaySelectedMode();
+
+
+            /* handle transition */
+            // NOTHING TO DO
+
+
+            /* go to to next state */
+            enterDisplayMode(event);
+        }
+
+        function exitDisplayMode() {
+
+            self.primarySVGShape.off('mousedown', handleDisplayModeToDisplaySelectedModeTransition);
+        }
+
+        function exitDisplaySelectedMode() {
+
+            self.primarySVGShape.off('mouseup', self.onSelectedMouseupHandler);
+            self.primarySVGShape.off('mousedown', handleDisplaySelectedModeToDisplaySelectedModeTransition);
+            $window.removeEventListener('mousedown', handleDisplaySelectedModeToDisplayModeTransitionTest);
+        }
+
+        function exitEditMode() {
+
+            self.primarySVGShape.off('mousedown', stopEventPropagation);
+            $window.removeEventListener('click', handleEditModeToDisplayModeTransitionTest);
         }
     };
 

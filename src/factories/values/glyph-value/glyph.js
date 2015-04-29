@@ -151,34 +151,38 @@ module.exports = [
         /*
          * Sets the onBlurHandler callback function
          */
-        Glyph.prototype.onBlur = function onBlur(onBlurHandler = function() {}) {
+        Glyph.prototype.onBlur = function onBlur(onBlurHandler) {
 
             this.onBlurHandler = onBlurHandler;
         };
+        Glyph.prototype.onBlurHandler = function() {};
 
         /*
          * Sets the onDragStart callback function
          */
-        Glyph.prototype.onDragStart = function onDragStart(onDragStartHandler = function() {}) {
+        Glyph.prototype.onDragStart = function onDragStart(onDragStartHandler) {
 
             this.onDragStartHandler = onDragStartHandler;
         };
+        Glyph.prototype.onDragStartHandler = function() {};
 
         /*
          * Sets the onDragEnd callback function
          */
-        Glyph.prototype.onDragEnd = function onDragEnd(onDragEndHandler = function() {}) {
+        Glyph.prototype.onDragEnd = function onDragEnd(onDragEndHandler) {
 
             this.onDragEndHandler = onDragEndHandler;
         };
+        Glyph.prototype.onDragEndHandler = function() {};
 
         /*
          * Sets the onTextChanged callback function
          */
-        Glyph.prototype.onTextChanged = function onTextChanged(onTextChangedHandler = function() {}) {
+        Glyph.prototype.onTextChanged = function onTextChanged(onTextChangedHandler) {
 
             this.onTextChangedHandler = onTextChangedHandler;
         };
+        Glyph.prototype.onTextChangedHandler = function() {};
 
 
         /* Optional Sub-class hooks */
