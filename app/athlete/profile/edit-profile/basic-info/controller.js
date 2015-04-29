@@ -16,6 +16,7 @@ BasicInfoController.$inject = [
     '$timeout',
     'config',
     'UsersFactory',
+    'SportsFactory',
     'SessionService',
     'AlertsService',
     'Athlete.Profile.EditProfile.Data'
@@ -33,11 +34,13 @@ function BasicInfoController (
     $timeout,
     config,
     users,
+    sports,
     session,
     alerts,
     data
 ) {
     $scope.athlete = session.getCurrentUser();
+    $scope.sports = sports.getList();
     $scope.maxAboutMeLength = 200;
 
     $scope.setProfilePicture = function setProfilePicture(files) {

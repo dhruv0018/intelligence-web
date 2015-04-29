@@ -9,14 +9,26 @@
             </div>
             <div class="form-block-two-thirds">
                 <div>
-                    <h4>First Name</h4>
-                    <input type="text" ng-model="athlete.firstName" class="form-control" placeholder="Enter First Name"/>
+                    <div class="form-block-half">
+                        <h4>First Name</h4>
+                        <input type="text" ng-model="athlete.firstName" class="form-control" placeholder="Enter First Name"/>
+                    </div>
+                    <div class="form-block-half">
+                        <h4>Last Name</h4>
+                        <input type="text" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
+                    </div>
                 </div>
-                <div>
-                    <h4>Last Name</h4>
-                    <input type="text" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
+                <div class="form-block-half-row">
+                    <h4>Primary Sport</h4>
+                    <select ng-model="athlete.profile.primarySport" ng-options="sport.id as sport.name for sport in sports">
+                        <option value="">Select Sport</option>
+                    </select>
                 </div>
-                <div>
+                <div class="form-block-half-row">
+                    <h4>Primary Position</h4>
+                    <input type="text" ng-model="athlete.profile.primaryPosition" class="form-control" placeholder="Enter Primary Position"/>
+                </div>
+                <div class="form-block-half-row">
                     <h4>Hometown</h4>
                     <input type="text" ng-model="athlete.profile.hometown" class="form-control" placeholder="Enter Hometown"/>
                 </div>
