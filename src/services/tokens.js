@@ -70,8 +70,8 @@ IntelligenceWebClient.factory('TokensService', [
                 url += '&state=' + config.oauth.state;
 
                 var data = 'authorized=yes';
-                data += '&username=' + username;
-                data += '&password=' + password;
+                data += '&username=' + encodeURIComponent(username);
+                data += '&password=' + encodeURIComponent(password);
 
                 var request = {
 
