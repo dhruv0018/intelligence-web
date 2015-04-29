@@ -266,7 +266,6 @@ function QueueController (
     });
 
     var refreshGames = function() {
-
         angular.forEach($scope.queue, function(game) {
 
             if (game.remainingTime) {
@@ -306,6 +305,8 @@ function QueueController (
                             $scope.queue = [];
                             $scope.queue[0] = game;
                             $scope.noResults = false;
+                    }).then(function() {
+                        $scope.searching = false;
                     });
                 },
 
@@ -313,10 +314,6 @@ function QueueController (
 
                     $scope.queue = [];
                     $scope.noResults = true;
-                },
-
-                function final () {
-
                     $scope.searching = false;
                 }
             );
@@ -338,6 +335,8 @@ function QueueController (
                         function updateQueue() {
                             $scope.queue = games;
                             $scope.noResults = false;
+                    }).then(function() {
+                        $scope.searching = false;
                     });
                 },
 
@@ -345,10 +344,6 @@ function QueueController (
 
                     $scope.queue = [];
                     $scope.noResults = true;
-                },
-
-                function final () {
-
                     $scope.searching = false;
                 }
             );
