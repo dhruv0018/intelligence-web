@@ -187,8 +187,8 @@ describe('TokensService', function() {
                 };
 
                 var expectedRequest = 'authorized=yes';
-                expectedRequest += '&username=' + username;
-                expectedRequest += '&password=' + password;
+                expectedRequest += '&username=' + encodeURIComponent(username);
+                expectedRequest += '&password=' + encodeURIComponent(password);
 
                 var expectedCode = {
 
