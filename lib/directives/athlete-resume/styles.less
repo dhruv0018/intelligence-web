@@ -32,6 +32,12 @@
         -moz-transition: max-height 1s;
         transition: max-height 1s;
 
+        p {
+            font-size: 18px;
+            margin-bottom: 0;
+            margin-left: 20px;
+        }
+
         .add-field {
             cursor: pointer;
             color: @gray;
@@ -39,6 +45,11 @@
             &:hover {
                 color: black;
             }
+        }
+
+        .physical-measurement {
+            .pull-right;
+            font-weight: 500;
         }
     }
 
@@ -61,7 +72,12 @@
 
     @media only screen
     and (min-width: @md-screen-sm) {
-        width: 400px;
+        width: 250px;
+    }
+
+    @media only screen
+    and (min-width: @md-screen-md) {
+        width: 375px;
     }
 
 }

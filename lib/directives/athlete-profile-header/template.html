@@ -3,7 +3,7 @@
 
         <profile-picture user="athlete"></profile-picture>
 
-        <h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
+        <h2 hide-gt-sm>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
         <a ng-if="auth.isLoggedIn && session.getCurrentUserId() === athlete.profile.userId"
            ui-sref="Athlete.Profile.EditProfile.BasicInfo"
@@ -17,10 +17,10 @@
 
     <section class="athlete-secondary-info animated fadeOut collapsed">
 
-        <h2 hide show-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
+        <h2 hide show-gt-sm>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-        <p ng-if="athlete.profile.about">{{athlete.profile.about}}</p>
-        <p ng-if="!athlete.profile.about && isCurrentUser">
+        <p hide show-gt-sm ng-if="athlete.profile.about">{{athlete.profile.about}}</p>
+        <p hide show-gt-sm ng-if="!athlete.profile.about && isCurrentUser">
             <a
              class="empty-attribute"
              ui-sref="Athlete.Profile.EditProfile.BasicInfo"
