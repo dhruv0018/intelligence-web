@@ -25,7 +25,7 @@ export function SVGGlyphValue(
 
         Glyph.call(this, type, options, containerElement);
 
-        this.primarySVGShape.node.setAttribute('class', 'Glyph');
+        this.primarySVGShape.node.setAttribute('class', this.BASE_CLASS);
 
         this.addStateChangeListeners();
     }
@@ -73,7 +73,7 @@ export function SVGGlyphValue(
                 TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
                 self.onBlurHandler();
 
-            } else if (targetClass && targetClass.split(' ').indexOf('Glyph') === -1) {
+            } else if (targetClass && targetClass.split(' ').indexOf(self.BASE_CLASS) === -1) {
 
                 TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
                 self.onBlurHandler();

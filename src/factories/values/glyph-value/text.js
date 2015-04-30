@@ -192,7 +192,7 @@ function TextValue(
 
                 TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
 
-            } else if (targetClass && targetClass.split(' ').indexOf('Glyph') === -1) {
+            } else if (targetClass && targetClass.split(' ').indexOf(parentGlyph.BASE_CLASS) === -1) {
 
                 TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
             }
@@ -594,7 +594,7 @@ function TextValue(
         self.element.css(parentGlyph.TEXT_AREA_BASE_CSS);
         self.element.css(parentGlyph.TEXT_AREA_EDIT_CSS);
         self.element.attr(parentGlyph.TEXT_AREA_EDIT_ATTR);
-        self.element.attr('class', 'Glyph');
+        self.element.attr('class', parentGlyph.BASE_CLASS);
 
         // set color
         self.element.css('color', parentGlyph.color);

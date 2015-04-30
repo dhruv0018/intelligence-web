@@ -32,6 +32,7 @@ module.exports = [
 
         Glyph.prototype.MIN_VERTICES = 2;
         Glyph.prototype.RESIZABLE = false;
+        Glyph.prototype.BASE_CLASS = 'glyph-base-class';
 
 
         /* Getters & Setters */
