@@ -1,11 +1,11 @@
 <div
     class="arena-modal"
-    ng-blur="onBlur()"
+    ng-blur="$parent.onArenaBlur()"
 >
     <xy-coordinates ng-model="coordinates">
 
         <krossover-arena
-            league="league"
+            league="$parent.league"
             ng-model="region"
         ></krossover-arena>
 
