@@ -1,3 +1,3 @@
 <div class="film-home-tabs">
-    <button class="btn-filter" data-ng-class="{'active': filter.selected}" data-ng-click="selectFilter(filter)" data-ng-repeat="filter in filters">{{filter.description}}</button>
+    <button data-ng-attr-id="{{filter.id}}" class="btn-filter" data-ng-class="{'active': filter.selected}" data-ng-click="selectFilter(filter)" data-ng-repeat="filter in filters">{{filter.description}}</button>
 </div>

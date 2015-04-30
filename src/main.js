@@ -30,7 +30,6 @@ require('./users');
 require('./routes');
 require('./errors');
 require('./viewports');
-require('./logs');
 require('./device');
 require('./mediator');
 

@@ -233,35 +233,5 @@ IntelligenceWebClient.service('PlayManager', [
                 plays.delete(play);
             }
         };
-
-        /**
-         * Saves a play.
-         */
-        this.save = function(play) {
-
-            playsManager = playsManager || $injector.get('PlaysManager');
-
-            play = play || this.current;
-
-            var playIndex = playsManager.plays.indexOf(play);
-
-            /* Save the play remotely. */
-            plays.save(play)
-
-            .then(function(play) {
-
-                /* If the play exists in the play list. */
-                if (~playIndex) {
-
-                    /* Update the play in the play list. */
-                    playsManager.plays[playIndex] = play;
-                }
-            })
-
-            .catch(function() {
-
-                playsManager.plays[playIndex].error = true;
-            });
-        };
     }
 ]);
