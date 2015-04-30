@@ -1,8 +1,14 @@
 <div
-	class="arena-modal"
-	data-ng-blur="onBlur()"
+    class="arena-modal"
+    ng-blur="onBlur()"
 >
-    <xy-coordinates data-ng-model="coordinates">
-		<krossover-arena data-league="league" data-ng-model="region"></krossover-arena>
-	</xy-coordinates>
+    <xy-coordinates ng-model="coordinates">
+
+        <krossover-arena
+            league="league"
+            ng-model="region"
+        ></krossover-arena>
+
+    </xy-coordinates>
+
 </div>

@@ -1,4 +1,5 @@
 <span class="item">
+
     <button
         class="player-dropdown"
         data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
@@ -16,6 +17,7 @@
             </svg>
         </span>
     </button>
+
     <!-- Gap variable -->
     <krossover-item-gap data-ng-if="item.type === 'GAP'"></krossover-item-gap>
 
@@ -47,6 +49,6 @@
     <krossover-item-team-player-dropdown data-ng-if="item.type === 'PLAYER_TEAM_DROPDOWN'"></krossover-item-team-player-dropdown>
 
     <!-- Arena variable -->
-    <krossover-item-arena data-ng-if="item.type === 'ARENA'" data-league="league" data-game="game" data-item="item" data-plays="plays" data-play="play" data-event="event" data-auto-advance="autoAdvance" data-is-editable="isEditable"></krossover-item-arena>
+    <krossover-item-arena data-ng-if="item.type === 'ARENA'"></krossover-item-arena>
 
 </span>

@@ -1,14 +1,15 @@
 <div class="arena-item">
+
 	<input
         type="button"
         class="btn-arena mousetrap"
         ng-class="{'btn-arena-focus': isFocused}"
-        data-ng-required="item.isRequired"
-		data-ng-if="isUndefined(event.variableValues[item.id].value)"
-
-        data-focus-on="shouldFocus()"
-        data-autofocus-when="autoAdvance && item.index === 1"
-        data-ng-focus="openArenaModal()"
+        ng-required="item.isRequired"
+        ng-if="isUndefined(event.variableValues[item.id].value)"
+        ng-focus="openArenaModal()"
+        focus-on="shouldFocus()"
+        autofocus-when="autoAdvance && item.index === 1"
         value="at shot location"
-	/>
+    />
+
 </div>
