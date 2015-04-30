@@ -168,7 +168,6 @@ function QueueController (
     SelectIndexerModal,
     utilities
 ) {
-
     $scope.ROLE_TYPE = ROLE_TYPE;
     $scope.GAME_STATUSES = GAME_STATUSES;
     $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
@@ -188,7 +187,6 @@ function QueueController (
 
     //initially show everything
     $scope.queue = $scope.games;
-
     $scope.queueFilters = {
         remaining: {
             '48': [],
@@ -273,6 +271,7 @@ function QueueController (
                 game.remainingTime = moment.duration(game.remainingTime).subtract(1, 'minute').asMilliseconds();
             }
         });
+
     };
 
     var ONE_MINUTE = 60000;
@@ -304,9 +303,11 @@ function QueueController (
                         function updateQueue() {
                             $scope.queue = [];
                             $scope.queue[0] = game;
-                            $scope.noResults = false;
-                    }).then(function() {
+                    }).finally(function removeSpinner() {
+                        $scope.noResults = false;
                         $scope.searching = false;
+                        //Notify Angular to start digest cycle
+                        $scope.$digest();
                     });
                 },
 
@@ -315,6 +316,8 @@ function QueueController (
                     $scope.queue = [];
                     $scope.noResults = true;
                     $scope.searching = false;
+                    //Notify Angular to start digest cycle
+                    $scope.$digest();
                 }
             );
         }
@@ -334,9 +337,11 @@ function QueueController (
                     teams.load(teamIds).then(
                         function updateQueue() {
                             $scope.queue = games;
-                            $scope.noResults = false;
-                    }).then(function() {
+                    }).finally(function removeSpinner() {
+                        $scope.noResults = false;
                         $scope.searching = false;
+                        //Notify Angular to start digest cycle
+                        $scope.$digest();
                     });
                 },
 
@@ -345,6 +350,8 @@ function QueueController (
                     $scope.queue = [];
                     $scope.noResults = true;
                     $scope.searching = false;
+                    //Notify Angular to start digest cycle
+                    $scope.$digest();
                 }
             );
         }
