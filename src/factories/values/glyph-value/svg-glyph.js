@@ -47,6 +47,10 @@ export function SVGGlyphValue(
 
     /* Event listeners and handlers */
 
+    SVGGlyph.prototype.enterDisplaySelectedModeHook = function() {};
+
+    SVGGlyph.prototype.enterDisplayModeHook = function() {};
+
     SVGGlyph.prototype.addStateChangeListeners = function addStateChangeListeners() {
 
         let self = this;
@@ -78,6 +82,8 @@ export function SVGGlyphValue(
             self.primarySVGShape.on('mousedown', handleDisplayModeToDisplaySelectedModeTransition);
 
             self.primarySVGShape.stroke({'color': self.color});
+
+            self.enterDisplayModeHook();
         }
 
 
@@ -92,6 +98,8 @@ export function SVGGlyphValue(
             self.primarySVGShape.on('mousedown', handleDisplaySelectedModeToDisplaySelectedModeTransition);
 
             self.primarySVGShape.stroke({'color': TELESTRATION_COLORS.HIGHLIGHT_BLUE()});
+
+            self.enterDisplaySelectedModeHook();
         }
 
         function handleDisplaySelectedModeToDisplayModeTransitionTest(event) {
@@ -193,6 +201,11 @@ export function SVGGlyphValue(
             self.startPosition = {x: self.primarySVGShape.x(), y: self.primarySVGShape.y()};
 
             self.onDragStartHandler();
+        };
+
+        self.primarySVGShape.dragmove = function dragmove(delta, event) {
+
+            self.constrainDelta(delta);
         };
 
         self.primarySVGShape.dragend = function dragend(delta, event) {
