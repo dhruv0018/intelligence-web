@@ -114,7 +114,6 @@ module.exports = [
                 self.primarySVGShape.dragend = function SpotlightShapeDragEnd(delta, event) {
 
                     prevDragEnd(delta, event);
-                    // self.render();
                 };
             }
         };

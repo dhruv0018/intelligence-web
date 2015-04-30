@@ -143,10 +143,11 @@ module.exports = [
         /*
          * Sets the onClickHandler callback function
          */
-        Glyph.prototype.onSelectedMouseup = function onSelectedMouseup(onSelectedMouseupHandler = function() {}) {
+        Glyph.prototype.onSelectedMouseup = function onSelectedMouseup(onSelectedMouseupHandler) {
 
             this.onSelectedMouseupHandler = onSelectedMouseupHandler;
         };
+        Glyph.prototype.onSelectedMouseupHandler = () => {};
 
         /*
          * Sets the onBlurHandler callback function
@@ -155,7 +156,7 @@ module.exports = [
 
             this.onBlurHandler = onBlurHandler;
         };
-        Glyph.prototype.onBlurHandler = function() {};
+        Glyph.prototype.onBlurHandler = () => {};
 
         /*
          * Sets the onDragStart callback function
@@ -164,7 +165,7 @@ module.exports = [
 
             this.onDragStartHandler = onDragStartHandler;
         };
-        Glyph.prototype.onDragStartHandler = function() {};
+        Glyph.prototype.onDragStartHandler = () => {};
 
         /*
          * Sets the onDragEnd callback function
@@ -173,7 +174,7 @@ module.exports = [
 
             this.onDragEndHandler = onDragEndHandler;
         };
-        Glyph.prototype.onDragEndHandler = function() {};
+        Glyph.prototype.onDragEndHandler = () => {};
 
         /*
          * Sets the onTextChanged callback function
@@ -182,7 +183,7 @@ module.exports = [
 
             this.onTextChangedHandler = onTextChangedHandler;
         };
-        Glyph.prototype.onTextChangedHandler = function() {};
+        Glyph.prototype.onTextChangedHandler = () => {};
 
 
         /* Optional Sub-class hooks */

@@ -18,7 +18,6 @@ module.exports = [
         Freehand.prototype.MAX_VERTICES = 1200;
 
         Freehand.prototype.updateEndPointFromPixels = function updateEndPointFromPixels(x, y) {
-            // TODO: only call getBoundingClientRect on window Resize
 
             if (this.vertices.length <= this.MAX_VERTICES) {
 
