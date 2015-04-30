@@ -16,6 +16,7 @@ IntelligenceWebClient.service('PlayerlistManager', [
         var playerList = [];
         return {
             fill: function(game) {
+                this.clear(); //ensures a fresh start
                 var mergedRosters = angular.extend({},
                     game.getRoster(game.teamId).playerInfo,
                     game.getRoster(game.opposingTeamId).playerInfo);

@@ -153,7 +153,8 @@ IntelligenceWebClient.factory('BaseFactory', [
                     });
                 }
 
-                else return [];
+                // FIXME: Should not return whole list.
+                else return storage.list;
             },
 
             /**

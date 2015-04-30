@@ -480,7 +480,9 @@ IntelligenceWebClient.factory('BaseStorage', [
 
                 let ids = this.loadView(key);
 
-                if (ids === null) throw new Error(`View '${key}' not cached yet in local Storage.`);
+                // FIXME: This should throw the error
+                //if (ids === null) throw new Error(`View '${key}' not cached yet in local Storage.`);
+                if (ids === null) console.error(new Error(`View '${key}' not cached yet in local Storage.`));
 
                 /* Return array of IDs. */
                 return ids;

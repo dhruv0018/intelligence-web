@@ -15,16 +15,21 @@ IntelligenceWebClient.factory('IndexingService', [
 
             reset: function(tagset, game, plays) {
 
-                var self = this;
+                this.showTags = false;
+                this.showScript = false;
+                this.isIndexing = false;
+                this.eventSelected = false;
 
                 game.currentPeriod = 0;
-                game.teamIndexedScore = 0;
+                game.indexedScore = 0;
                 game.opposingIndexedScore = 0;
 
+                eventManager.current = new KrossoverEvent();
                 playsManager.reset(plays);
                 tagsManager.reset(tagset);
                 playManager.reset(tagset, game.id);
                 playManager.clear();
+                playsManager.calculatePlays();
             },
 
             /**
@@ -109,7 +114,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Snap video back to time of current event. */
                 videoPlayer.seekTime(event.time);
 
-                playManager.save();
+                playManager.current.save();
                 playManager.clear();
                 tagsManager.reset();
                 eventManager.current = new KrossoverEvent();
@@ -294,20 +299,24 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = null;
 
                 /* Save play. */
-                playManager.save();
+                playManager.current.save();
 
                 /* Clear the current play. */
                 playManager.clear();
+            },
+
+            onEventSelect: function () {
+
+                this.eventSelected = true;
+                this.isIndexing = true;
+                this.showTags = false;
+                this.showScript = true;
+
+                videoPlayer.seekTime(eventManager.current.time);
             }
         };
 
-        playlistEventEmitter.on('EVENT_SELECT', () => {
-
-            this.eventSelected = true;
-            this.isIndexing = true;
-            this.showTags = false;
-            this.showScript = true;
-        });
+        playlistEventEmitter.on('EVENT_SELECT', IndexingService.onEventSelect.bind(IndexingService));
 
         return IndexingService;
     }
