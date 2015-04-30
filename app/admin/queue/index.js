@@ -168,6 +168,7 @@ function QueueController (
     SelectIndexerModal,
     utilities
 ) {
+
     $scope.ROLE_TYPE = ROLE_TYPE;
     $scope.GAME_STATUSES = GAME_STATUSES;
     $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
@@ -187,6 +188,7 @@ function QueueController (
 
     //initially show everything
     $scope.queue = $scope.games;
+
     $scope.queueFilters = {
         remaining: {
             '48': [],
@@ -264,6 +266,7 @@ function QueueController (
     });
 
     var refreshGames = function() {
+
         angular.forEach($scope.queue, function(game) {
 
             if (game.remainingTime) {
@@ -271,7 +274,6 @@ function QueueController (
                 game.remainingTime = moment.duration(game.remainingTime).subtract(1, 'minute').asMilliseconds();
             }
         });
-
     };
 
     var ONE_MINUTE = 60000;
