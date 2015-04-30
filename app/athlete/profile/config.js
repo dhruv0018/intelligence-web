@@ -33,25 +33,42 @@ Profile.config([
                     'UsersFactory',
                     'ReelsFactory',
                     'PlaysFactory',
+                    'SportsFactory',
+                    'PositionsetsFactory',
                     function data(
                                 $q,
                                 $stateParams,
                                 users,
                                 reels,
-                                plays) {
+                                plays,
+                                sports,
+                                positionsets) {
 
                         let userId = $stateParams.id;
 
                         /* Load data for Athlete.Profile.<sub-state> upfront
+
+                        userpromise = users.load
+                        reelspromise = userpromise.then(function)
+
+                        data {
+                            user: userpromise
+                            reels
                          */
 
-                        return users.load({relatedUserId: userId}).then(function() {
-                            return reels.load({relatedUserId: userId}).then(function() {
-                                let user = users.get(userId);
-                                let featuredReel = reels.getFeaturedReel(user);
-                                if (featuredReel) return plays.load(featuredReel.plays);
-                            });
+                        let relatedUsers = users.load({relatedUserId: userId});
+
+                        let relatedReels = relatedUsers.then(function() {
+                            return reels.load({relatedUserId: userId});
                         });
+
+                        let relatedPlays = relatedReels.then(function() {
+                            let user = users.get(userId);
+                            let featuredReel = reels.getFeaturedReel(user);
+                            if (featuredReel) return plays.load(featuredReel.plays);
+                        });
+
+                        return $q.all([relatedUsers, relatedReels, relatedPlays, positionsets.load(), sports.load()]);
                     }
                 ],
                 userId: [

@@ -11,6 +11,15 @@
             <i class="icon icon-youtube-play">&nbsp;</i>Highlights
         </md-tab>
         <md-tab
+            id="about"
+            aria-controls="about-content"
+            ui-sref="Athlete.Profile.About"
+            hide-gt-md
+        >
+            <i class="icon icon-info-circle">&nbsp;</i>About
+        </md-tab>
+        <!-- Hide for first deployment
+        <md-tab
             id="academics"
             aria-controls="academics-content"
             ui-sref="Athlete.Profile.Academics"
@@ -25,9 +34,8 @@
             disabled
         >
             <i class="icon icon-bar-chart-o">&nbsp;</i>Stats
-        </md-tab>
+        </md-tab>-->
     </md-tabs>
-
     <ng-switch on="tabs.index" class="tabpanel-container">
         <div role="tabpanel"
              class="tabpanel"
@@ -41,9 +49,19 @@
         </div>
         <div role="tabpanel"
              class="tabpanel"
+             id="about-content"
+             aria-labelledby="about"
+             ng-switch-when="1"
+             md-swipe-left="tabs.next()"
+             md-swipe-right="tabs.prev()"
+        >
+            <div ui-view="about"></div>
+        </div>
+        <div role="tabpanel"
+             class="tabpanel"
              id="academics-content"
              aria-labelledby="academics"
-             ng-switch-when="1"
+             ng-switch-when="2"
              md-swipe-left="tabs.next()"
              md-swipe-right="tabs.prev()"
         >
@@ -53,7 +71,7 @@
              class="tabpanel"
              id="stats-content"
              aria-labelledby="stats"
-             ng-switch-when="2"
+             ng-switch-when="4"
              md-swipe-left="tabs.next()"
              md-swipe-right="tabs.prev()"
         >

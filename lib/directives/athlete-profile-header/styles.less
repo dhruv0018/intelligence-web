@@ -63,6 +63,7 @@
 
         .athlete-attribute {
             margin: 10px 0;
+            text-transform: capitalize;
 
             label {
                 display: block;
@@ -98,9 +99,10 @@
             top: 0;
             margin: 20px 20px;
 
-            img {
-                height: 120px;
-                width: 120px;
+            img, .placeholder-picture {
+                height: 100px;
+                width: 100px;
+                padding: 0;
                 border-radius: 60px;
                 border-width: 2px;
             }
@@ -147,7 +149,7 @@
             top: 0;
             margin: 20px 40px;
 
-            img {
+            img, placeholder-picture {
                 height: 160px;
                 width: 160px;
                 border-radius: 80px;
@@ -156,7 +158,7 @@
         }
 
         .athlete-secondary-info {
-            margin: 20px 0 10px 240px;
+            margin: 20px 0 20px 240px;
         }
     }
 }

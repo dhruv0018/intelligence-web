@@ -8,7 +8,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
 var VIEWPORTS = {
 
     MOBILE: {
-        id: 2,
+        id: 1,
         name: 'Mobile',
         width: require('./breakpoints').MOBILE
     },

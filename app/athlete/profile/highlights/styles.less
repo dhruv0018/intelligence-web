@@ -115,7 +115,14 @@
     }
 
     .no-profile-results {
-        display: inline-block;
-        margin-left: 20%;
+        display: block;
+        padding-top: 20px;
+
+        @media only screen
+        and (min-width: @md-screen-md) {
+            display: inline-block;
+            margin-left: 20%;
+            padding-top: 0;
+        }
     }
 }

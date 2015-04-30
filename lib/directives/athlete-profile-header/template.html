@@ -31,9 +31,8 @@
             layout-gt-sm="row"
         >
             <li class="athlete-attribute" ng-if="athlete.profile.primarySport || isCurrentUser">
-                <label>Sport</label>
                 <span ng-if="athlete.profile.primarySport">
-                    {{athlete.profile.primarySport}}
+                    {{sports[athlete.profile.primarySport].name}}
                 </span>
                 <span ng-if="!athlete.profile.primarySport">
                     <a
@@ -43,11 +42,10 @@
                 </span>
             </li>
             <li class="athlete-attribute" ng-if="athlete.profile.primaryPosition || isCurrentUser">
-                <label>Position</label>
                 <span ng-if="athlete.profile.primaryPosition">
                     {{athlete.profile.primaryPosition}}
                 </span>
-                <span ng-if="!athlete.profile.teams.primaryPosition">
+                <span ng-if="!athlete.profile.primaryPosition">
                     <a
                      class="empty-attribute"
                      ui-sref="Athlete.Profile.EditProfile.BasicInfo"
@@ -55,9 +53,8 @@
                 </span>
             </li>
             <li class="athlete-attribute" ng-if="athlete.profile.hometown || isCurrentUser">
-                <label>Hometown</label>
                 <span ng-if="athlete.profile.hometown">
-                    {{athlete.profile.hometown}}
+                    From {{athlete.profile.hometown}}
                 </span>
                 <span ng-if="!athlete.profile.hometown">
                     <a
@@ -67,9 +64,8 @@
                 </span>
             </li>
             <li class="athlete-attribute" ng-if="athlete.profile.highSchoolGraduationYear || isCurrentUser">
-                <label>HS Class</label>
                 <span ng-if="athlete.profile.highSchoolGraduationYear">
-                    Class of {{athlete.profile.highSchoolGraduationYear}}
+                    HS Class of {{athlete.profile.highSchoolGraduationYear}}
                 </span>
                 <span ng-if="!athlete.profile.highSchoolGraduationYear">
                     <a

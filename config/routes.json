@@ -402,6 +402,11 @@
         "*": true
     },
 
+    "Athlete.Profile.About": {
+
+        "*": true
+    },
+
     "Athlete.Profile.EditProfile": {
 
         "Athlete": true

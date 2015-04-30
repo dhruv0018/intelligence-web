@@ -28,14 +28,22 @@
         border-bottom: thin solid @gray-border;
         padding: 10px 20px;
         background-color: @active-bg;
+        text-transform: capitalize;
         -webkit-transition: max-height 1s;
         -moz-transition: max-height 1s;
         transition: max-height 1s;
 
         p {
-            font-size: 18px;
             margin-bottom: 0;
             margin-left: 20px;
+        }
+
+        .profile-list-title {
+            font-size: 18px;
+        }
+
+        .team-sport {
+            font-weight: 500;
         }
 
         .add-field {
@@ -72,7 +80,8 @@
 
     @media only screen
     and (min-width: @md-screen-sm) {
-        width: 250px;
+        width: 80%;
+        margin: auto;
     }
 
     @media only screen

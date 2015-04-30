@@ -20,7 +20,8 @@ HighlightsController.$inject = [
     'PlayManager',
     'VideoPlayer',
     'VideoPlayerEventEmitter',
-    'VIDEO_PLAYER_EVENTS'
+    'VIDEO_PLAYER_EVENTS',
+    'VIEWPORTS'
 ];
 
 /**
@@ -39,10 +40,12 @@ function HighlightsController (
     playManager,
     videoPlayer,
     VideoPlayerEventEmitter,
-    VIDEO_PLAYER_EVENTS
+    VIDEO_PLAYER_EVENTS,
+    VIEWPORTS
 )   {
         $scope.athlete = users.get($stateParams.id);
         $scope.featuredReel = reels.getFeaturedReel($scope.athlete);
+        $scope.VIEWPORTS = VIEWPORTS;
 
         if ($scope.featuredReel) {
 

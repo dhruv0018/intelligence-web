@@ -23,7 +23,7 @@ Profile.controller('Athlete.Profile.controller', [
 
         $scope.tabs = {
             index: 0,
-            length: 3,
+            length: 4,
             next: function next() {
                 this.index = Math.min(this.index + 1, this.length - 1);
             },
