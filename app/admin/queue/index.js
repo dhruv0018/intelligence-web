@@ -305,7 +305,11 @@ function QueueController (
                         function updateQueue() {
                             $scope.queue = [];
                             $scope.queue[0] = game;
-                            $scope.noResults = false;
+                    }).finally(function removeSpinner() {
+                        $scope.noResults = false;
+                        $scope.searching = false;
+                        //Notify Angular to start digest cycle
+                        $scope.$digest();
                     });
                 },
 
@@ -313,11 +317,9 @@ function QueueController (
 
                     $scope.queue = [];
                     $scope.noResults = true;
-                },
-
-                function final () {
-
                     $scope.searching = false;
+                    //Notify Angular to start digest cycle
+                    $scope.$digest();
                 }
             );
         }
@@ -337,7 +339,11 @@ function QueueController (
                     teams.load(teamIds).then(
                         function updateQueue() {
                             $scope.queue = games;
-                            $scope.noResults = false;
+                    }).finally(function removeSpinner() {
+                        $scope.noResults = false;
+                        $scope.searching = false;
+                        //Notify Angular to start digest cycle
+                        $scope.$digest();
                     });
                 },
 
@@ -345,11 +351,9 @@ function QueueController (
 
                     $scope.queue = [];
                     $scope.noResults = true;
-                },
-
-                function final () {
-
                     $scope.searching = false;
+                    //Notify Angular to start digest cycle
+                    $scope.$digest();
                 }
             );
         }
