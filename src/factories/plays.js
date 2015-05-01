@@ -52,6 +52,44 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 return play;
             },
 
+            unextend: function(play) {
+
+                var self = this;
+
+                play = play || self;
+
+                var copy = angular.copy(play);
+
+                delete copy.PAGE_SIZE;
+                delete copy.description;
+                delete copy.model;
+                delete copy.storage;
+
+                delete copy.hasVisibleEvents;
+                delete copy.isFiltered;
+
+                copy.events = copy.events.map(unextendEvent);
+
+                function unextendEvent (event) {
+
+                    delete event.activeEventVariableIndex;
+
+                    Object.keys(event.variableValues).forEach(key => {
+
+                        let variableValue = event.variableValues[key];
+
+                        event.variableValues[key] = {
+                            type: variableValue.type,
+                            value: variableValue.value
+                        };
+                    });
+
+                    return event;
+                }
+
+                return copy;
+            },
+
             filterPlays: function(filterId, resources, success, error) {
                 var self = this;
                 var playIds = [];
