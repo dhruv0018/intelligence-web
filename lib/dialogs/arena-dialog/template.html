@@ -1,0 +1,19 @@
+<md-dialog
+    flex="50"
+    class="arena-modal"
+    ng-blur="onArenaBlur()"
+>
+    <md-dialog-content>
+
+        <xy-coordinates ng-model="event.variableValues[item.id].value.coordinates">
+
+            <krossover-arena
+                league="league"
+                ng-model="event.variableValues[item.id].value.region"
+            ></krossover-arena>
+
+        </xy-coordinates>
+
+    </md-dialog-content>
+
+</md-dialog>
