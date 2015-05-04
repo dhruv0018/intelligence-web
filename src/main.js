@@ -72,6 +72,7 @@ require('./constants/states');
 require('./constants/video-player');
 require('./constants/views');
 require('./constants/telestrations');
+require('./constants/cue-points');
 
 require('./models/users');
 require('./models/sports');
@@ -121,6 +122,7 @@ require('./factories/plans');
 require('./emitters/playlist');
 require('./emitters/video-player');
 require('./emitters/telestrations');
+require('./emitters/cue-point-event-emitter');
 
 require('./brokers/telestrationsVideoPlayerBroker');
 
