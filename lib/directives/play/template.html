@@ -1,4 +1,5 @@
 <div
+    ng-click="selectPlay()"
     ng-hide="!play.hasVisibleEvents && !isIndexer"
     class="play"
     ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll, 'play__reel': isReelsPlay, 'edit-mode': editFlag }"
