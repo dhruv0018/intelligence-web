@@ -8,9 +8,9 @@
                 <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
                 <span class="dash"> — </span>
                 <time>
-                    {{ play.startTime | time }}
+                    {{ play.startTime | time: true }}
                     <span class="dash"> — </span>
-                    {{ play.endTime | time }}
+                    {{ play.endTime | time: true }}
                 </time>
             </h4>
 
