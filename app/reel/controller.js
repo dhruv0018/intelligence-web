@@ -65,6 +65,7 @@ function ReelController(
     let isCoach = currentUser.is(ROLES.COACH);
     let plays = reel.plays.map(mapPlays);
     let play = plays[0];
+    let currentPlay = play;
     let game = gamesFactory.get(plays[0].gameId);
     let isTelestrationsSharedWithCurrentUser = reel.isTelestrationsSharedWithUser(currentUser);
     let isTelestrationsSharedPublicly = reel.isTelestrationsSharedPublicly();
@@ -138,7 +139,7 @@ function ReelController(
     // telestrations
 
     $scope.telestrationsEntity = reel.telestrations;
-    $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id);
+    $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
 
     // uploader could be a coach or an athlete (they have permissions to edit by default)
     if (isUploader) {
@@ -217,19 +218,18 @@ function ReelController(
         });
     };
 
-    $scope.$watchCollection('playManager.current', function(currentPlay) {
+    $scope.$watchCollection('playManager.current', function(newPlay) {
 
-        if (currentPlay && currentPlay.id) {
+        if (newPlay && newPlay.id) {
+
+            currentPlay = newPlay;
 
             $scope.currentPlayId = currentPlay.id;
 
             if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
-                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id, currentPlay.startTime);
             }
-            // TODO: add back event cuepoint an concat with play cuepoints
-            // var eventCuePoints = play.getEventCuePoints();
-            // $scope.cuePoints = $scope.cuepoints.concat(eventCuePoints);
         }
     });
 
@@ -237,7 +237,7 @@ function ReelController(
 
         $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
-            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.getCurrentPlayId());
+            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id, currentPlay.startTime);
 
         });
 
