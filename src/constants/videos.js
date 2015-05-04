@@ -40,6 +40,12 @@ const VIDEO_STATUSES = {
 
 IntelligenceWebClient.constant('VIDEO_STATUSES', VIDEO_STATUSES);
 
+/** 
+ * @constant
+ * Specifies the current seeking state for the video player.
+ * @type {Number}
+*/
+
 const SEEKING_STATES = {
 
     NOT_SEEKING: 0,
@@ -51,13 +57,25 @@ const SEEKING_STATES = {
 
 IntelligenceWebClient.constant('SEEKING_STATES', SEEKING_STATES);
 
-const RESUME_STATES = {
+/** 
+ * @constant
+ * Used to determine the video player's play/pause state after a seeking
+ * function is complete. For instance, if the video was playing and user
+ * initiated backward seeking, on seeking complete, the player should resume
+ * playback: PLAYBACK_RESUME_STATES.RESUME === 1.
+ * @type {Number}
+*/
 
+const PLAYBACK_RESUME_STATES = {
+
+    /** Do nothing if seeking state changes from outside (videogular play/pause)  */
     DEFAULT: 0,
+    /** Set the player to play after seeking complete */
     RESUME: 1,
+    /** Set the player to pause after seeking complete */
     PAUSE: 2
 };
 
-IntelligenceWebClient.constant('RESUME_STATES', RESUME_STATES);
+IntelligenceWebClient.constant('PLAYBACK_RESUME_STATES', PLAYBACK_RESUME_STATES);
 
-export {VIDEO_STATUS_IDS, VIDEO_STATUSES, SEEKING_STATES, RESUME_STATES};
+export {VIDEO_STATUS_IDS, VIDEO_STATUSES, SEEKING_STATES, PLAYBACK_RESUME_STATES};
