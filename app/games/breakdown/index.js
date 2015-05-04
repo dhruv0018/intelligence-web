@@ -214,7 +214,7 @@ function GamesBreakdownController (
             // Set telestrations
             $scope.telestrationsEntity = $scope.game.playTelestrations;
             $scope.currentPlayId = play.id;
-            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId);
+            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId, play.startTime);
 
             $scope.sources = play.getVideoSources();
 
@@ -249,13 +249,17 @@ function GamesBreakdownController (
 
             /* Listeners & Watches */
 
+            let currentPlay = play;
+
             if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
-                $scope.$watchCollection('playManager.current', function(currentPlay) {
+                $scope.$watchCollection('playManager.current', function(newPlay) {
+
+                    currentPlay = newPlay;
 
                     if (currentPlay && currentPlay.id) {
 
-                        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id);
+                        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id, currentPlay.startTime);
                         $scope.currentPlayId = currentPlay.id;
                         // TODO: add back event cuepoint an concat with play cuepoints
                         // var eventCuePoints = play.getEventCuePoints();
@@ -268,7 +272,7 @@ function GamesBreakdownController (
 
                 $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
-                    $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.getCurrentPlayId());
+                    $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id, currentPlay.startTime);
                 });
             }
         }

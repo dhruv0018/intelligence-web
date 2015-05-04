@@ -30,7 +30,7 @@ module.exports = [
             * getTelestrationCuePoints
             * @param playId (optional)
             */
-            this.getTelestrationCuePoints = function getTelestrationCuePoints(playId) {
+            this.getTelestrationCuePoints = function getTelestrationCuePoints(playId, playAbsoluteStartTime = 0) {
 
                 if (!this.length) return [];
 
@@ -49,15 +49,15 @@ module.exports = [
 
                 cuePoints = filteredTelestrations.map(function(telestration) {
 
+                    // Cuepoint times are relative to the play if the playAbsoluteStartTime is specified
                     return {
-                        time: telestration.time,
+                        time: Math.abs(playAbsoluteStartTime - telestration.time),
                         type: CUEPOINT_TYPES.TELESTRATION
                     };
                 });
 
                 return cuePoints;
             };
-
         };
 
         var extendTelestrationEntityModel = function extendTelestrationEntityModel(telestrationEntityModel) {
