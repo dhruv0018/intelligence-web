@@ -40,7 +40,7 @@ const VIDEO_STATUSES = {
 
 IntelligenceWebClient.constant('VIDEO_STATUSES', VIDEO_STATUSES);
 
-/** 
+/**
  * @constant
  * Specifies the current seeking state for the video player.
  * @type {Number}
@@ -57,7 +57,7 @@ const SEEKING_STATES = {
 
 IntelligenceWebClient.constant('SEEKING_STATES', SEEKING_STATES);
 
-/** 
+/**
  * @constant
  * Used to determine the video player's play/pause state after a seeking
  * function is complete. For instance, if the video was playing and user
