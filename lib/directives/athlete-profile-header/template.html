@@ -30,11 +30,11 @@
             layout="column"
             layout-gt-sm="row"
         >
-            <li class="athlete-attribute" ng-if="athlete.profile.primarySport || isCurrentUser">
-                <span ng-if="athlete.profile.primarySport">
-                    {{sports[athlete.profile.primarySport].name}}
+            <li class="athlete-attribute" ng-if="athlete.profile.primarySportId || isCurrentUser">
+                <span ng-if="athlete.profile.primarySportId">
+                    {{sports[athlete.profile.primarySportId].name}}
                 </span>
-                <span ng-if="!athlete.profile.primarySport">
+                <span ng-if="!athlete.profile.primarySportId">
                     <a
                      class="empty-attribute"
                      ui-sref="Athlete.Profile.EditProfile.BasicInfo"
