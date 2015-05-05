@@ -46,21 +46,22 @@ Profile.config([
                                 sports,
                                 positionsets) {
 
-                        let userId = $stateParams.id;
+                        let userId = Number($stateParams.id);
 
-                        let relatedUsers = users.load({relatedUserId: userId});
+                        let relatedUsers = users.load(userId);
 
-                        let relatedReels = relatedUsers.then(function() {
-                            return reels.load({relatedUserId: userId});
-                        });
+                        let Data = {
+                            positionsets: positionsets.load(),
+                            sports: sports.load(),
+                            users: relatedUsers,
+                            reels: reels.load({relatedUserId: userId}),
+                            plays: relatedUsers.then(() => {
+                                let user = users.get(userId);
+                                if (user.profile.featuredReelId) return plays.load({reelId: user.profile.featuredReelId});
+                            })
+                        };
 
-                        let relatedPlays = relatedReels.then(function() {
-                            let user = users.get(userId);
-                            let featuredReel = reels.getFeaturedReel(user);
-                            if (featuredReel) return plays.load(featuredReel.plays);
-                        });
-
-                        return $q.all([relatedUsers, relatedReels, relatedPlays, positionsets.load(), sports.load()]);
+                        return $q.all(Data);
                     }
                 ],
                 userId: [
