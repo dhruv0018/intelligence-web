@@ -57,12 +57,7 @@ function featureFlagDirective(
 
     /*
      * IMPORTANT!!!
-     * featureFlag can have 2 modes, with the attribute as a boolean indicating
-     * which mode is turned on.
-     * If the featureFlag has a boolean of true, this indicates
-     * that the $element should handle its own disablement (i.e. elements that transclude content).
-     * If the featureFlag is set to false, then the $element will be hidden. Otherwise, there will
-     * be no affect on the $element and/or its children.
+     * featureFlag can have 2 modes, 'SELF' and 'AUTO'. (SEE FEATURE_FLAG_TYPES constant for details)
      */
     function featureFlagLink($scope, $element, $attributes) {
 
