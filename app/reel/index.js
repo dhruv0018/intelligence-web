@@ -6,6 +6,7 @@ import ReelController from './controller.js';
 
 import template from './template.html.js';
 import restricted from './restricted.html.js';
+import FilmSpec from '../../src/specs/film/index.js';
 
 const templateUrl = './template.html';
 const restrictedUrl = './restricted.html';
@@ -94,20 +95,15 @@ Reel.config([
                     let currentUser = session.getCurrentUser();
                     let reelId = Number($stateParams.id);
                     let reel = reels.get(reelId);
+                    let reelPerm = new FilmSpec(reel, currentUser);
 
                     if (reel.isDeleted) {
 
                         account.gotoUsersHomeState();
                     }
 
-                    /*
-                        Check if the reel is public,
-                        if the uploader team id matches the current user's role team id,
-                        and if the reel is shared with the user
-                    */
-                    if (!reel.isSharedWithPublic() &&
-                        reel.uploaderTeamId !== currentUser.currentRole.teamId &&
-                        !reel.isSharedWithUser(currentUser))
+                    /*Check if user has permissions to view reel*/
+                    if (!reelPerm.isAllowedToView())
                     {
                         $state.go('Reel.Restricted', { id: reelId });
                     }
