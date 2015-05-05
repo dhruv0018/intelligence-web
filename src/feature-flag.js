@@ -65,7 +65,7 @@ function featureFlagDirective(
 
         if (featureFlagType === FEATURE_FLAG_TYPES.AUTO) {
 
-            $element.css('display', 'none');
+            $element.attr('style', 'display: none !important;');
         }
     }
 
