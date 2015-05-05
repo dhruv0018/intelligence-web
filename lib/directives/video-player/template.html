@@ -11,7 +11,7 @@
      ng-class="{'fullscreen': videoPlayer.fullScreenEnabled}"
     >
 
-        <telestrations telestrations-entity="videoPlayer.telestrations" play-id="videoPlayer.playId" permissions="videoPlayer.telestrationsPermissions" class="vg-media-container">
+        <telestrations telestrations-entity="videoPlayer.telestrations" play-id="videoPlayer.playId" permissions="videoPlayer.telestrationsPermissions" class="vg-media-container" feature-flag="{{$root.FLAGS.FEATURE_TELESTRATIONS.TELESTRATIONS}}">
 
             <vg-media
              vg-loop="videoPlayer.config.loop"
@@ -33,7 +33,7 @@
 
             <vg-scrub-bar>
                 <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                <cue-points points="videoPlayer.cuePoints"></cue-points>
+                <cue-points points="videoPlayer.cuePoints" feature-flag="{{$root.FLAGS.FEATURE_TELESTRATIONS.CUEPOINTS}}"></cue-points>
             </vg-scrub-bar>
 
             <div class="controls-bottom">
