@@ -32,6 +32,7 @@ require('./errors');
 require('./viewports');
 require('./device');
 require('./mediator');
+require('./feature-flag');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
