@@ -18,7 +18,7 @@ function TextValue(
 ) {
 
     var body;
-    var testTextArea; // Singleton object used for all text tools
+    var testTextarea; // Singleton object used for all text tools
     var containerBoundingBox;
 
     function Text(type, options, containerElement, mode) {
@@ -31,11 +31,16 @@ function TextValue(
         this.TEXT_AREA_DISPLAY_CSS.color = this.color;
 
         this.primaryTextarea = new PrimaryTextarea(this, mode);
-        if (!testTextArea) createTestTextarea.call(this);
+        if (!testTextarea) createTestTextarea.call(this);
     }
     angular.inheritPrototype(Text, Glyph);
 
     Text.prototype.RESIZABLE = false;
+    Text.prototype.BASE_WIDTH = 1280; // px
+    Text.prototype.BASE_FONT_SIZE = 22; // px
+    Text.prototype.BASE_HORIZONTAL_PADDING = 10; // px
+    Text.prototype.BASE_VERTICAL_PADDING = 20; // px
+    Text.prototype.TEST_TEXTAREA_BASE_PADDING_RIGHT = 15; // px
 
     Text.prototype.KEY_CODE_TO_HTML_ENTITY = {
         ' ': '&nbsp;'
@@ -105,6 +110,25 @@ function TextValue(
 
     Text.prototype.MAX_LENGTH = 70;
 
+    Text.prototype.getScaledFontSize = function getScaledFontSize() {
+
+        return this.getContainerDimensions().width * (1 / (this.BASE_WIDTH / this.BASE_FONT_SIZE));
+    };
+
+    Text.prototype.getScaledHorizontalPadding = function getScaledHorizontalPadding() {
+
+        return this.getContainerDimensions().width * (1 / (this.BASE_WIDTH / this.BASE_HORIZONTAL_PADDING));
+    };
+
+    Text.prototype.getScaledVerticalPadding = function getScaledVerticalPadding() {
+
+        return this.getContainerDimensions().width * (1 / (this.BASE_WIDTH / this.BASE_VERTICAL_PADDING));
+    };
+
+    Text.prototype.getScaledTestTextareaBasePaddingRight = function getScaledTestTextareaBasePaddingRight() {
+
+        return this.getContainerDimensions().width * (1 / (this.BASE_WIDTH / this.TEST_TEXTAREA_BASE_PADDING_RIGHT));
+    };
 
     /*
      * Used set the start position and reset the width and position of the text position based on start/end points.
@@ -118,6 +142,8 @@ function TextValue(
         if (startPoint) self.primaryTextarea.element.css({'left': startPoint.x + 'px', 'top': startPoint.y + 'px'});
 
         // update textarea position
+        recalculateTestTextareaSize.call(this); // determine test text area size first before primary width
+        self.primaryTextarea.recalculatePrimaryTextareaSize(); // first determine size before width
         self.primaryTextarea.recalculatePrimaryTextareaWidth(self.text);
         self.primaryTextarea.recalculatePrimaryTextareaStartPosition();
     };
@@ -515,6 +541,17 @@ function TextValue(
             }
         };
 
+        self.recalculatePrimaryTextareaSize = function recalculatePrimaryTextareaSize() {
+
+            self.element.css({
+                'font-size': parentGlyph.getScaledFontSize() + 'px',
+                'padding-top': parentGlyph.getScaledVerticalPadding() + 'px',
+                'padding-bottom': parentGlyph.getScaledVerticalPadding() + 'px',
+                'padding-right': parentGlyph.getScaledHorizontalPadding() + 'px',
+                'padding-left': parentGlyph.getScaledHorizontalPadding() + 'px'
+            });
+        };
+
         self.recalculatePrimaryTextareaStartPosition = function recalculatePrimaryTextareaStartPosition() {
 
             var textareaClientRect = self.element[0].getBoundingClientRect();
@@ -555,9 +592,9 @@ function TextValue(
 
         function calculateTextWidth(newString) {
 
-            testTextArea.html(newString);
+            testTextarea.html(newString);
 
-            var boundingBox = testTextArea[0].getBoundingClientRect();
+            var boundingBox = testTextarea[0].getBoundingClientRect();
 
             return boundingBox.width;
         }
@@ -618,6 +655,17 @@ function TextValue(
         return self;
     }
 
+    var recalculateTestTextareaSize = function recalculateTestTextareaSize() {
+
+        testTextarea.css({
+            'font-size': this.getScaledFontSize() + 'px',
+            'padding-top': this.getScaledVerticalPadding() + 'px',
+            'padding-bottom': this.getScaledVerticalPadding() + 'px',
+            'padding-right': this.getScaledTestTextareaBasePaddingRight() + 'px',
+            'padding-left': this.getScaledHorizontalPadding() + 'px'
+        });
+    };
+
     /*
      * This is a div that is used a width 'calculation' area. It has the same styles
      * as the primaryTextarea edit-mode, so that the width will be completely accurate.
@@ -628,20 +676,20 @@ function TextValue(
 
         var self = this;
 
-        testTextArea = angular.element('<div class="telestrations testTextArea"></div>');
+        testTextarea = angular.element('<div class="telestrations testTextArea"></div>');
 
         // add to dom
-        body.append(testTextArea);
+        body.append(testTextarea);
 
         // add generic styles and attributes
-        testTextArea.css(self.TEXT_AREA_BASE_CSS);
-        testTextArea.css(self.TEXT_AREA_EDIT_CSS);
+        testTextarea.css(self.TEXT_AREA_BASE_CSS);
+        testTextarea.css(self.TEXT_AREA_EDIT_CSS);
 
         // add custom styles and attributes
-        testTextArea.css({'top': '-9999px'});
+        testTextarea.css({'top': '-9999px'});
 
         // important: adding additional padding to fit the text one-line
-        testTextArea.css({'padding': '20px 15px 20px 10px'});
+        testTextarea.css({'padding': '20px 15px 20px 10px'});
     };
 
     return Text;
