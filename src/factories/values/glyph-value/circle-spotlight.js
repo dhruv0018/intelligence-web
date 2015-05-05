@@ -11,12 +11,13 @@ module.exports = [
 
             this.primarySVGShape.opacity(0);
 
-            this.addEditHandlers();
             this.addMoveHandlers();
         }
         angular.inheritPrototype(CircleSpotlight, Spotlight);
 
-        CircleSpotlight.prototype.render = function renderShadowCircle() {
+        CircleSpotlight.prototype.RESIZABLE = true;
+
+        CircleSpotlight.prototype.renderShape = function renderShape() {
 
             var verticesInPixels = this.getVerticesInPixels();
             var startPoint = verticesInPixels[0];
@@ -32,12 +33,24 @@ module.exports = [
 
             this.primarySVGShape.radius(pointDistance / 2)
                 .cx((startPoint.x + endPoint.x) / 2)
-                .cy((startPoint.y + endPoint.y) / 2)
-                .attr({
-                    fill: this.color,
-                    stroke: this.color,
-                    'stroke-width': this.STROKE_WIDTH
-                });
+                .cy((startPoint.y + endPoint.y) / 2);
+        };
+
+        CircleSpotlight.prototype.renderAttributes = function renderAttributes() {
+
+            let attributes = {
+                fill: this.color,
+                stroke: this.color,
+                'stroke-width': this.STROKE_WIDTH
+            };
+
+            this.primarySVGShape.attr(attributes);
+        };
+
+        CircleSpotlight.prototype.render = function renderShadowCircle() {
+
+            this.renderShape();
+            this.renderAttributes();
         };
 
         return CircleSpotlight;

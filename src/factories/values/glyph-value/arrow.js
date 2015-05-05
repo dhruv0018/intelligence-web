@@ -9,15 +9,15 @@ module.exports = [
 
             SVGGlyph.call(this, type, options, containerElement, SVGContext, SVGContext.path());
 
-            this.addEditHandlers();
             this.addMoveHandlers();
         }
         angular.inheritPrototype(Arrow, SVGGlyph);
 
+        Arrow.prototype.RESIZABLE = true;
         Arrow.prototype.ARROW_SIDE_LENGTH = 10;
         Arrow.prototype.ARROW_HEIGHT = Math.sqrt(5 / 4 * Math.pow(Arrow.prototype.ARROW_SIDE_LENGTH, 2));
 
-        Arrow.prototype.render = function renderArrow() {
+        Arrow.prototype.renderShape = function renderShape() {
 
             var verticesInPixels = this.getVerticesInPixels();
 
@@ -52,15 +52,25 @@ module.exports = [
             arrowBase2[0] = endPoint.x + (this.ARROW_SIDE_LENGTH / 2) * dx;
             arrowBase2[1] = endPoint.y + (this.ARROW_SIDE_LENGTH / 2) * dy;
 
-            var attributes = {
+            this.primarySVGShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + endPoint.x + ' ' + endPoint.y + ' M ' + arrowBase1[0] + ' ' + arrowBase1[1] + ' L ' + arrowTip[0] + ' ' + arrowTip[1] + ' ' + arrowBase2[0] + ' ' + arrowBase2[1] + ' z');
+        };
+
+        Arrow.prototype.renderAttributes = function renderAttributes() {
+
+            let attributes = {
                 fill: this.color,
                 stroke: this.color,
                 'stroke-width': this.STROKE_WIDTH,
                 'stroke-dasharray': this.dashedArray
             };
 
-            this.primarySVGShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + endPoint.x + ' ' + endPoint.y + ' M ' + arrowBase1[0] + ' ' + arrowBase1[1] + ' L ' + arrowTip[0] + ' ' + arrowTip[1] + ' ' + arrowBase2[0] + ' ' + arrowBase2[1] + ' z')
-                .attr(attributes);
+            this.primarySVGShape.attr(attributes);
+        };
+
+        Arrow.prototype.render = function renderArrow() {
+
+            this.renderShape();
+            this.renderAttributes();
         };
 
         return Arrow;
