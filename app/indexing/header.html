@@ -8,7 +8,7 @@
 
     <div class="info">
 
-        <h2>{{ league.periodLabel }} {{ game.currentPeriod }}</h2>
+        <h2>{{ league.periodLabel }} {{ playsManager.plays[playsManager.plays.length-1].period || 'Not Entered' }}</h2>
 
         <h1>
 

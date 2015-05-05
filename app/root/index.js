@@ -45,13 +45,7 @@ Root.config([
  * @type {Controller}
  */
 Root.controller('RootController', [
-    '$scope', '$window', '$log',
-    function controller($scope, $window, $log) {
+    function controller() {
 
-        $scope.$watch('$window.trackJs', function() {
-            if (!$log.decorated) {
-                $log.initDecoration();
-            }
-        });
     }
 ]);

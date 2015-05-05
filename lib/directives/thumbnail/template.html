@@ -6,7 +6,7 @@
         <i class="icon icon-bar-chart-o"></i>
         Breakdown In Progress
     </div>
-    <a data-ng-if="isGame" data-ui-sref="Games({id:film.id})">
+    <a data-ng-attr-id="{{'film-game-' + film.id + '-cta'}}" data-ng-if="isGame" data-ui-sref="Games({id:film.id})">
         <div data-ng-if="thumbnail.length > 0" class="has-thumbnail">
             <img class="img-responsive" data-ng-src="{{thumbnail}}" alt="thumbnail">
             <i class="icon icon-play"></i>
@@ -28,7 +28,7 @@
             <div data-ng-if="film.isVideoTranscodeFailed()"><strong>There is an issue with this film.</strong><br/>Please contact support@krossover.com</div>
         </div>
     </a>
-    <a data-ui-sref="Reel({id:film.id})" data-ng-if="!isGame">
+    <a data-ng-attr-id="{{'film-reel-' + film.id + '-cta'}}" data-ui-sref="Reel({id:film.id})" data-ng-if="!isGame">
         <div data-ng-if="thumbnail.length > 0" class="has-thumbnail">
             <img class="img-responsive" src="{{thumbnail}}" alt="thumbnail">
             <i class="icon icon-play"></i>

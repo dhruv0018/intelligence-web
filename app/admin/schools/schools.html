@@ -2,7 +2,7 @@
 
     <aside class="sidebar" data-ng-init="sidebar = true" data-ui-toggle="sidebar">
 
-        <x-button-add-new>Add a new school</x-button-add-new>
+        <x-button-add-new data-elem-id="add-new-school-cta">Add a new school</x-button-add-new>
 
         <h3>Search</h3>
 
@@ -28,7 +28,7 @@
                 <input class="form-control" name="conference" placeholder="Conference" data-ng-model="filter.conference" type="text">
             </div>
 
-            <button class="btn-search" data-ng-show="sidebar" data-ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
+            <button id="search-schools-cta" class="btn-search" data-ng-show="sidebar" data-ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
 
         </form>
 

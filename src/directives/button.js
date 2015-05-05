@@ -53,7 +53,11 @@ IntelligenceWebClient.directive('buttonAddNew', [
 
             restrict: TO += ELEMENTS,
             transclude: true,
-            template: '<button class="btn-add-new" data-ng-click="add()"><span data-ng-transclude></span> <i class="btn btn-primary pull-right icon icon-plus"></i></button>'
+            template: '<button data-ng-attr-id="{{elemId}}" class="btn-add-new" data-ng-click="add()"><span data-ng-transclude></span> <i class="btn btn-primary pull-right icon icon-plus"></i></button>',
+            link: function (scope, element, attrs) {
+
+                scope.elemId = attrs.elemId;
+            }
         };
 
         return directive;

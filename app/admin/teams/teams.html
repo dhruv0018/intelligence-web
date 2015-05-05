@@ -2,7 +2,7 @@
 
     <aside class="sidebar" data-ng-init="sidebar = true" data-ui-toggle="sidebar">
 
-        <x-button-add-new>Add a new team</x-button-add-new>
+        <x-button-add-new data-elem-id="add-new-team-cta">Add a new team</x-button-add-new>
 
         <h3>Search</h3>
 
@@ -38,7 +38,7 @@
                        data-typeahead="school.name for school in findSchoolsByName() | filter: {name: $viewValue}">
             </div>
 
-            <button class="btn-search" data-ng-show="sidebar" data-ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
+            <button id="search-teams-cta" class="btn-search" data-ng-show="sidebar" data-ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
 
         </form>
 

@@ -1,5 +1,7 @@
 @import (reference) "main.less";
 
+@bullet-vertical-offset: 7px;
+
 .event {
 
     .list-group-item;
@@ -35,7 +37,7 @@
 
         content: "";
         top: 0;
-        height: 25%;
+        height: @bullet-vertical-offset;
         border-left: 2px solid @gray-dark;
     }
 
@@ -61,7 +63,7 @@
         height: 16px;
         position: absolute;
         left: -9px;
-        top: 7px;
+        top: @bullet-vertical-offset;
         border: 1px solid @gray-dark;
         border-radius: 50%;
         background-color: @gray-lighter;

@@ -160,7 +160,7 @@ Teams.filter('visiblePlanOrPackage', [
             var filteredItems = [];
 
             for (var i = 0; i < planOrPackageArray.length; i++) {
-                planOrPackage = planOrPackageArray[i];
+                var planOrPackage = planOrPackageArray[i];
 
                 if (typeof planOrPackage.endDate === 'string') {
                     planOrPackage.endDate = newDate.generatePlanEndDate(planOrPackage.endDate);

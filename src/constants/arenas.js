@@ -12,49 +12,57 @@ var ARENA_TYPES = {
     1: {
         id: 1,
         name: 'High School Basketball',
-        type: 'BASKETBALL_HS'
+        type: 'BASKETBALL_HS',
+        size: 'lg'
     },
 
     2: {
         id: 2,
         name: 'NCAA Basketball',
-        type: 'BASKETBALL_NCAA'
+        type: 'BASKETBALL_NCAA',
+        size: 'lg'
     },
 
     3: {
         id: 3,
         name: 'NBA Basketball',
-        type: 'BASKETBALL_NBA'
+        type: 'BASKETBALL_NBA',
+        size: 'lg'
     },
 
     4: {
         id: 4,
         name: 'FIBA Basketball',
-        type: 'BASKETBALL_FIBA'
+        type: 'BASKETBALL_FIBA',
+        size: 'lg'
     },
 
     5: {
         id: 5,
         name: 'Men\'s Outdoor Lacrosse',
-        type: 'LACROSSE_MENS_OUTDOOR'
+        type: 'LACROSSE_MENS_OUTDOOR',
+        size: 'lg'
     },
 
     6: {
         id: 6,
         name: 'Women\'s Outdoor Lacrosse',
-        type: 'LACROSSE_WOMENS_OUTDOOR'
+        type: 'LACROSSE_WOMENS_OUTDOOR',
+        size: 'lg'
     },
 
     7: {
         id: 7,
         name: 'Football',
-        type: 'FOOTBALL'
+        type: 'FOOTBALL',
+        size: 'lg'
     },
 
     8: {
         id: 8,
         name: 'Volleyball',
-        type: 'VOLLEYBALL'
+        type: 'VOLLEYBALL',
+        size: 'sm'
     }
 };
 

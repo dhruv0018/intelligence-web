@@ -14,8 +14,8 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Header.Controller', [
-    '$window', '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'SessionService', 'IndexingService', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory',
-    function controller($window, $scope, $state, $stateParams, $modal, GAME_STATUSES, session, indexing, sidebar, data, leagues, teams, games) {
+    '$window', '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'SessionService', 'IndexingService', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'PlaysManager',
+    function controller($window, $scope, $state, $stateParams, $modal, GAME_STATUSES, session, indexing, sidebar, data, leagues, teams, games, playsManager) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
 
@@ -30,6 +30,34 @@ Indexing.controller('Indexing.Header.Controller', [
         $scope.sidebar = sidebar;
 
         $scope.indexing = indexing;
+
+        $scope.playsManager = playsManager;
+
+        const watchLastPlayIndexedScore = $scope.$watch('playsManager.plays[playsManager.plays.length-1].indexedScore', function onLastPlayIndexedScoreChange (indexedScore) {
+
+            if (angular.isDefined(indexedScore)) {
+
+                $scope.game.indexedScore = indexedScore;
+            }
+        });
+
+        const watchLastPlayOpposingIndexedScore = $scope.$watch('playsManager.plays[playsManager.plays.length-1].opposingIndexedScore', function onLastPlayOpposingIndexedScoreChange (opposingIndexedScore) {
+
+            if (angular.isDefined(opposingIndexedScore)) {
+
+                $scope.game.opposingIndexedScore = opposingIndexedScore;
+            }
+        });
+
+        $scope.$on('$destroy', onDestroy);
+
+        function onDestroy () {
+
+            watchLastPlayIndexedScore();
+            watchLastPlayOpposingIndexedScore();
+
+            $scope.game.save();
+        }
 
         $scope.sendToQa = function() {
 

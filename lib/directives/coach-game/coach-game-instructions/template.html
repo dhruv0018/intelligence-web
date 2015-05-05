@@ -23,7 +23,7 @@
 
                                 <div class="select-boxes col-md-12">
 
-                                    <button data-ng-show="hasRoster || game.isNonRegular()" type="button" class="btn-radio breakdown-game" data-ng-disabled="remainingBreakdowns.planGamesRemaining <= 0 && remainingBreakdowns.packageGamesRemaining <= 0" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.READY_FOR_INDEXING.id">
+                                    <button data-ng-show="hasRoster || game.isNonRegular()" type="button" class="btn-radio breakdown-choice breakdown-game" data-ng-disabled="remainingBreakdowns.planGamesRemaining <= 0 && remainingBreakdowns.packageGamesRemaining <= 0" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.READY_FOR_INDEXING.id">
 
                                         <i class="icon icon-bar-chart-o"></i>
                                         <div>
@@ -33,7 +33,7 @@
 
                                     </button>
 
-                                    <button data-ng-show="game.isRegular() && !hasRoster" type="button" class="btn-radio breakdown-game no-roster" data-ng-disabled="true" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}">
+                                    <button data-ng-show="game.isRegular() && !hasRoster" type="button" class="btn-radio breakdown-game breakdown-choice no-roster" data-ng-disabled="true" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}">
 
                                         <i class="icon icon-bar-chart-o"></i>
                                         <div>
@@ -52,7 +52,7 @@
 
                                 <div class="select-boxes col-md-12">
 
-                                    <button type="button" class="btn-radio" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.NOT_INDEXED.id">
+                                    <button type="button" class="btn-radio breakdown-choice" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.NOT_INDEXED.id">
 
                                         <i class="icon icon-share-square-o"></i>
                                         <div>

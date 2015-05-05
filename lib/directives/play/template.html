@@ -1,23 +1,33 @@
 <div
-        ng-hide="!play.hasVisibleEvents && !isIndexer"
-        class="play"
-        ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll, 'edit-mode': editFlag }"
-    >
-        <play-header></play-header>
+    ng-click="selectPlay()"
+    ng-hide="!play.hasVisibleEvents && !isIndexer"
+    class="play"
+    ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll, 'play__reel': isReelsPlay, 'edit-mode': editFlag }"
+>
+    <play-header></play-header>
+
+    <div ng-hide="isReelsPlay">
 
         <ul
             class="playBody"
+            ng-hide="editFlag"
             ng-if="
                 isIndexer ||
                 expandAll ||
                 play === playManager.current ||
                 showPlayBody ||
                 (isReelsPlay && !editFlag && expandAll)"
-            ng-class="{'playHide': (!expandAll && (play != playManager.current || isReelsPlay && editFlag )) && !showPlayBody, 'play__reel': isReelsPlay }"
+            ng-class="{'playHide': (!expandAll && (play != playManager.current || isReelsPlay && editFlag )) && !showPlayBody}"
         >
+
             <krossover-event ng-repeat="event in play.events"></krossover-event>
+
         </ul>
+
         <hr class="summaryBodyDivider">
+
         <play-footer></play-footer>
 
     </div>
+
+</div>
