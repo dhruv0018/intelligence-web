@@ -32,7 +32,8 @@ function featureFlagRun(
 IntelligenceWebClient.directive('featureFlag', featureFlagDirective);
 
 featureFlagDirective.$inject = [
-    'config'
+    'config',
+    'FEATURE_FLAG_TYPES'
 ];
 /**
  * Feature Flag directive.
@@ -41,7 +42,8 @@ featureFlagDirective.$inject = [
  * @type {Directive}
  */
 function featureFlagDirective(
-    config
+    config,
+    FEATURE_FLAG_TYPES
 ) {
 
     const featureFlag = {
@@ -66,7 +68,7 @@ function featureFlagDirective(
 
         let featureFlagType = $attributes.featureFlag;
 
-        if (featureFlagType === 'auto') {
+        if (featureFlagType === FEATURE_FLAG_TYPES.AUTO) {
 
             $element.css('display', 'none');
         }

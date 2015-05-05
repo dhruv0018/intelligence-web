@@ -73,6 +73,7 @@ require('./constants/states');
 require('./constants/video-player');
 require('./constants/views');
 require('./constants/telestrations');
+require('./constants/feature-flags');
 
 require('./models/users');
 require('./models/sports');
