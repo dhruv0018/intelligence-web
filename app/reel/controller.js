@@ -138,7 +138,6 @@ function ReelController(
     // telestrations
 
     $scope.telestrationsEntity = reel.telestrations;
-    $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id);
 
     // uploader could be a coach or an athlete (they have permissions to edit by default)
     if (isUploader) {
@@ -158,6 +157,12 @@ function ReelController(
     } else {
 
         $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
+    }
+
+    // set initial cuepoints
+    if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId);
     }
 
 
