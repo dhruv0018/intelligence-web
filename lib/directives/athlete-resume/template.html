@@ -1,7 +1,11 @@
 <div class="athlete-resume">
+
+    <!-- Experience Header -->
     <div class="resume-header">
         <dropdown-toggle-button toggled-element="toggleExperience" text="'Experience'"></dropdown-toggle-button>
     </div>
+
+    <!-- Experience Body -->
     <div id="toggle-experience" class="resume-body animated fadeOut collapsed">
         <h4 ng-show="athlete.profile.teams.length">Teams</h4>
         <div class="experience-teams" ng-show="athlete.profile.teams.length" ng-repeat="team in athlete.profile.teams">
@@ -23,6 +27,7 @@
                 </li>
             </ul>
         </div>
+        <!-- Show if no teams -->
         <div ng-show="!athlete.profile.teams.length">
             <p ng-hide="isCurrentUser">{{athlete.firstName}} has not added any teams.</p>
             <p ng-show="isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Experience">
@@ -31,9 +36,12 @@
         </div>
     </div>
 
+    <!-- Academics Header -->
     <div class="resume-header">
         <dropdown-toggle-button toggled-element="toggleAcademics" text="'Academics'"></dropdown-toggle-button>
     </div>
+
+    <!-- Academics Body -->
     <div id="toggle-academics" class="resume-body animated fadeOut collapsed">
         <h4 ng-show="hasHighSchoolInfo || isCurrentUser">High School</h4>
         <p class="profile-list-title" ng-show="athlete.profile.highSchool || isCurrentUser">
@@ -97,14 +105,18 @@
                 </span>
             </li>
         </ul>
+        <!-- Show if no academic info -->
         <div ng-hide="hasHighSchoolInfo && hasCollegeInfo || isCurrentUser">
             <p>{{athlete.firstName}} has not added any academic information.</p>
         </div>
     </div>
 
+    <!-- Physical Header -->
     <div class="resume-header">
         <dropdown-toggle-button toggled-element="togglePhysical" text="'Physical'"></dropdown-toggle-button>
     </div>
+
+    <!-- Physical Body -->
     <div id="toggle-physical" class="resume-body animated fadeOut collapsed">
         <ul ng-show="hasPhysicalInfo || isCurrentUser">
             <li ng-show="athlete.profile.height || isCurrentUser">
@@ -218,6 +230,7 @@
                 </span>
             </li>
         </ul>
+        <!-- Show if no physical info -->
         <div ng-hide="hasPhysicalInfo || isCurrentUser">
             <p>{{athlete.firstName}} has not added any physical information.</p>
         </div>
