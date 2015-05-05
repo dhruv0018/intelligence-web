@@ -57,7 +57,7 @@
 
                         <td><div class="email">{{user.email}}</div></td>
 
-                        <td><div class="name"><a data-ui-sref="user-info({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></div></td>
+                        <td><div class="name"><a id="user-{{$index}}-select-cta" data-ui-sref="user-info({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></div></td>
 
                         <td class="roles">
 
