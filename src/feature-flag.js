@@ -66,7 +66,7 @@ function featureFlagDirective(
 
         let featureFlagType = $attributes.featureFlag;
 
-        if (featureFlagType === 'false') {
+        if (featureFlagType === 'auto') {
 
             $element.css('display', 'none');
         }

@@ -4,14 +4,14 @@
   "qa": {},
   "uat": {
     "FEATURE_TELESTRATIONS": {
-      "TELESTRATIONS": true,
-      "CUEPOINTS": false
+      "TELESTRATIONS": "self",
+      "CUEPOINTS": "auto"
     }
   },
   "production": {
     "FEATURE_TELESTRATIONS": {
-      "TELESTRATIONS": true,
-      "CUEPOINTS": false
+      "TELESTRATIONS": "self",
+      "CUEPOINTS": "auto"
     }
   }
 }
