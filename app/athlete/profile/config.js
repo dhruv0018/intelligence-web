@@ -48,16 +48,6 @@ Profile.config([
 
                         let userId = $stateParams.id;
 
-                        /* Load data for Athlete.Profile.<sub-state> upfront
-
-                        userpromise = users.load
-                        reelspromise = userpromise.then(function)
-
-                        data {
-                            user: userpromise
-                            reels
-                         */
-
                         let relatedUsers = users.load({relatedUserId: userId});
 
                         let relatedReels = relatedUsers.then(function() {
