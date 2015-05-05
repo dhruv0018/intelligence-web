@@ -9,14 +9,14 @@ module.exports = [
 
             SVGGlyph.call(this, type, options, containerElement, SVGContext, SVGContext.path());
 
-            this.addEditHandlers();
             this.addMoveHandlers();
         }
         angular.inheritPrototype(TBar, SVGGlyph);
 
+        TBar.prototype.RESIZABLE = true;
         TBar.prototype.T_BAR_LENGTH = 100;
 
-        TBar.prototype.render = function renderTBar() {
+        TBar.prototype.renderShape = function renderShape() {
 
             var verticesInPixels = this.getVerticesInPixels();
 
@@ -42,15 +42,25 @@ module.exports = [
             tPoint2[0] = endPoint.x + (this.T_BAR_LENGTH / 2) * dx;
             tPoint2[1] = endPoint.y + (this.T_BAR_LENGTH / 2) * dy;
 
-            var attributes = {
+            this.primarySVGShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + endPoint.x + ' ' + endPoint.y + ' M ' + tPoint1[0] + ' ' + tPoint1[1] + ' L ' + tPoint2[0] + ' ' + tPoint2[1]);
+        };
+
+        TBar.prototype.renderAttributes = function renderAttributes() {
+
+            let attributes = {
                 fill: 'none',
                 stroke: this.color,
                 'stroke-width': this.STROKE_WIDTH,
                 'stroke-dasharray': this.dashedArray
             };
 
-            this.primarySVGShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + endPoint.x + ' ' + endPoint.y + ' M ' + tPoint1[0] + ' ' + tPoint1[1] + ' L ' + tPoint2[0] + ' ' + tPoint2[1])
-                .attr(attributes);
+            this.primarySVGShape.attr(attributes);
+        };
+
+        TBar.prototype.render = function renderTBar() {
+
+            this.renderShape();
+            this.renderAttributes();
         };
 
         return TBar;

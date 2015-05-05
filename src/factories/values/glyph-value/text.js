@@ -32,10 +32,10 @@ function TextValue(
 
         this.primaryTextarea = new PrimaryTextarea(this, mode);
         if (!testTextArea) createTestTextarea.call(this);
-
-        this.addEditHandlers();
     }
     angular.inheritPrototype(Text, Glyph);
+
+    Text.prototype.RESIZABLE = false;
 
     Text.prototype.KEY_CODE_TO_HTML_ENTITY = {
         ' ': '&nbsp;'
@@ -106,14 +106,6 @@ function TextValue(
     Text.prototype.MAX_LENGTH = 70;
 
 
-    Text.prototype.addEditHandlers = function addEditHandlers() {
-
-        this.primaryTextarea.element.on('click', (event) => {
-
-            this.onClickHandler(event);
-        });
-    };
-
     /*
      * Used set the start position and reset the width and position of the text position based on start/end points.
      */
@@ -170,26 +162,19 @@ function TextValue(
          */
         function enterEditMode(event) {
 
-            self.element[0].focus();
-
-            // remove this handler as primaryTextArea is already in this state
-            self.element.off('dblclick', enterEditMode);
-            $window.removeEventListener('click', onDisplaySelectedModeBlur);
-
             // remove any other handlers
-            self.element.off('mousedown', dragStart);
             TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.DISABLE_DRAW);
 
-            self.element.off('mousedown', stopEventPropagation);
-            self.element.on('mousedown', stopEventPropagation);
-
             // add blur event (to handle exiting this state)
-            self.element.off('blur', onEditModeBlur);
-            self.element.on('blur', onEditModeBlur);
+            setTimeout(function kickToNextCycle() {
+                $window.addEventListener('mousedown', handleEditModeToDisplayModeTransitionTest);
+            }, 0);
 
             // add style & properties
             self.element.css(parentGlyph.TEXT_AREA_EDIT_CSS);
             self.element.attr('readOnly', false);
+
+            self.element[0].focus();
         }
 
         /*
@@ -198,10 +183,22 @@ function TextValue(
          */
         function enterDisplayMode(event) {
 
-            self.element.off('mousedown', enterDisplaySelectedMode);
-            self.element.on('mousedown', enterDisplaySelectedMode);
+            // enable draw if the target is not of type textareaGlyph
+            let targetClass;
 
-            self.element.off('mousedown', dragStart);
+            if (event) targetClass = event.target.getAttribute('class');
+
+            if (!event || !targetClass) {
+
+                TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+
+            } else if (targetClass && targetClass.split(' ').indexOf(parentGlyph.BASE_CLASS) === -1) {
+
+                TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+            }
+
+            self.element.on('mousedown', handleDisplayModeToDisplaySelectedModeTransition);
+
             self.element.on('mousedown', dragStart);
 
             // add style & properties
@@ -211,48 +208,141 @@ function TextValue(
         }
 
 
-        function enterDisplaySelectedMode() {
+        function enterDisplaySelectedMode(event) {
 
             TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.DISABLE_DRAW);
 
-            self.element.off('mousedown', enterDisplaySelectedMode);
+            $window.addEventListener('mousedown', handleDisplaySelectedModeToDisplayModeTransitionTest);
 
-            $window.removeEventListener('click', onDisplaySelectedModeBlur);
-            $window.addEventListener('click', onDisplaySelectedModeBlur);
-
-            self.element.off('mousedown', dragStart);
             self.element.on('mousedown', dragStart);
 
-            // add textarea display-mode event handlers
-            self.element.off('dblclick', enterEditMode);
-            self.element.on('dblclick', enterEditMode);
+            self.element.on('mouseup', parentGlyph.onSelectedMouseupHandler);
+
+            handleDisplaySelectedModeToEditModeTransitionTest(event);
 
             self.element.css(parentGlyph.TEXT_AREA_DISPLAY_SELECTED_CSS);
             self.element.attr(parentGlyph.TEXT_AREA_DISPLAY_SELECTED_ATTR);
         }
 
-        function onDisplaySelectedModeBlur(event) {
+        function handleDisplaySelectedModeToDisplayModeTransitionTest(event) {
 
-            $window.removeEventListener('click', onDisplaySelectedModeBlur);
+            if (event.target !== self.element[0]) {
 
-            enterDisplayMode(event);
-
-            TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+                handleDisplaySelectedModeToDisplayModeTransition(event);
+            }
         }
 
-        /*
-         * Handles exiting edit-state and entering display-state
-         */
-        function onEditModeBlur(event) {
+        function handleEditModeToDisplayModeTransitionTest(event) {
 
-            self.element.off('blur', onEditModeBlur);
+            if (event.target !== self.element[0]) {
 
+                handleEditModeToDisplayModeTransition(event);
+            }
+        }
+
+        function handleDisplaySelectedModeToEditModeTransitionTest(event) {
+
+            event.preventDefault();
+            const doubleClickTimeout = 1000;
+
+            self.element.on('mousedown', handleDisplaySelectedModeToEditModeTransition);
+
+            $window.setTimeout(function disableDoubleClick() {
+
+                self.element.off('mousedown', handleDisplaySelectedModeToEditModeTransition);
+                self.element.on('mousedown', handleDisplaySelectedModeToDisplaySelectedModeTransition);
+            }, doubleClickTimeout);
+        }
+
+        function handleDisplaySelectedModeToDisplaySelectedModeTransition(event) {
+
+            /* handle exiting current state */
+            exitDisplaySelectedMode();
+
+
+            /* handle transition */
+            // NOTHING TO DO
+
+
+            /* go to to next state */
+            enterDisplaySelectedMode(event);
+        }
+
+        function handleDisplayModeToDisplaySelectedModeTransition(event) {
+
+            /* handle exiting current state */
+            exitDisplayMode();
+
+
+            /* handle transition */
+            // NOTHING TO DO
+
+
+            /* go to to next state */
+            enterDisplaySelectedMode(event);
+        }
+
+        function handleDisplaySelectedModeToDisplayModeTransition(event) {
+
+            /* handle exiting current state */
+            exitDisplaySelectedMode();
+
+
+            /* handle transition */
+            // NOTHING TO DO
+
+
+            /* go to to next state */
             enterDisplayMode(event);
+        }
 
-            // save text area properties
+        function handleEditModeToDisplayModeTransition(event) {
+
+            /* handle exiting current state */
+            exitEditMode();
+
+
+            /* handle transition */
             storeTextAreaProperties();
+            parentGlyph.onBlurHandler();
 
-            TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+
+            /* go to to next state */
+            enterDisplayMode(event);
+        }
+
+        function handleDisplaySelectedModeToEditModeTransition(event) {
+
+            /* handle exiting current state */
+            exitDisplaySelectedMode();
+
+
+            /* handle transition */
+            // NOTHING TO DO
+
+
+            /* go to to next state */
+            enterEditMode(event);
+        }
+
+        function exitDisplayMode() {
+
+            self.element.off('mousedown', handleDisplayModeToDisplaySelectedModeTransition);
+            self.element.off('mousedown', dragStart);
+        }
+
+        function exitDisplaySelectedMode() {
+
+            self.element.off('mousedown', dragStart);
+            self.element.off('mousedown', handleDisplaySelectedModeToEditModeTransition);
+            self.element.off('mouseup', parentGlyph.onSelectedMouseupHandler);
+            self.element.off('mousedown', handleDisplaySelectedModeToDisplaySelectedModeTransition);
+            $window.removeEventListener('mousedown', handleDisplaySelectedModeToDisplayModeTransitionTest);
+        }
+
+        function exitEditMode() {
+
+            $window.removeEventListener('mousedown', handleEditModeToDisplayModeTransitionTest);
         }
 
         function storeTextAreaProperties() {
@@ -277,14 +367,7 @@ function TextValue(
             }
         }
 
-        function stopEventPropagation(event) {
-
-            event.stopPropagation();
-        }
-
         function dragStart(event) {
-
-            event.stopPropagation();
 
             containerBoundingBox = parentGlyph.getContainerDimensions();
             self.element.startPosition = {x: event.offsetX, y: event.offsetY};
@@ -301,8 +384,6 @@ function TextValue(
 
         function dragMove(event) {
 
-            event.preventDefault();
-
             var left = event.clientX - containerBoundingBox.left - self.element.startPosition.x;
             var top = event.clientY - containerBoundingBox.top - self.element.startPosition.y;
 
@@ -313,8 +394,6 @@ function TextValue(
         }
 
         function dragEnd(event) {
-
-            event.preventDefault();
 
             // ensure text is within constraints
             self.recalculatePrimaryTextareaStartPosition();
@@ -515,6 +594,7 @@ function TextValue(
         self.element.css(parentGlyph.TEXT_AREA_BASE_CSS);
         self.element.css(parentGlyph.TEXT_AREA_EDIT_CSS);
         self.element.attr(parentGlyph.TEXT_AREA_EDIT_ATTR);
+        self.element.attr('class', parentGlyph.BASE_CLASS);
 
         // set color
         self.element.css('color', parentGlyph.color);
