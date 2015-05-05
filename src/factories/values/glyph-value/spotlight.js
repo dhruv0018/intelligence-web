@@ -2,19 +2,23 @@
 /* Spotlight - Abstract class extends SVGGlyph */
 
 module.exports = [
-    'SVGGlyphValue',
-    function(SVGGlyph) {
+    'SVGGlyphValue', 'TELESTRATION_COLORS',
+    function(SVGGlyph, TELESTRATION_COLORS) {
 
-        var visibleSpotlightShapes = [];
-        var initialized = false;
+        let visibleSpotlightShapes = [];
+        let initialized = false;
 
         // Semi-opaque layer
-        var blackBackdropLayer;
+        let blackBackdropLayer;
+
+        let SVGMaskWhite;
 
         // Mask layer
-        var maskLayer;
+        let maskLayer;
 
-        var BLACK_BACKDROP_OPACITY = 0.4;
+        const SELECTED_STATE_SPOTLIGHT_OPACITY = 0.2;
+        const DISPLAY_STATE_SPOTLIGHT_OPACITY = 0;
+        const BLACK_BACKDROP_OPACITY = 0.4;
 
         function Spotlight(type, options, containerElement, SVGContext, shape, spotlightShape) {
 
@@ -25,6 +29,8 @@ module.exports = [
             if (!maskLayer) addMask.call(this);
 
             SVGGlyph.call(this, type, options, containerElement, SVGContext, shape);
+
+            this.addStateChangeListeners();
 
             this.show();
         }
@@ -69,6 +75,16 @@ module.exports = [
             }
         };
 
+        Spotlight.prototype.enterDisplaySelectedModeHook = function enterDisplaySelectedModeHook() {
+
+            this.primarySVGShape.attr({'fill': TELESTRATION_COLORS.HIGHLIGHT_BLUE()}).opacity(SELECTED_STATE_SPOTLIGHT_OPACITY);
+        };
+
+        Spotlight.prototype.enterDisplayModeHook = function enterDisplayModeHook() {
+
+            this.primarySVGShape.attr({'fill': TELESTRATION_COLORS.WHITE()}).opacity(DISPLAY_STATE_SPOTLIGHT_OPACITY);
+        };
+
         Spotlight.prototype.addMoveHandlers = function SpotlightShapeaddMoveHandlers() {
 
             var self = this;
@@ -98,7 +114,6 @@ module.exports = [
                 self.primarySVGShape.dragend = function SpotlightShapeDragEnd(delta, event) {
 
                     prevDragEnd(delta, event);
-                    self.render();
                 };
             }
         };
@@ -129,7 +144,7 @@ module.exports = [
 
             // Mask layer
             maskLayer = this.SVGContext.mask();
-            var SVGMaskWhite = this.SVGContext.rect('100%', '100%').attr({ fill: '#fff' }).back().forward();
+            SVGMaskWhite = this.SVGContext.rect('100%', '100%').attr({ fill: TELESTRATION_COLORS.WHITE()}).back().forward();
             maskLayer.add(SVGMaskWhite);
         }
 

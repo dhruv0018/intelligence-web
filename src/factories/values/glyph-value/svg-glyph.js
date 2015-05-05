@@ -1,172 +1,298 @@
 
 /* Abstract SVGGlyph extends Abstract Glyph */
 
-module.exports = [
+SVGGlyphValue.$inject = [
     'GlyphValue',
-    function(Glyph) {
+    '$window',
+    'TelestrationsEventEmitter',
+    'TELESTRATION_EVENTS',
+    'TELESTRATION_COLORS'
+];
 
-        function SVGGlyph(type, options, containerElement, SVGContext, shape) {
+export function SVGGlyphValue(
+    Glyph,
+    $window,
+    TelestrationsEventEmitter,
+    TELESTRATION_EVENTS,
+    TELESTRATION_COLORS
+) {
 
-            this.primarySVGShape = shape;
-            this.SVGContext = SVGContext;
+    function SVGGlyph(type, options, containerElement, SVGContext, shape) {
 
-            Glyph.call(this, type, options, containerElement);
-        }
-        angular.inheritPrototype(SVGGlyph, Glyph);
+        this.primarySVGShape = shape;
 
-        /* Default Values */
+        this.SVGContext = SVGContext;
 
-        SVGGlyph.prototype.STROKE_WIDTH = 8;
-        SVGGlyph.prototype.DASHED_ARRAY = '2,2';
+        Glyph.call(this, type, options, containerElement);
 
+        this.primarySVGShape.node.setAttribute('class', this.BASE_CLASS);
 
-        /* Getters and Setters */
+        this.addStateChangeListeners();
+    }
+    angular.inheritPrototype(SVGGlyph, Glyph);
 
-        SVGGlyph.prototype.getShapeContext = function getShapeContext() {
+    /* Default Values */
 
-            if (this.primarySVGShape) return this.primarySVGShape;
-        };
-
-
-        /* Event listeners and handlers */
-
-        SVGGlyph.prototype.addEditHandlers = function addEditHandlers() {
-
-            var self = this;
-
-            if (!self.primarySVGShape) return;
-
-            self.primarySVGShape.on('click', function handleClick(event) {
-
-                self.onClickHandler(event);
-            });
-
-            self.addRemoveListenerFunction('click');
-
-        };
-
-        SVGGlyph.prototype.addMoveHandlers = function addMoveHandlers() {
-
-            var self = this;
-
-            if (!self.primarySVGShape) return;
-
-            self.primarySVGShape.draggable();
-            self.primarySVGShape.startPosition = null;
+    SVGGlyph.prototype.STROKE_WIDTH = 8;
+    SVGGlyph.prototype.DASHED_ARRAY = '2,2';
+    SVGGlyph.prototype.RESIZABLE = false;
 
 
-            self.primarySVGShape.on('mousedown', function preventDrawing(mouseEvent) {
+    /* Getters and Setters */
 
-                // prevent event bubbling
-                mouseEvent.stopPropagation();
-            });
+    SVGGlyph.prototype.getShapeContext = function getShapeContext() {
 
-            self.primarySVGShape.on('mouseover', function addHoverClass(mouseEvent) {
+        if (this.primarySVGShape) return this.primarySVGShape;
+    };
 
-                self.primarySVGShape.addClass('hover');
-            });
+    /* Event listeners and handlers */
 
-            self.primarySVGShape.on('mouseout', function removeHoverClass(mouseEvent) {
+    SVGGlyph.prototype.enterDisplaySelectedModeHook = function() {};
 
-                self.primarySVGShape.removeClass('hover');
-            });
+    SVGGlyph.prototype.enterDisplayModeHook = function() {};
 
-            self.addRemoveListenerFunction('mouseover');
-            self.addRemoveListenerFunction('mouseout');
-            self.addRemoveListenerFunction('mousedown');
+    SVGGlyph.prototype.addStateChangeListeners = function addStateChangeListeners() {
 
-            // dragging handlers
+        let self = this;
 
-            self.primarySVGShape.dragstart = function dragstart(delta, event) {
-
-                self.startPosition = {x: self.primarySVGShape.x(), y: self.primarySVGShape.y()};
-
-                self.onDragStartHandler();
-            };
-
-            self.primarySVGShape.dragend = function dragend(delta, event) {
-
-                self.constrainDelta(delta);
-
-                self.startPosition = null;
-
-                self.updateVerticesPositions(delta);
-                self.onDragEndHandler(delta);
-            };
-        };
-
-        SVGGlyph.prototype.addRemoveListenerFunction = function addRemoveListenerFunction(eventType) {
-
-            var self = this;
-
-            var removeListenerFunction = function removeListenerFunction() {
-
-                self.primarySVGShape.off(eventType);
-            };
-
-            self.activeListenerRemovers.push(removeListenerFunction);
-        };
-
-        SVGGlyph.prototype.constrainDelta = function constrainDelta(delta) {
-
-            var self = this;
-
-            if (self.constraintFn) {
-
-                var endPosition = {x: self.primarySVGShape.x(), y: self.primarySVGShape.y()};
-
-                delta.x = endPosition.x - self.startPosition.x;
-                delta.y = endPosition.y - self.startPosition.y;
-            }
-        };
+        enterDisplayMode();
 
         /*
-         * SVGGlyph.prototype.setDraggableConstraintFn
-         * Updates the current bounding constraintFn for moving a shape.
-         * @param constraintFn : function
+         * Changes styles and handlers for display-text mode.
+         * Text Input Handlers are already set.
          */
-        SVGGlyph.prototype.setDraggableConstraintFn = function setDraggableConstraintFn(constraintFn) {
+        function enterDisplayMode(event) {
 
-            if (this.primarySVGShape && !this.constraintFn) {
+            // enable draw if the target is not of type textareaGlyph
+            let targetClass;
 
-                this.constraintFn = constraintFn;
-                this.primarySVGShape.draggable(constraintFn);
+            if (event) targetClass = event.target.getAttribute('class');
+
+            if (!event || !targetClass) {
+
+                TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+                self.onBlurHandler();
+
+            } else if (targetClass && targetClass.split(' ').indexOf(self.BASE_CLASS) === -1) {
+
+                TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.ENABLE_DRAW);
+                self.onBlurHandler();
             }
+
+            self.primarySVGShape.on('mousedown', handleDisplayModeToDisplaySelectedModeTransition);
+
+            self.primarySVGShape.stroke({'color': self.color});
+
+            self.enterDisplayModeHook();
+        }
+
+
+        function enterDisplaySelectedMode(event) {
+
+            TelestrationsEventEmitter.emit(TELESTRATION_EVENTS.DISABLE_DRAW);
+
+            $window.addEventListener('mousedown', handleDisplaySelectedModeToDisplayModeTransitionTest);
+
+            self.primarySVGShape.on('mouseup', self.onSelectedMouseupHandler);
+
+            self.primarySVGShape.on('mousedown', handleDisplaySelectedModeToDisplaySelectedModeTransition);
+
+            self.primarySVGShape.stroke({'color': TELESTRATION_COLORS.HIGHLIGHT_BLUE()});
+
+            self.enterDisplaySelectedModeHook();
+        }
+
+        function handleDisplaySelectedModeToDisplayModeTransitionTest(event) {
+
+            if (event.target !== self.primarySVGShape.node && self.resizeNodes.indexOf(event.target) === -1) {
+
+                handleDisplaySelectedModeToDisplayModeTransition(event);
+            }
+        }
+
+        function handleDisplaySelectedModeToDisplaySelectedModeTransition(event) {
+
+            /* handle exiting current state */
+            exitDisplaySelectedMode();
+
+
+            /* handle transition */
+            // NOTHING TO DO
+
+
+            /* go to to next state */
+            enterDisplaySelectedMode(event);
+        }
+
+        function handleDisplayModeToDisplaySelectedModeTransition(event) {
+
+            /* handle exiting current state */
+            exitDisplayMode();
+
+
+            /* handle transition */
+            // NOTHING TO DO
+
+
+            /* go to to next state */
+            enterDisplaySelectedMode(event);
+        }
+
+        function handleDisplaySelectedModeToDisplayModeTransition(event) {
+
+            /* handle exiting current state */
+            exitDisplaySelectedMode();
+
+
+            /* handle transition */
+            // NOTHING TO DO
+
+
+            /* go to to next state */
+            enterDisplayMode(event);
+        }
+
+        function exitDisplayMode() {
+
+            self.primarySVGShape.off('mousedown', handleDisplayModeToDisplaySelectedModeTransition);
+        }
+
+        function exitDisplaySelectedMode() {
+
+            self.primarySVGShape.off('mouseup', self.onSelectedMouseupHandler);
+            self.primarySVGShape.off('mousedown', handleDisplaySelectedModeToDisplaySelectedModeTransition);
+            $window.removeEventListener('mousedown', handleDisplaySelectedModeToDisplayModeTransitionTest);
+        }
+
+        function exitEditMode() {
+
+            self.primarySVGShape.off('mousedown', stopEventPropagation);
+            $window.removeEventListener('click', handleEditModeToDisplayModeTransitionTest);
+        }
+    };
+
+
+    SVGGlyph.prototype.addMoveHandlers = function addMoveHandlers() {
+
+        var self = this;
+
+        if (!self.primarySVGShape) return;
+
+        self.primarySVGShape.draggable();
+        self.primarySVGShape.startPosition = null;
+
+        self.primarySVGShape.on('mouseover', function addHoverClass(mouseEvent) {
+
+            self.primarySVGShape.addClass('hover');
+        });
+
+        self.primarySVGShape.on('mouseout', function removeHoverClass(mouseEvent) {
+
+            self.primarySVGShape.removeClass('hover');
+        });
+
+        self.addRemoveListenerFunction('mouseover');
+        self.addRemoveListenerFunction('mouseout');
+
+        // dragging handlers
+
+        self.primarySVGShape.dragstart = function dragstart(delta, event) {
+
+            self.startPosition = {x: self.primarySVGShape.x(), y: self.primarySVGShape.y()};
+
+            self.onDragStartHandler();
         };
 
+        self.primarySVGShape.dragmove = function dragmove(delta, event) {
 
-        /* Manipulate Primary SVG Shape */
-
-        SVGGlyph.prototype.bringToFront = function bringToFront() {
-
-            if (this.primarySVGShape) this.primarySVGShape.front();
+            self.constrainDelta(delta);
         };
 
-        SVGGlyph.prototype.hide = function hide() {
+        self.primarySVGShape.dragend = function dragend(delta, event) {
 
-            if (this.primarySVGShape) this.primarySVGShape.hide();
+            self.constrainDelta(delta);
+
+            self.startPosition = null;
+
+            self.updateVerticesPositions(delta);
+            self.onSelectedMouseupHandler();
+            self.onDragEndHandler(delta);
+        };
+    };
+
+    SVGGlyph.prototype.addRemoveListenerFunction = function addRemoveListenerFunction(eventType) {
+
+        var self = this;
+
+        var removeListenerFunction = function removeListenerFunction() {
+
+            self.primarySVGShape.off(eventType);
         };
 
-        SVGGlyph.prototype.show = function show() {
+        self.activeListenerRemovers.push(removeListenerFunction);
+    };
 
-            if (this.primarySVGShape) this.primarySVGShape.show();
-        };
+    SVGGlyph.prototype.constrainDelta = function constrainDelta(delta) {
+
+        var self = this;
+
+        if (self.constraintFn) {
+
+            var endPosition = {x: self.primarySVGShape.x(), y: self.primarySVGShape.y()};
+
+            delta.x = endPosition.x - self.startPosition.x;
+            delta.y = endPosition.y - self.startPosition.y;
+        }
+    };
+
+    /*
+     * SVGGlyph.prototype.setDraggableConstraintFn
+     * Updates the current bounding constraintFn for moving a shape.
+     * @param constraintFn : function
+     */
+    SVGGlyph.prototype.setDraggableConstraintFn = function setDraggableConstraintFn(constraintFn) {
+
+        if (this.primarySVGShape && !this.constraintFn) {
+
+            this.constraintFn = constraintFn;
+            this.primarySVGShape.draggable(constraintFn);
+        }
+    };
 
 
-        /* Cleanup Helper Functions */
+    /* Manipulate Primary SVG Shape */
 
-        SVGGlyph.prototype.removeListeners = function removeListeners() {
+    SVGGlyph.prototype.bringToFront = function bringToFront() {
 
-            if (this.primarySVGShape) this.primarySVGShape.fixed();
-        };
+        if (this.primarySVGShape) this.primarySVGShape.front();
+    };
 
-        SVGGlyph.prototype.destroy = function() {
+    SVGGlyph.prototype.hide = function hide() {
 
-            if (this.primarySVGShape) this.primarySVGShape.remove();
+        if (this.primarySVGShape) this.primarySVGShape.hide();
+    };
 
-            Glyph.prototype.destroy.call(this);
-        };
+    SVGGlyph.prototype.show = function show() {
 
-        return SVGGlyph;
-    }
-];
+        if (this.primarySVGShape) this.primarySVGShape.show();
+    };
+
+
+    /* Cleanup Helper Functions */
+
+    SVGGlyph.prototype.removeListeners = function removeListeners() {
+
+        if (this.primarySVGShape) this.primarySVGShape.fixed();
+    };
+
+    SVGGlyph.prototype.destroy = function() {
+
+        if (this.primarySVGShape) this.primarySVGShape.remove();
+
+        Glyph.prototype.destroy.call(this);
+    };
+
+    return SVGGlyph;
+}
+
+module.exports = SVGGlyphValue;

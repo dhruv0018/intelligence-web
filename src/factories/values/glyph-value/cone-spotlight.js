@@ -11,12 +11,13 @@ module.exports = [
 
             this.primarySVGShape.opacity(0);
 
-            this.addEditHandlers();
             this.addMoveHandlers();
         }
         angular.inheritPrototype(ConeSpotlight, Spotlight);
 
-        ConeSpotlight.prototype.render = function renderConeSpotlight() {
+        ConeSpotlight.prototype.RESIZABLE = true;
+
+        ConeSpotlight.prototype.renderShape = function renderShape() {
 
             var verticesInPixels = this.getVerticesInPixels();
 
@@ -71,12 +72,24 @@ module.exports = [
 
             this.spotlight.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + conePoint1[0] + ' ' + conePoint1[1] + ' C' + curveReferencePoint1[0] + ' ' + curveReferencePoint1[1] + ' ' + curveReferencePoint2[0] + ' ' + curveReferencePoint2[1] + ' ' + conePoint2[0] + ' ' + conePoint2[1] + ' z');
 
-            this.primarySVGShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + conePoint1[0] + ' ' + conePoint1[1] + ' C' + curveReferencePoint1[0] + ' ' + curveReferencePoint1[1] + ' ' + curveReferencePoint2[0] + ' ' + curveReferencePoint2[1] + ' ' + conePoint2[0] + ' ' + conePoint2[1] + ' z')
-                .attr({
-                    fill: this.color,
-                    stroke: this.color,
-                    'stroke-width': this.STROKE_WIDTH
-                });
+            this.primarySVGShape.plot('M ' + startPoint.x + ' ' + startPoint.y + ' L ' + conePoint1[0] + ' ' + conePoint1[1] + ' C' + curveReferencePoint1[0] + ' ' + curveReferencePoint1[1] + ' ' + curveReferencePoint2[0] + ' ' + curveReferencePoint2[1] + ' ' + conePoint2[0] + ' ' + conePoint2[1] + ' z');
+        };
+
+        ConeSpotlight.prototype.renderAttributes = function renderAttributes() {
+
+            let attributes = {
+                fill: this.color,
+                stroke: this.color,
+                'stroke-width': this.STROKE_WIDTH
+            };
+
+            this.primarySVGShape.attr(attributes);
+        };
+
+        ConeSpotlight.prototype.render = function renderConeSpotlight() {
+
+            this.renderShape();
+            this.renderAttributes();
         };
 
         return ConeSpotlight;

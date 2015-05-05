@@ -32,6 +32,7 @@ require('./errors');
 require('./viewports');
 require('./device');
 require('./mediator');
+require('./feature-flag');
 
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
@@ -72,6 +73,7 @@ require('./constants/states');
 require('./constants/video-player');
 require('./constants/views');
 require('./constants/telestrations');
+require('./constants/feature-flags');
 require('./constants/cue-points');
 
 require('./models/users');
