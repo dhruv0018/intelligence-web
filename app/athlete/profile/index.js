@@ -6,13 +6,17 @@ require('about');
 require('edit-profile');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/profile/template.html';
+
+const template = require('./template.html');
 
 /**
  * Profile page module.
  * @module Profile
  */
-var Profile = angular.module('Athlete.Profile', [
+const Profile = angular.module('Athlete.Profile', [
     'Athlete.Profile.Highlights',
     'Athlete.Profile.Academics',
     'Athlete.Profile.Stats',
@@ -29,7 +33,7 @@ Profile.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('athlete/profile/template.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 

@@ -1,11 +1,11 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Profile.About page module.
  * @module Profile.About
  */
-var About = angular.module('Athlete.Profile.About');
+const About = angular.module('Athlete.Profile.About');
 
 /**
  * Profile.About dependencies

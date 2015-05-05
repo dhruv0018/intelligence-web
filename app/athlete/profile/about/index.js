@@ -1,11 +1,15 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/profile/about/template.html';
+
+const template = require('./template.html');
 
 /**
  * About page module.
  * @module About
  */
-var About = angular.module('Athlete.Profile.About', [
+const About = angular.module('Athlete.Profile.About', [
     'ui.router',
     'ui.bootstrap',
     'ngMaterial',
@@ -17,7 +21,7 @@ About.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('athlete/profile/about/template.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 

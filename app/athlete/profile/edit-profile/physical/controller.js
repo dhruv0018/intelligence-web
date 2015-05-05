@@ -1,11 +1,11 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * EditProfile.Physical page module.
  * @module EditProfile.Physical
  */
-var Physical = angular.module('Athlete.Profile.EditProfile.Physical');
+const Physical = angular.module('Athlete.Profile.EditProfile.Physical');
 
 /*
 * EditProfile.Physical dependencies

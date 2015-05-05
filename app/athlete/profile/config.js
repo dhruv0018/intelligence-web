@@ -1,11 +1,13 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/profile/template.html';
 
 /**
  * Profile page module.
  * @module Profile
  */
-var Profile = angular.module('Athlete.Profile');
+const Profile = angular.module('Athlete.Profile');
 
 /**
  * Profile page state router.
@@ -22,7 +24,7 @@ Profile.config([
             url: '/:id/profile',
             views: {
                 'main@root': {
-                    templateUrl: 'athlete/profile/template.html',
+                    templateUrl: templateUrl,
                     controller: 'Athlete.Profile.controller'
                 }
             },

@@ -1,11 +1,15 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/edit-profile/basic-info/template.html';
+
+const template = require('./template.html');
 
 /**
  * BasicInfo page module.
  * @module BasicInfo
  */
-var BasicInfo = angular.module('Athlete.Profile.EditProfile.BasicInfo', [
+const BasicInfo = angular.module('Athlete.Profile.EditProfile.BasicInfo', [
     'ui.router',
     'ui.bootstrap',
     'ngMaterial',
@@ -17,7 +21,7 @@ BasicInfo.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('athlete/edit-profile/basic-info/template.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 

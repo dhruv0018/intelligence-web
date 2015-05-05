@@ -1,11 +1,13 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/edit-profile/physical/template.html';
 
 /**
  * EditProfile.Physical page module.
  * @module EditProfile.Physical
  */
-var Physical = angular.module('Athlete.Profile.EditProfile.Physical');
+const Physical = angular.module('Athlete.Profile.EditProfile.Physical');
 
 /**
  * EditProfile.Physical page state router.
@@ -21,7 +23,7 @@ Physical.config([
         .state('Athlete.Profile.EditProfile.Physical', {
             views: {
                 'content@Athlete.Profile.EditProfile': {
-                    templateUrl: 'athlete/edit-profile/physical/template.html',
+                    templateUrl: templateUrl,
                     controller: 'Athlete.Profile.EditProfile.Physical.controller'
                 }
             }
