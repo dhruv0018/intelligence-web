@@ -40,7 +40,7 @@ function TextValue(
     Text.prototype.BASE_FONT_SIZE = 22; // px
     Text.prototype.BASE_HORIZONTAL_PADDING = 10; // px
     Text.prototype.BASE_VERTICAL_PADDING = 20; // px
-    Text.prototype.TEST_TEXTAREA_BASE_PADDING_RIGHT = 15; // px
+    Text.prototype.TEST_TEXTAREA_BASE_PADDING_RIGHT = 24; // px
 
     Text.prototype.KEY_CODE_TO_HTML_ENTITY = {
         ' ': '&nbsp;'
@@ -329,7 +329,10 @@ function TextValue(
 
 
             /* handle transition */
-            storeTextAreaProperties();
+            if (self.previousText !== parentGlyph.text) {
+
+                parentGlyph.onTextChangedHandler();
+            }
             parentGlyph.onBlurHandler();
 
 
@@ -344,7 +347,7 @@ function TextValue(
 
 
             /* handle transition */
-            // NOTHING TO DO
+            self.previousText = parentGlyph.text;
 
 
             /* go to to next state */
@@ -371,7 +374,10 @@ function TextValue(
             $window.removeEventListener('mousedown', handleEditModeToDisplayModeTransitionTest);
         }
 
-        function storeTextAreaProperties() {
+        /**
+         * Store the current startPoint and Endpoint vertices on the model.
+         */
+        function storeTextAreaVertices() {
 
             containerBoundingBox = parentGlyph.getContainerDimensions();
             let boundingBox = self.element[0].getBoundingClientRect();
@@ -383,14 +389,16 @@ function TextValue(
 
             parentGlyph.updateStartPointFromPixels(newLeft, newTop);
             parentGlyph.updateEndPointFromPixels(newRight, newBottom);
+        }
+
+        /**
+         * Stores the text value on the model.
+         */
+        function storeTextAreaValue() {
 
             let newText = self.element[0].value;
 
-            if (newText !== parentGlyph.text) {
-
-                parentGlyph.text = newText;
-                parentGlyph.onTextChangedHandler();
-            }
+            parentGlyph.setText(newText);
         }
 
         function dragStart(event) {
@@ -425,7 +433,7 @@ function TextValue(
             self.recalculatePrimaryTextareaStartPosition();
 
             // save text area properties
-            storeTextAreaProperties();
+            storeTextAreaVertices();
 
             $window.removeEventListener('mousedown', dragStart);
             $window.removeEventListener('mousemove', dragMove);
@@ -502,6 +510,8 @@ function TextValue(
 
                 // set the selected range up by 1 from where it started
                 self.element[0].setSelectionRange(selectionStart + 1, selectionStart + 1);
+
+                storeTextAreaValue();
             }
         }
 
@@ -525,6 +535,8 @@ function TextValue(
 
             // NOTE: Add placeholder when there's no text
             if (!nextString.length) self.element.attr('placeholder', parentGlyph.HINT_TEXT);
+
+            storeTextAreaValue();
         }
 
         self.recalculatePrimaryTextareaWidth = function recalculatePrimaryTextareaWidth(text) {
@@ -685,9 +697,6 @@ function TextValue(
 
         // add custom styles and attributes
         testTextarea.css({'top': '-9999px'});
-
-        // important: adding additional padding to fit the text one-line
-        testTextarea.css({'padding': '20px 15px 20px 10px'});
     };
 
     return Text;
