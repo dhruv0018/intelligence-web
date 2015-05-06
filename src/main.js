@@ -17,7 +17,7 @@ require('./extensions');
 require('../build/build');
 
 import Reel from '../app/reel/index';
-import { SelectMediaSrc } from '../lib/directives/video-player/select-media-src/index';
+import SelectMediaSrc from '../lib/directives/video-player/select-media-src/index';
 
 /* App dependencies */
 require('./config');
