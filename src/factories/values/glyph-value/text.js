@@ -40,7 +40,7 @@ function TextValue(
     Text.prototype.BASE_FONT_SIZE = 22; // px
     Text.prototype.BASE_HORIZONTAL_PADDING = 10; // px
     Text.prototype.BASE_VERTICAL_PADDING = 20; // px
-    Text.prototype.TEST_TEXTAREA_BASE_PADDING_RIGHT = 24; // px
+    Text.prototype.TEST_TEXTAREA_BASE_PADDING_RIGHT = 30; // px
 
     Text.prototype.KEY_CODE_TO_HTML_ENTITY = {
         ' ': '&nbsp;'
@@ -511,6 +511,7 @@ function TextValue(
                 // set the selected range up by 1 from where it started
                 self.element[0].setSelectionRange(selectionStart + 1, selectionStart + 1);
 
+                storeTextAreaVertices();
                 storeTextAreaValue();
             }
         }
@@ -536,6 +537,7 @@ function TextValue(
             // NOTE: Add placeholder when there's no text
             if (!nextString.length) self.element.attr('placeholder', parentGlyph.HINT_TEXT);
 
+            storeTextAreaVertices();
             storeTextAreaValue();
         }
 
