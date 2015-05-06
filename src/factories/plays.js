@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_TYPES',
-    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_TYPES) {
+    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_CONSTANTS',
+    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_CONSTANTS) {
 
         var PlaysFactory = {
 
@@ -168,7 +168,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 cuePoints = this.events.map(function(event) {
                     return {
                         time: event.time,
-                        type: CUEPOINT_TYPES.EVENT
+                        type: CUEPOINT_CONSTANTS.TYPES.EVENT
                     };
                 });
 

@@ -5,26 +5,21 @@ const angular = window.angular;
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
-const CUE_POINT_EVENTS = {
-    'TELESTRATION': 0,
-    'EVENT': 1
-};
-
-const CUEPOINT_TYPES = {
-    'TELESTRATION': 0,
-    'EVENT': 1
-};
-
-const CUE_POINT_TYPE_LABELS = [
-    'TELESTRATION',
-    'EVENT'
-];
-
 const CUEPOINT_CONSTANTS = {
-    'MAX_TIME_DELTA': 0.2 // seconds
+    TYPES: {
+        'TELESTRATION': 0,
+        'EVENT': 1
+    },
+    LABELS: [
+        'TELESTRATION',
+        'EVENT'
+    ],
+    /*
+     * NOTE: The max amount of time (in seconds) that a CUEPOINT can be different from the current time
+     * to be 'triggered' before it is no longer within this specified range. (i.e. cuepoint time = 2.2s,
+     * the cuepoint can be triggered if the current time is between 2.0s and 2.4s).
+    */
+    MAX_TIME_DELTA: 0.2
 };
 
-IntelligenceWebClient.constant('CUEPOINT_TYPES', CUEPOINT_TYPES);
-IntelligenceWebClient.constant('CUE_POINT_TYPE_LABELS', CUE_POINT_TYPE_LABELS);
 IntelligenceWebClient.constant('CUEPOINT_CONSTANTS', CUEPOINT_CONSTANTS);
-IntelligenceWebClient.constant('CUE_POINT_EVENTS', CUE_POINT_EVENTS);

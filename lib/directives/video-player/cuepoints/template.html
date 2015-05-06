@@ -1,7 +1,7 @@
 <div class="cuepoints">
     <div ng-repeat="cuepoint in points"
-         ng-mousedown="goToCuePoint($event, cuepoint)"
-         ng-class="{'telestration': cuepoint.type === CUEPOINT_TYPES.TELESTRATION, 'event': cuepoint.type === CUEPOINT_TYPES.EVENT}"
+         ng-mousedown="onMousedown($event, cuepoint)"
+         ng-class="{'telestration': cuepoint.type === CUEPOINT_CONSTANTS.TYPES.TELESTRATION, 'event': cuepoint.type === CUEPOINT_CONSTANTS.TYPES.EVENT}"
          class="cuepoint"
          style="{{'left:' + calcLeft(cuepoint) + '%'}}"
     ></div>

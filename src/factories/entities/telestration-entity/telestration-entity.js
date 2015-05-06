@@ -2,8 +2,8 @@
 /* TelestrationEntity - Abstract Class*/
 
 module.exports = [
-    'ArrayEntity', 'TelestrationValue', 'ExtendTelestrationValue', 'CUEPOINT_TYPES',
-    function(arrayEntity, TelestrationValue, ExtendTelestrationValue, CUEPOINT_TYPES) {
+    'ArrayEntity', 'TelestrationValue', 'ExtendTelestrationValue', 'CUEPOINT_CONSTANTS',
+    function(arrayEntity, TelestrationValue, ExtendTelestrationValue, CUEPOINT_CONSTANTS) {
 
         var TelestrationEntity = function TelestrationEntity() {
 
@@ -52,7 +52,7 @@ module.exports = [
                     // Cuepoint times are relative to the play if the playAbsoluteStartTime is specified
                     return {
                         time: Math.abs(playAbsoluteStartTime - telestration.time),
-                        type: CUEPOINT_TYPES.TELESTRATION
+                        type: CUEPOINT_CONSTANTS.TYPES.TELESTRATION
                     };
                 });
 
