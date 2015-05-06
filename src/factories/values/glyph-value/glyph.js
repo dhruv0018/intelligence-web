@@ -37,6 +37,10 @@ module.exports = [
 
         /* Getters & Setters */
 
+        /**
+         * Sets new text on the Glyph model.
+         * @param {string} text - The text to set on the model.
+         */
         Glyph.prototype.setText = function setText(text) {
 
             this.text = text || this.text;
