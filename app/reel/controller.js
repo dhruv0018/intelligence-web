@@ -87,11 +87,11 @@ function ReelController(
 
     /* TODO: Rename sortOrder? */
     // Update the play order if the sortOrder changes based on play Ids
-    $scope.sortOrder = $scope.reel.plays;
+    $scope.sortOrder = $scope.plays;
+    // $scope.sortOrder = $scope.reel.plays;
 
     $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
 
-        $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
         $scope.plays.forEach(function indexPlays(play, index) {
 
             play.index = index;
