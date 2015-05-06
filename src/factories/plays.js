@@ -149,6 +149,12 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     /* If the transcode profile is complete. */
                     if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
 
+                        /* TODO:
+                         *
+                         * Video sources should be mp4s. Only videogular
+                         * requires $sce trusted resources, so it should
+                         * handle the responsibilities of wrapping it.
+                         */
                         /* Create a video source. */
                         let source = {
                             type: 'video/mp4',

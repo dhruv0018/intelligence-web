@@ -359,6 +359,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                             if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
 
+                                /* TODO:
+                                 *
+                                 * Video sources should be mp4s. Only videogular
+                                 * requires $sce trusted resources, so it should
+                                 * handle the responsibilities of wrapping it.
+                                 */
                                 let source = {
                                     type: 'video/mp4',
                                     src: $sce.trustAsResourceUrl(profile.videoUrl),
