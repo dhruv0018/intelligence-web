@@ -94,8 +94,7 @@ function TextValue(
 
     Text.prototype.TEXT_AREA_DISPLAY_ATTR = {
         'placeholder': Text.prototype.HINT_TEXT,
-        'title': Text.prototype.HELPER_TEXT,
-        'autofocus': true
+        'title': Text.prototype.HELPER_TEXT
     };
 
     Text.prototype.TEXT_AREA_DISPLAY_SELECTED_ATTR = {
@@ -198,6 +197,7 @@ function TextValue(
 
             // add style & properties
             self.element.css(parentGlyph.TEXT_AREA_EDIT_CSS);
+            self.element.attr(parentGlyph.TEXT_AREA_EDIT_ATTR);
             self.element.attr('readOnly', false);
 
             self.element[0].focus();
@@ -629,8 +629,6 @@ function TextValue(
 
         // add generic styles and attributes
         self.element.css(parentGlyph.TEXT_AREA_BASE_CSS);
-        self.element.css(parentGlyph.TEXT_AREA_EDIT_CSS);
-        self.element.attr(parentGlyph.TEXT_AREA_EDIT_ATTR);
         self.element.attr('class', parentGlyph.BASE_CLASS);
 
         // set color
