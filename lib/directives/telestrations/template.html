@@ -2,13 +2,13 @@
 
     <!-- HAS TELESTRATION ACCESS -->
 
-    <div class="telestration-container" ng-hide="NO_ACCESS">
+    <div class="telestration-container">
 
-        <telestration-controls ng-if="EDIT" ng-class="{hidden: telestrations.hide}"></telestration-controls>
+        <telestration-controls ng-hide="NO_ACCESS" ng-if="EDIT" ng-class="{hidden: telestrations.hide}"></telestration-controls>
 
         <svg-context-area id="svg-context-area">
 
-            <glyph-editor ng-class="{hidden: telestrations.hide}">
+            <glyph-editor ng-hide="NO_ACCESS" ng-class="{hidden: telestrations.hide}">
 
                 <glyph data-ng-repeat="glyph in telestrations.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
 
@@ -17,15 +17,6 @@
             <ng-transclude class="transcluded-content"></ng-transclude>
 
         </svg-context-area>
-
-    </div>
-
-
-    <!-- NO TELESTRATION ACCESS -->
-
-    <div class="telestration-container" ng-if="NO_ACCESS">
-
-        <ng-transclude class="transcluded-content"></ng-transclude>
 
     </div>
 
