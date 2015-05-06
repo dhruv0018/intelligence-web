@@ -36,6 +36,7 @@ Profile.config([
                     'ReelsFactory',
                     'PlaysFactory',
                     'SportsFactory',
+                    'TeamsFactory',
                     'PositionsetsFactory',
                     function data(
                                 $q,
@@ -44,20 +45,34 @@ Profile.config([
                                 reels,
                                 plays,
                                 sports,
+                                teams,
                                 positionsets) {
 
                         let userId = Number($stateParams.id);
 
-                        let relatedUsers = users.load(userId);
+                        let relatedUser = users.load(userId);
+
+
 
                         let Data = {
                             positionsets: positionsets.load(),
                             sports: sports.load(),
-                            users: relatedUsers,
+                            users: relatedUser,
                             reels: reels.load({relatedUserId: userId}),
-                            plays: relatedUsers.then(() => {
+                            plays: relatedUser.then(() => {
                                 let user = users.get(userId);
                                 if (user.profile.featuredReelId) return plays.load({reelId: user.profile.featuredReelId});
+                            }),
+                            teams: relatedUser.then(() => {
+                                let user = users.get(userId);
+
+                                if (user.profile.teams.length) {
+                                    let teamIds = user.profile.teams.map(function getProfileTeamIds(team) {
+                                        return team.teamId;
+                                    });
+
+                                    return teams.load(teamIds);
+                                }
                             })
                         };
 
