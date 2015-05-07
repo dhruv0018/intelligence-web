@@ -85,19 +85,14 @@ function ReelController(
         return play;
     }
 
-    /* TODO: Rename sortOrder? */
-    // Update the play order if the sortOrder changes based on play Ids
-    $scope.sortOrder = $scope.plays;
-    // $scope.sortOrder = $scope.reel.plays;
-
-    $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
+    // Store the reel order on the play
+    $scope.$watchCollection('plays', function sortPlays(newVals) {
 
         $scope.plays.forEach(function indexPlays(play, index) {
 
             play.index = index;
         });
     });
-
 
     /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
     // Editing config

@@ -16,9 +16,9 @@
             <!-- Reel Play -->
             <krossover-play
                 data-ng-if="isReelsPlay"
-                data-draggable="editFlag"
+                draggable-ordered-list="editFlag"
                 data-ng-class="{'edit-mode': editFlag}"
-                data-ng-repeat="play in plays">
+                ng-repeat="play in plays">
             </krossover-play>
 
             <no-results data-ng-hide="plays.length"></no-results>
