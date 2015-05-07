@@ -1,6 +1,6 @@
 <div>
     <div class="playHeadingContainer">
-        <check-box ng-if="currentUser.is(ROLES.COACH) && !isReelsPlay" checked="play.isSelected" ng-click="togglePlaySelection(play)"></check-box>
+        <check-box ng-if="currentUser.is(ROLES.COACH) && !isReelsPlay" checked="play.isSelected" ng-click="togglePlaySelection($event, play)"></check-box>
         <div
             ng-click="expandPlay()"
             class="playHeading">
