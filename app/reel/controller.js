@@ -149,7 +149,6 @@ function ReelController(
     $scope.$on('delete-reel-play', function postReelPlayDeleteSetup($event, index) {
         if ($scope.editFlag && $scope.plays && angular.isArray($scope.plays)) {
             $scope.plays.splice(index, 1);
-            $scope.sortOrder.splice(index, 1);
         }
     });
 
