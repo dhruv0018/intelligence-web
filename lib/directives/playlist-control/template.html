@@ -2,8 +2,8 @@
 
     <span hide>Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
 
-    <div class="select-all">
-        <check-box 
+    <div class="select-all" feature="playSelection">
+        <check-box
             ng-click="toggleSelectAllPlays()"
             checked="selectedPlays.length === plays.length"
             indeterminate="selectedPlays.length > 0 && selectedPlays.length < plays.length">
