@@ -1,49 +1,45 @@
 @import (reference) "main.less";
 
 .krossover-playlist-control {
+    display: flex;
     background: #ffffff;
-    padding: 15px;
+    padding: 0 15px;
+    flex: 0 0 55px;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid rgb(216, 216, 216);
 
-    .playlist-control-container {
-        display: flex;
-        flex: 1;
-        justify-content: space-between;
-        align-items: center;
-        min-height: 36px;
+    button.play-all-plays {
 
-        button.play-all-plays {
+        margin-left: 75px;
+        cursor: pointer;
+        display: inline-block;
+        padding: 0;
+        background: #ffffff;
+        border: 0;
+        margin: 0;
+        outline: 0;
 
-            margin-left: 75px;
-            cursor: pointer;
-            display: inline-block;
-            padding: 0;
-            background: #ffffff;
-            border: 0;
-            margin: 0;
-            outline: 0;
-
-            .play-all-text {
-                padding: 2px 2px 2px 8px;
-            }
-
-            .on, .off {
-                padding: 4px;
-                display: inline-block;
-                color: #e1e1e1;
-                background: #f9f9f9;
-            }
-
-            .on.chosen {
-                background: @brand-success;
-                color: #ffffff;
-            }
-
-            .off.chosen {
-                background: @brand-danger;
-                color: #ffffff;
-            }
-
+        .play-all-text {
+            padding: 2px 2px 2px 8px;
         }
+
+        .on, .off {
+            padding: 4px;
+            display: inline-block;
+            color: #e1e1e1;
+            background: #f9f9f9;
+        }
+
+        .on.chosen {
+            background: @brand-success;
+            color: #ffffff;
+        }
+
+        .off.chosen {
+            background: @brand-danger;
+            color: #ffffff;
+        }
+
     }
 }
