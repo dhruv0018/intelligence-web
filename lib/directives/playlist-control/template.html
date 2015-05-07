@@ -1,6 +1,12 @@
 <div class="krossover-playlist-control">
 
-    <span ng-hide="selectedPlays.length">Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
+    <span hide>Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
+
+    <div class="select-all">
+        <check-box ng-click="toggleSelectAllPlays(selectedPlays)" checked="selectedPlays.length === plays.length"></check-box>
+        <span ng-show="!selectedPlays.length">Select All</span>
+        <span ng-show="selectedPlays.length">{{selectedPlays.length}} Selected</span>
+    </div>
 
     <button ng-hide="selectedPlays.length" class="play-all-plays" ng-click="playManager.playAllPlays = !playManager.playAllPlays">
         <span class="play-all-text">Continuous Play</span>
