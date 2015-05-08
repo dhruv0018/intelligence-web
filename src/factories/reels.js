@@ -7,8 +7,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'ROLES', 'Utilities', 'BaseFactory', 'SessionService',
-    function(ROLES, utilities, BaseFactory, session) {
+    'ROLES', 'Utilities', 'UsersFactory', 'BaseFactory', 'SessionService',
+    function(ROLES, utilities, users, BaseFactory, session) {
 
         var ReelsFactory = {
 
@@ -123,17 +123,14 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     return reel.isSharedWithTeamId(teamId);
                 });
             },
-            isCoach: function() {
-                return session.currentUser.is(ROLES.COACH);
-            },
-            isAllowedToView: function(reel) {
+            isAllowedToView: function(reel, currentUser) {
 
                 let self = this;
 
                 //Check if user has permissions to view reel
                 if (reel.isSharedWithPublic() ||
                     (reel.uploaderUserId === session.getCurrentUserId()) ||
-                    (self.isCoach() && reel.uploaderTeamId === session.getCurrentTeamId()) ||
+                    (users.isCoach(currentUser) && reel.uploaderTeamId === session.getCurrentTeamId()) ||
                     self.isSharedWithUser() ||
                     self.isSharedWithTeam()) {
                     return true;
@@ -150,7 +147,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 var reels = [];
 
-                if (self.isCoach()) {
+                if (session.currentUser.is(ROLES.COACH)) {
 
                     reels = reels.concat(self.getByUploaderRole(userId, teamId));
                     reels = reels.concat(self.getByUploaderTeamId(teamId));

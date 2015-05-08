@@ -66,9 +66,10 @@ Clips.config([
                     if($stateParams.reel) {
 
                         let reel = reels.get($stateParams.reel);
+                        let currentUser = session.getCurrentUser();
 
                         /*Check if user has permissions to view reel*/
-                        if (!reels.isAllowedToView(reel))
+                        if (!reels.isAllowedToView(reel, currentUser))
                         {
                             //Without timeout, the read property '@' is null
                             //when using $state in onEnter

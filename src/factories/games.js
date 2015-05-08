@@ -224,17 +224,10 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             isAllowedToView: function(game) {
-
-                let self = this;
-
                 //Check if user has permissions to view reel
-                if (game.isSharedWithPublic() ||
-                    game.uploaderTeamId === session.getCurrentTeamId() ||
-                    game.isSharedWithUser(session.getCurrentUser())) {
-                    return true;
-                }
-
-                return false;
+                return game.isSharedWithPublic() ||
+                        game.uploaderTeamId === session.getCurrentTeamId() ||
+                        game.isSharedWithUser(session.getCurrentUser());
             },
 
             isPlayerOnOpposingTeam: function(playerId) {
