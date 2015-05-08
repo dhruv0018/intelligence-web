@@ -223,6 +223,20 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return angular.isDefined(playerInfo[playerId]);
             },
 
+            isAllowedToView: function(game) {
+
+                let self = this;
+
+                //Check if user has permissions to view reel
+                if (game.isSharedWithPublic() ||
+                    game.uploaderTeamId === session.getCurrentTeamId() ||
+                    game.isSharedWithUser(session.getCurrentUser())) {
+                    return true;
+                }
+
+                return false;
+            },
+
             isPlayerOnOpposingTeam: function(playerId) {
 
                 var self = this;

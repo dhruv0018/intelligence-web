@@ -129,6 +129,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
             isAllowedToView: function(reel) {
 
                 let self = this;
+
                 //Check if user has permissions to view reel
                 if (reel.isSharedWithPublic() ||
                     (reel.uploaderUserId === session.getCurrentUserId()) ||

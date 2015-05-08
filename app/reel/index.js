@@ -6,7 +6,6 @@ import ReelController from './controller.js';
 
 import template from './template.html.js';
 import restricted from './restricted.html.js';
-//import FilmSpec from '../../src/specs/film/index.js';
 
 const templateUrl = './template.html';
 const restrictedUrl = './restricted.html';
