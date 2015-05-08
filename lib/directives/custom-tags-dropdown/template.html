@@ -16,25 +16,25 @@
 
     <div class="add-tag">
         <input class="form-control" id="add-tag-filter-input" ng-disabled="(!sport.id && sport.id !== 0) || !selectedTags"
-               ko-focus="tagFilterFocus()" 
-               ko-blur="tagFilterBlur()" 
-               ng-model="filters.title" 
+               ko-focus="tagFilterFocus()"
+               ko-blur="tagFilterBlur()"
+               ng-model="filters.title"
                ng-change="tagFilterChanged()"
                placeholder="Add Tag">
 
-        <ul class="tag-list" ng-show="filterFocus || selectingTag" 
-                             ng-mouseenter="hoverTags(true)" 
-                             ng-mouseleave="hoverTags(false)" 
+        <ul class="tag-list" ng-show="filterFocus || selectingTag"
+                             ng-mouseenter="hoverTags(true)"
+                             ng-mouseleave="hoverTags(false)"
                              ng-keydown="onKeydown(tag, $event)">
 
-            <li class="tag-list-item" ng-click="createNewTag(filters.title)" 
-                                      ng-class="{'selected' : focusIndex === -1 }" 
+            <li class="tag-list-item" ng-click="createNewTag(filters.title)"
+                                      ng-class="{'selected' : focusIndex === -1 }"
                                       ng-mouseenter="setFocusIndex(-1)">
-                Create new tag: 
+                Create new tag:
                 <span class="new-tag-name">{{ filter.title }}</span>
             </li>
             <li class="tag-list-header">Choose Existing Tags:</li>
-            <li class="tag-list-item" ng-class="{'selected' : $index == focusIndex}" 
+            <li class="tag-list-item" ng-class="{'selected' : $index == focusIndex}"
                                     ng-repeat="tag in filteredTags"
                                     ng-click="addTag(tag)"
                                     ng-keydown="onKeydown(tag, $event)"
