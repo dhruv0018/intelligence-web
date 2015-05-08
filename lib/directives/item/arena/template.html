@@ -6,7 +6,7 @@
         ng-class="{'btn-arena-focus': isFocused}"
         ng-required="item.isRequired"
         ng-if="isUndefined(event.variableValues[item.id].value)"
-        ng-focus="openArenaModal($event)"
+        ng-focus="openArenaDialog($event)"
         focus-on="shouldFocus()"
         autofocus-when="autoAdvance && item.index === 1"
         value="at shot location"
