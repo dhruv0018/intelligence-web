@@ -112,7 +112,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     return reel.isSharedWithUserId(userId);
                 });
             },
-
             getBySharedWithTeamId: function(teamId) {
 
                 teamId = teamId || session.getCurrentTeamId();
@@ -124,7 +123,23 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     return reel.isSharedWithTeamId(teamId);
                 });
             },
+            isCoach: function() {
+                return session.currentUser.is(ROLES.COACH);
+            },
+            isAllowedToView: function(reel) {
 
+                let self = this;
+                //Check if user has permissions to view reel
+                if (reel.isSharedWithPublic() ||
+                    (reel.uploaderUserId === session.getCurrentUserId()) ||
+                    (self.isCoach() && reel.uploaderTeamId === session.getCurrentTeamId()) ||
+                    self.isSharedWithUser() ||
+                    self.isSharedWithTeam()) {
+                    return true;
+                }
+
+                return false;
+            },
             getByRelatedRole:function(userId, teamId) {
 
                 var self = this;
@@ -134,7 +149,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 var reels = [];
 
-                if (session.currentUser.is(ROLES.COACH)) {
+                if (self.isCoach()) {
 
                     reels = reels.concat(self.getByUploaderRole(userId, teamId));
                     reels = reels.concat(self.getByUploaderTeamId(teamId));

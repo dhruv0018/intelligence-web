@@ -511,6 +511,10 @@
         "*": true
     },
 
+    "Clips.Restricted": {
+        "*": true
+    },
+
     "ShortClips": {
 
         "*": true

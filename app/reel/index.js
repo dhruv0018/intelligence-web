@@ -6,7 +6,7 @@ import ReelController from './controller.js';
 
 import template from './template.html.js';
 import restricted from './restricted.html.js';
-import FilmSpec from '../../src/specs/film/index.js';
+//import FilmSpec from '../../src/specs/film/index.js';
 
 const templateUrl = './template.html';
 const restrictedUrl = './restricted.html';
@@ -61,7 +61,7 @@ Reel.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: './restricted.html'
+                    templateUrl: restrictedUrl
                 }
             }
         };
@@ -95,7 +95,6 @@ Reel.config([
                     let currentUser = session.getCurrentUser();
                     let reelId = Number($stateParams.id);
                     let reel = reels.get(reelId);
-                    let reelPerm = new FilmSpec(reel, currentUser);
 
                     if (reel.isDeleted) {
 
@@ -103,7 +102,7 @@ Reel.config([
                     }
 
                     /*Check if user has permissions to view reel*/
-                    if (!reelPerm.isAllowedToView())
+                    if (!reels.isAllowedToView(reel))
                     {
                         $state.go('Reel.Restricted', { id: reelId });
                     }
