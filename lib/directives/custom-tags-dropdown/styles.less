@@ -1,0 +1,93 @@
+@import (reference) "main.less";
+
+.custom-tags-dropdown {
+
+    .info-text {
+        color: #AAA;
+        font-weight: normal;
+        letter-spacing: 0.3px;
+    }
+
+    .sport-label {
+        float: right;
+    }
+
+    .tags-warning{
+        width: 100%;
+        text-align: center;
+    }
+
+    .tag-container {
+
+        max-height: 120px;
+        overflow-y: scroll;
+        margin-bottom: 5px;
+
+        .tag-obj {
+            float: left;
+            margin: 0 5px 5px 0;
+            padding: 5px;
+            background-color: #192731;
+            border-radius: 4px;
+            color: white;
+
+            .remove-tag-btn {
+                margin-left: 5px;
+                margin-top: -4px;
+                vertical-align: middle;
+                color: white;
+                cursor: pointer;
+            }
+
+            .remove-tag-btn:hover {
+                color: #ddd;
+
+            }
+        }
+    }
+
+    .add-tag {
+        position: relative;
+        z-index: 9;
+
+        input {
+
+            .clear-filter-tags {
+                float: right;
+                margin-right: 5px;
+            }
+        }
+
+        .tag-list {
+            position: absolute;
+            left: 0;
+            min-width: 99%;
+            min-width: 100%;
+            max-height: 215px;
+            overflow-y: scroll;
+            border: 1px solid #CCC;
+            background-color: #EEE;
+            padding: 10px 0;
+            text-align: left;
+
+            .new-tag-name {
+                font-weight: bold;
+            }
+
+            .tag-list-header {
+                color: #999;
+                margin: 5px 0;
+                padding-left: 15px;
+            }
+
+            .tag-list-item {
+                cursor: pointer;
+                padding-left: 15px;
+            }
+
+            .selected {
+                background-color: #999;
+            }
+        }
+    }
+}

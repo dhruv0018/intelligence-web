@@ -1,0 +1,47 @@
+<div class="custom-tags-dropdown">
+
+    <label>Selected Tags:</label>
+    <label class="info-text sport-label">{{ sport.title || 'Sport Required' }}</label>
+
+    <div class="tag-container">
+        <label class="info-text tags-warning" ng-show="!selectedTags">Unknown Data Source</label>
+
+        <span class="tag-obj" ng-repeat="tag in selectedTags | filter : { type: tagTypes.GENERAL.id }">
+            {{ tag.title }}
+            <span class="remove-tag-btn glyphicon glyphicon-remove" ng-click="removeTag(tag)"></span>
+        </span>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="add-tag">
+        <input class="form-control" id="add-tag-filter-input" ng-disabled="(!sport.id && sport.id !== 0) || !selectedTags"
+               ko-focus="tagFilterFocus()" 
+               ko-blur="tagFilterBlur()" 
+               ng-model="filters.title" 
+               ng-change="tagFilterChanged()"
+               placeholder="Add Tag">
+
+        <ul class="tag-list" ng-show="filterFocus || selectingTag" 
+                             ng-mouseenter="hoverTags(true)" 
+                             ng-mouseleave="hoverTags(false)" 
+                             ng-keydown="onKeydown(tag, $event)">
+
+            <li class="tag-list-item" ng-click="createNewTag(filters.title)" 
+                                      ng-class="{'selected' : focusIndex === -1 }" 
+                                      ng-mouseenter="setFocusIndex(-1)">
+                Create new tag: 
+                <span class="new-tag-name">{{ filter.title }}</span>
+            </li>
+            <li class="tag-list-header">Choose Existing Tags:</li>
+            <li class="tag-list-item" ng-class="{'selected' : $index == focusIndex}" 
+                                    ng-repeat="tag in filteredTags"
+                                    ng-click="addTag(tag)"
+                                    ng-keydown="onKeydown(tag, $event)"
+                                    ng-mouseenter="setFocusIndex($index)">
+                {{ tag.title }}
+             </li>
+        </ul>
+    </div>
+
+</div>

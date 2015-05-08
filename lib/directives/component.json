@@ -72,7 +72,8 @@
         "publish-user-profile-reel",
         "role-class",
         "spinner",
-        "check-box"
+        "check-box",
+        "cutsom-tags-dropdown"
     ],
     "scripts": [
         "index.js"
