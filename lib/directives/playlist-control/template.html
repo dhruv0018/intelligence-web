@@ -19,6 +19,6 @@
     </button>
 
     <button hide class="btn btn-default">Add to Reel</button>
-    <button ng-show="selectedPlays.length" class="btn btn-default">Add Tag</button>
 
+    <custom-tags-dropdown ng-show="selectedPlays.length" plays="selectedPlays"></custom-tags-dropdown>
 </div>

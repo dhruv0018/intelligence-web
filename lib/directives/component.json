@@ -73,7 +73,7 @@
         "role-class",
         "spinner",
         "check-box",
-        "cutsom-tags-dropdown"
+        "custom-tags-dropdown"
     ],
     "scripts": [
         "index.js"

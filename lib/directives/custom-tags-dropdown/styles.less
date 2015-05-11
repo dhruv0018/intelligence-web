@@ -1,93 +1,49 @@
 @import (reference) "main.less";
 
 .custom-tags-dropdown {
+    position: relative;
 
-    .info-text {
-        color: #AAA;
-        font-weight: normal;
-        letter-spacing: 0.3px;
+    &.open > .btn-default {
+        .btn-primary;
     }
 
-    .sport-label {
-        float: right;
-    }
+    .tags-dropdown-menu {
+        position: absolute;
+        width: 300px;
 
-    .tags-warning{
-        width: 100%;
-        text-align: center;
-    }
-
-    .tag-container {
-
-        max-height: 120px;
-        overflow-y: scroll;
-        margin-bottom: 5px;
-
-        .tag-obj {
-            float: left;
-            margin: 0 5px 5px 0;
+        .selected-tags {
+            border-bottom: thin solid @gray-border;
             padding: 5px;
-            background-color: #192731;
-            border-radius: 4px;
-            color: white;
-
-            .remove-tag-btn {
-                margin-left: 5px;
-                margin-top: -4px;
-                vertical-align: middle;
-                color: white;
-                cursor: pointer;
-            }
-
-            .remove-tag-btn:hover {
-                color: #ddd;
-
-            }
         }
-    }
 
-    .add-tag {
-        position: relative;
-        z-index: 9;
+        .search-tags {
+            border-bottom: thin solid @gray-border;
+            padding: 5px;
+        }
 
-        input {
+        .tags-list {
+            padding: 5px;
 
-            .clear-filter-tags {
-                float: right;
-                margin-right: 5px;
+            .tag-selection-label {
+                display: block;
+                color: @gray-light;
+                text-transform: uppercase;
+            }
+
+            ul {
+                list-style: none;
+                padding-left: 0px;
+                font-weight: 500;
+
+                li {
+                    padding: 2px 0px;
+                }
             }
         }
 
-        .tag-list {
-            position: absolute;
-            left: 0;
-            min-width: 99%;
-            min-width: 100%;
-            max-height: 215px;
-            overflow-y: scroll;
-            border: 1px solid #CCC;
-            background-color: #EEE;
-            padding: 10px 0;
-            text-align: left;
-
-            .new-tag-name {
-                font-weight: bold;
-            }
-
-            .tag-list-header {
-                color: #999;
-                margin: 5px 0;
-                padding-left: 15px;
-            }
-
-            .tag-list-item {
-                cursor: pointer;
-                padding-left: 15px;
-            }
-
-            .selected {
-                background-color: #999;
-            }
+        .tag-action-buttons {
+            border-top: thin solid @gray-border;
+            padding: 5px;
         }
     }
 }
