@@ -7,8 +7,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'ROLES', 'Utilities', 'UsersFactory', 'BaseFactory', 'SessionService',
-    function(ROLES, utilities, users, BaseFactory, session) {
+    'ROLES', 'Utilities', 'BaseFactory', 'SessionService',
+    function(ROLES, utilities, BaseFactory, session) {
 
         var ReelsFactory = {
 
