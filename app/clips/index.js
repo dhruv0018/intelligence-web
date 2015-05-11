@@ -69,21 +69,21 @@ Clips.config([
                         let currentUser = session.getCurrentUser();
 
                         /*Check if user has permissions to view reel*/
-                        if (!reels.isAllowedToView(reel, currentUser))
-                        {
+                        if (!reels.isAllowedToView(reel, currentUser)) {
+
                             //Without timeout, the read property '@' is null
                             //when using $state in onEnter
                             $timeout(function(){
                                 $state.go('Clips.Restricted', { id: playId });
                             });
                         }
-                    } else if($stateParams.game){
+                    } else if($stateParams.game) {
 
                         let game = games.get($stateParams.game);
 
                         /*Check if user has permissions to view game*/
-                        if (!games.isAllowedToView(game))
-                        {
+                        if (!games.isAllowedToView(game)) {
+
                             //Without timeout, the read property '@' is null
                             //when using $state in onEnter
                             $timeout(function(){

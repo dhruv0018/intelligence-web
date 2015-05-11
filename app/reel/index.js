@@ -101,8 +101,8 @@ Reel.config([
                     }
 
                     /*Check if user has permissions to view reel*/
-                    if (!reels.isAllowedToView(reel, currentUser))
-                    {
+                    if (!reels.isAllowedToView(reel, currentUser)) {
+
                         $state.go('Reel.Restricted', { id: reelId });
                     }
                 }
