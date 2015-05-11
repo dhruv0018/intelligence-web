@@ -455,16 +455,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
              * @class User
              * @method
-             * @returns {Boolean} true if user is a coach; false otherwise.
-             * Checks if the user is a coach.
-             */
-            isCoach: function(currentUser) {
-                return currentUser.is(ROLES.COACH);
-            },
-
-            /**
-             * @class User
-             * @method
              * @param {Object} matches - the role object(s) to match.
              * @returns {Boolean} true if a match is found; false otherwise.
              * Checks if any of the users roles for a match to the role given.
