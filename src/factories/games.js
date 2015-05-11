@@ -228,17 +228,18 @@ IntelligenceWebClient.factory('GamesFactory', [
             * @method
             * @returns {Boolean} returns if user can view game
             * or not.
-            * Given a game object and user, check if the user is allowed
-            * to view a given game.
+            * Check if the user is allowed to view a given game.
             */
-            isAllowedToView: function(game) {
+            isAllowedToView: function() {
+
+                let self = this;
 
                 //Check if user has permissions to view reel
-                let isAllowed = game.isSharedWithPublic() ||
-                                game.uploaderUserId === session.getCurrentUserId() ||
-                                game.uploaderTeamId === session.getCurrentTeamId() ||
-                                game.isSharedWithUser(session.getCurrentUser()) ||
-                                game.isSharedWithTeam();
+                let isAllowed = self.isSharedWithPublic() ||
+                                self.uploaderUserId === session.getCurrentUserId() ||
+                                self.uploaderTeamId === session.getCurrentTeamId() ||
+                                self.isSharedWithUser(session.getCurrentUser()) ||
+                                self.isSharedWithTeam();
 
                 return isAllowed;
             },

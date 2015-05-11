@@ -129,17 +129,17 @@ IntelligenceWebClient.factory('ReelsFactory', [
             * @method
             * @returns {Boolean} returns if user can view reel
             * or not.
-            * Given a reel object and user, check if the user is allowed
-            * to view a given reel.
+            * Check if the user is allowed to view a given reel.
             */
-            isAllowedToView: function(reel, currentUser) {
+            isAllowedToView: function() {
 
                 let self = this;
+                let currentUser = session.getCurrentUser();
 
                 //Check if user has permissions to view reel
-                let isAllowed = reel.isSharedWithPublic() ||
-                                reel.uploaderUserId === session.getCurrentUserId() ||
-                                (currentUser.is(ROLES.COACH) && reel.uploaderTeamId === session.getCurrentTeamId()) ||
+                let isAllowed = self.isSharedWithPublic() ||
+                                self.uploaderUserId === session.getCurrentUserId() ||
+                                (currentUser.is(ROLES.COACH) && self.uploaderTeamId === session.getCurrentTeamId()) ||
                                 self.isSharedWithUser() ||
                                 self.isSharedWithTeam();
 

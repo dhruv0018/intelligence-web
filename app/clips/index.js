@@ -69,7 +69,7 @@ Clips.config([
                         let currentUser = session.getCurrentUser();
 
                         /*Check if user has permissions to view reel*/
-                        if (!reels.isAllowedToView(reel, currentUser)) {
+                        if (!reel.isAllowedToView()) {
 
                             //Without timeout, the read property '@' is null
                             //when using $state in onEnter
@@ -82,7 +82,7 @@ Clips.config([
                         let game = games.get($stateParams.game);
 
                         /*Check if user has permissions to view game*/
-                        if (!games.isAllowedToView(game)) {
+                        if (!game.isAllowedToView()) {
 
                             //Without timeout, the read property '@' is null
                             //when using $state in onEnter

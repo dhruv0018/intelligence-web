@@ -73,7 +73,7 @@ Games.config([
                     var gameId = Number($stateParams.id);
                     var game = games.get(gameId);
 
-                    if (!games.isAllowedToView(game)) {
+                    if (!game.isAllowedToView()) {
                         $state.go('Games.Restricted', { id: gameId });
                     }
                 }
