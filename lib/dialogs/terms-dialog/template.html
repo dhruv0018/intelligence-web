@@ -4,7 +4,7 @@
 >
     <md-dialog-content class="modal-content">
 
-        <div class="terms-prompt" ng-show="promptUser">
+        <div class="terms-prompt" data-ng-show="promptUser">
 
             <header class="modal-header">
 
@@ -16,10 +16,10 @@
 
                 <p>Welcome back. Please review our updated Terms &amp; Conditions.</p>
 
-                <div id="agree-terms-cta" class="modal-cta" ng-click="newTerms.agree = !newTerms.agree;">
+                <div id="agree-terms-cta" class="modal-cta" data-ng-click="newTerms.agree = !newTerms.agree;" data-ng-class="{'modal-cta-selected': newTerms.agree}">
 
                     <check-box checked="newTerms.agree"></check-box>
-                    <span>I agree to the <a ng-click="showTerms();">Krossover Terms &amp; Conditions</a></span>
+                    <span>I agree to the <a data-ng-click="showTerms();">Krossover Terms &amp; Conditions</a></span>
 
                 </div>
 
@@ -27,13 +27,13 @@
 
             <footer class="modal-footer">
 
-                <button class="modal-button" ng-click="acceptTerms();" data-ng-disabled="!newTerms.agree">Go to your account</button>
+                <button class="modal-button" data-ng-click="acceptTerms();" data-ng-disabled="!newTerms.agree">Go to your account</button>
 
             </footer>
 
         </div>
 
-        <div class="terms-copy" ng-show="!promptUser">
+        <div class="terms-copy" data-ng-show="!promptUser">
 
             <header class="modal-header">
 
@@ -49,7 +49,7 @@
 
             <footer class="modal-footer">
 
-                <button id="close-terms-cta" class="modal-button" ng-click="closeTerms();" type="button">Close</button>
+                <button id="close-terms-cta" class="modal-button" data-ng-click="closeTerms();" type="button">Close</button>
 
             </footer>
 
