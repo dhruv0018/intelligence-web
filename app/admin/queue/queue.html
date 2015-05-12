@@ -152,11 +152,11 @@
 
                             <td>
 
-                                <button class="btn btn-default" data-ng-if="!game.isAssignedToIndexer() && game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(game, false)">Select Indexer</button>
+                                <button id="select-indexer-unassigned-cta-game-{{$index}}" class="btn btn-default" data-ng-if="!game.isAssignedToIndexer() && game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(game, false)">Select Indexer</button>
 
                                 <ul data-ng-if="game.hasIndexerAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: false } | limitTo:1">
 
-                                    <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+                                    <li><button id="select-indexer-cta-game-{{$index}}" class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
 
                                 </ul>
 
