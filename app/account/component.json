@@ -3,12 +3,14 @@
     "templates": [
         "template.html",
         "contact-info.html",
-        "roles-list.html"
+        "roles-list.html",
+        "terms-and-conditions.html"
     ],
     "scripts": [
         "index.js",
         "contact-info.js",
-        "roles-list.js"
+        "roles-list.js",
+        "terms-and-conditions.js"
     ],
     "styles": [
         "styles.less"

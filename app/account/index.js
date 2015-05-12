@@ -19,6 +19,7 @@ Account.run([
         $templateCache.put('account/template.html', require('./template.html'));
         $templateCache.put('account/contact-info.html', require('./contact-info.html'));
         $templateCache.put('account/roles-list.html', require('./roles-list.html'));
+        $templateCache.put('account/terms-and-conditions.html', require('./terms-and-conditions.html'));
     }
 ]);
 
@@ -52,6 +53,17 @@ Account.config([
                     'content@Account': {
                         templateUrl: 'account/contact-info.html',
                         controller: 'Account.ContactInfo.controller'
+                    }
+                }
+            })
+
+            .state('Account.TermsAndConditions', {
+                url: '',
+                parent: 'Account',
+                views: {
+                    'content@Account': {
+                        templateUrl: 'account/terms-and-conditions.html',
+                        controller: 'Account.TermsAndConditions.controller'
                     }
                 }
             })
