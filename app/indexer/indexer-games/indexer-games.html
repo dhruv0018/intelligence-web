@@ -56,7 +56,7 @@
 	        			<td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                         <td>{{ game.timeRemaining | millisecondsAsHours | hoursAsClock }}</td>
                         <td>
-                            <button class="btn btn-default" data-ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
+                            <button id="enter-indexing-cta" class="btn btn-default" data-ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
                                 <span data-ng-hide="game.isAssignmentStarted()">Start </span>
                                 <span data-ng-show="game.isAssignmentStarted()">Resume </span>
                                 <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
