@@ -7,7 +7,7 @@
             </div>
             <div class="analytics-option">
                 <span>Game Type</span>
-                <select data-ng-model="filterQuery.gameType" data-ng-change="generateStats()">
+                <select id="analytics-gametype-cta" data-ng-model="filterQuery.gameType" data-ng-change="generateStats()">
                     <option value="">All Stats</option>
                     <option value="{{CONFERENCE.id}}">Conference Stats</option>
                     <option value="{{NON_CONFERENCE.id}}">Non-Conference Stats</option>
