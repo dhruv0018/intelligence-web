@@ -49,6 +49,11 @@
         "*": true
     },
 
+    "new": {
+
+        "*": true
+    },
+
     "roles": {
 
         "*": true
