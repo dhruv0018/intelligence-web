@@ -1,8 +1,19 @@
 @import (reference) "main.less";
 
+.base-modal {
+
+    z-index: @zindex-modal;
+}
+
 .modal {
 
     display: block;
+
+    /* For Angular Material */
+    &-content {
+
+        padding: 0;
+    }
 }
 
 .modal-backdrop {
@@ -35,5 +46,47 @@
 
         margin: 10px;
         height: 21px;
+    }
+}
+
+/* Buttons */
+
+.modal-button {
+
+    .btn;
+    .btn-lg;
+
+    &:enabled {
+
+        .btn-primary;
+    }
+
+    &:disabled {
+
+        .btn-lg;
+    }
+
+}
+
+/* Angular Material */
+
+.md-dialog-backdrop {
+
+    background-color: fade(@brand-blue, 90%) !important;
+}
+
+.modal-cta {
+
+    cursor: pointer;
+
+    &:focus {
+
+        outline: none;
+    }
+
+    &-selected {
+
+        color: @brand-blue;
+        font-weight: 500;
     }
 }
