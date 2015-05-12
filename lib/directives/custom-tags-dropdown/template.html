@@ -1,22 +1,29 @@
-<div class="custom-tags-dropdown dropdown" dropdown auto-close="outsideClick">
+<div class="custom-tags-dropdown dropdown" dropdown is-open="status.isopen">
     <button class="btn btn-default dropdown-toggle" dropdown-toggle>Add Tag</button>
     <div class="tags-dropdown-menu dropdown-menu" ng-click="$event.stopPropagation()">
-        <div class="selected-tags">
-            <span ng-repeat="tag in selectedTags">{{tag.name}}</span>
+        <div class="selected-tags" ng-hide="!selectedTags.length">
+            <custom-tag-pills ng-model="selectedTags" plays="plays"></custom-tag-pills>
         </div>
-        <div class="search-tags">
-            <md-autocomplete></md-autocomplete>
-        </div>
-        <div class="tags-list">
-            <span class="tag-selection-label">Create New Tag</span>
 
-            <span class="tag-selection-label">All Tags</span>
-            <ul>
-                <li ng-repeat="tag in customTags" ng-click="selectTag(tag)">{{tag.name}}</li>
-            </ul>
+        <div class="search-tags">
+            <input ng-model="filters.name" ng-change="updateFilteredTags()" placeholder="Search Tags">
+            <i class="icon icon-search"></i>
         </div>
+
+        <div class="tags-list">
+            <span class="tag-selection-label" ng-show="filters.name">Create New Tag</span>
+            <p class="new-tag" ng-click="createNewTag(filters.name)" ng-show="filters.name">{{filters.name}}</p>
+
+            <span class="tag-selection-label" ng-hide="filters.name">All Tags</span>
+            <span class="tag-selection-label" ng-show="filters.name">Matching Tags</span>
+            <ul ng-show="filteredTags.length">
+                <li ng-repeat="tag in filteredTags" ng-click="selectTag(tag)" ng-hide="tagSelected(tag)">{{tag.name}}</li>
+            </ul>
+            <p ng-hide="filteredTags.length">No tags match your search</p>
+        </div>
+
         <div class="tag-action-buttons">
-            <a href>Cancel</a>
+            <a href ng-click="cancelTagging(); status.isopen = false">Cancel</a>
             <a href class="pull-right">Apply</a>
         </div>
     </div>

@@ -9,16 +9,35 @@
 
     .tags-dropdown-menu {
         position: absolute;
+        left: -220px;
         width: 300px;
+        padding: 0;
 
         .selected-tags {
             border-bottom: thin solid @gray-border;
             padding: 5px;
+            max-height: 100px;
+            min-height: 38px;
+            overflow: auto;
         }
 
         .search-tags {
             border-bottom: thin solid @gray-border;
             padding: 5px;
+            position: relative;
+
+            input {
+                border: none;
+                width: 100%;
+                padding-right: 20px;
+            }
+
+            .icon-search {
+                position: absolute;
+                right: 5px;
+                top: 8px;
+                color: @gray-light;
+            }
         }
 
         .tags-list {
@@ -30,6 +49,12 @@
                 text-transform: uppercase;
             }
 
+            .new-tag {
+                margin: 0;
+                cursor: pointer;
+                overflow-wrap: break-word;
+            }
+
             ul {
                 list-style: none;
                 padding-left: 0px;
@@ -37,6 +62,9 @@
 
                 li {
                     padding: 2px 0px;
+                    cursor: pointer;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
         }
