@@ -1,0 +1,23 @@
+@import (reference) "main.less";
+@import (reference) "modal.less";
+
+.new-terms-modal {
+
+    .base-modal;
+
+    .terms-prompt {
+
+        text-align: center;
+    }
+
+    /* For Scrolling long modal content */
+    /* TODO: Need to standardize height breakpoints for 'desktop' */
+    @media (min-height: 600px) {
+
+        .modal-body {
+
+            max-height: 300px;
+            overflow: auto;
+        }
+    }
+}

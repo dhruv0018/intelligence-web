@@ -1,0 +1,12 @@
+{
+    "name": "dialogs",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "terms-dialog"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

@@ -1,0 +1,60 @@
+<md-dialog
+    flex="50"
+    class="new-terms-modal"
+>
+    <md-dialog-content class="modal-content">
+
+        <div class="terms-prompt" ng-show="promptUser">
+
+            <header class="modal-header">
+
+                <span class="modal-title">Action Required</span>
+
+            </header>
+
+            <div class="modal-body">
+
+                <p>Welcome back. Please review our updated Terms &amp; Conditions.</p>
+
+                <div id="agree-terms-cta" class="modal-cta" ng-click="newTerms.agree = !newTerms.agree;">
+
+                    <check-box checked="newTerms.agree"></check-box>
+                    <span>I agree to the <a ng-click="showTerms();">Krossover Terms &amp; Conditions</a></span>
+
+                </div>
+
+            </div>
+
+            <footer class="modal-footer">
+
+                <button class="modal-button" ng-click="acceptTerms();" data-ng-disabled="!newTerms.agree">Go to your account</button>
+
+            </footer>
+
+        </div>
+
+        <div class="terms-copy" ng-show="!promptUser">
+
+            <header class="modal-header">
+
+                <span class="modal-title">Terms &amp; Conditions</span>
+
+            </header>
+
+            <div class="modal-body">
+
+                <terms-and-conditions></terms-and-conditions>
+
+            </div>
+
+            <footer class="modal-footer">
+
+                <button id="close-terms-cta" class="modal-button" ng-click="closeTerms();" type="button">Close</button>
+
+            </footer>
+
+        </div>
+
+    </md-dialog-content>
+
+</md-dialog>
