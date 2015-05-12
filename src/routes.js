@@ -16,8 +16,8 @@ IntelligenceWebClient.config([
 IntelligenceWebClient.value('$previousState', {});
 
 IntelligenceWebClient.run([
-    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', '$previousState', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService',
-    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, $previousState, tokens, auth, authz, session, alerts) {
+    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', '$previousState', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'AccountService', 'TermsDialog.Service',
+    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, $previousState, tokens, auth, authz, session, alerts, account, TermsDialog) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -100,6 +100,25 @@ IntelligenceWebClient.run([
 
             /* Store previous state */
             $previousState = fromState;
+
+            /* Get users */
+            let user         = session.retrieveCurrentUser();
+            let previousUser = session.retrievePreviousUser();
+
+            /* Check if the user has accepted the Terms & Conditions.
+             * Make sure we aren't an admin switching to another user as we
+             * don't want to accidentially accept the terms on behalf of the
+             * user. Also make sure we're logged in. Then check for terms. */
+            if (!previousUser && auth.isLoggedIn && !account.hasAcceptedTerms()) {
+
+                // Prompt user to accept the new Terms & Conditions.
+                TermsDialog.show(true)
+                .then(function saveUserTermsAcceptedDate () {
+
+                    user.termsAcceptedDate = new Date().toISOString();
+                    user.save();
+                });
+            }
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {
