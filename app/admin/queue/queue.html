@@ -179,7 +179,7 @@
                                 <span class="togo" data-ng-if="game.remainingTime > 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
                             </td>
                             <td>
-                                <button data-open-modal="AdminManagement.Modal" data-modal-options="game" class="btn btn-default">Manage</button>
+                                <button id="manage-cta-game-{{$index}}" data-open-modal="AdminManagement.Modal" data-modal-options="game" class="btn btn-default">Manage</button>
                             </td>
                         </tr>
                     </tbody>
