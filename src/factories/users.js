@@ -526,9 +526,34 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* Assume all other roles do not have access. */
                 return false;
             },
-            getLastAccessed: function(user) {
-                return new Date(user.lastAccessed);
+
+            /**
+             * @class User
+             * @method getLastAccessed
+             * Returns the date of the last time the user has logged in.
+             * @return {Object} The date user last logged in
+             */
+            getLastAccessed: function getLastAccessed () {
+
+                var self = this;
+
+                return new Date(self.lastAccessed);
             },
+
+            /**
+             * @class User
+             * @method getTermsAcceptedDate
+             * Returns the date of the last time the user has accepted the
+             * Terms and conditions.
+             * @return {Object} The date user last accepted terms
+             */
+            getTermsAcceptedDate: function getTermsAcceptedDate () {
+
+                var self = this;
+
+                return new Date(self.termsAcceptedDate);
+            },
+
             /**
              * @class User
              * @method
