@@ -531,13 +531,16 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @class User
              * @method getLastAccessed
              * Returns the date of the last time the user has logged in.
-             * @return {Object} The date user last logged in
+             * @return {(Object|undefined)} The date user last logged in
              */
             getLastAccessed: function getLastAccessed () {
 
                 var self = this;
 
-                return new Date(self.lastAccessed);
+                if (self.lastAccessed) {
+
+                    return new Date(self.lastAccessed);
+                }
             },
 
             /**
@@ -545,13 +548,16 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @method getTermsAcceptedDate
              * Returns the date of the last time the user has accepted the
              * Terms and conditions.
-             * @return {Object} The date user last accepted terms
+             * @return {(Object|undefined)} The date user last accepted terms
              */
             getTermsAcceptedDate: function getTermsAcceptedDate () {
 
                 var self = this;
 
-                return new Date(self.termsAcceptedDate);
+                if (self.termsAcceptedDate) {
+
+                    return new Date(self.termsAcceptedDate);
+                }
             },
 
             /**
