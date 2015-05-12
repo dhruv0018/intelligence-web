@@ -170,7 +170,7 @@
                                 <button id="select-qaer-unassigned-cta-game-{{$index}}" class="btn btn-default" data-ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(game, true)">Select QA</button>
 
                                 <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1">
-                                    <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+                                    <li><button id="select-qaer-cta-game-{{$index}}" class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
                                  </ul>
                             </td>
                             <td class="time-left">
