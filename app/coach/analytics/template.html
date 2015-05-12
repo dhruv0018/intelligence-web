@@ -3,7 +3,7 @@
         <div class="analytics-options">
             <div class="analytics-option">
                 <span>Season</span>
-                <select data-ng-options="season.id as season.startDate | date: 'yyyy' for season in seasons" data-ng-model="filterQuery.seasonId" data-ng-change="generateStats()"></select>
+                <select id="analytics-season-cta" data-ng-options="season.id as season.startDate | date: 'yyyy' for season in seasons" data-ng-model="filterQuery.seasonId" data-ng-change="generateStats()"></select>
             </div>
             <div class="analytics-option">
                 <span>Game Type</span>
