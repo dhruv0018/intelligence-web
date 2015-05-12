@@ -134,7 +134,7 @@
 
                             <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                             <td>{{ game.id }}</td>
-                            <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
+                            <td><a id="select-game-cta-game-{{$index}}" data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
                             <td>
                                 <span>
                                     {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}
