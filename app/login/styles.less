@@ -80,6 +80,12 @@
             font-size: 60px;
             margin-right: 20px;
         }
+
+        &.new-user {
+
+            padding-right: 0;
+            border-right: none;
+        }
     }
 
     .oldLogin {
@@ -118,6 +124,52 @@
 
         .icon {
             font-size: 16px;
+        }
+    }
+}
+
+/**
+ * Login Checkbox.
+ */
+
+.login-checkbox {
+
+    .pull-left;
+    height: 45px;
+    line-height: 45px;
+    user-select: none;
+
+    label {
+
+        cursor: pointer;
+        font-weight: 400;
+        font-size: 18px;
+    }
+
+    .icon {
+        display: inline-block;
+        color: @gray-lighter;
+        width: 28px;
+        height: 28px;
+        line-height: 24px;
+        border-radius: 14px;
+        border: 2px solid @input-border;
+        margin-right: 10px;
+    }
+
+    input[type="checkbox"] {
+
+        display: none;
+
+        &:checked + label {
+
+            color: @brand-primary;
+            border-color: @brand-primary;
+
+            i {
+                color: @brand-primary;
+                border-color: @brand-primary;
+            }
         }
     }
 }

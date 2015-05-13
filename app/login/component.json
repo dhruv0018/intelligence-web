@@ -6,7 +6,8 @@
         "login.html",
         "locked.html",
         "forgot.html",
-        "reset.html"
+        "reset.html",
+        "new-user.html"
     ],
     "styles": [
         "styles.less",
@@ -14,9 +15,13 @@
         "login.less",
         "locked.less",
         "forgot.less",
-        "reset.less"
+        "reset.less",
+        "new-user.less"
     ],
     "scripts": [
         "index.js"
-    ]
+    ],
+    "dependencies": {
+        "moment/moment": "2.9.0"
+    }
 }

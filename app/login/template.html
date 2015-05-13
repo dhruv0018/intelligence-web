@@ -4,10 +4,10 @@
     <header data-ui-view="header"></header>
     <div class="icon icon-krossover-logo"></div>
     <div class="login-container">
-	    <div class="newLogin">
+	    <div class="newLogin" ng-class="{'new-user': newUser}">
 			<main data-ui-view="main"></main>
 		</div>
-		<div class="oldLogin">
+		<div class="oldLogin" ng-if="!newUser">
 			<div>
 				<i class="icon icon-basketball"></i>
 				<i class="icon icon-lacrosse"></i>

@@ -1,5 +1,5 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Login module for managing user logins.
@@ -21,6 +21,7 @@ Login.run([
         $templateCache.put('locked.html', require('./locked.html'));
         $templateCache.put('forgot.html', require('./forgot.html'));
         $templateCache.put('reset.html', require('./reset.html'));
+        $templateCache.put('new-user.html', require('./new-user.html'));
     }
 ]);
 
@@ -54,7 +55,7 @@ Login.config([
 
                 onEnter: [
                     '$state', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService',
-                    function($state, ROLES, auth, session, account) {
+                    function ($state, ROLES, auth, session, account) {
 
                         if (auth.isLoggedIn) {
 
@@ -123,11 +124,39 @@ Login.config([
                 },
 
                 onEnter: ['$state', '$stateParams',
-                    function($state, $stateParams) {
+                    function ($state, $stateParams) {
 
                         if (!$stateParams.token) {
 
                             throw new Error('No password reset token!');
+                        }
+                    }
+                ]
+            })
+
+            .state('new', {
+                public: true,
+                url: '^/new-user/:token',
+                parent: 'login',
+                views: {
+                    'header@login': {
+                        templateUrl: 'signup.html'
+                    },
+                    'main@login': {
+                        templateUrl: 'new-user.html',
+                        controller: 'LoginController'
+                    }
+                },
+                data: {
+                    isNewUser: true
+                },
+
+                onEnter: ['$state', '$stateParams',
+                    function newOnEnter ($state, $stateParams) {
+
+                        if (!$stateParams.token) {
+
+                            throw new Error('No new user token!');
                         }
                     }
                 ]
@@ -157,7 +186,8 @@ LoginController.$inject = [
     'AlertsService',
     'UsersFactory',
     'AnalyticsService',
-    'EMAIL_REQUEST_TYPES',
+    'TermsDialog.Service',
+    'EMAIL_REQUEST_TYPES'
 ];
 
 function LoginController(
@@ -174,12 +204,13 @@ function LoginController(
     alerts,
     users,
     analytics,
+    TermsDialog,
     EMAIL_REQUEST_TYPES
 ) {
 
     $scope.config = config;
 
-    var currentUser = session.retrieveCurrentUser();
+    let currentUser = session.retrieveCurrentUser();
 
     if (currentUser && currentUser.persist) {
 
@@ -188,7 +219,16 @@ function LoginController(
         $scope.login.remember = currentUser.persist;
     }
 
-    $scope.submitLogin = function() {
+    if ($state.current.data && $state.current.data.isNewUser) {
+
+        $scope.newUser = {
+            password     : undefined,
+            showPassword : true, // By default, show the new user's password
+            agree        : true
+        };
+    }
+
+    $scope.submitLogin = function submitLogin () {
 
         $scope.login.submitted = true;
 
@@ -203,24 +243,19 @@ function LoginController(
                 /* Track the event for MixPanel */
                 analytics.track('Login', 'Selected', 'SignIn');
 
-                /* If the user has more than one role, but has not selected
-                 * a default one yet. */
-                if (user.isActive() && !user.defaultRole) {
-                    $state.go('roles', false).then(function () {
+                /* Once successfully logged in, determine the user's home state.
+                 * Then, track user in analytics (user may not have a default
+                 * roll yet). Also, update the user's last accessed timestamp. */
+                account.gotoUsersHomeState(user)
+                .then(function saveUserData () {
 
-                        /* Indentify the user for MixPanel */
-                        analytics.identify();
-                    });
-                } else {
-                    account.gotoUsersHomeState(user).then(function () {
+                    /* Indentify the user for MixPanel */
+                    analytics.identify();
 
-                        /* Indentify the user for MixPanel */
-                        analytics.identify();
-                    });
-                }
-
-                user.lastAccessed = new Date().toISOString();
-                user.save();
+                    /* Save user data */
+                    user.lastAccessed = new Date().toISOString();
+                    user.save();
+                });
             }
 
         }, function(error) {
@@ -258,7 +293,7 @@ function LoginController(
         });
     };
 
-    $scope.submitForgotPassword = function() {
+    $scope.submitForgotPassword = function submitForgotPassword () {
 
         $scope.login.submitted = true;
 
@@ -309,20 +344,23 @@ function LoginController(
         );
     };
 
-    $scope.submitResetPassword = function() {
+    // TODO: Merge there two methods.
+    $scope.submitResetPassword = function submitResetPassword () {
 
         if ($stateParams.token) {
 
-            users.passwordReset($stateParams.token, $scope.reset.password).then(
+            let token    = $stateParams.token;
+            let password = $scope.reset.password;
 
+            users.passwordReset(token, password).then(
 
                 function success(data, status) {
 
                     $scope.reset.submitted = false;
 
-                    $scope.login = {};
-                    $scope.login.email = data.email;
-                    $scope.login.password = $scope.reset.password;
+                    $scope.login          = {};
+                    $scope.login.email    = data.email;
+                    $scope.login.password = password;
 
                     $scope.submitLogin();
                 },
@@ -338,5 +376,54 @@ function LoginController(
                 }
             );
         }
+    };
+
+    /**
+     * Upon first login, save the user's new password
+     * @method submitNewUserPassword
+     */
+    $scope.submitNewUserPassword = function submitNewUserPassword () {
+
+        if ($stateParams.token) {
+
+            let token    = $stateParams.token;
+            let password = $scope.newUser.password;
+
+            users.passwordReset(token, password).then(
+
+                function success(data, status) {
+
+                    $scope.newUser.submitted = false;
+
+                    $scope.login          = {};
+                    $scope.login.email    = data.email;
+                    $scope.login.password = password;
+
+                    $scope.submitLogin();
+                },
+
+                function error(data, status) {
+
+                    alerts.add({
+                        type: 'danger',
+                        message: 'There was a problem setting your new password'
+                    });
+
+                    throw new Error('Could not set new password');
+                }
+            );
+        }
+    };
+
+    /**
+     * Show the Terms & Conditions modal.
+     * @method showTerms
+     * @param {Object} Click event object to prevent propagation. Clicking terms
+     * link toggles check box otherwise.
+     */
+    $scope.showTerms = function showTerms (event) {
+
+        event.stopPropagation();
+        TermsDialog.show();
     };
 }

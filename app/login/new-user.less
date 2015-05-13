@@ -1,0 +1,67 @@
+@import (reference) "main.less";
+@import (reference) "styles.less";
+
+.login-new-user {
+
+    .form-new-user {
+
+        .form-horizontal;
+
+        .form-group {
+
+            margin-left: 0;
+            margin-right: 0;
+            position: relative;
+
+            data-error {
+                position: relative !important;
+                text-align: left;
+                line-height: 20px !important;
+                left: 0px !important;
+            }
+        }
+    }
+
+    .new-user-password-group {
+
+        display: flex;
+        align-items: flex-start;
+
+        .form-group {
+
+            width: 100%;
+        }
+    }
+
+    .show-hide-password {
+
+        .btn;
+        .btn-link;
+    }
+
+    .button-set-password {
+
+        width: 100%;
+        height: 45px;
+        background-color: @btn-default-bg;
+        margin: auto;
+
+        & {
+
+            .btn;
+            .btn-lg;
+            padding: 0;
+        }
+
+        &:enabled {
+
+            .btn-primary;
+        }
+    }
+}
+
+.new-user-login {
+
+    padding-right: 0;
+    border-right: none;
+}
