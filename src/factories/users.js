@@ -535,12 +535,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             getLastAccessed: function getLastAccessed () {
 
-                var self = this;
-
-                if (self.lastAccessed) {
-
-                    return new Date(self.lastAccessed);
-                }
+                if (this.lastAccessed) return new Date(this.lastAccessed);
             },
 
             /**
@@ -552,12 +547,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             getTermsAcceptedDate: function getTermsAcceptedDate () {
 
-                var self = this;
-
-                if (self.termsAcceptedDate) {
-
-                    return new Date(self.termsAcceptedDate);
-                }
+                if (this.termsAcceptedDate) return new Date(this.termsAcceptedDate);
             },
 
             /**
