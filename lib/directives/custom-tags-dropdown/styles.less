@@ -10,8 +10,39 @@
     .tags-dropdown-menu {
         position: absolute;
         left: -220px;
+        top: 45px;
         width: 300px;
         padding: 0;
+
+        /* Triangle Marker */
+        &:before,
+        &:after {
+
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+
+        &:before {
+
+            border-bottom: 11px solid @gray-border;
+            border-left: 11px solid transparent;
+            border-right: 11px solid transparent;
+            margin-left: -11px;
+            right: 30px;
+            top: -11px;
+        }
+
+        &:after {
+
+            border-bottom: 10px solid white;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            margin-left: -10px;
+            right: 31px;
+            top: -10px;
+        }
 
         .selected-tags {
             border-bottom: thin solid @gray-border;
