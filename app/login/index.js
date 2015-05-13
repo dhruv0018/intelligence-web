@@ -344,8 +344,9 @@ function LoginController(
         );
     };
 
-    // TODO: Merge there two methods.
     $scope.submitResetPassword = function submitResetPassword () {
+
+        $scope.reset.submitted = true;
 
         if ($stateParams.token) {
 
@@ -367,6 +368,8 @@ function LoginController(
 
                 function error(data, status) {
 
+                    $scope.reset.submitted = false;
+
                     alerts.add({
                         type: 'danger',
                         message: 'There was a problem resetting your password'
@@ -383,6 +386,8 @@ function LoginController(
      * @method submitNewUserPassword
      */
     $scope.submitNewUserPassword = function submitNewUserPassword () {
+
+        $scope.newUser.submitted = true;
 
         if ($stateParams.token) {
 
@@ -403,6 +408,8 @@ function LoginController(
                 },
 
                 function error(data, status) {
+
+                    $scope.newUser.submitted = false;
 
                     alerts.add({
                         type: 'danger',
