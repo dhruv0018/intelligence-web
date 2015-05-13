@@ -614,14 +614,14 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return vettedUsers;
             },
-            passwordReset: function(token, password) {
+            passwordReset: function(token, email, password) {
                 var self = this;
 
                 var model = $injector.get(self.model);
 
                 return model.resetPassword(
                     {token: token},
-                    {password: password}
+                    {email: email, password: password}
                 ).$promise;
             },
             /**
