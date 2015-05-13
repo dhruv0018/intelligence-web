@@ -32,7 +32,7 @@
         flex: 1;
     }
 
-    .video-player {
+    video-player {
         margin-left: 15px;
     }
 
@@ -41,16 +41,15 @@
     and (max-width: @screen-md-max) {
         display: block;
 
+        video-player {
+            margin-left: 0px;
+        }
+
         .clip-body {
             display: block;
             margin: 0;
             padding: 0;
             flex-direction: column-reverse;
-        }
-
-        .video-player {
-            justify-content: center;
-            margin: 0;
         }
 
         .vertical-spacer {
