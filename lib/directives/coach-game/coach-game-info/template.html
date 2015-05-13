@@ -96,7 +96,7 @@
                                                         <div class="col-xs-12">
 
                                                             <h6>Final</h6>
-                                                            <input name="yourscore" size="3" data-ng-model="game.finalScore" required>
+                                                            <input name="yourscore" id="team-score-cta" size="3" data-ng-model="game.finalScore" required>
 
                                                         </div>
 
@@ -132,7 +132,7 @@
 
                                                 <td>
                                                     <!--<team-typeahead data-customer-teams="false" data-team="gameTeams.opposingTeam"></team-typeahead>-->
-                                                    <input required type="text" name="opponent" class="form-control" placeholder="Opposing Team" data-ng-model="gameTeams.opposingTeam.name">
+                                                    <input required type="text" id="opposing-team-score-cta" name="opponent" class="form-control" placeholder="Opposing Team" data-ng-model="gameTeams.opposingTeam.name">
                                                 </td>
 
                                                 <td class="score">
