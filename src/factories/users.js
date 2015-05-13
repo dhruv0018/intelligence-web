@@ -614,14 +614,21 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return vettedUsers;
             },
-            passwordReset: function(token, email, password) {
-                var self = this;
 
-                var model = $injector.get(self.model);
+            /**
+             * @class User
+             * @method passwordReset
+             * @param {String} password reset token
+             * @param {String} new password
+             * @returns {Object} resource promise
+             */
+            passwordReset: function passwordReset (token, password) {
+
+                var model = $injector.get(this.model);
 
                 return model.resetPassword(
                     {token: token},
-                    {email: email, password: password}
+                    {password: password}
                 ).$promise;
             },
             /**
