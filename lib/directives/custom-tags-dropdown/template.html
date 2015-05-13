@@ -6,7 +6,7 @@
         </div>
 
         <div class="search-tags">
-            <input ng-model="filters.name" ng-change="updateFilteredTags()" placeholder="Search Tags">
+            <input ng-model="filters.name" ng-change="updateFilteredTags()" ng-keypress="keyPressTracker($event, filters.name)" placeholder="Search Tags">
             <i class="icon icon-search"></i>
         </div>
 
@@ -17,7 +17,7 @@
             <span class="tag-selection-label" ng-hide="filters.name">All Tags</span>
             <span class="tag-selection-label" ng-show="filters.name">Matching Tags</span>
             <ul ng-show="filteredTags.length">
-                <li ng-repeat="tag in filteredTags" ng-click="selectTag(tag)" ng-hide="tagSelected(tag)">{{tag.name}}</li>
+                <li ng-repeat="tag in filteredTags" ng-click="selectTag(tag)">{{tag.name}}</li>
             </ul>
             <p ng-hide="filteredTags.length">No tags match your search</p>
         </div>

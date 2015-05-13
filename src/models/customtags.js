@@ -27,12 +27,9 @@ IntelligenceWebClient.factory('CustomtagsResource', [
             query: {
                 method: 'GET',
                 isArray: true,
-                /*
-                 * Hide untill querying by isActive works
-                 * params: {
-                 *    isActive: true
-                 *}
-                 */
+                params: {
+                    isActive: 1
+                }
             }
         };
 
