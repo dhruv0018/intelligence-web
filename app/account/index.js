@@ -62,8 +62,7 @@ Account.config([
                 parent: 'Account',
                 views: {
                     'content@Account': {
-                        templateUrl: 'account/terms-and-conditions.html',
-                        controller: 'Account.TermsAndConditions.controller'
+                        templateUrl: 'account/terms-and-conditions.html'
                     }
                 }
             })

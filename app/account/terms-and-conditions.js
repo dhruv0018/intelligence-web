@@ -19,18 +19,3 @@ Account.run([
         $templateCache.put(templateUrl, template);
     }
 ]);
-
-/**
- * Account controller.
- * @module Account
- * @name Account.TermsAndConditions.controller
- * @type {controller}
- */
-
-AccountTermsAndConditionsController.$inject = [];
-
-function AccountTermsAndConditionsController () {
-
-}
-
-Account.controller('Account.TermsAndConditions.controller', AccountTermsAndConditionsController);

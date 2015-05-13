@@ -86,6 +86,17 @@
         "Athlete": true
     },
 
+    "Account.TermsAndConditions": {
+
+        "!": true,
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
+    },
+
     "Account.RolesList": {
 
         "!": true,
