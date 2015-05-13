@@ -11,8 +11,8 @@
         </div>
 
         <div class="tags-list">
-            <span class="tag-selection-label" ng-show="filters.name">Create New Tag</span>
-            <p class="new-tag" ng-click="createNewTag(filters.name)" ng-show="filters.name">{{filters.name}}</p>
+            <span class="tag-selection-label" ng-show="filters.name && !tagAlreadyExists(filters.name)">Create New Tag</span>
+            <p class="new-tag" ng-click="createNewTag(filters.name)" ng-show="filters.name && !tagAlreadyExists(filters.name)">{{filters.name}}</p>
 
             <span class="tag-selection-label" ng-hide="filters.name">All Tags</span>
             <span class="tag-selection-label" ng-show="filters.name">Matching Tags</span>
