@@ -34,11 +34,11 @@
 
                                     <div class="btn-group-vertical">
 
-                                        <button type="button" data-ng-if="game.isRegular()" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.CONFERENCE.id" required>{{ GAME_TYPES.CONFERENCE.name }}</button>
-                                        <button type="button" data-ng-if="game.isRegular()" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.NON_CONFERENCE.id" required>{{ GAME_TYPES.NON_CONFERENCE.name }}</button>
-                                        <button type="button" data-ng-if="game.isRegular()" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.PLAYOFF.id" required>{{ GAME_TYPES.PLAYOFF.name }}</button>
-                                        <button type="button" data-ng-if="game.isNonRegular()" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.SCOUTING.id" required>{{ GAME_TYPES.SCOUTING.name }}</button>
-                                        <button type="button" data-ng-if="game.isNonRegular()" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.SCRIMMAGE.id" required>{{ GAME_TYPES.SCRIMMAGE.name }}</button>
+                                        <button type="button" data-ng-if="game.isRegular()" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.CONFERENCE.id" id="select-conference-cta" required>{{ GAME_TYPES.CONFERENCE.name }}</button>
+                                        <button type="button" data-ng-if="game.isRegular()" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.NON_CONFERENCE.id" id="select-non-conference-cta" required>{{ GAME_TYPES.NON_CONFERENCE.name }}</button>
+                                        <button type="button" data-ng-if="game.isRegular()" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.PLAYOFF.id" id="select-playoff-cta" required>{{ GAME_TYPES.PLAYOFF.name }}</button>
+                                        <button type="button" data-ng-if="game.isNonRegular()" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.SCOUTING.id" id="select-scouting-cta" required>{{ GAME_TYPES.SCOUTING.name }}</button>
+                                        <button type="button" data-ng-if="game.isNonRegular()" class="btn-radio" data-ng-model="game.gameType" data-btn-radio="GAME_TYPES.SCRIMMAGE.id" id="select-scrimmage-cta" required>{{ GAME_TYPES.SCRIMMAGE.name }}</button>
                                     </div>
 
                                 </div>
