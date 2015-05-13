@@ -1,7 +1,10 @@
 @import (reference) "main.less";
 
 .custom-tag-pills {
-    line-height: 26px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 
     .tag-pill {
         background-color: @brand-blue;
@@ -10,6 +13,7 @@
         padding: 4px;
         border-radius: 10px;
         margin-right: 5px;
+        margin-top: 5px;
         white-space: nowrap;
 
         .icon-remove {
