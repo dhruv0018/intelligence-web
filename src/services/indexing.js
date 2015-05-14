@@ -305,14 +305,14 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.clear();
             },
 
-            onEventSelect: function () {
+            onEventSelect: function (event) {
 
                 this.eventSelected = true;
                 this.isIndexing = true;
                 this.showTags = false;
                 this.showScript = true;
 
-                videoPlayer.seekTime(eventManager.current.time);
+                videoPlayer.seekTime(event.time);
             }
         };
 
