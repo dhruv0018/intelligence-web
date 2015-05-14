@@ -140,7 +140,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 let isAllowed = self.isSharedWithPublic() ||
                                 self.uploaderUserId === session.getCurrentUserId() ||
                                 (currentUser.is(ROLES.COACH) && self.uploaderTeamId === session.getCurrentTeamId()) ||
-                                self.isSharedWithUser() ||
+                                self.isSharedWithUser(session.getCurrentUser()) ||
                                 self.isSharedWithTeam();
 
                 return isAllowed;
