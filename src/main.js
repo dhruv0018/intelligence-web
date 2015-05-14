@@ -145,3 +145,5 @@ require('./aggregates');
 require('./values');
 
 require('./entities');
+
+require('./bootstrap');
