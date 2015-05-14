@@ -142,6 +142,14 @@ var ARENA_REGIONS = {
             name: 'PERIMETER',
             description: 'from the perimeter'
         }
+    },
+
+    VOLLEYBALL: {
+        'COURT': {
+            id: 10,
+            name: 'Court',
+            description: 'the court'
+        }
     }
 };
 
@@ -192,6 +200,11 @@ var ARENA_REGIONS_BY_ID = {
         id: 9,
         name: 'PERIMETER',
         description: 'from the perimeter'
+    },
+    10: {
+        id: 10,
+        name: 'Court',
+        description: 'the court'
     }
 };
 
