@@ -179,7 +179,8 @@ Indexing.config([
                             'right': true,
                             'enter': true,
                             'tab': true,
-                            'esc': true
+                            'esc': true,
+                            'backspace': true
                         };
 
                         var originalStopCallback = Mousetrap.stopCallback;
@@ -235,6 +236,18 @@ Indexing.config([
 
                             return false;
                         });
+
+                        //Used primarily to go back when indexing in fullscreen
+                        Mousetrap.bind('backspace', function() {
+
+                            $timeout(function() {
+
+                                indexing.back();
+
+                            }, 0);
+
+                            return false;
+                        });
                     }
                 ],
 
@@ -246,6 +259,7 @@ Indexing.config([
                         Mousetrap.unbind('enter');
                         Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
+                        Mousetrap.unbind('backspace');
                     }
                 ]
             });
