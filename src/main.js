@@ -147,3 +147,5 @@ require('./values');
 require('./entities');
 
 require('./bootstrap');
+
+import * as Brokers from './brokers/index';
