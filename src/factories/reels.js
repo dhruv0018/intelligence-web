@@ -158,10 +158,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return self.getList(reelIds);
             },
 
-            addPlay: function(play) {
-                if (this.plays.indexOf(play.id) === -1) {
-                    this.plays.push(play.id);
-                }
+            addPlays: function(playIds) {
+                playIds.forEach( playId => {
+                    if (this.plays.indexOf(playId) === -1) {
+                        this.plays.push(playId);
+                    }
+                });
             },
 
             updateDate: function() {
