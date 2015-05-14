@@ -139,3 +139,17 @@ select {
 
     -moz-appearance: none;
 }
+
+/* Tables */
+/* We don't want the table to scroll unless on mobile. This breaks things like
+ * the typehead on for rosters on game uploads. */
+
+.table-responsive {
+
+    overflow-x: visible;
+
+    @media (max-width: 1024px) {
+
+        overflow-x: auto;
+    }
+}
