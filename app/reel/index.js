@@ -105,6 +105,7 @@ Reel.config([
 
                         $state.go('Reel.Restricted', { id: reelId });
                     }
+
                 }
             ],
             onExit: [
