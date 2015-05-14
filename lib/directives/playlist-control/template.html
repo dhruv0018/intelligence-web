@@ -18,7 +18,7 @@
         <span class="off" ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
     </button>
 
-    <button hide class="btn btn-default">Add to Reel</button>
-    <button ng-show="selectedPlays.length" class="btn btn-default">Add Tag</button>
+    <button ng-show="selectedPlays.length && isTeamMember" class="btn btn-default">Add to Reel</button>
+    <button ng-show="selectedPlays.length && currentUser.is(ROLES.COACH) && isTeamMember" class="btn btn-default">Add Tag</button>
 
 </div>
