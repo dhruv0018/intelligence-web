@@ -7,9 +7,14 @@
             <div class="box-content row">
 
                 <header class="box-header col-md-12">
-
-                    <x-button-continue data-ng-disabled="formGameInfo.$invalid || game.isSaving || game.isFetching"><span data-ng-hide="game.isSaving || game.isFetching">Next</span><span data-ng-show="game.isSaving || game.isFetching">Saving game…</span></x-button-continue>
-
+                    <button data-ng-disabled="formGameInfo.$invalid || game.isSaving || game.isFetching"
+                            class="btn-submit-continue"
+                            id="game-info-next-tab-top-cta"
+                            data-ng-click="save()">
+                                <span ng-hide="game.isSaving || game.isFetching">Next</span>
+                                <span data-ng-show="game.isSaving || game.isFetching">Saving game…</span>
+                                <i class="icon icon-chevron-right pull-right"></i>
+                    </button>
                 </header>
 
                 <div class="box-body col-md-12">
@@ -189,7 +194,14 @@
 
             </div>
 
-            <x-button-continue data-ng-disabled="formGameInfo.$invalid || game.isSaving || game.isFetching"><span data-ng-hide="game.isSaving || game.isFetching">Next</span><span data-ng-show="game.isSaving || game.isFetching">Saving game…</span></x-button-continue>
+            <button data-ng-disabled="formGameInfo.$invalid || game.isSaving || game.isFetching"
+                    class="btn-submit-continue"
+                    id="game-info-next-tab-bottom-cta"
+                    data-ng-click="save()">
+                <span ng-hide="game.isSaving || game.isFetching">Next</span>
+                <span data-ng-show="game.isSaving || game.isFetching">Saving game…</span>
+                <i class="icon icon-chevron-right pull-right"></i>
+            </button>
 
             <a class="game-delete" data-ng-click="deleteGame()">
                 <i class="icon icon-remove"></i> Delete this game and all the data associated with it
