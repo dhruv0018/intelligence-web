@@ -78,6 +78,6 @@ function onTimeUpdate (timeUpdateEvent) {
     });
 }
 
-angular.$provide.factory('CurrentEventBroker', new CurrentEventBroker());
+angular.$provide.service('CurrentEventBroker', CurrentEventBroker);
 
 export default CurrentEventBroker;
