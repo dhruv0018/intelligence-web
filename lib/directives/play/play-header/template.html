@@ -55,12 +55,18 @@
         </div>
 
         <span
-            class="playplay"
             ng-click="viewAssociatedPlayContent(); videoPlayer.play()"
+            class="watch-play"
+            ng-hide="isIndexer"
             ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
             >
             <i class="icon icon-play-circle"></i>
         </span>
 
+        <span
+            class="play-chevron"
+        >
+            <i class="icon icon-chevron-right"></i>
+        </span>
     </div>
 </div>
