@@ -23,12 +23,16 @@
                 </td>
 
                 <td class="athlete-column">
-                    <input data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="First Name" data-ng-model="athlete.firstName">
+                    <input
+                        id="{{idHook}}-first-name-cta"
+                        data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="First Name" data-ng-model="athlete.firstName">
                     <span data-ng-if="team.isCustomerTeam"> {{athlete.firstName}}</span>
                 </td>
 
                 <td class="athlete-column">
-                    <input data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="Last Name" data-ng-model="athlete.lastName">
+                    <input
+                        id="{{idHook}}-last-name-cta"
+                        data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="Last Name" data-ng-model="athlete.lastName">
                     <span data-ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
                 </td>
 
