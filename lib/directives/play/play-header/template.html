@@ -1,7 +1,7 @@
 <div>
     <div class="playHeadingContainer">
         <div
-            ng-click="openPlay()"
+            ng-click="openPlay(play)"
             class="playHeading">
 
             <h4 ng-if="isIndexer">
@@ -55,9 +55,9 @@
         </div>
 
         <span
-            ng-click="viewAssociatedPlayContent(); videoPlayer.play()"
             class="watch-play"
             ng-hide="isIndexer"
+            ng-click="watchPlay(play)"
             ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
             >
             <i class="icon icon-play-circle"></i>
