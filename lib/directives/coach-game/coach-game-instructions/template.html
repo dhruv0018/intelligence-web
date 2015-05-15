@@ -23,7 +23,7 @@
 
                                 <div class="select-boxes col-md-12">
 
-                                    <button data-ng-show="hasRoster || game.isNonRegular()" type="button" class="btn-radio breakdown-choice breakdown-game" data-ng-disabled="remainingBreakdowns.planGamesRemaining <= 0 && remainingBreakdowns.packageGamesRemaining <= 0" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.READY_FOR_INDEXING.id">
+                                    <button id="non-regular-breakdown-cta" data-ng-show="hasRoster || game.isNonRegular()" type="button" class="btn-radio breakdown-choice breakdown-game" data-ng-disabled="remainingBreakdowns.planGamesRemaining <= 0 && remainingBreakdowns.packageGamesRemaining <= 0" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.READY_FOR_INDEXING.id">
 
                                         <i class="icon icon-bar-chart-o"></i>
                                         <div>
@@ -33,7 +33,7 @@
 
                                     </button>
 
-                                    <button data-ng-show="game.isRegular() && !hasRoster" type="button" class="btn-radio breakdown-game breakdown-choice no-roster" data-ng-disabled="true" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}">
+                                    <button id="regular-breakdown-cta" data-ng-show="game.isRegular() && !hasRoster" type="button" class="btn-radio breakdown-game breakdown-choice no-roster" data-ng-disabled="true" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}">
 
                                         <i class="icon icon-bar-chart-o"></i>
                                         <div>
