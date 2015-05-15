@@ -22,7 +22,7 @@
 
                             <td class="drag">
                                 <span><i class="icon icon-align-justify"></i> {{ $index+1 }}. {{ file.name }} — {{ file.size | bytes }}</span>
-                                <button class="btn-remove pull-right" data-ng-click="file.cancel()"><i class="icon icon-remove"></i></button>
+                                <button id="cancel-file-{{$index}}" class="btn-remove pull-right" data-ng-click="file.cancel()"><i class="icon icon-remove"></i></button>
                             </td>
 
 
