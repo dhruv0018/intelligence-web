@@ -25,5 +25,14 @@
                 ng-show="play.error"
                 ></i>
         </div>
+
+        <button
+            class="play-link"
+            ng-if="reelsActive && isTeamMember && isReelsPlay"
+            open-modal="AddReel.Modal"
+            modal-options="options"
+            >
+            <i class="icon icon-plus"></i> Add to reel
+        </button>
     </div>
 </div>
