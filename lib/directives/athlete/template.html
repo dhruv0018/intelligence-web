@@ -17,7 +17,9 @@
                     <profile-placeholder data-size="small"></profile-placeholder>
                 </td>
                 <td class="athlete-column">
-                    <input size="3" data-ng-change="updateAthleteInformation()" name="jerseyNumber" type="text" data-ng-model="rosterEntry.playerInfo.jerseyNumber">
+                    <input size="3"
+                           id="{{idHook}}-jersey-cta"
+                           data-ng-change="updateAthleteInformation()" name="jerseyNumber" type="text" data-ng-model="rosterEntry.playerInfo.jerseyNumber">
                 </td>
 
                 <td class="athlete-column">
