@@ -4,7 +4,8 @@
         "."
     ],
     "locals": [
-        "terms-dialog"
+        "terms-dialog",
+        "arena-dialog"
     ],
     "scripts": [
         "index.js"

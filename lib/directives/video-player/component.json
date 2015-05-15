@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "video-player-seeking-controls",
         "button-video-fast-forward",
         "button-video-fast-backward",
         "button-video-slow-forward",
