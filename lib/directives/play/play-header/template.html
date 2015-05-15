@@ -55,11 +55,14 @@
         </div>
 
         <span
-            class="playplay"
-            ng-click="viewAssociatedPlayContent(); videoPlayer.play()"
-            ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
-            >
+         id="play-play-cta"
+         class="playplay"
+         ng-click="viewAssociatedPlayContent(); videoPlayer.play()"
+         ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
+        >
+
             <i class="icon icon-play-circle"></i>
+
         </span>
 
     </div>
