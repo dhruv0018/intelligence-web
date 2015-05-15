@@ -29,7 +29,6 @@ function TelestrationsVideoPlayerBrokerFactory(
             // Bind Private functions
             setupHandlers.bind(this);
             handleInitialStateChange.bind(this);
-            onGlyphsVisible.bind(this);
             onFullScreen.bind(this);
 
             setupHandlers();
@@ -38,14 +37,12 @@ function TelestrationsVideoPlayerBrokerFactory(
 
         cleanup () {
 
-            TelestrationsEventEmitter.removeListener(TELESTRATION_EVENTS.ON_GLYPHS_VISIBLE, onGlyphsVisible);
             VideoPlayerEventEmitter.removeListener(VIDEO_PLAYER_EVENTS.FULLSCREEN, onFullScreen);
         }
     }
 
     function setupHandlers () {
 
-        TelestrationsEventEmitter.on(TELESTRATION_EVENTS.ON_GLYPHS_VISIBLE, onGlyphsVisible);
         VideoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.FULLSCREEN, onFullScreen);
     }
 
@@ -58,11 +55,6 @@ function TelestrationsVideoPlayerBrokerFactory(
             Telestrations.show();
             VideoPlayerEventEmitter.removeListener(VIDEO_PLAYER_EVENTS.ON_PLAY, onVideoPlayerInitialPlay);
         }
-    }
-
-    function onGlyphsVisible() {
-
-        VideoPlayer.pause();
     }
 
     function onFullScreen(event) {
