@@ -18,13 +18,6 @@
         >
         </vg-media>
 
-        <div class="seeking-indicators">
-            <span class="seeking-indicator ng-hide fbkwd">&#8211;2x speed</span>
-            <span class="seeking-indicator ng-hide sbkwd">&#8211;0.5x speed</span>
-            <span class="seeking-indicator ng-hide sfwd">0.5x speed</span>
-            <span class="seeking-indicator ng-hide ffwd">2x speed</span>
-        </div>
-
         <vg-controls>
 
             <vg-scrub-bar>
@@ -46,7 +39,7 @@
 
                 </div>
 
-                <div class="controls-center">
+                <div class="controls-center" video-player-seeking-controls>
 
                     <button-video-step-backward
                         ng-show="userIsIndexer"
