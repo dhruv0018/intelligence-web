@@ -20,9 +20,14 @@ const IntelligenceWebClient = angular.module(pkg.name);
 
 class CurrentEventBroker extends Broker {
 
-    constructor () {
+    retain () {
 
         videoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.ON_TIME_UPDATE, onTimeUpdate);
+    }
+
+    resign () {
+
+        videoPlayerEventEmitter.removeListener(VIDEO_PLAYER_EVENTS.ON_TIME_UPDATE, onTimeUpdate);
     }
 }
 
