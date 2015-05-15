@@ -35,9 +35,11 @@
                     <button data-ng-if="!isUserTeam" class="remove btn btn-blank pull-right" data-ng-click="toggle(rosterEntry)"><i class="icon icon-remove"></i></button>
                 </td>
 
-                <td class="athlete-column" data-ng-if="isUserTeam" data-ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
-                    <i class="icon icon-check-square-o" data-ng-show="!rosterEntry.playerInfo.isActive"></i>
-                    <i class="icon icon-check-empty" data-ng-show="rosterEntry.playerInfo.isActive"></i>
+                <td class="athlete-column"
+                    data-ng-if="isUserTeam"
+                    data-ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
+                    <i id="{{idHook}}-toggle-activation-off-cta" class="icon icon-check-square-o" data-ng-show="!rosterEntry.playerInfo.isActive"></i>
+                    <i id="{{idHook}}-toggle-activation-on-cta" class="icon icon-check-empty" data-ng-show="rosterEntry.playerInfo.isActive"></i>
                 </td>
             </tr>
         </table>
