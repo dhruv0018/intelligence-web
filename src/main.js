@@ -53,6 +53,7 @@ require('./services/analytics');
 
 require('./constants/users');
 require('./constants/games');
+require('./constants/event');
 require('./constants/events');
 require('./constants/schools');
 require('./constants/videos');
