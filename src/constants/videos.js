@@ -75,4 +75,42 @@ const TRANSCODE_PROFILES = {
 
 IntelligenceWebClient.constant('TRANSCODE_PROFILES', TRANSCODE_PROFILES);
 
-export {VIDEO_STATUS_IDS, VIDEO_STATUSES};
+/**
+ * @constant
+ * Specifies the current seeking state for the video player.
+ * @type {Number}
+*/
+
+const SEEKING_STATES = {
+
+    NOT_SEEKING: 0,
+    FAST_BACKWARD: 1,
+    SLOW_BACKWARD: 2,
+    SLOW_FORWARD: 3,
+    FAST_FORWARD: 4
+};
+
+IntelligenceWebClient.constant('SEEKING_STATES', SEEKING_STATES);
+
+/**
+ * @constant
+ * Used to determine the video player's play/pause state after a seeking
+ * function is complete. For instance, if the video was playing and user
+ * initiated backward seeking, on seeking complete, the player should resume
+ * playback: PLAYBACK_RESUME_STATES.RESUME === 1.
+ * @type {Number}
+*/
+
+const PLAYBACK_RESUME_STATES = {
+
+    /** Do nothing if seeking state changes from outside (videogular play/pause)  */
+    DEFAULT: 0,
+    /** Set the player to play after seeking complete */
+    RESUME: 1,
+    /** Set the player to pause after seeking complete */
+    PAUSE: 2
+};
+
+IntelligenceWebClient.constant('PLAYBACK_RESUME_STATES', PLAYBACK_RESUME_STATES);
+
+export {VIDEO_STATUS_IDS, VIDEO_STATUSES, TRANSCODE_PROFILES_IDS, TRANSCODE_PROFILES, SEEKING_STATES, PLAYBACK_RESUME_STATES};
