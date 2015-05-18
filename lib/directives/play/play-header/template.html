@@ -1,7 +1,8 @@
 <div>
     <div class="playHeadingContainer">
+        <check-box feature="playSelection" ng-if="currentUser.is(ROLES.COACH) && !isReelsPlay" checked="play.isSelected" ng-click="togglePlaySelection($event, play)"></check-box>
         <div
-            ng-click="openPlay()"
+            ng-click="expandPlay()"
             class="playHeading">
 
             <h4 ng-if="isIndexer">

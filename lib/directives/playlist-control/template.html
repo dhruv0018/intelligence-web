@@ -1,11 +1,24 @@
 <div class="krossover-playlist-control">
 
-    <span>Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
+    <span hide>Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
 
-    <button class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
+    <div class="select-all" feature="playSelection" ng-show="plays.length">
+        <check-box
+            ng-click="toggleSelectAllPlays()"
+            checked="selectedPlays.length === plays.length"
+            indeterminate="selectedPlays.length > 0 && selectedPlays.length < plays.length">
+        </check-box>
+        <span ng-show="!selectedPlays.length">Select All</span>
+        <span ng-show="selectedPlays.length">{{selectedPlays.length}} Selected</span>
+    </div>
+
+    <button ng-hide="selectedPlays.length" class="play-all-plays" ng-click="playManager.playAllPlays = !playManager.playAllPlays">
         <span class="play-all-text">Continuous Play</span>
-        <span class="on" data-ng-class="{chosen: playManager.playAllPlays}">ON</span>
-        <span class="off" data-ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
+        <span class="on" ng-class="{chosen: playManager.playAllPlays}">ON</span>
+        <span class="off" ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
     </button>
+
+    <button hide class="btn btn-default">Add to Reel</button>
+    <button ng-show="selectedPlays.length" class="btn btn-default">Add Tag</button>
 
 </div>
