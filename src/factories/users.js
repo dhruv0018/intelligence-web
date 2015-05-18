@@ -80,6 +80,13 @@ IntelligenceWebClient.factory('UsersFactory', [
                 }
                 */
 
+                // TODO: Implement using List
+                // Populate user subscriptions array with Subscription entities
+                user.subscriptions =
+                    user.subscriptions ?
+                    user.subscriptions.map(subscription => new Subscription(subscription)) :
+                    [];
+
                 /* Copy all of the properties from the retrieved $resource
                  * "user" object. */
                 angular.extend(user, self);
