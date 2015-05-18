@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities',
-    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils) {
+    '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities',
+    function($injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils) {
 
         var PlaysFactory = {
 
@@ -159,6 +159,15 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         return source;
                     }
                 }
+            },
+
+            // TODO: move to list modelling
+            batchSave: function(plays) {
+                let model = $injector.get(this.model);
+                let parameters = {};
+                let batchUpdate = model.batchUpdate(parameters, plays);
+
+                return  batchUpdate.$promise;
             }
         };
 

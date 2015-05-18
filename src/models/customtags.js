@@ -30,6 +30,12 @@ IntelligenceWebClient.factory('CustomtagsResource', [
                 params: {
                     isActive: 1
                 }
+            },
+
+            batchUpdate: {
+                method: 'POST',
+                url: config.api.uri + 'custom-tags/batch',
+                isArray: true
             }
         };
 

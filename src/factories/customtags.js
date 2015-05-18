@@ -6,8 +6,12 @@ const angular = window.angular;
 const IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('CustomtagsFactory', [
+    '$injector',
+    '$q',
     'BaseFactory',
     function(
+        $injector,
+        $q,
         BaseFactory
     ) {
 
@@ -18,6 +22,26 @@ IntelligenceWebClient.factory('CustomtagsFactory', [
             model: 'CustomtagsResource',
 
             storage: 'CustomtagsStorage',
+
+            // TODO: move to list modelling
+            batchSave: function(customTags) {
+
+                let model = $injector.get(this.model);
+                let storage = $injector.get(this.storage);
+                let promises = customTags.map(tag => tag.save());
+
+
+                return $q.all(promises).then(function() {
+                    return customTags.map(tag => storage.get(tag.id));
+                });
+
+                /* FIXME: use this when batch saving is in back end
+                 *let parameters = {};
+                 *let batchUpdate = model.batchUpdate(parameters, customTags);
+                 *
+                 *return  batchUpdate.$promise;
+                 */
+            }
 
         };
 

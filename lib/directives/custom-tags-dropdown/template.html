@@ -1,4 +1,8 @@
 <div class="custom-tags-dropdown dropdown" dropdown is-open="status.isopen">
+    <div hide class="add-tag-success">
+        <i class="icon icon-ok"></i>
+        Tag(s) applied
+    </div>
     <button class="btn btn-default dropdown-toggle" ng-class="{'btn-default': !status.isopen, 'btn-primary': status.isopen}" dropdown-toggle>Add Tag</button>
     <div class="tags-dropdown-menu dropdown-menu" ng-click="$event.stopPropagation()">
         <div class="selected-tags" ng-hide="!selectedTags.length">
@@ -24,7 +28,8 @@
 
         <div class="tag-action-buttons">
             <a href ng-click="cancelTagging(); status.isopen = false">Cancel</a>
-            <a href class="pull-right">Apply</a>
+            <a href class="pull-right" ng-show="selectedTags.length" ng-click="applyTags(); status.isopen = false">Apply</a>
+            <span class="pull-right" ng-hide="selectedTags.length">Apply</span>
         </div>
     </div>
 </div>
