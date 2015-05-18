@@ -7,6 +7,7 @@
     "locals": [
         "modals",
         "filters",
-        "directives"
+        "directives",
+        "dialogs"
     ]
 }
