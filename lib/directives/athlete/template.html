@@ -13,26 +13,69 @@
                                'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}"
                class="table">
             <tr>
+
                 <td class="athlete-column" data-ng-if="team.isCustomerTeam">
+
                     <profile-placeholder data-size="small"></profile-placeholder>
-                </td>
-                <td class="athlete-column">
-                    <input size="3" data-ng-change="updateAthleteInformation()" name="jerseyNumber" type="text" data-ng-model="rosterEntry.playerInfo.jerseyNumber">
+
                 </td>
 
                 <td class="athlete-column">
-                    <input data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="First Name" data-ng-model="athlete.firstName">
+
+                    <input
+                     size="3"
+                     data-ng-change="updateAthleteInformation()"
+                     name="jerseyNumber"
+                     type="text"
+                     data-ng-model="rosterEntry.playerInfo.jerseyNumber"
+                     data-ng-disabled="!rosterEntry.playerInfo.isActive">
+
+                </td>
+
+                <td class="athlete-column">
+
+                    <input
+                     data-ng-change="updateAthleteInformation()"
+                     data-ng-if="!team.isCustomerTeam"
+                     class="name"
+                     placeholder="First Name"
+                     data-ng-model="athlete.firstName"
+                     data-ng-disabled="!rosterEntry.playerInfo.isActive">
+
                     <span data-ng-if="team.isCustomerTeam"> {{athlete.firstName}}</span>
+
                 </td>
 
                 <td class="athlete-column">
-                    <input data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="Last Name" data-ng-model="athlete.lastName">
+
+                    <input
+                     data-ng-change="updateAthleteInformation()"
+                     data-ng-if="!team.isCustomerTeam"
+                     class="name"
+                     placeholder="Last Name"
+                     data-ng-model="athlete.lastName"
+                     data-ng-disabled="!rosterEntry.playerInfo.isActive">
+
                     <span data-ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
+
                 </td>
 
                 <td class="athlete-column">
-                    <data-positions-dropdown data-ng-model="rosterEntry.playerInfo" data-player="athlete" data-positionset="positionset"></data-positions-dropdown>
-                    <button data-ng-if="!isUserTeam" class="remove btn btn-blank pull-right" data-ng-click="toggle(rosterEntry)"><i class="icon icon-remove"></i></button>
+
+                    <data-positions-dropdown
+                     data-ng-model="rosterEntry.playerInfo"
+                     data-player="athlete"
+                     data-positionset="positionset"></data-positions-dropdown>
+
+                    <button
+                     data-ng-if="!isUserTeam"
+                     class="remove btn btn-blank pull-right"
+                     data-ng-click="toggle(rosterEntry)">
+
+                        <i class="icon icon-remove"></i>
+
+                    </button>
+
                 </td>
 
                 <td class="athlete-column" data-ng-if="isUserTeam" data-ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">

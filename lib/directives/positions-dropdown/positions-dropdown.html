@@ -1,7 +1,14 @@
 <div class="positions-dropdown-container btn-group">
 
-    <button type="button" class="btn btn-default dropdown-toggle" data-ng-click="toggleSelect()" data-ng-disabled="!playerInfo.isActive" data-ng-class="{'error': !valid()}">
+    <button
+     type="button"
+     class="btn btn-default dropdown-toggle"
+     ng-click="toggleSelect()"
+     ng-disabled="playerInfo && !playerInfo.isActive"
+     ng-class="{'error': !valid()}">
+
         <span data-ng-show="playerInfo.positionIds.length" class="position-label" data-ng-repeat="positionId in playerInfo.positionIds">{{indexedPositions[positionId].name}}<span data-ng-if="!$last">,</span></span><span data-ng-show="!playerInfo.positionIds.length">Select Position</span> <span class="caret"></span>
+
     </button>
 
     <ul class="dropdown-menu">
