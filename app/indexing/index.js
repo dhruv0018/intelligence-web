@@ -180,7 +180,7 @@ Indexing.config([
                             'enter': true,
                             'tab': true,
                             'esc': true,
-                            'backspace': true
+                            'shift+backspace': true
                         };
 
                         var originalStopCallback = Mousetrap.stopCallback;
@@ -238,7 +238,7 @@ Indexing.config([
                         });
 
                         //Used primarily to go back when indexing in fullscreen
-                        Mousetrap.bind('backspace', function() {
+                        Mousetrap.bind('shift+backspace', function() {
 
                             $timeout(function() {
 
@@ -259,7 +259,7 @@ Indexing.config([
                         Mousetrap.unbind('enter');
                         Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
-                        Mousetrap.unbind('backspace');
+                        Mousetrap.unbind('shift+backspace');
                     }
                 ]
             });
