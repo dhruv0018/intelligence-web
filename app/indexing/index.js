@@ -206,33 +206,21 @@ Indexing.config([
 
                         Mousetrap.bind('enter', function() {
 
-                            $timeout(function() {
-
-                                indexing.index();
-
-                            }, 0);
+                            $timeout(() => indexing.index());
 
                             return false;
                         });
 
                         Mousetrap.bind('tab', function() {
 
-                            $timeout(function() {
-
-                                indexing.step();
-
-                            }, 0);
+                            $timeout(() => indexing.step());
 
                             return false;
                         });
 
                         Mousetrap.bind('esc', function() {
 
-                            $timeout(function() {
-
-                                indexing.back();
-
-                            }, 0);
+                            $timeout(() => indexing.back());
 
                             return false;
                         });
@@ -240,11 +228,7 @@ Indexing.config([
                         //Used primarily to go back when indexing in fullscreen
                         Mousetrap.bind('shift+backspace', function() {
 
-                            $timeout(function() {
-
-                                indexing.back();
-
-                            }, 0);
+                            $timeout(() => indexing.back());
 
                             return false;
                         });
