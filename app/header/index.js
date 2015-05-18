@@ -89,8 +89,8 @@ Header.factory('Header.Data.Dependencies', [
  * @type {Controller}
  */
 Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'UsersFactory', 'LeaguesFactory', 'TeamsFactory', 'SPORTS',
-    function controller(config, $scope, $state, auth, session, account, ROLES, users, leagues, teams, SPORTS) {
+    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'UsersFactory', 'LeaguesFactory', 'TeamsFactory', 'SPORTS', 'SUBSCRIPTIONS',
+    function controller(config, $scope, $state, auth, session, account, ROLES, users, leagues, teams, SPORTS, SUBSCRIPTIONS) {
 
         $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
         $scope.ADMIN = ROLES.ADMIN;
@@ -105,10 +105,18 @@ Header.controller('HeaderController', [
         $scope.session = session;
         $scope.account = account;
 
+        let currentUser = session.currentUser;
+        let subscriptions = currentUser.subscriptions;
+
+        // user.subscriptions is guaranteed to be descending by expiration date
+        $scope.currentUserIsAthleteRecruit =
+            (subscriptions.length > 0) &&
+            (subscriptions[0].is(SUBSCRIPTIONS.ATHLETE_RECRUIT));
+
         //TEMP - get sport id to show Analytics tab for FB only
         if (auth.isLoggedIn) {
-            if (session.currentUser.is(ROLES.COACH)) {
-                var team = teams.get(session.currentUser.currentRole.teamId);
+            if (currentUser.is(ROLES.COACH)) {
+                var team = teams.get(currentUser.currentRole.teamId);
                 $scope.league = leagues.get(team.leagueId);
                 $scope.SPORTS = SPORTS;
             }
