@@ -64,3 +64,27 @@
         display: none !important;
     }
 }
+
+/*******************************************************
+* Responsive Block Mixins
+********************************************************/
+
+// Mobile screens (less than 1024px wide)
+.mobile (@rules; @maxWidth: @screen-lg - 1) {
+
+    @media only screen
+    and (max-width: @maxWidth) {
+
+        @rules();
+    }
+}
+
+// Desktop screens (1024px and up)
+.desktop (@rules; @minWidth: @screen-lg) {
+
+    @media only screen
+    and (min-width: @minWidth) {
+
+        @rules();
+    }
+}

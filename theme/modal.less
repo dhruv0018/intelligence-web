@@ -94,8 +94,7 @@ md-backdrop.md-opaque.md-default-theme {
 md-dialog.md-default-theme {
 
     /* Screens less than this size */
-    @media only screen
-    and (max-width: 1023px) {
+    .mobile({
 
         display: block;
         max-width: 100%;
@@ -104,5 +103,5 @@ md-dialog.md-default-theme {
         height: 100%;
         border-radius: 0;
         box-shadow: none;
-    }
+    });
 }
