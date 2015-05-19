@@ -23,6 +23,8 @@ require('./config');
 
 require('./app');
 
+require('./features');
+
 require('./utilities');
 require('./indexeddb');
 require('./flow');
