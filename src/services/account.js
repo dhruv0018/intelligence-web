@@ -23,8 +23,7 @@ AccountService.$inject = [
     '$rootScope',
     '$state',
     '$q',
-    'SessionService',
-    'TermsDialog.Service'
+    'SessionService'
 ];
 
 function AccountService (
@@ -33,8 +32,7 @@ function AccountService (
     $rootScope,
     $state,
     $q,
-    session,
-    TermsDialog
+    session
 ) {
 
     return {
@@ -174,7 +172,7 @@ function AccountService (
                 return false;
             } else {
 
-                return true;
+                return false;
             }
         }
     };
