@@ -34,6 +34,9 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 play.indexedScore = play.indexedScore || 0;
                 play.opposingIndexedScore = play.opposingIndexedScore || 0;
 
+                /* If play has no custom tags, set it to an empty array */
+                play.customTagIds = play.customTagIds || [];
+
                 /* Indicates if the play has visible events; set by the events. */
                 play.hasVisibleEvents = false;
 
