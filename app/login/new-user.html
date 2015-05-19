@@ -1,6 +1,11 @@
 <div class="login-new-user">
 
-    <form class="form-new-user" name="newUserForm" role="form" data-ng-submit="submitNewUserPassword()" novalidate>
+    <form
+     class="form-new-user"
+     name="newUserForm"
+     role="form"
+     ng-submit="submitNewUserPassword()"
+     novalidate>
 
         <div class="form-group">
 
@@ -13,17 +18,37 @@
 
             <div class="form-group">
 
-                <input id="new-user-password" class="form-field-login" name="password" ng-attr-type="{{newUser.showPassword ? 'text' : 'password'}}" data-ng-minlength="4" placeholder="New Password" data-ng-model="newUser.password" data-ng-trim="false" data-errors="{ required: 'Required!', minlength: 'Password must be at least 4 characters long.'}" oncopy="return false;" onpaste="return false;" required>
+                <input
+                 id="new-user-password"
+                 class="form-field-login"
+                 name="password"
+                 ng-attr-type="{{newUser.showPassword ? 'text' : 'password'}}"
+                 ng-minlength="4"
+                 placeholder="New Password"
+                 ng-model="newUser.password"
+                 ng-trim="false"
+                 data-errors="{ required: 'Required!', minlength: 'Password must be at least 4 characters long.'}"
+                 oncopy="return false;"
+                 onpaste="return false;"
+                 required>
 
             </div>
 
-            <button id="show-hide-password" class="show-hide-password" ng-click="newUser.showPassword = !newUser.showPassword;" type="button">{{newUser.showPassword ? 'Hide' : 'Show'}}</button>
+            <button
+             id="show-hide-password"
+             class="show-hide-password"
+             ng-click="newUser.showPassword = !newUser.showPassword;"
+             type="button">{{newUser.showPassword ? 'Hide' : 'Show'}}</button>
 
         </div>
 
         <div class="form-group">
 
-            <div id="new-user-agree" class="modal-cta" data-ng-click="newUser.agree = !newUser.agree;" data-ng-class="{'modal-cta-selected': newUser.agree}">
+            <div
+             id="new-user-agree"
+             class="modal-cta"
+             ng-click="newUser.agree = !newUser.agree;"
+             ng-class="{'modal-cta-selected': newUser.agree}">
 
                 <form-toggle
                  name="remember"
@@ -35,13 +60,22 @@
 
                 </form-toggle>
 
+                <a
+                 href="https://twitter.com/krossovr"
+                 class="twitter-follow-button"
+                 data-show-count="false"
+                 data-size="large">Follow @krossovr</a>
+
             </div>
 
         </div>
 
         <div class="form-group">
 
-            <button class="button-set-password" type="submit" data-ng-disabled="newUserForm.$invalid || newUser.submitted">
+            <button
+             class="button-set-password"
+             type="submit"
+             ng-disabled="newUserForm.$invalid || newUser.submitted">
 
                 <span data-ng-hide="newUser.submitted">Go to your account</span>
                 <span data-ng-show="newUser.submitted">Submitting...</span>
