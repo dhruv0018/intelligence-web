@@ -55,6 +55,14 @@
             </div>
         </div>
 
+        <i class="icon icon-tag pull-right" ng-hide="
+                                                isIndexer ||
+                                                isReelsPlay ||
+                                                !play.customTagIds.length ||
+                                                !isTeamMember || 
+                                                play === playManager.current ||
+                                                showPlayBody"></i>
+
         <span
             class="playplay"
             ng-click="viewAssociatedPlayContent(); videoPlayer.play()"

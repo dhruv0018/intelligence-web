@@ -20,7 +20,7 @@
 
     <button ng-show="selectedPlays.length && isTeamMember" class="btn btn-default" open-modal="AddReel.Modal" modal-options="options">Add to Reel</button>
 
-    <custom-tags-dropdown ng-show="selectedPlays.length && !confirmTagSave" plays="selectedPlays"></custom-tags-dropdown>
+    <custom-tags-dropdown ng-show="selectedPlays.length && isTeamMember && currentUser.is(ROLES.COACH)" plays="selectedPlays"></custom-tags-dropdown>
 
     <div ng-show="confirmTagSave" class="add-tag-success">
         <i class="icon icon-ok"></i>
