@@ -10,3 +10,9 @@ const PLAYLIST_EVENTS = {
 };
 
 IntelligenceWebClient.constant('PLAYLIST_EVENTS', PLAYLIST_EVENTS);
+
+const CUSTOM_TAGS_EVENTS = {
+    SAVE: 'SAVE'
+};
+
+IntelligenceWebClient.constant('CUSTOM_TAGS_EVENTS', CUSTOM_TAGS_EVENTS);
