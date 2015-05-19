@@ -24,9 +24,13 @@
 
         </ul>
 
-        <hr class="summaryBodyDivider">
+        <hr class="summaryBodyDivider" ng-show="isIndexer || isReelsPlay || play.customTagIds.length">
 
-        <play-footer></play-footer>
+        <play-footer ng-show="
+                            expandAll ||
+                            play === playManager.current ||
+                            isIndexer">
+        </play-footer>
 
     </div>
 
