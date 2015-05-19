@@ -5,6 +5,7 @@
     ],
     "locals": [
         "terms-dialog",
+        "mobile-app-dialog",
         "arena-dialog"
     ],
     "scripts": [
