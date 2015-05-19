@@ -73,7 +73,8 @@
         "role-class",
         "spinner",
         "check-box",
-        "terms-and-conditions"
+        "terms-and-conditions",
+        "form-toggle"
     ],
     "scripts": [
         "index.js"
