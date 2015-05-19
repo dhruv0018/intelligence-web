@@ -16,8 +16,38 @@ IntelligenceWebClient.config([
 IntelligenceWebClient.value('$previousState', {});
 
 IntelligenceWebClient.run([
-    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', '$previousState', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService', 'AccountService', 'TermsDialog.Service',
-    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, $previousState, tokens, auth, authz, session, alerts, account, TermsDialog) {
+    'ANONYMOUS_USER',
+    '$rootScope',
+    '$urlRouter',
+    '$state',
+    '$stateParams',
+    '$previousState',
+    'TokensService',
+    'AuthenticationService',
+    'AuthorizationService',
+    'SessionService',
+    'AlertsService',
+    'AccountService',
+    'TermsDialog.Service',
+    'MobileAppDialog.Service',
+    'DetectDeviceService',
+    function run(
+        ANONYMOUS_USER,
+        $rootScope,
+        $urlRouter,
+        $state,
+        $stateParams,
+        $previousState,
+        tokens,
+        auth,
+        authz,
+        session,
+        alerts,
+        account,
+        TermsDialog,
+        MobileAppDialog,
+        detectDevice
+    ) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -114,6 +144,9 @@ IntelligenceWebClient.run([
                 // Prompt user to accept the new Terms & Conditions.
                 TermsDialog.show(true)
                 .then(function saveUserTermsAcceptedDate () {
+
+                    /* Promote Mobile Apps */
+                    if (detectDevice.any()) MobileAppDialog.show();
 
                     user.termsAcceptedDate = new Date().toISOString();
                     user.save();
