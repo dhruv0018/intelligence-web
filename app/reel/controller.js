@@ -130,7 +130,7 @@ function ReelController(
     // DEFAULT RESTRICTION
     let reelsPermissions = REELS_PERMISSIONS.VIEWABLE;
 
-    if (isTeamUploadersTeam && isCoach) {
+    if (isTeamUploadersTeam && isCoach || isUploader) {
 
         reelsPermissions = REELS_PERMISSIONS.EDITABLE;
     }
