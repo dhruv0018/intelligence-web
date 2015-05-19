@@ -30,18 +30,11 @@
 
         <button
             class="play-link"
-            ng-if="reelsActive && isTeamMember"
+            ng-if="reelsActive && isTeamMember && isReelsPlay"
             open-modal="AddReel.Modal"
             modal-options="options"
             >
             <i class="icon icon-plus"></i> Add to reel
-        </button>
-
-        <button
-            class="play-link pull-right disabled ng-hide"
-            ng-if="!isIndexer"
-            >
-            <i class="icon icon-tag"></i> Label Play
         </button>
     </div>
 </div>
