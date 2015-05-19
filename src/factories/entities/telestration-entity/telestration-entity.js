@@ -2,8 +2,8 @@
 /* TelestrationEntity - Abstract Class*/
 
 module.exports = [
-    'ArrayEntity', 'TelestrationValue', 'ExtendTelestrationValue', 'CUEPOINT_TYPES',
-    function(arrayEntity, TelestrationValue, ExtendTelestrationValue, CUEPOINT_TYPES) {
+    'ArrayEntity', 'TelestrationValue', 'ExtendTelestrationValue', 'CUEPOINT_CONSTANTS',
+    function(arrayEntity, TelestrationValue, ExtendTelestrationValue, CUEPOINT_CONSTANTS) {
 
         var TelestrationEntity = function TelestrationEntity() {
 
@@ -30,7 +30,7 @@ module.exports = [
             * getTelestrationCuePoints
             * @param playId (optional)
             */
-            this.getTelestrationCuePoints = function getTelestrationCuePoints(playId) {
+            this.getTelestrationCuePoints = function getTelestrationCuePoints(playId, playAbsoluteStartTime = 0) {
 
                 if (!this.length) return [];
 
@@ -49,15 +49,15 @@ module.exports = [
 
                 cuePoints = filteredTelestrations.map(function(telestration) {
 
+                    // Cuepoint times are relative to the play if the playAbsoluteStartTime is specified
                     return {
-                        time: telestration.time,
-                        type: CUEPOINT_TYPES.TELESTRATION
+                        time: Math.abs(playAbsoluteStartTime - telestration.time),
+                        type: CUEPOINT_CONSTANTS.TYPES.TELESTRATION
                     };
                 });
 
                 return cuePoints;
             };
-
         };
 
         var extendTelestrationEntityModel = function extendTelestrationEntityModel(telestrationEntityModel) {

@@ -7,8 +7,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'ROLES', 'Utilities', 'BaseFactory', 'SessionService', 'ReelTelestrationEntity', 'CUEPOINT_TYPES',
-    function(ROLES, utilities, BaseFactory, session, reelTelestrationEntity, CUEPOINT_TYPES) {
+    'ROLES', 'Utilities', 'BaseFactory', 'SessionService', 'ReelTelestrationEntity',
+    function(ROLES, utilities, BaseFactory, session, reelTelestrationEntity) {
 
         var ReelsFactory = {
 
@@ -57,15 +57,15 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 /* Create a copy of the resource to break reference to original. */
 
-                let copy = {};
+                let copy = Object.assign({}, reel);
 
-                delete reel.$promise; // cannot stringify a circular object, thus remove
+                // Remove circular object that cannot be stringified before PUT request
+                delete copy.$promise;
 
-                // Unextend any children objects, and copy other attributes. TODO: Add validation to children
-                Object.keys(reel).forEach(function assignCopies(key) {
+                // Unextend any children objects
+                Object.keys(copy).forEach(function assignCopies(key) {
 
-                    if (reel[key] && reel[key].unextend) copy[key] = reel[key].unextend();
-                    else if (reel[key] && typeof reel[key] !== 'function') copy[key] = JSON.parse(JSON.stringify(reel[key]));
+                    if (copy[key] && copy[key].unextend) copy[key] = copy[key].unextend();
                 });
 
                 return copy;

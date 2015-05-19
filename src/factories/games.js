@@ -30,28 +30,27 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 /* Create a copy of the resource to break reference to original. */
 
-                let copy = {};
+                let copy = Object.assign({}, game);
 
-                /* remove non-stringifiable circular objects */
-                delete game.$promise;
-                delete game.flow;
+                // remove attributes that are circular
+                delete copy.$promise;
+                delete copy.flow;
 
                 // copy share attributes that rely on game functions.
                 // TODO: This sharing copying should not have to be done. It should model reels implementation.
 
-                if (game.isSharedWithPublic()) {
-                    game.shares.push(game.publicShare);
+                if (copy.isSharedWithPublic()) {
+                    copy.shares.push(copy.publicShare);
                 }
 
-                game.shares.forEach(function(share) {
-                    share.isBreakdownShared = JSON.parse(share.isBreakdownShared);
+                copy.shares.forEach(function(share) {
+                    copy.isBreakdownShared = JSON.parse(share.isBreakdownShared);
                 });
 
-                // Unextend any children objects, and copy other attributes. TODO: Add validation to children
-                Object.keys(game).forEach(function assignCopies(key) {
+                // Unextend any children objects
+                Object.keys(copy).forEach(function assignCopies(key) {
 
-                    if (game[key] && game[key].unextend) copy[key] = game[key].unextend();
-                    else if (game[key] && typeof game[key] !== 'function') copy[key] = JSON.parse(JSON.stringify(game[key]));
+                    if (copy[key] && copy[key].unextend) copy[key] = copy[key].unextend();
                 });
 
                 return copy;
