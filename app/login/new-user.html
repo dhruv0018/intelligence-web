@@ -25,8 +25,15 @@
 
             <div id="new-user-agree" class="modal-cta" data-ng-click="newUser.agree = !newUser.agree;" data-ng-class="{'modal-cta-selected': newUser.agree}">
 
-                <check-box checked="newUser.agree" form="true" required="true"></check-box>
-                <span>I agree to the <a data-ng-click="showTerms($event);">Krossover Terms &amp; Conditions</a></span>
+                <form-toggle
+                 name="remember"
+                 data-id="new-user-accept-terms-cta"
+                 data-required="true"
+                 model="newUser.agree">
+
+                    I agree to the <a data-ng-click="showTerms($event);">Krossover Terms &amp; Conditions</a>
+
+                </form-toggle>
 
             </div>
 
