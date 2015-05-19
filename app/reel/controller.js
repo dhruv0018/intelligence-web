@@ -80,6 +80,7 @@ function ReelController(
     $scope.sources = plays[0].getVideoSources();
     $scope.currentPlayId = play.id;
 
+    playManager.current = play;
 
     /* TODO: game.getPosterImage() */
     $scope.posterImage = {
@@ -163,7 +164,7 @@ function ReelController(
     // set initial cuepoints
     if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
-        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId);
+        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
     }
 
 
@@ -242,7 +243,10 @@ function ReelController(
 
         $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
-            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id, currentPlay.startTime);
+            if (playManager.current) {
+
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.current.id, playManager.current.startTime);
+            }
 
         });
 

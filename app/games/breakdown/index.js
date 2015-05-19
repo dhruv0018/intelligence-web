@@ -218,7 +218,7 @@ function GamesBreakdownController (
             // set initial cuepoints
             if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
-                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId);
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId, play.startTime);
             }
 
             $scope.sources = play.getVideoSources();
@@ -270,7 +270,10 @@ function GamesBreakdownController (
 
                 $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
 
-                    $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.current.id, playManager.current.startTime);
+                    if (playManager.current) {
+
+                        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.current.id, playManager.current.startTime);
+                    }
                 });
             }
         }
