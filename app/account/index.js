@@ -1,5 +1,5 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Account page module.
@@ -47,7 +47,6 @@ Account.config([
             })
 
             .state('Account.ContactInfo', {
-                url: '',
                 parent: 'Account',
                 views: {
                     'content@Account': {
@@ -58,7 +57,6 @@ Account.config([
             })
 
             .state('Account.TermsAndConditions', {
-                url: '',
                 parent: 'Account',
                 views: {
                     'content@Account': {
@@ -68,7 +66,6 @@ Account.config([
             })
 
             .state('Account.RolesList', {
-                url: '',
                 parent: 'Account',
                 views: {
                     'content@Account': {

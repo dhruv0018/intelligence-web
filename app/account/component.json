@@ -9,8 +9,7 @@
     "scripts": [
         "index.js",
         "contact-info.js",
-        "roles-list.js",
-        "terms-and-conditions.js"
+        "roles-list.js"
     ],
     "styles": [
         "styles.less"
