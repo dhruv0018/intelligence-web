@@ -52,10 +52,10 @@
                     {{files[0].name}} <data-krossover-uploader data-ng-show="files" data-upload-label="Pick Again" data-on-upload="uploadFile(files)"></data-krossover-uploader>
                 </div>
 
-                <data-krossover-uploader data-ng-show="!files" data-upload-label="Upload Roster" data-on-upload="uploadFile(files)"></data-krossover-uploader>
+                <data-krossover-uploader id="choose-roster-cta" data-ng-show="!files" data-upload-label="Upload Roster" data-on-upload="uploadFile(files)"></data-krossover-uploader>
             </li>
             <li>
-                <button class="btn btn-primary" data-ng-click="uploadRoster()">Start Roster Upload</button>
+                <button class="btn btn-primary" id="start-roster-upload-cta" data-ng-click="uploadRoster()">Start Roster Upload</button>
             </li>
         </ul>
 
@@ -78,7 +78,7 @@
                 </tr>
             </table>
 
-            <button data-ng-click="retry()" class="btn btn-primary">
+            <button id="retry-upload-cta" data-ng-click="retry()" class="btn btn-primary">
                 Try Again
             </button>
         </div>
