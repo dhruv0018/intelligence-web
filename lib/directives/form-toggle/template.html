@@ -1,0 +1,24 @@
+<label
+ class="form-toggle-label"
+ for="{{id}}"
+ ng-class="{'form-toggle-checked': model}">
+
+    <check-box checked="model"></check-box>
+
+    <input
+     id="{{id}}"
+     class="form-toggle-checkbox"
+     type="checkbox"
+     name="{{name}}"
+     ng-model="model"
+     ng-required="required">
+
+    <ng-transclude></ng-transclude>
+
+    <!-- TODO: Refactor input directive to not use inline styles or utilize 
+         ngMessages -->
+    <div class="error"
+     ng-if="form[name].$dirty && form[name].$error.required"
+     role="alert">Required!</div>
+
+</label>
