@@ -135,6 +135,12 @@ IntelligenceWebClient.run([
             let user         = session.retrieveCurrentUser();
             let previousUser = session.retrievePreviousUser();
 
+            /* Get last time user logged in date */
+            let lastAccessedDate = user.getLastAccessed();
+
+            /* Is user using an iOS or Android device? */
+            let isMobile = detectDevice.iOS() || detectDevice.Android();
+
             /* Check if the user has accepted the Terms & Conditions.
              * Make sure we aren't an admin switching to another user as we
              * don't want to accidentially accept the terms on behalf of the
@@ -143,15 +149,17 @@ IntelligenceWebClient.run([
 
                 // Prompt user to accept the new Terms & Conditions.
                 TermsDialog.show(true)
-                .then(function saveUserTermsAcceptedDate () {
+                .then(function termsAcceptedSuccess () {
 
                     /* Promote Mobile Apps */
-                    if (detectDevice.any()) MobileAppDialog.show();
+                    if (isMobile) MobileAppDialog.show();
 
                     user.termsAcceptedDate = new Date().toISOString();
                     user.save();
                 });
-            }
+
+            /* If a new user, then only show the mobile app dialog. */
+            } else if (auth.isLoggedIn && !lastAccessedDate && isMobile) MobileAppDialog.show();
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {
