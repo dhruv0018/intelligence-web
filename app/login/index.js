@@ -397,7 +397,7 @@ function LoginController(
 
             let
                 token    = $stateParams.token,
-                password = $scope.reset.password;
+                password = $scope.newUser.password;
 
             users.passwordReset(token, password).then(
 
