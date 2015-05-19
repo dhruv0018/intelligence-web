@@ -1,0 +1,28 @@
+<md-dialog class="mobile-app-modal">
+
+    <md-dialog-content class="modal-content">
+
+        <header class="modal-header">
+
+            <span class="modal-title">Hey, our mobile apps are cool.</span>
+
+        </header>
+
+        <div class="modal-body">
+
+            <p>Download the <a ng-href="{{MOBILE_APP_URLS.COACH[device]}}">Krossover Coach</a> App.</p>
+            <p>Download the <a ng-href="{{MOBILE_APP_URLS.ATHLETE[device]}}">Krossover Athelte</a> App.</p>
+
+        </div>
+
+        <footer class="modal-footer">
+
+            <button
+             class="modal-button"
+             ng-click="dismiss();">Maybe Later</button>
+
+        </footer>
+
+    </md-dialog-content>
+
+</md-dialog>
