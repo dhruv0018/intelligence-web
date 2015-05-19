@@ -21,10 +21,10 @@
 
         <div class="form-group">
 
-            <div class="user-remember">
-                <input id="remember" name="remember" type="checkbox" data-ng-model="$parent.login.remember">
-                <label for="remember"><i class="icon icon-ok"></i> Remember Me</label>
-            </div>
+            <form-toggle
+             name="remember"
+             data-id="remember-me-cta"
+             model="$parent.login.remember">Remember Me</form-toggle>
 
             <div class="password-reset"><a href data-ui-sref="forgot">Forgot your password?</a></div>
 

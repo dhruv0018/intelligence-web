@@ -350,8 +350,9 @@ function LoginController(
 
         if ($stateParams.token) {
 
-            let token    = $stateParams.token;
-            let password = $scope.reset.password;
+            let
+                token    = $stateParams.token,
+                password = $scope.reset.password;
 
             users.passwordReset(token, password).then(
 
@@ -391,8 +392,9 @@ function LoginController(
 
         if ($stateParams.token) {
 
-            let token    = $stateParams.token;
-            let password = $scope.newUser.password;
+            let
+                token    = $stateParams.token,
+                password = $scope.reset.password;
 
             users.passwordReset(token, password).then(
 
