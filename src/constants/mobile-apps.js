@@ -10,13 +10,13 @@ const MOBILE_APP_URLS = {
     COACH: {
 
         IOS: 'http://itunes.com/apps/krossoverintelligenceinc/krossovercoach',
-        ANDROID: 'https://play.google.com/store/apps/details?id=com.krossover.coach&hl=en'
+        ANDROID: 'https://play.google.com/store/apps/details?id=com.krossover.coach'
     },
 
     ATHLETE: {
 
         IOS: 'http://itunes.com/apps/krossoverintelligenceinc/krossoverathlete',
-        ANDROID: 'https://play.google.com/store/apps/details?id=com.krossover.athlete&hl=en'
+        ANDROID: 'https://play.google.com/store/apps/details?id=com.krossover.athlete'
     }
 };
 
