@@ -27,20 +27,10 @@ IntelligenceWebClient.factory('CustomtagsFactory', [
             batchSave: function(customTags) {
 
                 let model = $injector.get(this.model);
-                let storage = $injector.get(this.storage);
-                let promises = customTags.map(tag => tag.save());
+                let parameters = {};
+                let batchUpdate = model.batchUpdate(parameters, customTags);
 
-
-                return $q.all(promises).then(function() {
-                    return customTags.map(tag => storage.get(tag.id));
-                });
-
-                /* FIXME: use this when batch saving is in back end
-                 *let parameters = {};
-                 *let batchUpdate = model.batchUpdate(parameters, customTags);
-                 *
-                 *return  batchUpdate.$promise;
-                 */
+                return  batchUpdate.$promise;
             }
 
         };
