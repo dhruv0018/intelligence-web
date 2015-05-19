@@ -10,8 +10,11 @@
 
         <div class="modal-body">
 
-            <p>Download the <a ng-href="{{MOBILE_APP_URLS.COACH[device]}}">Krossover Coach</a> App.</p>
-            <p>Download the <a ng-href="{{MOBILE_APP_URLS.ATHLETE[device]}}">Krossover Athelte</a> App.</p>
+            <pre>{{DEVICE | json}}</pre>
+            <p ng-if="DEVICE.IOS && isCoach">Download the <a ng-href="{{MOBILE_APP_URLS.COACH.IOS}}">Krossover Coach</a> App.</p>
+            <p ng-if="DEVICE.IOS && isAthlete">Download the <a ng-href="{{MOBILE_APP_URLS.ATHLETE.IOS}}">Krossover Athelte</a> App.</p>
+            <p ng-if="DEVICE.ANDROID && isCoach">Download the <a ng-href="{{MOBILE_APP_URLS.COACH.ANDROID}}">Krossover Coach</a> App.</p>
+            <p ng-if="DEVICE.ANDROID && isAthlete">Download the <a ng-href="{{MOBILE_APP_URLS.ATHLETE.ANDROID}}">Krossover Athelte</a> App.</p>
 
         </div>
 
