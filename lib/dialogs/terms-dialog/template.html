@@ -1,38 +1,49 @@
-<md-dialog
-    class="new-terms-modal"
->
+<md-dialog class="new-terms-modal">
+
     <md-dialog-content class="modal-content">
 
-        <div class="terms-prompt" data-ng-show="promptUser">
+        <div class="terms-prompt" ng-show="promptUser">
 
-            <header class="modal-header">
+            <form
+             class="form-new-terms"
+             name="new-terms-form"
+             role="form"
+             novalidate>
 
-                <span class="modal-title">Action Required</span>
+                <header class="modal-header">
 
-            </header>
+                    <span class="modal-title">Action Required</span>
 
-            <div class="modal-body">
+                </header>
 
-                <p>Welcome back. Please review our updated Terms &amp; Conditions.</p>
+                <div class="modal-body">
 
-                <div id="agree-terms-cta" class="modal-cta" data-ng-click="newTerms.agree = !newTerms.agree;" data-ng-class="{'modal-cta-selected': newTerms.agree}">
+                    <p>Welcome back. Please review our updated Terms &amp; Conditions.</p>
 
-                    <check-box checked="newTerms.agree"></check-box>
-                    <span>I agree to the <a data-ng-click="showTerms();">Krossover Terms &amp; Conditions</a></span>
+                    <form-toggle
+                     class="new-terms-agree"
+                     data-id="returning-user-terms-agree-cta"
+                     name="remember"
+                     data-required="true"
+                     model="newTerms.agree">
+
+                        I agree to the <a ng-click="showTerms();">Krossover Terms &amp; Conditions</a>
+
+                    </form-toggle>
 
                 </div>
 
-            </div>
+                <footer class="modal-footer">
 
-            <footer class="modal-footer">
+                    <button class="modal-button" ng-click="acceptTerms();" ng-disabled="!newTerms.agree">Go to your account</button>
 
-                <button class="modal-button" data-ng-click="acceptTerms();" data-ng-disabled="!newTerms.agree">Go to your account</button>
+                </footer>
 
-            </footer>
+            </form>
 
         </div>
 
-        <div class="terms-copy" data-ng-show="!promptUser">
+        <div class="terms-copy" ng-show="!promptUser">
 
             <header class="modal-header">
 
@@ -48,7 +59,11 @@
 
             <footer class="modal-footer">
 
-                <button id="close-terms-cta" class="modal-button" data-ng-click="closeTerms();" type="button">Close</button>
+                <button
+                 id="close-terms-cta"
+                 class="modal-button"
+                 ng-click="closeTerms();"
+                 type="button">Close</button>
 
             </footer>
 

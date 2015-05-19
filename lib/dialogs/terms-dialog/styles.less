@@ -1,20 +1,37 @@
 @import (reference) "main.less";
 @import (reference) "modal.less";
 
-.new-terms-modal {
+.new-terms {
 
-    .terms-prompt {
+    &-modal {
 
-        text-align: center;
+        .terms-prompt {
+
+            text-align: center;
+        }
+
+        /* For Scrolling long modal content */
+        @media (min-width: 1023px) and (min-height: 600px) {
+
+            .modal-body {
+
+                max-height: 300px;
+                overflow: auto;
+            }
+        }
     }
 
-    /* For Scrolling long modal content */
-    @media (min-width: 1023px) and (min-height: 600px) {
+    &-agree label {
 
-        .modal-body {
+        width: 100%;
+        display: block;
+        line-height: @line-height-computed;
 
-            max-height: 300px;
-            overflow: auto;
+        .error {
+
+            line-height: @line-height-computed;
+            font-weight: normal;
+            color: @brand-danger;
         }
     }
 }
