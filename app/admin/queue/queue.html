@@ -67,7 +67,12 @@
     </aside>
 
     <div class="queue-container">
-        <admin-queue-dashboard></admin-queue-dashboard>
+
+        <admin-queue-dashboard
+            games="games"
+            queue="queue">
+        </admin-queue-dashboard>
+
         <div class="list" data-ng-hide="noResults || searching">
 
 
