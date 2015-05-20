@@ -23,10 +23,11 @@ IntelligenceWebClient.service('PlayerlistManager', [
                 Object.keys(mergedRosters).forEach(function generatePlayerDropdownObject(playerId) {
                     var playerInfo = mergedRosters[playerId];
                     var player = angular.extend({}, players.get(playerId), playerInfo);
+                    if (!player.isActive) return;
                     player.jerseyNumber = (playerInfo.jerseyNumber.length === 0) ? 'UN' : parseInt(playerInfo.jerseyNumber, 10);
                     player.primaryJerseyColor = game.rosters[game.teamId].playerInfo[playerId] ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor;
                     player.type = 'Player';
-                    if (player.isActive) playerList.push(player);
+                    playerList.push(player);
                 });
             },
             get: function() {
