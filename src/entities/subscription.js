@@ -3,6 +3,7 @@ import Entity from './entity.js';
 
 const tv4 = require('tv4');
 const schema = require('../../schemas/subscription.json');
+const moment = require('moment');
 
 class Subscription extends Entity {
 
@@ -75,17 +76,20 @@ class Subscription extends Entity {
 
     /**
      * Method:isActive
-     * Determine if given subscription is active
+     * Determine if given subscription is active and of the given type
      *
-     * @return: {Boolean} [true] if active, else [false]
+     * @param: {SUBSCRIPTION} Subscription constant to check against
+     * @return: {Boolean} [true] if active and given subscription matches given type, else [false]
      */
-    get isActive() {
+    isActive(match) {
 
-        let today = moment.utc();
-        let activation = moment.utc(this.activatesAt);
-        let expiration = moment.utc(this.expiresAt);
+        const today = moment.utc();
+        const activation = moment.utc(this.activatesAt);
+        const expiration = moment.utc(this.expiresAt);
 
-        return today.isAfter(activation) && today.isBefore(expiration);
+        const isActive = today.isAfter(activation) && today.isBefore(expiration);
+
+        return match ? (this.is(match) && isActive) : isActive;
     }
 }
 
