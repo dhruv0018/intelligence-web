@@ -27,10 +27,16 @@ IntelligenceWebClient.factory('CustomtagsFactory', [
             batchSave: function(customTags) {
 
                 let model = $injector.get(this.model);
+                let storage = $injector.get(this.storage);
                 let parameters = {};
                 let batchUpdate = model.batchUpdate(parameters, customTags);
 
-                return  batchUpdate.$promise;
+                return batchUpdate.$promise.then(tags => {
+                    return tags.map(tag => {
+                        storage.set(tag);
+                        return this.extend(tag);
+                    });
+                });
             }
 
         };

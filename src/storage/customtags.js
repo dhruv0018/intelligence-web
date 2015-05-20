@@ -6,8 +6,12 @@ const angular = window.angular;
 const IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('CustomtagsStorage', [
-    'BaseStorage', 'CustomtagsFactory',
-    function(BaseStorage, customtags) {
+    'BaseStorage',
+    'CustomtagsFactory',
+    function(
+        BaseStorage,
+        customtags
+    ) {
 
         const CustomtagsStorage = Object.create(BaseStorage);
 

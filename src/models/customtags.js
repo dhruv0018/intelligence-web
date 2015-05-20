@@ -6,8 +6,12 @@ const angular = window.angular;
 const IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('CustomtagsResource', [
-    'config', '$resource',
-    function(config, $resource) {
+    'config',
+    '$resource',
+    function(
+        config,
+        $resource
+    ) {
 
         const base = 'custom-tags';
 
