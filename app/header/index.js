@@ -137,7 +137,7 @@ function HeaderController(
     // user.subscriptions is guaranteed to be descending by expiration date
     $scope.currentUserIsAthleteRecruit =
         (subscriptions.length > 0) &&
-        (subscriptions[0].is(SUBSCRIPTIONS.ATHLETE_RECRUIT));
+        (subscriptions[0].isActive(SUBSCRIPTIONS.ATHLETE_RECRUIT));
 
     //TEMP - get sport id to show Analytics tab for FB only
     if (auth.isLoggedIn) {
