@@ -1,5 +1,80 @@
 @import (reference) "main.less";
 
 .admin-queue-dashboard {
+    .queue-dashboard {
 
+        width: 100%;
+        padding: 20px;
+        background-color: @content-bg;
+        border-bottom: thin solid @gray-border;
+        letter-spacing: normal;
+
+        .general-status-row {
+
+
+            height: 100px;
+
+            .general-status-col {
+                display: table-cell;
+                width: 150px;
+                padding: 0 20px;
+                border-right: thin solid @gray-border;
+                font-weight: 400;
+
+                &:last-child {
+                    border-right: none;
+                    width: 200px;
+                }
+
+                h4 {
+                    font-size: 18px;
+                }
+
+                .status-good {
+                    font-size: 30px;
+                    color: @brand-success;
+                    font-weight: 500;
+                }
+
+                .status-bad {
+                    font-size: 30px;
+                    color: @brand-danger;
+                    font-weight: 500;
+                }
+
+                .general-status-info {
+                    display: block;
+                    width: 100%;
+
+                    span {
+                        margin-right: 20px;
+                    }
+                }
+            }
+
+        }
+
+        .time-status-row,
+        .assigned-status-row {
+            display: inline-block;
+            background-color: white;
+
+            th, td {
+                width: 90px;
+                border: thin solid @gray-border;
+                padding: 5px;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            td {
+                font-size: 30px;
+            }
+        }
+
+        .assigned-status-row {
+            margin-left: 10px;
+        }
+
+    }
 }
