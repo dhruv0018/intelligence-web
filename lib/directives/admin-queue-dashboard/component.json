@@ -7,7 +7,8 @@
         "styles.less"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "controller.js"
     ],
     "dependencies": {
         "moment/moment": "2.9.0"
