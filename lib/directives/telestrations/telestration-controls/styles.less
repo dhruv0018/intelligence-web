@@ -13,7 +13,6 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    align-items: center;
     z-index: 2;
     margin-top: @margin;
     margin-left: @margin;
@@ -44,7 +43,7 @@
     li {
         font-size: @font-size;
         cursor: pointer;
-        display: inline-flex;
+        display: flex;
         user-select: none;
     }
 
@@ -57,6 +56,10 @@
             position: absolute;
             transition: left 0.5s ease-out;
             left: 60px;
+            
+            ul {
+                display: flex;
+            }
 
             &.ng-hide {
 
@@ -87,7 +90,7 @@
         }
 
         li[telestration-tool] {
-            margin-right: -3px;
+            margin-right: 1px;
 
             &:active, &:hover {
                 color: @icon-highlight-blue;
@@ -110,6 +113,7 @@
             position: absolute;
             top: @tool-size;
             left: 0px;
+            flex-direction: column;
 
             li {
                 margin: 1px 0px;
