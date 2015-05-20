@@ -26,7 +26,7 @@ IntelligenceWebClient.service('PlayerlistManager', [
                     player.jerseyNumber = (playerInfo.jerseyNumber.length === 0) ? 'UN' : parseInt(playerInfo.jerseyNumber, 10);
                     player.primaryJerseyColor = game.rosters[game.teamId].playerInfo[playerId] ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor;
                     player.type = 'Player';
-                    playerList.push(player);
+                    if (player.isActive) playerList.push(player);
                 });
             },
             get: function() {
