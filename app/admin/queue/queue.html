@@ -281,7 +281,7 @@
                                 <div ng-if="!game.hasQaAssignment() && !game.canBeAssignedToQa()">––</div>
 
                                 <button
-                                 class="btn btn-default"
+                                 class="btn btn-default select-qa"
                                  ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()"
                                  ng-click="SelectIndexerModal.open(game, true)">Select QA</button>
 
