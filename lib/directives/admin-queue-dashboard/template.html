@@ -1,3 +1,56 @@
 <div class="admin-queue-dashboard">
-    <p>working admin queue dashboard</p>
+    <div class="queue-dashboard">
+        <div class="general-status-row">
+            <div class="general-status-col">
+                <h4>Queue Status</h4>
+                <span data-ng-show="queueFilters.remaining.late.length === 0" class="status-good">Good</span>
+                <span data-ng-show="queueFilters.remaining.late.length > 0" class="status-bad">Bad</span>
+            </div>
+            <div class="general-status-col">
+                <h4>Current</h4>
+                <span class="general-status-info"><a href data-ng-click="setQueue(queueFilters.ready.indexing)">{{queueFilters.ready.indexing.length}}</a> to be indexed</span>
+                <span class="general-status-info"><a href data-ng-click="setQueue(queueFilters.ready.qa)">{{queueFilters.ready.qa.length}}</a> to be QA'd</span>
+            </div>
+            <div class="general-status-col">
+                <h4>Last 48 Hours</h4>
+                <span class="general-status-info"><a href data-ng-click="setQueue(queueFilters.last48.uploaded)">{{queueFilters.last48.uploaded.length}}</a> uploaded</span>
+            </div>
+        </div>
+        <table class="time-status-row table-responsive">
+            <tbody>
+            <tr>
+                <th>Total</th>
+                <th>48h - 24h</th>
+                <th>24h - 10h</th>
+                <th>10h - 5h</th>
+                <th>5h - 1h</th>
+                <th>&lt;1</th>
+                <th>Late</th>
+                <th>Set Aside</th>
+            </tr>
+            <tr>
+                <td><a href data-ng-click="setQueue(games)">{{games.length}}</a></td>
+                <td><a href data-ng-click="setQueue(queueFilters.remaining['48'])">{{queueFilters.remaining['48'].length}}</a></td>
+                <td><a href data-ng-click="setQueue(queueFilters.remaining['24'])">{{queueFilters.remaining['24'].length}}</a></td>
+                <td><a href data-ng-click="setQueue(queueFilters.remaining['10'])">{{queueFilters.remaining['10'].length}}</a></td>
+                <td><a href data-ng-click="setQueue(queueFilters.remaining['5'])">{{queueFilters.remaining['5'].length}}</a></td>
+                <td><a href data-ng-click="setQueue(queueFilters.remaining['1'])">{{queueFilters.remaining['1'].length}}</a></td>
+                <td><a href data-ng-click="setQueue(queueFilters.remaining.late)">{{queueFilters.remaining.late.length}}</a></td>
+                <td><a href data-ng-click="setQueue(queueFilters.setAside)">{{queueFilters.setAside.length}}</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="assigned-status-row table-responsive">
+            <tbody>
+            <tr>
+                <th>Assigned</th>
+                <th>Unassigned</th>
+            </tr>
+            <tr>
+                <td><a href data-ng-click="setQueue(queueFilters.assigned)"> {{queueFilters.assigned.length}}</a></td>
+                <td><a href data-ng-click="setQueue(queueFilters.unassigned)"> {{queueFilters.unassigned.length}}</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
