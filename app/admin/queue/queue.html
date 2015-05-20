@@ -1,14 +1,18 @@
 <section class="queue">
 
-    <aside class="sidebar" data-ng-init="sidebar = false" data-ui-toggle="sidebar">
+    <aside class="sidebar" ng-init="sidebar = false" data-ui-toggle="sidebar">
 
         <h3>Search</h3>
 
-        <form role="form" data-ng-submit="search(filter)">
+        <form role="form" ng-submit="search(filter)">
 
             <div class="form-group">
 
-                <select class="form-control" name="sport" data-ng-model="filter.sport" data-ng-options="sport.id as sport.name for sport in sportsList">
+                <select
+                 class="form-control"
+                 name="sport"
+                 ng-model="filter.sport"
+                 ng-options="sport.id as sport.name for sport in sportsList">
                     <option value="">Pick a Sport</option>
                 </select>
 
@@ -16,53 +20,143 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="status" data-ng-model="filter.status" data-ng-options="status.id as status.name for (key, status) in GAME_STATUSES">
+                <select
+                 class="form-control"
+                 name="status"
+                 ng-model="filter.status"
+                 ng-options="status.id as status.name for (key, status) in GAME_STATUSES">
                     <option value="">Status</option>
                 </select>
 
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="id" placeholder="Game ID" data-ng-model="filter.gameId" type="text">
+
+                <input
+                 class="form-control"
+                 name="id"
+                 placeholder="Game ID"
+                 ng-model="filter.gameId"
+                 type="text">
+
             </div>
 
             <div class="form-group">
 
-                <input class="form-control" name="team" placeholder="Team Name" data-ng-model="filter.team" type="text">
+                <input
+                 class="form-control"
+                 name="team"
+                 placeholder="Team Name"
+                 ng-model="filter.team"
+                 type="text">
+
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="coach-firstname" placeholder="Coach First Name" data-ng-model="filter.coachFirstName" type="text">
+
+                <input
+                 class="form-control"
+                 name="coach-firstname"
+                 placeholder="Coach First Name"
+                 ng-model="filter.coachFirstName"
+                 type="text">
+
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="coach-lastname" placeholder="Coach Last Name" data-ng-model="filter.coachLastName" type="text">
+
+                <input
+                 class="form-control"
+                 name="coach-lastname"
+                 placeholder="Coach Last Name"
+                 ng-model="filter.coachLastName"
+                 type="text">
+
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="indexer-firstname" placeholder="Indexer First Name" data-ng-model="filter.indexerFirstName" type="text">
+
+                <input
+                 class="form-control"
+                 name="indexer-firstname"
+                 placeholder="Indexer First Name"
+                 ng-model="filter.indexerFirstName"
+                 type="text">
+
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="indexer-lastname" placeholder="Indexer Last Name" data-ng-model="filter.indexerLastName" type="text">
+
+                <input
+                 class="form-control"
+                 name="indexer-lastname"
+                 placeholder="Indexer Last Name"
+                 ng-model="filter.indexerLastName"
+                 type="text">
+
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="assurer-firstname" placeholder="QA First Name" data-ng-model="filter.qaFirstName" type="text">
+
+                <input
+                 class="form-control"
+                 name="assurer-firstname"
+                 placeholder="QA First Name"
+                 ng-model="filter.qaFirstName"
+                 type="text">
+
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="assurer-lastname" placeholder="QA Last Name" data-ng-model="filter.qaLastName" type="text">
+
+                <input
+                 class="form-control"
+                 name="assurer-lastname"
+                 placeholder="QA Last Name"
+                 ng-model="filter.qaLastName"
+                 type="text">
+
             </div>
 
-            <button id="search-queue-cta" class="btn-search" data-ng-show="sidebar" data-ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
+            <button
+             id="search-queue-cta"
+             class="btn-search"
+             ng-show="sidebar"
+             ng-disabled="searching"
+             type="submit">
+
+                <i class="icon icon-search"></i>
+
+            </button>
 
         </form>
 
-        <button class="btn-search" data-ng-hide="sidebar" data-ng-click="sidebar=!sidebar"><i class="icon icon-search"></i></button>
+        <button
+         class="btn-search"
+         ng-hide="sidebar"
+         ng-click="sidebar=!sidebar">
 
-        <button class="btn-toggle-sidebar" data-ng-show="sidebar" data-ng-click="sidebar = false"><i class="icon icon-chevron-left"></i></button>
-        <button class="btn-toggle-sidebar" data-ng-hide="sidebar" data-ng-click="sidebar = true"><i class="icon icon-chevron-right"></i></button>
+            <i class="icon icon-search"></i>
+
+        </button>
+
+        <button
+         class="btn-toggle-sidebar"
+         ng-show="sidebar"
+         ng-click="sidebar = false">
+
+            <i class="icon icon-chevron-left"></i>
+
+        </button>
+        
+        <button
+         class="btn-toggle-sidebar"
+         ng-hide="sidebar"
+         ng-click="sidebar = true">
+
+            <i class="icon icon-chevron-right"></i>
+
+        </button>
 
     </aside>
 
@@ -72,17 +166,17 @@
             <div class="general-status-row">
                 <div class="general-status-col">
                     <h4>Queue Status</h4>
-                    <span data-ng-show="queueFilters.remaining.late.length === 0" class="status-good">Good</span>
-                    <span data-ng-show="queueFilters.remaining.late.length > 0" class="status-bad">Bad</span>
+                    <span ng-show="queueFilters.remaining.late.length === 0" class="status-good">Good</span>
+                    <span ng-show="queueFilters.remaining.late.length > 0" class="status-bad">Bad</span>
                 </div>
                 <div class="general-status-col">
                     <h4>Current</h4>
-                    <span class="general-status-info"><a href data-ng-click="setQueue(queueFilters.ready.indexing)">{{queueFilters.ready.indexing.length}}</a> to be indexed</span>
-                    <span class="general-status-info"><a href data-ng-click="setQueue(queueFilters.ready.qa)">{{queueFilters.ready.qa.length}}</a> to be QA'd</span>
+                    <span class="general-status-info"><a href ng-click="setQueue(queueFilters.ready.indexing)">{{queueFilters.ready.indexing.length}}</a> to be indexed</span>
+                    <span class="general-status-info"><a href ng-click="setQueue(queueFilters.ready.qa)">{{queueFilters.ready.qa.length}}</a> to be QA'd</span>
                 </div>
                 <div class="general-status-col">
                     <h4>Last 48 Hours</h4>
-                    <span class="general-status-info"><a href data-ng-click="setQueue(queueFilters.last48.uploaded)">{{queueFilters.last48.uploaded.length}}</a> uploaded</span>
+                    <span class="general-status-info"><a href ng-click="setQueue(queueFilters.last48.uploaded)">{{queueFilters.last48.uploaded.length}}</a> uploaded</span>
                 </div>
             </div>
             <table class="time-status-row table-responsive">
@@ -98,14 +192,14 @@
                         <th>Set Aside</th>
                     </tr>
                     <tr>
-                        <td><a href data-ng-click="setQueue(games)">{{games.length}}</a></td>
-                        <td><a href data-ng-click="setQueue(queueFilters.remaining['48'])">{{queueFilters.remaining['48'].length}}</a></td>
-                        <td><a href data-ng-click="setQueue(queueFilters.remaining['24'])">{{queueFilters.remaining['24'].length}}</a></td>
-                        <td><a href data-ng-click="setQueue(queueFilters.remaining['10'])">{{queueFilters.remaining['10'].length}}</a></td>
-                        <td><a href data-ng-click="setQueue(queueFilters.remaining['5'])">{{queueFilters.remaining['5'].length}}</a></td>
-                        <td><a href data-ng-click="setQueue(queueFilters.remaining['1'])">{{queueFilters.remaining['1'].length}}</a></td>
-                        <td><a href data-ng-click="setQueue(queueFilters.remaining.late)">{{queueFilters.remaining.late.length}}</a></td>
-                        <td><a href data-ng-click="setQueue(queueFilters.setAside)">{{queueFilters.setAside.length}}</a></td>
+                        <td><a href ng-click="setQueue(games)">{{games.length}}</a></td>
+                        <td><a href ng-click="setQueue(queueFilters.remaining['48'])">{{queueFilters.remaining['48'].length}}</a></td>
+                        <td><a href ng-click="setQueue(queueFilters.remaining['24'])">{{queueFilters.remaining['24'].length}}</a></td>
+                        <td><a href ng-click="setQueue(queueFilters.remaining['10'])">{{queueFilters.remaining['10'].length}}</a></td>
+                        <td><a href ng-click="setQueue(queueFilters.remaining['5'])">{{queueFilters.remaining['5'].length}}</a></td>
+                        <td><a href ng-click="setQueue(queueFilters.remaining['1'])">{{queueFilters.remaining['1'].length}}</a></td>
+                        <td><a href ng-click="setQueue(queueFilters.remaining.late)">{{queueFilters.remaining.late.length}}</a></td>
+                        <td><a href ng-click="setQueue(queueFilters.setAside)">{{queueFilters.setAside.length}}</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -116,47 +210,66 @@
                         <th>Unassigned</th>
                     </tr>
                     <tr>
-                        <td><a href data-ng-click="setQueue(queueFilters.assigned)"> {{queueFilters.assigned.length}}</a></td>
-                        <td><a href data-ng-click="setQueue(queueFilters.unassigned)"> {{queueFilters.unassigned.length}}</a></td>
+                        <td><a href ng-click="setQueue(queueFilters.assigned)"> {{queueFilters.assigned.length}}</a></td>
+                        <td><a href ng-click="setQueue(queueFilters.unassigned)"> {{queueFilters.unassigned.length}}</a></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="list" data-ng-hide="noResults || searching">
+        <div class="list" ng-hide="noResults || searching">
 
 
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
 
                     <tbody>
-                        <tr data-ng-repeat="game in queue | orderBy:'remainingTime'">
+                        <tr ng-repeat="game in queue | orderBy:'remainingTime'">
 
                             <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
+
                             <td>{{ game.id }}</td>
-                            <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
+
+                            <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs {{ teams[game.opposingTeamId].name }}</a></td>
+
                             <td>
                                 <span>
                                     {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}
                                 </span>
                             </td>
+
                             <td>
-                                <span data-ng-if="game.getStatus().id != GAME_STATUSES.SET_ASIDE.id">{{ game.getStatus().name }}</span>
-                                <span data-ng-if="game.status === GAME_STATUSES.SET_ASIDE.id">
-                                    <span data-ng-if="!game.canBeAssignedToQa() && !game.canBeAssignedToIndexer()">{{GAME_STATUSES.SET_ASIDE.name}}</span>
-                                    <a data-ng-if="game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(game, true)">{{GAME_STATUSES.SET_ASIDE.name}} in QA</a>
-                                    <a data-ng-if="game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(game, false)">{{GAME_STATUSES.SET_ASIDE.name}} in Indexing</a>
+
+                                <span ng-if="game.getStatus().id != GAME_STATUSES.SET_ASIDE.id">{{ game.getStatus().name }}</span>
+
+                                <span ng-if="game.status === GAME_STATUSES.SET_ASIDE.id">
+                                    <span ng-if="!game.canBeAssignedToQa() && !game.canBeAssignedToIndexer()">{{GAME_STATUSES.SET_ASIDE.name}}</span>
+                                    <a ng-if="game.canBeAssignedToQa()" ng-click="SelectIndexerModal.open(game, true)">{{GAME_STATUSES.SET_ASIDE.name}} in QA</a>
+                                    <a ng-if="game.canBeAssignedToIndexer()" ng-click="SelectIndexerModal.open(game, false)">{{GAME_STATUSES.SET_ASIDE.name}} in Indexing</a>
                                 </span>
+
                             </td>
 
 
                             <td>
 
-                                <button class="btn btn-default" data-ng-if="!game.isAssignedToIndexer() && game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(game, false)">Select Indexer</button>
+                                <button
+                                 class="btn btn-default select-indexer"
+                                 ng-if="!game.isAssignedToIndexer() && game.canBeAssignedToIndexer()"
+                                 ng-click="SelectIndexerModal.open(game, false)">Select Indexer</button>
 
-                                <ul data-ng-if="game.hasIndexerAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: false } | limitTo:1">
+                                <ul
+                                 ng-if="game.hasIndexerAssignment()"
+                                 ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: false } | limitTo:1">
 
-                                    <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+                                    <li>
+
+                                        <button
+                                         class="btn btn-link assignment"
+                                         ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id"
+                                         ng-click="SelectIndexerModal.open(game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button>
+
+                                    </li>
 
                                 </ul>
 
@@ -165,22 +278,49 @@
 
                             <td>
 
-                                <div data-ng-if="!game.hasQaAssignment() && !game.canBeAssignedToQa()">--</div>
+                                <div ng-if="!game.hasQaAssignment() && !game.canBeAssignedToQa()">––</div>
 
-                                <button class="btn btn-default" data-ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(game, true)">Select QA</button>
+                                <button
+                                 class="btn btn-default"
+                                 ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()"
+                                 ng-click="SelectIndexerModal.open(game, true)">Select QA</button>
 
-                                <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1">
-                                    <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+                                <ul
+                                 ng-if="game.hasQaAssignment()"
+                                 ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1">
+
+                                    <li>
+
+                                        <button
+                                         class="btn btn-link assignment"
+                                         ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id"
+                                         ng-click="SelectIndexerModal.open(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button>
+
+                                    </li>
+
                                  </ul>
+
                             </td>
+
                             <td class="time-left">
-                                <span class="late" data-ng-if="game.remainingTime < 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
-                                <span class="none" data-ng-if="game.remainingTime === 0">None</span>
-                                <span class="togo" data-ng-if="game.remainingTime > 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
+                                <span class="late" ng-if="game.remainingTime < 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
+                                <span class="none" ng-if="game.remainingTime === 0">None</span>
+                                <span class="togo" ng-if="game.remainingTime > 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
                             </td>
+
                             <td>
-                                <button data-open-modal="AdminManagement.Modal" data-modal-options="game" class="btn btn-default">Manage</button>
+
+                                <button
+                                 data-open-modal="AdminManagement.Modal"
+                                 data-modal-options="game"
+                                 class="btn btn-default manage-button">
+
+                                    <i class="icon icon-gear"></i>
+
+                                </button>
+
                             </td>
+
                         </tr>
                     </tbody>
 
@@ -191,14 +331,14 @@
 
         </div>
 
-        <div class="results" data-ng-show="searching">
+        <div class="results" ng-show="searching">
             <h1>Searching...</h1>
 
             <!-- TODO: The size shouldn't be a static value -->
             <krossover-spinner ng-if="searching" size="'80px'"></krossover-spinner>
         </div>
 
-        <div class="results noresults" data-ng-show="noResults">
+        <div class="results noresults" ng-show="noResults">
 
             <i class="icon icon-search"></i>
             <h1>No Results Found</h1>
