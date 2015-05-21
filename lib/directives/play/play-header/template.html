@@ -1,7 +1,7 @@
 <div>
     <div class="playHeadingContainer">
         <div
-            ng-click="openPlay()"
+            ng-click="openPlay(play)"
             class="playHeading">
 
             <h4 ng-if="isIndexer">
@@ -55,15 +55,20 @@
         </div>
 
         <span
-         id="play-play-cta"
-         class="playplay"
-         ng-click="viewAssociatedPlayContent(); videoPlayer.play()"
-         ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
-        >
-
+            class="watch-play"
+            ng-hide="isIndexer"
+            id="play-play-cta"
+            ng-click="watchPlay(play)"
+            ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
+            >
             <i class="icon icon-play-circle"></i>
 
         </span>
 
+        <span
+            class="play-chevron"
+        >
+            <i class="icon icon-chevron-right"></i>
+        </span>
     </div>
 </div>
