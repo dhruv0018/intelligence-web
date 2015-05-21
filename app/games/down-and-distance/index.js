@@ -84,8 +84,8 @@ GamesDownAndDistance.config([
 ]);
 
 GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
-    '$stateParams', '$scope', 'TeamsFactory', 'GamesFactory', 'LeaguesFactory',
-    function controller($stateParams, $scope, teams, games, leagues) {
+    '$stateParams', '$scope', 'TeamsFactory', 'GamesFactory', 'LeaguesFactory', 'ARENA_TYPES',
+    function controller($stateParams, $scope, teams, games, leagues, ARENA_TYPES) {
 
         //Collections
         $scope.teams = teams.getCollection();
@@ -102,7 +102,8 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
         var teamOnOffense = true;
 
         //League Related
-        $scope.league = leagues.get(team.leagueId);
+        let league = leagues.get(team.leagueId);
+        $scope.league = league;
 
         //Used to render the view for the
         $scope.options = {
@@ -170,5 +171,8 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
             });
 
         };
+
+        // Determine arena type
+        $scope.arenaType = ARENA_TYPES[league.arenaId].type;
     }
 ]);
