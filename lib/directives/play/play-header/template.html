@@ -1,8 +1,8 @@
 <div>
     <div class="playHeadingContainer">
-        <check-box feature="playSelection" ng-if="currentUser.is(ROLES.COACH) && !isReelsPlay" checked="play.isSelected" ng-click="togglePlaySelection($event, play)"></check-box>
+        <check-box feature="SelectPlays" ng-if="currentUser.is(ROLES.COACH) && !isReelsPlay" checked="play.isSelected" ng-click="togglePlaySelection($event, play)"></check-box>
         <div
-            ng-click="expandPlay()"
+            ng-click="openPlay(play)"
             class="playHeading">
 
             <h4 ng-if="isIndexer">
@@ -56,12 +56,18 @@
         </div>
 
         <span
-            class="playplay"
-            ng-click="viewAssociatedPlayContent(); videoPlayer.play()"
+            class="watch-play"
+            ng-hide="isIndexer"
+            ng-click="watchPlay(play)"
             ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
             >
             <i class="icon icon-play-circle"></i>
         </span>
 
+        <span
+            class="play-chevron"
+        >
+            <i class="icon icon-chevron-right"></i>
+        </span>
     </div>
 </div>
