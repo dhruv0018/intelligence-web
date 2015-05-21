@@ -38,6 +38,23 @@ IntelligenceWebClient.service('SessionService', [
             return currentUser ? currentUser.getCurrentRole() : undefined;
         };
 
+        this.getCurrentRoleName = function() {
+
+            let roleName = '';
+
+            /* Get the current users current role. */
+            const currentRole = this.getCurrentRole();
+
+            /* Ensure the current role is set for the current user. */
+            if (currentRole && currentRole.type) {
+
+                /* Get the role name of the user. */
+                roleName = currentRole.type.name;
+            }
+
+            return roleName;
+        };
+
         this.getCurrentUserId = function() {
 
             var currentUser = this.getCurrentUser();
