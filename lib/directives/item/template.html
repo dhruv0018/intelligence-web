@@ -1,21 +1,22 @@
 <span class="item">
+
     <button
         class="player-dropdown"
         data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
-        data-ng-click="reset()"
+        data-ng-click="reset($event)"
         >
         <span>
+            <svg data-ng-if="item.type === 'PLAYER_DROPDOWN' || item.type === 'PLAYER_TEAM_DROPDOWN'" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+                <rect data-ng-attr-fill="{{ resetButton.meta.jerseyColor }}" x="0" y="0" width="16px" height="16px" />
+            </svg>
             <span class="jersey-number" data-ng-if="item.type === 'PLAYER_DROPDOWN' || item.type === 'PLAYER_TEAM_DROPDOWN'">
                     {{ resetButton.meta.jerseyNumber}}
             </span>
 
             <span>{{ resetButton.text }}</span>
-
-            <svg data-ng-if="item.type === 'PLAYER_DROPDOWN' || item.type === 'PLAYER_TEAM_DROPDOWN'" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-                <rect data-ng-attr-fill="{{ resetButton.meta.jerseyColor }}" x="0" y="0" width="16px" height="16px" />
-            </svg>
         </span>
     </button>
+
     <!-- Gap variable -->
     <krossover-item-gap data-ng-if="item.type === 'GAP'"></krossover-item-gap>
 
@@ -47,6 +48,6 @@
     <krossover-item-team-player-dropdown data-ng-if="item.type === 'PLAYER_TEAM_DROPDOWN'"></krossover-item-team-player-dropdown>
 
     <!-- Arena variable -->
-    <krossover-item-arena data-ng-if="item.type === 'ARENA'" data-league="league" data-game="game" data-item="item" data-plays="plays" data-play="play" data-event="event" data-auto-advance="autoAdvance" data-is-editable="isEditable"></krossover-item-arena>
+    <krossover-item-arena data-ng-if="item.type === 'ARENA'"></krossover-item-arena>
 
 </span>

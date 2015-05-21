@@ -1,0 +1,12 @@
+{
+    "name": "dialogs",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "arena-dialog"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

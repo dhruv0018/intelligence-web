@@ -23,7 +23,7 @@ IntelligenceWebClient.factory('CurrentEventMediator', [
          * A mediator colleague to change the current event.
          * @param {Event} event - the event to change to.
          */
-        function changeCurrentEvent(event) {
+        function changeCurrentEvent (event) {
 
             /* Set the current play. */
             eventManager.current = event;
@@ -32,9 +32,10 @@ IntelligenceWebClient.factory('CurrentEventMediator', [
         /**
          * A mediator strategy to compare times.
          */
-        function compareTimes(a, b) {
+        function compareTimes (a, b) {
 
-            return a.time - b.time;
+            /* Sort in descending order. */
+            return b.time - a.time;
         }
 
         return mediator;

@@ -1,0 +1,28 @@
+@import (reference) "main.less";
+
+@arena-margin: 30px;
+
+// Dialog parent container
+.md-dialog-container {
+
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+// General styles
+[class^="arena-dialog"] {
+
+    margin-top: @arena-margin;
+    margin-right: @arena-margin;
+}
+
+// Orientation specific styles
+.arena-dialog-portrait {
+
+    flex-basis: 20%;
+}
+
+.arena-dialog-landscape {
+
+    flex-basis: 50%;
+}

@@ -130,17 +130,12 @@ IntelligenceWebClient.service('PlaysManager', [
          */
         this.calculatePlays = function() {
 
-            console.time('Calculating plays...');
-
             period = 0;
             indexedScore = 0;
             opposingIndexedScore = 0;
 
             this.plays.sort(utilities.compareStartTimes);
             this.plays.forEach(calculatePlay);
-
-            console.timeEnd('Calculating plays...');
-
         };
 
         function calculatePlay (play, index) {
@@ -198,8 +193,9 @@ IntelligenceWebClient.service('PlaysManager', [
                     teamId = game.isPlayerOnTeam(field.value) ? game.teamId : game.opposingTeamId;
                 }
 
-                /* If event is the first one in the play, define possession. */
-                if (event === play.events[0]) play.possessionTeamId = teamId;
+                /* Consider the first team to take possession in a play to have
+                 * possession for the remainder of the play. */
+                if (!play.possessionTeamId) play.possessionTeamId = teamId;
 
                 /* If the tag has points to assign. */
                 if (event.pointsAssigned) {
