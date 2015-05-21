@@ -26,20 +26,17 @@ export default `
 
                 </krossover-sidebar>
 
-                <div class="player reels-player" data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
-
-                    <video-player
-                    class="reels-video-container"
-                    poster-image="posterImage"
-                    sources="sources"
-                    cue-points="cuePoints"
-                    telestrations="telestrationsEntity"
-                    telestrations-permissions="telestrationsPermissions"
-                    play-id="currentPlayId"
-                    >
-                    </video-player>
-
-                </div>
+                <video-player
+                data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name"
+                class="reels-video-container"
+                poster-image="posterImage"
+                sources="sources"
+                cue-points="cuePoints"
+                telestrations="telestrationsEntity"
+                telestrations-permissions="telestrationsPermissions"
+                play-id="currentPlayId"
+                >
+                </video-player>
 
             </div>
 

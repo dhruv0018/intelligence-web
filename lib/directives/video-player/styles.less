@@ -3,61 +3,35 @@
 @controls-height: 60px;
 @fullscreen-side-margin: @controls-height * 16 / 9;
 
-.video-player-size(@width, @media-height) {
-
-    videogular, .vg-media-container {
-        width: @width;
-    }
-
-    .vg-media-container {
-        height: @media-height;
-    }
-
-    videogular {
-        height: calc(@media-height + @controls-height);
-    }
+video-player, .video-player {
+    width: 100%;
+    display: flex;
 }
 
-video-player {
-    display: inline-block;
-    margin: 0 auto;
+vg-media {
+    display: block;
 }
 
-.video-player {
-    display: inline-block;
+vg-media, video {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
 
-    vg-media {
-        display: block;
-    }
+videogular {
 
-    vg-media, video {
-        display: block;
-        height: 100%;
-        width: 100%;
-    }
+    &:fullscreen,
+    &.fullscreen {
 
-    videogular {
-
-        &:fullscreen,
-        &.fullscreen {
-
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-
-            .vg-media-container {
-                margin: 0 auto;
-                width: calc(100% ~"-" @fullscreen-side-margin);
-                height: calc(100% ~"-" @controls-height);
-                display: flex;
-                align-items: center;
-            }
+        .vg-media-container {
+            margin: 0 auto;
+            width: calc(100% ~"-" @fullscreen-side-margin);
+            height: calc(100% ~"-" @controls-height);
+            display: flex;
+            align-items: center;
         }
     }
 }
-
 
 /**
  * @license Videogular v1.0.0 http://videogular.com
@@ -75,26 +49,4 @@ videogular {
     -moz-user-select: moz-none;
     -ms-user-select: none;
     user-select: none;
-}
-
-.video-player-size(320px, 180px);
-
-@media (min-width: 640px) {
-    .video-player-size(426px, 240px);
-}
-
-@media (min-width: 800px) {
-    .video-player-size(550px, 310px);
-}
-
-@media (min-width: 1105px) {
-    .video-player-size(640px, 360px);
-}
-
-@media (min-width: 1320px) {
-    .video-player-size(854px, 480px);
-}
-
-@media (min-width: 1745px) {
-    .video-player-size(1280px, 720px);
 }

@@ -23,6 +23,8 @@ require('./config');
 
 require('./app');
 
+require('./features');
+
 require('./utilities');
 require('./indexeddb');
 require('./flow');
@@ -55,6 +57,7 @@ require('./services/analytics');
 
 require('./constants/users');
 require('./constants/games');
+require('./constants/event');
 require('./constants/events');
 require('./constants/schools');
 require('./constants/videos');
@@ -154,3 +157,7 @@ require('./aggregates');
 require('./values');
 
 require('./entities');
+
+require('./bootstrap');
+
+import * as Brokers from './brokers/index';
