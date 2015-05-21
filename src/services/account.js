@@ -1,12 +1,12 @@
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Take a moment */
-var moment = require('moment');
+const moment = require('moment');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
 /**
  * A service to manage a users account state. It handles setting the users role
@@ -161,18 +161,11 @@ function AccountService (
 
                 return true;
 
-            } else if (!termsAcceptedDate) {
-
-                return false;
-
             /* Compare posting date and last accepted date. If difference is
-             * greater than zero, terms posting date is more recent. */
-            } else if (termsDate.diff(termsAcceptedDate) > 0) {
+             * less than zero, terms posting date is more recent. */
+            } else if (termsAcceptedDate && termsDate.diff(termsAcceptedDate) < 0) {
 
-                return false;
-            } else {
-
-                return false;
+                return true;
             }
         }
     };
