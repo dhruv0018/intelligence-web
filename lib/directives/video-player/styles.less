@@ -3,25 +3,44 @@
 @controls-height: 60px;
 @fullscreen-side-margin: @controls-height * 16 / 9;
 
-video-player, .video-player {
+video-player {
+
     width: 100%;
     display: flex;
-}
 
-vg-media {
-    display: block;
-}
+    .video-player {
+        width: 100%;
+        display: flex;
+    }
 
-vg-media, video {
-    display: block;
-    height: 100%;
-    width: 100%;
-}
+    vg-media, video {
+        display: block;
+    }
 
-videogular {
+    vg-media {
 
-    &:fullscreen,
-    &.fullscreen {
+        height: 100%;
+        width: 100%;
+    }
+
+    videogular:fullscreen {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    videgular.fullscreen {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+    }
+
+    :fullscreen,
+    .fullscreen {
+
+        video {
+            width: 100% !important;
+            height: 100% !important;
+        }
 
         .vg-media-container {
             margin: 0 auto;
@@ -31,22 +50,22 @@ videogular {
             align-items: center;
         }
     }
-}
 
-/**
- * @license Videogular v1.0.0 http://videogular.com
- * Two Fucking Developers http://twofuckingdevelopers.com
- * License: MIT
- */
+    /**
+     * @license Videogular v1.0.0 http://videogular.com
+     * Two Fucking Developers http://twofuckingdevelopers.com
+     * License: MIT
+     */
 
-videogular {
-    display: block;
-    position: relative;
-    background-color: #000000;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: moz-none;
-    -ms-user-select: none;
-    user-select: none;
+    videogular {
+        display: block;
+        position: relative;
+        background-color: #000000;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: moz-none;
+        -ms-user-select: none;
+        user-select: none;
+    }
 }

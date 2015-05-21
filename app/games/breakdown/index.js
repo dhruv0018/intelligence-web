@@ -182,7 +182,6 @@ function GamesBreakdownController (
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
 
         $scope.reels = auth.isLoggedIn ? reels.getList() : [];
-        $scope.playManager = playManager;
         $scope.VIEWPORTS = VIEWPORTS;
         $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
 

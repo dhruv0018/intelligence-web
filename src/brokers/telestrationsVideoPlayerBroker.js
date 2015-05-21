@@ -59,7 +59,7 @@ function TelestrationsVideoPlayerBrokerFactory(
 
     function onFullScreen(event) {
 
-        Telestrations.resizeTelestrationContext();
+        // NOTE: Interact with telestrations here
     }
 
     return TelestrationsVideoPlayerBroker;
