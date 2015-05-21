@@ -30,6 +30,10 @@
         margin-bottom: 15px;
         background: #f7f8f8;
         flex: 1;
+
+        .play .playHeadingContainer .play-chevron {
+            display: none;
+        }
     }
 
     video-player {
@@ -41,16 +45,15 @@
     and (max-width: @screen-md-max) {
         display: block;
 
+        video-player {
+            margin-left: 0px;
+        }
+
         .clip-body {
             display: block;
             margin: 0;
             padding: 0;
             flex-direction: column-reverse;
-        }
-
-        video-player {
-            justify-content: center;
-            margin: 0;
         }
 
         .vertical-spacer {

@@ -85,19 +85,14 @@ function ReelController(
         return play;
     }
 
-    /* TODO: Rename sortOrder? */
-    // Update the play order if the sortOrder changes based on play Ids
-    $scope.sortOrder = $scope.reel.plays;
+    // Store the reel order on the play
+    $scope.$watchCollection('plays', function sortPlays(newVals) {
 
-    $scope.$watchCollection('sortOrder', function sortPlays(newVals) {
-
-        $scope.plays.sort(function sortCallback(itemA, itemB) {return (newVals.indexOf(itemA.id) < newVals.indexOf(itemB.id) ? -1 : 1);});
         $scope.plays.forEach(function indexPlays(play, index) {
 
             play.index = index;
         });
     });
-
 
     /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
     // Editing config
@@ -154,7 +149,6 @@ function ReelController(
     $scope.$on('delete-reel-play', function postReelPlayDeleteSetup($event, index) {
         if ($scope.editFlag && $scope.plays && angular.isArray($scope.plays)) {
             $scope.plays.splice(index, 1);
-            $scope.sortOrder.splice(index, 1);
         }
     });
 
