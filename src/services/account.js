@@ -148,9 +148,12 @@ function AccountService (
         hasAcceptedTerms: function hasAcceptedTerms () {
 
             let user              = session.currentUser;
-            let lastAccessedDate  = user.getLastAccessed();
-            let termsAcceptedDate = user.getTermsAcceptedDate() ? moment(user.getTermsAcceptedDate()) : false;
-            let termsDate         = moment(config.termsDate);
+
+            /* If timestamp doesn't exist, don't pass into moment.js as we want
+             * to keep it a falsely value for tests below. */
+            let lastAccessedDate  = user.getLastAccessed() ? moment.utc(user.getLastAccessed()) : false;
+            let termsAcceptedDate = user.getTermsAcceptedDate() ? moment.utc(user.getTermsAcceptedDate()) : false;
+            let termsDate         = moment.utc(config.termsDate);
 
             if (!lastAccessedDate) {
 
