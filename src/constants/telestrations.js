@@ -45,6 +45,9 @@ const TELESTRATION_COLORS = {
             name: 'neon green'
         }
     },
+    BRIGHT_BLUE: function(a=1.0) {
+        return `rgba(43, 171, 245, ${a})`;
+    },
     HIGHLIGHT_BLUE: function(a=1.0) {
         return `rgba(83, 148, 236, ${a})`;
     },
