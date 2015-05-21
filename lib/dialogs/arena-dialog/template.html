@@ -1,6 +1,6 @@
 <md-dialog
     flex="50"
-    class="arena-modal"
+    class="arena-dialog-{{arenaOrientation}}"
     ng-blur="onArenaBlur()"
 >
     <md-dialog-content>
@@ -8,7 +8,7 @@
         <xy-coordinates ng-model="eventManager.current.variableValues[item.id].value.coordinates">
 
             <krossover-arena
-                league="league"
+                type="arenaType"
                 ng-model="eventManager.current.variableValues[item.id].value.region"
             ></krossover-arena>
 
