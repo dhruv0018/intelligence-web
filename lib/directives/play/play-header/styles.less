@@ -85,7 +85,8 @@
             }
         }
 
-        .playplay {
+        .watch-play,
+        .play-chevron {
             font-size: 36px;
             width: 36px;
             color: @gray-light;
@@ -141,6 +142,28 @@
             .icon {
                 color: @brand-danger;
                 cursor: pointer;
+            }
+        }
+    }
+}
+
+@media all and (max-width: 1024px) {
+
+    .play {
+        .playHeadingContainer {
+            .watch-play {
+                display: none;
+            }
+        }
+    }
+}
+
+@media all and (min-width: 1025px) {
+
+    .play {
+        .playHeadingContainer {
+            .play-chevron {
+                display: none;
             }
         }
     }
