@@ -4,10 +4,10 @@
      type="button"
      class="btn btn-default dropdown-toggle"
      ng-click="toggleSelect()"
-     ng-disabled="playerInfo && !playerInfo.isActive"
+     ng-disabled="!isActive"
      ng-class="{'error': !valid()}">
 
-        <span data-ng-show="playerInfo.positionIds.length" class="position-label" data-ng-repeat="positionId in playerInfo.positionIds">{{indexedPositions[positionId].name}}<span data-ng-if="!$last">,</span></span><span data-ng-show="!playerInfo.positionIds.length">Select Position</span> <span class="caret"></span>
+        <span data-ng-show="selectedPositions.length" class="position-label" data-ng-repeat="positionId in selectedPositions">{{indexedPositions[positionId].name}}<span data-ng-if="!$last">,</span></span><span data-ng-show="!selectedPositions.length">Select Position</span> <span class="caret"></span>
 
     </button>
 
