@@ -77,8 +77,8 @@ GamesFormations.config([
 ]);
 
 GamesFormations.controller('GamesFormations.controller', [
-    '$scope', '$state', '$stateParams', 'TeamsFactory', 'GamesFactory', 'LeaguesFactory', 'PlayersFactory', 'Games.FormationReport.Data',
-    function controller($scope, $state, $stateParams, teams, games, leagues, players, data) {
+    '$scope', '$state', '$stateParams', 'TeamsFactory', 'GamesFactory', 'LeaguesFactory', 'PlayersFactory', 'Games.FormationReport.Data', 'ARENA_TYPES',
+    function controller($scope, $state, $stateParams, teams, games, leagues, players, data, ARENA_TYPES) {
         //Game Related
         var gameId = $stateParams.id;
         $scope.game = games.get(gameId);
@@ -90,7 +90,11 @@ GamesFormations.controller('GamesFormations.controller', [
         $scope.opposingTeamId = $scope.game.opposingTeamId;
 
         //League Related
-        $scope.league = leagues.get($scope.team.leagueId);
+        let league = leagues.get($scope.team.leagueId);
+        $scope.league = league;
+
+        // Determine arena type
+        $scope.arenaType = ARENA_TYPES[league.arenaId].type;
 
         //TODO formation report is a special case of data
         //This is going to go away relatively soon
