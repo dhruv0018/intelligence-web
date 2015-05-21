@@ -2,8 +2,15 @@
     <div class="filter-dropdown pull-left dropdown" dropdown data-is-open="filterMenu.isOpen">
 
         <a class="dropdown-toggle" dropdown-toggle>
-            Filter Plays
-            <i class="icon icon-chevron-down"></i>
+
+            <span class="play-count">
+                Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})&nbsp;&nbsp;
+            </span>
+
+            <span>
+                Filter Plays
+                <i class="icon icon-chevron-down"></i>
+            </span>
         </a>
 
         <span data-ng-repeat="filter in activeFilters track by $index" class="btn btn-default active-filter">

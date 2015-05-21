@@ -131,7 +131,6 @@ GamesBreakdownController.$inject = [
     'FiltersetsFactory',
     'ReelsFactory',
     'VIEWPORTS',
-    'PlayManager',
     'PlaysManager',
     'PlaylistManager'
 ];
@@ -155,7 +154,6 @@ function GamesBreakdownController (
     filtersets,
     reels,
     VIEWPORTS,
-    playManager,
     playsManager,
     playlistManager
 ) {
@@ -178,7 +176,6 @@ function GamesBreakdownController (
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
 
         $scope.reels = auth.isLoggedIn ? reels.getList() : [];
-        $scope.playManager = playManager;
         $scope.VIEWPORTS = VIEWPORTS;
         $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
 
@@ -203,7 +200,6 @@ function GamesBreakdownController (
             let play = $scope.plays[0];
             if (play) {
                 $scope.sources = play.getVideoSources();
-                playManager.current = play;
             }
 
 
