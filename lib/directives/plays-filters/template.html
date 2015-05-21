@@ -40,7 +40,7 @@
                         <a data-ng-if="!filter.customFilter" data-ng-show="filter.filterCategoryId === currentFilterCategory" class="btn" data-ng-class="{'child': (filter.parent !== null), 'btn-default':(!contains(activeFilters, filter.id)), 'btn-primary':(contains(activeFilters, filter.id))}" data-ng-click="setFilter(filter)">
                             {{filter.name}}
                         </a>
-                        <a data-ng-if="filter.customFilter" data-ng-show="filter.filterCategoryId === currentFilterCategory && filter.teamId === teamId" class="btn" data-ng-class="{'btn-default':(!contains(activeFilters, filter.id, filter.playerId)), 'btn-primary':(contains(activeFilters, filter.id, filter.playerId))}" data-ng-click="setFilter(filter)">
+                        <a data-ng-if="filter.customFilter" data-ng-show="filter.filterCategoryId === currentFilterCategory && filter.teamId === teamId" class="btn" data-ng-class="{'btn-default':(!contains(activeFilters, filter)), 'btn-primary':(contains(activeFilters, filter))}" data-ng-click="setFilter(filter)">
                             {{filter.name}}
                         </a>
                     </div>

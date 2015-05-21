@@ -105,7 +105,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     plays: {},
                     options: {
                         teamId: resources.teamId,
-                        playerId: resources.playerId
+                        playerId: resources.playerId,
+                        customTagId: resources.customTagId
                     }
                 };
 

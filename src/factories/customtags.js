@@ -33,8 +33,9 @@ IntelligenceWebClient.factory('CustomtagsFactory', [
 
                 return batchUpdate.$promise.then(tags => {
                     return tags.map(tag => {
+                        tag = this.extend(tag);
                         storage.set(tag);
-                        return this.extend(tag);
+                        return tag;
                     });
                 });
             }
