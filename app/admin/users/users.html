@@ -9,26 +9,26 @@
         <form role="form" data-ng-submit="search(filter)">
 
             <div class="form-group">
-                <input class="form-control" placeholder="Email" data-ng-model="filter.email" type="text">
+                <input id="search-user-email-cta" class="form-control" placeholder="Email" data-ng-model="filter.email" type="text">
             </div>
 
             <div class="form-group">
-                <input class="form-control" placeholder="First Name" data-ng-model="filter.firstName" type="text">
+                <input id="search-user-first-name-cta" class="form-control" placeholder="First Name" data-ng-model="filter.firstName" type="text">
             </div>
 
             <div class="form-group">
-                <input class="form-control" placeholder="Last Name" data-ng-model="filter.lastName" type="text">
+                <input class="form-control" id="search-user-last-name-cta" placeholder="Last Name" data-ng-model="filter.lastName" type="text">
             </div>
 
             <div class="form-group">
-                <select class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole">
+                <select id="search-user-role-cta" class="form-control" data-ng-model="filter.role" data-ng-options="role.type.id as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole">
                     <option value="">Role</option>
                 </select>
             </div>
 
             <div class="form-group">
 
-                <select class="form-control" data-ng-model="filter.hasNoRoles" data-ng-options="status.value as status.label for status in statuses">
+                <select id="search-user-status-cta" class="form-control" data-ng-model="filter.hasNoRoles" data-ng-options="status.value as status.label for status in statuses">
                     <option value="">Status</option>
                 </select>
 
@@ -57,7 +57,7 @@
 
                         <td><div class="email">{{user.email}}</div></td>
 
-                        <td><div class="name"><a data-ui-sref="user-info({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></div></td>
+                        <td><div class="name"><a id="user-select-cta-user-{{$index}}" data-ui-sref="user-info({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></div></td>
 
                         <td class="roles">
 
@@ -89,7 +89,7 @@
 
                         </td>
                         <td>
-                            <button data-ng-if="user.hasNoRoles() || !user.has([ROLES.SUPER_ADMIN, ROLES.ADMIN])" data-ng-click="account.gotoAsUser(user)" class="btn btn-primary">Go To As</button>
+                            <button id="user-go-to-as-cta-user-{{$index}}" data-ng-if="user.hasNoRoles() || !user.has([ROLES.SUPER_ADMIN, ROLES.ADMIN])" data-ng-click="account.gotoAsUser(user)" class="btn btn-primary">Go To As</button>
                         </td>
                     </tr>
 
