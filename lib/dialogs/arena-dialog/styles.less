@@ -3,7 +3,7 @@
 @arena-margin: 30px;
 
 // Dialog parent container
-.md-dialog-container {
+.indexing .md-dialog-container {
 
     justify-content: flex-end;
     align-items: flex-start;
@@ -14,6 +14,12 @@
 
     margin-top: @arena-margin;
     margin-right: @arena-margin;
+
+    md-dialog-content {
+
+        // Override default MD styles
+        padding: 0;
+    }
 }
 
 // Orientation specific styles
