@@ -1,4 +1,13 @@
-<div class="xy-coordinates" ng-click="clickListener($event)">
-	<data-ng-transclude></data-ng-transclude>
-	<i class="coordinate-marker" data-ng-show="coordinates"></i>
+<div
+    class="xy-coordinates"
+    ng-click="onClick($event)"
+>
+
+	<ng-transclude></ng-transclude>
+
+	 <i
+        class="coordinate-marker"
+        data-ng-show="relativeCoordinates.x && relativeCoordinates.y"
+    ></i>
+
 </div>

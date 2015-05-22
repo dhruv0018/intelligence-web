@@ -20,27 +20,19 @@
         display: flex;
         padding: 0;
         height: 538px;
-        .playlist {
-            display: flex;
-            width: 335px;
-            height: 100%;
-            overflow-y: hidden;
-            overflow-x: hidden;
-            float:left;
-            padding: 0px;
-            -webkit-transform: translateZ(0);
 
-            .no-results {
-                width: 100%;
-            }
-        }
-
-        div.breakdown-video {
-            display: flex;
-            flex: 1;
+        videogular {
+            margin: 0 auto;
         }
     }
 
+    // MOBILE
+    @media only screen
+    and (max-width: @screen-md-max) {
+        .krossover-sidebar {
+            flex: 0 0 420px;
+        }
+    }
 }
 
 .film-breakdown-size {

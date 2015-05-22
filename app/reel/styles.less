@@ -48,10 +48,15 @@
         .reel-body {
             margin: 0;
             padding: 0;
+            .playBody{
+                display: none;
+            }
         }
     }
 
         .reel-edit-control-container {
+            display: flex;
+            flex: 0 0 50px;
             background-color: @gray-lightest;
         }
 
@@ -59,6 +64,7 @@
 
             padding: 15px;
             display: flex;
+            flex: 1;
             justify-content: space-between;
             max-width: 420px;
 
@@ -81,9 +87,7 @@
             }
         }
 
-            .player.reels-player {
-                display: flex;
-                flex: 1;
+            video-player {
                 margin-left: 15px;
             }
 }

@@ -1,11 +1,12 @@
 <div
     ng-hide="!play.hasVisibleEvents && !isIndexer"
     class="play"
+    ng-click="selectPlay(play)"
     ng-class="{ active: play.id == playManager.current.id, 'fully-opaque': expandAll, 'play__reel': isReelsPlay, 'edit-mode': editFlag }"
 >
     <play-header></play-header>
 
-    <div ng-hide="isReelsPlay">
+    <div>
 
         <ul
             class="playBody"
@@ -19,7 +20,7 @@
             ng-class="{'playHide': (!expandAll && (play != playManager.current || isReelsPlay && editFlag )) && !showPlayBody}"
         >
 
-            <krossover-event ng-repeat="event in play.events"></krossover-event>
+            <krossover-event ng-repeat="event in play.events track by $index | orderBy:'time'"></krossover-event>
 
         </ul>
 

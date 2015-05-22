@@ -120,7 +120,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = new KrossoverEvent();
 
                 /* If the event is an end-and-start event. */
-                if (eventManager.current.isEndAndStart) {
+                if (event.isEndAndStart) {
 
                     /* Get the tagId of the event. */
                     var tagId = event.tagId;
@@ -296,14 +296,14 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.removeEvent(event);
             },
 
-            onEventSelect: function () {
+            onEventSelect: function (event) {
 
                 this.eventSelected = true;
                 this.isIndexing = true;
                 this.showTags = false;
                 this.showScript = true;
 
-                videoPlayer.seekTime(eventManager.current.time);
+                videoPlayer.seekTime(event.time);
             }
         };
 
