@@ -25,7 +25,7 @@
     },
     "links": {
         "signup": {
-            "uri": "http://krossover.com/sign-up.php"
+            "uri": "http://www.krossover.com/get-started"
         },
         "intelligence": {
             "uri": "localhost:9999"
