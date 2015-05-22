@@ -24,7 +24,7 @@
 
         </ul>
 
-        <play-footer ng-show="expandAll || play === playManager.current || showPlayBody || isIndexer"></play-footer>
+        <play-footer ng-show="isIndexer || ((showPlayBody || expandAll) && (isReelsPlay || play.customTagIds.length))"></play-footer>
 
     </div>
 
