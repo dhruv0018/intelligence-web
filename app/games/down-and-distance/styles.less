@@ -24,18 +24,15 @@
 
         .dndInfoBody {
             padding: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
         .dndOption {
-            display: inline-block;
-            padding-right: 20px;
-            white-space: nowrap;
 
             &.lastOption {
-                padding: 0;
-                position: absolute;
-                bottom: 21px;
-                right: 20px;
+                align-self: flex-end;
             }
 
             span {
@@ -44,7 +41,7 @@
 
             select {
                 background-color: white;
-                color: @gray-light;
+                color: @gray;
                 font-weight: 400;
                 padding-right: 30px;
             }

@@ -34,8 +34,17 @@
                     <option value="true">Red Zone</option>
                 </select>
             </div>
+            <div class="dndOption">
+                <span>Show snaps with tags</span>
+                <x-multiselect
+                    ng-model="dndReport.customTagIds"
+                    options="tag.id as tag.name for tag in customtags"
+                    multiple="true"
+                >
+                </x-multiselect>
+            </div>
             <div class="dndOption lastOption">
-                <button data-ng-click="createDownAndDistanceReport()" class="create-report-btn">Create Report</button>
+                <button ng-click="createDownAndDistanceReport()" class="create-report-btn">Create Report</button>
             </div>
         </div>
     </div>
