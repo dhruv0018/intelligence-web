@@ -2,7 +2,7 @@
 
     <span class="playlist-control-play-count">Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
 
-    <div class="select-all" feature="SelectPlays" ng-show="plays.length && isTeamMember">
+    <div class="select-all" feature="SelectPlays" ng-if="plays.length && isTeamMember">
         <check-box
             ng-click="toggleSelectAllPlays()"
             checked="selectedPlays.length === plays.length"
@@ -12,15 +12,15 @@
         <span ng-show="selectedPlays.length">{{selectedPlays.length}} Selected</span>
     </div>
 
-    <button ng-hide="selectedPlays.length || confirmTagSave || confirmTagSave" class="play-all-plays" ng-click="playManager.playAllPlays = !playManager.playAllPlays">
+    <button ng-hide="selectedPlays.length || confirmTagSave" class="play-all-plays" ng-click="playManager.playAllPlays = !playManager.playAllPlays">
         <span class="play-all-text">Continuous Play</span>
         <span class="on" ng-class="{chosen: playManager.playAllPlays}">ON</span>
         <span class="off" ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
     </button>
 
-    <button ng-show="selectedPlays.length && isTeamMember" class="btn btn-default" open-modal="AddReel.Modal" modal-options="options">Add to Reel</button>
+    <button feature="SelectPlays" ng-if="selectedPlays.length && isTeamMember && !confirmTagSave" class="btn btn-default" open-modal="AddReel.Modal" modal-options="options">Add to Reel</button>
 
-    <custom-tags-dropdown ng-show="selectedPlays.length && isTeamMember && currentUser.is(ROLES.COACH)" plays="selectedPlays"></custom-tags-dropdown>
+    <custom-tags-dropdown feature="CustomTags" ng-if="selectedPlays.length && isTeamMember && currentUser.is(ROLES.COACH) && !confirmTagSave" plays="selectedPlays"></custom-tags-dropdown>
 
     <div ng-show="confirmTagSave" class="add-tag-success">
         <i class="icon icon-ok"></i>
