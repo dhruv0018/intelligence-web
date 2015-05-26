@@ -5,8 +5,8 @@
     <div class="select-all" feature="SelectPlays" ng-show="plays.length && isTeamMember">
         <check-box
             ng-click="toggleSelectAllPlays()"
-            checked="selectedPlays.length === plays.length"
-            indeterminate="selectedPlays.length > 0 && selectedPlays.length < plays.length">
+            checked="selectedPlays.length === filteredPlays.length"
+            indeterminate="selectedPlays.length > 0 && selectedPlays.length < filteredPlays.length">
         </check-box>
         <span ng-show="!selectedPlays.length">Select All</span>
         <span ng-show="selectedPlays.length">{{selectedPlays.length}} Selected</span>
