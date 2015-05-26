@@ -38,6 +38,16 @@ IntelligenceWebClient.factory('CustomtagsFactory', [
                         return tag;
                     });
                 });
+            },
+
+            getTagsByTeam: function(team) {
+
+                if (!team) throw new Error('No team');
+                if (!team.id) throw new Error('No team id');
+
+                return this.getList().filter( tag => {
+                    return tag.teamId === team.id;
+                });
             }
 
         };
