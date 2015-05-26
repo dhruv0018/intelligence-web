@@ -81,6 +81,7 @@ IntelligenceWebClient.service('Utilities', [
 
         //generic padding function for any input which needs to be preceeded by a zero if it is less than 10
         this.padZero = function(input) {
+
             let castedInput = +input;
             return (castedInput < 10) ? ('0' + castedInput) : castedInput;
         };

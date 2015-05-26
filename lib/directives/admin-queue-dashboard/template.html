@@ -8,12 +8,12 @@
                 <h4>Current</h4>
                 <div class="general-status-info">
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.ready.indexing)">{{queueFilters.ready.indexing.length | zeroPad}}</a> to be indexed
+                        <a href data-ng-click="setQueue(queueFilters.ready.indexing)">{{queueFilters.ready.indexing.length | padZero}}</a> to be indexed
                     </div>
                 </div>
                 <div class="general-status-info">
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.ready.qa)">{{queueFilters.ready.qa.length | zeroPad}}</a> to be QA'd
+                        <a href data-ng-click="setQueue(queueFilters.ready.qa)">{{queueFilters.ready.qa.length | padZero}}</a> to be QA'd
                     </div>
                 </div>
             </div>
@@ -21,42 +21,42 @@
                 <h4>Games</h4>
                 <div class="general-status-info">
                     <div class="filter">
-                        <a href data-ng-click="setQueue(games)">{{games.length | zeroPad}}</a> Total
+                        <a href data-ng-click="setQueue(games)">{{games.length | padZero}}</a> Total
                     </div>
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.remaining['24'])">{{queueFilters.remaining['24'].length | zeroPad}}</a> 24h - 10h
+                        <a href data-ng-click="setQueue(queueFilters.remaining['24'])">{{queueFilters.remaining['24'].length | padZero}}</a> 24h - 10h
                     </div>
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.remaining['5'])">{{queueFilters.remaining['5'].length | zeroPad}}</a> 5h - 1h
+                        <a href data-ng-click="setQueue(queueFilters.remaining['5'])">{{queueFilters.remaining['5'].length | padZero}}</a> 5h - 1h
                     </div>
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.remaining.late)">{{queueFilters.remaining.late.length | zeroPad}}</a> Late
+                        <a href data-ng-click="setQueue(queueFilters.remaining.late)">{{queueFilters.remaining.late.length | padZero}}</a> Late
                     </div>
                 </div>
                 <div class="general-status-info">
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.remaining['48'])">{{queueFilters.remaining['48'].length | zeroPad}}</a> 48h - 24h
+                        <a href data-ng-click="setQueue(queueFilters.remaining['48'])">{{queueFilters.remaining['48'].length | padZero}}</a> 48h - 24h
                     </div>
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.remaining['10'])">{{queueFilters.remaining['10'].length | zeroPad}}</a> 10h - 5h
+                        <a href data-ng-click="setQueue(queueFilters.remaining['10'])">{{queueFilters.remaining['10'].length | padZero}}</a> 10h - 5h
                     </div>
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.remaining['1'])">{{queueFilters.remaining['1'].length | zeroPad}}</a> Less than 1h
+                        <a href data-ng-click="setQueue(queueFilters.remaining['1'])">{{queueFilters.remaining['1'].length | padZero}}</a> Less than 1h
                     </div>
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.setAside)">{{queueFilters.setAside.length | zeroPad}}</a> Set Aside
+                        <a href data-ng-click="setQueue(queueFilters.setAside)">{{queueFilters.setAside.length | padZero}}</a> Set Aside
                     </div>
                 </div>
             </div>
             <div class="general-status-col">
                 <div class="general-status-info">
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.assigned)"> {{queueFilters.assigned.length | zeroPad}}</a> Assigned
+                        <a href data-ng-click="setQueue(queueFilters.assigned)"> {{queueFilters.assigned.length | padZero}}</a> Assigned
                     </div>
                 </div>
                 <div class="general-status-info">
                     <div class="filter">
-                        <a href data-ng-click="setQueue(queueFilters.unassigned)"> {{queueFilters.unassigned.length | zeroPad}}</a> Unassigned
+                        <a href data-ng-click="setQueue(queueFilters.unassigned)"> {{queueFilters.unassigned.length | padZero}}</a> Unassigned
                     </div>
                 </div>
             </div>
