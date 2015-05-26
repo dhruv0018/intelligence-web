@@ -2,14 +2,14 @@
 
     <aside class="sidebar" data-ng-init="sidebar = true" data-ui-toggle="sidebar">
 
-        <x-button-add-new data-elem-id="add-new-team-cta">Add a new team</x-button-add-new>
+        <x-button-add-new id="add-new-team-cta" data-elem-id="add-new-team-cta">Add a new team</x-button-add-new>
 
         <h3>Search</h3>
 
         <form role="form" data-ng-submit="search(filter)">
 
             <div class="form-group">
-                <input class="form-control" name="name" placeholder="Team Name" data-ng-model="filter.name" type="search" autocomplete="on" list="team-name" autosave="team-name">
+                <input class="form-control" id="search-team-name-cta" name="name" placeholder="Team Name" data-ng-model="filter.name" type="search" autocomplete="on" list="team-name" autosave="team-name">
             </div>
 
             <div class="form-group">
@@ -30,6 +30,7 @@
 
             <div class="form-group">
                 <input class="form-control"
+                       id="search-team-school-name-cta"
                        placeholder="School Name" data-ng-model="filter.schoolName"
                        data-typeahead-wait-ms="200"
                        data-typeahead-min-length="3"
