@@ -84,7 +84,7 @@
         		<div class="shared-with" data-ng-repeat="share in film.getUserShares()" data-ng-hide="!isGame && team.isMember(share.sharedWithUserId) && users.get(share.sharedWithUserId).is(ROLES.ATHLETE)">
         			<strong data-ng-class="{'user-for-game': isGame}">{{usersMap[share.sharedWithUserId].firstName}} {{usersMap[share.sharedWithUserId].lastName}}</strong>
                     <span class="pull-right">
-                        <select data-ng-model="share.isBreakdownShared" data-ng-change="film.save()" data-ng-show="isGame">
+                        <select id="share-film-others-options-cta" data-ng-model="share.isBreakdownShared" data-ng-change="film.save()" data-ng-show="isGame">
                             <option id="share-film-others-raw-film-only-cta" value="false">Sharing raw film only</option>
                             <option id="share-film-others-raw-film-and-breakdown-cta" value="true">Sharing raw film and breakdown</option>
                         </select>
