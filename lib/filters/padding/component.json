@@ -1,0 +1,9 @@
+{
+    "name": "time",
+    "scripts": [
+        "index.js"
+    ],
+    "dependencies": {
+        "moment/moment": "2.9.0"
+    }
+}
