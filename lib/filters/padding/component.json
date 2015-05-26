@@ -1,9 +1,6 @@
 {
-    "name": "time",
+    "name": "padding",
     "scripts": [
         "index.js"
-    ],
-    "dependencies": {
-        "moment/moment": "2.9.0"
-    }
+    ]
 }
