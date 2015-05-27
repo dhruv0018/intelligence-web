@@ -55,8 +55,8 @@ GamesBreakdown.config([
 ]);
 
 GamesBreakdown.service('Games.Data.Dependencies', [
-    '$q', 'AuthenticationService', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory', 'SessionService',
-    function dataService($q, auth, games, plays, teams, reels, leagues, tagsets, players, filtersets, users, session) {
+    '$q', 'AuthenticationService', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory', 'CustomtagsFactory', 'SessionService',
+    function dataService($q, auth, games, plays, teams, reels, leagues, tagsets, players, filtersets, users, customtags, session) {
 
         var service = function(stateParams) {
 
@@ -82,6 +82,10 @@ GamesBreakdown.service('Games.Data.Dependencies', [
                             teamId: teamId,
                             userId: userId
                         });
+                    }
+
+                    if (auth.isLoggedIn && teamId) {
+                        Data.customtags = customtags.load({ teamId: teamId });
                     }
 
                     Data.game = games.load(gameId).then(function() {

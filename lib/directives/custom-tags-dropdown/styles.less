@@ -1,0 +1,117 @@
+@import (reference) "main.less";
+
+.custom-tags-dropdown {
+    position: relative;
+
+    .tags-dropdown-menu {
+        position: absolute;
+        left: -220px;
+        top: 45px;
+        width: 300px;
+        padding: 0;
+
+        /* Triangle Marker */
+        &:before,
+        &:after {
+
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+
+        &:before {
+
+            border-bottom: 11px solid @gray-border;
+            border-left: 11px solid transparent;
+            border-right: 11px solid transparent;
+            margin-left: -11px;
+            right: 30px;
+            top: -11px;
+        }
+
+        &:after {
+
+            border-bottom: 10px solid white;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            margin-left: -10px;
+            right: 31px;
+            top: -10px;
+        }
+
+        .selected-tags {
+            border-bottom: thin solid @gray-border;
+            padding: 5px;
+            max-height: 100px;
+            overflow: auto;
+        }
+
+        .search-tags {
+            border-bottom: thin solid @gray-border;
+            padding: 5px;
+            position: relative;
+
+            input {
+                border: none;
+                width: 100%;
+                padding-right: 20px;
+            }
+
+            .icon-search {
+                position: absolute;
+                right: 5px;
+                top: 8px;
+                color: @gray-light;
+            }
+        }
+
+        .tags-list {
+            padding: 5px;
+            max-height: 250px;
+            overflow-y: auto;
+
+            .tag-selection-label {
+                display: block;
+                color: @gray-light;
+                text-transform: uppercase;
+            }
+
+            .new-tag {
+                margin: 0;
+                cursor: pointer;
+                overflow-wrap: break-word;
+
+                &:hover {
+                    background-color: @active-bg;
+                }
+            }
+
+            ul {
+                list-style: none;
+                padding-left: 0px;
+                font-weight: 500;
+
+                li {
+                    padding: 2px 0px;
+                    cursor: pointer;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    &:hover {
+                        background-color: @active-bg;
+                    }
+                }
+            }
+        }
+
+        .tag-action-buttons {
+            border-top: thin solid @gray-border;
+            padding: 5px;
+
+            span {
+                color: @gray-light;
+            }
+        }
+    }
+}

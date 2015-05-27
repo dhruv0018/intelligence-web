@@ -24,9 +24,7 @@
 
         </ul>
 
-        <hr class="summaryBodyDivider">
-
-        <play-footer></play-footer>
+        <play-footer ng-show="isIndexer || ((showPlayBody || expandAll) && (isReelsPlay || play.customTagIds.length) && isTeamMember)"></play-footer>
 
     </div>
 

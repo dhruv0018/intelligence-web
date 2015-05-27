@@ -1,6 +1,6 @@
 <div>
     <div class="playHeadingContainer">
-        <check-box feature="SelectPlays" ng-if="currentUser.is(ROLES.COACH) && !isReelsPlay" checked="play.isSelected" ng-click="togglePlaySelection($event, play)"></check-box>
+        <check-box feature="SelectPlays" ng-if="isTeamMember && !isReelsPlay" checked="play.isSelected" ng-click="togglePlaySelection($event, play)"></check-box>
         <div
             ng-click="openPlay(play)"
             class="playHeading">
@@ -54,6 +54,13 @@
                 </span>
             </div>
         </div>
+
+        <i class="icon icon-tag pull-right" ng-hide="
+                                                isIndexer ||
+                                                isReelsPlay ||
+                                                !play.customTagIds.length ||
+                                                !isTeamMember ||
+                                                showPlayBody"></i>
 
         <span
             class="watch-play"
