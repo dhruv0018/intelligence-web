@@ -18,13 +18,14 @@ IntelligenceWebClient.factory('503.Interceptor', [
             responseError: function(response) {
 
                 $injector.invoke([
-                    '$state',
-                    function($state) {
+                    '$state', 'AuthenticationService',
+                    function($state, auth) {
 
                         switch (response.status) {
 
                             case 503: /* Temporarily Unavailable */
 
+                                auth.logoutUser();
                                 $state.go('maintenance');
                         }
                     }
