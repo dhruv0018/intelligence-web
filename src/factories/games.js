@@ -346,43 +346,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return players;
             },
 
-            getVideoSources: function() {
-
-                var self = this;
-
-                var sources = [];
-                var defaultVideo;
-                var DEFAULT_VIDEO_ID = config.defaultVideoId;
-
-                if (self.video && self.video.status) {
-
-                    if (self.video.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                        self.video.videoTranscodeProfiles.forEach(function(profile) {
-
-                            if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                                var source = {
-                                    type: 'video/mp4',
-                                    src: $sce.trustAsResourceUrl(profile.videoUrl)
-                                };
-
-                                if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
-                                    defaultVideo = source;
-                                } else {
-                                    sources.push(source);
-                                }
-                            }
-                        });
-
-                    }
-                }
-
-                if (defaultVideo) sources.unshift(defaultVideo);
-
-                return sources;
-            },
-
             /**
              * Determines if the game can be assigned to an indexer.
              * Indexer assignments follow the these rules:
