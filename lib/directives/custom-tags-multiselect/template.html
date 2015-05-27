@@ -1,0 +1,11 @@
+<div class="custom-tags-multiselect">
+    <span>Yo</span>
+    <x-multiselect
+        ng-model="selectedCustomTags"
+        options="tag.id as tag.name for tag in customTags"
+        multiple="true"
+        template-url="custom-tags-multiselect/multiselect-template.html"
+    >
+    </x-multiselect>
+
+</div>

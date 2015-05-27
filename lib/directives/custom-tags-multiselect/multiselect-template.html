@@ -1,0 +1,22 @@
+<div class="custom-tags-multiselect-container btn-group">
+
+    <button type="button" class="btn btn-default dropdown-toggle" ng-click="toggleSelect()" ng-disabled="disabled" ng-class="{'error': !valid()}">
+        <span ng-show="selectedCustomTags.length" class="tag-label" ng-repeat="tag in selectedCustomTags">{{tag.name}}<span ng-if="!$last">,</span></span><span ng-show="!selectedCustomTags.length">Select Tags</span> <span class="caret"></span>
+    </button>
+
+    <ul class="dropdown-menu">
+
+        <li class="tag-filter">
+            <input class="form-control input-sm" type="text" ng-model="searchText.label" autofocus="autofocus" placeholder="Filter" />
+        </li>
+
+        <li ng-if="isOpen" class="tag-row" ng-repeat="item in items | filter:searchText">
+            <a class="tag" href ng-click="select(item); focus()">
+                <i class="icon" ng-class="{'icon-ok': item.checked, 'empty': !item.checked}"></i>
+                <span class="item-label">{{ item.label }}</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>

@@ -1,9 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var GamesDownAndDistance = angular.module('Games.DownAndDistance', [
-    'ui.multiselect'
-]);
+var GamesDownAndDistance = angular.module('Games.DownAndDistance', []);
 
 GamesDownAndDistance.run([
     '$templateCache',
@@ -123,6 +121,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
 
         //Custom Tags Related
         $scope.customtags = customtags.getList({ teamId: $scope.teamId });
+        $scope.selectedCustomTags = [];
 
         //Used to render the view for the
         $scope.options = {
@@ -168,6 +167,11 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
 
         //Generates a down and distant report based on various properties stored on the dndReport object
         $scope.createDownAndDistanceReport = function() {
+
+            if ($scope.selectedCustomTags.length) {
+                $scope.dndReport.customTagIds = $scope.selectedCustomTags.map(tag => tag.id);
+                console.log($scope.dndReport.customTagIds);
+            }
 
             //TODO This casting seems very awkward -- perhaps the generation method should handle the casting
             if ($scope.dndReport.redZone === 'true') {
