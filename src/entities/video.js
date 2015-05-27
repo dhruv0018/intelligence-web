@@ -9,6 +9,12 @@ import { TRANSCODE_PROFILE_IDS, TRANSCODE_PROFILES } from '../constants/transcod
 import { VIDEO_STATUSES } from '../constants/videos';
 
 /**
+ * Angular Dependency Injector
+ * @const {Object} injector
+ */
+const injector = window.angular.element(document).injector();
+
+/**
  * tv4 3rd party JSON validation library
  * @const {Object} tv4
  */
@@ -200,6 +206,23 @@ class Video extends Entity {
         return this.currentTranscodeProfile ?
             this.currentTranscodeProfile.url :
             undefined;
+    }
+
+    /**
+     * Getter for Video.resourceUrl
+     * @method Video.resourceUrl
+     * @readonly
+     * @returns {Object} resourceUrl Trusted Resource URL
+     */
+    get resourceUrl() {
+
+        const $sce = injector.get('$sce');
+
+        return {
+
+            type: 'video/mp4',
+            src: $sce.trustAsResourceUrl(this.url)
+        };
     }
 
     /**
