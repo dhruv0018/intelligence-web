@@ -25,11 +25,10 @@ class Subscription extends Entity {
 
         let validation = this.validate(subscription);
 
-        // FIXME: ValidationError: Invalid type: object (expected Object)
-        // if (validation.errors.length) {
+        if (validation.errors.length) {
 
-        //     throw new Error(validation.errors.shift());
-        // }
+            throw new Error(validation.errors.shift());
+        }
 
         return this.extend(subscription);
     }
