@@ -9,8 +9,9 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$injector', '$rootScope', '$http', 'config', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES',
-    function($injector, $rootScope, $http, config, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES) {
+    '$injector', '$rootScope', '$http', 'config', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'SUBSCRIPTIONS',
+
+    function($injector, $rootScope, $http, config, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, SUBSCRIPTIONS) {
 
         var UsersFactory = {
 
@@ -118,6 +119,13 @@ IntelligenceWebClient.factory('UsersFactory', [
                 });
 
                 return copy;
+            },
+
+            isAthleteRecruit: (user = this) => {
+
+                return user.is(ROLES.ATHLETE) &&
+                    (user.subscriptions.length > 0) &&
+                    (user.subscriptions[0].isActive(SUBSCRIPTIONS.ATHLETE_RECRUIT));
             },
 
             search: function(query) {
