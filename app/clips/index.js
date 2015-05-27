@@ -110,7 +110,7 @@ Clips.controller('Clips.controller', [
         $scope.showFooter = false;
 
         // Krossover VideoPlayer data-attributes
-        $scope.sources = $scope.play.getVideoSources();
+        $scope.sources = $scope.play.clip.resourceUrls;
         $scope.videoTitle = 'clip';
 
         // TODO: This should be refactored, code-smell...

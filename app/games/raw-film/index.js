@@ -66,6 +66,6 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
             url: game.video.thumbnail
         };
 
-        $scope.sources = game.getVideoSources();
+        $scope.sources = game.video.resourceUrls;
     }
 ]);

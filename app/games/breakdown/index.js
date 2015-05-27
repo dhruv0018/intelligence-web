@@ -198,7 +198,7 @@ function GamesBreakdownController (
             $scope.totalPlays = $scope.plays; // TODO: Unnecessary variable?
             let play = $scope.plays[0];
             if (play) {
-                $scope.sources = play.getVideoSources();
+                $scope.sources = play.clip.resourceUrls;
             }
 
 
