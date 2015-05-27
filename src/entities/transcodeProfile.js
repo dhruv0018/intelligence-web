@@ -75,12 +75,10 @@ class TranscodeProfile extends Entity {
         }
 
         let validation = this.validate(transcodeProfile);
+        if (validation.errors.length) {
 
-        // FIXME: ValidationError: Invalid type: object (expected Object)
-        // if (validation.errors.length) {
-
-        //     throw new Error(validation.errors.shift());
-        // }
+            throw new Error(validation.errors.shift());
+        }
 
         // Simplify DB object to constant id for lookups
         transcodeProfile.transcodeProfileId = transcodeProfile.transcodeProfile.id;

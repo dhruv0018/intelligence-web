@@ -66,11 +66,10 @@ class Video extends Entity {
 
         let validation = this.validate(video);
 
-        // FIXME: ValidationError: Invalid type: object (expected Object)
-        // if (validation.errors.length) {
+        if (validation.errors.length) {
 
-        //     throw new Error(validation.errors.shift());
-        // }
+            throw new Error(validation.errors.shift());
+        }
 
         video.status = video.status || VIDEO_STATUSES.INCOMPLETE.id;
 
