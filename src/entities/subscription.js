@@ -62,7 +62,7 @@ class Subscription extends Entity {
      * @param: {SUBSCRIPTION} (req) Subscription constant to check against
      * @return: {Boolean} [true] if given subscription matches given type, else [false]
      */
-    is (match) {
+    is (subscriptionConstant) {
 
         switch (arguments.length) {
 
@@ -71,7 +71,7 @@ class Subscription extends Entity {
                 throw new Error('Invoking Subscription.is without passing a SUBSCRIPTION to match');
         }
 
-        return this.type === match.type.id;
+        return this.type === subscriptionConstant.type.id;
     }
 
     /**
@@ -81,15 +81,15 @@ class Subscription extends Entity {
      * @param: {SUBSCRIPTION} Subscription constant to check against
      * @return: {Boolean} [true] if active and given subscription matches given type, else [false]
      */
-    isActive(match) {
+    isActive(subscriptionConstant) {
 
-        const today = moment.utc();
+        const now = moment.utc();
         const activation = moment.utc(this.activatesAt);
         const expiration = moment.utc(this.expiresAt);
 
-        const isActive = today.isAfter(activation) && today.isBefore(expiration);
+        const isActive = now.isAfter(activation) && now.isBefore(expiration);
 
-        return match ? (this.is(match) && isActive) : isActive;
+        return subscriptionConstant ? (this.is(subscriptionConstant) && isActive) : isActive;
     }
 }
 
