@@ -74,6 +74,7 @@ require('./constants/states');
 require('./constants/schemas');
 require('./constants/video-player');
 require('./constants/views');
+require('./constants/transcodeProfiles');
 
 require('./models/users');
 require('./models/sports');
