@@ -121,9 +121,9 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return copy;
             },
 
-            isAthleteRecruit: (user = this) => {
+            isAthleteRecruit: function(user = this) {
 
-                return user.is(ROLES.ATHLETE) &&
+                return user.is(user.currentRole, ROLES.ATHLETE) &&
                     (user.subscriptions.length > 0) &&
                     (user.subscriptions[0].isActive(SUBSCRIPTIONS.ATHLETE_RECRUIT));
             },
