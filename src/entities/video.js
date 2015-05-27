@@ -226,6 +226,17 @@ class Video extends Entity {
     }
 
     /**
+     * Getter for Video.resourceUrls
+     * @method Video.resourceUrls
+     * @readonly
+     * @returns {Array} resourceUrls Array of trusted Resource URLs
+     */
+    get resourceUrls() {
+
+        return this.transcodeProfiles.map(transcodeProfile => transcodeProfile.resourceUrl);
+    }
+
+    /**
      * Business logic for status complete
      * @method videoIsComplete
      * @returns {Boolean} videoIsComplete [true] if video is complete
