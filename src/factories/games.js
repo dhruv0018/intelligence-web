@@ -1,3 +1,5 @@
+import Video from '../entities/video';
+
 var PAGE_SIZE = 20;
 
 var moment = require('moment');
@@ -53,8 +55,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 angular.augment(game, self);
                 game.isSaving = false;
-                game.video = game.video || {};
-                game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
+                game.video = game.video ? new Video(game.video) : {};
                 game.notes = game.notes || {};
                 game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;

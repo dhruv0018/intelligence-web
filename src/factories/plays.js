@@ -1,3 +1,4 @@
+import Video from '../entities/video';
 import KrossoverEvent from '../entities/event.js';
 
 var pkg = require('../../package.json');
@@ -48,6 +49,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     return new KrossoverEvent(event, tag, event.time);
                 }
+
+                play.clip = play.clip ? new Video(play.clip) : {};
 
                 return play;
             },
