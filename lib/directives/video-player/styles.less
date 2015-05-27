@@ -41,14 +41,6 @@ video-player {
             width: 100% !important;
             height: 100% !important;
         }
-
-        .vg-media-container {
-            margin: 0 auto;
-            width: calc(100% ~"-" @fullscreen-side-margin);
-            height: calc(100% ~"-" @controls-height);
-            display: flex;
-            align-items: center;
-        }
     }
 
     /**
@@ -60,7 +52,7 @@ video-player {
     videogular {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         flex-direction: column;
         position: relative;
         background-color: #000000;

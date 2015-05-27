@@ -16,6 +16,7 @@
 
 @scrub-bar-height: 10px;
 @controls-bottom-height: 50px;
+@controls-height: @scrub-bar-height + @controls-bottom-height;
 
 videogular button {
     cursor: pointer;
@@ -67,6 +68,7 @@ videogular vg-play-pause-button .icon {
 
 videogular vg-controls {
     display: block;
+    flex: 0 0 @controls-height;
     width: 100%;
 
     .controls-container {
