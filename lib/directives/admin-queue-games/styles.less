@@ -1,1 +1,101 @@
 @import (reference) "main.less";
+
+@queue-list-font-size: 14px;
+@queue-list-padding: 6px;
+
+admin-queue-games {
+
+    overflow: hidden;
+    overflow-y: auto;
+
+    .queue-list {
+
+        width: 100%;
+
+        td {
+
+            border: none;
+            color: black;
+            vertical-align: middle;
+            font-size: @queue-list-font-size;
+            line-height: 16px;
+            padding: @queue-list-padding;
+            font-weight: 500;
+
+            &:first-child {
+
+                padding-left: 15px;
+            }
+        }
+
+        ul {
+
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+
+            list-style: none;
+        }
+
+        .game-id {
+
+            text-align: right;
+        }
+
+        .time-left {
+
+            text-align: right;
+
+            .late {
+
+                color: @brand-danger;
+            }
+
+            .none {
+
+                color: @brand-warning;
+            }
+
+            .togo {
+
+                color: @brand-success;
+            }
+        }
+
+        // Base class for buttons used within the queue table
+        .queue-button {
+
+            padding: 4px 11px;
+            line-height: 1;
+        }
+
+        .select-indexer,
+        .select-qa {
+
+            .queue-button;
+            font-size: @queue-list-font-size;
+        }
+
+        .assignment {
+
+            font-size: @queue-list-font-size;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .manage-button {
+
+            .queue-button;
+            font-size: 12px;
+
+            i {
+
+                // Ensure icon has no extra space around it
+                display: block;
+            }
+        }
+    }
+}
