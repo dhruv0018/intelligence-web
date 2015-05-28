@@ -148,8 +148,7 @@ require('./aggregates');
 
 require('./values');
 
-require('./entities');
-
 require('./bootstrap');
 
 import * as Brokers from './brokers/index';
+import * as Entities from './entities/index';
