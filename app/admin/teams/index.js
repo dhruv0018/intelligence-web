@@ -110,8 +110,13 @@ Teams.config([
                 },
                 resolve: {
                     'Teams.Data': [
-                        '$q', 'Teams.Data.Dependencies',
-                        function($q, data) {
+                        '$stateParams', '$q', 'Teams.Data.Dependencies', 'TeamsFactory',
+                        function($stateParams, $q, data, teams) {
+                            data.breakdowns = teams.getRemainingBreakdowns($stateParams.id)
+                                .then(function(breakdownData) {
+                                    return breakdownData;
+                                });
+
                             return $q.all(data);
                         }
                     ]
