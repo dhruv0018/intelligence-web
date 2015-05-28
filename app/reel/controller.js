@@ -63,7 +63,7 @@ function ReelController(
     $scope.isReelsPlay = true;
     $scope.plays = plays;
     $scope.playManager = playManager;
-    $scope.sources = plays[0].clip.resourceUrls;
+    $scope.video = plays[0].clip;
 
     /* TODO: game.getPosterImage() */
     $scope.posterImage = {

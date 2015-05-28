@@ -72,7 +72,6 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.opposingTeamPlayers = data.opposingTeamPlayers;
         $scope.league = leagues.get($scope.team.leagueId);
         $scope.tagset = tagsets.get($scope.league.tagSetId);
-        $scope.sources = $scope.game.video.resourceUrls;
         $scope.videoPlayer = videoPlayer;
 
         var playsList = plays.getList({ gameId: gameId });

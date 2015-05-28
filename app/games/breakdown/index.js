@@ -196,11 +196,6 @@ function GamesBreakdownController (
             .sort(utilities.compareStartTimes)
             .filter(play => play.hasVisibleEvents);
             $scope.totalPlays = $scope.plays; // TODO: Unnecessary variable?
-            let play = $scope.plays[0];
-            if (play) {
-                $scope.sources = play.clip.resourceUrls;
-            }
-
 
             /* TODO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.

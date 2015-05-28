@@ -27,10 +27,10 @@ export default `
                 </krossover-sidebar>
 
                 <video-player
-                data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name"
-                class="reels-video-container"
-                poster-image="posterImage"
-                sources="sources"
+                    ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name"
+                    class="reels-video-container"
+                    poster-image="posterImage"
+                    video="video"
                 >
                 </video-player>
 
