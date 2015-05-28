@@ -43,6 +43,7 @@ describe('TranscodeProfile', () => {
         expect(transcodeProfile).to.respondTo('targetDisplayWidth');
         expect(transcodeProfile).to.respondTo('targetDisplayHeight');
         expect(transcodeProfile).to.respondTo('aspectRatio');
+        expect(TranscodeProfile).to.respondTo('title');
         expect(transcodeProfile).to.respondTo('status');
         expect(transcodeProfile).to.respondTo('url');
         expect(transcodeProfile).to.respondTo('resourceUrl');

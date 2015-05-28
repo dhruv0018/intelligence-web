@@ -212,6 +212,18 @@ class TranscodeProfile extends Entity {
     }
 
     /**
+     * Getter for TranscodeProfile.title
+     * @method TranscodeProfile.title
+     * @readonly
+     * @returns {String} title
+     */
+    get title() {
+
+        // TODO: Improve readability
+        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]].title;
+    }
+
+    /**
      * Getter for TranscodeProfile.status
      * @method TranscodeProfile.status
      * @readonly
