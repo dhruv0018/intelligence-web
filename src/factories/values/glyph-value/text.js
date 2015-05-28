@@ -36,10 +36,9 @@ function TextValue(
     angular.inheritPrototype(Text, Glyph);
 
     Text.prototype.RESIZABLE = false;
-    Text.prototype.BASE_WIDTH = 1280; // px
+    Text.prototype.BASE_CONTAINER_WIDTH = 1280; // px
     Text.prototype.BASE_FONT_SIZE = 22; // px
-    Text.prototype.BASE_HORIZONTAL_PADDING = 10; // px
-    Text.prototype.BASE_VERTICAL_PADDING = 20; // px
+    Text.prototype.BASE_HORIZONTAL_PADDING = 5; // px
     Text.prototype.TEST_TEXTAREA_BASE_PADDING_RIGHT = 30; // px
 
     Text.prototype.KEY_CODE_TO_HTML_ENTITY = {
@@ -51,11 +50,12 @@ function TextValue(
 
     Text.prototype.TEXT_AREA_BASE_CSS = {
         'margin': '0px',
-        'padding': '20px 10px',
+        'padding': '0px 5px', // 0px vertical padding
         'font-family': 'Helvetica',
         'font-size': '22px',
         'font-weight': '500',
-        'line-height': '1px',
+        'line-height': Text.prototype.BASE_FONT_SIZE * 2 + 'px',
+        'height': Text.prototype.BASE_FONT_SIZE * 2 + 'px',
         'overflow': 'hidden',
         'min-width': '60px',
         'opacity': '1',
@@ -109,24 +109,23 @@ function TextValue(
 
     Text.prototype.MAX_LENGTH = 70;
 
-    Text.prototype.getScaledFontSize = function getScaledFontSize() {
+    Text.prototype.getScaledTextAreaCSSProperties = function getScaledTextAreaCSSProperties(testTextArea = false) {
 
-        return this.getContainerDimensions().width * (1 / (this.BASE_WIDTH / this.BASE_FONT_SIZE));
-    };
+        let containerDimensions = this.getContainerDimensions();
 
-    Text.prototype.getScaledHorizontalPadding = function getScaledHorizontalPadding() {
+        let scaledFontSize = containerDimensions.width * (1 / (this.BASE_CONTAINER_WIDTH / this.BASE_FONT_SIZE));
+        let scaledHorizontalPadding = containerDimensions.width * (1 / (this.BASE_CONTAINER_WIDTH / this.BASE_HORIZONTAL_PADDING));
+        let scaledHeight = scaledFontSize * 2;
 
-        return this.getContainerDimensions().width * (1 / (this.BASE_WIDTH / this.BASE_HORIZONTAL_PADDING));
-    };
+        let scaledTestTextareaBasePadding = containerDimensions.width * (1 / (this.BASE_CONTAINER_WIDTH / this.TEST_TEXTAREA_BASE_PADDING_RIGHT));
 
-    Text.prototype.getScaledVerticalPadding = function getScaledVerticalPadding() {
-
-        return this.getContainerDimensions().width * (1 / (this.BASE_WIDTH / this.BASE_VERTICAL_PADDING));
-    };
-
-    Text.prototype.getScaledTestTextareaBasePaddingRight = function getScaledTestTextareaBasePaddingRight() {
-
-        return this.getContainerDimensions().width * (1 / (this.BASE_WIDTH / this.TEST_TEXTAREA_BASE_PADDING_RIGHT));
+        return {
+            'font-size': scaledFontSize + 'px',
+            'padding-right': testTextArea ? scaledTestTextareaBasePadding  + 'px' : scaledHorizontalPadding + 'px',
+            'padding-left': scaledHorizontalPadding + 'px',
+            'height': scaledHeight + 'px',
+            'line-height': scaledHeight + 'px'
+        };
     };
 
     /*
@@ -557,13 +556,7 @@ function TextValue(
 
         self.recalculatePrimaryTextareaSize = function recalculatePrimaryTextareaSize() {
 
-            self.element.css({
-                'font-size': parentGlyph.getScaledFontSize() + 'px',
-                'padding-top': parentGlyph.getScaledVerticalPadding() + 'px',
-                'padding-bottom': parentGlyph.getScaledVerticalPadding() + 'px',
-                'padding-right': parentGlyph.getScaledHorizontalPadding() + 'px',
-                'padding-left': parentGlyph.getScaledHorizontalPadding() + 'px'
-            });
+            self.element.css(parentGlyph.getScaledTextAreaCSSProperties());
         };
 
         self.recalculatePrimaryTextareaStartPosition = function recalculatePrimaryTextareaStartPosition() {
@@ -669,13 +662,7 @@ function TextValue(
 
     var recalculateTestTextareaSize = function recalculateTestTextareaSize() {
 
-        testTextarea.css({
-            'font-size': this.getScaledFontSize() + 'px',
-            'padding-top': this.getScaledVerticalPadding() + 'px',
-            'padding-bottom': this.getScaledVerticalPadding() + 'px',
-            'padding-right': this.getScaledTestTextareaBasePaddingRight() + 'px',
-            'padding-left': this.getScaledHorizontalPadding() + 'px'
-        });
+        testTextarea.css(this.getScaledTextAreaCSSProperties(true));
     };
 
     /*
