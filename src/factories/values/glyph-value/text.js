@@ -455,60 +455,44 @@ function TextValue(
          */
         function handleTextareaInput(event) {
 
-            event.preventDefault();
-            event.stopPropagation();
-
             var keyCode = event.keyCode || event.which;
-            var keyCodeString = String.fromCharCode(keyCode);
 
-            if (self.element[0].readOnly) return;
+            if (self.element[0].readOnly) {
+
+                event.preventDefault();
+                return;
+            }
 
             // TODO: Prevent Enter until text-box height expansion is allowed.
             if (keyCode === parentGlyph.KEY_MAP.ENTER) {
-                // TODO: HANDLE THIS CASE WHEN GROWING VERTICALLY
+
+                // TODO: HANDLE THIS CASE WHEN MULTIPLE LINES IS ALLOWED
+                event.preventDefault();
                 return;
+
             } else {
 
-                let newestValue = '';
+                let nextString = self.element[0].value;
 
-                if (event.type === 'paste') {
+                // Limit textarea string length, unless user is deleting
+                if (nextString.length >= parentGlyph.MAX_LENGTH && keyCode !== parentGlyph.KEY_MAP.DELETE) {
 
-                    newestValue = event.clipboardData.getData('text/plain');
-
-                } else if (keyCodeString) {
-
-                    newestValue = keyCodeString;
+                    event.preventDefault();
+                    return;
                 }
-
-                let selectionStart = self.element[0].selectionStart;
-                let selectionEnd = self.element[0].selectionEnd;
-
-                // nextString is the actual text to be set in the primaryTextArea
-                let nextString = self.element[0].value.split('');
-                nextString.splice(selectionStart, selectionEnd - selectionStart, newestValue);
-                nextString = nextString.join('');
-
-                // Limit textarea string length
-                if (nextString.length >= parentGlyph.MAX_LENGTH) return;
 
                 let htmlEncodedString = htmlEntityEncode(nextString);
                 let nextWidth = calculateTextWidth(htmlEncodedString);
 
-                // prevent input if next width would be too wide for container
-                if (Math.ceil(nextWidth) > parentGlyph.getMaxWidth()) return;
+                // prevent input if next width would be too wide for container unless user is deleting
+                if (Math.ceil(nextWidth) > parentGlyph.getMaxWidth() && keyCode !== parentGlyph.KEY_MAP.DELETE) {
 
-                // NOTE: placeholder affects text-area inner size, thus remove it
-                // when there is any entered text
-                if (nextString.length) self.element.removeAttr('placeholder');
+                    event.preventDefault();
+                    return;
+                }
 
                 // IMPORTANT: set the width to the proper width first before setting the textarea's value
                 self.recalculatePrimaryTextareaWidth(htmlEncodedString);
-
-                // set the textarea's value
-                self.element[0].value = nextString;
-
-                // set the selected range up by 1 from where it started
-                self.element[0].setSelectionRange(selectionStart + 1, selectionStart + 1);
 
                 storeTextAreaVertices();
                 storeTextAreaValue();
@@ -518,23 +502,21 @@ function TextValue(
         /*
          * Handle cut/delete events primarily.
          */
-        function handleTextareaDeleteText(event) {
+        function handleTextAreaKeyUp(event) {
 
             event.stopPropagation();
 
             if (self.element[0].readOnly) {
+
                 event.preventDefault();
                 return;
             }
 
-            var keyCode = event.keyCode || event.which;
-            var nextString = self.element[0].value;
-            var htmlEncodedString = htmlEntityEncode(nextString);
+            let keyCode = event.keyCode || event.which;
+            let nextString = self.element[0].value;
+            let htmlEncodedString = htmlEntityEncode(nextString);
             self.recalculatePrimaryTextareaWidth(htmlEncodedString);
             self.recalculatePrimaryTextareaStartPosition();
-
-            // NOTE: Add placeholder when there's no text
-            if (!nextString.length) self.element.attr('placeholder', parentGlyph.HINT_TEXT);
 
             storeTextAreaVertices();
             storeTextAreaValue();
@@ -650,8 +632,7 @@ function TextValue(
         // add edit handlers
         self.element.on('paste', handleTextareaInput);
         self.element.on('keypress', handleTextareaInput);
-        self.element.on('keyup', handleTextareaDeleteText);
-        self.element.on('cut', handleTextareaDeleteText);
+        self.element.on('keyup', handleTextAreaKeyUp);
 
         // enter default start-state
         if (mode !== 'display') enterEditMode();
