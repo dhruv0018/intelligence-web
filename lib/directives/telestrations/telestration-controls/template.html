@@ -14,7 +14,7 @@
         <telestration-delete-button data-ng-show="controls.telestrationsController.selectedGlyph">
         </telestration-delete-button>
 
-        <telestration-clear-all-button data-ng-show="controls.telestrationsController.areGlyphsPresent()">
+        <telestration-clear-all-button data-ng-show="!controls.telestrationsController.selectedGlyph && controls.telestrationsController.areGlyphsPresent()">
         </telestration-clear-all-button>
 
     </div>
