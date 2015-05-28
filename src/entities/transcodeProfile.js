@@ -8,12 +8,6 @@ import Entity from './entity';
 import { TRANSCODE_PROFILE_IDS, TRANSCODE_PROFILES } from '../constants/transcodeProfiles';
 
 /**
- * Angular Dependency Injector
- * @const {Object} injector
- */
-const injector = window.angular.element(document).injector();
-
-/**
  * tv4 3rd party JSON validation library
  * @const {Object} tv4
  */
@@ -243,6 +237,16 @@ class TranscodeProfile extends Entity {
      */
     get resourceUrl() {
 
+        /**
+         * Angular Dependency Injector
+         * @const {Object} injector
+         */
+        const injector = window.angular.element(document).injector();
+
+        /**
+         * Angular Strict Contextual Escaping service
+         * @const {Object} $sce
+         */
         const $sce = injector.get('$sce');
 
         return {
