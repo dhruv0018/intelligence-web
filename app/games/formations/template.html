@@ -14,6 +14,10 @@
                 <option value="true">Red Zone</option>
             </select>
         </div>
+        <div class="formationOption">
+            <span>Filter by tags</span>
+            <custom-tags-multiselect ng-model="dndReport.customTagIds" custom-tags="customtags"></custom-tags-multiselect>
+        </div>
     </div>
 
     <accordion close-others="true">
