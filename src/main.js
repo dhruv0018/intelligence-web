@@ -36,6 +36,7 @@ require('./device');
 require('./mediator');
 require('./feature-flag');
 
+require('./http/interceptors/503');
 require('./http/interceptors/error');
 require('./http/interceptors/auth');
 require('./http/interceptors/broadcast');
