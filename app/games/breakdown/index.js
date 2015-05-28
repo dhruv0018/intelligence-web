@@ -73,8 +73,7 @@ GamesBreakdown.service('Games.Data.Dependencies', [
                         tagsets: tagsets.load(),
                         filtersets: filtersets.load(),
                         plays: plays.load({ gameId: gameId }),
-                        players: players.load({ gameId: gameId }),
-                        customtags: customtags.load({ teamId: teamId })
+                        players: players.load({ gameId: gameId })
                     };
 
                     if (auth.isLoggedIn && userId && teamId) {
@@ -83,6 +82,10 @@ GamesBreakdown.service('Games.Data.Dependencies', [
                             teamId: teamId,
                             userId: userId
                         });
+                    }
+
+                    if (auth.isLoggedIn && teamId) {
+                        Data.customtags = customtags.load({ teamId: teamId });
                     }
 
                     Data.game = games.load(gameId).then(function() {
