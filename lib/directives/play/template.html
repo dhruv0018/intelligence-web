@@ -20,7 +20,15 @@
             ng-class="{'playHide': (!expandAll && (play != playManager.current || isReelsPlay && editFlag )) && !showPlayBody}"
         >
 
-            <krossover-event ng-repeat="event in play.events track by $index | orderBy:'time'"></krossover-event>
+            <krossover-event
+             play="play"
+             plays="plays"
+             event="event"
+             league="league"
+             auto-advance="autoAdvance"
+             ng-repeat="event in play.events track by $index | orderBy:'time'"
+            >
+            </krossover-event>
 
         </ul>
 
