@@ -1,7 +1,9 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var GamesDownAndDistance = angular.module('Games.DownAndDistance', []);
+var GamesDownAndDistance = angular.module('Games.DownAndDistance', [
+    'ui.multiselect'
+]);
 
 GamesDownAndDistance.run([
     '$templateCache',
@@ -84,11 +86,29 @@ GamesDownAndDistance.config([
 ]);
 
 GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
-    '$stateParams', '$scope', 'TeamsFactory', 'GamesFactory', 'LeaguesFactory', 'ARENA_TYPES',
-    function controller($stateParams, $scope, teams, games, leagues, ARENA_TYPES) {
+    '$stateParams',
+    '$scope',
+    'TeamsFactory',
+    'GamesFactory',
+    'LeaguesFactory',
+    'CustomtagsFactory',
+    'PlaylistEventEmitter',
+    'ARENA_TYPES',
+    'CUSTOM_TAGS_EVENTS',
+    function controller(
+        $stateParams,
+        $scope,
+        teams,
+        games,
+        leagues,
+        customtags,
+        playlistEventEmitter,
+        ARENA_TYPES,
+        CUSTOM_TAGS_EVENTS
+    ) {
 
         //Collections
-        $scope.teams = teams.getCollection();
+        $scope.teams = teams.getMap();
 
         //Game Related
         var gameId = $stateParams.id;
@@ -104,6 +124,12 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
         //League Related
         let league = leagues.get(team.leagueId);
         $scope.league = league;
+
+        //Custom Tags Related
+        $scope.customtags = customtags.getList();
+        playlistEventEmitter.on(CUSTOM_TAGS_EVENTS.SAVE, event => {
+            $scope.customtags = customtags.getList();
+        });
 
         //Used to render the view for the
         $scope.options = {
@@ -142,7 +168,8 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
             strength: $scope.options.weight[0],
             redZone: false,
             hash: $scope.options.hash[0],
-            down: $scope.options.down[0]
+            down: $scope.options.down[0],
+            customTagIds: []
         };
 
 

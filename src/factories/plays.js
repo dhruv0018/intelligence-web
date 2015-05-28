@@ -173,7 +173,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 plays = plays.map(play => {
                     return this.unextend(play);
                 });
-                console.log(plays);
 
                 let batchUpdate = model.batchUpdate(parameters, plays);
 

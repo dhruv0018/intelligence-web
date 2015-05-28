@@ -74,6 +74,7 @@
         "spinner",
         "check-box",
         "custom-tags-dropdown",
+        "custom-tags-multiselect",
         "custom-tag-pills",
         "feature"
     ],
