@@ -133,8 +133,10 @@ GamesBreakdownController.$inject = [
     'PlayManager',
     'PlaysManager',
     'PlaylistManager',
+    'PlaylistEventEmitter',
     'TELESTRATION_PERMISSIONS',
     'TelestrationsVideoPlayerBroker',
+    'EVENT'
 ];
 
 function GamesBreakdownController (
@@ -159,8 +161,10 @@ function GamesBreakdownController (
     playManager,
     playsManager,
     playlistManager,
+    playlistEventEmitter,
     TELESTRATION_PERMISSIONS,
-    TelestrationsVideoPlayerBroker
+    TelestrationsVideoPlayerBroker,
+    EVENT
 ) {
 
         var uploader = users.get($scope.game.uploaderUserId);
@@ -255,14 +259,7 @@ function GamesBreakdownController (
 
             if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
-                $scope.$watchCollection('playManager.current', function(currentPlay) {
-
-                    if (currentPlay && currentPlay.id) {
-
-                        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id, currentPlay.startTime);
-                        $scope.currentPlayId = currentPlay.id;
-                    }
-                });
+                playlistEventEmitter.on(EVENT.PLAYLIST.PLAY.WATCH, onPlaylistWatch);
             }
 
             if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
@@ -277,8 +274,15 @@ function GamesBreakdownController (
             }
         }
 
+        function onPlaylistWatch(play) {
+
+            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
+            $scope.currentPlayId = play.id;
+        }
+
         $scope.$on('$destroy', function onDestroy() {
 
             telestrationsVideoPlayerBroker.cleanup();
+            playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAY.WATCH, onPlaylistWatch);
         });
 }
