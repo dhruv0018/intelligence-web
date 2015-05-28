@@ -314,7 +314,7 @@ function TextValue(
 
 
             /* handle transition */
-            // NOTHING TO DO
+            parentGlyph.onBlurHandler();
 
 
             /* go to to next state */
