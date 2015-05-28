@@ -169,6 +169,12 @@ IntelligenceWebClient.factory('PlaysFactory', [
             batchSave: function(plays) {
                 let model = $injector.get(this.model);
                 let parameters = {};
+
+                plays = plays.map(play => {
+                    return this.unextend(play);
+                });
+                console.log(plays);
+
                 let batchUpdate = model.batchUpdate(parameters, plays);
 
                 return  batchUpdate.$promise;
