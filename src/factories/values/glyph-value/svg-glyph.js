@@ -282,6 +282,7 @@ export function SVGGlyphValue(
 
     SVGGlyph.prototype.removeListeners = function removeListeners() {
 
+        Glyph.prototype.removeListeners.call(this);
         if (this.primarySVGShape) this.primarySVGShape.fixed();
     };
 
