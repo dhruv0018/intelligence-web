@@ -6,8 +6,28 @@
     text-align: left;
     display: inline-block;
 
-    .btn-group {
+    .custom-tags-multiselect-container {
         position: relative;
+    }
+
+    button {
+        padding: 8px;
+        border: thin solid @gray-border;
+        color: @gray;
+        font-weight: 400;
+
+        .icon-chevron-down {
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    }
+
+    button,
+    button:active,
+    button:focus,
+    button:hover {
+        background-color: white;
+        box-shadow: none;
     }
 
     .tag-label {
@@ -16,11 +36,10 @@
 
     .dropdown-menu {
 
-        height: 250px;
+        max-height: 250px;
         width: 250px;
         overflow-y: scroll;
         letter-spacing: normal;
-        margin-top: 35px;
         top: auto;
         left: auto;
 
