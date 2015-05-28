@@ -22,7 +22,9 @@ ReelController.$inject = [
     'ROLES',
     'VIEWPORTS',
     'TELESTRATION_PERMISSIONS',
-    'TelestrationsVideoPlayerBroker'
+    'TelestrationsVideoPlayerBroker',
+    'PlaylistEventEmitter',
+    'EVENT'
 ];
 
 /**
@@ -52,7 +54,9 @@ function ReelController(
     ROLES,
     VIEWPORTS,
     TELESTRATION_PERMISSIONS,
-    TelestrationsVideoPlayerBroker
+    TelestrationsVideoPlayerBroker,
+    playlistEventEmitter,
+    EVENT
 ) {
 
     const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
@@ -65,7 +69,6 @@ function ReelController(
     let isCoach = currentUser.is(ROLES.COACH);
     let plays = reel.plays.map(mapPlays);
     let play = plays[0];
-    let currentPlay = play;
     let game = gamesFactory.get(plays[0].gameId);
     let isTelestrationsSharedWithCurrentUser = reel.isTelestrationsSharedWithUser(currentUser);
     let isTelestrationsSharedPublicly = reel.isTelestrationsSharedPublicly();
@@ -218,20 +221,10 @@ function ReelController(
         });
     };
 
-    $scope.$watchCollection('playManager.current', function(newPlay) {
+    if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
-        if (newPlay && newPlay.id) {
-
-            currentPlay = newPlay;
-
-            $scope.currentPlayId = currentPlay.id;
-
-            if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
-
-                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(currentPlay.id, currentPlay.startTime);
-            }
-        }
-    });
+        playlistEventEmitter.on(EVENT.PLAYLIST.PLAY.WATCH, onPlaylistWatch);
+    }
 
     if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
 
@@ -255,6 +248,12 @@ function ReelController(
         });
     }
 
+    function onPlaylistWatch(play) {
+
+        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
+        $scope.currentPlayId = play.id;
+    }
+
     $scope.$watch('plays', function playsWatch(newVals, oldVals) {
 
         $scope.filteredPlaysIds = newVals;
@@ -263,6 +262,7 @@ function ReelController(
     $scope.$on('$destroy', function onDestroy() {
 
         telestrationsVideoPlayerBroker.cleanup();
+        playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAY.WATCH, onPlaylistWatch);
     });
 }
 
