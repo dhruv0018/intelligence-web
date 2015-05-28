@@ -77,13 +77,7 @@ module.exports = [
 
         ConeSpotlight.prototype.renderAttributes = function renderAttributes() {
 
-            let attributes = {
-                fill: this.color,
-                stroke: this.color,
-                'stroke-width': this.STROKE_WIDTH
-            };
-
-            this.primarySVGShape.attr(attributes);
+            this.primarySVGShape.opacity(0);
         };
 
         ConeSpotlight.prototype.render = function renderConeSpotlight() {
