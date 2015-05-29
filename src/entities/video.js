@@ -71,7 +71,6 @@ class Video extends Entity {
         if (this.videoIsComplete(video) && video.videoTranscodeProfiles) {
 
             video.videoTranscodeProfiles = video.videoTranscodeProfiles.map(transcodeProfile => new TranscodeProfile(transcodeProfile));
-            video.currentTranscodeProfile = video.videoTranscodeProfiles.sort((a, b) => b.transcodeProfileId - a.transcodeProfileId)[0];
         }
 
 
@@ -172,33 +171,6 @@ class Video extends Entity {
     get thumbnail() {
 
         return this.thumbnail;
-    }
-
-    /**
-     * Getter for Video.quality
-     * @method Video.quality
-     * @readonly
-     * @returns {String} quality descriptor
-     */
-    get quality() {
-
-        // TODO: Improve readability
-        return this.currentTranscodeProfile ?
-            TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.currentTranscodeProfile.transcodeProfileId]].title :
-            undefined;
-    }
-
-    /**
-     * Getter for Video.url
-     * @method Video.url
-     * @readonly
-     * @returns {String} url source URL
-     */
-    get url() {
-
-        return this.currentTranscodeProfile ?
-            this.currentTranscodeProfile.url :
-            undefined;
     }
 
     /**
