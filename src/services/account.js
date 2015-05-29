@@ -151,22 +151,12 @@ function AccountService (
 
             /* If timestamp doesn't exist, don't pass into moment.js as we want
              * to keep it a falsely value for tests below. */
-            let lastAccessedDate  = user.getLastAccessed() ? moment.utc(user.getLastAccessed()) : false;
             let termsAcceptedDate = user.getTermsAcceptedDate() ? moment.utc(user.getTermsAcceptedDate()) : false;
             let termsDate         = moment.utc(config.termsDate);
 
-            if (!lastAccessedDate) {
-
-                /* This is a new user; already accepted Terms & Conditions
-                 * by setting new password. */
-                user.termsAcceptedDate = new Date().toISOString();
-                user.save();
-
-                return true;
-
             /* Compare posting date and last accepted date. If difference is
              * less than zero, terms posting date is more recent. */
-            } else if (termsAcceptedDate && termsDate.diff(termsAcceptedDate) < 0) {
+            if (termsAcceptedDate && termsDate.diff(termsAcceptedDate) < 0) {
 
                 return true;
             }
