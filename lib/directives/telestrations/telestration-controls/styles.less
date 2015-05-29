@@ -45,6 +45,7 @@
         cursor: pointer;
         display: flex;
         user-select: none;
+        outline: none;
     }
 
     .primary-controls {
@@ -160,6 +161,11 @@
                 }
             }
         }
+    }
+
+    // material design override
+    .delete-tools .md-button {
+        line-height: initial;
     }
 
     telestration-clear-all-button, telestration-delete-button {
