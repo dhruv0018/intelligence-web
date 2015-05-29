@@ -2,27 +2,48 @@ const assert = chai.assert;
 const expect = chai.expect;
 const should = chai.should();
 
-describe('Video', () => {
+import TranscodeProfile from '../src/entities/transcodeProfile';
+
+describe('TranscodeProfile', () => {
 
     beforeEach(angular.mock.module('intelligence-web-client'));
 
-    it('should exist', inject(TranscodeProfile => {
+    const transcodeProfileJSONObject = {
+        "id": 1544085,
+        "videoId": 354704,
+        "transcodeProfile": {
+            "id": 1,
+            "targetBitrate": 600,
+            "maximumBitrate": 800,
+            "minimumBitrate": 0,
+            "description": "SD Low Resolution (360p)",
+            "targetDisplayWidth": 640,
+            "targetDisplayHeight": 360,
+            "aspectRatio": "16:9"
+        },
+        "status": 4,
+        "videoUrl": "http:\\/\\/krossover-com-prod-content.cdn.krossover.com\\/videos\\/finished\\/ec2-23-20-153-60.compute-1.amazonaws.com544e904aa6998_600.mp4"
+    };
 
-        expect(TranscodeProfile).to.exist;
+    const transcodeProfile = new TranscodeProfile(transcodeProfileJSONObject);
+
+    it('should exist', inject(transcodeProfile => {
+
+        expect(transcodeProfile).to.exist;
     }));
 
-    it('should have a public API', inject(TranscodeProfile => {
+    it('should have a public API', inject(transcodeProfile => {
 
-        expect(TranscodeProfile).to.respondTo('id');
-        expect(TranscodeProfile).to.respondTo('videoId');
-        expect(TranscodeProfile).to.respondTo('targetBitrate');
-        expect(TranscodeProfile).to.respondTo('maximumBitrate');
-        expect(TranscodeProfile).to.respondTo('minimumBitrate');
-        expect(TranscodeProfile).to.respondTo('targetDisplayWidth');
-        expect(TranscodeProfile).to.respondTo('targetDisplayHeight');
-        expect(TranscodeProfile).to.respondTo('aspectRatio');
-        expect(TranscodeProfile).to.respondTo('status');
-        expect(TranscodeProfile).to.respondTo('url');
-        expect(TranscodeProfile).to.respondTo('resourceUrl');
+        expect(transcodeProfile).to.respondTo('id');
+        expect(transcodeProfile).to.respondTo('videoId');
+        expect(transcodeProfile).to.respondTo('targetBitrate');
+        expect(transcodeProfile).to.respondTo('maximumBitrate');
+        expect(transcodeProfile).to.respondTo('minimumBitrate');
+        expect(transcodeProfile).to.respondTo('targetDisplayWidth');
+        expect(transcodeProfile).to.respondTo('targetDisplayHeight');
+        expect(transcodeProfile).to.respondTo('aspectRatio');
+        expect(transcodeProfile).to.respondTo('status');
+        expect(transcodeProfile).to.respondTo('url');
+        expect(transcodeProfile).to.respondTo('resourceUrl');
     }));
 });
