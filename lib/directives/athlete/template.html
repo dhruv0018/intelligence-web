@@ -40,7 +40,7 @@
                     <data-positions-dropdown
                         id="{{idHook}}-positions-cta"
                         data-ng-model="rosterEntry.playerInfo.positionIds" data-player="athlete" data-positionset="positionset"></data-positions-dropdown>
-                    <button data-ng-if="!isUserTeam" class="remove btn btn-blank pull-right" data-ng-click="toggle(rosterEntry)"><i class="icon icon-remove"></i></button>
+                    <button id="athlete-position-remove-cta" data-ng-if="!isUserTeam" class="remove btn btn-blank pull-right" data-ng-click="toggle(rosterEntry)"><i class="icon icon-remove"></i></button>
                 </td>
 
                 <td class="athlete-column"
