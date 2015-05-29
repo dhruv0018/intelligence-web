@@ -122,9 +122,13 @@ Login.config([
                         controller: 'LoginController'
                     }
                 },
+                data: {
+
+                    isResettingPassword: true
+                },
 
                 onEnter: ['$state', '$stateParams',
-                    function ($state, $stateParams) {
+                    function resetOnEnter ($state, $stateParams) {
 
                         if (!$stateParams.token) {
 
@@ -148,6 +152,7 @@ Login.config([
                     }
                 },
                 data: {
+
                     isNewUser: true
                 },
 
@@ -221,6 +226,8 @@ function LoginController(
         $scope.login.email = currentUser.email;
         $scope.login.remember = currentUser.persist;
     }
+
+    if ($state.current.data.isResettingPassword) $scope.resetPassword = true;
 
     if ($state.current.data && $state.current.data.isNewUser) {
 

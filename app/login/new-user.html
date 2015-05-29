@@ -5,7 +5,8 @@
      name="newUserForm"
      role="form"
      ng-submit="submitNewUserPassword()"
-     novalidate>
+     novalidate
+    >
 
         <div class="form-group">
 
@@ -30,7 +31,8 @@
                  data-errors="{ required: 'Required!', minlength: 'Password must be at least 4 characters long.'}"
                  oncopy="return false;"
                  onpaste="return false;"
-                 required>
+                 required
+                >
 
             </div>
 
@@ -47,17 +49,12 @@
          class="new-user-accept"
          data-id="new-user-accept-terms-cta"
          data-required="true"
-         model="newUser.agree">
+         model="newUser.agree"
+        >
 
             I agree to the <a data-ng-click="showTerms($event);">Krossover Terms &amp; Conditions</a>
 
         </form-toggle>
-
-        <a
-         href="https://twitter.com/krossovr"
-         class="twitter-follow-button"
-         data-show-count="false"
-         data-size="large">Follow @krossovr</a>
 
         <div class="form-group">
 
@@ -72,6 +69,12 @@
             </button>
 
         </div>
+
+        <a
+         href="https://twitter.com/krossovr"
+         class="twitter-follow-button"
+         data-show-count="false"
+         data-size="large">Follow @krossovr</a>
 
     </form>
 
