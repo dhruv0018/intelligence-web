@@ -2,6 +2,7 @@ const assert = chai.assert;
 const expect = chai.expect;
 const should = chai.should();
 
+// TODO: Run Traceur in unit tests
 import TranscodeProfile from '../src/entities/transcodeProfile';
 
 describe('TranscodeProfile', () => {
