@@ -68,7 +68,7 @@ class Video extends Entity {
         video.status = video.status || VIDEO_STATUSES.INCOMPLETE.id;
 
         // Instantiate transcodeProfile entities
-        if (this.videoIsComplete(video) && video.videoTranscodeProfiles) {
+        if (this.isComplete(video) && video.videoTranscodeProfiles) {
 
             video.videoTranscodeProfiles = video.videoTranscodeProfiles.map(transcodeProfile => new TranscodeProfile(transcodeProfile));
         }
@@ -213,10 +213,10 @@ class Video extends Entity {
 
     /**
      * Business logic for status complete
-     * @method videoIsComplete
-     * @returns {Boolean} videoIsComplete [true] if video is complete
+     * @method isComplete
+     * @returns {Boolean} isComplete [true] if video is complete
      */
-    videoIsComplete(video = this) {
+    isComplete(video = this) {
 
         return video.status === VIDEO_STATUSES.COMPLETE.id;
     }
