@@ -23,6 +23,7 @@
                     <td>
                         <p>{{ plan.maxAnyGames }} Breakdowns per week</p>
                         <p>{{ plan.maxGamesPerPlan }} Max Breakdowns per Season</p>
+                        <p>{{ plan.maxAnyGames - breakdownStats.planGamesRemaining}} used, {{breakdownStats.planGamesRemaining}} left this week</p>
                     </td>
                     <td>{{ minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{ plan.maxTurnaroundTime }} hour Turnaround Time</td>
                 </tr>
