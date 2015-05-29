@@ -112,7 +112,7 @@ Teams.config([
                     'Teams.Data': [
                         '$stateParams', '$q', 'Teams.Data.Dependencies', 'TeamsFactory',
                         function($stateParams, $q, data, teams) {
-                            data.breakdowns = teams.getRemainingBreakdowns($stateParams.id)
+                            data.breakdownStats = teams.getRemainingBreakdowns($stateParams.id)
                                 .then(function(breakdownData) {
                                     return breakdownData;
                                 });
@@ -193,8 +193,10 @@ Teams.filter('visiblePlanOrPackage', [
  * @type {Controller}
  */
 Teams.controller('TeamPlansController', [
-    '$scope', '$filter', '$modal', 'TeamsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'BasicModals',
-    function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup, basicModals) {
+    '$scope', '$filter', '$modal', 'TeamsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'BasicModals', 'Teams.Data',
+    function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup, basicModals, data) {
+        //todo do we need to add a factory for remaining breakdowns so we dont need to inject data?
+        $scope.breakdownStats = data.breakdownStats;
 
         $scope.minTurnaroundTimeLookup = minTurnaroundTimeLookup;
 
