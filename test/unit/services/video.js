@@ -66,8 +66,6 @@ describe('Video', () => {
         expect(video).to.respondTo('transcodeProfiles');
         expect(video).to.respondTo('duration');
         expect(video).to.respondTo('thumbnail');
-        expect(video).to.respondTo('quality');
-        expect(video).to.respondTo('url');
         expect(video).to.respondTo('resourceUrl');
         expect(video).to.respondTo('resourceUrls');
     }));
