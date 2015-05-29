@@ -142,7 +142,6 @@ class TranscodeProfile extends Entity {
      */
     get targetBitrate() {
 
-        // TODO: Improve readability
         return this.profile.targetBitrate;
     }
 
@@ -154,7 +153,6 @@ class TranscodeProfile extends Entity {
      */
     get maximumBitrate() {
 
-        // TODO: Improve readability
         return this.profile.maximumBitrate;
     }
 
@@ -166,7 +164,6 @@ class TranscodeProfile extends Entity {
      */
     get minimumBitrate() {
 
-        // TODO: Improve readability
         return this.profile.minimumBitrate;
     }
 
@@ -178,7 +175,6 @@ class TranscodeProfile extends Entity {
      */
     get description() {
 
-        // TODO: Improve readability
         return this.profile.description;
     }
 
@@ -190,7 +186,6 @@ class TranscodeProfile extends Entity {
      */
     get targetDisplayWidth() {
 
-        // TODO: Improve readability
         return this.profile.targetDisplayWidth;
     }
 
@@ -202,7 +197,6 @@ class TranscodeProfile extends Entity {
      */
     get targetDisplayHeight() {
 
-        // TODO: Improve readability
         return this.profile.targetDisplayHeight;
     }
 
@@ -214,7 +208,6 @@ class TranscodeProfile extends Entity {
      */
     get aspectRatio() {
 
-        // TODO: Improve readability
         return this.profile.aspectRatio;
     }
 
