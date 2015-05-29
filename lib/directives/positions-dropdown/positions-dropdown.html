@@ -1,18 +1,18 @@
 <div class="positions-dropdown-container btn-group">
 
-    <button type="button" class="btn btn-default dropdown-toggle" data-ng-click="toggleSelect()" data-ng-disabled="disabled" data-ng-class="{'error': !valid()}">
-        <span data-ng-show="selectedPositions.length" class="position-label" data-ng-repeat="positionId in selectedPositions">{{indexedPositions[positionId].name}}<span data-ng-if="!$last">,</span></span><span data-ng-show="!selectedPositions.length">Select Position</span> <span class="caret"></span>
+    <button id="positions-dropdown-toggle-cta" type="button" class="btn btn-default dropdown-toggle" ng-click="toggleSelect()" ng-disabled="disabled" ng-class="{'error': !valid()}">
+        <span ng-show="selectedPositions.length" class="position-label" ng-repeat="positionId in selectedPositions">{{indexedPositions[positionId].name}}<span ng-if="!$last">,</span></span><span ng-show="!selectedPositions.length">Select Position</span> <span class="caret"></span>
     </button>
 
     <ul class="dropdown-menu">
 
         <li class="position-filter">
-            <input class="form-control input-sm" type="text" data-ng-model="searchText.label" autofocus="autofocus" placeholder="Filter" />
+            <input class="form-control input-sm" type="text" ng-model="searchText.label" autofocus="autofocus" placeholder="Filter" />
         </li>
 
-        <li data-ng-if="isOpen" class="position-row" data-ng-repeat="item in items | filter:searchText">
-            <a class="position" href data-ng-click="select(item); focus()">
-                <i class="icon" data-ng-class="{'icon-ok': item.checked, 'empty': !item.checked}"></i>
+        <li ng-if="isOpen" class="position-row" ng-repeat="item in items | filter:searchText">
+            <a id="positions-dropdown-position-cta-{{$index}}" class="position" href ng-click="select(item); focus()">
+                <i class="icon" ng-class="{'icon-ok': item.checked, 'empty': !item.checked}"></i>
                 <span class="item-label">{{ item.label }}</span>
             </a>
         </li>
