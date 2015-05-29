@@ -58,7 +58,8 @@
                         <p>Ends: {{activePackage.endDate | date : 'MMM d/yy' }}</p>
                     </td>
                     <td>
-                        <p>{{activePackage.maxGamesPerPackage}} Games</p>
+                        <p>{{activePackage.maxGamesPerPackage}} games allotted</p>
+                        <p>{{activePackage.maxGamesPerPackage - breakdownStats.packageGamesRemaining}} used, {{breakdownStats.packageGamesRemaining}} left </p>
                     </td>
                     <td>
                         <p>{{minTurnaroundTimeLookup[activePackage.maxTurnaroundTime]}}-{{activePackage.maxTurnaroundTime}} Hour Turnaround Time</p>
