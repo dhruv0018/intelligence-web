@@ -124,6 +124,17 @@ class TranscodeProfile extends Entity {
     }
 
     /**
+     * Getter for TranscodeProfile.profile
+     * @method TrancodeProfile.profile
+     * @readonly
+     * @returns {TRANSCODE_PROFILE} constant
+     */
+    get profile() {
+
+        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]];
+    }
+
+    /**
      * Getter for TranscodeProfile.targetBitrate
      * @method TranscodeProfile.targetBitrate
      * @readonly
@@ -132,7 +143,7 @@ class TranscodeProfile extends Entity {
     get targetBitrate() {
 
         // TODO: Improve readability
-        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]].targetBitrate;
+        return this.profile.targetBitrate;
     }
 
     /**
@@ -144,7 +155,7 @@ class TranscodeProfile extends Entity {
     get maximumBitrate() {
 
         // TODO: Improve readability
-        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]].maximumBitrate;
+        return this.profile.maximumBitrate;
     }
 
     /**
@@ -156,7 +167,7 @@ class TranscodeProfile extends Entity {
     get minimumBitrate() {
 
         // TODO: Improve readability
-        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]].minimumBitrate;
+        return this.profile.minimumBitrate;
     }
 
     /**
@@ -168,7 +179,7 @@ class TranscodeProfile extends Entity {
     get description() {
 
         // TODO: Improve readability
-        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]].description;
+        return this.profile.description;
     }
 
     /**
@@ -180,7 +191,7 @@ class TranscodeProfile extends Entity {
     get targetDisplayWidth() {
 
         // TODO: Improve readability
-        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]].targetDisplayWidth;
+        return this.profile.targetDisplayWidth;
     }
 
     /**
@@ -192,7 +203,7 @@ class TranscodeProfile extends Entity {
     get targetDisplayHeight() {
 
         // TODO: Improve readability
-        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]].targetDisplayHeight;
+        return this.profile.targetDisplayHeight;
     }
 
     /**
@@ -204,7 +215,7 @@ class TranscodeProfile extends Entity {
     get aspectRatio() {
 
         // TODO: Improve readability
-        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]].aspectRatio;
+        return this.profile.aspectRatio;
     }
 
     /**
