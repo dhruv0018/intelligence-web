@@ -10,20 +10,30 @@
 
         <div class="modal-body">
 
+            <!-- TODO: This is the old copy from the login screen.
+                 This is temporary; remove this.
+             -->
+            <div>
+                <i class="icon icon-football"></i>
+                <i class="icon icon-volleyball"></i>
+            </div>
+            <h1>Football + Volleyball</h1>
+            <a ng-href="{{MOBILE_APP_URLS.COACH.IOS}}}"><i class="icon icon-mobile-phone"></i> Coaches, please download our iOS app!</a>
+            <p>Athletes iOS app coming soon!</p>
+            <p>Android app coming soon for coaches and athletes!</p>
+
+            <!-- TODO: These are conditional shown links for all apps/platforms.
+                 Use these when the time comes
+             -->
+
+            <!--
             <p ng-if="DEVICE.IOS && isCoach">Download the <a ng-href="{{MOBILE_APP_URLS.COACH.IOS}}">Krossover Coach</a> App.</p>
             <p ng-if="DEVICE.IOS && isAthlete">Download the <a ng-href="{{MOBILE_APP_URLS.ATHLETE.IOS}}">Krossover Athelte</a> App.</p>
             <p ng-if="DEVICE.ANDROID && isCoach">Download the <a ng-href="{{MOBILE_APP_URLS.COACH.ANDROID}}">Krossover Coach</a> App.</p>
             <p ng-if="DEVICE.ANDROID && isAthlete">Download the <a ng-href="{{MOBILE_APP_URLS.ATHLETE.ANDROID}}">Krossover Athelte</a> App.</p>
+            -->
 
         </div>
-
-        <footer class="modal-footer">
-
-            <button
-             class="modal-button"
-             ng-click="dismiss();">Maybe Later</button>
-
-        </footer>
 
     </md-dialog-content>
 
