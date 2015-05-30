@@ -3,6 +3,7 @@
     "templates": [
         "template.html",
         "signup.html",
+        "maintenance.html",
         "login.html",
         "locked.html",
         "forgot.html",
@@ -12,6 +13,7 @@
     "styles": [
         "styles.less",
         "signup.less",
+        "maintenance.less",
         "login.less",
         "locked.less",
         "forgot.less",
