@@ -67,10 +67,13 @@ class Video extends Entity {
 
         video.status = video.status || VIDEO_STATUSES.INCOMPLETE.id;
 
+
+
         // Instantiate transcodeProfile entities
         if (this.isComplete(video) && video.videoTranscodeProfiles) {
 
             video.videoTranscodeProfiles = video.videoTranscodeProfiles.map(transcodeProfile => new TranscodeProfile(transcodeProfile));
+            video.videoTranscodeProfiles.sort((a, b) => b.targetBitrate - a.targetBitrate);
         }
 
 
