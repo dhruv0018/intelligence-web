@@ -27,6 +27,7 @@ const TRANSCODE_PROFILES = {
         aspectRatio: '16:9',
         title: '360p'
     },
+
     '480p': {
         id: 2,
         targetBitrate: 1600,
@@ -38,7 +39,8 @@ const TRANSCODE_PROFILES = {
         aspectRatio: '16:9',
         title: '480p'
     },
-    '720': {
+
+    '720p': {
         id: 3,
         targetBitrate: 3500,
         maximumBitrate: 5000,
