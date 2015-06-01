@@ -53,7 +53,6 @@ require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
 require('./services/analytics');
-require('./services/twitter');
 
 require('./constants/users');
 require('./constants/games');
