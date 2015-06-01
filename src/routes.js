@@ -146,7 +146,7 @@ IntelligenceWebClient.run([
             $q(function checkTermsAcceptance (resolve, reject) {
 
                 /* Get user */
-                let user  = session.retrieveCurrentUser();
+                let user = session.retrieveCurrentUser();
 
                 /* Get date user last logged in */
                 let lastAccessedDate = user.getLastAccessed();
@@ -161,7 +161,10 @@ IntelligenceWebClient.run([
 
                     /* If the user has NOT accepted the Terms & Conditions,
                      * prompt them to accept, then record time of acceptance. */
-                    resolve(TermsDialog.show(true).then(user.setTermsAcceptedDate));
+                    TermsDialog.show(true).then(function () {
+                        user.setTermsAcceptedDate();
+                        resolve();
+                    });
                 } else {
 
                     /* User is not required to accept the Terms at this time */
