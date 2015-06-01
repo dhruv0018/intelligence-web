@@ -40,6 +40,41 @@ const VIDEO_STATUSES = {
 
 IntelligenceWebClient.constant('VIDEO_STATUSES', VIDEO_STATUSES);
 
+const TRANSCODE_PROFILES_IDS = {
+
+    1: 'SD_LOW',
+    2: 'SD_HIGH',
+    3: 'HD'
+};
+
+IntelligenceWebClient.constant('TRANSCODE_PROFILES_IDS', TRANSCODE_PROFILES_IDS);
+
+const TRANSCODE_PROFILES = {
+
+    SD_LOW: {
+        id: 1,
+        name: 'SD Low Resolution',
+        quality: '360p',
+        targetBitrate: 600
+    },
+
+    SD_HIGH: {
+        id: 2,
+        name: 'SD High Resolution',
+        quality: '480p',
+        targetBitrate: 1600
+    },
+
+    HD: {
+        id: 3,
+        name: 'HD Resolution',
+        quality: '720p',
+        targetBitrate: 3500
+    }
+};
+
+IntelligenceWebClient.constant('TRANSCODE_PROFILES', TRANSCODE_PROFILES);
+
 /**
  * @constant
  * Specifies the current seeking state for the video player.
@@ -78,4 +113,4 @@ const PLAYBACK_RESUME_STATES = {
 
 IntelligenceWebClient.constant('PLAYBACK_RESUME_STATES', PLAYBACK_RESUME_STATES);
 
-export {VIDEO_STATUS_IDS, VIDEO_STATUSES, SEEKING_STATES, PLAYBACK_RESUME_STATES};
+export {VIDEO_STATUS_IDS, VIDEO_STATUSES, TRANSCODE_PROFILES_IDS, TRANSCODE_PROFILES, SEEKING_STATES, PLAYBACK_RESUME_STATES};

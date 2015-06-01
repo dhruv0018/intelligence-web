@@ -14,7 +14,7 @@
         <vg-media
          vg-loop="videoPlayer.config.loop"
          vg-preload="videoPlayer.config.preload"
-         vg-src="videoPlayer.sources"
+         vg-src="vgSource.videos"
         >
         </vg-media>
 
@@ -59,6 +59,8 @@
 
                 <div class="controls-right">
 
+                    <select-media-src></select-media-src>
+
                     <vg-fullscreen-button title="Toggle Fullscreen"></vg-fullscreen-button>
 
                 </div>
@@ -73,4 +75,3 @@
     </videogular>
 
 </div>
-
