@@ -177,33 +177,6 @@ class Video extends Entity {
     }
 
     /**
-     * Getter for Video.resourceUrl
-     * @method Video.resourceUrl
-     * @readonly
-     * @returns {Object} resourceUrl Trusted Resource URL
-     */
-    get resourceUrl() {
-
-        /**
-         * Angular Dependency Injector
-         * @const {Object} injector
-         */
-        const injector = window.angular.element(document).injector();
-
-        /**
-         * Angular Strict Contextual Escaping service
-         * @const {Object} $sce
-         */
-        const $sce = injector.get('$sce');
-
-        return {
-
-            type: 'video/mp4',
-            src: $sce.trustAsResourceUrl(this.url)
-        };
-    }
-
-    /**
      * Getter for Video.resourceUrls
      * @method Video.resourceUrls
      * @readonly
