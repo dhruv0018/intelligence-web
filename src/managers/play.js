@@ -17,11 +17,26 @@ IntelligenceWebClient.service('PlayManager', [
     function service($injector, EVENT, ROLES, session, plays, eventManager, gamesFactory, playlistEventEmitter) {
 
         var playsManager;
+        let current;
 
         this.tagset = null;
         this.gameId = null;
-        this.current = null;
         this.playAllPlays = true;
+
+        Object.defineProperty(this, 'current', {
+
+            get: function() {
+
+                return current;
+            },
+
+            set: function(value) {
+
+                current = value;
+
+                playlistEventEmitter.emit(EVENT.PLAYLIST.PLAY.CURRENT, current);
+            }
+        });
 
         /**
          * Clear the current play.
