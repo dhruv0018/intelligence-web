@@ -24,8 +24,6 @@ IntelligenceWebClient.factory('TagsetsFactory', [
 
             extend: function(tagset) {
 
-                console.time('Extending tagset...');
-
                 var self = this;
 
                 angular.extend(tagset, self);
@@ -104,8 +102,6 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                 });
 
                 tagset.tags = tags;
-
-                console.timeEnd('Extending tagset...');
 
                 return tagset;
             },

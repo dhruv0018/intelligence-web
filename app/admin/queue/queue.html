@@ -134,7 +134,7 @@
 
                             <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                             <td>{{ game.id }}</td>
-                            <td><a data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
+                            <td><a id="select-game-cta-game-{{$index}}" data-ui-sref="game({ id: game.id })">{{ teams[game.teamId].name }} vs<br>{{ teams[game.opposingTeamId].name }}</a></td>
                             <td>
                                 <span>
                                     {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}
@@ -144,19 +144,19 @@
                                 <span data-ng-if="game.getStatus().id != GAME_STATUSES.SET_ASIDE.id">{{ game.getStatus().name }}</span>
                                 <span data-ng-if="game.status === GAME_STATUSES.SET_ASIDE.id">
                                     <span data-ng-if="!game.canBeAssignedToQa() && !game.canBeAssignedToIndexer()">{{GAME_STATUSES.SET_ASIDE.name}}</span>
-                                    <a data-ng-if="game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(game, true)">{{GAME_STATUSES.SET_ASIDE.name}} in QA</a>
-                                    <a data-ng-if="game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(game, false)">{{GAME_STATUSES.SET_ASIDE.name}} in Indexing</a>
+                                    <a data-ng-if="game.canBeAssignedToQa()" id="set-aside-qa-cta-game-{{$index}}" data-ng-click="SelectIndexerModal.open(game, true)">{{GAME_STATUSES.SET_ASIDE.name}} in QA</a>
+                                    <a data-ng-if="game.canBeAssignedToIndexer()" id="set-aside-indexing-cta-game-{{$index}}" data-ng-click="SelectIndexerModal.open(game, false)">{{GAME_STATUSES.SET_ASIDE.name}} in Indexing</a>
                                 </span>
                             </td>
 
 
                             <td>
 
-                                <button class="btn btn-default" data-ng-if="!game.isAssignedToIndexer() && game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(game, false)">Select Indexer</button>
+                                <button id="select-indexer-unassigned-cta-game-{{$index}}" class="btn btn-default" data-ng-if="!game.isAssignedToIndexer() && game.canBeAssignedToIndexer()" data-ng-click="SelectIndexerModal.open(game, false)">Select Indexer</button>
 
                                 <ul data-ng-if="game.hasIndexerAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: false } | limitTo:1">
 
-                                    <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+                                    <li><button id="select-indexer-cta-game-{{$index}}" class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
 
                                 </ul>
 
@@ -167,10 +167,10 @@
 
                                 <div data-ng-if="!game.hasQaAssignment() && !game.canBeAssignedToQa()">--</div>
 
-                                <button class="btn btn-default" data-ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(game, true)">Select QA</button>
+                                <button id="select-qaer-unassigned-cta-game-{{$index}}" class="btn btn-default" data-ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()" data-ng-click="SelectIndexerModal.open(game, true)">Select QA</button>
 
                                 <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1">
-                                    <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+                                    <li><button id="select-qaer-cta-game-{{$index}}" class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
                                  </ul>
                             </td>
                             <td class="time-left">
@@ -179,7 +179,7 @@
                                 <span class="togo" data-ng-if="game.remainingTime > 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
                             </td>
                             <td>
-                                <button data-open-modal="AdminManagement.Modal" data-modal-options="game" class="btn btn-default">Manage</button>
+                                <button id="manage-cta-game-{{$index}}" data-open-modal="AdminManagement.Modal" data-modal-options="game" class="btn btn-default">Manage</button>
                             </td>
                         </tr>
                     </tbody>

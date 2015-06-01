@@ -24,6 +24,11 @@
         "*": true
     },
 
+    "maintenance": {
+
+        "*": true
+    },
+
     "login": {
 
         "*": true

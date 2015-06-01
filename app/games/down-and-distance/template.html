@@ -27,7 +27,7 @@
                 <span>Select Weight</span>
                 <select data-ng-model="dndReport.strength" class="second-choices" data-ng-options="value as key for (key, value) in options.weight"></select>
             </div>
-            <div class="dndOption">
+            <div class="dndOption ng-hide">
                 <span>Show snaps only from</span>
                 <select data-ng-model="dndReport.redZone">
                     <option value="false">Whole Field</option>
@@ -66,7 +66,7 @@
             <span class="print-formation"><i class="icon icon-print"></i> Print</span>
         </div>-->
         <div class="field">
-            <krossover-arena data-league="league"></krossover-arena>
+            <krossover-arena type="arenaType"></krossover-arena>
         </div>
     </div>
 </div>

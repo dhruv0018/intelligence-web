@@ -13,56 +13,56 @@ var ARENA_TYPES = {
         id: 1,
         name: 'High School Basketball',
         type: 'BASKETBALL_HS',
-        size: 'lg'
+        orientation: 'landscape'
     },
 
     2: {
         id: 2,
         name: 'NCAA Basketball',
         type: 'BASKETBALL_NCAA',
-        size: 'lg'
+        orientation: 'landscape'
     },
 
     3: {
         id: 3,
         name: 'NBA Basketball',
         type: 'BASKETBALL_NBA',
-        size: 'lg'
+        orientation: 'landscape'
     },
 
     4: {
         id: 4,
         name: 'FIBA Basketball',
         type: 'BASKETBALL_FIBA',
-        size: 'lg'
+        orientation: 'landscape'
     },
 
     5: {
         id: 5,
         name: 'Men\'s Outdoor Lacrosse',
         type: 'LACROSSE_MENS_OUTDOOR',
-        size: 'lg'
+        orientation: 'landscape'
     },
 
     6: {
         id: 6,
         name: 'Women\'s Outdoor Lacrosse',
         type: 'LACROSSE_WOMENS_OUTDOOR',
-        size: 'lg'
+        orientation: 'landscape'
     },
 
     7: {
         id: 7,
         name: 'Football',
         type: 'FOOTBALL',
-        size: 'lg'
+        orientation: 'landscape'
     },
 
     8: {
         id: 8,
         name: 'Volleyball',
         type: 'VOLLEYBALL',
-        size: 'sm'
+        orientation: 'portrait'
     }
 };
 
@@ -142,6 +142,14 @@ var ARENA_REGIONS = {
             name: 'PERIMETER',
             description: 'from the perimeter'
         }
+    },
+
+    VOLLEYBALL: {
+        'COURT': {
+            id: 10,
+            name: 'Court',
+            description: 'the court'
+        }
     }
 };
 
@@ -192,6 +200,11 @@ var ARENA_REGIONS_BY_ID = {
         id: 9,
         name: 'PERIMETER',
         description: 'from the perimeter'
+    },
+    10: {
+        id: 10,
+        name: 'Court',
+        description: 'the court'
     }
 };
 

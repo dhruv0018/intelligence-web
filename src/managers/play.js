@@ -13,8 +13,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlayManager', [
-    '$injector', 'PlaysFactory', 'EventManager', 'GamesFactory',
-    function service($injector, plays, eventManager, gamesFactory) {
+    '$injector', 'EVENT', 'ROLES', 'SessionService', 'PlaysFactory', 'EventManager', 'GamesFactory', 'PlaylistEventEmitter',
+    function service($injector, EVENT, ROLES, session, plays, eventManager, gamesFactory, playlistEventEmitter) {
 
         var playsManager;
 
@@ -30,6 +30,15 @@ IntelligenceWebClient.service('PlayManager', [
 
             this.current = null;
         };
+
+        /* On play select; set the current play to match the selected play. */
+        playlistEventEmitter.on(EVENT.PLAYLIST.PLAY.SELECT, play => {
+
+            if (session.currentUser.is(ROLES.INDEXER)) {
+
+                this.current = play;
+            }
+        });
 
         /**
          * Resets the current play.
