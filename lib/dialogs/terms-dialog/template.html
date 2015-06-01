@@ -5,10 +5,11 @@
         <div class="terms-prompt" ng-show="promptUser">
 
             <form
-             class="form-new-terms"
+             class="terms-prompt-form"
              name="new-terms-form"
              role="form"
-             novalidate>
+             novalidate
+            >
 
                 <header class="modal-header">
 
@@ -25,23 +26,24 @@
                      data-id="returning-user-terms-agree-cta"
                      name="remember"
                      data-required="true"
-                     model="newTerms.agree">
+                     model="newTerms.agree"
+                    >
 
                         I agree to the <a ng-click="showTerms();">Krossover Terms &amp; Conditions</a>
 
                     </form-toggle>
 
-                    <a
-                     href="https://twitter.com/krossovr"
-                     class="twitter-follow-button"
-                     data-show-count="false"
-                     data-size="large">Follow @krossovr</a>
-
                 </div>
 
                 <footer class="modal-footer">
 
-                    <button class="modal-button" ng-click="acceptTerms();" ng-disabled="!newTerms.agree">Go to your account</button>
+                    <div id="new-terms-twitter-follow" class="new-terms-twitter-container"></div>
+
+                    <button
+                     class="modal-button new-terms-accept-cta"
+                     ng-click="acceptTerms();"
+                     ng-disabled="!newTerms.agree"
+                    >Go to your account</button>
 
                 </footer>
 
@@ -69,7 +71,8 @@
                  id="close-terms-cta"
                  class="modal-button"
                  ng-click="closeTerms();"
-                 type="button">Close</button>
+                 type="button"
+                >Close</button>
 
             </footer>
 

@@ -5,9 +5,64 @@
 
     &-modal {
 
+        .base-modal;
+
         .terms-prompt {
 
-            text-align: center;
+            height: 100%;
+
+            &-form {
+
+                height: 100%;
+
+                .mobile({
+
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                });
+            }
+
+            .modal-body {
+
+                text-align: center;
+                padding-bottom: 50px;
+                height: 100%;
+            }
+
+            .modal-footer {
+
+                display: flex;
+                padding: 15px;
+                border-color: @modal-header-border-color;
+
+                .desktop({
+
+                    justify-content: flex-end;
+
+                    .new-terms-twitter-container {
+
+                        display: flex;
+                        align-items: center;
+                        flex: 1 0 auto;
+                    }
+                });
+
+                .mobile({
+
+                    text-align: center;
+                    flex-direction: column;
+                });
+
+            }
+        }
+
+        .terms-copy {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
         }
 
         /* For Scrolling long modal content */
@@ -24,6 +79,7 @@
     &-agree label {
 
         width: 100%;
+        font-weight: normal;
         display: block;
         line-height: @line-height-computed;
 
