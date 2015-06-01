@@ -161,8 +161,7 @@ IntelligenceWebClient.run([
 
                     /* If the user has NOT accepted the Terms & Conditions,
                      * prompt them to accept, then record time of acceptance. */
-                    // return TermsDialog.show(true).then(user.setTermsAcceptedDate);
-                    resolve(TermsDialog.show(true));
+                    resolve(TermsDialog.show(true).then(user.setTermsAcceptedDate));
                 } else {
 
                     /* User is not required to accept the Terms at this time */
