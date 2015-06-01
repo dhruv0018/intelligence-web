@@ -552,6 +552,18 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
              * @class User
+             * @method setTermsAcceptedDate
+             * Record the date of Terms & Conditions acceptance.
+             * @return {Promise} The date user last accepted terms
+             */
+            setTermsAcceptedDate: function setTermsAcceptedDate () {
+
+                this.termsAcceptedDate = new Date().toISOString();
+                return this.save();
+            },
+
+            /**
+             * @class User
              * @method
              * Resend invitation to user based on their unique identifier (email or id)
              */
