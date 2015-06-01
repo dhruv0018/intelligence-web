@@ -207,7 +207,6 @@ LoginController.$inject = [
     'UsersFactory',
     'AnalyticsService',
     'TermsDialog.Service',
-    'TwitterService',
     'EMAIL_REQUEST_TYPES',
     'MOBILE_APP_URLS'
 ];
@@ -227,7 +226,6 @@ function LoginController(
     users,
     analytics,
     TermsDialog,
-    twitter,
     EMAIL_REQUEST_TYPES,
     MOBILE_APP_URLS
 ) {
