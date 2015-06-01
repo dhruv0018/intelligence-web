@@ -2,16 +2,6 @@
   "development": {},
   "test": {},
   "qa": {},
-  "uat": {
-    "FEATURE_TELESTRATIONS": {
-      "TELESTRATIONS": "SELF",
-      "CUEPOINTS": "AUTO"
-    }
-  },
-  "production": {
-    "FEATURE_TELESTRATIONS": {
-      "TELESTRATIONS": "SELF",
-      "CUEPOINTS": "AUTO"
-    }
-  }
+  "uat": {},
+  "production": {}
 }
