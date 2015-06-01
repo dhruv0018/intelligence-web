@@ -22,6 +22,7 @@ IntelligenceWebClient.run([
     '$state',
     '$stateParams',
     '$previousState',
+    '$q',
     'TokensService',
     'AuthenticationService',
     'AuthorizationService',
@@ -38,6 +39,7 @@ IntelligenceWebClient.run([
         $state,
         $stateParams,
         $previousState,
+        $q,
         tokens,
         auth,
         authz,
@@ -131,35 +133,49 @@ IntelligenceWebClient.run([
             /* Store previous state */
             $previousState = fromState;
 
-            /* Get users */
-            let user         = session.retrieveCurrentUser();
+            /* Get previous user */
             let previousUser = session.retrievePreviousUser();
 
-            /* Get last time user logged in date */
-            let lastAccessedDate = user.getLastAccessed();
-
-            /* Is user using an iOS or Android device? */
-            let isMobile = detectDevice.iOS() || detectDevice.Android();
-
-            /* Check if the user has accepted the Terms & Conditions.
-             * Make sure we aren't an admin switching to another user as we
+            /* Make sure we aren't an admin switching to another user as we
              * don't want to accidentially accept the terms on behalf of the
              * user. Also make sure we're logged in. Then check for terms. */
-            if (!previousUser && auth.isLoggedIn && !account.hasAcceptedTerms()) {
+            if (previousUser || !auth.isLoggedIn) return;
 
-                // Prompt user to accept the new Terms & Conditions.
-                TermsDialog.show(true)
-                .then(function termsAcceptedSuccess () {
+            /* Check for Terms acceptance/prompt user to accept,
+             * then, if mobile user, show links to download native apps. */
+            $q(function checkTermsAcceptance (resolve, reject) {
 
-                    /* Promote Mobile Apps */
-                    if (isMobile) MobileAppDialog.show();
+                /* Get user */
+                let user  = session.retrieveCurrentUser();
 
-                    user.termsAcceptedDate = new Date().toISOString();
-                    user.save();
-                });
+                /* Get date user last logged in */
+                let lastAccessedDate = user.getLastAccessed();
 
-            /* If a new user, then only show the mobile app dialog. */
-            } else if (auth.isLoggedIn && !lastAccessedDate && isMobile) MobileAppDialog.show();
+                if (!lastAccessedDate) {
+
+                    /* If first login, user has already accepted Terms and
+                     * Conditions by setting password, so record that here. */
+                    user.setTermsAcceptedDate();
+                    resolve();
+                } else if (!account.hasAcceptedTerms()) {
+
+                    /* If the user has NOT accepted the Terms & Conditions,
+                     * prompt them to accept, then record time of acceptance. */
+                    // return TermsDialog.show(true).then(user.setTermsAcceptedDate);
+                    resolve(TermsDialog.show(true));
+                } else {
+
+                    /* User is not required to accept the Terms at this time */
+                    resolve();
+                }
+            }).then(function promoteMobileApps () {
+
+                /* Is user using an iOS or Android device? */
+                let isMobile = detectDevice.iOS() || detectDevice.Android();
+
+                /* If a new user, then only show the mobile app dialog. */
+                if (isMobile) return MobileAppDialog.show();
+            });
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {
