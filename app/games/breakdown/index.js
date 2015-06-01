@@ -259,7 +259,7 @@ function GamesBreakdownController (
 
             if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
-                playlistEventEmitter.on(EVENT.PLAYLIST.PLAY.WATCH, onPlaylistWatch);
+                playlistEventEmitter.on(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
             }
 
             if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
@@ -283,6 +283,6 @@ function GamesBreakdownController (
         $scope.$on('$destroy', function onDestroy() {
 
             telestrationsVideoPlayerBroker.cleanup();
-            playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAY.WATCH, onPlaylistWatch);
+            playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
         });
 }
