@@ -40,7 +40,8 @@
              id="show-hide-password"
              class="show-hide-password"
              ng-click="newUser.showPassword = !newUser.showPassword;"
-             type="button">{{newUser.showPassword ? 'Hide' : 'Show'}}</button>
+             type="button"
+            >{{newUser.showPassword ? 'Hide' : 'Show'}}</button>
 
         </div>
 
@@ -61,7 +62,8 @@
             <button
              class="button-set-password"
              type="submit"
-             ng-disabled="newUserForm.$invalid || newUser.submitted">
+             ng-disabled="newUserForm.$invalid || newUser.submitted"
+            >
 
                 <span data-ng-hide="newUser.submitted">Go to your account</span>
                 <span data-ng-show="newUser.submitted">Submitting...</span>
@@ -70,11 +72,16 @@
 
         </div>
 
-        <a
-         href="https://twitter.com/krossovr"
-         class="twitter-follow-button"
-         data-show-count="false"
-         data-size="large">Follow @krossovr</a>
+        <div id="new-user-twitter-follow" class="new-user-twitter-container">
+
+            <a
+             href="https://twitter.com/davekrstin"
+             class="twitter-follow-button"
+             data-show-count="false"
+             data-size="large"
+            >Follow @davekrstin</a>
+
+        </div>
 
     </form>
 

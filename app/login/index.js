@@ -207,6 +207,7 @@ LoginController.$inject = [
     'UsersFactory',
     'AnalyticsService',
     'TermsDialog.Service',
+    'TwitterService',
     'EMAIL_REQUEST_TYPES',
     'MOBILE_APP_URLS'
 ];
@@ -226,6 +227,7 @@ function LoginController(
     users,
     analytics,
     TermsDialog,
+    twitter,
     EMAIL_REQUEST_TYPES,
     MOBILE_APP_URLS
 ) {
@@ -242,7 +244,7 @@ function LoginController(
         $scope.login.remember = currentUser.persist;
     }
 
-    if ($state.current.data.isResettingPassword) $scope.resetPassword = true;
+    if ($state.current.data && $state.current.data.isResettingPassword) $scope.resetPassword = true;
 
     if ($state.current.data && $state.current.data.isNewUser) {
 
@@ -266,7 +268,11 @@ function LoginController(
             if (user) {
 
                 /* Track the event for MixPanel */
-                analytics.track('Login', 'Selected', 'SignIn');
+                analytics.track({
+                    category : 'Login',
+                    action   : 'Selected',
+                    label    : 'SignIn'
+                });
 
                 /* Once successfully logged in, determine the user's home state.
                  * Then, track user in analytics (user may not have a default
