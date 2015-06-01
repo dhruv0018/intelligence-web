@@ -26,38 +26,41 @@ function TwitterService (
 ) {
 
     /* Bind Callback for Analytics on successful follow event */
-    twttr.events.bind(
-        'follow',
-        function bindFollowEvent (event) {
+    if (twttr) {
 
-            let context = event.target.parentElement.id;
+        twttr.events.bind(
+            'follow',
+            function bindFollowEvent (event) {
 
-            switch (context) {
+                let context = event.target.parentElement.id;
 
-                case 'new-terms-twitter-follow':
+                switch (context) {
 
-                analytics.track({
-                    category  : 'Twitter',
-                    action    : 'Followed',
-                    label     : 'TermsAndConditonsAccept',
-                    property1 : 'Returning User'
-                });
+                    case 'new-terms-twitter-follow':
 
-                break;
+                    analytics.track({
+                        category  : 'Twitter',
+                        action    : 'Followed',
+                        label     : 'TermsAndConditonsAccept',
+                        property1 : 'Returning User'
+                    });
 
-                case 'new-user-twitter-follow':
+                    break;
 
-                analytics.track({
-                    category  : 'Twitter',
-                    action    : 'Followed',
-                    label     : 'NewUserPasswordSet',
-                    property1 : 'New User'
-                });
+                    case 'new-user-twitter-follow':
 
-                break;
+                    analytics.track({
+                        category  : 'Twitter',
+                        action    : 'Followed',
+                        label     : 'NewUserPasswordSet',
+                        property1 : 'New User'
+                    });
+
+                    break;
+                }
             }
-        }
-    );
+        );
+    }
 
     return {
 
@@ -78,12 +81,15 @@ function TwitterService (
                 size: 'large'
             };
 
-            return twttr.widgets.createFollowButton('krossovr', element, options)
-            .then(function rebindTwitterCallbacks () {
+            if (twttr) {
 
-                console.log('What about this? Are you here???????');
-                twttr.widgets.load(element);
-            });
+                return twttr.widgets.createFollowButton('krossovr', element, options)
+                .then(function rebindTwitterCallbacks () {
+
+                    console.log('What about this? Are you here???????');
+                    twttr.widgets.load(element);
+                });
+            }
         }
     };
 }
