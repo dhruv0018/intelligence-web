@@ -206,13 +206,13 @@ Teams.controller('TeamPlansController', [
         $scope.team.teamPackages = $scope.team.teamPackages || [];
         $scope.team.teamPlans = $scope.team.teamPlans || [];
 
-        function applyFilter() {
+        $scope.applyFilter = function() {
             $scope.filteredPackages = $filter('visiblePlanOrPackage')($scope.team.teamPackages);
             $scope.filteredPlans = $filter('visiblePlanOrPackage')($scope.team.teamPlans);
-        }
+        };
 
-        $scope.$watch(function() { return $scope.team.teamPlans; }, applyFilter, true);
-        $scope.$watch(function() { return $scope.team.teamPackages; }, applyFilter, true);
+        $scope.$watch(function() { return $scope.team.teamPlans; }, $scope.applyFilter, true);
+        $scope.$watch(function() { return $scope.team.teamPackages; }, $scope.applyFilter, true);
 
         var openPackageModal = function(editTeamPackageObjIndex) {
             var modalInstance = $modal.open({
@@ -242,6 +242,8 @@ Teams.controller('TeamPlansController', [
             });
 
             modalInstance.result.then(function(teamWithPlansToSave) {
+                $scope.applyFilter();
+                $scope.breakdownStats.planGamesRemaining = $scope.filteredPlans[0].maxAnyGames;
                 $scope.save(teamWithPlansToSave);
             });
         };
