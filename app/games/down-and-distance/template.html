@@ -63,6 +63,11 @@
                 <span data-ng-if="createdDndReport.strength">{{createdDndReport.strength}}</span>
                 <span data-ng-if="!createdDndReport.strength">Any</span>
             </span>
+            <span class="field-info" ng-show="createdDndReport">
+                <span class="field-info-title">Tags:</span>
+                <span data-ng-if="createdDndReport.customTagIds" ng-repeat="tag in createdDndReport.customTags">{{tag.name}}<span ng-if="!$last">, </span></span>
+                <span data-ng-if="!createdDndReport.customTagIds.length">Any</span>
+            </span>
         </div>
         <!--<div class="field-options">
             <span class="offense-defense" data-ng-click="teamOnOffense = true" data-ng-class="{active-report: teamOnOffense = true}">What Home did on offense</span>
