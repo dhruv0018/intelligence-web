@@ -227,6 +227,8 @@ Teams.controller('TeamPlansController', [
             });
 
             modalInstance.result.then(function(teamWithPackagesToSave) {
+                $scope.applyFilter();
+                $scope.breakdownStats.packageGamesRemaining = $scope.filteredPackages[0].maxGamesPerPackage;
                 $scope.save(teamWithPackagesToSave);
             });
         };
