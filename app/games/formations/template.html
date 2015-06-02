@@ -7,7 +7,7 @@
                 <option value="false">{{teams[game.opposingTeamId].name}}</option>
             </select>
         </div>
-        <div class="formationOption">
+        <div class="formationOption ng-hide">
             <span>Show formations from</span>
             <select data-ng-model="redzone">
                 <option value="false">Whole Field</option>
@@ -17,6 +17,6 @@
     </div>
 
     <accordion close-others="true">
-        <formation-chart data-league="league" data-chart="chart" data-ng-repeat="chart in report[teamId]" data-redzone="isRedZone"></formation-chart>
+        <formation-chart arena-type="arenaType" data-chart="chart" data-ng-repeat="chart in report[teamId]" data-redzone="isRedZone"></formation-chart>
     </accordion>
 </div>

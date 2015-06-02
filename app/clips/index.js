@@ -141,7 +141,13 @@ Clips.controller('Clips.controller', [
 
             // Populate the array with play objects from playIds
             for (var i = 0; i < film.plays.length; i++) {
-                var play = plays.get(film.plays[i]);
+
+                let play = plays.get(film.plays[i]);
+
+                /* Assume all plays in a clip have visible events, this should hold true
+                * because they are all added from visible plays on a breakdown. */
+                play.hasVisibleEvents = true;
+
                 playsArray.push(play);
             }
 

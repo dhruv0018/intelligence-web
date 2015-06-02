@@ -64,7 +64,7 @@
         "coach-game",
         "film-info",
         "plays-filters",
-        "draggable",
+        "draggable-ordered-list",
         "sidebar",
         "profile-picture",
         "athlete-profile-header",
@@ -72,7 +72,8 @@
         "publish-user-profile-reel",
         "role-class",
         "spinner",
-        "check-box"
+        "check-box",
+        "feature"
     ],
     "scripts": [
         "index.js"

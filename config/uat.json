@@ -25,7 +25,7 @@
     },
     "links": {
         "signup": {
-            "uri": "/get-started/"
+            "uri": "http://www.krossover.com/get-started"
         },
         "intelligence": {
             "uri": "https://v2-qa.krossover.com"
