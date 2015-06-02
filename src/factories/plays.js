@@ -177,6 +177,18 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 let batchUpdate = model.batchUpdate(parameters, plays);
 
                 return  batchUpdate.$promise;
+            },
+
+            filterByCustomTags: function(plays, customTagIds) {
+                if (!customTagIds || !customTagIds.length) return plays;
+
+                plays = plays.filter(play => {
+                    return customTagIds.every(tagId => {
+                        return !!~play.customTagIds.indexOf(tagId);
+                    });
+                });
+
+                return plays;
             }
         };
 

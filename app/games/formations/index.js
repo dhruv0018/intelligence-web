@@ -101,10 +101,15 @@ GamesFormations.controller('GamesFormations.controller', [
     'TeamsFactory',
     'GamesFactory',
     'LeaguesFactory',
+    'PlaysFactory',
     'PlayersFactory',
     'CustomtagsFactory',
+    'PlaylistEventEmitter',
     'Games.FormationReport.Data',
     'ARENA_TYPES',
+    'ZONE_IDS',
+    'GAP_IDS',
+    'CUSTOM_TAGS_EVENTS',
     function controller(
         $scope,
         $state,
@@ -112,11 +117,20 @@ GamesFormations.controller('GamesFormations.controller', [
         teams,
         games,
         leagues,
+        plays,
         players,
         customtags,
+        playlistEventEmitter,
         data,
-        ARENA_TYPES
+        ARENA_TYPES,
+        ZONE_IDS,
+        GAP_IDS,
+        CUSTOM_TAGS_EVENTS
     ) {
+
+        let formationReport = angular.copy(data.formationReport);
+        $scope.report = formationReport;
+
         //Game Related
         let gameId = $stateParams.id;
         $scope.game = games.get(gameId);
@@ -132,14 +146,73 @@ GamesFormations.controller('GamesFormations.controller', [
         $scope.league = league;
 
         //Custom Tags Related
-        $scope.customtags = customtags.getList({ teamId: $scope.teamId });
+        $scope.customtags = customtags.getList();
+        $scope.customTagIds = [];
+
+        playlistEventEmitter.on(CUSTOM_TAGS_EVENTS.SAVE, event => {
+            $scope.customtags = customtags.getList();
+        });
+
+        //Plays Related
+        $scope.allPlays = plays.getList({ gameId: $scope.game.id });
+
+        $scope.$watch('customTagIds', () => {
+            //Filter plays by custom tag ids
+            $scope.plays = plays.filterByCustomTags($scope.allPlays, $scope.customTagIds);
+            let playIds = $scope.plays.map(play => play.id);
+
+            //Make new copy of formation report before filtering
+            formationReport = angular.copy(data.formationReport);
+
+            formationReport[$scope.teamId].forEach(chart => {
+                let snaps = 0;
+
+                //For some reason this becomes an array when empty
+                if (chart.passes && !Array.isArray(chart.passes)) {
+                    Object.keys(ZONE_IDS).forEach(zoneId => {
+                        let passes = chart.passes[zoneId];
+
+                        if (passes) {
+                            //Filter passes by new list of plays
+                            chart.passes[zoneId].playIds = passes.playIds.filter(playId => {
+                                return !!~playIds.indexOf(playId);
+                            });
+
+                            //Update total number of passes for this zone based on filtered plays
+                            chart.passes[zoneId].totalPassCount = chart.passes[zoneId].playIds.length;
+                            snaps += chart.passes[zoneId].totalPassCount;
+                        }
+                    });
+                }
+
+                //For some reason this becomes an array when empty
+                if (chart.runs && !Array.isArray(chart.runs)) {
+                    Object.keys(GAP_IDS).forEach(gapId => {
+                        let runs = chart.runs[gapId];
+
+                        if (runs) {
+                            //Filter runs by new list of plays
+                            chart.runs[gapId].playIds = runs.playIds.filter(playId => {
+                                return !!~playIds.indexOf(playId);
+                            });
+
+                            //Update total number of runs for this gap based on filtered plays
+                            chart.runs[gapId].totalRuns = chart.runs[gapId].playIds.length;
+                            snaps += chart.runs[gapId].totalRuns;
+                        }
+                    });
+                }
+
+                //Update snap count based on filtered plays
+                chart.snaps = snaps;
+            });
+
+            formationReport[$scope.teamId] = formationReport[$scope.teamId].filter(chart => chart.snaps);
+            $scope.report = formationReport;
+        });
 
         // Determine arena type
         $scope.arenaType = ARENA_TYPES[league.arenaId].type;
-
-        //TODO formation report is a special case of data
-        //This is going to go away relatively soon
-        $scope.report = data.formationReport;
 
         //TODO get rid of the previous code and use this code instead once caching is in
         //$scope.game.getFormationReport().$promise.then(function(formationReport) {
