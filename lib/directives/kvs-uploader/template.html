@@ -18,7 +18,7 @@
 
                         <tbody>
 
-                        <tr class="file" data-ng-repeat="file in transfers" data-draggable="true">
+                        <tr class="file" data-ng-repeat="file in transfers" draggable-ordered-list="true">
 
                             <td class="drag">
                                 <span><i class="icon icon-align-justify"></i> {{ $index+1 }}. {{ file.name }} — {{ file.size | bytes }}</span>

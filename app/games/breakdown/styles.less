@@ -13,7 +13,7 @@
 
         .filter-container {
             background-color: @gray-lightest;
-            height: 50px;
+            flex: 0 0 50px;
             display: flex;
             align-items: center;
         }
@@ -41,9 +41,13 @@ and (max-width: @screen-md-max) {
     .games-breakdown {
         margin: 0;
         padding: 0;
-    }
 
-    krossover-play {
-        flex: 0 0 60px;
+        krossover-play {
+            flex: 0 0 60px;
+
+            .playBody{
+                display: none;
+            }
+        }
     }
 }

@@ -6,15 +6,14 @@
         data-ng-click="reset($event)"
         >
         <span>
+            <svg data-ng-if="item.type === 'PLAYER_DROPDOWN' || item.type === 'PLAYER_TEAM_DROPDOWN'" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+                <rect data-ng-attr-fill="{{ resetButton.meta.jerseyColor }}" x="0" y="0" width="16px" height="16px" />
+            </svg>
             <span class="jersey-number" data-ng-if="item.type === 'PLAYER_DROPDOWN' || item.type === 'PLAYER_TEAM_DROPDOWN'">
                     {{ resetButton.meta.jerseyNumber}}
             </span>
 
             <span>{{ resetButton.text }}</span>
-
-            <svg data-ng-if="item.type === 'PLAYER_DROPDOWN' || item.type === 'PLAYER_TEAM_DROPDOWN'" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-                <rect data-ng-attr-fill="{{ resetButton.meta.jerseyColor }}" x="0" y="0" width="16px" height="16px" />
-            </svg>
         </span>
     </button>
 
