@@ -21,7 +21,7 @@ export default `
             <div class="main-highlight ng-scope" data-ui-view="content" ng-class="{'not-editable': !canUserEdit}">
 
                 <krossover-sidebar>
-                    
+
                     <krossover-playlist></krossover-playlist>
 
                 </krossover-sidebar>
