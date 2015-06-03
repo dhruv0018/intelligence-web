@@ -72,8 +72,11 @@ Teams.config([
                 },
                 resolve: {
                     'Teams.Data': [
-                        '$q', 'Teams.Data.Dependencies',
-                        function($q, data) {
+                        '$q', '$stateParams', 'Teams.Data.Dependencies',
+                        function($q, $stateParams, TeamData) {
+                            let teamId = Number($stateParams.id);
+                            let data = new TeamData(teamId);
+
                             return $q.all(data);
                         }
                     ]
@@ -131,21 +134,31 @@ Teams.config([
     }
 ]);
 
-Teams.service('Teams.Data.Dependencies', [
-    'SportsFactory', 'LeaguesFactory',
-    function(sports, leagues) {
+TeamDataDependencies.$inject = [
+    'SportsFactory',
+    'LeaguesFactory',
+    'UsersFactory'
+];
 
-        var Data = {
+function TeamDataDependencies (
+    sports,
+    leagues,
+    users
+) {
 
-            sports: sports.load(),
-            leagues: leagues.load()
-        };
+    class TeamData {
 
-        return Data;
+        constructor (teamId) {
 
+            /* Load data. */
+            this.sports = sports.load();
+            this.leagues = leagues.load();
+            this.users = users.load({teamId: teamId});
+        }
     }
-]);
 
+    return TeamData;
+}
 
 Teams.filter('visiblePlanOrPackage', [
     'NewDate',
@@ -299,7 +312,6 @@ Teams.controller('TeamPlansController', [
 Teams.controller('TeamController', [
     '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'UsersFactory',
     function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, sports, leagues, schoolsFactory, teams, users) {
-
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
@@ -343,6 +355,7 @@ Teams.controller('TeamController', [
                 $scope.team = teams.create();
                 teams.fetch(teamId).then(function(team) {
                     angular.extend($scope.team, team);
+                    //$scope.team.members = $scope.team.getMembers();
                     $scope.team.members = $scope.team.getMembers();
                     $scope.sportId = leagues.get(team.leagueId).sportId;
                     $scope.updateTeamAddress();
