@@ -76,6 +76,7 @@ require('./constants/schemas');
 require('./constants/video-player');
 require('./constants/views');
 require('./constants/playlist');
+require('./constants/keyboard');
 
 require('./models/users');
 require('./models/sports');
