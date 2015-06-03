@@ -56,6 +56,8 @@ function ReelController(
     let plays = reel.plays.map(mapPlays);
     let game = gamesFactory.get(plays[0].gameId);
 
+    playManager.current = plays[0];
+
     $scope.VIEWPORTS = VIEWPORTS;
     $scope.reel = reel;
     $scope.auth = auth;
