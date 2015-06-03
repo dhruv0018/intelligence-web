@@ -12,8 +12,11 @@
                  class="form-control"
                  name="sport"
                  ng-model="filter.sport"
-                 ng-options="sport.id as sport.name for sport in sportsList">
+                 ng-options="sport.id as sport.name for sport in sportsList"
+                >
+
                     <option value="">Pick a Sport</option>
+
                 </select>
 
             </div>
@@ -24,8 +27,11 @@
                  class="form-control"
                  name="status"
                  ng-model="filter.status"
-                 ng-options="status.id as status.name for (key, status) in GAME_STATUSES">
+                 ng-options="status.id as status.name for (key, status) in GAME_STATUSES"
+                >
+
                     <option value="">Status</option>
+
                 </select>
 
             </div>
@@ -37,7 +43,8 @@
                  name="id"
                  placeholder="Game ID"
                  ng-model="filter.gameId"
-                 type="text">
+                 type="text"
+                >
 
             </div>
 
@@ -48,7 +55,8 @@
                  name="team"
                  placeholder="Team Name"
                  ng-model="filter.team"
-                 type="text">
+                 type="text"
+                >
 
             </div>
 
@@ -59,7 +67,8 @@
                  name="coach-firstname"
                  placeholder="Coach First Name"
                  ng-model="filter.coachFirstName"
-                 type="text">
+                 type="text"
+                >
 
             </div>
 
@@ -70,7 +79,8 @@
                  name="coach-lastname"
                  placeholder="Coach Last Name"
                  ng-model="filter.coachLastName"
-                 type="text">
+                 type="text"
+                >
 
             </div>
 
@@ -81,7 +91,8 @@
                  name="indexer-firstname"
                  placeholder="Indexer First Name"
                  ng-model="filter.indexerFirstName"
-                 type="text">
+                 type="text"
+                >
 
             </div>
 
@@ -92,7 +103,8 @@
                  name="indexer-lastname"
                  placeholder="Indexer Last Name"
                  ng-model="filter.indexerLastName"
-                 type="text">
+                 type="text"
+                >
 
             </div>
 
@@ -103,7 +115,8 @@
                  name="assurer-firstname"
                  placeholder="QA First Name"
                  ng-model="filter.qaFirstName"
-                 type="text">
+                 type="text"
+                >
 
             </div>
 
@@ -114,7 +127,8 @@
                  name="assurer-lastname"
                  placeholder="QA Last Name"
                  ng-model="filter.qaLastName"
-                 type="text">
+                 type="text"
+                >
 
             </div>
 
@@ -123,7 +137,8 @@
              class="btn-search"
              ng-show="sidebar"
              ng-disabled="searching"
-             type="submit">
+             type="submit"
+            >
 
                 <i class="icon icon-search"></i>
 
@@ -134,7 +149,8 @@
         <button
          class="btn-search"
          ng-hide="sidebar"
-         ng-click="sidebar=!sidebar">
+         ng-click="sidebar=!sidebar"
+        >
 
             <i class="icon icon-search"></i>
 
@@ -143,7 +159,8 @@
         <button
          class="btn-toggle-sidebar"
          ng-show="sidebar"
-         ng-click="sidebar = false">
+         ng-click="sidebar = false"
+        >
 
             <i class="icon icon-chevron-left"></i>
 
@@ -152,7 +169,8 @@
         <button
          class="btn-toggle-sidebar"
          ng-hide="sidebar"
-         ng-click="sidebar = true">
+         ng-click="sidebar = true"
+        >
 
             <i class="icon icon-chevron-right"></i>
 
@@ -223,13 +241,16 @@
          leagues="leagues"
          teams="teams"
          users="users"
-         ng-hide="noResults || searching"></admin-queue-games>
+         ng-hide="noResults || searching"
+        ></admin-queue-games>
 
         <div class="results" ng-show="searching">
+
             <h1>Searching...</h1>
 
             <!-- TODO: The size shouldn't be a static value -->
             <krossover-spinner ng-if="searching" size="'80px'"></krossover-spinner>
+ 
         </div>
 
         <div class="results noresults" ng-show="noResults">

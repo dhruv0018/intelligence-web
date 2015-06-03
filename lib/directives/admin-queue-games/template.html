@@ -34,18 +34,21 @@
                 <button
                  class="btn btn-default select-indexer"
                  ng-if="!game.isAssignedToIndexer() && game.canBeAssignedToIndexer()"
-                 ng-click="SelectIndexerModal.open(game, false)">Select Indexer</button>
+                 ng-click="SelectIndexerModal.open(game, false)"
+                >Select Indexer</button>
 
                 <ul
                  ng-if="game.hasIndexerAssignment()"
-                 ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: false } | limitTo:1">
+                 ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: false } | limitTo:1"
+                >
 
                     <li>
 
                         <button
                          class="btn btn-link assignment"
                          ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id"
-                         ng-click="SelectIndexerModal.open(game, false)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button>
+                         ng-click="SelectIndexerModal.open(game, false)"
+                        >{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button>
 
                     </li>
 
@@ -60,18 +63,21 @@
                 <button
                  class="btn btn-default select-qa"
                  ng-if="!game.isAssignedToQa() && game.canBeAssignedToQa()"
-                 ng-click="SelectIndexerModal.open(game, true)">Select QA</button>
+                 ng-click="SelectIndexerModal.open(game, true)"
+                >Select QA</button>
 
                 <ul
                  ng-if="game.hasQaAssignment()"
-                 ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1">
+                 ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1"
+                >
 
                     <li>
 
                         <button
                          class="btn btn-link assignment"
                          ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id"
-                         ng-click="SelectIndexerModal.open(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button>
+                         ng-click="SelectIndexerModal.open(game, true)"
+                        >{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button>
 
                     </li>
 
@@ -92,7 +98,8 @@
                 <button
                  data-open-modal="AdminManagement.Modal"
                  data-modal-options="game"
-                 class="btn btn-default manage-button">
+                 class="btn btn-default manage-button"
+                >
 
                     <i class="icon icon-gear"></i>
 

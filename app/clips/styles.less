@@ -7,6 +7,12 @@
     overflow-y: auto;
     background-color: @content-bg;
 
+    * {
+
+        min-height: 0px;
+        min-width: 0px;
+    }
+
     .locked-game {
         background-color: @content-bg;
         width: 30%;
@@ -22,8 +28,6 @@
     }
 
     .clip-body {
-
-        min-height: 0px;
         display: flex;
         padding-top: 15px;
         flex-direction: row-reverse;
@@ -35,12 +39,6 @@
 
         .play .playHeadingContainer .play-chevron {
             display: none;
-        }
-
-        .krossover-sidebar {
-
-            overflow: hidden;
-            overflow-y: auto;
         }
     }
 

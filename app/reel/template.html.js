@@ -20,7 +20,11 @@ export default `
 
             <div class="main-highlight ng-scope" data-ui-view="content" ng-class="{'not-editable': !canUserEdit}">
 
-                <krossover-playlist></krossover-playlist>
+                <krossover-sidebar>
+                    
+                    <krossover-playlist></krossover-playlist>
+
+                </krossover-sidebar>
 
                 <video-player
                 data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name"
