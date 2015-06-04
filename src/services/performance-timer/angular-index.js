@@ -1,8 +1,12 @@
 import PerformanceTimer from './performance-timer';
 import VideoPerformanceTimer from './video-performance-timer';
 
+const pkg = require('../../../package.json');
+
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-angular.$provide.service('PerformanceTimer', PerformanceTimer);
-angular.$provide.service('VideoPerformanceTimer', VideoPerformanceTimer);
+const IntelligenceWebClient = angular.module(pkg.name);
+
+IntelligenceWebClient.service('PerformanceTimer', PerformanceTimer);
+IntelligenceWebClient.service('VideoPerformanceTimer', VideoPerformanceTimer);
