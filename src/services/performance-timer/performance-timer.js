@@ -82,6 +82,15 @@ export default class PerformanceTimer {
     }
 
     /**
+     * Cleanup resets the performance timer
+     * @api public
+     */
+    cleanup() {
+
+        this.reset();
+    }
+
+    /**
      * Updates the timer
      */
     _updateTime() {
