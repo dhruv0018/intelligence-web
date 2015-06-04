@@ -195,6 +195,8 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
             games.getDownAndDistanceReport($scope.dndReport).then(function(dndReport) {
                 $scope.game.dndReport = dndReport;
                 $scope.chart = $scope.game.dndReport;
+                $scope.createdDndReport = angular.copy($scope.dndReport);
+                $scope.createdDndReport.customTags = customtags.getList($scope.createdDndReport.customTagIds);
             });
 
         };

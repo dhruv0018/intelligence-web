@@ -45,23 +45,28 @@
     </div>
     <div class="formations-chart-container">
         <div class="field-header">
-            <span class="field-info">
+            <span class="field-info" ng-show="createdDndReport">
                 <span class="field-info-title">Down and Distance:</span>
-                <span data-ng-if="dndReport.down">{{dndReport.down}}</span>
-                <span data-ng-if="!dndReport.down">Any down</span>
+                <span data-ng-if="createdDndReport.down">{{createdDndReport.down}}</span>
+                <span data-ng-if="!createdDndReport.down">Any down</span>
                 and
-                <span data-ng-if="dndReport.distance">{{dndReport.distance}}</span>
-                <span data-ng-if="!dndReport.distance">any distance</span>
+                <span data-ng-if="createdDndReport.distance">{{createdDndReport.distance}}</span>
+                <span data-ng-if="!createdDndReport.distance">any distance</span>
             </span>
-            <span class="field-info">
+            <span class="field-info" ng-show="createdDndReport">
                 <span class="field-info-title">Hash:</span>
-                <span data-ng-if="dndReport.hash">{{dndReport.hash}}</span>
-                <span data-ng-if="!dndReport.hash">Any</span>
+                <span data-ng-if="createdDndReport.hash">{{createdDndReport.hash}}</span>
+                <span data-ng-if="!createdDndReport.hash">Any</span>
             </span>
-            <span class="field-info">
+            <span class="field-info" ng-show="createdDndReport">
                 <span class="field-info-title">Weight:</span>
-                <span data-ng-if="dndReport.strength">{{dndReport.strength}}</span>
-                <span data-ng-if="!dndReport.strength">Any</span>
+                <span data-ng-if="createdDndReport.strength">{{createdDndReport.strength}}</span>
+                <span data-ng-if="!createdDndReport.strength">Any</span>
+            </span>
+            <span class="field-info" ng-show="createdDndReport">
+                <span class="field-info-title">Tags:</span>
+                <span data-ng-if="createdDndReport.customTagIds" ng-repeat="tag in createdDndReport.customTags">{{tag.name}}<span ng-if="!$last">, </span></span>
+                <span data-ng-if="!createdDndReport.customTagIds.length">Any</span>
             </span>
         </div>
         <!--<div class="field-options">
