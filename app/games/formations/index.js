@@ -156,7 +156,13 @@ GamesFormations.controller('GamesFormations.controller', [
         //Plays Related
         $scope.allPlays = plays.getList({ gameId: $scope.game.id });
 
-        $scope.$watch('customTagIds', () => {
+        //Determine arena type
+        $scope.arenaType = ARENA_TYPES[league.arenaId].type;
+
+        //Update formation report when customTagIds change
+        $scope.$watch('customTagIds', updateReport);
+
+        function updateReport() {
             //Filter plays by custom tag ids
             $scope.plays = plays.filterByCustomTags($scope.allPlays, $scope.customTagIds);
             let playIds = $scope.plays.map(play => play.id);
@@ -209,10 +215,7 @@ GamesFormations.controller('GamesFormations.controller', [
 
             formationReport[$scope.teamId] = formationReport[$scope.teamId].filter(chart => chart.snaps);
             $scope.report = formationReport;
-        });
-
-        // Determine arena type
-        $scope.arenaType = ARENA_TYPES[league.arenaId].type;
+        }
 
         //TODO get rid of the previous code and use this code instead once caching is in
         //$scope.game.getFormationReport().$promise.then(function(formationReport) {
@@ -233,6 +236,8 @@ GamesFormations.controller('GamesFormations.controller', [
                 $scope.teamId = $scope.game.opposingTeamId;
                 $scope.opposingTeamId = $scope.game.teamId;
             }
+
+            updateReport();
         });
 
         $scope.redzone = 'false';
