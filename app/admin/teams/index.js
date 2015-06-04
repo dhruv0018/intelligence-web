@@ -160,6 +160,8 @@ function TeamDataDependencies (
     return TeamData;
 }
 
+Teams.service('Teams.Data.Dependencies', TeamDataDependencies);
+
 Teams.filter('visiblePlanOrPackage', [
     'NewDate',
     function(newDate) {
@@ -355,8 +357,6 @@ Teams.controller('TeamController', [
                 $scope.team = teams.create();
                 teams.fetch(teamId).then(function(team) {
                     angular.extend($scope.team, team);
-                    //$scope.team.members = $scope.team.getMembers();
-                    $scope.team.members = $scope.team.getMembers();
                     $scope.sportId = leagues.get(team.leagueId).sportId;
                     $scope.updateTeamAddress();
                 });
