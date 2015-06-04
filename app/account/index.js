@@ -1,6 +1,17 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/* Templates */
+
+const accountTemplate               = require('./template.html');
+const accountTemplateUrl            = 'account/template.html';
+const contactInfoTemplate           = require('./contact-info.html');
+const contactInfoTemplateUrl        = 'account/contact-info.html';
+const rolesListTemplate             = require('./roles-list.html');
+const rolesListTemplateUrl          = 'account/roles-list.html';
+const termsAndConditionsTemplate    = require('./terms-and-conditions.html');
+const termsAndConditionsTemplateUrl = 'account/terms-and-conditions.html';
+
 /**
  * Account page module.
  * @module Account
@@ -16,8 +27,10 @@ Account.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('account/template.html', require('./template.html'));
-        $templateCache.put('account/terms-and-conditions.html', require('./terms-and-conditions.html'));
+        $templateCache.put(accountTemplateUrl, accountTemplate);
+        $templateCache.put(contactInfoTemplateUrl, contactInfoTemplate);
+        $templateCache.put(rolesListTemplateUrl, rolesListTemplate);
+        $templateCache.put(termsAndConditionsTemplateUrl, termsAndConditionsTemplate);
     }
 ]);
 
@@ -38,7 +51,7 @@ Account.config([
                 abstract: true,
                 views: {
                     'main@root': {
-                        templateUrl: 'account/template.html',
+                        templateUrl: accountTemplateUrl,
                         controller: 'Account.controller'
                     }
                 }
@@ -48,7 +61,7 @@ Account.config([
                 parent: 'Account',
                 views: {
                     'content@Account': {
-                        templateUrl: 'account/contact-info.html',
+                        templateUrl: contactInfoTemplateUrl,
                         controller: 'Account.ContactInfo.controller'
                     }
                 }
@@ -58,7 +71,7 @@ Account.config([
                 parent: 'Account',
                 views: {
                     'content@Account': {
-                        templateUrl: 'account/terms-and-conditions.html'
+                        templateUrl: termsAndConditionsTemplateUrl
                     }
                 }
             })
@@ -67,7 +80,7 @@ Account.config([
                 parent: 'Account',
                 views: {
                     'content@Account': {
-                        templateUrl: 'account/roles-list.html',
+                        templateUrl: rolesListTemplateUrl,
                         controller: 'Account.RolesList.controller'
                     }
                 }

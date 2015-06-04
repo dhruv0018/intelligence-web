@@ -7,15 +7,6 @@ var angular = window.angular;
  */
 var Account = angular.module('Account');
 
-/* Cache the template file */
-Account.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('account/contact-info.html', require('./contact-info.html'));
-    }
-]);
-
 /**
  * Account controller.
  * @module Account
