@@ -148,21 +148,18 @@ IntelligenceWebClient.run([
                 /* Get user */
                 let user = session.retrieveCurrentUser();
 
-                /* Get date user last logged in */
-                let lastAccessedDate = user.getLastAccessed();
-
-                if (!lastAccessedDate) {
+                if (!user.lastAccessed) {
 
                     /* If first login, user has already accepted Terms and
                      * Conditions by setting password, so record that here. */
-                    user.setTermsAcceptedDate();
+                    user.updateTermsAcceptedDate();
                     resolve();
                 } else if (!account.hasAcceptedTerms()) {
 
                     /* If the user has NOT accepted the Terms & Conditions,
                      * prompt them to accept, then record time of acceptance. */
                     TermsDialog.show(true).then(function () {
-                        user.setTermsAcceptedDate();
+                        user.updateTermsAcceptedDate();
                         resolve();
                     });
                 } else {

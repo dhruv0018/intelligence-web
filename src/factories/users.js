@@ -529,17 +529,6 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
              * @class User
-             * @method getLastAccessed
-             * Returns the date of the last time the user has logged in.
-             * @return {(String|undefined)} The date user last logged in
-             */
-            getLastAccessed: function getLastAccessed () {
-
-                return this.lastAccessed;
-            },
-
-            /**
-             * @class User
              * @method getTermsAcceptedDate
              * Returns the date of the last time the user has accepted the
              * Terms and conditions.
@@ -552,11 +541,11 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
              * @class User
-             * @method setTermsAcceptedDate
+             * @method updateTermsAcceptedDate
              * Record the date of Terms & Conditions acceptance.
              * @return {Promise} The date user last accepted terms
              */
-            setTermsAcceptedDate: function setTermsAcceptedDate () {
+            updateTermsAcceptedDate: function updateTermsAcceptedDate () {
 
                 this.termsAcceptedDate = new Date().toISOString();
                 return this.save();
@@ -626,7 +615,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             passwordReset: function passwordReset (token, password) {
 
-                var model = $injector.get(this.model);
+                const model = $injector.get(this.model);
 
                 return model.resetPassword(
                     {token: token},
