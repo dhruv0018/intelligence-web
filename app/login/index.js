@@ -5,7 +5,7 @@ const angular = window.angular;
  * Login module for managing user logins.
  * @module Login
  */
-var Login = angular.module('login', [
+const Login = angular.module('login', [
     'ui.router',
     'ui.bootstrap'
 ]);
@@ -74,7 +74,7 @@ Login.config([
 
                         if (auth.isLoggedIn) {
 
-                            var currentUser = session.retrieveCurrentUser();
+                            let currentUser = session.retrieveCurrentUser();
 
                             /* If the user has more than one role, but has not
                             * selected a default one yet. */
@@ -95,7 +95,6 @@ Login.config([
             })
 
             .state('locked', {
-                public: true,
                 url: '',
                 parent: 'login',
                 views: {
@@ -110,7 +109,6 @@ Login.config([
             })
 
             .state('forgot', {
-                public: true,
                 url: '^/forgot-password',
                 parent: 'login',
                 views: {
@@ -125,7 +123,6 @@ Login.config([
             })
 
             .state('reset', {
-                public: true,
                 url: '^/password-reset/:token',
                 parent: 'login',
                 views: {
@@ -154,7 +151,6 @@ Login.config([
             })
 
             .state('new', {
-                public: true,
                 url: '^/new-user/:token',
                 parent: 'login',
                 views: {
@@ -242,7 +238,10 @@ function LoginController(
         $scope.login.remember = currentUser.persist;
     }
 
-    if ($state.current.data && $state.current.data.isResettingPassword) $scope.resetPassword = true;
+    if ($state.current.data && $state.current.data.isResettingPassword) {
+
+        $scope.resetPassword = true;
+    }
 
     if ($state.current.data && $state.current.data.isNewUser) {
 
@@ -257,9 +256,9 @@ function LoginController(
 
         $scope.login.submitted = true;
 
-        var email = $scope.login.email;
-        var password = $scope.login.password;
-        var persist = $scope.login.remember;
+        let email = $scope.login.email;
+        let password = $scope.login.password;
+        let persist = $scope.login.remember;
 
         /* Login the user. */
         auth.loginUser(email, password, persist).then(function(user) {
@@ -326,7 +325,7 @@ function LoginController(
 
         $scope.login.submitted = true;
 
-        var email = $scope.$parent.login.email;
+        let email = $scope.$parent.login.email;
 
         users.resendEmail(EMAIL_REQUEST_TYPES.FORGOTTEN_PASSWORD, null, email).then(
 
@@ -379,9 +378,8 @@ function LoginController(
 
         if ($stateParams.token) {
 
-            let
-                token    = $stateParams.token,
-                password = $scope.reset.password;
+            let token    = $stateParams.token;
+            let password = $scope.reset.password;
 
             users.passwordReset(token, password).then(
 
@@ -421,9 +419,8 @@ function LoginController(
 
         if ($stateParams.token) {
 
-            let
-                token    = $stateParams.token,
-                password = $scope.newUser.password;
+            let token    = $stateParams.token;
+            let password = $scope.newUser.password;
 
             users.passwordReset(token, password).then(
 
