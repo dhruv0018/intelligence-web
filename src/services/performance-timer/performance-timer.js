@@ -78,7 +78,7 @@ export default class PerformanceTimer {
 
         this._paused = false;
 
-        this.time.currentTime = 0;
+        this._time.currentTime = 0;
     }
 
     /**
