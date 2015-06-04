@@ -135,4 +135,14 @@ export default class VideoPerformanceTimer extends PerformanceTimer {
         // set the performance time
         this.time = event.target.currentTime * 1000; // convert to ms
     }
+
+    /**
+     * Resets and removes any handlers
+     * @api public
+     */
+    cleanup() {
+
+        super.cleanup();
+        this._removeVideoListeners();
+    }
 }
