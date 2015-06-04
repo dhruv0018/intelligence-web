@@ -53,6 +53,8 @@ require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
 require('./services/analytics');
+import './services/performance-timer/angular-index';
+import './services/performance-timer/index';
 
 require('./constants/users');
 require('./constants/games');
