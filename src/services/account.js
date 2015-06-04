@@ -88,30 +88,30 @@ function AccountService (
             /* If the user is a super admin or an admin. */
             else if (user.is(ROLES.SUPER_ADMIN) || user.is(ROLES.ADMIN)) {
 
-                return $state.go('users', null, { reload: reload });
+                return $state.go('users', null, { reload });
             }
 
             /* If the user is an indexer. */
             else if (user.is(ROLES.INDEXER)) {
 
-                return $state.go('indexer-games', null, { reload: reload });
+                return $state.go('indexer-games', null, { reload });
             }
 
             /* If the user is a coach. */
             else if (user.is(ROLES.COACH)) {
 
-                return $state.go('Coach.FilmHome', null, { reload: reload });
+                return $state.go('Coach.FilmHome', null, { reload });
             }
 
             /* If the user is an athlete. */
             else if (user.is(ROLES.ATHLETE)) {
 
-                return $state.go('Athlete.FilmHome', null, { reload: reload });
+                return $state.go('Athlete.FilmHome', null, { reload });
             }
 
             else {
 
-                return $state.go('Account.ContactInfo', null, { reload: reload });
+                return $state.go('Account.ContactInfo', null, { reload });
             }
         },
 
