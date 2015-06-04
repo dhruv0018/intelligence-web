@@ -165,25 +165,6 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 role.teamId = self.id;
                 self.roles.push(role);
             },
-            getMembers: function() {
-
-                var members = [];
-
-                if (this.roles) {
-
-                    for (var i = 0; i < this.roles.length; i++) {
-
-                        var userId = this.roles[i].userId;
-
-                        if (userId) {
-
-                            members[userId] = usersResource.get({ id: userId });
-                        }
-                    }
-                }
-
-                return members;
-            },
 
             isMember: function(userId) {
 
