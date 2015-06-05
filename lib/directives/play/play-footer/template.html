@@ -40,6 +40,9 @@
             <i class="icon icon-plus"></i> Add to reel
         </button>
 
-        <custom-tag-pills ng-show="isTeamMember && !isReelsPlay" feature="SelectPlays" ng-model="customTags" play="play"></custom-tag-pills>
+        <div class="tags-container" ng-show="isTeamMember && !isReelsPlay" feature="SelectPlays">
+            <span class="tags-label">Tags:</span>
+            <custom-tag-pills ng-model="customTags" play="play"></custom-tag-pills>
+        </div>
     </div>
 </div>
