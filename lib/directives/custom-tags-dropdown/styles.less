@@ -82,7 +82,8 @@
                 cursor: pointer;
                 overflow-wrap: break-word;
 
-                &:hover {
+                &:hover,
+                &.focused {
                     background-color: @active-bg;
                 }
             }
@@ -98,7 +99,8 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
 
-                    &:hover {
+                    &:hover,
+                    &.focused {
                         background-color: @active-bg;
                     }
                 }

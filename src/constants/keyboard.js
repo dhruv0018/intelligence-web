@@ -7,6 +7,7 @@ const IntelligenceWebClient = angular.module(pkg.name);
 
 const KEYBOARD_CODES = {
     ENTER: 13,
+    ESC: 27,
     LEFT_ARROW: 37,
     UP_ARROW: 38,
     RIGHT_ARROW: 39,

@@ -18,7 +18,7 @@
         <span class="off" ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
     </button>
 
-    <button feature="SelectPlays" ng-if="selectedPlays.length && isTeamMember && !confirmTagSave" class="btn btn-default" open-modal="AddReel.Modal" modal-options="options">Add to Reel</button>
+    <button feature="SelectPlays" ng-if="selectedPlays.length && isTeamMember && !confirmTagSave" class="btn btn-sm btn-default" open-modal="AddReel.Modal" modal-options="options">Add to Reel</button>
 
     <custom-tags-dropdown feature="CustomTags" ng-if="selectedPlays.length && isTeamMember && currentUser.is(ROLES.COACH) && !confirmTagSave" plays="selectedPlays"></custom-tags-dropdown>
 
