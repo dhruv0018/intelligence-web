@@ -1,8 +1,9 @@
 import PerformanceTimer from './performance-timer';
 
 /**
- * VideoPerformanceTimer takes a `videoElement` and keeps track of the video's `currentTime` more accurately than
- * the browser normally provides. It does so by interpolating values between video events using performance.now()
+ * VideoPerformanceTimer Singleton takes a `videoElement` via getInstance() and keeps track of the video's `currentTime`
+ * more accurately than the browser normally provides. It does so by interpolating values between video events using
+ * performance.now().
  *
  * **Warning**: This does not mean that the video element is actually set to the `currentTime` as is being calculated.
  * It is simply an approximated currentTime of the video.
@@ -21,7 +22,24 @@ import PerformanceTimer from './performance-timer';
  * @augments PerformanceTimer
  * @param {String} videoElementOrId
  */
-class VideoPerformanceTimer extends PerformanceTimer {
+
+class VideoPerformanceTimer {
+
+    /**
+     * Lazily gets or creates a PrivateVideoPerformanceTimer uniqueInstance
+     */
+    static getInstance(videoElement) {
+
+        if (!this._uniqueInstance) {
+
+            this._uniqueInstance = new PrivateVideoPerformanceTimer(videoElement);
+        }
+
+        return this._uniqueInstance;
+    }
+}
+
+class PrivateVideoPerformanceTimer extends PerformanceTimer {
 
     constructor(videoElement) {
 
