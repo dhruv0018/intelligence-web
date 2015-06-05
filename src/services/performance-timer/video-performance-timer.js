@@ -93,7 +93,7 @@ class PrivateVideoPerformanceTimer extends PerformanceTimer {
         if (!this._videoElement) return;
 
         this._videoElement.removeEventListener('timeupdate', this._boundOnTimeUpdate);
-        this._videoElement.removeEventListener('play', this._boundOPlay);
+        this._videoElement.removeEventListener('play', this._boundOnPlay);
         this._videoElement.removeEventListener('pause', this._boundOnPause);
     }
 
@@ -137,6 +137,7 @@ class PrivateVideoPerformanceTimer extends PerformanceTimer {
 
         // set the performance time
         this.time = event.target.currentTime * 1000; // convert to ms
+
         super.pause();
     }
 
