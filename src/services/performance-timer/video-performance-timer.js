@@ -35,6 +35,8 @@ class VideoPerformanceTimer {
             this._uniqueInstance = new PrivateVideoPerformanceTimer(videoElement);
         }
 
+        this._uniqueInstance.reset(videoElement);
+
         return this._uniqueInstance;
     }
 }
@@ -44,10 +46,6 @@ class PrivateVideoPerformanceTimer extends PerformanceTimer {
     constructor(videoElement) {
 
         super();
-
-        this._setVideoElement(videoElement);
-
-        this._addVideoListeners();
     }
 
     /**
@@ -91,6 +89,8 @@ class PrivateVideoPerformanceTimer extends PerformanceTimer {
      * Removes all internal listeners from the video element
      */
     _removeVideoListeners() {
+
+        if (!this._videoElement) return;
 
         this._videoElement.removeEventListener('timeupdate', this._boundOnTimeUpdate);
         this._videoElement.removeEventListener('play', this._boundOPlay);
