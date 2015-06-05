@@ -2,7 +2,7 @@
  * Creates a new PerformanceTimer.
  * @class class PerformanceTimer
  */
-export default class PerformanceTimer {
+class PerformanceTimer {
 
     constructor() {
 
@@ -108,3 +108,5 @@ export default class PerformanceTimer {
         this._frameId = requestAnimationFrame(this._updateTime.bind(this));
     }
 }
+
+export default PerformanceTimer;
