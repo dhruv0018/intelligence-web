@@ -1,12 +1,16 @@
 import PerformanceTimer from './performance-timer';
 
 /**
- * VideoPerformanceTimer takes a `videoElementOrId` and keeps track of the video's `currentTime` more accurately than
+ * VideoPerformanceTimer takes a `videoElement` and keeps track of the video's `currentTime` more accurately than
  * the browser normally provides. It does so by interpolating values between video events using performance.now()
+ *
+ * **Warning**: This does not mean that the video element is actually set to the `currentTime` as is being calculated.
+ * It is simply an approximated currentTime of the video.
  *
  * @example
  *      // create timer for video from element on document (i.e. <video id="myVideo">...</video>)
- *      let videoPerformanceTimer = new VideoPerformanceTimer('myVideo')
+ *      let videoElement = document.getElementById('myVideo');
+ *      let videoPerformanceTimer = new VideoPerformanceTimer(videoElement);
  *      // observe changes to the video's time
  *      Object.observe(videoPerformanceTimer.observableTime, function(timeObject) {
  *          let currentTime = timeObject[0].object.currentTime;
@@ -17,34 +21,34 @@ import PerformanceTimer from './performance-timer';
  * @augments PerformanceTimer
  * @param {String} videoElementOrId
  */
-export default class VideoPerformanceTimer extends PerformanceTimer {
+class VideoPerformanceTimer extends PerformanceTimer {
 
-    constructor(videoElementOrId) {
+    constructor(videoElement) {
 
         super();
 
-        this._setVideoElement(videoElementOrId);
+        this._setVideoElement(videoElement);
 
         this._addVideoListeners();
     }
 
     /**
-     * Resets the video timer
-     * @param {String} [videoElementOrId] - the video element or unique id
+     * Resets the video timer and the videoElement & its listeners if a videoElement is provided.
+     * @param {String} [videoElement] the video element
      * @api public
      */
-    reset(videoElementOrId) {
+    reset(videoElement) {
 
         // reset timer
         super.reset();
 
         // removes video listeners
-        if (videoElementOrId) {
+        if (videoElement) {
 
             this._removeVideoListeners();
 
             // gets/sets new video element
-            this._setVideoElement(videoElementOrId);
+            this._setVideoElement(videoElement);
 
             // setup video timer
             this._addVideoListeners();
@@ -52,29 +56,17 @@ export default class VideoPerformanceTimer extends PerformanceTimer {
     }
 
     /**
-     * Sets the video element from the document based on a unique string id or a video element.
-     * @param {String} videoElementOrId the video element's unique id
+     * Sets the video element
+     * @param {Object} videoElement
      */
-    _setVideoElement(videoElementOrId) {
+    _setVideoElement(videoElement) {
 
-        // videoElementOrId is a video tag
-        if (videoElementOrId.tagName === 'VIDEO') {
+        if (!videoElement || videoElement.tagName !== 'VIDEO') {
 
-            this._videoElement = videoElementOrId;
-
-        } else if (typeof videoElementOrId === 'string') {
-
-            let videoElement = document.getElementById(videoElementOrId);
-
-            if (!videoElement) {
-
-                throw new Error(`Cannot create new PerformanceVideoTimer: No Video Player with id: ${videoDomId}`);
-
-            } else {
-
-                this._videoElement = videoElement;
-            }
+            throw new Error(`invalid 'videoElement' parameter - ${videoElement}`);
         }
+
+        this._videoElement = videoElement;
     }
 
     /**
@@ -92,6 +84,8 @@ export default class VideoPerformanceTimer extends PerformanceTimer {
      */
     _addVideoListeners() {
 
+        if (!this._videoElement) throw new Error('this._videoElement is undefined. Call _setVideoElement first');
+
         // bind listener functions
         this._boundOnTimeUpdate = this._onTimeUpdate.bind(this);
         this._boundOnPlay = this._onPlay.bind(this);
@@ -108,6 +102,8 @@ export default class VideoPerformanceTimer extends PerformanceTimer {
      */
     _onPlay(event) {
 
+        if (!event) return;
+
         // set the performance time
         this.time = event.target.currentTime * 1000; // convert to ms
 
@@ -119,6 +115,8 @@ export default class VideoPerformanceTimer extends PerformanceTimer {
      */
     _onPause(event) {
 
+        if (!event) return;
+
         // set the performance time
         this.time = event.target.currentTime * 1000; // convert to ms
         super.pause();
@@ -129,10 +127,21 @@ export default class VideoPerformanceTimer extends PerformanceTimer {
      */
     _onTimeUpdate(event) {
 
-        // ignore update event if video already paused
-        if (this._videoElement.paused) return;
+        if (!event) return;
 
         // set the performance time
         this.time = event.target.currentTime * 1000; // convert to ms
     }
+
+    /**
+     * Resets and removes any handlers
+     * @api public
+     */
+    cleanup() {
+
+        super.cleanup();
+        this._removeVideoListeners();
+    }
 }
+
+export default VideoPerformanceTimer;

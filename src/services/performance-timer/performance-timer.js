@@ -2,7 +2,7 @@
  * Creates a new PerformanceTimer.
  * @class class PerformanceTimer
  */
-export default class PerformanceTimer {
+class PerformanceTimer {
 
     constructor() {
 
@@ -82,6 +82,15 @@ export default class PerformanceTimer {
     }
 
     /**
+     * Cleanup resets the performance timer
+     * @api public
+     */
+    cleanup() {
+
+        this.reset();
+    }
+
+    /**
      * Updates the timer
      */
     _updateTime() {
@@ -99,3 +108,5 @@ export default class PerformanceTimer {
         this._frameId = requestAnimationFrame(this._updateTime.bind(this));
     }
 }
+
+export default PerformanceTimer;
