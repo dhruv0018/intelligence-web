@@ -1,5 +1,5 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 require('team-plan');
 require('team-package');
 
@@ -7,7 +7,7 @@ require('team-package');
  * Teams page module.
  * @module Teams
  */
-var Teams = angular.module('teams', [
+const Teams = angular.module('teams', [
     'ui.router',
     'ui.bootstrap',
     'ui.unique',
@@ -211,108 +211,123 @@ Teams.filter('visiblePlanOrPackage', [
  * @name TeamPlanController
  * @type {Controller}
  */
-Teams.controller('TeamPlansController', [
-    '$scope', '$filter', '$modal', 'TeamsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'BasicModals',
-    function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup, basicModals) {
+Teams.controller('TeamPlansController', TeamPlansController);
 
-        $scope.minTurnaroundTimeLookup = minTurnaroundTimeLookup;
+TeamPlansController.$inject = [
+    '$scope',
+    '$filter',
+    '$modal',
+    'TeamsFactory',
+    'TURNAROUND_TIME_MIN_TIME_LOOKUP',
+    'BasicModals'
+];
 
-        $scope.team.teamPackages = $scope.team.teamPackages || [];
-        $scope.team.teamPlans = $scope.team.teamPlans || [];
+function TeamPlansController (
+    $scope,
+    $filter,
+    $modal,
+    teams,
+    minTurnaroundTimeLookup,
+    basicModals
+) {
 
-        function applyFilter() {
-            $scope.filteredPackages = $filter('visiblePlanOrPackage')($scope.team.teamPackages);
-            $scope.filteredPlans = $filter('visiblePlanOrPackage')($scope.team.teamPlans);
-        }
+    $scope.minTurnaroundTimeLookup = minTurnaroundTimeLookup;
 
-        $scope.$watch(function() { return $scope.team.teamPlans; }, applyFilter, true);
-        $scope.$watch(function() { return $scope.team.teamPackages; }, applyFilter, true);
+    $scope.team.teamPackages = $scope.team.teamPackages || [];
+    $scope.team.teamPlans = $scope.team.teamPlans || [];
 
-        var openPackageModal = function(editTeamPackageObjIndex) {
-            var modalInstance = $modal.open({
-                scope: $scope,
-                size: 'sm',
-                templateUrl: 'app/admin/teams/team-package/team-package.html',
-                controller: 'TeamPackageController',
-                resolve: {
-                    Team: function() { return $scope.team; },
-                    PackageIndex: function() { return editTeamPackageObjIndex; }
-                }
-            });
-
-            modalInstance.result.then(function(teamWithPackagesToSave) {
-                $scope.save(teamWithPackagesToSave);
-            });
-        };
-
-        var openTeamPlanModal = function(teamPlanIndex) {
-            var modalInstance = $modal.open({
-                templateUrl: 'app/admin/teams/team-plan/team-plan.html',
-                controller: 'TeamPlanController',
-                resolve: {
-                    Team: function() { return $scope.team; },
-                    TeamPlanIndex: function() { return teamPlanIndex; }
-                }
-            });
-
-            modalInstance.result.then(function(teamWithPlansToSave) {
-                $scope.save(teamWithPlansToSave);
-            });
-        };
-
-        $scope.addNewPlan = function() {
-            openTeamPlanModal();
-        };
-
-        $scope.addNewPackage = function() {
-            openPackageModal();
-        };
-
-        $scope.editTeamPlan = function(index) {
-            openTeamPlanModal(index);
-        };
-
-        $scope.editActivePackage = function(index) {
-            openPackageModal(index);
-        };
-
-        $scope.removeActivePackage = function(packageIdToRemove) {
-            var modalOptions = {
-                title: 'Are you sure you want to delete this package?',
-                buttonText: 'Yes, delete',
-                cancelButtonText: 'No, cancel'
-            };
-
-            var modalInstance = basicModals.openForConfirm(modalOptions);
-
-            modalInstance.result.then(function confirm() {
-                //delete the package
-                $scope.team.teamPackages.splice(packageIdToRemove, 1);
-                $scope.save($scope.team);
-            });
-        };
-
-        $scope.removeActivePlan = function(planIdToRemove) {
-            var modalOptions = {
-                title: 'Are you sure you want to delete this plan?',
-                buttonText: 'Yes, delete',
-                cancelButtonText: 'No, cancel'
-            };
-
-            var modalInstance = basicModals.openForConfirm(modalOptions);
-
-            modalInstance.result.then(function confirm() {
-                //delete the plan
-                $scope.team.teamPlans.splice(planIdToRemove, 1);
-                $scope.save($scope.team);
-            });
-        };
-
-        $scope.save = function(team) {
-            teams.save(team).then(function() {});
-        };
+    function applyFilter() {
+        $scope.filteredPackages = $filter('visiblePlanOrPackage')($scope.team.teamPackages);
+        $scope.filteredPlans = $filter('visiblePlanOrPackage')($scope.team.teamPlans);
     }
-]);
+
+    $scope.$watch(function() { return $scope.team.teamPlans; }, applyFilter, true);
+    $scope.$watch(function() { return $scope.team.teamPackages; }, applyFilter, true);
+
+    var openPackageModal = function(editTeamPackageObjIndex) {
+        var modalInstance = $modal.open({
+            scope: $scope,
+            size: 'sm',
+            templateUrl: 'app/admin/teams/team-package/team-package.html',
+            controller: 'TeamPackageController',
+            resolve: {
+                Team: function() { return $scope.team; },
+                PackageIndex: function() { return editTeamPackageObjIndex; }
+            }
+        });
+
+        modalInstance.result.then(function(teamWithPackagesToSave) {
+            $scope.save(teamWithPackagesToSave);
+        });
+    };
+
+    var openTeamPlanModal = function(teamPlanIndex) {
+        var modalInstance = $modal.open({
+            templateUrl: 'app/admin/teams/team-plan/team-plan.html',
+            controller: 'TeamPlanController',
+            resolve: {
+                Team: function() { return $scope.team; },
+                TeamPlanIndex: function() { return teamPlanIndex; }
+            }
+        });
+
+        modalInstance.result.then(function(teamWithPlansToSave) {
+            $scope.save(teamWithPlansToSave);
+        });
+    };
+
+    $scope.addNewPlan = function() {
+        openTeamPlanModal();
+    };
+
+    $scope.addNewPackage = function() {
+        openPackageModal();
+    };
+
+    $scope.editTeamPlan = function(index) {
+        openTeamPlanModal(index);
+    };
+
+    $scope.editActivePackage = function(index) {
+        openPackageModal(index);
+    };
+
+    $scope.removeActivePackage = function(packageIdToRemove) {
+        var modalOptions = {
+            title: 'Are you sure you want to delete this package?',
+            buttonText: 'Yes, delete',
+            cancelButtonText: 'No, cancel'
+        };
+
+        var modalInstance = basicModals.openForConfirm(modalOptions);
+
+        modalInstance.result.then(function confirm() {
+            //delete the package
+            $scope.team.teamPackages.splice(packageIdToRemove, 1);
+            $scope.save($scope.team);
+        });
+    };
+
+    $scope.removeActivePlan = function(planIdToRemove) {
+        var modalOptions = {
+            title: 'Are you sure you want to delete this plan?',
+            buttonText: 'Yes, delete',
+            cancelButtonText: 'No, cancel'
+        };
+
+        var modalInstance = basicModals.openForConfirm(modalOptions);
+
+        modalInstance.result.then(function confirm() {
+            //delete the plan
+            $scope.team.teamPlans.splice(planIdToRemove, 1);
+            $scope.save($scope.team);
+        });
+    };
+
+    $scope.save = function(team) {
+        teams.save(team).then(function() {});
+    };
+}
 
 /**
  * Team controller. Controls the view for adding and editing a single team.
@@ -320,128 +335,162 @@ Teams.controller('TeamPlansController', [
  * @name TeamController
  * @type {Controller}
  */
-Teams.controller('TeamController', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', '$modal', 'ROLES', 'Teams.Data', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, $modal, ROLES, data, sports, leagues, schoolsFactory, teams, users) {
-        $scope.ROLES = ROLES;
-        $scope.HEAD_COACH = ROLES.HEAD_COACH;
+Teams.controller('TeamController', TeamController);
 
-        $scope.sports = sports.getList();
-        $scope.indexedSports = sports.getCollection();
+TeamController.$inject = [
+    '$rootScope',
+    '$scope',
+    '$state',
+    '$stateParams',
+    '$filter',
+    '$modal',
+    'ROLES',
+    'Teams.Data',
+    'SportsFactory',
+    'LeaguesFactory',
+    'SchoolsFactory',
+    'TeamsFactory',
+    'UsersFactory'
+];
 
-        $scope.leagues = leagues.getList();
-        $scope.indexedLeagues = leagues.getCollection();
+function TeamController (
+    $rootScope,
+    $scope,
+    $state,
+    $stateParams,
+    $filter,
+    $modal,
+    ROLES,
+    data,
+    sports,
+    leagues,
+    schoolsFactory,
+    teams,
+    users
+) {
 
-        var team;
-        $scope.schoolName = '';
+    $scope.ROLES = ROLES;
+    $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
-        $scope.updateTeamAddress = function($item) {
-            if ($item) {
-                if (!$scope.team) {
-                    $scope.team = {
-                        schoolId: $item.id
-                    };
-                } else {
-                    $scope.team.schoolId = $item.id;
-                }
+    $scope.sports = sports.getList();
+    $scope.indexedSports = sports.getCollection();
 
-            }
+    $scope.leagues = leagues.getList();
+    $scope.indexedLeagues = leagues.getCollection();
 
-            if ($scope.team && $scope.team.schoolId) {
+    var team;
+    $scope.schoolName = '';
 
-                schoolsFactory.fetch($scope.team.schoolId).then(function(school) {
-                    $scope.school = school;
-                    $scope.schoolName = school.name;
-                    $scope.team.address = angular.copy($scope.school.address);
-                });
-            }
-        };
+    $scope.updateTeamAddress = function($item) {
 
-        /* If no team is stored locally, then get the team from the server. */
-        if (!team) {
+        if ($item) {
 
-            var teamId = $stateParams.id;
+            if (!$scope.team) {
+                $scope.team = {
 
-            if (teamId) {
-                $scope.team = teams.create();
-                teams.fetch(teamId).then(function(team) {
-                    angular.extend($scope.team, team);
-                    $scope.team.members = data.members;
-                    $scope.sportId = leagues.get(team.leagueId).sportId;
-                    $scope.updateTeamAddress();
-                });
+                    schoolId: $item.id
+                };
+            } else {
+
+                $scope.team.schoolId = $item.id;
             }
         }
 
-        //TODO: are all of the watches below necessary?
-        $scope.$watch('addNewHeadCoach', function() {
+        if ($scope.team && $scope.team.schoolId) {
 
-            if ($scope.addNewHeadCoach) {
-
-                $scope.users = users.getList();
-            }
-        });
-
-        $scope.findSchoolsByName = function() {
-            return schoolsFactory.query({name: $scope.schoolName, count: 10}).then(function(schools) {
-                return $filter('orderBy')(schools, 'name');
+            schoolsFactory.fetch($scope.team.schoolId).then(function(school) {
+                $scope.school = school;
+                $scope.schoolName = school.name;
+                $scope.team.address = angular.copy($scope.school.address);
             });
-        };
+        }
+    };
 
-        $scope.onlyCurrentRoles = function(role) {
+    /* If no team is stored locally, then get the team from the server. */
+    if (!team) {
 
-            /* Assume falsy value means the tenure end date hasn't been set yet. */
-            if (!role.tenureEnd) return true;
+        var teamId = $stateParams.id;
 
-            var tenureEnd = new Date(role.tenureEnd);
+        if (teamId) {
+            $scope.team = teams.create();
+            teams.fetch(teamId).then(team => {
 
-            /* Assume invalid date means the tenure end date hasn't been set yet. */
-            if (isNaN(tenureEnd.getTime())) return true;
-
-            return false;
-        };
-
-        $scope.onlyPastRoles = function(role) {
-
-            if ($scope.onlyCurrentRoles(role)) return false;
-
-            var today = new Date();
-            var tenureEnd = new Date(role.tenureEnd);
-
-            return today - tenureEnd > 0;
-        };
-
-        $scope.formatUser = function(user) {
-
-            if (!user) return '';
-
-            var firstName = user.firstName || '';
-            var lastName = user.lastName || '';
-            var email = user.email || '';
-
-            return firstName + ' ' + lastName + ' - ' + email;
-        };
-
-        $scope.addHeadCoach = function(coach) {
-
-            var newCoachRole = ROLES.HEAD_COACH;
-            newCoachRole.userId = coach.id;
-            newCoachRole.teamId = $scope.team.id;
-            coach.addRole(newCoachRole);
-            coach.save();
-            $scope.team.roles = $scope.team.roles || [];
-            $scope.team.roles.push(newCoachRole);
-            $scope.addNewHeadCoach = false;
-        };
-
-        $scope.save = function(team) {
-
-            teams.save(team).then(function() {
-                $state.go('teams');
+                angular.extend($scope.team, team);
+                $scope.team.members = data.members;
+                $scope.sportId = leagues.get(team.leagueId).sportId;
+                $scope.updateTeamAddress();
             });
-        };
+        }
     }
-]);
+
+    //TODO: are all of the watches below necessary?
+    $scope.$watch('addNewHeadCoach', function() {
+
+        if ($scope.addNewHeadCoach) {
+
+            $scope.users = users.getList();
+        }
+    });
+
+    $scope.findSchoolsByName = function() {
+        return schoolsFactory.query({name: $scope.schoolName, count: 10}).then(function(schools) {
+            return $filter('orderBy')(schools, 'name');
+        });
+    };
+
+    $scope.onlyCurrentRoles = function(role) {
+
+        /* Assume falsy value means the tenure end date hasn't been set yet. */
+        if (!role.tenureEnd) return true;
+
+        var tenureEnd = new Date(role.tenureEnd);
+
+        /* Assume invalid date means the tenure end date hasn't been set yet. */
+        if (isNaN(tenureEnd.getTime())) return true;
+
+        return false;
+    };
+
+    $scope.onlyPastRoles = function(role) {
+
+        if ($scope.onlyCurrentRoles(role)) return false;
+
+        var today = new Date();
+        var tenureEnd = new Date(role.tenureEnd);
+
+        return today - tenureEnd > 0;
+    };
+
+    $scope.formatUser = function(user) {
+
+        if (!user) return '';
+
+        var firstName = user.firstName || '';
+        var lastName = user.lastName || '';
+        var email = user.email || '';
+
+        return firstName + ' ' + lastName + ' - ' + email;
+    };
+
+    $scope.addHeadCoach = function(coach) {
+
+        var newCoachRole = ROLES.HEAD_COACH;
+        newCoachRole.userId = coach.id;
+        newCoachRole.teamId = $scope.team.id;
+        coach.addRole(newCoachRole);
+        coach.save();
+        $scope.team.roles = $scope.team.roles || [];
+        $scope.team.roles.push(newCoachRole);
+        $scope.addNewHeadCoach = false;
+    };
+
+    $scope.save = function(team) {
+
+        teams.save(team).then(function() {
+            $state.go('teams');
+        });
+    };
+}
 
 /**
  * Teams controller. Controls the view for displaying multiple teams.
@@ -449,46 +498,69 @@ Teams.controller('TeamController', [
  * @name TeamsController
  * @type {Controller}
  */
-Teams.controller('TeamsController', [
-    '$rootScope', '$scope', '$state', '$q', '$filter', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'Teams.Data',
-    function controller($rootScope, $scope, $state, $q, $filter, sports, leagues, schools, teams, data) {
+Teams.controller('TeamsController', TeamsController);
 
-        $scope.teams = [];
+TeamsController.$inject = [
+    '$rootScope',
+    '$scope',
+    '$state',
+    '$q',
+    '$filter',
+    'SportsFactory',
+    'LeaguesFactory',
+    'SchoolsFactory',
+    'TeamsFactory',
+    'Teams.Data'
+];
 
-        //TODO potential candiate for changing filter to true instead of 1 if the backend begins to support it
-        $scope.filter = {
-            isCustomerTeam: 1
-        };
+function TeamsController (
+    $rootScope,
+    $scope,
+    $state,
+    $q,
+    $filter,
+    sports,
+    leagues,
+    schools,
+    teams,
+    data
+) {
 
-        $scope.sports = sports.getList();
-        $scope.indexedSports = sports.getCollection();
-        $scope.schools = schools.getCollection();
-        $scope.leagues = leagues.getList();
-        $scope.indexedLeagues = leagues.getCollection();
+    $scope.teams = [];
 
-        $scope.add = function() {
-            $state.go('team-info');
-        };
+    //TODO potential candiate for changing filter to true instead of 1 if the backend begins to support it
+    $scope.filter = {
+        isCustomerTeam: 1
+    };
 
-        $scope.findSchoolsByName = function() {
-            return schools.query({name: $scope.filter.schoolName, count: 10}).then(function(schools) {
-                return $filter('orderBy')(schools, 'name');
-            });
-        };
+    $scope.sports = sports.getList();
+    $scope.indexedSports = sports.getCollection();
+    $scope.schools = schools.getCollection();
+    $scope.leagues = leagues.getList();
+    $scope.indexedLeagues = leagues.getCollection();
 
-        $scope.search = function(query) {
+    $scope.add = function() {
+        $state.go('team-info');
+    };
 
-            $scope.searching = true;
-            $scope.teams.length = 0;
+    $scope.findSchoolsByName = function() {
+        return schools.query({name: $scope.filter.schoolName, count: 10}).then(function(schools) {
+            return $filter('orderBy')(schools, 'name');
+        });
+    };
 
-            $scope.query = teams.search(query).then(function(teams) {
+    $scope.search = function(query) {
 
-                $scope.teams = teams;
+        $scope.searching = true;
+        $scope.teams.length = 0;
 
-            }).finally(function() {
+        $scope.query = teams.search(query).then(function(teams) {
 
-                $scope.searching = false;
-            });
-        };
-    }
-]);
+            $scope.teams = teams;
+
+        }).finally(function() {
+
+            $scope.searching = false;
+        });
+    };
+}
