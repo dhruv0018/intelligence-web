@@ -6,13 +6,13 @@
         </div>
 
         <div class="search-tags">
+            <i class="icon icon-search"></i>
             <input
                 ng-model="filters.name"
                 ng-change="updateFilteredTags()"
                 ng-keydown="keyPressTracker($event, filters.name)"
                 placeholder="Search Tags"
                 maxlength="50">
-            <i class="icon icon-search"></i>
         </div>
 
         <div class="tags-list">
