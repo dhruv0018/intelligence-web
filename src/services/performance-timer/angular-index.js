@@ -8,5 +8,5 @@ const angular = window.angular;
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.service('PerformanceTimer', PerformanceTimer);
-IntelligenceWebClient.service('VideoPerformanceTimer', VideoPerformanceTimer);
+IntelligenceWebClient.factory('PerformanceTimer', function() {return PerformanceTimer});
+IntelligenceWebClient.factory('VideoPerformanceTimer', function() {return VideoPerformanceTimer});
