@@ -276,8 +276,11 @@ function GamesBreakdownController (
 
         function onPlaylistWatch(play) {
 
-            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
-            $scope.currentPlayId = play.id;
+            if (play && play.id) {
+
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
+                $scope.currentPlayId = play.id;
+            }
         }
 
         $scope.$on('$destroy', function onDestroy() {
