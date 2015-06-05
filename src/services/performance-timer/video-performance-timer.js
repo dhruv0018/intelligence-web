@@ -11,7 +11,7 @@ import PerformanceTimer from './performance-timer';
  * @example
  *      // create timer for video from element on document (i.e. <video id="myVideo">...</video>)
  *      let videoElement = document.getElementById('myVideo');
- *      let videoPerformanceTimer = new VideoPerformanceTimer(videoElement);
+ *      let videoPerformanceTimer = VideoPerformanceTimer.getInstance(videoElement);
  *      // observe changes to the video's time
  *      Object.observe(videoPerformanceTimer.observableTime, function(timeObject) {
  *          let currentTime = timeObject[0].object.currentTime;
