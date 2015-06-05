@@ -10,6 +10,7 @@ class PerformanceTimer {
             currentTime: 0 // in milliseconds
         };
 
+        this._paused = true;
     }
 
     /**
@@ -48,9 +49,10 @@ class PerformanceTimer {
      */
     start() {
 
-        cancelAnimationFrame(this._frameId);
+        if (this._paused) this._paused = false;
+        else return; // already started
 
-        this._paused = false;
+        cancelAnimationFrame(this._frameId);
 
         this._lastTime = performance.now();
 
@@ -63,9 +65,10 @@ class PerformanceTimer {
      */
     pause() {
 
-        cancelAnimationFrame(this._frameId);
+        if (!this._paused) this._paused = true;
+        else return; // already paused
 
-        this._paused = true;
+        cancelAnimationFrame(this._frameId);
     }
 
     /**
@@ -76,7 +79,7 @@ class PerformanceTimer {
 
         cancelAnimationFrame(this._frameId);
 
-        this._paused = false;
+        this._paused = true;
 
         this._time.currentTime = 0;
     }
