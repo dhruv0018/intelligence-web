@@ -122,6 +122,8 @@ class PrivateVideoPerformanceTimer extends PerformanceTimer {
 
         if (!event) return;
 
+        if (!this._paused) return; // already playing, do not update the time as the time could be old
+
         // set the performance time
         this.time = event.target.currentTime * 1000; // convert to ms
 
