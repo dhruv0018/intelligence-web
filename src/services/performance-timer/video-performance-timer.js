@@ -129,9 +129,6 @@ class VideoPerformanceTimer extends PerformanceTimer {
 
         if (!event) return;
 
-        // ignore update event if video already paused
-        if (this._videoElement.paused) return;
-
         // set the performance time
         this.time = event.target.currentTime * 1000; // convert to ms
     }
