@@ -153,7 +153,16 @@ function TeamDataDependencies (
             /* Load data. */
             this.sports = sports.load();
             this.leagues = leagues.load();
-            this.users = users.load({teamId: teamId});
+            this.members = [];
+
+            let usersPromise = users.load({teamId: teamId});
+            usersPromise.then(users => {
+
+                users.forEach(user => {
+
+                    this.members[user.id] = user;
+                });
+            });
         }
     }
 
@@ -357,6 +366,7 @@ Teams.controller('TeamController', [
                 $scope.team = teams.create();
                 teams.fetch(teamId).then(function(team) {
                     angular.extend($scope.team, team);
+                    $scope.team.members = data.members;
                     $scope.sportId = leagues.get(team.leagueId).sportId;
                     $scope.updateTeamAddress();
                 });
