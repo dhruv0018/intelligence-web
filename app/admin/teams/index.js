@@ -200,7 +200,8 @@ Teams.controller('TeamPlansController', [
     function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup, basicModals, data) {
         //todo do we need to add a factory for remaining breakdowns so we dont need to inject data?
         $scope.breakdownStats = data.breakdownStats ? data.breakdownStats : {};
-
+        $scope.isSavingPlan = false;
+        $scope.isSavingPackage = false;
         $scope.minTurnaroundTimeLookup = minTurnaroundTimeLookup;
 
         $scope.team.teamPackages = $scope.team.teamPackages || [];
@@ -227,8 +228,7 @@ Teams.controller('TeamPlansController', [
             });
 
             modalInstance.result.then(function(teamWithPackagesToSave) {
-                $scope.applyFilter();
-                $scope.breakdownStats.packageGamesRemaining = $scope.filteredPackages[0].maxGamesPerPackage;
+                $scope.isSavingPackage = true;
                 $scope.save(teamWithPackagesToSave);
             });
         };
@@ -244,8 +244,7 @@ Teams.controller('TeamPlansController', [
             });
 
             modalInstance.result.then(function(teamWithPlansToSave) {
-                $scope.applyFilter();
-                $scope.breakdownStats.planGamesRemaining = $scope.filteredPlans[0].maxAnyGames;
+                $scope.isSavingPlan = true;
                 $scope.save(teamWithPlansToSave);
             });
         };
@@ -278,6 +277,7 @@ Teams.controller('TeamPlansController', [
             modalInstance.result.then(function confirm() {
                 //delete the package
                 $scope.team.teamPackages.splice(packageIdToRemove, 1);
+                $scope.isSavingPackage = true;
                 $scope.save($scope.team);
             });
         };
@@ -294,12 +294,21 @@ Teams.controller('TeamPlansController', [
             modalInstance.result.then(function confirm() {
                 //delete the plan
                 $scope.team.teamPlans.splice(planIdToRemove, 1);
+                $scope.isSavingPlan = true;
                 $scope.save($scope.team);
             });
         };
 
+        //todo I really dislike this code
         $scope.save = function(team) {
-            teams.save(team).then(function() {});
+            teams.save(team).then(function() {
+                teams.getRemainingBreakdowns(team.id)
+                    .then(function(breakdownData) {
+                        $scope.isSavingPlan = false;
+                        $scope.isSavingPackage = false;
+                        $scope.breakdownStats = breakdownData;
+                    });
+            });
         };
     }
 ]);
