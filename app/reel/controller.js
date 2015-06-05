@@ -250,8 +250,11 @@ function ReelController(
 
     function onPlaylistWatch(play) {
 
-        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
-        $scope.currentPlayId = play.id;
+        if (play && play.id) {
+
+            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
+            $scope.currentPlayId = play.id;
+        }
     }
 
     $scope.$watch('plays', function playsWatch(newVals, oldVals) {
