@@ -62,8 +62,17 @@ module.exports = [
             if (index === -1) {
 
                 visibleSpotlightShapes.push(this.spotlight);
+
+                // ensure maskLayer exists
+                if (!maskLayer) addMask.call(this);
+
                 var theMask = maskLayer.add(this.spotlight);
+
+                // ensure blackBackdropLayer exists
+                if (!blackBackdropLayer) addBlackMask.call(this);
+
                 var objWithMask = blackBackdropLayer.maskWith(theMask);
+
                 var shortUrl = objWithMask.attr('mask');
                 var longUrl = 'url(' + window.location.href + shortUrl.match(/#\w+/i)[0] + ')';
                 objWithMask.attr({'mask': longUrl});
@@ -160,6 +169,12 @@ module.exports = [
 
                 maskLayer.remove();
                 maskLayer = null;
+            }
+
+            if (SVGMaskWhite) {
+
+                SVGMaskWhite.remove();
+                SVGMaskWhite = null;
             }
         }
 
