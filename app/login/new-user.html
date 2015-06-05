@@ -53,20 +53,21 @@
          model="newUser.agree"
         >
 
-            I agree to the <a data-ng-click="showTerms($event);">Krossover Terms &amp; Conditions</a>
+            I agree to the <a id="new-user-show-terms-cta" ng-click="showTerms($event);">Krossover Terms &amp; Conditions</a>
 
         </form-toggle>
 
         <div class="form-group">
 
             <button
+             id="new-user-set-password-cta"
              class="button-set-password"
              type="submit"
              ng-disabled="newUserForm.$invalid || newUser.submitted"
             >
 
-                <span data-ng-hide="newUser.submitted">Go to your account</span>
-                <span data-ng-show="newUser.submitted">Submitting...</span>
+                <span ng-hide="newUser.submitted">Go to your account</span>
+                <span ng-show="newUser.submitted">Submitting...</span>
 
             </button>
 

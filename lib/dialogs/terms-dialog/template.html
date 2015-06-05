@@ -29,7 +29,7 @@
                      model="newTerms.agree"
                     >
 
-                        I agree to the <a ng-click="showTerms();">Krossover Terms &amp; Conditions</a>
+                        I agree to the <a id="terms-modal-show-terms-cta" ng-click="showTerms();">Krossover Terms &amp; Conditions</a>
 
                     </form-toggle>
 
@@ -38,6 +38,7 @@
                 <footer class="modal-footer">
 
                     <button
+                     id="terms-modal-go-to-account-cta"
                      class="modal-button new-terms-accept-cta"
                      ng-click="acceptTerms();"
                      ng-disabled="!newTerms.agree"

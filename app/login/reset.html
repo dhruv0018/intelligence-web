@@ -17,6 +17,7 @@
         <div class="form-group">
 
             <input
+             id="reset-password-field"
              class="form-field-login"
              name="password"
              type="password"
@@ -35,6 +36,7 @@
         <div class="form-group">
 
             <input
+             id="reset-password-confirm-field"
              class="form-field-login"
              name="passwordVerify"
              type="password"
@@ -54,10 +56,15 @@
 
         <div class="form-group">
 
-            <button class="button-reset" type="submit" data-ng-disabled="resetForm.$invalid || reset.submitted">
+            <button
+             id="reset-password-submit-cta"
+             class="button-reset"
+             type="submit"
+             ng-disabled="resetForm.$invalid || reset.submitted"
+            >
 
-                <span data-ng-hide="reset.submitted">Submit</span>
-                <span data-ng-show="reset.submitted">Submitting...</span>
+                <span ng-hide="reset.submitted">Submit</span>
+                <span ng-show="reset.submitted">Submitting...</span>
 
             </button>
 
