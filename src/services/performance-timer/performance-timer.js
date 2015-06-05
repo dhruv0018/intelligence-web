@@ -52,7 +52,13 @@ class PerformanceTimer {
 
         this._paused = false;
 
-        this._lastTime = performance.now(); // milliseconds
+        // IMPORTANT: update the currentTime immediately, otherwise have to wait for next frame
+        let now = performance.now();
+        let nextNow = performance.now();
+        let delta = nextNow - now;
+        this._time.currentTime = this._time.currentTime ? this._time.currentTime + delta : delta; // milliseconds
+
+        this._lastTime = performance.now();
 
         this._frameId = requestAnimationFrame(this._updateTime.bind(this));
     }
@@ -98,11 +104,11 @@ class PerformanceTimer {
         if (this._paused) return;
 
         let now = performance.now(); // milliseconds
-        this._timeDelta = (now - this._lastTime); // milliseconds
+        let timeDelta = (now - this._lastTime); // milliseconds
         this._lastTime = now;
 
         // increment now by the difference between now and the last set time
-        this._time.currentTime += this._timeDelta;
+        this._time.currentTime += timeDelta;
 
         // update the time
         this._frameId = requestAnimationFrame(this._updateTime.bind(this));
