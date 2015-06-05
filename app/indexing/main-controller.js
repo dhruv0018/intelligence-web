@@ -75,6 +75,9 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
 
+        //Pass in all elements that need to be overlayed on top of the video during fullscreen mode
+        $scope.overlayElements = [document.getElementsByClassName('indexing-block')[0]];
+
         var playsList = plays.getList({ gameId: gameId });
 
         indexing.reset($scope.tagset, $scope.game, playsList);
