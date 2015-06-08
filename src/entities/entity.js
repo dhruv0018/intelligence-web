@@ -8,7 +8,14 @@ class Entity {
 
     extend (entity) {
 
-        Object.assign(this, entity);
+        let describedEntity = Object.keys(entity).reduce((propertyDescriptor, propertyName) => {
+
+            propertyDescriptor[propertyName] = Object.getOwnPropertyDescriptor(entity, propertyName);
+
+            return propertyDescriptor;
+        }, {});
+
+        Object.defineProperties(this, describedEntity);
 
         return this;
     }
