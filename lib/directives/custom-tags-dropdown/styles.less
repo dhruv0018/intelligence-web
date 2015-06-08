@@ -33,12 +33,18 @@
 
         &:after {
 
-            border-bottom: 10px solid white;
+            border-bottom: 10px solid @content-bg;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
             margin-left: -10px;
             right: 31px;
             top: -10px;
+        }
+
+        &.tags-are-selected {
+            &:after {
+                border-bottom: 10px solid white;
+            }
         }
 
         .selected-tags {

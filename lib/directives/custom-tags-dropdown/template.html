@@ -1,6 +1,6 @@
 <div class="custom-tags-dropdown dropdown" dropdown is-open="status.isopen">
     <button class="btn btn-sm dropdown-toggle" ng-class="{'btn-default': !status.isopen, 'btn-primary': status.isopen}" dropdown-toggle>Add Tag</button>
-    <div class="tags-dropdown-menu dropdown-menu" ng-click="$event.stopPropagation()">
+    <div class="tags-dropdown-menu dropdown-menu" ng-click="$event.stopPropagation()" ng-class="{'tags-are-selected': selectedTags.length}">
         <div class="selected-tags" ng-hide="!selectedTags.length">
             <custom-tag-pills ng-model="selectedTags"></custom-tag-pills>
         </div>
