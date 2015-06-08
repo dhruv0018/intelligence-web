@@ -175,6 +175,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
 
         //Generates a down and distant report based on various properties stored on the dndReport object
         $scope.createDownAndDistanceReport = function() {
+            $scope.creatingDnDReport = true;
 
             //TODO This casting seems very awkward -- perhaps the generation method should handle the casting
             if ($scope.dndReport.redZone === 'true') {
@@ -197,6 +198,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
                 $scope.chart = $scope.game.dndReport;
                 $scope.createdDndReport = angular.copy($scope.dndReport);
                 $scope.createdDndReport.customTags = customtags.getList($scope.createdDndReport.customTagIds);
+                $scope.creatingDnDReport = false;
             });
 
         };
