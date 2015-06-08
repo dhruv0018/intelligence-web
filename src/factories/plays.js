@@ -1,4 +1,4 @@
-import KrossoverEvent from '../entities/event.js';
+import KrossoverPlay from '../entities/play.js';
 
 var pkg = require('../../package.json');
 
@@ -23,71 +23,16 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             extend: function(play) {
 
-                var self = this;
+                angular.extend(play, this);
 
-                angular.extend(play, self);
-
-                play.events = play.events || [];
-
-                play.period = play.period || 0;
-
-                play.indexedScore = play.indexedScore || 0;
-                play.opposingIndexedScore = play.opposingIndexedScore || 0;
-
-                /* Indicates if the play has visible events; set by the events. */
-                play.hasVisibleEvents = false;
-
-                /* Play possesion; filled in by the events. */
-                play.possessionTeamId = play.possessionTeamId || null;
-
-                play.events = play.events.map(constructEvent);
-
-                function constructEvent (event) {
-
-                    let tag = tagsets.getTag(event.tagId);
-
-                    return new KrossoverEvent(event, tag, event.time);
-                }
-
-                return play;
+                return new KrossoverPlay(play);
             },
 
             unextend: function(play) {
 
-                var self = this;
+                play = play || this;
 
-                play = play || self;
-
-                var copy = angular.copy(play);
-
-                delete copy.PAGE_SIZE;
-                delete copy.description;
-                delete copy.model;
-                delete copy.storage;
-
-                delete copy.hasVisibleEvents;
-                delete copy.isFiltered;
-
-                copy.events = copy.events.map(unextendEvent);
-
-                function unextendEvent (event) {
-
-                    delete event.activeEventVariableIndex;
-
-                    Object.keys(event.variableValues).forEach(key => {
-
-                        let variableValue = event.variableValues[key];
-
-                        event.variableValues[key] = {
-                            type: variableValue.type,
-                            value: variableValue.value
-                        };
-                    });
-
-                    return event;
-                }
-
-                return copy;
+                return JSON.stringify(play);
             },
 
             filterPlays: function(filterId, resources, success, error) {
