@@ -1,5 +1,11 @@
 import Entity from './entity.js';
 
+/**
+ * Angular
+ * @const {Object} angular
+ */
+const angular = window.angular;
+
 class Event extends Entity {
 
     constructor (event, tag, time) {
@@ -94,6 +100,25 @@ class Event extends Entity {
 
         /* Check if the given event is an end tag and only has one child. */
         return this.isEnd && this.children && this.children.length === 1;
+    }
+
+    toJSON () {
+
+        let copy = angular.copy(this);
+
+        delete copy.activeEventVariableIndex;
+
+        Object.keys(copy.variableValues).forEach(key => {
+
+            let variableValue = copy.variableValues[key];
+
+            copy.variableValues[key] = {
+                type: variableValue.type,
+                value: variableValue.value
+            };
+        });
+
+        return copy;
     }
 }
 
