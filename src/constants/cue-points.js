@@ -15,11 +15,10 @@ const CUEPOINT_CONSTANTS = {
         'EVENT'
     ],
     /*
-     * NOTE: The max amount of time (in seconds) that a CUEPOINT can be different from the current time
-     * to be 'triggered' before it is no longer within this specified range. (i.e. cuepoint time = 2.2s,
-     * the cuepoint can be triggered if the current time is between 2.0s and 2.4s).
+     * NOTE: The max amount of time (in seconds) before a cuePoint's time is within range of being `hit`
+     * (i.e. cuepoint time = 2.2s, the cuepoint can be `hit` between 2.136s and 2.2s)
     */
-    MAX_TIME_DELTA: 0.2
+    MAX_TIME_TAIL_DELTA: 0.064
 };
 
 IntelligenceWebClient.constant('CUEPOINT_CONSTANTS', CUEPOINT_CONSTANTS);
