@@ -24,12 +24,12 @@ class Field extends Entity {
 
     toJSON () {
 
-        return this;
+        return '';
     }
 }
 
 /**
- * @module KrossoverField
+ * @module Field
  * @exports entities/field
  */
-export default KrossoverField;
+export default Field;
