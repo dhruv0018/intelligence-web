@@ -17,7 +17,9 @@ class Field extends Entity {
 
         super();
 
-        return this.extend(field);
+        this.extend(field);
+        this.value = field.value;
+        this.availableValues = []; //todo
     }
 
     toJSON () {
