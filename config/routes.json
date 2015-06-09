@@ -228,6 +228,11 @@
         "Indexer": true
     },
 
+    "indexer-history": {
+
+        "Indexer": true
+    },
+
     "indexing": {
 
         "Indexer": true

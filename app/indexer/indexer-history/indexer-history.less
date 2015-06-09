@@ -1,0 +1,128 @@
+@import (reference) "main.less";
+
+.indexer-games {
+
+    letter-spacing: normal;
+
+    .sidebar {
+
+        h4 {
+            margin-bottom: 0;
+        }
+
+        ul {
+
+            padding-left: 20px;
+            list-style: none;
+            margin-bottom: 30px;
+
+            li:before {
+                content: "";
+                border-color: transparent @brand-primary;
+                border-style: solid;
+                border-width: 0.3em 0 0.3em 0.4em;
+                display: block;
+                height: 0;
+                width: 0;
+                left: -10px;
+                top: 15px;
+                position: relative;
+            }
+
+            li {
+
+                margin-left: 0;
+                height: 25px;
+
+                a {
+                    color: @brand-primary;
+                    border: none;
+                    padding: 0;
+                }
+            }
+        }
+    }
+
+    .lookup {
+
+        text-decoration: none;
+
+        .lookup-container {
+
+            width: 100%;
+            height: 150px;
+            margin: 0;
+            padding-left: 40px;
+            border: thin solid @gray-border;
+            background-color: white;
+            color: @gray-darker;
+
+            .left-container {
+                text-align: center;
+                padding-right: 20px;
+                padding-left: 20px;
+                padding-top: 10px;
+                line-height: 150px;
+
+                i {
+                    font-size: 40px;
+
+                    &::before {
+
+                        width: 90px;
+                        line-height: 90px;
+                        text-align: center;
+                        border: 3px solid @gray-darker;
+                        border-radius: 50%;
+                    }
+                }
+            }
+
+            .middle-container {
+
+                padding-left: 20px;
+
+                h3 {
+                    margin-top: 10px;
+                    margin-bottom: 0;
+                }
+            }
+
+            .right-container {
+
+                .pull-right;
+                line-height: 150px;
+
+                i.icon-chevron-right {
+                    font-size: 30px;
+                    margin-right: 20px;
+                }
+            }
+
+            div {
+                display: table-cell;
+                vertical-align: middle;
+                height: 150px;
+            }
+        }
+    }
+
+    .box-body {
+        font-weight: 400;
+
+        h3 {
+            color: @brand-blue;
+        }
+
+        table {
+
+            td {
+                background-color: white;
+                border-right: none;
+                border-left: none;
+                line-height: normal;
+                vertical-align: middle;
+            }
+        }
+    }
+}
