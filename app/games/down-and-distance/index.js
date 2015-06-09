@@ -92,6 +92,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
     'GamesFactory',
     'LeaguesFactory',
     'CustomtagsFactory',
+    'PlaysFactory',
     'PlaylistEventEmitter',
     'ARENA_TYPES',
     'CUSTOM_TAGS_EVENTS',
@@ -102,6 +103,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
         games,
         leagues,
         customtags,
+        plays,
         playlistEventEmitter,
         ARENA_TYPES,
         CUSTOM_TAGS_EVENTS
@@ -130,6 +132,9 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
         playlistEventEmitter.on(CUSTOM_TAGS_EVENTS.SAVE, event => {
             $scope.customtags = customtags.getList();
         });
+
+        //Plays Related
+        $scope.plays = plays.getList({ gameId: $scope.game.id });
 
         //Used to render the view for the
         $scope.options = {
