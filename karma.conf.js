@@ -20,7 +20,16 @@ module.exports = function(config) {
 
         ],
 
-        frameworks: ['mocha', 'chai', 'chai-as-promised', 'sinon-chai'],
+        frameworks: ['mocha', 'chai', 'chai-as-promised', 'sinon-chai', 'browserify'],
+
+        preprocessors: {
+            'test/unit/**/*.es6.js': ['browserify']
+        },
+
+        browserify: {
+            debug: true,
+            transform: ['es6ify']
+        },
 
         browsers: ['Chrome'],
 
