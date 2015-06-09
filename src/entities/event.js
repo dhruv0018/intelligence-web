@@ -1,4 +1,5 @@
 import Entity from './entity.js';
+import Field from './field.js';
 
 class Event extends Entity {
 
@@ -21,7 +22,7 @@ class Event extends Entity {
         delete tag.id;
 
         Object.assign(this, event, tag, { time });
-
+        console.log('Test', new Field({x:1}));
         /* FIXME: Remove when API is updated. */
         if (this.tagVariables) Object.keys(this.tagVariables).forEach(key => {
 
