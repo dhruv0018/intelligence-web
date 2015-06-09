@@ -39,7 +39,7 @@
                     <a data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-click="resendInvite(athlete.userId, team.id)">Resend Invitation</a>
                 </div>
                 <div class="resending-invite" data-ng-show="sendingEmail">
-                    <krossover-spinner ng-show="!confirmSent" size="'15px'"></krossover-spinner>
+                    <krossover-spinner ng-show="!confirmSent" size="15px"></krossover-spinner>
                     <span data-ng-show="confirmSent"><i class="icon icon-ok"></i> The invitation has been resent.</span>
                 </div>
                 <div class="active" data-ng-if="athlete.userId && users[athlete.userId].lastAccessed">
