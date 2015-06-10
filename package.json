@@ -125,6 +125,7 @@
     "moment-timezone": "0.3.0",
     "mysql": "^2.5.4",
     "napa": "1.2.0",
+    "object.observe": "^0.2.3",
     "protractor": "1.8.0",
     "sequelize": "^2.0.0-rc8",
     "time-grunt": "1.1.0",
