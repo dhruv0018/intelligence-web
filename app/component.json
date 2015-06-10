@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "updated-terms-and-conditions",
         "root",
         "login",
         "logout",

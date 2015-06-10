@@ -1,3 +1,4 @@
+require('updated-terms-and-conditions');
 require('root');
 require('login');
 require('logout');
@@ -19,6 +20,7 @@ var angular = window.angular;
  * @module App
  */
 var App = angular.module('App', [
+    'UpdatedTermsAndConditions',
     'root',
     'login',
     'logout',
