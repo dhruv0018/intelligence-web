@@ -44,28 +44,22 @@
 		        		<th>Game</th>
 		        		<th>Coach</th>
 		        		<th>Sport</th>
-		        		<th>Time Left</th>
-		        		<th>Options</th>
+		        		<th>Indexed/QA’d</th>
 		        	</tr>
 	        	</thead>
 	        	<tbody>
-	        		<tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'timeRemaining'" ng-if="game.indexerAssignments[0].timeFinished !== null">
+	        		<tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'datePlayed'" ng-if="game.indexerAssignments[game.indexerAssignments.length -1].timeFinished !== null">
 	        			<td>{{game.id}}</td>
 	        			<td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="indexer-game({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
                         <td>{{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}</td>
 	        			<td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
-                        <td>{{ game.timeRemaining | millisecondsAsHours | hoursAsClock }}</td>
                         <td>
-                            <button id="enter-indexing-cta" class="btn btn-default" data-ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
-                                <span data-ng-hide="game.isAssignmentStarted()">Start </span>
-                                <span data-ng-show="game.isAssignmentStarted()">Resume </span>
-                                <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
-                            </button>
-                            <button id="enter-qa-cta" class="btn btn-default" data-ng-show="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
-                                <span data-ng-hide="game.isAssignmentStarted()">Start </span>
-                                <span data-ng-show="game.isAssignmentStarted()">Resume </span>
-                                <span>QA</span>
-                            </button>
+                        <span ng-if="game.indexerAssignments[game.indexerAssignments.length -1].isQa">
+                            QA
+                        </span>
+                        <span ng-if="!game.indexerAssignments[game.indexerAssignments.length -1].isQa">
+                            Indexed
+                        </span>
                         </td>
 	        		</tr>
 	        	</tbody>

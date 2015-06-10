@@ -1,6 +1,7 @@
 /* Component dependencies */
 require('indexer-game');
 require('indexer-games');
+require('indexer-history');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -11,7 +12,8 @@ var angular = window.angular;
  */
 var Indexer = angular.module('indexer', [
     'indexer-game',
-    'indexer-games'
+    'indexer-games',
+    'indexer-history'
 ]);
 
 /**
