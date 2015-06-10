@@ -37,6 +37,9 @@ class Field extends Entity {
             case 'PLAYER_DROPDOWN':
                 value = new TeamPlayerValue(this.value, true);
                 break;
+            case 'TEAM_DROPDOWN':
+                value = new TeamPlayerValue(this.value, false);
+                break;
             default:
                 value = this.value;
                 break;
