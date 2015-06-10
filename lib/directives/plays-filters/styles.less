@@ -1,5 +1,8 @@
 @import (reference) "main.less";
 
+@filter-vertical-padding: 2px;
+@filter-vertical-margin: 7px;
+
 .plays-filter{
 
     a {
@@ -27,10 +30,18 @@
             }
         }
 
+        .search-filter {
+            .form-control;
+            height: 28px;
+            padding-top: @filter-vertical-padding;
+            padding-bottom: @filter-vertical-padding;
+            margin-bottom: @filter-vertical-margin;
+        }
+
         ul{
             padding-top: 25px;
-            width: 650px;
-            opacity: .95;
+            width: 610px;
+            background-color: rgba(255, 255, 255, .95);
 
             li{
                 position: relative;
@@ -44,9 +55,9 @@
 
                 a{
                     width:160px;
-                    margin-bottom: 7px;
-                    padding-bottom: 2px;
-                    padding-top: 2px;
+                    margin-bottom: @filter-vertical-margin;
+                    padding-bottom: @filter-vertical-padding;
+                    padding-top: @filter-vertical-padding;
                     border-radius:@border-radius-small;
                     letter-spacing: normal;
                     font-weight: 400;
