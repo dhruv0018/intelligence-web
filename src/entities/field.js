@@ -1,4 +1,5 @@
 import Entity from './entity';
+import TeamPlayerValue from '../values/field/TeamPlayer.js';
 
 /**
  * KrossoverField Entity Model
@@ -18,8 +19,29 @@ class Field extends Entity {
         super();
 
         this.extend(field);
-        this.value = field.value;
+        this.value = this.valueFactory();
         this.availableValues = []; //todo
+    }
+
+    valueFactory () {
+        let value = {};
+        //todo might to be refactored a bit once the entity class is defined
+        switch(this.inputType) {
+            case 'PLAYER_TEAM_DROPDOWN':
+                if (this.type === 'Player') {
+                    value = new TeamPlayerValue(this.value, true);
+                } else {
+                    value = new TeamPlayerValue(this.value, false);
+                }
+                break;
+            case 'PLAYER_DROPDOWN':
+                value = new TeamPlayerValue(this.value, true);
+                break;
+            default:
+                value = this.value;
+                break;
+        }
+        return value;
     }
 
     toJSON () {
