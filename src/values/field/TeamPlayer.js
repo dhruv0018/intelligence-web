@@ -4,7 +4,7 @@ import Value from '../value.js';
 const angular = window.angular;
 
 class TeamPlayerValue extends Value {
-    constructor(value, isPlayer) {
+    constructor(value, isPlayer = undefined) {
         super();
         let injector = angular.element(document).injector();
 
@@ -12,8 +12,9 @@ class TeamPlayerValue extends Value {
         this.name = undefined;
         this.teamId = undefined;
         this.playerId = undefined;
-        this.isPlayer = undefined;
+        this.isPlayer = isPlayer;
 
+        //todo we might want to have some sort of handling here specially for undef versus null
         if (!value) return;
 
         if (isPlayer) {
@@ -21,9 +22,12 @@ class TeamPlayerValue extends Value {
             let player = players.get(value);
             this.name = player.firstName + ' ' + player.lastName;
             this.playerId = player.id;
-            this.isPlayer = isPlayer;
         } else {
             //todo add team stuff
+            let teams = injector.get('TeamsFactory');
+            let team = teams.get(value);
+            this.name = team.name;
+            this.teamId = team.id;
             console.log('team stuff');
         }
 
