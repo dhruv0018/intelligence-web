@@ -57,7 +57,7 @@
     "angular-material-icons": "0.4.0",
     "angulartics": "0.17.2",
     "bcrypt": "^0.8.1",
-    "bootstrap": "3.3.2",
+    "bootstrap": "3.3.4",
     "browserify": "4.1.10",
     "browserify-shim": "3.5.0",
     "builder-html-minifier": "1.0.0",
