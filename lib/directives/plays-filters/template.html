@@ -43,16 +43,15 @@
             </li>
             <li>
                 <input class="search-filter" ng-click="$event.stopPropagation()" ng-model="searchFilter.name" placeholder="Search Filters">
-                <div ng-repeat="(key, filterCategory) in filtersetCategories">
-                    <div ng-repeat="filter in filterCategory.subFilters | filter:searchFilter track by $index">
-                        <a ng-if="!filter.customFilter" ng-show="filter.filterCategoryId === currentFilterCategory" class="btn" ng-class="{'child': (filter.parent !== null), 'btn-default':(!contains(activeFilters, filter.id)), 'btn-primary':(contains(activeFilters, filter.id))}" ng-click="setFilter(filter)">
-                            {{filter.name}}
-                        </a>
-                        <a ng-if="filter.customFilter" ng-show="filter.filterCategoryId === currentFilterCategory && filter.teamId === teamId" class="btn" ng-class="{'btn-default':(!contains(activeFilters, filter)), 'btn-primary':(contains(activeFilters, filter))}" ng-click="setFilter(filter)">
-                            {{filter.name}}
-                        </a>
-                    </div>
+                <div ng-repeat="filter in matchingFilters = (filtersetCategories[currentFilterCategory].subFilters | filter:searchFilter) track by $index">
+                    <a ng-if="!filter.customFilter" class="btn" ng-class="{'child': (filter.parent !== null), 'btn-default':(!contains(activeFilters, filter.id)), 'btn-primary':(contains(activeFilters, filter.id))}" ng-click="setFilter(filter)">
+                        {{filter.name}}
+                    </a>
+                    <a ng-if="filter.customFilter" ng-show="filter.teamId === teamId" class="btn" ng-class="{'btn-default':(!contains(activeFilters, filter)), 'btn-primary':(contains(activeFilters, filter))}" ng-click="setFilter(filter)">
+                        {{filter.name}}
+                    </a>
                 </div>
+                <no-results ng-if="!matchingFilters.length"></no-results>
             </li>
         </ul>
     </div>

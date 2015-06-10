@@ -2,6 +2,7 @@
 
 @filter-vertical-padding: 2px;
 @filter-vertical-margin: 7px;
+@filter-width: 160px;
 
 .plays-filter{
 
@@ -33,6 +34,7 @@
         .search-filter {
             .form-control;
             height: 28px;
+            width: @filter-width;
             padding-top: @filter-vertical-padding;
             padding-bottom: @filter-vertical-padding;
             margin-bottom: @filter-vertical-margin;
@@ -54,7 +56,7 @@
                 overflow-x: hidden;
 
                 a{
-                    width:160px;
+                    width: @filter-width;
                     margin-bottom: @filter-vertical-margin;
                     padding-bottom: @filter-vertical-padding;
                     padding-top: @filter-vertical-padding;
@@ -65,10 +67,6 @@
                     text-overflow: ellipsis;
                     white-space: nowrap;
 
-                    &.child{
-                        margin-left: 10px;
-                    }
-
                     &.btn-primary {
                         color: white;
                     }
@@ -76,6 +74,25 @@
 
                 &:last-of-type{
                     border:none;
+                }
+
+                .no-results {
+                    display: inline-block;
+                    width: @filter-width;
+                    padding-top: 0px;
+
+                    i {
+                        font-size: 40px; //override no-results font sizes
+                    }
+
+                    h1 {
+                        font-size: 25px; //override no-results font sizes
+                        margin: 0px;
+                    }
+
+                    h2 {
+                        font-size: 14px; //override no-results font sizes
+                    }
                 }
             }
         }
