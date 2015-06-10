@@ -153,20 +153,14 @@ IntelligenceWebClient.run([
                     /* If first login, user has already accepted Terms and
                      * Conditions by setting password, so record that here. */
                     user.updateTermsAcceptedDate();
-                    resolve();
                 } else if (!account.hasAcceptedTerms()) {
 
                     /* If the user has NOT accepted the Terms & Conditions,
                      * prompt them to accept, then record time of acceptance. */
-                    TermsDialog.show(true).then(function () {
-                        user.updateTermsAcceptedDate();
-                        resolve();
-                    });
-                } else {
-
-                    /* User is not required to accept the Terms at this time */
-                    resolve();
+                    $state.go('ReacceptTermsAndConditions');
                 }
+
+                resolve();
             }).then(function promoteMobileApps () {
 
                 /* Is user using an iOS or Android device? */
