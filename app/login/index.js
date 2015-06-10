@@ -248,7 +248,7 @@ function LoginController(
         $scope.newUser = {
             password     : undefined,
             showPassword : true, // By default, show the new user's password
-            agree        : true
+            agree        : false
         };
     }
 
