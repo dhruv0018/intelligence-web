@@ -2,55 +2,7 @@
 
     <md-dialog-content class="modal-content">
 
-        <div class="terms-prompt" ng-show="promptUser">
-
-            <form
-             class="terms-prompt-form"
-             name="new-terms-form"
-             role="form"
-             novalidate
-            >
-
-                <header class="modal-header">
-
-                    <span class="modal-title">Action Required</span>
-
-                </header>
-
-                <div class="modal-body">
-
-                    <p>Welcome back. Please review our updated Terms &amp; Conditions.</p>
-
-                    <form-toggle
-                     class="new-terms-agree"
-                     data-id="returning-user-terms-agree-cta"
-                     name="remember"
-                     data-required="true"
-                     model="newTerms.agree"
-                    >
-
-                        I agree to the <a id="terms-modal-show-terms-cta" ng-click="showTerms();">Krossover Terms &amp; Conditions</a>
-
-                    </form-toggle>
-
-                </div>
-
-                <footer class="modal-footer">
-
-                    <button
-                     id="terms-modal-go-to-account-cta"
-                     class="modal-button new-terms-accept-cta"
-                     ng-click="acceptTerms();"
-                     ng-disabled="!newTerms.agree"
-                    >Go to your account</button>
-
-                </footer>
-
-            </form>
-
-        </div>
-
-        <div class="terms-copy" ng-show="!promptUser">
+        <div class="terms-copy">
 
             <header class="modal-header">
 
