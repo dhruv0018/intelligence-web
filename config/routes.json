@@ -535,6 +535,11 @@
     "ShortClips": {
 
         "*": true
+    },
+
+    "ReacceptTermsAndConditions": {
+
+        "*": true
     }
 }
 
