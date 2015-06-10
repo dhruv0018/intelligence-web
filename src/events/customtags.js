@@ -10,8 +10,10 @@ const IntelligenceWebClient = angular.module(pkg.name);
 class CustomTagsEvent extends BaseEvent {
 
     /*
-     *
-     *
+     * Custom Tags Event constructor
+     * @param {Array} updatedPlayIds - plays that custom tags were updated on
+     * @param {Integer} updatedTagCount - number of tags that have been updated
+     * @param {Boolean} showConfirmation - whether or not confirmation should be shown to user
      */
 
     constructor (updatedPlayIds = [], updatedTagCount = 0, showConfirmation = false) {
