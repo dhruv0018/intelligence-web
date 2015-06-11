@@ -2,18 +2,14 @@ import Entity from './entity';
 import KrossoverEvent from '../entities/event.js';
 
 /**
- * Angular
- * @const {Object} angular
- */
-const angular = window.angular;
-
-/**
  * KrossoverPlay Entity Model
  * @class KrossoverPlay
  */
 class KrossoverPlay extends Entity {
 
-    constructor (play) {
+    constructor (play, tagsets) {
+
+        super(play);
 
         switch (arguments.length) {
 
@@ -21,18 +17,6 @@ class KrossoverPlay extends Entity {
 
                 throw new Error('Invoking Play.constructor without passing a JSON object');
         }
-
-        /**
-         * Angular Dependency Injector
-         * @const {Object} injector
-         */
-        const injector = angular.element(document).injector();
-
-        /**
-         * Tagsets Factory
-         * @const {Object} tagsets
-         */
-        const tagsets = injector.get('TagsetsFactory');
 
         play.events               = play.events || [];
         play.period               = play.period || 0;
@@ -59,7 +43,7 @@ class KrossoverPlay extends Entity {
 
     toJSON () {
 
-        let copy = angular.copy(this);
+        let copy = Object.assign({}, this);
 
         delete copy.PAGE_SIZE;
         delete copy.description;
