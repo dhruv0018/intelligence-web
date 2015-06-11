@@ -1,11 +1,5 @@
 import Entity from './entity.js';
 
-/**
- * Angular
- * @const {Object} angular
- */
-const angular = window.angular;
-
 class Event extends Entity {
 
     constructor (event, tag, time) {
@@ -106,7 +100,7 @@ class Event extends Entity {
 
     toJSON () {
 
-        let copy = angular.copy(this);
+        let copy = Object.assign({}, this);
 
         delete copy.activeEventVariableIndex;
 
