@@ -2,19 +2,23 @@
 const angular = window.angular;
 
 UpdatedTermsAndConditionsController.$inject = [
-    '$scope',
-    '$state',
-    'TermsDialog.Service',
+    'AccountService',
+    'DetectDeviceService',
     'SessionService',
-    'AccountService'
+    'MobileAppDialog.Service',
+    'TermsDialog.Service',
+    '$state',
+    '$scope'
 ];
 
 function UpdatedTermsAndConditionsController (
-    $scope,
-    $state,
-    TermsDialog,
+    account,
+    detectDevice,
     session,
-    account
+    MobileAppDialog,
+    TermsDialog,
+    $state,
+    $scope
 ) {
 
     $scope.showTerms = function () {
@@ -31,7 +35,18 @@ function UpdatedTermsAndConditionsController (
         /* Update the Terms accepted timestamp and redirect to home state. */
         user.updateTermsAcceptedDate();
         user.save();
-        account.gotoUsersHomeState();
+
+        /* Is user using an iOS or Android device? */
+        let isMobile = detectDevice.iOS() || detectDevice.Android();
+
+        /* If a new user, then only show the mobile app promo dialog. */
+        if (isMobile) {
+
+            MobileAppDialog.show().then(() => account.gotoUsersHomeState());
+        } else {
+
+            account.gotoUsersHomeState();
+        }
     };
 }
 
