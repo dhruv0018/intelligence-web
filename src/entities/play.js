@@ -54,7 +54,7 @@ class KrossoverPlay extends Entity {
 
         function unextendEvent (event) {
 
-            return JSON.stringify(event);
+            return event.toJSON();
         }
 
         return copy;
