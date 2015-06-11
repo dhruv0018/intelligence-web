@@ -23,6 +23,7 @@ class CustomTagsEvent extends BaseEvent {
     }
 }
 
+// TODO: export class directly
 IntelligenceWebClient.factory('CustomTagsEvent', () => CustomTagsEvent);
 
 export default CustomTagsEvent;
