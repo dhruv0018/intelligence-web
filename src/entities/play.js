@@ -18,18 +18,18 @@ class KrossoverPlay extends Entity {
                 throw new Error('Invoking Play.constructor without passing a JSON object');
         }
 
-        play.events               = play.events || [];
-        play.period               = play.period || 0;
-        play.indexedScore         = play.indexedScore || 0;
-        play.opposingIndexedScore = play.opposingIndexedScore || 0;
+        this.events               = play.events || [];
+        this.period               = play.period || 0;
+        this.indexedScore         = play.indexedScore || 0;
+        this.opposingIndexedScore = play.opposingIndexedScore || 0;
 
         /* Indicates if the play has visible events; set by the events. */
-        play.hasVisibleEvents = false;
+        this.hasVisibleEvents = false;
 
         /* Play possesion; filled in by the events. */
-        play.possessionTeamId = play.possessionTeamId || null;
+        this.possessionTeamId = play.possessionTeamId || null;
 
-        play.events = play.events.map(constructEvent);
+        this.events = play.events.map(constructEvent);
 
         function constructEvent (event) {
 
@@ -37,8 +37,6 @@ class KrossoverPlay extends Entity {
 
             return new KrossoverEvent(event, tag, event.time);
         }
-
-        return this.extend(play);
     }
 
     toJSON () {
