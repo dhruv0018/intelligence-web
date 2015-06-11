@@ -17,6 +17,7 @@ require('./extensions');
 require('../build/build');
 
 import Reel from '../app/reel/index.js';
+import IndexingBlock from '../lib/directives/indexing-block/index';
 
 /* App dependencies */
 require('./config');

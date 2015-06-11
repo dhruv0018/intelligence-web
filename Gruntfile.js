@@ -254,6 +254,7 @@ module.exports = function(grunt) {
             components: {
                 files: {
                     'build/components.css': [
+                        'lib/directives/index-block/styles.less',
                         'app/reel/styles.less'
                     ]
                 }
