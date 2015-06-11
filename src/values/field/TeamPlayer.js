@@ -28,7 +28,6 @@ class TeamPlayerValue extends Value {
             let team = teams.get(value);
             this.name = team.name;
             this.teamId = team.id;
-            console.log('team stuff');
         }
 
     }
