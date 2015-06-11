@@ -29,9 +29,6 @@ IntelligenceWebClient.run([
     'SessionService',
     'AlertsService',
     'AccountService',
-    'TermsDialog.Service',
-    'MobileAppDialog.Service',
-    'DetectDeviceService',
     function run(
         ANONYMOUS_USER,
         $rootScope,
@@ -45,10 +42,7 @@ IntelligenceWebClient.run([
         authz,
         session,
         alerts,
-        account,
-        TermsDialog,
-        MobileAppDialog,
-        detectDevice
+        account
     ) {
 
         $rootScope.$state = $state;
@@ -141,35 +135,22 @@ IntelligenceWebClient.run([
              * user. Also make sure we're logged in. Then check for terms. */
             if (previousUser || !auth.isLoggedIn) return;
 
-            /* Check for Terms acceptance/prompt user to accept,
-             * then, if mobile user, show links to download native apps. */
-            $q(function checkTermsAcceptance (resolve, reject) {
+            /* Get user */
+            let user = session.retrieveCurrentUser();
 
-                /* Get user */
-                let user = session.retrieveCurrentUser();
+            /* Check for Terms acceptance/prompt user to accept. */
+            if (!user.lastAccessed) {
 
-                if (!user.lastAccessed) {
+                /* If first login, user has already accepted Terms and
+                 * Conditions by setting password, so record that here. */
+                user.updateTermsAcceptedDate();
+                user.save();
+            } else if (!account.hasAcceptedTerms()) {
 
-                    /* If first login, user has already accepted Terms and
-                     * Conditions by setting password, so record that here. */
-                    user.updateTermsAcceptedDate();
-                    user.save();
-                } else if (!account.hasAcceptedTerms()) {
-
-                    /* If the user has NOT accepted the Terms & Conditions,
-                     * prompt them to accept, then record time of acceptance. */
-                    $state.go('UpdatedTermsAndConditions');
-                }
-
-                resolve();
-            }).then(function promoteMobileApps () {
-
-                /* Is user using an iOS or Android device? */
-                let isMobile = detectDevice.iOS() || detectDevice.Android();
-
-                /* If a new user, then only show the mobile app dialog. */
-                if (isMobile) return MobileAppDialog.show();
-            });
+                /* If the user has NOT accepted the Terms & Conditions,
+                 * prompt them to accept, then record time of acceptance. */
+                $state.go('UpdatedTermsAndConditions');
+            }
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {
