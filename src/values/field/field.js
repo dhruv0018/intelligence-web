@@ -1,7 +1,7 @@
 import Value from '../value.js';
 
 /**
- * KrossoverField Entity Model
+ * KrossoverField Field Model
  * @class KrossoverField
  */
 class Field extends Value {
