@@ -23,10 +23,6 @@ class CustomTagsEvent extends BaseEvent {
     }
 }
 
-function CustomTagsEventFactory() {
-    return CustomTagsEvent;
-}
-
-IntelligenceWebClient.factory('CustomTagsEvent', CustomTagsEventFactory);
+IntelligenceWebClient.factory('CustomTagsEvent', () => CustomTagsEvent);
 
 export default CustomTagsEvent;
