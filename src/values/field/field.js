@@ -1,11 +1,10 @@
-import Entity from './entity';
-import TeamPlayerValue from '../values/field/TeamPlayer.js';
+import Value from '../value.js';
 
 /**
  * KrossoverField Entity Model
  * @class KrossoverField
  */
-class Field extends Entity {
+class Field extends Value {
 
     constructor (field) {
 
@@ -19,33 +18,33 @@ class Field extends Entity {
         super();
 
         this.extend(field);
-        this.value = this.valueFactory();
-        this.availableValues = []; //todo
+        //this.value = this.valueFactory();
+        //this.availableValues = []; //todo
     }
 
-    valueFactory () {
-        let value = {};
-        //todo might to be refactored a bit once the entity class is defined
-        switch(this.inputType) {
-            case 'PLAYER_TEAM_DROPDOWN':
-                if (this.type === 'Player') {
-                    value = new TeamPlayerValue(this.value, true);
-                } else {
-                    value = new TeamPlayerValue(this.value, false);
-                }
-                break;
-            case 'PLAYER_DROPDOWN':
-                value = new TeamPlayerValue(this.value, true);
-                break;
-            case 'TEAM_DROPDOWN':
-                value = new TeamPlayerValue(this.value, false);
-                break;
-            default:
-                value = this.value;
-                break;
-        }
-        return value;
-    }
+    //valueFactory () {
+    //    let value = {};
+    //    //todo might to be refactored a bit once the entity class is defined
+    //    switch(this.inputType) {
+    //        case 'PLAYER_TEAM_DROPDOWN':
+    //            if (this.type === 'Player') {
+    //                value = new TeamPlayerValue(this.value, true);
+    //            } else {
+    //                value = new TeamPlayerValue(this.value, false);
+    //            }
+    //            break;
+    //        case 'PLAYER_DROPDOWN':
+    //            value = new TeamPlayerValue(this.value, true);
+    //            break;
+    //        case 'TEAM_DROPDOWN':
+    //            value = new TeamPlayerValue(this.value, false);
+    //            break;
+    //        default:
+    //            value = this.value;
+    //            break;
+    //    }
+    //    return value;
+    //}
 
     toJSON () {
 
