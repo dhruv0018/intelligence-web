@@ -1,19 +1,17 @@
 import KrossoverPlay from './play';
 
-/* Fetch angular from the browser scope */
-const angular = window.angular;
-
-PlayDataDependencies.$inject = [
+KrossoverPlayDataDependencies.$inject = [
     'TagsetsFactory'
 ];
 
-function PlayDataDependencies (
+function KrossoverPlayDataDependencies (
     tagsets
 ) {
 
-    tagsets.load();
+    return function playDataFactory (play) {
 
-    return new KrossoverPlay(play, tagsets);
+        return new KrossoverPlay(play, tagsets);
+    };
 }
 
-export default PlayDataDependencies;
+export default KrossoverPlayDataDependencies;
