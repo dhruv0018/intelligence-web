@@ -22,7 +22,6 @@ class Event extends Entity {
         delete tag.id;
 
         Object.assign(this, event, tag, { time });
-        console.log('Test', new Field({x:1}));
         /* FIXME: Remove when API is updated. */
         if (this.tagVariables) Object.keys(this.tagVariables).forEach(key => {
 
@@ -35,6 +34,7 @@ class Event extends Entity {
             if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
                 this.variableValues[tagVariable.id].value = null;
             }
+            console.log(new Field(this.variableValues[tagVariable.id]));
         });
     }
 
