@@ -10,6 +10,8 @@ class Event extends Entity {
 
     constructor (event, tag, time) {
 
+        super(event);
+
         if (arguments.length === 2) {
 
             time = tag;
