@@ -135,20 +135,11 @@ IntelligenceWebClient.run([
              * user. Also make sure we're logged in. Then check for terms. */
             if (previousUser || !auth.isLoggedIn) return;
 
-            /* Get user */
-            let user = session.retrieveCurrentUser();
-
-            /* Check for Terms acceptance/prompt user to accept. */
-            if (!user.lastAccessed) {
-
-                /* If first login, user has already accepted Terms and
-                 * Conditions by setting password, so record that here. */
-                user.updateTermsAcceptedDate();
-                user.save();
-            } else if (!account.hasAcceptedTerms()) {
+            /* Check for latest Terms acceptance/prompt user to accept. */
+            if (!account.hasAcceptedTerms()) {
 
                 /* If the user has NOT accepted the Terms & Conditions,
-                 * prompt them to accept, then record time of acceptance. */
+                 * prompt them to accept. */
                 $state.go('UpdatedTermsAndConditions');
             }
         });

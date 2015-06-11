@@ -271,18 +271,24 @@ function LoginController(
                     label    : 'SignIn'
                 });
 
+                /* If first login, user has already accepted Terms and
+                 * Conditions by setting password, so record that. */
+                if (!user.lastAccessed) {
+
+                    user.updateTermsAcceptedDate();
+                }
+
+                /* Update last accessed data and save. */
+                user.lastAccessed = new Date().toISOString();
+                user.save();
+
                 /* Once successfully logged in, determine the user's home state.
                  * Then, track user in analytics (user may not have a default
-                 * roll yet). Also, update the user's last accessed timestamp. */
-                account.gotoUsersHomeState(user)
-                .then(function saveUserData () {
+                 * roll yet). */
+                account.gotoUsersHomeState(user).then(function trackUser () {
 
                     /* Indentify the user for MixPanel */
                     analytics.identify();
-
-                    /* Save user data */
-                    user.lastAccessed = new Date().toISOString();
-                    user.save();
                 });
             }
 
