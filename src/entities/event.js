@@ -46,7 +46,8 @@ class Event extends Entity {
             case 'PLAYER_TEAM_DROPDOWN':
             case 'TEAM_DROPDOWN:':
             case 'PLAYER_DROPDOWN':
-                field = new TeamPlayerField(variableValue);
+                field = (variableValue.type === 'Player') ?
+                    new TeamPlayerField(variableValue, true) : new TeamPlayerField(variableValue);
                 break;
             default:
                 field = variableValue;
