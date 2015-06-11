@@ -47,7 +47,6 @@ function PlaysFactory (
 
             angular.extend(play, this);
             play = new KrossoverPlay(play);
-            console.log('----- PLAY', play);
 
             return play;
         },
@@ -97,7 +96,7 @@ function PlaysFactory (
 
         load (filter) {
 
-            return tagsets.load().then(() => { return this.baseLoad(filter); });
+            return tagsets.load().then(() => this.baseLoad(filter));
         },
 
         /**
