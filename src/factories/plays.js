@@ -1,114 +1,143 @@
 import KrossoverPlay from '../entities/play.js';
+import KrossoverPlayDataDependencies from '../entities/playDataDependencies.js';
 
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.factory('PlaysFactory', [
-    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities',
-    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils) {
+IntelligenceWebClient.factory('PlaysFactory', PlaysFactory);
+IntelligenceWebClient.factory('KrossoverPlayDataDependencies', KrossoverPlayDataDependencies);
 
-        var PlaysFactory = {
+PlaysFactory.$inject = [
+    'KrossoverPlayDataDependencies',
+    'config',
+    '$sce',
+    'VIDEO_STATUSES',
+    'PlaysResource',
+    'BaseFactory',
+    'TagsetsFactory',
+    'Utilities'
+];
 
-            PAGE_SIZE: 1000,
+function PlaysFactory (
+    KrossoverPlay,
+    config,
+    $sce,
+    VIDEO_STATUSES,
+    PlaysResource,
+    BaseFactory,
+    tagsets,
+    utils
+) {
 
-            description: 'plays',
+    let factory = {
 
-            model: 'PlaysResource',
+        PAGE_SIZE: 1000,
 
-            storage: 'PlaysStorage',
+        description: 'plays',
 
-            extend: function(play) {
+        model: 'PlaysResource',
 
-                angular.extend(play, this);
+        storage: 'PlaysStorage',
 
-                return new KrossoverPlay(play);
-            },
+        extend: function (play) {
 
-            unextend: function(play) {
+            angular.extend(play, this);
+            play = new KrossoverPlay(play);
+            console.log('----- PLAY', play);
 
-                play = play || this;
+            return play;
+        },
 
-                return JSON.stringify(play);
-            },
+        unextend: function (play) {
 
-            filterPlays: function(filterId, resources, success, error) {
-                var self = this;
-                var playIds = [];
+            play = play || this;
 
-                angular.forEach(resources.plays, function(play) {
-                    playIds.push(play.id);
-                });
+            return JSON.stringify(play);
+        },
 
-                var filter = {
-                    plays: {},
-                    options: {
-                        teamId: resources.teamId,
-                        playerId: resources.playerId
-                    }
-                };
+        filterPlays: function(filterId, resources, success, error) {
+            let self = this;
+            let playIds = [];
 
-                filter.plays[resources.game.id] = playIds;
+            angular.forEach(resources.plays, function (play) {
 
-                var newPlayList = new PlaysResource(filter);
+                playIds.push(play.id);
+            });
 
-                var callback = success || function(plays) {
-                    return plays;
-                };
+            let filter = {
 
-                error = error || function() {
-                    throw new Error('could not filter plays');
-                };
+                plays: {},
+                options: {
 
-                return newPlayList.$filter({filterId: filterId.filterId}, callback, error);
-            },
+                    teamId: resources.teamId,
+                    playerId: resources.playerId
+                }
+            };
 
-            load (filter) {
+            filter.plays[resources.game.id] = playIds;
 
-                return tagsets.load().then(() => { return this.baseLoad(filter); });
-            },
+            let newPlayList = new PlaysResource(filter);
 
-            /**
-             * Gets the video sources for a play.
-             * If a play has a clip the clips video transcode profiles are
-             * mapped to video sources that can be used in videogular.
-             * @returns Array - an array of video sources.
-             */
-            getVideoSources: function() {
+            let callback = success || function (plays) {
 
-                var self = this;
+                return plays;
+            };
 
-                /* If there is no clip for the play, return an empty array. */
-                if (!self.clip) return [];
+            error = error || function () {
 
-                /* Get the video transcode profiles. */
-                var profiles = self.clip.videoTranscodeProfiles;
+                throw new Error('could not filter plays');
+            };
 
-                /* Map the video transcode profiles to video sources. */
-                return profiles.map(profileToSource);
+            return newPlayList.$filter({filterId: filterId.filterId}, callback, error);
+        },
 
-                function profileToSource(profile) {
+        load (filter) {
 
-                    /* If the transcode profile is complete. */
-                    if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
+            return tagsets.load().then(() => { return this.baseLoad(filter); });
+        },
 
-                        /* Create a video source. */
-                        var source = {
-                            type: 'video/mp4',
-                            src: $sce.trustAsResourceUrl(profile.videoUrl)
-                        };
+        /**
+         * Gets the video sources for a play.
+         * If a play has a clip the clips video transcode profiles are
+         * mapped to video sources that can be used in videogular.
+         * @returns Array - an array of video sources.
+         */
+        getVideoSources: function () {
 
-                        return source;
-                    }
+            let self = this;
+
+            /* If there is no clip for the play, return an empty array. */
+            if (!self.clip) return [];
+
+            /* Get the video transcode profiles. */
+            let profiles = self.clip.videoTranscodeProfiles;
+
+            /* Map the video transcode profiles to video sources. */
+            return profiles.map(profileToSource);
+
+            function profileToSource (profile) {
+
+                /* If the transcode profile is complete. */
+                if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
+
+                    /* Create a video source. */
+                    let source = {
+
+                        type: 'video/mp4',
+                        src: $sce.trustAsResourceUrl(profile.videoUrl)
+                    };
+
+                    return source;
                 }
             }
-        };
+        }
+    };
 
-        angular.augment(PlaysFactory, BaseFactory);
+    angular.augment(factory, BaseFactory);
 
-        return PlaysFactory;
-    }
-]);
+    return factory;
+}
