@@ -149,17 +149,16 @@ function AccountService (
 
             let user              = session.currentUser;
 
-            /* If timestamp doesn't exist, don't pass into moment.js as we want
-             * to keep it a falsely value for tests below. */
-            let termsAcceptedDate = user.getTermsAcceptedDate() ? moment.utc(user.getTermsAcceptedDate()) : false;
+            /* Get the date the user accepted the terms and conditions. */
+            let termsAcceptedDate = user.getTermsAcceptedDate();
             let termsDate         = moment.utc(config.termsDate);
 
-            /* Compare posting date and last accepted date. If difference is
-             * less than zero, terms posting date is more recent. */
-            if (termsAcceptedDate && termsDate.diff(termsAcceptedDate) < 0) {
+            /* If the user has not accepted the terms and conditions; return false. */
+            if (!termsAcceptedDate) return false;
 
-                return true;
-            }
+            termsAcceptedDate = moment.utc(termsAcceptedDate);
+
+            return termsAcceptedDate.isAfter(termsDate);
         }
     };
 }
