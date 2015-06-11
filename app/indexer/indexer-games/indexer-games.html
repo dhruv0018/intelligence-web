@@ -49,7 +49,7 @@
 		        	</tr>
 	        	</thead>
 	        	<tbody>
-	        		<tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'timeRemaining'" ng-if="game.indexerAssignments[game.indexerAssignments.length -1].timeFinished === null">
+	        		<tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'timeRemaining' | byTimeFinishedAndDate">
 	        			<td>{{game.id}}</td>
 	        			<td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="indexer-game({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
                         <td>{{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}</td>
