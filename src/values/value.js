@@ -6,7 +6,7 @@ class Value {
 
     extend (value) {
 
-        Object.assign(this, entity);
+        Object.assign(this, value);
 
         return this;
     }
