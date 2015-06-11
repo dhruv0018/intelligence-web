@@ -155,6 +155,8 @@ require('./values');
 
 require('./entities');
 
+import CustomTagsEvent from './events/customtags';
+
 require('./bootstrap');
 
 import * as Brokers from './brokers/index';
