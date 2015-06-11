@@ -153,6 +153,7 @@ IntelligenceWebClient.run([
                     /* If first login, user has already accepted Terms and
                      * Conditions by setting password, so record that here. */
                     user.updateTermsAcceptedDate();
+                    user.save();
                 } else if (!account.hasAcceptedTerms()) {
 
                     /* If the user has NOT accepted the Terms & Conditions,

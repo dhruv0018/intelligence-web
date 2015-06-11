@@ -548,7 +548,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             updateTermsAcceptedDate: function updateTermsAcceptedDate () {
 
                 this.termsAcceptedDate = new Date().toISOString();
-                return this.save();
             },
 
             /**

@@ -30,6 +30,7 @@ function UpdatedTermsAndConditionsController (
 
         /* Update the Terms accepted timestamp and redirect to home state. */
         user.updateTermsAcceptedDate();
+        user.save();
         account.gotoUsersHomeState();
     };
 }
