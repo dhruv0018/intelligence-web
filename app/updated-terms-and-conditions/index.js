@@ -39,7 +39,7 @@ UpdatedTermsAndConditions.config([
     ) {
 
         $stateProvider
-        .state('ReacceptTermsAndConditions', {
+        .state('UpdatedTermsAndConditions', {
 
             url: '/updated-terms-and-conditions',
             views: {

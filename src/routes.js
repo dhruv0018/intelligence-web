@@ -157,7 +157,7 @@ IntelligenceWebClient.run([
 
                     /* If the user has NOT accepted the Terms & Conditions,
                      * prompt them to accept, then record time of acceptance. */
-                    $state.go('ReacceptTermsAndConditions');
+                    $state.go('UpdatedTermsAndConditions');
                 }
 
                 resolve();
