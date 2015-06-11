@@ -1,5 +1,5 @@
 import Entity from './entity.js';
-import Field from './field.js';
+import TeamPlayerField from '../values/field/TeamPlayer.js';
 
 class Event extends Entity {
 
@@ -22,6 +22,7 @@ class Event extends Entity {
         delete tag.id;
 
         Object.assign(this, event, tag, { time });
+        this.fields = {};
         /* FIXME: Remove when API is updated. */
         if (this.tagVariables) Object.keys(this.tagVariables).forEach(key => {
 
@@ -34,10 +35,25 @@ class Event extends Entity {
             if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
                 this.variableValues[tagVariable.id].value = null;
             }
-            console.log(new Field(this.variableValues[tagVariable.id]));
+            this.fields[tagVariable.index] = this.FieldFactory(this.variableValues[tagVariable.id]);
         });
+        console.log(this);
     }
+    FieldFactory (variableValue) {
+        let field = {};
 
+        switch(variableValue.inputType) {
+            case 'PLAYER_TEAM_DROPDOWN':
+            case 'TEAM_DROPDOWN:':
+            case 'PLAYER_DROPDOWN':
+                field = new TeamPlayerField(variableValue);
+                break;
+            default:
+                field = variableValue;
+                break;
+        }
+        return field;
+    }
     /**
      * Checks whether the event has variables.
      * @returns - true if the event has variables; false otherwise.
