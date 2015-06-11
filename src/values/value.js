@@ -4,6 +4,12 @@ class Value {
 
     }
 
+    extend (entity) {
+
+        Object.assign(this, entity);
+
+        return this;
+    }
 }
 
 export default Value;
