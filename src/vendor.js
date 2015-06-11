@@ -26,7 +26,6 @@ require('Mousetrap');
 require('Mousetrap/plugins/pause/mousetrap-pause');
 require('svg.js/dist/svg');
 require('svg.draggable.js/svg.draggable');
-require('svg.filter.js/svg.filter');
 require('videogular/videogular');
 require('videogular-controls/vg-controls');
 require('videogular-buffering/vg-buffering');

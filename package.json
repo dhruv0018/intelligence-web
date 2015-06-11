@@ -36,9 +36,7 @@
     "videogular-poster": "2fdevs/bower-videogular-poster",
     "fullscreen-api-polyfill": "https://github.com/neovov/Fullscreen-API-Polyfill.git",
     "svg-morpheus": "alexk111/svg-morpheus#v0.1.8",
-    "svg.js": "https://github.com/wout/svg.js.git",
-    "svg.draggable.js": "https://github.com/krossoverintelligence/svg.draggable.js.git",
-    "svg.filter.js": "https://github.com/wout/svg.filter.js.git"
+    "svg.draggable.js": "https://github.com/krossoverintelligence/svg.draggable.js.git"
   },
   "dependencies": {
     "express": "^4.11.0",
@@ -128,6 +126,7 @@
     "object.observe": "^0.2.3",
     "protractor": "1.8.0",
     "sequelize": "^2.0.0-rc8",
+    "svg.js": "2.0.0",
     "time-grunt": "1.1.0",
     "traceur": "0.0.86"
   },
