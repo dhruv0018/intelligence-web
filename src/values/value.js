@@ -4,7 +4,7 @@ class Value {
 
     }
 
-    extend (entity) {
+    extend (value) {
 
         Object.assign(this, entity);
 
