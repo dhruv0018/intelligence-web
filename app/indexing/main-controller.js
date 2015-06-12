@@ -83,7 +83,5 @@ Indexing.controller('Indexing.Main.Controller', [
         indexing.reset($scope.tagset, $scope.game, playsList);
 
         playlistManager.isEditable = true;
-
-        var indexingElement = document.getElementsByClassName('indexing')[0];
     }
 ]);
