@@ -3,6 +3,7 @@ import TeamPlayerField from '../values/field/TeamPlayer.js';
 import GapField from '../values/field/Gap.js';
 import PassingZoneField from '../values/field/PassingZone.js';
 import FormationField from '../values/field/Formation.js';
+import DropdownField from '../values/field/Dropdown.js';
 
 class Event extends Entity {
 
@@ -68,6 +69,9 @@ class Event extends Entity {
                 break;
             case 'FORMATION':
                 field = new FormationField(variableValue);
+                break;
+            case 'DROPDOWN':
+                field = new DropdownField(variableValue);
                 break;
             default:
                 field = variableValue;
