@@ -1,6 +1,7 @@
 import Entity from './entity.js';
 import TeamPlayerField from '../values/field/TeamPlayer.js';
 import GapField from '../values/field/Gap.js';
+import PassingZoneField from '../values/field/PassingZone.js';
 
 class Event extends Entity {
 
@@ -60,6 +61,9 @@ class Event extends Entity {
                 break;
             case 'GAP':
                 field = new GapField(variableValue);
+                break;
+            case 'PASSING_ZONE':
+                field = new PassingZoneField(variableValue);
                 break;
             default:
                 field = variableValue;
