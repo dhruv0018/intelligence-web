@@ -19,6 +19,13 @@ class TeamPlayerField extends Field {
         value.playerId = undefined;
         value.isPlayer = isPlayer;
 
+        if (field.value === null && !field.isRequired) {
+            this.value = value;
+            return;
+        } else if (field.value === null && field.isRequired) {
+            throw Error('Corrupted data - null value in required field');
+        }
+
         //todo we might want to have some sort of handling here specially for undef versus null
         if (isPlayer) {
             let players = injector.get('PlayersFactory');
