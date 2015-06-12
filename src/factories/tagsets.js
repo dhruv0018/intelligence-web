@@ -1,162 +1,147 @@
 import KrossoverTag from '../entities/tag.js';
 
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.factory('TagsetsFactory', [
-    'BaseFactory', '$filter',
-    function(BaseFactory, $filter) {
+IntelligenceWebClient.factory('TagsetsFactory', TagsetsFactory);
 
-        var indexedTags = {};
+TagsetsFactory.$inject = [
+    'BaseFactory',
+    '$filter'
+];
 
-        var TagsetsFactory = {
+function TagsetsFactory (
+    BaseFactory,
+    $filter
+) {
 
-            description: 'tagsets',
+    let indexedTags = {};
 
-            model: 'TagsetsResource',
+    let factory = {
 
-            storage: 'TagsetsStorage',
+        description: 'tagsets',
 
-            extend: function(tagset) {
+        model: 'TagsetsResource',
 
-                angular.extend(tagset, this);
+        storage: 'TagsetsStorage',
 
-                let tags = {};
+        extend: function (tagset) {
 
-                tagset.tags.forEach(function(tag) {
+            angular.extend(tagset, this);
 
-                    tag = new KrossoverTag(tag);
+            let tags = {};
 
-                    tags[tag.id] = tag;
-                    indexedTags[tag.id] = tag;
-                });
+            tagset.tags.forEach(tag => {
 
-                tagset.tags = tags;
+                if (tag.id === 42) console.log('tag', tag.id, tag);
+                tag = new KrossoverTag(tag);
 
-                return tagset;
-            },
+                tags[tag.id] = tag;
+                indexedTags[tag.id] = tag;
+            });
 
-            unextend: function(tagset) {
+            tagset.tags = tags;
 
-                tagset = tagset || this;
+            return tagset;
+        },
 
-                let copy = angular.copy(tagset);
-                let tags = [];
+        unextend: function (tagset) {
 
-                Object.keys(copy.tags).forEach(tagKey => {
+            tagset = tagset || this;
 
-                    let tag = copy.tags[tagKey];
-                    tags.push(JSON.stringify(tag));
-                });
+            let copy = angular.copy(tagset);
+            let tags = [];
 
-                copy.tags = tags;
+            Object.keys(copy.tags).forEach(tagKey => {
 
-                return copy;
-            },
+                let tag = copy.tags[tagKey];
+                tags.push(JSON.stringify(tag));
+            });
 
-            getTag: function(tagId) {
+            copy.tags = tags;
 
-                let tag = indexedTags[tagId];
+            return copy;
+        },
 
-                if (!tag) throw new Error('Tag ' + tagId + ' not found');
+        getTag: function (tagId) {
 
-                return tag;
-            },
+            let tag = indexedTags[tagId];
 
-            getTagMap: function() {
+            if (!tag) throw new Error(`Tag ${tagId} not found`);
 
-                return indexedTags;
-            },
+            return tag;
+        },
 
-            getStartTags: function() {
+        getTagMap: function () {
 
-                var self = this;
+            return indexedTags;
+        },
 
-                var tags = this.tags;
+        getStartTags: function () {
 
-                return Object.keys(tags)
+            let tags = this.tags;
 
-                .map(function(key) {
+            return Object.keys(tags)
 
-                    return tags[key];
-                })
+            .map(key => tags[key])
+            .filter(tag => this.isStartTag(tag.id));
+        },
 
-                .filter(function(tag) {
+        getFloatTags: function () {
 
-                    return self.isStartTag(tag.id);
-                });
-            },
+            let tags = this.tags;
 
-            getFloatTags: function() {
+            return Object.keys(tags)
 
-                var self = this;
+            .map(key => tags[key])
+            .filter(tag => this.isFloatTag(tag.id));
+        },
 
-                var tags = this.tags;
+        getNextTags: function (tagId) {
 
-                return Object.keys(tags)
+            let tags = this.tags;
+            let tag = tags[tagId];
 
-                .map(function(key) {
+            if (tag.children && tag.children.length) {
 
-                    return tags[key];
-                })
+                return tag.children.map(childId => tags[childId])
+                .concat(this.getFloatTags());
+            } else {
 
-                .filter(function(tag) {
-
-                    return self.isFloatTag(tag.id);
-                });
-            },
-
-            getNextTags: function(tagId) {
-
-                var tags = this.tags;
-                var tag = tags[tagId];
-
-                if (tag.children && tag.children.length) {
-
-                    return tag.children.map(function(childId) {
-
-                        return tags[childId];
-                    })
-
-                    .concat(this.getFloatTags());
-
-                } else {
-
-                    return this.getStartTags();
-                }
-            },
-
-            isStartTag: function(tagId) {
-
-                var tags = this.tags;
-                var tag = tags[tagId];
-
-                return tag.isStart;
-            },
-
-            isFloatTag: function(tagId) {
-
-                var tags = this.tags;
-                var tag = tags[tagId];
-
-                return tag.isStart === false && tag.isEnd === false && tag.children && tag.children.length === 0;
-            },
-
-            isEndTag: function(tagId) {
-
-                var tags = this.tags;
-                var tag = tags[tagId];
-
-                return tag.isEnd;
+                return this.getStartTags();
             }
-        };
+        },
 
-        angular.augment(TagsetsFactory, BaseFactory);
+        isStartTag: function (tagId) {
 
-        return TagsetsFactory;
-    }
-]);
+            let tags = this.tags;
+            let tag = tags[tagId];
+
+            return tag.isStart;
+        },
+
+        isFloatTag: function (tagId) {
+
+            let tags = this.tags;
+            let tag = tags[tagId];
+
+            return tag.isStart === false && tag.isEnd === false && tag.children && tag.children.length === 0;
+        },
+
+        isEndTag: function (tagId) {
+
+            let tags = this.tags;
+            let tag = tags[tagId];
+
+            return tag.isEnd;
+        }
+    };
+
+    angular.augment(factory, BaseFactory);
+
+    return factory;
+}
