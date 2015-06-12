@@ -42,10 +42,27 @@
         letter-spacing: normal;
         top: auto;
         left: auto;
+        padding: 0px;
 
         .tag-filter {
-            padding: 5px 5px;
+            position: relative;
+            padding: 10px;
+            background-color: @content-bg;
             text-align: left;
+            border-bottom: thin solid @gray-border;
+
+            input {
+                border: thin solid @gray-border;
+                border-radius: 5px;
+                padding-left: 22px;
+            }
+
+            .icon-search {
+                position: absolute;
+                left: 15px;
+                top: 17px;
+                color: @gray-light;
+            }
         }
 
         .tag {

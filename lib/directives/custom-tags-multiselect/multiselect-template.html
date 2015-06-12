@@ -9,7 +9,8 @@
     <ul class="dropdown-menu">
 
         <li class="tag-filter">
-            <input class="form-control input-sm" type="text" ng-model="searchText.label" autofocus="autofocus" placeholder="Filter" />
+            <i class="icon icon-search"></i>
+            <input class="form-control input-sm" type="text" ng-model="searchText.label" autofocus="autofocus" placeholder="Search Tags" />
         </li>
 
         <li ng-if="isOpen" class="tag-row" ng-repeat="item in items | filter:searchText">
