@@ -294,7 +294,7 @@ describe('Play Entity', () => {
 
     it('should have certain properties when instantiated', inject(TagsetsFactory => {
 
-        let samplePlay = angular.copy(srcJSON);
+        let samplePlay = Object.assign({}, srcJSON);
         let play       = new KrossoverPlay(samplePlay, TagsetsFactory);
 
         expect(play).to.contain.keys([
@@ -319,7 +319,7 @@ describe('Play Entity', () => {
 
     it('should have called toJSON on a JSON.stringify call', inject(TagsetsFactory => {
 
-        let samplePlay = angular.copy(srcJSON);
+        let samplePlay = Object.assign({}, srcJSON);
         let play       = new KrossoverPlay(samplePlay, TagsetsFactory);
         play.toJSON    = sinon.spy();
 
@@ -330,7 +330,7 @@ describe('Play Entity', () => {
 
     it('should restore the original JSON on JSON.stringify calls', inject(TagsetsFactory => {
 
-        let samplePlay = angular.copy(srcJSON);
+        let samplePlay = Object.assign({}, srcJSON);
         let play = new KrossoverPlay(samplePlay, TagsetsFactory);
 
         play = play.toJSON();
