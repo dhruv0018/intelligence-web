@@ -1,5 +1,6 @@
 import Entity from './entity.js';
 import TeamPlayerField from '../values/field/TeamPlayer.js';
+import GapField from '../values/field/Gap.js';
 
 class Event extends Entity {
 
@@ -36,18 +37,29 @@ class Event extends Entity {
                 this.variableValues[tagVariable.id].value = null;
             }
             this.fields[tagVariable.index] = this.FieldFactory(this.variableValues[tagVariable.id]);
+            console.log(this.fields[tagVariable.index]);
+            //if (variableValue.inputType === 'TEAM_DROPDOWN' || variableValue.inputType === 'PLAYER_TEAM_DROPDOWN') {
+            //
+            //}
         });
-        console.log(this);
+        //console.log(this);
     }
     FieldFactory (variableValue) {
         let field = {};
-
+        //console.log(variableValue.inputType);
         switch(variableValue.inputType) {
-            case 'PLAYER_TEAM_DROPDOWN':
-            case 'TEAM_DROPDOWN':
             case 'PLAYER_DROPDOWN':
+                field = new TeamPlayerField(variableValue, true);
+                break;
+            case 'TEAM_DROPDOWN':
+                field = new TeamPlayerField(variableValue);
+                break;
+            case 'PLAYER_TEAM_DROPDOWN':
                 field = (variableValue.type === 'Player') ?
                     new TeamPlayerField(variableValue, true) : new TeamPlayerField(variableValue);
+                break;
+            case 'GAP':
+                field = new GapField(variableValue);
                 break;
             default:
                 field = variableValue;
