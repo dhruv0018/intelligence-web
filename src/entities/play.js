@@ -9,12 +9,12 @@ class KrossoverPlay extends Entity {
 
     constructor (play, tagsets) {
 
-        super(play);
-
         if (!arguments.length) {
 
-            throw new Error('Invoking Play.constructor without passing a JSON object');
+            throw new Error('Invoking KrossoverPlay.constructor without passing a JSON object');
         }
+
+        super(play);
 
         this.events               = play.events || [];
         this.period               = play.period || 0;
