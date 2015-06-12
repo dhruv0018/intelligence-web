@@ -11,11 +11,9 @@ class KrossoverPlay extends Entity {
 
         super(play);
 
-        switch (arguments.length) {
+        if (!arguments.length) {
 
-            case 0:
-
-                throw new Error('Invoking Play.constructor without passing a JSON object');
+            throw new Error('Invoking Play.constructor without passing a JSON object');
         }
 
         this.events               = play.events || [];
