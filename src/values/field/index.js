@@ -3,5 +3,6 @@ import TeamPlayerField from './TeamPlayer.js';
 import GapField from './Gap.js';
 import PassingZoneField from './PassingZone.js';
 import FormationField from './Formation.js';
+import DropdownField from './Dropdown.js';
 
-export default {Field, TeamPlayerField, GapField, PassingZoneField, FormationField};
+export default {Field, TeamPlayerField, GapField, PassingZoneField, FormationField, DropdownField};
