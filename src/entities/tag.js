@@ -4,6 +4,11 @@ class KrossoverTag extends Entity {
 
     constructor (tag) {
 
+        if (!arguments.length) {
+
+            throw new Error('Invoking KrossoverTag.constructor without passing a JSON object');
+        }
+
         super(tag);
 
         if (Array.isArray(this.tagVariables)) {
@@ -26,8 +31,9 @@ class KrossoverTag extends Entity {
 
                 let indexedFormations = {};
 
-                variable.formations.forEach(formation => {
+                Object.keys(variable.formations).forEach(formationKey => {
 
+                    let formation = variable.formations[formationKey];
                     indexedFormations[formation.id] = formation;
                 });
 
