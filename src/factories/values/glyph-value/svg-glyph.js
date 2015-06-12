@@ -33,7 +33,7 @@ export function SVGGlyphValue(
 
     /* Default Values */
 
-    SVGGlyph.prototype.STROKE_WIDTH = 8;
+    SVGGlyph.prototype.STROKE_WIDTH = 3;
     SVGGlyph.prototype.DASHED_ARRAY = '2,2';
     SVGGlyph.prototype.RESIZABLE = false;
 
