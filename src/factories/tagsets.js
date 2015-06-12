@@ -145,7 +145,7 @@ IntelligenceWebClient.factory('TagsetsFactory', [
                             var tagVariable = tag.tagVariables[tagVariableKey];
 
                             if (tagVariable.formations) {
-
+                                tagVariable.availableValues = tagVariable.availableValues || tagVariable.formations;
                                 let formations = [];
 
                                 Object.keys(tagVariable.formations).forEach(tagVariableFormationsKey => {
