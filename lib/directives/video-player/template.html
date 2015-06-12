@@ -1,7 +1,5 @@
 <div class="video-player" ng-class="{'mobile': videoPlayer.isMobile}">
 
-    <ng-transclude ng-if="videoPlayer.fullScreenEnabled"></ng-transclude>
-
     <videogular
      vg-complete="videoPlayer.onCompleteVideo()"
      vg-player-ready="videoPlayer.onPlayerReady($API)"
@@ -12,6 +10,8 @@
      vg-plays-inline="videoPlayer.config.playsInline"
      ng-class="{'fullscreen': videoPlayer.fullScreenEnabled}"
     >
+
+        <ng-transclude ng-if="videoPlayer.fullScreenEnabled"></ng-transclude>
 
         <vg-media
          vg-loop="videoPlayer.config.loop"
