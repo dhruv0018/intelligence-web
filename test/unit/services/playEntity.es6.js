@@ -33,6 +33,11 @@ describe('Play Entity', () => {
         expect(KrossoverPlay).to.exist;
     });
 
+    it('should throw an Error if constructor is called without parameters.', () => {
+
+        expect(() => new KrossoverPlay()).to.throw(Error);
+    });
+
     it('should have public API', () => {
 
         expect(KrossoverPlay).to.respondTo('toJSON');
