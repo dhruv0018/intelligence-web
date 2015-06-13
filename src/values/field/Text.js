@@ -13,7 +13,7 @@ class TextField extends Field {
 
         let value = {};
 
-        value.gapId = this.value;
+        value.content = this.value;
 
         this.value = value;
 
