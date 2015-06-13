@@ -1,11 +1,10 @@
-import Field from './field.js';
+import Field from './Field.js';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
 class TextField extends Field {
     constructor(field) {
-
         if (!field) return;
         super(field);
 
