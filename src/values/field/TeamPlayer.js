@@ -4,7 +4,7 @@ import Field from './Field.js';
 const angular = window.angular;
 
 class TeamPlayerField extends Field {
-    constructor(field, isPlayer = false) {
+    constructor(field) {
 
         if (!field) return;
         super(field);
@@ -17,7 +17,6 @@ class TeamPlayerField extends Field {
         value.name = undefined;
         value.teamId = undefined;
         value.playerId = undefined;
-        value.isPlayer = isPlayer;
 
         if (field.value === null && !field.isRequired) {
             this.value = value;
@@ -26,13 +25,13 @@ class TeamPlayerField extends Field {
             throw Error('Corrupted data - null value in required field');
         }
 
-        //todo we might want to have some sort of handling here specially for undef versus null
-        if (isPlayer) {
+        //todo refine this a bit later
+        if (field.type === 'Player') {
             let players = injector.get('PlayersFactory');
             let player = players.get(field.value);
             value.name = player.firstName + ' ' + player.lastName;
             value.playerId = player.id;
-        } else {
+        } else if (field.type === 'Team') {
             let teams = injector.get('TeamsFactory');
             let team = teams.get(field.value);
             value.name = team.name;
