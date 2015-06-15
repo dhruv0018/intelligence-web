@@ -1,5 +1,6 @@
 import KrossoverTag from '../../../src/entities/tag';
 import tagData from './sample-data/tag';
+import tagTransformedData from './sample-data/tag-transformed';
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -65,6 +66,7 @@ describe('Tag Entity', () => {
 
         assert.isDefined(tag.fields, '"fields" has been defined.');
         expect(tag.fields).to.be.an('object');
+        expect(tag.fields).to.deep.equal(tagTransformedData.tagVariables);
     });
 
     it('should have called toJSON on a JSON.stringify call', () => {
