@@ -11,7 +11,8 @@ class ArenaField extends Field {
         let value = {};
 
         value.coordinates = this.value.coordinates;
-        value.regionId = this.value.region.id;
+        //todo might not want this
+        value.regionId = (this.value && this.value.region) ? this.value.region.id : undefined;
 
         this.value = value;
 
