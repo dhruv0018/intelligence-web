@@ -13,7 +13,7 @@
                 <!-- Tags -->
                 <div class="tags" data-ng-if="indexing.isIndexing && indexing.showTags">
 
-                    <button class="tag" data-ng-repeat="tag in tags.current" data-keybinding="{{ tag.shortcutKey.toLowerCase() }}" data-ng-click="indexing.selectTag(tag.id)" tabindex="{{ $index+1 }}">{{ tag.name }} ({{ tag.shortcutKey.toLowerCase() }})</button>
+                    <button class="tag" data-ng-repeat="tag in tags.current" data-keybinding="{{ tag.keyboardShortcut.toLowerCase() }}" data-ng-click="indexing.selectTag(tag.id)" tabindex="{{ $index+1 }}">{{ tag.name }} ({{ tag.keyboardShortcut.toLowerCase() }})</button>
 
                 </div>
 
