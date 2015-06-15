@@ -23,7 +23,7 @@ class KrossoverTag extends Entity {
      * Getter for tag.shortcutKey
      * @method KrossoverTag.shortcutKey
      * @readonly
-     * @returns {Integer} shortcutKey
+     * @returns {String} shortcutKey
      */
     get keyboardShortcut () {
 
@@ -34,7 +34,7 @@ class KrossoverTag extends Entity {
      * Getter for tag.fields
      * @method KrossoverTag.fields
      * @readonly
-     * @returns {Integer} fields
+     * @returns {Array} fields
      */
     get fields () {
 
@@ -53,9 +53,8 @@ class KrossoverTag extends Entity {
 
                 let indexedFormations = {};
 
-                Object.keys(variable.formations).forEach(formationKey => {
+                variable.formations.forEach(formation => {
 
-                    let formation = variable.formations[formationKey];
                     indexedFormations[formation.id] = formation;
                 });
 
