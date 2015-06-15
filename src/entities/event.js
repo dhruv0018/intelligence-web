@@ -62,10 +62,9 @@ class Event extends Entity {
             case 'TEAM_DROPDOWN':
                 field = new TeamField(variableValue);
                 break;
-            // case 'PLAYER_TEAM_DROPDOWN':
-            //     field = (variableValue.type === 'Player') ?
-            //         new TeamPlayerField(variableValue, true) : new TeamPlayerField(variableValue);
-            //     break;
+            case 'PLAYER_TEAM_DROPDOWN':
+                field = new TeamPlayerField(variableValue);
+                break;
             case 'GAP':
                 field = new GapField(variableValue);
                 break;
