@@ -14,7 +14,7 @@ module.exports = [
         angular.inheritPrototype(TBar, SVGGlyph);
 
         TBar.prototype.RESIZABLE = true;
-        TBar.prototype.T_BAR_LENGTH = 100;
+        TBar.prototype.T_BAR_LENGTH = 50;
 
         TBar.prototype.renderShape = function renderShape() {
 
