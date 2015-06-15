@@ -6,5 +6,17 @@ import FormationField from './Formation.js';
 import DropdownField from './Dropdown.js';
 import TextField from './Text.js';
 import YardField from './Yard.js';
+import ArenaField from './Arena.js';
 
-export default {Field, TeamPlayerField, GapField, PassingZoneField, FormationField, DropdownField, TextField, YardField};
+export default
+{
+    Field,
+    TeamPlayerField,
+    GapField,
+    PassingZoneField,
+    FormationField,
+    DropdownField,
+    TextField,
+    YardField,
+    ArenaField
+};
