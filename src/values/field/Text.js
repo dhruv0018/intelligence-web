@@ -16,7 +16,7 @@ class TextField extends Field {
 
         this.value = value;
 
-        this.availableOptions = [];
+        this.availableOptions = null;
     }
 }
 
