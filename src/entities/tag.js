@@ -19,6 +19,28 @@ class KrossoverTag extends Entity {
         this.mapScriptTypes();
     }
 
+    /**
+     * Getter for tag.shortcutKey
+     * @method KrossoverTag.shortcutKey
+     * @readonly
+     * @returns {Integer} shortcutKey
+     */
+    get keyboardShortcut () {
+
+        return this.shortcutKey;
+    }
+
+    /**
+     * Getter for tag.fields
+     * @method KrossoverTag.fields
+     * @readonly
+     * @returns {Integer} fields
+     */
+    get fields () {
+
+        return this.tagVariables;
+    }
+
     indexTagVariables () {
 
         let indexedVariables = {};
