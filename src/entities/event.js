@@ -6,6 +6,7 @@ import FormationField from '../values/field/Formation.js';
 import DropdownField from '../values/field/Dropdown.js';
 import TextField from '../values/field/Text.js';
 import YardField from '../values/field/Yard.js';
+import ArenaField from '../values/field/Arena.js';
 
 class Event extends Entity {
 
@@ -80,6 +81,9 @@ class Event extends Entity {
                 break;
             case 'YARD':
                 field = new YardField(variableValue);
+                break;
+            case 'ARENA':
+                field = new ArenaField(variableValue);
                 break;
             default:
                 field = variableValue;
