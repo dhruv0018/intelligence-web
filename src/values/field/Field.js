@@ -11,6 +11,18 @@ class Field extends Value {
 
         super(field);
         this.extend(field);
+
+        if (!field.value) {
+            field.value = undefined;
+            return;
+        }
+
+        if (field.value === null && !field.isRequired) {
+            this.value = value;
+            return;
+        } else if (field.value === null && field.isRequired) {
+            throw Error('Corrupted data - null value in required field');
+        }
     }
 }
 
