@@ -15,7 +15,7 @@ describe('Tag Entity', () => {
 
     beforeEach(inject(TagsetsFactory => {
 
-        sampleTag = Object.assign({}, srcTag);
+        sampleTag = angular.copy(srcTag);
         tag       = new KrossoverTag(sampleTag);
     }));
 
@@ -89,9 +89,17 @@ describe('Tag Entity', () => {
         expect(tag.isStart).to.equal(srcTag.isStart);
         expect(tag.isEnd).to.equal(srcTag.isEnd);
         expect(tag.tagSetId).to.equal(srcTag.tagSetId);
-        expect(tag.children).to.equal(srcTag.children);
+        expect(tag.children).to.deep.equal(srcTag.children);
 
-        expect(tag.tagVariables).to.deep.equal(srcTag.tagVariables);
+        tag.tagVariables.forEach((variable, index) => {
+
+            expect(variable.id).to.equal(srcTag.tagVariables[index].id);
+            expect(variable.name).to.equal(srcTag.tagVariables[index].name);
+            expect(variable.type).to.equal(srcTag.tagVariables[index].type);
+            expect(variable.isRequired).to.equal(srcTag.tagVariables[index].isRequired);
+            expect(variable.options).to.deep.equal(srcTag.tagVariables[index].options);
+            expect(variable.formations).to.deep.equal(srcTag.tagVariables[index].formations);
+        });
 
         expect(tag.pointsAssigned).to.equal(srcTag.pointsAssigned);
         expect(tag.assignThisTeam).to.equal(srcTag.assignThisTeam);
