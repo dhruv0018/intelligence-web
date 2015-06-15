@@ -8,6 +8,7 @@ import TextField from '../values/field/Text.js';
 import YardField from '../values/field/Yard.js';
 import ArenaField from '../values/field/Arena.js';
 import PlayerField from '../values/field/Player.js';
+import TeamField from '../values/field/Team.js';
 
 class Event extends Entity {
 
@@ -59,12 +60,12 @@ class Event extends Entity {
                 field = new PlayerField(variableValue);
                 break;
             case 'TEAM_DROPDOWN':
-                field = new TeamPlayerField(variableValue);
+                field = new TeamField(variableValue);
                 break;
-            case 'PLAYER_TEAM_DROPDOWN':
-                field = (variableValue.type === 'Player') ?
-                    new TeamPlayerField(variableValue, true) : new TeamPlayerField(variableValue);
-                break;
+            // case 'PLAYER_TEAM_DROPDOWN':
+            //     field = (variableValue.type === 'Player') ?
+            //         new TeamPlayerField(variableValue, true) : new TeamPlayerField(variableValue);
+            //     break;
             case 'GAP':
                 field = new GapField(variableValue);
                 break;
