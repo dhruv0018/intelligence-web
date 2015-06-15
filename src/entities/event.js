@@ -7,6 +7,7 @@ import DropdownField from '../values/field/Dropdown.js';
 import TextField from '../values/field/Text.js';
 import YardField from '../values/field/Yard.js';
 import ArenaField from '../values/field/Arena.js';
+import PlayerField from '../values/field/Player.js';
 
 class Event extends Entity {
 
@@ -55,7 +56,7 @@ class Event extends Entity {
         //console.log(variableValue.inputType);
         switch(variableValue.inputType) {
             case 'PLAYER_DROPDOWN':
-                field = new TeamPlayerField(variableValue, true);
+                field = new PlayerField(variableValue);
                 break;
             case 'TEAM_DROPDOWN':
                 field = new TeamPlayerField(variableValue);
