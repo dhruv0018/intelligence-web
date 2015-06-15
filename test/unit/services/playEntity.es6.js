@@ -11,6 +11,9 @@ const srcTags = tagsData;
 
 describe('Play Entity', () => {
 
+    let samplePlay;
+    let play;
+
     beforeEach(angular.mock.module('intelligence-web-client'));
 
     beforeEach(angular.mock.module($provide => {
@@ -26,6 +29,12 @@ describe('Play Entity', () => {
                 return tag;
             }
         });
+    }));
+
+    beforeEach(inject(TagsetsFactory => {
+
+        samplePlay = angular.copy(srcJSON);
+        play       = new KrossoverPlay(samplePlay, TagsetsFactory);
     }));
 
     it('should exist', () => {
@@ -44,9 +53,6 @@ describe('Play Entity', () => {
     });
 
     it('should have certain properties when instantiated', inject(TagsetsFactory => {
-
-        let samplePlay = Object.assign({}, srcJSON);
-        let play       = new KrossoverPlay(samplePlay, TagsetsFactory);
 
         expect(play).to.contain.keys([
             'id',
@@ -70,9 +76,7 @@ describe('Play Entity', () => {
 
     it('should have called toJSON on a JSON.stringify call', inject(TagsetsFactory => {
 
-        let samplePlay = Object.assign({}, srcJSON);
-        let play       = new KrossoverPlay(samplePlay, TagsetsFactory);
-        play.toJSON    = sinon.spy();
+        play.toJSON = sinon.spy();
 
         JSON.stringify(play);
 
@@ -80,9 +84,6 @@ describe('Play Entity', () => {
     }));
 
     it('should restore the original JSON on JSON.stringify calls', inject(TagsetsFactory => {
-
-        let samplePlay = Object.assign({}, srcJSON);
-        let play = new KrossoverPlay(samplePlay, TagsetsFactory);
 
         play = play.toJSON();
 
