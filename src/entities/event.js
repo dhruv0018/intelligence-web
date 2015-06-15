@@ -40,6 +40,28 @@ class Event extends Entity {
     }
 
     /**
+     * Getter for event.shortcutKey
+     * @method Event.shortcutKey
+     * @readonly
+     * @returns {String} shortcutKey
+     */
+    get keyboardShortcut () {
+
+        return this.shortcutKey;
+    }
+
+    /**
+     * Getter for event.fields
+     * @method Event.fields
+     * @readonly
+     * @returns {Array} fields
+     */
+    get fields () {
+
+        return this.tagVariables;
+    }
+
+    /**
      * Checks whether the event has variables.
      * @returns - true if the event has variables; false otherwise.
      */
