@@ -49,24 +49,24 @@
 		        	</tr>
 	        	</thead>
 	        	<tbody>
-	        		<tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'timeRemaining' | byDeadlineForGames">
+	        		<tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'timeRemaining' | byDeadline: true">
 	        			<td>{{game.id}}</td>
 	        			<td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="indexer-game({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
-                        <td>{{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}</td>
+                <td>{{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}</td>
 	        			<td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
-                        <td>{{ game.timeRemaining | millisecondsAsHours | hoursAsClock }}</td>
-                        <td>
-                            <button id="enter-indexing-cta" class="btn btn-default" data-ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
-                                <span data-ng-hide="game.isAssignmentStarted()">Start </span>
-                                <span data-ng-show="game.isAssignmentStarted()">Resume </span>
-                                <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
-                            </button>
-                            <button id="enter-qa-cta" class="btn btn-default" data-ng-show="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
-                                <span data-ng-hide="game.isAssignmentStarted()">Start </span>
-                                <span data-ng-show="game.isAssignmentStarted()">Resume </span>
-                                <span>QA</span>
-                            </button>
-                        </td>
+                <td>{{ game.timeRemaining | millisecondsAsHours | hoursAsClock }}</td>
+                <td>
+                    <button id="enter-indexing-cta" class="btn btn-default" data-ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
+                        <span data-ng-hide="game.isAssignmentStarted()">Start </span>
+                        <span data-ng-show="game.isAssignmentStarted()">Resume </span>
+                        <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
+                    </button>
+                    <button id="enter-qa-cta" class="btn btn-default" data-ng-show="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
+                        <span data-ng-hide="game.isAssignmentStarted()">Start </span>
+                        <span data-ng-show="game.isAssignmentStarted()">Resume </span>
+                        <span>QA</span>
+                    </button>
+                </td>
 	        		</tr>
 	        	</tbody>
 
@@ -75,4 +75,3 @@
     </main>
 
 </section>
-
