@@ -8,7 +8,16 @@ const srcTag = tagData;
 
 describe('Tag Entity', () => {
 
+    let sampleTag;
+    let tag;
+
     beforeEach(angular.mock.module('intelligence-web-client'));
+
+    beforeEach(inject(TagsetsFactory => {
+
+        sampleTag = Object.assign({}, srcTag);
+        tag       = new KrossoverTag(sampleTag);
+    }));
 
     it('should exist', () => {
 
@@ -23,9 +32,6 @@ describe('Tag Entity', () => {
     });
 
     it('should have certain properties when instantiated', () => {
-
-        let sampleTag = Object.assign({}, srcTag);
-        let tag       = new KrossoverTag(sampleTag);
 
         expect(tag).to.contain.keys([
             'id',
@@ -48,11 +54,22 @@ describe('Tag Entity', () => {
         ]);
     });
 
+    it('should have a "keyboardShortcut" getter that works.', () => {
+
+        assert.isDefined(tag.keyboardShortcut, '"keyboardShortcut" has been defined.');
+        expect(tag.keyboardShortcut).to.be.a('string');
+        expect(tag.keyboardShortcut).to.equal('QG');
+    });
+
+    it('should have a "fields" getter that works.', () => {
+
+        assert.isDefined(tag.fields, '"fields" has been defined.');
+        expect(tag.fields).to.be.an('object');
+    });
+
     it('should have called toJSON on a JSON.stringify call', () => {
 
-        let sampleTag = Object.assign({}, srcTag);
-        let tag       = new KrossoverTag(sampleTag);
-        tag.toJSON    = sinon.spy();
+        tag.toJSON = sinon.spy();
 
         JSON.stringify(tag);
 
@@ -60,9 +77,6 @@ describe('Tag Entity', () => {
     });
 
     it('should restore the original JSON on JSON.stringify calls', () => {
-
-        let sampleTag = Object.assign({}, srcTag);
-        let tag       = new KrossoverTag(sampleTag);
 
         tag = tag.toJSON();
 
