@@ -37,7 +37,6 @@ function TagsetsFactory (
 
             tagset.tags.forEach(tag => {
 
-                if (tag.id === 42) console.log('tag', tag.id, tag);
                 tag = new KrossoverTag(tag);
 
                 tags[tag.id] = tag;
