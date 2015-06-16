@@ -14,8 +14,8 @@ class PlayerField extends Field {
 
         //initialization
         let value = {
-            name: null,
-            playerId: null
+            name: !field.isRequired ? 'Optional' : undefined,
+            playerId: (field.isRequired && field.type === 'Player') ? null : undefined
         };
 
         if (field.value) {

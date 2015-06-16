@@ -11,9 +11,13 @@ class GapField extends Field {
 
         let injector = angular.element(document).injector();
 
-        let value = {};
+        let value = {
+            gapId: !field.isRequired ? 'Optional' : null
+        };
 
-        value.gapId = this.value;
+        if (field.value) {
+            value.gapId = this.value;
+        }
 
         this.value = value;
 

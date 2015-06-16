@@ -8,11 +8,15 @@ class ArenaField extends Field {
         super(field);
 
         let injector = angular.element(document).injector();
-        let value = {};
+        let value = {
+            regionId: !field.isRequired ? undefined : null,
+            coordinates: !field.isRequired ? undefined: {}
+        };
 
-        value.coordinates = this.value.coordinates;
-        //todo might not want this
-        value.regionId = (this.value && this.value.region) ? this.value.region.id : undefined;
+        if (field.value && field.value.region && field.value.region.id) {
+            value.coordinates = this.value.coordinates;
+            value.regionId = this.value.region.id;
+        }
 
         this.value = value;
 

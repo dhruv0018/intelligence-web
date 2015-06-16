@@ -8,12 +8,13 @@ class YardField extends Field {
         if (!field) return;
         super(field);
 
-        let injector = angular.element(document).injector();
-        let value = {};
+        let value = {
+            content: !field.isRequired? 'Optional' : null
+        };
 
-        value.content = this.value;
-
-        this.value = value;
+        if (field.value) {
+            value.content = this.value;
+        }
 
         this.availableOptions = [];
 

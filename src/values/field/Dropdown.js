@@ -11,9 +11,13 @@ class DropdownField extends Field {
 
         let injector = angular.element(document).injector();
 
-        let value = {};
+        let value = {
+            content: !field.isRequired ? 'Optional' : null
+        };
 
-        value.content = this.value;
+        if (field.value) {
+            value.content = field.value;
+        }
 
         this.value = value;
         this.availableOptions = JSON.parse(this.options);

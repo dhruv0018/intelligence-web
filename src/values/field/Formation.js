@@ -11,10 +11,15 @@ class FormationField extends Field {
 
         let injector = angular.element(document).injector();
 
-        let value = {};
+        let value = {
+            formationId: !field.isRequired ? undefined : null,
+            numberPlayers: 0
+        };
 
-        value.formationId = this.value;
-        value.numberPlayers = this.numberPlayers;
+        if (field.value) {
+            value.formationId = this.value;
+            value.numberPlayers = this.numberPlayers;
+        }
 
         this.value = value;
 

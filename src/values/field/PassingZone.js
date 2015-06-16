@@ -11,9 +11,13 @@ class PassingZoneField extends Field {
 
         let injector = angular.element(document).injector();
 
-        let value = {};
+        let value = {
+            zoneId: !field.isRequired ? 'Optional' : null
+        };
 
-        value.zoneId = this.value;
+        if (field.value) {
+            value.zoneId = this.value;
+        }
 
         this.value = value;
 
