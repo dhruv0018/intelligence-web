@@ -11,31 +11,29 @@ class TeamPlayerField extends Field {
 
         let injector = angular.element(document).injector();
 
-        let value = {};
+        //set up basic value for tag field
+        let value = {
+            name: !field.isRequired ? 'Optional' : undefined,
+            teamId: (field.isRequired && field.type === 'Team') ? null : undefined,
+            playerId: (field.isRequired && field.type === 'Player') ? null : undefined,
+        };
 
-        //initialization
-        value.name = undefined;
-        value.teamId = undefined;
-        value.playerId = undefined;
-
-        if (field.value === null && !field.isRequired) {
-            this.value = value;
-            return;
-        } else if (field.value === null && field.isRequired) {
-            throw Error('Corrupted data - null value in required field');
-        }
-
-        //todo refine this a bit later
-        if (field.type === 'Player') {
-            let players = injector.get('PlayersFactory');
-            let player = players.get(field.value);
-            value.name = player.firstName + ' ' + player.lastName;
-            value.playerId = player.id;
-        } else if (field.type === 'Team') {
-            let teams = injector.get('TeamsFactory');
-            let team = teams.get(field.value);
-            value.name = team.name;
-            value.teamId = team.id;
+        //if the value is set on the field
+        if (field.value) {
+            switch(field.type) {
+                case 'Player':
+                    let players = injector.get('PlayersFactory');
+                    let player = players.get(field.value);
+                    value.name = player.firstName + ' ' + player.lastName;
+                    value.playerId = Number(player.id);
+                    break;
+                case 'Team':
+                    let teams = injector.get('TeamsFactory');
+                    let team = teams.get(field.value);
+                    value.name = team.name;
+                    value.teamId = Number(team.id);
+                    break;
+            }
         }
 
         this.value = value;
@@ -43,18 +41,20 @@ class TeamPlayerField extends Field {
     }
 
     toJSON() {
-        let variableValue = {};
-        if (this.type === 'Player') {
-            variableValue = {
-                type: 'Player',
-                value: this.value.playerId
-            };
-        } else if (this.type === 'Team') {
-            variableValue = {
-                type: 'Team',
-                value: this.value.teamId
-            };
+
+        let variableValue = {
+            type: this.type
+        };
+
+        switch(variableValue.type) {
+            case 'Player':
+                variableValue.value = this.value.playerId;
+                break;
+            case 'Team':
+                variableValue.value = this.value.teamId;
+                break;
         }
+
         return JSON.stringify(variableValue);
     }
 }
