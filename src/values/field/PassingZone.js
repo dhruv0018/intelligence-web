@@ -19,6 +19,15 @@ class PassingZoneField extends Field {
 
         this.availableOptions = injector.get('ZONES');
     }
+
+    toJSON(){
+        let variableValue = {};
+        variableValue = {
+            type: null,
+            value: this.value.zoneId
+        };
+        return JSON.stringify(variableValue);
+    }
 }
 
 export default PassingZoneField;
