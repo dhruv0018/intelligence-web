@@ -40,6 +40,46 @@ const schema = require('../../schemas/video.json');
 /**
  * Video Entity Model
  * @class Video
+ *//**
+ * Server-assigned index identification number
+ * @property {Integer} id
+ * @readonly
+ * @example 29
+ *//**
+ * Server assigned globally unique identifer for the Video
+ * @property {String} guid
+ * @readonly
+ * @example "ec2-54-242-131-88.compute-1.amazonaws.com53c563b6bed86"
+ *//**
+ * (1 = Incomplete, 2 = Uploaded, 3 = Complete, 4 = Failed)
+ * @property {Integer} status
+ * @example 3
+ *//**
+ * Available transcode profiles for the Video
+ * @property {Array<TranscodeProfile>} transcodeProfiles
+ * @readonly
+ *//**
+ * Available transcode profiles for the Video
+ * @property {Array<Object>} videoTranscodeProfiles
+ * @deprecated in favor of this.transcodeProfiles
+ * @readonly
+ *//**
+ * Duration of the Video, accuracy to two decimal places
+ * @property {Float} duration
+ * @readonly
+ * @example 6232.68
+ *//**
+ * Server generated thumbnail URL for the Video
+ * @property {String} thumbnail
+ * @readonly
+ * @example
+ * "http:\\/\\/krossover-com-prod-content.
+ * cdn.krossover.com\\/images\\/thumbnails\\
+ * /ec2-54-242-131-88.compute-1.amazonaws.com53c563b6bed86_3500.jpg"
+ *//**
+ * Available resourceUrls for Videogular media
+ * @property {Array<Object>} resourceUrls
+ * @readonly
  */
 class Video extends Entity {
 

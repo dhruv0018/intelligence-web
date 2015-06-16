@@ -50,6 +50,93 @@ const schema = require('../../schemas/transcode-profile.json');
 /**
  * TranscodeProfile Entity Model
  * @class TranscodeProfile
+ *//**
+ * Server-assigned index identification number
+ * @property {Integer} id
+ * @readonly
+ * @example 231
+ *//**
+ * Back-reference identification to a parent Video
+ * @property {Integer} videoId
+ * @readonly
+ * @example 29
+ *//**
+ * (1 = Incomplete, 2 = Uploaded, 3 = Complete, 4 = Failed)
+ * @property {Integer} status
+ * @example 3
+ *//**
+ * URL for the video transcoded with TranscodeProfile
+ * @property {String} url
+ * @readonly
+ *//**
+ * URL for the video transcoded with TranscodeProfile
+ * @property {String} videoUrl
+ * @deprecated in favor of this.url
+ * @readonly
+ *//**
+ * Output properties of the TranscodeProfile
+ * @property {Object} profile
+ * @constant
+ * @readonly
+ *//**
+ * Output properties of the TranscodeProfile
+ * @property {Object} transcodeProfile
+ * @deprecated in favor of this.profile
+ * @readonly
+ *//**
+ * Map key for TRANSCODE_PROFILES constant
+ * @property {Integer} transcodeProfileId
+ * @readonly
+ * @example 3
+ *//**
+ * Output target bitrate of the TranscodeProfile
+ * @property {Integer} targetBitrate
+ * @readonly
+ * @example 3500
+ *//**
+ * Output maximum bitrate of the TranscodeProfile
+ * @property {Integer} maximumBitrate
+ * @readonly
+ * @example 5000
+ *//**
+ * Output minimum bitrate of the TranscodeProfile
+ * @property {Integer} minimumBitrate
+ * @readonly
+ * @example 2400
+ *//**
+ * Semantic description of the profile signal format
+ * @property {String} description
+ * @readonly
+ * @example "HD Resolution (720p)"
+ *//**
+ * Output target display width of the TranscodeProfile
+ * @property {Integer} targetDisplayWidth
+ * @readonly
+ * @example 1280
+ *//**
+ * Output target display height of the TranscodeProfile
+ * @property {Integer} targetDisplayHeight
+ * @readonly
+ * @example 720
+ *//**
+ * Stringified description of output aspect ratio
+ * @property {String} aspectRatio
+ * @readonly
+ * @example "16:9"
+ *//**
+ * Concise description of the TranscodeProfile
+ * @property {String} title
+ * @readonly
+ * @example "720p"
+ *//**
+ * Map key for TRANSCODE_PROFILES constant
+ * @property {Object} resourceUrl
+ * @readonly
+ * @example
+ * {
+ *     type: 'video/mp4',
+ *     src: $sce.trustAsResourceUrl(this.url)
+ * }
  */
 class TranscodeProfile extends Entity {
 
