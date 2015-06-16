@@ -18,6 +18,15 @@ class TextField extends Field {
 
         this.availableOptions = null;
     }
+
+    toJSON() {
+        let variableValue = {};
+        variableValue = {
+            type: null,
+            value: this.value.content
+        };
+        return JSON.stringify(variableValue);
+    }
 }
 
 export default TextField;
