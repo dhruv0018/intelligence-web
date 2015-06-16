@@ -6,7 +6,7 @@
 
         <button class="btn-back" data-ng-if="indexing.isIndexing" data-ng-click="indexing.back()">Back (Esc)</button>
 
-        <indexing-block></indexing-block>
+        <indexing-block ng-if="!fullScreenEnabled"></indexing-block>
 
         <video-player overlay-elements="overlayElements" sources="sources">
         	<indexing-block></indexing-block>
