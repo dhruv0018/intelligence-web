@@ -81,6 +81,23 @@ class Video extends Entity {
     }
 
     /**
+     * Serializes Video entity to valid JSON
+     * @method Video.toJSON
+     * @returns {Object} VideoJSONObject
+     */
+    toJSON () {
+
+        let copy = Object.assign({}, this);
+
+        if (copy.transcodeProfiles) {
+
+            copy.videoTranscodeProfiles = video.videoTranscodeProfiles.map(transcodeProfile => JSON.stringify(transcodeProfile));
+        }
+
+        return copy;
+    }
+
+    /**
     * Checks a video JSON object for valid properties
     * @method Video.validate
     * @param {Object} VideoJSONObject [req]

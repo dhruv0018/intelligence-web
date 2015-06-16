@@ -82,6 +82,22 @@ class TranscodeProfile extends Entity {
     }
 
     /**
+     * Serializes Video entity to valid JSON
+     * @method Video.toJSON
+     * @returns {Object} VideoJSONObject
+     */
+    toJSON () {
+
+        let copy = Object.assign({}, this);
+
+        copy.transcodeProfile = this.profile;
+        delete copy.transcodeProfile.title;
+        delete copy.transcodeProfileId;
+
+        return copy;
+    }
+
+    /**
     * Checks a transcodeProfile JSON object for valid properties
     * @method TranscodeProfile.validate
     * @param {Object} TranscodeProfileJSONObject [req]

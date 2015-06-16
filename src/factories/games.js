@@ -47,6 +47,17 @@ IntelligenceWebClient.factory('GamesFactory', [
                     share.isBreakdownShared = JSON.parse(share.isBreakdownShared);
                 });
 
+                /*
+                 * FIXME:
+                 * Using Object.assign to strip video of getters during
+                 * resource save to in order to pass JSON validation.
+                 * TODO:
+                 * delete copy.video.resourceUrls;
+                 * delete copy.video.transcodeProfiles;
+                 * Investigate why ^ doesn't work
+                 */
+                copy.video = Object.assign({}, copy.video);
+
                 return copy;
             },
             extend: function(game) {
