@@ -18,6 +18,15 @@ class DropdownField extends Field {
         this.value = value;
         this.availableOptions = JSON.parse(this.options);
     }
+
+    toJSON() {
+        let variableValue = {};
+        variableValue = {
+            type: null,
+            value: this.value.content
+        };
+        return JSON.stringify(variableValue);
+    }
 }
 
 export default DropdownField;
