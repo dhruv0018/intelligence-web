@@ -57,6 +57,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                  * Investigate why ^ doesn't work
                  */
                 copy.video = Object.assign({}, copy.video);
+                copy.video.videoTranscodeProfiles = copy.video.videoTranscodeProfiles.map(profile => Object.assign({}, profile.toJSON()));
 
                 return copy;
             },
