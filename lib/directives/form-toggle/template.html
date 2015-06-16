@@ -1,7 +1,11 @@
+<!-- FIXME: The ngClick below is temporary in order to fix the garbage that
+            is Angular Material. Material is highjacking mobile taps on labels
+            and/or checkboxes. -->
 <label
  class="form-toggle-label"
  for="{{id}}"
  ng-class="{'form-toggle-checked': model}"
+ ng-click="model = !model;"
 >
 
     <check-box checked="model"></check-box>
