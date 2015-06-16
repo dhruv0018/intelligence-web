@@ -17,13 +17,12 @@ module.exports = function(config) {
         ],
 
         exclude: [
-
         ],
 
         frameworks: ['mocha', 'chai', 'chai-as-promised', 'sinon-chai', 'browserify'],
 
         preprocessors: {
-            'test/unit/**/*.es6.js': ['browserify']
+            'test/unit/**/*.js': ['browserify']
         },
 
         browserify: {
