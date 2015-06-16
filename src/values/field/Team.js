@@ -11,7 +11,11 @@ class TeamField extends Field {
 
         let injector = angular.element(document).injector();
 
-        let value = {};
+        //initialization
+        let value = {
+            name: null,
+            teamId: null
+        };
 
         if (field.value) {
             let teams = injector.get('TeamsFactory');
@@ -22,6 +26,16 @@ class TeamField extends Field {
 
         this.value = value;
 
+    }
+
+    toJSON() {
+        let variableValue = {};
+        //todo make a constant for type
+        variableValue = {
+            type: 'Team',
+            value: this.value.teamId
+        };
+        return JSON.stringify(variableValue);
     }
 }
 
