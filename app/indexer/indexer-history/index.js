@@ -59,21 +59,21 @@ Games.service('Indexer.Games.Data.Dependencies', [
     '$q', 'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'SchoolsFactory',
     function($q, session, users, games, teams, leagues, sports, schools) {
 
-        var Data = {
+        let Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
 
             get users() {
 
-                var userId = session.currentUser.id;
+                let userId = session.currentUser.id;
 
                 return users.load({ relatedUserId: userId });
             },
 
             get teams() {
 
-                var userId = session.currentUser.id;
+                let userId = session.currentUser.id;
 
                 return teams.load({ relatedUserId: userId });
             },
@@ -82,7 +82,7 @@ Games.service('Indexer.Games.Data.Dependencies', [
 
                 return this.teams.then(function(teams) {
 
-                    var schoolIds = teams
+                    let schoolIds = teams
 
                     .filter(function(team) {
 
@@ -100,7 +100,7 @@ Games.service('Indexer.Games.Data.Dependencies', [
 
             get games() {
 
-                var userId = session.currentUser.id;
+                let userId = session.currentUser.id;
 
                 return games.load({ assignedUserId: userId });
             }
@@ -122,6 +122,8 @@ Games.controller('indexer-history.Controller', [
     '$scope', '$state', '$interval', 'config', 'GAME_TYPES', 'TeamsFactory', 'LeaguesFactory', 'GamesFactory', 'SportsFactory', 'UsersFactory', 'SessionService', 'Indexer.Games.Data', 'INDEXER_GROUPS', 'GAME_STATUSES',
     function controller($scope, $state, $interval, config, GAME_TYPES, teams, leagues, games, sports, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
 
+        const ONE_MINUTE = 60000;
+
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.sports = sports.getCollection();
         $scope.leagues = leagues.getCollection();
@@ -131,14 +133,21 @@ Games.controller('indexer-history.Controller', [
         $scope.footballFAQ = config.links.indexerFAQ.football.uri;
         $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
 
-        var userLocation = session.currentUser.currentRole.indexerGroupId;
+        let userLocation = session.currentUser.currentRole.indexerGroupId;
 
-        if (userLocation === INDEXER_GROUPS.US_MARKETPLACE) {
-            $scope.signUpLocation = config.links.indexerSignUp.unitedStates.uri;
-        } else if (userLocation === INDEXER_GROUPS.INDIA_MARKETPLACE || userLocation === INDEXER_GROUPS.INDIA_OFFICE) {
-            $scope.signUpLocation = config.links.indexerSignUp.india.uri;
-        } else if (userLocation === INDEXER_GROUPS.PHILIPPINES_OFFICE) {
-            $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
+        switch (userLocation) {
+            case INDEXER_GROUPS.US_MARKETPLACE:
+                $scope.signUpLocation = config.links.indexerSignUp.unitedStates.uri;
+                break;
+            case INDEXER_GROUPS.INDIA_MARKETPLACE:
+                $scope.signUpLocation = config.links.indexerSignUp.india.uri;
+                break;
+            case INDEXER_GROUPS.INDIA_OFFICE:
+                $scope.signUpLocation = config.links.indexerSignUp.india.uri;
+                break;
+            case INDEXER_GROUPS.PHILIPPINES_OFFICE:
+                $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
+                break;
         }
 
         $scope.games = games.getList({ assignedUserId: $scope.userId });
@@ -147,7 +156,7 @@ Games.controller('indexer-history.Controller', [
             game.timeRemaining = game.assignmentTimeRemaining();
         });
 
-        var refreshGames = function() {
+        let refreshGames = function() {
 
             angular.forEach($scope.games, function(game) {
 
@@ -158,9 +167,7 @@ Games.controller('indexer-history.Controller', [
             });
         };
 
-        var ONE_MINUTE = 60000;
-
-        var refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
+        let refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
 
         $scope.$on('$destroy', function() {
 

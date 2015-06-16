@@ -49,7 +49,6 @@
 	        	</tr>
 	        	</thead>
 	        	<tbody>
-                <!-- assignment in indexerAssignments | filter:byTimeAssigned -->
         		<tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'datePlayed' | byDeadline: false">
                     <td>{{(game | byUserDeadlineTime)[0].timeAssigned | date:'MM/dd/yyyy'}}</td>
         			<td>{{game.id}}</td>
