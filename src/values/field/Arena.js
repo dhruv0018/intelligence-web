@@ -18,6 +18,20 @@ class ArenaField extends Field {
 
         this.availableOptions = null;
     }
+
+    toJSON() {
+        let variablevalue = {};
+        variableValue = {
+            type: null,
+            value: {
+                coordinates: this.value.coordinates,
+                region: {
+                    id: this.value.regionId
+                }
+            }
+        };
+
+    }
 }
 
 export default ArenaField;
