@@ -16,7 +16,7 @@ class GapField extends Field {
         };
 
         if (field.value) {
-            value.gapId = this.value;
+            value.gapId = field.value;
         }
 
         this.value = value;

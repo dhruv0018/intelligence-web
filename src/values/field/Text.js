@@ -15,7 +15,7 @@ class TextField extends Field {
         };
 
         if (field.value) {
-            value.content = this.value;
+            value.content = field.value;
         }
 
         this.value = value;

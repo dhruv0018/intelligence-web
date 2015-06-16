@@ -9,8 +9,6 @@ class DropdownField extends Field {
         if (!field) return;
         super(field);
 
-        let injector = angular.element(document).injector();
-
         let value = {
             content: !field.isRequired ? 'Optional' : null
         };
@@ -20,7 +18,7 @@ class DropdownField extends Field {
         }
 
         this.value = value;
-        this.availableOptions = JSON.parse(this.options);
+        this.availableOptions = JSON.parse(field.options);
     }
 
     toJSON() {

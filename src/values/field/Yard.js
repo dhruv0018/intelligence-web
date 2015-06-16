@@ -9,11 +9,11 @@ class YardField extends Field {
         super(field);
 
         let value = {
-            content: !field.isRequired? 'Optional' : null
+            content: !field.isRequired ? 'Optional' : null
         };
 
         if (field.value) {
-            value.content = this.value;
+            value.content = field.value;
         }
 
         this.availableOptions = [];
@@ -21,6 +21,8 @@ class YardField extends Field {
         for (let yard = 1; yard < 100; yard++) {
             this.availableOptions.push(yard);
         }
+
+        this.value = value;
     }
 
     toJSON() {

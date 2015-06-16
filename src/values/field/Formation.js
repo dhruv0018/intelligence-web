@@ -17,8 +17,8 @@ class FormationField extends Field {
         };
 
         if (field.value) {
-            value.formationId = this.value;
-            value.numberPlayers = this.numberPlayers;
+            value.formationId = field.value;
+            value.numberPlayers = field.numberPlayers;
         }
 
         this.value = value;

@@ -16,7 +16,7 @@ class PassingZoneField extends Field {
         };
 
         if (field.value) {
-            value.zoneId = this.value;
+            value.zoneId = field.value;
         }
 
         this.value = value;
