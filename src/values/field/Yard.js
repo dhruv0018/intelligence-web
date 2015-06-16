@@ -21,6 +21,15 @@ class YardField extends Field {
             this.availableOptions.push(yard);
         }
     }
+
+    toJSON() {
+        let variableValue = {};
+        variableValue = {
+            type: null,
+            value: this.value.content
+        };
+        return JSON.stringify(variableValue);
+    }
 }
 
 export default YardField;
