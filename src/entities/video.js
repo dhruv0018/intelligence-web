@@ -95,7 +95,7 @@ class Video extends Entity {
                 throw new Error('Invoking Video.validate without passing a JSON object');
         }
 
-        let validation =  tv4.validateMultiple(video, schema);
+        let validation = tv4.validateMultiple(video, schema);
 
         return validation;
     }

@@ -197,8 +197,7 @@ class TranscodeProfile extends Entity {
      */
     get title() {
 
-        // TODO: Improve readability
-        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]].title;
+        return this.profile.title;
     }
 
     /**
