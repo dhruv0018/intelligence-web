@@ -20,7 +20,7 @@ class ArenaField extends Field {
     }
 
     toJSON() {
-        let variablevalue = {};
+        let variableValue = {};
         variableValue = {
             type: null,
             value: {
@@ -30,7 +30,7 @@ class ArenaField extends Field {
                 }
             }
         };
-
+        return JSON.stringify(variableValue);
     }
 }
 
