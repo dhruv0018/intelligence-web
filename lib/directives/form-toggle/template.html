@@ -5,7 +5,7 @@
  class="form-toggle-label"
  for="{{id}}"
  ng-class="{'form-toggle-checked': model}"
- ng-click="model = !model;"
+ ng-click="model = !model; form[name].$dirty = true;"
 >
 
     <check-box checked="model"></check-box>
