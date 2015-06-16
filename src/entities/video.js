@@ -101,39 +101,6 @@ class Video extends Entity {
     }
 
     /**
-     * Getter for Video.id
-     * @method Video.id
-     * @readonly
-     * @returns {Integer} id
-     */
-    get id() {
-
-        return this.id;
-    }
-
-    /**
-     * Getter for Video.guid
-     * @method Video.guid
-     * @readonly
-     * @returns {String} guid
-     */
-    get guid() {
-
-        return this.guid;
-    }
-
-    /**
-     * Getter for Video.status
-     * @method Video.status
-     * @readonly
-     * @returns {Integer} status
-     */
-    get status() {
-
-        return this.status;
-    }
-
-    /**
      * Getter for Video.videoTranscodeProfiles
      * @method Video.videoTranscodeProfiles
      * @returns {Array} transcodeProfiles array of entities
@@ -151,29 +118,6 @@ class Video extends Entity {
     set transcodeProfiles(transcodeProfiles) {
 
         this.videoTranscodeProfiles = transcodeProfiles;
-    }
-
-    /**
-     * Getter for Video.duration
-     * @method Video.duration
-     * @readonly
-     * @returns {Integer} duration
-     */
-    get duration() {
-
-        // Seconds
-        return this.duration;
-    }
-
-    /**
-     * Getter for Video.thumbnail
-     * @method Video.thumbnail
-     * @readonly
-     * @returns {String} thumbnail
-     */
-    get thumbnail() {
-
-        return this.thumbnail;
     }
 
     /**

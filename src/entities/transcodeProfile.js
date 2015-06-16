@@ -102,28 +102,6 @@ class TranscodeProfile extends Entity {
     }
 
     /**
-     * Getter for TranscodeProfile.id
-     * @method TranscodeProfile.id
-     * @readonly
-     * @returns {Integer} id
-     */
-    get id() {
-
-        return this.id;
-    }
-
-    /**
-     * Getter for TranscodeProfile.videoId
-     * @method TranscodeProfile.videoId
-     * @readonly
-     * @returns {Integer} videoId
-     */
-    get videoId() {
-
-        return this.videoId;
-    }
-
-    /**
      * Getter for TranscodeProfile.profile
      * @method TrancodeProfile.profile
      * @readonly
@@ -221,17 +199,6 @@ class TranscodeProfile extends Entity {
 
         // TODO: Improve readability
         return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]].title;
-    }
-
-    /**
-     * Getter for TranscodeProfile.status
-     * @method TranscodeProfile.status
-     * @readonly
-     * @returns {Integer} status
-     */
-    get status() {
-
-        return this.status;
     }
 
     /**
