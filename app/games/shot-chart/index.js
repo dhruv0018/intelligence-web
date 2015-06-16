@@ -31,11 +31,16 @@ GamesShotChart.config([
     }
 ]);
 
-GamesShotChart.controller('GamesShotChart.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'GAME_STATUS_IDS',
-    function controller($scope, $state, $stateParams, games, GAME_STATUS_IDS) {
+GamesShotChartController.$inject = [
+    '$scope',
+    'GamesFactory'
+];
 
+function GamesShotChartController(
+    $scope,
+    games
+) {
 
+}
 
-    }
-]);
+GamesShotChart.controller('GamesShotChart.controller', GamesShotChartController);
