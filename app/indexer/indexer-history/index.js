@@ -168,17 +168,3 @@ Games.controller('indexer-history.Controller', [
         });
     }
 ]);
-
-//TODO find out why games are coming down for indexers if they are not assigned to them or their assignment has finished
-Games.filter('assignedGames',
-    ['SessionService',
-        function(session) {
-            return function(games) {
-                return games.filter(function(game) {
-                    return game.indexerAssignments.some(function(assignment) {
-                        return !assignment.timeFinished && assignment.userId === session.currentUser.id;
-                    });
-                });
-            };
-        }
-    ]);

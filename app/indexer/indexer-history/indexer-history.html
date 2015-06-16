@@ -43,7 +43,6 @@
                     <th>Date Assigned</th>
             		<th>Game ID</th>
             		<th>Game</th>
-            		<th>Coach</th>
             		<th>Sport</th>
             		<th>Indexed/QA’d</th>
                     <th>Date Completed</th>
@@ -52,14 +51,13 @@
 	        	<tbody>
                 <!-- assignment in indexerAssignments | filter:byTimeAssigned -->
         		<tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'datePlayed' | byDeadline: false">
-                    <td>{{(game | byDateAssigned)[0].timeAssigned | date:'MM-dd-yyyy'}}</td>
+                    <td>{{(game | byUserDeadlineTime)[0].timeAssigned | date:'MM/dd/yyyy'}}</td>
         			<td>{{game.id}}</td>
         			<td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="indexer-game({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
-                    <td>{{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}</td>
         			<td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
-                    <td>{{(game | byDateAssigned)[0].isQa ? 'QA' : 'Indexer'}}</td>
+                    <td>{{(game | byUserDeadlineTime)[0].isQa ? 'QA' : 'Indexed'}}</td>
                     <td>
-                        {{(game | byTimeFinishedAndDate) ? 'Complete' : 'Incomplete'}}
+                        {{(game | byUserDeadlineTime)[0].timeFinished ? ((game | byUserDeadlineTime)[0].timeFinished | date:'MM/dd/yyyy') : 'Incomplete'}}
                     </td>
         		</tr>
 	        	</tbody>
