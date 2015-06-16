@@ -128,7 +128,7 @@ class Video extends Entity {
 
         if (copy.transcodeProfiles) {
 
-            copy.videoTranscodeProfiles = video.videoTranscodeProfiles.map(transcodeProfile => JSON.stringify(transcodeProfile));
+            copy.videoTranscodeProfiles = copy.videoTranscodeProfiles.map(transcodeProfile => JSON.stringify(transcodeProfile));
         }
 
         return copy;
