@@ -1,11 +1,22 @@
 @import (reference) "main.less";
 
+@line-height: 45px;
+
+form-toggle {
+
+    check-box {
+
+        line-height: @line-height;
+        vertical-align: middle;
+    }
+}
+
 .form-toggle {
 
     &-label {
 
-        height: 45px;
-        line-height: 45px;
+        height: @line-height;
+        line-height: @line-height;
         cursor: pointer;
     }
 

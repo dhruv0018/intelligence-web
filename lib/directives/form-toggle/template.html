@@ -1,7 +1,8 @@
 <label
  class="form-toggle-label"
  for="{{id}}"
- ng-class="{'form-toggle-checked': model}">
+ ng-class="{'form-toggle-checked': model}"
+>
 
     <check-box checked="model"></check-box>
 
@@ -11,7 +12,8 @@
      type="checkbox"
      name="{{name}}"
      ng-model="model"
-     ng-required="required">
+     ng-required="required"
+    >
 
     <ng-transclude></ng-transclude>
 
@@ -19,6 +21,7 @@
          ngMessages -->
     <div class="error"
      ng-if="form[name].$dirty && form[name].$error.required"
-     role="alert">Required!</div>
+     role="alert"
+    >Required!</div>
 
 </label>
