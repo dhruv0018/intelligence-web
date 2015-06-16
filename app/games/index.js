@@ -11,9 +11,9 @@ require('formations');
 require('shot-chart');
 
 /**
- * Coach game area raw film page module.
- * @module Games
- */
+* Coach game area raw film page module.
+* @module Games
+*/
 var Games = angular.module('Games', [
     'Games.RawFilm',
     'Games.Breakdown',
@@ -132,68 +132,100 @@ Games.config([
     }
 ]);
 
-Games.controller('Games.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'AuthenticationService', 'SessionService', 'ROLES',
-    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, auth, session, ROLES) {
-        $scope.game = games.get($stateParams.id);
+GamesController.$inject = [
+    'Features',
+    'ROLES',
+    'SessionService',
+    'AuthenticationService',
+    'SPORT_IDS',
+    'SPORTS',
+    'UsersFactory',
+    'LeaguesFactory',
+    'TeamsFactory',
+    'GamesFactory',
+    '$stateParams',
+    '$state',
+    '$scope'
+];
 
-        $scope.teams = teams.getCollection();
-        $scope.team = $scope.teams[$scope.game.teamId];
-        $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
+function GamesController(
+    features,
+    ROLES,
+    session,
+    auth,
+    SPORT_IDS,
+    SPORTS,
+    users,
+    leagues,
+    teams,
+    games,
+    $stateParams,
+    $state,
+    $scope
+) {
 
-        //todo alex -- remove this when it is not needed for header
-        $scope.isPublic = true;
+    $scope.game = games.get($stateParams.id);
 
-        $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
-        $scope.league = leagues.get($scope.uploaderTeam.leagueId);
-        $scope.auth = auth;
-        var currentUser = session.currentUser;
+    $scope.teams = teams.getCollection();
+    $scope.team = $scope.teams[$scope.game.teamId];
+    $scope.opposingTeam = $scope.teams[$scope.game.opposingTeamId];
 
-        //define states for view selector
-        $scope.gameStates = [];
+    //todo alex -- remove this when it is not needed for header
+    $scope.isPublic = true;
 
-        var sport = SPORTS[SPORT_IDS[$scope.league.sportId]];
-        var transcodeCompleted = $scope.game.isVideoTranscodeComplete();
-        var gameDelivered = $scope.game.isDelivered();
-        var gameBelongsToUserTeam = $scope.game.uploaderTeamId === currentUser.currentRole.teamId;
-        var sharedWithCurrentUser = $scope.game.isSharedWithUser(currentUser);
-        var breakdownShared = $scope.game.publicShare && $scope.game.publicShare.isBreakdownShared || sharedWithCurrentUser && $scope.game.getShareByUser(currentUser).isBreakdownShared;
+    $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
+    $scope.league = leagues.get($scope.uploaderTeam.leagueId);
+    $scope.auth = auth;
+    var currentUser = session.currentUser;
 
-        if (gameBelongsToUserTeam && currentUser.is(ROLES.COACH)) {
-            //game information
-            $scope.gameStates.push({name: 'Games.Info'});
+    //define states for view selector
+    $scope.gameStates = [];
 
-            //statistics related states
-            if (gameDelivered) {
-                if (sport.hasStatistics) {
-                    $scope.gameStates.push({name: 'Games.Stats'});
-                }
-                //sport specific states
-                switch (sport.id) {
-                    case SPORTS.BASKETBALL.id:
+    var sport = SPORTS[SPORT_IDS[$scope.league.sportId]];
+    var transcodeCompleted = $scope.game.isVideoTranscodeComplete();
+    var gameDelivered = $scope.game.isDelivered();
+    var gameBelongsToUserTeam = $scope.game.uploaderTeamId === currentUser.currentRole.teamId;
+    var sharedWithCurrentUser = $scope.game.isSharedWithUser(currentUser);
+    var breakdownShared = $scope.game.publicShare && $scope.game.publicShare.isBreakdownShared || sharedWithCurrentUser && $scope.game.getShareByUser(currentUser).isBreakdownShared;
+
+    if (gameBelongsToUserTeam && currentUser.is(ROLES.COACH)) {
+        //game information
+        $scope.gameStates.push({name: 'Games.Info'});
+
+        //statistics related states
+        if (gameDelivered) {
+            if (sport.hasStatistics) {
+                $scope.gameStates.push({name: 'Games.Stats'});
+            }
+            //sport specific states
+            switch (sport.id) {
+                case SPORTS.BASKETBALL.id:
+                    if (features.isEnabled('ShotChart')) {
                         $scope.gameStates.push({name: 'Games.ShotChart'});
-                        break;
-                    case SPORTS.FOOTBALL.id:
-                        $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
-                        break;
-                }
+                    }
+                    break;
+                case SPORTS.FOOTBALL.id:
+                    $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                    break;
             }
         }
-
-        //video related states
-        if (transcodeCompleted) {
-
-            $scope.gameStates.unshift({name: 'Games.RawFilm'});
-
-            if (gameDelivered) {
-                $scope.gameStates.unshift({name: 'Games.Breakdown'});
-
-                //handles public sharing
-                if (!breakdownShared && !gameBelongsToUserTeam) {
-                    $scope.gameStates.shift();
-                }
-            }
-        }
-
     }
-]);
+
+    //video related states
+    if (transcodeCompleted) {
+
+        $scope.gameStates.unshift({name: 'Games.RawFilm'});
+
+        if (gameDelivered) {
+            $scope.gameStates.unshift({name: 'Games.Breakdown'});
+
+            //handles public sharing
+            if (!breakdownShared && !gameBelongsToUserTeam) {
+                $scope.gameStates.shift();
+            }
+        }
+    }
+
+}
+
+Games.controller('Games.controller', GamesController);

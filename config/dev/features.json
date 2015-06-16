@@ -3,6 +3,11 @@
 
         "Head Coach": true,
         "Assistant Coach": true
+    },
+    "ShotChart": {
+
+        "Head Coach": true,
+        "Assitant Coach": true,
+        "Athlete": true,
     }
 }
-
