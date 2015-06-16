@@ -41,6 +41,22 @@ class TeamPlayerField extends Field {
         this.value = value;
 
     }
+
+    toJSON() {
+        let variableValue = {};
+        if (this.type === 'Player') {
+            variableValue = {
+                type: 'Player',
+                value: this.value.playerId
+            };
+        } else if (this.type === 'Team') {
+            variableValue = {
+                type: 'Team',
+                value: this.value.teamId
+            };
+        }
+        return JSON.stringify(variableValue);
+    }
 }
 
 export default TeamPlayerField;
