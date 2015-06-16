@@ -19,6 +19,15 @@ class GapField extends Field {
 
         this.availableOptions = injector.get('GAPS');
     }
+
+    toJSON(){
+        let variableValue = {};
+        variableValue = {
+            type: null,
+            value: this.value.gapId
+        };
+        return JSON.stringify(variableValue);
+    }
 }
 
 export default GapField;
