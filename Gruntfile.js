@@ -784,4 +784,3 @@ module.exports = function(grunt) {
         'ver:prod'
     ]);
 };
-
