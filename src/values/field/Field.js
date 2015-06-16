@@ -24,6 +24,10 @@ class Field extends Value {
             throw Error('Corrupted data - null value in required field');
         }
     }
+
+    toJSON() {
+        throw Error('Trying to stringify abstract class - Field');
+    }
 }
 
 /**
