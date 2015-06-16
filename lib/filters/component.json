@@ -10,7 +10,8 @@
         "films",
         "normalize",
         "height",
-        "weight"
+        "weight",
+        "to-array"
     ],
     "scripts": [
         "index.js"

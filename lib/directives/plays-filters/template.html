@@ -30,8 +30,8 @@
             </li>
 
             <li>
-                <div data-ng-repeat="(key, filterCategory) in filtersetCategories">
-                    <a data-ng-click="setFilterCategory($event, filterCategory.id)" class="btn" data-ng-class="{'btn-default':(filterCategory.id !== currentFilterCategory), 'btn-primary':(filterCategory.id === currentFilterCategory)}">{{filterCategory.name}}</a>
+                <div ng-repeat="(key, filterCategory) in filtersetCategories | toArray | orderBy: 'sortOrder'">
+                    <a ng-click="setFilterCategory($event, filterCategory.id)" class="btn" ng-class="{'btn-default':(filterCategory.id !== currentFilterCategory), 'btn-primary':(filterCategory.id === currentFilterCategory)}" ng-hide="filterCategory.type === 4 && !isTeamMember">{{filterCategory.name}}</a>
                 </div>
             </li>
             <li>
