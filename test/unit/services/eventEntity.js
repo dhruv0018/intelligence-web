@@ -45,28 +45,24 @@ describe('Event Entity', () => {
 
     it('should have a "hasVariables" getter that works.', () => {
 
-        assert.isDefined(sampleEvent.hasVariables, '"hasVariables" has been defined.');
         expect(sampleEvent.hasVariables).to.be.a('boolean');
         expect(sampleEvent.hasVariables).to.be.true;
     });
 
     it('should have a "isValid" getter that works.', () => {
 
-        assert.isDefined(sampleEvent.isValid, '"isValid" has been defined.');
         expect(sampleEvent.isValid).to.be.a('boolean');
         expect(sampleEvent.isValid).to.be.true;
     });
 
     it('should have a "isFloat" getter that works.', () => {
 
-        assert.isDefined(sampleEvent.isFloat, '"isFloat" has been defined.');
         expect(sampleEvent.isFloat).to.be.a('boolean');
         expect(sampleEvent.isFloat).to.be.false;
     });
 
     it('should have a "isEndAndStart" getter that works.', () => {
 
-        assert.isDefined(sampleEvent.isEndAndStart, '"isEndAndStart" has been defined.');
         expect(sampleEvent.isEndAndStart).to.be.a('boolean');
         expect(sampleEvent.isEndAndStart).to.be.false;
     });
@@ -85,6 +81,10 @@ describe('Event Entity', () => {
             'playId',
             'variableValues'
         ]);
+        assert.isDefined(sampleEvent.hasVariables, '"hasVariables" has been defined.');
+        assert.isDefined(sampleEvent.isValid, '"isValid" has been defined.');
+        assert.isDefined(sampleEvent.isFloat, '"isFloat" has been defined.');
+        assert.isDefined(sampleEvent.isEndAndStart, '"isEndAndStart" has been defined.');
     });
 
     it('should have called toJSON on a JSON.stringify call.', () => {
