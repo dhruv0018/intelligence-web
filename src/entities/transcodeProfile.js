@@ -161,11 +161,11 @@ class TranscodeProfile extends Entity {
             throw new Error(validation.errors.shift());
         }
 
-        // Simplify DB object to constant id for lookups
-        transcodeProfile.transcodeProfileId = transcodeProfile.transcodeProfile.id;
-        delete transcodeProfile.transcodeProfile;
+        super(transcodeProfile);
 
-        return this.extend(transcodeProfile);
+        // Simplify DB object to constant id for lookups
+        this.transcodeProfileId = this.transcodeProfile.id;
+        delete this.transcodeProfile;
     }
 
     /**

@@ -105,19 +105,16 @@ class Video extends Entity {
             throw new Error(validation.errors.shift());
         }
 
-        video.status = video.status || VIDEO_STATUSES.INCOMPLETE.id;
+        super(video);
 
-
+        this.status = this.status || VIDEO_STATUSES.INCOMPLETE.id;
 
         // Instantiate transcodeProfile entities
-        if (this.isComplete(video) && video.videoTranscodeProfiles) {
+        if (this.isComplete() && this.videoTranscodeProfiles) {
 
-            video.videoTranscodeProfiles = video.videoTranscodeProfiles.map(transcodeProfile => new TranscodeProfile(transcodeProfile));
-            video.videoTranscodeProfiles.sort((a, b) => b.targetBitrate - a.targetBitrate);
+            this.videoTranscodeProfiles = this.videoTranscodeProfiles.map(transcodeProfile => new TranscodeProfile(transcodeProfile));
+            this.videoTranscodeProfiles.sort((a, b) => b.targetBitrate - a.targetBitrate);
         }
-
-
-        return this.extend(video);
     }
 
     /**
