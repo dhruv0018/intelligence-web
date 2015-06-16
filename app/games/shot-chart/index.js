@@ -23,6 +23,9 @@ GamesShotChart.config([
                     templateUrl: 'games/shot-chart.html',
                     controller: 'GamesShotChart.controller'
                 }
+            },
+            resolve: {
+                'Games.ShotChart.Data': GamesShotChartData
             }
         };
 
@@ -31,16 +34,49 @@ GamesShotChart.config([
     }
 ]);
 
+/* ShotChart Data Resolve */
+
+GamesShotChartData.$inject = [
+    'GamesFactory',
+    '$stateParams',
+    '$q'
+];
+
+function GamesShotChartData (
+    games,
+    $stateparams,
+    $q
+) {
+
+}
+
+
+/* ShotChart Controller */
+
 GamesShotChartController.$inject = [
-    '$scope',
-    'GamesFactory'
+    'ARENA_TYPES',
+    'GamesFactory',
+    'TeamsFactory',
+    'LeaguesFactory',
+    '$stateParams',
+    '$scope'
 ];
 
 function GamesShotChartController(
-    $scope,
-    games
+    ARENA_TYPES,
+    games,
+    teams,
+    leagues,
+    $stateParams,
+    $scope
 ) {
 
+    let game = games.get($stateParams.id);
+    let team = teams.get(game.teamId);
+    let league = leagues.get(team.leagueId);
+
+    // Determine arena type
+    $scope.arenaType = ARENA_TYPES[league.arenaId].type;
 }
 
 GamesShotChart.controller('GamesShotChart.controller', GamesShotChartController);
