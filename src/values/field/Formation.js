@@ -20,6 +20,15 @@ class FormationField extends Field {
 
         //todo note the available values should be in at this point, lmk if they are not
     }
+
+    toJSON() {
+        let variableValue = {};
+        variableValue = {
+            type: null,
+            value: this.value.formationId
+        };
+        return JSON.stringify(variableValue);
+    }
 }
 
 export default FormationField;
