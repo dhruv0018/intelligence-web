@@ -120,7 +120,8 @@ module.exports = function(grunt) {
                 src: [
                     'app/**/*.js',
                     'lib/**/*.js',
-                    'src/**/*.js'
+                    'src/**/*.js',
+                    'test/unit/**/*/*.js'
                 ]
             },
             less: {
@@ -143,7 +144,8 @@ module.exports = function(grunt) {
                 src: [
                     'app/**/*.js',
                     'lib/**/*.js',
-                    'src/**/*.js'
+                    'src/**/*.js',
+                    'test/unit/**/*/*.js'
                 ],
                 options: {
                     newline: true,
