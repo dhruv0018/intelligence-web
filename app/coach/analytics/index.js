@@ -30,58 +30,18 @@ Analytics.config([
 
         $stateProvider
 
-        .state('Coach.Analytics', {
-            url: '/analytics',
-            views: {
-                'main@root': {
-                    templateUrl: 'coach/analytics/template.html',
-                    controller: 'AnalyticsController'
+            .state('Coach.Analytics', {
+                url: '/analytics',
+                views: {
+                    'main@root': {
+                        templateUrl: 'coach/analytics/template.html',
+                    }
+                },
+                resolve: {
+                    'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
+                        return $q.all(data);
+                    }]
                 }
-            },
-            resolve: {
-                'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
-                    return $q.all(data);
-                }]
-            }
-        });
-    }
-]);
-
-/**
- * Analytics page controller
- */
-
-Analytics.controller('AnalyticsController', [
-    '$scope', '$state', '$stateParams', 'SessionService', 'LeaguesFactory', 'TeamsFactory', 'GAME_TYPES',
-    function controller($scope, $state, $stateParams, session, leagues, teams, GAME_TYPES) {
-        var teamId = session.currentUser.currentRole.teamId;
-        var team = teams.get(teamId);
-        var league = leagues.get(team.leagueId);
-        $scope.seasons = league.seasons;
-        $scope.loadingTables = true;
-        $scope.statsData = {};
-
-        //Game type constants
-        $scope.CONFERENCE = GAME_TYPES.CONFERENCE;
-        $scope.NON_CONFERENCE = GAME_TYPES.NON_CONFERENCE;
-        $scope.PLAYOFF = GAME_TYPES.PLAYOFF;
-
-        $scope.filterQuery = {
-            seasonId: league.seasons[0].id,
-            gameType: ''
-        };
-
-        team.generateStats($scope.filterQuery).then(function(statsData) {
-            $scope.statsData = statsData;
-            $scope.loadingTables = false;
-        });
-
-        $scope.generateStats = function() {
-            $scope.loadingTables = true;
-            team.generateStats($scope.filterQuery).then(function(statsData) {
-                $scope.statsData = statsData;
-                $scope.loadingTables = false;
             });
-        };
-    }
-]);
+        }
+    ]);

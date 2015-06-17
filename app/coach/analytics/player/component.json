@@ -1,5 +1,5 @@
 {
-    "name": "analytics",
+    "name": "analytics-player",
     "templates": [
         "template.html"
     ],
@@ -8,12 +8,5 @@
     ],
     "styles": [
         "styles.less"
-    ],
-    "paths": [
-        "."
-    ],
-    "locals": [
-        "team",
-        "player"
     ]
 }

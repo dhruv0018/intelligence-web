@@ -92,7 +92,13 @@
     <menu class="nav navbar-nav" data-ng-if="currentUser.is(COACH)">
 
         <li data-ui-sref-active="active"><a id="menu-coach-film-home-cta" data-ui-sref="Coach.FilmHome">Film Home</a></li>
-        <li data-ng-if="league.sportId === SPORTS.FOOTBALL.id" data-ui-sref-active="active"><a id="menu-coach-analytics-cta" data-ui-sref="Coach.Analytics">Analytics</a></li>
+        <li ng-if="league.sportId === SPORTS.FOOTBALL.id" id="menu-coach-analytics-cta" class="header-dropdown" ng-class="{active: $state.includes('Coach.Analytics')}">
+            <a class="dropdown-toggle" dropdown-toggle>Analytics</a>
+            <ul class="dropdown-menu">
+                <li><a id="menu-coach-team-analytics-cta" data-ui-sref="Coach.Analytics">Team Analytics</a></li>
+                <li><a id="menu-coach-player-analytics-cta" data-ui-sref="Coach.Analytics.Player">Player Analytics</a></li>
+            </ul>
+        </li>
         <li id="menu-coach-team-cta" class="header-dropdown" data-ng-class="{active: $state.includes('Coach.Team')}">
             <a class="dropdown-toggle" dropdown-toggle>Team</a>
             <ul class="dropdown-menu">
