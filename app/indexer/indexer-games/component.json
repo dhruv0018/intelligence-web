@@ -1,7 +1,8 @@
 {
     "name": "indexer-games",
     "scripts": [
-        "index.js"
+        "index.js",
+        "controller.js"
     ],
     "styles": [
         "styles.less"
