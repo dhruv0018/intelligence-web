@@ -10,18 +10,21 @@ class GapField extends Field {
         super(field);
 
         let injector = angular.element(document).injector();
-        const GAPS = injector.get('GAPS');
+        this.GAPS = injector.get('GAPS');
+        this.GAP_IDS = injector.get('GAP_IDS');
 
         let value = {
             gapId: !field.isRequired ? 'Optional' : undefined
         };
 
         if (field.value) {
-            value.gapId = field.value;
+            let gap = this.GAPS[this.GAP_IDS[field.value]];
+            value.name = gap.name;
+            value.gapId = gap.value;
         }
 
         this.value = value;
-        this.availableValues = Object.keys(GAPS).map(key => GAPS[key]);
+        this.availableValues = Object.keys(this.GAPS).map(key => this.GAPS[key]);
     }
 
     toJSON(){
