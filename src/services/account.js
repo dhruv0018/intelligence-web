@@ -80,7 +80,7 @@ function AccountService (
 
             /* If the user has more than one role, but has not selected
              * a default one yet. */
-            if (user.isActive() && !user.defaultRole) {
+            if (user.isActive() && !user.getDefaultRole()) {
 
                 return $state.go('roles', false);
             }
