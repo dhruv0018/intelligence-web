@@ -12,18 +12,19 @@ class FormationField extends Field {
         let injector = angular.element(document).injector();
 
         let value = {
-            formationId: !field.isRequired ? undefined : null,
-            numberPlayers: 0
+            formationId: !field.isRequired ? null : undefined,
+            numberOfPlayers: 0
         };
 
         if (field.value) {
-            value.formationId = field.value;
-            value.numberPlayers = field.numberPlayers;
+            let formation = this.formations[field.value];
+            value.formationId = formation.id;
+            value.numberOfPlayers = formation.numberPlayers;
+            value.name = formation.name;
         }
 
         this.value = value;
-
-        //todo note the available values should be in at this point, lmk if they are not
+        this.availableValues = Object.keys(this.formations).map(key => this.formations[key]);
     }
 
     toJSON() {
