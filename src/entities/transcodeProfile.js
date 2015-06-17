@@ -165,7 +165,6 @@ class TranscodeProfile extends Entity {
 
         // Simplify DB object to constant id for lookups
         this.transcodeProfileId = this.transcodeProfile.id;
-        delete this.transcodeProfile;
     }
 
     /**
@@ -177,8 +176,6 @@ class TranscodeProfile extends Entity {
 
         let copy = Object.assign({}, this);
 
-        copy.transcodeProfile = this.profile;
-        delete copy.transcodeProfile.title;
         delete copy.transcodeProfileId;
 
         return copy;
@@ -212,7 +209,7 @@ class TranscodeProfile extends Entity {
      */
     get profile() {
 
-        return TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]];
+        return angular.copy(TRANSCODE_PROFILES[TRANSCODE_PROFILE_IDS[this.transcodeProfileId]]);
     }
 
     /**
