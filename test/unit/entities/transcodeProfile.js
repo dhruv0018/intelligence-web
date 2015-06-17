@@ -57,13 +57,11 @@ describe('TranscodeProfile Entity', () => {
     it('should have certain properties when instantiated', () => {
 
         ownProperties.forEach(
-            property =>
-            expect(this).to.have.ownProperty(property)
+            property => expect(this).to.have.ownProperty(property)
         );
 
         getters.forEach(
-            getter =>
-            expect(this).to.have.property(getter)
+            getter => expect(this).to.have.property(getter)
         );
 
         /* FIXME: Test does not pass, I think because the method
