@@ -72,11 +72,42 @@ function GamesShotChartController(
 ) {
 
     let game = games.get($stateParams.id);
-    let team = teams.get(game.teamId);
-    let league = leagues.get(team.leagueId);
+    let homeTeam = teams.get(game.teamId);
+    let opposingTeam = teams.get(game.opposingTeamId);
+    let league = leagues.get(homeTeam.leagueId);
 
     // Determine arena type
     $scope.arenaType = ARENA_TYPES[league.arenaId].type;
+    $scope.homeTeam = homeTeam;
+    $scope.opposingTeam = opposingTeam;
+
+
+    // $scope.arenaEvents = [
+    //     {
+    //         x: 0.32,
+    //         y: 0.5
+    //     },
+    //     {
+    //         x: 0.01,
+    //         y: 0.25
+    //     },
+    //     {
+    //         x: 0.22,
+    //         y: 0.85
+    //     },
+    //     {
+    //         x: 0.95,
+    //         y: 0.12
+    //     },
+    //     {
+    //         x: 0.432,
+    //         y: 0.35
+    //     },
+    //     {
+    //         x: 0.62,
+    //         y: 0.56
+    //     }
+    // ];
 }
 
 GamesShotChart.controller('GamesShotChart.controller', GamesShotChartController);

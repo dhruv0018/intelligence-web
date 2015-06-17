@@ -1,13 +1,62 @@
 <div class="shot-chart">
 
-    <div class="shot-chart-arena">
+    <div class="header">
 
-        <krossover-arena type="arenaType" fit-element>
-
-            <arena-event arena-event="arenaEvent" ng-repeat="arenaEvent in arenaEvents"></arena-event>
-
-        </krossover-arena>
+        <!-- Shot chart arena event count and filter pills -->
 
     </div>
+
+
+    <div class="primary-content">
+
+        <div class="teams">
+
+            <div class="home-team">
+
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+
+                    <rect data-ng-attr-fill="{{ game.primaryJerseyColor }}" x="0" y="0" width="16px" height="16px" />
+
+                </svg>
+
+                <span class="home-team-name">{{homeTeam.name}}</span>
+
+            </div>
+
+            <div class="opposing-team">
+
+                <span class="opposing-team-name">{{opposingTeam.name}}</span>
+
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+
+                    <rect data-ng-attr-fill="{{ game.opposingJerseyColor }}" x="0" y="0" width="16px" height="16px" />
+
+                </svg>
+
+            </div>
+
+        </div>
+
+
+        <div class="filters">
+
+            <!-- Filters -->
+
+        </div>
+
+
+        <div class="shot-chart-arena">
+
+            <krossover-arena type="arenaType" fit-element>
+
+                <arena-event arena-event="arenaEvent" ng-repeat="arenaEvent in arenaEvents"></arena-event>
+
+            </krossover-arena>
+
+        </div>
+
+    </div>
+
+
 
 </div>
