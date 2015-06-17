@@ -13,7 +13,7 @@ Games.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('indexer-games.html', require('./indexer-games.html'));
+        $templateCache.put('template.html', require('./template.html'));
     }
 ]);
 
@@ -33,7 +33,7 @@ Games.config([
                 parent: 'indexer',
                 views: {
                     'main@root': {
-                        templateUrl: 'indexer-games.html',
+                        templateUrl: 'template.html',
                         controller: 'indexer-games.Controller'
                     }
                 },

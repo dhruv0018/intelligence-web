@@ -4,10 +4,10 @@
         "index.js"
     ],
     "styles": [
-        "indexer-history.less"
+        "../indexer-games/styles.less"
     ],
     "templates": [
-        "indexer-history.html"
+        "template.html"
     ],
     "dependencies": {
         "moment/moment": "2.9.0"
