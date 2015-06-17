@@ -50,34 +50,19 @@
                 <i class="icon icon-plus"></i> Add High School
             </span>
             <span class="pull-right" ng-show="athlete.profile.highSchoolGraduationYear" hide show-gt-sm>Class of {{athlete.profile.highSchoolGraduationYear}}</span>
-            <span class="add-field pull-right" ng-show="!athlete.profile.highSchoolGraduationYear && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics" hide show-gt-sm>
-                <i class="icon icon-plus"></i> Add Graduation Year
-            </span>
         </p>
         <ul ng-show="hasHighSchoolInfo || isCurrentUser">
-            <li ng-show="athlete.profile.highSchoolGraduationYear || isCurrentUser" hide-gt-sm>
-                <span ng-show="athlete.profile.highSchoolGraduationYear">Class of {{athlete.profile.highSchoolGraduationYear}}</span>
-                <span class="add-field" ng-show="!athlete.profile.highSchoolGraduationYear && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
-                    <i class="icon icon-plus"></i> Add Graduation Year
-                </span>
+            <li ng-show="athlete.profile.highSchoolGraduationYear" hide-gt-sm>
+                Class of {{athlete.profile.highSchoolGraduationYear}}
             </li>
-            <li ng-show="athlete.profile.highSchoolGpa || isCurrentUser">
-                <span ng-show="athlete.profile.highSchoolGpa">GPA: {{athlete.profile.highSchoolGpa}}</span>
-                <span class="add-field" ng-show="!athlete.profile.highSchoolGpa && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
-                    <i class="icon icon-plus"></i> Add GPA
-                </span>
+            <li ng-show="athlete.profile.highSchoolGpa">
+                GPA: {{athlete.profile.highSchoolGpa}}
             </li>
-            <li ng-show="athlete.profile.satScore || isCurrentUser">
-                <span ng-show="athlete.profile.satScore">SAT Score: {{athlete.profile.satScore}}</span>
-                <span class="add-field" ng-show="!athlete.profile.satScore && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
-                    <i class="icon icon-plus"></i> Add SAT Score
-                </span>
+            <li ng-show="athlete.profile.satScore">
+                SAT Score: {{athlete.profile.satScore}}
             </li>
-            <li ng-show="athlete.profile.actScore || isCurrentUser">
-                <span ng-show="athlete.profile.actScore">ACT Score: {{athlete.profile.actScore}}</span>
-                <span class="add-field" ng-show="!athlete.profile.actScore && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
-                    <i class="icon icon-plus"></i> Add ACT Score
-                </span>
+            <li ng-show="athlete.profile.actScore">
+                ACT Score: {{athlete.profile.actScore}}
             </li>
         </ul>
         <h4 ng-show="hasCollegeInfo || isCurrentUser">College</h4>
@@ -86,23 +71,14 @@
             <span class="add-field" ng-show="!athlete.profile.college && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
                 <i class="icon icon-plus"></i> Add College
             </span>
-            <span class="pull-right" ng-show="athlete.profile.collegeGraduationYear"  hide show-gt-sm>Class of {{athlete.profile.collegeGraduationYear}}</span>
-            <span class="add-field pull-right" ng-show="!athlete.profile.collegeGraduationYear && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics"  hide show-gt-sm>
-                <i class="icon icon-plus"></i> Add Graduation Year
-            </span>
+            <span class="pull-right" ng-show="athlete.profile.collegeGraduationYear" hide show-gt-sm>Class of {{athlete.profile.collegeGraduationYear}}</span>
         </p>
         <ul ng-show="hasCollegeInfo || isCurrentUser">
-            <li ng-show="athlete.profile.collegeGraduationYear || isCurrentUser" hide-gt-sm>
-                <span ng-show="athlete.profile.collegeGraduationYear">Class of {{athlete.profile.collegeGraduationYear}}</span>
-                <span class="add-field" ng-show="!athlete.profile.collegeGraduationYear && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
-                    <i class="icon icon-plus"></i> Add Graduation Year
-                </span>
+            <li ng-show="athlete.profile.collegeGraduationYear" hide-gt-sm>
+                Class of {{athlete.profile.collegeGraduationYear}}
             </li>
-            <li ng-show="athlete.profile.intendedMajor || isCurrentUser">
-                <span ng-show="athlete.profile.intendedMajor">Intended Major: {{athlete.profile.intendedMajor}}</span>
-                <span class="add-field" ng-show="!athlete.profile.intendedMajor && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
-                    <i class="icon icon-plus"></i> Add Intended Major
-                </span>
+            <li ng-show="athlete.profile.intendedMajor">
+                Intended Major: {{athlete.profile.intendedMajor}}
             </li>
         </ul>
         <!-- Show if no academic info -->
