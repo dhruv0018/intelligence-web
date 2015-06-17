@@ -20,7 +20,7 @@ class ArenaField extends Field {
 
         this.value = value;
 
-        this.availableOptions = null;
+        this.availableValues = null;
     }
 
     toJSON() {

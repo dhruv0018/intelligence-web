@@ -18,7 +18,7 @@ class DropdownField extends Field {
         }
 
         this.value = value;
-        this.availableOptions = JSON.parse(field.options);
+        this.availableValues = JSON.parse(field.options);
     }
 
     toJSON() {

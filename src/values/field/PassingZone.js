@@ -21,7 +21,7 @@ class PassingZoneField extends Field {
 
         this.value = value;
 
-        this.availableOptions = injector.get('ZONES');
+        this.availableValues = injector.get('ZONES');
     }
 
     toJSON(){

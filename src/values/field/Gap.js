@@ -21,7 +21,7 @@ class GapField extends Field {
 
         this.value = value;
 
-        this.availableOptions = injector.get('GAPS');
+        this.availableValues = injector.get('GAPS');
     }
 
     toJSON(){

@@ -16,10 +16,10 @@ class YardField extends Field {
             value.content = field.value;
         }
 
-        this.availableOptions = [];
+        this.availableValues = [];
 
         for (let yard = 1; yard < 100; yard++) {
-            this.availableOptions.push(yard);
+            this.availableValues.push(yard);
         }
 
         this.value = value;
