@@ -10,18 +10,23 @@ class PassingZoneField extends Field {
         super(field);
 
         let injector = angular.element(document).injector();
+        this.ZONES = injector.get('ZONES');
+        this.ZONE_IDS = injector.get('ZONE_IDS');
 
         let value = {
             zoneId: !field.isRequired ? 'Optional' : undefined
         };
 
         if (field.value) {
-            value.zoneId = field.value;
+            let zone = this.ZONES[this.ZONE_IDS[field.value]];
+            value.zoneId = zone.value;
+            value.keyboardShortcut = zone.shortcut;
+            value.name = zone.name;
         }
 
         this.value = value;
 
-        this.availableValues = injector.get('ZONES');
+        this.availableValues = Object.keys(this.ZONES).map(key => this.ZONES[key]);
     }
 
     toJSON(){
