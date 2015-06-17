@@ -3,10 +3,27 @@
 .search-dropdown {
     position: relative;
 
+    button {
+        padding: 8px;
+        border: thin solid @gray-border;
+        color: @gray;
+        font-weight: 400;
+
+        .icon-chevron-down {
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    }
+
+    button,
+    button:active,
+    button:focus,
+    button:hover {
+        background-color: white;
+        box-shadow: none;
+    }
+
     .search-dropdown-menu {
-        position: absolute;
-        left: -227px;
-        top: 35px;
         width: 300px;
         padding: 0;
         box-shadow: 2px 2px 10px @gray-light;
@@ -27,7 +44,7 @@
             border-left: 11px solid transparent;
             border-right: 11px solid transparent;
             margin-left: -11px;
-            right: 30px;
+            left: 106px;
             top: -11px;
         }
 
@@ -37,7 +54,7 @@
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
             margin-left: -10px;
-            right: 31px;
+            left: 106px;
             top: -10px;
         }
 
