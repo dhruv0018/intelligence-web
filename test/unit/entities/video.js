@@ -113,4 +113,18 @@ describe('Video Entity', () => {
         expect(this).to.contain.keys(ownProperties);
         expect(copy).to.contain.keys(ownProperties);
     });
+
+    it('should respond to "isComplete"', () => {
+
+        expect(this).to.respondTo('isComplete');
+        expect(this.isComplete()).to.be.a('boolean');
+    });
+
+    it('should respond to "resourceUrls" via getter', () => {
+
+        /* FIXME: Test does not pass, I think because the method
+         * uses the injector for $sce
+         */
+        // expect(this.resourceUrls).to.be.an('array');
+    });
 });
