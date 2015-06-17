@@ -30,7 +30,7 @@ class GapField extends Field {
             type: null,
             value: this.value.gapId
         };
-        return JSON.stringify(variableValue);
+        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }
 }
 

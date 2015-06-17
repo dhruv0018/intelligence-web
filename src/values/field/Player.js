@@ -33,7 +33,7 @@ class PlayerField extends Field {
             type: 'Player',
             value: this.value.playerId
         };
-        return JSON.stringify(variableValue);
+        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }
 }
 

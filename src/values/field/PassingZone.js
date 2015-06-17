@@ -30,7 +30,7 @@ class PassingZoneField extends Field {
             type: null,
             value: this.value.zoneId
         };
-        return JSON.stringify(variableValue);
+        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }
 }
 

@@ -34,7 +34,7 @@ class ArenaField extends Field {
                 }
             }
         };
-        return JSON.stringify(variableValue);
+        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }
 }
 

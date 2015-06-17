@@ -27,7 +27,7 @@ class DropdownField extends Field {
             type: null,
             value: this.value.content
         };
-        return JSON.stringify(variableValue);
+        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }
 }
 
