@@ -120,6 +120,19 @@ describe('Video Entity', () => {
         expect(this.isComplete()).to.be.a('boolean');
     });
 
+    it('should respond to "transcodeProfiles" via getter', () => {
+
+        expect(this.transcodeProfiles).to.deep.equal(this.videoTranscodeProfiles);
+    });
+
+    it('should respond to "transcodeProfiles" via setter', () => {
+
+        let copy = angular.copy(this.transcodeProfiles);
+        this.transcodeProfiles = copy;
+
+        expect(this.transcodeProfiles).to.deep.equal(copy);
+    })
+
     it('should respond to "resourceUrls" via getter', () => {
 
         /* FIXME: Test does not pass, I think because the method
