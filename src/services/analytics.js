@@ -28,9 +28,17 @@ IntelligenceWebClient.service('AnalyticsService', [
             identify: function () {
 
                 let user     = session.retrieveCurrentUser();
-                let teamId   = session.getCurrentTeamId() || '';
+                let teamId   = '';
                 let leagueId = '';
                 let sportId  = '';
+
+                try {
+
+                    teamId = session.getCurrentTeamId();
+                } catch (e) {
+
+                    return;
+                }
 
                 if (teamId) {
 
