@@ -73,7 +73,8 @@
         "role-class",
         "spinner",
         "check-box",
-        "feature"
+        "feature",
+        "search-dropdown"
     ],
     "scripts": [
         "index.js"
