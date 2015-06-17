@@ -9,7 +9,7 @@ class YardField extends Field {
         super(field);
 
         let value = {
-            content: !field.isRequired ? 'Optional' : null
+            content: !field.isRequired ? 'Optional' : undefined
         };
 
         if (field.value) {

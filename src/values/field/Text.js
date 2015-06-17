@@ -11,7 +11,7 @@ class TextField extends Field {
         let injector = angular.element(document).injector();
 
         let value = {
-            content: !field.isRequired? 'Optional' : null
+            content: !field.isRequired? 'Optional' : undefined
         };
 
         if (field.value) {

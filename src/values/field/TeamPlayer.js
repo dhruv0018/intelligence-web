@@ -14,8 +14,8 @@ class TeamPlayerField extends Field {
         //set up basic value for tag field
         let value = {
             name: !field.isRequired ? 'Optional' : undefined,
-            teamId: (field.isRequired && field.type === 'Team') ? null : undefined,
-            playerId: (field.isRequired && field.type === 'Player') ? null : undefined
+            teamId: (!field.isRequired && field.type === 'Team') ? null : undefined,
+            playerId: (!field.isRequired && field.type === 'Player') ? null : undefined
         };
 
         //if the value is set on the field

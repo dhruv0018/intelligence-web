@@ -8,9 +8,10 @@ class ArenaField extends Field {
         super(field);
 
         let injector = angular.element(document).injector();
+        //todo look into initialization of arena value
         let value = {
-            regionId: !field.isRequired ? undefined : null,
-            coordinates: !field.isRequired ? undefined: {}
+            regionId: !field.isRequired ? null : undefined,
+            coordinates: !field.isRequired ? {} : {}
         };
 
         if (field.value && field.value.region && field.value.region.id) {

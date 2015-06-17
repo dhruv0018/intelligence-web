@@ -14,7 +14,7 @@ class TeamField extends Field {
         //initialization
         let value = {
             name: !field.isRequired ? 'Optional' : undefined,
-            teamId: (field.isRequired && field.type === 'Team') ? null : undefined
+            teamId: (!field.isRequired && field.type === 'Team') ? null : undefined
         };
 
         if (field.value) {
