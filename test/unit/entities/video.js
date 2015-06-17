@@ -122,10 +122,13 @@ describe('Video Entity', () => {
 
     it('should respond to "transcodeProfiles" via getter', () => {
 
+        assert.isDefined(this.transcodeProfiles, '"transcodeProfiles" has been defined.');
         expect(this.transcodeProfiles).to.deep.equal(this.videoTranscodeProfiles);
     });
 
     it('should respond to "transcodeProfiles" via setter', () => {
+
+        assert.isDefined(this.transcodeProfiles, '"transcodeProfiles" has been defined.');
 
         let copy = angular.copy(this.transcodeProfiles);
         this.transcodeProfiles = copy;
@@ -138,6 +141,7 @@ describe('Video Entity', () => {
         /* FIXME: Test does not pass, I think because the method
          * uses the injector for $sce
          */
+        //  assert.isDefined(this.resourceUrls, '"resourceUrls" has been defined.');
         // expect(this.resourceUrls).to.be.an('array');
     });
 });

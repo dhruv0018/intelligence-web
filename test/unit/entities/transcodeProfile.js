@@ -125,51 +125,61 @@ describe('TranscodeProfile Entity', () => {
 
     it('should respond to "profile" via getter', () => {
 
+        assert.isDefined(this.profile, '"profile" has been defined.');
         expect(this.profile).to.be.an('object');
     });
 
     it('should respond to "targetBitrate" via getter', () => {
 
+        assert.isDefined(this.targetBitrate, '"targetBitrate" has been defined.');
         expect(this.targetBitrate).to.be.a('number');
     });
 
     it('should respond to "maximumBitrate" via getter', () => {
 
+        assert.isDefined(this.maximumBitrate, '"maximumBitrate" has been defined.');
         expect(this.maximumBitrate).to.be.a('number');
     });
 
     it('should respond to "minimumBitrate" via getter', () => {
 
+        assert.isDefined(this.minimumBitrate, '"minimumBitrate" has been defined.');
         expect(this.minimumBitrate).to.be.a('number');
     });
 
     it('should respond to "description" via getter', () => {
 
+        assert.isDefined(this.description, '"description" has been defined.');
         expect(this.description).to.be.a('string');
     });
 
     it('should respond to "targetDisplayWidth" via getter', () => {
 
+        assert.isDefined(this.targetDisplayWidth, '"targetDisplayWidth" has been defined.');
         expect(this.targetDisplayWidth).to.be.a('number');
     });
 
     it('should respond to "targetDisplayHeight" via getter', () => {
 
+        assert.isDefined(this.targetDisplayHeight, '"targetDisplayHeight" has been defined.');
         expect(this.targetDisplayHeight).to.be.a('number');
     });
 
     it('should respond to "aspectRatio" via getter', () => {
 
+        assert.isDefined(this.aspectRatio, '"aspectRatio" has been defined.');
         expect(this.aspectRatio).to.be.a('string');
     });
 
     it('should respond to "title" via getter', () => {
 
+        assert.isDefined(this.title, '"title" has been defined.');
         expect(this.title).to.be.a('string');
     });
 
     it('should respond to "url" via getter', () => {
 
+        assert.isDefined(this.url, '"url" has been defined.');
         expect(this.url).to.be.a('string');
     });
 
@@ -178,6 +188,8 @@ describe('TranscodeProfile Entity', () => {
         /* FIXME: Test does not pass, I think because the method
          * uses the injector for $sce
          */
+
+        //  assert.isDefined(this.resourceUrl, '"resourceUrl" has been defined.');
         // expect(this.resourceUrl).to.be.an('object');
     });
 });
