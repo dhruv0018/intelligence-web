@@ -44,13 +44,10 @@ class Event extends Entity {
             if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
                 this.variableValues[tagVariable.id].value = null;
             }
-            this.fields[tagVariable.index] = this.FieldFactory(this.variableValues[tagVariable.id]);
-            console.log(this.fields[tagVariable.index]);
-            //if (variableValue.inputType === 'TEAM_DROPDOWN' || variableValue.inputType === 'PLAYER_TEAM_DROPDOWN') {
-            //
-            //}
+            let field = this.FieldFactory(this.variableValues[tagVariable.id]);
+            this.fields[tagVariable.index] = field;
         });
-        //console.log(this);
+
     }
     FieldFactory (variableValue) {
         let field = {};
@@ -90,6 +87,7 @@ class Event extends Entity {
                 field = variableValue;
                 break;
         }
+        console.log(field.toJSON());
         return field;
     }
     /**
