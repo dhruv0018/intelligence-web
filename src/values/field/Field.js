@@ -25,6 +25,21 @@ class Field extends Value {
         }
     }
 
+    //validates data sent to the server
+    isValid(variableValue) {
+        let isValid = false;
+        if (this.isRequired && variableValue.value !== undefined && variableValue.value !== null)
+            isValid = true;
+        else if (!this.isRequired && (variableValue.value || variableValue.value === null))
+            isValid = true;
+        //todo do something with the validation
+        if (!isValid) {
+            console.log('This field does not validate properly and cannot save to the server');
+            console.log(this.inputType, variableValue);
+        }
+        return isValid;
+    }
+
     toJSON() {
         throw Error('Trying to stringify abstract class - Field');
     }
