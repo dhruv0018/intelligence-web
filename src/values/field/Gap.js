@@ -21,6 +21,7 @@ class GapField extends Field {
             let gap = this.GAPS[this.GAP_IDS[field.value]];
             value.name = gap.name;
             value.gapId = gap.value;
+            value.keyboardShortcut = gap.shortcut;
         }
 
         this.value = value;
