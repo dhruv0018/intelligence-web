@@ -81,33 +81,39 @@ function GamesShotChartController(
     $scope.homeTeam = homeTeam;
     $scope.opposingTeam = opposingTeam;
 
-
-    // $scope.arenaEvents = [
-    //     {
-    //         x: 0.32,
-    //         y: 0.5
-    //     },
-    //     {
-    //         x: 0.01,
-    //         y: 0.25
-    //     },
-    //     {
-    //         x: 0.22,
-    //         y: 0.85
-    //     },
-    //     {
-    //         x: 0.95,
-    //         y: 0.12
-    //     },
-    //     {
-    //         x: 0.432,
-    //         y: 0.35
-    //     },
-    //     {
-    //         x: 0.62,
-    //         y: 0.56
-    //     }
-    // ];
+    /* TODO: use arenaChart.get($stateParams.id) to get the arena Events*/
+    $scope.arenaEvents = [
+        {
+            x: 0.32,
+            y: 0.5,
+            isMade: 1
+        },
+        {
+            x: 0.01,
+            y: 0.25,
+            isMade: 1
+        },
+        {
+            x: 0.22,
+            y: 0.85,
+            isMade: 1
+        },
+        {
+            x: 0.95,
+            y: 0.12,
+            isMade: 0
+        },
+        {
+            x: 0.432,
+            y: 0.35,
+            isMade: 0
+        },
+        {
+            x: 0.62,
+            y: 0.56,
+            isMade: 0
+        }
+    ];
 }
 
 GamesShotChart.controller('GamesShotChart.controller', GamesShotChartController);

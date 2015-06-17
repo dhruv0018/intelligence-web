@@ -5,7 +5,13 @@
 >
 
 	 <i
-        class="icon-circle"
+        ng-if="arenaEvent.isMade"
+        class="icon-stop"
     ></i>
+
+    <i
+        ng-if="!arenaEvent.isMade"
+        class="icon-asterisk"
+   ></i>
 
 </div>
