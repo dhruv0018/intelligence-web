@@ -13,19 +13,28 @@ class GapField extends Field {
         this.GAPS = injector.get('GAPS');
         this.GAP_IDS = injector.get('GAP_IDS');
 
-        let value = {
-            gapId: !field.isRequired ? 'Optional' : undefined
+        let gap = {
+            gapId: !field.isRequired ? null : undefined,
+            name: !field.isRequired ? 'Optional' : undefined,
+            keyboardShortcut: null
         };
 
-        if (field.value) {
-            let gap = this.GAPS[this.GAP_IDS[field.value]];
-            value.name = gap.name;
-            value.gapId = gap.value;
-            value.keyboardShortcut = gap.shortcut;
-        }
+        if (field.value) gap = this.GAPS[this.GAP_IDS[field.value]];
 
-        this.value = value;
+        this.currentValue = gap;
         this.availableValues = Object.keys(this.GAPS).map(key => this.GAPS[key]);
+    }
+
+    get currentValue() {
+        return this.value;
+    }
+
+    set currentValue(gap) {
+        let value = {};
+        value.name = gap.name;
+        value.gapId = gap.value;
+        value.keyboardShortcut = gap.shortcut;
+        this.value = value;
     }
 
     toJSON(){
