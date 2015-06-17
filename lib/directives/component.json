@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "arena-event",
         "fit-element",
         "role",
         "rolebar",
