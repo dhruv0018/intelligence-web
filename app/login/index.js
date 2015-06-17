@@ -432,8 +432,6 @@ function LoginController(
 
                 function success(data, status) {
 
-                    $scope.newUser.submitted = false;
-
                     $scope.login          = {};
                     $scope.login.email    = data.email;
                     $scope.login.password = password;
