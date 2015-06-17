@@ -2,7 +2,11 @@
 
     <div class="shot-chart-arena">
 
-        <krossover-arena type="arenaType" fit-element></krossover-arena>
+        <krossover-arena type="arenaType" fit-element>
+
+            <arena-event arena-event="arenaEvent" ng-repeat="arenaEvent in arenaEvents"></arena-event>
+
+        </krossover-arena>
 
     </div>
 
