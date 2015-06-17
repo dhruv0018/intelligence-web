@@ -59,6 +59,8 @@ Games.service('Indexer.Games.Data.Dependencies', [
     '$q', 'SessionService', 'UsersFactory', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'SchoolsFactory',
     function($q, session, users, games, teams, leagues, sports, schools) {
 
+        const userId = session.currentUser.id;
+
         let Data = {
 
             sports: sports.load(),
@@ -66,14 +68,10 @@ Games.service('Indexer.Games.Data.Dependencies', [
 
             get users() {
 
-                let userId = session.currentUser.id;
-
                 return users.load({ relatedUserId: userId });
             },
 
             get teams() {
-
-                let userId = session.currentUser.id;
 
                 return teams.load({ relatedUserId: userId });
             },
@@ -100,8 +98,6 @@ Games.service('Indexer.Games.Data.Dependencies', [
 
             get games() {
 
-                let userId = session.currentUser.id;
-
                 return games.load({ assignedUserId: userId });
             }
         };
@@ -123,6 +119,7 @@ Games.controller('indexer-history.Controller', [
     function controller($scope, $state, $interval, config, GAME_TYPES, teams, leagues, games, sports, users, session, data, INDEXER_GROUPS, GAME_STATUSES) {
 
         const ONE_MINUTE = 60000;
+        const userLocation = session.currentUser.currentRole.indexerGroupId;
 
         $scope.GAME_STATUSES = GAME_STATUSES;
         $scope.sports = sports.getCollection();
@@ -133,15 +130,11 @@ Games.controller('indexer-history.Controller', [
         $scope.footballFAQ = config.links.indexerFAQ.football.uri;
         $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
 
-        let userLocation = session.currentUser.currentRole.indexerGroupId;
-
         switch (userLocation) {
             case INDEXER_GROUPS.US_MARKETPLACE:
                 $scope.signUpLocation = config.links.indexerSignUp.unitedStates.uri;
                 break;
             case INDEXER_GROUPS.INDIA_MARKETPLACE:
-                $scope.signUpLocation = config.links.indexerSignUp.india.uri;
-                break;
             case INDEXER_GROUPS.INDIA_OFFICE:
                 $scope.signUpLocation = config.links.indexerSignUp.india.uri;
                 break;
