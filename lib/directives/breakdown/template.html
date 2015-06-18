@@ -8,14 +8,16 @@
 
             <!-- Game Play -->
             <krossover-play
-                data-ng-if="!isReelsPlay"
-                data-play="play"
-                data-plays="plays"
-                data-reels="reels"
-                data-expand-all="expandAll"
-                data-filtered-plays-ids="filteredPlaysIds"
-                data-ng-show="play.isFiltered"
-                data-ng-repeat="play in plays | orderBy:'startTime'">
+                ng-if="!isReelsPlay"
+                play="play"
+                plays="plays"
+                reels="reels"
+                game="games"
+                league="leagues"
+                expand-all="expandAll"
+                filtered-plays-ids="filteredPlaysIds"
+                ng-show="play.isFiltered"
+                ng-repeat="play in plays | orderBy:'startTime'">
             </krossover-play>
 
             <no-results data-ng-hide="plays.length"></no-results>
