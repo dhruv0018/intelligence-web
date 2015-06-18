@@ -18,9 +18,6 @@ class YardField extends Field {
 
         this.availableValues = [];
 
-        // for (let yard = 1; yard < 100; yard++) {
-        //     this.availableValues.push({content: yard});
-        // }
         this.availableValues = Array.from(new Array(99), (item, yardLength) => {
             return {content: yardLength + 1};
         });
