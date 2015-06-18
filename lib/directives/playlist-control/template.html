@@ -2,7 +2,7 @@
 
     <span class="playlist-control-play-count">Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
 
-    <button class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
+    <button id="playlist-continuous-play-on-off-cta" class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
         <span class="play-all-text">Continuous Play</span>
         <span class="on" data-ng-class="{chosen: playManager.playAllPlays}">ON</span>
         <span class="off" data-ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
