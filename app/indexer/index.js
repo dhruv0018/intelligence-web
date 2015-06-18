@@ -1,7 +1,8 @@
 /* Component dependencies */
-require('indexer-game');
-require('indexer-games');
-require('indexer-history');
+//require('indexer-game');
+import Games from './indexer-games/index';
+import GamesHistory from './indexer-history/index';
+
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;

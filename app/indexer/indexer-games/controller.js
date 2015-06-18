@@ -1,8 +1,7 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-
-IndexingGamesController.$inject = [
+GamesController.$inject = [
     '$scope',
     '$state',
     '$interval',
@@ -22,10 +21,10 @@ IndexingGamesController.$inject = [
 /**
  * Indexing Games Controller controller.
  * @module Games
- * @name IndexingGamesController
+ * @name GamesController
  * @type {Controller}
  */
-function IndexingGamesController(
+function GamesController(
     $scope,
     $state,
     $interval,
@@ -91,3 +90,5 @@ function IndexingGamesController(
             $interval.cancel(refreshGamesInterval);
         });
 }
+
+export default GamesController;

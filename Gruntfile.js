@@ -254,7 +254,8 @@ module.exports = function(grunt) {
             components: {
                 files: {
                     'build/components.css': [
-                        'app/reel/styles.less'
+                        'app/reel/*.less',
+                        'app/indexer/**/*.less'
                     ]
                 }
             }
@@ -783,4 +784,3 @@ module.exports = function(grunt) {
         'ver:prod'
     ]);
 };
-

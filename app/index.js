@@ -6,7 +6,6 @@ require('account');
 require('admin');
 require('coach');
 require('athlete');
-require('indexer');
 require('indexing');
 require('games');
 require('clips');

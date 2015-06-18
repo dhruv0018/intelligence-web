@@ -4,9 +4,7 @@
         "."
     ],
     "local": [
-        "indexer-history",
-        "indexer-game",
-        "indexer-games"
+        "indexer-game"
     ],
     "scripts": [
         "index.js"
