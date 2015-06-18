@@ -112,7 +112,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     return reel.isSharedWithUserId(userId);
                 });
             },
-
             getBySharedWithTeamId: function(teamId) {
 
                 teamId = teamId || session.getCurrentTeamId();
@@ -125,6 +124,27 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 });
             },
 
+            /**
+            * @class Reels
+            * @method
+            * @returns {Boolean} returns if user can view reel
+            * or not.
+            * Check if the user is allowed to view a given reel.
+            */
+            isAllowedToView: function() {
+
+                let self = this;
+                let currentUser = session.getCurrentUser();
+
+                //Check if user has permissions to view reel
+                let isAllowed = self.isSharedWithPublic() ||
+                                self.uploaderUserId === session.getCurrentUserId() ||
+                                (currentUser.is(ROLES.COACH) && self.uploaderTeamId === session.getCurrentTeamId()) ||
+                                self.isSharedWithUser(session.getCurrentUser()) ||
+                                self.isSharedWithTeam();
+
+                return isAllowed;
+            },
             getByRelatedRole:function(userId, teamId) {
 
                 var self = this;
@@ -314,7 +334,10 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
             },
 
-            /* FIXME: Should this be checking for a specific teamId? */
+            /** FIXME: We should consolidate isSharedWithTeam
+             *  and isSharedWithTeamId into one function,
+             *  especially before unit tests
+             */
             isSharedWithTeam: function() {
                 var self = this;
 
