@@ -58,6 +58,8 @@ function ReelController(
     let team = teamsFactory.get(game.teamId);
     let league = leaguesFactory.get(team.leagueId);
 
+    playManager.current = plays[0];
+
     $scope.VIEWPORTS = VIEWPORTS;
     $scope.reel = reel;
     $scope.auth = auth;

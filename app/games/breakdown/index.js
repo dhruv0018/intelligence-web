@@ -130,6 +130,7 @@ GamesBreakdownController.$inject = [
     'FiltersetsFactory',
     'ReelsFactory',
     'VIEWPORTS',
+    'PlayManager',
     'PlaysManager',
     'PlaylistManager'
 ];
@@ -153,6 +154,7 @@ function GamesBreakdownController (
     filtersets,
     reels,
     VIEWPORTS,
+    playManager,
     playsManager,
     playlistManager
 ) {
@@ -198,6 +200,7 @@ function GamesBreakdownController (
             $scope.totalPlays = $scope.plays; // TODO: Unnecessary variable?
             let play = $scope.plays[0];
             if (play) {
+                playManager.current = play;
                 $scope.sources = play.getVideoSources();
             }
 
