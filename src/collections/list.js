@@ -1,18 +1,51 @@
-import Collection from './collection.js';
-
-class List extends Collection {
+class List extends Array {
 
     /**
      * Constructor:
-     * Instantaties List with a new array
+     * Instantaties List as a new array
      *
-     * @param: {Array} (opt) List to copy
-     * @return: {List} New list
+     * @param: {Array} (opt) Array to copy
      */
-    constructor(array = []) {
+    constructor (array = []) {
 
-        this.extend(array);
+        super();
+
+        array.forEach(value => this.push(value));
     }
+
+    /**
+     * Method: includes
+     * Simulates the ES7 includes method
+     *
+     * @return: {Boolean}
+     */
+    includes (searchElement, fromIndex) {
+
+        return !!~this.indexOf(searchElement, fromIndex);
+    }
+
+    /**
+     * Method: identity
+     * Returns a copy of the array, and only the array
+     *
+     * @return: {Array}
+     */
+    identity () {
+
+        return this.slice(0);
+    }
+
+    /**
+     * Method: toJSON
+     * Returns a copy of the array, and only the array
+     *
+     * @return: {Array}
+     */
+    toJSON () {
+
+        return this.identity();
+    }
+    /* NEW */
 
     /**
      * Method:clear
@@ -22,9 +55,7 @@ class List extends Collection {
      */
     clear() {
 
-        this.length = 0;
-
-        return this;
+        return this.splice(0, Number.MAX_VALUE);
     }
 
     /**
@@ -34,7 +65,7 @@ class List extends Collection {
      * @param: {Integer} (req) Index of entry
      * @return: {Object} Entry at index
      */
-    get(index) {
+    get (index) {
 
         switch (arguments.length) {
 
@@ -52,9 +83,9 @@ class List extends Collection {
      *
      * @return: {Object} First entry, OR undefined
      */
-    first() {
+    first () {
 
-        return this[0];
+        return this.slice(0, 1).pop();
     }
 
     /**
@@ -63,9 +94,9 @@ class List extends Collection {
      *
      * @return: {Object} Last entry, OR undefined
      */
-    last() {
+    last () {
 
-        return this[this.length - 1];
+        return this.slice(this.length - 1);
     }
 
     /**
@@ -79,7 +110,7 @@ class List extends Collection {
      *         List, default is [true]
      * @return: {Integer} Length
      */
-    add(item, toLast = true) {
+    add (item, toLast = true) {
 
         switch (arguments.length) {
 
@@ -99,7 +130,7 @@ class List extends Collection {
      *         remove (arrays not accepted)
      * @return: {Integer} Length, OR undefined
      */
-    remove(item) {
+    remove (item) {
 
         switch (arguments.length) {
 
@@ -108,14 +139,10 @@ class List extends Collection {
                 throw new Error('Invoked List.remove without passing an Object to remove');
         }
 
-        let index = this.indexOf(item);
+        if (this.includes(index)) {
 
-        if (!~index) {
-
-            return undefined;
+            return this.splice(index, 1);
         }
-
-        return this.splice(index, 1);
     }
 
     /**
@@ -128,7 +155,7 @@ class List extends Collection {
      *         default is [true]
      * @return: {Array} Sorted List
      */
-    sort(property, descending = true) {
+    sort (property, descending = true) {
 
         switch (arguments.length) {
 
@@ -149,7 +176,7 @@ class List extends Collection {
      *
      * @return: {Boolean} [true] if empty, else [false]
      */
-    isEmpty() {
+    isEmpty () {
 
         return !!this.length;
     }
