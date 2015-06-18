@@ -9,16 +9,24 @@ class DropdownField extends Field {
         if (!field) return;
         super(field);
 
-        let value = {
+        let dropdownOption = {
             content: !field.isRequired ? 'Optional' : undefined
         };
 
-        if (field.value) {
-            value.content = field.value;
-        }
+        if (field.value) dropdownOption.content = field.value;
 
+        this.currentValue = dropdownOption;
+        this.availableValues = JSON.parse(field.options).map(content => { return {content}; });
+    }
+
+    get currentValue(){
+        return this.value;
+    }
+
+    set currentValue(dropdownOption) {
+        let value = {};
+        value.content = dropdownOption.content;
         this.value = value;
-        this.availableValues = JSON.parse(field.options);
     }
 
     toJSON() {
