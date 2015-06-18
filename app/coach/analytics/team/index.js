@@ -5,37 +5,37 @@ var angular = window.angular;
  * Analytics page module.
  * @module Analytics
  */
-var Analytics = angular.module('Coach.Analytics', [
+var TeamAnalytics = angular.module('Coach.Analytics.Team', [
     'ui.router',
     'ui.bootstrap'
 ]);
 
 /* Cache the template files */
-Analytics.run([
+TeamAnalytics.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('coach/analytics/template.html', require('./template.html'));
+        $templateCache.put('coach/analytics/team/template.html', require('./template.html'));
     }
 ]);
 
 /**
- * Analytics page state router.
+ * Team Analytics page state router.
  * @module Analytics
  * @type {UI-Router}
  */
-Analytics.config([
+TeamAnalytics.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
         $stateProvider
 
         .state('Coach.Analytics', {
-            url: '/analytics',
+            url: '/team',
             views: {
                 'main@root': {
-                    templateUrl: 'coach/analytics/template.html',
-                    controller: 'AnalyticsController'
+                    templateUrl: 'coach/analytics/team/template.html',
+                    controller: 'TeamAnalyticsController'
                 }
             },
             resolve: {
@@ -48,10 +48,10 @@ Analytics.config([
 ]);
 
 /**
- * Analytics page controller
+ * Team Analytics page controller
  */
 
-Analytics.controller('AnalyticsController', [
+TeamAnalytics.controller('TeamAnalyticsController', [
     '$scope', '$state', '$stateParams', 'SessionService', 'LeaguesFactory', 'TeamsFactory', 'GAME_TYPES',
     function controller($scope, $state, $stateParams, session, leagues, teams, GAME_TYPES) {
         var teamId = session.currentUser.currentRole.teamId;
