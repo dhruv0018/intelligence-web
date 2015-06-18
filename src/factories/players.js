@@ -27,6 +27,12 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     player.positionIds = {};
                 }
 
+                Object.defineProperty(player, 'name', {
+                    get: function() {
+                        return this.firstName + ' ' + this.lastName;
+                    }
+                });
+
                 return player;
             },
             resendEmail: function(userId, teamId) {
