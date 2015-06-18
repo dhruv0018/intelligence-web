@@ -83,7 +83,7 @@ function GamesShotChartController(
 
     /* Filters */
 
-    let filtersDefault = {
+    const filtersDefault = {
         shots: {
             made: true,
             missed: true
@@ -98,24 +98,30 @@ function GamesShotChartController(
     };
 
     //  make copy of default filters for 'applied' filters
-    $scope.filters = Object.assign({}, filtersDefault);
+    $scope.filters = angular.copy(filtersDefault);
 
-    $scope.arenaEventFilter = function(filters) {
+    /* reset filters */
+    $scope.resetFilters = function() {
+
+        $scope.filters = angular.copy(filtersDefault);
+    };
+
+    $scope.arenaEventFilter = function() {
 
         return function filterArenaEventFilter(arenaEvent) {
 
-            if (!angular.isUndefined(arenaEvent) && !angular.isUndefined(filters)) {
+            if (!angular.isUndefined(arenaEvent)) {
 
                 /* shots */
 
                 let inShotsFilter;
 
-                if (filters.shots.made) {
+                if ($scope.filters.shots.made) {
 
                     if (arenaEvent.isMade) inShotsFilter = true;
                 }
 
-                if (filters.shots.missed) {
+                if ($scope.filters.shots.missed) {
 
                     if (!arenaEvent.isMade) inShotsFilter = true;
                 }
@@ -125,27 +131,27 @@ function GamesShotChartController(
 
                 let inPeriodFilter;
 
-                if (filters.period.one) {
+                if ($scope.filters.period.one) {
 
                     if (arenaEvent.period === '1') inPeriodFilter = true;
                 }
 
-                if (filters.period.two) {
+                if ($scope.filters.period.two) {
 
                     if (arenaEvent.period === '2') inPeriodFilter = true;
                 }
 
-                if (filters.period.three) {
+                if ($scope.filters.period.three) {
 
                     if (arenaEvent.period === '3') inPeriodFilter = true;
                 }
 
-                if (filters.period.four) {
+                if ($scope.filters.period.four) {
 
                     if (arenaEvent.period === '4') inPeriodFilter = true;
                 }
 
-                if (filters.period.overtime) {
+                if ($scope.filters.period.overtime) {
 
                     if (arenaEvent.period === 'OT') inPeriodFilter = true;
                 }
