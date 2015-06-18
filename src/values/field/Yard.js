@@ -8,20 +8,31 @@ class YardField extends Field {
         if (!field) return;
         super(field);
 
-        let value = {
+        let yard = {
             content: !field.isRequired ? 'Optional' : undefined
         };
 
-        if (field.value) {
-            value.content = field.value;
-        }
+        if (field.value) yard.content = field.value;
+
+        this.currentValue = yard;
 
         this.availableValues = [];
 
-        for (let yard = 1; yard < 100; yard++) {
-            this.availableValues.push(yard);
-        }
+        // for (let yard = 1; yard < 100; yard++) {
+        //     this.availableValues.push({content: yard});
+        // }
+        this.availableValues = Array.from(new Array(99), (item, yardLength) => {
+            return {content: yardLength + 1};
+        });
+    }
 
+    get currentValue() {
+        return this.value;
+    }
+
+    set currentValue(yard) {
+        let value = {};
+        value.content = yard.content;
         this.value = value;
     }
 
