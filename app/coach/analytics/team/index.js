@@ -30,7 +30,7 @@ TeamAnalytics.config([
 
         $stateProvider
 
-        .state('Coach.Analytics', {
+        .state('Coach.Analytics.Team', {
             url: '/team',
             views: {
                 'main@root': {
