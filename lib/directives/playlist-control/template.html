@@ -1,6 +1,6 @@
 <div class="krossover-playlist-control">
 
-    <span>Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
+    <span class="playlist-control-play-count">Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
 
     <button class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
         <span class="play-all-text">Continuous Play</span>
