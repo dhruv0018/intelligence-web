@@ -11,6 +11,7 @@ PlayerAnalyticsController.$inject = [
     'SessionService',
     'LeaguesFactory',
     'TeamsFactory',
+    'PlayersFactory',
     'GAME_TYPES'
 ];
 
@@ -25,11 +26,17 @@ function PlayerAnalyticsController(
     session,
     leagues,
     teams,
+    players,
     GAME_TYPES
 ) {
     var teamId = session.currentUser.currentRole.teamId;
     var team = teams.get(teamId);
     var league = leagues.get(team.leagueId);
+
+    players.load({rosterId: team.roster.id}).then(function(data) {
+        $scope.options = data;
+    });
+
     $scope.seasons = league.seasons;
     $scope.loadingTables = true;
     $scope.statsData = {};
