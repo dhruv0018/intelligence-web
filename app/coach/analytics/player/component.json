@@ -1,5 +1,5 @@
 {
-    "name": "analytics-player",
+    "name": "player",
     "templates": [
         "template.html"
     ],

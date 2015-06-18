@@ -13,7 +13,7 @@
         "."
     ],
     "locals": [
-        "team",
-        "player"
+        "player",
+        "team"
     ]
 }

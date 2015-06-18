@@ -1,6 +1,9 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+require('player');
+require('team');
+
 /**
  * Analytics page module.
  * @module Analytics
