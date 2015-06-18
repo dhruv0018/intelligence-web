@@ -1,0 +1,65 @@
+@import (reference) "main.less";
+
+
+.login-maintenance {
+
+    margin-top: 30px;
+    letter-spacing: normal;
+
+    .maintenance-symbol {
+
+        padding: 20px;
+        color: rgb(216, 216, 216);
+        font-size: 50px;
+        line-height: 50px;
+        display: inline-block;
+        border-color: rgb(216, 216, 216);
+        border: 8px solid rgb(216, 216, 216);
+        border-radius: 100px;
+        width: 100px;
+        height: 100px;
+    }
+
+    .maintenace-message {
+
+        border: 1px solid rgb(216, 216, 216);
+
+        p {
+
+            margin-bottom: 0;
+        }
+    }
+
+    main {
+
+        padding: 30px;
+    }
+}
+
+
+/**
+ * Responsive sizes.
+ */
+
+
+/* Screens under 480px */
+@media only screen
+and (max-width: 479px) {
+
+    .login-maintenance {
+
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+}
+
+/* Screens over 480px */
+@media only screen
+and (min-width: 480px) {
+
+    .login-maintenance {
+
+        width: 450px;
+    }
+}
