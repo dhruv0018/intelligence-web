@@ -23,6 +23,7 @@
                 <td class="athlete-column">
 
                     <input
+                     id="{{idHook}}-jersey-cta"
                      size="3"
                      ng-change="updateAthleteInformation()"
                      name="jerseyNumber"
@@ -35,6 +36,7 @@
                 <td class="athlete-column">
 
                     <input
+                     id="{{idHook}}-first-name-cta"
                      ng-change="updateAthleteInformation()"
                      ng-if="!team.isCustomerTeam"
                      class="name"
@@ -49,6 +51,7 @@
                 <td class="athlete-column">
 
                     <input
+                     id="{{idHook}}-last-name-cta"
                      ng-change="updateAthleteInformation()"
                      ng-if="!team.isCustomerTeam"
                      class="name"
@@ -63,12 +66,14 @@
                 <td class="athlete-column">
 
                     <data-positions-dropdown
+                     id="{{idHook}}-positions-cta"
                      ng-model="rosterEntry.playerInfo.positionIds"
                      data-is-active="rosterEntry.playerInfo.isActive"
                      data-player="athlete"
                      data-positionset="positionset"></data-positions-dropdown>
 
                     <button
+                     id="athlete-position-remove-cta"
                      ng-if="!isUserTeam"
                      class="remove btn btn-blank pull-right"
                      ng-click="toggle(rosterEntry)">
@@ -80,8 +85,8 @@
                 </td>
 
                 <td class="athlete-column" ng-if="isUserTeam" ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
-                    <i class="icon icon-check-square-o" ng-show="!rosterEntry.playerInfo.isActive"></i>
-                    <i class="icon icon-check-empty" ng-show="rosterEntry.playerInfo.isActive"></i>
+                    <i id="{{idHook}}-toggle-activation-off-cta" class="icon icon-check-square-o" ng-show="!rosterEntry.playerInfo.isActive"></i>
+                    <i id="{{idHook}}-toggle-activation-on-cta" class="icon icon-check-empty" ng-show="rosterEntry.playerInfo.isActive"></i>
                 </td>
             </tr>
         </table>
