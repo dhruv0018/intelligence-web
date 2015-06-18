@@ -16,6 +16,9 @@ IntelligenceWebClient.config([
 IntelligenceWebClient.value('$previousState', {});
 
 IntelligenceWebClient.run([
+    '$timeout',
+    'DetectDeviceService',
+    'MobileAppDialog.Service',
     'ANONYMOUS_USER',
     '$rootScope',
     '$urlRouter',
@@ -30,6 +33,9 @@ IntelligenceWebClient.run([
     'AlertsService',
     'AccountService',
     function run(
+        $timeout,
+        detectDevice,
+        MobileAppDialog,
         ANONYMOUS_USER,
         $rootScope,
         $urlRouter,
@@ -141,6 +147,16 @@ IntelligenceWebClient.run([
                 /* If the user has NOT accepted the Terms & Conditions,
                  * prompt them to accept. */
                 $state.go('UpdatedTermsAndConditions');
+            } else {
+
+                /* Is user using an iOS or Android device? */
+                let isMobile = detectDevice.iOS() || detectDevice.Android();
+
+                /* If a new user, then only show the mobile app promo dialog. */
+                if (isMobile) {
+
+                    $timeout(MobileAppDialog.show);
+                }
             }
         });
 
