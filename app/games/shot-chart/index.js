@@ -93,6 +93,29 @@ function GamesShotChartController(
     //  make copy of default filters for 'applied' filters
     $scope.filters = Object.assign({}, filtersDefault);
 
+    $scope.arenaEventFilter = function(filters) {
+
+        return function filterArenaEventFilter(arenaEvent) {
+
+            let included = false; //
+
+            if (!angular.isUndefined(arenaEvent) && !angular.isUndefined(filters)) {
+
+                if (filters.shots.made) {
+
+                    if (arenaEvent.isMade) included = true;
+                }
+
+                if (filters.shots.missed) {
+
+                    if (!arenaEvent.isMade) included = true;
+                }
+
+                return included;
+            }
+        };
+    };
+
     /* TODO: use arenaChart.get($stateParams.id) to get the arena Events*/
     $scope.arenaEvents = [
         {

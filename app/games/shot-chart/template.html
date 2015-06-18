@@ -83,7 +83,7 @@
 
             <krossover-arena type="arenaType" fit-element>
 
-                <arena-event arena-event="arenaEvent" ng-repeat="arenaEvent in filteredArenaEvents = (arenaEvents | arenaEventsFilter:filters)"></arena-event>
+                <arena-event arena-event="arenaEvent" ng-repeat="arenaEvent in arenaEvents | filter:arenaEventFilter(filters)"></arena-event>
 
             </krossover-arena>
 
