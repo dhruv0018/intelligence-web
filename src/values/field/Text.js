@@ -8,19 +8,25 @@ class TextField extends Field {
         if (!field) return;
         super(field);
 
-        let injector = angular.element(document).injector();
-
-        let value = {
+        let text = {
             content: !field.isRequired? 'Optional' : undefined
         };
 
-        if (field.value) {
-            value.content = field.value;
-        }
+        if (field.value) text.content = field.value;
 
-        this.value = value;
+        this.currentValue = text;
 
         this.availableValues = null;
+    }
+
+    get currentValue() {
+        return this.value;
+    }
+
+    set currentValue(text) {
+        let value = {};
+        value.content = text.content;
+        this.value = value;
     }
 
     toJSON() {
