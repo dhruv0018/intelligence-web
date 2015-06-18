@@ -1,43 +1,87 @@
 <div class="krossover-athlete">
-    <div class="sidebar-athlete" data-ng-if="!editable">
-        <img data-ng-if="athlete.picture.url" data-ng-src="{{athlete.picture.url}}" width="40" height="40" alt="Avatar">
-        <profile-placeholder data-ng-if="!player.picture.url" data-size="small"></profile-placeholder>
+    <div class="sidebar-athlete" ng-if="!editable">
+        <img ng-if="athlete.picture.url" ng-src="{{athlete.picture.url}}" width="40" height="40" alt="Avatar">
+        <profile-placeholder ng-if="!player.picture.url" data-size="small"></profile-placeholder>
 
         <a>
             <div>{{team.roster.playerInfo[athlete.id].jerseyNumber}}</div>
             <div>{{athlete.firstName[0] + '.'}} {{athlete.lastName}}</div>
         </a>
     </div>
-    <form name="athleteForm" data-ng-if="editable && !athlete.isUnknown">
-        <table data-ng-class="{'deselected': !rosterEntry.playerInfo.isActive,
+    <form name="athleteForm" ng-if="editable && !athlete.isUnknown">
+        <table ng-class="{'deselected': !rosterEntry.playerInfo.isActive,
                                'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}"
                class="table">
             <tr>
-                <td class="athlete-column" data-ng-if="team.isCustomerTeam">
+
+                <td class="athlete-column" ng-if="team.isCustomerTeam">
+
                     <profile-placeholder data-size="small"></profile-placeholder>
-                </td>
-                <td class="athlete-column">
-                    <input size="3" data-ng-change="updateAthleteInformation()" name="jerseyNumber" type="text" data-ng-model="rosterEntry.playerInfo.jerseyNumber">
+
                 </td>
 
                 <td class="athlete-column">
-                    <input data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="First Name" data-ng-model="athlete.firstName">
-                    <span data-ng-if="team.isCustomerTeam"> {{athlete.firstName}}</span>
+
+                    <input
+                     size="3"
+                     ng-change="updateAthleteInformation()"
+                     name="jerseyNumber"
+                     type="text"
+                     ng-model="rosterEntry.playerInfo.jerseyNumber"
+                     ng-disabled="!rosterEntry.playerInfo.isActive">
+
                 </td>
 
                 <td class="athlete-column">
-                    <input data-ng-change="updateAthleteInformation()" data-ng-if="!team.isCustomerTeam" class="name" placeholder="Last Name" data-ng-model="athlete.lastName">
-                    <span data-ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
+
+                    <input
+                     ng-change="updateAthleteInformation()"
+                     ng-if="!team.isCustomerTeam"
+                     class="name"
+                     placeholder="First Name"
+                     ng-model="athlete.firstName"
+                     ng-disabled="!rosterEntry.playerInfo.isActive">
+
+                    <span ng-if="team.isCustomerTeam"> {{athlete.firstName}}</span>
+
                 </td>
 
                 <td class="athlete-column">
-                    <data-positions-dropdown data-ng-model="rosterEntry.playerInfo.positionIds" data-player="athlete" data-positionset="positionset"></data-positions-dropdown>
-                    <button data-ng-if="!isUserTeam" class="remove btn btn-blank pull-right" data-ng-click="toggle(rosterEntry)"><i class="icon icon-remove"></i></button>
+
+                    <input
+                     ng-change="updateAthleteInformation()"
+                     ng-if="!team.isCustomerTeam"
+                     class="name"
+                     placeholder="Last Name"
+                     ng-model="athlete.lastName"
+                     ng-disabled="!rosterEntry.playerInfo.isActive">
+
+                    <span ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
+
                 </td>
 
-                <td class="athlete-column" data-ng-if="isUserTeam" data-ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
-                    <i class="icon icon-check-square-o" data-ng-show="!rosterEntry.playerInfo.isActive"></i>
-                    <i class="icon icon-check-empty" data-ng-show="rosterEntry.playerInfo.isActive"></i>
+                <td class="athlete-column">
+
+                    <data-positions-dropdown
+                     ng-model="rosterEntry.playerInfo.positionIds"
+                     data-is-active="rosterEntry.playerInfo.isActive"
+                     data-player="athlete"
+                     data-positionset="positionset"></data-positions-dropdown>
+
+                    <button
+                     ng-if="!isUserTeam"
+                     class="remove btn btn-blank pull-right"
+                     ng-click="toggle(rosterEntry)">
+
+                        <i class="icon icon-remove"></i>
+
+                    </button>
+
+                </td>
+
+                <td class="athlete-column" ng-if="isUserTeam" ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
+                    <i class="icon icon-check-square-o" ng-show="!rosterEntry.playerInfo.isActive"></i>
+                    <i class="icon icon-check-empty" ng-show="rosterEntry.playerInfo.isActive"></i>
                 </td>
             </tr>
         </table>
