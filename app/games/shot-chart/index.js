@@ -87,6 +87,13 @@ function GamesShotChartController(
         shots: {
             made: true,
             missed: true
+        },
+        period: {
+            one: true,
+            two: true,
+            three: true,
+            four: true,
+            overtime: true
         }
     };
 
@@ -97,21 +104,53 @@ function GamesShotChartController(
 
         return function filterArenaEventFilter(arenaEvent) {
 
-            let included = false; //
-
             if (!angular.isUndefined(arenaEvent) && !angular.isUndefined(filters)) {
+
+                /* shots */
+
+                let inShotsFilter;
 
                 if (filters.shots.made) {
 
-                    if (arenaEvent.isMade) included = true;
+                    if (arenaEvent.isMade) inShotsFilter = true;
                 }
 
                 if (filters.shots.missed) {
 
-                    if (!arenaEvent.isMade) included = true;
+                    if (!arenaEvent.isMade) inShotsFilter = true;
                 }
 
-                return included;
+
+                /* periods */
+
+                let inPeriodFilter;
+
+                if (filters.period.one) {
+
+                    if (arenaEvent.period === '1') inPeriodFilter = true;
+                }
+
+                if (filters.period.two) {
+
+                    if (arenaEvent.period === '2') inPeriodFilter = true;
+                }
+
+                if (filters.period.three) {
+
+                    if (arenaEvent.period === '3') inPeriodFilter = true;
+                }
+
+                if (filters.period.four) {
+
+                    if (arenaEvent.period === '4') inPeriodFilter = true;
+                }
+
+                if (filters.period.overtime) {
+
+                    if (arenaEvent.period === 'OT') inPeriodFilter = true;
+                }
+
+                return (inShotsFilter && inPeriodFilter);
             }
         };
     };
@@ -119,34 +158,40 @@ function GamesShotChartController(
     /* TODO: use arenaChart.get($stateParams.id) to get the arena Events*/
     $scope.arenaEvents = [
         {
-            x: 0.32,
-            y: 0.5,
-            isMade: 1
+            x: 0.6,
+            y: 0.2,
+            isMade: 0,
+            period: '1'
         },
         {
-            x: 0.01,
+            x: 0.65,
             y: 0.25,
-            isMade: 1
+            isMade: 0,
+            period: '2'
         },
         {
-            x: 0.22,
-            y: 0.85,
-            isMade: 1
-        },
-        {
-            x: 0.95,
-            y: 0.12,
-            isMade: 0
-        },
-        {
-            x: 0.432,
+            x: 0.75,
             y: 0.35,
-            isMade: 0
+            isMade: 0,
+            period: '3'
         },
         {
-            x: 0.62,
-            y: 0.56,
-            isMade: 0
+            x: 0.80,
+            y: 0.50,
+            isMade: 1,
+            period: '4'
+        },
+        {
+            x: 0.85,
+            y: 0.65,
+            isMade: 1,
+            period: 'OT'
+        },
+        {
+            x: 0.9,
+            y: 0.75,
+            isMade: 1,
+            period: '1'
         }
     ];
 }

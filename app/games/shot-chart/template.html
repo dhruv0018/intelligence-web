@@ -55,16 +55,52 @@
                             <checkbox-button
                                 type="button"
                                 class="btn"
-                                ng-class="filters.shots.made ? 'btn-default:active' : 'btn-default'"
                                 ng-model="filters.shots.made"
                             >Made</checkbox-button>
 
                             <checkbox-button
                                 type="button"
                                 class="btn"
-                                ng-class="filters.shots.missed ? 'btn-default:active' : 'btn-default'"
                                 ng-model="filters.shots.missed"
                             >Missed</checkbox-button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="periods">
+
+                        <div class="btn-group" role="group" aria-label="...">
+
+                            <checkbox-button
+                                type="button"
+                                class="btn"
+                                ng-model="filters.period.one"
+                            >1</checkbox-button>
+
+                            <checkbox-button
+                                type="button"
+                                class="btn"
+                                ng-model="filters.period.two"
+                            >2</checkbox-button>
+
+                            <checkbox-button
+                                type="button"
+                                class="btn"
+                                ng-model="filters.period.three"
+                            >3</checkbox-button>
+
+                            <checkbox-button
+                                type="button"
+                                class="btn"
+                                ng-model="filters.period.four"
+                            >4</checkbox-button>
+
+                            <checkbox-button
+                                type="button"
+                                class="btn"
+                                ng-model="filters.period.overtime"
+                            >OT</checkbox-button>
 
                         </div>
 
