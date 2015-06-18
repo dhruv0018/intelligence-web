@@ -81,6 +81,18 @@ function GamesShotChartController(
     $scope.homeTeam = homeTeam;
     $scope.opposingTeam = opposingTeam;
 
+    /* Filters */
+
+    let filtersDefault = {
+        shots: {
+            made: true,
+            missed: true
+        }
+    };
+
+    //  make copy of default filters for 'applied' filters
+    $scope.filters = Object.assign({}, filtersDefault);
+
     /* TODO: use arenaChart.get($stateParams.id) to get the arena Events*/
     $scope.arenaEvents = [
         {

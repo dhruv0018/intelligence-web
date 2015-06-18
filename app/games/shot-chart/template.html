@@ -51,8 +51,21 @@
                     <div class="shots">
 
                         <div class="btn-group" role="group" aria-label="...">
-                          <button type="button" class="btn btn-default">Made</button>
-                          <button type="button" class="btn btn-default">Missed</button>
+
+                            <button
+                                type="button"
+                                class="btn"
+                                ng-class="filters.shots.made ? 'btn-default:active' : 'btn-default'"
+                                ng-click="filters.shots.made = !filters.shots.made"
+                            >Made</button>
+
+                            <button
+                                type="button"
+                                class="btn"
+                                ng-class="filters.shots.missed ? 'btn-default:active' : 'btn-default'"
+                                ng-click="filters.shots.missed = !filters.shots.missed"
+                            >Missed</button>
+
                         </div>
 
                     </div>
