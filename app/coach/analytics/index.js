@@ -10,7 +10,9 @@ require('team');
  */
 var Analytics = angular.module('Coach.Analytics', [
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'Coach.Analytics.Team',
+    'Coach.Analytics.Player'
 ]);
 
 /* Cache the template files */

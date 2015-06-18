@@ -15,7 +15,7 @@ PlayerAnalytics.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('coach/analytics/template.html', require('./template.html'));
+        $templateCache.put('coach/analytics/player/template.html', require('./template.html'));
     }
 ]);
 
@@ -34,8 +34,8 @@ PlayerAnalytics.config([
             url: '/player',
             views: {
                 'main@root': {
-                    templateUrl: 'coach/analytics-player/template.html',
-                    controller: 'AnalyticsPlayerController'
+                    templateUrl: 'coach/analytics/player/template.html',
+                    controller: 'PlayerAnalyticsController'
                 }
             },
             resolve: {
@@ -51,7 +51,7 @@ PlayerAnalytics.config([
  * Player Analytics page controller
  */
 
-PlayerAnalytics.controller('AnalyticsPlayerController', [
+PlayerAnalytics.controller('PlayerAnalyticsController', [
     '$scope', '$state', '$stateParams', 'SessionService', 'LeaguesFactory', 'TeamsFactory', 'GAME_TYPES',
     function controller($scope, $state, $stateParams, session, leagues, teams, GAME_TYPES) {
         var teamId = session.currentUser.currentRole.teamId;
