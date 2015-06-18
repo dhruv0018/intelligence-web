@@ -189,8 +189,6 @@ Login.config([
 Login.controller('LoginController', LoginController);
 
 LoginController.$inject = [
-    'MobileAppDialog.Service',
-    'DetectDeviceService',
     'config',
     '$rootScope',
     '$scope',
@@ -210,8 +208,6 @@ LoginController.$inject = [
 ];
 
 function LoginController(
-    MobileAppDialog,
-    detectDevice,
     config,
     $rootScope,
     $scope,
@@ -289,22 +285,8 @@ function LoginController(
                 /* Once successfully logged in, determine the user's home state.
                  * Then, track user in analytics (user may not have a default
                  * roll yet). */
-
-                /* Is user using an iOS or Android device? */
-                let isMobile = detectDevice.iOS() || detectDevice.Android();
-
-                /* If a new user, then only show the mobile app promo dialog. */
-                if (isMobile) {
-
-                    MobileAppDialog.show()
-                    .then(() => account.gotoUsersHomeState(user))
-                    .then(analytics.identify);
-                } else {
-
-                    account.gotoUsersHomeState(user)
-                    .then(analytics.identify);
-                }
-
+                account.gotoUsersHomeState(user)
+                .then(analytics.identify);
             }
         }, function(error) {
 
