@@ -21,9 +21,10 @@ function UpdatedTermsAndConditionsController (
     $scope
 ) {
 
-    $scope.showTerms = function () {
+    $scope.showTerms = function (event) {
 
         /* Show the Terms & Conditions Modal */
+        event.stopPropagation();
         TermsDialog.show();
     };
 
