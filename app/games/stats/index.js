@@ -77,9 +77,9 @@ GamesStats.config([
 ]);
 
 GamesStats.controller('GamesStats.controller', [
-    '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'SPORTS', 'StatsService',
-    function controller($scope, $state, $stateParams, data, SPORTS, stats) {
+    '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'SPORTS',
+    function controller($scope, $state, $stateParams, data, SPORTS) {
 
-        $scope.stats = stats.parse(data.stats, 'Game');
+        $scope.stats = data.stats;
     }
 ]);

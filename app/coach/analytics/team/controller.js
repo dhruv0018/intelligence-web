@@ -8,8 +8,7 @@ TeamAnalyticsController.$inject = [
     'SessionService',
     'LeaguesFactory',
     'TeamsFactory',
-    'GAME_TYPES',
-    'StatsService'
+    'GAME_TYPES'
 ];
 
 /**
@@ -23,8 +22,7 @@ function TeamAnalyticsController(
     session,
     leagues,
     teams,
-    GAME_TYPES,
-    stats
+    GAME_TYPES
 ) {
 
     var teamId = session.currentUser.currentRole.teamId;
@@ -47,7 +45,7 @@ function TeamAnalyticsController(
         $scope.loadingTables = true;
 
         function requestHandler(data) {
-            $scope.statsData = stats.parse(data, 'Team');
+            $scope.statsData = data;
             $scope.loadingTables = false;
         }
 

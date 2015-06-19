@@ -7,8 +7,7 @@ PlayerAnalyticsController.$inject = [
     'TeamsFactory',
     'PlayersFactory',
     'LeaguesFactory',
-    'GAME_TYPES',
-    'StatsService'
+    'GAME_TYPES'
 ];
 
 /**
@@ -20,8 +19,7 @@ function PlayerAnalyticsController(
     teams,
     players,
     leagues,
-    GAME_TYPES,
-    stats
+    GAME_TYPES
 ) {
 
     const team = teams.get(session.getCurrentTeamId());
@@ -45,7 +43,7 @@ function PlayerAnalyticsController(
         }
 
         function requestHandler(data) {
-            $scope.stats = stats.parse(data, 'Player');
+            $scope.stats = data;
             $scope.loadingTables = false;
         }
     };
