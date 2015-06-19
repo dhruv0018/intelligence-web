@@ -1,7 +1,7 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-GamesController.$inject = [
+IndexerGamesController.$inject = [
     '$scope',
     '$state',
     '$interval',
@@ -18,13 +18,7 @@ GamesController.$inject = [
     'GAME_STATUSES'
 ];
 
-/**
- * Indexing Games Controller controller.
- * @module Games
- * @name GamesController
- * @type {Controller}
- */
-function GamesController(
+function IndexerGamesController(
     $scope,
     $state,
     $interval,
@@ -41,54 +35,54 @@ function GamesController(
     GAME_STATUSES
 ) {
 
-        const ONE_MINUTE = 60000;
-        const userLocation = session.currentUser.currentRole.indexerGroupId;
+    const ONE_MINUTE = 60000;
+    const userLocation = session.currentUser.currentRole.indexerGroupId;
 
-        $scope.GAME_STATUSES = GAME_STATUSES;
-        $scope.sports = sports.getCollection();
-        $scope.leagues = leagues.getCollection();
-        $scope.teams = teams.getCollection();
-        $scope.users = users.getCollection();
-        $scope.userId = session.currentUser.id;
-        $scope.footballFAQ = config.links.indexerFAQ.football.uri;
-        $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
+    $scope.GAME_STATUSES = GAME_STATUSES;
+    $scope.sports = sports.getCollection();
+    $scope.leagues = leagues.getCollection();
+    $scope.teams = teams.getCollection();
+    $scope.users = users.getCollection();
+    $scope.userId = session.currentUser.id;
+    $scope.footballFAQ = config.links.indexerFAQ.football.uri;
+    $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
 
-        switch (userLocation) {
-            case INDEXER_GROUPS.US_MARKETPLACE:
-                $scope.signUpLocation = config.links.indexerSignUp.unitedStates.uri;
-                break;
-            case INDEXER_GROUPS.INDIA_MARKETPLACE:
-            case INDEXER_GROUPS.INDIA_OFFICE:
-                $scope.signUpLocation = config.links.indexerSignUp.india.uri;
-                break;
-            case INDEXER_GROUPS.PHILIPPINES_OFFICE:
-                $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
-                break;
-        }
+    switch (userLocation) {
+        case INDEXER_GROUPS.US_MARKETPLACE:
+            $scope.signUpLocation = config.links.indexerSignUp.unitedStates.uri;
+            break;
+        case INDEXER_GROUPS.INDIA_MARKETPLACE:
+        case INDEXER_GROUPS.INDIA_OFFICE:
+            $scope.signUpLocation = config.links.indexerSignUp.india.uri;
+            break;
+        case INDEXER_GROUPS.PHILIPPINES_OFFICE:
+            $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
+            break;
+    }
 
-        $scope.games = games.getList({ assignedUserId: $scope.userId });
+    $scope.games = games.getList({ assignedUserId: $scope.userId });
+
+    angular.forEach($scope.games, function(game) {
+        game.timeRemaining = game.assignmentTimeRemaining();
+    });
+
+    let refreshGames = function() {
 
         angular.forEach($scope.games, function(game) {
-            game.timeRemaining = game.assignmentTimeRemaining();
+
+            if (game.timeRemaining) {
+
+                game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
+            }
         });
+    };
 
-        let refreshGames = function() {
+    let refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
 
-            angular.forEach($scope.games, function(game) {
+    $scope.$on('$destroy', function() {
 
-                if (game.timeRemaining) {
-
-                    game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
-                }
-            });
-        };
-
-        let refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
-
-        $scope.$on('$destroy', function() {
-
-            $interval.cancel(refreshGamesInterval);
-        });
+        $interval.cancel(refreshGamesInterval);
+    });
 }
 
-export default GamesController;
+export default IndexerGamesController;

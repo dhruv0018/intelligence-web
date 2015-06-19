@@ -1,25 +1,20 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 //might need to window.moment
-var moment = require('moment');
+const moment = require('moment');
 
-import IndexingGamesDataDependencies from './data.js';
-import GamesController from './controller.js';
+import IndexingDataDependencies from '../data.js';
+import IndexerGamesController from './controller.js';
 import template from './template.html.js';
 
 const templateUrl = './template.html';
+const IndexerGames = angular.module('IndexerGames', []);
 
-/**
- * Indexer Games module.
- * @module Games
- */
-var Games = angular.module('indexer-games', []);
-
-
-Games.factory('IndexingGamesDataDependencies', IndexingGamesDataDependencies);
+IndexerGames.factory('IndexingDataDependencies', IndexingDataDependencies);
+IndexerGames.controller('IndexerGamesController', IndexerGamesController);
 
 /* Cache the template file */
-Games.run([
+IndexerGames.run([
     '$templateCache',
     function run($templateCache) {
 
@@ -27,32 +22,26 @@ Games.run([
     }
 ]);
 
-/**
- * Games page state router.
- * @module Games
- * @type {UI-Router}
- */
-Games.config([
+IndexerGames.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
         $stateProvider
 
-            .state('indexer-games', {
+            .state('IndexerGames', {
                 url: '/games',
                 parent: 'indexer',
                 views: {
                     'main@root': {
                         templateUrl,
-                        controller: GamesController
+                        controller: IndexerGamesController
                     }
                 },
                 resolve: {
                     'Indexer.Games.Data': [
-                        '$q', 'IndexingGamesDataDependencies',
+                        '$q', 'IndexingDataDependencies',
                         function($q, IndexingGamesData) {
                             let data = new IndexingGamesData();
-                            console.log('DATA', data);
                             return $q.all(data);
                         }
                     ]
@@ -61,4 +50,4 @@ Games.config([
     }
 ]);
 
-export default Games;
+export default IndexerGames;

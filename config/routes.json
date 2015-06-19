@@ -218,17 +218,17 @@
         "Super Admin": true
     },
 
-    "indexer-game": {
+    "IndexerGame": {
 
         "Indexer": true
     },
 
-    "indexer-games": {
+    "IndexerGames": {
 
         "Indexer": true
     },
 
-    "indexer-history": {
+    "IndexerHistory": {
 
         "Indexer": true
     },
@@ -526,4 +526,3 @@
         "*": true
     }
 }
-

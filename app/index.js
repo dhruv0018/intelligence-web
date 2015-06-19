@@ -24,7 +24,7 @@ var App = angular.module('App', [
     'header',
     'Account',
     'Admin',
-    'indexer',
+    'Indexer',
     'Indexing',
     'Coach',
     'Athlete',

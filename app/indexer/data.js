@@ -1,7 +1,7 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-IndexingGamesDataDependencies.$inject = [
+IndexingDataDependencies.$inject = [
     '$q',
     'SessionService',
     'UsersFactory',
@@ -12,7 +12,7 @@ IndexingGamesDataDependencies.$inject = [
     'SchoolsFactory',
 ];
 
-function IndexingGamesDataDependencies (
+function IndexingDataDependencies (
     $q,
     session,
     users,
@@ -59,4 +59,4 @@ function IndexingGamesDataDependencies (
     return Data;
 }
 
-export default IndexingGamesDataDependencies;
+export default IndexingDataDependencies;

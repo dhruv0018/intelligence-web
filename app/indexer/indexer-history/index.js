@@ -1,23 +1,19 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
-var moment = require('moment');
+const angular = window.angular;
+const moment = require('moment');
 
 import IndexingGamesDataDependencies from '../indexer-games/data.js';
-import GamesController from '../indexer-games/controller.js';
+import IndexerGamesController from '../indexer-games/controller.js';
 import template from './template.html.js';
 
 const templateUrl = './template.html';
+const IndexerHistory = angular.module('IndexerHistory', []);
 
-/**
- * Indexer Games module.
- * @module Games
- */
-var Games = angular.module('indexer-history', []);
-
-Games.factory('IndexingGamesDataDependencies', IndexingGamesDataDependencies);
+IndexerHistory.factory('IndexingGamesDataDependencies', IndexingGamesDataDependencies);
+IndexerHistory.controller('IndexerGamesController', IndexerGamesController);
 
 /* Cache the template file */
-Games.run([
+IndexerHistory.run([
     '$templateCache',
     function run($templateCache) {
 
@@ -25,24 +21,19 @@ Games.run([
     }
 ]);
 
-/**
- * Games page state router.
- * @module Games
- * @type {UI-Router}
- */
-Games.config([
+IndexerHistory.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
         $stateProvider
 
-            .state('indexer-history', {
+            .state('IndexerHistory', {
                 url: '/history',
                 parent: 'indexer',
                 views: {
                     'main@root': {
                         templateUrl,
-                        controller: GamesController
+                        controller: IndexerGamesController
                     }
                 },
                 resolve: {
@@ -59,4 +50,4 @@ Games.config([
     }
 ]);
 
-export default Games;
+export default IndexerHistory;
