@@ -31,35 +31,37 @@ function PlayerAnalyticsController(
     const league = leagues.get(team.leagueId);
     const seasons = league.seasons;
 
-    const onPlayerSelect = function (player) {
+    let player = null;
 
-        const playerId = player.id;
-    };
-
-    const generateStats = function () {
+    const generateStats = function (selectedPlayer) {
         $scope.loadingTables = true;
+        player = selectedPlayer || player;
+
+        if (player) {
+
+            const request = player.generateStats($scope.filterQuery);
+            request.then(requestHandler);
+        }
+        else {
+
+            $scope.loadingTables = false;
+        }
 
         function requestHandler(data) {
             $scope.statsData = stats.parse(data, 'Player');
             $scope.loadingTables = false;
         }
-
-        const request = team.generateStats($scope.filterQuery);
-        request.then(requestHandler);
     };
 
     players.load({rosterId: team.roster.id}).then(data => $scope.options = data);
 
-    $scope.onPlayerSelect = onPlayerSelect;
-    $scope.selectedOption = {};
+    $scope.seasons = seasons;
     $scope.GAME_TYPES = GAME_TYPES;
     $scope.generateStats = generateStats;
     $scope.filterQuery = {
         seasonId: league.seasons[0].id,
         gameType: ''
     };
-
-    generateStats();
 }
 
 require('./controller');
