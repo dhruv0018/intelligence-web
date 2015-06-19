@@ -3,7 +3,7 @@
         <div class="analytics-options">
 
             <div class="analytics-option">
-                <span>Season</span>
+                <span>Season:&nbsp;</span>
                 <select
                     id="analytics-season-cta"
                     ng-options="season.id as season.startDate | date: 'yyyy' for season in seasons"
@@ -13,7 +13,7 @@
             </div>
 
             <div class="analytics-option">
-                <span>Game Type</span>
+                <span>Game Type:&nbsp;</span>
                 <select
                     id="analytics-gametype-cta"
                     ng-model="filterQuery.gameType"
@@ -27,7 +27,7 @@
             </div>
 
             <div class="analytics-option">
-                <span>Player</span>
+                <span>Player:&nbsp;</span>
                 <search-dropdown
                     options="options"
                     option-label="players"
