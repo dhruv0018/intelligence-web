@@ -2,4 +2,134 @@
 
 .dynamic-tables {
 
+    .stats-btn-group {
+        text-align: center;
+        margin-bottom: 20px;
+
+        .stats-btn {
+            .btn;
+            background-color: @gray-lighter;
+            font-weight: 400;
+            margin-left: 5px;
+            margin-right: 5px;
+            border-radius: 4px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            font-size: 16px;
+            &.active,
+            &:active,
+            &:focus,
+            &:hover {
+                background-color: @brand-primary;
+                color: white;
+            }
+        }
+
+        .active-stats-btn {
+            background-color: @brand-primary;
+            color: white;
+        }
+    }
+
+    .table-responsive {
+
+        table {
+            width: auto;
+            margin: auto;
+            border-top: thin solid black;
+        }
+
+        td {
+            text-align: left;
+        }
+
+        th {
+            font-weight: 400;
+            border:thin solid black;
+            background-color: @brand-blue;
+            color: white;
+            text-align: center;
+        }
+
+        .fixed-table {
+            table-layout: fixed;
+        }
+
+        .logheader {
+
+            color: white;
+
+            .topth {
+                font-weight: 400;
+                border:thin solid black;
+                background-color: @brand-blue;
+            }
+        }
+
+        .hometeamrow {
+        }
+
+        .awayteamrow {
+            background-color: @gray-lightest;
+
+        }
+
+        .statcell {
+            border-right: none;
+            border-left: none;
+        }
+
+        .setnumber {
+            font-size: 30px;
+            color: black;
+            vertical-align: middle;
+        }
+
+        .firstrow {
+
+            color: white;
+
+            .topth {
+                font-weight: 400;
+                border: thin solid black;
+                border-bottom: none;
+                background-color: @brand-blue;
+            }
+
+            td {
+                border-bottom: none;
+            }
+        }
+        .secondrow {
+
+            color: white;
+
+            .startsection {
+                border-left: thin solid black;
+            }
+
+            th {
+                font-weight: 400;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-bottom: thin solid black;
+                background-color: @brand-blue;
+            }
+
+            .endsection {
+                border-right: thin solid black;
+            }
+
+            td {
+                border-bottom: none;
+                border-top: none;
+            }
+        }
+        .contentrow {
+            td:first-child {
+                border: none;
+            }
+        }
+    }
 }

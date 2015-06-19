@@ -79,23 +79,43 @@ GamesStats.config([
 GamesStats.controller('GamesStats.controller', [
     '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'SPORTS',
     function controller($scope, $state, $stateParams, data, SPORTS) {
-        //TODO consolidated all of the data into this one variable, to get rid of
-        var stats = data.stats;
 
-        $scope.gameLogTable = stats.gameLog;
-        $scope.homeTeamStats = stats.homeTeamStats;
-        $scope.awayTeamStats = stats.awayTeamStats;
-
-        $scope.homeTeamName = stats.homeTeamStats.meta.teamName;
-        $scope.awayTeamName = stats.awayTeamStats.meta.teamName;
-
-        $scope.scoreSummary = stats.scoreSummary;
-        $scope.showScoreSummary = false;
-
-        if (stats.scoreSummary !== null) {
-            $scope.showScoreSummary = true;
-        }
-
-        $scope.statsSelector = stats.gameLog ? 'ga-log' : '';
+        $scope.stats = parseStatsData(data.stats);
     }
 ]);
+
+function parseStatsData(statsObject) {
+
+    // Remove extraneous properties
+    delete statsObject.$promise;
+    delete statsObject.$resolved;
+
+    // Mock table names
+    statsObject.gameLog.meta.tableName = 'Game Log';
+    statsObject.homeTeamStats.meta.tableName = 'Home Team';
+    statsObject.awayTeamStats.meta.tableName = 'Away Team';
+
+    // Mock index
+    statsObject.gameLog.meta.index = 0;
+    statsObject.homeTeamStats.meta.index = 1;
+    statsObject.awayTeamStats.meta.index = 2;
+
+    // Handle score summary property
+    if (statsObject.scoreSummary === null) {
+
+        delete statsObject.scoreSummary;
+    }
+    else {
+
+        statsObject.scoreSummary.meta.tableName = 'Score Summary';
+        statsObject.scoreSummary.meta.index = 3;
+    }
+
+    // Convert Object to array ordered by statsObject.table.meta.index
+    let statsKeys = Object.keys(statsObject);
+    statsKeys.sort((a, b) => statsObject[a].meta.index > statsObject[b].meta.index);
+    let statsArray = [];
+    statsKeys.forEach(key => statsArray.push(statsObject[key]));
+
+    return statsArray;
+}
