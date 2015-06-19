@@ -8,7 +8,10 @@ PlayerAnalyticsController.$inject = [
     '$scope',
     'SessionService',
     'TeamsFactory',
-    'PlayersFactory'
+    'PlayersFactory',
+    'LeaguesFactory',
+    'GAME_TYPES',
+    'StatsService'
 ];
 
 /**
@@ -18,23 +21,45 @@ function PlayerAnalyticsController(
     $scope,
     session,
     teams,
-    players
+    players,
+    leagues,
+    GAME_TYPES,
+    stats
 ) {
 
-    const teamId = session.getCurrentTeamId();
-    const team = teams.get(teamId);
+    const team = teams.get(session.getCurrentTeamId());
+    const league = leagues.get(team.leagueId);
+    const seasons = league.seasons;
 
-    players.load({rosterId: team.roster.id}).then(function(data) {
-        $scope.options = data;
-    });
-
-    $scope.onPlayerSelect = onPlayerSelect;
-    $scope.selectedOption = {};
-
-    const onPlayerSelect = function(player) {
+    const onPlayerSelect = function (player) {
 
         const playerId = player.id;
     };
+
+    const generateStats = function () {
+        $scope.loadingTables = true;
+
+        function requestHandler(data) {
+            $scope.statsData = stats.parse(data, 'Player');
+            $scope.loadingTables = false;
+        }
+
+        const request = team.generateStats($scope.filterQuery);
+        request.then(requestHandler);
+    };
+
+    players.load({rosterId: team.roster.id}).then(data => $scope.options = data);
+
+    $scope.onPlayerSelect = onPlayerSelect;
+    $scope.selectedOption = {};
+    $scope.GAME_TYPES = GAME_TYPES;
+    $scope.generateStats = generateStats;
+    $scope.filterQuery = {
+        seasonId: league.seasons[0].id,
+        gameType: ''
+    };
+
+    generateStats();
 }
 
 require('./controller');
