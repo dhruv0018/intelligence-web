@@ -10,7 +10,12 @@ class List extends Array {
 
         super();
 
-        array.forEach(value => this.push(value));
+        let index = 0;
+        while (index < array.length) {
+
+            this.push(array[index]);
+            index++;
+        }
     }
 
     /**
@@ -22,6 +27,37 @@ class List extends Array {
     includes (searchElement, fromIndex) {
 
         return !!~this.indexOf(searchElement, fromIndex);
+    }
+
+    // TODO: Try this with .slice(0)
+
+    /**
+     * Method: setLength
+     * Simulates setting the length property to truncate and array
+     *
+     * @return: {Array}
+     */
+    setLength (value) {
+
+        switch (arguments.length) {
+
+            case 0:
+
+                throw new Error('Invoked List.setLength without passing a value');
+        }
+
+        if (value <= this.length) {
+
+            return this.splice(value, this.length - value);
+        } else {
+
+            let index = this.length;
+            while (index < value) {
+
+                this.push(undefined);
+                index++;
+            }
+        }
     }
 
     /**
@@ -96,7 +132,7 @@ class List extends Array {
      */
     last () {
 
-        return this.slice(this.length - 1);
+        return this.slice(this.length - 1).pop();
     }
 
     /**
@@ -130,7 +166,7 @@ class List extends Array {
      *         remove (arrays not accepted)
      * @return: {Integer} Length, OR undefined
      */
-    remove (item) {
+    remove (index) {
 
         switch (arguments.length) {
 
@@ -146,31 +182,6 @@ class List extends Array {
     }
 
     /**
-     * Method:sort
-     * Sorts entries by property in order
-     *
-     * @param: {String} (req) Property to sort by
-     * @param: {Boolean} (opt) Sort by ASCENDING
-     *         [false] or DESCENDING [true],
-     *         default is [true]
-     * @return: {Array} Sorted List
-     */
-    sort (property, descending = true) {
-
-        switch (arguments.length) {
-
-            case 0:
-
-                throw new Error('Invoked List.sort without passing a String property to sort by');
-        }
-
-        return this.sort((a, b) => {
-
-            return descending ? (b.property - a.property) : (a.property - b.property);
-        });
-    }
-
-    /**
      * Method:isEmpty
      * Returns empty List status
      *
@@ -179,6 +190,21 @@ class List extends Array {
     isEmpty () {
 
         return !!this.length;
+    }
+
+    /**
+     * Method:fromProto
+     * Returns a Real Array with a prototype matching this class
+     *
+     * @static
+     * @return: {Array}
+     */
+    static fromProto (array = []) {
+
+        let instance = array.slice(0);
+        instance.__proto__ = List.prototype;
+
+        return instance;
     }
 }
 
