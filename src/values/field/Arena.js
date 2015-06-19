@@ -35,8 +35,9 @@ class ArenaField extends Field {
     set currentValue(arena) {
         let value = {};
         value.coordinates = arena.coordinates;
-        value.regionId = arena.region.id;
-        value.name = this.regionMap[arena.region.id].name;
+        value.regionId = arena.regionId;
+        //todo this is because old basketball games have messed up data
+        value.name = (this.regionMap[arena.regionId]) ? this.regionMap[arena.regionId].name : 'Select';
         this.value = value;
     }
 
