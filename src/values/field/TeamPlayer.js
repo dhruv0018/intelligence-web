@@ -11,33 +11,60 @@ class TeamPlayerField extends Field {
 
         let injector = angular.element(document).injector();
 
-        //set up basic value for tag field
-        let value = {
+
+        let teamPlayerOption = {
             name: !field.isRequired ? 'Optional' : undefined,
             teamId: (!field.isRequired && field.type === 'Team') ? null : undefined,
             playerId: (!field.isRequired && field.type === 'Player') ? null : undefined
         };
 
-        //if the value is set on the field
+        this.players = injector.get('PlayersFactory');
+        this.teams = injector.get('TeamsFactory');
+
         if (field.value) {
             switch(field.type) {
                 case 'Player':
-                    let players = injector.get('PlayersFactory');
-                    let player = players.get(field.value);
-                    value.name = player.firstName + ' ' + player.lastName;
-                    value.playerId = Number(player.id);
+                    let player = this.players.get(field.value);
+                    teamPlayerOption.name = player.firstName + ' ' + player.lastName;
+                    teamPlayerOption.playerId = Number(player.id);
                     break;
                 case 'Team':
-                    let teams = injector.get('TeamsFactory');
-                    let team = teams.get(field.value);
-                    value.name = team.name;
-                    value.teamId = Number(team.id);
+                    let team = this.teams.get(field.value);
+                    teamPlayerOption.name = team.name;
+                    teamPlayerOption.teamId = Number(team.id);
                     break;
             }
         }
 
-        this.value = value;
+        this.value = teamPlayerOption;
+        this.availableValues = []; //todo blocker
+    }
 
+    get currentValue() {
+        return this.value;
+    }
+
+    set currentValue(teamPlayerOption) {
+        let value = {};
+        let type = this.type;
+        if (!teamPlayerOption && !teamPlayerOption) {
+            value = teamPlayerOption;
+            this.value = value;
+            return;
+        }
+        switch(this.type) {
+            case 'Player':
+                let player = this.players.get(teamPlayerOption.playerId);
+                value.name = player.firstName + ' ' + player.lastName;
+                value.playerId = Number(player.id);
+                break;
+            case 'Team':
+                let team = this.teams.get(teamPlayerOption.teamId);
+                value.name = team.name;
+                value.teamId = Number(team.id);
+                break;
+        }
+        this.value = value;
     }
 
     toJSON() {
