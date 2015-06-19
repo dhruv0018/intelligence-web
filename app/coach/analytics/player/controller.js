@@ -45,13 +45,14 @@ function PlayerAnalyticsController(
         }
 
         function requestHandler(data) {
-            $scope.statsData = stats.parse(data, 'Player');
+            $scope.stats = stats.parse(data, 'Player');
             $scope.loadingTables = false;
         }
     };
 
     players.load({rosterId: team.roster.id}).then(data => $scope.options = data);
 
+    $scope.stats = {};
     $scope.seasons = seasons;
     $scope.GAME_TYPES = GAME_TYPES;
     $scope.generateStats = generateStats;

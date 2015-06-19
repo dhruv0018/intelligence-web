@@ -51,7 +51,9 @@
         </div>
         <div class="analytics-tables-container" data-ng-hide="loadingTables">
 
-            <!-- TODO: Implement dynamic-tables -->
+            <div class="analytics-tables-container" data-ng-hide="loadingTables">
+                <dynamic-tables tables="stats"></dynamic-tables>
+            </div>
         </div>
 
     </div>
