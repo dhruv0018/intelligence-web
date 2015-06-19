@@ -49,12 +49,12 @@ function StatsService () {
             case 'Team':
 
                 // Mock table names
-                statsObject.gameLog.meta.tableName = 'Game Log';
-                statsObject.teamStats.meta.tableName = 'Home Team';
+                statsObject.gamesLog.meta.tableName = 'Games Log';
+                statsObject.teamStats.meta.tableName = 'Team Stats';
 
                 // Mock index
-                statsObject.gameLog.meta.index = 0;
-                statsObject.team.meta.index = 1;
+                statsObject.gamesLog.meta.index = 0;
+                statsObject.teamStats.meta.index = 1;
 
                 break;
 

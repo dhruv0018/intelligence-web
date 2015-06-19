@@ -29,7 +29,7 @@
             <p>Loading Statistics...</p>
         </div>
         <div class="analytics-tables-container" data-ng-hide="loadingTables">
-            <dynamic-table data-ng-if="statsData.teamStats" data-source="statsData.teamStats"></dynamic-table>
+            <dynamic-tables tables="statsData"></dynamic-tables>
         </div>
     </div>
 </section>

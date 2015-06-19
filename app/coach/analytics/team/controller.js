@@ -11,7 +11,8 @@ TeamAnalyticsController.$inject = [
     'SessionService',
     'LeaguesFactory',
     'TeamsFactory',
-    'GAME_TYPES'
+    'GAME_TYPES',
+    'StatsService'
 ];
 
 /**
@@ -25,7 +26,8 @@ function TeamAnalyticsController(
     session,
     leagues,
     teams,
-    GAME_TYPES
+    GAME_TYPES,
+    stats
 ) {
     var teamId = session.currentUser.currentRole.teamId;
     var team = teams.get(teamId);
@@ -52,7 +54,7 @@ function TeamAnalyticsController(
     $scope.generateStats = function() {
         $scope.loadingTables = true;
         team.generateStats($scope.filterQuery).then(function(statsData) {
-            $scope.statsData = statsData;
+            $scope.statsData = stats.parse(statsData, 'Team');
             $scope.loadingTables = false;
         });
     };
