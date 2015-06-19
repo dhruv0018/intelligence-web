@@ -24,39 +24,9 @@
     }
 
     .search-dropdown-menu {
-        width: 300px;
+        min-width: 225px;
         padding: 0;
         box-shadow: 2px 2px 10px @gray-light;
-
-        /* Triangle Marker */
-        &:before,
-        &:after {
-
-            content: "";
-            width: 0;
-            height: 0;
-            position: absolute;
-        }
-
-        &:before {
-
-            border-bottom: 11px solid @gray-border;
-            border-left: 11px solid transparent;
-            border-right: 11px solid transparent;
-            margin-left: -11px;
-            left: 106px;
-            top: -11px;
-        }
-
-        &:after {
-
-            border-bottom: 10px solid @content-bg;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            margin-left: -10px;
-            left: 106px;
-            top: -10px;
-        }
 
         .search-input-container {
             border-bottom: thin solid @gray-border;
