@@ -27,6 +27,14 @@ function PlayerAnalyticsController(
     players.load({rosterId: team.roster.id}).then(function(data) {
         $scope.options = data;
     });
+
+    $scope.onPlayerSelect = onPlayerSelect;
+    $scope.selectedOption = {};
+
+    const onPlayerSelect = function(player) {
+
+        const playerId = player.id;
+    };
 }
 
 require('./controller');
