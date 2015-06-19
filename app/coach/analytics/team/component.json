@@ -6,8 +6,5 @@
     "scripts": [
         "index.js",
         "controller.js"
-    ],
-    "styles": [
-        "styles.less"
     ]
 }
