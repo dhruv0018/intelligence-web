@@ -66,6 +66,17 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     self.rosterStatuses[toRosterId] = true;
                 }
 
+            },
+
+            generateStats: function(query) {
+
+                let self = this;
+
+                query.id = query.id || self.id;
+
+                const model = $injector.get(self.model);
+
+                return model.generateStats(query).$promise;
             }
         };
 
