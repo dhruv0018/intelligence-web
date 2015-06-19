@@ -29,11 +29,11 @@ function TeamAnalyticsController(
     GAME_TYPES,
     stats
 ) {
+
     var teamId = session.currentUser.currentRole.teamId;
     var team = teams.get(teamId);
     var league = leagues.get(team.leagueId);
     $scope.seasons = league.seasons;
-    $scope.loadingTables = true;
     $scope.statsData = {};
 
     //Game type constants
@@ -46,18 +46,21 @@ function TeamAnalyticsController(
         gameType: ''
     };
 
-    team.generateStats($scope.filterQuery).then(function(statsData) {
-        $scope.statsData = statsData;
-        $scope.loadingTables = false;
-    });
-
-    $scope.generateStats = function() {
+    const generateStats = function () {
         $scope.loadingTables = true;
-        team.generateStats($scope.filterQuery).then(function(statsData) {
-            $scope.statsData = stats.parse(statsData, 'Team');
+
+        function requestHandler(data) {
+            $scope.statsData = stats.parse(data, 'Team');
             $scope.loadingTables = false;
-        });
+        }
+
+        const request = team.generateStats($scope.filterQuery);
+        request.then(requestHandler);
     };
+
+    $scope.generateStats = generateStats;
+
+    generateStats();
 }
 
 
