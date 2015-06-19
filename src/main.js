@@ -54,6 +54,7 @@ require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
 require('./services/analytics');
+require('./services/stats');
 
 require('./constants/users');
 require('./constants/games');
