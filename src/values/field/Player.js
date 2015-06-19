@@ -10,19 +10,39 @@ class PlayerField extends Field {
         super(field);
 
         let injector = angular.element(document).injector();
-        let players = injector.get('PlayersFactory');
+        this.players = injector.get('PlayersFactory');
 
         //initialization
-        let value = {
+        let playerOption = {
             name: !field.isRequired ? 'Optional' : undefined,
             playerId: (!field.isRequired && field.type === 'Player') ? null : undefined
         };
 
         if (field.value) {
-            let player = players.get(field.value);
-            value.name = player.firstName + ' ' + player.lastName;
-            value.playerId = player.id;
+            let player = this.players.get(field.value);
+            playerOption.name = player.firstName + ' ' + player.lastName;
+            playerOption.playerId = player.id;
         }
+
+        this.currentValue = playerOption;
+
+        this.availableValues = []; //todo blocker
+    }
+
+    get currentValue() {
+        return this.value;
+    }
+
+    set currentValue(playerOption) {
+        let value = {};
+        if (!playerOption.id) {
+            value = playerOption;
+            this.value = value;
+            return;
+        }
+        let player = this.players.get(playerOption.playerId);
+        value.name = player.firstName + ' ' + player.lastName;
+        value.playerId = player.id;
         this.value = value;
     }
 
