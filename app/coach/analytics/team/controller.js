@@ -1,8 +1,5 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
-var TeamAnalytics = angular.module('Coach.Analytics.Team');
-
-TeamAnalytics.controller('TeamAnalyticsController', TeamAnalyticsController);
 
 TeamAnalyticsController.$inject = [
     '$scope',
@@ -63,5 +60,4 @@ function TeamAnalyticsController(
     generateStats();
 }
 
-
-require('./controller');
+export default TeamAnalyticsController;

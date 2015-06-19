@@ -1,11 +1,17 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+/* Module imports */
+import controller from './controller';
+
+const templateUrl = 'coach/analytics/player/template.html';
+const template = require('./template');
 
 /**
  * Analytics page module.
  * @module Analytics
  */
-var PlayerAnalytics = angular.module('Coach.Analytics.Player', [
+const PlayerAnalytics = angular.module('Coach.Analytics.Player', [
     'ui.router',
     'ui.bootstrap'
 ]);
@@ -15,7 +21,7 @@ PlayerAnalytics.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('coach/analytics/player/template.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 
@@ -34,8 +40,8 @@ PlayerAnalytics.config([
             url: '/player',
             views: {
                 'main@root': {
-                    templateUrl: 'coach/analytics/player/template.html',
-                    controller: 'PlayerAnalyticsController'
+                    templateUrl,
+                    controller
                 }
             },
             resolve: {
@@ -47,4 +53,4 @@ PlayerAnalytics.config([
     }
 ]);
 
-require('./controller');
+PlayerAnalytics.controller('Coach.Analytics.Player.Controller', controller);

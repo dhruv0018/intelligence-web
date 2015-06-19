@@ -1,8 +1,5 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
-const PlayerAnalytics = angular.module('Coach.Analytics.Player');
-
-PlayerAnalytics.controller('PlayerAnalyticsController', PlayerAnalyticsController);
 
 PlayerAnalyticsController.$inject = [
     '$scope',
@@ -64,4 +61,4 @@ function PlayerAnalyticsController(
     };
 }
 
-require('./controller');
+export default PlayerAnalyticsController;

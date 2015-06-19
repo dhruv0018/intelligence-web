@@ -1,6 +1,12 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+/* Module imports */
+import controller from './controller';
+
+const templateUrl = 'coach/analytics/team/template.html';
+const template = require('./template.html');
+
 /**
  * Analytics page module.
  * @module Analytics
@@ -15,7 +21,7 @@ TeamAnalytics.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('coach/analytics/team/template.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 
@@ -34,8 +40,8 @@ TeamAnalytics.config([
             url: '/team',
             views: {
                 'main@root': {
-                    templateUrl: 'coach/analytics/team/template.html',
-                    controller: 'TeamAnalyticsController'
+                    templateUrl,
+                    controller
                 }
             },
             resolve: {
@@ -47,4 +53,4 @@ TeamAnalytics.config([
     }
 ]);
 
-require('./controller');
+TeamAnalytics.controller('Coach.Analytics.Team.Controller', controller);
