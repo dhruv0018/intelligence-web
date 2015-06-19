@@ -3,6 +3,13 @@
     <div class="header">
 
         <!-- Shot chart arena event count and filter pills -->
+        <label name="arena-event-count">
+
+            <span ng-if="filteredArenaEventCount === arenaEvents.length">Viewing: All Shots ({{arenaEvents.length}})</span>
+            <span ng-if="filteredArenaEventCount < arenaEvents.length">Viewing: ({{filteredArenaEventCount}})</span>
+
+        </label>
+
         <a name="reset-filters" ng-click="resetFilters()">Reset Filters</a>
 
     </div>
@@ -120,7 +127,7 @@
 
             <krossover-arena type="arenaType" fit-element>
 
-                <arena-event arena-event="arenaEvent" ng-repeat="arenaEvent in arenaEvents | filter:arenaEventFilter()"></arena-event>
+                <arena-event arena-event="arenaEvent" ng-repeat="arenaEvent in filteredArenaEvents = (arenaEvents | filter:arenaEventFilter())"></arena-event>
 
             </krossover-arena>
 
