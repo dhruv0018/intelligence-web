@@ -13,32 +13,56 @@ function StatsService () {
         parse
     };
 
-    function parse (statsObject) {
+    function parse (statsObject, statsType) {
 
         // Remove extraneous properties
         delete statsObject.$promise;
         delete statsObject.$resolved;
 
-        // Mock table names
-        statsObject.gameLog.meta.tableName = 'Game Log';
-        statsObject.homeTeamStats.meta.tableName = 'Home Team';
-        statsObject.awayTeamStats.meta.tableName = 'Away Team';
+        switch (statsType) {
 
-        // Mock index
-        statsObject.gameLog.meta.index = 0;
-        statsObject.homeTeamStats.meta.index = 1;
-        statsObject.awayTeamStats.meta.index = 2;
+            case 'Game':
 
-        // Handle score summary property
-        if (statsObject.scoreSummary === null) {
+                // Mock table names
+                statsObject.gameLog.meta.tableName = 'Game Log';
+                statsObject.homeTeamStats.meta.tableName = 'Home Team';
+                statsObject.awayTeamStats.meta.tableName = 'Away Team';
 
-            delete statsObject.scoreSummary;
+                // Mock index
+                statsObject.gameLog.meta.index = 0;
+                statsObject.homeTeamStats.meta.index = 1;
+                statsObject.awayTeamStats.meta.index = 2;
+
+                // Handle score summary property
+                if (statsObject.scoreSummary === null) {
+
+                    delete statsObject.scoreSummary;
+                }
+                else {
+
+                    statsObject.scoreSummary.meta.tableName = 'Score Summary';
+                    statsObject.scoreSummary.meta.index = 3;
+                }
+
+                break;
+
+            case 'Team':
+
+                // Mock table names
+                statsObject.gameLog.meta.tableName = 'Game Log';
+                statsObject.teamStats.meta.tableName = 'Home Team';
+
+                // Mock index
+                statsObject.gameLog.meta.index = 0;
+                statsObject.team.meta.index = 1;
+
+                break;
+
+            case 'Player':
+
+                break;
         }
-        else {
 
-            statsObject.scoreSummary.meta.tableName = 'Score Summary';
-            statsObject.scoreSummary.meta.index = 3;
-        }
 
         // Convert Object to array ordered by statsObject.table.meta.index
         let statsKeys = Object.keys(statsObject);

@@ -80,6 +80,6 @@ GamesStats.controller('GamesStats.controller', [
     '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'SPORTS', 'StatsService',
     function controller($scope, $state, $stateParams, data, SPORTS, stats) {
 
-        $scope.stats = stats.parse(data.stats);
+        $scope.stats = stats.parse(data.stats, 'Game');
     }
 ]);
