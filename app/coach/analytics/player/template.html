@@ -46,13 +46,29 @@
                 </select>
             </div>-->
         </div>
-        <div class="spinner-container" data-ng-show="loadingTables">
+
+        <div
+            class="all-center unselected-player"
+            ng-show="loadingTables === undefined"
+        >
+            <i class="icon icon-bar-chart-o"></i>
+            <h4>Please select a player to view analytics</h4>
+        </div>
+
+        <div
+            class="all-center"
+            ng-show="loadingTables"
+        >
             <krossover-spinner size="'40px'"></krossover-spinner>
             <p>Loading Statistics...</p>
         </div>
-        <div class="analytics-tables-container" data-ng-hide="loadingTables">
 
-            <div class="analytics-tables-container" data-ng-hide="loadingTables">
+        <div
+            class="analytics-tables-container"
+            ng-hide="loadingTables"
+        >
+
+            <div class="analytics-tables-container" ng-hide="loadingTables">
                 <dynamic-tables tables="stats"></dynamic-tables>
             </div>
         </div>
