@@ -26,15 +26,15 @@ function PlayerAnalyticsController(
     const league = leagues.get(team.leagueId);
     const seasons = league.seasons;
 
-    let player = null;
+    $scope.player = null;
 
     const generateStats = function (selectedPlayer) {
         $scope.loadingTables = true;
-        player = selectedPlayer || player;
+        $scope.player = selectedPlayer || $scope.player;
 
-        if (player) {
+        if ($scope.player) {
 
-            const request = player.generateStats($scope.filterQuery);
+            const request = $scope.player.generateStats($scope.filterQuery);
             request.then(requestHandler);
         }
         else {
