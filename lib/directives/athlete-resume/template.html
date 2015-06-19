@@ -27,6 +27,9 @@
                 </li>
             </ul>
         </div>
+        <div ng-show="athlete.profile.teams.length && isCurrentUser">
+            <span class="edit-field" ui-sref="Athlete.Profile.EditProfile.Experience"><i class="icon icon-pencil"></i> Edit Experience Information</span>
+        </div>
         <!-- Show if no teams -->
         <div ng-show="!athlete.profile.teams.length">
             <p ng-hide="isCurrentUser">{{athlete.firstName}} has not added any teams.</p>
@@ -81,6 +84,9 @@
                 Intended Major: {{athlete.profile.intendedMajor}}
             </li>
         </ul>
+        <div ng-show="(hasHighSchoolInfo || hasCollegeInfo) && isCurrentUser">
+            <span class="edit-field" ui-sref="Athlete.Profile.EditProfile.Academics"><i class="icon icon-pencil"></i> Edit Academic Information</span>
+        </div>
         <!-- Show if no academic info -->
         <div ng-hide="hasHighSchoolInfo && hasCollegeInfo || isCurrentUser">
             <p>{{athlete.firstName}} has not added any academic information.</p>
@@ -94,119 +100,57 @@
 
     <!-- Physical Body -->
     <div id="toggle-physical" class="resume-body animated fadeOut collapsed">
-        <ul ng-show="hasPhysicalInfo || isCurrentUser">
-            <li ng-show="athlete.profile.height || isCurrentUser">
-                <span ng-if="athlete.profile.height">
-                    Height:
-                    <span class="physical-measurement">{{athlete.profile.height | height}}</span>
-                </span>
-                <span class="add-field" ng-if="!athlete.profile.height && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add Height
+        <ul ng-show="hasPhysicalInfo">
+            <li ng-show="athlete.profile.height">
+                Height: <span class="physical-measurement">{{athlete.profile.height | height}}</span>
+            </li>
+            <li ng-show="athlete.profile.weight">
+                Weight: <span class="physical-measurement">{{athlete.profile.weight}} lbs.</span>
+            </li>
+            <li ng-show="athlete.profile.dominantHandType">
+                Dominant Hand:
+                <span class="physical-measurement">
+                    {{ATHLETE_DOMINANT_HAND_TYPES[ATHLETE_DOMINANT_HAND_TYPES_ID[athlete.profile.dominantHandType]].description}}
                 </span>
             </li>
-            <li ng-show="athlete.profile.weight || isCurrentUser">
-                <span ng-show="athlete.profile.weight">
-                    Weight:
-                    <span class="physical-measurement">{{athlete.profile.weight}} lbs.</span>
-                </span>
-                <span class="add-field" ng-show="!athlete.profile.weight && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add Weight
-                </span>
+            <li ng-show="athlete.profile.oneMileTime">
+                1 Mile Time: <span class="physical-measurement">{{athlete.profile.oneMileTime | secondsAsMinutesAndSeconds}}</span>
             </li>
-            <li ng-show="athlete.profile.dominantHandType || isCurrentUser">
-                <span ng-show="athlete.profile.dominantHandType">
-                    Dominant Hand:
-                    <span class="physical-measurement">
-                        {{ATHLETE_DOMINANT_HAND_TYPES[ATHLETE_DOMINANT_HAND_TYPES_ID[athlete.profile.dominantHandType]].description}}
-                    </span>
-                </span>
-                <span class="add-field" ng-show="!athlete.profile.dominantHandType && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add Dominant Hand
-                </span>
+            <li ng-show="athlete.profile.threeMileTime">
+                3 Mile Time: <span class="physical-measurement">{{athlete.profile.threeMileTime | secondsAsMinutesAndSeconds}}</span>
             </li>
-            <li ng-show="athlete.profile.oneMileTime || isCurrentUser">
-                <span ng-if="athlete.profile.oneMileTime">
-                    1 Mile Time:
-                    <span class="physical-measurement">{{athlete.profile.oneMileTime | secondsAsMinutesAndSeconds}}</span>
-                </span>
-                <span class="add-field" ng-if="!athlete.profile.oneMileTime && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add 1 Mile Time
-                </span>
+            <li ng-show="athlete.profile.fortyYardDash">
+                40 Yard Dash: <span class="physical-measurement">{{athlete.profile.fortyYardDash}} seconds</span>
             </li>
-            <li ng-show="athlete.profile.threeMileTime || isCurrentUser">
-                <span ng-if="athlete.profile.threeMileTime">
-                    3 Mile Time:
-                    <span class="physical-measurement">{{athlete.profile.threeMileTime | secondsAsMinutesAndSeconds}}</span>
-                </span>
-                <span class="add-field" ng-if="!athlete.profile.threeMileTime && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add 3 Mile Time
-                </span>
+            <li ng-show="athlete.profile.benchPress">
+                Bench Press: <span class="physical-measurement">{{athlete.profile.benchPress}} lbs.</span>
             </li>
-            <li ng-show="athlete.profile.fortyYardDash || isCurrentUser">
-                <span ng-show="athlete.profile.fortyYardDash">
-                    40 Yard Dash:
-                    <span class="physical-measurement">{{athlete.profile.fortyYardDash}} seconds</span>
-                </span>
-                <span class="add-field" ng-show="!athlete.profile.fortyYardDash && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add 40 Yard Dash
-                </span>
+            <li ng-show="athlete.profile.clean">
+                Clean: <span class="physical-measurement">{{athlete.profile.clean}} lbs.</span>
             </li>
-            <li ng-show="athlete.profile.benchPress || isCurrentUser">
-                <span ng-show="athlete.profile.benchPress">
-                    Bench Press:
-                    <span class="physical-measurement">{{athlete.profile.benchPress}} lbs.</span>
-                </span>
-                <span class="add-field" ng-show="!athlete.profile.benchPress && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add Bench Press
-                </span>
+            <li ng-show="athlete.profile.deadlift">
+                Deadlift: <span class="physical-measurement">{{athlete.profile.deadlift}} lbs.</span>
             </li>
-            <li ng-show="athlete.profile.clean || isCurrentUser">
-                <span ng-show="athlete.profile.clean">
-                    Clean:
-                    <span class="physical-measurement">{{athlete.profile.clean}} lbs.</span>
-                </span>
-                <span class="add-field" ng-show="!athlete.profile.clean && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add Clean
-                </span>
+            <li ng-show="athlete.profile.squat">
+                Squat: <span class="physical-measurement">{{athlete.profile.squat}} lbs.</span>
             </li>
-            <li ng-show="athlete.profile.deadlift || isCurrentUser">
-                <span ng-show="athlete.profile.deadlift">
-                    Deadlift:
-                    <span class="physical-measurement">{{athlete.profile.deadlift}} lbs.</span>
-                </span>
-                <span class="add-field" ng-show="!athlete.profile.deadlift && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add Deadlift
-                </span>
+            <li ng-show="athlete.profile.verticalLeap">
+                Vertical Leap: <span class="physical-measurement">{{athlete.profile.verticalLeap}} inches</span>
             </li>
-            <li ng-show="athlete.profile.squat || isCurrentUser">
-                <span ng-show="athlete.profile.squat">
-                    Squat:
-                    <span class="physical-measurement">{{athlete.profile.squat}} lbs.</span>
-                </span>
-                <span class="add-field" ng-show="!athlete.profile.squat && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add Squat
-                </span>
-            </li>
-            <li ng-show="athlete.profile.verticalLeap || isCurrentUser">
-                <span ng-show="athlete.profile.verticalLeap">
-                    Vertical Leap:
-                    <span class="physical-measurement">{{athlete.profile.verticalLeap}} inches</span>
-                </span>
-                <span class="add-field" ng-show="!athlete.profile.verticalLeap && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add Veartical Leap
-                </span>
-            </li>
-            <li ng-show="athlete.profile.wingspan || isCurrentUser">
-                <span ng-if="athlete.profile.wingspan">
-                    Wingspan:
-                    <span class="physical-measurement">{{athlete.profile.wingspan | height}}</span>
-                </span>
-                <span class="add-field" ng-if="!athlete.profile.wingspan && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Physical">
-                    <i class="icon icon-plus"></i> Add Wingspan
-                </span>
+            <li ng-show="athlete.profile.wingspan">
+                Wingspan: <span class="physical-measurement">{{athlete.profile.wingspan | height}}</span>
             </li>
         </ul>
-        <!-- Show if no physical info -->
+        <div ng-show="hasPhysicalInfo && isCurrentUser">
+            <span class="edit-field" ui-sref="Athlete.Profile.EditProfile.Physical"><i class="icon icon-pencil"></i> Edit Physical Information</span>
+        </div>
+        <!-- Show if no physical info and is current user's profile -->
+        <div ng-show="!hasPhysicalInfo && isCurrentUser">
+            <p ui-sref="Athlete.Profile.EditProfile.Physical">
+                <span class="add-field"><i class="icon icon-plus"></i> Add Physical Information</span>
+            </p>
+        </div>
+        <!-- Show if no physical info and is not current user's profile -->
         <div ng-hide="hasPhysicalInfo || isCurrentUser">
             <p>{{athlete.firstName}} has not added any physical information.</p>
         </div>
