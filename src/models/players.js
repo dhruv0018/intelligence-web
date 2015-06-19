@@ -41,7 +41,8 @@ IntelligenceWebClient.factory('PlayersResource', [
             generateStats: {
 
                 method: 'GET',
-                url: url + '/analytics'
+                url: url + '/analytics',
+                isArray: true
             }
         };
 
