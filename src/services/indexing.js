@@ -294,15 +294,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* Remove the event from the current play. */
                 playManager.removeEvent(event);
-
-                /* Clear the current event. */
-                eventManager.current = null;
-
-                /* Save play. */
-                playManager.current.save();
-
-                /* Clear the current play. */
-                playManager.clear();
             },
 
             onEventSelect: function (event) {

@@ -74,7 +74,8 @@
         "spinner",
         "check-box",
         "feature",
-        "search-dropdown"
+        "search-dropdown",
+        "admin-queue-dashboard"
     ],
     "scripts": [
         "index.js"
