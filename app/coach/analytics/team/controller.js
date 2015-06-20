@@ -1,10 +1,8 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 TeamAnalyticsController.$inject = [
     '$scope',
-    '$state',
-    '$stateParams',
     'SessionService',
     'LeaguesFactory',
     'TeamsFactory',
@@ -14,47 +12,47 @@ TeamAnalyticsController.$inject = [
 /**
  * Team Analytics page controller
  */
-
 function TeamAnalyticsController(
     $scope,
-    $state,
-    $stateParams,
     session,
     leagues,
     teams,
     GAME_TYPES
 ) {
 
-    var teamId = session.currentUser.currentRole.teamId;
-    var team = teams.get(teamId);
-    var league = leagues.get(team.leagueId);
-    $scope.seasons = league.seasons;
-    $scope.statsData = {};
+    const team = teams.get(session.getCurrentTeamId());
+    const league = leagues.get(team.leagueId);
+    const seasons = league.seasons;
 
-    //Game type constants
-    $scope.CONFERENCE = GAME_TYPES.CONFERENCE;
-    $scope.NON_CONFERENCE = GAME_TYPES.NON_CONFERENCE;
-    $scope.PLAYOFF = GAME_TYPES.PLAYOFF;
+    const generateStats = function () {
+        $scope.loadingTables = true;
 
+        const request = team.generateStats($scope.filterQuery);
+        request.then(requestHandler);
+
+        function requestHandler(data) {
+            // Populate dynamic-tables
+            $scope.stats = data;
+            $scope.loadingTables = false;
+        }
+    };
+
+    // Reference to generateStats data response, to populate dynamic-tables
+    $scope.stats = {};
+    // Available seaons for filters
+    $scope.seasons = seasons;
+    // Available game types for filters
+    $scope.GAME_TYPES = GAME_TYPES;
+    // Publish request method as callback on scope
+    $scope.generateStats = generateStats;
+    // Query parameters for /player/:playerId
     $scope.filterQuery = {
         seasonId: league.seasons[0].id,
         gameType: ''
     };
 
-    const generateStats = function () {
-        $scope.loadingTables = true;
-
-        function requestHandler(data) {
-            $scope.statsData = data;
-            $scope.loadingTables = false;
-        }
-
-        const request = team.generateStats($scope.filterQuery);
-        request.then(requestHandler);
-    };
-
-    $scope.generateStats = generateStats;
-
+    // FIXME: Network request in the controller
+    // Request team stats for most recent season
     generateStats();
 }
 

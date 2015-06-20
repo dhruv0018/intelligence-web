@@ -21,9 +21,9 @@
                     ng-change="generateStats()"
                 >
                     <option value="">All Stats</option>
-                    <option value="{{CONFERENCE.id}}">Conference Stats</option>
-                    <option value="{{NON_CONFERENCE.id}}">Non-Conference Stats</option>
-                    <option value="{{PLAYOFF.id}}">Playoffs Stats</option>
+                    <option value="{{GAME_TYPES.CONFERENCE.id}}">Conference Stats</option>
+                    <option value="{{GAME_TYPES.NON_CONFERENCE.id}}">Non-Conference Stats</option>
+                    <option value="{{GAME_TYPES.PLAYOFF.id}}">Playoffs Stats</option>
                 </select>
             </div>
             <!--TODO: generate list of opponents
@@ -49,7 +49,7 @@
             class="analytics-tables-container"
             ng-hide="loadingTables"
         >
-            <dynamic-tables tables="statsData"></dynamic-tables>
+            <dynamic-tables tables="stats"></dynamic-tables>
         </div>
     </div>
 </section>

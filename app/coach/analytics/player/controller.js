@@ -26,12 +26,11 @@ function PlayerAnalyticsController(
     const league = leagues.get(team.leagueId);
     const seasons = league.seasons;
 
-    $scope.player = null;
-
     const generateStats = function (selectedPlayer) {
         $scope.loadingTables = true;
         $scope.player = selectedPlayer || $scope.player;
 
+        // If a player has been selected
         if ($scope.player) {
 
             const request = $scope.player.generateStats($scope.filterQuery);
@@ -43,17 +42,25 @@ function PlayerAnalyticsController(
         }
 
         function requestHandler(data) {
+            // Populate dynamic-tables
             $scope.stats = data;
             $scope.loadingTables = false;
         }
     };
 
-    $scope.options = players.getList({rosterId: team.roster.id});
-
+    // Players to populate search-dropdown
+    $scope.players = players.getList({rosterId: team.roster.id});
+    // Reference to selected player
+    $scope.player = null;
+    // Reference to generateStats data response, to populate dynamic-tables
     $scope.stats = {};
+    // Available seaons for filters
     $scope.seasons = seasons;
+    // Available game types for filters
     $scope.GAME_TYPES = GAME_TYPES;
+    // Publish request method as callback on scope
     $scope.generateStats = generateStats;
+    // Query parameters for /player/:playerId
     $scope.filterQuery = {
         seasonId: league.seasons[0].id,
         gameType: ''
