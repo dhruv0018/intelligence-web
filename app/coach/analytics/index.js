@@ -37,6 +37,7 @@ Analytics.config([
 
             .state('Coach.Analytics', {
                 url: '/analytics',
+                abstract: true,
                 views: {
                     'main@root': {
                         templateUrl: 'coach/analytics/template.html',

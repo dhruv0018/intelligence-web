@@ -38,16 +38,12 @@ TeamAnalytics.config([
 
         .state('Coach.Analytics.Team', {
             url: '/team',
+            parent: 'Coach.Analytics',
             views: {
                 'main@root': {
                     templateUrl,
                     controller
                 }
-            },
-            resolve: {
-                'Coach.Data': ['$q', 'Coach.Data.Dependencies', function($q, data) {
-                    return $q.all(data);
-                }]
             }
         });
     }
