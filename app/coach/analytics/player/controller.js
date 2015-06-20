@@ -48,7 +48,7 @@ function PlayerAnalyticsController(
         }
     };
 
-    players.load({rosterId: team.roster.id}).then(data => $scope.options = data);
+    $scope.options = players.getList({rosterId: team.roster.id});
 
     $scope.stats = {};
     $scope.seasons = seasons;
