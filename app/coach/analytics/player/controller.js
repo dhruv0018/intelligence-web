@@ -54,13 +54,13 @@ function PlayerAnalyticsController(
     $scope.player = null;
     // Reference to generateStats data response, to populate dynamic-tables
     $scope.stats = {};
-    // Available seaons for filters
+    // Available seasons for filters
     $scope.seasons = seasons;
     // Available game types for filters
     $scope.GAME_TYPES = GAME_TYPES;
     // Publish request method as callback on scope
     $scope.generateStats = generateStats;
-    // Query parameters for /player/:playerId
+    // Query parameters for /players/:playerId/analytics
     $scope.filterQuery = {
         seasonId: league.seasons[0].id,
         gameType: ''
