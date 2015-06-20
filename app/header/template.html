@@ -95,8 +95,18 @@
         <li ng-if="league.sportId === SPORTS.FOOTBALL.id || league.sportId === SPORTS.VOLLEYBALL.id" id="menu-coach-analytics-cta" class="header-dropdown" ng-class="{active: $state.includes('Coach.Analytics')}">
             <a class="dropdown-toggle" dropdown-toggle>Analytics</a>
             <ul class="dropdown-menu">
-                <li><a id="menu-coach-analytics-team-cta" data-ui-sref="Coach.Analytics.Team">Team Analytics</a></li>
-                <li><a id="menu-coach-analytics-player-cta" data-ui-sref="Coach.Analytics.Player">Player Analytics</a></li>
+                <li>
+                    <a
+                        id="menu-coach-analytics-team-cta" ui-sref="Coach.Analytics.Team"
+                        feature="TeamAnalytics"
+                    >Team Analytics</a>
+                </li>
+                <li>
+                    <a
+                        id="menu-coach-analytics-player-cta" ui-sref="Coach.Analytics.Player"
+                        feature="PlayerAnalytics"
+                    >Player Analytics</a>
+                </li>
             </ul>
         </li>
         <li id="menu-coach-team-cta" class="header-dropdown" data-ng-class="{active: $state.includes('Coach.Team')}">
