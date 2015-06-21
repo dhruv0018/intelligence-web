@@ -33,6 +33,8 @@ function PlayerAnalyticsController(
         // If a player has been selected
         if ($scope.player) {
 
+            $scope.filterQuery.id = $scope.player.id;
+
             const request = $scope.player.generateStats($scope.filterQuery);
             request.then(requestHandler);
         }
