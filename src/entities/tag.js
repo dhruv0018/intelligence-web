@@ -2,6 +2,12 @@ import Entity from './entity';
 
 class KrossoverTag extends Entity {
 
+    /**
+     * Constructor:
+     * Instantaties KrossoverTag
+     *
+     * @param: {Object} Tag JSON
+     */
     constructor (tag) {
 
         if (!arguments.length) {
@@ -41,6 +47,13 @@ class KrossoverTag extends Entity {
         return this.tagVariables;
     }
 
+    /**
+     * Method: indexTagVariables
+     * Takes the tag variables array and converts it into an Object keyed by
+     * index ID.
+     *
+     * @return: {undefined}
+     */
     indexTagVariables () {
 
         let indexedVariables = {};
@@ -65,6 +78,12 @@ class KrossoverTag extends Entity {
         this.tagVariables = indexedVariables;
     }
 
+    /**
+     * Method: mapScriptTypes
+     * Maps script type strings from string to array.
+     *
+     * @return: {undefined}
+     */
     mapScriptTypes () {
 
         let VARIABLE_PATTERN       = /(__\d__)/;
@@ -112,6 +131,13 @@ class KrossoverTag extends Entity {
         });
     }
 
+    /**
+     * Method: toJSON
+     * Transforms the data back into the format excpected by the server:
+     * convert tag variables back to array; change scripts back to string.
+     *
+     * @return: {Object} The JSON
+     */
     toJSON () {
 
         let copy = Object.assign({}, this);
