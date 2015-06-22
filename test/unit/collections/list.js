@@ -1,6 +1,8 @@
-let util = require('util');
-
 import List from '../../../src/collections/list';
+
+/* Utility for consoling out large objects. */
+const util = require('util');
+const krog = obj => console.log(util.inspect(obj));
 
 const srcArray = [
     1,
@@ -32,7 +34,6 @@ describe('List', () => {
         'last',
         'add',
         'remove',
-        'sort',
         'isEmpty'
     ];
 
@@ -195,12 +196,22 @@ describe('List', () => {
     it('should have a "remove" method that removes elements from the array', () => {
 
         expect(sampleList.length).to.equal(13);
-        expect(sampleList.get(2)).to.equal('3');
-
-        sampleList.remove(2);
-
+        sampleList.remove(1);
         expect(sampleList.length).to.equal(12);
-        expect(sampleList.get(2)).to.deep.equal({'foo': 4});
+        expect(sampleList[0]).to.equal(2);
+        expect(sampleList.indexOf(1)).to.equal(-1);
+
+        sampleList.remove({foo: 4});
+        expect(sampleList.length).to.equal(12);
+        expect(sampleList[0]).to.equal(2);
+        expect(sampleList[2]).to.deep.equal({foo: 4});
+        expect(sampleList.indexOf({foo: 4})).to.equal(-1);
+
+        sampleList.remove(srcArray[3]);
+        expect(sampleList.length).to.equal(11);
+        expect(sampleList[0]).to.equal(2);
+        expect(sampleList[2]).to.equal(null);
+        expect(sampleList.indexOf(srcArray[3])).to.equal(-1);
     });
 
     it('should not remove elements that do not exist', () => {
