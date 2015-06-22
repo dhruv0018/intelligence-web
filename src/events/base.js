@@ -1,4 +1,4 @@
-class BaseEvent extends CustomEvent {
+class BaseEvent {
 
 }
 
