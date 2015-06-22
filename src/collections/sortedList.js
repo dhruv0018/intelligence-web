@@ -38,10 +38,10 @@ class SortedList extends List {
 
             if (a[this.sortProperty] > b[this.sortProperty]) {
 
-                return 1;
+                return this.descending? 1 : -1;
             } else if (a[this.sortProperty] < b[this.sortProperty]) {
 
-                return -1;
+                return this.descending? -1 : 1;
             }
 
             /* a must be equal to b */

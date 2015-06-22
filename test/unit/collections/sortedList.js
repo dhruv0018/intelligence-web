@@ -69,6 +69,15 @@ describe('SortedList', () => {
         expect(sampleList[2]).to.deep.equal(srcArray[2]);
     });
 
+    it('should be ascending sorted after instantiation, if descending set to false.', () => {
+
+        let ascendingList = new SortedList(srcArray, 'foo', false);
+
+        expect(ascendingList[0]).to.deep.equal(srcArray[2]);
+        expect(ascendingList[1]).to.deep.equal(srcArray[0]);
+        expect(ascendingList[2]).to.deep.equal(srcArray[1]);
+    });
+
     it('should sort itself after adding new elements', () => {
 
         const sampleElem = angular.copy(srcElem1);
