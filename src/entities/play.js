@@ -27,7 +27,7 @@ class KrossoverPlay extends Entity {
         /* Play possesion; filled in by the events. */
         this.possessionTeamId = play.possessionTeamId || null;
 
-        this.events = play.events.map(constructEvent);
+        this.events = this.events.map(constructEvent);
 
         function constructEvent (event) {
 
