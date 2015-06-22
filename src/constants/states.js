@@ -31,7 +31,7 @@ var STATE_NAMES = {
         display: 'Formation Report'
     },
 
-    'Games.ShotChart': {
+    'Games.ArenaChart': {
         display: 'Shot Chart'
     }
 };

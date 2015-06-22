@@ -1,48 +1,48 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-var GamesShotChart = angular.module('Games.ShotChart', []);
+var GamesArenaChart = angular.module('Games.ArenaChart', []);
 
-GamesShotChart.run([
+GamesArenaChart.run([
     '$templateCache',
     function run($templateCache) {
-        $templateCache.put('games/shot-chart.html', require('./template.html'));
+        $templateCache.put('games/arena-chart.html', require('./template.html'));
     }
 ]);
 
-GamesShotChart.config([
+GamesArenaChart.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var shotChart = {
-            name: 'Games.ShotChart',
-            url: '/shot-chart',
+        var arenaChart = {
+            name: 'Games.ArenaChart',
+            url: '/arena-chart',
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'games/shot-chart.html',
-                    controller: 'GamesShotChart.controller'
+                    templateUrl: 'games/arena-chart.html',
+                    controller: 'GamesArenaChart.controller'
                 }
             },
             resolve: {
-                'Games.ShotChart.Data': GamesShotChartData
+                'Games.ArenaChart.Data': GamesArenaChartData
             }
         };
 
-        $stateProvider.state(shotChart);
+        $stateProvider.state(arenaChart);
 
     }
 ]);
 
-/* ShotChart Data Resolve */
+/* ArenaChart Data Resolve */
 
-GamesShotChartData.$inject = [
+GamesArenaChartData.$inject = [
     'GamesFactory',
     '$stateParams',
     '$q'
 ];
 
-function GamesShotChartData (
+function GamesArenaChartData (
     games,
     $stateparams,
     $q
@@ -51,9 +51,9 @@ function GamesShotChartData (
 }
 
 
-/* ShotChart Controller */
+/* ArenaChart Controller */
 
-GamesShotChartController.$inject = [
+GamesArenaChartController.$inject = [
     'ARENA_TYPES',
     'GamesFactory',
     'TeamsFactory',
@@ -62,7 +62,7 @@ GamesShotChartController.$inject = [
     '$scope'
 ];
 
-function GamesShotChartController(
+function GamesArenaChartController(
     ARENA_TYPES,
     games,
     teams,
@@ -209,4 +209,4 @@ function GamesShotChartController(
     };
 }
 
-GamesShotChart.controller('GamesShotChart.controller', GamesShotChartController);
+GamesArenaChart.controller('GamesArenaChart.controller', GamesArenaChartController);

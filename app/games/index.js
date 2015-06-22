@@ -8,7 +8,7 @@ require('down-and-distance');
 require('game-info');
 require('stats');
 require('formations');
-require('shot-chart');
+require('arena-chart');
 
 /**
 * Coach game area raw film page module.
@@ -21,7 +21,7 @@ var Games = angular.module('Games', [
     'Games.Info',
     'Games.Stats',
     'Games.Formations',
-    'Games.ShotChart'
+    'Games.ArenaChart'
 ]);
 
 Games.run([
@@ -200,8 +200,8 @@ function GamesController(
             //sport specific states
             switch (sport.id) {
                 case SPORTS.BASKETBALL.id:
-                    if (features.isEnabled('ShotChart')) {
-                        $scope.gameStates.push({name: 'Games.ShotChart'});
+                    if (features.isEnabled('ArenaChart')) {
+                        $scope.gameStates.push({name: 'Games.ArenaChart'});
                     }
                     break;
                 case SPORTS.FOOTBALL.id:
