@@ -2,33 +2,51 @@ import List from './list';
 
 class SortedList extends List {
 
-    constructor (array = []) {
+    constructor (array, sortProperty, descending) {
 
         super(array);
+
+        if (!sortProperty) {
+
+            throw new Error('Invoked List.constructor without passing a sort property');
+        }
+
+        this.sortProperty = sortProperty;
+        this.descending   = descending;
+
+        this.sortList();
     }
 
     /**
      * Method:sort
      * Sorts entries by property in order
      *
-     * @param: {String} (req) Property to sort by
-     * @param: {Boolean} (opt) Sort by ASCENDING
-     *         [false] or DESCENDING [true],
-     *         default is [true]
      * @return: {Array} Sorted List
      */
-    sort (property, descending = true) {
+    sortList () {
 
-        switch (arguments.length) {
-
-            case 0:
-
-                throw new Error('Invoked List.sort without passing a String property to sort by');
-        }
-
+        /* Create a temporary Array to sort with */
         return this.sort((a, b) => {
 
-            return descending ? (b.property - a.property) : (a.property - b.property);
+            if (a[this.sortProperty] > b[this.sortProperty]) {
+
+                return 1;
+            } else if (a[this.sortProperty] < b[this.sortProperty]) {
+
+                return -1;
+            }
+
+            /* a must be equal to b */
+            return 0;
         });
     }
+
+    add (item, toLast = true) {
+
+        super.add(item, toLast);
+
+        this.sortList();
+    }
 }
+
+export default SortedList;
