@@ -166,7 +166,7 @@ class List extends Array {
      *         remove (arrays not accepted)
      * @return: {Integer} Length, OR undefined
      */
-    remove (index) {
+    remove (item) {
 
         switch (arguments.length) {
 
@@ -175,9 +175,9 @@ class List extends Array {
                 throw new Error('Invoked List.remove without passing an Object to remove');
         }
 
-        if (this.includes(index)) {
+        if (this.includes(item)) {
 
-            return this.splice(index, 1);
+            return this.splice(this.indexOf(item), 1);
         }
     }
 
