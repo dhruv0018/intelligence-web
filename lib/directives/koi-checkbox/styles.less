@@ -1,0 +1,48 @@
+@import (reference) "main.less";
+
+koi-checkbox {
+    display: inline-block;
+}
+
+.koi-checkbox {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: flex-start;
+    cursor: pointer;
+    color: black;
+    font-size: @font-size-large;
+
+    &-toggle, &-label {
+        margin: 0 2px;
+    }
+
+    * {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        user-select: none;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    &.reverse {
+        flex-direction: row-reverse;
+    }
+
+    &-toggle i {
+        display: flex;
+        align-items: center;
+    }
+
+    i {
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        vertical-align: baseline;
+
+        &.icon-check-square {
+            color: @brand-primary;
+        }
+    }
+}

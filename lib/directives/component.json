@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "koi-checkbox",
         "role",
         "rolebar",
         "alertbar",
