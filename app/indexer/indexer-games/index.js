@@ -31,7 +31,7 @@ IndexerGames.config([
                 parent: 'Indexer',
                 views: {
                     'main@root': {
-                        templateUrl,
+                        template,
                         controller: IndexerGamesController
                     }
                 },
