@@ -1,7 +1,5 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
-//might need to window.moment
-const moment = require('moment');
 
 import IndexingDataDependencies from '../data.js';
 import IndexerGamesController from './controller.js';

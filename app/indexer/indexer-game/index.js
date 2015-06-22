@@ -1,6 +1,5 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
-const moment = require('moment');
 
 import IndexingDataDependencies from '../data.js';
 import IndexerGameController from './controller.js';
@@ -44,8 +43,8 @@ IndexerGame.config([
                 resolve: {
                     'Indexer.Game.Data': [
                         '$q', 'IndexingDataDependencies',
-                        function($q, IndexingGamesData) {
-                            let data = new IndexingGamesData();
+                        function($q, IndexingGameData) {
+                            let data = new IndexingGameData();
                             return $q.all(data);
                         }
                     ]

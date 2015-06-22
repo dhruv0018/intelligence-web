@@ -1,5 +1,6 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const moment = require('moment');
 
 IndexerGamesController.$inject = [
     '$scope',

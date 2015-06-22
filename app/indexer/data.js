@@ -33,9 +33,7 @@ function IndexingDataDependencies (
             this.users = users.load({ relatedUserId: this.userId });
             this.teams = teams.load({ relatedUserId: this.userId });
             this.games = games.load({ assignedUserId: this.userId });
-            this.schools = function () {
-
-                return this.teams.then(function(teams) {
+            this.schools = this.teams.then(function(teams) {
 
                     let schoolIds = teams
 
@@ -51,7 +49,6 @@ function IndexingDataDependencies (
 
                     if (schoolIds.length) return schools.load(schoolIds);
                 });
-            };
 
         }
     }
