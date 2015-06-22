@@ -88,9 +88,14 @@
     }
 
     .athlete-resume {
-        display: inline-block;
+        display: none;
         margin-right: 30px;
         vertical-align: top;
+
+        @media only screen
+        and (min-width: @md-screen-md) {
+            display: inline-block;
+        }
     }
 
     .reels {
