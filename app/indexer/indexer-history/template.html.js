@@ -54,7 +54,7 @@ export default `
                 <tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'datePlayed' | byDeadline: false">
                     <td>{{(game | byUserDeadlineTime)[0].timeAssigned | date:'MM/dd/yyyy'}}</td>
                     <td>{{game.id}}</td>
-                    <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="indexer-game({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
+                    <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
                     <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                     <td>{{(game | byUserDeadlineTime)[0].isQa ? 'QA' : 'Indexed'}}</td>
                     <td>

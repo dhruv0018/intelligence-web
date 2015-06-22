@@ -1,5 +1,4 @@
 /* Component dependencies */
-//require('indexer-game');
 import IndexerGame from './indexer-game/index';
 import IndexerGames from './indexer-games/index';
 import IndexerHistory from './indexer-history/index';

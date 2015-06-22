@@ -34,21 +34,20 @@ function IndexingDataDependencies (
             this.teams = teams.load({ relatedUserId: this.userId });
             this.games = games.load({ assignedUserId: this.userId });
             this.schools = this.teams.then(function(teams) {
+                let schoolIds = teams
 
-                    let schoolIds = teams
+                .filter(function(team) {
 
-                    .filter(function(team) {
+                    return team.schoolId;
+                })
 
-                        return team.schoolId;
-                    })
+                .map(function(team) {
 
-                    .map(function(team) {
-
-                        return team.schoolId;
-                    });
-
-                    if (schoolIds.length) return schools.load(schoolIds);
+                    return team.schoolId;
                 });
+
+                if (schoolIds.length) return schools.load(schoolIds);
+            });
 
         }
     }
