@@ -11,7 +11,8 @@
         "normalize",
         "height",
         "weight",
-        "games"
+        "games",
+        "padding"
     ],
     "scripts": [
         "index.js"

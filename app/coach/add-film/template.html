@@ -30,11 +30,11 @@
 
                                     <div class="no-roster-warning" data-ng-if="!team.hasActivePlayerInfo()">
                                         You must have a roster to upload a regular game.
-                                        <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team.Roster">Add players to your roster.</a>
+                                        <a id="add-missing-roster-cta" data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team.Roster">Add players to your roster.</a>
                                     </div>
 
 
-                                    <button type="button" data-ng-disabled="!team.hasActivePlayerInfo()">
+                                    <button id="upload-regular-game-cta" type="button" data-ng-disabled="!team.hasActivePlayerInfo()">
                                         <div>
                                             <h1>Regular Game</h1>
                                             <h2>Includes: regular season, conference and non conference, and playoff games.</h2>
@@ -48,7 +48,7 @@
 
                                 <div class="select-boxes active col-md-6">
 
-                                    <button type="button"
+                                    <button id="upload-scout-scrim-game-cta" type="button"
                                             data-ng-class="{active: team.hasActivePlayerInfo()}"
                                             data-ng-click="launchUploaderInterface(GAME_TYPES.SCOUTING.id)">
 

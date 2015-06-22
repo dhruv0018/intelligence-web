@@ -57,10 +57,12 @@
         <span
             class="watch-play"
             ng-hide="isIndexer"
+            id="play-play-cta"
             ng-click="watchPlay(play)"
             ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
             >
             <i class="icon icon-play-circle"></i>
+
         </span>
 
         <span
