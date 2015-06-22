@@ -29,7 +29,7 @@ IndexerHistory.config([
 
             .state('IndexerHistory', {
                 url: '/history',
-                parent: 'indexer',
+                parent: 'Indexer',
                 views: {
                     'main@root': {
                         templateUrl,
@@ -41,7 +41,6 @@ IndexerHistory.config([
                         '$q', 'IndexingGamesDataDependencies',
                         function($q, IndexingGamesData) {
                             let data = new IndexingGamesData();
-
                             return $q.all(data);
                         }
                     ]

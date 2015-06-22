@@ -34,10 +34,10 @@ IndexerGame.config([
 
             .state('IndexerGame', {
                 url: '/game/:id',
-                parent: 'indexer',
+                parent: 'Indexer',
                 views: {
                     'main@root': {
-                        templateUrl: 'indexer-game.html',
+                        templateUrl,
                         controller: IndexerGameController
                     }
                 },

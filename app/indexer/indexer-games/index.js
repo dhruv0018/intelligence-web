@@ -30,7 +30,7 @@ IndexerGames.config([
 
             .state('IndexerGames', {
                 url: '/games',
-                parent: 'indexer',
+                parent: 'Indexer',
                 views: {
                     'main@root': {
                         templateUrl,
