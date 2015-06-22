@@ -5,8 +5,7 @@ let FieldData = {
     inputType: 'TEXT',
     isRequired: true,
     options: [],
-    type: null,
-    value: '10'
-}
+    type: null
+};
 
 export default FieldData;
