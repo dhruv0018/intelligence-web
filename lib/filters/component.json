@@ -10,7 +10,8 @@
         "films",
         "normalize",
         "height",
-        "weight"
+        "weight",
+        "padding"
     ],
     "scripts": [
         "index.js"

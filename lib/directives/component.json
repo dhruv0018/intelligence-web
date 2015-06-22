@@ -73,6 +73,7 @@
         "role-class",
         "spinner",
         "check-box",
+        "admin-queue-dashboard",
         "feature"
     ],
     "scripts": [

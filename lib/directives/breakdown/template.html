@@ -8,14 +8,15 @@
 
             <!-- Game Play -->
             <krossover-play
-                data-ng-if="!isReelsPlay"
-                data-play="play"
-                data-plays="plays"
-                data-reels="reels"
-                data-expand-all="expandAll"
-                data-filtered-plays-ids="filteredPlaysIds"
-                data-ng-show="play.isFiltered"
-                data-ng-repeat="play in plays | orderBy:'startTime'">
+                ng-if="!isReelsPlay"
+                play="play"
+                plays="plays"
+                game="game"
+                league="league"
+                expand-all="expandAll"
+                filtered-plays-ids="filteredPlaysIds"
+                ng-show="play.isFiltered"
+                ng-repeat="play in plays | orderBy:'startTime'">
             </krossover-play>
 
             <no-results data-ng-hide="plays.length"></no-results>
@@ -24,8 +25,8 @@
     </div>
 
     <div class="playlist-footer screen-lg-min" data-ng-show="showFooter && !editFlag">
-        <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
-        <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
+        <button id="breakdown-expand-all-cta" data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
+        <button id="breakdown-collapse-all-cta" data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
     </div>
 
 </div>
