@@ -2,14 +2,14 @@
 const angular = window.angular;
 const moment = require('moment');
 
-import IndexingGamesDataDependencies from '../indexer-games/data.js';
+import IndexingDataDependencies from '../data.js';
 import IndexerGamesController from '../indexer-games/controller.js';
 import template from './template.html.js';
 
 const templateUrl = './template.html';
 const IndexerHistory = angular.module('IndexerHistory', []);
 
-IndexerHistory.factory('IndexingGamesDataDependencies', IndexingGamesDataDependencies);
+IndexerHistory.factory('IndexingDataDependencies', IndexingDataDependencies);
 IndexerHistory.controller('IndexerGamesController', IndexerGamesController);
 
 /* Cache the template file */

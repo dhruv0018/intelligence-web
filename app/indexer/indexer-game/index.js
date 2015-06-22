@@ -9,7 +9,7 @@ import template from './template.html.js';
 const templateUrl = './template.html';
 const IndexerGame = angular.module('IndexerGame', []);
 
-IndexerGames.factory('IndexingDataDependencies', IndexingDataDependencies);
+IndexerGame.factory('IndexingDataDependencies', IndexingDataDependencies);
 IndexerGame.controller('IndexerGameController', IndexerGameController);
 
 /* Cache the template file */
