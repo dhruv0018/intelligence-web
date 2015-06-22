@@ -2,7 +2,15 @@ import List from './list';
 
 class SortedList extends List {
 
-    constructor (array, sortProperty, descending) {
+    /**
+     * Constructor:
+     * Instantaties Sorted List as a new array
+     *
+     * @param: {Array} (opt) Array to copy
+     * @param: {String} Property to sort array by
+     * @param: {Boolean} (opt) Sort array descending/ascending
+     */
+    constructor (array, sortProperty, descending = true) {
 
         super(array);
 
@@ -18,7 +26,7 @@ class SortedList extends List {
     }
 
     /**
-     * Method:sort
+     * Method: sort
      * Sorts entries by property in order
      *
      * @return: {Array} Sorted List
@@ -41,11 +49,22 @@ class SortedList extends List {
         });
     }
 
+    /**
+     * Method: add
+     * Adds new items to the array and then sorts according the sort settings
+     *
+     * @param: {Object} (req) Item(s) to add,
+     *         (arrays accepted)
+     * @param: {Boolean} (opt) Add to FIRST
+     *         [false] or LAST [true] of
+     *         List, default is [true]
+     * @return: {Array} Sorted List
+     */
     add (item, toLast = true) {
 
         super.add(item, toLast);
 
-        this.sortList();
+        return this.sortList();
     }
 }
 
