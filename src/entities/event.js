@@ -1,4 +1,5 @@
 import Entity from './entity.js';
+import Fields from '../values/field/Fields';
 
 class Event extends Entity {
 
@@ -24,6 +25,8 @@ class Event extends Entity {
 
         Object.assign(this, event, tag, { time });
 
+        this.fields = {};
+
         /* FIXME: Remove when API is updated. */
         if (this.tagVariables) Object.keys(this.tagVariables).forEach(key => {
 
@@ -36,6 +39,8 @@ class Event extends Entity {
             if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
                 this.variableValues[tagVariable.id].value = null;
             }
+            let field = Fields.factory(this.variableValues[tagVariable.id]);
+            this.fields[tagVariable.index] = field;
         });
     }
 
@@ -48,17 +53,6 @@ class Event extends Entity {
     get keyboardShortcut () {
 
         return this.shortcutKey;
-    }
-
-    /**
-     * Getter for event.fields
-     * @method Event.fields
-     * @readonly
-     * @returns {Array} fields
-     */
-    get fields () {
-
-        return this.tagVariables;
     }
 
     /**
