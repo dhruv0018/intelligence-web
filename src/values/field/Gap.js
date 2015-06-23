@@ -9,12 +9,23 @@ class GapField extends Field {
 
         this.GAPS =  GapConstants.GAPS;
         this.GAP_IDS = GapConstants.GAP_IDS;
-
-        let gap = {
+        this.availableValues = Object.keys(this.GAPS).map(key => {
+            let currentGap = this.GAPS[key];
+            gap = {
+                gapId: Number(currentGap.value),
+                name: currentGap.name,
+                keyboardShortcut: currentGap.shortcut
+            };
+            return gap;
+        });
+        let optionalGap = {
             gapId: !field.isRequired ? null : undefined,
             name: !field.isRequired ? 'Optional' : undefined,
             keyboardShortcut: undefined
         };
+        this.availableValues.unshift(optionalGap);
+
+        let gap = this.availableValues[0];
 
         if (field.value) {
             let currentGap = this.GAPS[this.GAP_IDS[field.value]];
@@ -26,15 +37,6 @@ class GapField extends Field {
         }
 
         this.currentValue = gap;
-        this.availableValues = Object.keys(this.GAPS).map(key => {
-            let currentGap = this.GAPS[key];
-            gap = {
-                gapId: Number(currentGap.value),
-                name: currentGap.name,
-                keyboardShortcut: currentGap.shortcut
-            };
-            return gap;
-        });
     }
 
     get currentValue() {
@@ -47,9 +49,10 @@ class GapField extends Field {
 
     toJSON(){
         let variableValue = {};
+        let value = this.value.gapId === null ? null : String(this.value.gapId);
         variableValue = {
             type: null,
-            value: String(this.value.gapId)
+            value: value
         };
         return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }

@@ -64,7 +64,7 @@ describe('Gap Event Field', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = true;
         let eventField = new GapField(localEventVariable);
-        eventField.currentValue = eventField.availableValues[1];
+        eventField.currentValue = eventField.availableValues[2];
         let value = eventField.currentValue;
 
         expect(value.gapId).to.equal(2);
@@ -83,7 +83,6 @@ describe('Gap Event Field', () => {
 
     it('toJSON should serialize to the right format if the field has no value', () => {
         let localEventVariable = angular.copy(eventVariable);
-
         localEventVariable.isRequired = false;
         localEventVariable.value = undefined;
 
@@ -91,6 +90,17 @@ describe('Gap Event Field', () => {
         let value = eventField.currentValue;
         let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":null,"value": null}');
+        expect(serializedField).to.equal('{"type":null,"value":null}');
+    });
+
+    it('Should be able to switch back to an optional value from a set value', () => {
+        let localEventVariable = angular.copy(eventVariable);
+        localEventVariable.isRequired = false;
+        let eventField = new GapField(localEventVariable);
+        let value = eventField.currentValue;
+        expect(value.gapId).to.not.be.null;
+        eventField.currentValue = eventField.availableValues[0];
+        value = eventField.currentValue;
+        expect(value.gapId).to.be.null;
     });
 });
