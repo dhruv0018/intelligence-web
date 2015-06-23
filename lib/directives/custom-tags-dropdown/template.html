@@ -41,8 +41,9 @@
 
         <div class="tag-action-buttons">
             <a href ng-click="cancelTagging()">Cancel</a>
-            <a href class="pull-right" ng-show="selectedTags.length" ng-click="applyTags()">Apply</a>
-            <span class="pull-right" ng-hide="selectedTags.length">Apply</span>
+            <a href class="pull-right" ng-show="selectedTags.length && !tagsApplying" ng-click="applyTags()">Apply</a>
+            <span class="empty-apply" ng-hide="selectedTags.length || tagsApplying">Apply</span>
+            <span class="applying" ng-show="tagsApplying">Applying... <krossover-spinner size="12px"></krossover-spinner></span>
         </div>
     </div>
 </div>
