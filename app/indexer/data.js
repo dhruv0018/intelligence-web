@@ -23,11 +23,11 @@ function IndexingDataDependencies (
     schools
 ) {
 
-    class Data {
+    class IndexingData {
 
         constructor () {
             /* Load data. */
-            this.userId = session.currentUser.id;
+            this.userId = session.getCurrentUserId();
             this.sports = sports.load();
             this.leagues = leagues.load();
             this.users = users.load({ relatedUserId: this.userId });
@@ -52,7 +52,7 @@ function IndexingDataDependencies (
         }
     }
 
-    return Data;
+    return IndexingData;
 }
 
 export default IndexingDataDependencies;

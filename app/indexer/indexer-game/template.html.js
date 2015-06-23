@@ -177,6 +177,7 @@ export default `
 
             <hr>
 
+            <!-- todo Take a look at  app/admin/queue/game.html on how to approach
             <h4>Time remaining to deliver</h4>
             <time>6h 15m</time>
 
@@ -191,6 +192,7 @@ export default `
 
             <h4>Date uploaded</h4>
             <time>Jun 23, 1014</time>
+            -->
 
         </aside>
 

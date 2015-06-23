@@ -1,7 +1,7 @@
 /* Component dependencies */
-import IndexerGame from './indexer-game/index';
-import IndexerGames from './indexer-games/index';
-import IndexerHistory from './indexer-history/index';
+import IndexerGame from './indexer-game/';
+import IndexerGames from './indexer-games/';
+import IndexerHistory from './indexer-history/';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;

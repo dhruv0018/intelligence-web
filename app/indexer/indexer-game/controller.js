@@ -46,7 +46,7 @@ function IndexerGameController(
     users
 ) {
 
-    const gameId = $stateParams.id;
+    const gameId = Number($stateParams.id);
 
     $scope.GAME_TYPES = GAME_TYPES;
     $scope.GAME_STATUSES = GAME_STATUSES;
@@ -98,9 +98,8 @@ function IndexerGameController(
 
         modalInstance.result.then(function() {
             $scope.game.setAside();
-            $scope.game.save().then(function() {
-                $state.go('IndexerGames');
-            });
+            $scope.game.save();
+            $state.go('IndexerGames');
         });
     };
 

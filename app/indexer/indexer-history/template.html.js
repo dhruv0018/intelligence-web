@@ -51,14 +51,14 @@ export default `
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'datePlayed' | byDeadline: false">
-                    <td>{{(game | byUserDeadlineTime)[0].timeAssigned | date:'MM/dd/yyyy'}}</td>
+                <tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'datePlayed' | filterByDeadline: false">
+                    <td>{{(game | filterByUserDeadlineAndTime)[0].timeAssigned | date:'MM/dd/yyyy'}}</td>
                     <td>{{game.id}}</td>
                     <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
                     <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
-                    <td>{{(game | byUserDeadlineTime)[0].isQa ? 'QA' : 'Indexed'}}</td>
+                    <td>{{(game | filterByUserDeadlineAndTime)[0].isQa ? 'QA' : 'Indexed'}}</td>
                     <td>
-                        {{(game | byUserDeadlineTime)[0].timeFinished ? ((game | byUserDeadlineTime)[0].timeFinished | date:'MM/dd/yyyy') : 'Incomplete'}}
+                        {{(game | filterByUserDeadlineAndTime)[0].timeFinished ? ((game | filterByUserDeadlineAndTime)[0].timeFinished | date:'MM/dd/yyyy') : 'Incomplete'}}
                     </td>
                 </tr>
                 </tbody>
