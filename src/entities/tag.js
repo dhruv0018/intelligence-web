@@ -1,4 +1,5 @@
 import Entity from './entity';
+import Fields from '../values/field/Fields';
 
 class KrossoverTag extends Entity {
 
@@ -17,6 +18,8 @@ class KrossoverTag extends Entity {
 
         super(tag);
 
+        this.fields = this.tagVariables.forEach(field => Fields.factory(field));
+
         if (Array.isArray(this.tagVariables)) {
 
             this.indexTagVariables();
@@ -27,7 +30,7 @@ class KrossoverTag extends Entity {
 
     /**
      * Getter for tag.shortcutKey
-     * @method KrossoverTag.shortcutKey
+     * @method KrossoverTag.keyboardShortcut
      * @readonly
      * @returns {String} shortcutKey
      */
@@ -37,14 +40,15 @@ class KrossoverTag extends Entity {
     }
 
     /**
-     * Getter for tag.fields
-     * @method KrossoverTag.fields
+     * Setter for tag.shortcutKey
+     * @method KrossoverTag.keyboardShortcut
      * @readonly
-     * @returns {Array} fields
+     * @param {Object}
+     * @returns {undefined}
      */
-    get fields () {
+    set keyboardShortcut (value) {
 
-        return this.tagVariables;
+        return;
     }
 
     /**
