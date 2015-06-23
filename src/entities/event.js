@@ -87,7 +87,7 @@ class Event extends Entity {
                 field = variableValue;
                 break;
         }
-        console.log(field.toJSON());
+        console.log(field);
         return field;
     }
     /**
