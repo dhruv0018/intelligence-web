@@ -11,7 +11,8 @@
         "normalize",
         "height",
         "weight",
-        "padding"
+        "padding",
+        "to-array"
     ],
     "scripts": [
         "index.js"
