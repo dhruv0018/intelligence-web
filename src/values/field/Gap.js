@@ -13,13 +13,27 @@ class GapField extends Field {
         let gap = {
             gapId: !field.isRequired ? null : undefined,
             name: !field.isRequired ? 'Optional' : undefined,
-            keyboardShortcut: null
+            keyboardShortcut: undefined
         };
 
-        if (field.value) gap = this.GAPS[this.GAP_IDS[field.value]];
+        if (field.value) {
+            let currentGap = this.GAPS[this.GAP_IDS[field.value]];
+            gap = {
+                gapId: currentGap.id,
+                name: currentGap.name,
+                keyboardShortcut: currentGap.shortcut
+            };
+        }
 
         this.currentValue = gap;
-        this.availableValues = Object.keys(this.GAPS).map(key => this.GAPS[key]);
+        this.availableValues = Object.keys(this.GAPS).map(key => {
+            let currentGap = this.GAPS[key];
+            gap = {
+                gapId: currentGap.id,
+                name: currentGap.name,
+                keyboardShortcut: currentGap.shortcut
+            };
+        });
     }
 
     get currentValue() {
@@ -27,11 +41,7 @@ class GapField extends Field {
     }
 
     set currentValue(gap) {
-        let value = {};
-        value.name = gap.name;
-        value.gapId = gap.value;
-        value.keyboardShortcut = gap.shortcut;
-        this.value = value;
+        this.value = gap;
     }
 
     toJSON(){
