@@ -58,7 +58,7 @@ function TagsetsFactory (
             Object.keys(copy.tags).forEach(tagKey => {
 
                 let tag = copy.tags[tagKey];
-                tags.push(JSON.stringify(tag));
+                tags.push(tag.toJSON());
             });
 
             copy.tags = tags;

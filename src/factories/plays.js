@@ -55,7 +55,7 @@ function PlaysFactory (
 
             play = play || this;
 
-            return JSON.stringify(play);
+            return play.toJSON();
         },
 
         filterPlays: function(filterId, resources, success, error) {
