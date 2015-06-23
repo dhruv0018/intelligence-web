@@ -1,3 +1,7 @@
+#v2.3.1#
+##Bug Fixes / Improvements##
+- Clips Pages Not Loading
+
 #v2.3.0#
 ##Features##
 - Design improvements to the queue dashboard/status
