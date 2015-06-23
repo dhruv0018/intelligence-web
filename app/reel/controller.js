@@ -39,7 +39,7 @@ function ReelController(
     auth,
     account,
     alerts,
-    reels,
+    reelsFactory,
     playManager,
     gamesFactory,
     playsFactory,
@@ -52,9 +52,13 @@ function ReelController(
 ) {
 
     let reelId = Number($stateParams.id);
-    let reel = reels.get(reelId);
+    let reel = reelsFactory.get(reelId);
     let plays = reel.plays.map(mapPlays);
     let game = gamesFactory.get(plays[0].gameId);
+    let team = teamsFactory.get(game.teamId);
+    let league = leaguesFactory.get(team.leagueId);
+
+    playManager.current = plays[0];
 
     $scope.VIEWPORTS = VIEWPORTS;
     $scope.reel = reel;
@@ -64,6 +68,8 @@ function ReelController(
     $scope.plays = plays;
     $scope.playManager = playManager;
     $scope.sources = plays[0].getVideoSources();
+    $scope.game = game;
+    $scope.league = league;
 
     /* TODO: game.getPosterImage() */
     $scope.posterImage = {

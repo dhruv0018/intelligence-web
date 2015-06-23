@@ -75,6 +75,7 @@
         "check-box",
         "terms-and-conditions",
         "form-toggle",
+        "admin-queue-dashboard",
         "feature"
     ],
     "scripts": [

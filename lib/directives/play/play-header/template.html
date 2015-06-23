@@ -1,8 +1,6 @@
 <div>
-    <div class="playHeadingContainer">
-        <div
-            ng-click="openPlay(play)"
-            class="playHeading">
+    <div class="playHeadingContainer" ng-click="openPlay(play)">
+        <div class="playHeading">
 
             <h4 ng-if="isIndexer">
                 <span class="period">{{ league.periodAbbreviationLabel }} {{ play.period }}</span>
@@ -57,10 +55,12 @@
         <span
             class="watch-play"
             ng-hide="isIndexer"
+            id="play-play-cta"
             ng-click="watchPlay(play)"
             ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
             >
             <i class="icon icon-play-circle"></i>
+
         </span>
 
         <span

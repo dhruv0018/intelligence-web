@@ -14,15 +14,13 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
-    '$scope', '$stateParams', 'Indexing.Sidebar', 'GamesFactory', 'PlaysManager', 'Indexing.Data',
-    function controller($scope, $stateParams, sidebar, games, playsManager, data) {
+    '$scope', '$stateParams', 'Indexing.Sidebar', 'GamesFactory', 'PlaysManager',
+    function controller($scope, $stateParams, sidebar, games, playsManager) {
 
         var gameId = Number($stateParams.id);
 
         $scope.sidebar = sidebar;
         $scope.game = games.get(gameId);
         $scope.plays = playsManager.plays;
-        $scope.teamPlayers = data.teamPlayers;
-        $scope.opposingTeamPlayers = data.opposingTeamPlayers;
     }
 ]);
