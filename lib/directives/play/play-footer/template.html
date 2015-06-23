@@ -1,4 +1,7 @@
 <div>
+
+    <hr>
+
     <div
         ng-hide="editFlag"
         class="playFooter">
@@ -29,22 +32,19 @@
         </div>
 
         <button
-         id="play-add-to-reel-cta"
-         class="play-link"
-         ng-if="reelsActive && isTeamMember"
-         open-modal="AddReel.Modal"
-         modal-options="options"
-        >
-
+            id="play-add-to-reel-cta"
+            class="play-link"
+            ng-if="reelsActive && isTeamMember && isReelsPlay"
+            open-modal="AddReel.Modal"
+            modal-options="options"
+            >
             <i class="icon icon-plus"></i> Add to reel
 
         </button>
 
-        <button
-            class="play-link pull-right disabled ng-hide"
-            ng-if="!isIndexer"
-            >
-            <i class="icon icon-tag"></i> Label Play
-        </button>
+        <div class="tags-container" ng-show="isTeamMember && !isReelsPlay" feature="SelectPlays">
+            <span class="tags-label">Tags:</span>
+            <custom-tag-pills ng-model="customTags" play="play"></custom-tag-pills>
+        </div>
     </div>
 </div>

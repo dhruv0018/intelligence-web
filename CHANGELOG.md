@@ -1,3 +1,7 @@
+#v2.4.0#
+##Features##
+- Custom tags
+
 #v2.3.1#
 ##Bug Fixes / Improvements##
 - Clips Pages Not Loading

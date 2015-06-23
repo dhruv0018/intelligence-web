@@ -1,0 +1,48 @@
+<div class="custom-tags-dropdown dropdown" dropdown is-open="status.isopen">
+    <button class="btn btn-sm dropdown-toggle" ng-class="{'btn-default': !status.isopen, 'btn-primary': status.isopen}" dropdown-toggle>Add Tag</button>
+    <div class="tags-dropdown-menu dropdown-menu" ng-click="$event.stopPropagation()" ng-class="{'tags-are-selected': selectedTags.length}">
+        <div class="selected-tags" ng-hide="!selectedTags.length">
+            <custom-tag-pills ng-model="selectedTags"></custom-tag-pills>
+        </div>
+
+        <div class="search-tags">
+            <i class="icon icon-search"></i>
+            <input
+                ng-model="filters.name"
+                ng-change="updateFilteredTags()"
+                ng-keydown="keyPressTracker($event, filters.name)"
+                placeholder="Search Tags"
+                maxlength="50">
+        </div>
+
+        <div class="tags-list">
+            <span class="tag-selection-label" ng-show="filters.name && !tagAlreadyExists(filters.name)">Create New Tag</span>
+            <p
+                class="new-tag"
+                ng-click="createNewTag(filters.name)"
+                ng-show="filters.name && !tagAlreadyExists(filters.name)"
+                ng-class="{'focused' : focusIndex === -1 }"
+                ng-mouseenter="setFocusIndex(-1)"
+            >{{filters.name}}</p>
+
+            <span class="tag-selection-label" ng-hide="filters.name">All Tags</span>
+            <span class="tag-selection-label" ng-show="filters.name">Matching Tags</span>
+            <ul ng-show="filteredTags.length">
+                <li
+                    ng-repeat="tag in filteredTags"
+                    ng-click="selectTag(tag)"
+                    ng-class="{'focused' : $index == focusIndex}"
+                    ng-mouseenter="setFocusIndex($index)"
+                    ng-mouseleave="setFocusIndex(-1)"
+                >{{tag.name}}</li>
+            </ul>
+            <p ng-hide="filteredTags.length">No tags match your search</p>
+        </div>
+
+        <div class="tag-action-buttons">
+            <a href ng-click="cancelTagging()">Cancel</a>
+            <a href class="pull-right" ng-show="selectedTags.length" ng-click="applyTags()">Apply</a>
+            <span class="pull-right" ng-hide="selectedTags.length">Apply</span>
+        </div>
+    </div>
+</div>

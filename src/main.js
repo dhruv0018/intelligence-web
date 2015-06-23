@@ -75,6 +75,8 @@ require('./constants/states');
 require('./constants/schemas');
 require('./constants/video-player');
 require('./constants/views');
+require('./constants/playlist');
+require('./constants/keyboard');
 
 require('./models/users');
 require('./models/sports');
@@ -89,6 +91,7 @@ require('./models/plays');
 require('./models/filtersets');
 require('./models/reels');
 require('./models/plans');
+require('./models/customtags');
 
 require('./storage/base');
 require('./storage/users');
@@ -104,6 +107,7 @@ require('./storage/filtersets');
 require('./storage/reels');
 require('./storage/positionsets');
 require('./storage/plans');
+require('./storage/customtags');
 
 require('./factories/base');
 require('./factories/users');
@@ -119,6 +123,7 @@ require('./factories/filtersets');
 require('./factories/reels');
 require('./factories/positionsets');
 require('./factories/plans');
+require('./factories/customtags');
 
 require('./emitters/playlist');
 require('./emitters/video-player');
@@ -149,6 +154,8 @@ require('./aggregates');
 require('./values');
 
 require('./entities');
+
+import CustomTagsEvent from './events/customtags';
 
 require('./bootstrap');
 
