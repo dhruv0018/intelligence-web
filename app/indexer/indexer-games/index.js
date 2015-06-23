@@ -1,24 +1,13 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const IndexerGames = angular.module('IndexerGames', []);
 
 import IndexingDataDependencies from '../data.js';
 import IndexerGamesController from './controller.js';
 import template from './template.html.js';
 
-const templateUrl = './template.html';
-const IndexerGames = angular.module('IndexerGames', []);
-
 IndexerGames.factory('IndexingDataDependencies', IndexingDataDependencies);
 IndexerGames.controller('IndexerGamesController', IndexerGamesController);
-
-/* Cache the template file */
-IndexerGames.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put(templateUrl, template);
-    }
-]);
 
 IndexerGames.config([
     '$stateProvider', '$urlRouterProvider',

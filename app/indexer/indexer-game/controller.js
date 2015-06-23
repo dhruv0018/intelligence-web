@@ -76,6 +76,8 @@ function IndexerGameController(
         $scope.headCoach = users.get(headCoachRole.userId);
     }
 
+    //TODO: The game should handle this or the revert(). The scope function
+    //should only have to call that, save the game and change the state.
     $scope.revertAssignment = function() {
         let previousAssignment = $scope.game.findLastIndexerAssignment();
         $scope.game.revert();

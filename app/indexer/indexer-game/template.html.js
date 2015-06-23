@@ -177,7 +177,7 @@ export default `
 
             <hr>
 
-            <!-- todo Take a look at  app/admin/queue/game.html on how to approach
+            <!-- TODO: Take a look at  app/admin/queue/game.html on how to approach
             <h4>Time remaining to deliver</h4>
             <time>6h 15m</time>
 
