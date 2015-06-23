@@ -19,7 +19,7 @@ class GapField extends Field {
         if (field.value) {
             let currentGap = this.GAPS[this.GAP_IDS[field.value]];
             gap = {
-                gapId: currentGap.id,
+                gapId: Number(currentGap.value),
                 name: currentGap.name,
                 keyboardShortcut: currentGap.shortcut
             };
@@ -29,10 +29,11 @@ class GapField extends Field {
         this.availableValues = Object.keys(this.GAPS).map(key => {
             let currentGap = this.GAPS[key];
             gap = {
-                gapId: currentGap.id,
+                gapId: Number(currentGap.value),
                 name: currentGap.name,
                 keyboardShortcut: currentGap.shortcut
             };
+            return gap;
         });
     }
 
@@ -48,7 +49,7 @@ class GapField extends Field {
         let variableValue = {};
         variableValue = {
             type: null,
-            value: this.value.gapId
+            value: String(this.value.gapId)
         };
         return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }
