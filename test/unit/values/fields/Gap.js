@@ -7,45 +7,40 @@ const expect  = chai.expect;
 const should  = chai.should();
 
 const tagVariable = GapFieldData.Tag;
+const eventVariable = GapFieldData.Event;
 
 describe('Gap Tag Field', () => {
-
-    let tagField;
-    let eventField;
-
     beforeEach(angular.mock.module('intelligence-web-client'));
 
-    beforeEach(angular.mock.module($provide => {
+    it('The Gap Class should Exist', () => {
+        expect(GapField).to.exist;
+    });
 
-        $provide.constant('GAPS', {
-                D_LEFT: {
-                    name: 'D Left',
-                    value: '1',
-                    shortcut: 'DL'
-                }
-        });
+    it('Should have correct input type', () => {
+        let tagField = new GapField(tagVariable);
+        expect(tagField.inputType).to.exist;
+        expect(tagField.inputType).to.equal('GAP');
+    });
 
-        $provide.constant('GAP_IDS', {
-                '1': 'D_LEFT'
-        });
-    }));
+    it('Should be initialized correctly if required', () => {
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = true;
+        let tagField = new GapField(localTagVariable);
+        let value = tagField.currentValue;
 
-    beforeEach( inject(() => {
-        tagField = new GapField(tagVariable);
-        eventField = new GapField(eventField);
-    }));
+        expect(value.gapId).to.be.undefined;
+        expect(value.name).to.be.undefined;
+        expect(value.keyboardShortcut).to.be.undefined;
+    });
 
-    // it('should work', inject((GAP_IDS, GAPS) => {
-    //     console.log(field);
-    // }));
+    it('Should be initialized correctly if not required', () => {
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = false;
+        let tagField = new GapField(localTagVariable);
+        let value = tagField.currentValue;
 
-    // it('The Gap Class should Exist', () => {
-    //     expect(GapField).to.exist;
-    // });
-    //
-    // it('The Field Class has appropriate properties expected from the model', () => {
-    //     assert.isDefined(field.id, 'The id property is defined');
-    //     assert.isDefined(field.type, 'The type property is defined');
-    //     assert.isDefined(field.isRequired, 'The isRequired property is defined');
-    // });
+        expect(value.gapId).to.be.null;
+        expect(value.name).to.equal('Optional');
+        expect(value.keyboardShortcut).to.be.undefined;
+    });
 });
