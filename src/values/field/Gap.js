@@ -1,7 +1,5 @@
 import Field from './Field.js';
-
-/* Fetch angular from the browser scope */
-const angular = window.angular;
+import GapConstants from '../../constants/football/gaps.js';
 
 class GapField extends Field {
     constructor(field) {
@@ -9,9 +7,8 @@ class GapField extends Field {
         if (!field) return;
         super(field);
 
-        let injector = angular.element(document).injector();
-        this.GAPS = injector.get('GAPS');
-        this.GAP_IDS = injector.get('GAP_IDS');
+        this.GAPS =  GapConstants.GAPS;
+        this.GAP_IDS = GapConstants.GAP_IDS;
 
         let gap = {
             gapId: !field.isRequired ? null : undefined,
