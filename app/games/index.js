@@ -73,7 +73,7 @@ Games.config([
                     var gameId = Number($stateParams.id);
                     var game = games.get(gameId);
 
-                    if (!game.isSharedWithPublic() && game.uploaderTeamId !== currentUser.currentRole.teamId && !game.isSharedWithUser(currentUser)) {
+                    if (!game.isAllowedToView()) {
                         $state.go('Games.Restricted', { id: gameId });
                     }
                 }

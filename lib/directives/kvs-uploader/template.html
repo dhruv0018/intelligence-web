@@ -7,7 +7,7 @@
 
                 <div class="col-md-11">
 
-                    <button class="choose-files" data-ng-hide="film.flow.files.length" data-flow-btn>
+                    <button id="choose-files-cta" class="choose-files" data-ng-hide="film.flow.files.length" data-flow-btn>
 
                         <i class="icon icon-upload"></i>
                         <h1>Choose files to upload…</h1>
@@ -22,7 +22,7 @@
 
                             <td class="drag">
                                 <span><i class="icon icon-align-justify"></i> {{ $index+1 }}. {{ file.name }} — {{ file.size | bytes }}</span>
-                                <button class="btn-remove pull-right" data-ng-click="file.cancel()"><i class="icon icon-remove"></i></button>
+                                <button id="cancel-file-{{$index}}" class="btn-remove pull-right" data-ng-click="file.cancel()"><i class="icon icon-remove"></i></button>
                             </td>
 
 
@@ -32,13 +32,13 @@
 
                     </table>
 
-                    <button class="btn-choose-files" data-ng-show="film.flow.files.length" data-flow-btn>
+                    <button id="choose-files-continue-cta" class="btn-choose-files" data-ng-show="film.flow.files.length" data-flow-btn>
 
                         <i class="icon icon-upload"></i> Choose files to upload…
 
                     </button>
 
-                    <button class="btn-upload-start" data-ng-click="upload()">
+                    <button id="start-uploading-cta" class="btn-upload-start" data-ng-click="upload()">
 
                         <span data-ng-hide="uploading">Start u</span><span data-ng-show="uploading">U</span>ploading…<i class="icon icon-chevron-right pull-right"></i>
 

@@ -169,13 +169,13 @@ IntelligenceWebClient.service('PlaysManager', [
             /* Look at the first position script field. */
             /* TODO: Clear up once fields are indexed by position and not the
              * tag variable ID. */
-            let tagVariables = event.tagVariables;
-            if (!tagVariables) return;
-            let fields = event.variableValues;
-            let firstTagVariable = tagVariables[1];
-            if (!firstTagVariable) return;
-            let firstTagVariableId = firstTagVariable.id;
-            let field = fields[firstTagVariableId];
+            let fields = event.fields;
+            if (!fields) return;
+            let fieldValues = event.variableValues;
+            let firstField = fields[1];
+            if (!firstField) return;
+            let firstFieldId = firstField.id;
+            let field = fieldValues[firstFieldId];
 
             /* If the field value is defined. */
             if (angular.isDefined(field.value)) {

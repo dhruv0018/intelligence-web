@@ -14,6 +14,8 @@ class Event extends Entity {
 
     constructor (event, tag, time) {
 
+        super(event);
+
         if (arguments.length === 2) {
 
             time = tag;
@@ -91,6 +93,28 @@ class Event extends Entity {
         return field;
     }
     /**
+     * Getter for event.shortcutKey
+     * @method Event.shortcutKey
+     * @readonly
+     * @returns {String} shortcutKey
+     */
+    get keyboardShortcut () {
+
+        return this.shortcutKey;
+    }
+
+    /**
+     * Getter for event.fields
+     * @method Event.fields
+     * @readonly
+     * @returns {Array} fields
+     */
+    get fields () {
+
+        return this.tagVariables;
+    }
+
+    /**
      * Checks whether the event has variables.
      * @returns - true if the event has variables; false otherwise.
      */
@@ -147,6 +171,25 @@ class Event extends Entity {
 
         /* Check if the given event is an end tag and only has one child. */
         return this.isEnd && this.children && this.children.length === 1;
+    }
+
+    toJSON () {
+
+        let copy = Object.assign({}, this);
+
+        delete copy.activeEventVariableIndex;
+
+        Object.keys(copy.variableValues).forEach(key => {
+
+            let variableValue = copy.variableValues[key];
+
+            copy.variableValues[key] = {
+                type: variableValue.type,
+                value: variableValue.value
+            };
+        });
+
+        return copy;
     }
 }
 
