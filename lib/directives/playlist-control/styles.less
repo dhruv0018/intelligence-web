@@ -10,13 +10,30 @@
     border-bottom: 1px solid rgb(216, 216, 216);
     position: relative;
 
+    .select-all {
+        margin-right: 125px;
+        width: 110px;
+
+        check-box {
+            font-size: 25px;
+            margin-right: 10px;
+            vertical-align: middle;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        span {
+            vertical-align: middle;
+        }
+    }
+
     button.play-all-plays {
 
         margin-left: 75px;
         cursor: pointer;
         display: inline-block;
         padding: 0;
-        background: #ffffff;
+        background: white;
         border: 0;
         margin: 0;
         outline: 0;
@@ -31,19 +48,31 @@
         .on, .off {
             padding: 4px;
             display: inline-block;
-            color: #e1e1e1;
-            background: #f9f9f9;
+            color: @gray-light;
+            background: @gray-lightest;
         }
 
         .on.chosen {
             background: @brand-success;
-            color: #ffffff;
+            color: white;
         }
 
         .off.chosen {
             background: @brand-danger;
-            color: #ffffff;
+            color: white;
         }
 
+    }
+
+    .add-tag-success {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: @state-success-bg;
+        border: thin solid @state-success-border;
+        color: @state-success-text;
+
+        .icon-ok {
+            margin-right: 10px;
+        }
     }
 }

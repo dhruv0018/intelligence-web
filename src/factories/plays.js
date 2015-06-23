@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities',
-    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils) {
+    '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities',
+    function($injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils) {
 
         var PlaysFactory = {
 
@@ -33,6 +33,9 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 play.indexedScore = play.indexedScore || 0;
                 play.opposingIndexedScore = play.opposingIndexedScore || 0;
+
+                /* If play has no custom tags, set it to an empty array */
+                play.customTagIds = play.customTagIds || [];
 
                 /* Indicates if the play has visible events; set by the events. */
                 play.hasVisibleEvents = false;
@@ -102,7 +105,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     plays: {},
                     options: {
                         teamId: resources.teamId,
-                        playerId: resources.playerId
+                        playerId: resources.playerId,
+                        customTagId: resources.customTagId
                     }
                 };
 
@@ -159,6 +163,32 @@ IntelligenceWebClient.factory('PlaysFactory', [
                         return source;
                     }
                 }
+            },
+
+            // TODO: move to list modelling
+            batchSave: function(plays) {
+                let model = $injector.get(this.model);
+                let parameters = {};
+
+                plays = plays.map(play => {
+                    return this.unextend(play);
+                });
+
+                let batchUpdate = model.batchUpdate(parameters, plays);
+
+                return  batchUpdate.$promise;
+            },
+
+            filterByCustomTags: function(plays, customTagIds) {
+                if (!customTagIds || !customTagIds.length) return plays;
+
+                plays = plays.filter(play => {
+                    return customTagIds.every(tagId => {
+                        return !!~play.customTagIds.indexOf(tagId);
+                    });
+                });
+
+                return plays;
             }
         };
 

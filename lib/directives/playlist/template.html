@@ -1,6 +1,6 @@
 <div class="krossover-playlist">
 
-    <krossover-playlist-control data-ng-if="showHeader" ng-hide="editFlag" class="screen-lg-min">
+    <krossover-playlist-control ng-if="showHeader" ng-hide="editFlag" class="screen-lg-min">
     </krossover-playlist-control>
 
     <div class="playlist-container">
@@ -32,14 +32,14 @@
                 ng-repeat="play in plays">
             </krossover-play>
 
-            <no-results data-ng-hide="plays.length"></no-results>
+            <no-results ng-hide="plays.length"></no-results>
 
         </div>
     </div>
 
-    <div class="playlist-footer screen-lg-min" data-ng-show="showFooter && !editFlag">
-        <button id="playlist-expand-all-cta" data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
-        <button id="playlist-collapse-all-cta" data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
+    <div class="playlist-footer screen-lg-min" ng-show="showFooter && !editFlag">
+        <button id="playlist-expand-all-cta" ng-show="!expandAll" ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
+        <button id="playlist-collapse-all-cta" ng-show="expandAll" ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
     </div>
 
 </div>
