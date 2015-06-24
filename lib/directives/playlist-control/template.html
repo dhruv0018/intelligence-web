@@ -1,7 +1,5 @@
 <div class="krossover-playlist-control">
 
-    <span class="playlist-control-play-count">Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
-
     <div class="select-all" feature="SelectPlays" ng-if="plays.length && isTeamMember">
         <check-box
             ng-click="toggleSelectAllPlays()"
@@ -20,7 +18,7 @@
 
     <button feature="SelectPlays" ng-if="selectedPlays.length && isTeamMember && !confirmTagSave" class="btn btn-sm btn-default" open-modal="AddReel.Modal" modal-options="options">Add to Reel</button>
 
-    <custom-tags-dropdown feature="CustomTags" ng-if="selectedPlays.length && isTeamMember && currentUser.is(ROLES.COACH) && !confirmTagSave" plays="selectedPlays"></custom-tags-dropdown>
+    <custom-tags-dropdown feature="CustomTags" ng-if="selectedPlays.length && isTeamMember && currentUser.is(ROLES.COACH) && !isReel && !confirmTagSave" plays="selectedPlays"></custom-tags-dropdown>
 
     <div ng-show="confirmTagSave" class="add-tag-success">
         <i class="icon icon-ok"></i>
