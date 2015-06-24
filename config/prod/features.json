@@ -7,12 +7,12 @@
 
     "PlayerAnalytics": {
 
-        "*": false
+        "*": true
     },
 
     "TeamAnalytics": {
 
-        "*": false
+        "*": true
     },
 
     "SelectPlays": {
