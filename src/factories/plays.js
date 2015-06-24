@@ -13,6 +13,7 @@ IntelligenceWebClient.factory('KrossoverPlayDataDependencies', KrossoverPlayData
 
 PlaysFactory.$inject = [
     'KrossoverPlayDataDependencies',
+    '$injector',
     'config',
     '$sce',
     'VIDEO_STATUSES',
@@ -24,6 +25,7 @@ PlaysFactory.$inject = [
 
 function PlaysFactory (
     KrossoverPlay,
+    $injector,
     config,
     $sce,
     VIDEO_STATUSES,
@@ -59,13 +61,11 @@ function PlaysFactory (
         },
 
         filterPlays: function(filterId, resources, success, error) {
+
             let self = this;
             let playIds = [];
 
-            angular.forEach(resources.plays, function (play) {
-
-                playIds.push(play.id);
-            });
+            angular.forEach(resources.plays, (play) => playIds.push(play.id));
 
             let filter = {
 
@@ -73,7 +73,8 @@ function PlaysFactory (
                 options: {
 
                     teamId: resources.teamId,
-                    playerId: resources.playerId
+                    playerId: resources.playerId,
+                    customTagId: resources.customTagId
                 }
             };
 
@@ -133,6 +134,37 @@ function PlaysFactory (
                     return source;
                 }
             }
+        },
+
+        // TODO: move to list modelling
+        batchSave: function (plays) {
+
+            let model = $injector.get(this.model);
+            let parameters = {};
+
+            plays = plays.map(play => {
+
+                return this.unextend(play);
+            });
+
+            let batchUpdate = model.batchUpdate(parameters, plays);
+
+            return  batchUpdate.$promise;
+        },
+
+        filterByCustomTags: function (plays, customTagIds) {
+
+            if (!customTagIds || !customTagIds.length) return plays;
+
+            plays = plays.filter(play => {
+
+                return customTagIds.every(tagId => {
+
+                    return !!~play.customTagIds.indexOf(tagId);
+                });
+            });
+
+            return plays;
         }
     };
 

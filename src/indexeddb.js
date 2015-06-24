@@ -24,7 +24,8 @@ angular.injector(['ng']).invoke([
 var migrations = [
 
     require('../migrations/1'),
-    require('../migrations/2')
+    require('../migrations/2'),
+    require('../migrations/3')
 ];
 
 /* Set a timeout for opening the database. */
@@ -40,7 +41,7 @@ function onOpenTimeout () {
    a publicly shared video, the database is not required.
 */
 
-openDB(pkg.name);
+openDB(pkg.name, 3);
 
 function openDB(name, version) {
 
