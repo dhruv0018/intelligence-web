@@ -1,4 +1,4 @@
-import Entity from './entity';
+import Tag from './tag';
 
 class Event extends Tag {
 
