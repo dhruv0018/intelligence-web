@@ -1,7 +1,6 @@
 import Entity from './entity';
-import Fields from '../values/field/Fields';
 
-class Event extends Entity {
+class Event extends Tag {
 
     constructor (event, tag, time) {
 
@@ -39,7 +38,7 @@ class Event extends Entity {
             if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
                 this.variableValues[tagVariable.id].value = null;
             }
-            let field = Fields.factory(this.variableValues[tagVariable.id]);
+            let field = this.fieldFactory(this.variableValues[tagVariable.id]);
             this.fields[tagVariable.index] = field;
         });
     }

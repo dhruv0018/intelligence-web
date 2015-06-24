@@ -1,5 +1,14 @@
 import Entity from './entity';
-import Fields from '../values/field/Fields';
+import TeamPlayerField from '../values/field/TeamPlayer';
+import GapField from '../values/field/Gap';
+import PassingZoneField from '../values/field/PassingZone';
+import FormationField from '../values/field/Formation';
+import DropdownField from '../values/field/Dropdown';
+import TextField from '../values/field/Text';
+import YardField from '../values/field/Yard';
+import ArenaField from '../values/field/Arena';
+import PlayerField from '../values/field/Player';
+import TeamField from '../values/field/Team';
 
 class KrossoverTag extends Entity {
 
@@ -18,7 +27,7 @@ class KrossoverTag extends Entity {
 
         super(tag);
 
-        this.fields = this.tagVariables.forEach(field => Fields.factory(field));
+        this.fields = this.tagVariables.forEach(field => this.fieldFactory(field));
 
         if (Array.isArray(this.tagVariables)) {
 
@@ -133,6 +142,54 @@ class KrossoverTag extends Entity {
                 });
             }
         });
+    }
+
+    /**
+     * Method: fieldFactory
+     * Checks whether the event has variables.
+     * @returns {Field} - Depending on input type.
+     */
+    fieldFactory (rawField) {
+
+        let field;
+
+        switch (rawField.inputType) {
+
+        case 'PLAYER_DROPDOWN':
+            field = new PlayerField(rawField);
+            break;
+        case 'TEAM_DROPDOWN':
+            field = new TeamField(rawField);
+            break;
+        case 'PLAYER_TEAM_DROPDOWN':
+            field = new TeamPlayerField(rawField);
+            break;
+        case 'GAP':
+            field = new GapField(rawField);
+            break;
+        case 'PASSING_ZONE':
+            field = new PassingZoneField(rawField);
+            break;
+        case 'FORMATION':
+            field = new FormationField(rawField);
+            break;
+        case 'DROPDOWN':
+            field = new DropdownField(rawField);
+            break;
+        case 'TEXT':
+            field = new TextField(rawField);
+            break;
+        case 'YARD':
+            field = new YardField(rawField);
+            break;
+        case 'ARENA':
+            field = new ArenaField(rawField);
+            break;
+        default:
+            field = rawField;
+        }
+
+        return field;
     }
 
     /**
