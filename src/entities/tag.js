@@ -27,7 +27,12 @@ class KrossoverTag extends Entity {
 
         super(tag);
 
-        this.fields = this.tagVariables.map(field => this.fieldFactory(field));
+        this.fields = {};
+        this.tagVariables.forEach(variable => {
+
+            let field = this.createFieldFrom(variable);
+            this.fields[field.id] = field;
+        });
 
         if (Array.isArray(this.tagVariables)) {
 
@@ -145,11 +150,11 @@ class KrossoverTag extends Entity {
     }
 
     /**
-     * Method: fieldFactory
-     * Checks whether the event has variables.
+     * Method: createFieldFrom
+     * Instantiates and returns a Field based on input type.
      * @returns {Field} - Depending on input type.
      */
-    fieldFactory (rawField) {
+    createFieldFrom (rawField) {
 
         let field;
 

@@ -38,7 +38,7 @@ class Event extends Tag {
             if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
                 this.variableValues[tagVariable.id].value = null;
             }
-            let field = this.fieldFactory(this.variableValues[tagVariable.id]);
+            let field = this.createFieldFrom(this.variableValues[tagVariable.id]);
             this.fields[tagVariable.index] = field;
         });
     }
