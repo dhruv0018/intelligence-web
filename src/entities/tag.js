@@ -27,7 +27,7 @@ class KrossoverTag extends Entity {
 
         super(tag);
 
-        this.fields = this.tagVariables.forEach(field => this.fieldFactory(field));
+        this.fields = this.tagVariables.map(field => this.fieldFactory(field));
 
         if (Array.isArray(this.tagVariables)) {
 
