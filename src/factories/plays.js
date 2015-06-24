@@ -49,7 +49,10 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     let tag = tagsets.getTag(event.tagId);
 
-                    return new KrossoverEvent(event, tag, event.time);
+                    /* NOTE: Not all browsers support more than 6 decimals for video times */
+                    let safeEventTime = utils.toFixedFloat(event.time);
+
+                    return new KrossoverEvent(event, tag, safeEventTime);
                 }
 
                 return play;
@@ -189,6 +192,19 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 });
 
                 return plays;
+            },
+
+            /** Gets the events time relative to a play
+            * @param {event} event
+            * @param [{event}] play The play it's relative to or the thisObject
+            */
+            getEventsRelativeTime: function (event, play = this) {
+
+                if (angular.isUndefined(play.startTime)) throw new Error('Play parameter is missing startTime');
+                if (!event) throw new Error('Missing "event" parameter');
+                if (angular.isUndefined(event.time)) throw new Error('event.time is undefined');
+
+                return event.time - play.startTime;
             }
         };
 

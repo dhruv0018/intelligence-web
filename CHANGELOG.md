@@ -1,3 +1,7 @@
+#v2.4.2#
+##Bug Fixes / Improvements##
+- As a coach, when selecting an event in the breakdown the play for the event should be selected.
+
 #v2.4.1#
 ##Bug Fixes / Improvements##
 - 'Add to Reel' button appearing on Reels for athletes. The button does not do anything when selected.
