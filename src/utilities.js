@@ -85,5 +85,10 @@ IntelligenceWebClient.service('Utilities', [
             let castedInput = +input;
             return (castedInput < 10) ? ('0' + castedInput) : castedInput;
         };
+
+        this.getBrowserVideoPlayerSafeTime = function(time) {
+
+            return parseFloat(time.toFixed(6));
+        };
     }
 ]);
