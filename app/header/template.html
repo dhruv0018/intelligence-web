@@ -101,7 +101,10 @@
                         ui-sref="Coach.Analytics.Team"
                     >Team Analytics</a>
                 </li>
-                <li feature="PlayerAnalytics">
+                <li
+                    ng-if="league.sportId === SPORTS.VOLLEYBALL.id"
+                    feature="PlayerAnalytics"
+                >
                     <a
                         id="menu-coach-analytics-player-cta"
                         ui-sref="Coach.Analytics.Player"
