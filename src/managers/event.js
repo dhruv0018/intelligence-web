@@ -36,7 +36,7 @@ IntelligenceWebClient.service('EventManager', [
         });
 
         /* On event select; set the current event to match the selected event. */
-        playlistEventEmitter.on('EVENT_SELECT', event => this.current = event);
+        playlistEventEmitter.on(EVENT.PLAYLIST.EVENT.SELECT, event => this.current = event);
 
         /**
          * Gets the value of the active variable.
