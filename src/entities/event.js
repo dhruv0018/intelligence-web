@@ -1,4 +1,4 @@
-import Entity from './entity.js';
+import Entity from './entity';
 import Fields from '../values/field/Fields';
 
 class Event extends Entity {
