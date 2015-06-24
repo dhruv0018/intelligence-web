@@ -75,7 +75,10 @@
         "check-box",
         "feature",
         "search-dropdown",
-        "admin-queue-dashboard"
+        "admin-queue-dashboard",
+        "custom-tags-dropdown",
+        "custom-tags-multiselect",
+        "custom-tag-pills"
     ],
     "scripts": [
         "index.js"

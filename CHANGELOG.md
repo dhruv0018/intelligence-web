@@ -1,3 +1,17 @@
+#v2.4.1#
+##Bug Fixes / Improvements##
+- 'Add to Reel' button appearing on Reels for athletes. The button does not do anything when selected.
+- As an athlete, when I create a reel, by adding clips from a breakdown, there is no date on the reel when I go back to the Film Home, until I refresh.
+- When a user applies a custom tag to a large number of plays, the "Tag Added" confirmation is taking a long time to appear.
+
+#v2.4.0#
+##Features##
+- Custom tags
+
+#v2.3.1#
+##Bug Fixes / Improvements##
+- Clips Pages Not Loading
+
 #v2.3.0#
 ##Features##
 - Design improvements to the queue dashboard/status

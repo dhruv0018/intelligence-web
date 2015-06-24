@@ -1,0 +1,13 @@
+{
+    "name": "custom-tag-pills",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ]
+}
