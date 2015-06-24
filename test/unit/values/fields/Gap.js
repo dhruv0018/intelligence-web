@@ -30,7 +30,7 @@ describe('Gap Tag Field', () => {
         let value = tagField.currentValue;
 
         expect(value.gapId).to.be.undefined;
-        expect(value.name).to.be.undefined;
+        expect(value.name).to.equal('Select');
         expect(value.keyboardShortcut).to.be.undefined;
     });
 

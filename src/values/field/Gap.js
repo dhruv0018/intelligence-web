@@ -11,19 +11,19 @@ class GapField extends Field {
         this.GAP_IDS = GapConstants.GAP_IDS;
         this.availableValues = Object.keys(this.GAPS).map(key => {
             let currentGap = this.GAPS[key];
-            gap = {
+            let value = {
                 gapId: Number(currentGap.value),
                 name: currentGap.name,
                 keyboardShortcut: currentGap.shortcut
             };
-            return gap;
+            return value;
         });
-        let optionalGap = {
+        let initialGap = {
+            name: !field.isRequired ? 'Optional' : 'Select',
             gapId: !field.isRequired ? null : undefined,
-            name: !field.isRequired ? 'Optional' : undefined,
             keyboardShortcut: undefined
         };
-        this.availableValues.unshift(optionalGap);
+        this.availableValues.unshift(initialGap);
 
         let gap = this.availableValues[0];
 
