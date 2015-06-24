@@ -2,9 +2,9 @@
 const angular = window.angular;
 const IndexerHistory = angular.module('IndexerHistory', []);
 
-import IndexingDataDependencies from '../data.js';
-import IndexerGamesController from '../indexer-games/controller.js';
-import template from './template.html.js';
+import IndexingDataDependencies from '../data';
+import IndexerGamesController from '../indexer-games/controller';
+import template from './template.html';
 
 IndexerHistory.factory('IndexingDataDependencies', IndexingDataDependencies);
 IndexerHistory.controller('IndexerGamesController', IndexerGamesController);

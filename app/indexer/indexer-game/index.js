@@ -2,9 +2,9 @@
 const angular = window.angular;
 const IndexerGame = angular.module('IndexerGame', []);
 
-import IndexingDataDependencies from '../data.js';
-import IndexerGameController from './controller.js';
-import template from './template.html.js';
+import IndexingDataDependencies from '../data';
+import IndexerGameController from './controller';
+import template from './template.html';
 
 IndexerGame.factory('IndexingDataDependencies', IndexingDataDependencies);
 IndexerGame.controller('IndexerGameController', IndexerGameController);
