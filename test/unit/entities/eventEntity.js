@@ -22,7 +22,7 @@ describe('Event Entity', () => {
 
             this.getTag = (tagId) => {
 
-                let tag = srcTags[tagId];
+                let tag = angular.copy(srcTags[tagId]);
 
                 if (!tag) throw new Error(`Tag ${tagId} not found`);
 
@@ -33,7 +33,7 @@ describe('Event Entity', () => {
 
     beforeEach(inject(TagsetsFactory => {
 
-        srcEvent    = srcJSON.events[0];
+        srcEvent    = angular.copy(srcJSON.events[0]);
         let tag     = TagsetsFactory.getTag(srcEvent.tagId);
         sampleEvent = new KrossoverEvent(srcEvent, tag, srcEvent.time);
     }));
@@ -41,6 +41,12 @@ describe('Event Entity', () => {
     it('should exist.', () => {
 
         expect(KrossoverEvent).to.exist;
+    });
+
+    it('should have a "keyboardShortcut" getter that works.', () => {
+
+        expect(sampleEvent.keyboardShortcut).to.be.a('string');
+        expect(sampleEvent.keyboardShortcut).to.equal('K');
     });
 
     it('should have a "hasVariables" getter that works.', () => {
