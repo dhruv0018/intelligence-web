@@ -13,6 +13,7 @@ const Highlights = angular.module('Athlete.Profile.Highlights');
 HighlightsController.$inject = [
     '$scope',
     '$stateParams',
+    'config',
     'ReelsFactory',
     'UsersFactory',
     'PlaysFactory',
@@ -33,6 +34,7 @@ HighlightsController.$inject = [
 function HighlightsController (
     $scope,
     $stateParams,
+    config,
     reels,
     users,
     plays,
@@ -45,6 +47,7 @@ function HighlightsController (
 )   {
         $scope.athlete = users.get($stateParams.id);
         $scope.featuredReel = reels.getFeaturedReel($scope.athlete);
+        $scope.config = config;
         $scope.VIEWPORTS = VIEWPORTS;
 
         if ($scope.featuredReel) {
