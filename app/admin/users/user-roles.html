@@ -35,10 +35,10 @@
             class="role-options"
             ng-show="currentUser.hasAccess(role)"
         >
-            <a
-                href
+            <md-button
+                class="remove-role"
                 ng-click="users.removeRole(user, role)"
-            >Remove</a>
+            >Remove</md-button>
 
             <div
                 class="qa-status-toggle"
