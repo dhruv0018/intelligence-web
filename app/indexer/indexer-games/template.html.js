@@ -51,7 +51,7 @@ export default `
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="game in games | filter: {isDeleted: false} | filter: {status: '!' + GAME_STATUSES.SET_ASIDE.id} | orderBy: 'timeRemaining' | filterByDeadline: true">
+                    <tr data-ng-repeat="game in games | isNotDeletedGame | isNotSetAside | userHasGameAssignment | userAssignmentIsActive: true | orderBy: 'timeRemaining'">
                         <td>{{game.id}}</td>
                         <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
                         <td>{{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}</td>

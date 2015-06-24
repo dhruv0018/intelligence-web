@@ -62,6 +62,7 @@ function IndexerGamesController(
     }
 
     $scope.games = games.getList({ assignedUserId: $scope.userId });
+    $scope.currentUser = session.getCurrentUserId();
 
     angular.forEach($scope.games, function(game) {
         game.timeRemaining = game.assignmentTimeRemaining();
