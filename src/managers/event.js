@@ -13,8 +13,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('EventManager', [
-    'PlaylistEventEmitter', 'TagsetsFactory',
-    function service(playlistEventEmitter, tagsets) {
+    'EVENT', 'PlaylistEventEmitter', 'TagsetsFactory',
+    function service(EVENT, playlistEventEmitter, tagsets) {
 
         let current;
 
@@ -27,14 +27,13 @@ IntelligenceWebClient.service('EventManager', [
 
             set: function(value) {
 
+                if (current === value) return;
+
                 current = value;
 
-                playlistEventEmitter.emit('EVENT_CURRENT_CHANGE', current);
+                playlistEventEmitter.emit(EVENT.PLAYLIST.EVENT.CURRENT_CHANGE, current);
             }
         });
-
-        /* On event select; set the current event to match the selected event. */
-        playlistEventEmitter.on('EVENT_SELECT', event => this.current = event);
 
         /**
          * Gets the value of the active variable.
