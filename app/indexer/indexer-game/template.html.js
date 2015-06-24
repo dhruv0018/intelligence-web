@@ -177,21 +177,23 @@ export default `
 
             <hr>
 
-            <!-- TODO: Take a look at  app/admin/queue/game.html on how to approach
-            <h4>Time remaining to deliver</h4>
-            <time>6h 15m</time>
+            <!-- TODO: Take a look at app/admin/queue/game.html which has the
+                        code needed for this section -->
+            <!--
+                <h4>Time remaining to deliver</h4>
+                <time>6h 15m</time>
 
-            <h4>Game length</h4>
-            <time>59m</time>
+                <h4>Game length</h4>
+                <time>59m</time>
 
-            <h4>Time to index:</h4>
-            <time>1h 30m</time>
+                <h4>Time to index:</h4>
+                <time>1h 30m</time>
 
-            <h4>Time to QA:</h4>
-            <time>5m</time>
+                <h4>Time to QA:</h4>
+                <time>5m</time>
 
-            <h4>Date uploaded</h4>
-            <time>Jun 23, 1014</time>
+                <h4>Date uploaded</h4>
+                <time>Jun 23, 1014</time>
             -->
 
         </aside>
