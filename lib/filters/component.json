@@ -12,7 +12,8 @@
         "height",
         "weight",
         "games",
-        "padding"
+        "padding",
+        "to-array"
     ],
     "scripts": [
         "index.js"

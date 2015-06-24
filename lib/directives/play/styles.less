@@ -16,7 +16,7 @@
     &:hover,
     &.active {
         opacity: 1;
-        background-color: @play-selected-bg;
+        background-color: @gray-lightest;
 
         .playHeadingContainer .playHeading h4 {
             color: black;
@@ -29,6 +29,10 @@
 
     &.edit-mode {
         cursor: move;
+    }
+
+    &.play-selected {
+        background-color: @play-selected-bg;
     }
 
     a.accordion-toggle {
