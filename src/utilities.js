@@ -88,7 +88,7 @@ IntelligenceWebClient.service('Utilities', [
 
         this.toFixedFloat = function(time, precision = 6) {
 
-            return Number.parseFloat(time.toFixed(precision));
+            return parseFloat(time.toFixed(precision));
         };
     }
 ]);
