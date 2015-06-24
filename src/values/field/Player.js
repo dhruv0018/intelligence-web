@@ -4,13 +4,14 @@ import Field from './Field.js';
 const angular = window.angular;
 
 class PlayerField extends Field {
-    constructor(field) {
+    constructor(players, field) {
 
         if (!field) return;
         super(field);
 
         let injector = angular.element(document).injector();
-        this.players = injector.get('PlayersFactory');
+        this.players = players;
+        //injector.get('PlayersFactory');
 
         //initialization
         let playerOption = {
@@ -57,4 +58,7 @@ class PlayerField extends Field {
     }
 }
 
+PlayerField.$inject = ['PlayersFactory'];
+var IntelligenceWebClient = angular.module('intelligence-web-client');
+IntelligenceWebClient.factory('PlayersField', () => PlayersField);
 export default PlayerField;
