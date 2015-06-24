@@ -50,7 +50,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     let tag = tagsets.getTag(event.tagId);
 
                     /* NOTE: Not all browsers support more than 6 decimals for video times */
-                    let safeEventTime = utils.getBrowserVideoPlayerSafeTime(event.time);
+                    let safeEventTime = utils.toFixedFloat(event.time);
 
                     return new KrossoverEvent(event, tag, safeEventTime);
                 }

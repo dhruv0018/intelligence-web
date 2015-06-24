@@ -67,7 +67,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 let tag = tagsets.getTag(tagId);
 
                 /* get browser safe time */
-                time = utils.getBrowserVideoPlayerSafeTime(time);
+                time = utils.toFixedFloat(time);
 
                 /* Create new event. */
                 eventManager.current = new KrossoverEvent(tag, time);

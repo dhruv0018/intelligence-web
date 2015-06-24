@@ -86,9 +86,9 @@ IntelligenceWebClient.service('Utilities', [
             return (castedInput < 10) ? ('0' + castedInput) : castedInput;
         };
 
-        this.getBrowserVideoPlayerSafeTime = function(time) {
+        this.toFixedFloat = function(time, precision = 6) {
 
-            return parseFloat(time.toFixed(6));
+            return Number.parseFloat(time.toFixed(precision));
         };
     }
 ]);
