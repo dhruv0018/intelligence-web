@@ -13,7 +13,8 @@ const EVENT = {
             SELECT: 'PLAYLIST_PLAY_SELECT'
         },
         EVENT: {
-            SELECT: 'PLAYLIST_EVENT_SELECT'
+            SELECT: 'PLAYLIST_EVENT_SELECT',
+            CURRENT_CHANGE: 'PLAYLIST_EVENT_CURRENT_CHANGE'
         }
     }
 };
