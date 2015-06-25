@@ -360,7 +360,7 @@ Teams.controller('TeamController', [
         });
 
         $scope.findSchoolsByName = function() {
-            return schoolsFactory.query({name: $scope.schoolName, count: 10}).then(function(schools) {
+            return schoolsFactory.query({name: $scope.schoolName}).then(function(schools) {
                 return $filter('orderBy')(schools, 'name');
             });
         };

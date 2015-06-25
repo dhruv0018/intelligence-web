@@ -7,5 +7,10 @@
     "ArenaChart": {
 
         "*": false
+    },
+    "SelectPlays": {
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
     }
 }

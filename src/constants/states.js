@@ -8,31 +8,38 @@ var IntelligenceWebClient = angular.module(pkg.name);
 var STATE_NAMES = {
 
     'Games.RawFilm': {
-        display: 'Raw'
+        display: 'Raw',
+        id: 'raw-film-cta'
     },
 
     'Games.Breakdown': {
-        display: 'Breakdown'
+        display: 'Breakdown',
+        id: 'breakdown-cta'
     },
 
     'Games.DownAndDistance': {
-        display: 'Down and Distance Report'
+        display: 'Down and Distance Report',
+        id: 'down-and-distance-cta'
     },
 
     'Games.Info': {
-        display: 'Game Info'
+        display: 'Game Info',
+        id: 'game-info-cta'
     },
 
     'Games.Stats': {
-        display: 'Stats'
+        display: 'Stats',
+        id: 'stats-cta'
     },
 
     'Games.Formations': {
-        display: 'Formation Report'
+        display: 'Formation Report',
+        id: 'formation-report-cta'
     },
 
     'Games.ArenaChart': {
-        display: 'Shot Chart'
+        display: 'Shot Chart',
+        id: 'arena-chart-cta'
     }
 };
 

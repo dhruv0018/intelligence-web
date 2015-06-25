@@ -75,6 +75,10 @@
         "role-class",
         "spinner",
         "check-box",
+        "admin-queue-dashboard",
+        "custom-tags-dropdown",
+        "custom-tags-multiselect",
+        "custom-tag-pills",
         "feature"
     ],
     "scripts": [
