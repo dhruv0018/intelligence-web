@@ -29,6 +29,30 @@ class TeamField extends Field {
                 return calculatedName;
             }
         });
+
+        Object.defineProperty(this, 'availableValues', {
+            get: () => {
+
+                if (!this.gameId) return [];
+
+                let injector = angular.element(document).injector();
+
+                let games = injector.get('GamesFactory');
+                let teams = injector.get('TeamsFactory');
+
+                let game = games.get(this.gameId);
+                let team = game.teamId ? teams.get(game.teamId) : null;
+                let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
+                let values = [team, opposingTeam].map((localTeam) => {
+                    return {
+                        teamId: localTeam.id,
+                        name: localTeam.name,
+                        color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
+                    };
+                });
+                return values;
+            }
+        });
     }
 
     get currentValue() {
