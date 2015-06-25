@@ -2,11 +2,11 @@
 const angular = window.angular;
 const IndexerHistory = angular.module('IndexerHistory', []);
 
-import IndexingDataDependencies from '../data';
+import IndexerDataDependencies from '../data';
 import IndexerGamesController from '../controller';
 import template from './template.html';
 
-IndexerHistory.factory('IndexingDataDependencies', IndexingDataDependencies);
+IndexerHistory.factory('IndexerDataDependencies', IndexerDataDependencies);
 IndexerHistory.controller('IndexerGamesController', IndexerGamesController);
 
 IndexerHistory.config([
@@ -26,7 +26,7 @@ IndexerHistory.config([
                 },
                 resolve: {
                     'Indexer.Games.Data': [
-                        '$q', 'IndexingDataDependencies',
+                        '$q', 'IndexerDataDependencies',
                         function($q, IndexingGamesData) {
                             let data = new IndexingGamesData();
                             return $q.all(data);

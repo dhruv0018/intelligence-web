@@ -1,7 +1,7 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-IndexingDataDependencies.$inject = [
+IndexerDataDependencies.$inject = [
     '$q',
     'SessionService',
     'UsersFactory',
@@ -12,7 +12,7 @@ IndexingDataDependencies.$inject = [
     'SchoolsFactory',
 ];
 
-function IndexingDataDependencies (
+function IndexerDataDependencies (
     $q,
     session,
     users,
@@ -23,7 +23,7 @@ function IndexingDataDependencies (
     schools
 ) {
 
-    class IndexingData {
+    class IndexerData {
 
         constructor () {
             /* Load data. */
@@ -52,7 +52,7 @@ function IndexingDataDependencies (
         }
     }
 
-    return IndexingData;
+    return IndexerData;
 }
 
-export default IndexingDataDependencies;
+export default IndexerDataDependencies;
