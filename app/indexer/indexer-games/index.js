@@ -3,7 +3,7 @@ const angular = window.angular;
 const IndexerGames = angular.module('IndexerGames', []);
 
 import IndexingDataDependencies from '../data';
-import IndexerGamesController from './controller';
+import IndexerGamesController from '../controller';
 import template from './template.html';
 
 IndexerGames.factory('IndexingDataDependencies', IndexingDataDependencies);
