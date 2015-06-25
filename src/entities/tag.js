@@ -20,22 +20,17 @@ class KrossoverTag extends Entity {
      */
     constructor (tag) {
 
-        if (!arguments.length) {
-
-            throw new Error('Invoking KrossoverTag.constructor without passing a JSON object');
-        }
-
         super(tag);
 
         this.fields = {};
-        this.tagVariables.forEach(variable => {
-
-            let field = this.createField(variable);
-            this.fields[field.id] = field;
-        });
 
         if (Array.isArray(this.tagVariables)) {
 
+            this.tagVariables.forEach(variable => {
+
+                let field = this.createField(variable);
+                this.fields[field.id] = field;
+            });
             this.indexTagVariables();
         }
 
