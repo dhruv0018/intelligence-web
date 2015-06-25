@@ -1,12 +1,18 @@
 import KrossoverEvent from '../../../src/entities/event';
+import KrossoverTag from '../../../src/entities/tag';
 import playData from './sample-data/play';
+import tagData from './sample-data/tag';
 import tagsData from './sample-data/tags';
+
+const util    = require('util');
+const krog    = obj => console.log(util.inspect(obj));
 
 const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
 
 const srcJSON = playData;
+const srcTag  = tagData;
 const srcTags = tagsData;
 
 describe('Event Entity', () => {
@@ -34,8 +40,10 @@ describe('Event Entity', () => {
     beforeEach(inject(TagsetsFactory => {
 
         srcEvent    = angular.copy(srcJSON.events[0]);
-        let tag     = TagsetsFactory.getTag(srcEvent.tagId);
-        sampleEvent = new KrossoverEvent(srcEvent, tag, srcEvent.time);
+        let gameId  = srcJSON.gameId;
+        // let tag     = TagsetsFactory.getTag(srcEvent.tagId);
+        let tag     = new KrossoverTag(angular.copy(srcTag));
+        sampleEvent = new KrossoverEvent(srcEvent, tag, srcEvent.time, gameId);
     }));
 
     it('should exist.', () => {
@@ -91,6 +99,14 @@ describe('Event Entity', () => {
         assert.isDefined(sampleEvent.isValid, '"isValid" has been defined.');
         assert.isDefined(sampleEvent.isFloat, '"isFloat" has been defined.');
         assert.isDefined(sampleEvent.isEndAndStart, '"isEndAndStart" has been defined.');
+    });
+
+    it('should have the proper game ID on each variable value', () => {
+
+        Object.keys(sampleEvent.variableValues).forEach(key => {
+
+            expect(sampleEvent.variableValues[key].gameId).to.equal(srcJSON.gameId);
+        });
     });
 
     it('should have called toJSON on a JSON.stringify call.', () => {
