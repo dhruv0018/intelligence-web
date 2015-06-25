@@ -35,10 +35,20 @@
         }
     }
 
-    .athlete-resume {
-        display: inline-block;
+    .left-side-container {
+        display: none;
         margin-right: 30px;
         vertical-align: top;
+
+        @media only screen
+        and (min-width: @md-screen-md) {
+            display: inline-block;
+        }
+
+        .profile-link-container {
+            text-align: center;
+            margin-top: 10px;
+        }
     }
 
     .reels {
@@ -69,7 +79,7 @@
         @media only screen
         and (min-width: @md-screen-md) {
             display: inline-block;
-            margin-left: 20%;
+            width: ~"calc(100% - 411px)"; // Account for space taken up by resume
             padding-top: 0;
         }
     }

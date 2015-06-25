@@ -1,6 +1,13 @@
 <div class="highlights">
 
-    <athlete-resume athlete="athlete" ng-if="viewport === VIEWPORTS.DESKTOP"></athlete-resume>
+    <div class="left-side-container">
+        <athlete-resume athlete="athlete"></athlete-resume>
+
+        <div class="profile-link-container">
+            Share this link:<br>
+            <a href="/intelligence/athlete/{{athlete.id}}/profile">{{config.links.intelligence.uri}}/intelligence/athlete/{{athlete.id}}/profile</a>
+        </div>
+    </div>
 
     <div class="featured-reel-container" ng-show="featuredReel">
 
