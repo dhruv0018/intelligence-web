@@ -76,13 +76,15 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
             url: $scope.game.video.thumbnail
         };
 
+        let removeTelestrationsSaveListener = angular.noop;
+
         if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
             $scope.cuePoints = $scope.telestrations.getTelestrationCuePoints();
         }
 
 
-        /* Listeners */
+        /* Listeners & Watches */
 
         if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
 
@@ -92,8 +94,25 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
             });
         }
 
+        if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
+
+            removeTelestrationsSaveListener = $scope.$on('telestrations:save', saveTelestrations);
+        }
+
+        function saveTelestrations(event, callbackFn) {
+
+            callbackFn = callbackFn || angular.noop;
+
+            // Save Game
+            $scope.game.save().then(function onSaved() {
+                callbackFn();
+            });
+
+        }
+
         $scope.$on('$destroy', function onDestroy() {
 
+            removeTelestrationsSaveListener();
             telestrationsVideoPlayerBroker.cleanup();
         });
     }

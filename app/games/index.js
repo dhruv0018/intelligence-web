@@ -283,23 +283,5 @@ Games.controller('Games.controller', [
                 }
             }
         }
-
-
-        /* Listeners & Watches */
-
-        if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
-
-            $scope.$on('telestrations:save', function saveTelestrations(event, callbackFn) {
-
-                callbackFn = callbackFn || angular.noop;
-
-                // Save Game
-                $scope.game.save().then(function onSaved() {
-                    callbackFn();
-                });
-
-            });
-        }
-
     }
 ]);

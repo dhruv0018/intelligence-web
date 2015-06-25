@@ -221,6 +221,8 @@ function GamesBreakdownController (
 
         $scope.filmTitle = $scope.game.description;
 
+        let removeTelestrationsSaveListener = angular.noop;
+
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
         if ($scope.game.isDelivered()) {
 
@@ -299,6 +301,24 @@ function GamesBreakdownController (
                     }
                 });
             }
+
+            /* Listeners & Watches */
+
+            if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
+
+                removeTelestrationsSaveListener = $scope.$on('telestrations:save', saveTelestrations);
+            }
+        }
+
+        function saveTelestrations(event, callbackFn) {
+
+            callbackFn = callbackFn || angular.noop;
+
+            // Save Game
+            $scope.game.save().then(function onSaved() {
+                callbackFn();
+            });
+
         }
 
         function onPlaylistWatch(play) {
@@ -312,6 +332,7 @@ function GamesBreakdownController (
 
         $scope.$on('$destroy', function onDestroy() {
 
+            removeTelestrationsSaveListener();
             telestrationsVideoPlayerBroker.cleanup();
             playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
         });
