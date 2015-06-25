@@ -1,12 +1,12 @@
 import KrossoverPlay from '../entities/play.js';
 import KrossoverPlayDataDependencies from '../entities/playDataDependencies.js';
 
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('KrossoverPlayDataDependencies', KrossoverPlayDataDependencies);
 
