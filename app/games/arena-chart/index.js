@@ -72,9 +72,9 @@ function GamesArenaChartController(
 ) {
 
     let game = games.get($stateParams.id);
-    let homeTeam = teams.get(game.teamId);
+    let team = teams.get(game.teamId);
     let opposingTeam = teams.get(game.opposingTeamId);
-    let league = leagues.get(homeTeam.leagueId);
+    let league = leagues.get(team.leagueId);
 
     /* TODO: use arenaChart.get($stateParams.id) to get the arena Events*/
     $scope.arenaEvents = [
@@ -118,7 +118,7 @@ function GamesArenaChartController(
 
     // Determine arena type
     $scope.arenaType = ARENA_TYPES[league.arenaId].type;
-    $scope.homeTeam = homeTeam;
+    $scope.team = team;
     $scope.opposingTeam = opposingTeam;
     $scope.filteredArenaEventCount = $scope.arenaEvents.length;
 
