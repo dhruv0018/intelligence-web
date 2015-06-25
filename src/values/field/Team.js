@@ -22,10 +22,12 @@ class TeamField extends Field {
                 let calculatedName = !this.isRequired ? 'Optional' : 'Select';
                 let value = this.currentValue;
                 let teamId = value.teamId;
-                let injector = angular.element(document).injector();
-                let teams = injector.get('TeamsFactory');
-                let team = teams.get(teamId);
-                calculatedName = angular.copy(team.name);
+                if (teamId) {
+                    let injector = angular.element(document).injector();
+                    let teams = injector.get('TeamsFactory');
+                    let team = teams.get(teamId);
+                    calculatedName = angular.copy(team.name);
+                }
                 return calculatedName;
             }
         });
