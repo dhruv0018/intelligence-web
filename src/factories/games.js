@@ -673,9 +673,13 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.indexerAssignments.slice(-1).pop();
             },
 
-            userAssignment: function(userId) {
+            userAssignment: function(userId=null) {
 
                 var self = this;
+
+                if(!userId) {
+                    userId = session.getCurrentUserId();
+                }
 
                 var assignments = self.indexerAssignments;
 

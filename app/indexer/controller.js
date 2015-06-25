@@ -66,6 +66,13 @@ function IndexerGamesController(
 
     $scope.games.forEach(game => game.timeRemaining = game.assignmentTimeRemaining());
 
+    $scope.getSportName = function(teamId) {
+        const gameLeagueId = $scope.teams[teamId].leagueId;
+        const gameSportId = $scope.leagues[gameLeagueId].sportId;
+
+        return $scope.sports[gameSportId].name;
+    };
+
     let refreshGames = function() {
 
         $scope.games.forEach(game => {
