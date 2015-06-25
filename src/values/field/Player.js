@@ -17,8 +17,6 @@ class PlayerField extends Field {
         if (field.value) playerOption.playerId = field.value;
         this.currentValue = playerOption;
 
-        this.availableValues = []; //todo blocker
-
         Object.defineProperty(this.value, 'name', {
             get: () => {
                 let calculatedName = !this.isRequired ? 'Optional' : 'Select';
@@ -31,6 +29,50 @@ class PlayerField extends Field {
                     calculatedName = player.firstName + ' ' + player.lastName;
                 }
                 return calculatedName;
+            }
+        });
+
+        Object.defineProperty(this, 'availableValues', {
+            get: () => {
+
+                if (!this.gameId) return [];
+
+                let injector = angular.element(document).injector();
+
+                let games = injector.get('GamesFactory');
+                let teams = injector.get('TeamsFactory');
+                let players = injector.get('PlayersFactory');
+
+                let game = games.get(this.gameId);
+                let team = game.teamId ? teams.get(game.teamId) : null;
+                let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
+
+                let teamPlayersValues = Object.keys(game.rosters[team.id].playerInfo).map( (playerId) => {
+                    let rosterEntry = game.rosters[team.id].playerInfo[playerId];
+                    let player = players.get(playerId);
+
+                    let value = {
+                        playerId: player.id,
+                        jerseyColor: game.primaryJerseyColor,
+                        jerseyNumber: rosterEntry.jerseyNumber,
+                        name: player.firstName + ' ' + player.lastName
+                    };
+                    return value;
+                });
+
+                let opposingTeamPlayersValues = Object.keys(game.rosters[opposingTeam.id].playerInfo).map( (playerId) => {
+                    let rosterEntry = game.rosters[opposingTeam.id].playerInfo[playerId];
+                    let player = players.get(playerId);
+
+                    let value = {
+                        playerId: player.id,
+                        jerseyColor: game.opposingPrimaryJerseyColor,
+                        jerseyNumber: rosterEntry.jerseyNumber,
+                        name: player.firstName + ' ' + player.lastName
+                    };
+                    return value;
+                });
+                return teamPlayersValues.concat(opposingTeamPlayersValues);
             }
         });
     }
