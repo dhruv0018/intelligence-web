@@ -1,0 +1,16 @@
+{
+    "name": "glyph",
+    "paths": [
+        "."
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "templates": [
+        "template.html"
+    ],
+    "locals": [
+        "non-svg-glyph",
+        "svg-glyph"
+    ]
+}

@@ -1,7 +1,8 @@
 {
     "name": "clips",
     "templates": [
-        "template.html"
+        "template.html",
+        "restricted.html"
     ],
     "styles": [
         "styles.less"
