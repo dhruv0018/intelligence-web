@@ -18,28 +18,21 @@ class PlayerField extends Field {
         this.currentValue = playerOption;
 
         this.availableValues = []; //todo blocker
-    }
 
-    get name() {
-        let calculatedName = !this.isRequired ? 'Optional' : 'Select';
-        let value = this.currentValue;
-        let playerId = value.playerId;
-        if (playerId) {
-            let injector = angular.element(document).injector();
-            let players = injector.get('PlayersFactory');
-            let player = players.get(playerId);
-            calculatedName = player.firstName + ' ' + player.lastName;
-        }
-        return calculatedName;
-    }
-
-    set name (calculatedName) {
-        // let calculatedName = !this.isRequired ? 'Optional' : 'Select';
-        // let injector = angular.element(document).injector();
-        // let players = injector.get('PlayersFactory');
-        // let player = players.get(playerId);
-        // calculatedName = player.firstName + ' ' + player.lastName;
-        //this.value.name = calculatedName;
+        Object.defineProperty(this.value, 'name', {
+            get: () => {
+                let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+                let value = this.currentValue;
+                let playerId = value.playerId;
+                if (playerId) {
+                    let injector = angular.element(document).injector();
+                    let players = injector.get('PlayersFactory');
+                    let player = players.get(playerId);
+                    calculatedName = player.firstName + ' ' + player.lastName;
+                }
+                return calculatedName;
+            }
+        });
     }
 
     get currentValue() {
