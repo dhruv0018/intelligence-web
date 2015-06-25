@@ -2,9 +2,9 @@ import Tag from './tag';
 
 class Event extends Tag {
 
-    constructor (event, tag, time) {
+    constructor (event, tag, time, gameId) {
 
-        super(event);
+        super();
 
         if (arguments.length === 2) {
 
@@ -38,8 +38,13 @@ class Event extends Tag {
             if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
                 this.variableValues[tagVariable.id].value = null;
             }
-            let field = this.createFieldFrom(this.variableValues[tagVariable.id]);
+            let field = this.createField(this.variableValues[tagVariable.id]);
             this.fields[tagVariable.index] = field;
+        });
+
+        Object.keys(this.variableValues).forEach(key => {
+
+            this.variableValues[key].gameId = gameId;
         });
     }
 
