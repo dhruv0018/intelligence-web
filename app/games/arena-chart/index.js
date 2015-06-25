@@ -117,7 +117,12 @@ function GamesArenaChartController(
     ];
 
     // Determine arena type
-    $scope.arenaType = ARENA_TYPES[league.arenaId].type;
+    try {
+        $scope.arenaType = ARENA_TYPES[league.arenaId].type;
+    } catch (error) {
+        throw new Error(error);
+    }
+
     $scope.team = team;
     $scope.opposingTeam = opposingTeam;
     $scope.filteredArenaEventCount = $scope.arenaEvents.length;
