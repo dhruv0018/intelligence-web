@@ -30,7 +30,7 @@ class KrossoverTag extends Entity {
         this.fields = {};
         this.tagVariables.forEach(variable => {
 
-            let field = this.createFieldFrom(variable);
+            let field = this.createField(variable);
             this.fields[field.id] = field;
         });
 
@@ -150,11 +150,11 @@ class KrossoverTag extends Entity {
     }
 
     /**
-     * Method: createFieldFrom
+     * Method: createField
      * Instantiates and returns a Field based on input type.
      * @returns {Field} - Depending on input type.
      */
-    createFieldFrom (rawField) {
+    createField (rawField) {
 
         let field;
 
