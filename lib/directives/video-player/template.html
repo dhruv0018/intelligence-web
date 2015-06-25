@@ -21,7 +21,7 @@
 
         </telestrations>
 
-        <vg-controls>
+        <vg-controls ng-hide="deviceIsiPhone">
 
             <vg-scrub-bar>
                 <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
@@ -72,7 +72,7 @@
 
         <vg-buffering></vg-buffering>
 
-        <vg-poster ng-hide="videoPlayer.state" vg-url="videoPlayer.posterImage.url"></vg-poster>
+        <vg-poster ng-if="!deviceIsiPhone" ng-hide="videoPlayer.state" vg-url="videoPlayer.posterImage.url"></vg-poster>
 
     </videogular>
 

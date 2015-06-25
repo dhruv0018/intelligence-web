@@ -14,7 +14,8 @@ const EVENT = {
             CURRENT: 'PLAYLIST_PLAY_CURRENT'
         },
         EVENT: {
-            SELECT: 'PLAYLIST_EVENT_SELECT'
+            SELECT: 'PLAYLIST_EVENT_SELECT',
+            CURRENT_CHANGE: 'PLAYLIST_EVENT_CURRENT_CHANGE'
         }
     }
 };

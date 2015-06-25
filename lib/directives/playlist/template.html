@@ -1,6 +1,6 @@
 <div class="krossover-playlist">
 
-    <krossover-playlist-control data-ng-if="showHeader" ng-hide="editFlag" class="screen-lg-min">
+    <krossover-playlist-control ng-if="showHeader" ng-hide="editFlag" class="screen-lg-min">
     </krossover-playlist-control>
 
     <div class="playlist-container">
@@ -9,7 +9,11 @@
             <!-- Game Play -->
             <krossover-play
                 cue-points="cuePoints"
-                data-ng-if="!isReelsPlay"
+                ng-if="!isReelsPlay"
+                game="game"
+                plays="plays"
+                play="play"
+                league="league"
                 data-ng-show="play.isFiltered"
                 data-ng-repeat="play in plays | orderBy:orderBy">
             </krossover-play>
@@ -17,20 +21,27 @@
             <!-- Reel Play -->
             <krossover-play
                 cue-points="cuePoints"
-                data-ng-if="isReelsPlay"
+                ng-if="isReelsPlay"
+                reel="reel"
+                game="game"
+                plays="plays"
+                play="play"
+                league="league"
+                edit-flag="editFlag"
+                is-reels-play="isReelsPlay"
                 draggable-ordered-list="{{editFlag}}"
-                data-ng-class="{'edit-mode': editFlag}"
+                ng-class="{'edit-mode': editFlag}"
                 ng-repeat="play in plays">
             </krossover-play>
 
-            <no-results data-ng-hide="plays.length"></no-results>
+            <no-results ng-hide="plays.length"></no-results>
 
         </div>
     </div>
 
-    <div class="playlist-footer screen-lg-min" data-ng-show="showFooter && !editFlag">
-        <button data-ng-show="!expandAll" data-ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
-        <button data-ng-show="expandAll" data-ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
+    <div class="playlist-footer screen-lg-min" ng-show="showFooter && !editFlag">
+        <button id="playlist-expand-all-cta" ng-show="!expandAll" ng-click="expandAll=true"><i class="icon icon-plus"></i> Expand All</button>
+        <button id="playlist-collapse-all-cta" ng-show="expandAll" ng-click="expandAll=false"><i class="icon icon-minus"></i> Collapse All</button>
     </div>
 
 </div>

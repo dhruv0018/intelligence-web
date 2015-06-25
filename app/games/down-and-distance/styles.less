@@ -15,36 +15,33 @@
         color: black;
         position: relative;
 
-        .dndInfoHeader {
+        .dnd-info-header {
             height: 40px;
             padding: 10px 20px;
             background-color: @gray-lighter;
             color: @brand-blue;
         }
 
-        .dndInfoBody {
+        .dnd-info-body {
             padding: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
-        .dndOption {
-            display: inline-block;
-            padding-right: 20px;
-            white-space: nowrap;
+        .dnd-option {
 
             &.lastOption {
-                padding: 0;
-                position: absolute;
-                bottom: 21px;
-                right: 20px;
+                align-self: flex-end;
             }
 
-            span {
+            .options-label {
                 display: block;
             }
 
             select {
                 background-color: white;
-                color: @gray-light;
+                color: @gray;
                 font-weight: 400;
                 padding-right: 30px;
             }
@@ -53,6 +50,8 @@
                 .pull-right;
                 .btn;
                 .btn-primary;
+                width: 106px;
+                text-align: center;
             }
         }
     }

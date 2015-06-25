@@ -10,9 +10,9 @@ export default `
 
                 <div class="reel-edit-controls">
 
-                    <a href data-ng-hide="editFlag" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
-                    <a href data-ng-show="editFlag" data-ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
-                    <a href data-ng-show="editFlag" data-ng-click="toggleEditMode()">Cancel</a>
+                    <a id="reels-edit-clips-cta" href data-ng-hide="editFlag" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
+                    <a id="reels-edit-clips-save-cta" href data-ng-show="editFlag" data-ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
+                    <a id="reels-edit-clips-cancel-cta" href data-ng-show="editFlag" data-ng-click="toggleEditMode()">Cancel</a>
 
                 </div>
 

@@ -1,5 +1,5 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 
 require('raw-film');
@@ -14,7 +14,7 @@ require('shot-chart');
  * Coach game area raw film page module.
  * @module Games
  */
-var Games = angular.module('Games', [
+const Games = angular.module('Games', [
     'Games.RawFilm',
     'Games.Breakdown',
     'Games.DownAndDistance',
@@ -37,7 +37,7 @@ Games.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var shortGames = {
+        const shortGames = {
             name: 'ShortGames',
             url: '/g/:id',
             parent: 'base',
@@ -50,7 +50,7 @@ Games.config([
             ]
         };
 
-        var GamesRestricted = {
+        const GamesRestricted = {
             name: 'Games.Restricted',
             url: 'games/:id/restricted',
             parent: 'base',
@@ -61,7 +61,7 @@ Games.config([
             }
         };
 
-        var Games = {
+        const Games = {
             name: 'Games',
             url: '/games/:id',
             parent: 'base',
@@ -69,11 +69,11 @@ Games.config([
                 '$state', '$stateParams', 'SessionService', 'GamesFactory',
                 function($state, $stateParams, session, games) {
 
-                    var currentUser = session.currentUser;
-                    var gameId = Number($stateParams.id);
-                    var game = games.get(gameId);
+                    let currentUser = session.currentUser;
+                    let gameId = Number($stateParams.id);
+                    let game = games.get(gameId);
 
-                    if (!game.isSharedWithPublic() && game.uploaderTeamId !== currentUser.currentRole.teamId && !game.isSharedWithUser(currentUser)) {
+                    if (!game.isAllowedToView()) {
                         $state.go('Games.Restricted', { id: gameId });
                     }
                 }
@@ -92,20 +92,45 @@ Games.config([
             },
             resolve: {
                 'Games.Data': [
-                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'LeaguesFactory',
-                    function($q, $stateParams, games, teams, users, leagues) {
+                    '$q',
+                    '$stateParams',
+                    'GamesFactory',
+                    'TeamsFactory',
+                    'UsersFactory',
+                    'LeaguesFactory',
+                    'CustomtagsFactory',
+                    'SessionService',
+                    'AuthenticationService',
+                    function(
+                        $q,
+                        $stateParams,
+                        games,
+                        teams,
+                        users,
+                        leagues,
+                        customtags,
+                        session,
+                        auth
+                    ) {
 
-                        var gameId = Number($stateParams.id);
+                        let gameId = Number($stateParams.id);
 
                         return games.load(gameId).then(function() {
 
-                            var game = games.get(gameId);
+                            let game = games.get(gameId);
 
-                            var Data = {
+                            let Data = {
                                 leagues: leagues.load()
                             };
 
-                            var userIds = [];
+                            //Load custom tags
+                            let teamId = session.getCurrentTeamId();
+
+                            if (auth.isLoggedIn && teamId) {
+                                Data.customtags = customtags.load({ teamId: teamId });
+                            }
+
+                            let userIds = [];
                             userIds.push(game.uploaderUserId);
                             game.getUserShares().forEach(function(share) {
 
@@ -113,7 +138,7 @@ Games.config([
                             });
                             if (userIds.length) Data.users = users.load(userIds);
 
-                            var teamIds = [];
+                            let teamIds = [];
                             if (game.teamId) teamIds.push(game.teamId);
                             if (game.opposingTeamId) teamIds.push(game.opposingTeamId);
                             if (game.uploaderTeamId) teamIds.push(game.uploaderTeamId);
@@ -133,26 +158,50 @@ Games.config([
 ]);
 
 Games.controller('Games.controller', [
-    '$scope', '$state', '$stateParams', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'UsersFactory', 'SPORTS', 'SPORT_IDS', 'AuthenticationService', 'SessionService', 'ROLES', 'TELESTRATION_PERMISSIONS',
-    function controller($scope, $state, $stateParams, games, teams, leagues, users, SPORTS, SPORT_IDS, auth, session, ROLES, TELESTRATION_PERMISSIONS) {
+    'TELESTRATION_PERMISSIONS',
+    '$scope',
+    '$state',
+    '$stateParams',
+    'GamesFactory',
+    'TeamsFactory',
+    'LeaguesFactory',
+    'UsersFactory',
+    'AuthenticationService',
+    'SessionService',
+    'SPORTS',
+    'SPORT_IDS',
+    'ROLES',
+    function controller(
+        TELESTRATION_PERMISSIONS,
+        $scope,
+        $state,
+        $stateParams,
+        games,
+        teams,
+        leagues,
+        users,
+        auth,
+        session,
+        SPORTS,
+        SPORT_IDS,
+        ROLES
+    ) {
 
-        /* Variables */
-
-        var gameId = $stateParams.id;
-        var game = games.get(gameId);
-        var team = teams.get(game.uploaderTeamId);
-        var league = leagues.get(team.leagueId);
-        var currentUser = session.getCurrentUser();
-        var sport = SPORTS[SPORT_IDS[league.sportId]];
-        var transcodeCompleted = game.isVideoTranscodeComplete();
-        var breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isSharedWithUser(currentUser) && game.getShareByUser(currentUser).isBreakdownShared;
-        var uploader = users.get(game.uploaderUserId);
-        var uploaderIsCoach = uploader.is(ROLES.COACH);
-        var isUploader = game.isUploader(currentUser.id);
-        var isTeamUploadersTeam = game.isTeamUploadersTeam(currentUser.currentRole.teamId);
-        var isCoach = currentUser.is(ROLES.COACH);
-        var isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
-        var isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
+        let gameId = Number($stateParams.id);
+        let game = games.get(gameId);
+        let team = teams.get(game.uploaderTeamId);
+        let league = leagues.get(team.leagueId);
+        let currentUser = session.getCurrentUser();
+        let sport = SPORTS[SPORT_IDS[league.sportId]];
+        let transcodeCompleted = game.isVideoTranscodeComplete();
+        let breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isSharedWithUser(currentUser) && game.getShareByUser(currentUser).isBreakdownShared;
+        let uploader = users.get(game.uploaderUserId);
+        let uploaderIsCoach = uploader.is(ROLES.COACH);
+        let isUploader = game.isUploader(currentUser.id);
+        let isTeamUploadersTeam = game.isTeamUploadersTeam(currentUser.currentRole.teamId);
+        let isCoach = currentUser.is(ROLES.COACH);
+        let isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
+        let isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
 
 
         /* Scope */

@@ -43,7 +43,7 @@ function ReelController(
     auth,
     account,
     alerts,
-    reels,
+    reelsFactory,
     playManager,
     gamesFactory,
     playsFactory,
@@ -62,7 +62,7 @@ function ReelController(
     const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
 
     let reelId = Number($stateParams.id);
-    let reel = reels.get(reelId);
+    let reel = reelsFactory.get(reelId);
     let currentUser = session.getCurrentUser();
     let isUploader = reel.isUploader(currentUser.id);
     let isTeamUploadersTeam = reel.isTeamUploadersTeam(currentUser.currentRole.teamId);
@@ -72,6 +72,8 @@ function ReelController(
     let game = gamesFactory.get(plays[0].gameId);
     let isTelestrationsSharedWithCurrentUser = reel.isTelestrationsSharedWithUser(currentUser);
     let isTelestrationsSharedPublicly = reel.isTelestrationsSharedPublicly();
+    let team = teamsFactory.get(game.teamId);
+    let league = leaguesFactory.get(team.leagueId);
 
     $scope.VIEWPORTS = VIEWPORTS;
     $scope.reel = reel;
@@ -82,8 +84,11 @@ function ReelController(
     $scope.playManager = playManager;
     $scope.sources = plays[0].getVideoSources();
     $scope.currentPlayId = play.id;
+    $scope.game = game;
+    $scope.league = league;
 
     playManager.current = play;
+
 
     /* TODO: game.getPosterImage() */
     $scope.posterImage = {
