@@ -18,7 +18,7 @@ TextFieldData.Event = {
     isRequired: true,
     options: [],
     type: null,
-    value: '1'
+    value: 'abc'
 };
 
 
