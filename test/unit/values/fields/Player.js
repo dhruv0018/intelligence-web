@@ -1,5 +1,5 @@
 // jshint ignore: start
-//import PlayerField from '../../../../src/values/field/Player.js';
+import PlayerField from '../../../../src/values/field/Player.js';
 import PlayerFieldData from '../sample-data/Player.js';
 
 const assert  = chai.assert;
@@ -11,13 +11,37 @@ const eventVariable = PlayerFieldData.Event;
 
 beforeEach(angular.mock.module('intelligence-web-client'));
 
-beforeEach( inject(function(PlayerField){
-  console.log(PlayerField);
+// beforeEach(angular.mock.module($provide => {
+//     $provide.service('PlayersFactory', () => {
+//         function get() {
+//             return '1';
+//         }
+//         return {get};
+//     });
+//     //$provide.factory('PlayerFieldFactory', ['PlayersFactory', () => PlayerField ]);
+// }));
+//
+beforeEach(angular.mock.module($provide => {
+
+        $provide.service('PlayersFactory', function () {
+
+            this.get = (playerId) => {
+
+                return {id: 1, firstName: 'foo'};
+            }
+        });
+
+        // $provide.service('PlayerFieldFactory', ['PlayersFactory', function (players) {
+        //         let PlayerFieldFactory = PlayerField;
+        //         PlayerFieldFactory.$inject = ['PlayersFactory'];
+        //         return PlayerFieldFactory;
+        // }]);
+        // PlayerField.$inject = ['PlayersFactory'];
+        // let tagField = new PlayerField(tagVariable);
+        // console.log(tagField.inputType);
 }));
 
-
 // describe('General Player Field', () => {
-//     let tagField = new PlayerField(tagVariable);
 //     it('The Player Class should Exist', () => {
 //         expect(PlayerField).to.exist;
 //     });
