@@ -11,127 +11,94 @@ const eventVariable = PlayerFieldData.Event;
 
 beforeEach(angular.mock.module('intelligence-web-client'));
 
-// beforeEach(angular.mock.module($provide => {
-//     $provide.service('PlayersFactory', () => {
-//         function get() {
-//             return '1';
-//         }
-//         return {get};
-//     });
-//     //$provide.factory('PlayerFieldFactory', ['PlayersFactory', () => PlayerField ]);
-// }));
-//
-beforeEach(angular.mock.module($provide => {
 
-        $provide.service('PlayersFactory', function () {
+describe('General Player Field', () => {
+    let tagField = new PlayerField(tagVariable);
+    it('The Player Class should Exist', () => {
+        expect(PlayerField).to.exist;
+    });
 
-            this.get = (playerId) => {
+    it('Should have correct input type', () => {
+        expect(tagField.inputType).to.exist;
+        expect(tagField.inputType).to.equal('PLAYER');
+    });
 
-                return {id: 1, firstName: 'foo'};
-            }
-        });
+});
 
-        // $provide.service('PlayerFieldFactory', ['PlayersFactory', function (players) {
-        //         let PlayerFieldFactory = PlayerField;
-        //         PlayerFieldFactory.$inject = ['PlayersFactory'];
-        //         return PlayerFieldFactory;
-        // }]);
-        // PlayerField.$inject = ['PlayersFactory'];
-        // let tagField = new PlayerField(tagVariable);
-        // console.log(tagField.inputType);
-}));
+describe('Player Tag Field', () => {
+    it('Should be initialized correctly if required', () => {
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = true;
+        let tagField = new PlayerField(localTagVariable);
+        let value = tagField.currentValue;
 
-// describe('General Player Field', () => {
-//     it('The Player Class should Exist', () => {
-//         expect(PlayerField).to.exist;
-//     });
-//
-//     it('Should have correct input type', () => {
-//         expect(tagField.inputType).to.exist;
-//         expect(tagField.inputType).to.equal('PLAYER');
-//     });
-//
-// });
+        expect(value.playerId).to.be.undefined;
+        expect(value.name).to.equal('Select');
+    });
 
-// describe('Player Tag Field', () => {
-//     it('Should be initialized correctly if required', () => {
-//         let localTagVariable = angular.copy(tagVariable);
-//         localTagVariable.isRequired = true;
-//         let tagField = new PlayerField(localTagVariable);
-//         let value = tagField.currentValue;
-//
-//         expect(value.playerId).to.be.undefined;
-//         expect(value.name).to.equal('Select');
-//         expect(value.keyboardShortcut).to.be.undefined;
-//     });
-//
-//     it('Should be initialized correctly if not required', () => {
-//         let localTagVariable = angular.copy(tagVariable);
-//         localTagVariable.isRequired = false;
-//         let tagField = new PlayerField(localTagVariable);
-//         let value = tagField.currentValue;
-//
-//         expect(value.playerId).to.be.null;
-//         expect(value.name).to.equal('Optional');
-//         expect(value.keyboardShortcut).to.be.undefined;
-//     });
-//
-// });
-//
-// describe('Player Event Field', () => {
-//
-//     it('Should have properly set value if required', () => {
-//         let localEventVariable = angular.copy(eventVariable);
-//         localEventVariable.isRequired = true;
-//         let eventField = new PlayerField(localEventVariable);
-//         let value = eventField.currentValue;
-//
-//         expect(value.playerId).to.equal(1);
-//         expect(value.name).to.equal('Loss Far Left');
-//         expect(value.keyboardShortcut).to.equal('FL');
-//     });
-//
-//     it('Should set values properly', () => {
-//         let localEventVariable = angular.copy(eventVariable);
-//         localEventVariable.isRequired = true;
-//         let eventField = new PlayerField(localEventVariable);
-//         eventField.currentValue = eventField.availableValues[2];
-//         let value = eventField.currentValue;
-//
-//         expect(value.gapId).to.equal(2);
-//         expect(value.name).to.equal('Loss Left');
-//         expect(value.keyboardShortcut).to.equal('LL');
-//     });
-//
-//     it('toJSON should serialize to the right format if the field has a value', () => {
-//         let localEventVariable = angular.copy(eventVariable);
-//         localEventVariable.isRequired = true;
-//         let eventField = new PlayerField(localEventVariable);
-//         let value = eventField.currentValue;
-//         let serializedField = eventField.toJSON();
-//         expect(serializedField).to.equal('{"type":null,"value":"1"}');
-//     });
-//
-//     it('toJSON should serialize to the right format if the field has no value', () => {
-//         let localEventVariable = angular.copy(eventVariable);
-//         localEventVariable.isRequired = false;
-//         localEventVariable.value = undefined;
-//
-//         let eventField = new PlayerField(localEventVariable);
-//         let value = eventField.currentValue;
-//         let serializedField = eventField.toJSON();
-//
-//         expect(serializedField).to.equal('{"type":null,"value":null}');
-//     });
-//
-//     it('Should be able to switch back to an optional value from a set value', () => {
-//         let localEventVariable = angular.copy(eventVariable);
-//         localEventVariable.isRequired = false;
-//         let eventField = new PlayerField(localEventVariable);
-//         let value = eventField.currentValue;
-//         expect(value.playerId).to.not.be.null;
-//         eventField.currentValue = eventField.availableValues[0];
-//         value = eventField.currentValue;
-//         expect(value.playerId).to.be.null;
-//     });
-// });
+    it('Should be initialized correctly if not required', () => {
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = false;
+        let tagField = new PlayerField(localTagVariable);
+        let value = tagField.currentValue;
+
+        expect(value.playerId).to.be.null;
+    });
+
+});
+
+describe('Player Event Field', () => {
+
+    it('Should have properly set value if required', () => {
+        let localEventVariable = angular.copy(eventVariable);
+        localEventVariable.isRequired = true;
+        let eventField = new PlayerField(localEventVariable);
+        let value = eventField.currentValue;
+
+        expect(value.playerId).to.equal(1);
+        //todo cant test this until we figure out how injection works in this case
+        //expect(value.name).to.equal('something');
+    });
+
+    //it('Should set values properly', () => {
+        //todo can't run these tests until we figure out how injection works
+
+        // let localEventVariable = angular.copy(eventVariable);
+        // localEventVariable.isRequired = true;
+        // let eventField = new PlayerField(localEventVariable);
+        // eventField.currentValue = eventField.availableValues[2];
+        // let value = eventField.currentValue;
+    //});
+
+    it('toJSON should serialize to the right format if the field has a value', () => {
+        let localEventVariable = angular.copy(eventVariable);
+        localEventVariable.isRequired = true;
+        let eventField = new PlayerField(localEventVariable);
+        let value = eventField.currentValue;
+        let serializedField = eventField.toJSON();
+        expect(serializedField).to.equal('{"type":"Player","value":"1"}');
+    });
+
+    it('toJSON should serialize to the right format if the field has no value', () => {
+        let localEventVariable = angular.copy(eventVariable);
+        localEventVariable.isRequired = false;
+        localEventVariable.value = undefined;
+
+        let eventField = new PlayerField(localEventVariable);
+        let value = eventField.currentValue;
+        let serializedField = eventField.toJSON();
+
+        expect(serializedField).to.equal('{"type":"Player","value":null}');
+    });
+    //
+    // it('Should be able to switch back to an optional value from a set value', () => {
+    //     let localEventVariable = angular.copy(eventVariable);
+    //     localEventVariable.isRequired = false;
+    //     let eventField = new PlayerField(localEventVariable);
+    //     let value = eventField.currentValue;
+    //     expect(value.playerId).to.not.be.null;
+    //     eventField.currentValue = eventField.availableValues[0];
+    //     value = eventField.currentValue;
+    //     expect(value.playerId).to.be.null;
+    // });
+});

@@ -7,7 +7,7 @@ PlayerFieldData.Tag = {
     inputType: 'PLAYER',
     isRequired: true,
     options: [],
-    type: null
+    type: 'Player'
 };
 
 PlayerFieldData.Event = {
@@ -17,7 +17,7 @@ PlayerFieldData.Event = {
     inputType: 'PLAYER',
     isRequired: true,
     options: [],
-    type: null,
+    type: 'Player',
     value: '1'
 };
 
