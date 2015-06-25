@@ -9,23 +9,26 @@ class TeamField extends Field {
         if (!field) return;
         super(field);
 
-        let injector = angular.element(document).injector();
-        this.teams = injector.get('TeamsFactory');
-
-        //initialization
         let teamOption = {
-            name: !field.isRequired ? 'Optional' : undefined,
             teamId: (!field.isRequired && field.type === 'Team') ? null : undefined
         };
 
-        if (field.value) {
-            let team = this.teams.get(field.value);
-            teamOption.name = team.name;
-            teamOption.teamId = team.id;
-        }
+        if (field.value) teamOption.teamId = field.value;
 
         this.currentValue = teamOption;
-        this.availableOptions = []; //todo blocker
+
+        Object.defineProperty(this.value, 'name', {
+            get: () => {
+                let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+                let value = this.currentValue;
+                let teamId = value.teamId;
+                let injector = angular.element(document).injector();
+                let teams = injector.get('TeamsFactory');
+                let team = teams.get(teamId);
+                calculatedName = angular.copy(team.name);
+                return calculatedName;
+            }
+        });
     }
 
     get currentValue() {
@@ -33,24 +36,18 @@ class TeamField extends Field {
     }
 
     set currentValue(teamOption) {
-        let value = {};
-        if (!teamOption.id) {
-            value = teamOption;
-            this.value = value;
-            return;
-        }
-        let team = this.teams.get(teamOption.id);
-        teamOption.name = team.name;
-        teamOption.teamId = team.id;
+        let value = {
+            teamId: (teamOption.teamId) ? Number(teamOption.teamId) : teamOption.teamId
+        };
         this.value = value;
     }
 
     toJSON() {
         let variableValue = {};
-        //todo make a constant for type
+        let value = (!this.isRequired && this.value.teamId === null) ? null : String(this.value.teamId);
         variableValue = {
             type: 'Team',
-            value: this.value.teamId
+            value
         };
         return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }
