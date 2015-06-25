@@ -1,50 +1,57 @@
 <div class="plays-filter">
-    <div class="filter-dropdown pull-left dropdown" dropdown data-is-open="filterMenu.isOpen">
+    <div class="filter-dropdown pull-left dropdown" dropdown is-open="filterMenu.isOpen">
 
-        <a class="dropdown-toggle" dropdown-toggle>
-            Filter Plays
-            <i class="icon icon-chevron-down"></i>
+        <a id="plays-filter-dropdown-toggle-cta" class="dropdown-toggle" dropdown-toggle>
+
+            <span class="play-count">
+                Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})&nbsp;&nbsp;
+            </span>
+
+            <span>
+                Filter Plays
+                <i class="icon icon-chevron-down"></i>
+            </span>
         </a>
 
-        <span data-ng-repeat="filter in activeFilters track by $index" class="btn btn-default active-filter">
+        <span ng-repeat="filter in activeFilters track by $index" class="btn btn-default active-filter">
             {{filter.name}}
-            <i data-ng-click="removeFilter($index)" class="icon icon-remove"></i>
+            <i ng-click="removeFilter($index)" class="icon icon-remove"></i>
         </span>
 
-        <a data-ng-show="activeFilters.length > 0" data-ng-click="clearFilters()">
+        <a ng-show="activeFilters.length > 0" ng-click="clearFilters()">
             Clear
         </a>
 
-        <ul class="dropdown-menu" data-ng-if="filterMenu.isOpen">
+        <ul class="dropdown-menu" ng-if="filterMenu.isOpen">
             <li>
                 <div>
-                    <a class="btn" data-ng-click="setTeam($event, game.teamId)" data-ng-class="{'btn-default' : (teamId !== game.teamId), 'btn-primary': (teamId === game.teamId)}">
+                    <a class="btn" ng-click="setTeam($event, game.teamId)" ng-class="{'btn-default' : (teamId !== game.teamId), 'btn-primary': (teamId === game.teamId)}">
                         {{teams[game.teamId].name}}
                     </a>
                 </div>
                 <div>
-                    <a class="btn" data-ng-click="setTeam($event, game.opposingTeamId)" data-ng-class="{'btn-default' : (teamId !== game.opposingTeamId), 'btn-primary': (teamId === game.opposingTeamId)}">
+                    <a class="btn" ng-click="setTeam($event, game.opposingTeamId)" ng-class="{'btn-default' : (teamId !== game.opposingTeamId), 'btn-primary': (teamId === game.opposingTeamId)}">
                         {{teams[game.opposingTeamId].name}}
                     </a>
                 </div>
             </li>
 
             <li>
-                <div data-ng-repeat="(key, filterCategory) in filtersetCategories">
-                    <a data-ng-click="setFilterCategory($event, filterCategory.id)" class="btn" data-ng-class="{'btn-default':(filterCategory.id !== currentFilterCategory), 'btn-primary':(filterCategory.id === currentFilterCategory)}">{{filterCategory.name}}</a>
+                <div ng-repeat="(key, filterCategory) in filtersetCategories | toArray | orderBy: 'sortOrder'">
+                    <a ng-click="setFilterCategory($event, filterCategory.id)" class="btn" ng-class="{'btn-default':(filterCategory.id !== currentFilterCategory), 'btn-primary':(filterCategory.id === currentFilterCategory)}" ng-hide="filterCategory.type === 4 && !isTeamMember">{{filterCategory.name}}</a>
                 </div>
             </li>
             <li>
-                <div data-ng-repeat="(key, filterCategory) in filtersetCategories">
-                    <div data-ng-repeat="filter in filterCategory.subFilters track by $index">
-                        <a data-ng-if="!filter.customFilter" data-ng-show="filter.filterCategoryId === currentFilterCategory" class="btn" data-ng-class="{'child': (filter.parent !== null), 'btn-default':(!contains(activeFilters, filter.id)), 'btn-primary':(contains(activeFilters, filter.id))}" data-ng-click="setFilter(filter)">
-                            {{filter.name}}
-                        </a>
-                        <a data-ng-if="filter.customFilter" data-ng-show="filter.filterCategoryId === currentFilterCategory && filter.teamId === teamId" class="btn" data-ng-class="{'btn-default':(!contains(activeFilters, filter.id, filter.playerId)), 'btn-primary':(contains(activeFilters, filter.id, filter.playerId))}" data-ng-click="setFilter(filter)">
-                            {{filter.name}}
-                        </a>
-                    </div>
+                <input class="search-filter" ng-click="$event.stopPropagation()" ng-model="searchFilter.name" placeholder="Search Filters">
+                <div ng-repeat="filter in matchingFilters = (filtersetCategories[currentFilterCategory].subFilters | filter:searchFilter) track by $index">
+                    <a ng-if="!filter.customFilter" class="btn" ng-class="{'child': (filter.parent !== null), 'btn-default':(!contains(activeFilters, filter.id)), 'btn-primary':(contains(activeFilters, filter.id))}" ng-click="setFilter(filter)">
+                        {{filter.name}}
+                    </a>
+                    <a ng-if="filter.customFilter" ng-show="filter.teamId === teamId" class="btn" ng-class="{'btn-default':(!contains(activeFilters, filter)), 'btn-primary':(contains(activeFilters, filter))}" ng-click="setFilter(filter)">
+                        {{filter.name}}
+                    </a>
                 </div>
+                <no-results ng-if="!matchingFilters.length"></no-results>
             </li>
         </ul>
     </div>

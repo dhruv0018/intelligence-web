@@ -29,7 +29,12 @@ IntelligenceWebClient.factory('PlaysResource', [
                 }
             },
             create: { method: 'POST' },
-            update: { method: 'PUT' }
+            update: { method: 'PUT' },
+            batchUpdate: {
+                method: 'POST',
+                url: config.api.uri + 'plays/batch',
+                isArray: true
+            }
         };
 
         return $resource(url, paramDefaults, actions);

@@ -223,6 +223,51 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return angular.isDefined(playerInfo[playerId]);
             },
 
+            /**
+            * @class Games
+            * @method
+            * @returns {Boolean} returns if user can view game
+            * or not.
+            * Check if the user is allowed to view a given game.
+            */
+            isAllowedToView: function() {
+
+                let self = this;
+
+                //Check if user has permissions to view reel
+                let isAllowed = self.isSharedWithPublic() ||
+                                self.uploaderUserId === session.getCurrentUserId() ||
+                                self.uploaderTeamId === session.getCurrentTeamId() ||
+                                self.isSharedWithUser(session.getCurrentUser()) ||
+                                self.isSharedWithTeam();
+
+                return isAllowed;
+            },
+
+            /**
+            * @class Games
+            * @method
+            * @returns {Integer} returns the team id that the game
+            * is shared with.
+            * Checks if the game is shared with a team.
+            */
+
+            /** FIXME: We should consider consolidating this
+             *  function with the one is reels factory.
+             */
+            isSharedWithTeam: function() {
+
+                let self = this;
+
+                if (!self.shares) return false;
+
+                return self.shares.map(function(share) {
+                    return share.sharedWithTeamId;
+                }).some(function(sharedWithTeamId) {
+                    return sharedWithTeamId;
+                });
+            },
+
             isPlayerOnOpposingTeam: function(playerId) {
 
                 var self = this;

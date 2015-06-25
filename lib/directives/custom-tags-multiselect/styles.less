@@ -1,0 +1,83 @@
+@import (reference) "main.less";
+
+.custom-tags-multiselect {
+
+    line-height: normal;
+    text-align: left;
+    display: inline-block;
+
+    .custom-tags-multiselect-container {
+        position: relative;
+    }
+
+    button {
+        padding: 8px;
+        border: thin solid @gray-border;
+        color: @gray;
+        font-weight: 400;
+
+        .icon-chevron-down {
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    }
+
+    button,
+    button:active,
+    button:focus,
+    button:hover {
+        background-color: white;
+        box-shadow: none;
+    }
+
+    .tag-label {
+        margin-right: 3px;
+    }
+
+    .dropdown-menu {
+
+        max-height: 250px;
+        width: 250px;
+        overflow-y: scroll;
+        letter-spacing: normal;
+        top: auto;
+        left: auto;
+        padding: 0px;
+
+        .tag-filter {
+            position: relative;
+            padding: 10px;
+            background-color: @content-bg;
+            text-align: left;
+            border-bottom: thin solid @gray-border;
+
+            input {
+                border: thin solid @gray-border;
+                border-radius: 5px;
+                padding-left: 22px;
+            }
+
+            .icon-search {
+                position: absolute;
+                left: 15px;
+                top: 17px;
+                color: @gray-light;
+            }
+        }
+
+        .tag {
+
+            padding: 3px 5px;
+
+            .icon {
+
+                position: absolute;
+            }
+
+            .item-label {
+
+                margin-left: 25px;
+            }
+        }
+    }
+}

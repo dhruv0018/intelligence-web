@@ -1,7 +1,7 @@
 <div class="arena">
 
     <!-- Football -->
-    <krossover-arena-football-field data-ng-if="type === 'FOOTBALL'" data-chart="chart" data-redzone="redzone"></krossover-arena-football-field>
+    <krossover-arena-football-field data-ng-if="type === 'FOOTBALL'" chart="chart" redzone="redzone" plays="plays"></krossover-arena-football-field>
 
     <!-- Basketball -->
     <basketball-arena data-ng-if="type.indexOf('BASKETBALL') >= 0" data-ng-model="region"></basketball-arena>

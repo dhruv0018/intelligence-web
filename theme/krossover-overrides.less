@@ -4,14 +4,32 @@
 
 @import (reference) "main.less";
 
+.no-outline {
+
+    &:focus {
+        outline: none;
+    }
+}
+
 input {
 
     box-shadow: none;
+    &:extend(.no-outline all);
+}
+
+x-multiselect,
+button,
+tr,
+td {
+
+    &:extend(.no-outline all);
 }
 
 a {
+
+    &:extend(.no-outline all);
     &:focus {
-        outline: none;
+
         text-decoration: none;
     }
 }
