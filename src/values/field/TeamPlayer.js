@@ -54,7 +54,58 @@ class TeamPlayerField extends Field {
             }
         });
 
-        this.availableValues = []; //todo blocker
+        Object.defineProperty(this, 'availableValues', {
+            get: () => {
+
+                if (!this.gameId) return [];
+
+                let injector = angular.element(document).injector();
+
+                let games = injector.get('GamesFactory');
+                let teams = injector.get('TeamsFactory');
+                let players = injector.get('PlayersFactory');
+
+                let game = games.get(this.gameId);
+                let team = game.teamId ? teams.get(game.teamId) : null;
+                let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
+
+                let teamPlayersValues = Object.keys(game.rosters[team.id].playerInfo).map( (playerId) => {
+                    let rosterEntry = game.rosters[team.id].playerInfo[playerId];
+                    let player = players.get(playerId);
+
+                    let value = {
+                        playerId: player.id,
+                        jerseyColor: game.primaryJerseyColor,
+                        jerseyNumber: rosterEntry.jerseyNumber,
+                        name: player.firstName + ' ' + player.lastName
+                    };
+                    return value;
+                });
+
+                let opposingTeamPlayersValues = Object.keys(game.rosters[opposingTeam.id].playerInfo).map( (playerId) => {
+                    let rosterEntry = game.rosters[opposingTeam.id].playerInfo[playerId];
+                    let player = players.get(playerId);
+
+                    let value = {
+                        playerId: player.id,
+                        jerseyColor: game.opposingPrimaryJerseyColor,
+                        jerseyNumber: rosterEntry.jerseyNumber,
+                        name: player.firstName + ' ' + player.lastName
+                    };
+                    return value;
+                });
+
+                let teamValues = [team, opposingTeam].map((localTeam) => {
+                    return {
+                        teamId: localTeam.id,
+                        name: localTeam.name,
+                        color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
+                    };
+                });
+                let playerValues = teamPlayersValues.concat(opposingTeamPlayersValues);
+                return teamValues.concat(playerValues);
+            }
+        });
     }
 
     get currentValue() {
