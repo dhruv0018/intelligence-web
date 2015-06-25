@@ -60,7 +60,7 @@ Reel.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: './restricted.html'
+                    templateUrl: restrictedUrl
                 }
             }
         };
@@ -100,12 +100,12 @@ Reel.config([
                         account.gotoUsersHomeState();
                     }
 
-                    /*
-                        TODO
-                        Check if the reel is public,
-                        if the uploader team id matches the current user's role team id,
-                        and if the reel is shared with the user
-                    */
+                    /*Check if user has permissions to view reel*/
+                    if (!reel.isAllowedToView()) {
+
+                        $state.go('Reel.Restricted', { id: reelId });
+                    }
+
                 }
             ],
             onExit: [
