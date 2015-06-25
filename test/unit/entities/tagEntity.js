@@ -60,7 +60,7 @@ describe('Tag Entity', () => {
 
         assert.isDefined(tag.keyboardShortcut, '"keyboardShortcut" has been defined.');
         expect(tag.keyboardShortcut).to.be.a('string');
-        expect(tag.keyboardShortcut).to.equal('QG');
+        expect(tag.keyboardShortcut).to.equal('K');
     });
 
     it('should have called toJSON on a JSON.stringify call', () => {
