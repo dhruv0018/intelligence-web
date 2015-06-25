@@ -41,18 +41,20 @@ class PlayerField extends Field {
 
     set currentValue(playerOption) {
         let value = {
-            playerId: playerOption.playerId
+            playerId: (playerOption.playerId) ? Number(playerOption.playerId) : playerOption.playerId
         };
         this.value = value;
     }
 
     toJSON(){
         let variableValue = {};
-        //todo make a constant for type
+        let value = (!this.isRequired && this.value.playerId === null) ? null : String(this.value.playerId);
+
         variableValue = {
             type: 'Player',
-            value: this.value.playerId
+            value
         };
+
         return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }
 }
