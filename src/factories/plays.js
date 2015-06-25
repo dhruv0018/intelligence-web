@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities',
-    function($injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils) {
+    '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_CONSTANTS',
+    function($injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_CONSTANTS) {
 
         var PlaysFactory = {
 
@@ -205,6 +205,22 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 if (angular.isUndefined(event.time)) throw new Error('event.time is undefined');
 
                 return event.time - play.startTime;
+            },
+
+            getEventCuePoints: function() {
+
+                let cuePoints = [];
+
+                if (!this.events) return cuePoints;
+
+                cuePoints = this.events.map(function(event) {
+                    return {
+                        time: event.time,
+                        type: CUEPOINT_CONSTANTS.TYPES.EVENT
+                    };
+                });
+
+                return cuePoints;
             }
         };
 
