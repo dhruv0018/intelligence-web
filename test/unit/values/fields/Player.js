@@ -20,7 +20,7 @@ describe('General Player Field', () => {
 
     it('Should have correct input type', () => {
         expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('PLAYER');
+        expect(tagField.inputType).to.equal('PLAYER_DROPDOWN');
     });
 
 });
