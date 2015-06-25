@@ -37,14 +37,14 @@ function IndexerGamesController(
 ) {
 
     const ONE_MINUTE = 60000;
-    const userLocation = session.currentUser.currentRole.indexerGroupId;
+    const userLocation = session.getCurrentRole().indexerGroupId;
 
     $scope.GAME_STATUSES = GAME_STATUSES;
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
     $scope.teams = teams.getCollection();
     $scope.users = users.getCollection();
-    $scope.userId = session.currentUser.id;
+    $scope.userId = session.getCurrentUserId();
     $scope.footballFAQ = config.links.indexerFAQ.football.uri;
     $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
 
@@ -64,13 +64,11 @@ function IndexerGamesController(
     $scope.games = games.getList({ assignedUserId: $scope.userId });
     $scope.currentUser = session.getCurrentUserId();
 
-    angular.forEach($scope.games, function(game) {
-        game.timeRemaining = game.assignmentTimeRemaining();
-    });
+    $scope.games.forEach(game => game.timeRemaining = game.assignmentTimeRemaining());
 
     let refreshGames = function() {
 
-        angular.forEach($scope.games, function(game) {
+        $scope.games.forEach(game => {
 
             if (game.timeRemaining) {
 
