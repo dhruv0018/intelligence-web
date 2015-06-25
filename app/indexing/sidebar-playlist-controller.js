@@ -13,14 +13,55 @@ var Indexing = angular.module('Indexing');
  * @name Sidebar.Playlist.Controller
  * @type {Controller}
  */
-Indexing.controller('Indexing.Sidebar.Playlist.Controller', [
-    '$scope', '$stateParams', 'Indexing.Sidebar', 'GamesFactory', 'PlaysManager',
-    function controller($scope, $stateParams, sidebar, games, playsManager) {
 
-        var gameId = Number($stateParams.id);
+IndexingSidebarPlaylistController.$inject = [
+    'CurrentEventBroker',
+    '$scope',
+    '$stateParams',
+    'Indexing.Sidebar',
+    'GamesFactory',
+    'PlaysManager',
+    'PlaylistEventEmitter',
+    'IndexingService',
+    'EVENT',
+    'VideoPlayer'
+];
 
-        $scope.sidebar = sidebar;
-        $scope.game = games.get(gameId);
-        $scope.plays = playsManager.plays;
+function IndexingSidebarPlaylistController(
+    currentEventBroker,
+    $scope,
+    $stateParams,
+    sidebar,
+    games,
+    playsManager,
+    playlistEventEmitter,
+    indexing,
+    EVENT,
+    videoPlayer
+) {
+
+    var gameId = Number($stateParams.id);
+
+    $scope.sidebar = sidebar;
+    $scope.game = games.get(gameId);
+    $scope.plays = playsManager.plays;
+
+    currentEventBroker.retain();
+
+    $scope.$on('$destroy', onDestroy);
+    playlistEventEmitter.on(EVENT.PLAYLIST.EVENT.SELECT, onEventSelect);
+
+    function onEventSelect(event) {
+
+        indexing.onEventSelect(event);
+        videoPlayer.seekTime(event.time);
     }
-]);
+
+    function onDestroy() {
+
+        playlistEventEmitter.removeListener(EVENT.PLAYLIST.EVENT.SELECT, onEventSelect);
+        currentEventBroker.resign();
+    }
+}
+
+Indexing.controller('Indexing.Sidebar.Playlist.Controller', IndexingSidebarPlaylistController);

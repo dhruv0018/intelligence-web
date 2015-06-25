@@ -156,7 +156,11 @@ GamesBreakdownController.$inject = [
     'VIEWPORTS',
     'PlayManager',
     'PlaysManager',
-    'PlaylistManager'
+    'PlaylistManager',
+    'PlaylistEventEmitter',
+    'TELESTRATION_PERMISSIONS',
+    'TelestrationsVideoPlayerBroker',
+    'EVENT'
 ];
 
 function GamesBreakdownController (
@@ -180,15 +184,22 @@ function GamesBreakdownController (
     VIEWPORTS,
     playManager,
     playsManager,
-    playlistManager
+    playlistManager,
+    playlistEventEmitter,
+    TELESTRATION_PERMISSIONS,
+    TelestrationsVideoPlayerBroker,
+    EVENT
 ) {
 
+        let uploader = users.get($scope.game.uploaderUserId);
         let gameId = $stateParams.id;
         $scope.game = games.get(gameId);
 
         $scope.posterImage = {
             url: $scope.game.video.thumbnail
         };
+
+        const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
 
         let isUploader = session.getCurrentUserId() === $scope.game.uploaderUserId;
         let isTeamMember = session.getCurrentTeamId() === $scope.game.uploaderTeamId;
@@ -207,7 +218,10 @@ function GamesBreakdownController (
         // TODO: remove some of this later
         $scope.team = teams.get($scope.game.teamId);
         $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-        $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+
+        $scope.filmTitle = $scope.game.description;
+
+        let removeTelestrationsSaveListener = angular.noop;
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
         if ($scope.game.isDelivered()) {
@@ -226,8 +240,20 @@ function GamesBreakdownController (
             if (play) {
                 playManager.current = play;
                 $scope.sources = play.getVideoSources();
+                playManager.current = play;
             }
 
+            // Set telestrations
+            $scope.telestrationsEntity = $scope.game.playTelestrations;
+            $scope.currentPlayId = play.id;
+
+            // set initial cuepoints
+            if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId, play.startTime);
+            }
+
+            $scope.sources = play.getVideoSources();
 
             /* TODO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.
@@ -256,5 +282,58 @@ function GamesBreakdownController (
             $scope.filteredPlaysIds = [];
 
             $scope.expandAll = false;
+
+
+            /* Listeners & Watches */
+
+            if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+                playlistEventEmitter.on(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
+            }
+
+            if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
+
+                $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+
+                    if (playManager.current) {
+
+                        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.current.id, playManager.current.startTime);
+                    }
+                });
+            }
+
+            /* Listeners & Watches */
+
+            if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
+
+                removeTelestrationsSaveListener = $scope.$on('telestrations:save', saveTelestrations);
+            }
         }
+
+        function saveTelestrations(event, callbackFn) {
+
+            callbackFn = callbackFn || angular.noop;
+
+            // Save Game
+            $scope.game.save().then(function onSaved() {
+                callbackFn();
+            });
+
+        }
+
+        function onPlaylistWatch(play) {
+
+            if (play && play.id) {
+
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
+                $scope.currentPlayId = play.id;
+            }
+        }
+
+        $scope.$on('$destroy', function onDestroy() {
+
+            removeTelestrationsSaveListener();
+            telestrationsVideoPlayerBroker.cleanup();
+            playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
+        });
 }

@@ -11,8 +11,8 @@ const IntelligenceWebClient = angular.module(pkg.name);
 IntelligenceWebClient.factory('KrossoverPlayDataDependencies', KrossoverPlayDataDependencies);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'KrossoverPlayDataDependencies', '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_CONSTANTS',
-    function(KrossoverPlay, $injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_CONSTANTS) {
+    '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_CONSTANTS', 'KrossoverPlayDataDependencies',
+    function($injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_CONSTANTS, KrossoverPlay) {
 
         var PlaysFactory = {
 

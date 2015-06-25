@@ -6,6 +6,15 @@ function inherit(parent, extra) {
     return angular.extend(new (angular.extend(function() {}, {prototype: parent}))(), extra);
 }
 
+function inheritPrototype(childObject, parentObject) {
+
+    var copyOfParent = Object.create(parentObject.prototype);
+
+    copyOfParent.constructor = childObject;
+
+    childObject.prototype = copyOfParent;
+}
+
 function augment(dst) {
 
     angular.forEach(arguments, function(obj) {
@@ -24,5 +33,6 @@ function augment(dst) {
 
 angular.extend(angular, {
     'inherit': inherit,
-    'augment': augment
+    'augment': augment,
+    'inheritPrototype': inheritPrototype
 });
