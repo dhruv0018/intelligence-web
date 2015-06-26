@@ -79,7 +79,8 @@
         "custom-tags-dropdown",
         "custom-tags-multiselect",
         "custom-tag-pills",
-        "feature"
+        "feature",
+        "telestrations"
     ],
     "scripts": [
         "index.js"

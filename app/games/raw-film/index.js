@@ -37,7 +37,7 @@ GamesRawFilm.config([
                             var game = games.get(gameId);
 
                             var Data = {
-                                user: users.load(game.uploaderUserId),
+                                user: users.load(game.uploaderUserId)
                             };
 
                             var teamIds = [];
@@ -57,15 +57,63 @@ GamesRawFilm.config([
 ]);
 
 GamesRawFilm.controller('Games.Rawfilm.controller', [
-    '$scope', '$stateParams', 'GamesFactory',
-    function controller($scope, $stateParams, games) {
+    '$scope', '$stateParams', 'GamesFactory', 'ROLES', 'SessionService', 'UsersFactory', 'TELESTRATION_PERMISSIONS', 'TelestrationsVideoPlayerBroker',
+    function controller($scope, $stateParams, games, ROLES, session, users, TELESTRATION_PERMISSIONS, TelestrationsVideoPlayerBroker) {
 
-        var gameId = Number($stateParams.id);
-        var game = games.get(gameId);
+        /* Scope */
+
+        const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
+
+        // telestrations
+
+        $scope.telestrations = $scope.game.rawTelestrations;
+
+        // video player
+
+        $scope.sources = $scope.game.getVideoSources();
+        $scope.cuePoints = [];
         $scope.posterImage = {
-            url: game.video.thumbnail
+            url: $scope.game.video.thumbnail
         };
 
-        $scope.sources = game.getVideoSources();
+        let removeTelestrationsSaveListener = angular.noop;
+
+        if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+            $scope.cuePoints = $scope.telestrations.getTelestrationCuePoints();
+        }
+
+
+        /* Listeners & Watches */
+
+        if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
+
+            $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+
+                $scope.cuePoints = $scope.telestrations.getTelestrationCuePoints();
+            });
+        }
+
+        if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
+
+            removeTelestrationsSaveListener = $scope.$on('telestrations:save', saveTelestrations);
+        }
+
+        function saveTelestrations(event, callbackFn) {
+
+            callbackFn = callbackFn || angular.noop;
+
+            // Save Game
+            $scope.game.save().then(function onSaved() {
+                callbackFn();
+            });
+
+        }
+
+        $scope.$on('$destroy', function onDestroy() {
+
+            removeTelestrationsSaveListener();
+            telestrationsVideoPlayerBroker.cleanup();
+        });
     }
 ]);

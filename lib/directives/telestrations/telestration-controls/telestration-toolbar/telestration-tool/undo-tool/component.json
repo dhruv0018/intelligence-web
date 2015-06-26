@@ -1,0 +1,9 @@
+{
+    "name": "undo-tool",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
