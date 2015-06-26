@@ -18,10 +18,14 @@
         </krossover-sidebar>
 
         <video-player
-         class="screen-lg-min"
-         poster-image="posterImage"
-         sources="sources"
-        >
+            class="screen-lg-min"
+            poster-image="posterImage"
+            cue-points="cuePoints"
+            sources="sources"
+            telestrations="telestrationsEntity"
+            play-id="currentPlayId"
+            telestrations-permissions="telestrationsPermissions"
+            ng-show="$root.viewport.name === VIEWPORTS.DESKTOP.name">
         </video-player>
 
     </div>
