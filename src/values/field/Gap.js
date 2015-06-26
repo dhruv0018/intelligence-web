@@ -10,7 +10,7 @@ class GapField extends Field {
         this.GAPS =  GapConstants.GAPS;
         this.GAP_IDS = GapConstants.GAP_IDS;
         this.availableValues = Object.keys(this.GAPS).map(key => {
-            let currentGap = this.GAPS[key];
+            let currentGap = angular.copy(this.GAPS[key]);
             let value = {
                 gapId: Number(currentGap.value),
                 name: currentGap.name,
@@ -25,10 +25,10 @@ class GapField extends Field {
         };
         this.availableValues.unshift(initialGap);
 
-        let gap = this.availableValues[0];
+        let gap = angular.copy(this.availableValues[0]);
 
         if (field.value) {
-            let currentGap = this.GAPS[this.GAP_IDS[field.value]];
+            let currentGap = angular.copy(this.GAPS[this.GAP_IDS[field.value]]);
             gap = {
                 gapId: Number(currentGap.value),
                 name: currentGap.name,
