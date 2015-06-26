@@ -252,6 +252,8 @@ class KrossoverTag extends Entity {
             copy.tagVariables = tagVariables;
         }
 
+        delete copy.fields;
+
         return copy;
     }
 }
