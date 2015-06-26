@@ -1,11 +1,29 @@
 <div class="krossover-playlist-control">
 
-    <span>Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
+    <span class="playlist-control-play-count">Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
 
-    <button class="play-all-plays" data-ng-click="playManager.playAllPlays = !playManager.playAllPlays">
+    <div class="select-all" feature="SelectPlays" ng-if="plays.length && isTeamMember">
+        <check-box
+            ng-click="toggleSelectAllPlays()"
+            checked="selectedPlays.length === filteredPlays.length"
+            indeterminate="selectedPlays.length > 0 && selectedPlays.length < filteredPlays.length">
+        </check-box>
+        <span ng-show="!selectedPlays.length">Select All</span>
+        <span ng-show="selectedPlays.length">{{selectedPlays.length}} Selected</span>
+    </div>
+
+    <button id="playlist-continuous-play-on-off-cta" ng-hide="selectedPlays.length || confirmTagSave" class="play-all-plays" ng-click="playManager.playAllPlays = !playManager.playAllPlays">
         <span class="play-all-text">Continuous Play</span>
-        <span class="on" data-ng-class="{chosen: playManager.playAllPlays}">ON</span>
-        <span class="off" data-ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
+        <span class="on" ng-class="{chosen: playManager.playAllPlays}">ON</span>
+        <span class="off" ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
     </button>
 
+    <button feature="SelectPlays" ng-if="selectedPlays.length && isTeamMember && !confirmTagSave" class="btn btn-sm btn-default" open-modal="AddReel.Modal" modal-options="options">Add to Reel</button>
+
+    <custom-tags-dropdown feature="CustomTags" ng-if="selectedPlays.length && isTeamMember && currentUser.is(ROLES.COACH) && !confirmTagSave" plays="selectedPlays"></custom-tags-dropdown>
+
+    <div ng-show="confirmTagSave" class="add-tag-success">
+        <i class="icon icon-ok"></i>
+        Tag<span ng-show="updatedTagCount > 1">s</span> applied
+    </div>
 </div>
