@@ -1,0 +1,133 @@
+@import (reference) "main.less";
+
+.custom-tags-dropdown {
+    position: relative;
+
+    .tags-dropdown-menu {
+        position: absolute;
+        left: -227px;
+        top: 35px;
+        width: 300px;
+        padding: 0;
+        box-shadow: 2px 2px 10px @gray-light;
+
+        /* Triangle Marker */
+        &:before,
+        &:after {
+
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+
+        &:before {
+
+            border-bottom: 11px solid @gray-border;
+            border-left: 11px solid transparent;
+            border-right: 11px solid transparent;
+            margin-left: -11px;
+            right: 30px;
+            top: -11px;
+        }
+
+        &:after {
+
+            border-bottom: 10px solid @content-bg;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            margin-left: -10px;
+            right: 31px;
+            top: -10px;
+        }
+
+        &.tags-are-selected {
+            &:after {
+                border-bottom: 10px solid white;
+            }
+        }
+
+        .selected-tags {
+            border-bottom: thin solid @gray-border;
+            padding: 5px;
+            max-height: 100px;
+            overflow: auto;
+        }
+
+        .search-tags {
+            border-bottom: thin solid @gray-border;
+            padding: 10px;
+            position: relative;
+            background-color: @content-bg;
+
+            input {
+                border: thin solid @gray-border;
+                border-radius: 5px;
+                width: 100%;
+                padding-left: 22px;
+            }
+
+            .icon-search {
+                position: absolute;
+                left: 15px;
+                top: 14px;
+                color: @gray-light;
+            }
+        }
+
+        .tags-list {
+            padding: 5px;
+            max-height: 250px;
+            overflow-y: auto;
+
+            .tag-selection-label {
+                display: block;
+                color: @gray-light;
+                text-transform: uppercase;
+            }
+
+            .new-tag {
+                margin: 0;
+                cursor: pointer;
+                overflow-wrap: break-word;
+
+                &:hover,
+                &.focused {
+                    background-color: @active-bg;
+                }
+            }
+
+            ul {
+                list-style: none;
+                padding-left: 0px;
+                font-weight: 500;
+
+                li {
+                    padding: 2px 0px;
+                    cursor: pointer;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    &:hover,
+                    &.focused {
+                        background-color: @active-bg;
+                    }
+                }
+            }
+        }
+
+        .tag-action-buttons {
+            border-top: thin solid @gray-border;
+            padding: 5px;
+
+            .empty-apply {
+                .pull-right;
+                color: @gray-light;
+            }
+
+            .applying {
+                .pull-right;
+            }
+        }
+    }
+}
