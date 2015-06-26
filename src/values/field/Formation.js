@@ -9,17 +9,27 @@ class FormationField extends Field {
         if (!field) return;
         super(field);
 
-        let injector = angular.element(document).injector();
-
         let formation = {
             formationId: !field.isRequired ? null : undefined,
             numberOfPlayers: 0
         };
 
-        if (field.value) formation = this.formations[field.value];
+        if (field.value) {
+            let currentFormation = this.formations[field.value];
+            formation.formationId = currentFormation.id;
+            formation.numberOfPlayers =  currentFormation.numberPlayers;
+            formation.name =  currentFormation.name;
+        }
 
         this.currentValue = formation;
-        this.availableValues = Object.keys(this.formations).map(key => this.formations[key]);
+        this.availableValues = Object.keys(this.formations).map(key => {
+            let currentFormation = this.formations[key];
+            return {
+                formationId: currentFormation.id,
+                numberOfPlayers: currentFormation.numberPlayers,
+                name: currentFormation.name
+            };
+        });
     }
 
     get currentValue() {
@@ -28,9 +38,7 @@ class FormationField extends Field {
 
     set currentValue(formation) {
         let value = {};
-        value.formationId = formation.id;
-        value.numberOfPlayers = formation.numberPlayers;
-        value.name = formation.name;
+        value = formation;
         this.value = value;
     }
 
@@ -41,6 +49,7 @@ class FormationField extends Field {
             value: this.value.formationId
         };
         return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
+
     }
 }
 
