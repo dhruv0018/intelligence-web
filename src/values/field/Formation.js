@@ -9,27 +9,34 @@ class FormationField extends Field {
         if (!field) return;
         super(field);
 
-        let formation = {
+        let initialFormation = {
             formationId: !field.isRequired ? null : undefined,
-            numberOfPlayers: 0
+            numberOfPlayers: 0,
+            name: !field.isRequired ? 'Optional' : 'Select'
         };
-
-        if (field.value) {
-            let currentFormation = this.formations[field.value];
-            formation.formationId = currentFormation.id;
-            formation.numberOfPlayers =  currentFormation.numberPlayers;
-            formation.name =  currentFormation.name;
-        }
-
-        this.currentValue = formation;
         this.availableValues = Object.keys(this.formations).map(key => {
-            let currentFormation = this.formations[key];
+            let currentFormation = angular.copy(this.formations[key]);
             return {
                 formationId: currentFormation.id,
                 numberOfPlayers: currentFormation.numberPlayers,
                 name: currentFormation.name
             };
         });
+        this.availableValues.unshift(initialFormation);
+        let formation = angular.copy(this.availableValues[0]);
+
+        if (field.value) {
+            let currentFormation = angular.copy(this.formations[field.value]);
+            let value = {
+                formationId: currentFormation.id,
+                numberOfPlayers: currentFormation.numberPlayers,
+                name: currentFormation.name
+            };
+            formation = value;
+        }
+
+        this.currentValue = formation;
+
     }
 
     get currentValue() {
@@ -44,9 +51,10 @@ class FormationField extends Field {
 
     toJSON() {
         let variableValue = {};
+        let value = this.value.formationId === null ? null : String(this.value.formationId);
         variableValue = {
             type: null,
-            value: this.value.formationId
+            value
         };
         return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
 
