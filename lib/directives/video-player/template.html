@@ -8,20 +8,24 @@
      vg-update-volume="videoPlayer.onUpdateVolume($volume)"
      vg-autoplay="videoPlayer.config.autoplay"
      vg-plays-inline="videoPlayer.config.playsInline"
-     ng-class="{'fullscreen': videoPlayer.fullScreenEnabled}"
     >
 
-        <vg-media
-         vg-loop="videoPlayer.config.loop"
-         vg-preload="videoPlayer.config.preload"
-         vg-src="videoPlayer.sources"
-        >
-        </vg-media>
+        <telestrations telestrations-entity="videoPlayer.telestrations" play-id="videoPlayer.playId" permissions="videoPlayer.telestrationsPermissions" class="vg-media-container" feature-flag="{{$root.FLAGS.FEATURE_TELESTRATIONS.TELESTRATIONS}}">
 
-        <vg-controls>
+            <vg-media
+             vg-loop="videoPlayer.config.loop"
+             vg-preload="videoPlayer.config.preload"
+             vg-src="videoPlayer.sources"
+            >
+            </vg-media>
+
+        </telestrations>
+
+        <vg-controls ng-hide="deviceIsiPhone">
 
             <vg-scrub-bar>
                 <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                <cue-points points="videoPlayer.cuePoints" feature-flag="{{$root.FLAGS.FEATURE_TELESTRATIONS.CUEPOINTS}}"></cue-points>
             </vg-scrub-bar>
 
             <div class="controls-bottom">
@@ -68,7 +72,7 @@
 
         <vg-buffering></vg-buffering>
 
-        <vg-poster ng-hide="videoPlayer.state" vg-url="videoPlayer.posterImage.url"></vg-poster>
+        <vg-poster ng-if="!deviceIsiPhone" ng-hide="videoPlayer.state" vg-url="videoPlayer.posterImage.url"></vg-poster>
 
     </videogular>
 

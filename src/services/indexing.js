@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter',
-    function(config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter) {
+    'EVENT', 'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter', 'Utilities',
+    function(EVENT, config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter, utils) {
 
         var IndexingService = {
 
@@ -65,6 +65,9 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* Get tag. */
                 let tag = tagsets.getTag(tagId);
+
+                /* get browser safe time */
+                time = utils.toFixedFloat(time);
 
                 /* Create new event. */
                 eventManager.current = new KrossoverEvent(tag, time);
@@ -294,15 +297,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* Remove the event from the current play. */
                 playManager.removeEvent(event);
-
-                /* Clear the current event. */
-                eventManager.current = null;
-
-                /* Save play. */
-                playManager.current.save();
-
-                /* Clear the current play. */
-                playManager.clear();
             },
 
             onEventSelect: function (event) {
@@ -311,12 +305,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.isIndexing = true;
                 this.showTags = false;
                 this.showScript = true;
-
-                videoPlayer.seekTime(event.time);
             }
         };
-
-        playlistEventEmitter.on('EVENT_SELECT', IndexingService.onEventSelect.bind(IndexingService));
 
         return IndexingService;
     }
