@@ -1,0 +1,182 @@
+@import (reference) "main.less";
+
+.telestration-controls {
+    @radius: 3px;
+    @margin: 15px;
+    @font-size: 32px;
+    @tool-size: 50px;
+    @active-grey: rgba(49, 49, 49, 1.0);
+    @clear-all-red: rgba(213, 43, 43, 1.0);
+    @bright-blue: rgb(43, 171, 245);
+    @bright-blue-hover: rgb(60,153,220);
+
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+    margin-top: @margin;
+    margin-left: @margin;
+    margin-right: @margin;
+    color: white;
+    overflow: hidden;
+
+    &.visible-overflow {
+        overflow: visible;
+    }
+
+    .animate-hide-show {
+
+        .ng-hide-add, .ng-hide-remove {
+            transition: opacity 0.5s linear;
+        }
+
+        .ng-hide {
+            opacity: 0;
+        }
+    }
+
+    ul, li {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        font-size: @font-size;
+        cursor: pointer;
+        display: flex;
+        user-select: none;
+        outline: none;
+    }
+
+    .primary-controls {
+
+        display: flex;
+
+        telestration-toolbar {
+
+            position: absolute;
+            transition: left 0.5s ease-out;
+            left: 60px;
+
+            ul {
+                display: flex;
+            }
+
+            &.ng-hide {
+
+                left: -354px;
+            }
+        }
+
+        li {
+            background-color: black;
+            padding: 8px;
+            border: none;
+            height: @tool-size;
+            width: @tool-size;
+
+            &:active {
+                border: 1px solid @icon-highlight-blue;
+            }
+
+            &:active, &:hover {
+                background-color: @active-grey;
+            }
+        }
+
+        ul.telestration-toolbar >:last-child li[telestration-tool] {
+
+            border-top-right-radius: @radius;
+            border-bottom-right-radius: @radius;
+        }
+
+        li[telestration-tool] {
+            margin-right: 1px;
+
+            &:active, &:hover {
+                color: @icon-highlight-blue;
+            }
+        }
+
+        .dropdown {
+
+            .icon-expand_arrow {
+                position: absolute;
+                font-size: 60px;
+                height: inherit;
+                left: 14px;
+                top: 16px;
+                transform: rotate(90deg);
+            }
+        }
+
+        .dropdown-container {
+            position: absolute;
+            top: @tool-size;
+            left: 0px;
+            flex-direction: column;
+
+            li {
+                margin: 1px 0px;
+            }
+        }
+
+        color-picker-tool .dropdown-container li {
+            padding-left: 10px;
+        }
+
+        .selected li {
+            color: @icon-highlight-blue;
+            background-color: @active-grey;
+        }
+
+        .disabled {
+            opacity: 0.5;
+        }
+
+        telestration-enable-button {
+
+            z-index: 2;
+
+            li {
+
+                border-top-left-radius: @radius;
+                border-bottom-left-radius: @radius;
+                margin-right: 1px;
+
+                &.telestration-enable-button.active {
+                    background-color: @bright-blue;
+                    border-radius: @radius;
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+
+                    &:hover {
+                        background-color: @bright-blue-hover;
+                    }
+                }
+
+                &.telestration-enable-button.inactive {
+
+                    border-radius: @radius;
+                }
+            }
+        }
+    }
+
+    // material design override
+    .delete-tools .md-button {
+        line-height: initial;
+    }
+
+    telestration-clear-all-button, telestration-delete-button {
+
+        transition: opacity 0.5s linear;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        &.ng-hide {
+            opacity: 0;
+        }
+    }
+}

@@ -8,17 +8,19 @@
 
             <!-- Game Play -->
             <krossover-play
+                cue-points="cuePoints"
                 ng-if="!isReelsPlay"
                 game="game"
                 plays="plays"
                 play="play"
                 league="league"
-                ng-show="play.isFiltered"
-                ng-repeat="play in plays | orderBy:orderBy">
+                data-ng-show="play.isFiltered"
+                data-ng-repeat="play in plays | orderBy:orderBy">
             </krossover-play>
 
             <!-- Reel Play -->
             <krossover-play
+                cue-points="cuePoints"
                 ng-if="isReelsPlay"
                 reel="reel"
                 game="game"

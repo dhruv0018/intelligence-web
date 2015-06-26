@@ -3,9 +3,18 @@
     <header class="modal-header">
     	<h3 class="modal-title">
 	    	<span data-ng-show="!withTeam && !withOtherUsers && !withPublic">Pick how you would like to share</span>
-            <span data-ng-show="withTeam">Share this reel with your team</span>
-	        <span data-ng-show="withOtherUsers">Share this film with other Krossover users</span>
-	        <span data-ng-show="withPublic">Share this film via public URL</span>
+            <span data-ng-show="withTeam">
+                <span>Share this reel with your team</span>
+                <span class="modal-title-side-caption" data-ng-show="currentUser.is(ROLES.COACH)">(includes telestrations)</span>
+            </span>
+	        <span data-ng-show="withOtherUsers">
+                <span>Share this film with other Krossover users</span>
+                <span class="modal-title-side-caption" data-ng-show="currentUser.is(ROLES.COACH)">(does not include telestrations)</span>
+            </span>
+	        <span data-ng-show="withPublic">
+                <span>Share this film via public URL</span>
+                <span class="modal-title-side-caption" data-ng-show="currentUser.is(ROLES.COACH)">(does not include telestrations)</span>
+            </span>
 	        <i id="share-film-dismiss-cta" class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i>
 	    </h3>
 

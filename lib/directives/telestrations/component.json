@@ -1,0 +1,23 @@
+{
+    "name": "telestrations",
+    "paths": [
+        "."
+    ],
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "directive.js",
+        "index.js",
+        "constants.js",
+        "controller.js"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "locals": [
+        "glyph",
+        "glyph-editor",
+        "telestration-controls"
+    ]
+}
