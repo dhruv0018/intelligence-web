@@ -27,9 +27,9 @@ class PassingZoneField extends Field {
         };
         this.availableValues.unshift(initialZone);
 
-        let zone = this.availableValues[0];
+        let zone = angular.copy(this.availableValues[0]);
         if (field.value) {
-            let currentZone = ZONES[ZONE_IDS[field.value]];
+            let currentZone = angular.copy(ZONES[ZONE_IDS[field.value]]);
             zone = {
                 zoneId: Number(currentZone.value),
                 name: currentZone.name,
