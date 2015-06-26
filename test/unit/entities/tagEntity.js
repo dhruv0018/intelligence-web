@@ -1,5 +1,5 @@
 import KrossoverTag from '../../../src/entities/tag';
-import tagData from './sample-data/tag';
+import tagData from './sample-data/tag-22';
 import tagTransformedData from './sample-data/tag-transformed';
 
 const assert = chai.assert;
