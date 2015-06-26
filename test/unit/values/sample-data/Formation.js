@@ -20,7 +20,7 @@ FormationFieldData.Event = {
         },
         2: {
             id: 2,
-            name: "Ace",
+            name: 'Ace',
             numberPlayers: 7,
             variableId: 17
         }
