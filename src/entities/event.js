@@ -4,44 +4,54 @@ class Event extends Tag {
 
     constructor (event, tag, time, gameId) {
 
-        super();
-
+        /* If only two parameters are passed, we don't have an event, so
+         * reassign values. */
         if (arguments.length === 2) {
 
-            time = tag;
-            tag = event;
+            time  = tag;
+            tag   = event;
             event = null;
         }
 
-        event = event || {};
-        event.variableValues = event.variableValues || {};
-        event.activeEventVariableIndex = event.activeEventVariableIndex || 1;
+        /* Build out tag instance via super */
+        super(tag);
+        this.tagId = this.id;
 
-        tag = Object.assign({}, tag);
-
-        tag.tagId = tag.id;
-        delete tag.id;
-
-        Object.assign(this, event, tag, { time });
+        /* Add event data */
+        event                         = event || {};
+        this.variableValues           = event.variableValues || {};
+        this.activeEventVariableIndex = event.activeEventVariableIndex || 1;
+        this.id                       = event.id;
+        this.playId                   = event.playId;
+        this.time                     = time;
 
         this.fields = {};
 
         /* FIXME: Remove when API is updated. */
-        if (this.tagVariables) Object.keys(this.tagVariables).forEach(key => {
+        if (this.tagVariables) {
 
-            let tagVariable = Object.assign({}, this.tagVariables[key]);
-            tagVariable.inputType = this.tagVariables[key].type;
-            delete tagVariable.type;
-            this.variableValues[tagVariable.id] = this.variableValues[tagVariable.id] || {};
-            Object.assign(this.variableValues[tagVariable.id], tagVariable);
-            this.variableValues[tagVariable.id].type = this.variableValues[tagVariable.id].type || null;
-            if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
-                this.variableValues[tagVariable.id].value = null;
-            }
-            let field = this.createField(this.variableValues[tagVariable.id]);
-            this.fields[tagVariable.index] = field;
-        });
+            Object.keys(this.tagVariables).forEach(key => {
 
+                let tagVariable = Object.assign({}, this.tagVariables[key]);
+
+                tagVariable.inputType = this.tagVariables[key].type;
+                delete tagVariable.type;
+
+                this.variableValues[tagVariable.id] = this.variableValues[tagVariable.id] || {};
+                Object.assign(this.variableValues[tagVariable.id], tagVariable);
+                this.variableValues[tagVariable.id].type = this.variableValues[tagVariable.id].type || null;
+
+                if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
+
+                    this.variableValues[tagVariable.id].value = null;
+                }
+
+                let field = this.createField(this.variableValues[tagVariable.id]);
+                this.fields[tagVariable.index] = field;
+            });
+        }
+
+        /* Add game ID to all variable values */
         Object.keys(this.variableValues).forEach(key => {
 
             this.variableValues[key].gameId = gameId;
@@ -120,9 +130,25 @@ class Event extends Tag {
 
     toJSON () {
 
-        let copy = Object.assign({}, this);
+        let copy = super.toJSON(this);
 
         delete copy.activeEventVariableIndex;
+        delete copy.indexerScript;
+        delete copy.userScript;
+        delete copy.shortcutKey;
+        delete copy.description;
+        delete copy.isStart;
+        delete copy.isEnd;
+        delete copy.tagSetId;
+        delete copy.children;
+        delete copy.tagVariables;
+        delete copy.pointsAssigned;
+        delete copy.assignThisTeam;
+        delete copy.isPeriodTag;
+        delete copy.summaryPriority;
+        delete copy.summaryScript;
+        delete copy.buffer;
+        delete copy.name;
 
         Object.keys(copy.variableValues).forEach(key => {
 
