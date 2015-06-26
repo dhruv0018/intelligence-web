@@ -1,0 +1,15 @@
+{
+    "name": "telestration-toolbar",
+    "paths": [
+        "."
+    ],
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "locals": [
+        "telestration-tool"
+    ]
+}

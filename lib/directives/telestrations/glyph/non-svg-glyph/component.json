@@ -1,0 +1,9 @@
+{
+    "name": "non-svg-glyph",
+    "paths": [
+        "."
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}
