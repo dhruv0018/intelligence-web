@@ -1,11 +1,10 @@
 import KrossoverEvent from '../../../src/entities/event';
 import KrossoverTag from '../../../src/entities/tag';
 import playData from './sample-data/play';
-import tagData from './sample-data/tag';
-import tagsData from './sample-data/tags';
+import tagData from './sample-data/tag-22';
 
 const util    = require('util');
-const krog    = obj => console.log(util.inspect(obj));
+const krog    = (obj, msg) => console.log(msg, util.inspect(obj));
 
 const assert  = chai.assert;
 const expect  = chai.expect;
@@ -13,7 +12,6 @@ const should  = chai.should();
 
 const srcJSON = playData;
 const srcTag  = tagData;
-const srcTags = tagsData;
 
 describe('Event Entity', () => {
 
@@ -22,29 +20,13 @@ describe('Event Entity', () => {
 
     beforeEach(angular.mock.module('intelligence-web-client'));
 
-    beforeEach(angular.mock.module($provide => {
-
-        $provide.service('TagsetsFactory', function () {
-
-            this.getTag = (tagId) => {
-
-                let tag = angular.copy(srcTags[tagId]);
-
-                if (!tag) throw new Error(`Tag ${tagId} not found`);
-
-                return tag;
-            }
-        });
-    }));
-
-    beforeEach(inject(TagsetsFactory => {
+    beforeEach(() => {
 
         srcEvent    = angular.copy(srcJSON.events[0]);
         let gameId  = srcJSON.gameId;
-        // let tag     = TagsetsFactory.getTag(srcEvent.tagId);
-        let tag     = new KrossoverTag(angular.copy(srcTag));
+        let tag     = angular.copy(srcTag);
         sampleEvent = new KrossoverEvent(srcEvent, tag, srcEvent.time, gameId);
-    }));
+    });
 
     it('should exist.', () => {
 
@@ -89,11 +71,27 @@ describe('Event Entity', () => {
     it('should have certain properties when instantiated.', () => {
 
         expect(sampleEvent).to.contain.keys([
-            'id',
-            'time',
+            'name',
+            'indexerScript',
+            'userScript',
+            'shortcutKey',
+            'description',
+            'isStart',
+            'isEnd',
+            'tagSetId',
+            'children',
+            'tagVariables',
+            'pointsAssigned',
+            'assignThisTeam',
+            'isPeriodTag',
+            'summaryPriority',
+            'summaryScript',
+            'buffer',
+            'fields',
             'tagId',
-            'playId',
-            'variableValues'
+            'variableValues',
+            'activeEventVariableIndex',
+            'time'
         ]);
         assert.isDefined(sampleEvent.hasVariables, '"hasVariables" has been defined.');
         assert.isDefined(sampleEvent.isValid, '"isValid" has been defined.');
