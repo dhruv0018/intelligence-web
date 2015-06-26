@@ -1,0 +1,12 @@
+{
+    "name": "cuepoints",
+    "scripts": [
+        "index.js"
+    ],
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

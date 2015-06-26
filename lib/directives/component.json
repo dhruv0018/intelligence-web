@@ -76,7 +76,11 @@
         "terms-and-conditions",
         "form-toggle",
         "admin-queue-dashboard",
-        "feature"
+        "custom-tags-dropdown",
+        "custom-tags-multiselect",
+        "custom-tag-pills",
+        "feature",
+        "telestrations"
     ],
     "scripts": [
         "index.js"

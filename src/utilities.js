@@ -85,5 +85,10 @@ IntelligenceWebClient.service('Utilities', [
             let castedInput = +input;
             return (castedInput < 10) ? ('0' + castedInput) : castedInput;
         };
+
+        this.toFixedFloat = function(time, precision = 6) {
+
+            return parseFloat(time.toFixed(precision));
+        };
     }
 ]);

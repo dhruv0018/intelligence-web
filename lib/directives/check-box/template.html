@@ -1,2 +1,3 @@
-<i class="icon icon-check-empty" ng-show="!checked"></i>
-<i class="icon icon-check-square-o" ng-show="checked"></i>
+<i class="check-box icon icon-check-empty" ng-show="!checked && !indeterminate"></i>
+<i class="check-box icon icon-minus-square-o" ng-show="!checked && indeterminate"></i>
+<i class="check-box icon icon-check-square" ng-show="checked"></i>
