@@ -11,7 +11,20 @@ FormationFieldData.Tag = {
 };
 
 FormationFieldData.Event = {
-    formations: [],
+    formations: {
+        1: {
+            id: 1,
+            name: 'Empty',
+            numberPlayers: 6,
+            variableId: 17
+        },
+        2: {
+            id: 2,
+            name: "Ace",
+            numberPlayers: 7,
+            variableId: 17
+        }
+    },
     id: 1,
     index: 1,
     inputType: 'FORMATION',
@@ -21,6 +34,4 @@ FormationFieldData.Event = {
     value: '1'
 };
 
-
 export default FormationFieldData;
-//formations: [{ id: 1, name: 'Empty', numberPlayers: 6, variableId: 17 }],
