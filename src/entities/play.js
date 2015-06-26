@@ -35,7 +35,7 @@ class KrossoverPlay extends Entity {
 
         this.events = this.events.map(event => {
 
-            let tag = tagsets.getTag(event.tagId);
+            let tag = tagsets.getTagJSON(event.tagId);
 
             return new KrossoverEvent(event, tag, event.time, this.gameId);
         });
