@@ -17,11 +17,26 @@ IntelligenceWebClient.service('PlayManager', [
     function service($injector, EVENT, ROLES, session, plays, eventManager, gamesFactory, playlistEventEmitter) {
 
         var playsManager;
+        let current;
 
         this.tagset = null;
         this.gameId = null;
-        this.current = null;
         this.playAllPlays = true;
+
+        Object.defineProperty(this, 'current', {
+
+            get: function() {
+
+                return current;
+            },
+
+            set: function(value) {
+
+                current = value;
+
+                playlistEventEmitter.emit(EVENT.PLAYLIST.PLAY.CURRENT, current);
+            }
+        });
 
         /**
          * Clear the current play.
@@ -162,6 +177,9 @@ IntelligenceWebClient.service('PlayManager', [
             var wasFirstEvent = eventIndex === 0;
             var wasLastEvent = eventIndex === this.current.events.length - 1;
 
+            /* Set the current event to the previous event. */
+            eventManager.current = this.previousEvent(event);
+
             /* Remove current event from the current play. */
             this.current.events.splice(eventIndex, 1);
 
@@ -170,7 +188,6 @@ IntelligenceWebClient.service('PlayManager', [
 
                 var firstEvent = this.current.events[0];
                 var lastEvent = this.current.events[this.current.events.length - 1];
-                var previousEvent = this.current.events[eventIndex - 1];
 
                 /* Lookup tag buffer. */
                 var tagId = event.tagId;
@@ -195,8 +212,6 @@ IntelligenceWebClient.service('PlayManager', [
                 if (buffer < 0) this.current.startTime -= buffer;
                 if (buffer > 0) this.current.endTime -= buffer;
 
-                /* Set the current event to the previous event. */
-                eventManager.current = previousEvent;
 
                 /* If the play has been saved before. */
                 if (this.current.id) {

@@ -24,6 +24,11 @@
         "*": true
     },
 
+    "maintenance": {
+
+        "*": true
+    },
+
     "login": {
 
         "*": true
@@ -508,6 +513,10 @@
 
     "Clips": {
 
+        "*": true
+    },
+
+    "Clips.Restricted": {
         "*": true
     },
 
