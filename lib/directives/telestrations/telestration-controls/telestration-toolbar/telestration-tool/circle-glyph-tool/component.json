@@ -1,0 +1,9 @@
+{
+    "name": "circle-glyph-tool",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

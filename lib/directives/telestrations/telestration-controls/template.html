@@ -1,0 +1,22 @@
+<div class="telestration-controls" ng-class="{'visible-overflow': controls.dropdownToggled}">
+
+    <ul class="primary-controls">
+
+        <telestration-enable-button ng-click="controls.toggleControls($event)">
+        </telestration-enable-button>
+
+        <telestration-toolbar ng-show="controls.telestrationsController.isEnabled" class="slide"></telestration-toolbar>
+
+    </ul>
+
+    <div class="delete-tools">
+
+        <telestration-delete-button data-ng-show="controls.telestrationsController.selectedGlyph">
+        </telestration-delete-button>
+
+        <telestration-clear-all-button data-ng-show="!controls.telestrationsController.selectedGlyph && controls.telestrationsController.areGlyphsPresent()">
+        </telestration-clear-all-button>
+
+    </div>
+
+</div>
