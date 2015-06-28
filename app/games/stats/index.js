@@ -79,23 +79,7 @@ GamesStats.config([
 GamesStats.controller('GamesStats.controller', [
     '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'SPORTS',
     function controller($scope, $state, $stateParams, data, SPORTS) {
-        //TODO consolidated all of the data into this one variable, to get rid of
-        var stats = data.stats;
 
-        $scope.gameLogTable = stats.gameLog;
-        $scope.homeTeamStats = stats.homeTeamStats;
-        $scope.awayTeamStats = stats.awayTeamStats;
-
-        $scope.homeTeamName = stats.homeTeamStats.meta.teamName;
-        $scope.awayTeamName = stats.awayTeamStats.meta.teamName;
-
-        $scope.scoreSummary = stats.scoreSummary;
-        $scope.showScoreSummary = false;
-
-        if (stats.scoreSummary !== null) {
-            $scope.showScoreSummary = true;
-        }
-
-        $scope.statsSelector = stats.gameLog ? 'ga-log' : '';
+        $scope.stats = data.stats;
     }
 ]);
