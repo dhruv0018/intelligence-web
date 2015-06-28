@@ -78,7 +78,8 @@
         "admin-queue-dashboard",
         "custom-tags-dropdown",
         "custom-tags-multiselect",
-        "custom-tag-pills"
+        "custom-tag-pills",
+        "telestrations"
     ],
     "scripts": [
         "index.js"
