@@ -17,8 +17,6 @@ class FormationField extends Field {
         let keyedFormations = {};
         this.formations.forEach(formation => keyedFormations[formation.id] = formation);
 
-        console.log(keyedFormations);
-
         this.availableValues = [];
         this.availableValues = this.formations.map(formation => {
             let currentFormation = angular.copy(formation);
