@@ -27,77 +27,19 @@ class Event extends Tag {
 
         this.fields = {};
 
-        /* FIXME: Remove when API is updated. */
-        if (this.tagVariables) {
-
-            Object.keys(this.tagVariables).forEach(key => {
-
-                let tagVariable = Object.assign({}, this.tagVariables[key]);
-
-                tagVariable.inputType = this.tagVariables[key].type;
-                delete tagVariable.type;
-
-                this.variableValues[tagVariable.id] = this.variableValues[tagVariable.id] || {};
-                Object.assign(this.variableValues[tagVariable.id], tagVariable);
-                this.variableValues[tagVariable.id].type = this.variableValues[tagVariable.id].type || null;
-
-                if (!this.variableValues[tagVariable.id].isRequired && this.variableValues[tagVariable.id].value === undefined) {
-
-                    this.variableValues[tagVariable.id].value = null;
-                }
-
-                let field = this.createField(this.variableValues[tagVariable.id]);
-                this.fields[tagVariable.index] = field;
-            });
-        }
-
         /* Add game ID to all variable values */
-        Object.keys(this.variableValues).forEach(key => {
-
-            this.variableValues[key].gameId = gameId;
+        Object.keys(this.variableValues).forEach( (tagVariableId, index) => {
+            index = index + 1;
+            let variableValue = this.variableValues[tagVariableId];
+            let tagVariable = this.tagVariables[index];
+            variableValue.gameId = gameId;
+            variableValue.inputType = tagVariable.type;
+            variableValue.options = tagVariable.options;
+            variableValue.formations = tagVariable.formations;
         });
 
-    }
-    FieldFactory (variableValue) {
-        let field = {};
-        //console.log(variableValue.inputType);
-        switch(variableValue.inputType) {
-            case 'PLAYER_DROPDOWN':
-                field = new PlayerField(variableValue);
-                break;
-            case 'TEAM_DROPDOWN':
-                field = new TeamField(variableValue);
-                break;
-            case 'PLAYER_TEAM_DROPDOWN':
-                field = new TeamPlayerField(variableValue);
-                break;
-            case 'GAP':
-                field = new GapField(variableValue);
-                break;
-            case 'PASSING_ZONE':
-                field = new PassingZoneField(variableValue);
-                break;
-            case 'FORMATION':
-                field = new FormationField(variableValue);
-                break;
-            case 'DROPDOWN':
-                field = new DropdownField(variableValue);
-                break;
-            case 'TEXT':
-                field = new TextField(variableValue);
-                break;
-            case 'YARD':
-                field = new YardField(variableValue);
-                break;
-            case 'ARENA':
-                field = new ArenaField(variableValue);
-                break;
-            default:
-                field = variableValue;
-                break;
-        }
-        console.log(field);
-        return field;
+        this.indexFields(this.variableValues, 'variableValues');
+
     }
     /**
      * Getter for event.shortcutKey
