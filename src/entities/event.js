@@ -36,6 +36,10 @@ class Event extends Tag {
             variableValue.inputType = tagVariable.type;
             variableValue.options = tagVariable.options;
             variableValue.formations = tagVariable.formations;
+            variableValue.id = tagVariable.id;
+            variableValue.order = index;
+            variableValue.isRequired = tagVariable.isRequired;
+            delete variableValue.type;
         });
 
         this.indexFields(this.variableValues, 'variableValues');
