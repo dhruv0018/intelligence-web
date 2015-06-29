@@ -77,7 +77,7 @@ class KrossoverTag extends Entity {
                     index = index + 1;
                     let field = this.createField(variableValue);
                     indexedFields[index] = field;
-                    indexedVariables[index] = variableValue;
+                    indexedVariables[variableValue.id] = variableValue;
                 });
                 break;
         }
