@@ -14,8 +14,14 @@ class FormationField extends Field {
             numberOfPlayers: 0,
             name: !field.isRequired ? 'Optional' : 'Select'
         };
-        this.availableValues = Object.keys(this.formations).map(key => {
-            let currentFormation = angular.copy(this.formations[key]);
+        let keyedFormations = {};
+        this.formations.forEach(formation => keyedFormations[formation.id] = formation);
+
+        console.log(keyedFormations);
+
+        this.availableValues = [];
+        this.availableValues = this.formations.map(formation => {
+            let currentFormation = angular.copy(formation);
             return {
                 formationId: currentFormation.id,
                 numberOfPlayers: currentFormation.numberPlayers,
@@ -23,10 +29,11 @@ class FormationField extends Field {
             };
         });
         this.availableValues.unshift(initialFormation);
+
         let formation = angular.copy(this.availableValues[0]);
 
         if (field.value) {
-            let currentFormation = angular.copy(this.formations[field.value]);
+            let currentFormation = angular.copy(keyedFormations[field.value]);
             let value = {
                 formationId: currentFormation.id,
                 numberOfPlayers: currentFormation.numberPlayers,
