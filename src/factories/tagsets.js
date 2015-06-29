@@ -91,7 +91,7 @@ function TagsetsFactory (
 
             return Object.keys(tags)
 
-            .map(key => tags[key])
+            .map(key => new KrossoverTag(tags[key]))
             .filter(tag => this.isStartTag(tag.id));
         },
 
@@ -101,18 +101,18 @@ function TagsetsFactory (
 
             return Object.keys(tags)
 
-            .map(key => tags[key])
+            .map(key => new KrossoverTag(tags[key]))
             .filter(tag => this.isFloatTag(tag.id));
         },
 
         getNextTags: function (tagId) {
 
             let tags = this.tags;
-            let tag = tags[tagId];
+            let tag = new KrossoverTag(tags[tagId]);
 
             if (tag.children && tag.children.length) {
 
-                return tag.children.map(childId => tags[childId])
+                return tag.children.map(childId => new KrossoverTag(tags[childId]))
                 .concat(this.getFloatTags());
             } else {
 
@@ -123,7 +123,7 @@ function TagsetsFactory (
         isStartTag: function (tagId) {
 
             let tags = this.tags;
-            let tag = tags[tagId];
+            let tag = new KrossoverTag(tags[tagId]);
 
             return tag.isStart;
         },
@@ -131,7 +131,7 @@ function TagsetsFactory (
         isFloatTag: function (tagId) {
 
             let tags = this.tags;
-            let tag = tags[tagId];
+            let tag = new KrossoverTag(tags[tagId]);
 
             return tag.isStart === false && tag.isEnd === false && tag.children && tag.children.length === 0;
         },
@@ -139,7 +139,7 @@ function TagsetsFactory (
         isEndTag: function (tagId) {
 
             let tags = this.tags;
-            let tag = tags[tagId];
+            let tag = new KrossoverTag(tags[tagId]);
 
             return tag.isEnd;
         }

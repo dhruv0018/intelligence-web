@@ -64,7 +64,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 var time = videoPlayer.currentTime;
 
                 /* Get tag. */
-                let tag = tagsets.getTag(tagId);
+                let tag = tagsets.getTagJSON(tagId);
 
                 /* get browser safe time */
                 time = utils.toFixedFloat(time);
