@@ -59,6 +59,7 @@ GamesArenaChartController.$inject = [
     'TeamsFactory',
     'LeaguesFactory',
     '$stateParams',
+    '$filter',
     '$scope'
 ];
 
@@ -68,6 +69,7 @@ function GamesArenaChartController(
     teams,
     leagues,
     $stateParams,
+    $filter,
     $scope
 ) {
 
@@ -75,9 +77,8 @@ function GamesArenaChartController(
     let team = teams.get(game.teamId);
     let opposingTeam = teams.get(game.opposingTeamId);
     let league = leagues.get(team.leagueId);
-
     /* TODO: use arenaChart.get($stateParams.id) to get the arena Events*/
-    $scope.arenaEvents = [
+    let arenaEvents = [
         {
             x: 0.6,
             y: 0.2,
@@ -125,7 +126,8 @@ function GamesArenaChartController(
 
     $scope.team = team;
     $scope.opposingTeam = opposingTeam;
-    $scope.filteredArenaEventCount = $scope.arenaEvents.length;
+    $scope.arenaEvents = arenaEvents;
+    $scope.filteredArenaEvents = [];
 
     /* Filters */
 
@@ -152,66 +154,19 @@ function GamesArenaChartController(
         $scope.filters = angular.copy(filtersDefault);
     };
 
-    $scope.arenaEventFilter = function() {
+    let removeFiltersWatch = $scope.$watch('filters', filtersWatch, true);
+    $scope.$on('$destroy', onDestroy);
 
-        $scope.filteredArenaEventCount = 0;
+    /* Filter arenaEvents in this watch to have access to the filtered results in this scope */
+    function filtersWatch(newFilters) {
 
-        return function filterArenaEventFilter(arenaEvent) {
+        $scope.filteredArenaEvents = $filter('arenaEvents')($scope.arenaEvents, newFilters);
+    }
 
-            if (!angular.isUndefined(arenaEvent)) {
+    function onDestroy() {
 
-                /* shots */
-
-                let inShotsFilter;
-
-                if ($scope.filters.shots.made) {
-
-                    if (arenaEvent.isMade) inShotsFilter = true;
-                }
-
-                if ($scope.filters.shots.missed) {
-
-                    if (!arenaEvent.isMade) inShotsFilter = true;
-                }
-
-
-                /* periods */
-
-                let inPeriodFilter;
-
-                if ($scope.filters.period.one) {
-
-                    if (arenaEvent.period === '1') inPeriodFilter = true;
-                }
-
-                if ($scope.filters.period.two) {
-
-                    if (arenaEvent.period === '2') inPeriodFilter = true;
-                }
-
-                if ($scope.filters.period.three) {
-
-                    if (arenaEvent.period === '3') inPeriodFilter = true;
-                }
-
-                if ($scope.filters.period.four) {
-
-                    if (arenaEvent.period === '4') inPeriodFilter = true;
-                }
-
-                if ($scope.filters.period.overtime) {
-
-                    if (arenaEvent.period === 'OT') inPeriodFilter = true;
-                }
-
-                if (inShotsFilter && inPeriodFilter) {
-
-                    $scope.filteredArenaEventCount++;
-                    return true;
-                }
-            }
-        };
-    };
+        removeFiltersWatch();
+    }
 }
 
 GamesArenaChart.controller('GamesArenaChart.controller', GamesArenaChartController);
