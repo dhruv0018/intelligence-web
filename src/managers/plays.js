@@ -171,12 +171,12 @@ IntelligenceWebClient.service('PlaysManager', [
              * tag variable ID. */
             let fields = event.fields;
             if (!fields) return;
-            let fieldValues = event.variableValues;
+            let fieldValues = event.fields;
+
             let firstField = fields[1];
             if (!firstField) return;
-            let firstFieldId = firstField.id;
+            let firstFieldId = firstField.order;
             let field = fieldValues[firstFieldId];
-
             /* If the field value is defined. */
             if (angular.isDefined(field.value)) {
 
