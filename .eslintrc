@@ -34,6 +34,7 @@
         "curly": false,
         "eqeqeq": false,
         "comma-dangle": false,
+        "no-underscore-dangle": false,
         "no-undef": false,
         "no-unused-vars": false,
         "dot-notation": false,

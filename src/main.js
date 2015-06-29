@@ -18,6 +18,7 @@ require('../build/build');
 
 import Reel from '../app/reel/index.js';
 import Indexer from '../app/indexer/index.js';
+import DynamicTables from '../lib/directives/dynamic-tables/index';
 
 /* App dependencies */
 require('./config');
@@ -35,6 +36,7 @@ require('./errors');
 require('./viewports');
 require('./device');
 require('./mediator');
+require('./feature-flag');
 
 require('./http/interceptors/503');
 require('./http/interceptors/error');
@@ -43,6 +45,7 @@ require('./http/interceptors/broadcast');
 require('./http/transforms/date');
 
 require('./http/interceptors/queue');
+require('./services');
 require('./services/authentication');
 require('./services/authorization');
 require('./services/tokens');
@@ -54,6 +57,8 @@ require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
 require('./services/analytics');
+import './services/performance-timer/angular-index';
+import './services/performance-timer/index';
 
 require('./constants/users');
 require('./constants/games');
@@ -73,11 +78,13 @@ require('./constants/breakpoints');
 require('./constants/arenas');
 require('./constants/device');
 require('./constants/states');
-require('./constants/schemas');
 require('./constants/video-player');
 require('./constants/views');
 require('./constants/playlist');
 require('./constants/keyboard');
+require('./constants/telestrations');
+require('./constants/feature-flags');
+require('./constants/cue-points');
 
 require('./models/users');
 require('./models/sports');
@@ -110,6 +117,7 @@ require('./storage/positionsets');
 require('./storage/plans');
 require('./storage/customtags');
 
+require('./factories');
 require('./factories/base');
 require('./factories/users');
 require('./factories/teams');
@@ -128,6 +136,10 @@ require('./factories/customtags');
 
 require('./emitters/playlist');
 require('./emitters/video-player');
+require('./emitters/telestrations');
+require('./emitters/cue-point-event-emitter');
+
+require('./brokers/telestrationsVideoPlayerBroker');
 
 require('./managers/tags');
 require('./managers/play');

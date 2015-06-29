@@ -10,7 +10,8 @@
         "button-video-slow-forward",
         "button-video-slow-backward",
         "button-video-step-forward",
-        "button-video-step-backward"
+        "button-video-step-backward",
+        "cuepoints"
     ],
     "templates": [
         "template.html",
