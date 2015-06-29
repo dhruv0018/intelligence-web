@@ -4,12 +4,24 @@
         "Head Coach": true,
         "Assistant Coach": true
     },
+
     "ArenaChart": {
 
         "Head Coach": true,
         "Assitant Coach": true,
         "Athlete": true
     },
+
+    "PlayerAnalytics": {
+
+        "*": true
+    },
+
+    "TeamAnalytics": {
+
+        "*": true
+    },
+
     "SelectPlays": {
         "Head Coach": true,
         "Assistant Coach": true,
