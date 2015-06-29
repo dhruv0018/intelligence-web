@@ -1,74 +1,12 @@
 <div class="statsPage">
 
-    <div class="stats-btn-group">
+	<dynamic-tables tables="stats"></dynamic-tables>
 
-        <button
-         id="stats-page-game-log-cta"
-         data-ng-show="gameLogTable"
-         class="stats-btn"
-         data-ng-click="statsSelector = 'ga-log'"
-         data-ng-class="{'active-stats-btn':(statsSelector === 'ga-log')}">
-
-             <i class="icon icon-file-text"></i> Game Log
-
-        </button>
-
-        <button
-         id="stats-page-team-cta"
-         data-ng-show="homeTeamStats"
-         class="stats-btn"
-         data-ng-click="statsSelector = 'ga-homestats'"
-         data-ng-class="{'active-stats-btn':(statsSelector === 'ga-homestats')}">
-
-            <i class="icon icon-bar-chart"></i> {{ homeTeamName || 'Home'}} Stats
-
-        </button>
-
-        <button
-         id="stats-page-opposing-cta"
-         data-ng-show="awayTeamStats"
-         class="stats-btn"
-         data-ng-click="statsSelector = 'ga-awaystats'"
-         data-ng-class="{'active-stats-btn':(statsSelector === 'ga-awaystats')}">
-
-            <i class="icon icon-bar-chart"></i> {{ awayTeamName || 'Away' }} Stats
-
-        </button>
-
-        <button
-         id="stats-page-score-summary-cta"
-         data-ng-show="showScoreSummary"
-         class="stats-btn"
-         data-ng-click="statsSelector = 'ga-scoresummary'"
-         data-ng-class="{'active-stats-btn':(statsSelector === 'ga-scoresummary')}">Score Summary</button>
-
-    </div>
-
-    <dynamic-table
-     data-source="gameLogTable"
-     data-ng-show="statsSelector === 'ga-log'">
-    </dynamic-table>
-
-    <dynamic-table
-     data-source="homeTeamStats"
-     data-ng-show="statsSelector === 'ga-homestats'">
-    </dynamic-table>
-
-    <dynamic-table
-     data-source="awayTeamStats"
-     data-ng-show="statsSelector === 'ga-awaystats'">
-    </dynamic-table>
-
-    <dynamic-table
-     data-source="scoreSummary"
-     data-ng-show="statsSelector === 'ga-scoresummary'">
-    </dynamic-table>
-
-    <!--
-    <div class="bottom-links">
-        <a href><i class="icon-book"></i> Glossary</a>
-        <a href= class="middlelink"><i class="icon-download"></i> Download as Excel</a>
-        <a href><i class="icon-download"></i> Download for Max Preps</a>
-    </div> -->
+	<!--
+	<div class="bottom-links">
+		<a href><i class="icon-book"></i> Glossary</a>
+		<a href= class="middlelink"><i class="icon-download"></i> Download as Excel</a>
+		<a href><i class="icon-download"></i> Download for Max Preps</a>
+	</div> -->
 
 </div>
