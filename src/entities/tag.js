@@ -23,17 +23,7 @@ class KrossoverTag extends Entity {
         super(tag);
 
         this.fields = {};
-
-        if (Array.isArray(this.tagVariables)) {
-
-            this.tagVariables.forEach(variable => {
-
-                let field = this.createField(variable);
-                this.fields[field.id] = field;
-            });
-            this.indexTagVariables();
-        }
-
+        this.indexFields(this.tagVariables, 'tagVariables');
         this.mapScriptTypes();
     }
 
@@ -67,28 +57,33 @@ class KrossoverTag extends Entity {
      *
      * @return: {undefined}
      */
-    indexTagVariables () {
+    indexFields (variables = [], propertyName = 'tagVariables') {
+        //actual fields
+        let indexedFields = {};
 
+        //todo refactor because map script types needs this for now
         let indexedVariables = {};
-
-        this.tagVariables.forEach((variable, index) => {
-
-            indexedVariables[++index] = variable;
-
-            if (variable.formations) {
-
-                let indexedFormations = {};
-
-                variable.formations.forEach(formation => {
-
-                    indexedFormations[formation.id] = formation;
+        switch(propertyName) {
+            case 'tagVariables':
+                variables.forEach((variable, index) => {
+                    index = index + 1;
+                    indexedFields[index] = this.createField(variable);
+                    indexedVariables[index] = variable;
                 });
+                break;
+            case 'variableValues':
+                Object.keys(variables).forEach( (tagVariableId, index) => {
+                    let variableValue = variables[tagVariableId];
+                    index = index + 1;
+                    let field = this.createField(variableValue);
+                    indexedFields[index] = field;
+                    indexedVariables[index] = variableValue;
+                });
+                break;
+        }
 
-                variable.formations = indexedFormations;
-            }
-        });
-
-        this.tagVariables = indexedVariables;
+        this.fields = indexedFields;
+        this[propertyName] = indexedVariables;
     }
 
     /**
@@ -152,7 +147,6 @@ class KrossoverTag extends Entity {
     createField (rawField) {
 
         let field;
-
         switch (rawField.inputType) {
 
         case 'PLAYER_DROPDOWN':
@@ -188,7 +182,6 @@ class KrossoverTag extends Entity {
         default:
             field = rawField;
         }
-
         return field;
     }
 
