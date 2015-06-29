@@ -37,8 +37,6 @@ function TagsetsFactory (
 
             tagset.tags.forEach(tag => {
 
-                tag = new KrossoverTag(tag);
-
                 tags[tag.id] = tag;
                 indexedTags[tag.id] = tag;
             });
@@ -67,6 +65,13 @@ function TagsetsFactory (
         },
 
         getTag: function (tagId) {
+
+            let tag = this.getTagJSON(tagId);
+
+            return new KrossoverTag(tag);
+        },
+
+        getTagJSON: function (tagId) {
 
             let tag = indexedTags[tagId];
 

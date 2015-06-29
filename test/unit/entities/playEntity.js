@@ -1,13 +1,19 @@
 import KrossoverPlay from '../../../src/entities/play';
+import KrossoverTag from '../../../src/entities/tag';
 import playData from './sample-data/play';
-import tagsData from './sample-data/tags';
+import tagData22 from './sample-data/tag-22';
+import tagData59 from './sample-data/tag-59';
 
 const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
 
 const srcJSON = playData;
-const srcTags = tagsData;
+const srcTags = {
+
+    '22': tagData22,
+    '59': tagData59
+};
 
 describe('Play Entity', () => {
 
@@ -22,12 +28,19 @@ describe('Play Entity', () => {
 
             this.getTag = (tagId) => {
 
-                let tag = srcTags[tagId];
+                let tag = this.getTagJSON(tagId);
 
-                if (!tag) throw new Error('Tag ' + tagId + ' not found');
+                return new KrossoverTag(tag);
+            };
+
+            this.getTagJSON = (tagId) => {
+
+                let tag = angular.copy(srcTags[tagId]);
+
+                if (!tag) throw new Error(`Tag ${tagId} not found`);
 
                 return tag;
-            }
+            };
         });
     }));
 

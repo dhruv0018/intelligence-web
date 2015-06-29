@@ -10,10 +10,12 @@ const EVENT = {
     PLAYLIST: {
         PLAY: {
             WATCH: 'PLAYLIST_PLAY_WATCH',
-            SELECT: 'PLAYLIST_PLAY_SELECT'
+            SELECT: 'PLAYLIST_PLAY_SELECT',
+            CURRENT: 'PLAYLIST_PLAY_CURRENT'
         },
         EVENT: {
-            SELECT: 'PLAYLIST_EVENT_SELECT'
+            SELECT: 'PLAYLIST_EVENT_SELECT',
+            CURRENT_CHANGE: 'PLAYLIST_EVENT_CURRENT_CHANGE'
         }
     }
 };

@@ -1,4 +1,14 @@
 import Entity from './entity';
+import TeamPlayerField from '../values/field/TeamPlayer';
+import GapField from '../values/field/Gap';
+import PassingZoneField from '../values/field/PassingZone';
+import FormationField from '../values/field/Formation';
+import DropdownField from '../values/field/Dropdown';
+import TextField from '../values/field/Text';
+import YardField from '../values/field/Yard';
+import ArenaField from '../values/field/Arena';
+import PlayerField from '../values/field/Player';
+import TeamField from '../values/field/Team';
 
 class KrossoverTag extends Entity {
 
@@ -10,15 +20,17 @@ class KrossoverTag extends Entity {
      */
     constructor (tag) {
 
-        if (!arguments.length) {
-
-            throw new Error('Invoking KrossoverTag.constructor without passing a JSON object');
-        }
-
         super(tag);
+
+        this.fields = {};
 
         if (Array.isArray(this.tagVariables)) {
 
+            this.tagVariables.forEach(variable => {
+
+                let field = this.createField(variable);
+                this.fields[field.id] = field;
+            });
             this.indexTagVariables();
         }
 
@@ -27,7 +39,7 @@ class KrossoverTag extends Entity {
 
     /**
      * Getter for tag.shortcutKey
-     * @method KrossoverTag.shortcutKey
+     * @method KrossoverTag.keyboardShortcut
      * @readonly
      * @returns {String} shortcutKey
      */
@@ -37,14 +49,15 @@ class KrossoverTag extends Entity {
     }
 
     /**
-     * Getter for tag.fields
-     * @method KrossoverTag.fields
+     * Setter for tag.shortcutKey
+     * @method KrossoverTag.keyboardShortcut
      * @readonly
-     * @returns {Array} fields
+     * @param {Object}
+     * @returns {undefined}
      */
-    get fields () {
+    set keyboardShortcut (value) {
 
-        return this.tagVariables;
+        return;
     }
 
     /**
@@ -132,6 +145,54 @@ class KrossoverTag extends Entity {
     }
 
     /**
+     * Method: createField
+     * Instantiates and returns a Field based on input type.
+     * @returns {Field} - Depending on input type.
+     */
+    createField (rawField) {
+
+        let field;
+
+        switch (rawField.inputType) {
+
+        case 'PLAYER_DROPDOWN':
+            field = new PlayerField(rawField);
+            break;
+        case 'TEAM_DROPDOWN':
+            field = new TeamField(rawField);
+            break;
+        case 'PLAYER_TEAM_DROPDOWN':
+            field = new TeamPlayerField(rawField);
+            break;
+        case 'GAP':
+            field = new GapField(rawField);
+            break;
+        case 'PASSING_ZONE':
+            field = new PassingZoneField(rawField);
+            break;
+        case 'FORMATION':
+            field = new FormationField(rawField);
+            break;
+        case 'DROPDOWN':
+            field = new DropdownField(rawField);
+            break;
+        case 'TEXT':
+            field = new TextField(rawField);
+            break;
+        case 'YARD':
+            field = new YardField(rawField);
+            break;
+        case 'ARENA':
+            field = new ArenaField(rawField);
+            break;
+        default:
+            field = rawField;
+        }
+
+        return field;
+    }
+
+    /**
      * Method: toJSON
      * Transforms the data back into the format excpected by the server:
      * convert tag variables back to array; change scripts back to string.
@@ -190,6 +251,8 @@ class KrossoverTag extends Entity {
 
             copy.tagVariables = tagVariables;
         }
+
+        delete copy.fields;
 
         return copy;
     }

@@ -1,13 +1,17 @@
 import KrossoverEvent from '../../../src/entities/event';
+import KrossoverTag from '../../../src/entities/tag';
 import playData from './sample-data/play';
-import tagsData from './sample-data/tags';
+import tagData from './sample-data/tag-22';
+
+const util    = require('util');
+const krog    = (obj, msg) => console.log(msg, util.inspect(obj));
 
 const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
 
 const srcJSON = playData;
-const srcTags = tagsData;
+const srcTag  = tagData;
 
 describe('Event Entity', () => {
 
@@ -16,31 +20,23 @@ describe('Event Entity', () => {
 
     beforeEach(angular.mock.module('intelligence-web-client'));
 
-    beforeEach(angular.mock.module($provide => {
+    beforeEach(() => {
 
-        $provide.service('TagsetsFactory', function () {
-
-            this.getTag = (tagId) => {
-
-                let tag = srcTags[tagId];
-
-                if (!tag) throw new Error(`Tag ${tagId} not found`);
-
-                return tag;
-            }
-        });
-    }));
-
-    beforeEach(inject(TagsetsFactory => {
-
-        srcEvent    = srcJSON.events[0];
-        let tag     = TagsetsFactory.getTag(srcEvent.tagId);
-        sampleEvent = new KrossoverEvent(srcEvent, tag, srcEvent.time);
-    }));
+        srcEvent    = angular.copy(srcJSON.events[0]);
+        let gameId  = srcJSON.gameId;
+        let tag     = angular.copy(srcTag);
+        sampleEvent = new KrossoverEvent(srcEvent, tag, srcEvent.time, gameId);
+    });
 
     it('should exist.', () => {
 
         expect(KrossoverEvent).to.exist;
+    });
+
+    it('should have a "keyboardShortcut" getter that works.', () => {
+
+        expect(sampleEvent.keyboardShortcut).to.be.a('string');
+        expect(sampleEvent.keyboardShortcut).to.equal('K');
     });
 
     it('should have a "hasVariables" getter that works.', () => {
@@ -75,16 +71,40 @@ describe('Event Entity', () => {
     it('should have certain properties when instantiated.', () => {
 
         expect(sampleEvent).to.contain.keys([
-            'id',
-            'time',
+            'name',
+            'indexerScript',
+            'userScript',
+            'shortcutKey',
+            'description',
+            'isStart',
+            'isEnd',
+            'tagSetId',
+            'children',
+            'tagVariables',
+            'pointsAssigned',
+            'assignThisTeam',
+            'isPeriodTag',
+            'summaryPriority',
+            'summaryScript',
+            'buffer',
+            'fields',
             'tagId',
-            'playId',
-            'variableValues'
+            'variableValues',
+            'activeEventVariableIndex',
+            'time'
         ]);
         assert.isDefined(sampleEvent.hasVariables, '"hasVariables" has been defined.');
         assert.isDefined(sampleEvent.isValid, '"isValid" has been defined.');
         assert.isDefined(sampleEvent.isFloat, '"isFloat" has been defined.');
         assert.isDefined(sampleEvent.isEndAndStart, '"isEndAndStart" has been defined.');
+    });
+
+    it('should have the proper game ID on each variable value', () => {
+
+        Object.keys(sampleEvent.variableValues).forEach(key => {
+
+            expect(sampleEvent.variableValues[key].gameId).to.equal(srcJSON.gameId);
+        });
     });
 
     it('should have called toJSON on a JSON.stringify call.', () => {

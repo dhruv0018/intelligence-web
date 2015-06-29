@@ -16,25 +16,29 @@ class KrossoverPlay extends Entity {
 
         super(play);
 
+        /* If play has no events, set it to an empty array */
         this.events               = play.events || [];
+
         this.period               = play.period || 0;
+
         this.indexedScore         = play.indexedScore || 0;
         this.opposingIndexedScore = play.opposingIndexedScore || 0;
 
+        /* If play has no custom tags, set it to an empty array */
+        this.customTagIds         = play.customTagIds || [];
+
         /* Indicates if the play has visible events; set by the events. */
-        this.hasVisibleEvents = false;
+        this.hasVisibleEvents     = false;
 
         /* Play possesion; filled in by the events. */
-        this.possessionTeamId = play.possessionTeamId || null;
+        this.possessionTeamId     = play.possessionTeamId || null;
 
-        this.events = this.events.map(constructEvent);
+        this.events = this.events.map(event => {
 
-        function constructEvent (event) {
+            let tag = tagsets.getTagJSON(event.tagId);
 
-            let tag = tagsets.getTag(event.tagId);
-
-            return new KrossoverEvent(event, tag, event.time);
-        }
+            return new KrossoverEvent(event, tag, event.time, this.gameId);
+        });
     }
 
     toJSON () {

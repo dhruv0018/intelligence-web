@@ -74,7 +74,11 @@
         "spinner",
         "check-box",
         "admin-queue-dashboard",
-        "feature"
+        "custom-tags-dropdown",
+        "custom-tags-multiselect",
+        "custom-tag-pills",
+        "feature",
+        "telestrations"
     ],
     "scripts": [
         "index.js"

@@ -1,5 +1,5 @@
 import KrossoverTag from '../../../src/entities/tag';
-import tagData from './sample-data/tag';
+import tagData from './sample-data/tag-22';
 import tagTransformedData from './sample-data/tag-transformed';
 
 const assert = chai.assert;
@@ -41,6 +41,7 @@ describe('Tag Entity', () => {
             'userScript',
             'shortcutKey',
             'description',
+            'fields',
             'isStart',
             'isEnd',
             'tagSetId',
@@ -59,14 +60,7 @@ describe('Tag Entity', () => {
 
         assert.isDefined(tag.keyboardShortcut, '"keyboardShortcut" has been defined.');
         expect(tag.keyboardShortcut).to.be.a('string');
-        expect(tag.keyboardShortcut).to.equal('QG');
-    });
-
-    it('should have a "fields" getter that works.', () => {
-
-        assert.isDefined(tag.fields, '"fields" has been defined.');
-        expect(tag.fields).to.be.an('object');
-        expect(tag.fields).to.deep.equal(tagTransformedData.tagVariables);
+        expect(tag.keyboardShortcut).to.equal('K');
     });
 
     it('should have called toJSON on a JSON.stringify call', () => {

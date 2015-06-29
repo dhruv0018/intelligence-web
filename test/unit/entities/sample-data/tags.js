@@ -19,7 +19,7 @@ const tags = {
                 "name": "Kickoff",
                 "type": "DROPDOWN",
                 "isRequired": true,
-                "options": ["Normal", "Onside"],
+                "options": "[\"Normal\", \"Onside\"]",
                 "formations": {},
                 "index": 2
             }
@@ -31,7 +31,7 @@ const tags = {
                 "name": "Kickoff",
                 "type": "DROPDOWN",
                 "isRequired": true,
-                "options": ["Normal", "Onside"],
+                "options": "[\"Normal\", \"Onside\"]",
                 "formations": {},
                 "index": 2
             },
@@ -74,7 +74,7 @@ const tags = {
                 "name": "Kickoff",
                 "type": "DROPDOWN",
                 "isRequired": true,
-                "options": ["Normal", "Onside"],
+                "options": "[\"Normal\", \"Onside\"]",
                 "formations": {},
                 "index": 2
             }

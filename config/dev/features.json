@@ -3,6 +3,12 @@
 
         "Head Coach": true,
         "Assistant Coach": true
+    },
+
+    "SelectPlays": {
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
     }
 }
 
