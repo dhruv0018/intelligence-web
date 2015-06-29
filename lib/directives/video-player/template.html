@@ -10,7 +10,7 @@
      vg-plays-inline="videoPlayer.config.playsInline"
     >
 
-        <ng-transclude ng-if="videoPlayer.fullScreenEnabled"></ng-transclude>
+        <ng-transclude ng-if="$parent.fullScreenEnabled"></ng-transclude>
 
         <telestrations telestrations-entity="videoPlayer.telestrations" play-id="videoPlayer.playId" permissions="videoPlayer.telestrationsPermissions" class="vg-media-container" feature-flag="{{$root.FLAGS.FEATURE_TELESTRATIONS.TELESTRATIONS}}">
 
