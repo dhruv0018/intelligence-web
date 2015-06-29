@@ -1,0 +1,23 @@
+<div class="telestrations">
+
+    <!-- HAS TELESTRATION ACCESS -->
+
+    <div class="telestration-container">
+
+        <telestration-controls ng-hide="NO_ACCESS" ng-if="EDIT" ng-class="{hidden: telestrations.hide}"></telestration-controls>
+
+        <svg-context-area id="svg-context-area">
+
+            <glyph-editor ng-hide="NO_ACCESS" ng-class="{hidden: telestrations.hide}">
+
+                <glyph data-ng-repeat="glyph in telestrations.currentTelestration.glyphs" data-glyph-object="glyph"></glyph>
+
+            </glyph-editor>
+
+            <ng-transclude class="transcluded-content"></ng-transclude>
+
+        </svg-context-area>
+
+    </div>
+
+</div>

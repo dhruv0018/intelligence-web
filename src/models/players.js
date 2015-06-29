@@ -20,9 +20,30 @@ IntelligenceWebClient.factory('PlayersResource', [
         };
 
         var actions = {
-            create: {method: 'POST', url: config.api.uri + base},
-            update: { method: 'PUT' },
-            resendEmail: { method: 'POST', url: config.api.uri + base + '/reminder-email'}
+
+            create: {
+
+                method: 'POST',
+                url: config.api.uri + base
+            },
+
+            update: {
+
+                method: 'PUT'
+            },
+
+            resendEmail: {
+
+                method: 'POST',
+                url: config.api.uri + base + '/reminder-email'
+            },
+
+            generateStats: {
+
+                method: 'GET',
+                url: url + '/analytics',
+                isArray: true
+            }
         };
 
         return $resource(url, paramDefaults, actions);

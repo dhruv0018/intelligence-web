@@ -4,7 +4,7 @@
         <h3 class="modal-title">
             Upload Roster via Excel
 
-            <a class="pull-right" data-ng-click="$close()">
+            <a class="pull-right" id="close-excel-upload-modal-cta" data-ng-click="$close()">
                 <i class="icon icon-remove"></i>
             </a>
         </h3>
@@ -15,7 +15,7 @@
 
         <ul data-ng-hide="errors.length > 0">
             <li>
-                <strong> Step 1:</strong> Download our <a target="_blank" href="{{rosterTemplateUrl}}">excel roster file</a>
+                <strong> Step 1:</strong> Download our <a id="open-template-roster-cta" target="_blank" href="{{rosterTemplateUrl}}">excel roster file</a>
             </li>
             <li>
                 <strong>Step 2:</strong> Enter your roster into the excel file.
@@ -49,13 +49,13 @@
                 Once the roster is in the excel file, select it <br/>
 
                 <div data-ng-show="files" class="files-list shaded">
-                    {{files[0].name}} <data-krossover-uploader data-ng-show="files" data-upload-label="Pick Again" data-on-upload="uploadFile(files)"></data-krossover-uploader>
+                    {{files[0].name}} <data-krossover-uploader data-id="pick-file-again-cta" data-ng-show="files" data-upload-label="Pick Again" data-on-upload="uploadFile(files)"></data-krossover-uploader>
                 </div>
 
-                <data-krossover-uploader data-ng-show="!files" data-upload-label="Upload Roster" data-on-upload="uploadFile(files)"></data-krossover-uploader>
+                <data-krossover-uploader data-id="choose-roster-cta" data-ng-show="!files" data-upload-label="Upload Roster" data-on-upload="uploadFile(files)"></data-krossover-uploader>
             </li>
             <li>
-                <button class="btn btn-primary" data-ng-click="uploadRoster()">Start Roster Upload</button>
+                <button class="btn btn-primary" id="start-roster-upload-cta" data-ng-click="uploadRoster()">Start Roster Upload</button>
             </li>
         </ul>
 
@@ -78,7 +78,7 @@
                 </tr>
             </table>
 
-            <button data-ng-click="retry()" class="btn btn-primary">
+            <button data-id="retry-upload-cta" data-ng-click="retry()" class="btn btn-primary">
                 Try Again
             </button>
         </div>

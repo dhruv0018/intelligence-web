@@ -25,7 +25,7 @@
 			<h5 class="film-title">{{title}}</h5>
 		</div>
 		<div class="reel-title">
-			<h3 data-ng-show="!editingReelTitle">{{film.name}} <span class="edit-title" data-ng-show="isEditable" data-ng-click="editingReelTitle = true"><i class="icon icon-pencil"></i></span></h3>
+			<h3 data-ng-show="!editingReelTitle">{{film.name}} <span id="reel-title-edit-cta" class="edit-title" data-ng-show="isEditable" data-ng-click="editingReelTitle = true"><i class="icon icon-pencil"></i></span></h3>
 			<form class="edit-reel-title-form" data-ng-show="editingReelTitle">
 				<input class="form-control" type="text" name="newReelName" data-ng-model="newReelName">
 				<a class="btn-simple-save" data-ng-click="changeReelName(newReelName); editingReelTitle = false" href>Save</a>

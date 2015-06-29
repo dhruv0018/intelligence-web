@@ -73,7 +73,13 @@
         "role-class",
         "spinner",
         "check-box",
-        "feature"
+        "feature",
+        "search-dropdown",
+        "admin-queue-dashboard",
+        "custom-tags-dropdown",
+        "custom-tags-multiselect",
+        "custom-tag-pills",
+        "telestrations"
     ],
     "scripts": [
         "index.js"
