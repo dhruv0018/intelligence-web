@@ -1,35 +1,35 @@
 // jshint ignore: start
-import GapField from '../../../../src/values/field/Gap.js';
-import GapFieldData from '../sample-data/Gap.js';
+import PassingZoneField from '../../../../src/values/field/PassingZone.js';
+import PassingZoneFieldData from '../sample-data/PassingZone.js';
 
 const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
 
-const tagVariable = GapFieldData.Tag;
-const eventVariable = GapFieldData.Event;
+const tagVariable = PassingZoneFieldData.Tag;
+const eventVariable = PassingZoneFieldData.Event;
 
-describe('General Gap Field', () => {
-    let tagField = new GapField(tagVariable);
-    it('The Gap Class should Exist', () => {
-        expect(GapField).to.exist;
+describe('General PassingZone Field', () => {
+    let tagField = new PassingZoneField(tagVariable);
+    it('The PassingZone Class should Exist', () => {
+        expect(PassingZoneField).to.exist;
     });
 
     it('Should have correct input type', () => {
         expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('GAP');
+        expect(tagField.inputType).to.equal('PASSING_ZONE');
     });
 
 });
 
-describe('Gap Tag Field', () => {
+describe('Passing Zone Tag Field', () => {
     it('Should be initialized correctly if required', () => {
         let localTagVariable = angular.copy(tagVariable);
         localTagVariable.isRequired = true;
-        let tagField = new GapField(localTagVariable);
+        let tagField = new PassingZoneField(localTagVariable);
         let value = tagField.currentValue;
 
-        expect(value.gapId).to.be.undefined;
+        expect(value.zoneId).to.be.undefined;
         expect(value.name).to.equal('Select');
         expect(value.keyboardShortcut).to.be.undefined;
     });
@@ -37,45 +37,45 @@ describe('Gap Tag Field', () => {
     it('Should be initialized correctly if not required', () => {
         let localTagVariable = angular.copy(tagVariable);
         localTagVariable.isRequired = false;
-        let tagField = new GapField(localTagVariable);
+        let tagField = new PassingZoneField(localTagVariable);
         let value = tagField.currentValue;
 
-        expect(value.gapId).to.be.null;
+        expect(value.zoneId).to.be.null;
         expect(value.name).to.equal('Optional');
         expect(value.keyboardShortcut).to.be.undefined;
     });
 
 });
 
-describe('Gap Event Field', () => {
+describe('Passing Zone Event Field', () => {
 
     it('Should have properly set value if required', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = true;
-        let eventField = new GapField(localEventVariable);
+        let eventField = new PassingZoneField(localEventVariable);
         let value = eventField.currentValue;
 
-        expect(value.gapId).to.equal(1);
-        expect(value.name).to.equal('D Left');
-        expect(value.keyboardShortcut).to.equal('DL');
+        expect(value.zoneId).to.equal(1);
+        expect(value.name).to.equal('Loss Far Left');
+        expect(value.keyboardShortcut).to.equal('FL');
     });
 
     it('Should set values properly', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = true;
-        let eventField = new GapField(localEventVariable);
+        let eventField = new PassingZoneField(localEventVariable);
         eventField.currentValue = eventField.availableValues[2];
         let value = eventField.currentValue;
 
         expect(value.gapId).to.equal(2);
-        expect(value.name).to.equal('C Left');
-        expect(value.keyboardShortcut).to.equal('CL');
+        expect(value.name).to.equal('Loss Left');
+        expect(value.keyboardShortcut).to.equal('LL');
     });
 
     it('toJSON should serialize to the right format if the field has a value', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = true;
-        let eventField = new GapField(localEventVariable);
+        let eventField = new PassingZoneField(localEventVariable);
         let value = eventField.currentValue;
         let serializedField = eventField.toJSON();
         expect(serializedField).to.equal('{"type":null,"value":"1"}');
@@ -86,7 +86,7 @@ describe('Gap Event Field', () => {
         localEventVariable.isRequired = false;
         localEventVariable.value = undefined;
 
-        let eventField = new GapField(localEventVariable);
+        let eventField = new PassingZoneField(localEventVariable);
         let value = eventField.currentValue;
         let serializedField = eventField.toJSON();
 
@@ -96,11 +96,11 @@ describe('Gap Event Field', () => {
     it('Should be able to switch back to an optional value from a set value', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = false;
-        let eventField = new GapField(localEventVariable);
+        let eventField = new PassingZoneField(localEventVariable);
         let value = eventField.currentValue;
-        expect(value.gapId).to.not.be.null;
+        expect(value.zoneId).to.not.be.null;
         eventField.currentValue = eventField.availableValues[0];
         value = eventField.currentValue;
-        expect(value.gapId).to.be.null;
+        expect(value.zoneId).to.be.null;
     });
 });

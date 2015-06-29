@@ -8,15 +8,22 @@ class DropdownField extends Field {
 
         if (!field) return;
         super(field);
-
-        let dropdownOption = {
-            content: !field.isRequired ? 'Optional' : undefined
+        this.availableValues = JSON.parse(field.options).map(content => {
+            return {content, name: content};
+        });
+        let initialOption = {
+            content: !field.isRequired ? null : undefined,
+            name: !field.isRequired ? 'Optional' : 'Select'
         };
+        this.availableValues.unshift(initialOption);
+        let dropdownOption = angular.copy(this.availableValues[0]);
 
-        if (field.value) dropdownOption.content = field.value;
+        if (field.value) {
+            dropdownOption.content = field.value;
+            dropdownOption.name = field.value;
+        }
 
         this.currentValue = dropdownOption;
-        this.availableValues = JSON.parse(field.options).map(content => { return {content}; });
     }
 
     get currentValue(){
@@ -24,9 +31,7 @@ class DropdownField extends Field {
     }
 
     set currentValue(dropdownOption) {
-        let value = {};
-        value.content = dropdownOption.content;
-        this.value = value;
+        this.value = dropdownOption;
     }
 
     toJSON() {

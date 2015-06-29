@@ -8,13 +8,18 @@ class TextField extends Field {
         if (!field) return;
         super(field);
 
-        let text = {
-            content: !field.isRequired? 'Optional' : undefined
+        let initialText = {
+            content: !field.isRequired? null : undefined,
+            name: !field.isRequired? 'Optional': 'Select'
         };
 
-        if (field.value) text.content = field.value;
+        if (field.value) {
+            let value = angular.copy(field.value);
+            initialText.content = value;
+            initialText.name = value;
+        }
 
-        this.currentValue = text;
+        this.currentValue = initialText;
 
         this.availableValues = null;
     }
@@ -24,9 +29,7 @@ class TextField extends Field {
     }
 
     set currentValue(text) {
-        let value = {};
-        value.content = text.content;
-        this.value = value;
+        this.value = text;
     }
 
     toJSON() {

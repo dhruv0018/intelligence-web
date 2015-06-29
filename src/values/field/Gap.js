@@ -9,17 +9,34 @@ class GapField extends Field {
 
         this.GAPS =  GapConstants.GAPS;
         this.GAP_IDS = GapConstants.GAP_IDS;
-
-        let gap = {
+        this.availableValues = Object.keys(this.GAPS).map(key => {
+            let currentGap = angular.copy(this.GAPS[key]);
+            let value = {
+                gapId: Number(currentGap.value),
+                name: currentGap.name,
+                keyboardShortcut: currentGap.shortcut
+            };
+            return value;
+        });
+        let initialGap = {
+            name: !field.isRequired ? 'Optional' : 'Select',
             gapId: !field.isRequired ? null : undefined,
-            name: !field.isRequired ? 'Optional' : undefined,
-            keyboardShortcut: null
+            keyboardShortcut: undefined
         };
+        this.availableValues.unshift(initialGap);
 
-        if (field.value) gap = this.GAPS[this.GAP_IDS[field.value]];
+        let gap = angular.copy(this.availableValues[0]);
+
+        if (field.value) {
+            let currentGap = angular.copy(this.GAPS[this.GAP_IDS[field.value]]);
+            gap = {
+                gapId: Number(currentGap.value),
+                name: currentGap.name,
+                keyboardShortcut: currentGap.shortcut
+            };
+        }
 
         this.currentValue = gap;
-        this.availableValues = Object.keys(this.GAPS).map(key => this.GAPS[key]);
     }
 
     get currentValue() {
@@ -27,18 +44,15 @@ class GapField extends Field {
     }
 
     set currentValue(gap) {
-        let value = {};
-        value.name = gap.name;
-        value.gapId = gap.value;
-        value.keyboardShortcut = gap.shortcut;
-        this.value = value;
+        this.value = gap;
     }
 
     toJSON(){
         let variableValue = {};
+        let value = this.value.gapId === null ? null : String(this.value.gapId);
         variableValue = {
             type: null,
-            value: this.value.gapId
+            value: value
         };
         return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }

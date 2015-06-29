@@ -1,81 +1,76 @@
 // jshint ignore: start
-import GapField from '../../../../src/values/field/Gap.js';
-import GapFieldData from '../sample-data/Gap.js';
+import FormationField from '../../../../src/values/field/Formation.js';
+import FormationFieldData from '../sample-data/Formation.js';
 
 const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
 
-const tagVariable = GapFieldData.Tag;
-const eventVariable = GapFieldData.Event;
+const tagVariable = FormationFieldData.Tag;
+const eventVariable = FormationFieldData.Event;
 
-describe('General Gap Field', () => {
-    let tagField = new GapField(tagVariable);
-    it('The Gap Class should Exist', () => {
-        expect(GapField).to.exist;
+describe('General Formation Field', () => {
+    let tagField = new FormationField(tagVariable);
+    it('The Formation Class should Exist', () => {
+        expect(FormationField).to.exist;
     });
 
     it('Should have correct input type', () => {
         expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('GAP');
+        expect(tagField.inputType).to.equal('FORMATION');
     });
 
 });
 
-describe('Gap Tag Field', () => {
+describe('Formation Tag Field', () => {
     it('Should be initialized correctly if required', () => {
         let localTagVariable = angular.copy(tagVariable);
         localTagVariable.isRequired = true;
-        let tagField = new GapField(localTagVariable);
+        let tagField = new FormationField(localTagVariable);
         let value = tagField.currentValue;
 
-        expect(value.gapId).to.be.undefined;
+        expect(value.formationId).to.be.undefined;
         expect(value.name).to.equal('Select');
-        expect(value.keyboardShortcut).to.be.undefined;
     });
 
     it('Should be initialized correctly if not required', () => {
         let localTagVariable = angular.copy(tagVariable);
         localTagVariable.isRequired = false;
-        let tagField = new GapField(localTagVariable);
+        let tagField = new FormationField(localTagVariable);
         let value = tagField.currentValue;
-
-        expect(value.gapId).to.be.null;
+        expect(value.formationId).to.be.null;
         expect(value.name).to.equal('Optional');
-        expect(value.keyboardShortcut).to.be.undefined;
     });
 
 });
 
-describe('Gap Event Field', () => {
+describe('Formation Event Field', () => {
 
     it('Should have properly set value if required', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = true;
-        let eventField = new GapField(localEventVariable);
+        let eventField = new FormationField(localEventVariable);
         let value = eventField.currentValue;
 
-        expect(value.gapId).to.equal(1);
-        expect(value.name).to.equal('D Left');
-        expect(value.keyboardShortcut).to.equal('DL');
+        expect(value.formationId).to.equal(1);
+        expect(value.name).to.equal('Empty');
     });
 
     it('Should set values properly', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = true;
-        let eventField = new GapField(localEventVariable);
+        let eventField = new FormationField(localEventVariable);
         eventField.currentValue = eventField.availableValues[2];
         let value = eventField.currentValue;
 
-        expect(value.gapId).to.equal(2);
-        expect(value.name).to.equal('C Left');
-        expect(value.keyboardShortcut).to.equal('CL');
+        expect(value.formationId).to.equal(2);
+        expect(value.name).to.equal('Ace');
     });
 
     it('toJSON should serialize to the right format if the field has a value', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = true;
-        let eventField = new GapField(localEventVariable);
+        let eventField = new FormationField(localEventVariable);
         let value = eventField.currentValue;
         let serializedField = eventField.toJSON();
         expect(serializedField).to.equal('{"type":null,"value":"1"}');
@@ -86,7 +81,7 @@ describe('Gap Event Field', () => {
         localEventVariable.isRequired = false;
         localEventVariable.value = undefined;
 
-        let eventField = new GapField(localEventVariable);
+        let eventField = new FormationField(localEventVariable);
         let value = eventField.currentValue;
         let serializedField = eventField.toJSON();
 
@@ -96,11 +91,11 @@ describe('Gap Event Field', () => {
     it('Should be able to switch back to an optional value from a set value', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = false;
-        let eventField = new GapField(localEventVariable);
-        let value = eventField.currentValue;
-        expect(value.gapId).to.not.be.null;
+        let eventField = new FormationField(localEventVariable);
+        let value = eventField.currentValue;        
+        expect(value.formationId).to.not.be.null;
         eventField.currentValue = eventField.availableValues[0];
         value = eventField.currentValue;
-        expect(value.gapId).to.be.null;
+        expect(value.formationId).to.be.null;
     });
 });

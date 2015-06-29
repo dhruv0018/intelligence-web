@@ -7,24 +7,29 @@ class ArenaField extends Field {
         if (!field) return;
         super(field);
 
-        let injector = angular.element(document).injector();
-        this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
-
         //todo look into initialization of arena value
         let arena = {
             regionId: !field.isRequired ? null : undefined,
-            coordinates: !field.isRequired ? {} : {},
-            name: !field.isRequired ? 'Optional' : undefined
+            coordinates: !field.isRequired ? {} : {}
         };
 
         if (field.value && field.value.region && field.value.region.id) {
-            arena.coordinates = this.value.coordinates;
-            arena.regionId = this.value.region.id;
-            arena.name = this.regionMap[arena.regionId].name;
+            arena.coordinates = field.value.coordinates;
+            arena.regionId = field.value.region.id;
         }
 
         this.currentValue = arena;
-
+        Object.defineProperty(this.value, 'name', {
+            get: () => {
+                let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+                if (this.regionId) {
+                    let injector = angular.element(document).injector();
+                    this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
+                    calculatedName = angular.copy(this.regionMap[this.regionId].name);
+                }
+                return calculatedName;
+            }
+        });
         this.availableValues = null;
     }
 
@@ -36,8 +41,6 @@ class ArenaField extends Field {
         let value = {};
         value.coordinates = arena.coordinates;
         value.regionId = arena.regionId;
-        //todo this is because old basketball games have messed up data
-        value.name = (this.regionMap[arena.regionId]) ? this.regionMap[arena.regionId].name : 'Select';
         this.value = value;
     }
 
