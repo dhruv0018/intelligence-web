@@ -251,6 +251,18 @@
         "Assistant Coach": true
     },
 
+    "Coach.Analytics.Team": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+    
+    "Coach.Analytics.Player": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "Coach.GameArea": {
 
         "Head Coach": true,
@@ -530,4 +542,3 @@
         "*": true
     }
 }
-
