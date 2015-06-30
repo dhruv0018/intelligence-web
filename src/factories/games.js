@@ -86,7 +86,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.sharedWithUsers = game.sharedWithUsers || {};
 
                 //Sort indexer assignments by time assigned
-                game.indexerAssignments.sort((a, b) => moment.utc(b.timeAssigned).isAfter(moment.utc(a.timeAssigned)));
+                if(game.indexerAssignments && game.indexerAssignments.length > 1) {
+                    game.indexerAssignments.sort((a, b) => moment.utc(b.timeAssigned).isAfter(moment.utc(a.timeAssigned)));
+                }
 
                 if (game.shares && game.shares.length) {
 
@@ -535,7 +537,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     };
 
                     /* Add assignment. */
-                    self.indexerAssignments.push(assignment);
+                    self.indexerAssignments.unshift(assignment);
 
                     /* Update game status. */
                     self.status = GAME_STATUSES.INDEXING.id;
@@ -581,7 +583,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     };
 
                     /* Add assignment. */
-                    self.indexerAssignments.push(assignment);
+                    self.indexerAssignments.unshift(assignment);
 
                     /* Update game status. */
                     self.status = GAME_STATUSES.QAING.id;
