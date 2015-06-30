@@ -75,12 +75,15 @@
         "spinner",
         "check-box",
         "buttons",
+        "feature",
+        "search-dropdown",
         "admin-queue-dashboard",
         "custom-tags-dropdown",
         "custom-tags-multiselect",
         "custom-tag-pills",
         "feature",
-        "clips-navigation"
+        "clips-navigation",
+        "telestrations"
     ],
     "scripts": [
         "index.js"
