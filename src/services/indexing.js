@@ -58,7 +58,7 @@ IntelligenceWebClient.factory('IndexingService', [
             * Selects a tag.
             * @param {Number} tagId - the ID of the tag selected.
             */
-            selectTag: function(tagId) {
+            selectTag: function(tagId, game = null) {
 
                 /* Get current time from the video. */
                 var time = videoPlayer.currentTime;
@@ -70,7 +70,11 @@ IntelligenceWebClient.factory('IndexingService', [
                 time = utils.toFixedFloat(time);
 
                 /* Create new event. */
-                eventManager.current = new KrossoverEvent(tag, time);
+                if (game) {
+                    eventManager.current = new KrossoverEvent({}, tag, time, game.id);
+                } else {
+                    eventManager.current = new KrossoverEvent(tag, time);
+                }
 
                 /* Add event to the current play. */
                 playManager.addEvent(eventManager.current);
