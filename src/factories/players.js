@@ -27,10 +27,6 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     player.positionIds = {};
                 }
 
-                if (player.hasOwnProperty('name')) {
-                    delete player.name;
-                }
-
                 Object.defineProperty(player, 'name', {
                     get: function() {
                         return this.firstName + ' ' + this.lastName;
