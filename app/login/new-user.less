@@ -17,13 +17,33 @@
         }
     }
 
-    .new-user-password-group {
+    .new-user-form-group {
 
         display: flex;
-        align-items: flex-start;
+        align-items: stretch;
+        position: relative;
+        margin-bottom: 30px;
+    }
 
-        .form-group {
+    .new-user-password {
 
+        border-right: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .new-user-errors {
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        line-height: 1;
+
+        .error {
+
+            line-height: 1;
+            margin: 10px 0;
             width: 100%;
         }
     }
@@ -31,7 +51,10 @@
     .show-hide-password {
 
         .btn;
-        .btn-link;
+        .btn-primary;
+        min-width: 4em;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
     }
 
     .button-set-password {
@@ -54,17 +77,32 @@
         }
     }
 
-    .new-user-accept label {
+    .new-user-accept {
 
         width: 100%;
-        display: block;
-        line-height: @line-height-computed;
+
+        label {
+
+            width: 100%;
+            display: block;
+            line-height: @line-height-computed;
+            margin: 0;
+
+            .error {
+
+                line-height: @line-height-computed;
+                font-weight: normal;
+                color: @brand-danger;
+            }
+        }
 
         .error {
 
-            line-height: @line-height-computed;
-            font-weight: normal;
-            color: @brand-danger;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            line-height: 1;
         }
     }
 }

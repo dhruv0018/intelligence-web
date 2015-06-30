@@ -15,26 +15,22 @@
 
         </div>
 
-        <div class="form-group new-user-password-group">
+        <!-- TODO: This should be made into a directive. -->
+        <div class="form-group new-user-form-group">
 
-            <div class="form-group">
-
-                <input
-                 id="new-user-password"
-                 class="form-field-login"
-                 name="password"
-                 ng-attr-type="{{newUser.showPassword ? 'text' : 'password'}}"
-                 ng-minlength="4"
-                 placeholder="New Password"
-                 ng-model="newUser.password"
-                 ng-trim="false"
-                 data-errors="{ required: 'Required!', minlength: 'Password must be at least 4 characters long.'}"
-                 oncopy="return false;"
-                 onpaste="return false;"
-                 required
-                >
-
-            </div>
+            <input
+             id="new-user-password"
+             class="form-field-login new-user-password"
+             name="password"
+             ng-attr-type="{{newUser.showPassword ? 'text' : 'password'}}"
+             ng-minlength="4"
+             placeholder="New Password"
+             ng-model="newUser.password"
+             ng-trim="false"
+             oncopy="return false;"
+             onpaste="return false;"
+             required
+            >
 
             <button
              id="show-hide-password"
@@ -43,19 +39,40 @@
              type="button"
             >{{newUser.showPassword ? 'Hide' : 'Show'}}</button>
 
+            <!-- TODO: ngMessage or directive? -->
+            <div class="new-user-errors">
+
+                <div
+                 ng-show="newUserForm.password.$touched && newUserForm.password.$error.required"
+                 class="error"
+                 role="alert"
+                >Required!</div>
+                <div
+
+                 ng-show="newUserForm.password.$touched && newUserForm.password.$error.minlength"
+                 class="error"
+                 role="alert"
+                >Password must be at least 4 characters long.</div>
+
+            </div>
+
         </div>
 
-        <form-toggle
-         name="remember"
-         class="new-user-accept"
-         data-id="new-user-accept-terms-cta"
-         data-required="true"
-         model="newUser.agree"
-        >
+        <div class="form-group new-user-form-group">
 
-            I agree to the <a id="new-user-show-terms-cta" ng-click="showTerms($event);">Krossover Terms &amp; Conditions</a>
+            <form-toggle
+             name="remember"
+             class="new-user-accept"
+             data-id="new-user-accept-terms-cta"
+             data-required="true"
+             model="newUser.agree"
+            >
 
-        </form-toggle>
+                I agree to the <a id="new-user-show-terms-cta" ng-click="showTerms($event);">Krossover Terms &amp; Conditions</a>
+
+            </form-toggle>
+
+        </div>
 
         <div class="form-group">
 
