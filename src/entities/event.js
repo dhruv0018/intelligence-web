@@ -27,24 +27,10 @@ class Event extends Tag {
 
         this.fields = {};
 
-        /* Add game ID to all variable values */
-        // Object.keys(this.variableValues).forEach( (tagVariableId, index) => {
-        //     index = index + 1;
-        //     let variableValue = this.variableValues[tagVariableId];
-        //     let tagVariable = this.tagVariables[index];
-        //     variableValue.gameId = gameId;
-        //     variableValue.inputType = tagVariable.type;
-        //     variableValue.options = tagVariable.options;
-        //     variableValue.formations = tagVariable.formations;
-        //     variableValue.id = tagVariable.id;
-        //     variableValue.order = index;
-        //     variableValue.isRequired = tagVariable.isRequired;
-        //     delete variableValue.type;
-        // });
+        //todo refactor this later
         Object.keys(this.tagVariables).forEach( (positionId, index) => {
             index = index + 1;
             let variableValue = angular.copy(this.tagVariables[positionId]) || {};
-            //this.variableValues[tagVariableId];
             let tagVariable = this.tagVariables[index];
             variableValue.gameId = gameId;
             variableValue.inputType = tagVariable.type;
