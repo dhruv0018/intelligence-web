@@ -124,6 +124,7 @@ function GamesArenaChartController(
         throw new Error(error);
     }
 
+    $scope.game = game;
     $scope.team = team;
     $scope.opposingTeam = opposingTeam;
     $scope.arenaEvents = arenaEvents;

@@ -19,12 +19,8 @@
         <div class="teams">
 
             <div class="home-team">
-
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-
-                    <rect data-ng-attr-fill="{{ game.primaryJerseyColor }}" x="0" y="0" width="16px" height="16px" />
-
-                </svg>
+                {{ game.primaryJerseyColor }}
+                <jersey-color color="game.primaryJerseyColor"></jersey-color>
 
                 <span class="home-team-name">{{team.name}}</span>
 
@@ -34,11 +30,7 @@
 
                 <span class="opposing-team-name">{{opposingTeam.name}}</span>
 
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-
-                    <rect data-ng-attr-fill="{{ game.opposingJerseyColor }}" x="0" y="0" width="16px" height="16px" />
-
-                </svg>
+                <jersey-color color="game.opposingJerseyColor"></jersey-color>
 
             </div>
 
