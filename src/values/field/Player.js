@@ -22,6 +22,7 @@ class PlayerField extends Field {
                 let calculatedName = !this.isRequired ? 'Optional' : 'Select';
                 let value = this.currentValue;
                 let playerId = value.playerId;
+                console.log('the playerId is ', playerId);
                 if (playerId) {
                     let injector = angular.element(document).injector();
                     let players = injector.get('PlayersFactory');
@@ -50,12 +51,13 @@ class PlayerField extends Field {
                 let teamPlayersValues = Object.keys(game.rosters[team.id].playerInfo).map( (playerId) => {
                     let rosterEntry = game.rosters[team.id].playerInfo[playerId];
                     let player = players.get(playerId);
+                    let jerseyNumber = player.isUnknown ? 'U' : angular.copy(rosterEntry.jerseyNumber);
 
                     let value = {
-                        playerId: player.id,
-                        jerseyColor: game.primaryJerseyColor,
-                        jerseyNumber: rosterEntry.jerseyNumber,
-                        name: player.firstName + ' ' + player.lastName
+                        playerId: angular.copy(player.id),
+                        jerseyColor: angular.copy(game.primaryJerseyColor),
+                        jerseyNumber,
+                        name: angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
                     };
                     return value;
                 });
@@ -63,12 +65,12 @@ class PlayerField extends Field {
                 let opposingTeamPlayersValues = Object.keys(game.rosters[opposingTeam.id].playerInfo).map( (playerId) => {
                     let rosterEntry = game.rosters[opposingTeam.id].playerInfo[playerId];
                     let player = players.get(playerId);
-
+                    let jerseyNumber = player.isUnknown ? 'U' : angular.copy(rosterEntry.jerseyNumber);
                     let value = {
-                        playerId: player.id,
-                        jerseyColor: game.opposingPrimaryJerseyColor,
-                        jerseyNumber: rosterEntry.jerseyNumber,
-                        name: player.firstName + ' ' + player.lastName
+                        playerId: angular.copy(player.id),
+                        jerseyColor: angular.copy(game.opposingPrimaryJerseyColor),
+                        jerseyNumber,
+                        name: angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
                     };
                     return value;
                 });
@@ -86,6 +88,8 @@ class PlayerField extends Field {
             playerId: (playerOption.playerId) ? Number(playerOption.playerId) : playerOption.playerId
         };
         this.value = value;
+        console.log(this.value);
+        //Object.assign(this.value, value);
     }
 
     toJSON(){
