@@ -1,6 +1,6 @@
 {
   "name": "intelligence-web-client",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Krossover Intelligence Web Client",
   "author": "Jason Morganson <jason@krossover.com>",
   "private": true,
@@ -35,7 +35,6 @@
     "videogular-overlay-play": "2fdevs/bower-videogular-overlay-play",
     "videogular-poster": "2fdevs/bower-videogular-poster",
     "fullscreen-api-polyfill": "https://github.com/neovov/Fullscreen-API-Polyfill.git",
-    "svg-morpheus": "alexk111/svg-morpheus#v0.1.8",
     "svg.draggable.js": "https://github.com/krossoverintelligence/svg.draggable.js.git"
   },
   "dependencies": {

@@ -75,11 +75,12 @@
         "check-box",
         "terms-and-conditions",
         "form-toggle",
+        "feature",
+        "search-dropdown",
         "admin-queue-dashboard",
         "custom-tags-dropdown",
         "custom-tags-multiselect",
         "custom-tag-pills",
-        "feature",
         "telestrations"
     ],
     "scripts": [
