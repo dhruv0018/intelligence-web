@@ -1,0 +1,13 @@
+{
+    "name": "player-dropdown",
+    "templates": [
+        "template.html",
+        "player-dropdown-input.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

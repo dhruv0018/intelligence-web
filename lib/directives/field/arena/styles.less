@@ -1,0 +1,25 @@
+@import (reference) "main.less";
+
+@focus-blue: rgb(102, 175, 233);
+
+.arena-item {
+
+    input.btn-arena {
+        width: 100px;
+    }
+
+    .btn-arena {
+        line-height: 1.2;
+        color: @brand-primary;
+
+        &:hover {
+            color: @brand-secondary;
+            border-color: @brand-secondary;
+        }
+    }
+
+    .btn-arena-focus {
+        border-color: @focus-blue;
+        color: @focus-blue;
+    }
+}

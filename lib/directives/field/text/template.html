@@ -1,0 +1,15 @@
+<span class="text">
+
+    <input
+        class="text mousetrap"
+        placeholder="Select"
+        tabindex="{{ item.index }}"
+        data-ng-required="item.isRequired"
+        data-ng-if="isUndefined(event.variableValues[item.id].value)"
+        data-ng-model="variable.value"
+        data-ng-blur="onBlur()"
+        data-focus-on="shouldFocus()"
+        data-autofocus-when="autoAdvance && item.index === 1"
+    >
+
+</span>

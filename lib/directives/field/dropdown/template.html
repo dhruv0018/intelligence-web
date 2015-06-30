@@ -1,0 +1,19 @@
+<span class="dropdown">
+    <select
+        class="dropdown mousetrap"
+        tabindex="{{ item.index }}"
+        data-ng-required="item.isRequired"
+        data-ng-if="isUndefined(event.variableValues[item.id].value)"
+        data-ng-model="event.variableValues[item.id].value"
+        data-ng-change="onChange()"
+        data-ng-blur="onBlur()"
+        data-focus-on="shouldFocus()"
+        data-autofocus-when="autoAdvance && item.index == 1"
+    >
+
+        <option value="">Select</option>
+        <option data-ng-keybinding="option.charAt(0)" data-ng-repeat="option in options" value="{{ option }}">{{ option }}</option>
+
+    </select>
+
+</span>

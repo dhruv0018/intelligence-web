@@ -1,0 +1,53 @@
+<span class="item">
+
+    <button
+        class="player-dropdown"
+        data-ng-if="event.variableValues[item.id].value || event.variableValues[item.id].value === null"
+        data-ng-click="reset($event)"
+        >
+        <span>
+            <svg data-ng-if="item.type === 'PLAYER_DROPDOWN' || item.type === 'PLAYER_TEAM_DROPDOWN'" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+                <rect data-ng-attr-fill="{{ resetButton.meta.jerseyColor }}" x="0" y="0" width="16px" height="16px" />
+            </svg>
+            <span class="jersey-number" data-ng-if="item.type === 'PLAYER_DROPDOWN' || item.type === 'PLAYER_TEAM_DROPDOWN'">
+                    {{ resetButton.meta.jerseyNumber}}
+            </span>
+
+            <span>{{ resetButton.text }}</span>
+        </span>
+    </button>
+
+    <!-- Gap variable -->
+    <krossover-item-gap data-ng-if="item.type === 'GAP'"></krossover-item-gap>
+
+    <!-- Text variable -->
+    <krossover-item-text data-ng-if="item.type === 'TEXT'"></krossover-item-text>
+
+    <!-- Yard variable -->
+    <krossover-item-yard data-ng-if="item.type === 'YARD'"></krossover-item-yard>
+
+    <!-- Static item -->
+    <krossover-item-static data-ng-if="isString(item)"></krossover-item-static>
+
+    <!-- Dropdown variable -->
+    <krossover-item-dropdown data-ng-if="item.type === 'DROPDOWN'"></krossover-item-dropdown>
+
+    <!-- Formation variable -->
+    <krossover-item-formation data-ng-if="item.type === 'FORMATION'"></krossover-item-formation>
+
+    <!-- Passing zone variable -->
+    <krossover-item-passing-zone data-ng-if="item.type === 'PASSING_ZONE'"></krossover-item-passing-zone>
+
+    <!-- Team dropdown variable -->
+    <krossover-item-team-dropdown data-ng-if="item.type === 'TEAM_DROPDOWN'"></krossover-item-team-dropdown>
+
+    <!-- Player dropdown variable -->
+    <krossover-item-player-dropdown data-ng-if="item.type === 'PLAYER_DROPDOWN'"></krossover-item-player-dropdown>
+
+    <!-- Player Team dropdown variable -->
+    <krossover-item-team-player-dropdown data-ng-if="item.type === 'PLAYER_TEAM_DROPDOWN'"></krossover-item-team-player-dropdown>
+
+    <!-- Arena variable -->
+    <krossover-item-arena data-ng-if="item.type === 'ARENA'"></krossover-item-arena>
+
+</span>
