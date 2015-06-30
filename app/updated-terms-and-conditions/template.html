@@ -22,17 +22,21 @@
 
         <p>Welcome back. Please review our updated Terms &amp; Conditions.</p>
 
-        <form-toggle
-         class="new-terms-agree"
-         data-id="returning-user-terms-agree-cta"
-         name="remember"
-         data-required="true"
-         model="newTerms.agree"
-        >
+        <div class="updated-terms-form-group">
 
-            I agree to the <a id="terms-modal-show-terms-cta" ng-click="showTerms($event);">Krossover Terms &amp; Conditions</a>
+            <form-toggle
+             class="new-terms-agree"
+             data-id="returning-user-terms-agree-cta"
+             name="remember"
+             data-required="true"
+             model="newTerms.agree"
+            >
 
-        </form-toggle>
+                I agree to the <a id="terms-modal-show-terms-cta" ng-click="showTerms($event);">Krossover Terms &amp; Conditions</a>
+
+            </form-toggle>
+
+        </div>
 
         <button
          id="terms-modal-go-to-account-cta"
