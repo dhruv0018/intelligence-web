@@ -1,0 +1,12 @@
+{
+    "name": "telestration-enable-button",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

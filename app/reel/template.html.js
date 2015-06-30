@@ -31,6 +31,10 @@ export default `
                 class="reels-video-container"
                 poster-image="posterImage"
                 sources="sources"
+                cue-points="cuePoints"
+                telestrations="telestrationsEntity"
+                telestrations-permissions="telestrationsPermissions"
+                play-id="currentPlayId"
                 >
                 </video-player>
 

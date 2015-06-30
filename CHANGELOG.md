@@ -1,3 +1,11 @@
+#v2.6.0#
+##Features##
+- Stats
+
+#v2.5.0#
+##Features##
+- Telestrations
+
 #v2.4.2#
 ##Bug Fixes / Improvements##
 - As a coach, when selecting an event in the breakdown the play for the event should be selected.

@@ -1,0 +1,82 @@
+@import (reference) "main.less";
+
+.search-dropdown {
+    position: relative;
+
+    button {
+        padding: 8px;
+        border: thin solid @gray-border;
+        color: @gray;
+        font-weight: 400;
+
+        .icon-chevron-down {
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    }
+
+    button,
+    button:active,
+    button:focus,
+    button:hover {
+        background-color: white;
+        box-shadow: none;
+    }
+
+    .search-dropdown-menu {
+        min-width: 225px;
+        padding: 0;
+        box-shadow: 2px 2px 10px @gray-light;
+
+        .search-input-container {
+            border-bottom: thin solid @gray-border;
+            padding: 10px;
+            position: relative;
+            background-color: @content-bg;
+
+            input {
+                border: thin solid @gray-border;
+                border-radius: 5px;
+                width: 100%;
+                padding-left: 22px;
+            }
+
+            .icon-search {
+                position: absolute;
+                left: 15px;
+                top: 14px;
+                color: @gray-light;
+            }
+        }
+
+        .options-list {
+            padding: 5px;
+            max-height: 250px;
+            overflow-y: auto;
+
+            .option-selection-label {
+                display: block;
+                color: @gray-light;
+                text-transform: uppercase;
+            }
+
+            ul {
+                list-style: none;
+                padding-left: 0px;
+                font-weight: 500;
+
+                li {
+                    padding: 2px 0px;
+                    cursor: pointer;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    &:hover,
+                    &.focused {
+                        background-color: @active-bg;
+                    }
+                }
+            }
+        }
+    }
+}
