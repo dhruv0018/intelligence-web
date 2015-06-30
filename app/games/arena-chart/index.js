@@ -134,15 +134,15 @@ function GamesArenaChartController(
 
     const filtersDefault = {
         shots: {
-            made: true,
-            missed: true
+            made: false,
+            missed: false
         },
         period: {
-            one: true,
-            two: true,
-            three: true,
-            four: true,
-            overtime: true
+            one: false,
+            two: false,
+            three: false,
+            four: false,
+            overtime: false
         }
     };
 
