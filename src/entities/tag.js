@@ -67,7 +67,6 @@ class KrossoverTag extends Entity {
         switch(propertyName) {
             case 'tagVariables':
                 if (!variables) variables = [];
-                if (!Array.isArray(variables)) console.log('tagVariables', variables);
                 variables.forEach((variable, index) => {
                     index = index + 1;
                     indexedFields[index] = this.createField(variable);
@@ -76,7 +75,6 @@ class KrossoverTag extends Entity {
                 break;
             case 'variableValues':
                 if (!variables) variables = {};
-                console.log('variableValues', variables);
                 Object.keys(variables).forEach( (tagVariableId, index) => {
                     let variableValue = variables[tagVariableId];
                     index = index + 1;
