@@ -35,8 +35,6 @@ Indexing.controller('Indexing.Main.Controller', [
     'GamesFactory',
     'PlaysFactory',
     'VideoPlayer',
-    'VideoPlayerEventEmitter',
-    'VIDEO_PLAYER_EVENTS',
     function controller(config,
                         $rootScope,
                         $scope,
@@ -57,9 +55,8 @@ Indexing.controller('Indexing.Main.Controller', [
                         teams,
                         games,
                         plays,
-                        videoPlayer,
-                        videoPlayerEventEmitter,
-                        VIDEO_PLAYER_EVENTS) {
+                        videoPlayer
+                        ) {
 
         var gameId = Number($stateParams.id);
 
@@ -80,7 +77,7 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.videoPlayer = videoPlayer;
 
         //Watch for fullscreen change
-        $scope.$watch(videoPlayerFullScreenWatch.bind(this), onFullScreenChange);
+        $scope.$watch(videoPlayerFullScreenWatch.bind(this));
 
         var playsList = plays.getList({ gameId: gameId });
 
@@ -92,16 +89,9 @@ Indexing.controller('Indexing.Main.Controller', [
          * Watch for video player full screen changes.
          */
         function videoPlayerFullScreenWatch () {
-
             $scope.fullScreenEnabled = videoPlayer.isFullScreen || document.fullscreenEnabled;
         }
 
-        /**
-         * Change handler for video player fill screen changes.
-         */
-        function onFullScreenChange (isFullScreen) {
-            videoPlayerEventEmitter.emit(VIDEO_PLAYER_EVENTS.FULLSCREEN, {isFullScreen: isFullScreen});
-        }
     }
 
 ]);
