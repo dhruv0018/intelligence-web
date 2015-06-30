@@ -6,6 +6,12 @@
 
         <button class="btn-back" data-ng-if="indexing.isIndexing" data-ng-click="indexing.back()">Back (Esc)</button>
 
+        <pre>
+            <div ng-repeat="field in event.current.fields">
+                <player-dropdown-field ng-if="field.inputType === 'PLAYER_DROPDOWN' " field="field"></player-dropdown-field>
+            </div>
+        </pre>
+
         <div class="indexing-block">
 
             <form class="indexing-form" name="formIndexing" role="form" novalidate>
@@ -13,7 +19,7 @@
                 <!-- Tags -->
                 <div class="tags" data-ng-if="indexing.isIndexing && indexing.showTags">
 
-                    <button class="tag" data-ng-repeat="tag in tags.current" data-keybinding="{{ tag.keyboardShortcut.toLowerCase() }}" data-ng-click="indexing.selectTag(tag.id)" tabindex="{{ $index+1 }}">{{ tag.name }} ({{ tag.keyboardShortcut.toLowerCase() }})</button>
+                    <button class="tag" data-ng-repeat="tag in tags.current" data-keybinding="{{ tag.keyboardShortcut.toLowerCase() }}" data-ng-click="indexing.selectTag(tag.id, game)" tabindex="{{ $index+1 }}">{{ tag.name }} ({{ tag.keyboardShortcut.toLowerCase() }})</button>
 
                 </div>
 
