@@ -87,7 +87,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 //Sort indexer assignments by time assigned
                 if(game.indexerAssignments && game.indexerAssignments.length > 1) {
-                    game.indexerAssignments.sort((a, b) => moment.utc(b.timeAssigned).isAfter(moment.utc(a.timeAssigned)));
+                    game.indexerAssignments.sort((a,b) => moment.utc(b.timeAssigned).diff(moment.utc(a.timeAssigned)));
                 }
 
                 if (game.shares && game.shares.length) {
