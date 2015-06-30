@@ -256,7 +256,7 @@
         "Head Coach": true,
         "Assistant Coach": true
     },
-    
+
     "Coach.Analytics.Player": {
 
         "Head Coach": true,
@@ -370,11 +370,6 @@
     },
 
     "ga-awaystats": {
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "ga-arena-chart": {
         "Head Coach": true,
         "Assistant Coach": true
     },
