@@ -1,64 +1,68 @@
 <div class="arena-chart-filters">
 
     <!-- Filters -->
-    <div class="filters-left">
+    <div class="arena-chart-filters-left">
     </div>
 
-    <div class="filters-center">
+    <div class="arena-chart-filters-center">
 
-        <div class="shots">
+        <div class="shots filter-group">
 
-            <div class="btn-group" role="group" aria-label="...">
+            <label> Shots </label>
 
-                <checkbox-button
-                    type="button"
-                    class="btn"
+            <div class="btn-group">
+
+                <label
+                    class="btn btn-default"
                     ng-model="ngModel.shots.made"
-                >Made</checkbox-button>
+                    btn-checkbox
+                >Made</label>
 
-                <checkbox-button
-                    type="button"
-                    class="btn"
+                <label
+                    class="btn btn-default"
                     ng-model="ngModel.shots.missed"
-                >Missed</checkbox-button>
+                    btn-checkbox
+                >Missed</label>
 
             </div>
 
         </div>
 
-        <div class="periods">
+        <div class="periods filter-group">
 
-            <div class="btn-group" role="group" aria-label="...">
+            <label> Period </label>
 
-                <checkbox-button
-                    type="button"
-                    class="btn"
+            <div class="btn-group">
+
+                <label
+                    class="btn btn-default"
                     ng-model="ngModel.period.one"
-                >1</checkbox-button>
+                    btn-checkbox
+                >1</label>
 
-                <checkbox-button
-                    type="button"
-                    class="btn"
+                <label
+                    class="btn btn-default"
                     ng-model="ngModel.period.two"
-                >2</checkbox-button>
+                    btn-checkbox
+                >2</label>
 
-                <checkbox-button
-                    type="button"
-                    class="btn"
+                <label
+                    class="btn btn-default"
                     ng-model="ngModel.period.three"
-                >3</checkbox-button>
+                    btn-checkbox
+                >3</label>
 
-                <checkbox-button
-                    type="button"
-                    class="btn"
+                <label
+                    class="btn btn-default"
                     ng-model="ngModel.period.four"
-                >4</checkbox-button>
+                    btn-checkbox
+                >4</label>
 
-                <checkbox-button
-                    type="button"
-                    class="btn"
+                <label
+                    class="btn btn-default"
                     ng-model="ngModel.period.overtime"
-                >OT</checkbox-button>
+                    btn-checkbox
+                >OT</label>
 
             </div>
 
@@ -66,7 +70,7 @@
 
     </div>
 
-    <div class="filters-right">
+    <div class="arena-chart-filters-right">
     </div>
 
 </div>

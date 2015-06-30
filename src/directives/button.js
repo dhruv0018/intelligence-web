@@ -79,27 +79,3 @@ IntelligenceWebClient.directive('buttonContinue', [
         return directive;
     }
 ]);
-
-IntelligenceWebClient.directive('checkboxButton', function() {
-    return {
-        restrict: 'E',
-        require: 'ngModel',
-        link: function($scope, element, attr, ctrl) {
-
-            // set/unset 'active' class when model changes
-            $scope.$watch(attr.ngModel, function(newValue, oldValue) {
-                element.toggleClass('active', ctrl.$viewValue);
-            });
-
-            // update model when button is clicked
-            element.bind('click', function(event) {
-
-                $scope.$apply(function(scope) {
-                    ctrl.$setViewValue(!ctrl.$viewValue);
-                });
-
-                event.stopPropagation();
-            });
-        }
-    };
-});
