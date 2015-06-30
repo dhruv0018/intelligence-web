@@ -29,7 +29,8 @@ IntelligenceWebClient.factory('TeamsResource', [
             },
             generateStats: {
                 method: 'GET',
-                url: url + '/analytics'
+                url: url + '/analytics',
+                isArray: true
             }
         };
 
