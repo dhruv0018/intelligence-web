@@ -2,38 +2,32 @@
 
     <button class="add-reels-button" hide show-gt-sm><i class="icon icon-plus"></i></button>
 
-    <athlete-resume athlete="athlete" ng-if="viewport === VIEWPORTS.DESKTOP"></athlete-resume>
+    <div class="athlete-info-container">
+        <athlete-resume athlete="athlete"></athlete-resume>
 
-    <div class="featured-reel-container">
+        <div class="profile-link-container">
+            Share this link:<br>
+            <a href="/intelligence/athlete/{{athlete.id}}/profile">{{config.links.intelligence.uri}}/intelligence/athlete/{{athlete.id}}/profile</a>
+        </div>
+    </div>
 
-        <div class="featured-reel-video" ng-show="featuredReel">
+    <div class="featured-reel-container" ng-show="featuredReel">
+
+        <div class="featured-reel-video">
             <div class="featured-reel-header">
                 <h3>{{featuredReel.name}}</h3>
             </div>
             <video-player sources="sources"></video-player>
         </div>
 
-        <div class="clips-navigation" ng-show="featuredReel">
-            <div ng-class="{disabled: !previousPlay}"
-                 class="clip-previous"
-                 ng-click="goToPlay(previousPlay)">
-                <i class="icon icon-chevron-left"></i>
-                <span hide show-gt-sm>&nbsp;Prev</span>
-            </div>
-
-            <div class="clip-info">
-                Clip&nbsp;{{clipIndex}}/{{clipTotal}}
-            </div>
-
-            <div ng-class="{disabled: !nextPlay}"
-                 class="clip-next"
-                 ng-click="goToPlay(nextPlay)">
-                <span hide show-gt-sm>Next&nbsp;</span>
-                <i class="icon icon-chevron-right"></i>
-            </div>
-
-            <krossover-playlist-control play-count="clipTotal" hide-play-count="true"></krossover-playlist-control>
-        </div>
+        <clips-navigation
+            sources="sources"
+            current-play="currentPlay"
+            previous-play="previousPlay"
+            next-play="nextPlay"
+            clip-index="clipIndex"
+            clip-total="clipTotal"
+        ></clips-navigation>
     </div>
 
     <no-profile-reels ng-hide="highlightReels.length || featuredReel"></no-profile-reels>
