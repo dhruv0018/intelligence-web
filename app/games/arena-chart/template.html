@@ -19,7 +19,7 @@
         <div class="teams">
 
             <div class="home-team">
-                {{ game.primaryJerseyColor }}
+
                 <jersey-color color="game.primaryJerseyColor"></jersey-color>
 
                 <span class="home-team-name">{{team.name}}</span>
@@ -37,82 +37,8 @@
         </div>
 
 
-        <div class="filters-container">
+        <arena-chart-filters ng-model="filters"></arena-chart-filters>
 
-            <div class="filters">
-
-                <!-- Filters -->
-                <div class="filters-left">
-                </div>
-
-                <div class="filters-center">
-
-                    <div class="shots">
-
-                        <div class="btn-group" role="group" aria-label="...">
-
-                            <checkbox-button
-                                type="button"
-                                class="btn"
-                                ng-model="filters.shots.made"
-                            >Made</checkbox-button>
-
-                            <checkbox-button
-                                type="button"
-                                class="btn"
-                                ng-model="filters.shots.missed"
-                            >Missed</checkbox-button>
-
-                        </div>
-
-                    </div>
-
-                    <div class="periods">
-
-                        <div class="btn-group" role="group" aria-label="...">
-
-                            <checkbox-button
-                                type="button"
-                                class="btn"
-                                ng-model="filters.period.one"
-                            >1</checkbox-button>
-
-                            <checkbox-button
-                                type="button"
-                                class="btn"
-                                ng-model="filters.period.two"
-                            >2</checkbox-button>
-
-                            <checkbox-button
-                                type="button"
-                                class="btn"
-                                ng-model="filters.period.three"
-                            >3</checkbox-button>
-
-                            <checkbox-button
-                                type="button"
-                                class="btn"
-                                ng-model="filters.period.four"
-                            >4</checkbox-button>
-
-                            <checkbox-button
-                                type="button"
-                                class="btn"
-                                ng-model="filters.period.overtime"
-                            >OT</checkbox-button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="filters-right">
-                </div>
-
-            </div>
-
-        </div>
 
         <div class="arena-chart-arena">
 
