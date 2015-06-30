@@ -41,21 +41,22 @@ class Event extends Tag {
         //     variableValue.isRequired = tagVariable.isRequired;
         //     delete variableValue.type;
         // });
-        Object.keys(this.tagVariables).forEach( (positionId) => {
-            //index = index + 1;
+        Object.keys(this.tagVariables).forEach( (positionId, index) => {
+            index = index + 1;
             let variableValue = angular.copy(this.tagVariables[positionId]) || {};
             //this.variableValues[tagVariableId];
-            //let tagVariable = this.tagVariables[index];
+            let tagVariable = this.tagVariables[index];
             variableValue.gameId = gameId;
-            //variableValue.inputType = tagVariable.type;
-            //variableValue.options = tagVariable.options;
-            //variableValue.formations = tagVariable.formations;
-            //variableValue.id = tagVariable.id;
-            //variableValue.order = index;
-            //variableValue.isRequired = tagVariable.isRequired;
+            variableValue.inputType = tagVariable.type;
+            variableValue.options = tagVariable.options;
+            variableValue.formations = tagVariable.formations;
+            variableValue.id = tagVariable.id;
+            variableValue.order = index;
+            variableValue.isRequired = tagVariable.isRequired;
             delete variableValue.type;
-            let temporaryVariable = this.variableValues[variableValue.id] || null;
-            variableValue.value = temporaryVariable.value || null;
+            let temporaryVariable = this.variableValues[variableValue.id] || {};
+            variableValue.value = temporaryVariable.value;
+            this.variableValues[tagVariable.id] = variableValue;
         });
         this.indexFields(this.variableValues, 'variableValues');
 
