@@ -74,6 +74,7 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.tagset = tagsets.get($scope.league.tagSetId);
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
+        $scope.isString = angular.isString;
 
         var playsList = plays.getList({ gameId: gameId });
 
