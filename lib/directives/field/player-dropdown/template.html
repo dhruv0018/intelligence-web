@@ -1,5 +1,5 @@
 <span class="player-dropdown">
-    <a ng-hide="isSelecting" ng-click="isSelecting = true">{{field.value.name}}</a>
+    <a ng-hide="isSelecting" ng-click="isSelecting = true">{{selectedValue.name}}</a>
     <input
         ng-show="isSelecting"
         type="text"
@@ -8,12 +8,14 @@
         placeholder="Select"
         data-typeahead="player as player.name for player in field.availableValues | filter:{ jerseyNumber: $viewValue } | orderBy:'jerseyNumber'"
         data-typeahead-on-select="selectValue($item)"
-        data-typeahead-template-url="item/player-dropdown-input.html"
+        data-typeahead-template-url="field/player-dropdown-input.html"
+        data-ng-blur="onBlur()"
+        ng-focus="onFocus()"
+        data-focus-on="shouldFocus()"
+        data-ng-change="onChange()"
+        tabindex="{{field.order}"
     >
     <!-- tabindex="{{ item.index }}"
-    data-ng-change="onChange()"
-    data-ng-blur="onBlur()"
-    data-focus-on="shouldFocus()"
     data-typeahead-editable="false"
     data-typeahead-on-select="selectPlayer($item)"
     -->
