@@ -14,7 +14,7 @@
     <div class="featured-reel-container" ng-show="featuredReel">
 
         <div class="featured-reel-video">
-            <div class="featured-reel-header">
+            <div class="featured-reel-header" ui-sref="Reel({id:featuredReel.id})">
                 <h3>{{featuredReel.name}}</h3>
             </div>
             <video-player sources="sources"></video-player>
