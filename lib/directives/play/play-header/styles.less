@@ -4,6 +4,7 @@
     .playHeadingContainer {
 
         display: flex;
+        align-items: flex-start;
         cursor: pointer;
 
         check-box {
@@ -22,7 +23,7 @@
                 font-size: 16px;
                 font-weight: 200;
                 letter-spacing: -0.01em;
-                margin-top: 5px;
+                margin-top: 0px;
                 margin-bottom: 5px;
                 text-decoration: none;
 
@@ -85,10 +86,17 @@
             }
         }
 
+        .playHeading-right {
+            display: flex;
+            align-items: center;
+        }
+
         .icon-tag {
-            color: @gray-light;
             font-size: 20px;
-            margin-top: 10px;
+        }
+
+        .icon-telestration {
+            font-size: 24px;
         }
 
         .watch-play,

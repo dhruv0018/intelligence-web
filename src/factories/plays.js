@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_CONSTANTS',
-    function($injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_CONSTANTS) {
+    '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_CONSTANTS', 'GamesFactory',
+    function($injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_CONSTANTS, GamesFactory) {
 
         var PlaysFactory = {
 
@@ -53,6 +53,21 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     let safeEventTime = utils.toFixedFloat(event.time);
 
                     return new KrossoverEvent(event, tag, safeEventTime);
+                }
+
+                /* Telestrations associated with this play */
+
+                let game = GamesFactory.get(play.gameId);
+
+                if (game) {
+
+                    /* NOTE: This could be slow if there are lots of games and many have telestrations */
+                    let telestrations = game.playTelestrations.filter((telestration) => {
+
+                        return telestration.playId === play.id && telestration.hasGlyphs();
+                    });
+
+                    play.hasTelestrations = !!telestrations.length;
                 }
 
                 return play;
