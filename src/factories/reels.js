@@ -464,42 +464,45 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return teamId === this.uploaderTeamId;
             },
-            publishToProfile: function() {
-                var self = this;
+            publishToProfile: function(user) {
 
-                if (!self.isSharedWithPublic()) {
-                    self.togglePublicSharing();
+                if (!this.isSharedWithPublic()) {
+                    this.togglePublicSharing();
                 }
 
-                self.isPublishedToProfile = true;
+                if (!this.isPublishedToProfile(user)) {
+                    user.profile.reelIds.push(this.id);
+                }
             },
-            unpublishFromProfile: function() {
-                var self = this;
+            unpublishFromProfile: function(user) {
 
-                if (self.isSharedWithPublic()) {
-                    self.togglePublicSharing();
+                if (this.isSharedWithPublic()) {
+                    this.togglePublicSharing();
                 }
 
-                self.isPublishedToProfile = false;
+                if (this.isPublishedToProfile(user)) {
+                    console.log('hi');
+                    user.profile.reelIds.forEach( (reelId, index) => {
+                        if (reelId === this.id) {
+                            user.profile.reelIds.splice(index, 1);
+                        }
+                    });
+                }
             },
-            getPublishedReels: function(userId) {
-                userId = userId || session.getCurrentUserId();
+            isPublishedToProfile: function(user) {
+                user = user || session.getCurrentUser();
 
-                if (!userId) throw new Error('No userId');
+                if (!user) throw new Error('No user');
 
-                var reels = this.getList();
-
-                return reels.filter(function publishedReels(reel) {
-
-                    return reel.uploaderUserId == userId &&
-                        reel.isPublishedToProfile === true;
+                return user.profile.reelIds.find( reelId => {
+                    return this.id === reelId;
                 });
             },
             isFeatured: function(user) {
-                var self = this;
+
                 user = user || session.getCurrentUser();
 
-                return self.id == user.profile.featuredReelId;
+                return this.id === user.profile.reelIds[0];
             },
             getFeaturedReel: function(user) {
 
@@ -507,7 +510,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (!user) throw new Error('No user');
 
-                let featuredReelId = user.profile.featuredReelId;
+                let featuredReelId = user.profile.reelIds[0];
 
                 return featuredReelId ? this.get(featuredReelId) : undefined;
             }

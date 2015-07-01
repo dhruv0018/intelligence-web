@@ -39,14 +39,15 @@ Profile.config([
                     'TeamsFactory',
                     'PositionsetsFactory',
                     function data(
-                                $q,
-                                $stateParams,
-                                users,
-                                reels,
-                                plays,
-                                sports,
-                                teams,
-                                positionsets) {
+                        $q,
+                        $stateParams,
+                        users,
+                        reels,
+                        plays,
+                        sports,
+                        teams,
+                        positionsets
+                    ) {
 
                         let userId = Number($stateParams.id);
 
@@ -61,7 +62,7 @@ Profile.config([
                             reels: reels.load({relatedUserId: userId}),
                             plays: relatedUser.then(() => {
                                 let user = users.get(userId);
-                                if (user.profile.featuredReelId) return plays.load({reelId: user.profile.featuredReelId});
+                                if (user.profile.reelIds[0]) return plays.load({reelId: user.profile.reelIds[0]});
                             }),
                             teams: relatedUser.then(() => {
                                 let user = users.get(userId);

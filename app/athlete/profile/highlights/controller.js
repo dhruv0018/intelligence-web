@@ -44,8 +44,10 @@ function HighlightsController (
     VIDEO_PLAYER_EVENTS
 )   {
         $scope.athlete = users.get($stateParams.id);
-        $scope.featuredReel = reels.getFeaturedReel($scope.athlete);
+        $scope.profileReels = reels.getList($scope.athlete.profile.reelIds);
+        $scope.featuredReel = $scope.profileReels[0];
         $scope.config = config;
+        $scope.options = {scope: $scope};
 
         if ($scope.featuredReel) {
 
@@ -87,8 +89,6 @@ function HighlightsController (
                 });
             }
         }
-
-        $scope.highlightReels = [];
 }
 
 Highlights.controller('Athlete.Profile.Highlights.controller', HighlightsController);

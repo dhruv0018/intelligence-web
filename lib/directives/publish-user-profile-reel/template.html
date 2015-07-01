@@ -1,7 +1,7 @@
 <span class="publish-user-profile-reel" >
     <span
         class="publish"
-        ng-show="!reel.isFeatured(user) && !publishing"
+        ng-show="!reel.isPublishedToProfile(user) && !publishing"
         ng-click="toggleReelPublishing()"
     >
         <i class="icon icon-plus"></i>
@@ -18,7 +18,7 @@
 
     <span
         class="unpublish"
-        ng-show="reel.isFeatured(user) && !publishing"
+        ng-show="reel.isPublishedToProfile(user) && !publishing"
         ng-click="toggleReelPublishing()"
     >
         <i class="icon icon-minus"></i>
