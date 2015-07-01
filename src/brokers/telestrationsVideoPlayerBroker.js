@@ -30,6 +30,7 @@ function TelestrationsVideoPlayerBrokerFactory(
             setupHandlers.bind(this);
             handleInitialStateChange.bind(this);
             onFullScreen.bind(this);
+            telestrationsToggled.bind(this);
 
             setupHandlers();
             handleInitialStateChange();
@@ -38,12 +39,14 @@ function TelestrationsVideoPlayerBrokerFactory(
         cleanup () {
 
             VideoPlayerEventEmitter.removeListener(VIDEO_PLAYER_EVENTS.FULLSCREEN, onFullScreen);
+            TelestrationsEventEmitter.removeListener(TELESTRATION_EVENTS.TOGGLED, telestrationsToggled);
         }
     }
 
     function setupHandlers () {
 
         VideoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.FULLSCREEN, onFullScreen);
+        TelestrationsEventEmitter.on(TELESTRATION_EVENTS.TOGGLED, telestrationsToggled);
     }
 
     function handleInitialStateChange () {
@@ -55,6 +58,11 @@ function TelestrationsVideoPlayerBrokerFactory(
             Telestrations.show();
             VideoPlayerEventEmitter.removeListener(VIDEO_PLAYER_EVENTS.ON_PLAY, onVideoPlayerInitialPlay);
         }
+    }
+
+    function telestrationsToggled(isEnabled) {
+
+        if (isEnabled) VideoPlayer.pause();
     }
 
     function onFullScreen(event) {
