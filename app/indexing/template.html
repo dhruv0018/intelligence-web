@@ -6,12 +6,6 @@
 
         <button class="btn-back" data-ng-if="indexing.isIndexing" data-ng-click="indexing.back()">Back (Esc)</button>
 
-        <pre>
-            <div ng-repeat="field in event.current.fields">
-                <player-dropdown-field ng-if="field.inputType === 'PLAYER_DROPDOWN' " field="field"></player-dropdown-field>
-            </div>
-        </pre>
-
         <div class="indexing-block">
 
             <form class="indexing-form" name="formIndexing" role="form" novalidate>
@@ -24,10 +18,18 @@
                 </div>
 
                 <!-- Script -->
-                <div class="script" data-ng-if="indexing.isIndexing && indexing.showScript">
+                <!-- <div class="script" data-ng-if="indexing.isIndexing && indexing.showScript">
                     <krossover-summary-item data-auto-advance="true" data-league="league" data-game="game" data-item="item" data-plays="indexing.plays" data-play="play.current" data-event="event.current" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-ng-repeat="item in event.current.indexerScript track by $index"></krossover-summary-item>
-                </div>
+                </div> -->
 
+                <div class="script">
+                    <span ng-repeat="scriptItem in event.current.indexerScript">
+                        <span ng-if="isString(scriptItem)"> {{scriptItem}}</span>
+                        <player-dropdown-field ng-if="scriptItem.type === 'PLAYER_DROPDOWN' "
+                                               event="event.current"
+                                               field="event.current.fields[scriptItem.index]"></player-dropdown-field>
+                    </span>
+                </div>
 
                 <div class="controls">
 
