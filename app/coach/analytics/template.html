@@ -1,36 +1,3 @@
-<section class="analytics">
-    <div>
-        <div class="analytics-options">
-            <div class="analytics-option">
-                <span>Season</span>
-                <select id="analytics-season-cta" data-ng-options="season.id as season.startDate | date: 'yyyy' for season in seasons" data-ng-model="filterQuery.seasonId" data-ng-change="generateStats()"></select>
-            </div>
-            <div class="analytics-option">
-                <span>Game Type</span>
-                <select id="analytics-gametype-cta" data-ng-model="filterQuery.gameType" data-ng-change="generateStats()">
-                    <option value="">All Stats</option>
-                    <option value="{{CONFERENCE.id}}">Conference Stats</option>
-                    <option value="{{NON_CONFERENCE.id}}">Non-Conference Stats</option>
-                    <option value="{{PLAYOFF.id}}">Playoffs Stats</option>
-                </select>
-            </div>
-            <!--TODO: generate list of opponents
-            <div class="analytics-option">
-                <span>Opponent</span>
-                <select>
-                    <option>All</option>
-                    <option>Other team</option>
-                    <option>Another team</option>
-                </select>
-            </div>-->
-        </div>
-        <div class="spinner-container" data-ng-show="loadingTables">
-            <krossover-spinner size="40px"></krossover-spinner>
-            <p>Loading Statistics...</p>
-        </div>
-        <div class="analytics-tables-container" data-ng-hide="loadingTables">
-            <dynamic-table data-ng-if="statsData.teamStats" data-source="statsData.teamStats"></dynamic-table>
-        </div>
-    </div>
-</section>
+<section class="coach-analytics">
 
+</section>

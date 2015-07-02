@@ -8,5 +8,12 @@
     ],
     "styles": [
         "styles.less"
+    ],
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "player",
+        "team"
     ]
 }
