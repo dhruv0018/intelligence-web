@@ -30,7 +30,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 Object.defineProperty(player, 'name', {
                     get: function() {
                         return this.firstName + ' ' + this.lastName;
-                    }
+                    },
+                    configurable: true
                 });
 
                 Object.defineProperty(player, 'shortName', {
@@ -42,6 +43,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 return player;
             },
+
             resendEmail: function(userId, teamId) {
                 var self = this;
 
