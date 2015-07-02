@@ -40,7 +40,8 @@ IntelligenceWebClient.factory('GamesResource', [
 
             generateStats: {
                 method: 'GET',
-                url: url + '/stats'
+                url: url + '/stats',
+                isArray: true
             }
         };
 
