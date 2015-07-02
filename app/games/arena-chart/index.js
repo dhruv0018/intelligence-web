@@ -103,37 +103,85 @@ function GamesArenaChartController(
             x: 0.6,
             y: 0.2,
             isMade: 0,
-            period: '1'
+            period: '1',
+            playerId: 66791
         },
         {
             x: 0.65,
             y: 0.25,
             isMade: 0,
-            period: '2'
+            period: '2',
+            playerId: 66792
         },
         {
             x: 0.75,
             y: 0.35,
             isMade: 0,
-            period: '3'
+            period: '3',
+            playerId: 66793
         },
         {
             x: 0.80,
             y: 0.50,
             isMade: 1,
-            period: '4'
+            period: '4',
+            playerId: 66794
         },
         {
             x: 0.85,
             y: 0.65,
             isMade: 1,
-            period: 'OT'
+            period: 'OT',
+            playerId: 66795
         },
         {
             x: 0.9,
             y: 0.75,
             isMade: 1,
-            period: '1'
+            period: '1',
+            playerId: 66796
+        },
+        {
+            x: 0.1,
+            y: 0.2,
+            isMade: 0,
+            period: '1',
+            playerId: 66813
+        },
+        {
+            x: 0.3,
+            y: 0.25,
+            isMade: 0,
+            period: '2',
+            playerId: 66814
+        },
+        {
+            x: 0.25,
+            y: 0.35,
+            isMade: 0,
+            period: '3',
+            playerId: 66815
+        },
+        {
+            x: 0.13,
+            y: 0.50,
+            isMade: 1,
+            period: '4',
+            playerId: 66816
+        },
+        {
+            x: 0.45,
+            y: 0.65,
+            isMade: 1,
+            period: 'OT',
+            playerId: 66817
+        },
+        {
+            x: 0.18,
+            y: 0.75,
+            isMade: 1,
+            period: '1',
+            playerId: 66818
         }
     ];
 
@@ -163,7 +211,9 @@ function GamesArenaChartController(
             three: false,
             four: false,
             overtime: false
-        }
+        },
+        teamPlayersIds: [],
+        opposingTeamPlayersIds: []
     };
 
     //  make copy of default filters for 'applied' filters
