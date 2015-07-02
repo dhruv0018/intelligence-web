@@ -40,51 +40,69 @@ Account.run([
  * @type {UI-Router}
  */
 Account.config([
-    '$stateProvider', '$urlRouterProvider',
-    function config($stateProvider, $urlRouterProvider) {
+    '$stateProvider',
+    '$urlRouterProvider',
+    function config(
+        $stateProvider,
+        $urlRouterProvider
+    ) {
 
         $stateProvider
+        .state('Account', {
 
-            .state('Account', {
-                url: '/account',
-                parent: 'base',
-                abstract: true,
-                views: {
-                    'main@root': {
-                        templateUrl: accountTemplateUrl,
-                        controller: 'Account.controller'
-                    }
-                }
-            })
+            url: '/account',
+            parent: 'base',
+            abstract: true,
+            defaultChild: 'Account.ContactInfo',
+            views: {
 
-            .state('Account.ContactInfo', {
-                parent: 'Account',
-                views: {
-                    'content@Account': {
-                        templateUrl: contactInfoTemplateUrl,
-                        controller: 'Account.ContactInfo.controller'
-                    }
-                }
-            })
+                'main@root': {
 
-            .state('Account.TermsAndConditions', {
-                parent: 'Account',
-                views: {
-                    'content@Account': {
-                        templateUrl: termsAndConditionsTemplateUrl
-                    }
+                    templateUrl: accountTemplateUrl,
+                    controller: 'Account.controller'
                 }
-            })
+            }
+        })
 
-            .state('Account.RolesList', {
-                parent: 'Account',
-                views: {
-                    'content@Account': {
-                        templateUrl: rolesListTemplateUrl,
-                        controller: 'Account.RolesList.controller'
-                    }
+        .state('Account.ContactInfo', {
+
+            parent: 'Account',
+            url: '',
+            views: {
+
+                'content@Account': {
+
+                    templateUrl: contactInfoTemplateUrl,
+                    controller: 'Account.ContactInfo.controller'
                 }
-            });
+            }
+        })
+
+        .state('Account.TermsAndConditions', {
+
+            parent: 'Account',
+            url: '',
+            views: {
+
+                'content@Account': {
+
+                    templateUrl: termsAndConditionsTemplateUrl
+                }
+            }
+        })
+
+        .state('Account.RolesList', {
+
+            parent: 'Account',
+            views: {
+
+                'content@Account': {
+
+                    templateUrl: rolesListTemplateUrl,
+                    controller: 'Account.RolesList.controller'
+                }
+            }
+        });
     }
 ]);
 
