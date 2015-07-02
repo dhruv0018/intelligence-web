@@ -1,7 +1,7 @@
 <div class="player-multiselect">
     <x-multiselect
-        ng-model="selectedPlayerIds"
-        options="player.id as player.name for player in players"
+        ng-model="selectedIds"
+        options="player.id as player.shortName for player in players"
         multiple="true"
         template-url="player-multiselect/multiselect-template.html"
     >

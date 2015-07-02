@@ -33,6 +33,13 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     }
                 });
 
+                Object.defineProperty(player, 'shortName', {
+                    get: function() {
+                        return this.firstName[0] + '. ' + this.lastName;
+                    },
+                    configurable: true
+                });
+
                 return player;
             },
             resendEmail: function(userId, teamId) {

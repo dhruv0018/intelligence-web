@@ -35,48 +35,80 @@
     }
 
     .dropdown-menu {
-
-        max-height: 300px;
-        width: 250px;
-        overflow-y: scroll;
+        width: 200px;
+        overflow-y: none;
         letter-spacing: normal;
         top: auto;
         left: auto;
         padding: 0px;
 
-        .player-filter {
+        input {
+            border: thin solid @gray-border;
+            border-radius: 5px;
+            padding-left: 22px;
+        }
+
+        .icon-search {
+            position: absolute;
+            left: 10px;
+            top: 12px;
+            color: @gray-light;
+        }
+
+        .dropdown-menu-options {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+
+        .dropdown-menu-option {
             position: relative;
-            padding: 10px;
-            background-color: @content-bg;
+            padding: 3px;
+            cursor: pointer;
             text-align: left;
             border-bottom: thin solid @gray-border;
 
-            input {
-                border: thin solid @gray-border;
-                border-radius: 5px;
-                padding-left: 22px;
-            }
-
-            .icon-search {
-                position: absolute;
-                left: 15px;
-                top: 17px;
-                color: @gray-light;
+            &:hover {
+                background-color: @dropdown-link-hover-bg;
             }
         }
 
         .player {
-
+            position: relative;
             padding: 3px 5px;
 
             .icon {
-
                 position: absolute;
             }
 
             .item-label {
-
                 margin-left: 25px;
+            }
+        }
+
+        &-bottom, &-top {
+            position: relative;
+            padding: 5px;
+            background-color: @content-bg;
+        }
+
+        &-top {
+            text-align: left;
+            border-bottom: thin solid @gray-border;
+        }
+
+        &-bottom {
+            text-align: right;
+            border-top: thin solid @gray-border;
+        }
+
+        li a {
+            display: inline-block;
+            cursor: pointer;
+            text-decoration: none;
+
+            &:hover, &:focus, &:active {
+                background-color: transparent;
+                text-decoration: underline;
             }
         }
     }
