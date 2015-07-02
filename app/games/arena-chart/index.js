@@ -37,17 +37,36 @@ GamesArenaChart.config([
 /* ArenaChart Data Resolve */
 
 GamesArenaChartData.$inject = [
+    'PlayersFactory',
     'GamesFactory',
     '$stateParams',
     '$q'
 ];
 
 function GamesArenaChartData (
+    players,
     games,
-    $stateparams,
+    $stateParams,
     $q
 ) {
 
+    let gameId = Number($stateParams.id);
+
+    return games.load(gameId).then(function() {
+
+        let game = games.get(gameId);
+
+        let Data = {
+            players: players.load({
+                'rosterId[]': [
+                    game.getRoster(game.teamId).id,
+                    game.getRoster(game.opposingTeamId).id
+                ]
+            })
+        };
+
+        return $q.all(Data);
+    });
 }
 
 
@@ -77,6 +96,7 @@ function GamesArenaChartController(
     let team = teams.get(game.teamId);
     let opposingTeam = teams.get(game.opposingTeamId);
     let league = leagues.get(team.leagueId);
+
     /* TODO: use arenaChart.get($stateParams.id) to get the arena Events*/
     let arenaEvents = [
         {

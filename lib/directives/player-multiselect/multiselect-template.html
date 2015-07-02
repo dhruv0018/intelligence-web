@@ -1,0 +1,25 @@
+<div class="player-multiselect-container">
+
+    <label class="btn btn-default dropdown-toggle" ng-click="toggleSelect()" ng-disabled="disabled" ng-class="{'error': !valid()}">
+        <span ng-show="selectedPlayerIds.length" class="tag-label">{{selectedPlayerIds.length}} Selected</span>
+        <span ng-show="!selectedPlayerIds.length">All Players</span>
+        <i class="icon icon-chevron-down"></i>
+    </label>
+
+    <ul class="dropdown-menu">
+
+        <li class="tag-filter">
+            <i class="icon icon-search"></i>
+            <input class="form-control input-sm" type="text" ng-model="searchText.label" autofocus="autofocus" placeholder="Search Tags" />
+        </li>
+
+        <li ng-if="isOpen" class="tag-row" ng-repeat="item in items | filter:searchText">
+            <a class="tag" href ng-click="select(item); focus()">
+                <i class="icon" ng-class="{'icon-ok': item.checked, 'empty': !item.checked}"></i>
+                <span class="item-label">{{ item.label }}</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>

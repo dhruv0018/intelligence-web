@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "player-multiselect",
         "arena-chart-filters",
         "jersey-color",
         "arena-event",

@@ -2,6 +2,15 @@
 
     <!-- Filters -->
     <div class="arena-chart-filters-left">
+
+        <div class="players filter-group">
+
+            <label> Players </label>
+
+            <player-multiselect ng-model="ngModel.teamPlayers.ids" players="teamPlayerList"></player-multiselect>
+
+        </div>
+
     </div>
 
     <div class="arena-chart-filters-center">
@@ -71,6 +80,15 @@
     </div>
 
     <div class="arena-chart-filters-right">
+
+        <div class="players filter-group">
+
+            <label> Players </label>
+
+            <player-multiselect ng-model="ngModel.opposingTeamPlayers.ids" players="opposingTeamPlayerList"></player-multiselect>
+
+        </div>
+
     </div>
 
 </div>
