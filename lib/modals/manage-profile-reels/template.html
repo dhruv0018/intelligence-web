@@ -18,8 +18,8 @@
                 placeholder="Search Reels">
         </div>
 
-        <p class="reels-list-header">On Profile ({{profileReels.length}}) <span class="reorder">Reorder</span></p>
-        <div class="reels-list">
+        <p class="reels-list-header">On Profile ({{profileReels.length}}) <span class="reorder" ng-click="reordering = true">Reorder</span></p>
+        <div class="reels-list" ng-show="matchingProfileReels.length">
             <div class="reel-option" ng-repeat="reel in matchingProfileReels = (profileReels | filter: filters)">
                 <div>
                     <p class="reel-name">{{reel.name}}</p>
@@ -28,9 +28,10 @@
                 <span class="remove-from-profile" ng-click="removeReelFromProfile(reel)">Remove</span>
             </div>
         </div>
+        <p ng-hide="matchingProfileReels.length">You haven't added any reels to your profile yet.</p>
 
         <p class="reels-list-header">In Film Library ({{nonProfileReels.length}})</p>
-        <div class="reels-list">
+        <div class="reels-list" ng-show="matchingNonProfileReels.length">
             <div class="reel-option" ng-repeat="reel in matchingNonProfileReels = (nonProfileReels | filter: filters)">
                 <div>
                     <p class="reel-name">{{reel.name}}</p>
@@ -39,6 +40,7 @@
                 <span class="add-to-profile" ng-click="addReelToProfile(reel)">Add</span>
             </div>
         </div>
+        <p ng-hide="matchingNonProfileReels.length">You don't have any reels in your film library to add to your profile.</p>
     </div>
 
 </div>
