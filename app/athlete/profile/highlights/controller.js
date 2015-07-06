@@ -19,6 +19,7 @@ HighlightsController.$inject = [
     'PlaysFactory',
     'PlaysManager',
     'PlayManager',
+    'SessionService',
     'VideoPlayer',
     'VideoPlayerEventEmitter',
     'VIDEO_PLAYER_EVENTS'
@@ -39,6 +40,7 @@ function HighlightsController (
     plays,
     playsManager,
     playManager,
+    session,
     videoPlayer,
     VideoPlayerEventEmitter,
     VIDEO_PLAYER_EVENTS
@@ -48,6 +50,10 @@ function HighlightsController (
         $scope.featuredReel = $scope.profileReels[0];
         $scope.config = config;
         $scope.options = {scope: $scope};
+
+        // Check if user is on their own profile
+        $scope.isCurrentUser = false;
+        if ($scope.athlete.id === session.getCurrentUserId()) $scope.isCurrentUser = true;
 
         if ($scope.featuredReel) {
 

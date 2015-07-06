@@ -3,6 +3,8 @@
 .manage-profile-reels {
 
     .modal-header {
+        background-color: @content-bg;
+        border: none;
 
         .modal-title {
             text-align: left;
@@ -11,6 +13,61 @@
                 .pull-right;
                 color: @brand-danger;
                 cursor: pointer;
+            }
+        }
+    }
+
+    .modal-body {
+        background-color: @content-bg;
+
+        .profile-reels-filter {
+
+        }
+
+        .reels-list-header {
+            text-transform: uppercase;
+            margin-top: 20px;
+            margin-bottom: 0;
+
+            .reorder {
+                .pull-right;
+                color: @brand-light-blue;
+            }
+        }
+
+        .reels-list {
+            border: thin solid @gray-border;
+            background-color: white;
+
+            .reel-option {
+                border-bottom: thin solid @gray-border;
+                padding: 5px 10px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                &:last-child {
+                    border: none;
+                }
+
+                p {
+                    margin: 0;
+                    line-height: normal;
+                }
+
+                .reel-name {
+                    font-weight: 500;
+                    color: black;
+                }
+
+                .add-to-profile {
+                    color: @brand-success;
+                }
+
+                .remove-from-profile {
+                    color: @brand-danger;
+                }
             }
         }
     }
