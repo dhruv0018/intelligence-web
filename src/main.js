@@ -17,6 +17,7 @@ require('./extensions');
 require('../build/build');
 
 import Reel from '../app/reel/index.js';
+import DynamicTables from '../lib/directives/dynamic-tables/index';
 
 /* App dependencies */
 require('./config');

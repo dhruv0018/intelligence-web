@@ -1,3 +1,7 @@
+#v2.6.0#
+##Features##
+- Stats
+
 #v2.5.0#
 ##Features##
 - Telestrations
