@@ -1,10 +1,10 @@
 <span class="item">
     <span class="player-dropdown">
-        <a class="field-display" ng-hide="isSelecting" ng-click="isSelecting = true">
-            <span ng-show="selectedValue.name.length > 0">
+        <a class="field-display" ng-hide="isSelecting">
+            <span ng-click="isSelecting = true" ng-show="selectedValue.name.length > 0">
                 {{selectedValue.name}}
             </span>
-            <span ng-show="selectedValue.name.length === 0 || !selectedValue.name">
+            <span ng-click="isSelecting = true" ng-show="selectedValue.name.length === 0 || !selectedValue.name">
                 <span ng-show="field.isRequired">Select</span>
                 <span ng-show="!field.isRequired">Optional</span>
             </span>
