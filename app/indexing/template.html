@@ -25,9 +25,10 @@
                 <div class="script">
                     <span ng-repeat="scriptItem in event.current.indexerScript">
                         <span ng-if="isString(scriptItem)"> {{scriptItem}}</span>
-                        <player-dropdown-field ng-if="scriptItem.type === 'PLAYER_DROPDOWN' "
+                        <!-- <player-dropdown-field ng-if="scriptItem.type === 'PLAYER_DROPDOWN' "
                                                event="event.current"
-                                               field="event.current.fields[scriptItem.index]"></player-dropdown-field>
+                                               field="event.current.fields[scriptItem.index]"></player-dropdown-field> -->
+                        <krossover-field ng-if="!isString(scriptItem)" event="event.current" field="event.current.fields[scriptItem.index]"></krossover-field>
                     </span>
                 </div>
 

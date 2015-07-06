@@ -1,13 +1,15 @@
 {
     "name": "field",
     "templates": [
-        "template.html"
+        "template.html",
+        "dropdown-input.html"
     ],
     "styles": [
         "styles.less"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "controller.js"
     ],
     "paths": [
         "."
