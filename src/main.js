@@ -79,6 +79,8 @@ require('./constants/device');
 require('./constants/states');
 require('./constants/video-player');
 require('./constants/views');
+require('./constants/schemas');
+require('./constants/subscriptions');
 require('./constants/playlist');
 require('./constants/keyboard');
 require('./constants/telestrations');
