@@ -105,7 +105,8 @@ function GamesArenaChartController(
             isMade: 0,
             period: '1',
             playerId: 75066,
-            teamId: 13305
+            teamId: 13305,
+            customTagIds: [8]
         },
         {
             x: 0.65,
@@ -113,7 +114,8 @@ function GamesArenaChartController(
             isMade: 0,
             period: '2',
             playerId: 75067,
-            teamId: 13305
+            teamId: 13305,
+            customTagIds: [8]
         },
         {
             x: 0.75,
@@ -137,7 +139,8 @@ function GamesArenaChartController(
             isMade: 1,
             period: 'OT',
             playerId: 75071,
-            teamId: 13305
+            teamId: 13305,
+            customTagIds: [8]
         },
         {
             x: 0.9,
@@ -210,31 +213,10 @@ function GamesArenaChartController(
     $scope.arenaEvents = arenaEvents;
     $scope.filteredArenaEvents = [];
 
-    /* Filters */
-
-    const filtersDefault = {
-        shots: {
-            made: false,
-            missed: false
-        },
-        period: {
-            one: false,
-            two: false,
-            three: false,
-            four: false,
-            overtime: false
-        },
-        teamPlayersIds: [],
-        opposingTeamPlayersIds: []
-    };
-
-    //  make copy of default filters for 'applied' filters
-    $scope.filters = angular.copy(filtersDefault);
-
     /* reset filters */
     $scope.resetFilters = function() {
 
-        $scope.filters = angular.copy(filtersDefault);
+        $scope.$broadcast('arena-chart-filters:reset');
     };
 
     let removeFiltersWatch = $scope.$watch('filters', filtersWatch, true);
