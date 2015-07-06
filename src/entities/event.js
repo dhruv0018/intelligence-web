@@ -27,21 +27,8 @@ class Event extends Tag {
 
         this.fields = {};
 
-        /* Add game ID to all variable values */
-        // Object.keys(this.variableValues).forEach( (tagVariableId, index) => {
-        //     index = index + 1;
-        //     let variableValue = this.variableValues[tagVariableId];
-        //     let tagVariable = this.tagVariables[index];
-        //     variableValue.gameId = gameId;
-        //     variableValue.inputType = tagVariable.type;
-        //     variableValue.options = tagVariable.options;
-        //     variableValue.formations = tagVariable.formations;
-        //     variableValue.id = tagVariable.id;
-        //     variableValue.order = index;
-        //     variableValue.isRequired = tagVariable.isRequired;
-        //     delete variableValue.type;
-        // });
-        Object.keys(this.tagVariables).forEach( (positionId, index) => {
+        Object.keys(this.tagVariables).forEach((positionId, index) => {
+
             index = index + 1;
             let variableValue = angular.copy(this.tagVariables[positionId]) || {};
             //this.variableValues[tagVariableId];
@@ -58,8 +45,8 @@ class Event extends Tag {
             variableValue.value = temporaryVariable.value;
             this.variableValues[tagVariable.id] = variableValue;
         });
-        this.indexFields(this.variableValues, 'variableValues');
 
+        this.indexFields(this.variableValues, 'variableValues');
     }
     /**
      * Getter for event.shortcutKey
@@ -133,7 +120,7 @@ class Event extends Tag {
 
     toJSON () {
 
-        let copy = super.toJSON(this);
+        let copy = Object.assign({}, this);
 
         delete copy.activeEventVariableIndex;
         delete copy.indexerScript;
@@ -153,17 +140,14 @@ class Event extends Tag {
         delete copy.buffer;
         delete copy.name;
 
-        Object.keys(copy.variableValues).forEach(key => {
+        copy.variableVales = {};
 
-            let variableValue = copy.variableValues[key];
+        Object.keys(copy.fields).forEach((order) => {
 
-            copy.variableValues[key] = {
-                type: variableValue.type,
-                value: variableValue.value
-            };
+            copy.variableValues[copy.fields[order].id] = copy.fields[order].toJSON();
         });
 
-        return copy;
+        return JSON.stringify(copy);
     }
 }
 
