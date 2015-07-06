@@ -9,16 +9,18 @@
     </header>
 
     <div class="modal-body">
-        <input
-            class="profile-reels-filter form-control"
-            type="text"
-            ng-model="searchText.label"
-            autofocus="autofocus"
-            placeholder="Search Tags">
+        <div class="profile-reels-filter">
+            <i class="icon icon-search"></i>
+            <input
+                class="form-control"
+                type="text"
+                ng-model="filters.name"
+                placeholder="Search Reels">
+        </div>
 
         <p class="reels-list-header">On Profile ({{profileReels.length}}) <span class="reorder">Reorder</span></p>
         <div class="reels-list">
-            <div class="reel-option" ng-repeat="reel in profileReels">
+            <div class="reel-option" ng-repeat="reel in matchingProfileReels = (profileReels | filter: filters)">
                 <div>
                     <p class="reel-name">{{reel.name}}</p>
                     <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM. d, yyyy'}}</p>
@@ -29,7 +31,7 @@
 
         <p class="reels-list-header">In Film Library ({{nonProfileReels.length}})</p>
         <div class="reels-list">
-            <div class="reel-option" ng-repeat="reel in nonProfileReels">
+            <div class="reel-option" ng-repeat="reel in matchingNonProfileReels = (nonProfileReels | filter: filters)">
                 <div>
                     <p class="reel-name">{{reel.name}}</p>
                     <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM. d, yyyy'}}</p>
