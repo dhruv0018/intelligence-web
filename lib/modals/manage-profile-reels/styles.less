@@ -5,14 +5,17 @@
     .modal-header {
         background-color: @content-bg;
         border: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
 
-        .modal-title {
-            text-align: left;
+        .circle-button {
+            background-color: @brand-success;
+            color: white;
 
-            .icon {
-                .pull-right;
-                color: @brand-danger;
-                cursor: pointer;
+            &:hover {
+                background-color: lighten(@brand-success, 10%);
             }
         }
     }
@@ -32,6 +35,7 @@
             .reorder {
                 .pull-right;
                 color: @brand-light-blue;
+                cursor: pointer;
             }
         }
 
@@ -63,10 +67,12 @@
 
                 .add-to-profile {
                     color: @brand-success;
+                    cursor: pointer;
                 }
 
                 .remove-from-profile {
                     color: @brand-danger;
+                    cursor: pointer;
                 }
             }
         }
