@@ -19,10 +19,11 @@ class PlayerField extends Field {
 
         Object.defineProperty(this.value, 'name', {
             get: () => {
-                let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+                let calculatedName = '';
+                //!this.isRequired ? 'Optional' : 'Select';
                 let value = this.currentValue;
                 let playerId = value.playerId;
-                console.log('the playerId is ', playerId);
+                //console.log('the playerId is ', playerId);
                 if (playerId) {
                     let injector = angular.element(document).injector();
                     let players = injector.get('PlayersFactory');
@@ -88,7 +89,7 @@ class PlayerField extends Field {
             playerId: (playerOption.playerId) ? Number(playerOption.playerId) : playerOption.playerId
         };
         this.value = value;
-        console.log(this.value);
+        //console.log(this.value);
         //Object.assign(this.value, value);
     }
 
