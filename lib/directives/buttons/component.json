@@ -1,0 +1,13 @@
+{
+    "name": "buttons",
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "dropdown-toggle-button",
+        "save-button"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

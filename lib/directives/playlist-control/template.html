@@ -1,7 +1,5 @@
 <div class="krossover-playlist-control">
 
-    <span class="playlist-control-play-count">Viewing: {{filteredPlaysIds.length === totalPlays.length ? 'All Plays' : ''}} ({{ filteredPlaysIds.length }})</span>
-
     <div class="select-all" feature="SelectPlays" ng-if="plays.length && isTeamMember">
         <check-box
             ng-click="toggleSelectAllPlays()"
