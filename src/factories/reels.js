@@ -481,7 +481,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
 
                 if (this.isPublishedToProfile(user)) {
-                    console.log('hi');
                     user.profile.reelIds.forEach( (reelId, index) => {
                         if (reelId === this.id) {
                             user.profile.reelIds.splice(index, 1);

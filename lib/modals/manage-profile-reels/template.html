@@ -25,7 +25,7 @@
                     <p class="reel-name">{{reel.name}}</p>
                     <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM. d, yyyy'}}</p>
                 </div>
-                <span class="remove-from-profile">Remove</span>
+                <span class="remove-from-profile" ng-click="removeReelFromProfile(reel)">Remove</span>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
                     <p class="reel-name">{{reel.name}}</p>
                     <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM. d, yyyy'}}</p>
                 </div>
-                <span class="add-to-profile">Add</span>
+                <span class="add-to-profile" ng-click="addReelToProfile(reel)">Add</span>
             </div>
         </div>
     </div>
