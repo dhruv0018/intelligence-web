@@ -19,17 +19,53 @@
 
     .new-user-form-group {
 
-        display: flex;
-        align-items: stretch;
         position: relative;
         margin-bottom: 30px;
     }
 
     .new-user-password {
 
-        border-right: none;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
+        .form-control;
+        width: 100%;
+        box-sizing: border-box;
+        height: auto;
+        line-height: 36px;
+        border-width: 2px;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+
+        &.ng-dirty {
+
+            &.ng-invalid-notfound:focus
+            &.ng-invalid-password:focus {
+
+                border-color: red;
+            }
+
+            &.ng-invalid-notfound:focus + .error,
+            &.ng-invalid-password:focus + .error {
+
+                .show;
+            }
+        }
+    }
+
+    .input-button-combo {
+
+        position: relative;
+    }
+
+    .show-hide-password {
+
+        .btn;
+        .btn-default;
+        .btn-sm;
+        min-width: 4em;
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        bottom: 6px;
     }
 
     .new-user-errors {
@@ -46,15 +82,6 @@
             margin: 10px 0;
             width: 100%;
         }
-    }
-
-    .show-hide-password {
-
-        .btn;
-        .btn-primary;
-        min-width: 4em;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
     }
 
     .button-set-password {

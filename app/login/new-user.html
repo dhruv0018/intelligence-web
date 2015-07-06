@@ -18,26 +18,30 @@
         <!-- TODO: This should be made into a directive. -->
         <div class="form-group new-user-form-group">
 
-            <input
-             id="new-user-password"
-             class="form-field-login new-user-password"
-             name="password"
-             ng-attr-type="{{newUser.showPassword ? 'text' : 'password'}}"
-             ng-minlength="4"
-             placeholder="New Password"
-             ng-model="newUser.password"
-             ng-trim="false"
-             oncopy="return false;"
-             onpaste="return false;"
-             required
-            >
+            <div class="input-button-combo">
 
-            <button
-             id="show-hide-password"
-             class="show-hide-password"
-             ng-click="newUser.showPassword = !newUser.showPassword;"
-             type="button"
-            >{{newUser.showPassword ? 'Hide' : 'Show'}}</button>
+                <input
+                 id="new-user-password"
+                 class="new-user-password"
+                 name="password"
+                 ng-attr-type="{{newUser.showPassword ? 'text' : 'password'}}"
+                 ng-minlength="4"
+                 placeholder="New Password"
+                 ng-model="newUser.password"
+                 ng-trim="false"
+                 oncopy="return false;"
+                 onpaste="return false;"
+                 required
+                >
+
+                <button
+                 id="show-hide-password"
+                 class="show-hide-password"
+                 ng-click="newUser.showPassword = !newUser.showPassword;"
+                 type="button"
+                >{{newUser.showPassword ? 'Hide' : 'Show'}}</button>
+
+            </div>
 
             <!-- TODO: ngMessage or directive? -->
             <div class="new-user-errors">
