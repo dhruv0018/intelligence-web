@@ -86,7 +86,8 @@ class PlayerField extends Field {
 
     set currentValue(playerOption) {
         let value = {
-            playerId: (playerOption.playerId) ? Number(playerOption.playerId) : playerOption.playerId
+            playerId: (playerOption.playerId) ? Number(playerOption.playerId) : playerOption.playerId,
+            name: playerOption.name || ''
         };
         this.value = value;
         //console.log(this.value);
