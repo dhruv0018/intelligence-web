@@ -990,6 +990,17 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
             },
 
+            getArenaEvents: function() {
+
+                let self = this;
+
+                let model = $injector.get(self.model);
+
+                if (!self.id) throw new Error('Game must be saved before getting arena events');
+
+                return model.getArenaEvents({ id: self.id });
+            },
+
             getRemainingTime: function(uploaderTeam, now) {
 
                 var self = this;

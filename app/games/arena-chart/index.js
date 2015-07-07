@@ -62,6 +62,9 @@ function GamesArenaChartData (
                     game.getRoster(game.teamId).id,
                     game.getRoster(game.opposingTeamId).id
                 ]
+            }),
+            arenaEvents: game.getArenaEvents().$promise.then(function(arenaEvents) {
+                return arenaEvents;
             })
         };
 
@@ -73,6 +76,7 @@ function GamesArenaChartData (
 /* ArenaChart Controller */
 
 GamesArenaChartController.$inject = [
+    'Games.ArenaChart.Data',
     'ARENA_TYPES',
     'GamesFactory',
     'TeamsFactory',
@@ -83,6 +87,7 @@ GamesArenaChartController.$inject = [
 ];
 
 function GamesArenaChartController(
+    data,
     ARENA_TYPES,
     games,
     teams,
@@ -96,109 +101,7 @@ function GamesArenaChartController(
     let team = teams.get(game.teamId);
     let opposingTeam = teams.get(game.opposingTeamId);
     let league = leagues.get(team.leagueId);
-
-    /* TODO: use arenaChart.get($stateParams.id) to get the arena Events*/
-    let arenaEvents = [
-        {
-            x: 0.6,
-            y: 0.2,
-            isMade: 0,
-            period: '1',
-            playerId: 75066,
-            teamId: 13305,
-            customTagIds: [8]
-        },
-        {
-            x: 0.65,
-            y: 0.25,
-            isMade: 0,
-            period: '2',
-            playerId: 75067,
-            teamId: 13305,
-            customTagIds: [8]
-        },
-        {
-            x: 0.75,
-            y: 0.35,
-            isMade: 0,
-            period: '3',
-            playerId: 75070,
-            teamId: 13305
-        },
-        {
-            x: 0.80,
-            y: 0.50,
-            isMade: 1,
-            period: '4',
-            playerId: 75076,
-            teamId: 13305
-        },
-        {
-            x: 0.85,
-            y: 0.65,
-            isMade: 1,
-            period: 'OT',
-            playerId: 75071,
-            teamId: 13305,
-            customTagIds: [8]
-        },
-        {
-            x: 0.9,
-            y: 0.75,
-            isMade: 1,
-            period: '1',
-            playerId: 75047,
-            teamId: 13305
-        },
-        {
-            x: 0.1,
-            y: 0.2,
-            isMade: 0,
-            period: '1',
-            playerId: 75048,
-            teamId: 13304
-        },
-        {
-            x: 0.3,
-            y: 0.25,
-            isMade: 0,
-            period: '2',
-            playerId: 75053,
-            teamId: 13304
-        },
-        {
-            x: 0.25,
-            y: 0.35,
-            isMade: 0,
-            period: '3',
-            playerId: 75059,
-            teamId: 13304
-        },
-        {
-            x: 0.13,
-            y: 0.50,
-            isMade: 1,
-            period: '4',
-            playerId: 75062,
-            teamId: 13304
-        },
-        {
-            x: 0.45,
-            y: 0.65,
-            isMade: 1,
-            period: 'OT',
-            playerId: 75062,
-            teamId: 13304
-        },
-        {
-            x: 0.18,
-            y: 0.75,
-            isMade: 1,
-            period: '1',
-            playerId: 75063,
-            teamId: 13304
-        }
-    ];
+    let arenaEvents = data.arenaEvents;
 
     // Determine arena type
     try {
