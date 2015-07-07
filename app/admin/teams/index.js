@@ -153,10 +153,10 @@ function TeamDataDependencies (
             /* Load data. */
             this.sports = sports.load();
             this.leagues = leagues.load();
-            this.members = [];
+            this.members = {};
 
-            let usersPromise = users.load({teamId: teamId});
-            usersPromise.then(users => {
+            this.users = users.load({teamId: teamId})
+            .then(users => {
 
                 users.forEach(user => {
 
