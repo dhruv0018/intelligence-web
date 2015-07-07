@@ -223,7 +223,12 @@
         "Indexer": true
     },
 
-    "IndexerGames": {
+    "IndexerGamesAssigned": {
+
+        "Indexer": true
+    },
+
+    "IndexerGamesAvailable": {
 
         "Indexer": true
     },
@@ -261,7 +266,7 @@
         "Head Coach": true,
         "Assistant Coach": true
     },
-    
+
     "Coach.Analytics.Player": {
 
         "Head Coach": true,

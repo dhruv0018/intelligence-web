@@ -1,34 +1,34 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
-const IndexerGames = angular.module('IndexerGames', []);
+const IndexerGamesAssigned = angular.module('IndexerGamesAssigned', []);
 
 import IndexerDataDependencies from '../data';
-import IndexerGamesController from '../controller';
+import IndexerGamesAssignedController from '../controller';
 import template from './template.html';
 
-IndexerGames.factory('IndexerDataDependencies', IndexerDataDependencies);
-IndexerGames.controller('IndexerGamesController', IndexerGamesController);
+IndexerGamesAssigned.factory('IndexerDataDependencies', IndexerDataDependencies);
+IndexerGamesAssigned.controller('IndexerGamesAssignedController', IndexerGamesAssignedController);
 
-IndexerGames.config([
+IndexerGamesAssigned.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
         $stateProvider
 
-            .state('IndexerGames', {
+            .state('IndexerGamesAssigned', {
                 url: '/games',
                 parent: 'Indexer',
                 views: {
                     'main@root': {
                         template,
-                        controller: IndexerGamesController
+                        controller: IndexerGamesAssignedController
                     }
                 },
                 resolve: {
                     'Indexer.Games.Data': [
                         '$q', 'IndexerDataDependencies',
-                        function($q, IndexingGamesData) {
-                            let data = new IndexingGamesData();
+                        function($q, IndexerGamesAssignedData) {
+                            let data = new IndexerGamesAssignedData();
                             return $q.all(data);
                         }
                     ]
@@ -37,4 +37,4 @@ IndexerGames.config([
     }
 ]);
 
-export default IndexerGames;
+export default IndexerGamesAssigned;

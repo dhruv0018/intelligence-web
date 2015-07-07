@@ -1,34 +1,34 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
-const IndexerHistory = angular.module('IndexerHistory', []);
+const IndexerGamesAvailable = angular.module('IndexerGamesAvailable', []);
 
 import IndexerDataDependencies from '../data';
-import IndexerGamesController from '../controller';
+import IndexerGamesAvailableController from '../controller';
 import template from './template.html';
 
-IndexerHistory.factory('IndexerDataDependencies', IndexerDataDependencies);
-IndexerHistory.controller('IndexerGamesController', IndexerGamesController);
+IndexerGamesAvailable.factory('IndexerDataDependencies', IndexerDataDependencies);
+IndexerGamesAvailable.controller('IndexerGamesAvailableController', IndexerGamesAvailableController);
 
-IndexerHistory.config([
+IndexerGamesAvailable.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
         $stateProvider
 
-            .state('IndexerHistory', {
-                url: '/history',
+            .state('IndexerGamesAvailable', {
+                url: '/games',
                 parent: 'Indexer',
                 views: {
                     'main@root': {
                         template,
-                        controller: IndexerGamesController
+                        controller: IndexerGamesAvailableController
                     }
                 },
                 resolve: {
                     'Indexer.Games.Data': [
                         '$q', 'IndexerDataDependencies',
-                        function($q, IndexerHistoryData) {
-                            let data = new IndexerHistoryData();
+                        function($q, IndexerGamesAvailableData) {
+                            let data = new IndexerGamesAvailableData();
                             return $q.all(data);
                         }
                     ]
@@ -37,4 +37,4 @@ IndexerHistory.config([
     }
 ]);
 
-export default IndexerHistory;
+export default IndexerGamesAvailable;

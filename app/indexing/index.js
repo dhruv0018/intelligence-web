@@ -142,7 +142,7 @@ Indexing.config([
                         playerlist.fill(game);
                         if (!game.isAssignedToUser(userId)) {
 
-                            $state.go('IndexerGames');
+                            $state.go('IndexerGamesAssigned');
                         }
 
                         else if (game.canBeIndexed() || game.canBeQAed()) {

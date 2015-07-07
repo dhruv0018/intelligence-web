@@ -1,6 +1,6 @@
 export default `
 
-<section class="indexer-games">
+<section class="indexer-games-available">
 
     <aside class="sidebar">
 

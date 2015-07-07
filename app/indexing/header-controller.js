@@ -64,7 +64,7 @@ Indexing.controller('Indexing.Header.Controller', [
             indexing.isIndexing = false;
             $scope.game.finishAssignment(userId);
             $scope.game.save();
-            $state.go('IndexerGames');
+            $state.go('IndexerGamesAssigned');
         };
 
         $scope.sendToTeam = function() {
@@ -86,7 +86,7 @@ Indexing.controller('Indexing.Header.Controller', [
                         scope: $scope
                     }).result.then(function() {
                         $scope.game.save();
-                        $state.go('IndexerGames');
+                        $state.go('IndexerGamesAssigned');
                     });
                 });
             });
