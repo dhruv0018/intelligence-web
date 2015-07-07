@@ -1,7 +1,9 @@
 <x-tabset class="coach-game">
     <x-tab
+        id="coach-game-instructions-cta"
         data-active="gameTabs.confirm.active"
         data-disabled="gameTabs.confirm.disabled"
+        id="instructions-cta"
         data-heading="Instructions">
 
         <krossover-coach-game-instructions data-ng-if="game.rosters[game.teamId]"
@@ -13,8 +15,10 @@
     </x-tab>
 
     <x-tab
+        id="coach-game-opposing-info-cta"
         data-active="gameTabs.opposing.active"
         data-disabled="gameTabs.opposing.disabled"
+        id="opposing-team-info-cta"
         data-heading="{{ teams[game.opposingTeamId].name || 'Opposing Team' }}">
 
         <game-tab data-ng-if="game.rosters[game.opposingTeamId]"
@@ -31,8 +35,11 @@
                   data-positionset="positionset"></game-tab>
     </x-tab>
 
-    <x-tab data-active="gameTabs.team.active"
+    <x-tab
+           id="coach-game-team-cta"
+           data-active="gameTabs.team.active"
            data-disabled="gameTabs.team.disabled"
+           id="team-info-cta"
            data-heading="{{ teams[game.teamId].name || 'Team' }}">
 
         <game-tab data-ng-if="game.rosters[game.teamId]" data-next-tab="gameTabs.opposing"
@@ -49,7 +56,9 @@
     </x-tab>
 
     <x-tab
+        id="coach-game-basic-info-cta"
         data-active="gameTabs.info.active"
+        id="basic-game-info-cta"
         data-heading="Basic Game Info">
 
         <krossover-coach-game-info data-tabs="gameTabs"

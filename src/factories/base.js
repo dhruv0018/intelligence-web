@@ -2,8 +2,6 @@ var PAGE_SIZE = 100;
 
 var pkg = require('../../package.json');
 
-var tv4 = require('tv4');
-
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -32,24 +30,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                 angular.extend(resource, self);
 
                 return resource;
-            },
-
-            /**
-             * Validates resource with its schema.
-             * @param {Resource} resource - a user resource object.
-             */
-            validate: function(resource) {
-
-                resource = resource || this;
-
-                if (!resource) throw new Error('No resource to validate');
-                if (!this.schema) throw new Error('No schema for resource');
-
-                let schema = $injector.get(this.schema);
-
-                let result = tv4.validateMultiple(resource, schema, true);
-
-                return result;
             },
 
             /**
@@ -353,7 +333,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var storage = $injector.get(self.storage);
                 var session = $injector.get('SessionService');
 
-                var view = session.serializeUserResourceQuery(self.description, filter);
+                let view = angular.copy(filter) || {};
+                delete view.start;
+                delete view.count;
+                view = session.serializeUserResourceQuery(self.description, view);
 
                 /* Making a copy of the filter here so that the start and count
                  * properties don't get added to the filter if not passed in as a literal.  */

@@ -2,9 +2,9 @@
 
     <div data-ng-repeat="gap in gaps">
 
-        <krossover-arena-football-field-gap-report data-ng-if="redzone === false" data-runs="{{chart.runs[gap.value].totalRuns}}" data-avg-yards="{{chart.runs[gap.value].avgYards}}" data-play-ids="chart.runs[gap.value].playIds" data-game="game" data-plays="plays" data-team-id="teamId" data-opposing-team-id="opposingTeamId" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-league="league" data-chart="chart"></krossover-arena-football-field-gap-report>
+        <krossover-arena-football-field-gap-report data-ng-if="!redzone" data-runs="{{chart.runs[gap.value].totalRuns}}" data-avg-yards="{{chart.runs[gap.value].avgYards}}" data-play-ids="chart.runs[gap.value].playIds" data-game="game" data-plays="plays" data-team-id="teamId" data-opposing-team-id="opposingTeamId" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-league="league" data-chart="chart"></krossover-arena-football-field-gap-report>
 
-        <krossover-arena-football-field-gap-report data-ng-if="redzone === true" data-runs="{{chart.runs[gap.value].redzoneRuns}}" data-avg-yards="{{chart.runs[gap.value].avgYards}}" data-play-ids="chart.runs[gap.value].redzonePlayIds" data-game="game" data-plays="plays" data-team-id="teamId" data-opposing-team-id="opposingTeamId" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-league="league" data-chart="chart"></krossover-arena-football-field-gap-report>
+        <krossover-arena-football-field-gap-report data-ng-if="redzone" data-runs="{{chart.runs[gap.value].redzoneRuns}}" data-avg-yards="{{chart.runs[gap.value].avgYards}}" data-play-ids="chart.runs[gap.value].redzonePlayIds" data-game="game" data-plays="plays" data-team-id="teamId" data-opposing-team-id="opposingTeamId" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-league="league" data-chart="chart"></krossover-arena-football-field-gap-report>
 
     </div>
 
