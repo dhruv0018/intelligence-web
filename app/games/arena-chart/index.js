@@ -213,6 +213,7 @@ function GamesArenaChartController(
     $scope.arenaEvents = arenaEvents;
     $scope.filteredArenaEvents = [];
 
+
     /* reset filters */
     $scope.resetFilters = function() {
 
