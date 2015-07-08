@@ -7,8 +7,13 @@ arena-chart-filters {
 .arena-chart-filters {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     text-align: center;
     color: #000;
+    border: thin solid @gray-border;
+    padding: 10px;
+    border-radius: 2px;
+    background-color: @content-bg;
 
     > div {
         display: flex;
@@ -16,6 +21,10 @@ arena-chart-filters {
 
     &-left {
         justify-content: flex-start;
+
+        &:first-child {
+            text-align: left;
+        }
     }
 
     &-center {
@@ -24,6 +33,10 @@ arena-chart-filters {
 
     &-right {
         justify-content: flex-end;
+
+        &:last-child {
+            text-align: right;
+        }
     }
 
     .filter-group > * {
@@ -55,5 +68,11 @@ arena-chart-filters {
             padding: 6px 12px;
             font-weight: 500;
         }
+    }
+
+    .team-label {
+        font-weight: 500;
+        font-size: @font-size-large;
+        padding-bottom: 10px;
     }
 }

@@ -1,39 +1,21 @@
 <div class="arena-chart">
 
-    <header>
+    <header class="container">
 
-        <count-label all-count="arenaEvents.length" current-count="filteredArenaEvents.length" label="Shots"></count-label>
+        <div class="header-content">
 
-        <a name="reset-filters" ng-click="resetFilters()">Reset Filters</a>
+            <count-label all-count="arenaEvents.length" current-count="filteredArenaEvents.length" label="Shots"></count-label>
+
+            <a name="reset-filters" ng-click="resetFilters()">Reset Filters</a>
+
+        </div>
 
     </header>
 
 
     <div class="primary-content">
 
-        <div class="teams">
-
-            <div class="home-team">
-
-                <jersey-color color="game.primaryJerseyColor"></jersey-color>
-
-                <span class="home-team-name">{{team.name}}</span>
-
-            </div>
-
-            <div class="opposing-team">
-
-                <span class="opposing-team-name">{{opposingTeam.name}}</span>
-
-                <jersey-color color="game.opposingJerseyColor"></jersey-color>
-
-            </div>
-
-        </div>
-
-
-        <arena-chart-filters ng-model="filters"></arena-chart-filters>
-
+        <arena-chart-filters ng-model="filters" class="container"></arena-chart-filters>
 
         <div class="arena-chart-arena">
 

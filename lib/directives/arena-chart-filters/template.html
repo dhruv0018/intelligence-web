@@ -5,7 +5,13 @@
 
         <div class="players">
 
-            <label> Players </label>
+            <div class="team-label">
+
+                <jersey-color color="game.primaryJerseyColor"></jersey-color>
+
+                <span class="home-team-name">{{team.name}}</span>
+
+            </div>
 
             <player-multiselect ng-model="ngModel.teamPlayersIds" players="teamPlayerList"></player-multiselect>
 
@@ -91,7 +97,13 @@
 
         <div class="players">
 
-            <label> Players </label>
+            <div class="team-label">
+
+                <span class="opposing-team-name">{{opposingTeam.name}}</span>
+
+                <jersey-color color="game.opposingJerseyColor"></jersey-color>
+
+            </div>
 
             <player-multiselect ng-model="ngModel.opposingTeamPlayersIds" players="opposingTeamPlayerList"></player-multiselect>
 

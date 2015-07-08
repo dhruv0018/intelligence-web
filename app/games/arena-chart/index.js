@@ -99,7 +99,6 @@ function GamesArenaChartController(
 
     let game = games.get($stateParams.id);
     let team = teams.get(game.teamId);
-    let opposingTeam = teams.get(game.opposingTeamId);
     let league = leagues.get(team.leagueId);
     let arenaEvents = data.arenaEvents;
 
@@ -111,8 +110,6 @@ function GamesArenaChartController(
     }
 
     $scope.game = game;
-    $scope.team = team;
-    $scope.opposingTeam = opposingTeam;
     $scope.arenaEvents = arenaEvents;
     $scope.filteredArenaEvents = [];
 
