@@ -109,7 +109,6 @@ function GamesArenaChartController(
         throw new Error(error);
     }
 
-    $scope.game = game;
     $scope.arenaEvents = arenaEvents;
     $scope.filteredArenaEvents = [];
 
