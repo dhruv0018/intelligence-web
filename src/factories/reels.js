@@ -512,6 +512,25 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 let featuredReelId = user.profile.reelIds[0];
 
                 return featuredReelId ? this.get(featuredReelId) : undefined;
+            },
+            getSortedProfileReels: function(user) {
+
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
+
+                let profileReels = this.getList(user.profile.reelIds);
+
+                /* Sort profile reels objects by order on profile */
+                let sortedProfileReels = [];
+                user.profile.reelIds.forEach( (reelId, index) => {
+                    profileReels.forEach(reel => {
+                        if (reel.id === reelId) {
+                            sortedProfileReels[index] = reel;
+                        }
+                    });
+                });
+                return sortedProfileReels;
             }
         };
 

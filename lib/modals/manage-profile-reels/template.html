@@ -1,15 +1,16 @@
 <div class="manage-profile-reels">
 
-    <header class="modal-header">
+    <header class="modal-header" ng-class="{'centered': reordering}">
 
-        <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
-        <h3 class="modal-title">Manage Reels on your Profile</h3>
-        <button class="circle-button" ng-click="saveProfile()"><i class="icon icon-ok"></i></button>
+        <span class="btn-simple-cancel" ng-click="$dismiss()" ng-hide="reordering">Cancel</span>
+        <h3 class="modal-title" ng-hide="reordering">Manage Reels on your Profile</h3>
+        <h3 class="modal-title" ng-show="reordering">Reorder Reels on your Profile</h3>
+        <button class="circle-button" ng-click="saveProfile()" ng-hide="reordering"><i class="icon icon-ok"></i></button>
 
     </header>
 
     <div class="modal-body">
-        <div class="profile-reels-filter">
+        <div class="profile-reels-filter" ng-hide="reordering">
             <i class="icon icon-search"></i>
             <input
                 class="form-control"
@@ -18,9 +19,17 @@
                 placeholder="Search Reels">
         </div>
 
-        <p class="reels-list-header">On Profile ({{profileReels.length}}) <span class="reorder" ng-click="reordering = true">Reorder</span></p>
-        <div class="reels-list" ng-show="matchingProfileReels.length">
-            <div class="reel-option" ng-repeat="reel in matchingProfileReels = (profileReels | filter: filters)">
+        <p class="reels-list-header">
+            <span ng-hide="reordering">On Profile ({{profileReels.length}})</span>
+            <span ng-show="reordering">Drag to reorder</span>
+            <span class="reorder" ng-click="reordering = true" ng-hide="reordering || !matchingProfileReels.length">Reorder</span>
+            <span class="reorder" ng-click="reorderProfileReels()" ng-show="reordering">Done</span>
+        </p>
+        <div class="reels-list" ng-show="matchingProfileReels.length && !reordering">
+            <div
+                class="reel-option"
+                ng-repeat="reel in matchingProfileReels = (profileReels | filter: filters)"
+            >
                 <div>
                     <p class="reel-name">{{reel.name}}</p>
                     <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM. d, yyyy'}}</p>
@@ -30,25 +39,42 @@
         </div>
         <p ng-hide="matchingProfileReels.length">You haven't added any reels to your profile yet.</p>
 
-        <p class="reels-list-header">In Film Library ({{nonProfileReels.length}})</p>
-        <div class="reels-list" ng-show="matchingNonProfileReels.length">
-            <div class="reel-option" ng-repeat="reel in matchingNonProfileReels = (nonProfileReels | filter: filters)">
+        <!-- Show without filter when reordering -->
+        <div class="reels-list" ng-show="reordering">
+            <div
+                class="reel-option"
+                ng-repeat="reel in profileReels"
+                draggable-ordered-list="reordering"
+            >
                 <div>
                     <p class="reel-name">{{reel.name}}</p>
                     <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM. d, yyyy'}}</p>
                 </div>
-                <span class="add-to-profile" ng-click="addReelToProfile(reel)">Add</span>
+                <i class="icon icon-bars"></i>
             </div>
         </div>
-        <p ng-hide="matchingNonProfileReels.length || !reels.length">You don't have any reels in your film library to add to your profile.</p>
-        <div ng-hide="matchingNonProfileReels.length || reels.length">
-            <p>You haven't created any reels yet.</p>
-            <p>Want to know how to create a reel? It's easy:</p>
-            <ol>
-                <li>Go to any game your coach has broken down.</li>
-                <li>Select the plays that you want to add to a reel.</li>
-                <li>Name the new reel, and then you're done!</li>
-            </ol>
+
+        <div ng-hide="reordering">
+            <p class="reels-list-header">In Film Library ({{nonProfileReels.length}})</p>
+            <div class="reels-list" ng-show="matchingNonProfileReels.length">
+                <div class="reel-option" ng-repeat="reel in matchingNonProfileReels = (nonProfileReels | filter: filters)">
+                    <div>
+                        <p class="reel-name">{{reel.name}}</p>
+                        <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM. d, yyyy'}}</p>
+                    </div>
+                    <span class="add-to-profile" ng-click="addReelToProfile(reel)">Add</span>
+                </div>
+            </div>
+            <p ng-hide="matchingNonProfileReels.length || !reels.length">You don't have any reels in your film library to add to your profile.</p>
+            <div ng-hide="matchingNonProfileReels.length || reels.length">
+                <p>You haven't created any reels yet.</p>
+                <p>Want to know how to create a reel? It's easy:</p>
+                <ol>
+                    <li>Go to any game your coach has broken down.</li>
+                    <li>Select the plays that you want to add to a reel.</li>
+                    <li>Name the new reel, and then you're done!</li>
+                </ol>
+            </div>
         </div>
     </div>
 
