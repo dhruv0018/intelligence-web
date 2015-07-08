@@ -38,7 +38,7 @@
         		<h3>Other Krossover Users</h3>
         		<i class="icon icon-logo"></i>
         	</div>
-        	<div class="share-options" id="share-public-cta" ng-click="withPublic = true" ng-if="currentUser.is(ROLES.COACH)">
+        	<div class="share-options" id="share-public-cta" ng-click="withPublic = true" ng-show="currentUser.is(ROLES.COACH)">
         		<h3>Recruiters or others via public URL</h3>
         		<i class="icon icon-globe"></i>
         	</div>
