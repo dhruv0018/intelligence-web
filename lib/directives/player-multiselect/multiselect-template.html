@@ -1,10 +1,10 @@
 <div class="player-multiselect-container">
 
-    <label class="btn btn-default dropdown-toggle" ng-click="toggleSelect()" ng-disabled="disabled" ng-class="{'error': !valid()}">
+    <button class="btn btn-md btn-default dropdown-toggle" ng-click="toggleSelect()" ng-disabled="disabled" ng-class="{'error': !valid()}">
         <span ng-show="selectedIds.length" class="player-label">{{selectedIds.length}} Selected</span>
-        <span ng-show="!selectedIds.length">All Players</span>
+        <span ng-show="!selectedIds.length">Select Players</span>
         <i class="icon icon-chevron-down"></i>
-    </label>
+    </button>
 
     <ul class="dropdown-menu">
 
