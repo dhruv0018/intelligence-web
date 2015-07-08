@@ -1,0 +1,20 @@
+{
+    "name": "field",
+    "templates": [
+        "template.html",
+        "dropdown-input.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ],
+    "paths": [
+        "."
+    ],
+    "locals": [
+        "player-dropdown"
+    ]
+}

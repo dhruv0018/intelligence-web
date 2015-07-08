@@ -1,0 +1,19 @@
+<span class="team-player-dropdown">
+    <input
+        type="text"
+        class="team-player-dropdown mousetrap"
+        placeholder="Select"
+        tabindex="{{ item.index }}"
+        data-ng-required="item.isRequired"
+        data-ng-if="isUndefined(event.variableValues[item.id].value)"
+        data-ng-model="selectedItem"
+        data-ng-change="onChange()"
+        data-ng-blur="onBlur()"
+        data-focus-on="shouldFocus()"
+        data-autofocus-when="autoAdvance && item.index == 1"
+        data-typeahead-editable="false"
+        data-typeahead-on-select="selectItem($item)"
+        data-typeahead-template-url="item/team-player-dropdown-input.html"
+        data-typeahead="option for option in teamPlayerOptions | ORFilter:{ jerseyNumber: $viewValue, name: $viewValue } | orderBy:'jerseyNumber' | limitTo: teamPlayerOptions.length"
+    >
+</span>
