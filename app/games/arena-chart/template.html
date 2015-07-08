@@ -2,12 +2,7 @@
 
     <header>
 
-        <label name="arena-event-count">
-
-            <span ng-if="filteredArenaEvents.length === arenaEvents.length">Viewing: All Shots ({{arenaEvents.length}})</span>
-            <span ng-if="filteredArenaEvents.length < arenaEvents.length">Viewing: ({{filteredArenaEvents.length}})</span>
-
-        </label>
+        <count-label all-count="arenaEvents.length" current-count="filteredArenaEvents.length" label="Shots"></count-label>
 
         <a name="reset-filters" ng-click="resetFilters()">Reset Filters</a>
 
