@@ -8,6 +8,7 @@ arena-chart-filters {
     display: flex;
     justify-content: space-between;
     text-align: center;
+    color: #000;
 
     > div {
         display: flex;
@@ -25,12 +26,21 @@ arena-chart-filters {
         justify-content: flex-end;
     }
 
-    .filter-group {
-        margin: 5px;
+    .filter-group > * {
+        margin: 0 5px;
+
+        &:first-child {
+            margin-left: 0px;
+        }
+
+        &:last-child {
+            margin-right: 0px;
+        }
     }
 
     label {
         display: block;
+        font-weight: 400;
     }
 
     player-multiselect {
