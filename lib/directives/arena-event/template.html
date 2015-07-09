@@ -4,16 +4,16 @@
     style="left: {{::arenaEvent.x * 100 + '%'}}; top: {{::arenaEvent.y * 100 + '%'}};"
 >
 
-	 <i
+	 <div
         ng-if="arenaEvent.isMade"
-        class="icon-stop"
+        class="shot-icon-large icon-diamond"
         ng-style="arenaEventStyle"
-    ></i>
+    ></div>
 
-    <i
+    <div
         ng-if="!arenaEvent.isMade"
-        class="icon-asterisk"
+        class="shot-icon-large icon-x"
         ng-style="arenaEventStyle"
-   ></i>
+   ></div>
 
 </div>
