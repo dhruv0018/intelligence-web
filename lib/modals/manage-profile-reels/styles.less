@@ -57,6 +57,12 @@
         .reels-list {
             border: thin solid @gray-border;
             background-color: white;
+            max-height: 150px;
+            overflow-y: scroll;
+
+            &.reorder-list {
+                max-height: none;
+            }
 
             .reel-option {
                 border-bottom: thin solid @gray-border;
