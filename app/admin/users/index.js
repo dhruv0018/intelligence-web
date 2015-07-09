@@ -9,7 +9,8 @@ var Users = angular.module('Users', [
     'ui.router',
     'ui.bootstrap',
     'ui.unique',
-    'ui.showhide'
+    'ui.showhide',
+    'ngMaterial'
 ]);
 
 /* Cache the template files */

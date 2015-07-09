@@ -133,4 +133,3 @@ describe('SessionService', function() {
         ]));
     });
 });
-
