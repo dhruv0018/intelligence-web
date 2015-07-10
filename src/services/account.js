@@ -82,7 +82,7 @@ function AccountService (
 
             /* If the user has more than one role, but has not selected
              * a default one yet. */
-            if (user.isActive() && !user.getDefaultRole()) {
+            if (user.isActive() && !user.getDefaultRole() && this.hasAcceptedTerms()) {
 
                 return RolesModal.open();
             }
