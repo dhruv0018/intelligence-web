@@ -138,6 +138,26 @@ class KrossoverTag extends Entity {
                     /* If the item is not a variable return it as is. */
                     else return item;
                 });
+
+                this[scriptType].toString = () => {
+
+                    let script = this[scriptType];
+                    let string = ``;
+
+                    script.forEach(item => {
+
+                        if (typeof item === 'string') {
+
+                            string += `<span class="static">${item}</span>`;
+                        } else {
+
+                            let field = this.fields[item.index];
+                            string += field.toString();
+                        }
+                    });
+
+                    return string;
+                };
             }
         });
     }
