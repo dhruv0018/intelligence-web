@@ -17,6 +17,7 @@ Login.run([
 
         $templateCache.put('signup.html', require('./signup.html'));
         $templateCache.put('template.html', require('./template.html'));
+        $templateCache.put('maintenance.html', require('./maintenance.html'));
         $templateCache.put('login.html', require('./login.html'));
         $templateCache.put('locked.html', require('./locked.html'));
         $templateCache.put('forgot.html', require('./forgot.html'));
@@ -35,6 +36,20 @@ Login.config([
     function config($stateProvider, $urlRouterProvider) {
 
         $stateProvider
+
+            .state('maintenance', {
+                url: '^/maintenance',
+                parent: 'login',
+                views: {
+                    'header@login': {
+                        templateUrl: 'signup.html'
+                    },
+                    'main@login': {
+                        templateUrl: 'maintenance.html',
+                        controller: 'LoginController'
+                    }
+                }
+            })
 
             .state('login', {
                 url: '/login',

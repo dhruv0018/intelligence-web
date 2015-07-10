@@ -1,63 +1,75 @@
 <div class="game-area-down-distance">
     <div class="down-distance-info-container">
-        <div class="dndInfoHeader">
+        <div class="dnd-info-header">
             Create a Down and Distance Report
         </div>
-        <div class="dndInfoBody">
-            <div class="dndOption">
-                <span>Team on Offense</span>
+        <div class="dnd-info-body">
+            <div class="dnd-option">
+                <span class="option-label">Team on Offense</span>
                 <select data-ng-model="dndReport.teamId">
                     <option value="{{teamId}}">{{teams[game.teamId].name}}</option>
                     <option value="{{opposingTeamId}}">{{teams[game.opposingTeamId].name}}</option>
                 </select>
             </div>
-            <div class="dndOption">
-                <span>Select Down</span>
+            <div class="dnd-option">
+                <span class="option-label">Select Down</span>
                 <select data-ng-model="dndReport.down" class="second-choices" data-ng-options="value as key for (key, value) in options.down"></select>
             </div>
-            <div class="dndOption">
-                <span>Select Distance</span>
+            <div class="dnd-option">
+                <span class="option-label">Select Distance</span>
                 <select data-ng-model="dndReport.distance" class="second-choices" data-ng-options="value as key for (key, value) in options.distance"></select>
             </div>
-            <div class="dndOption">
-                <span>Select Hash</span>
+            <div class="dnd-option">
+                <span class="option-label">Select Hash</span>
                 <select data-ng-model="dndReport.hash" class="second-choices" data-ng-options="value as key for (key, value) in options.hash"></select>
             </div>
-            <div class="dndOption">
-                <span>Select Weight</span>
+            <div class="dnd-option">
+                <span class="option-label">Select Weight</span>
                 <select data-ng-model="dndReport.strength" class="second-choices" data-ng-options="value as key for (key, value) in options.weight"></select>
             </div>
-            <div class="dndOption">
-                <span>Show snaps only from</span>
+            <div class="dnd-option ng-hide">
+                <span class="option-label">Show snaps only from</span>
                 <select data-ng-model="dndReport.redZone">
                     <option value="false">Whole Field</option>
                     <option value="true">Red Zone</option>
                 </select>
             </div>
-            <div class="dndOption lastOption">
-                <button data-ng-click="createDownAndDistanceReport()" class="create-report-btn">Create Report</button>
+            <div class="dnd-option" feature="CustomTags">
+                <span class="option-label">Show snaps with tags</span>
+                <custom-tags-multiselect ng-model="dndReport.customTagIds" custom-tags="customtags"></custom-tags-multiselect>
+            </div>
+            <div class="dnd-option lastOption">
+                <button ng-click="createDownAndDistanceReport()" class="create-report-btn">
+                    <span ng-hide="creatingDnDReport">Create Report</span>
+                    <krossover-spinner ng-show="creatingDnDReport" size="15px"></krossover-spinner>
+                </button>
             </div>
         </div>
     </div>
     <div class="formations-chart-container">
         <div class="field-header">
-            <span class="field-info">
+            <span class="field-info" ng-show="createdDndReport">
                 <span class="field-info-title">Down and Distance:</span>
-                <span data-ng-if="dndReport.down">{{dndReport.down}}</span>
-                <span data-ng-if="!dndReport.down">Any down</span>
+                <span data-ng-if="createdDndReport.down">{{createdDndReport.down}}</span>
+                <span data-ng-if="!createdDndReport.down">Any down</span>
                 and
-                <span data-ng-if="dndReport.distance">{{dndReport.distance}}</span>
-                <span data-ng-if="!dndReport.distance">any distance</span>
+                <span data-ng-if="createdDndReport.distance">{{createdDndReport.distance}}</span>
+                <span data-ng-if="!createdDndReport.distance">any distance</span>
             </span>
-            <span class="field-info">
+            <span class="field-info" ng-show="createdDndReport">
                 <span class="field-info-title">Hash:</span>
-                <span data-ng-if="dndReport.hash">{{dndReport.hash}}</span>
-                <span data-ng-if="!dndReport.hash">Any</span>
+                <span data-ng-if="createdDndReport.hash">{{createdDndReport.hash}}</span>
+                <span data-ng-if="!createdDndReport.hash">Any</span>
             </span>
-            <span class="field-info">
+            <span class="field-info" ng-show="createdDndReport">
                 <span class="field-info-title">Weight:</span>
-                <span data-ng-if="dndReport.strength">{{dndReport.strength}}</span>
-                <span data-ng-if="!dndReport.strength">Any</span>
+                <span data-ng-if="createdDndReport.strength">{{createdDndReport.strength}}</span>
+                <span data-ng-if="!createdDndReport.strength">Any</span>
+            </span>
+            <span class="field-info" ng-show="createdDndReport">
+                <span class="field-info-title">Tags:</span>
+                <span data-ng-if="createdDndReport.customTagIds" ng-repeat="tag in createdDndReport.customTags">{{tag.name}}<span ng-if="!$last">, </span></span>
+                <span data-ng-if="!createdDndReport.customTagIds.length">Any</span>
             </span>
         </div>
         <!--<div class="field-options">
@@ -66,7 +78,7 @@
             <span class="print-formation"><i class="icon icon-print"></i> Print</span>
         </div>-->
         <div class="field">
-            <krossover-arena type="arenaType"></krossover-arena>
+            <krossover-arena type="arenaType" plays="plays" chart="chart"></krossover-arena>
         </div>
     </div>
 </div>

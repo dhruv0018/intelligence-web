@@ -3,6 +3,22 @@
 
         "Head Coach": true,
         "Assistant Coach": true
+    },
+
+    "PlayerAnalytics": {
+
+        "*": true
+    },
+
+    "TeamAnalytics": {
+
+        "*": true
+
+    },
+
+    "SelectPlays": {
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
     }
 }
-

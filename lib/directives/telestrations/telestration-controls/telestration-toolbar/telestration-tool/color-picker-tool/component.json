@@ -1,0 +1,10 @@
+{
+    "name": "color-picker-tool",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ]
+}
