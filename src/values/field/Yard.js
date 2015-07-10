@@ -39,6 +39,17 @@ class YardField extends Field {
         this.value = value;
     }
 
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        return `<span class="value">${this.value.content}</span>`;
+    }
+
     toJSON() {
         let variableValue = {};
         let value = (!this.isRequired && this.value.content === null) ? null : String(this.value.content);

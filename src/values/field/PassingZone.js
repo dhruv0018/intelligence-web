@@ -48,6 +48,17 @@ class PassingZoneField extends Field {
         this.value = zone;
     }
 
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        return `<span class="value passing-zone-field">${this.value.name}</span>`;
+    }
+
     toJSON(){
         let variableValue = {};
         let value = this.value.zoneId === null ? null : String(this.value.zoneId);

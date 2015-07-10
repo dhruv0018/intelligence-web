@@ -88,6 +88,29 @@ class PlayerField extends Field {
         this.value = value;
     }
 
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        let player = this.availableValues.find(value => value.playerId === this.value.playerId);
+
+        return `
+        <span class="value">
+
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+                <rect data-ng-attr-fill="${player.jerseyColor}" x="0" y="0" width="16px" height="16px" />
+            </svg>
+
+            <span class="player-name">${player.jerseyNumber} ${player.name}</span>
+
+        </span>
+        `;
+    }
+
     toJSON(){
         let variableValue = {};
         let value = (!this.isRequired && this.value.playerId === null) ? null : String(this.value.playerId);

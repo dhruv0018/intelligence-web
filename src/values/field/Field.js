@@ -40,6 +40,18 @@ class Field extends Value {
         return isValid;
     }
 
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        // TODO: Removed this method or change to a sensible default.
+        return `<h1>TEMPORARY!!!! toString method not defined for this field!</h1>`;
+    }
+
     toJSON() {
         throw Error('Trying to stringify abstract class - Field');
     }

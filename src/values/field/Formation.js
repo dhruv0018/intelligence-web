@@ -54,6 +54,17 @@ class FormationField extends Field {
         this.value = value;
     }
 
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        return `<span class="value formation-field">${this.value.name}</span>`;
+    }
+
     toJSON() {
         let variableValue = {};
         let value = this.value.formationId === null ? null : String(this.value.formationId);

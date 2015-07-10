@@ -32,6 +32,17 @@ class TextField extends Field {
         this.value = text;
     }
 
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        return `<span class="value text-field">${this.value.content}</span>`;
+    }
+
     toJSON() {
         let variableValue = {};
         variableValue = {
