@@ -1,0 +1,34 @@
+@import (reference) "main.less";
+
+.shot-icon {
+
+    height: @font-size-base;
+    width: @font-size-base;
+    font-size: @font-size-base;
+    display: inline-block;
+
+    &.icon-x, &.svg-icon-x {
+        height: @font-size-small;
+        width: @font-size-small;
+        font-size: @font-size-small;
+    }
+
+    &-large {
+        height: @font-size-large;
+        width: @font-size-large;
+        font-size: @font-size-large;
+        display: inline-block;
+
+        &.icon-x, &.svg-icon-x {
+            height: @font-size-base;
+            width: @font-size-base;
+            font-size: @font-size-base;
+        }
+    }
+
+    .svg-icon {
+        &.main, &.border {
+            fill: #000;
+        }
+    }
+}

@@ -1,68 +1,91 @@
 <div class="arena-chart-filters">
 
     <!-- Filters -->
-    <div class="arena-chart-filters-left">
+    <div class="arena-chart-filters-left filter-group">
+
+        <div class="players">
+
+            <div class="team-label">
+
+                <jersey-color color="game.primaryJerseyColor"></jersey-color>
+
+                <span class="home-team-name">{{team.name}}</span>
+
+            </div>
+
+            <player-multiselect ng-model="ngModel.teamPlayersIds" players="teamPlayerList"></player-multiselect>
+
+        </div>
+
     </div>
 
-    <div class="arena-chart-filters-center">
+    <div class="arena-chart-filters-center filter-group">
 
-        <div class="shots filter-group">
+        <div class="shots">
 
             <label> Shots </label>
 
             <div class="btn-group">
 
-                <label
-                    class="btn btn-default"
+                <button
+                    class="btn btn-md btn-default"
                     ng-model="ngModel.shots.made"
                     btn-checkbox
-                >Made</label>
+                ><div class="shot-icon icon-diamond"></div>Made</button>
 
-                <label
-                    class="btn btn-default"
+                <button
+                    class="btn btn-md btn-default"
                     ng-model="ngModel.shots.missed"
                     btn-checkbox
-                >Missed</label>
+                ><div class="shot-icon icon-x"></div>Missed</button>
 
             </div>
 
         </div>
 
-        <div class="periods filter-group">
+        <div class="custom-tags">
+
+            <label> Custom Tags </label>
+
+            <custom-tags-multiselect ng-model="ngModel.customTagIds" custom-tags="customtags"></custom-tags-multiselect>
+
+        </div>
+
+        <div class="periods">
 
             <label> Period </label>
 
             <div class="btn-group">
 
-                <label
-                    class="btn btn-default"
+                <button
+                    class="btn btn-md btn-default"
                     ng-model="ngModel.period.one"
                     btn-checkbox
-                >1</label>
+                >1</button>
 
-                <label
-                    class="btn btn-default"
+                <button
+                    class="btn btn-md btn-default"
                     ng-model="ngModel.period.two"
                     btn-checkbox
-                >2</label>
+                >2</button>
 
-                <label
-                    class="btn btn-default"
+                <button
+                    class="btn btn-md btn-default"
                     ng-model="ngModel.period.three"
                     btn-checkbox
-                >3</label>
+                >3</button>
 
-                <label
-                    class="btn btn-default"
+                <button
+                    class="btn btn-md btn-default"
                     ng-model="ngModel.period.four"
                     btn-checkbox
-                >4</label>
+                >4</button>
 
-                <label
-                    class="btn btn-default"
+                <button
+                    class="btn btn-md btn-default"
                     ng-model="ngModel.period.overtime"
                     btn-checkbox
-                >OT</label>
+                >OT</button>
 
             </div>
 
@@ -70,7 +93,22 @@
 
     </div>
 
-    <div class="arena-chart-filters-right">
+    <div class="arena-chart-filters-right filter-group">
+
+        <div class="players">
+
+            <div class="team-label">
+
+                <span class="opposing-team-name">{{opposingTeam.name}}</span>
+
+                <jersey-color color="game.opposingJerseyColor"></jersey-color>
+
+            </div>
+
+            <player-multiselect ng-model="ngModel.opposingTeamPlayersIds" players="opposingTeamPlayerList"></player-multiselect>
+
+        </div>
+
     </div>
 
 </div>

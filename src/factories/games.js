@@ -67,6 +67,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
+                game.primaryJerseyColor = game.primaryJerseyColor || '#000';
+                game.opposingJerseyColor = game.opposingJerseyColor || '#000';
 
                 //TODO remove when the back end makes notes always a object
                 if (angular.isArray(game.notes)) {
@@ -988,6 +990,17 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var dndReport = new Resource(report);
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
+            },
+
+            getArenaEvents: function() {
+
+                let self = this;
+
+                let model = $injector.get(self.model);
+
+                if (!self.id) throw new Error('Game must be saved before getting arena events');
+
+                return model.getArenaEvents({ id: self.id });
             },
 
             getRemainingTime: function(uploaderTeam, now) {

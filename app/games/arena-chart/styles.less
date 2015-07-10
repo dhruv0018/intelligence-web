@@ -3,20 +3,20 @@
 .arena-chart {
     width: 100%;
     height: 100%;
+    background-color: @gray-lightest;
+
+    .container {
+        margin: 0 auto;
+        max-width: @screen-lg;
+        width: 100%;
+    }
 
     .primary-content {
         width: 100%;
         height: 100%;
 
-        .teams {
-            display: flex;
-            justify-content: space-between;
-        }
-
         arena-chart-filters {
-            margin: 0 auto;
-            max-width: 1000px; // TODO: Actual width TBD
-            width: 100%;
+            margin-bottom: 30px !important;
         }
 
         .arena-chart-arena {
@@ -28,5 +28,14 @@
                 margin: 0 auto;
             }
         }
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        color: #000;
+        align-items: center;
+        padding: 10px;
     }
 }

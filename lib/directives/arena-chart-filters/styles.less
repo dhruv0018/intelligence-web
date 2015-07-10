@@ -7,15 +7,24 @@ arena-chart-filters {
 .arena-chart-filters {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     text-align: center;
+    color: #000;
+    border: thin solid @gray-border;
+    padding: 10px;
+    border-radius: 2px;
+    background-color: @content-bg;
 
     > div {
         display: flex;
-        flex: 1;
     }
 
     &-left {
         justify-content: flex-start;
+
+        &:first-child {
+            text-align: left;
+        }
     }
 
     &-center {
@@ -24,9 +33,51 @@ arena-chart-filters {
 
     &-right {
         justify-content: flex-end;
+
+        &:last-child {
+            text-align: right;
+        }
     }
 
-    .filter-group {
-        margin: 5px;
+    .filter-group > * {
+        margin: 0 5px;
+
+        &:first-child {
+            margin-left: 0px;
+        }
+
+        &:last-child {
+            margin-right: 0px;
+        }
+    }
+
+    label {
+        display: block;
+        font-weight: 400;
+    }
+
+    player-multiselect {
+        display: block;
+    }
+
+    // TODO: Remove this override when custom-tags-multiselect styles
+    // and other button styles are consistent
+    custom-tags-multiselect {
+        button {
+            .btn-default;
+            padding: 6px 12px;
+            font-weight: 500;
+        }
+    }
+
+    .team-label {
+        font-weight: 500;
+        font-size: @font-size-large;
+        padding-bottom: 10px;
+    }
+
+    .shot-icon {
+        margin-right: 4px;
+        color: #000;
     }
 }
