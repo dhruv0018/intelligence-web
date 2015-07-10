@@ -54,6 +54,10 @@
 
             &:hover {
                 background-color: @dropdown-link-hover-bg;
+
+                a {
+                    color: @dropdown-link-hover-color;
+                }
             }
         }
 
@@ -94,6 +98,14 @@
             &:hover, &:focus, &:active {
                 background-color: transparent;
                 text-decoration: underline;
+            }
+        }
+
+        .reset-player-filter {
+            color: @link-color;
+
+            &.disabled {
+                color: @dropdown-link-disabled-color;
             }
         }
     }

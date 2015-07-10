@@ -24,7 +24,7 @@
         </div>
 
         <li class="dropdown-menu-bottom">
-            <a name="reset-player-filter" ng-click="uncheckAll()">Reset</a>
+            <a class="reset-player-filter" ng-click="uncheckAll()" ng-class="{disabled: !selectedIds.length}">Reset</a>
         </li>
 
     </ul>
