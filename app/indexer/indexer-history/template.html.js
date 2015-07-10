@@ -46,7 +46,7 @@ export default `
                     <th>Game ID</th>
                     <th>Game</th>
                     <th>Sport</th>
-                    <th>Indexed/QA’d</th>
+                    <th>Status</th>
                     <th>Date Completed</th>
                 </tr>
                 </thead>

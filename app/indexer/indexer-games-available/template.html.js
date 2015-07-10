@@ -38,7 +38,7 @@ export default `
         </a>
 
         <div class="box-body">
-            <h3>Your Game Queue</h3>
+            <h3>Available Games to be QA\'d</h3>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -53,10 +53,9 @@ export default `
                 <tbody>
                     <tr data-ng-repeat="game in games
                         | gameIsDeleted: false
-                        | gameIsNotSetAside
-                        | gameHasCurrentUserAssignment
-                        | gameCurrentUserAssignmentIsActive: true
-                        | orderBy: 'timeRemaining'"
+                        | gameIsInQa: true
+                        | orderBy: 'timeRemaining'
+                        | limitTo: 100"
                     >
                         <td>{{game.id}}</td>
                         <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
@@ -64,15 +63,8 @@ export default `
                         <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                         <td>{{ game.timeRemaining | millisecondsAsHours | hoursAsClock }}</td>
                         <td>
-                            <button id="enter-indexing-cta" class="btn btn-default" data-ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
-                                <span data-ng-hide="game.isAssignmentStarted()">Start </span>
-                                <span data-ng-show="game.isAssignmentStarted()">Resume </span>
-                                <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
-                            </button>
-                            <button id="enter-qa-cta" class="btn btn-default" data-ng-show="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
-                                <span data-ng-hide="game.isAssignmentStarted()">Start </span>
-                                <span data-ng-show="game.isAssignmentStarted()">Resume </span>
-                                <span>QA</span>
+                            <button id="enter-qa-cta" class="btn btn-default" data-ng-show="game.canBeQAed() && !game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
+                                <span>Pick Up to QA </span>
                             </button>
                         </td>
                         </tr>
