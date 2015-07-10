@@ -63,16 +63,17 @@ Game.controller('indexer-game.Controller', [
         };
 
         $scope.setAside = function() {
-            var modalInstance = basicModal.openForConfirm({
+            const roleId = session.getCurrentRole().type.id;
+            const modalInstance = basicModal.openForConfirm({
                 title: 'Set aside this Game?',
                 bodyText: 'Are you sure you want to set aside this game?'
             });
 
             modalInstance.result.then(function() {
                 $scope.game.setAside();
-                $scope.game.save().then(function() {
-                    $state.go('indexer-games');
-                });
+                $scope.game.save();
+                $scope.game.sendSetAsideEmail(roleId);
+                $state.go('indexer-games');
             });
         };
 
