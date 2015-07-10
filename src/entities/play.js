@@ -41,6 +41,27 @@ class KrossoverPlay extends Entity {
         });
     }
 
+    userScript () {
+
+        return this.events.map((event, index) => {
+
+            let userScriptHTMLString = event.userScript.toString();
+            let eventHTMLString = `
+            <li class="event">
+
+                <button class="item btn-select-event" ng-click="selectEvent(${event.id});">
+
+                    ${userScriptHTMLString}
+
+                </button>
+
+            </li>
+            `;
+
+            return eventHTMLString;
+        });
+    }
+
     toJSON () {
 
         let copy = Object.assign({}, this);
@@ -52,14 +73,12 @@ class KrossoverPlay extends Entity {
         delete copy.hasVisibleEvents;
         delete copy.isFiltered;
 
-        copy.events = copy.events.map(unextendEvent);
+        copy.events = copy.events.map((event) => {
 
-        function unextendEvent (event) {
+            return JSON.parse(event.toJSON());
+        });
 
-            return event.toJSON();
-        }
-
-        return copy;
+        return JSON.stringify(copy);
     }
 }
 
