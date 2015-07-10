@@ -18,6 +18,7 @@ const IntelligenceWebClient = angular.module(pkg.name);
 IntelligenceWebClient.service('AccountService', AccountService);
 
 AccountService.$inject = [
+    'RolesModal',
     'config',
     'ROLES',
     '$rootScope',
@@ -27,6 +28,7 @@ AccountService.$inject = [
 ];
 
 function AccountService (
+    RolesModal,
     config,
     ROLES,
     $rootScope,
@@ -82,7 +84,7 @@ function AccountService (
              * a default one yet. */
             if (user.isActive() && !user.getDefaultRole()) {
 
-                return $state.go('roles', false);
+                return RolesModal.open();
             }
 
             /* If the user is a super admin or an admin. */

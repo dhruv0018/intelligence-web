@@ -76,19 +76,7 @@ Login.config([
 
                             let currentUser = session.retrieveCurrentUser();
 
-                            /* If the user has more than one role, but has not
-                            * selected a default one yet. */
-                            if (currentUser &&
-                                currentUser.roles &&
-                                currentUser.roles.length > 1 &&
-                                !currentUser.defaultRole) {
-
-                                $state.go('roles', false);
-
-                            } else {
-
-                                account.gotoUsersHomeState(currentUser);
-                            }
+                            account.gotoUsersHomeState(currentUser);
                         }
                     }
                 ]
