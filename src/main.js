@@ -17,6 +17,7 @@ require('./extensions');
 require('../build/build');
 
 import Reel from '../app/reel/index.js';
+import FieldComponent from '../lib/directives/field/index';
 
 /* App dependencies */
 require('./config');
