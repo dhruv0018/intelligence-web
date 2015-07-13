@@ -20,7 +20,7 @@
         </div>
 
         <p class="reels-list-header">
-            <span ng-hide="reordering">On Profile ({{profileReels.length}})</span>
+            <span ng-hide="reordering">On Profile ({{matchingProfileReels.length}})</span>
             <span ng-show="reordering">Drag to reorder</span>
             <span class="reorder" ng-click="reordering = true" ng-hide="reordering || !matchingProfileReels.length">Reorder</span>
             <span class="reorder" ng-click="reorderProfileReels()" ng-show="reordering">Done</span>
@@ -37,7 +37,8 @@
                 <button class="remove-from-profile" ng-click="removeReelFromProfile(reel)">Remove</button>
             </div>
         </div>
-        <p ng-hide="matchingProfileReels.length">You haven't added any reels to your profile yet.</p>
+        <p ng-hide="profileReels.length">You haven't added any reels to your profile yet.</p>
+        <p ng-hide="matchingProfileReels.length || !profileReels.length">No reels match your search.</p>
 
         <!-- Show without filter when reordering -->
         <div class="reels-list reorder-list" ng-show="reordering">
@@ -55,7 +56,7 @@
         </div>
 
         <div ng-hide="reordering">
-            <p class="reels-list-header">In Film Library ({{nonProfileReels.length}})</p>
+            <p class="reels-list-header">In Film Library ({{matchingNonProfileReels.length}})</p>
             <div class="reels-list" ng-show="matchingNonProfileReels.length">
                 <div class="reel-option" ng-repeat="reel in matchingNonProfileReels = (nonProfileReels | filter: filters)">
                     <div>
@@ -65,8 +66,9 @@
                     <span class="add-to-profile" ng-click="addReelToProfile(reel)">Add</span>
                 </div>
             </div>
-            <p ng-hide="matchingNonProfileReels.length || !reels.length">You don't have any reels in your film library to add to your profile.</p>
-            <div ng-hide="matchingNonProfileReels.length || reels.length">
+            <p ng-hide="nonProfileReels.length || !reels.length">You don't have any reels in your film library to add to your profile.</p>
+            <p ng-hide="matchingNonProfileReels.length || !nonProfileReels.length">No reels match your search.</p>
+            <div ng-hide="nonProfileReels.length || reels.length">
                 <p>You haven't created any reels yet.</p>
                 <p>Want to know how to create a reel? It's easy:</p>
                 <ol>
