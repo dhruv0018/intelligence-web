@@ -75,7 +75,13 @@ class PlayerField extends Field {
                     };
                     return value;
                 });
-                return teamPlayersValues.concat(opposingTeamPlayersValues);
+                let values =  teamPlayersValues.concat(opposingTeamPlayersValues);
+
+                if (!this.isRequired) {
+                    values.push({playerId: null, jerseyColor: null, jerseyNumber: 'NONE', name: 'Optional'});
+                }
+
+                return values;
             }
         });
     }

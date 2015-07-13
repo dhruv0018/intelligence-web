@@ -44,9 +44,6 @@ class Field extends Value {
         throw Error('Trying to stringify abstract class - Field');
     }
 
-    reset() {
-        this.value = undefined;
-    }
 }
 
 /**
