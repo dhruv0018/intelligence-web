@@ -107,29 +107,29 @@
     .new-user-accept {
 
         display: inline-block;
+        line-height: 1;
 
         label {
 
             width: 100%;
             display: inline-block;
-            line-height: @line-height-computed;
+            line-height: 1;
             margin: 0;
+        }
 
-            .error {
+        check-box {
 
-                line-height: @line-height-computed;
-                font-weight: normal;
-                color: @brand-danger;
-            }
+            line-height: 1;
         }
 
         .error {
 
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            line-height: 1;
+            display: none;
+        }
+
+        &-label {
+
+            margin-bottom: 0;
         }
     }
 }
