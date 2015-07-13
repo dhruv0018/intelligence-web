@@ -47,7 +47,7 @@ class YardField extends Field {
      */
     toString () {
 
-        return `<span class="value">${this.value.content}</span>`;
+        return `<span class="value">${this.currentValue.content}</span>`;
     }
 
     toJSON() {

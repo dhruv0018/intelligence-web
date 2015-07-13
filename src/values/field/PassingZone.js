@@ -56,7 +56,7 @@ class PassingZoneField extends Field {
      */
     toString () {
 
-        return `<span class="value passing-zone-field">${this.value.name}</span>`;
+        return `<span class="value passing-zone-field">${this.currentValue.name}</span>`;
     }
 
     toJSON(){

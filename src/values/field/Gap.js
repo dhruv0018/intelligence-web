@@ -55,7 +55,7 @@ class GapField extends Field {
      */
     toString () {
 
-        return `<span class="value gap-field">${this.value.name}</span>`;
+        return `<span class="value gap-field">${this.currentValue.name}</span>`;
     }
 
     toJSON(){

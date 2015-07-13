@@ -62,7 +62,7 @@ class FormationField extends Field {
      */
     toString () {
 
-        return `<span class="value formation-field">${this.value.name}</span>`;
+        return `<span class="value formation-field">${this.currentValue.name}</span>`;
     }
 
     toJSON() {

@@ -76,7 +76,7 @@ class TeamField extends Field {
      */
     toString () {
 
-        return `<span class="value team-field">${this.value.name}</span>`;
+        return `<span class="value team-field">${this.currentValue.name}</span>`;
     }
 
     toJSON() {

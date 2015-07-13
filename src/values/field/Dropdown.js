@@ -42,7 +42,7 @@ class DropdownField extends Field {
      */
     toString () {
 
-        return `<span class="value dropdown-field">${this.value.content}</span>`;
+        return `<span class="value dropdown-field">${this.currentValue.content}</span>`;
     }
 
     toJSON() {

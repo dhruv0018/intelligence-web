@@ -40,7 +40,7 @@ class TextField extends Field {
      */
     toString () {
 
-        return `<span class="value text-field">${this.value.content}</span>`;
+        return `<span class="value text-field">${this.currentValue.content}</span>`;
     }
 
     toJSON() {

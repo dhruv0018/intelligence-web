@@ -96,7 +96,7 @@ class PlayerField extends Field {
      */
     toString () {
 
-        let player = this.availableValues.find(value => value.playerId === this.value.playerId);
+        let player = this.availableValues.find(value => value.playerId === this.currentValue.playerId);
 
         return `
         <span class="value">
