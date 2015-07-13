@@ -1,4 +1,4 @@
-class List extends Array {
+class List {
 
     /**
      * Constructor:
@@ -8,14 +8,12 @@ class List extends Array {
      */
     constructor (array = []) {
 
-        super();
+        if (!Array.isArray(array)) {
 
-        let index = 0;
-        while (index < array.length) {
-
-            this.push(array[index]);
-            index++;
+            throw new Error('List data must be an Array!');
         }
+
+        this.data = array;
     }
 
     /**
@@ -26,7 +24,7 @@ class List extends Array {
      */
     includes (searchElement, fromIndex) {
 
-        return !!~this.indexOf(searchElement, fromIndex);
+        return !!~this.data.indexOf(searchElement, fromIndex);
     }
 
     // TODO: Try this with .slice(0)
@@ -60,6 +58,16 @@ class List extends Array {
         }
     }
 
+    get length () {
+
+        return this.data.length;
+    }
+
+    set length (value) {
+
+        this.data.length = value;
+    }
+
     /**
      * Method: identity
      * Returns a copy of the array, and only the array
@@ -68,7 +76,7 @@ class List extends Array {
      */
     identity () {
 
-        return this.slice(0);
+        return this.data.slice(0);
     }
 
     /**
@@ -91,7 +99,7 @@ class List extends Array {
      */
     clear() {
 
-        return this.splice(0, Number.MAX_VALUE);
+        return this.data.splice(0, Number.MAX_VALUE);
     }
 
     /**
@@ -110,7 +118,7 @@ class List extends Array {
                 throw new Error('Invoked List.get without passing a index');
         }
 
-        return this[index];
+        return this.data[index];
     }
 
     /**
@@ -121,7 +129,7 @@ class List extends Array {
      */
     first () {
 
-        return this.slice(0, 1).pop();
+        return this.data.slice(0, 1).pop();
     }
 
     /**
@@ -132,7 +140,7 @@ class List extends Array {
      */
     last () {
 
-        return this.slice(this.length - 1).pop();
+        return this.data.slice(this.length - 1).pop();
     }
 
     /**
@@ -155,7 +163,7 @@ class List extends Array {
                 throw new Error('Invoked List.add without passing an Object to add');
         }
 
-        return toLast ? this.push(item) : this.unshift(item);
+        return toLast ? this.data.push(item) : this.data.unshift(item);
     }
 
     /**
@@ -175,9 +183,10 @@ class List extends Array {
                 throw new Error('Invoked List.remove without passing an Object to remove');
         }
 
-        if (this.includes(item)) {
+        if (this.data.includes(item)) {
 
-            return this.splice(this.indexOf(item), 1);
+            let itemIndex = this.data.indexOf(item);
+            return this.data.splice(itemIndex, 1);
         }
     }
 
@@ -189,22 +198,7 @@ class List extends Array {
      */
     isEmpty () {
 
-        return !!this.length;
-    }
-
-    /**
-     * Method:fromProto
-     * Returns a Real Array with a prototype matching this class
-     *
-     * @static
-     * @return: {Array}
-     */
-    static fromProto (array = []) {
-
-        let instance = array.slice(0);
-        instance.__proto__ = List.prototype;
-
-        return instance;
+        return !!this.data.length;
     }
 }
 
