@@ -28,7 +28,9 @@
                         <player-dropdown-field ng-if="!isString(scriptItem) && scriptItem.type === 'PLAYER_DROPDOWN' "
                                                event="event.current"
                                                field="event.current.fields[scriptItem.index]"></player-dropdown-field>
-                        <krossover-field ng-if="!isString(scriptItem) && scriptItem.type !== 'PLAYER_DROPDOWN'" event="event.current" field="event.current.fields[scriptItem.index]"></krossover-field>
+                        <team-dropdown-field ng-if="!isString(scriptItem) && scriptItem.type === 'TEAM_DROPDOWN'" event="event.current" field="event.current.fields[scriptItem.index]"></team-dropdown-field>
+                        <krossover-field ng-if="!isString(scriptItem) && scriptItem.type !== 'PLAYER_DROPDOWN' && scriptItem.type !== 'TEAM_DROPDOWN'" event="event.current" field="event.current.fields[scriptItem.index]"></krossover-field>
+
                     </span>
                 </div>
 
