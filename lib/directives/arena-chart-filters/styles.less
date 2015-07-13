@@ -15,10 +15,6 @@ arena-chart-filters {
     border-radius: 2px;
     background-color: @content-bg;
 
-    > div {
-        display: flex;
-    }
-
     &-left {
         justify-content: flex-start;
 
@@ -39,15 +35,19 @@ arena-chart-filters {
         }
     }
 
-    .filter-group > * {
-        margin: 0 5px;
+    .filter-group {
+        display: flex;
 
-        &:first-child {
-            margin-left: 0px;
-        }
+        &__item {
+            margin: 0 5px;
 
-        &:last-child {
-            margin-right: 0px;
+            &:first-child {
+                margin-left: 0px;
+            }
+
+            &:last-child {
+                margin-right: 0px;
+            }
         }
     }
 
