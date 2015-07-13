@@ -55,14 +55,11 @@ class SortedList extends List {
      *
      * @param: {Object} (req) Item(s) to add,
      *         (arrays accepted)
-     * @param: {Boolean} (opt) Add to FIRST
-     *         [false] or LAST [true] of
-     *         List, default is [true]
      * @return: {Array} Sorted List
      */
-    add (item, toLast = true) {
+    add (item) {
 
-        super.add(item, toLast);
+        super.add(item);
 
         return this.sortList();
     }
