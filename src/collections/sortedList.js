@@ -22,7 +22,7 @@ class SortedList extends List {
         this.sortProperty = sortProperty;
         this.descending   = descending;
 
-        this.sortList();
+        this.sort();
     }
 
     /**
@@ -31,17 +31,20 @@ class SortedList extends List {
      *
      * @return: {Array} Sorted List
      */
-    sortList () {
+    sort () {
 
         /* Create a temporary Array to sort with */
-        return this.sort((a, b) => {
+        return this.data.sort((a, b) => {
 
-            if (a[this.sortProperty] > b[this.sortProperty]) {
+            a = a[this.sortProperty];
+            b = b[this.sortProperty];
 
-                return this.descending? 1 : -1;
-            } else if (a[this.sortProperty] < b[this.sortProperty]) {
+            if (a > b) {
 
-                return this.descending? -1 : 1;
+                return this.descending ? 1 : -1;
+            } else if (a < b) {
+
+                return this.descending ? -1 : 1;
             }
 
             /* a must be equal to b */
@@ -61,7 +64,7 @@ class SortedList extends List {
 
         super.add(item);
 
-        return this.sortList();
+        return this.sort();
     }
 }
 
