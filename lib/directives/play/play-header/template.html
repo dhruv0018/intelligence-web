@@ -27,7 +27,7 @@
 
                 <div class="summariesContainer">
 
-                    <krossover-play-summaries events="play.events"></krossover-play-summaries>
+                    <krossover-play-summaries play="play"></krossover-play-summaries>
 
                 </div>
 
@@ -35,7 +35,7 @@
             <div ng-if="!isIndexer && isReelsPlay">
                 <h4 class="title">
                     <span ng-show="editFlag">{{play.index + 1}}.&nbsp;</span>
-                    <krossover-play-summaries events="play.events"></krossover-play-summaries>
+                    <krossover-play-summaries play="play"></krossover-play-summaries>
                     <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                 </h4>
 
