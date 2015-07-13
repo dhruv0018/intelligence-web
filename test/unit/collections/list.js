@@ -39,7 +39,7 @@ describe('List', () => {
 
     let sampleList;
 
-    beforeEach(() => sampleList = new List(srcArray));
+    beforeEach(() => sampleList = new List(srcArray.slice(0)));
 
     it('should exist.', () => {
 
@@ -54,7 +54,6 @@ describe('List', () => {
     it('should have a length property', () => {
 
         expect(sampleList.length).to.equal(13);
-        expect(sampleList).to.include.keys('length');
     });
 
     it('should have an "includes" method', () => {
@@ -79,55 +78,45 @@ describe('List', () => {
         expect(sampleList.includes(undefined, 10)).to.be.false;
     });
 
-    it('should have a "setLength" method that allows you truncate the array', () => {
+    it('should have a setter for length that allows the array to be truncated', () => {
 
         let controlArray = srcArray.slice(0);
 
-        sampleList.setLength(3);
+        sampleList.length   = 3;
         controlArray.length = 3;
 
         expect(sampleList.length).to.equal(3);
-        expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(controlArray));
+        expect(JSON.stringify(sampleList.identity())).to.equal(JSON.stringify(controlArray));
     });
 
-    it('should allow you to set a length equal to the length of the array with no effect', () => {
+    it('should have a setter that does nothing if value equals the length', () => {
 
         let controlArray = srcArray.slice(0);
 
-        sampleList.setLength(sampleList.length);
+        sampleList.length = sampleList.length;
         controlArray.length = controlArray.length;
-        expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(controlArray));
+        expect(JSON.stringify(sampleList.identity())).to.equal(JSON.stringify(controlArray));
     });
 
-    it('should have a "setLength" method that allows increase the length', () => {
+    it('should have a setter that allows you to increase the length with a length value longer than the length', () => {
 
         let controlArray = srcArray.slice(0);
 
         controlArray.length = 20;
-        sampleList.setLength(20);
-        expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(controlArray));
+        sampleList.length = 20;
+        expect(JSON.stringify(sampleList.identity())).to.equal(JSON.stringify(controlArray));
     });
 
     it('should throw an error if you attempt to set a length without specifying a value', () => {
 
-        expect(() => sampleList.setLength()).to.throw(Error);
-    });
-
-    it('should have a prototype factory that returns a real Array', () => {
-
-        let protoArray = List.fromProto(srcArray);
-
-        // TODO: Write tests to validate the class methods when using __proto__
-        classMethods.forEach(method => expect(protoArray).to.respondTo(method));
-        expect(protoArray.__proto__).to.deep.equal(List.prototype);
-        expect(protoArray instanceof Array).to.true;
+        expect(() => sampleList.length = 'asdf').to.throw(Error);
     });
 
     it('should have an "identity" method that returns the data as a plain array', () => {
 
         expect(sampleList.identity()).to.be.an('array');
-        expect(sampleList.length).to.equal(srcArray.length);
-        sampleList.forEach((element, index) => {
+        expect(sampleList.identity().length).to.equal(srcArray.length);
+        sampleList.identity().forEach((element, index) => {
 
             expect(element).to.deep.equal(srcArray[index]);
         });
@@ -156,13 +145,11 @@ describe('List', () => {
 
     it('should have a "first" method that returns the first element in the array', () => {
 
-        expect(sampleList.first()).to.equal(sampleList[0]);
         expect(sampleList.first()).to.equal(srcArray[0]);
     });
 
     it('should have a "last" method that returns the last element of the array', () => {
 
-        expect(sampleList.last()).to.equal(sampleList[sampleList.length - 1]);
         expect(sampleList.last()).to.equal(srcArray[srcArray.length - 1]);
     });
 
@@ -174,7 +161,6 @@ describe('List', () => {
 
         expect(sampleList.length).to.equal(14);
         expect(sampleList.get(0)).to.equal(4);
-        expect(sampleList[0]).to.equal(4);
     });
 
     it('should have an "add" method that adds elements to the end of the array', () => {
@@ -185,7 +171,6 @@ describe('List', () => {
 
         expect(sampleList.length).to.equal(14);
         expect(sampleList.get(13)).to.equal(4);
-        expect(sampleList[13]).to.equal(4);
     });
 
     it('should throw an error if you attempt to add an element without providing a value', () => {
@@ -198,20 +183,20 @@ describe('List', () => {
         expect(sampleList.length).to.equal(13);
         sampleList.remove(1);
         expect(sampleList.length).to.equal(12);
-        expect(sampleList[0]).to.equal(2);
-        expect(sampleList.indexOf(1)).to.equal(-1);
+        expect(sampleList.get(0)).to.equal(2);
+        expect(sampleList.includes(1)).to.be.false;
 
         sampleList.remove({foo: 4});
         expect(sampleList.length).to.equal(12);
-        expect(sampleList[0]).to.equal(2);
-        expect(sampleList[2]).to.deep.equal({foo: 4});
-        expect(sampleList.indexOf({foo: 4})).to.equal(-1);
+        expect(sampleList.get(0)).to.equal(2);
+        expect(sampleList.get(2)).to.deep.equal({foo: 4});
+        expect(sampleList.includes({foo: 4})).to.be.false;
 
         sampleList.remove(srcArray[3]);
         expect(sampleList.length).to.equal(11);
-        expect(sampleList[0]).to.equal(2);
-        expect(sampleList[2]).to.equal(null);
-        expect(sampleList.indexOf(srcArray[3])).to.equal(-1);
+        expect(sampleList.get(0)).to.equal(2);
+        expect(sampleList.get(2)).to.equal(null);
+        expect(sampleList.includes(srcArray[3])).to.be.false
     });
 
     it('should not remove elements that do not exist', () => {

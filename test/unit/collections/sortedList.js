@@ -45,12 +45,12 @@ describe('SortedList', () => {
         'add',
         'remove',
         'isEmpty',
-        'sortList'
+        'sort'
     ];
 
     let sampleList;
 
-    beforeEach(() => sampleList = new SortedList(srcArray, 'foo'));
+    beforeEach(() => sampleList = new SortedList(srcArray.slice(0), 'foo'));
 
     it('should exist.', () => {
 
@@ -64,18 +64,18 @@ describe('SortedList', () => {
 
     it('should be sorted after instantiation.', () => {
 
-        expect(sampleList[0]).to.deep.equal(srcArray[1]);
-        expect(sampleList[1]).to.deep.equal(srcArray[0]);
-        expect(sampleList[2]).to.deep.equal(srcArray[2]);
+        expect(sampleList.get(0)).to.deep.equal(srcArray[1]);
+        expect(sampleList.get(1)).to.deep.equal(srcArray[0]);
+        expect(sampleList.get(2)).to.deep.equal(srcArray[2]);
     });
 
     it('should be ascending sorted after instantiation, if descending set to false.', () => {
 
-        let ascendingList = new SortedList(srcArray, 'foo', false);
+        let ascendingList = new SortedList(srcArray.slice(0), 'foo', false);
 
-        expect(ascendingList[0]).to.deep.equal(srcArray[2]);
-        expect(ascendingList[1]).to.deep.equal(srcArray[0]);
-        expect(ascendingList[2]).to.deep.equal(srcArray[1]);
+        expect(ascendingList.get(0)).to.deep.equal(srcArray[2]);
+        expect(ascendingList.get(1)).to.deep.equal(srcArray[0]);
+        expect(ascendingList.get(2)).to.deep.equal(srcArray[1]);
     });
 
     it('should sort itself after adding new elements', () => {
@@ -84,9 +84,9 @@ describe('SortedList', () => {
 
         sampleList.add(sampleElem);
 
-        expect(sampleList[0]).to.deep.equal(srcArray[1]);
-        expect(sampleList[1]).to.deep.equal(srcArray[0]);
-        expect(sampleList[2]).to.deep.equal(srcArray[2]);
-        expect(sampleList[3]).to.deep.equal(sampleElem);
+        expect(sampleList.get(0)).to.deep.equal(srcArray[1]);
+        expect(sampleList.get(1)).to.deep.equal(srcArray[0]);
+        expect(sampleList.get(2)).to.deep.equal(srcArray[2]);
+        expect(sampleList.get(3)).to.deep.equal(sampleElem);
     });
 });
