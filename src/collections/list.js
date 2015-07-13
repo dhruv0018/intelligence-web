@@ -27,43 +27,17 @@ class List {
         return !!~this.data.indexOf(searchElement, fromIndex);
     }
 
-    // TODO: Try this with .slice(0)
-
-    /**
-     * Method: setLength
-     * Simulates setting the length property to truncate and array
-     *
-     * @return: {Array}
-     */
-    setLength (value) {
-
-        switch (arguments.length) {
-
-            case 0:
-
-                throw new Error('Invoked List.setLength without passing a value');
-        }
-
-        if (value <= this.length) {
-
-            return this.splice(value, this.length - value);
-        } else {
-
-            let index = this.length;
-            while (index < value) {
-
-                this.push(undefined);
-                index++;
-            }
-        }
-    }
-
     get length () {
 
         return this.data.length;
     }
 
     set length (value) {
+
+        if (Number(value) !== value || value % 1 !== 0) {
+
+            throw new Error('List length setter must be given an integer value!');
+        }
 
         this.data.length = value;
     }
@@ -183,7 +157,7 @@ class List {
                 throw new Error('Invoked List.remove without passing an Object to remove');
         }
 
-        if (this.data.includes(item)) {
+        if (this.includes(item)) {
 
             let itemIndex = this.data.indexOf(item);
             return this.data.splice(itemIndex, 1);
