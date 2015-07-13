@@ -1,0 +1,15 @@
+{
+    "name": "pill",
+    "templates": [
+        "template.html"
+    ],
+    "paths": [
+        "."
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

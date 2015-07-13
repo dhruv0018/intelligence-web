@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "pills",
         "count-label",
         "player-multiselect",
         "arena-chart-filters",

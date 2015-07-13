@@ -6,6 +6,11 @@
 
             <count-label all-count="arenaEvents.length" current-count="filteredArenaEvents.length" label="Shots"></count-label>
 
+            <div class="filter-pills">
+
+                <pills items="pills" removed-item="removedPill"></pills>
+            </div>
+
             <a name="reset-filters" ng-click="resetFilters()">Reset Filters</a>
 
         </div>
