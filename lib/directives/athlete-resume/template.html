@@ -84,7 +84,7 @@
                 Intended Major: {{athlete.profile.intendedMajor}}
             </li>
         </ul>
-        <div ng-show="(hasHighSchoolInfo || hasCollegeInfo) && isCurrentUser">
+        <div ng-show="isCurrentUser && (hasHighSchoolInfo || hasCollegeInfo)">
             <span class="edit-field" ui-sref="Athlete.Profile.EditProfile.Academics"><i class="icon icon-pencil"></i> Edit Academic Information</span>
         </div>
         <!-- Show if no academic info -->
