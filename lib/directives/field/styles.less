@@ -1,6 +1,6 @@
 @import (reference) "main.less";
 
-.item {
+.field {
 
     padding-right: 0.5ex;
 
@@ -99,6 +99,26 @@
         &:focus {
 
             color: #66afe9;
+        }
+    }
+}
+
+.field .field-dropdown {
+
+    .dropdown-menu {
+
+        &,
+        & a {
+
+            padding: 0;
+        }
+
+        svg {
+
+            position: relative;
+            top: 3px;
+            left: 3px;
+            margin-right: 3px;
         }
     }
 }
