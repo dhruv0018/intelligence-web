@@ -41,6 +41,46 @@ class KrossoverPlay extends Entity {
         });
     }
 
+    /**
+     * Method returns an HTML string of the indexer script for the play.
+     *
+     * @function indexerScript
+     * @returns {String} - HTML
+     */
+    indexerScript () {
+
+        return ``;
+    }
+
+    /**
+     * Method returns an HTML string of the summary script for the play.
+     *
+     * @function summaryScript
+     * @returns {String} - HTML
+     */
+    summaryScript () {
+
+        return this.events.map((event, index) => {
+
+            if (event.summaryScript) {
+
+                let summaryScriptHTMLString = event.summaryScript.toString();
+                let eventHTMLString = `
+                ${summaryScriptHTMLString}
+                `;
+
+                return eventHTMLString;
+            }
+        })
+        .filter(Boolean);
+    }
+
+    /**
+     * Method returns an HTML string of the user script for the play.
+     *
+     * @function userScript
+     * @returns {String} - HTML
+     */
     userScript () {
 
         return this.events.map((event, index) => {
