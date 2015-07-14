@@ -98,6 +98,16 @@ class PlayerField extends Field {
 
         let player = this.availableValues.find(value => value.playerId === this.currentValue.playerId);
 
+        if (!player) {
+
+            player = {
+
+                name: 'Optional',
+                jerseyColor: '#000000',
+                jerseyNumber: ''
+            };
+        }
+
         return `
         <span class="value">
 
