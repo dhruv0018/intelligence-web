@@ -2,6 +2,13 @@ import Tag from './tag';
 
 class Event extends Tag {
 
+    /**
+     * @constructs KrossoverPlay
+     * @param event {Object}
+     * @param tag {Object}
+     * @param time {Number}
+     * @param gameId {Number}
+     */
     constructor (event, tag, time, gameId) {
 
         /* If only two parameters are passed, we don't have an event, so
@@ -118,6 +125,14 @@ class Event extends Tag {
         return this.isEnd && this.children && this.children.length === 1;
     }
 
+    // TODO: Should this just return an object instead of JSON?
+
+    /**
+     * Method: toJSON
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @return: {String} Stringified version of the object.
+     */
     toJSON () {
 
         let copy = Object.assign({}, this);
