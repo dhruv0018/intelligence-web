@@ -150,7 +150,25 @@ function GamesArenaChartController(
     /* reset filters */
     this.resetFilters = () => eventEmitter.emit(EVENT.ARENA_CHART.FILTERS.RESET);
 
-    /* Filter arenaEvents in this watch to have access to the filtered results in this scope */
+    this.pillRemoved = (pill) => {
+
+        if (!pill) return;
+
+        if (pill.model === 'PlayersResource') {
+
+            let index = this.filters.teamPlayersIds.indexOf(pill.id);
+            if (index != -1) this.filters.teamPlayersIds.splice(index, 1);
+
+            index = this.filters.opposingTeamPlayersIds.indexOf(pill.id);
+            if (index != -1) this.filters.opposingTeamPlayersIds.splice(index, 1);
+
+        } else if (pill.model === 'CustomtagsResource') {
+
+            index = this.filters.customTagIds.indexOf(pill.id);
+            if (index != -1) this.filters.customTagIds.splice(index, 1);
+        }
+    };
+
     $scope.$watch(
         () => {
 
@@ -161,11 +179,7 @@ function GamesArenaChartController(
 
             if (!newFilters) return;
 
-            /* Filter arena events */
-            this.filteredArenaEvents = $filter('arenaEvents')(this.arenaEvents, newFilters);
-
-            /* Setup Pills */
-            // player names, // custom tag names
+            /* Filter out active pills */
             this.activePills = pills.filter((pill) => {
 
                 /* Team Players */
@@ -193,34 +207,6 @@ function GamesArenaChartController(
                 }
             });
         }, true
-    );
-
-    $scope.$watch(
-        () => {
-
-            return this.removedPill;
-
-        },
-        (pill) => {
-
-            if (!pill) return;
-
-            if (pill.model === 'PlayersResource') {
-
-                let index = this.filters.teamPlayersIds.indexOf(pill.id);
-                if (index != -1) this.filters.teamPlayersIds.splice(index, 1);
-
-                index = this.filters.opposingTeamPlayersIds.indexOf(pill.id);
-                if (index != -1) this.filters.opposingTeamPlayersIds.splice(index, 1);
-
-            } else if (pill.model === 'CustomtagsResource') {
-
-                index = this.filters.customTagIds.indexOf(pill.id);
-                if (index != -1) this.filters.customTagIds.splice(index, 1);
-            }
-
-            this.removedPill = null;
-        }
     );
 }
 
