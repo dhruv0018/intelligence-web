@@ -247,6 +247,19 @@ function GamesBreakdownController (
             $scope.telestrationsEntity = $scope.game.playTelestrations;
             $scope.currentPlayId = play.id;
 
+            /* Telestrations associated with plays */
+
+            $scope.plays.forEach((play) => {
+
+                /* NOTE: This could be slow if there are lots of games and many have telestrations */
+                let telestrations = $scope.game.playTelestrations.filter((telestration) => {
+
+                    return telestration.playId === play.id && telestration.hasGlyphs();
+                });
+
+                play.hasTelestrations = !!telestrations.length;
+            });
+
             // set initial cuepoints
             if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 

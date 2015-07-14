@@ -119,6 +119,20 @@ function ReelController(
         });
     });
 
+    /* Telestrations associated with plays */
+
+    $scope.plays.forEach((play) => {
+
+        /* NOTE: This could be slow if there are lots of games and many have telestrations */
+        let telestrations = reel.telestrations.filter((telestration) => {
+
+            return telestration.playId === play.id && telestration.hasGlyphs();
+        });
+
+        play.hasTelestrations = !!telestrations.length;
+    });
+
+
     /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
     // Editing config
 
