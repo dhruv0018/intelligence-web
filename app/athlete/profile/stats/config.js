@@ -1,11 +1,13 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/profile/stats/template.html';
 
 /**
  * Profile.Stats page module.
  * @module Profile.Stats
  */
-var Stats = angular.module('Athlete.Profile.Stats');
+const Stats = angular.module('Athlete.Profile.Stats');
 
 /**
  * Profile.Stats page state router.
@@ -21,7 +23,7 @@ Stats.config([
         .state('Athlete.Profile.Stats', {
             views: {
                 'stats@Athlete.Profile': {
-                    templateUrl: 'athlete/profile/stats/template.html',
+                    templateUrl: templateUrl,
                     controller: 'Athlete.Profile.Stats.controller'
                 }
             }

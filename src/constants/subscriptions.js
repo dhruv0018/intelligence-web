@@ -7,16 +7,16 @@ const IntelligenceWebClient = angular.module(pkg.name);
 
 const SUBSCRIPTION_ID = {
 
-    0: 'ATHLETE_PLUS',
-    1: 'ATHLETE_RECRUIT'
+    1: 'ATHLETE_PLUS',
+    2: 'ATHLETE_RECRUIT'
 };
 
 IntelligenceWebClient.constant('SUBSCRIPTION_ID', SUBSCRIPTION_ID);
 
 const SUBSCRIPTION_TYPE = {
 
-    ATHLETE_PLUS: 0,
-    ATHLETE_RECRUIT: 1
+    ATHLETE_PLUS: 1,
+    ATHLETE_RECRUIT: 2
 };
 
 IntelligenceWebClient.constant('SUBSCRIPTION_TYPE', SUBSCRIPTION_TYPE);

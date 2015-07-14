@@ -1,3 +1,11 @@
+#v2.7.0#
+##Features##
+- Athlete profiles
+- Full screen indexing
+- As a coach, when I am looking at a reel, I should have the same tags/reels functionality as for breakdowns (checkboxes, multiple select, etc)
+##Bug Fixes / Improvements##
+- Center video player controls
+
 #v2.6.0#
 ##Features##
 - Stats
