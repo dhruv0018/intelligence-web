@@ -1,0 +1,30 @@
+@import (reference) "main.less";
+
+.manage-profile-reels {
+
+    .modal-header {
+        background-color: @content-bg;
+        border: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        &.centered {
+            justify-content: center;
+        }
+
+        .circle-button {
+            background-color: @brand-success;
+            color: white;
+
+            &:hover {
+                background-color: lighten(@brand-success, 10%);
+            }
+        }
+    }
+
+    .modal-body {
+        background-color: @content-bg;
+    }
+}
