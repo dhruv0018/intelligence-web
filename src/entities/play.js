@@ -1,5 +1,6 @@
 import Entity from './entity';
 import KrossoverEvent from '../entities/event.js';
+import eventTemplate from './eventTemplate';
 
 /**
  * KrossoverPlay Entity Model
@@ -7,6 +8,11 @@ import KrossoverEvent from '../entities/event.js';
  */
 class KrossoverPlay extends Entity {
 
+    /**
+     * @constructs KrossoverPlay
+     * @param play {Object} - Play JSON from server
+     * @param tagsets {Service} - Tagsets factory
+     */
     constructor (play, tagsets) {
 
         if (!arguments.length) {
@@ -54,19 +60,7 @@ class KrossoverPlay extends Entity {
             if (event.indexerScript) {
 
                 let indexerScriptHTMLString = event.indexerScript.toString();
-                let eventHTMLString = `
-                <li class="event">
-
-                    <button class="item btn-select-event" ng-click="selectEvent(${event.id});">
-
-                        ${indexerScriptHTMLString}
-
-                    </button>
-
-                </li>
-                `;
-
-                return eventHTMLString;
+                return eventTemplate(event, indexerScriptHTMLString);
             }
         });
     }
@@ -83,12 +77,7 @@ class KrossoverPlay extends Entity {
 
             if (event.summaryScript) {
 
-                let summaryScriptHTMLString = event.summaryScript.toString();
-                let eventHTMLString = `
-                ${summaryScriptHTMLString}
-                `;
-
-                return eventHTMLString;
+                return event.summaryScript.toString();
             }
         })
         .filter(Boolean);
@@ -105,22 +94,18 @@ class KrossoverPlay extends Entity {
         return this.events.map((event, index) => {
 
             let userScriptHTMLString = event.userScript.toString();
-            let eventHTMLString = `
-            <li class="event">
-
-                <button class="item btn-select-event" ng-click="selectEvent(${event.id});">
-
-                    ${userScriptHTMLString}
-
-                </button>
-
-            </li>
-            `;
-
-            return eventHTMLString;
+            return eventTemplate(event, userScriptHTMLString);
         });
     }
 
+    // TODO: Should this just return an object instead of JSON?
+
+    /**
+     * Method: toJSON
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @return: {String} Stringified version of the object.
+     */
     toJSON () {
 
         let copy = Object.assign({}, this);
