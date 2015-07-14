@@ -25,7 +25,7 @@
 
             <vg-scrub-bar>
                 <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                <cue-points points="videoPlayer.cuePoints" feature-flag="{{$root.FLAGS.FEATURE_TELESTRATIONS.CUEPOINTS}}"></cue-points>
+                <cue-points ng-if="videoPlayer.cuePoints" points="videoPlayer.cuePoints" feature-flag="{{$root.FLAGS.FEATURE_TELESTRATIONS.CUEPOINTS}}"></cue-points>
             </vg-scrub-bar>
 
             <div class="controls-bottom">
@@ -77,4 +77,3 @@
     </videogular>
 
 </div>
-
