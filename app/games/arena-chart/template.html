@@ -6,6 +6,7 @@
 
             <count-label all-count="gamesArenaChart.arenaEvents.length" current-count="gamesArenaChart.filteredArenaEvents.length" label="Shots"></count-label>
 
+            <a ng-click="gamesArenaChart.filtering = !gamesArenaChart.filtering">Filter</a>
 
             <div class="filter-pills">
 
@@ -22,7 +23,7 @@
 
     <div class="primary-content">
 
-        <arena-chart-filters filter-model="gamesArenaChart.filters" class="container"></arena-chart-filters>
+        <arena-chart-filters ng-show="gamesArenaChart.filtering" filter-model="gamesArenaChart.filters" class="container"></arena-chart-filters>
 
         <div class="arena-chart-arena">
 
