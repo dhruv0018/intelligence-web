@@ -134,6 +134,7 @@ require('./factories/positionsets');
 require('./factories/plans');
 require('./factories/customtags');
 
+require('./emitters/emitter.js');
 require('./emitters/playlist');
 require('./emitters/video-player');
 require('./emitters/telestrations');

@@ -21,7 +21,8 @@ GamesArenaChart.config([
             views: {
                 'gameView@Games': {
                     templateUrl: 'games/arena-chart.html',
-                    controller: 'GamesArenaChart.controller'
+                    controller: 'GamesArenaChart.controller',
+                    controllerAs: 'gamesArenaChart'
                 }
             },
             resolve: {
@@ -37,6 +38,8 @@ GamesArenaChart.config([
 /* ArenaChart Data Resolve */
 
 GamesArenaChartData.$inject = [
+    'CustomtagsFactory',
+    'SessionService',
     'PlayersFactory',
     'GamesFactory',
     '$stateParams',
@@ -44,6 +47,8 @@ GamesArenaChartData.$inject = [
 ];
 
 function GamesArenaChartData (
+    customtags,
+    session,
     players,
     games,
     $stateParams,
@@ -55,6 +60,7 @@ function GamesArenaChartData (
     return games.load(gameId).then(function() {
 
         let game = games.get(gameId);
+        let teamId = session.getCurrentTeamId();
 
         let Data = {
             players: players.load({
@@ -63,9 +69,8 @@ function GamesArenaChartData (
                     game.getRoster(game.opposingTeamId).id
                 ]
             }),
-            arenaEvents: game.getArenaEvents().$promise.then(function(arenaEvents) {
-                return arenaEvents;
-            })
+            arenaEvents: game.retrieveArenaEvents(),
+            customtags: customtags.load({teamId})
         };
 
         return $q.all(Data);
@@ -76,7 +81,8 @@ function GamesArenaChartData (
 /* ArenaChart Controller */
 
 GamesArenaChartController.$inject = [
-    'Games.ArenaChart.Data',
+    'EventEmitter',
+    'EVENT',
     'ARENA_TYPES',
     'GamesFactory',
     'TeamsFactory',
@@ -87,7 +93,8 @@ GamesArenaChartController.$inject = [
 ];
 
 function GamesArenaChartController(
-    data,
+    eventEmitter,
+    EVENT,
     ARENA_TYPES,
     games,
     teams,
@@ -100,38 +107,14 @@ function GamesArenaChartController(
     let game = games.get($stateParams.id);
     let team = teams.get(game.teamId);
     let league = leagues.get(team.leagueId);
-    let arenaEvents = data.arenaEvents;
+    let arenaEvents = game.getArenaEvents();
 
     // Determine arena type
-    try {
-        $scope.arenaType = ARENA_TYPES[league.arenaId].type;
-    } catch (error) {
-        throw new Error(error);
-    }
-
-    $scope.arenaEvents = arenaEvents;
-    $scope.filteredArenaEvents = [];
-
+    this.arenaType = ARENA_TYPES[league.arenaId].type;
+    this.arenaEvents = arenaEvents;
 
     /* reset filters */
-    $scope.resetFilters = function() {
-
-        $scope.$broadcast('arena-chart-filters:reset');
-    };
-
-    let removeFiltersWatch = $scope.$watch('filters', filtersWatch, true);
-    $scope.$on('$destroy', onDestroy);
-
-    /* Filter arenaEvents in this watch to have access to the filtered results in this scope */
-    function filtersWatch(newFilters) {
-
-        $scope.filteredArenaEvents = $filter('arenaEvents')($scope.arenaEvents, newFilters);
-    }
-
-    function onDestroy() {
-
-        removeFiltersWatch();
-    }
+    this.resetFilters = () => eventEmitter.emit(EVENT.ARENA_CHART.FILTERS.RESET);
 }
 
 GamesArenaChart.controller('GamesArenaChart.controller', GamesArenaChartController);

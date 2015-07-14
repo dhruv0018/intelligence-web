@@ -17,6 +17,11 @@ const EVENT = {
             SELECT: 'PLAYLIST_EVENT_SELECT',
             CURRENT_CHANGE: 'PLAYLIST_EVENT_CURRENT_CHANGE'
         }
+    },
+    ARENA_CHART: {
+        FILTERS: {
+            RESET: 'RESET'
+        }
     }
 };
 

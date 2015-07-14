@@ -7,13 +7,13 @@
 
             <div class="team-label">
 
-                <jersey-color color="game.primaryJerseyColor"></jersey-color>
+                <jersey-color color="::game.primaryJerseyColor"></jersey-color>
 
-                <span class="home-team-name">{{team.name}}</span>
+                <span class="home-team-name">{{::team.name}}</span>
 
             </div>
 
-            <player-multiselect ng-model="ngModel.teamPlayersIds" players="teamPlayerList"></player-multiselect>
+            <player-multiselect ng-model="filterModel.teamPlayersIds" players="::teamPlayerList"></player-multiselect>
 
         </div>
 
@@ -29,13 +29,13 @@
 
                 <button
                     class="btn btn-md btn-default"
-                    ng-model="ngModel.shots.made"
+                    ng-model="filterModel.shots.made"
                     btn-checkbox
                 ><div class="shot-icon icon-diamond"></div>Made</button>
 
                 <button
                     class="btn btn-md btn-default"
-                    ng-model="ngModel.shots.missed"
+                    ng-model="filterModel.shots.missed"
                     btn-checkbox
                 ><div class="shot-icon icon-x"></div>Missed</button>
 
@@ -47,7 +47,7 @@
 
             <label> Custom Tags </label>
 
-            <custom-tags-multiselect ng-model="ngModel.customTagIds" custom-tags="customtags"></custom-tags-multiselect>
+            <custom-tags-multiselect ng-model="filterModel.customTagIds" custom-tags="::customTags"></custom-tags-multiselect>
 
         </div>
 
@@ -59,31 +59,31 @@
 
                 <button
                     class="btn btn-md btn-default"
-                    ng-model="ngModel.period.one"
+                    ng-model="filterModel.period.one"
                     btn-checkbox
                 >1</button>
 
                 <button
                     class="btn btn-md btn-default"
-                    ng-model="ngModel.period.two"
+                    ng-model="filterModel.period.two"
                     btn-checkbox
                 >2</button>
 
                 <button
                     class="btn btn-md btn-default"
-                    ng-model="ngModel.period.three"
+                    ng-model="filterModel.period.three"
                     btn-checkbox
                 >3</button>
 
                 <button
                     class="btn btn-md btn-default"
-                    ng-model="ngModel.period.four"
+                    ng-model="filterModel.period.four"
                     btn-checkbox
                 >4</button>
 
                 <button
                     class="btn btn-md btn-default"
-                    ng-model="ngModel.period.overtime"
+                    ng-model="filterModel.period.overtime"
                     btn-checkbox
                 >OT</button>
 
@@ -99,13 +99,13 @@
 
             <div class="team-label">
 
-                <span class="opposing-team-name">{{opposingTeam.name}}</span>
+                <span class="opposing-team-name">{{::opposingTeam.name}}</span>
 
-                <jersey-color color="game.opposingJerseyColor"></jersey-color>
+                <jersey-color color="::game.opposingPrimaryJerseyColor"></jersey-color>
 
             </div>
 
-            <player-multiselect ng-model="ngModel.opposingTeamPlayersIds" players="opposingTeamPlayerList"></player-multiselect>
+            <player-multiselect ng-model="filterModel.opposingTeamPlayersIds" players="::opposingTeamPlayerList"></player-multiselect>
 
         </div>
 

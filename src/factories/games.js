@@ -992,15 +992,24 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
             },
 
-            getArenaEvents: function() {
+            retrieveArenaEvents: function(game = this) {
 
-                let self = this;
+                let model = $injector.get(game.model);
+                let storage = $injector.get(game.storage);
 
-                let model = $injector.get(self.model);
+                if (!game.id) throw new Error('Game must be saved before getting arena events');
 
-                if (!self.id) throw new Error('Game must be saved before getting arena events');
+                return model.retrieveArenaEvents({ id: game.id}).$promise.then((arenaEvents) => {
+                    game.arenaEvents = arenaEvents;
+                    storage.set(game);
+                });
+            },
 
-                return model.getArenaEvents({ id: self.id });
+            getArenaEvents: function(game = this) {
+
+                if (!game.arenaEvents) throw new Error('game.arenaEvents is not defined');
+
+                return game.arenaEvents;
             },
 
             getRemainingTime: function(uploaderTeam, now) {
