@@ -52,14 +52,12 @@ class KrossoverPlay extends Entity {
         delete copy.hasVisibleEvents;
         delete copy.isFiltered;
 
-        copy.events = copy.events.map(unextendEvent);
+        copy.events = copy.events.map((event) => {
 
-        function unextendEvent (event) {
+            return JSON.parse(event.toJSON());
+        });
 
-            return event.toJSON();
-        }
-
-        return copy;
+        return JSON.stringify(copy);
     }
 }
 
