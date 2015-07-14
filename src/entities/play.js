@@ -49,7 +49,28 @@ class KrossoverPlay extends Entity {
      */
     indexerScript () {
 
-        return ``;
+        return this.events.map((event, index) => {
+
+            console.log('event', event);
+
+            if (event.indexerScript) {
+
+                let indexerScriptHTMLString = event.indexerScript.toString();
+                let eventHTMLString = `
+                <li class="event">
+
+                    <button class="item btn-select-event" ng-click="selectEvent(${event.id});">
+
+                        ${indexerScriptHTMLString}
+
+                    </button>
+
+                </li>
+                `;
+
+                return eventHTMLString;
+            }
+        });
     }
 
     /**
