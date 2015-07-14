@@ -1,0 +1,10 @@
+{
+    "name": "team",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ]
+}

@@ -1,0 +1,31 @@
+<div class="search-dropdown dropdown" dropdown is-open="status.isopen">
+    <button
+        class="btn dropdown-toggle"
+        dropdown-toggle
+    >
+        <span ng-hide="selectedOption">Select {{optionLabel}}</span>
+        <span ng-show="selectedOption">{{selectedOption[filterCriteria]}}</span>
+        <i class="icon icon-chevron-down"></i>
+    </button>
+    <div class="search-dropdown-menu dropdown-menu" ng-click="$event.stopPropagation()">
+        <div class="search-input-container">
+            <i class="icon icon-search"></i>
+            <input
+                ng-model="filters[filterCriteria]"
+                ng-keydown="keyPressTracker($event, filters.name)"
+                placeholder="Search {{optionLabel}}s"
+                maxlength="50">
+        </div>
+
+        <div class="options-list">
+            <span class="option-selection-label" ng-hide="filters[filterCriteria]">All {{optionLabel}}s</span>
+            <span class="option-selection-label" ng-show="filters[filterCriteria]">Matching {{optionLabel}}s</span>
+            <ul>
+                <li ng-repeat="option in matchingOptions = (options | filter: filters)" ng-click="selectOption(option)">
+                    {{option[filterCriteria]}}
+                </li>
+            </ul>
+            <p ng-hide="matchingOptions.length">No {{optionLabel}}s match your search</p>
+        </div>
+    </div>
+</div>
