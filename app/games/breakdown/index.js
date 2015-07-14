@@ -250,14 +250,7 @@ function GamesBreakdownController (
             /* Telestrations associated with plays */
 
             $scope.plays.forEach((play) => {
-
-                /* NOTE: This could be slow if there are lots of games and many have telestrations */
-                let telestrations = $scope.game.playTelestrations.filter((telestration) => {
-
-                    return telestration.playId === play.id && telestration.hasGlyphs();
-                });
-
-                play.hasTelestrations = !!telestrations.length;
+                play.hasTelestrations = $scope.game.playTelestrations.some((telestration) => play.id === telestration.playId && telestration.hasGlyphs());
             });
 
             // set initial cuepoints
