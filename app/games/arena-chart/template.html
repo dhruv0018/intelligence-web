@@ -4,14 +4,16 @@
 
         <div class="header-content">
 
-            <count-label all-count="arenaEvents.length" current-count="filteredArenaEvents.length" label="Shots"></count-label>
+            <count-label all-count="gamesArenaChart.arenaEvents.length" current-count="gamesArenaChart.filteredArenaEvents.length" label="Shots"></count-label>
+
 
             <div class="filter-pills">
 
-                <pills items="pills" removed-item="removedPill"></pills>
+                <pills items="gamesArenaChart.activePills" removed-item="gamesArenaChart.removedPill"></pills>
+
             </div>
 
-            <a name="reset-filters" ng-click="resetFilters()">Reset Filters</a>
+            <a name="reset-filters" ng-click="gamesArenaChart.resetFilters()">Reset Filters</a>
 
         </div>
 
@@ -20,14 +22,13 @@
 
     <div class="primary-content">
 
-        <arena-chart-filters ng-model="filters" class="container"></arena-chart-filters>
+        <arena-chart-filters filter-model="gamesArenaChart.filters" class="container"></arena-chart-filters>
 
         <div class="arena-chart-arena">
 
-            <krossover-arena type="arenaType" fit-element>
+            <krossover-arena type="gamesArenaChart.arenaType" fit-element>
 
-                <!--  NOTE: Cannot filter here in template due to transclusion since we need the results in the arena-chart scope -->
-                <arena-event arena-event="arenaEvent" ng-repeat="arenaEvent in filteredArenaEvents"></arena-event>
+                <arena-event arena-event="arenaEvent" ng-repeat="arenaEvent in gamesArenaChart.filteredArenaEvents = (gamesArenaChart.arenaEvents | arenaEvents:gamesArenaChart.filters)"></arena-event>
 
             </krossover-arena>
 

@@ -44,7 +44,7 @@ IntelligenceWebClient.factory('GamesResource', [
                 isArray: true
             },
 
-            getArenaEvents: {
+            retrieveArenaEvents: {
                 method: 'GET',
                 isArray: true,
                 url: config.api.uri + base + '/:id/arena-events'

@@ -21,7 +21,8 @@ GamesArenaChart.config([
             views: {
                 'gameView@Games': {
                     templateUrl: 'games/arena-chart.html',
-                    controller: 'GamesArenaChart.controller'
+                    controller: 'GamesArenaChart.controller',
+                    controllerAs: 'gamesArenaChart'
                 }
             },
             resolve: {
@@ -37,6 +38,8 @@ GamesArenaChart.config([
 /* ArenaChart Data Resolve */
 
 GamesArenaChartData.$inject = [
+    'CustomtagsFactory',
+    'SessionService',
     'PlayersFactory',
     'GamesFactory',
     '$stateParams',
@@ -44,6 +47,8 @@ GamesArenaChartData.$inject = [
 ];
 
 function GamesArenaChartData (
+    customtags,
+    session,
     players,
     games,
     $stateParams,
@@ -55,6 +60,7 @@ function GamesArenaChartData (
     return games.load(gameId).then(function() {
 
         let game = games.get(gameId);
+        let teamId = session.getCurrentTeamId();
 
         let Data = {
             players: players.load({
@@ -63,9 +69,8 @@ function GamesArenaChartData (
                     game.getRoster(game.opposingTeamId).id
                 ]
             }),
-            arenaEvents: game.getArenaEvents().$promise.then(function(arenaEvents) {
-                return arenaEvents;
-            })
+            arenaEvents: game.retrieveArenaEvents(),
+            customtags: customtags.load({teamId})
         };
 
         return $q.all(Data);
@@ -76,7 +81,8 @@ function GamesArenaChartData (
 /* ArenaChart Controller */
 
 GamesArenaChartController.$inject = [
-    'Games.ArenaChart.Data',
+    'EventEmitter',
+    'EVENT',
     'ARENA_TYPES',
     'CustomtagsFactory',
     'PlayersFactory',
@@ -89,9 +95,10 @@ GamesArenaChartController.$inject = [
 ];
 
 function GamesArenaChartController(
-    data,
+    eventEmitter,
+    EVENT,
     ARENA_TYPES,
-    customTags,
+    customtags,
     players,
     games,
     teams,
@@ -105,8 +112,8 @@ function GamesArenaChartController(
     let team = teams.get(game.teamId);
     let opposingTeam = teams.get(game.opposingTeamId);
     let league = leagues.get(team.leagueId);
-    let arenaEvents = data.arenaEvents;
-    let customtags = customTags.getList();
+    let arenaEvents = game.getArenaEvents();
+    let customTags = customtags.getList({teamId: team.id});
 
     let teamPlayersFilter = {rosterId: game.getRoster(game.teamId).id};
     let teamPlayerList = players.getList(teamPlayersFilter);
@@ -114,20 +121,13 @@ function GamesArenaChartController(
     let opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
     let opposingTeamPlayerList = players.getList(opposingTeamPlayersFilter);
 
-
     // Determine arena type
-    try {
-        $scope.arenaType = ARENA_TYPES[league.arenaId].type;
-    } catch (error) {
-        throw new Error(error);
-    }
-
-    $scope.arenaEvents = arenaEvents;
-    $scope.filteredArenaEvents = [];
+    this.arenaType = ARENA_TYPES[league.arenaId].type;
+    this.arenaEvents = arenaEvents;
 
     /* Construct pills */
 
-    let pills = [];
+    const pills = [];
 
     teamPlayerList.forEach((player) => {
         let playerCopy = angular.copy(player);
@@ -141,87 +141,87 @@ function GamesArenaChartController(
         pills.push(playerCopy);
     });
 
-    customtags.forEach((tag) => {
+    customTags.forEach((tag) => {
         pills.push(tag);
     });
 
-    $scope.pills = pills;
-
-    // TODO: Add custom tags to pills
+    this.activePills = pills;
 
     /* reset filters */
-    $scope.resetFilters = function() {
-
-        $scope.$broadcast('arena-chart-filters:reset');
-    };
-
-    let removeFiltersWatch = $scope.$watch('filters', filtersWatch, true);
-    let removeRemovedPillWatch = $scope.$watch('removedPill', removedPillWatch);
-    $scope.$on('$destroy', onDestroy);
+    this.resetFilters = () => eventEmitter.emit(EVENT.ARENA_CHART.FILTERS.RESET);
 
     /* Filter arenaEvents in this watch to have access to the filtered results in this scope */
-    function filtersWatch(newFilters) {
+    $scope.$watch(
+        () => {
 
-        if (!newFilters) return;
+            return this.filters;
 
-        /* Filter arena events */
-        $scope.filteredArenaEvents = $filter('arenaEvents')($scope.arenaEvents, newFilters);
+        },
+        (newFilters) => {
 
-        /* Setup Pills */
-        // player names, // custom tag names
-        $scope.pills = pills.filter((pill) => {
+            if (!newFilters) return;
 
-            /* Team Players */
+            /* Filter arena events */
+            this.filteredArenaEvents = $filter('arenaEvents')(this.arenaEvents, newFilters);
+
+            /* Setup Pills */
+            // player names, // custom tag names
+            this.activePills = pills.filter((pill) => {
+
+                /* Team Players */
+                if (pill.model === 'PlayersResource') {
+
+                    let isTeamPlayer = newFilters.teamPlayersIds.some((playerId) => {
+                        return pill.id === playerId;
+                    });
+
+                    if (isTeamPlayer) return isTeamPlayer;
+
+                    let isOpposingTeamPlayer = newFilters.opposingTeamPlayersIds.some((playerId) => {
+                        return pill.id === playerId;
+                    });
+
+                    return isOpposingTeamPlayer;
+
+                } else if (pill.model === 'CustomtagsResource') {
+
+                    let isCustomTag = newFilters.customTagIds.some((tagId) => {
+                        return pill.id === tagId;
+                    });
+
+                    return isCustomTag;
+                }
+            });
+        }, true
+    );
+
+    $scope.$watch(
+        () => {
+
+            return this.removedPill;
+
+        },
+        (pill) => {
+
+            if (!pill) return;
+
             if (pill.model === 'PlayersResource') {
 
-                let isTeamPlayer = newFilters.teamPlayersIds.some((playerId) => {
-                    return pill.id === playerId;
-                });
+                let index = this.filters.teamPlayersIds.indexOf(pill.id);
+                if (index != -1) this.filters.teamPlayersIds.splice(index, 1);
 
-                if (isTeamPlayer) return isTeamPlayer;
-
-                let isOpposingTeamPlayer = newFilters.opposingTeamPlayersIds.some((playerId) => {
-                    return pill.id === playerId;
-                });
-
-                return isOpposingTeamPlayer;
+                index = this.filters.opposingTeamPlayersIds.indexOf(pill.id);
+                if (index != -1) this.filters.opposingTeamPlayersIds.splice(index, 1);
 
             } else if (pill.model === 'CustomtagsResource') {
 
-                let isCustomTag = newFilters.customTagIds.some((tagId) => {
-                    return pill.id === tagId;
-                });
-
-                return isCustomTag;
+                index = this.filters.customTagIds.indexOf(pill.id);
+                if (index != -1) this.filters.customTagIds.splice(index, 1);
             }
-        });
-    }
 
-    function removedPillWatch(pill) {
-
-        if (!pill) return;
-
-        if (pill.model === 'PlayersResource') {
-
-            let index = $scope.filters.teamPlayersIds.indexOf(pill.id);
-            if (index != -1) $scope.filters.teamPlayersIds.splice(index, 1);
-
-            index = $scope.filters.opposingTeamPlayersIds.indexOf(pill.id);
-            if (index != -1) $scope.filters.opposingTeamPlayersIds.splice(index, 1);
-
-        } else if (pill.model === 'CustomtagsResource') {
-
-            index = $scope.filters.customTagIds.indexOf(pill.id);
-            if (index != -1) $scope.filters.customTagIds.splice(index, 1);
+            this.removedPill = null;
         }
-
-        $scope.removedPill = null;
-    }
-
-    function onDestroy() {
-
-        removeFiltersWatch();
-    }
+    );
 }
 
 GamesArenaChart.controller('GamesArenaChart.controller', GamesArenaChartController);
