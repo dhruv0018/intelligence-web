@@ -25,6 +25,10 @@
 - Clips Pages Not Loading
 
 #v2.3.0#
+##Known Issues##
+- Clips pages not loading
+- As an indexer, while watching the video I should be able to see the video duration
+- On down and distance and formation report, the playlist play button is not starting the video
 ##Features##
 - Design improvements to the queue dashboard/status
 - Admin can toggle dashboard up and down on queue
@@ -47,13 +51,8 @@
 ##Known Issues##
 - I should not see buttons "glowing"
 - As an indexer, if I delete an event, the playlist script removes the last event of the play. It should remove the event which was deleted.
-- As a admin, I should have ability to filter by 'QA, In Progress'
-- As a Super Admin, when I edit league information and press 'Cancel', I expect edited info to not save
 - As a coach, when selecting an event in the breakdown the play for the event should be selected.
 - As a coach, when uploading a Football (and all sports) game and entering my team's roster, I should see a header that says DNP. On volleyball games, the header is there.
-- As a user, when I am changing my password, a message that says "Your passwords do not match" appears before I have even entered my password in the second box.
-- As a new user with only one role, when I first login to my account, I have to a select a role, but I only have one role, so there is nothing to select.
-- As a user, when creating a password and the two passwords don't match, the "Passwords Don't Match" message styling goes across the entire screen.##Bug Fixes / Improvements##
 ##Features##
 - Maintenance Functionality v0.1
 - Update API to force maintenance mode via server config (503) disabling access to all data for read or write
