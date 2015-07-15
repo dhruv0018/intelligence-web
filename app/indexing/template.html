@@ -25,12 +25,14 @@
                 <div class="script">
                     <span ng-repeat="scriptItem in event.current.indexerScript">
                         <span ng-if="isString(scriptItem)"> {{scriptItem}}</span>
-                        <player-dropdown-field ng-if="!isString(scriptItem) && scriptItem.type === 'PLAYER_DROPDOWN' "
-                                               event="event.current"
-                                               field="event.current.fields[scriptItem.index]"></player-dropdown-field>
-                        <team-dropdown-field ng-if="!isString(scriptItem) && scriptItem.type === 'TEAM_DROPDOWN'" event="event.current" field="event.current.fields[scriptItem.index]"></team-dropdown-field>
-                        <krossover-field ng-if="!isString(scriptItem) && scriptItem.type !== 'PLAYER_DROPDOWN' && scriptItem.type !== 'TEAM_DROPDOWN'" event="event.current" field="event.current.fields[scriptItem.index]"></krossover-field>
-
+                        <player-dropdown-field ng-if="scriptItem.type === 'PLAYER_DROPDOWN' " event="event.current" field="event.current.fields[scriptItem.index]"></player-dropdown-field>
+                        <team-dropdown-field ng-if="scriptItem.type === 'TEAM_DROPDOWN'" event="event.current" field="event.current.fields[scriptItem.index]"></team-dropdown-field>
+                        <gap-dropdown-field ng-if="scriptItem.type === 'GAP'" event="event.current" field="event.current.fields[scriptItem.index]"></gap-dropdown-field>
+                        <formation-dropdown-field ng-if="scriptItem.type === 'FORMATION'" event="event.current" field="event.current.fields[scriptItem.index]"></formation-dropdown-field>
+                        <passing-zone-dropdown-field ng-if="scriptItem.type === 'PASSING_ZONE'" event="event.current" field="event.current.fields[scriptItem.index]"></passing-zone-dropdown-field>
+                        <text-dropdown-field ng-if="scriptItem.type === 'TEXT'" event="event.current" field="event.current.fields[scriptItem.index]"></text-dropdown-field>
+                        <yard-dropdown-field ng-if="scriptItem.type === 'YARD'" event="event.current" field="event.current.fields[scriptItem.index]"></yard-dropdown-field>
+                        <dropdown-field ng-if="scriptItem.type === 'DROPDOWN'" event="event.current" field="event.current.fields[scriptItem.index]"></dropdown-field>
                     </span>
                 </div>
 
