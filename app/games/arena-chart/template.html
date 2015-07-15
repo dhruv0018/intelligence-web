@@ -8,9 +8,9 @@
 
             <a class="dropdown-toggle" dropdown-toggle>
                 <span ng-click="gamesArenaChart.filters.allArenaEvents = !gamesArenaChart.filters.allArenaEvents">
-                    <span ng-if="gamesArenaChart.filters.allArenaEvents">Filter Shots</span>
-                    <span ng-if="!gamesArenaChart.filters.allArenaEvents">Show All</span>
+                    <span>Filter Shots</span>
                     <i ng-if="gamesArenaChart.filters.allArenaEvents" class="icon icon-chevron-down"></i>
+                    <i ng-if="!gamesArenaChart.filters.allArenaEvents" class="icon icon-chevron-up"></i>
                 </span>
             </a>
 
@@ -21,8 +21,7 @@
             </div>
 
             <a
-                ng-show="gamesArenaChart.filteredArenaEvents.length < gamesArenaChart.arenaEvents.length
-                    && !gamesArenaChart.filters.allArenaEvents"
+                ng-show="!gamesArenaChart.filters.allArenaEvents"
                 name="reset-filters"
                 ng-click="gamesArenaChart.resetFilters()">Reset Filters
             </a>
