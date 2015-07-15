@@ -21,7 +21,7 @@
 
         </telestrations>
 
-        <vg-controls ng-hide="deviceIsiPhone">
+        <vg-controls class="controls-container" ng-hide="deviceIsiPhone">
 
             <vg-scrub-bar>
                 <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
@@ -62,6 +62,10 @@
                 </div>
 
                 <div class="controls-right">
+
+                    <a class="download" ng-href="{{vgSource.videos[0].src}}" tooltip="Download film" download>
+                        <i class="icon icon-download"></i>
+                    </a>
 
                     <select-media-src></select-media-src>
 
