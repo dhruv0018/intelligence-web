@@ -76,7 +76,7 @@ class TeamPlayerField extends Field {
                     let value = {
                         playerId: player.id,
                         jerseyColor: game.primaryJerseyColor,
-                        jerseyNumber: rosterEntry.jerseyNumber,
+                        jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
                         name: player.firstName + ' ' + player.lastName
                     };
                     return value;
@@ -89,7 +89,7 @@ class TeamPlayerField extends Field {
                     let value = {
                         playerId: player.id,
                         jerseyColor: game.opposingPrimaryJerseyColor,
-                        jerseyNumber: rosterEntry.jerseyNumber,
+                        jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
                         name: player.firstName + ' ' + player.lastName
                     };
                     return value;

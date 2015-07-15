@@ -25,6 +25,7 @@
                 <div class="script">
                     <span ng-repeat="scriptItem in event.current.indexerScript">
                         <span ng-if="isString(scriptItem)"> {{scriptItem}}</span>
+                        <team-player-dropdown-field ng-if="scriptItem.type === 'PLAYER_TEAM_DROPDOWN' " event="event.current" field="event.current.fields[scriptItem.index]"></team-player-dropdown-field>
                         <player-dropdown-field ng-if="scriptItem.type === 'PLAYER_DROPDOWN' " event="event.current" field="event.current.fields[scriptItem.index]"></player-dropdown-field>
                         <team-dropdown-field ng-if="scriptItem.type === 'TEAM_DROPDOWN'" event="event.current" field="event.current.fields[scriptItem.index]"></team-dropdown-field>
                         <gap-dropdown-field ng-if="scriptItem.type === 'GAP'" event="event.current" field="event.current.fields[scriptItem.index]"></gap-dropdown-field>
