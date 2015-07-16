@@ -50,7 +50,10 @@ class Event extends Tag {
             delete variableValue.type;
             let temporaryVariable = this.variableValues[variableValue.id] || {};
             variableValue.value = temporaryVariable.value;
-            variableValue.type = temporaryVariable.type;
+            if (temporaryVariable.type) {
+
+                variableValue.type = temporaryVariable.type;
+            }
             this.variableValues[tagVariable.id] = variableValue;
         });
 
