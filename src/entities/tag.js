@@ -1,4 +1,5 @@
 import Entity from './entity';
+import StaticField from '../values/field/Static';
 import TeamPlayerField from '../values/field/TeamPlayer';
 import GapField from '../values/field/Gap';
 import PassingZoneField from '../values/field/PassingZone';
@@ -135,8 +136,12 @@ class KrossoverTag extends Entity {
                         return tagVariable;
                     }
 
-                    /* If the item is not a variable return it as is. */
-                    else return item;
+                    /* If the item is not a variable, return it as STATIC. */
+                    else {
+
+                        let rawField = {value: item, type: 'STATIC'};
+                        return new StaticField(rawField);
+                    }
                 });
 
                 this[scriptType].toString = () => {
@@ -146,9 +151,9 @@ class KrossoverTag extends Entity {
 
                     script.forEach(item => {
 
-                        if (typeof item === 'string') {
+                        if (item.type === 'STATIC') {
 
-                            string += `<span class="static">${item}</span>`;
+                            string += item.toString();
                         } else {
 
                             let field = this.fields[item.index];
@@ -231,9 +236,9 @@ class KrossoverTag extends Entity {
                 copy[scriptType] = script
                 .map(item => {
 
-                    if (typeof item === 'string') {
+                    if (item.type === 'STATIC') {
 
-                        return item;
+                        return item.toJSON();
                     } else {
 
                         return `__${item.index}__`;
