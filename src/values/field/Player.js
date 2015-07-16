@@ -112,7 +112,7 @@ class PlayerField extends Field {
         <span class="value">
 
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-                <rect data-ng-attr-fill="${player.jerseyColor}" x="0" y="0" width="16px" height="16px" />
+                <rect fill="${player.jerseyColor}" x="0" y="0" width="16px" height="16px" />
             </svg>
 
             <span class="player-name">${player.jerseyNumber} ${player.name}</span>
