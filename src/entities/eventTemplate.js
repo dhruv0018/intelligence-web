@@ -1,12 +1,13 @@
 /**
  * Function to compile and return a string HTML for a single event in the playlist
  *
- * @function eventTemplate
+ * @function
  * @param event {Event} - The event instance
  * @param scriptHtmlString {String} - HTML of the events from relevant script
  * @returns {String} - HTML string
  */
-function eventTemplate (event, scriptHtmlString) {
+
+export default (event, scriptHtmlString) => {
 
     return `
     <li class="event">
@@ -19,10 +20,4 @@ function eventTemplate (event, scriptHtmlString) {
 
     </li>
     `;
-}
-
-/**
- * @module eventTemplate
- * @exports eventTemplate
- */
-export default eventTemplate;
+};
