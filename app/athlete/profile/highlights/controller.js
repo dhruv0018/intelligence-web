@@ -55,8 +55,7 @@ function HighlightsController (
         let playsArray = [];
 
         // Check if user is on their own profile
-        $scope.isCurrentUser = false;
-        if ($scope.athlete.id === session.getCurrentUserId()) $scope.isCurrentUser = true;
+        $scope.isCurrentUser = $scope.athlete.id === session.getCurrentUserId();
 
         if ($scope.featuredReel) {
 
