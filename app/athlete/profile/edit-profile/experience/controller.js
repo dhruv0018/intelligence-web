@@ -17,7 +17,8 @@ ExperienceController.$inject = [
     'SportsFactory',
     'PositionsetsFactory',
     'UsersFactory',
-    'SessionService'
+    'SessionService',
+    'AddProfileTeam.Modal'
 ];
 
 /**
@@ -33,11 +34,15 @@ function ExperienceController (
     sports,
     positionsets,
     users,
-    session
+    session,
+    addProfileTeamModal
 ) {
     $scope.athlete = session.getCurrentUser();
     $scope.teams = teams.getMap();
     $scope.addingTeam = false;
+    $scope.options = {
+        scope: $scope
+    };
 
     $scope.getPositionSet = function getPositionSet(teamId) {
         let team = teams.get(teamId);
@@ -51,6 +56,17 @@ function ExperienceController (
         let league = leagues.get(team.leagueId);
         let sport = sports.get(league.sportId);
         return sport.name;
+    };
+
+    $scope.openTeamModal = function(profileTeam) {
+        $scope.profileTeam = profileTeam;
+        let modal = addProfileTeamModal.open({
+            options: $scope.options
+        });
+
+        modal.result.then( () => {
+
+        });
     };
 }
 

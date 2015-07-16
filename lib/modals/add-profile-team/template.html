@@ -1,15 +1,51 @@
 <div class="manage-profile-reels">
 
     <header class="modal-header">
-
-        <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
         <h3 class="modal-title">Add a team your Profile</h3>
-        <button class="circle-button" ng-click="saveProfile()"><i class="icon icon-ok"></i></button>
+        <i class="icon icon-remove" ng-click="$dismiss()"></i>
 
     </header>
 
     <div class="modal-body">
+        <input
+                class="form-control"
+                type="text"
+                ng-model="profileTeam.name"
+                placeholder="Add Team">
 
+        <div class="team-dates-row">
+            <div>
+                Presently on team?
+                <check-box checked="hideEndYear" ng-click="checkPresentlyOnTeam()"></check-box>
+            </div>
+            <div>
+                From:
+                <select class="form-control" ng-model="profileTeam.startYear" ng-options="date as date for date in dates">
+                    <option value="">Pick Year</option>
+                </select>
+            </div>
+            <div>
+                To:
+                <select class="form-control" ng-disabled="hideEndYear" ng-model="profileTeam.endYear" ng-options="date as date for date in dates">
+                    <option value="">Pick Year</option>
+                </select>
+            </div>
+        </div>
+
+        <select class="team-option form-control" ng-model="teamSport" ng-options="sport as sport.name for sport in sports" ng-change="getLeagues(teamSport.id)">
+            <option value="">Pick a Sport</option>
+        </select>
+
+        <select class="team-option form-control" ng-disabled="!leagues.length" ng-model="teamLeague" ng-options="league as league.name for league in leagues" ng-change="getPositionset(teamLeague.positionSetId)">
+            <option value="">Pick a League</option>
+        </select>
+
+        <positions-dropdown is-active="teamLeague.positionSetId" ng-model="profileTeam.positionIds" player="athlete" positionset="positionset"></positions-dropdown>
+
+        <div class="button-row">
+            <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
+            <button class="btn btn-primary" ng-click="saveProfile()">Done</button>
+        </div>
     </div>
 
 </div>

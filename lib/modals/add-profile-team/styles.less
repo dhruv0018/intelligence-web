@@ -10,21 +10,60 @@
         justify-content: space-between;
         align-items: center;
 
-        &.centered {
-            justify-content: center;
-        }
-
-        .circle-button {
-            background-color: @brand-success;
-            color: white;
-
-            &:hover {
-                background-color: lighten(@brand-success, 10%);
-            }
+        .icon-remove {
+            color: @brand-danger;
+            cursor: pointer;
         }
     }
 
     .modal-body {
         background-color: @content-bg;
+
+        .form-control[disabled] {
+            opacity: .5;
+        }
+
+        .team-option {
+            margin-bottom: 20px;
+            text-transform: capitalize;
+        }
+
+        .team-dates-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0px;
+
+            div {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            check-box {
+                font-size: 24px;
+                margin-left: 10px;
+            }
+
+            select {
+                padding-right: 30px;
+                margin-left: 10px;
+            }
+        }
+
+        .button-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .disabled {
+            cursor: not-allowed;
+            opacity: .5;
+            background-color: @gray-lighter;
+        }
     }
 }
