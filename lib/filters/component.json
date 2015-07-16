@@ -13,7 +13,8 @@
         "weight",
         "games",
         "padding",
-        "to-array"
+        "to-array",
+        "capitalize"
     ],
     "scripts": [
         "index.js"

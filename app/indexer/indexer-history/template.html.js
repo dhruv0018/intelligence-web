@@ -62,7 +62,7 @@ export default `
                     <td>{{game.id}}</td>
                     <!-- TODO Add a getter in GamesFactory that returns the team vs opposing team string -->
                     <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
-                    <td>{{getSportName(game.teamId)}}</td>
+                    <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                     <td>{{game.userAssignment().isQa ? 'QA' : 'Indexed'}}</td>
                     <td>
                         {{game.userAssignment().timeFinished ? (game.userAssignment().timeFinished | date:'MM/dd/yyyy') : 'Incomplete'}}

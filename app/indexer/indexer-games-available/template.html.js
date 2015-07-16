@@ -58,7 +58,7 @@ export default `
                     >
                         <td>{{game.id}}</td>
                         <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
-                        <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
+                        <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                         <td>{{ game.timeRemaining | millisecondsAsHours | hoursAsClock }}</td>
                         <td>
                             <button id="pick-up-qa-cta" class="btn btn-default" ng-click="pickUpGame(game.id)">
