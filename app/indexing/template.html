@@ -33,6 +33,7 @@
                         <passing-zone-dropdown-field ng-if="scriptItem.type === 'PASSING_ZONE'" event="event.current" field="event.current.fields[scriptItem.index]"></passing-zone-dropdown-field>
                         <text-dropdown-field ng-if="scriptItem.type === 'TEXT'" event="event.current" field="event.current.fields[scriptItem.index]"></text-dropdown-field>
                         <yard-dropdown-field ng-if="scriptItem.type === 'YARD'" event="event.current" field="event.current.fields[scriptItem.index]"></yard-dropdown-field>
+                        <arena-dropdown-field ng-if="scriptItem.type === 'ARENA'" event="event.current" field="event.current.fields[scriptItem.index]"></arena-dropdown-field>
                         <dropdown-field ng-if="scriptItem.type === 'DROPDOWN'" event="event.current" field="event.current.fields[scriptItem.index]"></dropdown-field>
                     </span>
                 </div>
