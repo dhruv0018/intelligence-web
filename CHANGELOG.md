@@ -1,3 +1,17 @@
+#v2.7.0#
+##Features##
+- Athlete profiles
+- Full screen indexing
+- As a coach, when I am looking at a reel, I should have the same tags/reels functionality as for breakdowns (checkboxes, multiple select, etc)
+- As an Admin, on the team info page, in the plans and package section, I should be able to see the number of breakdowns submitted and left for a package and the plan
+- As an Admin, I should be able to toggle QA status on a user with an indexer role in the user info page
+- Coach or Athlete on Web will see video pause when opening the toolbar
+- As a user, I should be able to see a link to my profile below my resumé
+##Bug Fixes / Improvements##
+- Center video player controls
+- Profile design enhancements
+- As a basic athlete, I should not be able to add a reel to my profile
+
 #v2.6.0#
 ##Features##
 - Stats
