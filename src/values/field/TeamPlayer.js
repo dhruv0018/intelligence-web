@@ -115,7 +115,8 @@ class TeamPlayerField extends Field {
     set currentValue(teamPlayerOption) {
         let value = {
             playerId: teamPlayerOption.playerId,
-            teamId: teamPlayerOption.teamId
+            teamId: teamPlayerOption.teamId,
+            name: teamPlayerOption.name
         };
         this.type = (typeof value.playerId !== 'undefined') ? 'Player' : 'Team';
         this.value = value;
