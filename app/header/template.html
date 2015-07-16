@@ -25,7 +25,7 @@
         <!-- Indexer Menu -->
         <menu class="dropdown-menu" ng-if="currentUser.is(INDEXER)">
             <li ui-sref-active="active"><a id="mobile-menu-indexer-games-assigned-cta" ui-sref="IndexerGamesAssigned">Games Assigned</a></li>
-            <li ui-sref-active="active"><a id="mobile-menu-indexer-games-available-cta" ui-sref="IndexerGamesAvailable">Games Available</a></li>
+            <li ng-if="indexerQuality" ui-sref-active="active"><a id="mobile-menu-indexer-games-available-cta" ui-sref="IndexerGamesAvailable">Games Available</a></li>
             <li ui-sref-active="active"><a id="mobile-menu-indexer-history-cta" ui-sref="IndexerHistory">History</a></li>
         </menu>
 
@@ -86,7 +86,7 @@
     <menu class="nav navbar-nav" ng-if="currentUser.is(INDEXER)">
 
         <li ui-sref-active="active"><a id="menu-indexer-games-assigned-cta" ui-sref="IndexerGamesAssigned">Games Assigned</a></li>
-        <li ui-sref-active="active"><a id="menu-indexer-games-available-cta" ui-sref="IndexerGamesAvailable">Games Available</a></li>
+        <li ng-if="indexerQuality" ui-sref-active="active"><a id="menu-indexer-games-available-cta" ui-sref="IndexerGamesAvailable">Games Available</a></li>
         <li ui-sref-active="active"><a id="menu-indexer-history-cta" ui-sref="IndexerHistory">History</a></li>
 
     </menu>

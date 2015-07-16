@@ -7,6 +7,7 @@ IndexerGamesController.$inject = [
     '$state',
     '$interval',
     'config',
+    '$mdDialog',
     'GAME_TYPES',
     'TeamsFactory',
     'LeaguesFactory',
@@ -24,6 +25,7 @@ function IndexerGamesController(
     $state,
     $interval,
     config,
+    $mdDialog,
     GAME_TYPES,
     teams,
     leagues,
@@ -71,6 +73,20 @@ function IndexerGamesController(
         const gameSportId = $scope.leagues[gameLeagueId].sportId;
 
         return $scope.sports[gameSportId].name;
+    };
+
+    $scope.pickUpGame = function(gameId) {
+        let alert;
+    alert = $mdDialog.alert()
+        .title('Attention, ' + $scope.userName)
+        .content('This is an example of how easy dialogs can be!')
+        .ok('Close');
+
+    $mdDialog
+        .show( alert )
+        .finally(function() {
+        alert = undefined;
+        });
     };
 
     let refreshGames = function() {

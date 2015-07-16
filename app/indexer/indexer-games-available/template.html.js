@@ -44,10 +44,9 @@ export default `
                     <tr>
                         <th>Game ID</th>
                         <th>Game</th>
-                        <th>Coach</th>
                         <th>Sport</th>
                         <th>Time Left</th>
-                        <th>Options</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,11 +58,10 @@ export default `
                     >
                         <td>{{game.id}}</td>
                         <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
-                        <td>{{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}</td>
                         <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
                         <td>{{ game.timeRemaining | millisecondsAsHours | hoursAsClock }}</td>
                         <td>
-                            <button id="enter-qa-cta" class="btn btn-default" data-ng-show="game.canBeQAed() && !game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
+                            <button id="pick-up-qa-cta" class="btn btn-default" ng-click="pickUpGame(game.id)">
                                 <span>Pick Up to QA </span>
                             </button>
                         </td>

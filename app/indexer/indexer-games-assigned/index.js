@@ -16,7 +16,7 @@ IndexerGamesAssigned.config([
         $stateProvider
 
             .state('IndexerGamesAssigned', {
-                url: '/games',
+                url: '/games-assigned',
                 parent: 'Indexer',
                 views: {
                     'main@root': {

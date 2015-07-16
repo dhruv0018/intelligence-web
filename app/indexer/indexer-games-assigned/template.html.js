@@ -24,15 +24,15 @@ export default `
 
         <a class="lookup" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank">
             <div class="lookup-container">
-                <div class="right-container">
-                    <i class="icon icon-chevron-right"></i>
-                </div>
-                <div class="left-container">
-                    <i class="icon icon-bar-chart-o"></i>
-                </div>
                 <div class="middle-container">
-                    <h3>Looking for a game?</h3>
-                    <p>Click here to sign up to index or QA a game.</p>
+                    <h3>Request to Index a Game</h3>
+                </div>
+            </div>
+        </a>
+        <a class="lookup" id="games-available-cta" ui-sref="IndexerGamesAvailable">
+            <div class="lookup-container">
+                <div class="middle-container">
+                    <h3>See Games Available to QA</h3>
                 </div>
             </div>
         </a>
