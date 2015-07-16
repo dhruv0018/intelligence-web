@@ -62,15 +62,17 @@ function IndexerGamesController(
     }
 
     $scope.games = games.getList({ assignedUserId: $scope.userId });
-    $scope.currentUser = session.getCurrentUserId();
+    $scope.currentUser = session.getCurrentUser();
 
     $scope.games.forEach(game => game.timeRemaining = game.assignmentTimeRemaining());
 
     $scope.getSportName = function(teamId) {
-        const gameLeagueId = $scope.teams[teamId].leagueId;
-        const gameSportId = $scope.leagues[gameLeagueId].sportId;
-
-        return $scope.sports[gameSportId].name;
+        const team = $scope.teams[teamId];
+        if(team && team.leagueId){
+            const gameLeagueId = team.leagueId;
+            const gameSportId = $scope.leagues[gameLeagueId].sportId;
+            return $scope.sports[gameSportId].name;
+        }
     };
 
     let refreshGames = function() {
