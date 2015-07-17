@@ -14,7 +14,7 @@
                         No plans have been added to this team.
                     </td>
                 </tr>
-                <tr data-ng-repeat-start="plan in filteredPlans">
+                <tr ng-if="!isSavingPlan" data-ng-repeat-start="plan in filteredPlans">
                     <td>
                         <p>{{ plan.name }}</p>
                         <p>Starts: {{ plan.startDate | date : 'MMM d/yy' }}</p>
@@ -23,8 +23,14 @@
                     <td>
                         <p>{{ plan.maxAnyGames }} Breakdowns per week</p>
                         <p>{{ plan.maxGamesPerPlan }} Max Breakdowns per Season</p>
+                        <p>{{ plan.maxAnyGames - breakdownStats.planGamesRemaining}} used, {{breakdownStats.planGamesRemaining}} left this week</p>
                     </td>
                     <td>{{ minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{ plan.maxTurnaroundTime }} hour Turnaround Time</td>
+                </tr>
+                <tr ng-if="isSavingPlan">
+                    <td>
+                        <krossover-spinner></krossover-spinner>
+                    </td>
                 </tr>
                 <tr data-ng-repeat-end>
                     <td colspan="3" class="plan-options">
@@ -52,16 +58,22 @@
                         No packages have been added to this team.
                     </td>
                 </tr>
-                <tr data-ng-repeat-start="activePackage in filteredPackages">
+                <tr ng-if="!isSavingPackage" data-ng-repeat-start="activePackage in filteredPackages">
                     <td>
                         <p>Starts: {{activePackage.startDate | date : 'MMM d/yy' }}</p>
                         <p>Ends: {{activePackage.endDate | date : 'MMM d/yy' }}</p>
                     </td>
                     <td>
-                        <p>{{activePackage.maxGamesPerPackage}} Games</p>
+                        <p>{{activePackage.maxGamesPerPackage}} games allotted</p>
+                        <p>{{activePackage.maxGamesPerPackage - breakdownStats.packageGamesRemaining}} used, {{breakdownStats.packageGamesRemaining}} left </p>
                     </td>
                     <td>
                         <p>{{minTurnaroundTimeLookup[activePackage.maxTurnaroundTime]}}-{{activePackage.maxTurnaroundTime}} Hour Turnaround Time</p>
+                    </td>
+                </tr>
+                <tr ng-if="isSavingPackage">
+                    <td>
+                        <krossover-spinner></krossover-spinner>
                     </td>
                 </tr>
                 <tr data-ng-repeat-end>
