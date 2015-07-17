@@ -1,18 +1,21 @@
 @import (reference) "main.less";
 
 .profile-picture {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 3px solid white;
+    text-align: center;
+    overflow: hidden;
+    background-color: white;
 
     img,
     .placeholder-picture {
-        height: 150px;
-        width: 150px;
-        border-radius: 75px;
-        border: 3px solid white;
+        max-width: 100%;
     }
 
     .placeholder-picture {
         margin: auto;
-        padding-top: 22px;
-        background-color: white;
+        border: none;
     }
 }
