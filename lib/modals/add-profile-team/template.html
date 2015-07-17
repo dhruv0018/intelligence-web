@@ -7,45 +7,49 @@
     </header>
 
     <div class="modal-body">
-        <input
-                class="form-control"
-                type="text"
-                ng-model="profileTeam.name"
-                placeholder="Add Team">
+        <form>
+            <input
+                    class="form-control"
+                    type="text"
+                    ng-model="profileTeam.name"
+                    placeholder="Add Team"
+                    required>
 
-        <div class="team-dates-row">
-            <div>
-                Presently on team?
-                <check-box checked="hideEndYear" ng-click="checkPresentlyOnTeam()"></check-box>
+            <div class="team-dates-row">
+                <div>
+                    Presently on team?
+                    <check-box checked="hideEndYear" ng-click="checkPresentlyOnTeam()"></check-box>
+                </div>
+                <div>
+                    Starting:
+                    <select class="form-control" ng-model="profileTeam.startYear" ng-options="date as date for date in dates" required>
+                        <option value="">Pick Year</option>
+                    </select>
+                </div>
+                <div>
+                    Ending:
+                    <span class="invalid-date-warning" ng-show="profileTeam.endYear && profileTeam.endYear < profileTeam.startYear">End date must follow start date</span>
+                    <select class="form-control" ng-disabled="hideEndYear" ng-model="profileTeam.endYear" ng-options="date as date for date in dates" ng-invalid="profileTeam.endYear < profileTeam.startYear">
+                        <option value="">Pick Year</option>
+                    </select>
+                </div>
             </div>
-            <div>
-                From:
-                <select class="form-control" ng-model="profileTeam.startYear" ng-options="date as date for date in dates">
-                    <option value="">Pick Year</option>
-                </select>
+
+            <select class="team-option form-control" ng-model="teamSport" ng-options="sport as sport.name for sport in sports" ng-change="getLeagues(teamSport.id)" ng-valid="leagues.length" required>
+                <option value="">Pick a Sport</option>
+            </select>
+
+            <select class="team-option form-control" ng-disabled="!leagues.length" ng-model="teamLeague" ng-options="league as league.name for league in leagues" ng-change="getPositionset(teamLeague.positionSetId)" ng-valid="teamLeague.positionSetId" required>
+                <option value="">Pick a League</option>
+            </select>
+
+            <positions-dropdown is-active="teamLeague.positionSetId" ng-model="profileTeam.positionIds" player="athlete" positionset="positionset" ng-valid="profileTeam.positionIds.length" required></positions-dropdown>
+
+            <div class="button-row">
+                <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
+                <button class="btn btn-primary" type="submit" ng-click="saveProfile()">Done</button>
             </div>
-            <div>
-                To:
-                <select class="form-control" ng-disabled="hideEndYear" ng-model="profileTeam.endYear" ng-options="date as date for date in dates">
-                    <option value="">Pick Year</option>
-                </select>
-            </div>
-        </div>
-
-        <select class="team-option form-control" ng-model="teamSport" ng-options="sport as sport.name for sport in sports" ng-change="getLeagues(teamSport.id)">
-            <option value="">Pick a Sport</option>
-        </select>
-
-        <select class="team-option form-control" ng-disabled="!leagues.length" ng-model="teamLeague" ng-options="league as league.name for league in leagues" ng-change="getPositionset(teamLeague.positionSetId)">
-            <option value="">Pick a League</option>
-        </select>
-
-        <positions-dropdown is-active="teamLeague.positionSetId" ng-model="profileTeam.positionIds" player="athlete" positionset="positionset"></positions-dropdown>
-
-        <div class="button-row">
-            <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
-            <button class="btn btn-primary" ng-click="saveProfile()">Done</button>
-        </div>
+        </form>
     </div>
 
 </div>
