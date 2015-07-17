@@ -52,10 +52,6 @@ class TeamField extends Field {
                         color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
                     };
                 });
-
-                if (!this.isRequired) {
-                    values.push({teamId: null, name: 'Optional', color: null});
-                }
                 return values;
             }
         });
@@ -67,10 +63,20 @@ class TeamField extends Field {
 
     set currentValue(teamOption) {
         let value = {
-            teamId: (teamOption.teamId) ? Number(teamOption.teamId) : teamOption.teamId,
-            name: teamOption.name || ''
+            teamId: (teamOption.teamId) ? Number(teamOption.teamId) : teamOption.teamId
         };
         this.value = value;
+    }
+
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        return `<span class="value team-field">${this.currentValue.name}</span>`;
     }
 
     toJSON() {

@@ -11,7 +11,7 @@ const play = {
             "variableValues": {
                 "8": {
                     "type": "Team",
-                    "value": 623
+                    "value": "623"
                 },
                 "25": {
                     "type": null,
@@ -27,7 +27,7 @@ const play = {
             "variableValues": {
                 "1": {
                     "type": "Player",
-                    "value": 9188
+                    "value": "9188"
                 },
                 "24": {
                     "type": null,

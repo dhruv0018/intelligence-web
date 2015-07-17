@@ -47,6 +47,17 @@ class GapField extends Field {
         this.value = gap;
     }
 
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        return `<span class="value gap-field">${this.currentValue.name}</span>`;
+    }
+
     toJSON(){
         let variableValue = {};
         let value = this.value.gapId === null ? null : String(this.value.gapId);

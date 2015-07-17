@@ -2,6 +2,13 @@ import Tag from './tag';
 
 class Event extends Tag {
 
+    /**
+     * @constructs KrossoverPlay
+     * @param event {Object}
+     * @param tag {Object}
+     * @param time {Number}
+     * @param gameId {Number}
+     */
     constructor (event, tag, time, gameId) {
 
         /* If only two parameters are passed, we don't have an event, so
@@ -27,10 +34,11 @@ class Event extends Tag {
 
         this.fields = {};
 
-        //todo refactor this later
-        Object.keys(this.tagVariables).forEach( (positionId, index) => {
+        Object.keys(this.tagVariables).forEach((positionId, index) => {
+
             index = index + 1;
             let variableValue = angular.copy(this.tagVariables[positionId]) || {};
+            //this.variableValues[tagVariableId];
             let tagVariable = this.tagVariables[index];
             variableValue.gameId = gameId;
             variableValue.inputType = tagVariable.type;
@@ -42,10 +50,14 @@ class Event extends Tag {
             delete variableValue.type;
             let temporaryVariable = this.variableValues[variableValue.id] || {};
             variableValue.value = temporaryVariable.value;
+            if (temporaryVariable.type) {
+
+                variableValue.type = temporaryVariable.type;
+            }
             this.variableValues[tagVariable.id] = variableValue;
         });
-        this.indexFields(this.variableValues, 'variableValues');
 
+        this.indexFields(this.variableValues, 'variableValues');
     }
     /**
      * Getter for event.shortcutKey
@@ -117,9 +129,17 @@ class Event extends Tag {
         return this.isEnd && this.children && this.children.length === 1;
     }
 
+    // TODO: Should this just return an object instead of JSON?
+
+    /**
+     * Method: toJSON
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @return: {String} Stringified version of the object.
+     */
     toJSON () {
 
-        let copy = super.toJSON(this);
+        let copy = Object.assign({}, this);
 
         delete copy.activeEventVariableIndex;
         delete copy.indexerScript;
@@ -139,17 +159,14 @@ class Event extends Tag {
         delete copy.buffer;
         delete copy.name;
 
-        Object.keys(copy.variableValues).forEach(key => {
+        copy.variableVales = {};
 
-            let variableValue = copy.variableValues[key];
+        Object.keys(copy.fields).forEach((order) => {
 
-            copy.variableValues[key] = {
-                type: variableValue.type,
-                value: variableValue.value
-            };
+            copy.variableValues[copy.fields[order].id] = copy.fields[order].toJSON();
         });
 
-        return copy;
+        return JSON.stringify(copy);
     }
 }
 

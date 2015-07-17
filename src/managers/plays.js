@@ -181,16 +181,18 @@ IntelligenceWebClient.service('PlaysManager', [
             if (angular.isDefined(field.value)) {
 
                 /* If its a team field. */
-                if (field.type === FIELD_TYPE.TEAM) {
-
-                    /* The field value is a teamId. */
-                    teamId = field.value;
-                }
+                teamId = field.currentValue.teamId;
 
                 /* If its a player field. */
-                else if (field.type === FIELD_TYPE.PLAYER) {
+                if (!teamId) {
 
-                    teamId = game.isPlayerOnTeam(field.value) ? game.teamId : game.opposingTeamId;
+                    let playerId = field.currentValue.playerId;
+                    teamId = playerId && game.isPlayerOnTeam(playerId) ? game.teamId : game.opposingTeamId;
+
+                    if (!teamId) {
+
+                        console.warn('WARNING: Missing `teamId` in Field!', field);
+                    }
                 }
 
                 /* Consider the first team to take possession in a play to have

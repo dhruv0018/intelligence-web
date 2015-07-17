@@ -1,4 +1,5 @@
 import Entity from './entity';
+import StaticField from '../values/field/Static';
 import TeamPlayerField from '../values/field/TeamPlayer';
 import GapField from '../values/field/Gap';
 import PassingZoneField from '../values/field/PassingZone';
@@ -51,7 +52,7 @@ class KrossoverTag extends Entity {
     }
 
     /**
-     * Method: indexTagVariables
+     * Method: indexFields
      * Takes the tag variables array and converts it into an Object keyed by
      * index ID.
      *
@@ -75,7 +76,7 @@ class KrossoverTag extends Entity {
                 break;
             case 'variableValues':
                 if (!variables) variables = {};
-                Object.keys(variables).forEach( (tagVariableId, index) => {
+                Object.keys(variables).forEach((tagVariableId, index) => {
                     let variableValue = variables[tagVariableId];
                     index = index + 1;
                     let field = this.createField(variableValue);
@@ -135,9 +136,36 @@ class KrossoverTag extends Entity {
                         return tagVariable;
                     }
 
-                    /* If the item is not a variable return it as is. */
-                    else return item;
+                    /* If the item is not a variable, return it as STATIC. */
+                    else {
+
+                        let rawField = {value: item, type: 'STATIC'};
+                        return new StaticField(rawField);
+                    }
                 });
+
+                this[scriptType].toString = () => {
+
+                    let script = this[scriptType];
+                    let string = ``;
+
+                    script.forEach(item => {
+
+                        if (item.type === 'STATIC') {
+
+                            string += item.toString();
+                        } else {
+
+                            let field = this.fields[item.index];
+                            if (field) {
+
+                                string += field.toString();
+                            }
+                        }
+                    });
+
+                    return string;
+                };
             }
         });
     }
@@ -208,9 +236,9 @@ class KrossoverTag extends Entity {
                 copy[scriptType] = script
                 .map(item => {
 
-                    if (typeof item === 'string') {
+                    if (item.type === 'STATIC') {
 
-                        return item;
+                        return item.toJSON();
                     } else {
 
                         return `__${item.index}__`;

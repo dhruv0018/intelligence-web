@@ -34,6 +34,17 @@ class DropdownField extends Field {
         this.value = dropdownOption;
     }
 
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        return `<span class="value dropdown-field">${this.currentValue.content}</span>`;
+    }
+
     toJSON() {
         let variableValue = {};
         variableValue = {

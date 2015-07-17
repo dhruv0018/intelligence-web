@@ -76,7 +76,7 @@ class TeamPlayerField extends Field {
                     let value = {
                         playerId: player.id,
                         jerseyColor: game.primaryJerseyColor,
-                        jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
+                        jerseyNumber: rosterEntry.jerseyNumber,
                         name: player.firstName + ' ' + player.lastName
                     };
                     return value;
@@ -89,7 +89,7 @@ class TeamPlayerField extends Field {
                     let value = {
                         playerId: player.id,
                         jerseyColor: game.opposingPrimaryJerseyColor,
-                        jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
+                        jerseyNumber: rosterEntry.jerseyNumber,
                         name: player.firstName + ' ' + player.lastName
                     };
                     return value;
@@ -115,11 +115,39 @@ class TeamPlayerField extends Field {
     set currentValue(teamPlayerOption) {
         let value = {
             playerId: teamPlayerOption.playerId,
-            teamId: teamPlayerOption.teamId,
-            name: teamPlayerOption.name
+            teamId: teamPlayerOption.teamId
         };
         this.type = (typeof value.playerId !== 'undefined') ? 'Player' : 'Team';
         this.value = value;
+    }
+
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        if (this.type === 'Team') {
+
+            return `<span class="value">${this.currentValue.name}</span>`;
+        } else {
+
+            let player = this.availableValues.find(value => value.playerId === this.currentValue.playerId);
+
+            return `
+            <span class="value">
+
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+                    <rect fill="${player.jerseyColor}" x="0" y="0" width="16px" height="16px" />
+                </svg>
+
+                <span class="player-name">${player.jerseyNumber} ${player.name}</span>
+
+            </span>
+            `;
+        }
     }
 
     toJSON() {

@@ -18,16 +18,26 @@ class ArenaField extends Field {
             arena.regionId = field.value.region.id;
         }
 
+        let injector = angular.element(document).injector();
+        this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
+
         this.currentValue = arena;
         Object.defineProperty(this.value, 'name', {
             get: () => {
                 let calculatedName = !this.isRequired ? 'Optional' : 'Select';
-                if (this.regionId) {
-                    let injector = angular.element(document).injector();
-                    this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
-                    calculatedName = angular.copy(this.regionMap[this.regionId].name);
+                if (this.currentValue.regionId) {
+                    calculatedName = angular.copy(this.regionMap[this.currentValue.regionId].name);
                 }
                 return calculatedName;
+            }
+        });
+        Object.defineProperty(this.value, 'description', {
+            get: () => {
+                let calculatedDescription = !this.isRequired ? 'Optional' : 'Select';
+                if (this.currentValue.regionId) {
+                    calculatedDescription = angular.copy(this.regionMap[this.currentValue.regionId].description);
+                }
+                return calculatedDescription;
             }
         });
         this.availableValues = null;
@@ -42,6 +52,17 @@ class ArenaField extends Field {
         value.coordinates = arena.coordinates;
         value.regionId = arena.regionId;
         this.value = value;
+    }
+
+    /**
+     * Method: toString
+     * Generates an HTML string of the field.
+     *
+     * @return: {String} HTML of the field
+     */
+    toString () {
+
+        return `<span class="value gap-field">${this.currentValue.description}</span>`;
     }
 
     toJSON() {
