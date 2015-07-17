@@ -1,6 +1,13 @@
 <div class="highlights">
 
-    <athlete-resume athlete="athlete"></athlete-resume>
+    <div class="athlete-info-container">
+        <athlete-resume athlete="athlete"></athlete-resume>
+
+        <div class="profile-link-container">
+            Share this link:<br>
+            <span>{{config.links.intelligence.uri}}/intelligence/athlete/{{athlete.id}}/profile</span>
+        </div>
+    </div>
 
     <div class="featured-reel-container">
 
