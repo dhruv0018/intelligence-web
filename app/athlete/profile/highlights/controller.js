@@ -72,17 +72,6 @@ function HighlightsController (
             });
         }
 
-        $scope.goToPlay = function goToPlay(play) {
-            $scope.currentPlay = play;
-
-            // Replace video sources
-            $scope.sources = $scope.currentPlay.getVideoSources();
-            videoPlayer.changeSource($scope.sources);
-
-            // Change clip index to reflect current play
-            $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
-        };
-
         // When clip finishes playing, go to next play if continuous play is on
         VideoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.ON_CLIP_COMPLETE, onCompleteVideo);
 
