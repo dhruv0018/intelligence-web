@@ -1,6 +1,6 @@
 <div class="games-game-info">
     <div class="breakdown-status">
-        <span class="broken-down" data-ng-if="game.isDelivered()">This game was broken down and returned on {{ returnedDate | date:'mediumDate' }}</span>
+        <span class="broken-down" data-ng-if="game.isDelivered()">This game was broken down <span data-ng-if="returnedDate"> and returned on {{ returnedDate | date:'mediumDate' }}</span></span>
         <span class="breaking-down" data-ng-if="game.status > GAME_STATUSES['READY_FOR_INDEXING'].id && !game.isDelivered()">
             This game is currently being broken down.
         </span>

@@ -1,0 +1,13 @@
+{
+    "name": "custom-tags-multiselect",
+    "templates": [
+        "template.html",
+        "multiselect-template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

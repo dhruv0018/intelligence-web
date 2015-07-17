@@ -15,6 +15,7 @@ Clips.run([
     function run($templateCache) {
 
         $templateCache.put('clips/template.html', require('./template.html'));
+        $templateCache.put('clips/restricted.html', require('./restricted.html'));
     }
 ]);
 
@@ -35,6 +36,17 @@ Clips.config([
             ]
         };
 
+        var ClipsRestricted = {
+            name: 'Clips.Restricted',
+            url: 'clips/',
+            parent: 'base',
+            views: {
+                'main@root': {
+                    templateUrl: 'clips/restricted.html'
+                }
+            }
+        };
+
         var Clips = {
             name: 'Clips',
             url: '/clips/:id?reel&game',
@@ -45,6 +57,43 @@ Clips.config([
                     controller: 'Clips.controller'
                 }
             },
+            onEnter: [
+                '$state', '$timeout', '$stateParams', 'SessionService', 'ReelsFactory', 'GamesFactory',
+                function($state, $timeout, $stateParams, session, reels, games) {
+
+                    let playId = Number($stateParams.id);
+
+                    if($stateParams.reel) {
+
+                        let reel = reels.get($stateParams.reel);
+                        let currentUser = session.getCurrentUser();
+
+                        /*Check if user has permissions to view reel*/
+                        if (!reel.isAllowedToView()) {
+
+                            //Without timeout, the read property '@' is null
+                            //when using $state in onEnter
+                            $timeout(function(){
+                                $state.go('Clips.Restricted', { id: playId });
+                            });
+                        }
+                    } else if($stateParams.game) {
+
+                        let game = games.get($stateParams.game);
+
+                        /*Check if user has permissions to view game*/
+                        if (!game.isAllowedToView()) {
+
+                            //Without timeout, the read property '@' is null
+                            //when using $state in onEnter
+                            $timeout(function(){
+                                $state.go('Clips.Restricted', { id: playId });
+                            });
+                        }
+                    }
+
+                }
+            ],
             resolve: {
                 'Clips.Data': [
                     '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'PlaysFactory', 'PlayersFactory', 'LeaguesFactory', 'TagsetsFactory',
@@ -85,6 +134,7 @@ Clips.config([
         };
 
         $stateProvider.state(shortClips);
+        $stateProvider.state(ClipsRestricted);
         $stateProvider.state(Clips);
     }
 ]);

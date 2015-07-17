@@ -1,7 +1,7 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var GamesBreakdown = angular.module('Games.Breakdown', []);
+const GamesBreakdown = angular.module('Games.Breakdown', []);
 
 GamesBreakdown.run([
     '$templateCache',
@@ -15,7 +15,7 @@ GamesBreakdown.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var GamesBreakdown = {
+        const GamesBreakdown = {
             name: 'Games.Breakdown',
             url: '/breakdown',
             parent: 'Games',
@@ -37,8 +37,8 @@ GamesBreakdown.config([
             onEnter: [
                 '$stateParams', 'PlayerlistManager', 'GamesFactory',
                 function($stateParams, playerlist, games) {
-                    var gameId = $stateParams.id;
-                    var game = games.get(gameId);
+                    let gameId = $stateParams.id;
+                    let game = games.get(gameId);
                     playerlist.fill(game);
                 }
             ],
@@ -55,20 +55,44 @@ GamesBreakdown.config([
 ]);
 
 GamesBreakdown.service('Games.Data.Dependencies', [
-    '$q', 'AuthenticationService', 'GamesFactory', 'PlaysFactory', 'TeamsFactory', 'ReelsFactory', 'LeaguesFactory', 'TagsetsFactory', 'PlayersFactory', 'FiltersetsFactory', 'UsersFactory', 'SessionService',
-    function dataService($q, auth, games, plays, teams, reels, leagues, tagsets, players, filtersets, users, session) {
+    '$q',
+    'GamesFactory',
+    'PlaysFactory',
+    'TeamsFactory',
+    'ReelsFactory',
+    'LeaguesFactory',
+    'TagsetsFactory',
+    'PlayersFactory',
+    'FiltersetsFactory',
+    'UsersFactory',
+    'SessionService',
+    'AuthenticationService',
+    function dataService(
+        $q,
+        games,
+        plays,
+        teams,
+        reels,
+        leagues,
+        tagsets,
+        players,
+        filtersets,
+        users,
+        session,
+        auth
+    ) {
 
-        var service = function(stateParams) {
+        let service = function(stateParams) {
 
-            var obj = {
+            let obj = {
 
                 load: function() {
 
-                    var gameId = Number(stateParams.id);
-                    var userId = session.getCurrentUserId();
-                    var teamId = session.getCurrentTeamId();
+                    let gameId = Number(stateParams.id);
+                    let userId = session.getCurrentUserId();
+                    let teamId = session.getCurrentTeamId();
 
-                    var Data = {
+                    let Data = {
                         leagues: leagues.load(),
                         tagsets: tagsets.load(),
                         filtersets: filtersets.load(),
@@ -86,9 +110,9 @@ GamesBreakdown.service('Games.Data.Dependencies', [
 
                     Data.game = games.load(gameId).then(function() {
 
-                        var game = games.get(gameId);
+                        let game = games.get(gameId);
 
-                        var GameData = {
+                        let GameData = {
                             users: users.load(game.uploaderUserId),
                             teams: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId]),
                             roster: players.load({ rosterId: game.getRoster(game.teamId).id }),
@@ -130,8 +154,13 @@ GamesBreakdownController.$inject = [
     'FiltersetsFactory',
     'ReelsFactory',
     'VIEWPORTS',
+    'PlayManager',
     'PlaysManager',
-    'PlaylistManager'
+    'PlaylistManager',
+    'PlaylistEventEmitter',
+    'TELESTRATION_PERMISSIONS',
+    'TelestrationsVideoPlayerBroker',
+    'EVENT'
 ];
 
 function GamesBreakdownController (
@@ -153,20 +182,28 @@ function GamesBreakdownController (
     filtersets,
     reels,
     VIEWPORTS,
+    playManager,
     playsManager,
-    playlistManager
+    playlistManager,
+    playlistEventEmitter,
+    TELESTRATION_PERMISSIONS,
+    TelestrationsVideoPlayerBroker,
+    EVENT
 ) {
 
-        var gameId = $stateParams.id;
+        let uploader = users.get($scope.game.uploaderUserId);
+        let gameId = $stateParams.id;
         $scope.game = games.get(gameId);
 
         $scope.posterImage = {
             url: $scope.game.video.thumbnail
         };
 
-        var isUploader = session.getCurrentUserId() === $scope.game.uploaderUserId;
-        var isTeamMember = session.getCurrentTeamId() === $scope.game.uploaderTeamId;
-        var isACoachOfUploadersTeam = session.currentUser.is(ROLES.COACH) && isTeamMember;
+        const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
+
+        let isUploader = session.getCurrentUserId() === $scope.game.uploaderUserId;
+        let isTeamMember = session.getCurrentTeamId() === $scope.game.uploaderTeamId;
+        let isACoachOfUploadersTeam = session.currentUser.is(ROLES.COACH) && isTeamMember;
 
         playlistManager.isEditable = isUploader || isACoachOfUploadersTeam;
 
@@ -181,7 +218,10 @@ function GamesBreakdownController (
         // TODO: remove some of this later
         $scope.team = teams.get($scope.game.teamId);
         $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-        $scope.uploadedBy = users.get($scope.game.uploaderUserId);
+
+        $scope.filmTitle = $scope.game.description;
+
+        let removeTelestrationsSaveListener = angular.noop;
 
         //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
         if ($scope.game.isDelivered()) {
@@ -197,6 +237,21 @@ function GamesBreakdownController (
             .filter(play => play.hasVisibleEvents);
             $scope.totalPlays = $scope.plays; // TODO: Unnecessary variable?
 
+            let play = $scope.plays[0];
+            if (play) {
+                playManager.current = play;
+            }
+
+            // Set telestrations
+            $scope.telestrationsEntity = $scope.game.playTelestrations;
+            $scope.currentPlayId = play.id;
+
+            // set initial cuepoints
+            if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId, play.startTime);
+            }
+
             /* TODO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.
              *
@@ -205,7 +260,7 @@ function GamesBreakdownController (
              * BEWARE: It only contains viewable, i.e. has a clip, plays
              */
 
-            var playIds = $scope.plays
+            let playIds = $scope.plays
                 .filter(function(play) {
                     return play.clip !== null;
                 })
@@ -215,7 +270,7 @@ function GamesBreakdownController (
                 .map(function(play) {
                     return play.id;
                 });
-            var jsonPlayIds = JSON.stringify(playIds);
+            let jsonPlayIds = JSON.stringify(playIds);
             $window.sessionStorage.setItem(
                 'game.plays',
                 jsonPlayIds
@@ -224,5 +279,58 @@ function GamesBreakdownController (
             $scope.filteredPlaysIds = [];
 
             $scope.expandAll = false;
+
+
+            /* Listeners & Watches */
+
+            if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+                playlistEventEmitter.on(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
+            }
+
+            if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
+
+                $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+
+                    if (playManager.current) {
+
+                        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.current.id, playManager.current.startTime);
+                    }
+                });
+            }
+
+            /* Listeners & Watches */
+
+            if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
+
+                removeTelestrationsSaveListener = $scope.$on('telestrations:save', saveTelestrations);
+            }
         }
+
+        function saveTelestrations(event, callbackFn) {
+
+            callbackFn = callbackFn || angular.noop;
+
+            // Save Game
+            $scope.game.save().then(function onSaved() {
+                callbackFn();
+            });
+
+        }
+
+        function onPlaylistWatch(play) {
+
+            if (play && play.id) {
+
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
+                $scope.currentPlayId = play.id;
+            }
+        }
+
+        $scope.$on('$destroy', function onDestroy() {
+
+            removeTelestrationsSaveListener();
+            telestrationsVideoPlayerBroker.cleanup();
+            playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
+        });
 }

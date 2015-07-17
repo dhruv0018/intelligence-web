@@ -2,15 +2,16 @@
 
     <header class="modal-header">
         <h3 class="modal-title">Play Breakdown
-        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i></h3>
+        <i class="icon icon-remove pull-right" ng-click="$dismiss()"></i></h3>
 
     </header>
 
     <div class="modal-body">
 
 	    <krossover-sidebar>
-	    	<krossover-plays data-expand-all="expandAll" data-game="game" data-reels="reels" data-plays="currentPlays" data-team="team" data-opposing-team="opposingTeam" data-league="league"></krossover-plays>
-	    <!--	<no-results data-ng-hide="plays.length"></no-results>-->
+            <krossover-playlist-control plays="currentPlays"></krossover-playlist-control>
+	    	<krossover-plays expand-all="expandAll" game="game" reels="reels" plays="currentPlays" team="team" opposing-team="opposingTeam" league="league"></krossover-plays>
+	    <!--	<no-results ng-hide="plays.length"></no-results>-->
 	    </krossover-sidebar>
 
         <video-player video="video"></video-player>

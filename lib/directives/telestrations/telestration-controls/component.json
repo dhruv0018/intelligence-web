@@ -1,0 +1,22 @@
+{
+    "name": "telestration-controls",
+    "paths": [
+        "."
+    ],
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "locals": [
+        "telestration-enable-button",
+        "telestration-clear-all-button",
+        "telestration-delete-button",
+        "telestration-toolbar"
+    ]
+}

@@ -113,4 +113,17 @@ const PLAYBACK_RESUME_STATES = {
 
 IntelligenceWebClient.constant('PLAYBACK_RESUME_STATES', PLAYBACK_RESUME_STATES);
 
-export {VIDEO_STATUS_IDS, VIDEO_STATUSES, TRANSCODE_PROFILES_IDS, TRANSCODE_PROFILES, SEEKING_STATES, PLAYBACK_RESUME_STATES};
+const VIDEO_PLAYER_CONFIG = {
+
+    // min height for parent of video player to be used for determining videos height
+    MIN_PARENT_HEIGHT: 50,
+
+    ASPECT_RATIO: 16 / 9,
+
+    //Not loaded at this point, so need to hardcode
+    CONTROLS_HEIGHT: 60
+};
+
+IntelligenceWebClient.constant('VIDEO_PLAYER_CONFIG', VIDEO_PLAYER_CONFIG);
+
+export {VIDEO_STATUS_IDS, VIDEO_STATUSES, PLAYBACK_RESUME_STATES, VIDEO_PLAYER_CONFIG, TRANSCODE_PROFILES_IDS, TRANSCODE_PROFILES};

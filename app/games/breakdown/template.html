@@ -21,10 +21,13 @@
             class="screen-lg-min"
             poster-image="posterImage"
             video="plays[0].clip"
-        >
+            cue-points="cuePoints"
+            telestrations="telestrationsEntity"
+            play-id="currentPlayId"
+            telestrations-permissions="telestrationsPermissions"
+            ng-show="$root.viewport.name === VIEWPORTS.DESKTOP.name">
         </video-player>
 
     </div>
 
 </div>
-

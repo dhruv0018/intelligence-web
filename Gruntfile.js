@@ -257,7 +257,8 @@ module.exports = function(grunt) {
                 files: {
                     'build/components.css': [
                         'app/reel/styles.less',
-                        'lib/directives/video-player/select-media-src/styles.less'
+                        'lib/directives/video-player/select-media-src/styles.less',
+                        'lib/directives/dynamic-tables/styles.less'
                     ]
                 }
             }

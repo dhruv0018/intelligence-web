@@ -20,7 +20,11 @@ ReelController.$inject = [
     'PlaysManager',
     'SessionService',
     'ROLES',
-    'VIEWPORTS'
+    'VIEWPORTS',
+    'TELESTRATION_PERMISSIONS',
+    'TelestrationsVideoPlayerBroker',
+    'PlaylistEventEmitter',
+    'EVENT'
 ];
 
 /**
@@ -39,7 +43,7 @@ function ReelController(
     auth,
     account,
     alerts,
-    reels,
+    reelsFactory,
     playManager,
     gamesFactory,
     playsFactory,
@@ -48,13 +52,28 @@ function ReelController(
     playsManager,
     session,
     ROLES,
-    VIEWPORTS
+    VIEWPORTS,
+    TELESTRATION_PERMISSIONS,
+    TelestrationsVideoPlayerBroker,
+    playlistEventEmitter,
+    EVENT
 ) {
 
+    const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
+
     let reelId = Number($stateParams.id);
-    let reel = reels.get(reelId);
+    let reel = reelsFactory.get(reelId);
+    let currentUser = session.getCurrentUser();
+    let isUploader = reel.isUploader(currentUser.id);
+    let isTeamUploadersTeam = reel.isTeamUploadersTeam(currentUser.currentRole.teamId);
+    let isCoach = currentUser.is(ROLES.COACH);
     let plays = reel.plays.map(mapPlays);
+    let play = plays[0];
     let game = gamesFactory.get(plays[0].gameId);
+    let isTelestrationsSharedWithCurrentUser = reel.isTelestrationsSharedWithUser(currentUser);
+    let isTelestrationsSharedPublicly = reel.isTelestrationsSharedPublicly();
+    let team = teamsFactory.get(game.teamId);
+    let league = leaguesFactory.get(team.leagueId);
 
     $scope.VIEWPORTS = VIEWPORTS;
     $scope.reel = reel;
@@ -64,6 +83,11 @@ function ReelController(
     $scope.plays = plays;
     $scope.playManager = playManager;
     $scope.video = plays[0].clip;
+    $scope.currentPlayId = play.id;
+    $scope.game = game;
+    $scope.league = league;
+
+    playManager.current = play;
 
     /* TODO: game.getPosterImage() */
     $scope.posterImage = {
@@ -98,26 +122,53 @@ function ReelController(
     // Editing config
 
     $scope.editFlag = false;
-    var editAllowed = true;
+    let editAllowed = true;
 
-    var editModeRestrictions = {
-        DELETABLE: 'DELETABLE',
-        EDITABLE: 'EDITABLE',
-        VIEWABLE: 'VIEWABLE'
+    const REELS_PERMISSIONS = {
+        EDITABLE: 0,
+        VIEWABLE: 1
     };
 
     // DEFAULT RESTRICTION
-    $scope.restrictionLevel = editModeRestrictions.VIEWABLE;
+    let reelsPermissions = REELS_PERMISSIONS.VIEWABLE;
 
-    var isCoach = session.currentUser.is(ROLES.COACH);
-    var isACoachOfThisTeam = isCoach && session.currentUser.currentRole.teamId === $scope.reel.uploaderTeamId;
-    var isOwner = session.currentUser.id === $scope.reel.uploaderUserId;
+    if (isTeamUploadersTeam && isCoach || isUploader) {
 
-    if (isACoachOfThisTeam) $scope.restrictionLevel = editModeRestrictions.EDITABLE;
-    if (isOwner) $scope.restrictionLevel = editModeRestrictions.DELETABLE;
+        reelsPermissions = REELS_PERMISSIONS.EDITABLE;
+    }
 
-    $scope.canUserDelete = $scope.restrictionLevel === editModeRestrictions.DELETABLE;
-    $scope.canUserEdit = $scope.restrictionLevel === editModeRestrictions.DELETABLE || $scope.restrictionLevel === editModeRestrictions.EDITABLE;
+    $scope.canUserEdit = reelsPermissions === REELS_PERMISSIONS.DELETABLE || reelsPermissions === REELS_PERMISSIONS.EDITABLE;
+
+    // telestrations
+
+    $scope.telestrationsEntity = reel.telestrations;
+
+    // uploader could be a coach or an athlete (they have permissions to edit by default)
+    if (isUploader) {
+
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+
+    }
+    // Coaches on the same team as the uploader can edit
+    else if (isTeamUploadersTeam && isCoach) {
+
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+
+    } else if (isTelestrationsSharedWithCurrentUser || isTelestrationsSharedPublicly) {
+
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
+
+    } else {
+
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
+    }
+
+    // set initial cuepoints
+    if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
+    }
+
 
     /* TODO: Edit "mode"? */
     $scope.toggleEditMode = function toggleEditMode() {
@@ -174,9 +225,51 @@ function ReelController(
         });
     };
 
+    if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
+
+        playlistEventEmitter.on(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
+    }
+
+    if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
+
+        $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
+
+            if (playManager.current) {
+
+                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.current.id, playManager.current.startTime);
+            }
+
+        });
+
+        $scope.$on('telestrations:save', function handleTelestrationSave(event, callbackFn) {
+
+            callbackFn = callbackFn || angular.noop;
+
+            // Save Game
+            $scope.reel.save().then(function onSaved() {
+                callbackFn();
+            });
+        });
+    }
+
+    function onPlaylistWatch(play) {
+
+        if (play && play.id) {
+
+            $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
+            $scope.currentPlayId = play.id;
+        }
+    }
+
     $scope.$watch('plays', function playsWatch(newVals, oldVals) {
 
         $scope.filteredPlaysIds = newVals;
+    });
+
+    $scope.$on('$destroy', function onDestroy() {
+
+        telestrationsVideoPlayerBroker.cleanup();
+        playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
     });
 }
 

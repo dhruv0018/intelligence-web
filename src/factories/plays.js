@@ -9,8 +9,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities',
-    function(config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils) {
+    '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_CONSTANTS',
+    function($injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_CONSTANTS) {
 
         var PlaysFactory = {
 
@@ -35,6 +35,9 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 play.indexedScore = play.indexedScore || 0;
                 play.opposingIndexedScore = play.opposingIndexedScore || 0;
 
+                /* If play has no custom tags, set it to an empty array */
+                play.customTagIds = play.customTagIds || [];
+
                 /* Indicates if the play has visible events; set by the events. */
                 play.hasVisibleEvents = false;
 
@@ -47,7 +50,10 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                     let tag = tagsets.getTag(event.tagId);
 
-                    return new KrossoverEvent(event, tag, event.time);
+                    /* NOTE: Not all browsers support more than 6 decimals for video times */
+                    let safeEventTime = utils.toFixedFloat(event.time);
+
+                    return new KrossoverEvent(event, tag, safeEventTime);
                 }
 
                 play.clip = play.clip ? new Video(play.clip) : {};
@@ -105,7 +111,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     plays: {},
                     options: {
                         teamId: resources.teamId,
-                        playerId: resources.playerId
+                        playerId: resources.playerId,
+                        customTagId: resources.customTagId
                     }
                 };
 
@@ -127,6 +134,61 @@ IntelligenceWebClient.factory('PlaysFactory', [
             load (filter) {
 
                 return tagsets.load().then(() => { return this.baseLoad(filter); });
+            },
+
+            // TODO: move to list modelling
+            batchSave: function(plays) {
+                let model = $injector.get(this.model);
+                let parameters = {};
+
+                plays = plays.map(play => {
+                    return this.unextend(play);
+                });
+
+                let batchUpdate = model.batchUpdate(parameters, plays);
+
+                return  batchUpdate.$promise;
+            },
+
+            filterByCustomTags: function(plays, customTagIds) {
+                if (!customTagIds || !customTagIds.length) return plays;
+
+                plays = plays.filter(play => {
+                    return customTagIds.every(tagId => {
+                        return !!~play.customTagIds.indexOf(tagId);
+                    });
+                });
+
+                return plays;
+            },
+
+            /** Gets the events time relative to a play
+            * @param {event} event
+            * @param [{event}] play The play it's relative to or the thisObject
+            */
+            getEventsRelativeTime: function (event, play = this) {
+
+                if (angular.isUndefined(play.startTime)) throw new Error('Play parameter is missing startTime');
+                if (!event) throw new Error('Missing "event" parameter');
+                if (angular.isUndefined(event.time)) throw new Error('event.time is undefined');
+
+                return event.time - play.startTime;
+            },
+
+            getEventCuePoints: function() {
+
+                let cuePoints = [];
+
+                if (!this.events) return cuePoints;
+
+                cuePoints = this.events.map(function(event) {
+                    return {
+                        time: event.time,
+                        type: CUEPOINT_CONSTANTS.TYPES.EVENT
+                    };
+                });
+
+                return cuePoints;
             }
         };
 

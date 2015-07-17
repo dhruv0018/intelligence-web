@@ -12,8 +12,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q, playTelestrationEntity, rawTelestrationEntity) {
 
         var GamesFactory = {
 
@@ -23,28 +23,36 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             model: 'GamesResource',
 
-            schema: 'GAME_SCHEMA',
-
             storage: 'GamesStorage',
-
             unextend: function(game) {
+
                 var self = this;
 
                 game = game || self;
 
-                /* Create a copy of the resource to break reference to orginal. */
-                var copy = angular.copy(game);
+                /* Create a copy of the resource to break reference to original. */
+
+                let copy = Object.assign({}, game);
+
+                // remove attributes that are circular
+                delete copy.$promise;
                 delete copy.flow;
 
-                copy.shares = copy.shares || [];
+                // copy share attributes that rely on game functions.
+                // TODO: This sharing copying should not have to be done. It should model reels implementation.
 
                 if (copy.isSharedWithPublic()) {
                     copy.shares.push(copy.publicShare);
-                    delete copy.publicShare;
                 }
 
                 copy.shares.forEach(function(share) {
-                    share.isBreakdownShared = JSON.parse(share.isBreakdownShared);
+                    copy.isBreakdownShared = JSON.parse(share.isBreakdownShared);
+                });
+
+                // Unextend any children objects
+                Object.keys(copy).forEach(function assignCopies(key) {
+
+                    if (copy[key] && copy[key].unextend) copy[key] = copy[key].unextend();
                 });
 
                 /*
@@ -101,6 +109,13 @@ IntelligenceWebClient.factory('GamesFactory', [
                         }
                     });
                 }
+
+                // Extend Telestration Entities
+                game.rawTelestrations = game.rawTelestrations || [];
+                game.playTelestrations = game.playTelestrations || [];
+
+                if (!game.rawTelestrations.unextend) rawTelestrationEntity(game.rawTelestrations, game.id);
+                if (!game.playTelestrations.unextend) playTelestrationEntity(game.playTelestrations, game.id);
 
                 return game;
             },
@@ -234,6 +249,51 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 /* Check if the player is on the team roster. */
                 return angular.isDefined(playerInfo[playerId]);
+            },
+
+            /**
+            * @class Games
+            * @method
+            * @returns {Boolean} returns if user can view game
+            * or not.
+            * Check if the user is allowed to view a given game.
+            */
+            isAllowedToView: function() {
+
+                let self = this;
+
+                //Check if user has permissions to view reel
+                let isAllowed = self.isSharedWithPublic() ||
+                                self.uploaderUserId === session.getCurrentUserId() ||
+                                self.uploaderTeamId === session.getCurrentTeamId() ||
+                                self.isSharedWithUser(session.getCurrentUser()) ||
+                                self.isSharedWithTeam();
+
+                return isAllowed;
+            },
+
+            /**
+            * @class Games
+            * @method
+            * @returns {Integer} returns the team id that the game
+            * is shared with.
+            * Checks if the game is shared with a team.
+            */
+
+            /** FIXME: We should consider consolidating this
+             *  function with the one is reels factory.
+             */
+            isSharedWithTeam: function() {
+
+                let self = this;
+
+                if (!self.shares) return false;
+
+                return self.shares.map(function(share) {
+                    return share.sharedWithTeamId;
+                }).some(function(sharedWithTeamId) {
+                    return sharedWithTeamId;
+                });
             },
 
             isPlayerOnOpposingTeam: function(playerId) {
@@ -1024,7 +1084,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return isBeingBrokenDown;
             },
-            shareWithUser: function(user) {
+            shareWithUser: function(user, isTelestrationsShared = false) {
 
                 var self = this;
 
@@ -1041,7 +1101,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                     gameId: self.id,
                     sharedWithUserId: user.id,
                     createdAt: moment.utc().toDate(),
-                    isBreakdownShared: false
+                    isBreakdownShared: false,
+                    isTelestrationsShared: isTelestrationsShared
                 };
 
                 self.sharedWithUsers[user.id] = share;
@@ -1124,7 +1185,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return sharesArray;
             },
-            togglePublicSharing: function() {
+            togglePublicSharing: function(isTelestrationsShared = false) {
                 var self = this;
 
                 self.shares = self.shares || [];
@@ -1138,7 +1199,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                         gameId: self.id,
                         sharedWithUserId: null,
                         createdAt: moment.utc().toDate(),
-                        isBreakdownShared: false
+                        isBreakdownShared: false,
+                        isTelestrationsShared: isTelestrationsShared
                     };
 
                     self.publicShare = share;
@@ -1148,6 +1210,61 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 return !!self.publicShare;
+            },
+            getPublicShare: function() {
+                var self = this;
+
+                return self.publicShare;
+            },
+            isFeatureSharedPublicly: function(featureAttribute) {
+                var self = this;
+
+                if (!featureAttribute) throw new Error('Missing \'featureAttribute\' parameter');
+                if (typeof featureAttribute !== 'string') throw new Error('featureAttribute parameter must be a string');
+
+                var publicShare = self.getPublicShare();
+
+                if (angular.isDefined(publicShare) && publicShare[featureAttribute] === true) return true;
+            },
+            isFeatureSharedWithUser: function(featureAttribute, user) {
+                var self = this;
+
+                if (!featureAttribute) throw new Error('Missing \'featureAttribute\' parameter');
+                if (typeof featureAttribute !== 'string') throw new Error('featureAttribute parameter must be a string');
+
+                var userShare = self.getShareByUser(user);
+
+                if (angular.isDefined(userShare) && userShare[featureAttribute] === true) return true;
+            },
+            isTelestrationsSharedWithUser: function(user) {
+                var self = this;
+
+                return self.isFeatureSharedWithUser('isTelestrationsShared', user);
+            },
+            isTelestrationsSharedPublicly: function() {
+                var self = this;
+
+                return self.isFeatureSharedPublicly('isTelestrationsShared');
+            },
+            /*
+             * Determines if the user is the uploader (owner) of this game
+             * @param - userId
+             * @returns {boolean}
+             */
+            isUploader: function isUploader(userId) {
+                var self = this;
+
+                return userId === self.uploaderUserId;
+            },
+            /*
+             * Determines if the team given is the same as the uploader's (owner) team
+             * @param - teamId
+             * @returns {boolean}
+             */
+            isTeamUploadersTeam: function isTeamUploadersTeam(teamId) {
+                var self = this;
+
+                return teamId === self.uploaderTeamId;
             }
         };
 
