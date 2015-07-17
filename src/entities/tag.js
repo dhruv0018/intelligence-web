@@ -51,7 +51,7 @@ class KrossoverTag extends Entity {
     }
 
     /**
-     * Method: indexFields
+     * Method: indexTagVariables
      * Takes the tag variables array and converts it into an Object keyed by
      * index ID.
      *
@@ -75,7 +75,7 @@ class KrossoverTag extends Entity {
                 break;
             case 'variableValues':
                 if (!variables) variables = {};
-                Object.keys(variables).forEach((tagVariableId, index) => {
+                Object.keys(variables).forEach( (tagVariableId, index) => {
                     let variableValue = variables[tagVariableId];
                     index = index + 1;
                     let field = this.createField(variableValue);

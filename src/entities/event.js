@@ -27,11 +27,10 @@ class Event extends Tag {
 
         this.fields = {};
 
-        Object.keys(this.tagVariables).forEach((positionId, index) => {
-
+        //todo refactor this later
+        Object.keys(this.tagVariables).forEach( (positionId, index) => {
             index = index + 1;
             let variableValue = angular.copy(this.tagVariables[positionId]) || {};
-            //this.variableValues[tagVariableId];
             let tagVariable = this.tagVariables[index];
             variableValue.gameId = gameId;
             variableValue.inputType = tagVariable.type;
@@ -45,8 +44,8 @@ class Event extends Tag {
             variableValue.value = temporaryVariable.value;
             this.variableValues[tagVariable.id] = variableValue;
         });
-
         this.indexFields(this.variableValues, 'variableValues');
+
     }
     /**
      * Getter for event.shortcutKey
@@ -120,7 +119,7 @@ class Event extends Tag {
 
     toJSON () {
 
-        let copy = Object.assign({}, this);
+        let copy = super.toJSON(this);
 
         delete copy.activeEventVariableIndex;
         delete copy.indexerScript;
@@ -140,14 +139,17 @@ class Event extends Tag {
         delete copy.buffer;
         delete copy.name;
 
-        copy.variableVales = {};
+        Object.keys(copy.variableValues).forEach(key => {
 
-        Object.keys(copy.fields).forEach((order) => {
+            let variableValue = copy.variableValues[key];
 
-            copy.variableValues[copy.fields[order].id] = copy.fields[order].toJSON();
+            copy.variableValues[key] = {
+                type: variableValue.type,
+                value: variableValue.value
+            };
         });
 
-        return JSON.stringify(copy);
+        return copy;
     }
 }
 

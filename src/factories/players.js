@@ -27,16 +27,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     player.positionIds = {};
                 }
 
-                Object.defineProperty(player, 'name', {
-                    get: function() {
-                        return this.firstName + ' ' + this.lastName;
-                    },
-                    configurable: true
-                });
-
                 return player;
             },
-
             resendEmail: function(userId, teamId) {
                 var self = this;
 
@@ -68,17 +60,6 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     self.rosterStatuses[toRosterId] = true;
                 }
 
-            },
-
-            generateStats: function(query) {
-
-                let self = this;
-
-                query.id = query.id || self.id;
-
-                const model = $injector.get(self.model);
-
-                return model.generateStats(query).$promise;
             }
         };
 

@@ -98,13 +98,22 @@ describe('Play Entity', () => {
 
     it('should restore the original JSON on JSON.stringify calls', inject(TagsetsFactory => {
 
-        play = JSON.parse(play.toJSON());
+        play = play.toJSON();
 
         expect(play.id).to.equal(srcJSON.id);
         expect(play.startTime).to.equal(srcJSON.startTime);
         expect(play.endTime).to.equal(srcJSON.endTime);
 
         expect(play.events).to.be.an('array');
+
+        srcJSON.events.forEach((event, index) => {
+
+            expect(play.events[index].id).to.equal(srcJSON.events[index].id);
+            expect(play.events[index].time).to.equal(srcJSON.events[index].time);
+            expect(play.events[index].tagId).to.equal(srcJSON.events[index].tagId);
+            expect(play.events[index].playId).to.equal(srcJSON.events[index].playId);
+            expect(play.events[index].variableValues).to.deep.equal(srcJSON.events[index].variableValues);
+        });
 
         expect(play.gameId).to.equal(srcJSON.gameId);
 

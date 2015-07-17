@@ -52,6 +52,10 @@ class TeamField extends Field {
                         color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
                     };
                 });
+
+                if (!this.isRequired) {
+                    values.push({teamId: null, name: 'Optional', color: null});
+                }
                 return values;
             }
         });
@@ -63,7 +67,8 @@ class TeamField extends Field {
 
     set currentValue(teamOption) {
         let value = {
-            teamId: (teamOption.teamId) ? Number(teamOption.teamId) : teamOption.teamId
+            teamId: (teamOption.teamId) ? Number(teamOption.teamId) : teamOption.teamId,
+            name: teamOption.name || ''
         };
         this.value = value;
     }

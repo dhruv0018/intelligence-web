@@ -25,7 +25,7 @@ describe('Event Entity', () => {
         srcEvent    = angular.copy(srcJSON.events[0]);
         let gameId  = srcJSON.gameId;
         let tag     = angular.copy(srcTag);
-        sampleEvent = new KrossoverEvent(angular.copy(srcEvent), tag, srcEvent.time, gameId);
+        sampleEvent = new KrossoverEvent(srcEvent, tag, srcEvent.time, gameId);
     });
 
     it('should exist.', () => {
@@ -118,16 +118,12 @@ describe('Event Entity', () => {
 
     it('should restore the original JSON on JSON.stringify calls', () => {
 
-        sampleEvent = JSON.parse(sampleEvent.toJSON());
+        sampleEvent = sampleEvent.toJSON();
 
         expect(sampleEvent.id).to.equal(srcEvent.id);
         expect(sampleEvent.time).to.equal(srcEvent.time);
         expect(sampleEvent.tagId).to.equal(srcEvent.tagId);
         expect(sampleEvent.playId).to.equal(srcEvent.playId);
-
-        Object.keys(sampleEvent.variableValues).forEach((tagId) => {
-
-            expect(JSON.parse(sampleEvent.variableValues[tagId])).to.deep.equal(srcEvent.variableValues[tagId]);
-        });
+        expect(sampleEvent.variableValues).to.deep.equal(srcEvent.variableValues);
     });
 });

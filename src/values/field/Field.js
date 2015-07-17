@@ -43,6 +43,7 @@ class Field extends Value {
     toJSON() {
         throw Error('Trying to stringify abstract class - Field');
     }
+
 }
 
 /**

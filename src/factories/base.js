@@ -333,10 +333,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var storage = $injector.get(self.storage);
                 var session = $injector.get('SessionService');
 
-                let view = angular.copy(filter) || {};
-                delete view.start;
-                delete view.count;
-                view = session.serializeUserResourceQuery(self.description, view);
+                var view = session.serializeUserResourceQuery(self.description, filter);
 
                 /* Making a copy of the filter here so that the start and count
                  * properties don't get added to the filter if not passed in as a literal.  */
