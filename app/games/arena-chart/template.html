@@ -2,18 +2,29 @@
 
     <header class="container">
 
-        <div class="header-content">
+        <div class="header-content" ng-class="{allShots: gamesArenaChart.filters.allArenaEvents}">
 
             <count-label all-count="gamesArenaChart.arenaEvents.length" current-count="gamesArenaChart.filteredArenaEvents.length" label="Shots"></count-label>
 
+            <a class="dropdown-toggle" dropdown-toggle>
+                <span ng-click="gamesArenaChart.filters.allArenaEvents = !gamesArenaChart.filters.allArenaEvents">
+                    <span>Filter Shots</span>
+                    <i ng-if="gamesArenaChart.filters.allArenaEvents" class="icon icon-chevron-down"></i>
+                    <i ng-if="!gamesArenaChart.filters.allArenaEvents" class="icon icon-chevron-up"></i>
+                </span>
+            </a>
 
-            <div class="filter-pills">
+            <div ng-show="!gamesArenaChart.filters.allArenaEvents" class="filter-pills">
 
                 <pills items="gamesArenaChart.activePills" item-removed="gamesArenaChart.pillRemoved"></pills>
 
             </div>
 
-            <a name="reset-filters" ng-click="gamesArenaChart.resetFilters()">Reset Filters</a>
+            <a
+                ng-show="!gamesArenaChart.filters.allArenaEvents"
+                name="reset-filters"
+                ng-click="gamesArenaChart.resetFilters()">Reset Filters
+            </a>
 
         </div>
 
@@ -22,7 +33,7 @@
 
     <div class="primary-content">
 
-        <arena-chart-filters filter-model="gamesArenaChart.filters" class="container"></arena-chart-filters>
+        <arena-chart-filters ng-show="!gamesArenaChart.filters.allArenaEvents" filter-model="gamesArenaChart.filters" class="container"></arena-chart-filters>
 
         <div class="arena-chart-arena">
 
