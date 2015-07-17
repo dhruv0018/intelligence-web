@@ -1,0 +1,13 @@
+<span class="koi-checkbox" ng-class="{reverse: reverse}">
+
+    <span class="koi-checkbox-toggle">
+        <i class="icon icon-check-empty" ng-show="ngModelController.$viewValue === falseValue"></i>
+        <i class="icon icon-minus-square-o" ng-show="ngModelController.$viewValue === determinantValue"></i>
+        <i class="icon icon-check-square-o" ng-show="ngModelController.$viewValue === trueValue"></i>
+    </span>
+
+    <span class="koi-checkbox-label">
+        <ng-transclude></ng-transclude>
+    </span>
+
+</span>
