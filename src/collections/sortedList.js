@@ -1,16 +1,24 @@
+/**
+ * Creates a Sorted List
+ * @class List
+ * @classdesc Extends base List class: takes an array as a data source and adds
+ * the ability to sort the array automatically.
+ * @file src/collections/list.js
+ */
+
 import List from './list';
 
 class SortedList extends List {
 
     /**
-     * Constructor:
      * Instantaties Sorted List as a new array
      *
-     * @param: {Array} (opt) Array to copy
-     * @param: {String} Property to sort array by
-     * @param: {Boolean} (opt) Sort array descending/ascending
+     * @constructs SortedList
+     * @param {Array} [array]         - Array to copy
+     * @param {String} [sortProperty] - Property to sort array by
+     * @param {Boolean} descending    - Sort array descending/ascending
      */
-    constructor (array, sortProperty, descending = true) {
+    constructor (array = [], sortProperty = false, descending = true) {
 
         super(array);
 
@@ -26,10 +34,10 @@ class SortedList extends List {
     }
 
     /**
-     * Method: sort
      * Sorts entries by property in order
      *
-     * @return: {Array} Sorted List
+     * @method sort
+     * @returns {Array} - Sorted List
      */
     sort () {
 
@@ -53,12 +61,11 @@ class SortedList extends List {
     }
 
     /**
-     * Method: add
      * Adds new items to the array and then sorts according the sort settings
      *
-     * @param: {Object} (req) Item(s) to add,
-     *         (arrays accepted)
-     * @return: {Array} Sorted List
+     * @method add
+     * @param {Object|Array} item - Item(s) to add
+     * @returns {Array}            - Sorted List
      */
     add (item) {
 
