@@ -147,21 +147,13 @@ class List {
                 throw new Error('Invoked List.add without passing an Object to add');
         }
 
+        /* If multiple items, concatenate array to exisiting array */
         if (Array.isArray(item)) {
 
-            // Add new array to either beginning or end of exisitng array
-            if (toEnd) {
-
-                this.data.push(item);
-            } else {
-
-                this.data.unshift(item);
-            }
-
-            // Flatten array
-            this.data.reduce((a, b) => a.concat(b));
-
+            this.data = toEnd ? this.data.concat(item) : item.concat(this.data);
             return this.length;
+
+        /* If single item, just push/shift */
         } else {
 
             return toEnd ? this.data.push(item) : this.data.unshift(item);
