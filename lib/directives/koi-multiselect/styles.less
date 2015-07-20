@@ -1,12 +1,12 @@
 @import (reference) "main.less";
 
-.player-multiselect {
+.koi-multiselect {
 
     line-height: normal;
     text-align: left;
     display: inline-block;
 
-    .player-multiselect-container {
+    .koi-multiselect-container {
         position: relative;
     }
 
@@ -15,7 +15,7 @@
         margin-left: 10px;
     }
 
-    .player-label {
+    .label {
         margin-right: 3px;
     }
 
@@ -41,7 +41,7 @@
         }
 
         .dropdown-menu-options {
-            max-height: 300px;
+            max-height: 250px;
             overflow-y: scroll;
         }
 
@@ -59,19 +59,19 @@
                     color: @dropdown-link-hover-color;
                 }
             }
-        }
 
-        .player {
-            position: relative;
-            padding: 3px 5px;
+            a {
+                position: relative;
+                padding: 3px 5px;
+                .icon {
+                    position: absolute;
+                }
 
-            .icon {
-                position: absolute;
+                .item-label {
+                    margin-left: 25px;
+                }
             }
 
-            .item-label {
-                margin-left: 25px;
-            }
         }
 
         &-bottom, &-top {
@@ -101,7 +101,7 @@
             }
         }
 
-        .reset-player-filter {
+        .reset-filter {
             color: @link-color;
 
             &.disabled {

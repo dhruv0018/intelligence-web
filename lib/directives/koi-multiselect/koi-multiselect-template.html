@@ -1,13 +1,13 @@
-<div class="player-multiselect-container">
+<div class="koi-multiselect-container">
 
     <button class="btn btn-md btn-default dropdown-toggle" ng-click="toggleSelect()" ng-disabled="disabled" ng-class="{'error': !valid()}">
         <span ng-if="::type">
-            <span ng-show="selectedIds.length > 1" class="player-label">{{selectedIds.length}} {{::type}}s</span>
-            <span ng-show="selectedIds.length === 1" class="player-label">{{ header }}</span>
+            <span ng-show="selectedIds.length > 1" class="label">{{selectedIds.length}} {{::type}}s</span>
+            <span ng-show="selectedIds.length === 1" class="label">{{ header }}</span>
             <span ng-show="!selectedIds.length">Select {{::type}}(s)</span>
         </span>
         <span ng-if="::!type">
-            <span class="player-label">{{ header }}</span>
+            <span class="label">{{ header }}</span>
         </span>
         <i class="icon icon-chevron-down"></i>
     </button>
@@ -22,7 +22,7 @@
         <div class="dropdown-menu-options">
 
             <li class="dropdown-menu-option" ng-repeat="item in items | filter:searchText | orderBy:'label'" ng-click="select(item); focus()">
-                <a class="player" href>
+                <a href>
                     <i class="icon" ng-class="{'icon-ok': item.checked, 'empty': !item.checked}"></i>
                     <span class="item-label">{{ item.label }}</span>
                 </a>
@@ -30,7 +30,7 @@
         </div>
 
         <li class="dropdown-menu-bottom">
-            <a class="reset-player-filter" ng-click="uncheckAll()" ng-class="{disabled: !selectedIds.length}">Reset</a>
+            <a class="reset-filter" ng-click="uncheckAll()" ng-class="{disabled: !selectedIds.length}">Reset</a>
         </li>
 
     </ul>

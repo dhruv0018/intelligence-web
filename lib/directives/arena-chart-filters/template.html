@@ -13,7 +13,7 @@
 
             </div>
 
-            <player-multiselect ng-model="filterModel.teamPlayersIds" players="::teamPlayerList" type="Player" multiple="true"></player-multiselect>
+            <koi-multiselect ng-model="filterModel.teamPlayersIds" items="::teamPlayerList" type="Player" multiple="true"></koi-multiselect>
 
         </div>
 
@@ -101,7 +101,7 @@
 
             </div>
 
-            <player-multiselect ng-model="filterModel.opposingTeamPlayersIds" players="::opposingTeamPlayerList" multiple="true"></player-multiselect>
+            <koi-multiselect ng-model="filterModel.opposingTeamPlayersIds" items="::opposingTeamPlayerList" type="Player" multiple="true"></koi-multiselect>
 
         </div>
 

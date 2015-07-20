@@ -1,0 +1,9 @@
+<div class="koi-multiselect">
+    <x-multiselect
+        ng-model="selectedIds"
+        options="item.id as item.label for item in items"
+        multiple="multiple"
+        template-url="koi-multiselect/koi-multiselect-template.html"
+    >
+    </x-multiselect>
+</div>

@@ -1,8 +1,8 @@
 {
-    "name": "player-multiselect",
+    "name": "koi-multiselect",
     "templates": [
         "template.html",
-        "multiselect-template.html"
+        "koi-multiselect-template.html"
     ],
     "styles": [
         "styles.less"

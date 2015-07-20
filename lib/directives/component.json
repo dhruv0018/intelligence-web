@@ -6,7 +6,7 @@
     "locals": [
         "pills",
         "count-label",
-        "player-multiselect",
+        "koi-multiselect",
         "arena-chart-filters",
         "color-shape",
         "arena-event",
