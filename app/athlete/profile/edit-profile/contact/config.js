@@ -1,11 +1,13 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/edit-profile/contact/template.html';
 
 /**
  * EditProfile.Contact page module.
  * @module EditProfile.Contact
  */
-var Contact = angular.module('Athlete.Profile.EditProfile.Contact');
+const Contact = angular.module('Athlete.Profile.EditProfile.Contact');
 
 /**
  * EditProfile.Contact page state router.
@@ -21,7 +23,7 @@ Contact.config([
         .state('Athlete.Profile.EditProfile.Contact', {
             views: {
                 'content@Athlete.Profile.EditProfile': {
-                    templateUrl: 'athlete/edit-profile/contact/template.html',
+                    templateUrl: templateUrl,
                     controller: 'Athlete.Profile.EditProfile.Contact.controller'
                 }
             }

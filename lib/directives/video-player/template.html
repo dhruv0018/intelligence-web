@@ -10,6 +10,8 @@
      vg-plays-inline="videoPlayer.config.playsInline"
     >
 
+        <ng-transclude ng-if="$parent.fullScreenEnabled"></ng-transclude>
+
         <telestrations telestrations-entity="videoPlayer.telestrations" play-id="videoPlayer.playId" permissions="videoPlayer.telestrationsPermissions" class="vg-media-container" feature-flag="{{$root.FLAGS.FEATURE_TELESTRATIONS.TELESTRATIONS}}">
 
             <vg-media
@@ -25,7 +27,7 @@
 
             <vg-scrub-bar>
                 <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                <cue-points points="videoPlayer.cuePoints" feature-flag="{{$root.FLAGS.FEATURE_TELESTRATIONS.CUEPOINTS}}"></cue-points>
+                <cue-points ng-if="videoPlayer.cuePoints" points="videoPlayer.cuePoints" feature-flag="{{$root.FLAGS.FEATURE_TELESTRATIONS.CUEPOINTS}}"></cue-points>
             </vg-scrub-bar>
 
             <div class="controls-bottom">

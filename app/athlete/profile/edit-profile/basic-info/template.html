@@ -1,5 +1,5 @@
 <div class="basic-info">
-    <form>
+    <form ng-submit="saveBasicInfo()">
         <div class="form-block-full">
             <div class="form-block-third edit-profile-picture-container">
                 <h4>Profile Picture</h4>
@@ -9,13 +9,28 @@
             </div>
             <div class="form-block-two-thirds">
                 <div>
-                    <h4>First Name</h4>
-                    <input type="text" ng-model="athlete.firstName" class="form-control" placeholder="Enter First Name"/>
+                    <div class="form-block-half">
+                        <h4>First Name</h4>
+                        <input type="text" ng-model="athlete.firstName" class="form-control" placeholder="Enter First Name"/>
+                    </div>
+                    <div class="form-block-half">
+                        <h4>Last Name</h4>
+                        <input type="text" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
+                    </div>
                 </div>
-
-                <div>
-                    <h4>Last Name</h4>
-                    <input type="text" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
+                <div class="form-block-half-row">
+                    <h4>Primary Sport</h4>
+                    <select ng-model="athlete.profile.primarySportId" ng-options="sport.id as sport.name for sport in sports">
+                        <option value="">Select Sport</option>
+                    </select>
+                </div>
+                <div class="form-block-half-row">
+                    <h4>Primary Position</h4>
+                    <input type="text" ng-model="athlete.profile.primaryPosition" class="form-control" placeholder="Enter Primary Position"/>
+                </div>
+                <div class="form-block-half-row">
+                    <h4>Hometown</h4>
+                    <input type="text" ng-model="athlete.profile.hometown" class="form-control" placeholder="Enter Hometown"/>
                 </div>
                 <div>
                     <h4>
@@ -37,7 +52,7 @@
             </div>
         </div>
         <div class="button-row">
-            <button class="btn btn-primary" ng-click="saveBasicInfo()">Save</button>
+            <save-button is-saving="isSaving" confirm-save="confirmSave"></save-button>
             <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
         </div>
     </form>
