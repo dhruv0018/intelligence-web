@@ -10,17 +10,9 @@
         justify-content: space-between;
         align-items: center;
 
-        &.centered {
-            justify-content: center;
-        }
-
-        .circle-button {
-            background-color: @brand-success;
-            color: white;
-
-            &:hover {
-                background-color: lighten(@brand-success, 10%);
-            }
+        .icon-remove {
+            color: @brand-danger;
+            cursor: pointer;
         }
     }
 
@@ -100,6 +92,14 @@
                     cursor: pointer;
                 }
             }
+        }
+
+        .button-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
         }
     }
 }
