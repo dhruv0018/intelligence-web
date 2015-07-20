@@ -73,7 +73,7 @@ Game.controller('indexer-game.Controller', [
             modalInstance.result.then(function() {
                 $scope.game.setAside();
                 $scope.game.save();
-                users.resendEmail(EMAIL_REQUEST_TYPES.SET_ASIDE_EMAIL, {roleId: roleId, gameId: gameId}, userId);
+                users.resendEmail(EMAIL_REQUEST_TYPES.SET_ASIDE_EMAIL, {roleType: roleId, gameId: gameId}, userId);
                 $state.go('indexer-games');
             });
         };
