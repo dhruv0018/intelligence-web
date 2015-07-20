@@ -27,17 +27,13 @@
 
             <div class="btn-group">
 
-                <button
-                    class="btn btn-md btn-default"
-                    ng-model="filterModel.shots.made"
-                    btn-checkbox
-                ><div class="shot-icon icon-diamond"></div>Made</button>
+                <koi-checkbox ng-model="filterModel.shots.made" filled="true">
+                    Made <div class="shot-icon icon-diamond"></div>
+                </koi-checkbox>
 
-                <button
-                    class="btn btn-md btn-default"
-                    ng-model="filterModel.shots.missed"
-                    btn-checkbox
-                ><div class="shot-icon icon-x"></div>Missed</button>
+                <koi-checkbox ng-model="filterModel.shots.missed" filled="true">
+                    Missed <div class="shot-icon icon-x"></div>
+                </koi-checkbox>
 
             </div>
 
