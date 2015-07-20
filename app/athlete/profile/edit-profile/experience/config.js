@@ -1,11 +1,13 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/edit-profile/experience/template.html';
 
 /**
  * EditProfile.Experience page module.
  * @module EditProfile.Achievements
  */
-var Experience = angular.module('Athlete.Profile.EditProfile.Experience');
+const Experience = angular.module('Athlete.Profile.EditProfile.Experience');
 
 /**
  * EditProfile.Experience page state router.
@@ -21,7 +23,7 @@ Experience.config([
         .state('Athlete.Profile.EditProfile.Experience', {
             views: {
                 'content@Athlete.Profile.EditProfile': {
-                    templateUrl: 'athlete/edit-profile/experience/template.html',
+                    templateUrl: templateUrl,
                     controller: 'Athlete.Profile.EditProfile.Experience.controller'
                 }
             }

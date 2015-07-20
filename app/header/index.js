@@ -40,7 +40,7 @@ Header.config([
                 views: {
                     'header@root': {
                         templateUrl: 'header.html',
-                        controller: 'HeaderController'
+                        controller: HeaderController
                     }
                 },
                 resolve: {
@@ -81,6 +81,21 @@ Header.factory('Header.Data.Dependencies', [
     }
 ]);
 
+/* Header controller dependencies */
+HeaderController.$inject = [
+    'config',
+    '$scope',
+    '$state',
+    'AuthenticationService',
+    'SessionService',
+    'AccountService',
+    'ROLES',
+    'UsersFactory',
+    'LeaguesFactory',
+    'TeamsFactory',
+    'SPORTS',
+    'SUBSCRIPTIONS'
+];
 
 /**
  * Header controller.
@@ -88,41 +103,54 @@ Header.factory('Header.Data.Dependencies', [
  * @name HeaderController
  * @type {Controller}
  */
-Header.controller('HeaderController', [
-    'config', '$scope', '$state', 'AuthenticationService', 'SessionService', 'AccountService', 'ROLES', 'UsersFactory', 'LeaguesFactory', 'TeamsFactory', 'SPORTS',
-    function controller(config, $scope, $state, auth, session, account, ROLES, users, leagues, teams, SPORTS) {
 
-        $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
-        $scope.ADMIN = ROLES.ADMIN;
-        $scope.INDEXER = ROLES.INDEXER;
-        $scope.HEAD_COACH = ROLES.HEAD_COACH;
-        $scope.COACH = ROLES.COACH;
-        $scope.ATHLETE = ROLES.ATHLETE;
+function HeaderController(
+    config,
+    $scope,
+    $state,
+    auth,
+    session,
+    account,
+    ROLES,
+    users,
+    leagues,
+    teams,
+    SPORTS,
+    SUBSCRIPTIONS
+) {
+    $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
+    $scope.ADMIN = ROLES.ADMIN;
+    $scope.INDEXER = ROLES.INDEXER;
+    $scope.HEAD_COACH = ROLES.HEAD_COACH;
+    $scope.COACH = ROLES.COACH;
+    $scope.ATHLETE = ROLES.ATHLETE;
 
-        $scope.auth = auth;
-        $scope.config = config;
-        $scope.$state = $state;
-        $scope.session = session;
-        $scope.account = account;
+    $scope.auth = auth;
+    $scope.config = config;
+    $scope.$state = $state;
+    $scope.session = session;
+    $scope.account = account;
 
-        const indexerQuality = $scope.session.currentUser.currentRole.indexerQuality;
-        $scope.indexerQuality = (indexerQuality) ? indexerQuality : null;
+    let currentUser = session.currentUser;
+    $scope.currentUserIsAthleteRecruit = currentUser.isAthleteRecruit();
 
-        //TEMP - get sport id to show Analytics tab for FB only
-        if (auth.isLoggedIn) {
-            if (session.currentUser.is(ROLES.COACH)) {
-                var team = teams.get(session.currentUser.currentRole.teamId);
-                $scope.league = leagues.get(team.leagueId);
-                $scope.SPORTS = SPORTS;
-            }
+    const indexerQuality = $scope.session.currentUser.currentRole.indexerQuality;
+    $scope.indexerQuality = (indexerQuality) ? indexerQuality : null;
+
+    //TEMP - get sport id to show Analytics tab for FB only
+    if (auth.isLoggedIn) {
+        if (currentUser.is(ROLES.COACH)) {
+            var team = teams.get(currentUser.currentRole.teamId);
+            $scope.league = leagues.get(team.leagueId);
+            $scope.SPORTS = SPORTS;
         }
-
-        // This scope functionality limits a menu element to only one sub-menu
-        $scope.subMenu = false;
-
-        $scope.toggleSubMenu = function($event) {
-            $event.stopPropagation();
-            $scope.subMenu = !$scope.subMenu;
-        };
     }
-]);
+
+    // This scope functionality limits a menu element to only one sub-menu
+    $scope.subMenu = false;
+
+    $scope.toggleSubMenu = function($event) {
+        $event.stopPropagation();
+        $scope.subMenu = !$scope.subMenu;
+    };
+}

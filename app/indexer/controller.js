@@ -74,7 +74,7 @@ function IndexerGamesController(
     $scope.getSportName = function(teamId) {
         const team = $scope.teams[teamId];
 
-        if(team && team.leagueId) {
+        if(team && team.leagueId){
             const gameLeagueId = team.leagueId;
             const gameSportId = $scope.leagues[gameLeagueId].sportId;
             return $scope.sports[gameSportId].name;

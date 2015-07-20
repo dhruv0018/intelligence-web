@@ -20,7 +20,7 @@ describe('SessionService', function() {
         "lastAccessed":"0000-00-00 00:00:00"
     };
 
-    beforeEach(module('intelligence-web-client'));
+    beforeEach(angular.mock.module('intelligence-web-client'));
 
     it('should exist', inject([
         'SessionService',

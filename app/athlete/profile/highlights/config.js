@@ -1,11 +1,13 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/profile/highlights/template.html';
 
 /**
  * Profile.Highlights page module.
  * @module Profile.Highlights
  */
-var Highlights = angular.module('Athlete.Profile.Highlights');
+const Highlights = angular.module('Athlete.Profile.Highlights');
 
 /**
  * Profile.Highlights page state router.
@@ -21,7 +23,7 @@ Highlights.config([
         .state('Athlete.Profile.Highlights', {
             views: {
                 'highlights@Athlete.Profile': {
-                    templateUrl: 'athlete/profile/highlights/template.html',
+                    templateUrl: templateUrl,
                     controller: 'Athlete.Profile.Highlights.controller'
                 }
             }
