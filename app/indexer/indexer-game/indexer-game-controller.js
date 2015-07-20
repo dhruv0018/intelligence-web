@@ -16,8 +16,8 @@ var Game = angular.module('indexer-game');
  * @type {Controller}
  */
 Game.controller('indexer-game.Controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'RawFilm.Modal', 'Indexer.Game.Data', 'BasicModals', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, session, alerts, RawFilmModal, data, basicModal, sports, leagues, schools, teams, games, users) {
+    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'RawFilm.Modal', 'Indexer.Game.Data', 'BasicModals', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory', 'EMAIL_REQUEST_TYPES',
+    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, session, alerts, RawFilmModal, data, basicModal, sports, leagues, schools, teams, games, users, EMAIL_REQUEST_TYPES) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -64,6 +64,7 @@ Game.controller('indexer-game.Controller', [
 
         $scope.setAside = function() {
             const roleId = session.getCurrentRole().type.id;
+            const userId = session.getCurrentUserId();
             const modalInstance = basicModal.openForConfirm({
                 title: 'Set aside this Game?',
                 bodyText: 'Are you sure you want to set aside this game?'
@@ -72,7 +73,7 @@ Game.controller('indexer-game.Controller', [
             modalInstance.result.then(function() {
                 $scope.game.setAside();
                 $scope.game.save();
-                users.resendEmail(EMAIL_REQUEST_TYPES.SET_ASIDE_EMAIL, {roleId: roleId, gameId: gameId}, null);
+                users.resendEmail(EMAIL_REQUEST_TYPES.SET_ASIDE_EMAIL, {roleId: roleId, gameId: gameId}, userId);
                 $state.go('indexer-games');
             });
         };
