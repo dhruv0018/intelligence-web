@@ -63,12 +63,13 @@ function GamesArenaChartData (
         let teamId = session.getCurrentTeamId();
 
         let Data = {
-            players: players.load({
+            playersByRosters: players.load({
                 'rosterId[]': [
                     game.getRoster(game.teamId).id,
                     game.getRoster(game.opposingTeamId).id
                 ]
             }),
+            playersByGame: players.load({gameId}),
             arenaEvents: game.retrieveArenaEvents(),
             customtags: customtags.load({teamId})
         };
