@@ -43,12 +43,14 @@
         </menu>
 
         <!-- Athlete Menu -->
-        <menu class="dropdown-menu" ng-if="currentUser.is(ATHLETE)">
-            <li id="mobile-menu-athlete-film-home-cta" ui-sref-active="active"><a ui-sref="Athlete.FilmHome">Film Home</a></li>
+        <menu class="dropdown-menu" data-ng-if="currentUser.is(ATHLETE)">
+            <li id="mobile-menu-athlete-film-home-cta" data-ui-sref-active="active"><a data-ui-sref="Athlete.FilmHome">Film Home</a></li>
             <li
                 ng-if="config.athleteProfile.isEnabled"
+                ng-show="currentUserIsAthleteRecruit"
+                class="ng-hide"
                 ui-sref-active="active"
-            ><a id="mobile-menu-athlete-profile-cta" ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
+            ><a id="mobile-menu-athlete-profile-cta" data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
         </menu>
 
     </div>
@@ -124,12 +126,14 @@
     </menu>
 
     <!-- Athlete menu -->
-    <menu class="nav navbar-nav" ng-if="currentUser.is(ATHLETE)">
-        <li ui-sref-active="active"><a id="menu-athlete-film-home-cta" ui-sref="Athlete.FilmHome">Film Home</a></li>
+    <menu class="nav navbar-nav" data-ng-if="currentUser.is(ATHLETE)">
+        <li data-ui-sref-active="active"><a id="menu-athlete-film-home-cta" data-ui-sref="Athlete.FilmHome">Film Home</a></li>
         <li
             ng-if="config.athleteProfile.isEnabled"
+            ng-show="currentUserIsAthleteRecruit"
+            class="ng-hide"
             ui-sref-active="active"
-        ><a id="menu-athlete-profile-cta" ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
+        ><a id="menu-athlete-profile-cta" data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
     </menu>
 
     <!-- Role Dropdown -->

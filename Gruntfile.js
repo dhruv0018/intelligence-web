@@ -256,6 +256,7 @@ module.exports = function(grunt) {
                     'build/components.css': [
                         'app/reel/*.less',
                         'app/indexer/**/*.less',
+                        'lib/directives/indexing-block/styles.less',
                         'lib/directives/dynamic-tables/styles.less'
                     ]
                 }

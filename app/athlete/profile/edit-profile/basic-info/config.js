@@ -1,11 +1,13 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/edit-profile/basic-info/template.html';
 
 /**
  * EditProfile.BasicInfo page module.
  * @module EditProfile.BasicInfo
  */
-var BasicInfo = angular.module('Athlete.Profile.EditProfile.BasicInfo');
+const BasicInfo = angular.module('Athlete.Profile.EditProfile.BasicInfo');
 
 /**
  * EditProfile.BasicInfo page state router.
@@ -22,7 +24,7 @@ BasicInfo.config([
             url: '',
             views: {
                 'content@Athlete.Profile.EditProfile': {
-                    templateUrl: 'athlete/edit-profile/basic-info/template.html',
+                    templateUrl: templateUrl,
                     controller: 'Athlete.Profile.EditProfile.BasicInfo.controller'
                 }
             }
