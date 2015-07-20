@@ -1,11 +1,15 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/edit-profile/physical/template.html';
+
+const template = require('./template.html');
 
 /**
  * Physical page module.
  * @module Physical
  */
-var Physical = angular.module('Athlete.Profile.EditProfile.Physical', [
+const Physical = angular.module('Athlete.Profile.EditProfile.Physical', [
     'ui.router',
     'ui.bootstrap',
     'ngMaterial',
@@ -17,7 +21,7 @@ Physical.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('athlete/edit-profile/physical/template.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 

@@ -1,11 +1,15 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/profile/highlights/template.html';
+
+const template = require('./template.html');
 
 /**
  * Highlights page module.
  * @module Highlights
  */
-var Highlights = angular.module('Athlete.Profile.Highlights', [
+const Highlights = angular.module('Athlete.Profile.Highlights', [
     'ui.router',
     'ui.bootstrap',
     'ngMaterial',
@@ -17,7 +21,7 @@ Highlights.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('athlete/profile/highlights/template.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 

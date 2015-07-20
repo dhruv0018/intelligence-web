@@ -1,11 +1,13 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/profile/template.html';
 
 /**
  * Profile page module.
  * @module Profile
  */
-var Profile = angular.module('Athlete.Profile');
+const Profile = angular.module('Athlete.Profile');
 
 /**
  * Profile page state router.
@@ -22,22 +24,56 @@ Profile.config([
             url: '/:id/profile',
             views: {
                 'main@root': {
-                    templateUrl: 'athlete/profile/template.html',
+                    templateUrl: templateUrl,
                     controller: 'Athlete.Profile.controller'
-            }
+                }
             },
             resolve: {
                 'Athlete.Profile.Data': [
-                    '$q', '$stateParams', 'UsersFactory', 'ReelsFactory',
-                    function data($q, $stateParams, users, reels) {
+                    '$q',
+                    '$stateParams',
+                    'UsersFactory',
+                    'ReelsFactory',
+                    'PlaysFactory',
+                    'SportsFactory',
+                    'TeamsFactory',
+                    'PositionsetsFactory',
+                    function data(
+                                $q,
+                                $stateParams,
+                                users,
+                                reels,
+                                plays,
+                                sports,
+                                teams,
+                                positionsets) {
 
-                        let userId = $stateParams.id;
+                        let userId = Number($stateParams.id);
 
-                        /* Load data for Athlete.Profile.<sub-state> upfront
-                         */
+                        let relatedUser = users.load(userId);
+
+
+
                         let Data = {
-                            users: users.load({relatedUserId: userId}),
-                            reels: reels.load({relatedUserId: userId})
+                            positionsets: positionsets.load(),
+                            sports: sports.load(),
+                            users: relatedUser,
+                            reels: reels.load({relatedUserId: userId}),
+                            plays: relatedUser.then(() => {
+                                let user = users.get(userId);
+                                if (user.profile.featuredReelId) return plays.load({reelId: user.profile.featuredReelId});
+                            }),
+                            teams: relatedUser.then(() => {
+                                let user = users.get(userId);
+
+                                if (user.profile.teams.length) {
+                                    let teamIds = user.profile.teams.map(function getProfileTeamIds(team) {
+                                        return team.teamId;
+                                    });
+
+                                    return teams.load(teamIds);
+                                }
+                            })
                         };
 
                         return $q.all(Data);

@@ -1,0 +1,24 @@
+@import (reference) "main.less";
+@indexing-block-fullscreen-z: 1;
+
+.indexing-block {
+
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 45px;
+    margin-bottom: 25px;
+    padding: 0 50px;
+    justify-content: center;
+
+    &.fullscreen {
+        position: absolute;
+        display: block;
+        top: 20px;
+        left: 0;
+        right: 0;
+        z-index: @indexing-block-fullscreen-z;
+        color: white;
+        text-align: center;
+    }
+}

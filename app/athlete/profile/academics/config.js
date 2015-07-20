@@ -1,11 +1,13 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/profile/academics/template.html';
 
 /**
  * Profile.Academics page module.
  * @module Profile.Academics
  */
-var Academics = angular.module('Athlete.Profile.Academics');
+const Academics = angular.module('Athlete.Profile.Academics');
 
 /**
  * Profile.Academics page state router.
@@ -21,7 +23,7 @@ Academics.config([
         .state('Athlete.Profile.Academics', {
             views: {
                 'academics@Athlete.Profile': {
-                    templateUrl: 'athlete/profile/academics/template.html',
+                    templateUrl: templateUrl,
                     controller: 'Athlete.Profile.Academics.controller'
                 }
             }
