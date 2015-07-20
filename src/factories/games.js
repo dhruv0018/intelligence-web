@@ -1023,11 +1023,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
                 self.status = GAME_STATUSES.SET_ASIDE.id;
             },
-            sendSetAsideEmail: function(roleId) {
-                const self = this;
-                const model = $injector.get(self.model);
-                return model.sendSetAsideEmail({ id: self.id, roleId: roleId });
-            },
             unassign: function() {
                 var self = this;
 

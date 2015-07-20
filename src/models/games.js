@@ -33,12 +33,6 @@ IntelligenceWebClient.factory('GamesResource', [
 
             getFormationReport: {method: 'GET', url: config.api.uri + base + '/:id/formation-report'},
 
-            sendSetAsideEmail: {
-                method: 'POST',
-                url: config.api.uri + base + '/:id/send-set-aside-email',
-                params: {roleId: '@roleId'}
-            },
-
             generateDownAndDistanceReport: {
                 method: 'POST',
                 url: config.api.uri + base + '/:id/dnd-report'

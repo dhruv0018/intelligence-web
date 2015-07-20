@@ -26,7 +26,7 @@ Game.controller('indexer-game.Controller', [
 
         $scope.RawFilmModal = RawFilmModal;
 
-        var gameId = $stateParams.id;
+        const gameId = $stateParams.id;
 
         $scope.game = games.get(gameId);
 
@@ -72,7 +72,7 @@ Game.controller('indexer-game.Controller', [
             modalInstance.result.then(function() {
                 $scope.game.setAside();
                 $scope.game.save();
-                $scope.game.sendSetAsideEmail(roleId);
+                users.resendEmail(EMAIL_REQUEST_TYPES.SET_ASIDE_EMAIL, {roleId: roleId, gameId: gameId}, null);
                 $state.go('indexer-games');
             });
         };
